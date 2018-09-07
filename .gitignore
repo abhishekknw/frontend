@@ -21,3 +21,4 @@ coreapi/coreapi/coreapi/config.py
 !.elasticbeanstalk/*.global.yml
 *.DS_Store
 md.sublime*
+ui/buyer_catalogue/app/scripts/config.js
