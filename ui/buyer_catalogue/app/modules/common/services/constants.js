@@ -12,6 +12,7 @@ angular
     content_type : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     //amazon server
     aws_bucket_url : 'http://mdimages.s3.amazonaws.com/',
+    aws_campaign_images_url : 'http://androidtokyo.s3.amazonaws.com/',
     account_email_id : 'tejas.pawar@machaddalo.com',
     //general
     name : '',
