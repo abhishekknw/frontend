@@ -31,16 +31,7 @@
             <td>{{campaign.campaign.tentative_start_date|limitTo:10}}</td>
             <td>{{campaign.campaign.tentative_end_date|limitTo:10}}</td>
             <td>
-              <button class="btn btn-danger" ng-click="changeView('viewLeads',campaign)">View Leads</button>
-            </td>
-            <td>
               <button class="btn btn-danger" ng-click="changeView('viewLeadForms',campaign)">Create/Edit Lead Form</button>
-            </td>
-            <td>
-              <button class="btn btn-danger" ng-click="changeView('viewLeadForms',campaign)">Enter Leads</button>
-            </td>
-            <td>
-              <button class="btn btn-danger" ng-click="changeView('importLeads',campaign)">Import Leads</button>
             </td>
           </tr>
         </tbody>
@@ -78,9 +69,6 @@
           </tr>
         </tbody>
       </table>
-      <div ng-if="!leadsData.leads.length">
-        <label>No Leads Found</label>
-      </div>
     </div>
     <a class="btn btn-danger" title="{{campaignName}} Leads" ng-click='csv.generate()' ng-href="{{ csv.link() }}"
          download="{{campaignName}}_leads.csv" ng-if="leadsData.leads.length">
@@ -100,6 +88,7 @@
         Enter Name For Lead Form* :
         <input type="text" class="form-control" ng-model="formName.name" required>
       </div>
+      <br />  <br />
       <div ng-repeat="model in leadFormFields">
         <div class="form-group col-md-4">
           <label for="email">FieldName:</label>
@@ -120,15 +109,20 @@
           <label></label>
           <button type="button" class="form-control btn btn-danger" ng-click="removeField($index)">Remove</button>
         </div>
+        <br />  <br />  <br />  <br />
         <div class="col-md-12" ng-if="model.key_type=='RADIO' || model.key_type=='CHECKBOX' || model.key_type=='DROPDOWN'">
           Add Options:
+          <br />  <br />
           <input type="text" class="form-control" ng-model="optionForm.option">
+          <br />
           <button class="btn btn-danger" ng-click="addKeyOption(optionForm.option,$index)">+</button>
           <div class="" ng-repeat="option in model.key_options" style="display:inline-block;">
             <button class="btn btn-primary">{{option}}</button>
               <span ng-click="model.key_options.splice($index,1)" class="glyphicon glyphicon-remove-circle"></span>
           </div>
+          <br />  <br />
         </div>
+        <br />  <br />
       </div>
       <div class="form-group col-md-12">
         <button class="btn btn-danger" ng-click="addLeadFormFields()">Add</button>
@@ -204,6 +198,7 @@
             <th>Index</th>
             <th>Form Name</th>
             <th>Action</th>
+            <th>View Leads</th>
             <th>Leads</th>
             <th>Import</th>
           </tr>
@@ -213,7 +208,12 @@
             <td>{{$index+1}}</td>
             <td>{{item.leads_form_name}}</td>
             <td>
-              <button class="btn btn-danger" ng-click="getLeadForm(item)">Details</button>
+              <button class="btn btn-danger" ng-click="getLeadForm(item)">Form Details</button>
+            </td>
+            <td>
+              <button class="btn btn-danger" ng-click="changeView('viewLeadForms', campaignInfo)">View Leads</button>
+
+              <!-- <button class="btn btn-danger" ng-click="changeView('selectSuppliers',campaignInfo,item)">Enter Leads</button> -->
             </td>
             <td>
               <button class="btn btn-danger" ng-click="changeView('selectSuppliers',campaignInfo,item)">Enter Leads</button>
