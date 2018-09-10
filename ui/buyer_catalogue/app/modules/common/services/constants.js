@@ -3,8 +3,13 @@ angular
   constant('constants',{
     //amazon keys
     // base_url : 'http://coreapi-test.3j6wudg4pu.ap-southeast-1.elasticbeanstalk.com/',
+<<<<<<< Updated upstream
     base_url: Config.APIBaseUrl,
+=======
+    base_url : 'http://localhost:8000/',
+>>>>>>> Stashed changes
     url_base : 'v0/ui/website/',
+    url_base_leads : 'v0/ui/leads/',
     AWSAccessKeyId : 'AKIAI6PVCXJEAXV6UHUQ',
     policy : "eyJleHBpcmF0aW9uIjogIjIwMjAtMDEtMDFUMDA6MDA6MDBaIiwKICAiY29uZGl0aW9ucyI6IFsgCiAgICB7ImJ1Y2tldCI6ICJtZGltYWdlcyJ9LCAKICAgIFsic3RhcnRzLXdpdGgiLCAiJGtleSIsICIiXSwKICAgIHsiYWNsIjogInB1YmxpYy1yZWFkIn0sCiAgICBbInN0YXJ0cy13aXRoIiwgIiRDb250ZW50LVR5cGUiLCAiIl0sCiAgICBbImNvbnRlbnQtbGVuZ3RoLXJhbmdlIiwgMCwgNTI0Mjg4MDAwXQogIF0KfQoK",
     acl : 'public-read',
