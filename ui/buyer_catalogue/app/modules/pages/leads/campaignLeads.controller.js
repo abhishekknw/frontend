@@ -261,7 +261,7 @@ angular.module('catalogueApp')
           console.log($scope.leadFormFields,leadFormField);
           $scope.leadFormFields.push(angular.copy(leadFormField));
         }
-        $scope.changeView('createForm');
+        $scope.changeView('createForm',$scope.campaignInfo);
       }
 
       // start : to read excel sheet while importing lead sheet
