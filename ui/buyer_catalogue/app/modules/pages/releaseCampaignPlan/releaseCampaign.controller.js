@@ -555,7 +555,7 @@ $scope.multiSelect =
           var email_Data = {
             subject:$scope.paymentStatus + " Details For " + $scope.supplierPaymentData.name,
             body:$scope.body.message,
-            to:'yogesh.mhetre@machadalo.com',
+            to:constants.account_email_id,
           };
           releaseCampaignService.sendMail(email_Data)
           .then(function onSuccess(response){
