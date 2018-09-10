@@ -174,7 +174,7 @@
 </div>
 <!--end: enter leads data  -->
 <!--start : import leads  -->
-<div class="panel" ng-show="views.importLeads">
+<!-- <div class="panel" ng-show="views.importLeads">
   <div class="pageTitle">
     <h3>Import Leads for {{campaignName}} Campaign</h3>
   </div>
@@ -185,7 +185,7 @@
       <button ng-click="importLeadsThroughSheet()" class="btn btn-danger">Submit</button>
     </div>
   </div>
-</div>
+</div> -->
 <!--end : import leads  -->
 <!--start : view lead forms -->
 <div class="panel " ng-if="views.viewLeadForms">
@@ -201,6 +201,7 @@
             <th>Form Name</th>
             <th>Action</th>
             <th>Leads</th>
+            <th>Import</th>
           </tr>
         </thead>
         <tbody>
@@ -213,6 +214,9 @@
             <td>
               <button class="btn btn-danger" ng-click="changeView('selectSuppliers',campaignInfo,item)">Enter Leads</button>
             </td>
+            <td>
+             <button class="btn btn-danger" ng-click="changeView('importLeads',campaignInfo,item)">Import Leads</button>
+           </td>
           </tr>
         </tbody>
       </table>
@@ -351,3 +355,18 @@
 
 </div>
 <!--end: enter leads  -->
+<!--start : import leads  -->
+<div class="panel" ng-show="views.importLeads">
+  <div class="pageTitle">
+    <h3>Import Leads for {{campaignName}} Campaign</h3>
+  </div>
+  <label>Select Lead Sheet</label>
+  <div class="panel-body" >
+    <input type="file" class="buttonfile" accept=".xlsx" ngf-select = "uploadFiles($file)"/>
+    <br />
+    <div class="">
+      <button ng-click="importLeadsThroughSheet()" class="btn btn-danger">Submit</button>
+    </div>
+  </div>
+</div>
+<!--end : import leads  -->

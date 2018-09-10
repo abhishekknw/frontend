@@ -1,6 +1,6 @@
 "use strict";
 angular.module('catalogueApp')
-    .controller('CampaignLeadsCtrl', function($scope, $rootScope, $stateParams, $window, $location, campaignLeadsService ,$http, constants, permissions, commonDataShare) {
+    .controller('CampaignLeadsCtrl', function($scope, $rootScope, $stateParams, $window, $location, campaignLeadsService ,$http, constants, permissions, commonDataShare, Upload) {
       $scope.modelData = {};
       $scope.modelData['alias_data'] = [];
       $scope.savedFormFields = [];
@@ -166,6 +166,7 @@ angular.module('catalogueApp')
         });
       $scope.addField();
       $scope.changeView = function(view,campaign,formFields){
+        console.log(formFields);
         $scope.views = {
           createForm : false,
           viewLeads : false,
@@ -204,11 +205,11 @@ angular.module('catalogueApp')
           case $scope.views.importLeads:
             $scope.campaignId = campaign.campaign.proposal_id;
             $scope.campaignName = campaign.campaign.name;
-            $scope.aliasData = [];
-            getAliasData($scope.campaignId);
-            $scope.importLeadsData = [];
-            $scope.showImportTable = false;
-            break;
+            // $scope.aliasData = [];
+            // getAliasData($scope.campaignId);
+            // $scope.importLeadsData = [];
+            // $scope.showImportTable = false;
+            // break;
           case $scope.views.createForm:
             break;
           case $scope.views.enterLeads:
@@ -343,7 +344,7 @@ angular.module('catalogueApp')
         var token = $rootScope.globals.currentUser.token;
         if ($scope.file) {
           Upload.upload({
-              url: constants.base_url + constants.url_base + "leads/" + $scope.formId + "/import_leads",
+              url: constants.base_url + constants.url_base_leads + $scope.leadFormFields.leads_form_id + "/import_lead",
               data: {
                 file: $scope.file,
                 data_import_type : "base-data"
