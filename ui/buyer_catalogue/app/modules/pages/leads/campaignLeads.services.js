@@ -44,7 +44,7 @@
         }
 
         campaignLeadsService.importLeadsThroughSheet = function(campaignId,data){
-          var url = url_base + "leads/" + campaignId + "/import_leads/";
+          var url = url_base + "leads/" + campaignId + "/import_lead/";
           return machadaloHttp.post(url,data);
         }
 

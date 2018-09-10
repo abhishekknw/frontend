@@ -15,17 +15,7 @@ angular.module('catalogueApp')
         option : undefined
       };
       console.log("hello");
-      $scope.optionsDummy = [
-        {name : 'STRING'},
-        {name : 'INT'},
-        {name : 'EMAIL'},
-        {name : 'PASSWORD'},
-        {name : 'PHONE'},
-        {name : 'RADIO'},
-        {name : 'DROPDOWN'},
-        {name : 'CHECKBOX'},
-        {name : 'TEXTAREA'},
-      ];
+
       $scope.leadKeyTypes = [
         {name : 'STRING'},
         {name : 'INT'},
@@ -36,6 +26,9 @@ angular.module('catalogueApp')
         {name : 'DROPDOWN'},
         {name : 'CHECKBOX'},
         {name : 'TEXTAREA'},
+        {name : 'BOOLEAN'},
+        {name : 'FLOAT'},
+        {name : 'DATE'}
       ];
       $scope.keyTypesMap = {
         'STRING' : 'text',
@@ -45,7 +38,10 @@ angular.module('catalogueApp')
         'PHONE' : 'number',
         'RADIO' : 'radio',
         'CHECKBOX' : 'checkbox',
-        'TEXTAREA' : 'textarea'
+        'TEXTAREA' : 'textarea',
+        'BOOLEAN' : 'radio',
+        'FLOAT' : 'number',
+        'DATE' : 'date'
       }
       var leadFormField = {
         key_name : '',
@@ -453,6 +449,13 @@ angular.module('catalogueApp')
       }
       $scope.uploadFiles = function(file){
         $scope.file = file;
+      }
+      $scope.setHotLeadValue = function(item,value){
+        if(value){
+          item.value = item.hot_lead_criteria;
+        }else{
+          item.value = null;
+        }
       }
 
     });//Controller ends here
