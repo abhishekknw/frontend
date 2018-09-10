@@ -52,6 +52,11 @@
           var url = url_base_leads + formId + "/insert_lead";
           return machadaloHttp.post(url, data);
         }
+
+        campaignLeadsService.importLeadsThroughSheet = function(formId){
+          var url = url_base_leads + formId + "/import_lead/";
+          return machadaloHttp.post(url);
+        }
         return campaignLeadsService;
 
  }]);

@@ -11,7 +11,7 @@
 
 // var APIBaseUrl = 'http://coreapi-test.3j6wudg4pu.ap-southeast-1.elasticbeanstalk.com/';
 //var APIBaseUrl = 'http://13.232.210.224:8000/';
-var APIBaseUrl = 'http://localhost:8000/';
+var APIBaseUrl = Config.APIBaseUrl;
 
 angular.module('Authentication', []);
 
