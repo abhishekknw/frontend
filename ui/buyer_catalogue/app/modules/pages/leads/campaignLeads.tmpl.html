@@ -101,16 +101,20 @@
         <input type="text" class="form-control" ng-model="formName.name" required>
       </div>
       <div ng-repeat="model in leadFormFields">
-        <div class="form-group col-md-5">
+        <div class="form-group col-md-4">
           <label for="email">FieldName:</label>
           <input type="text" class="form-control" ng-model="model.key_name" required>
         </div>
-        <div class="form-group col-md-5">
+        <div class="form-group col-md-4">
           <label for="pwd">Field Type:</label>
           <select class="form-control" ng-model="model.key_type" required>
             <option ng-repeat="type in leadKeyTypes" value="{{type.name}}">{{type.name}}</option>
           </select>
-
+        </div>
+        <div class="form-group col-md-2">
+          <label>Action </label></br>
+          <input type="checkbox" name="" value="true"  ng-model="model.isHotLead"/>Hot Lead
+          <input type="text" ng-model="model.hot_lead_criteria" ng-if="model.isHotLead"/>
         </div>
         <div class="form-group col-md-2">
           <label></label>
@@ -170,7 +174,7 @@
 </div>
 <!--end: enter leads data  -->
 <!--start : import leads  -->
-<div class="panel" ng-show="views.importLeads">
+<!-- <div class="panel" ng-show="views.importLeads">
   <div class="pageTitle">
     <h3>Import Leads for {{campaignName}} Campaign</h3>
   </div>
@@ -181,7 +185,7 @@
       <button ng-click="importLeadsThroughSheet()" class="btn btn-danger">Submit</button>
     </div>
   </div>
-</div>
+</div> -->
 <!--end : import leads  -->
 <!--start : view lead forms -->
 <div class="panel " ng-if="views.viewLeadForms">
@@ -197,6 +201,7 @@
             <th>Form Name</th>
             <th>Action</th>
             <th>Leads</th>
+            <th>Import</th>
           </tr>
         </thead>
         <tbody>
@@ -209,6 +214,9 @@
             <td>
               <button class="btn btn-danger" ng-click="changeView('selectSuppliers',campaignInfo,item)">Enter Leads</button>
             </td>
+            <td>
+             <button class="btn btn-danger" ng-click="changeView('importLeads',campaignInfo,item)">Import Leads</button>
+           </td>
           </tr>
         </tbody>
       </table>
@@ -228,7 +236,7 @@
     <form name="leadForm"  style="margin:5%;" >
     <div class="" ng-repeat="item in leadModelData">
       <div class="form-group" style="padding-bottom:0;padding-top:0;">
-        <div class="cols-sm-10" ng-if="item.key_type != 'RADIO' && item.key_type != 'CHECKBOX' && item.key_type != 'DROPDOWN' && item.key_type != 'EMAIL' && item.key_type != 'PHONE' && item.key_type != 'TEXTAREA'">
+        <div class="cols-sm-10" ng-if="item.key_type != 'RADIO' && item.key_type != 'CHECKBOX' && item.key_type != 'DROPDOWN' && item.key_type != 'EMAIL' && item.key_type != 'PHONE' && item.key_type != 'TEXTAREA' && !item.hot_lead_criteria">
           {{item.key_name}}
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
@@ -268,7 +276,7 @@
         </div>
 
         <div class="form-group" style="padding-bottom:0;padding-top:0;">
-          <div class="cols-sm-10" ng-if="item.key_type == 'RADIO'">
+          <div class="cols-sm-10" ng-if="item.key_type == 'RADIO' && !item.hot_lead_criteria">
             {{item.key_name}}
             <div class="input-group" ng-repeat="option in item.key_options">
               <!-- <span class="form-check-input"></span> -->
@@ -277,16 +285,23 @@
           </div>
         </div>
         <div class="form-group" style="padding-bottom:0;padding-top:0;">
-          <div class="cols-sm-10" ng-if="item.key_type == 'CHECKBOX'" ng-init="getCheckBoxValues(item.key_options)">
+          <div class="cols-sm-10" ng-if="item.key_type == 'CHECKBOX' && !item.hot_lead_criteria" ng-init="getCheckBoxValues(item.key_options)">
             {{item.key_name}}
             <div class="input-group" ng-repeat="option in leadChBoxKeyOptions">
-              <!-- <span class="form-check-input"></span> -->
               <input type="checkbox" class="form-check-input"  value="{{option}}"  name="chbox" ng-model="option.selected"  ng-click="setCheckBoxValue(option.selected,$index,item)"/>{{option.name}}
-
             </div>
           </div>
         </div>
         <div class="form-group" style="padding-bottom:0;padding-top:0;">
+          <div class="cols-sm-10" ng-if="item.hot_lead_criteria">
+            {{item.key_name}}
+            <div class="input-group">
+              <!-- <span class="form-check-input"></span> -->
+              <input type="checkbox" class="form-check-input"  value="{{item.hot_lead_criteria}}"  ng-model="hotLeadValue" ng-click="setHotLeadValue(item,hotLeadValue)" name="hot_lead"/>{{item.hot_lead_criteria}}
+            </div>
+          </div>
+        </div>
+        <div class="form-group" style="padding-bottom:0;padding-top:0;" ng-if="!item.hot_lead_criteria">
             <span ng-if="item.key_type == 'DROPDOWN'">{{item.key_name}}</span>
             <select ng-if="item.key_type == 'DROPDOWN'" class="form-control" ng-model="item.value">
               <option ng-repeat="option in item.key_options" value="{{option}}" required>{{option}}</option>
@@ -340,3 +355,18 @@
 
 </div>
 <!--end: enter leads  -->
+<!--start : import leads  -->
+<div class="panel" ng-show="views.importLeads">
+  <div class="pageTitle">
+    <h3>Import Leads for {{campaignName}} Campaign</h3>
+  </div>
+  <label>Select Lead Sheet</label>
+  <div class="panel-body" >
+    <input type="file" class="buttonfile" accept=".xlsx" ngf-select = "uploadFiles($file)"/>
+    <br />
+    <div class="">
+      <button ng-click="importLeadsThroughSheet()" class="btn btn-danger">Submit</button>
+    </div>
+  </div>
+</div>
+<!--end : import leads  -->
