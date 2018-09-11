@@ -90,6 +90,7 @@ angular
     //releaseplan
     updateData_success : 'Data updated successfully',
     updateData_error : 'Error occured while saving data',
+    already_exist : 'Supplier Already Present',
     //auditReleasePlan
     inventory_date_success : 'Inventory Dates are saved successfully',
     inventory_date_error : 'Error occured while saving dates',

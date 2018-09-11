@@ -98,9 +98,10 @@
               </select>
             </td>
             <td  class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="phaseform">
-              <select name="phase" class="form-control spacing input-width-phase"ng-model="supplier.phase" min="1" permission = "[permissions.addPhase, permissions.viewPhase]">
+              <input type="text" readonly ng-model="phaseMappingList[supplier.phase_no].phase_no">
+              <select name="phase" class="form-control spacing input-width-phase" ng-click="setPhase(supplier,supplier.phaseNo)" ng-model="supplier.phaseNo" min="1" permission = "[permissions.addPhase, permissions.viewPhase]">
                 <option value="" disabled>Select Phase</option>
-                <option ng-repeat="phase in phases | unique:'phase_no'" value="{{phase.phase_no}}">{{phase.phase_no}}</option>
+                <option ng-repeat="phase in phases | unique:'phase_no'" value="{{phase.id}}">{{phase.phase_no}}</option>
               </select>
               <span class="error" ng-show="phaseform.phase.$error.min">{{positiveNoError}}</span>
             </td>
