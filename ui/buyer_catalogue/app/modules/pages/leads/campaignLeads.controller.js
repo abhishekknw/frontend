@@ -56,9 +56,7 @@ angular.module('catalogueApp')
         {header : 'Start Date'},
         {header : 'End Date'},
         {header : 'Action'},
-        {header : 'Action'},
-        {header : 'Action'},
-          {header : 'Action'},
+
       ];
       var formFieldsStruct = [
         {name : 'firstname1' , value : false},
@@ -128,7 +126,8 @@ angular.module('catalogueApp')
           console.log(response);
         })
       }
-      $scope.getEntryListLeads = function(){
+      $scope.getEntryListLeads = function(item){
+        console.log(item);
              campaignLeadsService.getEntryListLeads($scope.leadFormId,$scope.supplierData.supplier_id)
              .then(function onSuccess(response){
                console.log(response);
@@ -203,7 +202,7 @@ angular.module('catalogueApp')
           case $scope.views.viewLeads:
             $scope.campaignId = campaign.campaign.proposal_id;
             $scope.campaignName = campaign.campaign.name;
-            getLeads($scope.campaignId);
+            $scope.getEntryListLeads($scope.campaignId);
             break;
           case $scope.views.importLeads:
             $scope.campaignId = campaign.campaign.proposal_id;
@@ -352,7 +351,7 @@ angular.module('catalogueApp')
               headers: {'Authorization': 'JWT ' + token}
           }).then(function onSuccess(response){
                 console.log(response);
-
+                swal(constants.name,constants.create_success,constants.success);
           })
           .catch(function onError(response) {
               console.log(response);
