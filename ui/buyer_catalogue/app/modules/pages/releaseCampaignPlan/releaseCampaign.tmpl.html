@@ -622,7 +622,7 @@
                   <td>{{phase.end_date|limitTo:10||'NA'}}</td>
                   <td>
                     <div class="radio">
-                      <button type="button" name="button" ng-click="removePhase($index)">Remove</button>
+                      <button type="button" name="button" ng-click="removePhase(phase.id)">Remove</button>
                     </div>
                   </td>
                 </tr>
@@ -633,7 +633,7 @@
                   <td><input type="date" ng-model="phase.end_date"></td>
                   <td>
                     <div class="radio">
-                      <button type="button" name="button" ng-click="removePhase($index)">Remove</button>
+                      <button type="button" name="button" ng-click="removePhase(phase.id)">Remove</button>
                     </div>
                   </td>
                 </tr>

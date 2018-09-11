@@ -69,7 +69,7 @@
     }
 
     DashboardService.getLeadsByCampaign = function(campaignId){
-      var url = url_base + "dashboard/get_leads_by_campaign/?campaign_id=" + campaignId;
+      var url = url_base + "dashboard/get_leads_by_campaign_new/?campaign_id=" + campaignId;
       return machadaloHttp.get(url);
     }
 

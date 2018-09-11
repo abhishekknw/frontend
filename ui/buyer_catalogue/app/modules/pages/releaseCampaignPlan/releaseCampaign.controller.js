@@ -684,10 +684,17 @@ $scope.multiSelect =
         $scope.phases.push({});
         }
 
-        $scope.removePhase = function(index){
-          $scope.phases.splice(index , 1);
+        $scope.removePhase = function(id){
+          // $scope.phases.splice(index , 1);
           $scope.editPhase = false;
-
+          console.log(id);
+          releaseCampaignService.removePhase(id)
+          .then(function onSuccess(response){
+            console.log(response);
+            $scope.getPhases();
+          }).catch(function onError(response){
+            console.log(response);
+          })
         }
 
        var setSocietyLocationOnMap = function(supplier){
