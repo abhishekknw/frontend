@@ -1371,19 +1371,21 @@ $scope.setHashtagImageUrl = function(item,images){
   console.log($scope.hashTagImageUrl);
 }
 $scope.getHashtagImages = function(item){
-  console.log($scope.campaignReleaseData,item);
+  console.log($scope.campaignReleaseData,item, $scope.date);
     $scope.hashTagImageUrl = [];
-  DashboardService.getHashtagImages(item.proposalId)
+  DashboardService.getHashtagImages(item.proposalId,$scope.date)
   .then(function onSuccess(response){
     console.log(response);
-
+    $scope.hashTagImageData = [];
     angular.forEach(response.data.data, function(data){
       var imageData = {
-        image_url : 'http://androidtokyo.s3.amazonaws.com/' + data.image_path,
-        comment : data.comment,
+        image_url : constants.aws_campaign_images_url + data.image_path,
+        comment : data.hashtag,
+        supplier_name : data.supplier_data.society_name
       };
-      $scope.hashTagImageUrl.push(imageData);
+      $scope.hashTagImageData.push(imageData);
     })
+    console.log($scope.hashTagImageData);
   }).catch(function onError(response){
     console.log(response);
   })

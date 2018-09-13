@@ -164,10 +164,19 @@ $scope.addNewPhase =true;
 
       var setDataToModel = function(suppliers){
         for(var i=0;i<suppliers.length;i++){
+          console.log(suppliers);
           suppliers[i].total_negotiated_price = parseInt(suppliers[i].total_negotiated_price);
-          suppliers[i].phase = parseInt(suppliers[i].phase);
+          angular.forEach($scope.phases, function(phase){
+            suppliers[i].phase_no = parseInt(phase.id);
+
+          })
         }
       }
+
+      $scope.setPhase = function (supplier,id) {
+                 console.log(supplier,id);
+             }
+
     $scope.emptyList = {NA:'NA'};
     $scope.getFilters = function(supplier){
       var keys = Object.keys(supplier.shortlisted_inventories);
@@ -204,6 +213,7 @@ $scope.addNewPhase =true;
     $scope.updateData = function(){
       releaseCampaignService.updateAuditReleasePlanDetails($scope.campaign_id,$scope.releaseDetails.shortlisted_suppliers)
       .then(function onSuccess(response){
+        console.log(response);
         swal(constants.name,constants.updateData_success,constants.success);
       })
       .catch(function onError(response){
@@ -281,12 +291,10 @@ $scope.addNewPhase =true;
     $scope.addSuppliersToList = function(supplier){
       if(!(supplier.supplier_id in $scope.shortlistedSuppliersIdList || supplier.supplier_id in $scope.supplierSummaryData)){
         $scope.supplierSummaryData[supplier.supplier_id] = supplier;
-        $scope.showAddSupplierMsg = 'Added Successfully';
-        alert($scope.showAddSupplierMsg);
+        swal(constants.name,constants.updateData_success,constants.success);
       }
       else
-        alert("supplier Already Present");
-      console.log($scope.supplierSummaryData);
+      swal(constants.name,constants.already_exist,constants.error);
     }
     $scope.removeSupplierToList = function(supplier_id){
       delete $scope.supplierSummaryData[supplier_id];
@@ -302,6 +310,7 @@ $scope.addNewPhase =true;
         $scope.center_index = null;
 
         $scope.supplierSummaryData = {};
+
       }catch(error){
         console.log(error.message);
       }
@@ -555,7 +564,7 @@ $scope.multiSelect =
           var email_Data = {
             subject:$scope.paymentStatus + " Details For " + $scope.supplierPaymentData.name,
             body:$scope.body.message,
-            to:'yogesh.mhetre@machadalo.com',
+            to:constants.account_email_id,
           };
           releaseCampaignService.sendMail(email_Data)
           .then(function onSuccess(response){
@@ -633,11 +642,15 @@ $scope.multiSelect =
          releaseCampaignService.getPhases($scope.campaign_id)
          .then(function onSuccess(response){
            console.log(response);
+           $scope.phaseMappingList = {};
            angular.forEach(response.data.data, function(phase){
              phase.start_date = new Date(phase.start_date);
              phase.end_date = new Date(phase.end_date);
+             $scope.phaseMappingList[phase.id] = phase;
            })
+           console.log($scope.phaseMappingList);
            $scope.phases = response.data.data;
+           console.log($scope.phases);
 
          }).catch(function onError(response){
            console.log(response);
@@ -648,6 +661,7 @@ $scope.multiSelect =
          $scope.editPhase = true;
        }
        $scope.savePhases = function(){
+         console.log($scope.phases);
          releaseCampaignService.savePhases($scope.phases,$scope.campaign_id)
          .then(function onSuccess(response){
            console.log(response);
@@ -670,10 +684,17 @@ $scope.multiSelect =
         $scope.phases.push({});
         }
 
-        $scope.removePhase = function(index){
-          $scope.phases.splice(index , 1);
+        $scope.removePhase = function(id){
+          // $scope.phases.splice(index , 1);
           $scope.editPhase = false;
-
+          console.log(id);
+          releaseCampaignService.removePhase(id)
+          .then(function onSuccess(response){
+            console.log(response);
+            $scope.getPhases();
+          }).catch(function onError(response){
+            console.log(response);
+          })
         }
 
        var setSocietyLocationOnMap = function(supplier){

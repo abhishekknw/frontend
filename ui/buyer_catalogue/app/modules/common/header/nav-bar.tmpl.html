@@ -45,12 +45,16 @@
                                 <i class="fa fa-columns fa-lg"></i> Campaign Leads</a>
                           </li>
                           <li ng-class="{active: isActive('/dashboard')}">
-                              <a ng-href="/#/dashboard" class=" lipadding" ng-click="closeModal()">
-                                <i class="fa fa-dashboard fa-lg"></i>DashBoard</a>
+                            <a ng-href="/#/dashboard" class=" lipadding" ng-click="closeModal()">
+                            <i class="fa fa-dashboard fa-lg"></i>DashBoard</a>
                           </li>
                           <li ng-class="{active: isActive('/dashboard')}">
-                            <a href="/#/logout" class=" lipadding" ng-click="closeModal()">
-                              <i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
+                          <a href="/#/logout" class=" lipadding" ng-click="closeModal()">
+                          <i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
+
+                          <li ng-class="{active: isActive('/dashboard')}">
+                        <a data-target="#passwordModal" data-toggle="modal" ng-click="setPasswordDetails(user)" ng-click="closeModal()">
+                          <i class="fa fa-sign-out fa-lg"></i> Change Password</a></li>
 
                       </ul>
                 </div>
@@ -82,3 +86,33 @@
                         </div>
                     </div>
                 </div> -->
+                <div class="modal change_password" id="passwordModal" >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                  <div class="modal-header">
+                      <h3>Change Password <span class="extra-title muted"></span></h3>
+                  </div>
+                  <form name="passwordForm">
+                  <div class="modal-body form-horizontal">
+                      <div class="form-group">
+                          <label for="new_password" class="col-md-4 control-label">New Password</label>
+                          <div class="col-md-5 controls">
+                              <input type="password" name="new_password" class="form-control" ng-model="userInfo.password">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label for="confirm_password" class="col-md-4 control-label">Confirm Password</label>
+                          <div class="col-md-5 controls">
+                              <input type="password" name="confirm_password" class="form-control" ng-model="userInfo.confirm_password" ng-change="checkPassword(userInfo.password,userInfo.confirm_password)">
+                              <span ng-if="!passwordValid && passwordForm.confirm_password.$dirty">{{passwordError}}</span>
+                          </div>
+                      </div>
+                  </div>
+                </form>
+                  <div class="modal-footer">
+                      <button href="#" class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                      <button href="#" class="btn btn-primary"  id="password_modal_save" ng-click="changePassword()" ng-disabled="!passwordValid">Save changes</button>
+                  </div>
+                </div>
+                </div>
+                </div>

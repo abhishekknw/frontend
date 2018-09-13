@@ -237,9 +237,23 @@ angular.module('catalogueApp')
             }
           return data;
         }
+
         $scope.Proposalimport = function(){
+          console.log($scope.model);
           $scope.createsheetProposal = false;
           $scope.Proposalsheetimport = true;
+          if($scope.model.centers[0].center.pincode)
+            $scope.model.centers[0].center.pincode = $scope.model.centers[0].center.pincode.toString();
+          createProposalService.saveInitialProposal($scope.model.account_id, $scope.model)
+          .then(function onSuccess(response){
+            console.log(response);
+            $scope.proposalId = response.data.data;
+            getSocieties();
+            getProposalCenters();
+          }).catch(function onError(response){
+            console.log(response);
+          })
+
         }
 
         $scope.importThroughSheet = function(){

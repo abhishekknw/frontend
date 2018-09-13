@@ -1,6 +1,7 @@
 "use strict";
 angular.module('catalogueApp')
-    .controller('CampaignLeadsCtrl', function($scope, $rootScope, $stateParams, $window, $location, campaignLeadsService ,$http, constants, permissions, commonDataShare,  Upload) {
+    .controller('CampaignLeadsCtrl', function($scope, $rootScope, $stateParams, $window, $location, campaignLeadsService ,$http, constants, permissions, commonDataShare, Upload) {
+
       $scope.modelData = {};
       $scope.modelData['alias_data'] = [];
       $scope.savedFormFields = [];
@@ -17,17 +18,7 @@ angular.module('catalogueApp')
         option : undefined
       };
       console.log("hello");
-      $scope.optionsDummy = [
-        {name : 'STRING'},
-        {name : 'INT'},
-        {name : 'EMAIL'},
-        {name : 'PASSWORD'},
-        {name : 'PHONE'},
-        {name : 'RADIO'},
-        {name : 'DROPDOWN'},
-        {name : 'CHECKBOX'},
-        {name : 'TEXTAREA'},
-      ];
+
       $scope.leadKeyTypes = [
         {name : 'STRING'},
         {name : 'INT'},
@@ -38,6 +29,9 @@ angular.module('catalogueApp')
         {name : 'DROPDOWN'},
         {name : 'CHECKBOX'},
         {name : 'TEXTAREA'},
+        {name : 'BOOLEAN'},
+        {name : 'FLOAT'},
+        {name : 'DATE'}
       ];
       $scope.keyTypesMap = {
         'STRING' : 'text',
@@ -47,7 +41,10 @@ angular.module('catalogueApp')
         'PHONE' : 'number',
         'RADIO' : 'radio',
         'CHECKBOX' : 'checkbox',
-        'TEXTAREA' : 'textarea'
+        'TEXTAREA' : 'textarea',
+        'BOOLEAN' : 'radio',
+        'FLOAT' : 'number',
+        'DATE' : 'date'
       }
       var leadFormField = {
         key_name : '',
@@ -59,9 +56,7 @@ angular.module('catalogueApp')
         {header : 'Start Date'},
         {header : 'End Date'},
         {header : 'Action'},
-        {header : 'Action'},
-        {header : 'Action'},
-          {header : 'Action'},
+
       ];
       var formFieldsStruct = [
         {name : 'firstname1' , value : false},
@@ -131,7 +126,8 @@ angular.module('catalogueApp')
           console.log(response);
         })
       }
-      $scope.getEntryListLeads = function(){
+      $scope.getEntryListLeads = function(item){
+        console.log(item);
              campaignLeadsService.getEntryListLeads($scope.leadFormId,$scope.supplierData.supplier_id)
              .then(function onSuccess(response){
                console.log(response);
@@ -172,6 +168,7 @@ angular.module('catalogueApp')
         });
       $scope.addField();
       $scope.changeView = function(view,campaign,formFields){
+        console.log(formFields);
         $scope.views = {
           createForm : false,
           viewLeads : false,
@@ -205,15 +202,11 @@ angular.module('catalogueApp')
           case $scope.views.viewLeads:
             $scope.campaignId = campaign.campaign.proposal_id;
             $scope.campaignName = campaign.campaign.name;
-            getLeads($scope.campaignId);
+            $scope.getEntryListLeads($scope.campaignId);
             break;
           case $scope.views.importLeads:
             $scope.campaignId = campaign.campaign.proposal_id;
             $scope.campaignName = campaign.campaign.name;
-            $scope.aliasData = [];
-            // getAliasData($scope.campaignId);
-            $scope.importLeadsData = [];
-            $scope.showImportTable = false;
             break;
           case $scope.views.createForm:
             break;
@@ -266,7 +259,7 @@ angular.module('catalogueApp')
           console.log($scope.leadFormFields,leadFormField);
           $scope.leadFormFields.push(angular.copy(leadFormField));
         }
-        $scope.changeView('createForm');
+        $scope.changeView('createForm',$scope.campaignInfo);
       }
 
       // start : to read excel sheet while importing lead sheet
@@ -349,7 +342,8 @@ angular.module('catalogueApp')
         var token = $rootScope.globals.currentUser.token;
         if ($scope.file) {
           Upload.upload({
-              url: constants.base_url + constants.url_base + "leads/" + $scope.formId + "/import_lead",
+              url: constants.base_url + constants.url_base_leads + $scope.leadFormFields.leads_form_id + "/import_lead",
+
               data: {
                 file: $scope.file,
                 data_import_type : "base-data"
@@ -357,7 +351,7 @@ angular.module('catalogueApp')
               headers: {'Authorization': 'JWT ' + token}
           }).then(function onSuccess(response){
                 console.log(response);
-
+                swal(constants.name,constants.create_success,constants.success);
           })
           .catch(function onError(response) {
               console.log(response);
@@ -478,8 +472,26 @@ angular.module('catalogueApp')
       $scope.uploadFiles = function(file){
         $scope.file = file;
       }
+      $scope.setHotLeadValue = function(item,value){
+        if(value){
+          item.value = item.hot_lead_criteria;
+        }else{
+          item.value = null;
+        }
+      }
 
       $scope.uploadFiles = function(file){
                $scope.file = file;
-             }
+      }
+      $scope.getExportedSheet = function(){
+        $scope.exportedFile = undefined;
+        campaignLeadsService.getExportedSheet($scope.leadFormFields.leads_form_id)
+        .then(function onSuccess(response){
+
+          $scope.exportedFile = response.data.data.filepath;
+          console.log(response);
+        }).catch(function onError(response){
+          console.log(response);
+        })
+      }
     });//Controller ends here

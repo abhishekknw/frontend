@@ -5,6 +5,7 @@ angular
     // base_url : 'http://coreapi-test.3j6wudg4pu.ap-southeast-1.elasticbeanstalk.com/',
     base_url: Config.APIBaseUrl,
     url_base : 'v0/ui/website/',
+    url_base_leads : 'v0/ui/leads/',
     AWSAccessKeyId : 'AKIAI6PVCXJEAXV6UHUQ',
     policy : "eyJleHBpcmF0aW9uIjogIjIwMjAtMDEtMDFUMDA6MDA6MDBaIiwKICAiY29uZGl0aW9ucyI6IFsgCiAgICB7ImJ1Y2tldCI6ICJtZGltYWdlcyJ9LCAKICAgIFsic3RhcnRzLXdpdGgiLCAiJGtleSIsICIiXSwKICAgIHsiYWNsIjogInB1YmxpYy1yZWFkIn0sCiAgICBbInN0YXJ0cy13aXRoIiwgIiRDb250ZW50LVR5cGUiLCAiIl0sCiAgICBbImNvbnRlbnQtbGVuZ3RoLXJhbmdlIiwgMCwgNTI0Mjg4MDAwXQogIF0KfQoK",
     acl : 'public-read',
@@ -12,6 +13,7 @@ angular
     content_type : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     //amazon server
     aws_bucket_url : 'http://mdimages.s3.amazonaws.com/',
+    aws_campaign_images_url : 'http://androidtokyo.s3.amazonaws.com/',
     account_email_id : 'tejas.pawar@machaddalo.com',
     //general
     name : '',
@@ -89,6 +91,7 @@ angular
     //releaseplan
     updateData_success : 'Data updated successfully',
     updateData_error : 'Error occured while saving data',
+    already_exist : 'Supplier Already Present',
     //auditReleasePlan
     inventory_date_success : 'Inventory Dates are saved successfully',
     inventory_date_error : 'Error occured while saving dates',

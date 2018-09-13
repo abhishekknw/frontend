@@ -78,5 +78,10 @@
       return machadaloHttp.post(url,data);
     }
 
+    releaseCampaignService.removePhase = function(id){
+      var url = url_base  + "supplier-phase/" + id + "/";
+      return machadaloHttp.delete(url);
+    }
+
     return releaseCampaignService;
 }]);

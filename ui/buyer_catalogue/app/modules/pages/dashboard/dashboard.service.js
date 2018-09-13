@@ -69,7 +69,7 @@
     }
 
     DashboardService.getLeadsByCampaign = function(campaignId){
-      var url = url_base + "dashboard/get_leads_by_campaign/?campaign_id=" + campaignId;
+      var url = url_base + "dashboard/get_leads_by_campaign_new/?campaign_id=" + campaignId;
       return machadaloHttp.get(url);
     }
 
@@ -83,8 +83,8 @@
       return machadaloHttp.get(url);
     }
 
-    DashboardService.getHashtagImages = function(campaignId){
-      var url = url_base + "hashtag_images/?campaign_id=" + campaignId;
+    DashboardService.getHashtagImages = function(campaignId, date){
+      var url = url_base + "hashtag_images/?campaign_id=" + campaignId + "&date=" + date;
       return machadaloHttp.get(url);
     }
     return DashboardService;
