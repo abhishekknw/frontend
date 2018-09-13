@@ -12,6 +12,13 @@
  $scope.oneAtATime = true;
 
  $scope.rowCollection = [];
+ $scope.invNameToCode = {
+   'POSTER' : 'PO',
+   'STALL' : 'SL',
+   'STANDEE' : 'ST',
+   'FLYER' : 'FL',
+   'GATEWAY ARCH' : 'GA'
+ };
         $scope.invKeys = [
           {header : 'POSTER'},
           {header : 'STANDEE'},
@@ -863,8 +870,19 @@
        })
      })
    }
-   $scope.goToExecutionPage = function(proposalId){
-     $location.path('/' + proposalId + '/opsExecutionPlan');
+   $scope.getDatewiseSuppliersInventory = function(proposalId, proposalName){
+     $scope.dateWiseSuppliers = [];
+     $scope.selectedProposalname = proposalName;
+     console.log(proposalId,$scope.date);
+     DashboardService.getDatewiseSuppliersInventory(proposalId, $scope.date, $scope.invName, $scope.actType)
+     .then(function onSuccess(response){
+       console.log(response);
+       angular.forEach(response.data.data, function(data){
+         $scope.dateWiseSuppliers.push(data);
+       })
+     }).catch(function onError(response){
+       console.log(response);
+     })
    }
    $scope.getLeadsByCampaign = function(campaignId){
      $scope.showTimeLocBtn = false;
@@ -1332,9 +1350,10 @@ $scope.map;
      $scope.map.showInfoWindow('myWindow', this);
    };
 
-$scope.viewSupplierImages = function(supplierId, invType, activityType){
+$scope.viewSupplierImages = function(supplierId, invType, activityType, date){
+  console.log(date);
     $scope.imageUrlList = [];
-  DashboardService.getSupplierImages(supplierId, invType, activityType)
+  DashboardService.getSupplierImages(supplierId, invType, activityType, date)
   .then(function onSuccess(response){
     console.log(response);
 

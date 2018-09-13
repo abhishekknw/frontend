@@ -273,7 +273,7 @@
                                   <tbody>
                                     <tr ng-repeat="item in campaignReleaseData  |filter:query" >
                                       <td class="table-id">{{$index + 1}}</td>
-                                      <td><a ng-click="goToExecutionPage(item.proposalId)">{{item.name}}</a></td>
+                                      <td><a ng-click="getDatewiseSuppliersInventory(item.proposalId,item.name)">{{item.name}}</a></td>
                                       <td>{{invName}}</td>
                                       <td>{{item.inv_count}}</td>
                                       <td>{{item.offTimeDays/item.inv_count*100|limitTo:4||0}} </td>
@@ -289,6 +289,32 @@
                               </table>
                           </div>
                       </div>
+                </div>
+                <div class="col-md-12" ng-if="dateWiseSuppliers.length">
+                  <div class="panel-heading">
+                    <h4>Supplier Details for {{selectedProposalname}}</h4>
+                  </div>
+                  <div class="">
+                    <table class="table table-bordered table-responsive">
+                      <thead>
+                        <tr>
+                          <th>Society Name</th>
+                          <th>Assigned</th>
+                          <th>Completed</th>
+                          <th>View Images</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="supplier in dateWiseSuppliers">
+                          <td>{{supplier.supplier_data.society_name}}</td>
+                          <td>{{supplier.assigned}}</td>
+                          <td>{{supplier.completed}}</td>
+                          <td ng-if="supplier.completed != 0"><a data-target="#imageModal" data-toggle="modal" ng-click="viewSupplierImages(supplier.supplier_data.supplier_id,invNameToCode[invName],actType,date)">View Images</a></td>
+                          <td ng-if="supplier.completed == 0">View Image</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
             </div>
 

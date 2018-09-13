@@ -78,13 +78,18 @@
       return machadaloHttp.post(url,data);
     }
 
-    DashboardService.getSupplierImages = function(supplierId,invType,activityType){
-      var url = url_base + "dashboard/get_activity_images_by_suppliers/?supplier_id=" + supplierId + "&inv_code=" + invType + "&act_type=" + activityType;
+    DashboardService.getSupplierImages = function(supplierId,invType,activityType, date){
+      var url = url_base + "dashboard/get_activity_images_by_suppliers/?supplier_id=" + supplierId + "&inv_code=" + invType + "&act_type=" + activityType + "&date=" + date;
       return machadaloHttp.get(url);
     }
 
     DashboardService.getHashtagImages = function(campaignId, date){
       var url = url_base + "hashtag_images/?campaign_id=" + campaignId + "&date=" + date;
+      return machadaloHttp.get(url);
+    }
+
+    DashboardService.getDatewiseSuppliersInventory = function(campaignId, date, invName, actType){
+      var url = url_base + "dashboard/get_datewise_suppliers_inventory_status/?campaign_id=" + campaignId + "&date=" + date + "&inv_type=" + invName + "&act_type=" + actType;
       return machadaloHttp.get(url);
     }
     return DashboardService;
