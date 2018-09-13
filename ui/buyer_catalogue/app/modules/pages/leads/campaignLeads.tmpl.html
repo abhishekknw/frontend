@@ -367,9 +367,12 @@
   <label>Select Lead Sheet</label>
   <div class="panel-body" >
     <input type="file" class="buttonfile" accept=".xlsx" ngf-select = "uploadFiles($file)"/>
+
     <br />
     <div class="">
       <button ng-click="importLeadsThroughSheet()" class="btn btn-danger">Submit</button>
+      <button  ng-click="getExportedSheet()" >Export Sample Sheet To Enter Leads</button>
+      <a href="{{exportedFile}}" ng-if="exportedFile" target="_blank" download>Download</a>
     </div>
   </div>
 </div>

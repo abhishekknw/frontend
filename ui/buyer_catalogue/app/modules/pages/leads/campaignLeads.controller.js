@@ -482,5 +482,16 @@ angular.module('catalogueApp')
 
       $scope.uploadFiles = function(file){
                $scope.file = file;
-             }
+      }
+      $scope.getExportedSheet = function(){
+        $scope.exportedFile = undefined;
+        campaignLeadsService.getExportedSheet($scope.leadFormFields.leads_form_id)
+        .then(function onSuccess(response){
+
+          $scope.exportedFile = response.data.data.filepath;
+          console.log(response);
+        }).catch(function onError(response){
+          console.log(response);
+        })
+      }
     });//Controller ends here

@@ -57,6 +57,11 @@
           var url = url_base_leads + formId + "/import_lead/";
           return machadaloHttp.post(url);
         }
+
+        campaignLeadsService.getExportedSheet = function(formId){
+          var url = url_base_leads + formId + "/generate_lead_form";
+          return machadaloHttp.get(url);
+        }
         return campaignLeadsService;
 
  }]);
