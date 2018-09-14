@@ -92,14 +92,11 @@
       var url = url_base + "dashboard/get_datewise_suppliers_inventory_status/?campaign_id=" + campaignId + "&date=" + date + "&inv_type=" + invName + "&act_type=" + actType;
       return machadaloHttp.get(url);
     }
-    DashboardService.getBookingCampaigns = function(campaignId){
-        var url = url_base + campaignId + "/?get-suppliers-by-status=" + get-suppliers-by-status;
+    DashboardService.getBookingCampaigns = function(campaign){
+        var url = url_base +  campaign + "/get-suppliers-by-status/";
         return machadaloHttp.get(url);
     }
-    // DashboardService.getBookingCampaigns = function(campaignId){
-    //     var url = url_base + campaignId + "/?get-suppliers-by-status=" + get-suppliers-by-status;
-    //     return machadaloHttp.get(url);
-    // }
+
     return DashboardService;
 
  }]);

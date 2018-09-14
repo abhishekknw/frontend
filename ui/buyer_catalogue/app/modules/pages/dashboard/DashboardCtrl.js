@@ -1455,27 +1455,17 @@ var formatD3StackedBarChartData = function(data){
   console.log(d3Data);
   return d3Data;
 }
-// START : Booking details
-$scope.getBookingDetails = function(){
-  DashboardService.getBookingDetails()
+
+$scope.getBookingCampaigns = function(campaign){
+  console.log(campaign);
+  DashboardService.getBookingCampaigns(campaign.campaign)
   .then(function onSuccess(response){
     console.log(response);
+      $scope.bookingPhases = response.data.data;
   }).catch(function onError(response){
     console.log(response);
   })
 }
-// END : Booking details
-
-
-//
-// $scope.getBookingCampaigns = function(date){
-//   DashboardService.getBookingCampaigns(orgId, category, date)
-//   .then(function onSuccess(response){
-//     console.log(response);
-//   }).catch(function onError(response){
-//     console.log(response);
-//   })
-// }
 
 //END
 })
