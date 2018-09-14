@@ -40,11 +40,11 @@
                               <a ng-href="/#/CampaignList" class=" lipadding" ng-click="closeModal()">
                                 <i class="fa fa-list fa-lg"></i> List Campaigns</a>
                           </li>
-                          <li ng-class="{active: isActive('/campaignLeads')}">
+                          <li ng-class="{active: isActive('/campaignLeads')}" permission = "[perm.menuCampaignLeads]">
                               <a ng-href="/#/campaignLeads" class=" lipadding" ng-click="closeModal()">
                                 <i class="fa fa-columns fa-lg"></i> Campaign Leads</a>
                           </li>
-                          <li ng-class="{active: isActive('/dashboard')}">
+                          <li ng-class="{active: isActive('/dashboard')}" permission = "[perm.menuDashboard]">
                             <a ng-href="/#/dashboard" class=" lipadding" ng-click="closeModal()">
                             <i class="fa fa-dashboard fa-lg"></i>DashBoard</a>
                           </li>
@@ -52,7 +52,7 @@
                           <a href="/#/logout" class=" lipadding" ng-click="closeModal()">
                           <i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
 
-                          <li ng-class="{active: isActive('/dashboard')}">
+                          <li ng-class="{active: isActive('/dashboard')}" permission = "[perm.menuChangePassword]">
                         <a data-target="#passwordModal" data-toggle="modal" ng-click="setPasswordDetails(user)" ng-click="closeModal()">
                           <i class="fa fa-sign-out fa-lg"></i> Change Password</a></li>
 

@@ -1454,6 +1454,16 @@ var formatD3StackedBarChartData = function(data){
   console.log(d3Data);
   return d3Data;
 }
+// START : Booking details
+$scope.getBookingDetails = function(){
+  DashboardService.getBookingDetails()
+  .then(function onSuccess(response){
+    console.log(response);
+  }).catch(function onError(response){
+    console.log(response);
+  })
+}
+// END : Booking details
 //END
 })
 
