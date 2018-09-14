@@ -1477,7 +1477,6 @@ $scope.getBookingDetails = function(){
 //   })
 // }
 
->>>>>>> Stashed changes
 //END
 })
 

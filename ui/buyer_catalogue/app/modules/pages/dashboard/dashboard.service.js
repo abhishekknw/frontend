@@ -96,6 +96,10 @@
         var url = url_base + campaignId + "/?get-suppliers-by-status=" + get-suppliers-by-status;
         return machadaloHttp.get(url);
     }
+    // DashboardService.getBookingCampaigns = function(campaignId){
+    //     var url = url_base + campaignId + "/?get-suppliers-by-status=" + get-suppliers-by-status;
+    //     return machadaloHttp.get(url);
+    // }
     return DashboardService;
 
  }]);
