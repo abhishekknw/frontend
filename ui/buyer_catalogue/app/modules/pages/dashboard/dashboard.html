@@ -466,11 +466,18 @@
 
                           <div class="">
                               <div class="col-md-12 showDisplayDetailsTable" ng-if="showDisplayDetailsTable" style="margin-top:5px;">
-                                  <div style="background-color: #cb1925" class="col-md-12 panel-heading">
-                                  <h5>Society Details For {{campaignTabPropsalName}}</h5>
-                                  </div>
                               <table class="table-responsive table table-bordered showDisplayDetailsTable">
                                 <thead>
+                                  <tr>
+                                   <th colspan='999' style="background-color: #cb1925" class="panel-heading">
+                                      <h5>Society Details For {{campaignTabPropsalName}}</h5>
+                                    </th>
+                                  </tr>
+                                  <tr>
+                                    <th colspan='999' style="background-color:#ffffff;">
+                                      <input placeholder="Search ..." class="form-control"  type="search"/>
+                                    </th>
+                                  </tr>
                                   <tr>
                                     <td>INDEX</td>
                                     <td>Society Name</td>
@@ -941,8 +948,15 @@
                   </div>
               </uib-tab>
 
+<!-- START : BOOKING ENGINE -->
+<uib-tab ng-click="getBookingCampaigns()" index="2">
+    <uib-tab-heading>
+      <h3>Booking Engine</h3>
+    </uib-tab-heading>
+  </uib-tab>
+
               <!--START : Performance Metrics -->
-              <uib-tab ng-click="getCampaigns()" index="2">
+              <uib-tab ng-click="getCampaigns()" index="3">
                   <uib-tab-heading>
                     <h3> Performance Metrics</h3>
                   </uib-tab-heading>

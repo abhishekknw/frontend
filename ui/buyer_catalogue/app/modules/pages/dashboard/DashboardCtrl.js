@@ -315,6 +315,7 @@
           })
         }
 
+
         $scope.getCampaigns = function(date){
             $scope.showSupplierTypeCountChart = false;
           if(!date)
@@ -1464,6 +1465,19 @@ $scope.getBookingDetails = function(){
   })
 }
 // END : Booking details
+
+
+//
+// $scope.getBookingCampaigns = function(date){
+//   DashboardService.getBookingCampaigns(orgId, category, date)
+//   .then(function onSuccess(response){
+//     console.log(response);
+//   }).catch(function onError(response){
+//     console.log(response);
+//   })
+// }
+
+>>>>>>> Stashed changes
 //END
 })
 
