@@ -384,6 +384,19 @@ angular.module('catalogueApp')
         commonDataShare.showErrorMessage(response);
         console.log("error occured", response.status);
       });
-
     }
+
+    $scope.deleteInvActAssignment = function(id){
+      var data = {};
+      console.log(id);
+      auditReleasePlanService.deleteInvActAssignment(id, data)
+      .then(function onSuccess(response){
+        console.log(response);
+        swal(constants.name,constants.delete_success,constants.success);
+      }).catch(function onError(response){
+        swal(constants.name,response.data.data.general_error,constants.error);
+        console.log(response);
+      })
+    }
+
 }]);

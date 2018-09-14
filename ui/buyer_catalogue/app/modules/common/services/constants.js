@@ -26,6 +26,7 @@ angular
     btn_success : 'btn-success',
     warn_user_msg : 'Are You Sure?',
     save_success : 'Saved successfully',
+    delete_success : 'Deleted Successfully',
     save_error : 'Some error occured, Data not saved',
     shortlisted : 'Shortlisted',
     removed : 'Removed',

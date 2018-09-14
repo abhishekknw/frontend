@@ -28,6 +28,10 @@ angular.module('catalogueApp')
       return machadaloHttp.post(url,data);
     }
 
+    auditReleasePlanService.deleteInvActAssignment = function(id,data){
+      var url = url_base + 'delete-inv-activity-assignment/' + id + "/";
+      return machadaloHttp.post(url,data);
+    }
 
    return auditReleasePlanService;
   return 0;

@@ -344,6 +344,12 @@
                              {{usersMapListWithObjects[user.assigned_to].username}}</br>
                            </div>
                          </td>
+                         <td>
+                           <div ng-repeat = "item in activity.inventory_activity_assignment">
+                             <button class="btn btn-danger" ng-click="deleteInvActAssignment(item.id)">Delete</button></br>
+                           </div>
+
+                         </td>
                        </tr>
                      </tbody>
                    </table>
