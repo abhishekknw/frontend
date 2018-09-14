@@ -177,7 +177,7 @@ angular.module('catalogueApp')
           enterLeads : false,
           selectSuppliers : false,
           importLeads : false,
-          viewLeadForms : false
+          viewLeadForms : false,
         }
         $scope.views[view] = true;
         $scope.campaignInfo = campaign;

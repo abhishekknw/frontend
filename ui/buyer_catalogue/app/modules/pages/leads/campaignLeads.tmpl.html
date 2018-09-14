@@ -1,17 +1,18 @@
 <link rel="stylesheet" href="/modules/pages/leads/campaignLeads.tmpl.css">
 <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
 <div ng-loading="loading"></div> <!--For displaying loading icon-->
+<div ng-show="isEmpty" style="text-align:center;"><h2>{{msg}}</h2></div>
 
 <main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading">
 
 <div><nav-bar></nav-bar></div>
-<div ng-show="isEmpty" style="text-align:center;"><h2>{{msg}}</h2></div>
 <br/><br/><br/>
 <br/><br/>
 
 <div class="" ng-show="!views.campaigns">
   <button type="button" class="btn btn-primary" style="margin-left:23px;" ng-click="changeView('campaigns',campaign)">Back To Campaign Details Page</button>
 </div>
+
 <br/><br/>
 <div class="panel" ng-if="views.campaigns">
   <div class="pageTitle">
@@ -21,6 +22,11 @@
     <div >
       <table st-table="campaigns" st-safe-src="Data" class="table table-striped">
         <thead>
+          <tr>
+            <th colspan='999' style="background-color:#ffffff;">
+              <input st-search="" placeholder="Search ..." class="form-control"  type="search"/>
+            </th>
+          </tr>
           <tr>
             <th ng-repeat="header in campaignHeaders">{{header.header}}</th>
           </tr>
@@ -192,8 +198,13 @@
   </div>
   <div class="panel-body">
     <div>
-      <table class="table table-bordered table-responsive">
+      <table st-table="campaigns" st-safe-src="Data" class="table table-striped">
         <thead>
+          <tr>
+            <th colspan='999' style="background-color:#ffffff;">
+              <input st-search="" placeholder="Search ..." class="form-control"  type="search"/>
+            </th>
+          </tr>
           <tr>
             <th>Index</th>
             <th>Form Name</th>
@@ -221,10 +232,12 @@
             <td>
              <button class="btn btn-danger" ng-click="changeView('importLeads',campaignInfo,item)">Import Leads</button>
            </td>
+
           </tr>
         </tbody>
       </table>
       <button class="btn btn-danger" ng-click="getLeadForm()">Create Lead Form</button>
+
     </div>
   </div>
 </div>
@@ -367,12 +380,15 @@
   <label>Select Lead Sheet</label>
   <div class="panel-body" >
     <input type="file" class="buttonfile" accept=".xlsx" ngf-select = "uploadFiles($file)"/>
-
+    <button  ng-click="getExportedSheet()" class="btn btn-success pull-right">Export Sample Sheet To Enter Leads</button>
+    <br /><br />
+    <button type="button" name="button" class="btn btn-success">
+    <a href="{{exportedFile}}" class="pull-right" ng-if="exportedFile" target="_blank" download>Download</a></button>
     <br />
+
     <div class="">
       <button ng-click="importLeadsThroughSheet()" class="btn btn-danger">Submit</button>
-      <button  ng-click="getExportedSheet()" >Export Sample Sheet To Enter Leads</button>
-      <a href="{{exportedFile}}" ng-if="exportedFile" target="_blank" download>Download</a>
+
     </div>
   </div>
 </div>

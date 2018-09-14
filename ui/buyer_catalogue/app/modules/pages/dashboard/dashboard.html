@@ -466,11 +466,18 @@
 
                           <div class="">
                               <div class="col-md-12 showDisplayDetailsTable" ng-if="showDisplayDetailsTable" style="margin-top:5px;">
-                                  <div style="background-color: #cb1925" class="col-md-12 panel-heading">
-                                  <h5>Society Details For {{campaignTabPropsalName}}</h5>
-                                  </div>
                               <table class="table-responsive table table-bordered showDisplayDetailsTable">
                                 <thead>
+                                  <tr>
+                                   <th colspan='999' style="background-color: #cb1925" class="panel-heading">
+                                      <h5>Society Details For {{campaignTabPropsalName}}</h5>
+                                    </th>
+                                  </tr>
+                                  <tr>
+                                    <th colspan='999' style="background-color:#ffffff;">
+                                      <input placeholder="Search ..." class="form-control"  type="search"/>
+                                    </th>
+                                  </tr>
                                   <tr>
                                     <td>INDEX</td>
                                     <td>Society Name</td>
@@ -941,8 +948,102 @@
                   </div>
               </uib-tab>
 
+<!-- START : BOOKING ENGINE -->
+<uib-tab ng-click="getCampaigns()" index="2">
+    <uib-tab-heading>
+      <h3>Booking Engine</h3>
+    </uib-tab-heading>
+
+    <div class="container-fluid">
+
+      <div class="row">
+        <div class="panel panel-default" style="color:'0000ff'">
+          <div class="col-md-12">
+
+              <div class="panel-headding campaign-header">
+                <h3 style="color:rgb(53, 9, 6)">Booking Details</h3>
+              </div>
+
+    <div class="col-md-3">
+
+
+      <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div ng-if="showCampaignGraph" class="panel-heading" ng-click="getCampaigns()">
+                <h4 class="panel-title">
+                    All Campaigns
+                </h4>
+
+            </div>
+        </div>
+        <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.completed.status)">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    Completed Campaigns
+                </h4>
+            </div>
+            <div id="completed" class="animate-show" ng-show="campaignStatus.completed.value">
+                <div class="panel-bodyDashboard camp-menu-content">
+                    <table class="table">
+                        <tr ng-repeat="campaign in campaignData.completed_campaigns">
+                          <td ng-click="getBookingCampaigns(campaign)">
+                            {{campaign.name}}
+                          </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+          <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.ongoing.status)">
+              <div class="panel-heading">
+                  <h4 class="panel-title">
+                      Ongoing-Campaigns
+                  </h4>
+              </div>
+              <div id="ongoing" class="animate-show" ng-show="campaignStatus.ongoing.value">
+                  <div class="panel-bodyDashboard camp-menu-content">
+                      <table class="table">
+                          <tr ng-repeat="campaign in campaignData.ongoing_campaigns">
+                            <td ng-click="getBookingCampaigns(campaign)">
+                              {{campaign.name}}
+                            </td>
+                          </tr>
+                      </table>
+                  </div>
+              </div>
+          </div>
+
+          <div class="panel panel-default">
+              <div class="panel-heading" ng-click="getCampaignsMenu(campaignStatus.upcoming.status)">
+                  <h4 class="panel-title">
+                      Upcoming Campaigns
+                  </h4>
+              </div>
+              <div id="upcoming" class="animate-show" ng-show="campaignStatus.upcoming.value">
+                  <div class="panel-bodyDashboard camp-menu-content">
+                      <table class="table">
+                          <tr ng-repeat="campaign in campaignData.upcoming_campaigns">
+                            <td ng-click="getBookingCampaigns(campaign)">
+                              {{campaign.name}}
+                            </td>
+                          </tr>
+                      </table>
+                  </div>
+              </div>
+          </div>
+
+
+      </div>
+
+    </div>
+    </div>
+    </div>
+    </div>
+  </div>
+  </uib-tab>
+
               <!--START : Performance Metrics -->
-              <uib-tab ng-click="getCampaigns()" index="2">
+              <uib-tab ng-click="getCampaigns()" index="3">
                   <uib-tab-heading>
                     <h3> Performance Metrics</h3>
                   </uib-tab-heading>

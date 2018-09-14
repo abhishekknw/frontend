@@ -60,7 +60,6 @@ angular
     'angular-circular-progress',
     'ngMap',
 
-
   ])
   .config(function ($routeProvider, $stateProvider, $urlRouterProvider, $httpProvider, $qProvider, $locationProvider,cfpLoadingBarProvider) {
       $stateProvider
