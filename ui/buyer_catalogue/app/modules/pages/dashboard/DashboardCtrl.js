@@ -159,6 +159,7 @@
         $scope.pre = -1;
         $scope.next = 1;
         $scope.getDate = function(day){
+          $scope.dateWiseSuppliers = [];
 
           $scope.showAssignedInvTable = false;
           $scope.OntimeOnlocation.ontime.value = false;
@@ -168,6 +169,7 @@
           $scope.date = commonDataShare.formatDate($scope.date);
         }
         $scope.getRecentActivity = function(day){
+          $scope.dateWiseSuppliers = [];
           $scope.isPanelOpen =!$scope.isPanelOpen;
           $scope.showAssignedInvTable = false;
           $scope.OntimeOnlocation.ontime.value = false;
@@ -200,7 +202,7 @@
         }
 
         $scope.getAssignedIdsAndImages = function(date,type,inventory){
-
+          $scope.dateWiseSuppliers = [];
           $scope.invName = inventory;
           $scope.actType = type;
           DashboardService.getAssignedIdsAndImages(orgId, category, type, date, inventory)
