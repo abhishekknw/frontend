@@ -246,6 +246,13 @@ angular
                controller : 'SocietyDetailsPagesCtrl',
              templateUrl : 'modules/pages/SocietyDetailsPages/societydetailspage.tmpl.html',
          })
+
+         .state('changePassword',{
+              url : '/changePassword',
+                controller : 'changePswdCtrl',
+              templateUrl : 'modules/pages/changePassword/changePassword.tmpl.html',
+          })
+
       .state('releasePlan',{
            url : '/:proposal_id/releasePlan',
            controller : 'ReleaseCampaignCtrl',

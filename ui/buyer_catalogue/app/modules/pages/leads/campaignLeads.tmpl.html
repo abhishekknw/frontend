@@ -132,6 +132,7 @@
       </div>
       <div class="form-group col-md-12">
         <button class="btn btn-danger" ng-click="addLeadFormFields()">Add</button>
+        <button ng-if="editLead" ng-click="updateLeads()" class="btn btn-primary" style="margin:10px;">Update</button>
         <button ng-click="saveLeadForm()" style="text-align:right" class="btn btn-danger" ng-disabled="fieldForm.$invalid">Submit</button>
       </div>
     </form>
@@ -200,11 +201,6 @@
     <div>
       <table st-table="campaigns" st-safe-src="Data" class="table table-striped">
         <thead>
-          <tr>
-            <th colspan='999' style="background-color:#ffffff;">
-              <input st-search="" placeholder="Search ..." class="form-control"  type="search"/>
-            </th>
-          </tr>
           <tr>
             <th>Index</th>
             <th>Form Name</th>
