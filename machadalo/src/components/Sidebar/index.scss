@@ -1,0 +1,53 @@
+@import './../../assets/scss/partials/variables';
+
+.sidebar {
+  border-left: 2px solid $sidebar-border-color;
+  width: $sidebar-width;
+  background-color: $sidebar-bg-color;
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 10;
+  padding-top: $header-height;
+  transition: all 0.5s ease;
+  overflow-y: auto;
+
+  &--collapsed {
+    right: -$sidebar-width;
+  }
+
+  &__menu {
+
+    &__list {
+      ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+          font: {
+            size: 14px;
+            weight: $font-light;
+          };
+          line-height: 1;
+          border-bottom: 1px solid $sidebar-border-color;
+          padding: 10px;
+
+          i {
+            font: {
+              size: 18px;
+            };
+            margin-right: 5px;
+            min-width: 25px;
+          }
+
+          a {
+            color: white;
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
+    }
+  }
+}
