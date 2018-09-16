@@ -98,7 +98,7 @@
               </select>
             </td>
             <td  class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="phaseform">
-              <input type="text" readonly ng-model="phaseMappingList[supplier.phase_no].phase_no">
+              <input type="text" readonly ng-model="phaseMappingList[supplier.phase_no].phase_no"/>
               <select name="phase" class="form-control spacing input-width-phase" ng-click="setPhase(supplier,supplier.phaseNo)" ng-model="supplier.phaseNo" min="1" permission = "[permissions.addPhase, permissions.viewPhase]">
                 <option value="" disabled>Select Phase</option>
                 <option ng-repeat="phase in phases | unique:'phase_no'" value="{{phase.id}}">{{phase.phase_no}}</option>
@@ -238,6 +238,9 @@
     </span>
     <span class = "col-md-3">
       <button class="btn btn-danger active notify" style="text-align:left; margin-left:10px" ng-click="updateData()" permission = "[permissions.updateData]">Update</button>
+    </span>
+    <span class = "col-md-3 pull-right">
+      <button data-target = "#importSheet"  class="btn btn-danger active notify" data-toggle="modal" ng-click="initialiseImportSheet()">Import Sheet</button>
     </span>
     <span class = "col-md-3 pull-right">
       <button class="btn btn-danger active notify" style="text-align:right" ng-click="changeLocation()">Planning Release-Audit</button>
@@ -648,5 +651,35 @@
     </div>
   </div>
 </div>
+
+<div id="importSheet" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        Import Sheet
+      </div>
+      <div class="row">
+        <label>Select Sheet</label>
+        <input type="file" ngf-select = "uploadFiles($file, 1)" class="buttonfile" accept=".xlsx"/>
+      </div>
+      <div class=" row">
+        <div class = "col-md-12">
+          <label>Assigned To</label>
+          <p class="input-group">
+            <div class = "col-md-7">
+              <select class="form-control" ng-model="assign.to" required>
+                <option ng-repeat="user in userList" value="{{user.id}}">{{user.username}}</option>
+              </select>
+            </div>
+          </p>
+        </div>
+      </div></br></br>
+      <div class="">
+        <button ng-click="importThroughSheet()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!--END : NEFT payment modal  -->
 </main>

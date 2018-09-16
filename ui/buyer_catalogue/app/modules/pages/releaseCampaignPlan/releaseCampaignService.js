@@ -83,5 +83,10 @@
       return machadaloHttp.delete(url);
     }
 
+    releaseCampaignService.getProposalCenters = function(proposalId){
+      var url = url_base + "proposal-center-mapping/?proposal_id=" + proposalId;
+      return machadaloHttp.get(url);
+    }
+
     return releaseCampaignService;
 }]);

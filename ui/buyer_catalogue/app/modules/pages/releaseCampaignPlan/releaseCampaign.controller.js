@@ -6,7 +6,7 @@ angular.module('catalogueApp')
   $scope.positiveNoError = constants.positive_number_error;
   $scope.campaign_manager = constants.campaign_manager;
   $scope.editPaymentDetails = true;
-
+  $scope.assign = {};
   $scope.body = {
     message : '',
   };
@@ -175,6 +175,7 @@ $scope.addNewPhase =true;
 
       $scope.setPhase = function (supplier,id) {
                  console.log(supplier,id);
+                 supplier.phase_no = id;
              }
 
     $scope.emptyList = {NA:'NA'};
@@ -821,7 +822,70 @@ $scope.multiSelect =
          });
        }//End of function getSocietyDetails
 
+       var getUsersList = function(){
+         commonDataShare.getUsersList()
+           .then(function onSuccess(response){
+             $scope.userList = response.data.data;
+             $scope.usersMapListWithObjects = {};
+             angular.forEach($scope.userList, function(data){
+               $scope.usersMapListWithObjects[data.id] = data;
+             })
+             console.log($scope.usersMapListWithObjects);
+           })
+           .catch(function onError(response){
+             console.log("error occured", response.status);
+             commonDataShare.showErrorMessage(response);
+           });
+       }
 
+       $scope.initialiseImportSheet = function(){
+         getUsersList();
+         getProposalCenters();
+       }
+       var getProposalCenters = function(){
+         releaseCampaignService.getProposalCenters($scope.campaign_id)
+         .then(function onSuccess(response){
+           $scope.centerData = response.data.data[0];
+           console.log(response);
+         }).catch(function onError(response){
+           console.log(response);
+         })
+       }
+       $scope.importThroughSheet = function(){
+
+         console.log("hello", $scope.assign);
+         var token = $rootScope.globals.currentUser.token;
+         if ($scope.file) {
+           Upload.upload({
+               url: constants.base_url + constants.url_base + "import-sheet-in-existing-campaign/",
+               data: {
+                 file: $scope.file,
+                 is_import_sheet : true,
+                 proposal_id : $scope.campaign_id,
+                 center_id : $scope.centerData.id,
+                 invoice_number : '',
+                 tentative_start_date : '',
+                 tentative_end_date : '',
+                 assigned_by : $scope.assign.to,
+                 assigned_to : $scope.assign.to,
+                 data_import_type : "base-data"
+               },
+               headers: {'Authorization': 'JWT ' + token}
+           }).then(function onSuccess(response){
+                 console.log(response);
+
+           })
+           .catch(function onError(response) {
+               console.log(response);
+               // if(response.data){
+               //   swal(constants.name,response.data.data.general_error,constants.error);
+               // }
+             });
+       }
+     }
+       $scope.uploadFiles = function(file){
+         $scope.file = file;
+       }
 
 
 
