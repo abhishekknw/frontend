@@ -1,14 +1,47 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 import './index.css';
 
 export default class List extends React.Component {
   constructor() {
     super();
+
+    this.renderCampaignRow = this.renderCampaignRow.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getCampaignsList();
+  }
+
+  renderCampaignRow(campaign) {
+    return (
+      <tr key={campaign.id}>
+        <td>{campaign.campaign.name}</td>
+        <td>
+          {moment(campaign.campaign.tentative_start_date).format(
+            'Do MMM, YYYY'
+          )}
+        </td>
+        <td>
+          {moment(campaign.campaign.tentative_end_date).format('Do MMM, YYYY')}
+        </td>
+        <td>
+          <Link
+            to={`/r/checklist/suppliers/${campaign.id}`}
+            className="btn btn--danger"
+          >
+            Select Supplier
+          </Link>
+        </td>
+      </tr>
+    );
   }
 
   render() {
+    const { campaign } = this.props;
+
     return (
       <div className="list">
         <div className="list__title">
@@ -25,92 +58,9 @@ export default class List extends React.Component {
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Action</th>
-                <th>Action</th>
-                <th>Action</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>HDFC Retail Channel</td>
-                <td>2018-08-27</td>
-                <td>2018-10-30</td>
-                <td>
-                  <Link to="" className="btn btn--danger">
-                    View Checklist
-                  </Link>
-                </td>
-                <td>
-                  <Link to="" className="btn btn--danger">
-                    Create/Edit checklist
-                  </Link>
-                </td>
-                <td>
-                  <Link to="" className="btn btn--danger">
-                    Enter Checklist
-                  </Link>
-                </td>
-              </tr>
-              <tr>
-                <td>HDFC Retail Channel</td>
-                <td>2018-08-28</td>
-                <td>2018-10-30</td>
-                <td>
-                  <Link to="" className="btn btn--danger">
-                    View Checklist
-                  </Link>
-                </td>
-                <td>
-                  <Link to="/r/checklist/create" className="btn btn--danger">
-                    Create/Edit checklist
-                  </Link>
-                </td>
-                <td>
-                  <Link to="" className="btn btn--danger">
-                    Enter Checklist
-                  </Link>
-                </td>
-              </tr>
-              <tr>
-                <td>HDFC Retail Channel</td>
-                <td>2018-08-27</td>
-                <td>2018-10-30</td>
-                <td>
-                  <Link to="" className="btn btn--danger">
-                    View Checklist
-                  </Link>
-                </td>
-                <td>
-                  <Link to="" className="btn btn--danger">
-                    Create/Edit checklist
-                  </Link>
-                </td>
-                <td>
-                  <Link to="" className="btn btn--danger">
-                    Enter Checklist
-                  </Link>
-                </td>
-              </tr>
-              <tr>
-                <td>HDFC Retail Channel</td>
-                <td>2018-08-27</td>
-                <td>2018-10-30</td>
-                <td>
-                  <Link to="" className="btn btn--danger">
-                    View Checklist
-                  </Link>
-                </td>
-                <td>
-                  <Link to="" className="btn btn--danger">
-                    Create/Edit checklist
-                  </Link>
-                </td>
-                <td>
-                  <Link to="" className="btn btn--danger">
-                    Enter Checklist
-                  </Link>
-                </td>
-              </tr>
-            </tbody>
+            <tbody>{campaign.list.map(this.renderCampaignRow)}</tbody>
           </table>
         </div>
       </div>

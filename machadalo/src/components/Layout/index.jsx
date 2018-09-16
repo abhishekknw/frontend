@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import Header from './../Header';
 import Sidebar from './../Sidebar';
@@ -27,9 +27,10 @@ export default function Layout(props) {
       <div className="wrapper">
         <div className="container">
           <Switch>
-            <Route path={`${match.path}/checklist`} {...props}>
-              <ChecklistContainer {...props} />
-            </Route>
+            <Route
+              path={`${match.path}/checklist`}
+              component={ChecklistContainer}
+            />
           </Switch>
         </div>
       </div>

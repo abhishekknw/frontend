@@ -11,7 +11,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    // auth: state.auth,
+    campaign: state.campaign,
+    supplier: state.supplier
   };
 }
 
