@@ -359,6 +359,10 @@ angular
             // controller : 'DashboardCtrl',
             templateUrl : 'modules/pages/dashboard-gulp/admin/release/index.html',
 
+      }).state('loginLogs',{
+          url : '/loginLogs',
+          controller : 'loginLogsCtrl',
+          templateUrl : 'modules/pages/loginLogs/loginLogs.tmpl.html',
       });
 
 

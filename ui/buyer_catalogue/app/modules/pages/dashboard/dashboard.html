@@ -968,32 +968,6 @@
 
 
       <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
-            <div ng-if="showCampaignGraph" class="panel-heading" ng-click="getCampaigns()">
-                <h4 class="panel-title">
-                    All Campaigns
-                </h4>
-
-            </div>
-        </div>
-        <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.completed.status)">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    Completed Campaigns
-                </h4>
-            </div>
-            <div id="completed" class="animate-show" ng-show="campaignStatus.completed.value">
-                <div class="panel-bodyDashboard camp-menu-content">
-                    <table class="table">
-                        <tr ng-repeat="campaign in campaignData.completed_campaigns">
-                          <td ng-click="getBookingCampaigns(campaign)">
-                            {{campaign.name}}
-                          </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
           <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.ongoing.status)">
               <div class="panel-heading">
                   <h4 class="panel-title">
@@ -1037,7 +1011,10 @@
 
     </div>
     <div class="col-md-9">
-      <div class="">
+      <div class="" ng-if="!bookingPhases.length">
+        <label style="color:#000">Please Select the Campaign</label>
+      </div>
+      <div class="" ng-if="bookingPhases.length">
         <table class="table table-bordered table-responsive">
           <thead>
             <tr>
@@ -1064,7 +1041,7 @@
             </tr>
           </tbody>
         </table>
-        <div class="">
+        <div class="" ng-if="bookingSuppliersData.length">
           <div class="panel-heading">
             Supplier Details
           </div>
@@ -1087,7 +1064,7 @@
                 <td>{{supplier.society_subarea}}</td>
                 <td>{{supplier.flat_count}}</td>
                 <td>{{supplier.booking_status}}</td>
-                <td><a>View Details</a></td>
+                <td><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages" target="_blank">View Details</a></td>
               </tr>
             </tbody>
           </table>

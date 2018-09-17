@@ -49,7 +49,10 @@
                             <i class="fa fa-dashboard fa-lg"></i>DashBoard</a>
                           </li>
                           <li ng-class="{active: isActive('/dashboard')}" permission = "[perm.menuChangePassword]">
-                            <a href="/#/changePassword" ng-click="setPasswordDetails(user)" ng-click="closeModal()">
+                            <a href="/#/loginLogs"  ng-click="closeModal()">
+                          <i class="fa fa-sign-out fa-lg"></i> View Logs</a></li>
+                          <li ng-class="{active: isActive('/dashboard')}" permission = "[perm.menuChangePassword]">
+                            <a href="/#/changePassword"  ng-click="closeModal()">
                           <i class="fa fa-sign-out fa-lg"></i> Change Password</a></li>
 
                           <li ng-class="{active: isActive('/dashboard')}">

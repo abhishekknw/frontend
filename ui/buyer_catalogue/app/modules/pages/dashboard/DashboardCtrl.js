@@ -1458,10 +1458,15 @@ var formatD3StackedBarChartData = function(data){
 
 $scope.getBookingCampaigns = function(campaign){
   console.log(campaign);
+  $scope.bookingPhases = [];
+  $scope.bookingSuppliersData = [];
   DashboardService.getBookingCampaigns(campaign.campaign)
   .then(function onSuccess(response){
     console.log(response);
       $scope.bookingPhases = response.data.data;
+      if(!$scope.bookingPhases.length){
+        swal(constants.name, "Suppliers Booking is going on.Currently, No supplier is Booked", constants.warning)
+      }
   }).catch(function onError(response){
     console.log(response);
   })
@@ -1477,11 +1482,16 @@ $scope.getTotalFlatCount = function(data){
 }
 $scope.getSuppliers = function(data){
   console.log(data);
+  $scope.bookingSuppliersData = [];
   if(data.length){
     $scope.bookingSuppliersData = data;
   }else{
     swal(constants.name,"Suppliers Not Available In this Status",constants.warning);
   }
+}
+$scope.geToSupplierDetails = function(supplierId){
+  console.log(supplierId);
+  $location.path(supplierId + "/SocietyDetailsPages");
 }
 
 //END
