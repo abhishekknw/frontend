@@ -1466,6 +1466,23 @@ $scope.getBookingCampaigns = function(campaign){
     console.log(response);
   })
 }
+$scope.getTotalFlatCount = function(data){
+  var total = 0;
+  if(data){
+    angular.forEach(data , function(supplier){
+      total += supplier.flat_count||0;
+    })
+  }
+  return total;
+}
+$scope.getSuppliers = function(data){
+  console.log(data);
+  if(data.length){
+    $scope.bookingSuppliersData = data;
+  }else{
+    swal(constants.name,"Suppliers Not Available In this Status",constants.warning);
+  }
+}
 
 //END
 })

@@ -48,10 +48,10 @@ $scope.addNewPhase =true;
         {header : 'Payment Status'},
       ];
   $scope.booking_status = [
-    {name:'Undecided', code : ''},
+    {name:'Undecided', code : 'NB'},
     {name:'Decision Pending', code : 'DP'},
     {name:'Confirmed Booking', code : 'BK'},
-    {name:'Tentative Booking', code : 'NB'},
+    {name:'Tentative Booking', code : 'TB'},
     {name:'Phone Booked' , code : 'PB'},
     {name:'Visit Booked', code : 'VB'},
     {name:'Rejected', code : 'SR'},
@@ -166,16 +166,17 @@ $scope.addNewPhase =true;
         for(var i=0;i<suppliers.length;i++){
           console.log(suppliers);
           suppliers[i].total_negotiated_price = parseInt(suppliers[i].total_negotiated_price);
-          angular.forEach($scope.phases, function(phase){
-            suppliers[i].phase_no = parseInt(phase.id);
-
-          })
+          // angular.forEach($scope.phases, function(phase){
+          //   suppliers[i].phase_no = parseInt(phase.id);
+          //
+          // })
         }
       }
 
       $scope.setPhase = function (supplier,id) {
                  console.log(supplier,id);
                  supplier.phase_no = id;
+                 console.log(supplier.phase_no);
              }
 
     $scope.emptyList = {NA:'NA'};
@@ -212,6 +213,7 @@ $scope.addNewPhase =true;
       $scope.inventoryIds = filter.detail;
     }
     $scope.updateData = function(){
+      console.log($scope.releaseDetails.shortlisted_suppliers);
       releaseCampaignService.updateAuditReleasePlanDetails($scope.campaign_id,$scope.releaseDetails.shortlisted_suppliers)
       .then(function onSuccess(response){
         console.log(response);

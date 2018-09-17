@@ -1036,6 +1036,65 @@
       </div>
 
     </div>
+    <div class="col-md-9">
+      <div class="">
+        <table class="table table-bordered table-responsive">
+          <thead>
+            <tr>
+              <th>Phase</th>
+              <th>Booked</th>
+              <th>Tentative</th>
+              <th>Undecided</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in bookingPhases">
+              <td>
+                <div class="">
+                    Phase : {{item.phase_no}}</br>
+                    Start Date : {{item.start_date|limitTo:10|date:fullDate}}</br>
+                    End Date : {{item.end_date|limitTo:10|date:fullDate}}
+                </div>
+              </td>
+              <td><a ng-click="getSuppliers(item.supplier_data.BK)">{{item.supplier_data.BK.length}}({{getTotalFlatCount(item.supplier_data.BK)}})</a></td>
+              <td><a ng-click="getSuppliers(item.supplier_data.TB)">{{item.supplier_data.TB.length}}({{getTotalFlatCount(item.supplier_data.TB)}})</a></td>
+              <td><a ng-click="getSuppliers(item.supplier_data.NB)">{{item.supplier_data.NB.length}}({{getTotalFlatCount(item.supplier_data.NB)}})</a></td>
+              <td> {{item.supplier_data.BK.length + item.supplier_data.TB.length + item.supplier_data.NB.length}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="">
+          <div class="panel-heading">
+            Supplier Details
+          </div>
+          <table class="table table-bordered table-responsive">
+            <thead>
+              <tr>
+                <th>Supplier Name</th>
+                <th>City</th>
+                <th>Area</th>
+                <th>Subarea</th>
+                <th>Flat Count</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="supplier in bookingSuppliersData">
+                <td>{{supplier.society_name}}</td>
+                <td>{{supplier.society_city}}</td>
+                <td>{{supplier.society_locality}}</td>
+                <td>{{supplier.society_subarea}}</td>
+                <td>{{supplier.flat_count}}</td>
+                <td>{{supplier.booking_status}}</td>
+                <td><a>View Details</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
     </div>
     </div>
     </div>
