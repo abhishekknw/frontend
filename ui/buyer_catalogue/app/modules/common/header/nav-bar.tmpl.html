@@ -48,13 +48,15 @@
                             <a ng-href="/#/dashboard" class=" lipadding" ng-click="closeModal()">
                             <i class="fa fa-dashboard fa-lg"></i>DashBoard</a>
                           </li>
+                          <li ng-class="{active: isActive('/dashboard')}" permission = "[perm.menuChangePassword]">
+                            <a href="/#/changePassword" ng-click="setPasswordDetails(user)" ng-click="closeModal()">
+                          <i class="fa fa-sign-out fa-lg"></i> Change Password</a></li>
+
                           <li ng-class="{active: isActive('/dashboard')}">
                           <a href="/#/logout" class=" lipadding" ng-click="closeModal()">
                           <i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
 
-                          <li ng-class="{active: isActive('/dashboard')}" permission = "[perm.menuChangePassword]">
-                        <a data-target="#passwordModal" data-toggle="modal" ng-click="setPasswordDetails(user)" ng-click="closeModal()">
-                          <i class="fa fa-sign-out fa-lg"></i> Change Password</a></li>
+
 
                       </ul>
                 </div>
