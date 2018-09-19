@@ -9,7 +9,10 @@ export default class Suppliers extends React.Component {
 
     let campaign;
     for (let i = 0, l = this.props.campaign.list.length; i < l; i += 1) {
-      if (this.props.campaign.list[i].id == match.params.campaignId) {
+      if (
+        this.props.campaign.list[i].campaign.proposal_id ==
+        match.params.campaignId
+      ) {
         campaign = this.props.campaign.list[i];
         break;
       }
@@ -18,6 +21,8 @@ export default class Suppliers extends React.Component {
     this.state = {
       campaign
     };
+
+    this.renderSupplierRow = this.renderSupplierRow.bind(this);
   }
 
   componentDidMount() {
@@ -39,7 +44,12 @@ export default class Suppliers extends React.Component {
           {supplier.address1} {supplier.address2}
         </td>
         <td>
-          <Link to="/r/checklist/create" className="btn btn--danger">
+          <Link
+            to={`/r/checklist/create/${
+              this.state.campaign.campaign.proposal_id
+            }/${supplier.supplier_id}`}
+            className="btn btn--danger"
+          >
             Create checklist
           </Link>
         </td>

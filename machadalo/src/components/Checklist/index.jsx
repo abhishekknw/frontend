@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import List from './List';
+import Campaigns from './Campaigns';
 import Create from './Create';
 import Suppliers from './Suppliers';
 
@@ -14,8 +14,10 @@ export default function Checklist(props) {
     <div className="checklist">
       <Switch>
         <Route
-          path={`${match.path}/list`}
-          render={componentProps => <List {...props} {...componentProps} />}
+          path={`${match.path}/campaigns`}
+          render={componentProps => (
+            <Campaigns {...props} {...componentProps} />
+          )}
         />
         <Route
           path={`${match.path}/suppliers/:campaignId`}

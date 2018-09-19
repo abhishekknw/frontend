@@ -91,9 +91,10 @@ export default class CreateChecklistTemplate extends React.Component {
         Object.assign({}, item, {
           key_type: item.key_type.value
         })
-      )
+      ),
+      supplier_id: this.props.match.params.supplierId,
+      checklist_type: 'supplier'
     };
-
     // Send request to create template
     this.props.postChecklistTemplate(data);
   }

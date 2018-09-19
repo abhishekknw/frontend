@@ -45,7 +45,7 @@ export default function Sidebar({ appearance }) {
               </a>
             </li>
             <li>
-              <NavLink to="/r/checklist/list">
+              <NavLink to="/r/checklist/campaigns">
                 <i className="fa fa-check-square-o" aria-hidden="true" />
                 Campaign Checklist
               </NavLink>

@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import './index.css';
 
-export default class List extends React.Component {
+export default class Campaigns extends React.Component {
   constructor() {
     super();
 
@@ -29,7 +29,7 @@ export default class List extends React.Component {
         </td>
         <td>
           <Link
-            to={`/r/checklist/suppliers/${campaign.id}`}
+            to={`/r/checklist/suppliers/${campaign.campaign.proposal_id}`}
             className="btn btn--danger"
           >
             Select Supplier
