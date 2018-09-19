@@ -96,7 +96,10 @@ export default class CreateChecklistTemplate extends React.Component {
       checklist_type: 'supplier'
     };
     // Send request to create template
-    this.props.postChecklistTemplate(data);
+    this.props.postChecklistTemplate({
+      campaignId: this.state.campaign.campaign.proposal_id,
+      data
+    });
   }
 
   renderChecklistColumnAddForm(column, index) {

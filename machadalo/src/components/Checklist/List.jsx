@@ -1,7 +1,8 @@
+// List of checklists
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default class Suppliers extends React.Component {
+export default class List extends React.Component {
   constructor(props) {
     super(props);
 
@@ -18,36 +19,44 @@ export default class Suppliers extends React.Component {
       }
     }
 
+    let supplier;
+    for (let i = 0, l = this.props.supplier.list.length; i < l; i += 1) {
+      if (this.props.supplier.list[i].supplier_id === match.params.supplierId) {
+        supplier = this.props.supplier.list[i];
+        break;
+      }
+    }
+
+    console.log('campaign', campaign);
+    console.log('supplier', supplier);
+
     this.state = {
-      campaign
+      campaign,
+      supplier
     };
 
-    this.renderSupplierRow = this.renderSupplierRow.bind(this);
+    this.renderChecklistRow = this.renderChecklistRow.bind(this);
   }
 
   componentDidMount() {
-    if (this.state.campaign) {
-      this.props.getSuppliersList({
-        campaignProposalId: this.state.campaign.campaign.proposal_id
+    if (this.state.campaign && this.state.supplier) {
+      this.props.getSupplierChecklists({
+        campaignId: this.state.campaign.campaign.proposal_id,
+        supplierId: this.state.supplier.supplier_id
       });
     }
   }
 
-  renderSupplierRow(supplier, index) {
+  renderChecklistRow(checklist, index) {
     return (
-      <tr key={supplier.supplier_id}>
+      <tr key={checklist.id}>
         <td>{index + 1}</td>
-        <td>{supplier.name}</td>
-        <td>{supplier.area}</td>
-        <td>{supplier.subarea}</td>
-        <td>
-          {supplier.address1} {supplier.address2}
-        </td>
+        <td>{checklist.name}</td>
         <td>
           <Link
-            to={`/r/checklist/list/${
+            to={`/r/checklist/create/${
               this.state.campaign.campaign.proposal_id
-            }/${supplier.supplier_id}`}
+            }/${this.state.supplier.supplier_id}`}
             className="btn btn--danger"
           >
             Create checklist
@@ -58,14 +67,14 @@ export default class Suppliers extends React.Component {
   }
 
   render() {
-    const { supplier } = this.props;
+    const { checklist } = this.props;
 
     return (
       <div className="list">
         <div className="list__title">
           <h3>
-            Suppliers of Campaign{' '}
-            {this.state.campaign ? this.state.campaign.campaign.name : ''}
+            Checklists for supplier{' '}
+            {this.state.supplier ? this.state.supplier.name : ''}
           </h3>
         </div>
         <div className="list__filter">
@@ -77,13 +86,10 @@ export default class Suppliers extends React.Component {
               <tr>
                 <th>Index</th>
                 <th>Name</th>
-                <th>Area</th>
-                <th>Sub-area</th>
-                <th>Address</th>
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>{supplier.list.map(this.renderSupplierRow)}</tbody>
+            <tbody>{checklist.list.map(this.renderChecklistRow)}</tbody>
           </table>
         </div>
       </div>

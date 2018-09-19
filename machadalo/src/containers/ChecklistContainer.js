@@ -12,7 +12,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   return {
     campaign: state.campaign,
-    supplier: state.supplier
+    supplier: state.supplier,
+    checklist: state.checklist
   };
 }
 

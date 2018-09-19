@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Campaigns from './Campaigns';
 import Create from './Create';
 import Suppliers from './Suppliers';
+import List from './List';
 
 import './index.css';
 
@@ -28,6 +29,10 @@ export default function Checklist(props) {
         <Route
           path={`${match.path}/create/:campaignId/:supplierId`}
           render={componentProps => <Create {...props} {...componentProps} />}
+        />
+        <Route
+          path={`${match.path}/list/:campaignId/:supplierId`}
+          render={componentProps => <List {...props} {...componentProps} />}
         />
       </Switch>
     </div>

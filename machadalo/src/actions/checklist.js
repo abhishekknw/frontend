@@ -22,7 +22,7 @@ export function postChecklistTemplateFail() {
   };
 }
 
-export function postChecklistTemplate(data) {
+export function postChecklistTemplate({ campaignId, data }) {
   return (dispatch, getState) => {
     dispatch(postChecklistTemplateStart());
 
@@ -39,6 +39,49 @@ export function postChecklistTemplate(data) {
         console.log('Failed to create checklist template', ex);
 
         dispatch(postChecklistTemplateFail());
+      });
+  };
+}
+
+export function getSupplierChecklistsStart() {
+  return {
+    type: types.GET_SUPPLIER_CHECKLISTS_START
+  };
+}
+
+export function getSupplierChecklistsSuccess({ checklists }) {
+  return {
+    type: types.GET_SUPPLIER_CHECKLISTS_SUCCESS,
+    checklists
+  };
+}
+
+export function getSupplierChecklistsFail() {
+  return {
+    type: types.GET_SUPPLIER_CHECKLISTS_FAIL
+  };
+}
+
+export function getSupplierChecklists({ campaignId, supplierId }) {
+  return (dispatch, getState) => {
+    dispatch(getSupplierChecklistsStart());
+
+    const { auth } = getState();
+
+    request
+      .get(
+        `${
+          config.API_URL
+        }/v0/ui/checklists/${campaignId}/list_supplier_checklists/${supplierId}`
+      )
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(getSupplierChecklistsSuccess({ checklists: resp.body.data }));
+      })
+      .catch(ex => {
+        console.log('Failed to fetch supplier checklists', ex);
+
+        dispatch(getSupplierChecklistsFail());
       });
   };
 }

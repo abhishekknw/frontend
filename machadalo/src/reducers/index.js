@@ -3,6 +3,7 @@ import * as appearanceReducer from './appearance';
 import * as authReducer from './auth';
 import * as campaignReducer from './campaign';
 import * as supplierReducer from './supplier';
+import * as checklistReducer from './checklist';
 
 const reducers = combineReducers(
   Object.assign(
@@ -10,7 +11,8 @@ const reducers = combineReducers(
     appearanceReducer,
     authReducer,
     campaignReducer,
-    supplierReducer
+    supplierReducer,
+    checklistReducer
   )
 );
 

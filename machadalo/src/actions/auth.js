@@ -4,10 +4,10 @@ import constants from './../constants';
 
 export function autoLogin() {
   // Set temporary token
-  localStorage.setItem(
-    constants.MACHADALO_LOCAL_STORAGE_CREDENTIALS_KEY,
-    '{"username":"admin","user_id":19,"name":"","user_code":"0","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwib3JpZ19pYXQiOjE1MzU4MjQwNzEsIm5hbWUiOiIiLCJleHAiOjE1MzU4MjQzNzEsInVzZXJfaWQiOjE5LCJlbWFpbCI6IiJ9.e2WCzCUaOvBtyb9wd68E-65s8mCIv-ZsNRQuPXpSY30","email":""}'
-  );
+  // localStorage.setItem(
+  //   constants.MACHADALO_LOCAL_STORAGE_CREDENTIALS_KEY,
+  //   '{"username":"admin","user_id":19,"name":"","user_code":"0","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwib3JpZ19pYXQiOjE1MzU4MjQwNzEsIm5hbWUiOiIiLCJleHAiOjE1MzU4MjQzNzEsInVzZXJfaWQiOjE5LCJlbWFpbCI6IiJ9.e2WCzCUaOvBtyb9wd68E-65s8mCIv-ZsNRQuPXpSY30","email":""}'
+  // );
 
   // Fetch token from local storage
   const credentials = JSON.parse(
