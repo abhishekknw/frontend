@@ -21,6 +21,20 @@ export const checklist = createReducer(
       return Object.assign({}, state, {
         list: []
       });
+    },
+    [types.DELETE_SUPPLIER_CHECKLIST_SUCCESS](state, action) {
+      const newList = state.list.slice();
+
+      for (let i = 0, l = newList.length; i < l; i += 1) {
+        if (newList[i].id === action.checklistId) {
+          newList.splice(i, 1);
+          break;
+        }
+      }
+
+      return Object.assign({}, state, {
+        list: newList
+      });
     }
   }
 );

@@ -10,10 +10,24 @@ const ChecklistFieldTypes = [
 ];
 
 export default class CreateChecklistTemplate extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    const { match } = this.props;
+
+    let campaign;
+    for (let i = 0, l = this.props.campaign.list.length; i < l; i += 1) {
+      if (
+        this.props.campaign.list[i].campaign.proposal_id ===
+        match.params.campaignId
+      ) {
+        campaign = this.props.campaign.list[i];
+        break;
+      }
+    }
 
     this.state = {
+      campaign,
       checklist_name: '',
       checklist_columns: [
         {

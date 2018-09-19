@@ -29,7 +29,7 @@ export function postChecklistTemplate({ campaignId, data }) {
     const { auth } = getState();
 
     request
-      .post(`${config.API_URL}/v0/ui/checklists/BYJMAC1394/create`)
+      .post(`${config.API_URL}/v0/ui/checklists/${campaignId}/create`)
       .set('Authorization', `JWT ${auth.token}`)
       .send(data)
       .then(resp => {
@@ -82,6 +82,45 @@ export function getSupplierChecklists({ campaignId, supplierId }) {
         console.log('Failed to fetch supplier checklists', ex);
 
         dispatch(getSupplierChecklistsFail());
+      });
+  };
+}
+
+export function deleteSupplierChecklistStart() {
+  return {
+    type: types.DELETE_SUPPLIER_CHECKLIST_START
+  };
+}
+
+export function deleteSupplierChecklistSuccess({ checklistId }) {
+  return {
+    type: types.DELETE_SUPPLIER_CHECKLIST_SUCCESS,
+    checklistId
+  };
+}
+
+export function deleteSupplierChecklistFail() {
+  return {
+    type: types.DELETE_SUPPLIER_CHECKLIST_FAIL
+  };
+}
+
+export function deleteSupplierChecklist({ checklistId }) {
+  return (dispatch, getState) => {
+    dispatch(deleteSupplierChecklistStart());
+
+    const { auth } = getState();
+
+    request
+      .put(`${config.API_URL}/v0/ui/checklists/${checklistId}/delete_checklist`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(deleteSupplierChecklistSuccess({ checklistId }));
+      })
+      .catch(ex => {
+        console.log('Failed to delete supplier checklist', ex);
+
+        dispatch(deleteSupplierChecklistFail());
       });
   };
 }

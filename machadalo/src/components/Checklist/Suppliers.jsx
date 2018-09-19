@@ -50,7 +50,7 @@ export default class Suppliers extends React.Component {
             }/${supplier.supplier_id}`}
             className="btn btn--danger"
           >
-            Create checklist
+            View checklists
           </Link>
         </td>
       </tr>

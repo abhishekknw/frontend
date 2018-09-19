@@ -27,9 +27,6 @@ export default class List extends React.Component {
       }
     }
 
-    console.log('campaign', campaign);
-    console.log('supplier', supplier);
-
     this.state = {
       campaign,
       supplier
@@ -48,19 +45,27 @@ export default class List extends React.Component {
   }
 
   renderChecklistRow(checklist, index) {
+    // Remove checklist
+    const onRemove = () => {
+      this.props.deleteSupplierChecklist({ checklistId: checklist.id });
+    };
+
     return (
       <tr key={checklist.id}>
         <td>{index + 1}</td>
-        <td>{checklist.name}</td>
+        <td>{checklist.checklist_name}</td>
         <td>
           <Link
-            to={`/r/checklist/create/${
-              this.state.campaign.campaign.proposal_id
-            }/${this.state.supplier.supplier_id}`}
+            to={`/r/checklist/fill/${checklist.id}`}
             className="btn btn--danger"
           >
-            Create checklist
+            Fill checklist
           </Link>
+        </td>
+        <td>
+          <button type="button" className="btn btn--danger" onClick={onRemove}>
+            Remove
+          </button>
         </td>
       </tr>
     );
@@ -87,10 +92,36 @@ export default class List extends React.Component {
                 <th>Index</th>
                 <th>Name</th>
                 <th>Action</th>
+                <th>Action</th>
               </tr>
             </thead>
-            <tbody>{checklist.list.map(this.renderChecklistRow)}</tbody>
+            <tbody>
+              {checklist.list.length ? (
+                checklist.list.map(this.renderChecklistRow)
+              ) : (
+                <tr>
+                  <td colSpan="4">
+                    No checklists available. Create your first one now!
+                  </td>
+                </tr>
+              )}
+            </tbody>
           </table>
+        </div>
+
+        <div className="list__actions">
+          {this.state.campaign && this.state.supplier ? (
+            <Link
+              to={`/r/checklist/create/${
+                this.state.campaign.campaign.proposal_id
+              }/${this.state.supplier.supplier_id}`}
+              className="btn btn--danger"
+            >
+              Create
+            </Link>
+          ) : (
+            undefined
+          )}
         </div>
       </div>
     );
