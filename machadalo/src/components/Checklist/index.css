@@ -53,6 +53,9 @@
 .checklist .list__table table tbody tr:nth-child(odd) td {
   background-color: #f9f9f9;
 }
+.checklist .list__actions {
+  margin-top: 20px;
+}
 .checklist .createform__title {
   text-align: center;
   background-color: #d9534f;
