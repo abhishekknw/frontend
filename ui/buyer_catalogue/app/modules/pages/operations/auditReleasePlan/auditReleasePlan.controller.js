@@ -242,6 +242,7 @@ angular.module('catalogueApp')
       }
       else
         $scope.invIdList.splice(index,1);
+      console.log($scope.invIdList);
     }
     //To disable other checkboxes of other rows of adInventory Id
     $scope.isDisable = function(index){
@@ -396,6 +397,46 @@ angular.module('catalogueApp')
       }).catch(function onError(response){
         swal(constants.name,response.data.data.general_error,constants.error);
         console.log(response);
+      })
+    }
+    $scope.getInventoryRelatedData = function(supplier){
+      $scope.shortlistedSupplierData = supplier;
+        auditReleasePlanService.getInventoryRelatedData()
+        .then(function onSuccess(response){
+          console.log(response);
+          $scope.adInventoryTypes = response.data.data.inventory_types;
+          $scope.durationTypes = response.data.data.duration_types;
+        }).catch(function onError(response){
+          console.log(response);
+        })
+    }
+    $scope.adInvModel = {};
+    $scope.addAdInventoryIds = function(){
+      $scope.adInvModel['space_id'] =  $scope.shortlistedSupplierData.id;
+      console.log($scope.adInvModel);
+      auditReleasePlanService.addAdInventoryIds($scope.adInvModel)
+      .then(function onSuccess(response){
+        console.log(response);
+        $('#addInventoryModal').on('hide.bs.modal', function () {});
+        $scope.adInvModel = {};
+        getCampaignReleaseDetails();
+        swal(constants.name, constants.add_data_success, constants.success);
+      }).catch(function onError(response){
+        console.log(response);
+        swal(constants.name, constants.save_error, constants.error);
+      })
+
+    }
+    $scope.deleteAdInventoryIds = function(){
+      console.log($scope.invIdList);
+      auditReleasePlanService.deleteAdInventoryIds($scope.invIdList)
+      .then(function onSuccess(response){
+        console.log(response);
+        getCampaignReleaseDetails();
+        swal(constants.name,response.data.data.msg,constants.success);
+      }).catch(function onError(response){
+        console.log(response);
+        swal(constants.name, constants.error, constants.error);
       })
     }
 

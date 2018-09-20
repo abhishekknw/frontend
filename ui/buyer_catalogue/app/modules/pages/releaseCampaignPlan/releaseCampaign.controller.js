@@ -337,17 +337,18 @@ $scope.addNewPhase =true;
           filters.push(filterKeyValuData);
         }
       })
-      console.log(filters);
+      console.log(filters,$scope.supplier_type_code.code);
+
       var data = {
         campaign_id : $scope.releaseDetails.campaign.proposal_id,
         center_data : {
-          RS : {
-            supplier_data : supplier_ids,
-            filter_codes : filters,
-          },
-
         },
       }
+      data.center_data[$scope.supplier_type_code.code] = {
+       supplier_data : supplier_ids,
+       filter_codes : filters,
+     };
+      console.log(data);
       if(filters.length && supplier_ids.length){
         releaseCampaignService.addSuppliersToCampaign(data)
         .then(function onSuccess(response){
