@@ -864,31 +864,25 @@
    var getHistory = function(data){
      $scope.historyData = {};
      var curDate = new Date();
-     var total = 0;
      angular.forEach(data, function(dates,invKey){
        angular.forEach(dates, function(activities,dateKey){
-         if(!$scope.historyData.hasOwnProperty(dateKey)){
-           if(new Date(dateKey) <= curDate && total < 15){
-              $scope.historyData[dateKey] = {};
-              total += 1;
+         if(new Date(dateKey) < curDate){
+           if(!$scope.historyData.hasOwnProperty(dateKey)){
+             $scope.historyData[dateKey] = {};
            }
-
-         }
-         angular.forEach(activities, function(count,actKey){
-           if(new Date(dateKey) <= curDate && total < 15){
+           angular.forEach(activities, function(count,actKey){
              if(!$scope.historyData[dateKey].hasOwnProperty(actKey)){
+               console.log(dateKey,invKey,actKey);
                $scope.historyData[dateKey][actKey] = {};
                $scope.historyData[dateKey][actKey]['actual'] = 0;
                $scope.historyData[dateKey][actKey]['total'] = 0;
              }
              $scope.historyData[dateKey][actKey].actual += data[invKey][dateKey][actKey].actual;
              $scope.historyData[dateKey][actKey].total += data[invKey][dateKey][actKey].total;
-           }
-
-         })
+           })
+         }
        })
      })
-     console.log($scope.historyData);
    }
    $scope.getDatewiseSuppliersInventory = function(proposalId, proposalName){
      $scope.dateWiseSuppliers = [];

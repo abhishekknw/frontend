@@ -110,7 +110,7 @@
                      </tr>
                    </thead>
                        <tbody>
-                       <tr ng-repeat="(key,item) in historyData">
+                       <tr ng-repeat="(key,item) in historyData" ng-if="$index < 15">
                          <td class="col-xs-3" style="background-color: #8e1921;"><a ng-click="getDateData(key)">{{key| date :'d-MMM-yy'}}</a></td>
                          <td class="col-xs-8">
                            <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="greenColor" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100==100" type="button" name="button" class="btn btn-danger">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}  &#10004;</button>
