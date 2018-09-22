@@ -106,7 +106,10 @@ angular.module('catalogueApp')
         campaignLeadsService.createLeadForm(data,$scope.campaignId)
         .then(function onSuccess(response){
           console.log(response);
+          $scope.leadFormFields = [];
+          $scope.formName.name = undefined;
           swal(constants.name,constants.create_success,constants.success);
+          $scope.changeView('viewLeadForms',$scope.campaignInfo);
         }).catch(function onError(response){
           console.log(response);
         })
@@ -126,8 +129,7 @@ angular.module('catalogueApp')
           console.log(response);
         })
       }
-      $scope.getEntryListLeads = function(item){
-        console.log(item);
+      $scope.getEntryListLeads = function(){
              campaignLeadsService.getEntryListLeads($scope.leadFormId,$scope.supplierData.supplier_id)
              .then(function onSuccess(response){
                console.log(response);
@@ -149,6 +151,9 @@ angular.module('catalogueApp')
       }
       $scope.removeField = function(index){
         $scope.leadFormFields.splice(index,1);
+      }
+      $scope.removeNewField = function(index){
+        $scope.newLeadFormFields.splice(index,1);
       }
       var assigned_by = '0';
       var fetch_all = '0';
@@ -178,6 +183,7 @@ angular.module('catalogueApp')
           selectSuppliers : false,
           importLeads : false,
           viewLeadForms : false,
+          viewLeadsBySupplier : false
         }
         $scope.views[view] = true;
         $scope.campaignInfo = campaign;
@@ -185,7 +191,6 @@ angular.module('catalogueApp')
         {
           $scope.leadFormFields = formFields;
         }
-
         console.log(view,campaign);
         switch(true){
           case $scope.views.viewLeadForms:
@@ -211,6 +216,9 @@ angular.module('catalogueApp')
           case $scope.views.createForm:
             break;
           case $scope.views.enterLeads:
+            break;
+          case $scope.views.viewLeadsBySupplier:
+            $scope.getEntryListLeads();
             break;
         }
       }
@@ -250,8 +258,13 @@ angular.module('catalogueApp')
       $scope.getLeadForm = function(item){
         $scope.formName.name = undefined;
         $scope.leadFormFields = [];
-
+        $scope.updateForm = false;
         if(item){
+          console.log($scope.updateForm);
+          $scope.newLeadFormFields = [];
+          $scope.addNewLeadFormField();
+          $scope.updateForm = true;
+          $scope.leads_form_id = item.leads_form_id;
           $scope.formName.name = item.leads_form_name;
           $scope.leadFormFields = item.leads_form_items;
         }
@@ -339,6 +352,7 @@ angular.module('catalogueApp')
 
       // START: call to create leads API through sheet
       $scope.importLeadsThroughSheet = function(){
+        $scope.importLeadsSuccess = true;
         var token = $rootScope.globals.currentUser.token;
         if ($scope.file) {
           Upload.upload({
@@ -351,11 +365,12 @@ angular.module('catalogueApp')
               headers: {'Authorization': 'JWT ' + token}
           }).then(function onSuccess(response){
                 console.log(response);
+                $scope.importLeadsSuccess = false;
                 swal(constants.name,constants.create_success,constants.success);
           })
           .catch(function onError(response) {
               console.log(response);
-
+              $scope.importLeadsSuccess = false;
             });
       }
       }
@@ -390,6 +405,10 @@ angular.module('catalogueApp')
         console.log($scope.leadFormFields);
         $scope.leadFormFields.push(angular.copy(leadFormField));
       }
+      $scope.addNewLeadFormField = function(){
+        console.log($scope.newLeadFormFields);
+        $scope.newLeadFormFields.push(angular.copy(leadFormField));
+      }
 
 
       // END: add lead form fields
@@ -402,6 +421,14 @@ angular.module('catalogueApp')
         $scope.optionForm.option = undefined;
         }
 
+        $scope.addNewKeyOption = function(option,index){
+
+          if(!$scope.newLeadFormFields[index].hasOwnProperty('key_options')){
+              $scope.newLeadFormFields[index]['key_options'] = [];
+          }
+          $scope.newLeadFormFields[index]['key_options'].push(option);
+          $scope.optionForm.option = undefined;
+          }
 
       $scope.getMultipleLeadForms = function(supplier){
         $scope.changeView('viewLeadForms',$scope.campaignInfo);
@@ -490,6 +517,32 @@ angular.module('catalogueApp')
 
           $scope.exportedFile = response.data.data.filepath;
           console.log(response);
+        }).catch(function onError(response){
+          console.log(response);
+        })
+      }
+
+      $scope.updateLeadForm = function(){
+        console.log($scope.newLeadFormFields);
+        campaignLeadsService.updateLeadForm($scope.leads_form_id,$scope.newLeadFormFields)
+        .then(function onSuccess(response){
+          console.log(response);
+          $scope.newLeadFormFields = [];
+          $('#addNewLeadFormFields').modal('hide');
+          swal(constants.name,constants.add_data_success, constants.success);
+          $scope.changeView('viewLeadForms',$scope.campaignInfo);
+        }).catch(function onError(response){
+          console.log(response);
+        })
+      }
+      $scope.removeFieldFromForm = function(item){
+        console.log(item);
+        var data = {};
+        campaignLeadsService.removeFieldFromForm($scope.leads_form_id,item.item_id, data)
+        .then(function onSuccess(response){
+          console.log(response);
+          swal(constants.name,constants.delete_success, constants.success);
+          $scope.changeView('viewLeadForms',$scope.campaignInfo);
         }).catch(function onError(response){
           console.log(response);
         })
