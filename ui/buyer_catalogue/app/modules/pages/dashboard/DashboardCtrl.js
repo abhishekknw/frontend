@@ -866,7 +866,7 @@
      var curDate = new Date();
      angular.forEach(data, function(dates,invKey){
        angular.forEach(dates, function(activities,dateKey){
-         if(new Date(dateKey) < curDate){
+         if(new Date(dateKey) <= curDate){
            if(!$scope.historyData.hasOwnProperty(dateKey)){
              $scope.historyData[dateKey] = {};
            }

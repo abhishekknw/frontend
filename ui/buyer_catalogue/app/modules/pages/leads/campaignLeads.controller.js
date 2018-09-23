@@ -459,6 +459,9 @@ angular.module('catalogueApp')
         campaignLeadsService.saveLeads($scope.leadFormId,data)
         .then(function onSuccess(response){
           console.log(response);
+          $scope.leadModelData = [];
+          $scope.leadModelData = angular.copy($scope.leadFormFields.leads_form_items);
+          swal(constants.name, constants.add_data_success, constants.success);
         }).catch(function onError(response){
           console.log(response);
         })
