@@ -79,7 +79,7 @@
                      </tr>
                    </thead>
                        <tbody>
-                       <tr ng-repeat="(key,item) in historyData">
+                       <tr ng-repeat="(key,item) in historyData" ng-if="$index < 15">
                          <td class="col-xs-3" style="background-color: #8e1921;"><a ng-click="getDateData(key)">{{key| date :'d-MMM-yy'}}</a></td>
                          <td class="col-xs-8">
                            <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="greenColor" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100==100" type="button" name="button" class="btn btn-danger">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}  &#10004;</button>
@@ -142,8 +142,7 @@
                                           <div class="pie-chart-item-container ng-scope">
                                               <div class="custom-panel">
                                                   <uib-accordion close-others="oneAtATime">
-                                                      <div uib-accordion-group  panel-class="panel panel-blur date-grid-tab custom-panel" ng-click="getAssignedIdsAndImages(date,act.header,inv.header)"
-                                                          is-disabled="!inventoryActivityCountData[inv.header][date][act.header] || inventoryActivityCountData[inv.header][date][act.header].actual==0" >
+                                                      <div uib-accordion-group  panel-class="panel panel-blur date-grid-tab custom-panel" ng-click="getAssignedIdsAndImages(date,act.header,inv.header)">
                                                           <div uib-accordion-heading class="container">
                                                               <div class="pie-chart-item ng-scope">
                                                                   <div class="row" ng-if="inventoryActivityCountData[inv.header][date][act.header]">
@@ -245,14 +244,16 @@
                                       <td class="table-id">{{$index + 1}}</td>
                                       <td><a ng-click="getDatewiseSuppliersInventory(item.proposalId,item.name)">{{item.name}}</a></td>
                                       <td>{{invName}}</td>
+                                      <td>{{item.assigned}}</td>
                                       <td>{{item.inv_count}}</td>
                                       <td>{{item.offTimeDays/item.inv_count*100|limitTo:4||0}} </td>
                                       <td class="col-md-2">{{item.offLocationDistance/item.inv_count|limitTo:10||0}}
                                          ({{(item.offLocationDistance/item.inv_count)/1000|limitTo:10||0}}km)</td>
                                       <td class="col-md-2" ng-if="item.images.length > 0"><a data-target="#imageModal" data-toggle="modal" ng-click="setImageUrl(item,item.images)">View Images</a></td>
                                       <td ng-if="item.images.length == 0"><label>No Image<label></td>
-                                      <td class="col-md-2" ng-if="item.images.length > 0">
-                                        <a data-target="#imageHashtag" data-toggle="modal" ng-click="getHashtagImages(item)">View Other Images</a></td>
+                                      <td class="col-md-2">
+                                        <a data-target="" data-toggle="modal" ng-click="getHashtagImages(item)">View Other Images</a>
+                                      </td>
 
                                       </tr>
                                   </tbody>

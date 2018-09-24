@@ -62,6 +62,16 @@
           var url = url_base_leads + formId + "/generate_lead_form";
           return machadaloHttp.get(url);
         }
+
+        campaignLeadsService.updateLeadForm = function(formId, data){
+          var url = url_base_leads + formId + "/add_fields";
+          return machadaloHttp.put(url,data);
+        }
+
+        campaignLeadsService.removeFieldFromForm = function(formId, itemId, data){
+          var url = url_base_leads + formId + "/delete_form_element/" + itemId;
+          return machadaloHttp.put(url,data);
+        }
         return campaignLeadsService;
 
  }]);

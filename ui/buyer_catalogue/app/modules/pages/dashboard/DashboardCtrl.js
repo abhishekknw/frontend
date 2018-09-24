@@ -43,6 +43,7 @@
         $scope.supHeaders = [
           {header : 'Campaign Name', key : 'proposal_name'},
           {header : 'Inventory', key : 'supplier_name'},
+          {header : 'Total Assigned', key : 'assigned'},
           {header : 'Today Released', key : 'inv_type'},
           {header : 'Average Delay(In Hours)', key : 'act_name'},
           {header : 'Average Off Location(Meters)', key : 'act_name'},
@@ -231,7 +232,12 @@
               campaignData['offTimeCount'] = 0;
               campaignData['offTimeDays'] = 0;
               campaignData['offLocationDistance'] = 0;
-              angular.forEach(data, function(items,inv){
+              campaignData['assigned'] = Object.keys(data.assigned).length;
+
+              if(!campaignData['proposalId']){
+                campaignData['proposalId'] = data.assigned[Object.keys(data.assigned)[0]][0].proposal_id;
+              }
+              angular.forEach(data.completed, function(items,inv){
                 campaignData.inv_count += 1;
                 campaignData[inv] = {};
                 campaignData[inv]['onLocation'] = false;
@@ -289,6 +295,7 @@
               campaignReleaseData['totalOffTimeDays'] += campaignData['offTimeDays'];
 
               campaignReleaseData.push(campaignData);
+              console.log(campaignData,campaignReleaseData);
             })
             $scope.campaignReleaseData = campaignReleaseData;
             if($scope.campaignReleaseData.length){
@@ -856,20 +863,24 @@
 
    var getHistory = function(data){
      $scope.historyData = {};
+     var curDate = new Date();
      angular.forEach(data, function(dates,invKey){
        angular.forEach(dates, function(activities,dateKey){
-         if(!$scope.historyData.hasOwnProperty(dateKey)){
-           $scope.historyData[dateKey] = {};
-         }
-         angular.forEach(activities, function(count,actKey){
-           if(!$scope.historyData[dateKey].hasOwnProperty(actKey)){
-             $scope.historyData[dateKey][actKey] = {};
-             $scope.historyData[dateKey][actKey]['actual'] = 0;
-             $scope.historyData[dateKey][actKey]['total'] = 0;
+         if(new Date(dateKey) <= curDate){
+           if(!$scope.historyData.hasOwnProperty(dateKey)){
+             $scope.historyData[dateKey] = {};
            }
-           $scope.historyData[dateKey][actKey].actual += data[invKey][dateKey][actKey].actual;
-           $scope.historyData[dateKey][actKey].total += data[invKey][dateKey][actKey].total;
-         })
+           angular.forEach(activities, function(count,actKey){
+             if(!$scope.historyData[dateKey].hasOwnProperty(actKey)){
+               console.log(dateKey,invKey,actKey);
+               $scope.historyData[dateKey][actKey] = {};
+               $scope.historyData[dateKey][actKey]['actual'] = 0;
+               $scope.historyData[dateKey][actKey]['total'] = 0;
+             }
+             $scope.historyData[dateKey][actKey].actual += data[invKey][dateKey][actKey].actual;
+             $scope.historyData[dateKey][actKey].total += data[invKey][dateKey][actKey].total;
+           })
+         }
        })
      })
    }
@@ -1408,6 +1419,12 @@ $scope.getHashtagImages = function(item){
       $scope.hashTagImageData.push(imageData);
     })
     console.log($scope.hashTagImageData);
+    if(!$scope.hashTagImageData.length){
+      $('#imageHashtag').modal('hide');
+      swal(constants.name, "No Hashtag Images Clicked", constants.warning);
+    }else {
+      $('#imageHashtag').modal('show');
+    }
   }).catch(function onError(response){
     console.log(response);
   })

@@ -392,22 +392,25 @@ angular
         console.log(event);
          console.log("location change start - Whence: " + whence);
          // redirect to login page if not logged in
-         $rootScope.globals.currentUser = AuthService.UserInfo();
+         $rootScope.globals.currentUser = AuthService.UserInfo();         
+         var category = $rootScope.globals.userInfo.profile.organisation.category;
          if (!$rootScope.globals.currentUser) {
            if($location.path() != '/login')
               $cookieStore.put('returnUrl', $location.url());
            $location.path('/login');
-         }else if ($rootScope.globals.currentUser && $location.path() == '/guestHomePage') {
+         }else if ($rootScope.globals.currentUser && $location.path() == '/guestHomePage' && category != 'BUSINESS') {
            $location.path("/guestHomePage");
          }else if ($rootScope.globals.currentUser && $location.path() == '/logout'){
            AuthService.Logout();
            $location.path("/login");
-         }else if ($rootScope.globals.currentUser && typeof $cookieStore.get('returnUrl') != 'undefined' && $cookieStore.get('returnUrl')){
+         }else if ($rootScope.globals.currentUser && typeof $cookieStore.get('returnUrl') != 'undefined' && $cookieStore.get('returnUrl') && category != 'BUSINESS'){
            $location.path($cookieStore.get('returnUrl'));
            $cookieStore.remove('returnUrl');
-         }else if ($rootScope.globals.currentUser && ($location.path() == '/login' || $location.path() == '/') && ($window.localStorage.user_code != 'guestUser')){
+         }else if ($rootScope.globals.currentUser && ($location.path() == '/login' || $location.path() == '/') && ($window.localStorage.user_code != 'guestUser') && category != 'BUSINESS'){
            $location.path("/manageCampaign/create");
-         }else {
+         }else if(category == 'BUSINESS'){
+           $location.path("/dashboard");
+         } else if(category != 'BUSINESS'){
            $location.path(whence);
          }
        });
