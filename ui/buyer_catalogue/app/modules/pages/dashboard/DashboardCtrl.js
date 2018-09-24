@@ -60,6 +60,9 @@
           upcoming : {
             status : 'upcoming', value : false, campaignLabel : 'Upcoming Campaigns', supplierLabel : 'Upcoming Societies'
           },
+          onhold : {
+            status : 'onhold', value : false, campaignLabel : 'On Hold Campaigns', supplierLabel : 'Societies'
+          },
         };
         $scope.charts = {
           pie : { name : 'Pie Chart', value : 'pie' },

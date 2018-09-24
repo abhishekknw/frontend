@@ -402,6 +402,24 @@
                                           </div>
                                       </div>
                                   </div>
+                                  <div class="panel panel-default">
+                                      <div class="panel-heading" ng-click="getCampaignsMenu(campaignStatus.onhold.status)">
+                                          <h4 class="panel-title">
+                                              On Hold Campaigns
+                                          </h4>
+                                      </div>
+                                      <div id="upcoming" class="animate-show" ng-show="campaignStatus.upcoming.value">
+                                          <div class="panel-bodyDashboard camp-menu-content">
+                                              <table class="table">
+                                                  <tr ng-repeat="campaign in campaignData.onhold_campaigns">
+                                                    <td ng-click="getSuppliersOfCampaignWithStatus(campaign)">
+                                                      {{campaign.name}}
+                                                    </td>
+                                                  </tr>
+                                              </table>
+                                          </div>
+                                      </div>
+                                  </div>
 
 
                               </div>
@@ -1180,6 +1198,42 @@
                                           <div class="panel-bodyDashboard camp-menu-content">
                                             <table class="table">
                                                 <tr ng-repeat="campaign in campaignData.upcoming_campaigns">
+                                                <td >
+                                                  <md-menu>
+                                                     <div class="" ng-click="openMenu($mdMenu, $event)">
+                                                       {{campaign.name}}
+                                                     </div>
+                                                     <md-menu-content width="4">
+                                                       <md-menu-item>
+                                                         <md-button ng-click="getLeadsByCampaign(campaign.campaign)">
+                                                           Lead
+                                                         </md-button>
+                                                       </md-menu-item>
+                                                       <md-menu-divider></md-menu-divider>
+                                                       <md-menu-item ng-click="getontimelocation(ontimelocation.showdrop.status)">
+                                                         <md-button ng-click="getCampaignFilters(campaign.campaign)">
+                                                           Inventory
+                                                         </md-button>
+                                                       </md-menu-item>
+                                                       <md-menu-divider></md-menu-divider>
+                                                     </md-menu-content>
+                                                   </md-menu>
+                                                  </td>
+                                                </tr>
+                                            </table>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="panel panel-default">
+                                      <div class="panel-heading" ng-click="getCampaignsMenu(campaignStatus.onhold.status)">
+                                          <h4 class="panel-title">
+                                              On Hold Campaigns
+                                          </h4>
+                                      </div>
+                                      <div id="onhold" class="animate-show" ng-show="campaignStatus.onhold.value">
+                                          <div class="panel-bodyDashboard camp-menu-content">
+                                            <table class="table">
+                                                <tr ng-repeat="campaign in campaignData.onhold_campaigns">
                                                 <td >
                                                   <md-menu>
                                                      <div class="" ng-click="openMenu($mdMenu, $event)">
