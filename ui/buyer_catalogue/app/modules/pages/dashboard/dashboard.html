@@ -71,9 +71,9 @@
                      <tr>
                        <td style="color:#ffffff !important;">DATE</td>
                        <td>
-                         <button type="button" name="button" class="col-xs-3" style="margin: 0px 9px 0px -1px;width:60px;height:45px;color:black;background-color:#ffe000;">R (%)</button>
+                         <button type="button" name="button" class="col-xs-5" style="margin: 0px 9px 0px -1px;width:80px;height:70px;color:black;background-color:#ffe000;">Total Release (%)</button>
                          <!-- <button type="button" name="button" class="col-xs-3" style="margin: 0px 9px 0px -1px;width:60px;height:45px;color:black;background-color:#ffe000;">A (%)</button> -->
-                         <button type="button" name="button" class="col-xs-3" style="margin: 0px 9px 0px -1px;width:60px;height:45px;color:black;background-color:#ffe000;">C (%)</button>
+                         <button type="button" name="button" class="col-xs-5" style="margin: 0px 9px 0px -1px;width:80px;height:70px;color:black;background-color:#ffe000;">Total Closure (%)</button>
                         </td>
 
                      </tr>
@@ -81,12 +81,12 @@
                        <tbody>
                        <tr ng-repeat="(key,item) in historyData" ng-if="$index < 15">
                          <td class="col-xs-3" style="background-color: #8e1921;"><a ng-click="getDateData(key)">{{key| date :'d-MMM-yy'}}</a></td>
-                         <td class="col-xs-8">
-                           <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="greenColor" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100==100" type="button" name="button" class="btn btn-danger">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}  &#10004;</button>
-                           <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="yellowColor" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 75 &&
-                           item['RELEASE'].actual/item['RELEASE'].total*100 < 100" type="button" name="button"> {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
-                           <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="redColor" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 < 75" type="button" name="button">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
-                           <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:60px;height:35px;cursor:default;" ng-if="!item['RELEASE'].total" type="button" name="button">NA</button>
+                         <td class="col-xs-6">
+                           <button class="col-xs-5 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;" id="greenColor" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100==100" type="button" name="button" class="btn btn-danger">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}  &#10004;</button>
+                           <button class="col-xs-5 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;" id="lightGreen" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 75 && item['RELEASE'].actual/item['RELEASE'].total*100 != 100" type="button" name="button"> {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
+                           <button class="col-xs-5 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;" id="yellow" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 50 && item['RELEASE'].actual/item['RELEASE'].total*100 < 75" type="button" name="button"> {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
+                           <button class="col-xs-5 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;" id="redColor" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 < 50" type="button" name="button">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
+                           <button class="col-xs-5 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;cursor:default;" ng-if="!item['RELEASE'].total" type="button" name="button">NA</button>
 
                            <!-- <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="greenColor" ng-if="item['AUDIT'].actual/item['AUDIT'].total*100==100" type="button" name="button">{{item['AUDIT'].actual/item['AUDIT'].total*100|limitTo:4||NA}}  &#10004;</button>
                            <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="yellowColor" ng-if="item['AUDIT'].actual/item['AUDIT'].total*100 >= 75 &&
@@ -94,11 +94,13 @@
                            <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="redColor" ng-if="item['AUDIT'].actual/item['AUDIT'].total*100 < 75" type="button" name="button">{{item['AUDIT'].actual/item['AUDIT'].total*100|limitTo:4||NA}}</button>
                            <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:60px;height:35px;cursor:default;" ng-if="!item['AUDIT'].total" type="button" name="button">NA</button> -->
 
-                         <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="greenColor" ng-if="item['CLOSURE'].actual/item['CLOSURE'].total*100 == 100" type="button" name="button"> {{item['CLOSURE'].actual/item['CLOSURE'].total*100|limitTo:4||NA}}  &#10004;</button>
-                         <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="yellowColor" ng-if="item['CLOSURE'].actual/item['CLOSURE'].total*100 >= 75 &&
-                         item['CLOSURE'].actual/item['CLOSURE'].total*100 < 100" type="button" name="button">{{item['CLOSURE'].actual/item['CLOSURE'].total*100|limitTo:4||NA}}</button>
-                         <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="redColor" ng-if="item['CLOSURE'].actual/item['CLOSURE'].total*100 < 75" type="button" name="button">{{item['CLOSURE'].actual/item['CLOSURE'].total*100|limitTo:4||NA}}</button>
-                         <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:60px;height:35px;cursor:default;" ng-if="!item['CLOSURE'].total" type="button" name="button">NA</button>
+
+                         <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;" id="greenColor" ng-if="item['CLOSURE'].actual/item['CLOSURE'].total*100==100" type="button" name="button" class="btn btn-danger">{{item['CLOSURE'].actual/item['CLOSURE'].total*100|limitTo:4||NA}}  &#10004;</button>
+                         <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;" id="lightGreen" ng-if="item['CLOSURE'].actual/item['CLOSURE'].total*100 >= 75 && item['CLOSURE'].actual/item['CLOSURE'].total*100 != 100" type="button" name="button"> {{item['CLOSURE'].actual/item['CLOSURE'].total*100|limitTo:4||NA}}</button>
+                         <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;" id="yellow" ng-if="item['CLOSURE'].actual/item['CLOSURE'].total*100 >= 50 && item['CLOSURE'].actual/item['CLOSURE'].total*100 < 75" type="button" name="button"> {{item['CLOSURE'].actual/item['CLOSURE'].total*100|limitTo:4||NA}}</button>
+                         <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;" id="redColor" ng-if="item['CLOSURE'].actual/item['CLOSURE'].total*100 < 50" type="button" name="button">{{item['CLOSURE'].actual/item['CLOSURE'].total*100|limitTo:4||NA}}</button>
+                         <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;cursor:default;" ng-if="!item['CLOSURE'].total" type="button" name="button">NA</button>
+
                          </td>
                        </tr>
 
