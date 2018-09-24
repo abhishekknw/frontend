@@ -16,7 +16,7 @@
    'POSTER' : 'PO',
    'STALL' : 'SL',
    'STANDEE' : 'ST',
-   'FLYER' : 'FL',
+   'FLIER' : 'FL',
    'GATEWAY ARCH' : 'GA'
  };
         $scope.invKeys = [
