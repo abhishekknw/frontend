@@ -39,38 +39,7 @@
 
 
   </head>
-  <style>
-  svg {
-    font: 10px sans-serif;
-    shape-rendering: crispEdges;
-  }
-  g.axis path, g.axis line {
-  		fill: none;
-  		stroke: black;
-  		shape-rendering: crispEdges;
-  	}
-  	g.brush rect.extent {
-  		fill-opacity: 0.2;
-  	}
-  	.resize path {
-  		fill-opacity: 0.2;
-  	}
-  .toolTip {
-         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-         position: absolute;
-         display: none;
-         width: auto;
-         height: auto;
-         background: none repeat scroll 0 0 white;
-         border: 0 none;
-         border-radius: 8px 8px 8px 8px;
-         box-shadow: -3px 3px 15px #888888;
-         color: black;
-         font: 12px sans-serif;
-         padding: 5px;
-         text-align: center;
-     }
-</style>
+
   <body ng-cloak>
 
     <div class="body-bg"></div>
@@ -103,7 +72,7 @@
                        <td style="color:#ffffff !important;">DATE</td>
                        <td>
                          <button type="button" name="button" class="col-xs-3" style="margin: 0px 9px 0px -1px;width:60px;height:45px;color:black;background-color:#ffe000;">R (%)</button>
-                         <button type="button" name="button" class="col-xs-3" style="margin: 0px 9px 0px -1px;width:60px;height:45px;color:black;background-color:#ffe000;">A (%)</button>
+                         <!-- <button type="button" name="button" class="col-xs-3" style="margin: 0px 9px 0px -1px;width:60px;height:45px;color:black;background-color:#ffe000;">A (%)</button> -->
                          <button type="button" name="button" class="col-xs-3" style="margin: 0px 9px 0px -1px;width:60px;height:45px;color:black;background-color:#ffe000;">C (%)</button>
                         </td>
 
@@ -119,11 +88,11 @@
                            <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="redColor" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 < 75" type="button" name="button">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
                            <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:60px;height:35px;cursor:default;" ng-if="!item['RELEASE'].total" type="button" name="button">NA</button>
 
-                           <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="greenColor" ng-if="item['AUDIT'].actual/item['AUDIT'].total*100==100" type="button" name="button">{{item['AUDIT'].actual/item['AUDIT'].total*100|limitTo:4||NA}}  &#10004;</button>
+                           <!-- <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="greenColor" ng-if="item['AUDIT'].actual/item['AUDIT'].total*100==100" type="button" name="button">{{item['AUDIT'].actual/item['AUDIT'].total*100|limitTo:4||NA}}  &#10004;</button>
                            <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="yellowColor" ng-if="item['AUDIT'].actual/item['AUDIT'].total*100 >= 75 &&
                            item['AUDIT'].actual/item['AUDIT'].total*100 < 100" type="button" name="button"> {{item['AUDIT'].actual/item['AUDIT'].total*100|limitTo:4||NA}}</button>
                            <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="redColor" ng-if="item['AUDIT'].actual/item['AUDIT'].total*100 < 75" type="button" name="button">{{item['AUDIT'].actual/item['AUDIT'].total*100|limitTo:4||NA}}</button>
-                           <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:60px;height:35px;cursor:default;" ng-if="!item['AUDIT'].total" type="button" name="button">NA</button>
+                           <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:60px;height:35px;cursor:default;" ng-if="!item['AUDIT'].total" type="button" name="button">NA</button> -->
 
                          <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="greenColor" ng-if="item['CLOSURE'].actual/item['CLOSURE'].total*100 == 100" type="button" name="button"> {{item['CLOSURE'].actual/item['CLOSURE'].total*100|limitTo:4||NA}}  &#10004;</button>
                          <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="yellowColor" ng-if="item['CLOSURE'].actual/item['CLOSURE'].total*100 >= 75 &&
@@ -150,9 +119,9 @@
                                   <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
                                       <h4 class="date-tab-heading" style="color:rgb(53, 9, 6)">Release</h4>
                                   </div>
-                                  <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
+                                  <!-- <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
                                       <h4 class="date-tab-heading" style="color:rgb(53, 9, 6)">Audit</h4>
-                                  </div>
+                                  </div> -->
                                   <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
                                       <h4 class="date-tab-heading" style="color:rgb(53, 9, 6)">Closure</h4>
                                   </div>
@@ -168,7 +137,7 @@
                           </div>
                           <div class="col-xlg-10 col-lg-10 col-md-10 col-sm-10 col-xs-10" ng-if="inventoryActivityCountData[inv.header][date]">
                               <div class="row">
-                                  <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center" ng-repeat="act in actKeys">
+                                  <div class="col-xlg-6 col-lg-6 col-md-6 col-sm-6 col-xs-6" ng-repeat="act in actKeys">
                                       <div class="form-group has-success">
                                           <div class="pie-chart-item-container ng-scope">
                                               <div class="custom-panel">
@@ -258,8 +227,9 @@
                       </div>
                         <div class="col-md-12" ng-if="showAssignedInvTable">
                                 <div class="col-md-12 InventoryTable1">
-                                <div class="panel-heading content-title">
-                              <h5 style="background:'red';color:white;">Campaign Details ({{invName}}, {{actType}})</h5>
+                                <div class="panel-heading content-title" style="height:70px;">
+                                <h5 style="background:'red';color:white;">Campaign Details ({{invName}}, {{actType}})</h5>
+                                <h5 class="pull-right">{{date|date : "dd-MM-yyyy"}}</h5>
                         </div>
                               <table st-safe-src="rowCollection" st-table="displayed" st-pipe="callServer" class="table-responsive table table-bordered">
                                 <thead>

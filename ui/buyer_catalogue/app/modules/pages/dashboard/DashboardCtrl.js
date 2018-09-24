@@ -35,7 +35,7 @@
         };
         $scope.actKeys = [
           {header : 'RELEASE', key : 'release', label1 : 'Released', label2 : 'UnReleased'},
-          {header : 'AUDIT', key : 'audit', label1 : 'Audited', label2 : 'UnAudited'},
+          // {header : 'AUDIT', key : 'audit', label1 : 'Audited', label2 : 'UnAudited'},
           {header : 'CLOSURE', key : 'closure', label1 : 'Closed', label2 : 'UnClosed' },
         ];
 
@@ -45,7 +45,7 @@
           {header : 'Inventory', key : 'supplier_name'},
           {header : 'Total Assigned', key : 'assigned'},
           {header : 'Today Released', key : 'inv_type'},
-          {header : 'Average Delay(%)', key : 'act_name'},
+          {header : 'Average Delay(In Hours)', key : 'act_name'},
           {header : 'Average Off Location(Meters)', key : 'act_name'},
           {header : 'Images', key : 'images'},
           {header : 'Other Images', key : 'hashtagimages'},
