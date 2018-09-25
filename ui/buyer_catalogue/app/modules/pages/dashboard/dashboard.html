@@ -256,9 +256,9 @@
 
                                       <td class="col-md-2" ng-if="item.images.length > 0"><a data-target="#imageModal" data-toggle="modal" ng-click="setImageUrl(item,item.images)">View Images</a></td>
                                       <td ng-if="item.images.length == 0"><label>No Image<label></td>
-                                      <td class="col-md-2">
+                                      <!-- <td class="col-md-2">
                                         <a data-target="" data-toggle="modal" ng-click="getHashtagImages(item)">View Other Images</a>
-                                      </td>
+                                      </td> -->
 
                                       </tr>
                                   </tbody>
@@ -377,12 +377,12 @@
                                   </div>
 
                                   <div class="panel panel-default">
-                                      <div class="panel-heading" ng-click="getCampaignsMenu(campaignStatus.upcoming.status)">
+                                      <div class="panel-heading" ng-click="switchToInventory(campaignStatus.upcoming.status)">
                                           <h4 class="panel-title">
                                               Upcoming Campaigns
                                           </h4>
                                       </div>
-                                      <div id="upcoming" class="animate-show" ng-show="campaignStatus.upcoming.value">
+                                      <!-- <div id="upcoming" class="animate-show" ng-show="campaignStatus.upcoming.value">
                                           <div class="panel-bodyDashboard camp-menu-content">
                                               <table class="table">
                                                   <tr ng-repeat="campaign in campaignData.upcoming_campaigns">
@@ -392,7 +392,7 @@
                                                   </tr>
                                               </table>
                                           </div>
-                                      </div>
+                                      </div> -->
                                   </div>
                                   <div class="panel panel-default">
                                       <div class="panel-heading" ng-click="getCampaignsMenu(campaignStatus.onhold.status)">
@@ -400,7 +400,7 @@
                                               On Hold Campaigns
                                           </h4>
                                       </div>
-                                      <div id="upcoming" class="animate-show" ng-show="campaignStatus.upcoming.value">
+                                      <div id="onhold" class="animate-show" ng-show="campaignStatus.onhold.value">
                                           <div class="panel-bodyDashboard camp-menu-content">
                                               <table class="table">
                                                   <tr ng-repeat="campaign in campaignData.onhold_campaigns">
