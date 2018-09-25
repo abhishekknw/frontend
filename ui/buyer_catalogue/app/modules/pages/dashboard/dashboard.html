@@ -251,14 +251,14 @@
                                       <td>{{item.inv_count}}</td>
                                       <td ng-if="item.inv_count != 0">{{item.offTimeDays}} </td>
                                       <td ng-if="item.inv_count == 0">Not Allowed</td>
-                                      <td ng-if="item.inv_count == 0">Not Allowed</td>
-                                      <td ng-if="checkNan(item.offLocationDistance)">Not Applicable</td>
-                                      <td class="col-md-2" ng-if="!checkNan(item.offLocationDistance) && item.inv_count != 0">{{item.offLocationDistance/item.inv_count|limitTo:10||0}}
+                                      <td ng-if="item.inv_count == 0 && item.offLocationDistance == 0">Not Allowed</td>
+                                      <td ng-if="checkNan(item.offLocationDistance) || item.offLocationDistance == 0 && item.inv_count != 0">Not Applicable</td>
+                                      <td class="col-md-2" ng-if="!checkNan(item.offLocationDistance) && item.inv_count != 0 && item.offLocationDistance != 0">{{item.offLocationDistance/item.inv_count|limitTo:10||0}}
                                          ({{(item.offLocationDistance/item.inv_count)/1000|limitTo:10||0}}km)</td>
                                       <td class="col-md-2" ng-if="item.images.length > 0"><a data-target="#imageModal" data-toggle="modal" ng-click="setImageUrl(item,item.images)">View Images</a></td>
                                       <td ng-if="item.images.length == 0"><label>No Image<label></td>
 
-                                      </tr>
+                                       == 0>
                                   </tbody>
                               </table>
                           </div>
