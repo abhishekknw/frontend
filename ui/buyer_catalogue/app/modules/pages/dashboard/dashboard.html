@@ -837,7 +837,7 @@
                                       <td>Flier</td>
                                       <td>Standee</td>
                                       <td>Stall</td>
-                                      <td>Other Iamges</td>
+                                      <td>Other Images</td>
 
                                     </tr>
 
@@ -845,33 +845,65 @@
                                       <tbody>
                                       <tr ng-repeat="supplier in supplierAndInvData |filter:query ">
                                         <td style="vertical-align:middle">{{$index + 1}}</td>
-                                        <td>{{supplier.supplier.society_name}}</td>
+                                        <td class="col-md-4">{{supplier.supplier.society_name}}</td>
                                         <td>{{supplier.supplier.society_locality}} ({{supplier.supplier.society_subarea}})</td>
                                         <td>{{supplier.supplier.society_type_quality}}</td>
                                         <td>{{supplier.supplier.flat_count}}</td>
                                         <td>{{supplier.leads_data.total_leads_count}} ({{supplier.leads_data.leads_flat_percentage}})</td>
                                         <td>{{supplier.leads_data.hot_leads_count}} ({{supplier.leads_data.hot_leads_percentage}})</td>
-                                        <td ng-if="supplier.images_data.POSTER"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.POSTER.images)">{{supplier.images_data.POSTER.total_count}}</a></td>
-                                        <td ng-if="supplier.images_data.FLIER"><a data-target="#posterImageModal" data-toggle="modal" ng-click="PosterImageUrl(item,item.images)">{{supplier.images_data.FLIER.total_count}}</a></td>
-                                        <td ng-if="supplier.images_data.STANDEE"><a data-target="#posterImageModal" data-toggle="modal" ng-click="PosterImageUrl(item,item.images)">{{supplier.images_data.STANDEE.total_count}}</a></td>
-                                        <td ng-if="supplier.images_data.STALL"><a data-target="#posterImageModal" data-toggle="modal" ng-click="PosterImageUrl(item,item.images)">{{supplier.images_data.STALL.total_count}}</a></td>
+                                        <td ng-if="supplier.images_data.POSTER"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.POSTER.images)">Images ({{supplier.images_data.POSTER.total_count}})</a></td>
+                                        <td ng-if="!supplier.images_data.POSTER">No Images</td>
 
+                                        <td ng-if="supplier.images_data.FLIER"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.FLIER.images)">Images ({{supplier.images_data.FLIER.total_count}})</a></td>
+                                        <td ng-if="!supplier.images_data.FLIER">No Images</td>
 
+                                        <td ng-if="supplier.images_data.STANDEE"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.STANDEE.images)">Images ({{supplier.images_data.STANDEE.total_count}})</a></td>
+                                        <td ng-if="!supplier.images_data.STANDEE">No Images</td>
 
+                                        <td ng-if="supplier.images_data.STALL"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.STALL.images)">Images ({{supplier.images_data.STALL.total_count}})</a></td>
+                                        <td ng-if="!supplier.images_data.STALL">No Images</td>
+
+                                        <td>
+                                          <table class="table-responsive table table-bordered ">
+                                            <tr>
+                                              <td ng-if="supplier.images_data.BANNER" style="background-color:#cb1925">BANNER</td>
+                                              <td ng-if="supplier.images_data.BANNER"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.BANNER.images)">{{supplier.images_data.BANNER.total_count}}</a></td>
+                                            </tr>
+                                            <tr>
+                                              <td ng-if="supplier.images_data['OTHER IMAGES']" style="background-color:#cb1925">OTHER IMAGES</td>
+                                              <td ng-if="supplier.images_data['OTHER IMAGES']"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['OTHER IMAGES'].images)">{{supplier.images_data['OTHER IMAGES'].total_count}}</a></td>
+                                              <!-- <td ng-if="!supplier.images_data['OTHER IMAGES']">NA</td> -->
+                                            </tr>
+                                            <tr>
+                                              <td ng-if="supplier.images_data['CERTIFICATION DISTRIBUTION']" style="background-color:#cb1925">CERTIFICATION DISTRIBUTION</td>
+                                              <td ng-if="supplier.images_data['CERTIFICATION DISTRIBUTION']"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['CERTIFICATION DISTRIBUTION'].images)">{{supplier.images_data['CERTIFICATION DISTRIBUTION'].total_count}}</a></td>
+                                              <!-- <td ng-if="!supplier.images_data['CERTIFICATION DISTRIBUTION']">NA</td> -->
+                                            </tr>
+                                            <tr>
+                                            <td ng-if="supplier.images_data['STALL WITH PROMOTERS']" style="background-color:#cb1925">STALL WITH PROMOTERS</td>
+                                              <td ng-if="supplier.images_data['STALL WITH PROMOTERS']"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['STALL WITH PROMOTERS'].images)">{{supplier.images_data['STALL WITH PROMOTERS'].total_count}}</a></td>
+                                              <!-- <td ng-if="!supplier.images_data['CERTIFICATION DISTRIBUTION']">NA</td> -->
+                                            </tr>
+                                          </table>
+                                        </td>
                                           <!-- <td ng-init="calculateTotalCount('GATEWAY ARCH',supplier.supplier.inv_data['GATEWAY ARCH'].total.total)" ng-show="invStatusKeys['GATEWAY ARCH'].status">{{supplier.supplier.inv_data['GATEWAY ARCH'].total.total}}
                                           </td> -->
-                                          <td style="vertical-align:middle" ng-if="showLeads">{{supplier.leads_data.length}}</td>
+                                          <!-- <t d style="vertical-align:middle" ng-if="showLeads">{{supplier.leads_data.length}}</td> -->
 
                                         </tr>
 
                                         </tbody>
-                                        <tfoot>
+                                        <!-- <tfoot>
                                           <tr>
                                             <td>TOTAL</td>
-                                              <td>{{supplier.supplier}}</td>
                                               <td>{{length}}</td>
-                                            </tr>
-                                        </tfoot>
+                                              <td><button type="button" name="button" class="btn btn-primary" style="width:100%;color:black">{{invStatusKeys.STALL.total}}</button></td>
+                                              <td><button type="button" name="button" class="btn btn-primary" style="width:100%;color:black">totalFlats</button></td>
+                                              <td><button type="button" name="button" class="btn btn-primary" style="width:100%;color:black">{{invStatusKeys.FLIER.total}}</button></td>
+                                              <td><button type="button" name="button" class="btn btn-primary" style="width:100%;color:black">{{invStatusKeys.STANDEE.total}}</button></td>
+                                              <td><button type="button" name="button" class="btn btn-primary" style="width:100%;color:black">{{invStatusKeys['GATEWAY ARCH'].total}}</button></td>
+                                          </tr>
+                                        </tfoot> -->
                                     </table>
                                   </div>
 
@@ -1788,16 +1820,15 @@
         </div>
       </div>
     </div>
-
     <div id="posterImageModal" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">{{societyName}} Image Details</h4>
+            <h4 class="modal-title">{{campaignNameOnImageModal}} Image Details</h4>
             <hr/>
             <div class = "modal-body">
-              <div class="carousel" id="slider">
+              <div class="carousel" id="sliderofModal">
                  <div class="carousel-inner">
                    <div class="item" ng-class="{active:!$index}" ng-repeat="image in ImageURLListOfAll">
                      <div class="row">
@@ -1811,18 +1842,19 @@
                    </div>
 
                  </div>
-                  <a style="height:400px;" class="left carousel-control"  data-toggle="carousel" data-target = "#slider" role="button" data-slide="prev">
-                     <span class="glyphicon glyphicon-chevron-left"></span>
-                  </a>
-                 <a style="height:400px;" class="right carousel-control" data-toggle = "carousel" data-target = "#slider" role="button" data-slide="next">
-                   <span class="glyphicon glyphicon-chevron-right"></span>
+                 <a style="height:400px;" class="left carousel-control"  data-toggle="carousel" data-target = "#sliderofModal" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
                  </a>
+                <a style="height:400px;" class="right carousel-control" data-toggle = "carousel" data-target = "#sliderofModal" role="button" data-slide="next">
+                  <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
 
     <div id="imageHashtag" class="modal fade">
       <div class="modal-dialog">
