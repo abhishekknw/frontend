@@ -1125,21 +1125,22 @@
             <thead>
               <tr>
                 <th>Supplier Name</th>
-                <th>City</th>
-                <th>Area</th>
-                <th>Subarea</th>
-                <th>Flat Count</th>
+                <th>Flat</br>Count</th>
+                <th>Tower</br>Count</th>
+                <th>Type Of</br>Society</th>
+                <th>Area(SubArea)</th>
                 <th>Status</th>
+                <th>Supplier Details</th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="supplier in bookingSuppliersData">
                 <td>{{supplier.society_name}}</td>
-                <td>{{supplier.society_city}}</td>
-                <td>{{supplier.society_locality}}</td>
-                <td>{{supplier.society_subarea}}</td>
                 <td>{{supplier.flat_count}}</td>
-                <td>{{supplier.booking_status}}</td>
+                <td>{{supplier.tower_count}}</td>
+                <td>{{supplier.society_type_quality}}</td>
+                <td>{{supplier.society_locality}}({{supplier.society_subarea}})</td>
+                <td>{{bookingStatusSuppliers[supplier.booking_status]}}</td>
                 <td><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages" target="_blank">View Details</a></td>
               </tr>
             </tbody>

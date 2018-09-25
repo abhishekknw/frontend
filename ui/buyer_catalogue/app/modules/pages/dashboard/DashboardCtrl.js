@@ -10,8 +10,7 @@
  $scope.itemsByPage=15;
  $scope.query = "";
  $scope.oneAtATime = true;
- $scope.accordionArray = [];
-
+ $scope.bookingStatusSuppliers = constants.booking_status;
  $scope.rowCollection = [];
  $scope.invNameToCode = {
    'POSTER' : 'PO',
