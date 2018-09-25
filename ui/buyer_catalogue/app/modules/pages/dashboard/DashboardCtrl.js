@@ -48,7 +48,7 @@
           {header : 'Today Released', key : 'inv_type'},
           {header : 'Average Delay(In Hours)', key : 'act_name'},
           {header : 'Average Off Location(Meters)', key : 'act_name'},
-          {header : 'Images', key : 'images'},          
+          {header : 'Images', key : 'images'},
         ];
         $scope.campaignStatus = {
           ongoing : {
@@ -1217,10 +1217,29 @@
         $scope.longitude = supplier.supplier.society_longitude;
         $scope.societyName = supplier.supplier.society_name;
         $scope.length = $scope.supplierAndInvData.length;
+        $scope.societyName = supplier.supplier.society_name;
           angular.forEach(supplier.supplier.inv_data, function(inv,key){
           $scope.invStatusKeys[key].status = true;
           })
-          angular.forEach(supplier.leads_data, function(inv,key){
+          $scope.ImageURL = function(supplier,images){
+            console.log(supplier);
+            console.log(images);
+            $scope.ImageURLListOfAll = [];
+            angular.forEach(images, function(data){
+              console.log(data);
+                var imagesData = {
+                  image_url : 'http://androidtokyo.s3.amazonaws.com/' + data.image_path,
+                  comment : data.comment,
+                  // distance : data.distance,
+                };
+                console.log(imagesData);
+                $scope.ImageURLListOfAll.push(imagesData);
+
+            })
+            console.log($scope.ImageURLListOfAll);
+          }
+
+           angular.forEach(supplier.leads_data, function(inv,key){
             $scope.leads_data = inv;
 
             $scope.showLeads = true;
@@ -1353,6 +1372,7 @@ $scope.setImageUrl = function(item,images){
   console.log($scope.imageUrlList);
 }
 // map
+
 $scope.setInventoryInfoModalDetails = function(supplier,inv){
 }
 

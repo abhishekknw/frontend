@@ -169,7 +169,7 @@
                                                               </div>
                                                           </div>
 
-                                                          <div class="panel-group RELEASETable" id="accordion">
+                                                          <div class="panel-group RELEASETable" id="accordion[$index]">
                                                                   <div class="panel panel-default" style="border-radius:0!important;" ng-click="onTimeDetails = !onTimeDetails">
                                                                   <div class="panel-heading">
                                                                       <h4 class="panel-title" style="background-color:#8e1921  !important;">
@@ -206,8 +206,8 @@
                                                                     <td>{{campaignReleaseData.totalOnLocationCount}} : {{campaignReleaseData.totalOffLocationCount}}</td>
                                                                   </tr>
                                                                   <tr><td style="font:bold 12px/30px Georgia, serif;">Avg Off Loc. (Mts)</td>
-                                                                    <td>{{campaignReleaseData.totalOffLocationDistance / campaignReleaseData.totalInvCount |limitTo:10}}
-                                                                    ({{(campaignReleaseData.totalOffLocationDistance / campaignReleaseData.totalInvCount)/1000|limitTo:10}}Km) </td>
+                                                                  <td ng-if="checkNan(campaignReleaseData.totalOffLocationDistance / campaignReleaseData.totalInvCount)">NA</td>
+                                                                   <td ng-if="!checkNan(campaignReleaseData.totalOffLocationDistance / campaignReleaseData.totalInvCount)">{{campaignReleaseData.totalOffLocationDistance / campaignReleaseData.totalInvCount |limitTo:10}}
                                                                   </tr>
 
 
@@ -248,9 +248,12 @@
                                       <td>{{invName}}</td>
                                       <td>{{item.assigned}}</td>
                                       <td>{{item.inv_count}}</td>
-                                      <td>{{item.offTimeDays/item.inv_count*100|limitTo:4||0}} </td>
-                                      <td class="col-md-2">{{item.offLocationDistance/item.inv_count|limitTo:10||0}}
-                                         ({{(item.offLocationDistance/item.inv_count)/1000|limitTo:10||0}}km)</td>
+                                      <td ng-if="item.inv_count != 0">{{item.offTimeDays}} </td>
+                                      <td ng-if="item.inv_count == 0">Not Allowed</td>
+                                      <td ng-if="item.inv_count == 0 && item.offLocationDistance == 0">Not Allowed</td>
+                                      <td ng-if="checkNan(item.offLocationDistance) || item.offLocationDistance == 0 && item.inv_count != 0">Not Applicable</td>
+                                      <td class="col-md-2" ng-if="!checkNan(item.offLocationDistance) && item.inv_count != 0 && item.offLocationDistance != 0">{{item.offLocationDistance/item.inv_count|limitTo:10||0}}
+
                                       <td class="col-md-2" ng-if="item.images.length > 0"><a data-target="#imageModal" data-toggle="modal" ng-click="setImageUrl(item,item.images)">View Images</a></td>
                                       <td ng-if="item.images.length == 0"><label>No Image<label></td>
                                       <td class="col-md-2">
@@ -290,6 +293,18 @@
                           <td ng-if="inv.completed == 0">No Image</td>
                           <td></td>
                         </tr>
+                        <tr>
+                       <td><b>{{supplier.supplier_data.society_name}}</b></td>
+                          <td>Other Images(Banner)</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td><a data-target="" data-toggle="modal" ng-click="getHashtagImages()">View Other Images</a></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+
+                        </tr>
+
                       </tbody>
                     </table>
                   </div>
@@ -836,7 +851,10 @@
                                         <td>{{supplier.supplier.flat_count}}</td>
                                         <td>{{supplier.leads_data.total_leads_count}} ({{supplier.leads_data.leads_flat_percentage}})</td>
                                         <td>{{supplier.leads_data.hot_leads_count}} ({{supplier.leads_data.hot_leads_percentage}})</td>
-
+                                        <td ng-if="supplier.images_data.POSTER"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.POSTER.images)">{{supplier.images_data.POSTER.total_count}}</a></td>
+                                        <td ng-if="supplier.images_data.FLIER"><a data-target="#posterImageModal" data-toggle="modal" ng-click="PosterImageUrl(item,item.images)">{{supplier.images_data.FLIER.total_count}}</a></td>
+                                        <td ng-if="supplier.images_data.STANDEE"><a data-target="#posterImageModal" data-toggle="modal" ng-click="PosterImageUrl(item,item.images)">{{supplier.images_data.STANDEE.total_count}}</a></td>
+                                        <td ng-if="supplier.images_data.STALL"><a data-target="#posterImageModal" data-toggle="modal" ng-click="PosterImageUrl(item,item.images)">{{supplier.images_data.STALL.total_count}}</a></td>
 
 
 
@@ -1747,6 +1765,41 @@
               <div class="carousel" id="slider">
                  <div class="carousel-inner">
                    <div class="item" ng-class="{active:!$index}" ng-repeat="image in imageUrlList">
+                     <div class="row">
+                        <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
+                       </div>
+                       <div class="row" style="margin-left:10px;">
+                         Comment : {{image.comment}} </br>
+                         Distance : {{image.distance|limitTo:10}} mtrs, ({{image.distance/1000|limitTo:10}} kms)
+
+                       </div>
+                   </div>
+
+                 </div>
+                  <a style="height:400px;" class="left carousel-control"  data-toggle="carousel" data-target = "#slider" role="button" data-slide="prev">
+                     <span class="glyphicon glyphicon-chevron-left"></span>
+                  </a>
+                 <a style="height:400px;" class="right carousel-control" data-toggle = "carousel" data-target = "#slider" role="button" data-slide="next">
+                   <span class="glyphicon glyphicon-chevron-right"></span>
+                 </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="posterImageModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">{{societyName}} Image Details</h4>
+            <hr/>
+            <div class = "modal-body">
+              <div class="carousel" id="slider">
+                 <div class="carousel-inner">
+                   <div class="item" ng-class="{active:!$index}" ng-repeat="image in ImageURLListOfAll">
                      <div class="row">
                         <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
                        </div>
