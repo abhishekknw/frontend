@@ -167,7 +167,7 @@
                                                               </div>
                                                           </div>
 
-                                                          <div class="panel-group RELEASETable" id="accordion">
+                                                          <div class="panel-group RELEASETable" id="accordion[$index]">
                                                                   <div class="panel panel-default" style="border-radius:0!important;" ng-click="onTimeDetails = !onTimeDetails">
                                                                   <div class="panel-heading">
                                                                       <h4 class="panel-title" style="background-color:#8e1921  !important;">
@@ -204,7 +204,8 @@
                                                                     <td>{{campaignReleaseData.totalOnLocationCount}} : {{campaignReleaseData.totalOffLocationCount}}</td>
                                                                   </tr>
                                                                   <tr><td style="font:bold 12px/30px Georgia, serif;">Avg Off Loc. (Mts)</td>
-                                                                    <td>{{campaignReleaseData.totalOffLocationDistance / campaignReleaseData.totalInvCount |limitTo:10}}
+                                                                    <td ng-if="checkNan(campaignReleaseData.totalOffLocationDistance / campaignReleaseData.totalInvCount)">NA</td>
+                                                                    <td ng-if="!checkNan(campaignReleaseData.totalOffLocationDistance / campaignReleaseData.totalInvCount)">{{campaignReleaseData.totalOffLocationDistance / campaignReleaseData.totalInvCount |limitTo:10}}
                                                                     ({{(campaignReleaseData.totalOffLocationDistance / campaignReleaseData.totalInvCount)/1000|limitTo:10}}Km) </td>
                                                                   </tr>
 
@@ -246,14 +247,14 @@
                                       <td>{{invName}}</td>
                                       <td>{{item.assigned}}</td>
                                       <td>{{item.inv_count}}</td>
-                                      <td>{{item.offTimeDays/item.inv_count*100|limitTo:4||0}} </td>
-                                      <td class="col-md-2">{{item.offLocationDistance/item.inv_count|limitTo:10||0}}
+                                      <td ng-if="item.inv_count != 0">{{item.offTimeDays}} </td>
+                                      <td ng-if="item.inv_count == 0">Not Allowed</td>
+                                      <td ng-if="item.inv_count == 0">Not Allowed</td>
+                                      <td ng-if="checkNan(item.offLocationDistance)">Not Applicable</td>
+                                      <td class="col-md-2" ng-if="!checkNan(item.offLocationDistance) && item.inv_count != 0">{{item.offLocationDistance/item.inv_count|limitTo:10||0}}
                                          ({{(item.offLocationDistance/item.inv_count)/1000|limitTo:10||0}}km)</td>
                                       <td class="col-md-2" ng-if="item.images.length > 0"><a data-target="#imageModal" data-toggle="modal" ng-click="setImageUrl(item,item.images)">View Images</a></td>
                                       <td ng-if="item.images.length == 0"><label>No Image<label></td>
-                                      <td class="col-md-2">
-                                        <a data-target="" data-toggle="modal" ng-click="getHashtagImages(item)">View Other Images</a>
-                                      </td>
 
                                       </tr>
                                   </tbody>
@@ -288,6 +289,19 @@
                           <td ng-if="inv.completed == 0">No Image</td>
                           <td></td>
                         </tr>
+                        <tr>
+                          <td><b>{{supplier.supplier_data.society_name}}</b></td>
+                          <td>Other Images(Banner)</td>
+                          <td>-</td>
+                          <td>-</td>
+                          <td><a data-target="" data-toggle="modal" ng-click="getHashtagImages()">View Other Images</a></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+
+                        </tr>
+
+
                       </tbody>
                     </table>
                   </div>
@@ -945,7 +959,7 @@
 <!-- START : BOOKING ENGINE -->
 <uib-tab ng-click="getCampaigns()" index="2">
     <uib-tab-heading>
-      <h3>Booking Engine</h3>
+      <h3>Booking Details</h3>
     </uib-tab-heading>
 
     <div class="container-fluid">
@@ -1163,7 +1177,7 @@
                                       </div>
                                     </div>
 
-                                  <div class="panel panel-default">
+                                  <!-- <div class="panel panel-default">
                                       <div class="panel-heading" ng-click="getCampaignsMenu(campaignStatus.upcoming.status)">
                                           <h4 class="panel-title">
                                               Upcoming Campaigns
@@ -1198,7 +1212,7 @@
                                             </table>
                                           </div>
                                       </div>
-                                  </div>
+                                  </div> -->
                                   <div class="panel panel-default">
                                       <div class="panel-heading" ng-click="getCampaignsMenu(campaignStatus.onhold.status)">
                                           <h4 class="panel-title">
