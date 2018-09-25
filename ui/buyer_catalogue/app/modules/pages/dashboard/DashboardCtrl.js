@@ -10,6 +10,7 @@
  $scope.itemsByPage=15;
  $scope.query = "";
  $scope.oneAtATime = true;
+ $scope.accordionArray = [];
 
  $scope.rowCollection = [];
  $scope.invNameToCode = {
@@ -47,8 +48,7 @@
           {header : 'Today Released', key : 'inv_type'},
           {header : 'Average Delay(In Hours)', key : 'act_name'},
           {header : 'Average Off Location(Meters)', key : 'act_name'},
-          {header : 'Images', key : 'images'},
-          {header : 'Other Images', key : 'hashtagimages'},
+          {header : 'Images', key : 'images'},          
         ];
         $scope.campaignStatus = {
           ongoing : {
@@ -246,7 +246,7 @@
                 campaignData[inv]['onLocation'] = false;
                 campaignData[inv]['onTime'] = false;
                 // campaignData[inv]['minDistance'] = 100;
-                campaignData[inv]['dayCount'] = 100;
+                campaignData[inv]['dayCount'] = 3;
 
                   for(var i=0; i<items.length; i++){
                     campaignData['proposalId'] = items[i].proposal_id;
@@ -263,8 +263,10 @@
                   }
                   for(var i=0; i<items.length; i++){
                     var days = Math.floor((new Date(items[i].created_at) - new Date(items[i].actual_activity_date)) / (1000 * 60 * 60 * 24));
+                    console.log(days,items[i]);
                     if(days == 0){
                       campaignData[inv]['onTime'] = true;
+                      campaignData[inv]['dayCount'] = days;
                       break;
                     }else if(days < campaignData[inv]['dayCount']){
                       campaignData[inv]['dayCount'] = days;
@@ -272,11 +274,13 @@
                   }
                   if(campaignData[inv]['onLocation']){
                     campaignData['onLocationCount'] += 1;
-                    campaignData['offLocationDistance'] += campaignData[inv]['minDistance'];
+                    if(campaignData[inv]['minDistance'])
+                      campaignData['offLocationDistance'] += campaignData[inv]['minDistance'];
                   }
                   else{
                     campaignData['offLocationCount'] += 1;
-                    campaignData['offLocationDistance'] += campaignData[inv]['minDistance'];
+                    if(campaignData[inv]['minDistance'])
+                      campaignData['offLocationDistance'] += campaignData[inv]['minDistance'];
                   }
 
 
@@ -298,7 +302,7 @@
               campaignReleaseData['totalOffTimeDays'] += campaignData['offTimeDays'];
 
               campaignReleaseData.push(campaignData);
-              console.log(campaignData,campaignReleaseData);
+              // console.log(campaignData,campaignReleaseData);
             })
             $scope.campaignReleaseData = campaignReleaseData;
             if($scope.campaignReleaseData.length){
@@ -875,7 +879,6 @@
            }
            angular.forEach(activities, function(count,actKey){
              if(!$scope.historyData[dateKey].hasOwnProperty(actKey)){
-               console.log(dateKey,invKey,actKey);
                $scope.historyData[dateKey][actKey] = {};
                $scope.historyData[dateKey][actKey]['actual'] = 0;
                $scope.historyData[dateKey][actKey]['total'] = 0;
@@ -891,10 +894,12 @@
      $scope.dateWiseSuppliers = [];
      $scope.selectedProposalname = proposalName;
      console.log(proposalId,$scope.date);
+     $scope.proposalId= proposalId;
      DashboardService.getDatewiseSuppliersInventory(proposalId, $scope.date, $scope.invName, $scope.actType)
      .then(function onSuccess(response){
        console.log(response);
        angular.forEach(response.data.data, function(data){
+         console.log(data);
          $scope.dateWiseSuppliers.push(data);
        })
      }).catch(function onError(response){
@@ -1409,7 +1414,7 @@ $scope.setHashtagImageUrl = function(item,images){
 $scope.getHashtagImages = function(item){
   console.log($scope.campaignReleaseData,item, $scope.date);
     $scope.hashTagImageUrl = [];
-  DashboardService.getHashtagImages(item.proposalId,$scope.date)
+  DashboardService.getHashtagImages($scope.proposalId,$scope.date)
   .then(function onSuccess(response){
     console.log(response);
     $scope.hashTagImageData = [];
@@ -1512,6 +1517,9 @@ $scope.getSuppliers = function(data){
 $scope.geToSupplierDetails = function(supplierId){
   console.log(supplierId);
   $location.path(supplierId + "/SocietyDetailsPages");
+}
+$scope.checkNan = function(number){
+return isNaN(number);
 }
 
 //END
