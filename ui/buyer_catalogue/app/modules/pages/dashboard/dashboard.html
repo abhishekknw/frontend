@@ -254,9 +254,9 @@
 
                                       <td class="col-md-2" ng-if="item.images.length > 0"><a data-target="#imageModal" data-toggle="modal" ng-click="setImageUrl(item,item.images)">View Images</a></td>
                                       <td ng-if="item.images.length == 0"><label>No Image<label></td>
-                                      <td class="col-md-2">
+                                      <!-- <td class="col-md-2">
                                         <a data-target="" data-toggle="modal" ng-click="getHashtagImages(item)">View Other Images</a>
-                                      </td>
+                                      </td> -->
 
                                       </tr>
                                   </tbody>
@@ -375,12 +375,12 @@
                                   </div>
 
                                   <div class="panel panel-default">
-                                      <div class="panel-heading" ng-click="getCampaignsMenu(campaignStatus.upcoming.status)">
+                                      <div class="panel-heading" ng-click="switchToInventory(campaignStatus.upcoming.status)">
                                           <h4 class="panel-title">
                                               Upcoming Campaigns
                                           </h4>
                                       </div>
-                                      <div id="upcoming" class="animate-show" ng-show="campaignStatus.upcoming.value">
+                                      <!-- <div id="upcoming" class="animate-show" ng-show="campaignStatus.upcoming.value">
                                           <div class="panel-bodyDashboard camp-menu-content">
                                               <table class="table">
                                                   <tr ng-repeat="campaign in campaignData.upcoming_campaigns">
@@ -390,7 +390,7 @@
                                                   </tr>
                                               </table>
                                           </div>
-                                      </div>
+                                      </div> -->
                                   </div>
                                   <div class="panel panel-default">
                                       <div class="panel-heading" ng-click="getCampaignsMenu(campaignStatus.onhold.status)">
@@ -398,7 +398,7 @@
                                               On Hold Campaigns
                                           </h4>
                                       </div>
-                                      <div id="upcoming" class="animate-show" ng-show="campaignStatus.upcoming.value">
+                                      <div id="onhold" class="animate-show" ng-show="campaignStatus.onhold.value">
                                           <div class="panel-bodyDashboard camp-menu-content">
                                               <table class="table">
                                                   <tr ng-repeat="campaign in campaignData.onhold_campaigns">
@@ -1155,21 +1155,22 @@
             <thead>
               <tr>
                 <th>Supplier Name</th>
-                <th>City</th>
-                <th>Area</th>
-                <th>Subarea</th>
-                <th>Flat Count</th>
+                <th>Flat</br>Count</th>
+                <th>Tower</br>Count</th>
+                <th>Type Of</br>Society</th>
+                <th>Area(SubArea)</th>
                 <th>Status</th>
+                <th>Supplier Details</th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="supplier in bookingSuppliersData">
                 <td>{{supplier.society_name}}</td>
-                <td>{{supplier.society_city}}</td>
-                <td>{{supplier.society_locality}}</td>
-                <td>{{supplier.society_subarea}}</td>
                 <td>{{supplier.flat_count}}</td>
-                <td>{{supplier.booking_status}}</td>
+                <td>{{supplier.tower_count}}</td>
+                <td>{{supplier.society_type_quality}}</td>
+                <td>{{supplier.society_locality}}({{supplier.society_subarea}})</td>
+                <td>{{bookingStatusSuppliers[supplier.booking_status]}}</td>
                 <td><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages" target="_blank">View Details</a></td>
               </tr>
             </tbody>

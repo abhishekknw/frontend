@@ -10,8 +10,7 @@
  $scope.itemsByPage=15;
  $scope.query = "";
  $scope.oneAtATime = true;
- $scope.accordionArray = [];
-
+ $scope.bookingStatusSuppliers = constants.booking_status;
  $scope.rowCollection = [];
  $scope.invNameToCode = {
    'POSTER' : 'PO',
@@ -1349,8 +1348,8 @@ $scope.switchToLeads = function(){
 
 $scope.switchToInventory = function(inv){
   $scope.selectTabIndex.value = 2;
-  var perf_param = null;
-  $scope.getPerformanceMetricsData(inv,perf_param);
+  // var perf_param = null;
+  // $scope.getPerformanceMetricsData(inv,perf_param);
 }
 $scope.setImageUrl = function(item,images){
   console.log(item);
