@@ -914,10 +914,19 @@
      .then(function onSuccess(response){
        console.log(response);
        $scope.LeadsByCampaign = response.data.data;
+       $scope.locationHeader = [];
+       angular.forEach($scope.LeadsByCampaign.locality_data, function(data,key){
+          $scope.value1 = key;
+          $scope.locationHeader.push($scope.value1);
+       })
+       console.log($scope.locationHeader);
        $scope.d3StackedBarChartData = formatD3StackedBarChartData($scope.LeadsByCampaign.supplier_data);
        $scope.stackedBarChartOptions = angular.copy(stackedBarChart);
        $scope.stackedBarChartSupplierData = formatMultiBarChartDataForSuppliers(response.data.data.supplier_data);
        $scope.stackedBarChartDateData = formatMultiBarChartDataByDate(response.data.data.date_data);
+       $scope.stackedBarFLatCountChart = formatFlatCountChart(response.data.data.flat_data);
+       $scope.stackedBarLocationCountChart = formatLocationCountChart(response.data.data.locality_data);
+
        $scope.campaignLeadsData = response.data.data;
        $scope.showPerfMetrics = $scope.perfMetrics.leads;
      }).catch(function onError(response){
@@ -953,8 +962,7 @@
 
 
      })
-     console.log(values1);
-     console.log(values2);
+
      var temp_data = [
        {
          key : "Normal Leads",
@@ -973,7 +981,6 @@
              return series;
     });
      return temp_data;
-    console.log(temp_data);
    }
 
    var formatMultiBarChartDataByDate = function(data){
@@ -1003,6 +1010,66 @@
      return temp_data;
    }
 
+   var formatFlatCountChart = function(data){
+     var values1 = [];
+     var values2 = [];
+     angular.forEach(data, function(data,key){
+       var value1 =
+          { x : key, y : data.total - data.interested};
+       var value2 =
+          { x : key, y : data.interested};
+       values1.push(value1);
+       values2.push(value2);
+
+
+     })
+
+     var temp_data = [
+       {
+         key : "Normal Leads",
+         color : constants.colorKey1,
+         values : values1
+       },
+       {
+         key : "High Potential Leads",
+         color : constants.colorKey2,
+         values : values2
+       }
+     ];
+
+     return temp_data;
+   }
+
+   var formatLocationCountChart = function(data){
+     var values1 = [];
+     var values2 = [];
+     angular.forEach(data, function(data,key){
+       console.log(key);
+       var value1 =
+          { x : key, y : data.total - data.interested};
+       var value2 =
+          { x : key, y : data.interested};
+       values1.push(value1);
+       values2.push(value2);
+
+
+     })
+
+     var temp_data = [
+       {
+         key : "Normal Leads",
+         color : constants.colorKey1,
+         values : values1
+       },
+       {
+         key : "High Potential Leads",
+         color : constants.colorKey2,
+         values : values2
+       }
+     ];
+
+     return temp_data;
+   }
 
    $scope.getDateData = function(date){
      $scope.date = date;

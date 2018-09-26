@@ -33,7 +33,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon-96x96.png">
     <link rel="stylesheet" type="text/css" href="modules/pages/DashBoard/adminDashboard/percentage-circular-bar.css">
-    
+
 
 
   </head>
@@ -1370,8 +1370,164 @@
                         </div>
 
 
+                        <div class="col-md-8"  ng-if="showPerfMetrics == perfMetrics.leads">
+                        <table class="table-responsive table table-bordered RELEASETable" style="margin-left:5px;">
+                            <div class="panel-heading">
+                                    Flat Data Summary
+                            </div>
+                            <thead>
+                              <tr>
+                                <td>Flat Count <br> <small> < 150</small></td>
+                                <td>Flat Count <br><small>Between 150 to 400</small></td>
+                                <td>Flat Count <br> <small> > 400</small></td>
+                             </tr>
+                            </thead>
+                                <tbody>
+                                <tr>
+                                  <td>
+                                    <table class="table-responsive table table-bordered">
+                                      <tr>
+                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Flat Count</small></td>
+                                        <td>{{LeadsByCampaign.flat_data['0-150'].flat_count}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Society Count</small></td>
+                                        <td>{{LeadsByCampaign.flat_data['0-150'].supplier_count}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Hot Leads</small></td>
+                                        <td>{{LeadsByCampaign.flat_data['0-150'].interested}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Normal Leads</small></td>
+                                        <td>{{LeadsByCampaign.flat_data['0-150'].total - LeadsByCampaign.flat_data['0-150'].interested}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td style="background-color:#cb1925;"><small style="color:#ffffff">Hot Leads Ratio</small></td>
+                                        <td>{{LeadsByCampaign.flat_data['0-150'].hot_lead_ratio}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Total</small></td>
+                                        <td>{{LeadsByCampaign.flat_data['0-150'].total}}</td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                  <td>
+                                    <table class="table-responsive table table-bordered">
+                                      <tr>
+                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Flat Count</small></td>
+                                        <td>{{LeadsByCampaign.flat_data['0-150'].flat_count}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Society Count</small></td>
+                                        <td>{{LeadsByCampaign.flat_data['151-399'].supplier_count}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Hot Leads</small></td>
+                                        <td>{{LeadsByCampaign.flat_data['151-399'].interested}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Normal Leads</small></td>
+                                        <td>{{LeadsByCampaign.flat_data['151-399'].total - LeadsByCampaign.flat_data['151-399'].interested}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td style="background-color:#cb1925;"><small style="color:#ffffff">Hot Leads Ratio</small></td>
+                                        <td>{{LeadsByCampaign.flat_data['151-399'].hot_lead_ratio}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Total</small></td>
+                                        <td>{{LeadsByCampaign.flat_data['151-399'].total}}</td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                  <td>
+                                    <table class="table-responsive table table-bordered">
+                                      <tr>
+                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Flat Count</small></td>
+                                        <td>{{LeadsByCampaign.flat_data['400+'].flat_count}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Society Count</small></td>
+                                        <td>{{LeadsByCampaign.flat_data['400+'].supplier_count}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Hot Leads</small></td>
+                                        <td>{{LeadsByCampaign.flat_data['400+'].interested}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Normal Leads</small></td>
+                                        <td>{{LeadsByCampaign.flat_data['400+'].total - LeadsByCampaign.flat_data['400+'].interested}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td style="background-color:#cb1925;"><small style="color:#ffffff">Hot Leads Ratio</small></td>
+                                        <td>{{LeadsByCampaign.flat_data['400+'].hot_lead_ratio}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Total</small></td>
+                                        <td>{{LeadsByCampaign.flat_data['400+'].total}}</td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                              </tr>
 
-                        <div class="col-md-2">
+                              </tbody>
+                              </table>
+
+                                <div class="panel-heading content-title" ng-if="showPerfMetrics == perfMetrics.leads" style="margin-left:5px;">
+                                    <h4 style="text-align: center"> FLat Wise Graphs </h4>
+                                </div>
+                                <div class="col-md-12" style="height:300px">
+                                  <div class="outerFlat">
+                                    <div class="innerFlat">
+                                      <nvd3 options="stackedBarChartOptions" data="stackedBarFLatCountChart"></nvd3>
+                                    </div>
+                                  </div>
+                                </div>
+                      </div>
+
+
+                      <div class="col-md-8"  ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:50px;">
+                      <table class="table-responsive table table-bordered RELEASETable" style="margin-left:5px;">
+                          <div class="panel-heading">
+                                  Location Data Summary
+                          </div>
+                          <thead>
+                              <tr>
+                                <th>Society Area</th>
+                                <th>FLat Count</th>
+                                <th>Society Count</th>
+                                <th>Hot Leads</th>
+                                <th>Normal Leads</th>
+                                <th>Hot Leads Ratio</th>
+                                <th>Total</th>
+                              </tr>
+                          </thead>
+                              <tbody>
+                                <tr ng-repeat="(key,data) in LeadsByCampaign.locality_data">
+                                  <td>{{key}}</td>
+                                  <td>{{data.flat_count}}</td>
+                                  <td>{{data.supplier_count}}</td>
+                                  <td>{{data.interested}}</td>
+                                  <td>{{data.total - data.interested}}</td>
+                                  <td>{{data.hot_lead_ratio}}</td>
+                                  <td>{{data.total}}</td>
+                                </tr>
+                            </tbody>
+                            </table>
+
+                              <div class="panel-heading content-title" ng-if="showPerfMetrics == perfMetrics.leads" style="margin-left:5px;">
+                                  <h4 style="text-align: center"> Location Wise Graphs </h4>
+                              </div>
+                              <div class="col-md-12" style="height:300px">
+                                <div class="outerFlat">
+                                  <div class="innerFlat">
+                                    <nvd3 options="stackedBarChartOptions" data="stackedBarLocationCountChart"></nvd3>
+                                  </div>
+                                </div>
+                              </div>
+                    </div>
+
+                        <!-- <div class="col-md-2">
                           <table class="table table-responsive table-bordered">
                             <md-input-container ng-if="campaignInventories.length">
                               <label>Select Inventory</label>
@@ -1408,7 +1564,7 @@
                             </tr>
 
                           </table>
-                        </div>
+                        </div> -->
                           <div class="row zeroInventory" ng-if="campaignInventories.length == 0">
                             <h1 ng-if="showinv"> No Inventory Found</h1>
                           </div>
