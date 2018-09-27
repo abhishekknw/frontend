@@ -28,6 +28,7 @@ angular.module('catalogueApp')
         {header : 'Activity Name'},
         {header : 'Activity Date'},
         {header : 'Assigned User'},
+        {header : 'Delete Inventory'},
       ];
       $scope.activity_names = [
         {header : 'RELEASE' , code : 'RE'},

@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="modules/pages/releaseCampaignPlan/releaseCampaign.tmpl.css"/>
 <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
-<main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading" >
-<div><nav-bar></nav-bar></div>
 <div ng-loading="loading"></div>
+<div><nav-bar></nav-bar></div>
 </br></br></br>
+<main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading" >
 <div ng-if="!backButton" permission="[campaign_manager]">
   <back-Button></back-Button>
 </div>
@@ -658,24 +658,28 @@
       <div class="modal-header">
         Import Sheet
       </div>
-      <div class="row">
-        <label>Select Sheet</label>
-        <input type="file" ngf-select = "uploadFiles($file, 1)" class="buttonfile" accept=".xlsx"/>
-      </div>
-      <div class=" row">
-        <div class = "col-md-12">
-          <label>Assigned To</label>
-          <p class="input-group">
-            <div class = "col-md-7">
-              <select class="form-control" ng-model="assign.to" required>
-                <option ng-repeat="user in userList" value="{{user.id}}">{{user.username}}</option>
-              </select>
-            </div>
-          </p>
+      <div class="col-md-12" style="margin-left:5px;">
+        <div class="row">
+          <label>Select Sheet</label>
+          <input type="file" ngf-select = "uploadFiles($file, 1)" class="buttonfile" accept=".xlsx"/>
         </div>
-      </div></br></br>
-      <div class="">
-        <button ng-click="importThroughSheet()">Submit</button>
+        </br>
+        <div class="row">
+          <div class="col-md-12">
+            <label>Assigned To</label>
+            <p class="input-group">
+              <div class="col-md-7">
+                <select class="form-control" ng-model="assign.to" required>
+                  <option ng-repeat="user in userList" value="{{user.id}}">{{user.username}}</option>
+                </select>
+              </div>
+            </p>
+          </div>
+        </div>
+      </div>
+    </br></br>
+      <div class="row">
+        <button class="btn btn-success" type="button" name="button" ng-click="importThroughSheet()">Submit</button>
       </div>
     </div>
   </div>
