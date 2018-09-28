@@ -1198,17 +1198,17 @@
                             <div class="panel-headding campaign-header">
                               <h3 style="color:rgb(53, 9, 6)">Performance Details</h3>
                             </div>
+                            <div class="panel-group">
+                            <div class="col-md-12">
 
-                            <div class="col-md-4">
-
-
-                              <div class="panel-group" id="accordion">
+                                <div class="col-md-3">
                                 <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.completed.status)">
+                                  <div class="button" type="button">
                                     <div class="panel-heading">
-                                        <h4 class="panel-title">
                                           Completed Campaigns
-                                        </h4>
                                     </div>
+                                  </div>
+
                                     <div id="completed" class="animate-show" ng-show="campaignStatus.completed.value">
                                         <div class="panel-bodyDashboard camp-menu-content">
                                           <table class="table">
@@ -1240,12 +1240,15 @@
                                         </div>
                                     </div>
                                 </div>
+                              </div>
+                              <div class="col-md-3">
+
                                   <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.ongoing.status)">
+                                    <div class="button" type="button">
                                       <div class="panel-heading">
-                                          <h4 class="panel-title">
-                                              Ongoing-Campaigns
-                                          </h4>
+                                            Ongoing Campaigns
                                       </div>
+                                    </div>
                                       <div id="ongoing" class="animate-show" ng-show="campaignStatus.ongoing.value">
                                           <div class="panel-bodyDashboard camp-menu-content">
                                               <table class="table">
@@ -1276,256 +1279,268 @@
                                           </div>
                                       </div>
                                     </div>
-
-                                  <div class="panel panel-default">
-                                      <div class="panel-heading" ng-click="getCampaignsMenu(campaignStatus.upcoming.status)">
-                                          <h4 class="panel-title">
+                                  </div>
+                                  <!-- <div class="col-md-3">
+                                    <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.upcoming.status)">
+                                      <div class="button" type="button">
+                                        <div class="panel-heading">
                                               Upcoming Campaigns
-                                          </h4>
+                                        </div>
                                       </div>
-                                      <div id="upcoming" class="animate-show" ng-show="campaignStatus.upcoming.value">
-                                          <div class="panel-bodyDashboard camp-menu-content">
-                                            <table class="table">
-                                                <tr ng-repeat="campaign in campaignData.upcoming_campaigns">
-                                                <td >
-                                                  <!-- <md-menu> -->
-                                                     <div class="" ng-click="getLeadsByCampaign(campaign.campaign)">
-                                                       {{campaign.name}}
-                                                     </div>
-                                                     <!-- <md-menu-content width="4">
-                                                       <md-menu-item>
-                                                         <md-button ng-click="getLeadsByCampaign(campaign.campaign)">
-                                                           Lead
-                                                         </md-button>
-                                                       </md-menu-item>
-                                                       <md-menu-divider></md-menu-divider>
-                                                       <md-menu-item ng-click="getontimelocation(ontimelocation.showdrop.status)">
-                                                         <md-button ng-click="getCampaignFilters(campaign.campaign)">
-                                                           Inventory
-                                                         </md-button>
-                                                       </md-menu-item>
-                                                       <md-menu-divider></md-menu-divider>
-                                                     </md-menu-content> -->
-                                                   <!-- </md-menu> -->
-                                                  </td>
-                                                </tr>
-                                            </table>
-                                          </div>
+                                        <div id="upcoming" class="animate-show" ng-show="campaignStatus.upcoming.value">
+                                            <div class="panel-bodyDashboard camp-menu-content">
+                                              <table class="table">
+                                                  <tr ng-repeat="campaign in campaignData.upcoming_campaigns">
+                                                  <td > -->
+                                                  <!-- <div class="" ng-click="getLeadsByCampaign(campaign.campaign)">
+                                                    {{campaign.name}}
+                                                  </div> -->
+                                                    <!-- <md-menu> -->
+                                                       <!-- <md-menu-content width="4">
+                                                         <md-menu-item>
+                                                           <md-button ng-click="getLeadsByCampaign(campaign.campaign)">
+                                                             Lead
+                                                           </md-button>
+                                                         </md-menu-item>
+                                                         <md-menu-divider></md-menu-divider>
+                                                         <md-menu-item ng-click="getontimelocation(ontimelocation.showdrop.status)">
+                                                           <md-button ng-click="getCampaignFilters(campaign.campaign)">
+                                                             Inventory
+                                                           </md-button>
+                                                         </md-menu-item>
+                                                         <md-menu-divider></md-menu-divider>
+                                                       </md-menu-content> -->
+                                                     <!-- </md-menu> -->
+                                                    <!-- </td>
+                                                  </tr>
+                                              </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </div> -->
+                                  <div class="col-md-3">
+                                    <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.onhold.status)">
+                                      <div class="button" type="button">
+                                        <div class="panel-heading">
+                                              OnHold Campaigns
+                                        </div>
                                       </div>
+                                        <div id="onhold" class="animate-show" ng-show="campaignStatus.onhold.value">
+                                            <div class="panel-bodyDashboard camp-menu-content">
+                                              <table class="table">
+                                                  <tr ng-repeat="campaign in campaignData.onhold_campaigns">
+                                                  <td >
+                                                    <!-- <md-menu> -->
+                                                       <div class="" ng-click="getLeadsByCampaign(campaign.campaign)">
+                                                         {{campaign.name}}
+                                                       </div>
+                                                       <!-- <md-menu-content width="4">
+                                                         <md-menu-item>
+                                                           <md-button ng-click="getLeadsByCampaign(campaign.campaign)">
+                                                             Lead
+                                                           </md-button>
+                                                         </md-menu-item>
+                                                         <md-menu-divider></md-menu-divider>
+                                                         <md-menu-item ng-click="getontimelocation(ontimelocation.showdrop.status)">
+                                                           <md-button ng-click="getCampaignFilters(campaign.campaign)">
+                                                             Inventory
+                                                           </md-button>
+                                                         </md-menu-item>
+                                                         <md-menu-divider></md-menu-divider>
+                                                       </md-menu-content> -->
+                                                     <!-- </md-menu> -->
+                                                    </td>
+                                                  </tr>
+                                              </table>
+                                            </div>
+                                        </div>
+                                    </div>
                                   </div>
-                                  <div class="panel panel-default">
-                                      <div class="panel-heading" ng-click="getCampaignsMenu(campaignStatus.onhold.status)">
-                                          <h4 class="panel-title">
-                                              On Hold Campaigns
-                                          </h4>
-                                      </div>
-                                      <div id="onhold" class="animate-show" ng-show="campaignStatus.onhold.value">
-                                          <div class="panel-bodyDashboard camp-menu-content">
-                                            <table class="table">
-                                                <tr ng-repeat="campaign in campaignData.onhold_campaigns">
-                                                <td >
-                                                  <!-- <md-menu> -->
-                                                     <div class="" ng-click="getLeadsByCampaign(campaign.campaign)">
-                                                       {{campaign.name}}
-                                                     </div>
-                                                     <!-- <md-menu-content width="4">
-                                                       <md-menu-item>
-                                                         <md-button ng-click="getLeadsByCampaign(campaign.campaign)">
-                                                           Lead
-                                                         </md-button>
-                                                       </md-menu-item>
-                                                       <md-menu-divider></md-menu-divider>
-                                                       <md-menu-item ng-click="getontimelocation(ontimelocation.showdrop.status)">
-                                                         <md-button ng-click="getCampaignFilters(campaign.campaign)">
-                                                           Inventory
-                                                         </md-button>
-                                                       </md-menu-item>
-                                                       <md-menu-divider></md-menu-divider>
-                                                     </md-menu-content> -->
-                                                   <!-- </md-menu> -->
-                                                  </td>
-                                                </tr>
-                                            </table>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="panel panel-default" >
-                                      <div class="panel-heading" ng-click="getGraphicalComparision(graphicalComparision.leads.status)">
-                                          <h4 class="panel-title">
+                                  <div class="col-md-3">
+                                    <div class="panel panel-default" ng-click="getGraphicalComparision(graphicalComparision.leads.status)">
+                                      <div class="button" type="button">
+                                        <div class="panel-heading">
                                               Compare Campaigns
-                                          </h4>
+                                        </div>
                                       </div>
-                                      <div  class="animate-show" ng-show="graphicalComparision.leads.value">
-                                          <div class="panel-bodyDashboard camp-menu-content">
-                                            <div id="displayedFocus" class="panel panel-danger" style="width:60%;margin-left:50px;">
-                                              <button class="btn btn-danger" name="button" style="width:100%;" ng-click="getCompareCampaigns(compCampaigns.campaigns.status)">LEADS</button>
+                                        <div  class="animate-show" ng-show="graphicalComparision.leads.value">
+                                            <div class="panel-bodyDashboard camp-menu-content">
+                                              <div id="displayedFocus" class="panel panel-danger" style="width:60%;margin-left:50px;">
+                                                <button class="btn btn-danger" name="button" style="width:100%;" ng-click="getCompareCampaigns(compCampaigns.campaigns.status)">LEADS</button>
+                                              </div>
+                                              <div id="displayedFocus" class="panel panel-danger" style="width:60%;text-align:center;margin-left:50px;">
+                                                <button class="btn btn-danger" name="button" style="width:100%;">INVENTORY</button>
+                                              </div>
                                             </div>
-                                            <div id="displayedFocus" class="panel panel-danger" style="width:60%;text-align:center;margin-left:50px;">
-                                              <button class="btn btn-danger" name="button" style="width:100%;">INVENTORY</button>
-                                            </div>
-                                          </div>
-                                      </div>
+                                        </div>
+                                    </div>
                                   </div>
                               </div>
                         </div>
 
 
-                        <div class="col-md-8"  ng-if="showPerfMetrics == perfMetrics.leads">
-                        <table class="table-responsive table table-bordered RELEASETable" style="margin-left:5px;">
-                            <div class="panel-heading">
-                                    Flat Data Summary
-                            </div>
-                            <thead>
-                              <tr>
-                                <td>Flat Count <br> <small> < 150</small></td>
-                                <td>Flat Count <br><small>Between 150 to 400</small></td>
-                                <td>Flat Count <br> <small> > 400</small></td>
-                             </tr>
-                            </thead>
-                                <tbody>
-                                <tr>
-                                  <td>
-                                    <table class="table-responsive table table-bordered">
-                                      <tr>
-                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Flat Count</small></td>
-                                        <td>{{LeadsByCampaign.flat_data['0-150'].flat_count}}</td>
-                                      </tr>
-                                      <tr>
-                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Society Count</small></td>
-                                        <td>{{LeadsByCampaign.flat_data['0-150'].supplier_count}}</td>
-                                      </tr>
-                                      <tr>
-                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Hot Leads</small></td>
-                                        <td>{{LeadsByCampaign.flat_data['0-150'].interested}}</td>
-                                      </tr>
-                                      <tr>
-                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Normal Leads</small></td>
-                                        <td>{{LeadsByCampaign.flat_data['0-150'].total - LeadsByCampaign.flat_data['0-150'].interested}}</td>
-                                      </tr>
-                                      <tr>
-                                        <td style="background-color:#cb1925;"><small style="color:#ffffff">Hot Leads Ratio</small></td>
-                                        <td>{{LeadsByCampaign.flat_data['0-150'].hot_lead_ratio}}</td>
-                                      </tr>
-                                      <tr>
-                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Total</small></td>
-                                        <td>{{LeadsByCampaign.flat_data['0-150'].total}}</td>
-                                      </tr>
-                                    </table>
-                                  </td>
-                                  <td>
-                                    <table class="table-responsive table table-bordered">
-                                      <tr>
-                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Flat Count</small></td>
-                                        <td>{{LeadsByCampaign.flat_data['0-150'].flat_count}}</td>
-                                      </tr>
-                                      <tr>
-                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Society Count</small></td>
-                                        <td>{{LeadsByCampaign.flat_data['151-399'].supplier_count}}</td>
-                                      </tr>
-                                      <tr>
-                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Hot Leads</small></td>
-                                        <td>{{LeadsByCampaign.flat_data['151-399'].interested}}</td>
-                                      </tr>
-                                      <tr>
-                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Normal Leads</small></td>
-                                        <td>{{LeadsByCampaign.flat_data['151-399'].total - LeadsByCampaign.flat_data['151-399'].interested}}</td>
-                                      </tr>
-                                      <tr>
-                                        <td style="background-color:#cb1925;"><small style="color:#ffffff">Hot Leads Ratio</small></td>
-                                        <td>{{LeadsByCampaign.flat_data['151-399'].hot_lead_ratio}}</td>
-                                      </tr>
-                                      <tr>
-                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Total</small></td>
-                                        <td>{{LeadsByCampaign.flat_data['151-399'].total}}</td>
-                                      </tr>
-                                    </table>
-                                  </td>
-                                  <td>
-                                    <table class="table-responsive table table-bordered">
-                                      <tr>
-                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Flat Count</small></td>
-                                        <td>{{LeadsByCampaign.flat_data['400+'].flat_count}}</td>
-                                      </tr>
-                                      <tr>
-                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Society Count</small></td>
-                                        <td>{{LeadsByCampaign.flat_data['400+'].supplier_count}}</td>
-                                      </tr>
-                                      <tr>
-                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Hot Leads</small></td>
-                                        <td>{{LeadsByCampaign.flat_data['400+'].interested}}</td>
-                                      </tr>
-                                      <tr>
-                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Normal Leads</small></td>
-                                        <td>{{LeadsByCampaign.flat_data['400+'].total - LeadsByCampaign.flat_data['400+'].interested}}</td>
-                                      </tr>
-                                      <tr>
-                                        <td style="background-color:#cb1925;"><small style="color:#ffffff">Hot Leads Ratio</small></td>
-                                        <td>{{LeadsByCampaign.flat_data['400+'].hot_lead_ratio}}</td>
-                                      </tr>
-                                      <tr>
-                                        <td style="background-color:#cb1925"><small style="color:#ffffff">Total</small></td>
-                                        <td>{{LeadsByCampaign.flat_data['400+'].total}}</td>
-                                      </tr>
-                                    </table>
-                                  </td>
-                              </tr>
+                        <div class="col-md-12"  ng-if="showPerfMetrics == perfMetrics.leads">
+                          <div class="col-md-6">
+                            <table class="table-responsive table table-bordered RELEASETable" style="margin-left:5px;">
+                                <div class="panel-heading">
+                                        Flat Data Summary
+                                </div>
+                                <thead>
+                                  <tr>
+                                    <td>Flat Count <br> <small> < 150</small></td>
+                                    <td>Flat Count <br><small>Between 150 to 400</small></td>
+                                    <td>Flat Count <br> <small> > 400</small></td>
+                                 </tr>
+                                </thead>
+                                    <tbody>
+                                    <tr>
+                                      <td>
+                                        <table class="table-responsive table table-bordered">
+                                          <tr>
+                                            <td style="background-color:#cb1925"><small style="color:#ffffff">Flat Count</small></td>
+                                            <td>{{LeadsByCampaign.flat_data['0-150'].flat_count}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td style="background-color:#cb1925"><small style="color:#ffffff">Society Count</small></td>
+                                            <td>{{LeadsByCampaign.flat_data['0-150'].supplier_count}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td style="background-color:#cb1925"><small style="color:#ffffff">Hot Leads</small></td>
+                                            <td>{{LeadsByCampaign.flat_data['0-150'].interested}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td style="background-color:#cb1925"><small style="color:#ffffff">Normal Leads</small></td>
+                                            <td>{{LeadsByCampaign.flat_data['0-150'].total - LeadsByCampaign.flat_data['0-150'].interested}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td style="background-color:#cb1925;"><small style="color:#ffffff">Hot Leads Ratio</small></td>
+                                            <td>{{LeadsByCampaign.flat_data['0-150'].hot_lead_ratio}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td style="background-color:#cb1925"><small style="color:#ffffff">Total</small></td>
+                                            <td>{{LeadsByCampaign.flat_data['0-150'].total}}</td>
+                                          </tr>
+                                        </table>
+                                      </td>
+                                      <td>
+                                        <table class="table-responsive table table-bordered">
+                                          <tr>
+                                            <td style="background-color:#cb1925"><small style="color:#ffffff">Flat Count</small></td>
+                                            <td>{{LeadsByCampaign.flat_data['0-150'].flat_count}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td style="background-color:#cb1925"><small style="color:#ffffff">Society Count</small></td>
+                                            <td>{{LeadsByCampaign.flat_data['151-399'].supplier_count}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td style="background-color:#cb1925"><small style="color:#ffffff">Hot Leads</small></td>
+                                            <td>{{LeadsByCampaign.flat_data['151-399'].interested}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td style="background-color:#cb1925"><small style="color:#ffffff">Normal Leads</small></td>
+                                            <td>{{LeadsByCampaign.flat_data['151-399'].total - LeadsByCampaign.flat_data['151-399'].interested}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td style="background-color:#cb1925;"><small style="color:#ffffff">Hot Leads Ratio</small></td>
+                                            <td>{{LeadsByCampaign.flat_data['151-399'].hot_lead_ratio}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td style="background-color:#cb1925"><small style="color:#ffffff">Total</small></td>
+                                            <td>{{LeadsByCampaign.flat_data['151-399'].total}}</td>
+                                          </tr>
+                                        </table>
+                                      </td>
+                                      <td>
+                                        <table class="table-responsive table table-bordered">
+                                          <tr>
+                                            <td style="background-color:#cb1925"><small style="color:#ffffff">Flat Count</small></td>
+                                            <td>{{LeadsByCampaign.flat_data['400+'].flat_count}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td style="background-color:#cb1925"><small style="color:#ffffff">Society Count</small></td>
+                                            <td>{{LeadsByCampaign.flat_data['400+'].supplier_count}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td style="background-color:#cb1925"><small style="color:#ffffff">Hot Leads</small></td>
+                                            <td>{{LeadsByCampaign.flat_data['400+'].interested}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td style="background-color:#cb1925"><small style="color:#ffffff">Normal Leads</small></td>
+                                            <td>{{LeadsByCampaign.flat_data['400+'].total - LeadsByCampaign.flat_data['400+'].interested}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td style="background-color:#cb1925;"><small style="color:#ffffff">Hot Leads Ratio</small></td>
+                                            <td>{{LeadsByCampaign.flat_data['400+'].hot_lead_ratio}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td style="background-color:#cb1925"><small style="color:#ffffff">Total</small></td>
+                                            <td>{{LeadsByCampaign.flat_data['400+'].total}}</td>
+                                          </tr>
+                                        </table>
+                                      </td>
+                                  </tr>
 
-                              </tbody>
+                                  </tbody>
+                                  </table>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="panel-heading content-title" ng-if="showPerfMetrics == perfMetrics.leads" style="margin-left:5px;">
+                                      <h4 style="text-align: center"> FLat Wise Graphs </h4>
+                                  </div>
+                                  <div class="col-md-12" style="height:300px">
+                                    <div class="outerFlat">
+                                      <div class="innerFlat">
+                                        <nvd3 options="stackedBarChartOptions" data="stackedBarFLatCountChart"></nvd3>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                </div>
+
+
+                      <div class="col-md-12"  ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:50px;">
+                        <div class="col-md-12">
+                          <table class="table-responsive table table-bordered RELEASETable" style="margin-left:5px;width:20px">
+                              <div class="panel-heading">
+                                      Location Data Summary
+                              </div>
+                              <thead>
+                                  <tr>
+                                    <th>Society Area</th>
+                                    <th>FLat Count</th>
+                                    <th>Society Count</th>
+                                    <th>Hot Leads</th>
+                                    <th>Normal Leads</th>
+                                    <th>Hot Leads Ratio</th>
+                                    <th>Total</th>
+                                  </tr>
+                              </thead>
+                                  <tbody>
+                                    <tr ng-repeat="(key,data) in LeadsByCampaign.locality_data">
+                                      <td>{{key}}</td>
+                                      <td>{{data.flat_count}}</td>
+                                      <td>{{data.supplier_count}}</td>
+                                      <td>{{data.interested}}</td>
+                                      <td>{{data.total - data.interested}}</td>
+                                      <td>{{data.hot_lead_ratio}}</td>
+                                      <td>{{data.total}}</td>
+                                    </tr>
+                                </tbody>
                               </table>
-
+                              </div>
+                              <div class="col-md-12">
                                 <div class="panel-heading content-title" ng-if="showPerfMetrics == perfMetrics.leads" style="margin-left:5px;">
-                                    <h4 style="text-align: center"> FLat Wise Graphs </h4>
+                                    <h4 style="text-align: center"> Location Wise Graphs </h4>
                                 </div>
                                 <div class="col-md-12" style="height:300px">
                                   <div class="outerFlat">
                                     <div class="innerFlat">
-                                      <nvd3 options="stackedBarChartOptions" data="stackedBarFLatCountChart"></nvd3>
+                                      <nvd3 options="stackedBarChartOptions" data="stackedBarLocationCountChart"></nvd3>
                                     </div>
                                   </div>
                                 </div>
-                      </div>
-
-
-                      <div class="col-md-8"  ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:50px;">
-                      <table class="table-responsive table table-bordered RELEASETable" style="margin-left:5px;">
-                          <div class="panel-heading">
-                                  Location Data Summary
-                          </div>
-                          <thead>
-                              <tr>
-                                <th>Society Area</th>
-                                <th>FLat Count</th>
-                                <th>Society Count</th>
-                                <th>Hot Leads</th>
-                                <th>Normal Leads</th>
-                                <th>Hot Leads Ratio</th>
-                                <th>Total</th>
-                              </tr>
-                          </thead>
-                              <tbody>
-                                <tr ng-repeat="(key,data) in LeadsByCampaign.locality_data">
-                                  <td>{{key}}</td>
-                                  <td>{{data.flat_count}}</td>
-                                  <td>{{data.supplier_count}}</td>
-                                  <td>{{data.interested}}</td>
-                                  <td>{{data.total - data.interested}}</td>
-                                  <td>{{data.hot_lead_ratio}}</td>
-                                  <td>{{data.total}}</td>
-                                </tr>
-                            </tbody>
-                            </table>
-
-                              <div class="panel-heading content-title" ng-if="showPerfMetrics == perfMetrics.leads" style="margin-left:5px;">
-                                  <h4 style="text-align: center"> Location Wise Graphs </h4>
                               </div>
-                              <div class="col-md-12" style="height:300px">
-                                <div class="outerFlat">
-                                  <div class="innerFlat">
-                                    <nvd3 options="stackedBarChartOptions" data="stackedBarLocationCountChart"></nvd3>
-                                  </div>
-                                </div>
-                              </div>
-                    </div>
+                            </div>
 
                         <!-- <div class="col-md-2">
                           <table class="table table-responsive table-bordered">
@@ -1872,7 +1887,7 @@
                           <!--leads perf metrics  -->
                           <div class="col-md-12" ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:50px;">
                             <div class="panel-heading content-title">
-                                <h4 style="text-align: center">Leads Per Society of {{campaignTabPropsalName}}</h4>
+                                <h4 style="text-align: center">Leads Per Society</h4>
                             </div>
 
                             <div class="col-md-12" ng-scrollable>
@@ -1888,7 +1903,7 @@
                           </div>
                           <div class="col-md-12" ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:50px;">
                             <div class="panel-heading content-title">
-                                <h4 style="text-align: center"> Leads By Date of </h4>
+                                <h4 style="text-align: center"> Leads By Date </h4>
                             </div>
                             <div class="col-md-12" ng-scrollable>
                               <div class="outerdate">
