@@ -1,0 +1,23 @@
+@import './variables';
+
+.message {
+  font: {
+    size: 13px;
+    weight: $font-medium;
+  };
+
+  &--small {
+    font: {
+      size: 11px;
+      weight: $font-regular;
+    };
+  }
+
+  &--success {
+    color: $text-primary;
+  }
+
+  &--error {
+    color: $text-error;
+  }
+}

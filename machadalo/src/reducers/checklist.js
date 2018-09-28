@@ -35,6 +35,25 @@ export const checklist = createReducer(
       return Object.assign({}, state, {
         list: newList
       });
+    },
+    [types.POST_CHECKLIST_TEMPLATE_START](state) {
+      const newState = Object.assign({}, state);
+
+      if (newState.templateCreateStatus) {
+        delete newState.templateCreateStatus;
+      }
+
+      return newState;
+    },
+    [types.POST_CHECKLIST_TEMPLATE_SUCCESS](state) {
+      return Object.assign({}, state, {
+        templateCreateStatus: 'success'
+      });
+    },
+    [types.POST_CHECKLIST_TEMPLATE_FAIL](state) {
+      return Object.assign({}, state, {
+        templateCreateStatus: 'error'
+      });
     }
   }
 );
