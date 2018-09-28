@@ -7,11 +7,11 @@ angular.module('Authentication')
        },
 
        link: function (scope, elem, attrs) {
-            scope.$watch(AuthService.isLoggedIn, function() {
+            scope.$watch(AuthService.isLoggedIn, function() {              
                 if (AuthService.userHasPermission(scope.permission)) {
                     elem.show();
                 } else {
-                  if(elem[0].tagName == 'BUTTON' || elem[0].tagName == 'INPUT')
+                  if(elem[0].tagName == 'BUTTON' || elem[0].tagName == 'INPUT' || elem[0].tagName == 'SELECT')
                     attrs.$set('disabled', 'disabled');
                   else
                     elem.hide();
