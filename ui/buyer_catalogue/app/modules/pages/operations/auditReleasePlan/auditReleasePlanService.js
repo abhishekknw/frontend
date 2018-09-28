@@ -33,6 +33,21 @@ angular.module('catalogueApp')
       return machadaloHttp.post(url,data);
     }
 
+    auditReleasePlanService.getInventoryRelatedData = function(){
+      var url = url_base + 'get-adinventorytype-and-durationtype-data/';
+      return machadaloHttp.get(url);
+    }
+
+    auditReleasePlanService.addAdInventoryIds = function(data){
+      var url = url_base + 'add-dynamic-inventory-ids/';
+      return machadaloHttp.post(url,data);
+    }
+
+    auditReleasePlanService.deleteAdInventoryIds = function(data){
+      var url = url_base + 'delete-ad-inventory-ids/';
+      return machadaloHttp.post(url,data);
+    }
+
    return auditReleasePlanService;
   return 0;
 }]);

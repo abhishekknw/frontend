@@ -166,10 +166,18 @@ angular
       SL : 'STALL',
       FL : 'FLYER'
     },
-    distanceLimit : 50,
+    distanceLimit : 500,
     release : 'RELEASE',
     closure : 'CLOSURE',
     audit : 'AUDIT',
     colorKey1 : '#cb1925',
-    colorKey2 : '#fcfc5f'
+    colorKey2 : '#fcfc5f',
+    booking_status : {
+      'BK' : 'Booked',
+      'NB' : 'Not Booked',
+      'TB' : 'Tentative Booked',
+      'PB' : 'Phone Booked',
+      'VB' : 'Visit Booked',
+      'VR' : 'Visit Required'
+    }
     });

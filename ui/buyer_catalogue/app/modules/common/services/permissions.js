@@ -92,6 +92,6 @@ angular
       auditReleasePage        : 'auditReleasePage',
       opsExecutionPage        : 'opsExecutionPage',
       showProposalHistoryPage : 'showProposalHistoryPage',
-      publicPage              :  'publicPage',
+      dashboardPage            : 'dashboard'
     },
   });

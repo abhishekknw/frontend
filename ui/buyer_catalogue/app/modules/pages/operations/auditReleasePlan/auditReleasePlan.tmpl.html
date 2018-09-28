@@ -121,6 +121,9 @@
                <td class="col-md-2 checkboxes-btn">
                  <div ng-repeat="inventory in filter.detail">
                    <input type="checkbox" class="" ng-disabled="isDisable(rowIndex)" ng-model="inventory.status" ng-click="addInventory(inventory,rowIndex,$index)"  permission = "[permissions.assignDates]" />{{key}}{{$index+1}}
+                 </div></br>
+                 <div>
+                   <button  class="btn" data-target="#addInventoryModal" data-toggle="modal" ng-click="getInventoryRelatedData(supplier)" ng-disabled="savingDates">Add Inventory</button>
                  </div>
                </td>
                <td class="col-md-1">
@@ -129,7 +132,11 @@
                </div><br>
                <div>
                  <button  class="btn" data-target="#showDatesModal" data-toggle="modal" ng-click="showActivityDates(filter.detail, supplier, key)" ng-disabled="savingDates"  permission = "[permissions.viewDates]">View Dates</button>
-               </div>
+               </div><br>
+               <div>
+               <button  class="btn btn-info" ng-disabled="invIdList.length == 0 || isDisable(rowIndex)" ng-click="deleteAdInventoryIds(supplier)" >Delete Inventory</button>
+             </div><br>
+
                </td>
                <td class="col-md-8">
                  <textarea rows="4" cols="50" name="comments"  ng-model="filter.detail.comments" ng-change="addComments(filter.detail,filter.detail.comments)"class="form-control spacing"  permission = "[permissions.addComments]"></textarea></td>
@@ -360,3 +367,34 @@
        </div>
      </div>
      <!--End: Code for show dates Modal Window -->
+     <div id="addInventoryModal" class="modal fade">
+       <div class="modal-dialog" style="width:400px">
+         <div class="modal-content">
+           <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+             <h4 class="modal-title">Add Inventory for {{shortlistedSupplierData.name}} Supplier</h4>
+             <hr/>
+             <div class = "modal-body">
+               </br>
+                  <div class="">
+                    Select Inventory :
+                    <select class="form-control" name="" ng-model="adInvModel.ad_inv_id">
+                      <option value="{{inv.id}}" ng-repeat="inv in adInventoryTypes|unique:'adinventory_name'">{{inv.adinventory_name}}</option>
+                    </select>
+                  </div></br>
+                  <div class="">
+                    Select Duration Type :
+                    <select class="form-control" name="" ng-model="adInvModel.duration_id">
+                      <option value="{{inv.id}}" ng-repeat="inv in durationTypes">{{inv.duration_name}}</option>
+                    </select>
+                  </div></br>
+                  Inventory Count :
+                  <input type="number" ng-model="adInvModel.inv_count" class="form-control"/></br>
+                 <div class = "col-md-12" style="text-align:left">
+                   <button class="btn btn-danger active notify" ng-click="addAdInventoryIds()">Add</button>
+                 </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>

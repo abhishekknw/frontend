@@ -14,7 +14,7 @@ body a {
 }
 
 body a:hover {
-  color: #ffffff;
+  color: #123456;
 }
 
 a.collapse-menu-link:hover {
@@ -602,11 +602,15 @@ color: #ffffff !important;
 }
 
 div.outer { overflow: scroll; }
-div.outer .inner { width:900px; }
+div.outer .inner { width: 1900px; }
 
 
 div.outerdate { overflow: scroll; }
-div.outerdate .innerdate { width: 500px; }
+div.outerdate .innerdate { width: 1900px; }
+
+
+div.outerFlat { overflow: scroll; }
+div.outerFlat .innerFlat { width: 500px; }
 
 .dateHeading{
   width: 240px;

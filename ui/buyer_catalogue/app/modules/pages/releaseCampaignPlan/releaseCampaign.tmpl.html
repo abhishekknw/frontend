@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="modules/pages/releaseCampaignPlan/releaseCampaign.tmpl.css"/>
 <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
-<main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading" >
-<div><nav-bar></nav-bar></div>
 <div ng-loading="loading"></div>
+<div><nav-bar></nav-bar></div>
 </br></br></br>
+<main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading" >
 <div ng-if="!backButton" permission="[campaign_manager]">
   <back-Button></back-Button>
 </div>
@@ -84,14 +84,14 @@
             <td class="" rowspan="{{key.length}}" ng-show="$first">{{getTotalSupplierPrice(supplier)| currency : "₹"}} ({{getTotalSupplierPrice(supplier)/supplier.flat_count|limitTo:8| currency : "₹"}})</td>
             <td class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="priceform">
               <span  ng-disabled="!supplier.phase" class="error" ng-show="priceform.price.$error.min">{{positiveNoError}}</span>
-              <input  ng-disabled="!supplier.phase" type="number" name="price" ng-model="supplier.total_negotiated_price" class="form-control spacing input-width" min="0" permission = "[permissions.addNegotiatedPrice,permissions.viewNegotiatedPrice]">
+              <input  ng-disabled="!supplier.phase" type="number" name="price" ng-model="supplier.total_negotiated_price" class="form-control spacing input-width" min="0" permission = "[permissions.addNegotiatedPrice]">
           <br>{{supplier.total_negotiated_price / supplier.flat_count|| 0 | limitTo:8}}  </td>
             <td style="text-align:left;" rowspan="{{key.length}}" ng-show="$first">
               <span  ng-disabled="!supplier.phase" ng-dropdown-multiselect="" options="multiSelect"  extra-settings="selected_baseline_settings"
               selected-model="searchSelectAllModel"   translation-texts="selected_baselines_customTexts"></span>
             </td>
             <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first">
-              <select  class="form-control spacing input-width" ng-model="supplier.booking_status" permission = "[permissions.changeBookingStatus,permissions.viewBookingStatus]">
+              <select  class="form-control spacing input-width" ng-model="supplier.booking_status" permission = "[permissions.changeBookingStatus]">
                 <option style="width:100%;" ng-repeat="item in booking_status" value="{{item.code}}"
                 ng-if="supplier.booking_status == undefined ? supplier.booking_status = booking_status[0].code : 1"
                 >{{item.name}}</option>
@@ -117,11 +117,11 @@
 
               <div class="radio" ng-if="supplier.status != 'X'">
                 <label>
-                   <input  ng-disabled="!supplier.phase" type="radio" ng-model="supplier.payment_method" value="CHEQUE"  permission = "[permissions.viewPaymentMode,permissions.addPaymentMode]"
+                   <input  ng-disabled="!supplier.phase" type="radio" ng-model="supplier.payment_method" value="CHEQUE"  permission = "[permissions.addPaymentMode]"
                    data-target="#selectedPaymentModal" data-toggle="modal" ng-click="getPaymentDetails(supplier,supplier.payment_method)">Cheque</label>
               </div>
               <div class="radio" ng-if="supplier.status != 'X'">
-                     <label><input  ng-disabled="!supplier.phase" type="radio" ng-model="supplier.payment_method" value="CASH" permission = "[permissions.viewPaymentMode,permissions.addPaymentMode]"
+                     <label><input  ng-disabled="!supplier.phase" type="radio" ng-model="supplier.payment_method" value="CASH" permission = "[permissions.addPaymentMode]"
                        ng-click="getPaymentDetails(supplier,supplier.payment_method)">Cash</label>
               </div>
 
@@ -658,24 +658,28 @@
       <div class="modal-header">
         Import Sheet
       </div>
-      <div class="row">
-        <label>Select Sheet</label>
-        <input type="file" ngf-select = "uploadFiles($file, 1)" class="buttonfile" accept=".xlsx"/>
-      </div>
-      <div class=" row">
-        <div class = "col-md-12">
-          <label>Assigned To</label>
-          <p class="input-group">
-            <div class = "col-md-7">
-              <select class="form-control" ng-model="assign.to" required>
-                <option ng-repeat="user in userList" value="{{user.id}}">{{user.username}}</option>
-              </select>
-            </div>
-          </p>
+      <div class="col-md-12" style="margin-left:5px;">
+        <div class="row">
+          <label>Select Sheet</label>
+          <input type="file" ngf-select = "uploadFiles($file, 1)" class="buttonfile" accept=".xlsx"/>
         </div>
-      </div></br></br>
-      <div class="">
-        <button ng-click="importThroughSheet()">Submit</button>
+        </br>
+        <div class="row">
+          <div class="col-md-12">
+            <label>Assigned To</label>
+            <p class="input-group">
+              <div class="col-md-7">
+                <select class="form-control" ng-model="assign.to" required>
+                  <option ng-repeat="user in userList" value="{{user.id}}">{{user.username}}</option>
+                </select>
+              </div>
+            </p>
+          </div>
+        </div>
+      </div>
+    </br></br>
+      <div class="row">
+        <button class="btn btn-success" type="button" name="button" ng-click="importThroughSheet()">Submit</button>
       </div>
     </div>
   </div>

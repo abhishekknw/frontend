@@ -155,8 +155,6 @@ angular.module('Authentication')
 
         //code added to add permissions
         authService.userHasPermission = function(permissions){
-          // console.log(permissions);
-
          if(!authService.isAuthenticated()){
              return false;
          }
@@ -167,7 +165,6 @@ angular.module('Authentication')
                 if ($rootScope.globals.userInfo.profile.permissions[permissions[i]] == true)
                   return true;
             }
-            console.log(permissions[i]);
          }
          return false;
        }
