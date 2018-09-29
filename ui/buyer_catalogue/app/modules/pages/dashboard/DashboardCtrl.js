@@ -574,7 +574,8 @@
             },
             "clipEdge": true,
             "duration": 500,
-            "stacked": true,
+            "grouped": true,
+            "sortDescending" : false,
               "xAxis": {
               "axisLabel": "",
               "showMaxMin": false,
