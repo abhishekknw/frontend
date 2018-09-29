@@ -3,7 +3,8 @@ import * as types from './../actions/types';
 
 export const checklist = createReducer(
   {
-    list: []
+    list: [],
+    details: {} // Checklist data by checklist id
   },
 
   {
@@ -53,6 +54,32 @@ export const checklist = createReducer(
     [types.POST_CHECKLIST_TEMPLATE_FAIL](state) {
       return Object.assign({}, state, {
         templateCreateStatus: 'error'
+      });
+    },
+    [types.GET_SINGLE_CHECKLIST_SUCCESS](state, action) {
+      return Object.assign({}, state, {
+        details: Object.assign({}, state.details, {
+          [action.checklistId]: action.checklist
+        })
+      });
+    },
+    [types.POST_CHECKLIST_ENTRIES_START](state) {
+      const newState = Object.assign({}, state);
+
+      if (newState.entryStatus) {
+        delete newState.entryStatus;
+      }
+
+      return newState;
+    },
+    [types.POST_CHECKLIST_ENTRIES_SUCCESS](state) {
+      return Object.assign({}, state, {
+        entryStatus: 'success'
+      });
+    },
+    [types.POST_CHECKLIST_ENTRIES_FAIL](state) {
+      return Object.assign({}, state, {
+        entryStatus: 'error'
       });
     }
   }
