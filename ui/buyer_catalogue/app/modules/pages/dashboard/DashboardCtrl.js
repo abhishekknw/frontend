@@ -6,7 +6,7 @@
     'use strict';
 
   angular.module('catalogueApp')
-      .controller('DashboardCtrl',function($scope,NgMap, $rootScope, baConfig, colorHelper,DashboardService, commonDataShare, constants,$location,$anchorScroll,uiGmapGoogleMapApi,uiGmapIsReady) {
+      .controller('DashboardCtrl',function($scope,NgMap, $rootScope, baConfig, colorHelper,DashboardService, commonDataShare, constants,$location,$anchorScroll,uiGmapGoogleMapApi,uiGmapIsReady ,  $sce) {
  $scope.itemsByPage=15;
  $scope.query = "";
  $scope.oneAtATime = true;
@@ -915,6 +915,10 @@
      .then(function onSuccess(response){
        console.log(response);
        $scope.LeadsByCampaign = response.data.data;
+       $scope.Data = $scope.LeadsByCampaign;
+       $scope.localityData =  $scope.LeadsByCampaign.locality_data;
+        $scope.phaseData =  $scope.LeadsByCampaign.phase_data;
+       console.log($scope.localityData);
        $scope.locationHeader = [];
        angular.forEach($scope.LeadsByCampaign.locality_data, function(data,key){
           $scope.value1 = key;
@@ -927,6 +931,7 @@
        $scope.stackedBarChartDateData = formatMultiBarChartDataByDate(response.data.data.date_data);
        $scope.stackedBarFLatCountChart = formatFlatCountChart(response.data.data.flat_data);
        $scope.stackedBarLocationCountChart = formatLocationCountChart(response.data.data.locality_data);
+       $scope.stackedBarPhaseChart = formatPhaseChart(response.data.data.phase_data);
 
        $scope.campaignLeadsData = response.data.data;
        $scope.showPerfMetrics = $scope.perfMetrics.leads;
@@ -954,10 +959,11 @@
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(supplier){
+ var keyWithFlatLabel =  supplier.data.society_name + ' (' + supplier['flat count'] + ')';
         var value1 =
-           [supplier.data.society_name, supplier.total - supplier.interested];
+           [keyWithFlatLabel, supplier.total - supplier.interested];
         var value2 =
-           [supplier.data.society_name, supplier.interested];
+           [keyWithFlatLabel, supplier.interested];
         values1.push(value1);
         values2.push(value2);
 
@@ -989,10 +995,11 @@
      var values2 = [];
      angular.forEach(data, function(date){
        var tempDate = commonDataShare.formatDate(date.created_at);
+       var DateLabel = tempDate + ' (' + date['flat count'] + ')';
         var value1 =
-           { x : tempDate, y : date.total - date.interested};
+           { x : DateLabel, y : date.total - date.interested};
         var value2 =
-           { x : tempDate, y : date.interested};
+           { x : DateLabel, y : date.interested};
         values1.push(value1);
         values2.push(value2);
      })
@@ -1015,10 +1022,13 @@
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(data,key){
+
+
+       var keyWithFlatLabel =  key + ' (' + data['flat count'] + ')';
        var value1 =
-          { x : key, y : data.total - data.interested};
+          { x : keyWithFlatLabel, y : data.total - data.interested};
        var value2 =
-          { x : key, y : data.interested};
+          { x : keyWithFlatLabel, y : data.interested};
        values1.push(value1);
        values2.push(value2);
 
@@ -1046,10 +1056,11 @@
      var values2 = [];
      angular.forEach(data, function(data,key){
        console.log(key);
+       var keyWithFlatLabel =  key + ' (' + data['flat count'] + ')';
        var value1 =
-          { x : key, y : data.total - data.interested};
+          { x : keyWithFlatLabel, y : data.total - data.interested};
        var value2 =
-          { x : key, y : data.interested};
+          { x : keyWithFlatLabel, y : data.interested};
        values1.push(value1);
        values2.push(value2);
 
@@ -1071,6 +1082,39 @@
 
      return temp_data;
    }
+
+   var formatPhaseChart = function(data){
+     var values1 = [];
+     var values2 = [];
+     angular.forEach(data, function(data,key){
+       console.log(key);
+       var keyWithFlatLabel =  key + ' (' + data['flat count'] + ')';
+       var value1 =
+          { x : keyWithFlatLabel, y : data.total - data.interested};
+       var value2 =
+          { x : keyWithFlatLabel, y : data.interested};
+       values1.push(value1);
+       values2.push(value2);
+
+
+     })
+
+     var temp_data = [
+       {
+         key : "Normal Leads",
+         color : constants.colorKey1,
+         values : values1
+       },
+       {
+         key : "High Potential Leads",
+         color : constants.colorKey2,
+         values : values2
+       }
+     ];
+
+     return temp_data;
+   }
+
 
    $scope.getDateData = function(date){
      $scope.date = date;
