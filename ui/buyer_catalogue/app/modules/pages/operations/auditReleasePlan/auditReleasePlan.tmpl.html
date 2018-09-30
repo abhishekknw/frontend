@@ -114,10 +114,11 @@
                {{supplier.phase}}
                </td>
                <td class="col-md-1">{{key}}</td>
-               <td class="col-md-2">{{supplier.name}}<br>({{supplier.object_id}})</td>
-                <td class="col-md-1">{{supplier.area}}</td>
-                <td class="col-md-1">{{supplier.subarea}}</td>
-                <td class="col-md-2">{{supplier.address1}} {{supplier.address2}}</td>
+
+               <td class="col-md-2"><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages" ng-click="getSocietyDetails(supplier,supplier.supplier_id,center,$index)" target="_blank" style="text-decoration: underline; cursor: pointer;color:blue;">{{supplier.name}}({{supplier.quality_rating}})</a></td>
+               <td class="col-md-2">
+               <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank" style="text-decoration: underline; cursor: pointer;color:blue;">{{supplier.area}}, ({{supplier.subarea}}) {{supplier.address2}}</a></td>
+               <td class="col-md-2">{{supplier.address2}}</td>
                <td class="col-md-2 checkboxes-btn">
                  <div ng-repeat="inventory in filter.detail">
                    <input type="checkbox" class="" ng-disabled="isDisable(rowIndex)" ng-model="inventory.status" ng-click="addInventory(inventory,rowIndex,$index)"  permission = "[permissions.assignDates]" />{{key}}{{$index+1}}
