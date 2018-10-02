@@ -559,9 +559,85 @@
            }
                };
 
+               var societySummaryBarChart = {
+                  "chart": {
+                    "type": "multiBarChart",
+                    "height": 450,
+                    // "labelType" : "11",
+                    "margin": {
+                      "top": 100,
+                      "right": 20,
+                      "bottom": 145,
+                      "left": 45
+                    },
+                    "clipEdge": true,
+                    "duration": 500,
+                    "grouped": true,
+                    "sortDescending" : false,
+                      "xAxis": {
+                      "axisLabel": "Society (Flat Count)",
+                      "showMaxMin": false,
+                      "rotateLabels" : -30
+                    },
+                    "yAxis": {
+                      "axisLabel": "Leads in %",
+                      "axisLabelDistance": -20,
 
+                      "ticks" : 8
+                    },
+                    "legend" : {
+                            "margin": {
+                            "top": 5,
+                            "right": 3,
+                            "bottom": 5,
+                            "left": 15
+                        },
+                    },
 
-       var stackedBarChart = {
+                    "reduceXTicks" : false
+                  }
+                };
+
+                var dateSummaryBarChart = {
+                   "chart": {
+                     "type": "multiBarChart",
+                     "height": 450,
+                     // "labelType" : "11",
+                     "margin": {
+                       "top": 100,
+                       "right": 20,
+                       "bottom": 145,
+                       "left": 45
+                     },
+                     "clipEdge": true,
+                     "duration": 500,
+                     "grouped": true,
+                     "sortDescending" : false,
+                       "xAxis": {
+                       "axisLabel": "Date (Flat Count)",
+                       "showMaxMin": false,
+                       "rotateLabels" : -30
+                     },
+                     "yAxis": {
+                       "axisLabel": "Leads in %",
+                       "axisLabelDistance": -20,
+
+                       "ticks" : 8
+                     },
+                     "legend" : {
+                             "margin": {
+                             "top": 5,
+                             "right": 3,
+                             "bottom": 5,
+                             "left": 15
+                         },
+                     },
+
+                     "reduceXTicks" : false
+                   }
+                 };
+
+       var flatSummaryBarChart = {
           "chart": {
             "type": "multiBarChart",
             "height": 450,
@@ -577,12 +653,13 @@
             "grouped": true,
             "sortDescending" : false,
               "xAxis": {
-              "axisLabel": "",
+              "axisLabel": "Flat Range (Flat Count)",
+              "axisLabelDistance" : -50,
               "showMaxMin": false,
               "rotateLabels" : -30
             },
             "yAxis": {
-              "axisLabel": "",
+              "axisLabel": "Leads in %",
               "axisLabelDistance": -20,
 
               "ticks" : 8
@@ -599,6 +676,123 @@
             "reduceXTicks" : false
           }
         };
+
+        var locationSummaryBarChart = {
+           "chart": {
+             "type": "multiBarChart",
+             "height": 450,
+             // "labelType" : "11",
+             "margin": {
+               "top": 100,
+               "right": 20,
+               "bottom": 145,
+               "left": 45
+             },
+             "clipEdge": true,
+             "duration": 500,
+             "grouped": true,
+             "sortDescending" : false,
+               "xAxis": {
+               "axisLabel": "Society Area (Flat Count)",
+               "showMaxMin": false,
+               "rotateLabels" : -30
+             },
+             "yAxis": {
+               "axisLabel": "Leads in %",
+               "axisLabelDistance": -20,
+
+               "ticks" : 8
+             },
+             "legend" : {
+                     "margin": {
+                     "top": 5,
+                     "right": 3,
+                     "bottom": 5,
+                     "left": 15
+                 },
+             },
+
+             "reduceXTicks" : false
+           }
+         };
+
+         var phaseSummaryBarChart = {
+            "chart": {
+              "type": "multiBarChart",
+              "height": 450,
+              // "labelType" : "11",
+              "margin": {
+                "top": 100,
+                "right": 20,
+                "bottom": 145,
+                "left": 45
+              },
+              "clipEdge": true,
+              "duration": 500,
+              "grouped": true,
+              "sortDescending" : false,
+                "xAxis": {
+                "axisLabel": "Phases (Flat Count)",
+                "showMaxMin": false,
+                "rotateLabels" : -30
+              },
+              "yAxis": {
+                "axisLabel": "Leads in %",
+                "axisLabelDistance": -20,
+
+                "ticks" : 8
+              },
+              "legend" : {
+                      "margin": {
+                      "top": 5,
+                      "right": 3,
+                      "bottom": 5,
+                      "left": 15
+                  },
+              },
+
+              "reduceXTicks" : false
+            }
+          };
+
+          var citySummaryBarChart = {
+             "chart": {
+               "type": "multiBarChart",
+               "height": 450,
+               // "labelType" : "11",
+               "margin": {
+                 "top": 100,
+                 "right": 20,
+                 "bottom": 145,
+                 "left": 45
+               },
+               "clipEdge": true,
+               "duration": 500,
+               "grouped": true,
+               "sortDescending" : false,
+                 "xAxis": {
+                 "axisLabel": "City (Flat Count)",
+                 "showMaxMin": false,
+                 "rotateLabels" : -30
+               },
+               "yAxis": {
+                 "axisLabel": "Leads in %",
+                 "axisLabelDistance": -20,
+
+                 "ticks" : 8
+               },
+               "legend" : {
+                       "margin": {
+                       "top": 5,
+                       "right": 3,
+                       "bottom": 5,
+                       "left": 15
+                   },
+               },
+
+               "reduceXTicks" : false
+             }
+           };
 
         var lineChart = {
           "chart": {
@@ -926,7 +1120,12 @@
        })
        console.log($scope.locationHeader);
        $scope.d3StackedBarChartData = formatD3StackedBarChartData($scope.LeadsByCampaign.supplier_data);
-       $scope.stackedBarChartOptions = angular.copy(stackedBarChart);
+       $scope.stackedBarChartSocietyWise = angular.copy(societySummaryBarChart);
+       $scope.stackedBarChartDateWise = angular.copy(dateSummaryBarChart);
+       $scope.stackedBarChartFlatWise = angular.copy(flatSummaryBarChart);
+       $scope.stackedBarChartLocationWise = angular.copy(locationSummaryBarChart);
+       $scope.stackedBarChartPhaseWise = angular.copy(phaseSummaryBarChart);
+       $scope.stackedBarChartCityWise = angular.copy(citySummaryBarChart);
        $scope.stackedBarChartSupplierData = formatMultiBarChartDataForSuppliers(response.data.data.supplier_data);
        $scope.stackedBarChartDateData = formatMultiBarChartDataByDate(response.data.data.date_data);
        $scope.stackedBarFLatCountChart = formatFlatCountChart(response.data.data.flat_data);
@@ -959,11 +1158,13 @@
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(supplier){
- var keyWithFlatLabel =  supplier.data.society_name + ' (' + supplier['flat count'] + ')';
+       $scope.hotLeadsValues =  supplier.interested / supplier['flat_count'] * 100;
+       $scope.normalLeadsValues =  (supplier.total - supplier.interested)/supplier['flat_count'] * 100;
+        var keyWithFlatLabel =  supplier.data.society_name + ' (' + supplier['flat_count'] + ')';
         var value1 =
-           [keyWithFlatLabel, supplier.total - supplier.interested];
+           [keyWithFlatLabel, $scope.normalLeadsValues];
         var value2 =
-           [keyWithFlatLabel, supplier.interested];
+           [keyWithFlatLabel, $scope.hotLeadsValues];
         values1.push(value1);
         values2.push(value2);
 
@@ -972,13 +1173,13 @@
 
      var temp_data = [
        {
-         key : "Normal Leads",
+         key : "Normal Leads in %",
          color : constants.colorKey1,
          values : values1,
          "bar": true,
        },
        {
-         key : "High Potential Leads",
+         key : "High Potential Leads in %",
          color : constants.colorKey2,
          values : values2,
 
@@ -994,23 +1195,25 @@
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(date){
+       $scope.hotLeadsValues =  date.interested / date['flat_count'] * 100;
+       $scope.normalLeadsValues =  (date.total - date.interested)/date['flat_count'] * 100;
        var tempDate = commonDataShare.formatDate(date.created_at);
-       var DateLabel = tempDate + ' (' + date['flat count'] + ')';
+       var DateLabel = tempDate + ' (' + date['flat_count'] + ')';
         var value1 =
-           { x : DateLabel, y : date.total - date.interested};
+           { x : DateLabel, y :$scope.normalLeadsValues };
         var value2 =
-           { x : DateLabel, y : date.interested};
+           { x : DateLabel, y : $scope.hotLeadsValues };
         values1.push(value1);
         values2.push(value2);
      })
      var temp_data = [
        {
-         key : "Normal Leads",
+         key : "Normal Leads in %",
          color : constants.colorKey1,
          values : values1
        },
        {
-         key : "High Potential Leads",
+         key : "High Potential Leads in %",
          color : constants.colorKey2,
          values : values2
        }
@@ -1022,13 +1225,13 @@
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(data,key){
-
-
-       var keyWithFlatLabel =  key + ' (' + data['flat count'] + ')';
+       $scope.hotLeadsValues =  data.interested / data['flat_count'] * 100;
+       $scope.normalLeadsValues =  (data.total - data.interested)/data['flat_count'] * 100;
+       var keyWithFlatLabel =  key + ' (' + data['flat_count'] + ')';
        var value1 =
-          { x : keyWithFlatLabel, y : data.total - data.interested};
+          { x : keyWithFlatLabel, y : $scope.normalLeadsValues };
        var value2 =
-          { x : keyWithFlatLabel, y : data.interested};
+          { x : keyWithFlatLabel, y : $scope.hotLeadsValues };
        values1.push(value1);
        values2.push(value2);
 
@@ -1037,12 +1240,12 @@
 
      var temp_data = [
        {
-         key : "Normal Leads",
+         key : "Normal Leads in % :",
          color : constants.colorKey1,
          values : values1
-       },
+         },
        {
-         key : "High Potential Leads",
+         key : "High Potential Leads in % :",
          color : constants.colorKey2,
          values : values2
        }
@@ -1055,12 +1258,13 @@
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(data,key){
-       console.log(key);
-       var keyWithFlatLabel =  key + ' (' + data['flat count'] + ')';
+       $scope.hotLeadsValues =  data.interested / data['flat_count'] * 100;
+       $scope.normalLeadsValues =  (data.total - data.interested)/data['flat_count'] * 100;
+       var keyWithFlatLabel =  key + ' (' + data['flat_count'] + ')';
        var value1 =
-          { x : keyWithFlatLabel, y : data.total - data.interested};
+          { x : keyWithFlatLabel, y : $scope.normalLeadsValues};
        var value2 =
-          { x : keyWithFlatLabel, y : data.interested};
+          { x : keyWithFlatLabel, y : $scope.hotLeadsValues};
        values1.push(value1);
        values2.push(value2);
 
@@ -1069,12 +1273,12 @@
 
      var temp_data = [
        {
-         key : "Normal Leads",
+         key : "Normal Leads in %",
          color : constants.colorKey1,
          values : values1
        },
        {
-         key : "High Potential Leads",
+         key : "High Potential Leads in %",
          color : constants.colorKey2,
          values : values2
        }
@@ -1087,12 +1291,13 @@
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(data,key){
-       console.log(key);
-       var keyWithFlatLabel =  key + ' (' + data['flat count'] + ')';
+       $scope.hotLeadsValues =  data.interested / data['flat_count'] * 100;
+       $scope.normalLeadsValues =  (data.total - data.interested)/data['flat_count'] * 100;
+       var keyWithFlatLabel =  key + ' (' + data['flat_count'] + ')';
        var value1 =
-          { x : keyWithFlatLabel, y : data.total - data.interested};
+          { x : keyWithFlatLabel, y :$scope.normalLeadsValues};
        var value2 =
-          { x : keyWithFlatLabel, y : data.interested};
+          { x : keyWithFlatLabel, y : $scope.hotLeadsValues};
        values1.push(value1);
        values2.push(value2);
 
@@ -1101,12 +1306,12 @@
 
      var temp_data = [
        {
-         key : "Normal Leads",
+         key : "Normal Leads in %",
          color : constants.colorKey1,
          values : values1
        },
        {
-         key : "High Potential Leads",
+         key : "High Potential Leads in %",
          color : constants.colorKey2,
          values : values2
        }
@@ -1651,6 +1856,20 @@ $scope.geToSupplierDetails = function(supplierId){
 }
 $scope.checkNan = function(number){
 return isNaN(number);
+}
+
+
+$scope.getSortedLeadsByCampaign = function(campaignId){
+  $scope.showTimeLocBtn = false;
+  $scope.showinv = false;
+  $scope.showSelection = true;
+  $scope.showPerfMetrics = $scope.perfMetrics.blank;
+  DashboardService.getSortedLeadsByCampaign(campaignId)
+  .then(function onSuccess(response){
+    console.log(response);
+  }).catch(function onError(response){
+    console.log(response);
+  })
 }
 
 //END
