@@ -493,7 +493,7 @@ angular
          console.log("location change start - Whence: " + whence);
          // redirect to login page if not logged in
          $rootScope.globals.currentUser = AuthService.UserInfo();
-         if(!$rootScope.globals.userInfo.hasOwnProperty('profile')){
+         if(!$rootScope.globals.hasOwnProperty('userInfo') || $rootScope.globals.userInfo.hasOwnProperty('profile')){
            $location.path("/login");
          }
          var category = $rootScope.globals.userInfo.profile.organisation.category;
