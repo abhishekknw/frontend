@@ -72,11 +72,11 @@
       var url = url_base + "dashboard/get_leads_by_campaign_new/?campaign_id=" + campaignId;
       return machadaloHttp.get(url);
     }
-
-    DashboardService.getSortedLeadsByCampaign = function(campaignId){
-      var url = url_base + "dashboard/get_leads_by_campaign_custom/?campaign_id=" + campaignId + "&query_type=" + query_type;
-      return machadaloHttp.get(url);
-    }
+    //
+    // DashboardService.getSortedLeadsByCampaign = function(campaignId, query_type){
+    //   var url = url_base + "dashboard/get_leads_by_campaign_custom/?campaign_id=" + campaignId + "&query_type=" + query_type;
+    //   return machadaloHttp.get(url);
+    // }
 
     DashboardService.getCompareCampaignChartData = function(data){
       var url = url_base + "dashboard/proposal_id/get_leads_by_multiple_campaigns/";
