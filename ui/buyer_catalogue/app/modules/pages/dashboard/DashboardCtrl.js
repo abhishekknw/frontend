@@ -1144,7 +1144,7 @@
      })
    }
    $scope.getLeadsByCampaign = function(campaignId){
-     $scope.getSortedLeadsByCampaign();
+     // $scope.getSortedLeadsByCampaign();
      $scope.showTimeLocBtn = false;
      $scope.showinv = false;
      $scope.showSelection = true;
