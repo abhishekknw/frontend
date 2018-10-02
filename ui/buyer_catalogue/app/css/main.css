@@ -625,4 +625,10 @@ div.outerFlat .innerFlat { width: 500px; }
 .dateHeading > * {
        display: table-cell;
        width: 3%;
-   }
+}
+
+.table-style{
+  overflow-y: auto;
+  overflow-x: auto;
+  height: 350px;
+}

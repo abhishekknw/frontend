@@ -170,8 +170,8 @@ angular
     release : 'RELEASE',
     closure : 'CLOSURE',
     audit : 'AUDIT',
-    colorKey1 : '#cb1925',
-    colorKey2 : '#fcfc5f',
+    colorKey1 : '#FAEF11',
+    colorKey2 : '#6BCA56',
     booking_status : {
       'BK' : 'Booked',
       'NB' : 'Not Booked',
