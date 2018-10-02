@@ -312,10 +312,70 @@
 
               </uib-tab>
 
-              <uib-tab id="uib-tabs-width" ng-click="getCampaigns()" index="1">
+              <uib-tab id="uib-tabs-width" ng-click="viewCampaignLeads()" index="1">
                   <uib-tab-heading>
                     <h5>View Leads</h5>
                   </uib-tab-heading>
+                  <div class="container-fluid">
+                    <div class="" ng-if="showCampaigns">
+                      <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
+                      <table class="table table-bordered table-responsive">
+                        <thead>
+                          <tr>
+                            <th>Index</th>
+                            <th>Campaign Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Phase</br>Completed</th>
+                            <th>Campaign Status</th>
+                            <th>Supplier</br> Count</th>
+                            <th>Flat</br> Count</th>
+                            <th>Total</br> Leads</th>
+                            <th>Hot</br> Leads</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="campaign in leadsDataCampaigns|filter : searchQuery">
+                            <td>{{$index + 1}}</td>
+                            <td>{{campaign.name}}</td>
+                            <td>{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
+                            <td ng-if="campaign.campaign_status == 'completed'">{{campaign.end_date|limitTo:10|date:mediumDate}}</td>
+                            <td ng-if="campaign.campaign_status != 'completed'">NA</td>
+                            <td>{{campaign.phase_complete}}</td>
+                            <td>{{campaign.campaign_status}}</td>
+                            <td>{{campaign.supplier_count}}</td>
+                            <td>{{campaign.flat_count}}</td>
+                            <td>{{campaign.total_leads}}</td>
+                            <td>{{campaign.hot_leads}}</td>
+                            <td>
+                              <button class="btn btn-danger" ng-click="viewLeadsForSelectedCampaign(campaign.campaign_id)">View Leads</button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class=""  ng-if="!showCampaigns" style="width:900px;overflow-x:auto">
+                      <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button>
+                    </br><br>
+                      <input type="text" class="form-control" ng-model="searchData" placeholder="search">
+                      <table class="table table-bordered table-responsive" ng-if="selectedCampaignLeads.values.length">
+                        <br/>
+                        <thead>
+                          <tr>
+                            <th>Index</th>
+                            <th ng-repeat="header in selectedCampaignLeads.headers">{{header.key_name}}</th>
+                          </tr>
+                        </thead>
+                        <tbody ng-repeat="lead in selectedCampaignLeads.values | filter : searchData" >
+                          <tr>
+                            <td>{{$index + 1}}</td>
+                            <td  ng-repeat="alias in lead">{{alias.value}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </uib-tab>
 
               <uib-tab id="uib-tabs-width"  ng-click="getCampaigns()" index="2">
@@ -345,7 +405,7 @@
                                     </div>
                                 </div>
                                 <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.completed.status)">
-                                    <div class="panel-heading">
+                                    <div class="panel-hea/ding">
                                         <h4 class="panel-title">
                                             Completed Campaigns
                                         </h4>
@@ -1065,7 +1125,7 @@
 <!-- START : BOOKING ENGINE -->
 <uib-tab  id="uib-tabs-width" ng-click="getCampaigns()" index="3">
     <uib-tab-heading>
-      <h5>Booking</h5>
+      <h5>Booking Details</h5>
     </uib-tab-heading>
 
     <div class="container-fluid">
@@ -1179,7 +1239,7 @@
                 <td>{{supplier.society_type_quality}}</td>
                 <td>{{supplier.society_locality}}({{supplier.society_subarea}})</td>
                 <td>{{bookingStatusSuppliers[supplier.booking_status]}}</td>
-                <td><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages" target="_blank">View Details</a></td>
+                <td><a href="https://www.google.com/maps/?q=+{{supplier.society_latitude}}+{{supplier.society_longitude}}" target="_blank">View Details</a></td>
               </tr>
             </tbody>
           </table>
@@ -1389,7 +1449,7 @@
                         <div class="col-lg-12"  ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:30px;">
                           <div class="col-lg-6">
                             <div class="panel panel-primary">
-                              <div class="panel-heading">
+                              <div class="panel-heading content-title">
                                 <label for="Flat">Flat Summary Details</label>
                               </div>
                             </div>
@@ -1412,27 +1472,27 @@
                                   </tr>
                                   <tr>
                                     <td style="background-color:#cb1925"><small style="color:#ffffff">Flat Count</small></td>
-                                    <td>{{Data.flat_data['0-150']['flat count']}}</td>
-                                    <td>{{Data.flat_data['151-399']['flat count']}}</td>
-                                    <td>{{Data.flat_data['400+']['flat count']}}</td>
+                                    <td>{{Data.flat_data['0-150']['flat_count']}}</td>
+                                    <td>{{Data.flat_data['151-399']['flat_count']}}</td>
+                                    <td>{{Data.flat_data['400+']['flat_count']}}</td>
                                   </tr>
                                   <tr>
                                     <td style="background-color:#cb1925"><small style="color:#ffffff">Total Leads (%)</small></td>
-                                    <td>{{Data.flat_data['0-150'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].total / Data.flat_data['0-150']['flat count']) * 100 |limitTo:5}} %)</small> </td>
-                                    <td>{{Data.flat_data['151-399'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['151-399'].total / Data.flat_data['151-399']['flat count']) * 100 |limitTo:5}} %)</small> </td>
-                                    <td>{{Data.flat_data['400+'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['400+'].total / Data.flat_data['400+']['flat count']) * 100 |limitTo:5}} %)</small> </td>
+                                    <td>{{Data.flat_data['0-150'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].total / Data.flat_data['0-150']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
+                                    <td>{{Data.flat_data['151-399'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['151-399'].total / Data.flat_data['151-399']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
+                                    <td>{{Data.flat_data['400+'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['400+'].total / Data.flat_data['400+']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
                                   </tr>
                                   <tr>
                                     <td style="background-color:#cb1925"><small style="color:#ffffff">Hot Leads (%)</small></td>
-                                    <td>{{Data.flat_data['0-150'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].interested / Data.flat_data['0-150']['flat count']) * 100 |limitTo:5}} %)</small></td>
-                                    <td>{{Data.flat_data['151-399'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['151-399'].interested / Data.flat_data['151-399']['flat count']) * 100 |limitTo:5}} %)</small></td>
-                                    <td>{{Data.flat_data['400+'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['400+'].interested / Data.flat_data['400+']['flat count']) * 100 |limitTo:5}} %)</small></td>
+                                    <td>{{Data.flat_data['0-150'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].interested / Data.flat_data['0-150']['flat_count']) * 100 |limitTo:5}} %)</small></td>
+                                    <td>{{Data.flat_data['151-399'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['151-399'].interested / Data.flat_data['151-399']['flat_count']) * 100 |limitTo:5}} %)</small></td>
+                                    <td>{{Data.flat_data['400+'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['400+'].interested / Data.flat_data['400+']['flat_count']) * 100 |limitTo:5}} %)</small></td>
                                   </tr>
                                   <tr>
                                     <td style="background-color:#cb1925"><small style="color:#ffffff">Hot Leads Ratio (%)</small></td>
-                                    <td>{{Data.flat_data['0-150'].hot_lead_ratio * 100 |limitTo:5}} %</td>
-                                    <td>{{Data.flat_data['151-399'].hot_lead_ratio * 100 |limitTo:5}} %</td>
-                                    <td>{{Data.flat_data['400+'].hot_lead_ratio * 100 |limitTo:5}} %</td>
+                                    <td>{{Data.flat_data['0-150'].hot_leads_percentage |limitTo:4}} %</td>
+                                    <td>{{Data.flat_data['151-399'].hot_leads_percentage |limitTo:4}} %</td>
+                                    <td>{{Data.flat_data['400+'].hot_leads_percentage |limitTo:4}} %</td>
                                   </tr>
                                 </tbody>
                                 <tfoot>
@@ -1447,14 +1507,14 @@
                           </div>
                           <div class="col-lg-6">
                             <div class="panel panel-primary">
-                              <div class="panel-heading">
+                              <div class="panel-heading content-title">
                                 <label for="flat graph">Flat Graph Summary</label>
                               </div>
                             </div>
                             <div class="row">
                               <div class="outerFlat">
                                 <div class="innerFlat">
-                                  <nvd3 options="stackedBarChartOptions" data="stackedBarFLatCountChart"></nvd3>
+                                  <nvd3 options="stackedBarChartFlatWise" data="stackedBarFLatCountChart"></nvd3>
                                 </div>
                               </div>
                             </div>
@@ -1464,7 +1524,7 @@
                         <div class="col-lg-12"  ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:50px;">
                           <div class="col-lg-6">
                             <div class="panel panel-primary">
-                              <div class="panel-heading">
+                              <div class="panel-heading content-title">
                                 <label for="Location">Location Summary Details</label>
                               </div>
                             </div>
@@ -1484,10 +1544,10 @@
                                   <tr ng-repeat="(key,data) in localityData">
                                     <td>{{key}}</td>
                                     <td>{{data.suppliers}}</td>
-                                    <td>{{data['flat count']}}</td>
-                                    <td>{{data.total}} <br> <small style="font-weight:bold">({{(data.total / data['flat count']) * 100 |limitTo:5}} %)</small> </td>
-                                    <td>{{data.interested}} <br> <small style="font-weight:bold">({{(data.interested / data['flat count']) * 100 |limitTo:5}} %)</small></td>
-                                    <td>{{data.hot_lead_ratio * 100 |limitTo:5}} %</td>
+                                    <td>{{data['flat_count']}}</td>
+                                    <td>{{data.total}} <br> <small style="font-weight:bold">({{(data.total / data['flat_count']) * 100 |limitTo:5}} %)</small> </td>
+                                    <td>{{data.interested}} <br> <small style="font-weight:bold">({{(data.interested / data['flat_count']) * 100 |limitTo:5}} %)</small></td>
+                                    <td>{{data.hot_leads_percentage |limitTo:4}} %</td>
                                   </tr>
                                 </tbody>
                                 <tfoot>
@@ -1502,14 +1562,14 @@
                           </div>
                               <div class="col-lg-6">
                                 <div class="panel panel-primary">
-                                  <div class="panel-heading">
+                                  <div class="panel-heading content-title">
                                     <label for="flat graph">Location Graph Summary</label>
                                   </div>
                                 </div>
                                 <div class="col-md-12" style="height:300px">
                                   <div class="outerFlat">
                                     <div class="innerFlat">
-                                      <nvd3 options="stackedBarChartOptions" data="stackedBarLocationCountChart"></nvd3>
+                                      <nvd3 options="stackedBarChartLocationWise" data="stackedBarLocationCountChart"></nvd3>
                                     </div>
                                   </div>
                                 </div>
@@ -1520,7 +1580,7 @@
                         <div class="col-lg-12"  ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:120px">
                           <div class="col-lg-6">
                             <div class="panel panel-primary">
-                              <div class="panel-heading">
+                              <div class="panel-heading content-title">
                                 <label for="Location">Phase Summary Details</label>
                               </div>
                             </div>
@@ -1542,10 +1602,10 @@
                                   <tr ng-repeat="(key,data) in phaseData">
                                     <td>{{key}}</td>
                                     <td>{{data.supplier_count}}</td>
-                                    <td>{{data['flat count']}}</td>
-                                    <td>{{data.total}} <br> <small style="font-weight:bold">({{(data.total / data['flat count']) * 100 |limitTo:5}} %)</small> </td>
-                                    <td>{{data.interested}} <br> <small style="font-weight:bold">({{(data.interested / data['flat count']) * 100 |limitTo:5}} %)</small></td>
-                                    <td>{{data.hot_lead_ratio * 100 |limitTo:5}} %</td>
+                                    <td>{{data['flat_count']}}</td>
+                                    <td>{{data.total}} <br> <small style="font-weight:bold">({{(data.total / data['flat_count']) * 100 |limitTo:5}} %)</small> </td>
+                                    <td>{{data.interested}} <br> <small style="font-weight:bold">({{(data.interested / data['flat_count']) * 100 |limitTo:5}} %)</small></td>
+                                    <td>{{data.hot_leads_percentage  |limitTo:4}} %</td>
                                     <td>{{data['start date'] | date :  "MMM d, y"}}</td>
                                     <td>{{data['end date']| date :  "MMM d, y"}}</td>
                                   </tr>
@@ -1563,14 +1623,14 @@
                         </div>
                               <div class="col-lg-6">
                                 <div class="panel panel-primary">
-                                  <div class="panel-heading">
+                                  <div class="panel-heading content-title">
                                     <label for="flat graph">Phase Graph Summary</label>
                                   </div>
                                 </div>
                                 <div class="col-md-12" style="height:300px">
                                   <div class="outerFlat">
                                     <div class="innerFlat">
-                                      <nvd3 options="stackedBarChartOptions" data="stackedBarPhaseChart"></nvd3>
+                                      <nvd3 options="stackedBarChartPhaseWise" data="stackedBarPhaseChart"></nvd3>
                                     </div>
                                   </div>
                                 </div>
@@ -1886,7 +1946,7 @@
                             <div class="col-md-12" ng-scrollable>
                               <div class="outer">
                                 <div class="inner">
-                                  <nvd3 options="stackedBarChartOptions" data="stackedBarChartSupplierData"></nvd3>
+                                  <nvd3 options="stackedBarChartSocietyWise" data="stackedBarChartSupplierData"></nvd3>
                                 </div>
                               </div>
                             </div>
@@ -1901,7 +1961,7 @@
                             <div class="col-md-12" ng-scrollable>
                               <div class="outerdate">
                                 <div class="innerdate">
-                                  <nvd3 options="stackedBarChartOptions" data="stackedBarChartDateData"></nvd3>
+                                  <nvd3 options="stackedBarChartDateWise" data="stackedBarChartDateData"></nvd3>
                                 </div>
                               </div>
                             </div>
