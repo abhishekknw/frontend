@@ -575,7 +575,7 @@
                     "grouped": true,
                     "sortDescending" : false,
                       "xAxis": {
-                      "axisLabel": "Society (Flat Count)",
+                      "axisLabel": "Society (Flat Count) in Percentage",
                       "showMaxMin": false,
                       "rotateLabels" : -30
                     },
@@ -614,7 +614,7 @@
                      "grouped": true,
                      "sortDescending" : false,
                        "xAxis": {
-                       "axisLabel": "Date (Flat Count)",
+                       "axisLabel": "Date (Flat Count) in Percentage",
                        "showMaxMin": false,
                        "rotateLabels" : -30
                      },
@@ -653,7 +653,7 @@
             "grouped": true,
             "sortDescending" : false,
               "xAxis": {
-              "axisLabel": "Flat Range (Flat Count)",
+              "axisLabel": "Flat Range (Flat Count) in Percentage",
               "axisLabelDistance" : -50,
               "showMaxMin": false,
               "rotateLabels" : -30
@@ -693,7 +693,7 @@
              "grouped": true,
              "sortDescending" : false,
                "xAxis": {
-               "axisLabel": "Society Area (Flat Count)",
+               "axisLabel": "Society Area (Flat Count) in Percentage",
                "showMaxMin": false,
                "rotateLabels" : -30
              },
@@ -732,7 +732,7 @@
               "grouped": true,
               "sortDescending" : false,
                 "xAxis": {
-                "axisLabel": "Phases (Flat Count)",
+                "axisLabel": "Phases (Flat Count) in Percentage",
                 "showMaxMin": false,
                 "rotateLabels" : -30
               },
@@ -771,7 +771,7 @@
                "grouped": true,
                "sortDescending" : false,
                  "xAxis": {
-                 "axisLabel": "City (Flat Count)",
+                 "axisLabel": "City (Flat Count) in Percentage",
                  "showMaxMin": false,
                  "rotateLabels" : -30
                },
