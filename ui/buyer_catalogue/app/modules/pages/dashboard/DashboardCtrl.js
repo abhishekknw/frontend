@@ -11,6 +11,7 @@
  $scope.query = "";
  $scope.oneAtATime = true;
  $scope.bookingStatusSuppliers = constants.booking_status;
+ $scope.showCampaigns = true;
  $scope.rowCollection = [];
  $scope.invNameToCode = {
    'POSTER' : 'PO',
@@ -1606,9 +1607,31 @@ $scope.geToSupplierDetails = function(supplierId){
   $location.path(supplierId + "/SocietyDetailsPages");
 }
 $scope.checkNan = function(number){
-return isNaN(number);
+  return isNaN(number);
 }
+$scope.viewCampaignLeads = function(){
+  DashboardService.viewCampaignLeads()
+  .then(function onSuccess(response){
+    console.log(response);
+    $scope.leadsDataCampaigns = response.data.data;
+  }).catch(function onError(response){
+    console.log(response);
+  })
+}
+    $scope.viewLeadsForSelectedCampaign = function(campaignId){
+      DashboardService.viewLeadsForSelectedCampaign(campaignId)
+      .then(function onSuccess(response){
+      console.log(response);
+      $scope.selectedCampaignLeads = response.data.data;
+      $scope.showCampaigns = false;
 
+    }).catch(function onError(response){
+      console.log(response);
+    })
+  }
+$scope.backToCampaign = function(){
+  $scope.showCampaigns = true;
+}
 //END
 })
 

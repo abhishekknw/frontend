@@ -6,7 +6,8 @@
   function (machadaloHttp, $stateParams, $rootScope, $routeParams, $location) {
 
     var url_base = 'v0/ui/website/';
-    var url_base_proposal = 'v0/ui/proposal/'
+    var url_base_proposal = 'v0/ui/proposal/';
+    var url_root = 'v0/ui/';
     var DashboardService = {};
 
 
@@ -94,6 +95,16 @@
     }
     DashboardService.getBookingCampaigns = function(campaign){
         var url = url_base +  campaign + "/get-suppliers-by-status/";
+        return machadaloHttp.get(url);
+    }
+
+    DashboardService.viewCampaignLeads = function(){
+        var url = url_root  + "leads/summary/";
+        return machadaloHttp.get(url);
+    }
+
+    DashboardService.viewLeadsForSelectedCampaign = function(campaignId){
+        var url = url_root  + "leads/" + campaignId + "/entry_list_by_campaign_id";
         return machadaloHttp.get(url);
     }
 
