@@ -20,6 +20,10 @@
    'FLIER' : 'FL',
    'GATEWAY ARCH' : 'GA'
  };
+ $scope.queryType = {
+   'Locality' : 'Locality',
+   'date' : 'Date',
+    };
         $scope.invKeys = [
           {header : 'POSTER'},
           {header : 'STANDEE'},
@@ -599,6 +603,45 @@
                   }
                 };
 
+                var stackedBarChart = {
+                   "chart": {
+                     "type": "multiBarChart",
+                     "height": 450,
+                     // "labelType" : "11",
+                     "margin": {
+                       "top": 100,
+                       "right": 20,
+                       "bottom": 145,
+                       "left": 45
+                     },
+                     "clipEdge": true,
+                     "duration": 500,
+                     "grouped": true,
+                     "sortDescending" : false,
+                       "xAxis": {
+                       "axisLabel": "Society (Flat Count) in Percentage",
+                       "showMaxMin": false,
+                       "rotateLabels" : -30
+                     },
+                     "yAxis": {
+                       "axisLabel": "Leads in %",
+                       "axisLabelDistance": -20,
+
+                       "ticks" : 8
+                     },
+                     "legend" : {
+                             "margin": {
+                             "top": 5,
+                             "right": 3,
+                             "bottom": 5,
+                             "left": 15
+                         },
+                     },
+
+                     "reduceXTicks" : false
+                   }
+                 };
+
                 var dateSummaryBarChart = {
                    "chart": {
                      "type": "multiBarChart",
@@ -1102,6 +1145,7 @@
      })
    }
    $scope.getLeadsByCampaign = function(campaignId){
+     // $scope.getSortedLeadsByCampaign();
      $scope.showTimeLocBtn = false;
      $scope.showinv = false;
      $scope.showSelection = true;
@@ -1121,6 +1165,7 @@
        })
        console.log($scope.locationHeader);
        $scope.d3StackedBarChartData = formatD3StackedBarChartData($scope.LeadsByCampaign.supplier_data);
+       $scope.stackedBarChartOptions = angular.copy(stackedBarChart);
        $scope.stackedBarChartSocietyWise = angular.copy(societySummaryBarChart);
        $scope.stackedBarChartDateWise = angular.copy(dateSummaryBarChart);
        $scope.stackedBarChartFlatWise = angular.copy(flatSummaryBarChart);
@@ -1881,18 +1926,21 @@ $scope.backToCampaign = function(){
   $scope.showCampaigns = true;
 }
 
-$scope.getSortedLeadsByCampaign = function(campaignId){
-  $scope.showTimeLocBtn = false;
-  $scope.showinv = false;
-  $scope.showSelection = true;
-  $scope.showPerfMetrics = $scope.perfMetrics.blank;
-  DashboardService.getSortedLeadsByCampaign(campaignId)
-  .then(function onSuccess(response){
-    console.log(response);
-  }).catch(function onError(response){
-    console.log(response);
-  })
-}
+//
+//
+// $scope.getSortedLeadsByCampaign = function(campaignId,query_type){
+//   console.log(query_type);
+//   $scope.showTimeLocBtn = false;
+//   $scope.showinv = false;
+//   $scope.showSelection = true;
+//   $scope.showPerfMetrics = $scope.perfMetrics.blank;
+//   DashboardService.getSortedLeadsByCampaign(campaignId)
+//   .then(function onSuccess(response){
+//     console.log(response);
+//   }).catch(function onError(response){
+//     console.log(response);
+//   })
+// }
 
 //END
 })
