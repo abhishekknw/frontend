@@ -124,3 +124,84 @@ export function deleteSupplierChecklist({ checklistId }) {
       });
   };
 }
+
+export function getSingleChecklistStart() {
+  return {
+    type: types.GET_SINGLE_CHECKLIST_START
+  };
+}
+
+export function getSingleChecklistSuccess({ checklistId, checklist }) {
+  return {
+    type: types.GET_SINGLE_CHECKLIST_SUCCESS,
+    checklistId,
+    checklist
+  };
+}
+
+export function getSingleChecklistFail() {
+  return {
+    type: types.GET_SINGLE_CHECKLIST_FAIL
+  };
+}
+
+export function getSingleChecklist({ checklistId }) {
+  return (dispatch, getState) => {
+    dispatch(getSingleChecklistStart());
+
+    const { auth } = getState();
+
+    request
+      .get(`${config.API_URL}/v0/ui/checklists/${checklistId}/get_data`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(
+          getSingleChecklistSuccess({ checklistId, checklist: resp.body.data })
+        );
+      })
+      .catch(ex => {
+        console.log('Failed to fetch single checklist', ex);
+
+        dispatch(getSingleChecklistFail());
+      });
+  };
+}
+
+export function postChecklistEntriesStart() {
+  return {
+    type: types.POST_CHECKLIST_ENTRIES_START
+  };
+}
+
+export function postChecklistEntriesSuccess() {
+  return {
+    type: types.POST_CHECKLIST_ENTRIES_SUCCESS
+  };
+}
+
+export function postChecklistEntriesFail() {
+  return {
+    type: types.POST_CHECKLIST_ENTRIES_FAIL
+  };
+}
+
+export function postChecklistEntries({ checklistId, data }) {
+  return (dispatch, getState) => {
+    dispatch(postChecklistEntriesStart());
+
+    const { auth } = getState();
+
+    request
+      .put(`${config.API_URL}/v0/ui/checklists/${checklistId}/enter_data`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .send(data)
+      .then(resp => {
+        dispatch(postChecklistEntriesSuccess());
+      })
+      .catch(ex => {
+        console.log('Failed to update checklist entries', ex);
+
+        dispatch(postChecklistEntriesFail());
+      });
+  };
+}

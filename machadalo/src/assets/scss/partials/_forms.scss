@@ -1,0 +1,8 @@
+@import './variables';
+
+input {
+  &:disabled {
+    background-color: $input-disabled-bg;
+    cursor: $input-disabled-cursor;
+  }
+}
