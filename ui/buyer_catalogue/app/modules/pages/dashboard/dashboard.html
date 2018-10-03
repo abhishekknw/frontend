@@ -1478,15 +1478,25 @@
                                   </tr>
                                   <tr>
                                     <td style="background-color:#cb1925"><small style="color:#ffffff">Total Leads (%)</small></td>
-                                    <td>{{Data.flat_data['0-150'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].total / Data.flat_data['0-150']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
-                                    <td>{{Data.flat_data['151-399'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['151-399'].total / Data.flat_data['151-399']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
-                                    <td>{{Data.flat_data['400+'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['400+'].total / Data.flat_data['400+']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
+                                    <td ng-if="Data.flat_data['0-150']['flat_count'] != 0">{{Data.flat_data['0-150'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].total / Data.flat_data['0-150']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
+                                    <td ng-if="Data.flat_data['151-399']['flat_count'] != 0">{{Data.flat_data['151-399'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['151-399'].total / Data.flat_data['151-399']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
+                                    <td  ng-if="Data.flat_data['400+']['flat_count'] != 0">{{Data.flat_data['400+'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['400+'].total / Data.flat_data['400+']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
+
+                                    <td ng-if="Data.flat_data['0-150']['flat_count'] == 0">{{Data.flat_data['0-150'].total}} <br> <small style="font-weight:bold">({{Data.flat_data['0-150'].total}} %)</small> </td>
+                                    <td ng-if="Data.flat_data['151-399']['flat_count'] == 0">{{Data.flat_data['151-399'].total}} <br> <small style="font-weight:bold">({{Data.flat_data['151-399'].total }} %)</small> </td>
+                                    <td ng-if="Data.flat_data['400+']['flat_count'] == 0">{{Data.flat_data['400+'].total}} <br> <small style="font-weight:bold">({{Data.flat_data['400+'].total}} %)</small> </td>
+
                                   </tr>
                                   <tr>
                                     <td style="background-color:#cb1925"><small style="color:#ffffff">Hot Leads (%)</small></td>
-                                    <td>{{Data.flat_data['0-150'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].interested / Data.flat_data['0-150']['flat_count']) * 100 |limitTo:5}} %)</small></td>
-                                    <td>{{Data.flat_data['151-399'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['151-399'].interested / Data.flat_data['151-399']['flat_count']) * 100 |limitTo:5}} %)</small></td>
-                                    <td>{{Data.flat_data['400+'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['400+'].interested / Data.flat_data['400+']['flat_count']) * 100 |limitTo:5}} %)</small></td>
+                                    <td  ng-if="Data.flat_data['0-150']['flat_count'] != 0">{{Data.flat_data['0-150'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].interested / Data.flat_data['0-150']['flat_count']) * 100 |limitTo:5}} %)</small></td>
+                                    <td  ng-if="Data.flat_data['151-399']['flat_count'] != 0">{{Data.flat_data['151-399'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['151-399'].interested / Data.flat_data['151-399']['flat_count']) * 100 |limitTo:5}} %)</small></td>
+                                    <td  ng-if="Data.flat_data['400+']['flat_count'] != 0">{{Data.flat_data['400+'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['400+'].interested / Data.flat_data['400+']['flat_count']) * 100 |limitTo:5}} %)</small></td>
+
+                                    <td ng-if="Data.flat_data['0-150']['flat_count'] == 0">{{Data.flat_data['0-150'].interested}} <br> <small style="font-weight:bold">({{Data.flat_data['0-150'].interested}} %)</small></td>
+                                    <td ng-if="Data.flat_data['151-399']['flat_count'] == 0">{{Data.flat_data['151-399'].interested}} <br> <small style="font-weight:bold">({{Data.flat_data['151-399'].interested }} %)</small></td>
+                                    <td ng-if="Data.flat_data['400+']['flat_count'] == 0">{{Data.flat_data['400+'].interested}} <br> <small style="font-weight:bold">({{Data.flat_data['400+'].interested }} %)</small></td>
+
                                   </tr>
                                   <tr>
                                     <td style="background-color:#cb1925"><small style="color:#ffffff">Hot Leads Ratio (%)</small></td>
@@ -1545,8 +1555,12 @@
                                     <td>{{key}}</td>
                                     <td>{{data.suppliers}}</td>
                                     <td>{{data['flat_count']}}</td>
-                                    <td>{{data.total}} <br> <small style="font-weight:bold">({{(data.total / data['flat_count']) * 100 |limitTo:5}} %)</small> </td>
-                                    <td>{{data.interested}} <br> <small style="font-weight:bold">({{(data.interested / data['flat_count']) * 100 |limitTo:5}} %)</small></td>
+                                    <td ng-if="data['flat_count'] != 0">{{data.total}} <br> <small style="font-weight:bold">({{(data.total / data['flat_count']) * 100 |limitTo:5}} %)</small> </td>
+                                    <td ng-if="data['flat_count'] == 0">{{data.total}} <br> <small style="font-weight:bold">({{data.total}} %)</small> </td>
+
+                                    <td ng-if="data['flat_count'] != 0">{{data.interested}} <br> <small style="font-weight:bold">({{(data.interested / data['flat_count']) * 100 |limitTo:5}} %)</small></td>
+                                    <td ng-if="data['flat_count'] == 0">{{data.interested}} <br> <small style="font-weight:bold">({{data.interested }} %)</small></td>
+
                                     <td>{{data.hot_leads_percentage |limitTo:4}} %</td>
                                   </tr>
                                 </tbody>
@@ -1603,8 +1617,12 @@
                                     <td>{{key}}</td>
                                     <td>{{data.supplier_count}}</td>
                                     <td>{{data['flat_count']}}</td>
-                                    <td>{{data.total}} <br> <small style="font-weight:bold">({{(data.total / data['flat_count']) * 100 |limitTo:5}} %)</small> </td>
-                                    <td>{{data.interested}} <br> <small style="font-weight:bold">({{(data.interested / data['flat_count']) * 100 |limitTo:5}} %)</small></td>
+                                    <td ng-if="data['flat_count'] != 0">{{data.total}} <br> <small style="font-weight:bold">({{(data.total / data['flat_count']) * 100 |limitTo:5}} %)</small> </td>
+                                    <td ng-if="data['flat_count'] == 0">{{data.total}} <br> <small style="font-weight:bold">({{data.total}} %)</small> </td>
+
+                                    <td ng-if="data['flat_count'] != 0">{{data.interested}} <br> <small style="font-weight:bold">({{(data.interested / data['flat_count']) * 100 |limitTo:5}} %)</small></td>
+                                    <td ng-if="data['flat_count'] == 0">{{data.interested}} <br> <small style="font-weight:bold">({{data.interested}} %)</small></td>
+
                                     <td>{{data.hot_leads_percentage  |limitTo:4}} %</td>
                                     <td>{{data['start date'] | date :  "MMM d, y"}}</td>
                                     <td>{{data['end date']| date :  "MMM d, y"}}</td>
