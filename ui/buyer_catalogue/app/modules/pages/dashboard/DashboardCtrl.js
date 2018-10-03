@@ -1203,8 +1203,16 @@
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(supplier){
-       $scope.hotLeadsValues =  supplier.interested / supplier['flat_count'] * 100;
-       $scope.normalLeadsValues =  (supplier.total - supplier.interested)/supplier['flat_count'] * 100;
+       if(supplier['flat_count'] != 0){
+         $scope.hotLeadsValues =  supplier.interested / supplier['flat_count'] * 100;
+         $scope.normalLeadsValues =  (supplier.total - supplier.interested)/supplier['flat_count'] * 100;
+        }
+        else {
+          $scope.hotLeadsValues =  supplier.interested;
+          $scope.normalLeadsValues =  supplier.total - supplier.interested;
+
+        }
+
         var keyWithFlatLabel =  supplier.data.society_name + ' (' + supplier['flat_count'] + ')';
         var value1 =
            [keyWithFlatLabel, $scope.normalLeadsValues];
@@ -1240,8 +1248,16 @@
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(date){
-       $scope.hotLeadsValues =  date.interested / date['flat_count'] * 100;
-       $scope.normalLeadsValues =  (date.total - date.interested)/date['flat_count'] * 100;
+       if(date['flat_count'] != 0){
+         $scope.hotLeadsValues =  date.interested / date['flat_count'] * 100;
+         $scope.normalLeadsValues =  (date.total - date.interested)/date['flat_count'] * 100;
+        }
+        else {
+          $scope.hotLeadsValues =  date.interested;
+          $scope.normalLeadsValues =  date.total - date.interested;
+
+        }
+
        var tempDate = commonDataShare.formatDate(date.created_at);
        var DateLabel = tempDate + ' (' + date['flat_count'] + ')';
         var value1 =
@@ -1270,8 +1286,15 @@
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(data,key){
-       $scope.hotLeadsValues =  data.interested / data['flat_count'] * 100;
-       $scope.normalLeadsValues =  (data.total - data.interested)/data['flat_count'] * 100;
+       if(data['flat_count'] != 0){
+         $scope.hotLeadsValues =  data.interested / data['flat_count'] * 100;
+         $scope.normalLeadsValues =  (data.total - data.interested)/data['flat_count'] * 100;
+        }
+        else {
+          $scope.hotLeadsValues =  data.interested;
+          $scope.normalLeadsValues =  data.total - data.interested;
+
+        }
        var keyWithFlatLabel =  key + ' (' + data['flat_count'] + ')';
        var value1 =
           { x : keyWithFlatLabel, y : $scope.normalLeadsValues };
@@ -1303,9 +1326,16 @@
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(data,key){
-       $scope.hotLeadsValues =  data.interested / data['flat_count'] * 100;
-       $scope.normalLeadsValues =  (data.total - data.interested)/data['flat_count'] * 100;
-       var keyWithFlatLabel =  key + ' (' + data['flat_count'] + ')';
+       if(data['flat_count'] != 0){
+         $scope.hotLeadsValues =  data.interested / data['flat_count'] * 100;
+         $scope.normalLeadsValues =  (data.total - data.interested)/data['flat_count'] * 100;
+        }
+        else {
+          $scope.hotLeadsValues =  data.interested;
+          $scope.normalLeadsValues =  data.total - data.interested;
+
+        }
+         var keyWithFlatLabel =  key + ' (' + data['flat_count'] + ')';
        var value1 =
           { x : keyWithFlatLabel, y : $scope.normalLeadsValues};
        var value2 =
@@ -1336,8 +1366,16 @@
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(data,key){
-       $scope.hotLeadsValues =  data.interested / data['flat_count'] * 100;
-       $scope.normalLeadsValues =  (data.total - data.interested)/data['flat_count'] * 100;
+       if(data['flat_count'] != 0){
+         $scope.hotLeadsValues =  data.interested / data['flat_count'] * 100;
+         $scope.normalLeadsValues =  (data.total - data.interested)/data['flat_count'] * 100;
+        }
+        else {
+          $scope.hotLeadsValues =  data.interested;
+          $scope.normalLeadsValues =  data.total - data.interested;
+
+        }
+
        var keyWithFlatLabel =  key + ' (' + data['flat_count'] + ')';
        var value1 =
           { x : keyWithFlatLabel, y :$scope.normalLeadsValues};
