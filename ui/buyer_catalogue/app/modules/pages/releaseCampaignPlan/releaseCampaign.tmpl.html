@@ -599,14 +599,13 @@
 </div>
 
 <div id="viewAddPhase" class="modal fade">
-  <div class="modal-dialog" style="width:600px">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title">View Phase</h4>
         <hr/>
         <div class = "modal-body">
-          <div class="modal-body table-responsive">
             <table class="table table-bordered">
               <thead>
                 <tr>
@@ -621,22 +620,40 @@
                 <tr ng-repeat="phase in phases" ng-show="!editPhase">
                   <td>{{$index+1}}</td>
                   <td>{{phase.phase_no||'NA'}}</td>
-                  <td>{{phase.start_date|limitTo:10||'NA'}}</td>
-                  <td>{{phase.end_date|limitTo:10||'NA'}}</td>
+                  <td>{{phase.start_date|date:'dd-MM-yyyy'||'NA'}}</td>
+                  <td>{{phase.end_date|date:'dd-MM-yyyy'||'NA'}}</td>
                   <td>
-                    <div class="radio">
-                      <button type="button" name="button" ng-click="removePhase(phase.id)">Remove</button>
+                    <div class="radio" >
+                      <button type="button" class="btn btn-danger" name="button" ng-click="removePhase(phase.id)">Remove</button>
                     </div>
                   </td>
                 </tr>
                 <tr ng-repeat="phase in phases" ng-show="editPhase">
-                  <td>{{$index+1}}</td>
-                  <td><input type="text" ng-model="phase.phase_no" required></td>
-                  <td><input type="date" ng-model="phase.start_date"></td>
-                  <td><input type="date" ng-model="phase.end_date"></td>
+                  <td >{{$index+1}}</td>
+                  <td ><input type="text" class="form-control" ng-model="phase.phase_no" required></td>
+                  <td >
+                    <div>
+                      <p class="input-group">
+                        <input type="text" class="form-control"  ng-model="phase.start_date" uib-datepicker-popup="yyyy-MM-dd" is-open="phaseStartDate"  min-date="2017-01-01" datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}"/ required>
+                        <span class="input-group-btn col-md-5">
+                          <button type="button" class="btn btn-default" ng-click="phaseStartDate=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                      </p>
+                    </div>
+                  </td>
                   <td>
+                    <div>
+                    <p class="input-group">
+                      <input type="text" class="form-control"  ng-model="phase.end_date" uib-datepicker-popup="yyyy-MM-dd" is-open="phaseEndDate"  min-date="2017-01-01" datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}"/ required>
+                      <span class="input-group-btn col-md-5">
+                        <button type="button" class="btn btn-default" ng-click="phaseEndDate=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                      </span>
+                    </p>
+                  </div>
+                </td>
+                  <td class = "col-md-3">
                     <div class="radio">
-                      <button type="button" name="button" ng-click="removePhase(phase.id)">Remove</button>
+                      <button type="button" name="button" class="btn btn-danger" ng-click="removePhase(phase.id)">Remove</button>
                     </div>
                   </td>
                 </tr>
@@ -645,7 +662,6 @@
               <button class="btn btn-success" ng-click="editPhaseDetails()">Edit</button>
               <button class="btn btn-success" type="button" name="button" ng-click="addPhases()">Add</button>
               <button class="btn btn-success" type="button" name="button" ng-click="savePhases()">Save</button>
-            </div>
         </div>
       </div>
     </div>

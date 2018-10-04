@@ -34,7 +34,7 @@ angular.module('catalogueApp')
         {header : 'CLOSURE',   code : 'CL'},
         {header : 'AUDIT',     code : 'AU'},
       ];
-      $scope.maxDate = new Date(2020, 5, 22);
+      $scope.maxDate = new Date(2025, 5, 22);
       $scope.today = new Date();
       $scope.popup1 = false;
       $scope.popup2 = false;

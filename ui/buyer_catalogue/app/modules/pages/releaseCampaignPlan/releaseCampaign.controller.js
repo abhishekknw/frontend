@@ -113,6 +113,8 @@ $scope.addNewPhase =true;
       $scope.popup1 = false;
       $scope.popup2 = false;
       $scope.popup3 = false;
+      $scope.phaseStartDate = false;
+      $scope.phaseEndDate = false;
       $scope.error = false;
 
       $scope.setDate = function(year, month, day) {
@@ -669,6 +671,7 @@ $scope.multiSelect =
          releaseCampaignService.savePhases($scope.phases,$scope.campaign_id)
          .then(function onSuccess(response){
            console.log(response);
+           swal(constants.name, constants.add_data_success, constants.success);
            angular.forEach($scope.phases, function(phase){
              phase.start_date = new Date(phase.start_date);
              phase.end_date = new Date(phase.end_date);
@@ -695,6 +698,7 @@ $scope.multiSelect =
           releaseCampaignService.removePhase(id)
           .then(function onSuccess(response){
             console.log(response);
+            swal(constants.name, constants.delete_success, constants.success);
             $scope.getPhases();
           }).catch(function onError(response){
             console.log(response);
