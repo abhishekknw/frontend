@@ -336,7 +336,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr ng-repeat="campaign in leadsDataCampaigns|filter : searchQuery">
+                          <tr ng-repeat="campaign in leadsDataCampaigns|filter : searchQuery" ng-if="campaign.total_leads">
                             <td>{{$index + 1}}</td>
                             <td>{{campaign.name}}</td>
                             <td>{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
