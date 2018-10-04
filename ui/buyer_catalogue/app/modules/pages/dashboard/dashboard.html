@@ -343,7 +343,8 @@
                             <td ng-if="campaign.campaign_status == 'completed'">{{campaign.end_date|limitTo:10|date:mediumDate}}</td>
                             <td ng-if="campaign.campaign_status != 'completed'">NA</td>
                             <td>{{campaign.phase_complete}}</td>
-                            <td>{{campaign.campaign_status}}</td>
+                            <td ng-if="campaign.campaign_status == 'on_hold'">On Hold</td>
+                            <td ng-if="campaign.campaign_status != 'on_hold'">{{campaign.campaign_status}}</td>
                             <td>{{campaign.supplier_count}}</td>
                             <td>{{campaign.flat_count}}</td>
                             <td>{{campaign.total_leads}}</td>
