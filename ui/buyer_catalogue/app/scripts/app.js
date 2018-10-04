@@ -101,7 +101,7 @@ angular
             parent: 'manageCampaign.create'
           },
           data :{
-            permission : 'createProposalMePageAccess'
+            permission : 'create_proposal_page_access'
           }
         })
         .state('showCurrentProposal',{
@@ -113,7 +113,7 @@ angular
              parent : 'manageCampaign.create'
            },
            data :{
-             permission : 'CurrentProposalPageAccess'
+             permission : 'current_proposal_page_access'
            }
         })
         .state('showProposalHistory',{
@@ -125,7 +125,7 @@ angular
             parent : 'manageCampaign.create'
           },
           data :{
-            permission : 'showProposalHistoryPageAccess'
+            permission : 'show_proposal_hostory_page_access'
           }
         })
         .state('campaign.societyDetails', {
@@ -143,7 +143,7 @@ angular
           templateUrl: 'modules/pages/supplierDetails/societyDetails/newsocietyDetails.tmpl.html',
           controller: 'NewSocietyCtrl',
           data :{
-            permission : 'showSocietyDetailsPageAccess'
+            permission : 'show_society_details_page_access'
           }
         })
       .state('login', {
