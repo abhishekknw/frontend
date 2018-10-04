@@ -55,6 +55,7 @@
             <th>Transaction/Cheque Number</th>
             <th>Contacts</th>
             <th>Payment Status</th>
+            <th>Completion Status</th>
 
           </tr>
         </thead>
@@ -154,6 +155,14 @@
               <div class="radio" ng-if="supplier.status != 'X'" permission = "[permissions.viewPaymentDetails]">
                      <label><input type="radio" ng-model="supplier.payment_status" value="PNI" ng-click="updateSupplierStatus()" ng-disabled="supplier.booking_status != 'BK'">Not Paid</label>
               </div> -->
+            </td>
+            <td  style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
+              <div class="completedHeaderSpacing">
+                  <input type="radio" class="" ng-value="true" ng-model="supplier.is_completed"> Completed
+              </div>
+              <div class="completedHeaderSpacing">
+                <input type="radio" class="" ng-value="false" ng-model="supplier.is_completed"> Not Completed
+              </div>
             </td>
           </tr>
         </tbody>
