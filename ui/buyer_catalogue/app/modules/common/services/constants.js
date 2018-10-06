@@ -179,5 +179,15 @@ angular
       'PB' : 'Phone Booked',
       'VB' : 'Visit Booked',
       'VR' : 'Visit Required'
-    }
+    },
+    inventoryNames : [
+      {name : 'POSTER'},
+      {name : 'STANDEE'},
+      {name : 'STALL'},
+      {name : 'FLYER'},
+      {name : 'GATEWAY ARCH'},
+    ],
+    booking_related_comment : 'BOOKING',
+    execution_related_comment : 'EXECUTION',
+    no_comments_msg : 'No Comments Available',
     });

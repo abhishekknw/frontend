@@ -56,7 +56,7 @@
             <th>Contacts</th>
             <th>Payment Status</th>
             <th>Completion Status</th>
-
+            <th>Comments</th>
           </tr>
         </thead>
         <tbody ng-repeat="supplier in releaseDetails.shortlisted_suppliers">
@@ -163,6 +163,10 @@
               <div class="completedHeaderSpacing">
                 <input type="radio" class="" ng-value="false" ng-model="supplier.is_completed"> Not Completed
               </div>
+            </td>
+            <td rowspan="{{key.length}}" ng-show="$first">
+              <button type="button" class="btn btn-danger" data-target="#addComments" data-toggle="modal" ng-click="getSupplierForComments(supplier)">Add</button></br>
+              <button type="button" class="btn btn-danger"   ng-click="viewComments(supplier)">View</button>
             </td>
           </tr>
         </tbody>
@@ -709,6 +713,79 @@
     </div>
   </div>
 </div>
+<!--START : add comments modal  -->
+<div id="addComments" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        Add Comment For {{supplierDataForComment.name}}
+      </div>
+      <div class="col-md-12">
+        <div class="row col-md-6" >
+        <br>
+          <label>Select Related Inventory to Comment</label><br>
+          <select class="form-control" name="" ng-model="commentModal.inventory_type">
+            <option disabled="true" selected>Select Inventory</option>
+            <option ng-repeat="inv in invForComments" value="{{inv.name}}">{{inv.name}}</option>
+          </select></br>
+        </div>
+        <div style="width:100%">
+        <br>
+          <label>Comments :</label>
+          <textarea class="form-control col-md-10"  rows="8" cols="200" ng-model="commentModal.comment" placeholder="Write here.."></textarea>
+        </div>
+        <br>
+      </div><br>
+      <!-- <div> -->
+        <br>
+        <button class="btn btn-success" type="button" ng-click="addComment()">Add Comment</button>
+      <!-- </div> -->
+    </br></br>
 
-<!--END : NEFT payment modal  -->
+    </div>
+  </div>
+</div>
+<!--END : add comments modal  -->
+<!--START : view comments modal  -->
+<div id="viewComments" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        View Comments For {{supplierDataForComment.name}}
+      </div>
+      <div class="modal-body">
+        <div class="">
+          Selected Inventory :
+          <select class="form-control" ng-model="selectedInvForView">
+              <option ng-repeat="inv in viewInvForComments" value="{{inv}}">{{inv}}</option>
+          </select>
+        </div>
+        <br>
+        <div>
+          <table class="table-bordered table-striped">
+            <tbody>
+              <tr ng-repeat="item in commentsData[selectedInvForView]">
+                <td class="col-md-8">
+                  <div>
+                    <img ng-src="{{userIcon}}">
+                    <b>{{item.user_name}} :</b> <br>
+                  </div>
+                  <div style="padding-left:30px">
+                    Comment : {{item.comment}}</br>
+                    <span> <small>{{item.timestamp|date:'medium'}}</small></span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div><br>
+      <!-- <div> -->
+        <br>
+      <!-- </div> -->
+    </br></br>
+    </div>
+  </div>
+</div>
+<!--END : view comments modal  -->
 </main>

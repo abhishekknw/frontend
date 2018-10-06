@@ -88,5 +88,15 @@
       return machadaloHttp.get(url);
     }
 
+    releaseCampaignService.addComment = function(campaignId, data){
+      var url = url_base +  campaignId + "/comment/";
+      return machadaloHttp.post(url,data);
+    }
+
+    releaseCampaignService.viewComments = function(campaignId, spaceId, relatedTo){
+      var url = url_base +  campaignId + "/comment/?shortlisted_spaces_id=" + spaceId + "&related_to=" + relatedTo;
+      return machadaloHttp.get(url);
+    }
+
     return releaseCampaignService;
 }]);

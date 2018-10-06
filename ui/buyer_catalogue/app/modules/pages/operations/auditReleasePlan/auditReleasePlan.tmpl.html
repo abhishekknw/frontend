@@ -140,7 +140,12 @@
 
                </td>
                <td class="col-md-8">
-                 <textarea rows="4" cols="50" name="comments"  ng-model="filter.detail.comments" ng-change="addComments(filter.detail,filter.detail.comments)"class="form-control spacing"  permission = "[permissions.addComments]"></textarea></td>
+                 <textarea rows="4" cols="50" name="comments"  ng-model="filter.detail.comments" ng-change="addComments(filter.detail,filter.detail.comments)"class="form-control spacing"  permission = "[permissions.addComments]"></textarea>
+                 <td>
+                   <button type="button" name="button" data-target="#addComments">Add</button>
+                   <button type="button" name="button"  data-target="#viewComments">View</button>
+                 </td>
+               </td>
              </tr>
            </tbody>
            <tfoot>
