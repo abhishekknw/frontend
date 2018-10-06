@@ -282,14 +282,14 @@
                         </tr>
                       </thead>
                       <tbody ng-repeat="supplier in dateWiseSuppliers">
-                        <tr ng-repeat="(key,inv) in supplier" ng-if="key != 'supplier_data'">
+                        <tr ng-repeat="(key,inv) in supplier" ng-if="key != 'supplier_data' && key != 'space_id' ">
                           <td><b>{{supplier.supplier_data.society_name}}</b></td>
                           <td>{{key}}</td>
                           <td>{{inv.assigned}}</td>
                           <td>{{inv.completed}}</td>
                           <td ng-if="inv.completed != 0"><a data-target="#imageModal" data-toggle="modal" ng-click="viewSupplierImages(supplier.supplier_data.supplier_id,invNameToCode[key],actType,date)">View Images</a></td>
                           <td ng-if="inv.completed == 0">No Image</td>
-                          <td></td>
+                          <td><a ng-click="viewComments(key,supplier)">View Comments</a></td>
                         </tr>
                         <tr>
                        <td><b>{{supplier.supplier_data.society_name}}</b></td>
@@ -1230,6 +1230,7 @@
                 <th>Area(SubArea)</th>
                 <th>Status</th>
                 <th>Map Details</th>
+                <th>Comments</th>
               </tr>
             </thead>
             <tbody>
@@ -1241,6 +1242,7 @@
                 <td>{{supplier.society_locality}}({{supplier.society_subarea}})</td>
                 <td>{{bookingStatusSuppliers[supplier.booking_status]}}</td>
                 <td><a href="https://www.google.com/maps/?q=+{{supplier.society_latitude}}+{{supplier.society_longitude}}" target="_blank">View Details</a></td>
+                <td><a ng-click="viewBookingComments(supplier)">View Comments</a></td>
               </tr>
             </tbody>
           </table>
@@ -2155,6 +2157,48 @@
       </div>
   </div>
     <!--END: INVENTORY INFO MODAL  -->
-
+    <!--START : view comments modal  -->
+    <div id="viewComments" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            View Comments For {{supplierNameForComment}}
+          </div>
+          <div class="modal-body">
+            <div class="">
+              Selected Inventory :
+              <select class="form-control" ng-model="selectedInvForView">
+                  <option ng-repeat="inv in viewInvForComments" value="{{inv}}">{{inv}}</option>
+              </select>
+            </div>
+            <br>
+            <div style="margin:20px;">
+              <table class="table-bordered table-striped" align="center">
+                <tbody>
+                  <tr ng-repeat="item in commentsData[selectedInvForView]">
+                    <td class="col-md-8">
+                      <div style="margin-top:10px;margin-bottom:10px">
+                        <img ng-src="{{userIcon}}">
+                        <b>{{item.user_name}} :</b> <br>
+                      </div>
+                      <div style="padding-left:30px">
+                        Comment : {{item.comment}}</br>
+                        <span> <small>{{item.timestamp|date:'medium'}}</small></span>
+                      </div><br>
+                    </td>
+                  <br>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div><br>
+          <!-- <div> -->
+            <br>
+          <!-- </div> -->
+        </br></br>
+        </div>
+      </div>
+    </div>
+    <!--END : view comments modal  -->
   </body>
 </html>

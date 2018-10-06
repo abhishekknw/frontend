@@ -113,6 +113,16 @@
         return machadaloHttp.get(url);
     }
 
+    DashboardService.viewComments = function(campaignId, spaceId, relatedTo, invType){
+      var url = url_base +  campaignId + "/comment/?shortlisted_spaces_id=" + spaceId + "&related_to=" + relatedTo + "&inventory_type=" + invType;
+      return machadaloHttp.get(url);
+    }
+
+    DashboardService.viewBookingComments = function(campaignId, spaceId, relatedTo){
+      var url = url_base +  campaignId + "/comment/?shortlisted_spaces_id=" + spaceId + "&related_to=" + relatedTo;
+      return machadaloHttp.get(url);
+    }
+
     return DashboardService;
 
  }]);

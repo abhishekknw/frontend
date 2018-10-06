@@ -13,6 +13,7 @@
  $scope.bookingStatusSuppliers = constants.booking_status;
  $scope.showCampaigns = true;
  $scope.rowCollection = [];
+ $scope.userIcon = "icons/usericon.png";
  $scope.invNameToCode = {
    'POSTER' : 'PO',
    'STALL' : 'SL',
@@ -1905,6 +1906,7 @@ $scope.getBookingCampaigns = function(campaign){
   console.log(campaign);
   $scope.bookingPhases = [];
   $scope.bookingSuppliersData = [];
+  $scope.proposalId = campaign.campaign;
   DashboardService.getBookingCampaigns(campaign.campaign)
   .then(function onSuccess(response){
     console.log(response);
@@ -1978,6 +1980,56 @@ $scope.backToCampaign = function(){
 //     console.log(response);
 //   })
 // }
+
+$scope.viewComments = function(inv,supplier){
+  console.log(supplier);
+  $scope.supplierDataForComment = supplier;
+  $scope.supplierNameForComment = undefined;
+  $scope.supplierNameForComment = supplier.supplier_data.society_name;
+  $scope.commentsData = {};
+  var relatedTo = constants.execution_related_comment;
+  var spaceId = $scope.supplierDataForComment.space_id;
+  DashboardService.viewComments($scope.proposalId,spaceId,relatedTo,inv)
+  .then(function onSuccess(response){
+    console.log(response);
+    $scope.commentModal = {};
+    $scope.commentsData = response.data.data;
+    if(Object.keys($scope.commentsData).length != 0){
+      $scope.viewInvForComments = Object.keys($scope.commentsData);
+      $scope.selectedInvForView = $scope.viewInvForComments[0];
+      $('#viewComments').modal('show');
+    }else{
+      $('#viewComments').modal('hide');
+      swal(constants.name,constants.no_comments_msg,constants.warning);
+    }
+  }).catch(function onError(response){
+    console.log(response);
+  })
+}
+
+$scope.viewBookingComments = function(supplier){
+  $scope.supplierNameForComment = undefined;
+  $scope.supplierNameForComment = supplier.society_name;
+  $scope.commentsData = {};
+  var relatedTo = constants.booking_related_comment;
+  var spaceId = supplier.space_id;
+  DashboardService.viewBookingComments($scope.proposalId,spaceId,relatedTo)
+  .then(function onSuccess(response){
+    console.log(response);
+    $scope.commentModal = {};
+    $scope.commentsData = response.data.data;
+    if(Object.keys($scope.commentsData).length != 0){
+      $scope.viewInvForComments = Object.keys($scope.commentsData);
+      $scope.selectedInvForView = $scope.viewInvForComments[0];
+      $('#viewComments').modal('show');
+    }else{
+      $('#viewComments').modal('hide');
+      swal(constants.name,constants.no_comments_msg,constants.warning);
+    }
+  }).catch(function onError(response){
+    console.log(response);
+  })
+}
 
 //END
 })
