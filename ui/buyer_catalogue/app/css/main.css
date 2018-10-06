@@ -554,7 +554,6 @@ text-align: center;
 
 }
 
-
 .showDisplayDetailsTable  thead {
   background-color: #cb1925 ;
   color: #ffffff !important;
@@ -573,6 +572,38 @@ color: #ffffff !important;
 }
 
 .showDisplayDetailsTable tfoot td {
+  color: #ffffff !important;
+  text-align: center;
+}
+
+
+.campaignDetailTable{
+  height:350px !important;
+  opacity: 1;
+  overflow:auto;
+  color: white;
+
+}
+
+
+.campaignDetailTable  thead {
+  background-color: #cb1925 ;
+  color: #ffffff !important;
+  }
+
+
+.campaignDetailTable  tbody {
+background-color: #fcfc5f;
+color: black;
+
+}
+
+.campaignDetailTable  tfoot {
+background-color: #cb1925 ;
+color: #ffffff !important;
+}
+
+.campaignDetailTable tfoot td {
   color: #ffffff !important;
   text-align: center;
 }
@@ -631,4 +662,27 @@ div.outerFlat .innerFlat { width: 500px; }
   overflow-y: auto;
   overflow-x: auto;
   height: 350px;
+}
+
+
+.supplierTable-style{
+  overflow-y: auto;
+  overflow-x: auto;
+  /* height: 350px; */
+}
+
+.equal-width td {
+  width:50%;
+}
+
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+   background-color: #CD5C5C;
+   color:#ffffff !important;
+}
+
+
+.table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+   background-color: #EEB4B4;
+   color:#ffffff !important;
 }

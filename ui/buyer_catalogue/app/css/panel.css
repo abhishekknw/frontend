@@ -12,7 +12,7 @@
   height: 0.4em;
 }
 .panel ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.6);
+  background:rgb(142, 25, 33);
   cursor: pointer;
 }
 .panel ::-webkit-scrollbar-track {
@@ -130,7 +130,7 @@
 
 .panel-group .panel .panel-heading {
   border-bottom: 1px solid #ddd;
-  
+
 }
 
 .p-with-code {

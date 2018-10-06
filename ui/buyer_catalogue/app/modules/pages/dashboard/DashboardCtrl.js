@@ -57,16 +57,16 @@
         ];
         $scope.campaignStatus = {
           ongoing : {
-            status : 'ongoing', value : false, campaignLabel : 'Ongoing Campaigns', supplierLabel : 'Ongoing Societies'
+            status : 'ongoing', value : false, campaignLabel : 'Ongoing Campaigns', supplierLabel : 'Ongoing Campaigns'
           },
           completed : {
-            status : 'completed', value : false, campaignLabel : 'Completed Campaigns', supplierLabel : 'Completed Societies'
+            status : 'completed', value : false, campaignLabel : 'Completed Campaigns', supplierLabel : 'Completed Campaigns'
           },
           upcoming : {
-            status : 'upcoming', value : false, campaignLabel : 'Upcoming Campaigns', supplierLabel : 'Upcoming Societies'
+            status : 'upcoming', value : false, campaignLabel : 'Upcoming Campaigns', supplierLabel : 'Upcoming Campaigns'
           },
           onhold : {
-            status : 'onhold', value : false, campaignLabel : 'On Hold Campaigns', supplierLabel : 'Societies'
+            status : 'onhold', value : false, campaignLabel : 'On Hold Campaigns', supplierLabel : 'On Hold Campaigns'
           },
         };
         $scope.charts = {
@@ -389,6 +389,7 @@
            if(response.data.data){
               $scope.supplierCodeCountData = formatCountData(response.data.data);
               $scope.supplierTypesData = response.data.data;
+              console.log($scope.supplierTypesData);
               $scope.supplierTypesDataList = [];
               angular.forEach($scope.supplierTypesData, function(data){
                 $scope.supplierTypesDataList = $scope.supplierTypesDataList.concat(data);
@@ -588,7 +589,6 @@
                     "yAxis": {
                       "axisLabel": "Leads in %",
                       "axisLabelDistance": -20,
-
                       "ticks" : 8
                     },
                     "legend" : {
@@ -871,6 +871,20 @@
          .then(function onSuccess(response){
 
            console.log(response);
+           // $scope.overallMetricStatus = [
+           //   { label : $scope.campaignStatus.ongoing.supplierLabel, value : $scope.campaignStatusData.ongoing.length, status : $scope.campaignStatus.ongoing.status },
+           //   { label : $scope.campaignStatus.completed.supplierLabel, value : $scope.campaignStatusData.completed.length, status : $scope.campaignStatus.completed.status },
+           //   { label : $scope.campaignStatus.upcoming.supplierLabel, value : $scope.campaignStatusData.upcoming.length, status : $scope.campaignStatus.upcoming.status }
+           // ];
+           // console.log($scope.overallMetricStatus);
+           $scope.overallMetric = response.data.data.overall_metrics;
+
+            angular.forEach($scope.overallMetric , function(data,key){
+              $scope.metricStatusValue = data;
+              // $scope.avgLeadsPerFlat = data.total_leads_count/data.flat_count * 100;
+            });
+            console.log(  $scope.totalLeadsOfMetric);
+           console.log($scope.overallMetric);
            $scope.showLeadsDetails = false;
            $scope.showDisplayDetailsTable = false;
            $scope.showSupplierTypeCountChart = false;
@@ -1145,7 +1159,9 @@
        console.log(response);
      })
    }
-   $scope.getLeadsByCampaign = function(campaignId){
+   $scope.getLeadsByCampaign = function(campaignId,campaign){
+     console.log(campaign);
+     $scope.CampaignLeadsName = campaign.name;
      // $scope.getSortedLeadsByCampaign();
      $scope.showTimeLocBtn = false;
      $scope.showinv = false;
@@ -1612,8 +1628,8 @@
       $scope.supplierAndInvData = $scope.campaignSupplierAndInvData[data.status];
       $scope.invStatusKeys = angular.copy(invStatusKeys);
       $scope.countLeads = 0;
-      console.log($scope.supplierAndInvData);
-      angular.forEach($scope.supplierAndInvData, function(supplier){
+      angular.forEach($scope.supplierAndInvData, function(supplier,key){
+        console.log(supplier);
         $scope.latitude = supplier.supplier.society_latitude;
         $scope.longitude = supplier.supplier.society_longitude;
         $scope.societyName = supplier.supplier.society_name;
@@ -1623,11 +1639,9 @@
           $scope.invStatusKeys[key].status = true;
           })
           $scope.ImageURL = function(supplier,images){
-            console.log(supplier);
-            console.log(images);
+
             $scope.ImageURLListOfAll = [];
             angular.forEach(images, function(data){
-              console.log(data);
                 var imagesData = {
                   image_url : 'http://androidtokyo.s3.amazonaws.com/' + data.image_path,
                   comment : data.comment,
@@ -1637,7 +1651,6 @@
                 $scope.ImageURLListOfAll.push(imagesData);
 
             })
-            console.log($scope.ImageURLListOfAll);
           }
 
            angular.forEach(supplier.leads_data, function(inv,key){
