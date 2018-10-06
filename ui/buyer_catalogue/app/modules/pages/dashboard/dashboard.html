@@ -222,22 +222,53 @@
                               </div>
                           </div>
                       </div>
-                      <div class="col-md-12">
-                      <div class="form-group select-page-size-wrap ">
-                      </div>
-                        <div class="col-md-12" ng-if="showAssignedInvTable">
-                                <div class="col-md-12 InventoryTable1">
-                                <div class="panel-heading content-title" style="height:70px;">
+                      <div class="col-md-12" ng-if="showAssignedInvTable">
+                      <!-- <div class="form-group select-page-size-wrap ">
+                      </div> -->
+                        <!-- <div class="" > -->
+                                <!-- <div class=""> -->
+                                <div class="panel-heading" style="height:70px;">
                                   <h5 style="background:'red';color:white;">Campaign Details ({{invName}}, {{actType}})</h5>
                                   <h5 class="pull-right">{{date|date : "dd-MM-yyyy"}}</h5>
                                 </div>
-                              <table st-safe-src="rowCollection" st-table="displayed" st-pipe="callServer" class="table-responsive table table-bordered">
+                                <div class="row col-md-12 panel-heading" style="border: 1px solid #ccc;">
+                                  <label class="col-md-1">Index</label>
+                                  <label class="col-md-2">Campaign Name</label>
+                                  <label class="col-md-2">Inventory</label>
+                                  <label class="col-md-1">Total Assigned</label>
+                                  <label class="col-md-1">Today Released</label>
+                                  <label class="col-md-1">Average Delay(In Hours)</label>
+                                  <label class="col-md-2">Average Off Location(Meters)</label>
+                                  <label class="col-md-2">Images</label>
+                                </div><br>
+                                <div class="col-md-12" style="overflow-y:auto;max-height:100px;color:black">
+                                  <div class="row col-md-12" ng-repeat="item in campaignReleaseData">
+                                    <label class="col-md-1">{{$index+1}}</label>
+                                    <label class="col-md-2"><a ng-click="getDatewiseSuppliersInventory(item.proposalId,item.name)">{{item.name}}</a></label>
+                                    <label class="col-md-2">{{invName}}</label>
+                                    <label class="col-md-1">{{item.assigned}}</label>
+                                    <label class="col-md-1">{{item.inv_count}}</label>
+                                    <label class="col-md-1" ng-if="item.inv_count != 0">{{item.offTimeDays}}</label>
+                                    <label class="col-md-1" ng-if="item.inv_count == 0">Not Allowed</label>
+                                    <label class="col-md-2" ng-if="item.inv_count == 0 && item.offLocationDistance == 0">Not Allowed</label>
+                                    <label class="col-md-2" ng-if="checkNan(item.offLocationDistance) || item.offLocationDistance == 0 && item.inv_count != 0">Not Applicable</label>
+                                    <label class="col-md-2" ng-if="!checkNan(item.offLocationDistance) && item.inv_count != 0 && item.offLocationDistance != 0">{{item.offLocationDistance/item.inv_count|limitTo:10||0}}</label>
+
+                                    <label class="col-md-2" ng-if="item.images.length > 0"><a data-target="#imageModal" data-toggle="modal" ng-click="setImageUrl(item,item.images)">View Images</a></label>
+                                    <label class="col-md-2" ng-if="item.images.length == 0">No Image</label>
+                                    <!-- <td class="col-md-2">
+                                      <a data-target="" data-toggle="modal" ng-click="getHashtagImages(item)">View Other Images</a>
+                                    </td> -->
+                                    <!-- <label class="col-md-2">View Images</label> -->
+                                  </div>
+                                </div>
+                              <!-- <table st-safe-src="rowCollection" st-table="displayed" st-pipe="callServer" class="table-responsive table table-bordered">
                                 <thead>
                                 <tr class="sortable" >
                                     <th class="table-id" st-sort="id" st-sort-default="true" >Sr No</th>
                                     <th ng-repeat="header in supHeaders" st-sort="{{header.key}}">{{header.header}}</th>
                                   </thead>
-                                    </tr>
+                                </tr>
 
                                   <tbody>
                                     <tr ng-repeat="item in campaignReleaseData  |filter:query" >
@@ -254,15 +285,15 @@
 
                                       <td class="col-md-2" ng-if="item.images.length > 0"><a data-target="#imageModal" data-toggle="modal" ng-click="setImageUrl(item,item.images)">View Images</a></td>
                                       <td ng-if="item.images.length == 0"><label>No Image<label></td>
-                                      <!-- <td class="col-md-2">
+                                      <td class="col-md-2">
                                         <a data-target="" data-toggle="modal" ng-click="getHashtagImages(item)">View Other Images</a>
                                       </td> -->
 
-                                      </tr>
+                                      <!-- </tr>
                                   </tbody>
-                              </table>
-                          </div>
-                      </div>
+                              </table> -->
+                          <!-- </div> -->
+                      <!-- </div> -->
                 </div>
                 <div class="col-md-12" ng-show="dateWiseSuppliers.length">
                   <div class="panel-heading"  style="height:90px;">
