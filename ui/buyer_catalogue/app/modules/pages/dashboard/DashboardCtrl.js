@@ -587,7 +587,6 @@
                     "yAxis": {
                       "axisLabel": "Leads in %",
                       "axisLabelDistance": -20,
-
                       "ticks" : 8
                     },
                     "legend" : {
@@ -1158,7 +1157,9 @@
        console.log(response);
      })
    }
-   $scope.getLeadsByCampaign = function(campaignId){
+   $scope.getLeadsByCampaign = function(campaignId,campaign){
+     console.log(campaign);
+     $scope.CampaignLeadsName = campaign.name;
      // $scope.getSortedLeadsByCampaign();
      $scope.showTimeLocBtn = false;
      $scope.showinv = false;

@@ -833,7 +833,7 @@
 
 
                                 <div class="col-md-12 showDisplayDetailsTable" ng-if="showDisplayDetailsTable" style="margin-top:5px;">
-                                <table class="table-responsive table table-bordered showDisplayDetailsTable">
+                                <table class="table table-bordered campaignDetailTable">
                                   <thead>
                                     <tr>
                                      <th colspan='999' style="background-color: #cb1925" class="panel-heading">
@@ -862,15 +862,15 @@
                                     </tr>
 
                                   </thead>
-                                      <tbody>
-                                      <tr ng-repeat="supplier in supplierAndInvData |filter:query ">
+                                      <tbody class="detailedTable">
+                                      <tr ng-repeat="supplier in supplierAndInvData |filter:query">
                                         <td style="vertical-align:middle">{{$index + 1}}</td>
-                                        <td class="col-md-4">{{supplier.supplier.society_name}}</td>
-                                        <td>{{supplier.supplier.society_locality}} ({{supplier.supplier.society_subarea}})</td>
-                                        <td>{{supplier.supplier.society_type_quality}}</td>
-                                        <td>{{supplier.supplier.flat_count}}</td>
-                                        <td>{{supplier.leads_data.total_leads_count}} ({{supplier.leads_data.leads_flat_percentage}})</td>
-                                        <td>{{supplier.leads_data.hot_leads_count}} ({{supplier.leads_data.hot_leads_percentage}})</td>
+                                        <td class="col-md-2">{{supplier.supplier.society_name}}</td>
+                                        <td class="col-md-2">{{supplier.supplier.society_locality}} <small>({{supplier.supplier.society_subarea}})</small></td>
+                                        <td class="col-md-2">{{supplier.supplier.society_type_quality}}</td>
+                                        <td class="col-md-2">{{supplier.supplier.flat_count}}</td>
+                                        <td class="col-md-2" style="color:#ffffff">{{supplier.leads_data.total_leads_count}} <small style="color:#cb1925;"> ({{supplier.leads_data.leads_flat_percentage}} %)</small></td>
+                                        <td class="col-md-2">{{supplier.leads_data.hot_leads_count}} <small style="color:#cb1925;"> ({{supplier.leads_data.hot_leads_percentage}} %)</small></td>
                                         <td ng-if="supplier.images_data.POSTER && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.POSTER.images)">Images ({{supplier.images_data.POSTER.total_count}})</a></td>
                                         <td ng-if="!supplier.images_data.POSTER && supplierStatus == 'ongoing'">No Images</td>
 
@@ -1237,7 +1237,7 @@
                                               <tr ng-repeat="campaign in campaignData.completed_campaigns">
                                               <td >
                                                 <!-- <md-menu> -->
-                                                   <div class="" ng-click="getLeadsByCampaign(campaign.campaign)">
+                                                   <div class="" ng-click="getLeadsByCampaign(campaign.campaign ,campaign)">
                                                      {{campaign.name}}
                                                    </div>
                                                    <!-- ng-click="openMenu($mdMenu, $event)"
@@ -1277,7 +1277,7 @@
                                                   <tr ng-repeat="campaign in campaignData.ongoing_campaigns">
                                                   <td>
                                                     <!-- <md-menu> -->
-                                                       <div class="" ng-click="getLeadsByCampaign(campaign.campaign)">
+                                                       <div class="" ng-click="getLeadsByCampaign(campaign.campaign ,campaign)">
                                                          {{campaign.name}}
                                                        </div>
                                                        <!-- <md-menu-content width="4">
@@ -1353,7 +1353,7 @@
                                                   <tr ng-repeat="campaign in campaignData.onhold_campaigns">
                                                   <td >
                                                     <!-- <md-menu> -->
-                                                       <div class="" ng-click="getLeadsByCampaign(campaign.campaign)">
+                                                       <div class="" ng-click="getLeadsByCampaign(campaign.campaign ,campaign)">
                                                          {{campaign.name}}
                                                        </div>
                                                        <!-- <md-menu-content width="4">
@@ -1401,6 +1401,10 @@
                         </div>
                         <br /><br /><br />
                         <div class="col-lg-12"  ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:30px;">
+                          <div class="panel-heading content-title">
+                            <label for="heading">Leads of {{CampaignLeadsName}}</label>
+                          </div>
+                          <br /><br />
                           <div class="col-lg-6">
                             <div class="panel panel-primary">
                               <div class="panel-heading content-title">
@@ -1419,19 +1423,19 @@
                               </thead>
                                 <tbody style="text-align:center;">
                                   <tr>
-                                  <td style="background-color:#cb1925"><small style="color:#ffffff">Society Count</small></td>
+                                  <td><small style="color:#ffffff">Society Count</small></td>
                                   <td>{{Data.flat_data['0-150'].suppliers}}</td>
                                   <td>{{Data.flat_data['151-399'].suppliers}}</td>
                                   <td>{{Data.flat_data['400+'].suppliers}}</td>
                                   </tr>
                                   <tr>
-                                    <td style="background-color:#cb1925"><small style="color:#ffffff">Flat Count</small></td>
+                                    <td><small style="color:#ffffff">Flat Count</small></td>
                                     <td>{{Data.flat_data['0-150']['flat_count']}}</td>
                                     <td>{{Data.flat_data['151-399']['flat_count']}}</td>
                                     <td>{{Data.flat_data['400+']['flat_count']}}</td>
                                   </tr>
                                   <tr>
-                                    <td style="background-color:#cb1925"><small style="color:#ffffff">Total Leads (%)</small></td>
+                                    <td><small style="color:#ffffff">Total Leads (%)</small></td>
                                     <td ng-if="Data.flat_data['0-150']['flat_count'] != 0">{{Data.flat_data['0-150'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].total / Data.flat_data['0-150']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
                                     <td ng-if="Data.flat_data['151-399']['flat_count'] != 0">{{Data.flat_data['151-399'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['151-399'].total / Data.flat_data['151-399']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
                                     <td  ng-if="Data.flat_data['400+']['flat_count'] != 0">{{Data.flat_data['400+'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['400+'].total / Data.flat_data['400+']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
@@ -1442,7 +1446,7 @@
 
                                   </tr>
                                   <tr>
-                                    <td style="background-color:#cb1925"><small style="color:#ffffff">Hot Leads (%)</small></td>
+                                    <td><small style="color:#ffffff">Hot Leads (%)</small></td>
                                     <td  ng-if="Data.flat_data['0-150']['flat_count'] != 0">{{Data.flat_data['0-150'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].interested / Data.flat_data['0-150']['flat_count']) * 100 |limitTo:5}} %)</small></td>
                                     <td  ng-if="Data.flat_data['151-399']['flat_count'] != 0">{{Data.flat_data['151-399'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['151-399'].interested / Data.flat_data['151-399']['flat_count']) * 100 |limitTo:5}} %)</small></td>
                                     <td  ng-if="Data.flat_data['400+']['flat_count'] != 0">{{Data.flat_data['400+'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['400+'].interested / Data.flat_data['400+']['flat_count']) * 100 |limitTo:5}} %)</small></td>
@@ -1453,7 +1457,7 @@
 
                                   </tr>
                                   <tr>
-                                    <td style="background-color:#cb1925"><small style="color:#ffffff">Hot Leads Ratio (%)</small></td>
+                                    <td><small style="color:#ffffff">Hot Leads Ratio (%)</small></td>
                                     <td>{{Data.flat_data['0-150'].hot_leads_percentage |limitTo:4}} %</td>
                                     <td>{{Data.flat_data['151-399'].hot_leads_percentage |limitTo:4}} %</td>
                                     <td>{{Data.flat_data['400+'].hot_leads_percentage |limitTo:4}} %</td>
