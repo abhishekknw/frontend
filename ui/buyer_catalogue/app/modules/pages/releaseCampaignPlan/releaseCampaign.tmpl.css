@@ -67,6 +67,7 @@ td{
  }
  .table-style{
 	 overflow-y: auto;
+   /* font-size: 12px; */
  }
 .input-width{
 	min-width: 120px !important;
@@ -84,5 +85,6 @@ th {
     .st-sort-ascent:before {content: '\25B2'}
     .st-sort-descent:before {content: '\25BC'}
 
-
-  
+.completedHeaderSpacing{
+  width: 150px;
+}

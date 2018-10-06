@@ -6,12 +6,14 @@ angular.module('catalogueApp')
   $scope.positiveNoError = constants.positive_number_error;
   $scope.campaign_manager = constants.campaign_manager;
   $scope.editPaymentDetails = true;
+  $scope.commentModal = {};
   $scope.assign = {};
   $scope.body = {
     message : '',
   };
   $scope.editContactDetails = true;
   $scope.addContactDetails = true;
+  $scope.userIcon = "icons/usericon.png";
 $scope.addNewPhase = true;
   if($rootScope.globals.userInfo.is_superuser == true){
     $scope.backButton = true;
@@ -92,7 +94,8 @@ $scope.addNewPhase =true;
     {name : 'Stall(SL)',   code : 'SL',   selected : false },
     {name : 'Flyer(FL)',   code : 'FL',   selected : false },
     {name : 'Gateway Arch',   code : 'GA',   selected : false },
-  ]
+  ];
+  $scope.invForComments = constants.inventoryNames;
   $scope.shortlisted = constants.shortlisted;
   $scope.buffered = constants.buffered;
   $scope.removed = constants.removed;
@@ -113,6 +116,8 @@ $scope.addNewPhase =true;
       $scope.popup1 = false;
       $scope.popup2 = false;
       $scope.popup3 = false;
+      $scope.phaseStartDate = false;
+      $scope.phaseEndDate = false;
       $scope.error = false;
 
       $scope.setDate = function(year, month, day) {
@@ -669,6 +674,7 @@ $scope.multiSelect =
          releaseCampaignService.savePhases($scope.phases,$scope.campaign_id)
          .then(function onSuccess(response){
            console.log(response);
+           swal(constants.name, constants.add_data_success, constants.success);
            angular.forEach($scope.phases, function(phase){
              phase.start_date = new Date(phase.start_date);
              phase.end_date = new Date(phase.end_date);
@@ -695,6 +701,7 @@ $scope.multiSelect =
           releaseCampaignService.removePhase(id)
           .then(function onSuccess(response){
             console.log(response);
+            swal(constants.name, constants.delete_success, constants.success);
             $scope.getPhases();
           }).catch(function onError(response){
             console.log(response);
@@ -889,6 +896,46 @@ $scope.multiSelect =
        $scope.uploadFiles = function(file){
          $scope.file = file;
        }
+       $scope.addComment = function(){
+         console.log($scope.commentModal);
+         $scope.commentModal['related_to'] = constants.booking_related_comment;
+         $scope.commentModal['shortlisted_spaces_id'] = $scope.supplierDataForComment.id;
+         releaseCampaignService.addComment($scope.campaign_id,$scope.commentModal)
+         .then(function onSuccess(response){
+           console.log(response);
+           $scope.commentModal = {};
+           $scope.supplierDataForComment = undefined;
+           $('#addComments').modal('hide');
+           swal(constants.name, constants.add_data_success, constants.success);
+         }).catch(function onError(response){
+           console.log(response);
+         })
+       }
+      $scope.getSupplierForComments = function(supplier){
+        $scope.supplierDataForComment = supplier;
+      }
+      $scope.viewComments = function(supplier){
+        $scope.supplierDataForComment = supplier;
+        $scope.commentsData = {};
+        var relatedTo = constants.booking_related_comment;
+        var spaceId = $scope.supplierDataForComment.id;
+        releaseCampaignService.viewComments($scope.campaign_id,spaceId,relatedTo)
+        .then(function onSuccess(response){
+          console.log(response);
+          $scope.commentModal = {};
+          $scope.commentsData = response.data.data;
+          if(Object.keys($scope.commentsData).length != 0){
+            $scope.viewInvForComments = Object.keys($scope.commentsData);
+            $scope.selectedInvForView = $scope.viewInvForComments[0];
+            $('#viewComments').modal('show');
+          }else{
+            $('#viewComments').modal('hide');
+            swal(constants.name,constants.no_comments_msg,constants.warning);
+          }
+        }).catch(function onError(response){
+          console.log(response);
+        })
+      }
 
 
 

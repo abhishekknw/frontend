@@ -5,6 +5,7 @@ import Campaigns from './Campaigns';
 import Create from './Create';
 import Suppliers from './Suppliers';
 import List from './List';
+import Fill from './Fill';
 
 import './index.css';
 
@@ -33,6 +34,10 @@ export default function Checklist(props) {
         <Route
           path={`${match.path}/list/:campaignId/:supplierId`}
           render={componentProps => <List {...props} {...componentProps} />}
+        />
+        <Route
+          path={`${match.path}/fill/:checklistId`}
+          render={componentProps => <Fill {...props} {...componentProps} />}
         />
       </Switch>
     </div>

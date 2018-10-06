@@ -5,6 +5,9 @@ angular.module('catalogueApp')
       $scope.campaign_id = $stateParams.proposal_id;
       $scope.bd_manager = constants.bd_manager;
       $scope.campaign_manager = constants.campaign_manager;
+      $scope.invForComments = constants.inventoryNames;
+      $scope.userIcon = "icons/usericon.png";
+      $scope.commentModal = {};
       if($rootScope.globals.userInfo.is_superuser == true){
         $scope.backButton = true;
       }
@@ -34,7 +37,7 @@ angular.module('catalogueApp')
         {header : 'CLOSURE',   code : 'CL'},
         {header : 'AUDIT',     code : 'AU'},
       ];
-      $scope.maxDate = new Date(2020, 5, 22);
+      $scope.maxDate = new Date(2025, 5, 22);
       $scope.today = new Date();
       $scope.popup1 = false;
       $scope.popup2 = false;
@@ -439,5 +442,47 @@ angular.module('catalogueApp')
         swal(constants.name, constants.error, constants.error);
       })
     }
+
+    $scope.addComment = function(){
+      console.log($scope.commentModal);
+      $scope.commentModal['related_to'] = constants.execution_related_comment;
+      $scope.commentModal['shortlisted_spaces_id'] = $scope.supplierDataForComment.id;
+      auditReleasePlanService.addComment($scope.campaign_id,$scope.commentModal)
+      .then(function onSuccess(response){
+        console.log(response);
+        $scope.commentModal = {};
+        $scope.supplierDataForComment = undefined;
+        $('#addComments').modal('hide');
+        swal(constants.name, constants.add_data_success, constants.success);
+      }).catch(function onError(response){
+        console.log(response);
+      })
+    }
+   $scope.getSupplierForComments = function(supplier){
+     $scope.supplierDataForComment = supplier;
+   }
+   $scope.viewComments = function(supplier){
+     $scope.supplierDataForComment = supplier;
+     $scope.commentsData = {};
+     var relatedTo = constants.execution_related_comment;
+     var spaceId = $scope.supplierDataForComment.id;
+     auditReleasePlanService.viewComments($scope.campaign_id,spaceId,relatedTo)
+     .then(function onSuccess(response){
+       console.log(response);
+       $scope.commentModal = {};
+       $scope.commentsData = response.data.data;
+       if(Object.keys($scope.commentsData).length != 0){
+         $scope.viewInvForComments = Object.keys($scope.commentsData);
+         $scope.selectedInvForView = $scope.viewInvForComments[0];
+         $('#viewComments').modal('show');
+       }else{
+         $('#viewComments').modal('hide');
+         swal(constants.name,constants.no_comments_msg,constants.warning);
+       }
+     }).catch(function onError(response){
+       console.log(response);
+     })
+   }
+
 
 }]);

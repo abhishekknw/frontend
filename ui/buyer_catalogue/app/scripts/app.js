@@ -87,7 +87,10 @@ angular
              parent: function($rootScope) {
               return $rootScope.getCurState();
             },
-           }
+          },
+          data :{
+            permission : 'mapview_page_access'
+          }
         })
         .state('createProposalMe',{
           url : '/:account_id/createproposal',
@@ -96,6 +99,9 @@ angular
           ncyBreadcrumb: {
             label:'createProposal',
             parent: 'manageCampaign.create'
+          },
+          data :{
+            permission : 'create_proposal_page_access'
           }
         })
         .state('showCurrentProposal',{
@@ -105,6 +111,9 @@ angular
            ncyBreadcrumb: {
              label:'proposalSummary',
              parent : 'manageCampaign.create'
+           },
+           data :{
+             permission : 'current_proposal_page_access'
            }
         })
         .state('showProposalHistory',{
@@ -114,6 +123,9 @@ angular
           ncyBreadcrumb: {
             label:'proposalHistory',
             parent : 'manageCampaign.create'
+          },
+          data :{
+            permission : 'show_proposal_hostory_page_access'
           }
         })
         .state('campaign.societyDetails', {
@@ -124,17 +136,23 @@ angular
         .state('campaign.societyList.filter', {
           url : '/societyList/:filter',
           templateUrl: 'modules/pages/societylist/societylist.tmpl.html',
-          controller: 'SocietyFilterCtrl'
+          controller: 'SocietyFilterCtrl',
         })
         .state('showSocietyDetails', {
           url : '/societyDetails/:societyId',
           templateUrl: 'modules/pages/supplierDetails/societyDetails/newsocietyDetails.tmpl.html',
-          controller: 'NewSocietyCtrl'
+          controller: 'NewSocietyCtrl',
+          data :{
+            permission : 'show_society_details_page_access'
+          }
         })
       .state('login', {
           url : '/login',
           controller: 'LoginCtrl',
           templateUrl: 'modules/pages/login/login.tmpl.html',
+          data :{
+            permission : 'loginAccess'
+          }
         })
       .state('manageCampaign', {
           url : '/manageCampaign',
@@ -143,6 +161,9 @@ angular
           ncyBreadcrumb: {
             skip: true // Never display this state in breadcrumb.
           },
+          data :{
+            permission : 'homepage_access'
+          }
         })
       .state('manageCampaign.create', {
           url : '/create',
@@ -151,6 +172,9 @@ angular
           ncyBreadcrumb: {
             label: 'Homepage'
           },
+          data :{
+            permission : 'homepage_access'
+          }
         })
       .state('editAccount', {
             url : '/editAccount/:accountId',
@@ -159,6 +183,9 @@ angular
             ncyBreadcrumb: {
               label: 'Account',
               parent : 'manageCampaign.create'
+            },
+            data :{
+              permission : 'edit_account_page_access'
             }
         })
         .state('createaccount', {
@@ -168,6 +195,9 @@ angular
               ncyBreadcrumb: {
                 label: 'Account',
                 parent : 'manageCampaign.create'
+              },
+              data :{
+                permission : 'create_account_page_access'
               }
           })
       .state('manageCampaign.shortlisted', {
@@ -233,24 +263,37 @@ angular
       .state('manageCampaign.ongoingcampaign', {
             url : '/ongoingcampaign',
             controller: 'OngoingCampaignCtrl',
-            templateUrl: 'modules/pages/manageCampaign/ongoingcampaign/ongoing-campaign.tmpl.html'
+            templateUrl: 'modules/pages/manageCampaign/ongoingcampaign/ongoing-campaign.tmpl.html',
+            data :{
+              permission : 'manageCampaign.ongoingcampaignPageAccess'
+            }
+
           })
       .state('mapView',{
             url : '/mapview',
             controller : 'MapCtrl',
             templateUrl : 'modules/pages/mapview/mapview.tmpl.html',
+            data :{
+              permission : 'mapview_page_Access'
+            }
         })
         .state('societydetailspage',{
              // url : '/SocietyDetailsPages',
              url : '/:supplierId/SocietyDetailsPages',
                controller : 'SocietyDetailsPagesCtrl',
              templateUrl : 'modules/pages/SocietyDetailsPages/societydetailspage.tmpl.html',
+             data :{
+               permission : 'society_details_page_access'
+             }
          })
 
          .state('changePassword',{
               url : '/changePassword',
                 controller : 'changePswdCtrl',
               templateUrl : 'modules/pages/changePassword/changePassword.tmpl.html',
+              data :{
+                permission : 'change_password_page_access'
+              }
           })
 
       .state('releasePlan',{
@@ -260,6 +303,9 @@ angular
            ncyBreadcrumb: {
              label:'BookingPlan',
              parent : 'CampaignList'
+           },
+           data :{
+             permission : 'release_plan_page_access'
            }
        })
       .state('OpsDashBoard',{
@@ -269,6 +315,9 @@ angular
            ncyBreadcrumb: {
              label:'OpsDashBoard',
              parent : 'manageCampaign.create'
+           },
+           data :{
+             permission : 'ops_dashboard_page_access'
            }
        })
        .state('CampaignList',{
@@ -278,13 +327,19 @@ angular
             ncyBreadcrumb: {
               label:'CampaignList',
               parent : 'OpsDashBoard'
+            },
+            data :{
+              permission : 'campaign_list_page_access'
             }
         })
 
       .state('manageUsers',{
            url : '/manageUser',
            controller : 'userCtrl',
-           templateUrl : 'modules/pages/manageUsers/user.tmpl.html'
+           templateUrl : 'modules/pages/manageUsers/user.tmpl.html',
+           data :{
+             permission : 'manage_users_page_access'
+           }
        })
       .state('auditReleasePlan',{
             url : '/:proposal_id/auditReleasePlan',
@@ -293,6 +348,9 @@ angular
             ncyBreadcrumb: {
               label:'CampaignAndAuditPlan',
               parent : 'releasePlan'
+            },
+            data :{
+              permission : 'audit_release_plan_page_access'
             }
       })
       .state('opsExecutionPlan',{
@@ -302,6 +360,9 @@ angular
             ncyBreadcrumb: {
               label:'ExecutionPlan',
               parent : 'CampaignList'
+            },
+            data :{
+              permission : 'ops_execution_plan_page_access'
             }
       })
       .state('guestHomePage',{
@@ -310,59 +371,93 @@ angular
             templateUrl : 'modules/pages/guestPage/homepage.tmpl.html',
             ncyBreadcrumb: {
               label:'Homepage',
+            },
+            data :{
+              permission : 'guest_home_page_access'
             }
       })
       .state('ongoingCampaigns',{
             url : '/ongoingCampaigns',
             controller : 'OngoingCampaignCtrl',
             templateUrl : 'modules/pages/campaignStatus/ongoingCampaigns/ongoingCampaign.tmpl.html',
+            data :{
+              permission : 'ongoingCampaignsPageAccess'
+            }
+
       })
       .state('upcomingCampaigns',{
             url : '/upcomingCampaigns',
             controller : 'UpcomingCampaignCtrl',
             templateUrl : 'modules/pages/campaignStatus/upcomingCampaigns/upcomingCampaign.tmpl.html',
+            data :{
+              permission : 'upcomingCampaignsPageAccess'
+            }
       })
       .state('completedCampaigns',{
             url : '/completedCampaigns',
             controller : 'CompletedCampaignCtrl',
             templateUrl : 'modules/pages/campaignStatus/completedCampaigns/completedCampaign.tmpl.html',
+            data :{
+              permission : 'completedCampaignsPageAccess'
+            }
       })
       .state('dashboard',{
             url : '/dashboard',
             controller : 'DashboardCtrl',
             templateUrl : 'modules/pages/dashboard/dashboard.html',
             sidebarMeta: {
-            icon: 'ion-android-home',
-            order: 0,
-          },
+              icon: 'ion-android-home',
+              order: 0,
+            },
+            data :{
+              permission : 'dashboard_page_access'
+            }
       })
       .state('sheetToCampaign',{
             url : '/sheetToCampaign',
             controller : 'sheetToCampaignController',
             templateUrl : 'modules/pages/sheetToCampaign/sheetToCampaign.tmpl.html',
+            data :{
+              permission : 'sheet_to_campaign_page_access'
+            }
       })
       .state('campaignLeads',{
             url : '/campaignLeads',
             controller : 'CampaignLeadsCtrl',
             templateUrl : 'modules/pages/leads/campaignLeads.tmpl.html',
+            data :{
+              permission : 'campaign_leads_page_access'
+            }
       })
-      .state('enterLeads',{
-            url : '/leadsForm/:supplierCode/:campaignId/:supplierId',
-            controller : 'LeadFormCtrl',
-            templateUrl : 'modules/pages/leadForm/leadsForm.tmpl.html',
-      })
+      // .state('enterLeads',{
+      //       url : '/leadsForm/:supplierCode/:campaignId/:supplierId',
+      //       controller : 'LeadFormCtrl',
+      //       templateUrl : 'modules/pages/leadForm/leadsForm.tmpl.html',
+      //       data :{
+      //         permission : 'enterLeadsPageAccess'
+      //       }
+      // })
       .state('forbiddenPage',{
             url : '/forbiddenPage',
             templateUrl : 'modules/common/forbiddenErrorPage.tmpl.html',
+            data : {
+              permission : 'forbidden_page_access'
+            }
       }).state('dashboard1',{
             url : '/dashboard1',
             // controller : 'DashboardCtrl',
             templateUrl : 'modules/pages/dashboard-gulp/admin/release/index.html',
+            data : {
+              permission : 'dashboard1PageAccess'
+            }
 
       }).state('loginLogs',{
           url : '/loginLogs',
           controller : 'loginLogsCtrl',
           templateUrl : 'modules/pages/loginLogs/loginLogs.tmpl.html',
+          data : {
+            permission : 'login_logs_page_access'
+          }
       });
 
 
@@ -383,30 +478,40 @@ angular
         }
 
        var whence = $location.path();
-       $rootScope.$on('$locationChangeStart', function (event, next, current) {
+
+       $rootScope.$on('$stateChangeSuccess', function (e, toState, toParams, fromState, fromParams) {
+
+         var permissions = $rootScope.globals.userInfo.profile.permissions;
+         var page = toState.data.permission;
+         if($rootScope.globals.currentUser && !(permissions.hasOwnProperty(page.toLowerCase()) && permissions[page.toLowerCase()]) && $location.path() != '/logout'){
+           e.preventDefault();
+           $state.go('forbiddenPage');
+         }
+       });
+       $rootScope.$on('$locationChangeStart', function (e, toState, toParams, fromState, fromParams) {
          var whence = $location.path();
-        //  if(!AuthService.userHasPermission(next) || $location.path == '/forbiddenPage'){
-        //    console.log(next);
-        //    $location.path('/forbiddenPage');
-        //  }
-        console.log(event);
          console.log("location change start - Whence: " + whence);
          // redirect to login page if not logged in
-         $rootScope.globals.currentUser = AuthService.UserInfo();         
+         $rootScope.globals.currentUser = AuthService.UserInfo();
+         if(!$rootScope.globals.hasOwnProperty('userInfo') || !$rootScope.globals.userInfo.hasOwnProperty('profile')){
+           $location.path("/login");
+         }
          var category = $rootScope.globals.userInfo.profile.organisation.category;
          if (!$rootScope.globals.currentUser) {
-           if($location.path() != '/login')
-              $cookieStore.put('returnUrl', $location.url());
-           $location.path('/login');
+           // if(toState.name != 'login')
+              // $cookieStore.put('returnUrl', $location.url());
+              $location.path("/login");
          }else if ($rootScope.globals.currentUser && $location.path() == '/guestHomePage' && category != 'BUSINESS') {
            $location.path("/guestHomePage");
          }else if ($rootScope.globals.currentUser && $location.path() == '/logout'){
            AuthService.Logout();
            $location.path("/login");
-         }else if ($rootScope.globals.currentUser && typeof $cookieStore.get('returnUrl') != 'undefined' && $cookieStore.get('returnUrl') && category != 'BUSINESS'){
+         }
+         else if ($rootScope.globals.currentUser && typeof $cookieStore.get('returnUrl') != 'undefined' && $cookieStore.get('returnUrl') && category != 'BUSINESS'){
            $location.path($cookieStore.get('returnUrl'));
            $cookieStore.remove('returnUrl');
          }else if ($rootScope.globals.currentUser && ($location.path() == '/login' || $location.path() == '/') && ($window.localStorage.user_code != 'guestUser') && category != 'BUSINESS'){
+           // e.preventDefault();
            $location.path("/manageCampaign/create");
          }else if(category == 'BUSINESS'){
            $location.path("/dashboard");
@@ -414,4 +519,5 @@ angular
            $location.path(whence);
          }
        });
+
      }]);

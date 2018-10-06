@@ -222,22 +222,53 @@
                               </div>
                           </div>
                       </div>
-                      <div class="col-md-12">
-                      <div class="form-group select-page-size-wrap ">
-                      </div>
-                        <div class="col-md-12" ng-if="showAssignedInvTable">
-                                <div class="col-md-12 InventoryTable1">
-                                <div class="panel-heading content-title" style="height:70px;">
+                      <div class="col-md-12" ng-if="showAssignedInvTable">
+                      <!-- <div class="form-group select-page-size-wrap ">
+                      </div> -->
+                        <!-- <div class="" > -->
+                                <!-- <div class=""> -->
+                                <div class="panel-heading" style="height:70px;">
                                   <h5 style="background:'red';color:white;">Campaign Details ({{invName}}, {{actType}})</h5>
                                   <h5 class="pull-right">{{date|date : "dd-MM-yyyy"}}</h5>
                                 </div>
-                              <table st-safe-src="rowCollection" st-table="displayed" st-pipe="callServer" class="table-responsive table table-bordered">
+                                <div class="row col-md-12 panel-heading" style="border: 1px solid #ccc;">
+                                  <label class="col-md-1">Index</label>
+                                  <label class="col-md-2">Campaign Name</label>
+                                  <label class="col-md-2">Inventory</label>
+                                  <label class="col-md-1">Total Assigned</label>
+                                  <label class="col-md-1">Today Released</label>
+                                  <label class="col-md-1">Average Delay(In Hours)</label>
+                                  <label class="col-md-2">Average Off Location(Meters)</label>
+                                  <label class="col-md-2">Images</label>
+                                </div><br>
+                                <div class="col-md-12" style="overflow-y:auto;max-height:100px;color:black">
+                                  <div class="row col-md-12" ng-repeat="item in campaignReleaseData">
+                                    <label class="col-md-1">{{$index+1}}</label>
+                                    <label class="col-md-2"><a ng-click="getDatewiseSuppliersInventory(item.proposalId,item.name)">{{item.name}}</a></label>
+                                    <label class="col-md-2">{{invName}}</label>
+                                    <label class="col-md-1">{{item.assigned}}</label>
+                                    <label class="col-md-1">{{item.inv_count}}</label>
+                                    <label class="col-md-1" ng-if="item.inv_count != 0">{{item.offTimeDays}}</label>
+                                    <label class="col-md-1" ng-if="item.inv_count == 0">Not Allowed</label>
+                                    <label class="col-md-2" ng-if="item.inv_count == 0 && item.offLocationDistance == 0">Not Allowed</label>
+                                    <label class="col-md-2" ng-if="checkNan(item.offLocationDistance) || item.offLocationDistance == 0 && item.inv_count != 0">Not Applicable</label>
+                                    <label class="col-md-2" ng-if="!checkNan(item.offLocationDistance) && item.inv_count != 0 && item.offLocationDistance != 0">{{item.offLocationDistance/item.inv_count|limitTo:10||0}}</label>
+
+                                    <label class="col-md-2" ng-if="item.images.length > 0"><a data-target="#imageModal" data-toggle="modal" ng-click="setImageUrl(item,item.images)">View Images</a></label>
+                                    <label class="col-md-2" ng-if="item.images.length == 0">No Image</label>
+                                    <!-- <td class="col-md-2">
+                                      <a data-target="" data-toggle="modal" ng-click="getHashtagImages(item)">View Other Images</a>
+                                    </td> -->
+                                    <!-- <label class="col-md-2">View Images</label> -->
+                                  </div>
+                                </div>
+                              <!-- <table st-safe-src="rowCollection" st-table="displayed" st-pipe="callServer" class="table-responsive table table-bordered">
                                 <thead>
                                 <tr class="sortable" >
                                     <th class="table-id" st-sort="id" st-sort-default="true" >Sr No</th>
                                     <th ng-repeat="header in supHeaders" st-sort="{{header.key}}">{{header.header}}</th>
                                   </thead>
-                                    </tr>
+                                </tr>
 
                                   <tbody>
                                     <tr ng-repeat="item in campaignReleaseData  |filter:query" >
@@ -254,15 +285,15 @@
 
                                       <td class="col-md-2" ng-if="item.images.length > 0"><a data-target="#imageModal" data-toggle="modal" ng-click="setImageUrl(item,item.images)">View Images</a></td>
                                       <td ng-if="item.images.length == 0"><label>No Image<label></td>
-                                      <!-- <td class="col-md-2">
+                                      <td class="col-md-2">
                                         <a data-target="" data-toggle="modal" ng-click="getHashtagImages(item)">View Other Images</a>
                                       </td> -->
 
-                                      </tr>
+                                      <!-- </tr>
                                   </tbody>
-                              </table>
-                          </div>
-                      </div>
+                              </table> -->
+                          <!-- </div> -->
+                      <!-- </div> -->
                 </div>
                 <div class="col-md-12" ng-show="dateWiseSuppliers.length">
                   <div class="panel-heading"  style="height:90px;">
@@ -282,14 +313,14 @@
                         </tr>
                       </thead>
                       <tbody ng-repeat="supplier in dateWiseSuppliers">
-                        <tr ng-repeat="(key,inv) in supplier" ng-if="key != 'supplier_data'">
+                        <tr ng-repeat="(key,inv) in supplier" ng-if="key != 'supplier_data' && key != 'space_id' ">
                           <td><b>{{supplier.supplier_data.society_name}}</b></td>
                           <td>{{key}}</td>
                           <td>{{inv.assigned}}</td>
                           <td>{{inv.completed}}</td>
                           <td ng-if="inv.completed != 0"><a data-target="#imageModal" data-toggle="modal" ng-click="viewSupplierImages(supplier.supplier_data.supplier_id,invNameToCode[key],actType,date)">View Images</a></td>
                           <td ng-if="inv.completed == 0">No Image</td>
-                          <td></td>
+                          <td><a ng-click="viewComments(key,supplier)">View Comments</a></td>
                         </tr>
                         <tr>
                        <td><b>{{supplier.supplier_data.society_name}}</b></td>
@@ -312,10 +343,71 @@
 
               </uib-tab>
 
-              <uib-tab id="uib-tabs-width" ng-click="getCampaigns()" index="1">
+              <uib-tab id="uib-tabs-width" ng-click="viewCampaignLeads()" index="1">
                   <uib-tab-heading>
                     <h5>View Leads</h5>
                   </uib-tab-heading>
+                  <div class="container-fluid">
+                    <div class="" ng-if="showCampaigns">
+                      <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
+                      <table class="table table-bordered table-responsive">
+                        <thead>
+                          <tr>
+                            <th>Index</th>
+                            <th>Campaign Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Phase</br>Completed</th>
+                            <th>Campaign Status</th>
+                            <th>Supplier</br> Count</th>
+                            <th>Flat</br> Count</th>
+                            <th>Total</br> Leads</th>
+                            <th>Hot</br> Leads</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="campaign in leadsDataCampaigns|filter : searchQuery" ng-if="campaign.total_leads">
+                            <td>{{$index + 1}}</td>
+                            <td>{{campaign.name}}</td>
+                            <td>{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
+                            <td ng-if="campaign.campaign_status == 'completed'">{{campaign.end_date|limitTo:10|date:mediumDate}}</td>
+                            <td ng-if="campaign.campaign_status != 'completed'">NA</td>
+                            <td>{{campaign.phase_complete}}</td>
+                            <td ng-if="campaign.campaign_status == 'on_hold'">On Hold</td>
+                            <td ng-if="campaign.campaign_status != 'on_hold'">{{campaign.campaign_status}}</td>
+                            <td>{{campaign.supplier_count}}</td>
+                            <td>{{campaign.flat_count}}</td>
+                            <td>{{campaign.total_leads}}</td>
+                            <td>{{campaign.hot_leads}}</td>
+                            <td>
+                              <button class="btn btn-danger" ng-click="viewLeadsForSelectedCampaign(campaign.campaign_id)">View Leads</button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class=""  ng-if="!showCampaigns" style="width:900px;overflow-x:auto">
+                      <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button>
+                    </br><br>
+                      <input type="text" class="form-control" ng-model="searchData" placeholder="search">
+                      <table class="table table-bordered table-responsive" ng-if="selectedCampaignLeads.values.length">
+                        <br/>
+                        <thead>
+                          <tr>
+                            <th>Index</th>
+                            <th ng-repeat="header in selectedCampaignLeads.headers">{{header.key_name}}</th>
+                          </tr>
+                        </thead>
+                        <tbody ng-repeat="lead in selectedCampaignLeads.values | filter : searchData" >
+                          <tr>
+                            <td>{{$index + 1}}</td>
+                            <td  ng-repeat="alias in lead">{{alias.value}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </uib-tab>
 
               <uib-tab id="uib-tabs-width"  ng-click="getCampaigns()" index="2">
@@ -345,7 +437,7 @@
                                     </div>
                                 </div>
                                 <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.completed.status)">
-                                    <div class="panel-heading">
+                                    <div class="panel-hea/ding">
                                         <h4 class="panel-title">
                                             Completed Campaigns
                                         </h4>
@@ -1081,7 +1173,7 @@
 <!-- START : BOOKING ENGINE -->
 <uib-tab  id="uib-tabs-width" ng-click="getCampaigns()" index="3">
     <uib-tab-heading>
-      <h5>Booking</h5>
+      <h5>Booking Details</h5>
     </uib-tab-heading>
 
     <div class="container-fluid">
@@ -1183,6 +1275,7 @@
                 <th>Area(SubArea)</th>
                 <th>Status</th>
                 <th>Map Details</th>
+                <th>Comments</th>
               </tr>
             </thead>
             <tbody>
@@ -1194,6 +1287,7 @@
                 <td>{{supplier.society_locality}}({{supplier.society_subarea}})</td>
                 <td>{{bookingStatusSuppliers[supplier.booking_status]}}</td>
                 <td><a href="https://www.google.com/maps/?q=+{{supplier.society_latitude}}+{{supplier.society_longitude}}" target="_blank">View Details</a></td>
+                <td><a ng-click="viewBookingComments(supplier)">View Comments</a></td>
               </tr>
             </tbody>
           </table>
@@ -2112,6 +2206,48 @@
       </div>
   </div>
     <!--END: INVENTORY INFO MODAL  -->
-
+    <!--START : view comments modal  -->
+    <div id="viewComments" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            View Comments For {{supplierNameForComment}}
+          </div>
+          <div class="modal-body">
+            <div class="">
+              Selected Inventory :
+              <select class="form-control" ng-model="selectedInvForView">
+                  <option ng-repeat="inv in viewInvForComments" value="{{inv}}">{{inv}}</option>
+              </select>
+            </div>
+            <br>
+            <div style="margin:20px;">
+              <table class="table-bordered table-striped" align="center">
+                <tbody>
+                  <tr ng-repeat="item in commentsData[selectedInvForView]">
+                    <td class="col-md-8">
+                      <div style="margin-top:10px;margin-bottom:10px">
+                        <img ng-src="{{userIcon}}">
+                        <b>{{item.user_name}} :</b> <br>
+                      </div>
+                      <div style="padding-left:30px">
+                        Comment : {{item.comment}}</br>
+                        <span> <small>{{item.timestamp|date:'medium'}}</small></span>
+                      </div><br>
+                    </td>
+                  <br>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div><br>
+          <!-- <div> -->
+            <br>
+          <!-- </div> -->
+        </br></br>
+        </div>
+      </div>
+    </div>
+    <!--END : view comments modal  -->
   </body>
 </html>

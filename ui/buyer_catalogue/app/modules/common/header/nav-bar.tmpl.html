@@ -48,6 +48,11 @@
                             <a ng-href="/#/dashboard" class=" lipadding" ng-click="closeModal()">
                             <i class="fa fa-dashboard fa-lg"></i>DashBoard</a>
                           </li>
+                          <li ng-class="{active: isActive('/dashboard')}">
+                            <a href="https://forms.machadalo.com" target="_blank" class=" lipadding" ng-click="closeModal()">
+                              <i class="fa fa-sign-out fa-lg"></i> Supplier Forms
+                            </a>
+                          </li>
                           <li ng-class="{active: isActive('/dashboard')}" permission = "[perm.menuChangePassword]">
                             <a href="/#/loginLogs"  ng-click="closeModal()">
                           <i class="fa fa-outdent"></i> View Logs</a></li>
@@ -57,8 +62,9 @@
                           <i class="fa fa-columns fa-lg"></i> Change Password</a></li>
 
                           <li ng-class="{active: isActive('/dashboard')}">
-                          <a href="/#/logout" class=" lipadding" ng-click="closeModal()">
-                          <i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
+                            <a href="/#/logout" class=" lipadding" ng-click="closeModal()">
+                              <i class="fa fa-sign-out fa-lg"></i> Logout</a>
+                          </li>
 
 
 
