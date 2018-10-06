@@ -116,13 +116,13 @@
                           </div>
                           <div class="col-xlg-10 col-lg-10 col-md-10 col-sm-10 col-xs-10">
                               <div class="row" ng-if="dateListKeys[date]">
-                                  <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
+                                  <div class="col-xlg-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
                                       <h4 class="date-tab-heading" style="color:rgb(53, 9, 6)">Release</h4>
                                   </div>
                                   <!-- <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
                                       <h4 class="date-tab-heading" style="color:rgb(53, 9, 6)">Audit</h4>
                                   </div> -->
-                                  <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
+                                  <div class="col-xlg-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
                                       <h4 class="date-tab-heading" style="color:rgb(53, 9, 6)">Closure</h4>
                                   </div>
                               </div>
@@ -450,32 +450,47 @@
                                 <h5 style="background:'red';color:white;" ng-if="showSingleCampaignChart">Supplier / Leads Details</h5>
 
                               </div>
-                            <table class="table-responsive table table-bordered">
-                              <thead>
-                                <tr>
-                                  <td>Campaign Status</td>
-                                  <td>Supplier Count</td>
-                                  <td ng-if="showLeadsDetails" >Total Leads <br><small>(High Quality Leads)</small></td>
-                                </tr>
-                              </thead>
-                                  <tbody>
-                                  <tr ng-repeat="item in campaignChartdata">
-                                    <td style="text-align:left;">{{item.label}}</td>
-                                    <td> {{item.value}}</td>
-                                    <td class="blinking" ng-if="showLeadsDetails && item.status != 'upcoming'">{{campaignStatusData[item.status].totalLeads||0}}({{campaignStatusData[item.status].hotLeads}})</td>
-                                    <td ng-if="showLeadsDetails && item.status == 'upcoming'">NA</td>
-                                  </tr>
 
-                                </tbody>
-                                </table>
-                                    <table class="table-responsive table table-bordered AvgLeadsTable" >
+                              <div class="supplierTable-style">
+                                <table class="table-responsive table table-bordered equal-width">
+                                  <thead>
+                                    <tr style="font-size:12px;">
+                                      <td>Campaign Status</td>
+                                      <td>Supplier Count</td>
+                                      <td>Flat Count</td>
+                                      <td>HotLeads %</td>
+                                      <td>Leads/Flat %</td>
+                                      <td>TotalLeads Count</td>
+
+                                      <!-- <td ng-if="showLeadsDetails" >Total Leads <br><small>(High Quality Leads)</small></td> -->
+                                    </tr>
+                                  </thead>
+                                      <tbody>
+                                      <tr ng-repeat="(key,data) in overallMetric"  style="font-size:12px;">
+                                        <td style="text-align:left;">{{key}}</td>
+                                        <td style="text-align:left;">{{data.total_suppliers_count}}</td>
+                                        <td style="text-align:left;">{{data.flat_count}}</td>
+                                        <td style="text-align:left;">{{data.hot_leads_percentage | limitTo:4 || NA}} %</td>
+                                        <td style="text-align:left;">{{data.leads_flat_percentage| limitTo:4 || NA}} %</td>
+                                        <td style="text-align:left;">{{data.total_leads_count| limitTo:4 || NA}}</td>
+                                        <!-- <td> {{}}</td>
+                                        <td class="blinking" ng-if="showLeadsDetails && item.status != 'upcoming'">{{campaignStatusData[item.status].totalLeads||0}}({{campaignStatusData[item.status].hotLeads}})</td>
+                                        <td ng-if="showLeadsDetails && item.status == 'upcoming'">NA</td> -->
+                                      </tr>
+
+                                    </tbody>
+                                    </table>
+
+                              </div>
+
+                                    <!-- <table class="table-responsive table table-bordered AvgLeadsTable" >
                                     <tbody>
-                                      <tr ng-if="showLeadsDetails">
+                                      <tr>
                                         <td>Avg Leads Per Flat (HQ): {{avgLeadsPerFlat| limitTo:4 || NA }} % ({{avgHotLeadsPerFlat|limitTo:4 || NA}} %)</td>
                                         <td>Avg Leads Per Supplier (HQ): {{avgLeadsPerSupplier|limitTo:4 || NA}}  ({{avgHotLeadsPerSupplier|limitTo:4 || NA }} )</td>
                                       </tr>
                                     </tbody>
-                                  </table>
+                                  </table> -->
                                   </div>
                           </div>
                           </div>
@@ -822,7 +837,7 @@
                                   <thead>
                                     <tr>
                                      <th colspan='999' style="background-color: #cb1925" class="panel-heading">
-                                        <h5>Society Details For {{campaignTabPropsalName}}</h5>
+                                        <h5>{{supplierStatus}} Society Details For {{campaignTabPropsalName}}</h5>
                                       </th>
                                     </tr>
                                     <tr>
@@ -838,11 +853,11 @@
                                       <td>Flat Count</td>
                                       <td>Leads (% by Flat Count)</td>
                                       <td>Hot Leads (% by Leads)</td>
-                                      <td>Poster</td>
-                                      <td>Flier</td>
-                                      <td>Standee</td>
-                                      <td>Stall</td>
-                                      <td>Other Images</td>
+                                      <td ng-if="supplierStatus == 'ongoing'">Poster</td>
+                                      <td ng-if="supplierStatus == 'ongoing'">Flier</td>
+                                      <td ng-if="supplierStatus == 'ongoing'">Standee</td>
+                                      <td ng-if="supplierStatus == 'ongoing'">Stall</td>
+                                      <td ng-if="supplierStatus == 'ongoing'">Other Images</td>
                                       <td>Permission Box</td>
                                     </tr>
 
@@ -856,37 +871,37 @@
                                         <td>{{supplier.supplier.flat_count}}</td>
                                         <td>{{supplier.leads_data.total_leads_count}} ({{supplier.leads_data.leads_flat_percentage}})</td>
                                         <td>{{supplier.leads_data.hot_leads_count}} ({{supplier.leads_data.hot_leads_percentage}})</td>
-                                        <td ng-if="supplier.images_data.POSTER"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.POSTER.images)">Images ({{supplier.images_data.POSTER.total_count}})</a></td>
-                                        <td ng-if="!supplier.images_data.POSTER">No Images</td>
+                                        <td ng-if="supplier.images_data.POSTER && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.POSTER.images)">Images ({{supplier.images_data.POSTER.total_count}})</a></td>
+                                        <td ng-if="!supplier.images_data.POSTER && supplierStatus == 'ongoing'">No Images</td>
 
-                                        <td ng-if="supplier.images_data.FLIER"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.FLIER.images)">Images ({{supplier.images_data.FLIER.total_count}})</a></td>
-                                        <td ng-if="!supplier.images_data.FLIER">No Images</td>
+                                        <td ng-if="supplier.images_data.FLIER && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.FLIER.images)">Images ({{supplier.images_data.FLIER.total_count}})</a></td>
+                                        <td ng-if="!supplier.images_data.FLIER && supplierStatus == 'ongoing'">No Images</td>
 
-                                        <td ng-if="supplier.images_data.STANDEE"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.STANDEE.images)">Images ({{supplier.images_data.STANDEE.total_count}})</a></td>
-                                        <td ng-if="!supplier.images_data.STANDEE">No Images</td>
+                                        <td ng-if="supplier.images_data.STANDEE && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.STANDEE.images)">Images ({{supplier.images_data.STANDEE.total_count}})</a></td>
+                                        <td ng-if="!supplier.images_data.STANDEE && supplierStatus == 'ongoing'">No Images</td>
 
-                                        <td ng-if="supplier.images_data.STALL"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.STALL.images)">Images ({{supplier.images_data.STALL.total_count}})</a></td>
-                                        <td ng-if="!supplier.images_data.STALL">No Images</td>
+                                        <td ng-if="supplier.images_data.STALL && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.STALL.images)">Images ({{supplier.images_data.STALL.total_count}})</a></td>
+                                        <td ng-if="!supplier.images_data.STALL && supplierStatus == 'ongoing'">No Images</td>
 
-                                        <td>
+                                        <td ng-if="supplierStatus == 'ongoing'">
                                           <table class="table-responsive table table-bordered ">
                                             <tr>
-                                              <td ng-if="supplier.images_data.BANNER" style="background-color:#cb1925">BANNER</td>
-                                              <td ng-if="supplier.images_data.BANNER"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.BANNER.images)">{{supplier.images_data.BANNER.total_count}}</a></td>
+                                              <td ng-if="supplier.images_data.BANNER && supplierStatus == 'ongoing'" style="background-color:#cb1925">BANNER</td>
+                                              <td ng-if="supplier.images_data.BANNER && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.BANNER.images)">{{supplier.images_data.BANNER.total_count}}</a></td>
                                             </tr>
                                             <tr>
-                                              <td ng-if="supplier.images_data['OTHER IMAGES']" style="background-color:#cb1925">OTHER IMAGES</td>
-                                              <td ng-if="supplier.images_data['OTHER IMAGES']"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['OTHER IMAGES'].images)">{{supplier.images_data['OTHER IMAGES'].total_count}}</a></td>
+                                              <td ng-if="supplier.images_data['OTHER IMAGES'] && supplierStatus == 'ongoing'" style="background-color:#cb1925">OTHER IMAGES</td>
+                                              <td ng-if="supplier.images_data['OTHER IMAGES'] && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['OTHER IMAGES'].images)">{{supplier.images_data['OTHER IMAGES'].total_count}}</a></td>
                                               <!-- <td ng-if="!supplier.images_data['OTHER IMAGES']">NA</td> -->
                                             </tr>
                                             <tr>
-                                              <td ng-if="supplier.images_data['CERTIFICATION DISTRIBUTION']" style="background-color:#cb1925">CERTIFICATION DISTRIBUTION</td>
-                                              <td ng-if="supplier.images_data['CERTIFICATION DISTRIBUTION']"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['CERTIFICATION DISTRIBUTION'].images)">{{supplier.images_data['CERTIFICATION DISTRIBUTION'].total_count}}</a></td>
+                                              <td ng-if="supplier.images_data['CERTIFICATION DISTRIBUTION'] && supplierStatus == 'ongoing'" style="background-color:#cb1925">CERTIFICATION DISTRIBUTION</td>
+                                              <td ng-if="supplier.images_data['CERTIFICATION DISTRIBUTION'] && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['CERTIFICATION DISTRIBUTION'].images)">{{supplier.images_data['CERTIFICATION DISTRIBUTION'].total_count}}</a></td>
                                               <!-- <td ng-if="!supplier.images_data['CERTIFICATION DISTRIBUTION']">NA</td> -->
                                             </tr>
                                             <tr>
-                                            <td ng-if="supplier.images_data['STALL WITH PROMOTERS']" style="background-color:#cb1925">STALL WITH PROMOTERS</td>
-                                              <td ng-if="supplier.images_data['STALL WITH PROMOTERS']"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['STALL WITH PROMOTERS'].images)">{{supplier.images_data['STALL WITH PROMOTERS'].total_count}}</a></td>
+                                            <td ng-if="supplier.images_data['STALL WITH PROMOTERS'] && supplierStatus == 'ongoing'" style="background-color:#cb1925">STALL WITH PROMOTERS</td>
+                                              <td ng-if="supplier.images_data['STALL WITH PROMOTERS'] && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['STALL WITH PROMOTERS'].images)">{{supplier.images_data['STALL WITH PROMOTERS'].total_count}}</a></td>
                                               <!-- <td ng-if="!supplier.images_data['CERTIFICATION DISTRIBUTION']">NA</td> -->
                                             </tr>
                                           </table>
@@ -1004,7 +1019,37 @@
                                 </table>
                               </div>
                               </div>
+                              <br /> <br />
+                              <div class="panel panel-default">
+                              <div class="col-md-12" ng-if="showSupplierInvTable">
+                                <div class="panel-heading content-title">
+                                  <h5 style="background:'red'">Inventory Details Of {{campaignName}}</h5>
+                                </div>
+                                <div class="supplierInvTable">
+                                <table class="table-responsive table table-bordered" ng-if="campaignInventoryData.filters.length">
+                                  <thead>
+                                    <th>Inventory Type</th>
+                                      <th>Inventory Count </th>
 
+                                  </thead>
+                                  <tbody>
+                                    <tr ng-repeat="filter in campaignInventoryData.filters">
+                                      <td>{{inventories[filter.filter_code]}}</td>
+
+                                        <td ng-if="filter.filter_code=='PO' || filter.filter_code=='ST'"><a>{{totalTowerCount}}</a></td>
+                                        <td ng-if="filter.filter_code=='SL' || filter.filter_code=='GA'"><a>{{totalSupplierCount}}</a></td>
+                                        <td ng-if="filter.filter_code=='FL'"><a>{{totalFlatCount}}</a></td>
+                                     </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <div ng-if="!campaignInventoryData.filters.length">
+                                  <p style="text-align:center;">No Filters Found</p>
+                                </div>
+                              </div>
+                            </div>
+                            </div>
+                              <br /> <br />
                               <div class="col-md-12" ng-if="showSupplierTypeCountChart">
                                 <div class="panel-heading content-title">
                                   <h5 style="background:'red'">Map View for All Campaigns</h5></div>
@@ -1027,36 +1072,7 @@
                                   </div>
 
                             </div>
-                            <div class="panel panel-default" >
 
-                            <div class="col-md-6" ng-if="showSupplierInvTable">
-                              <div class="panel-heading content-title">
-                                <h5 style="background:'red'">Inventory Details Of {{campaignName}}</h5>
-                              </div>
-                              <div class="supplierInvTable">
-                              <table class="table-responsive table table-bordered" ng-if="campaignInventoryData.filters.length">
-                                <thead>
-                                  <th>Inventory Type</th>
-                                    <th>Inventory Count </th>
-
-                                </thead>
-                                <tbody>
-                                  <tr ng-repeat="filter in campaignInventoryData.filters">
-                                    <td>{{inventories[filter.filter_code]}}</td>
-
-                                      <td ng-if="filter.filter_code=='PO' || filter.filter_code=='ST'"><a>{{totalTowerCount}}</a></td>
-                                      <td ng-if="filter.filter_code=='SL' || filter.filter_code=='GA'"><a>{{totalSupplierCount}}</a></td>
-                                      <td ng-if="filter.filter_code=='FL'"><a>{{totalFlatCount}}</a></td>
-                                   </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                              <div ng-if="!campaignInventoryData.filters.length">
-                                <p style="text-align:center;">No Filters Found</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                         </div>
                     </div>
                   </div>
@@ -1133,10 +1149,9 @@
           <thead>
             <tr>
               <th>Phase</th>
-              <th>Booked</th>
+              <th>Total Booked <br>(Total Flat Count)</th>
+              <th>Verbally Booked</th>
               <th>Tentative</th>
-              <th>Undecided</th>
-              <th>Total</th>
             </tr>
           </thead>
           <tbody>
@@ -1148,10 +1163,9 @@
                     End Date : {{item.end_date|limitTo:10|date:fullDate}}
                 </div>
               </td>
+              <td> {{item.supplier_data.BK.length + item.supplier_data.TB.length + item.supplier_data.NB.length}} ({{getTotalFlatCount(item.supplier_data.BK) + getTotalFlatCount(item.supplier_data.TB) + getTotalFlatCount(item.supplier_data.NB)}})</td>
               <td><a ng-click="getSuppliers(item.supplier_data.BK)">{{item.supplier_data.BK.length}}({{getTotalFlatCount(item.supplier_data.BK)}})</a></td>
               <td><a ng-click="getSuppliers(item.supplier_data.TB)">{{item.supplier_data.TB.length}}({{getTotalFlatCount(item.supplier_data.TB)}})</a></td>
-              <td><a ng-click="getSuppliers(item.supplier_data.NB)">{{item.supplier_data.NB.length}}({{getTotalFlatCount(item.supplier_data.NB)}})</a></td>
-              <td> {{item.supplier_data.BK.length + item.supplier_data.TB.length + item.supplier_data.NB.length}}</td>
             </tr>
           </tbody>
         </table>

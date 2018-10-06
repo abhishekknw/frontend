@@ -632,3 +632,14 @@ div.outerFlat .innerFlat { width: 500px; }
   overflow-x: auto;
   height: 350px;
 }
+
+
+.supplierTable-style{
+  overflow-y: auto;
+  overflow-x: auto;
+  /* height: 350px; */
+}
+
+.equal-width td {
+  width:50%;
+}
