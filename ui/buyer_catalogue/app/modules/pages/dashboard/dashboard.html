@@ -231,8 +231,12 @@
                                   <h5 style="background:'red';color:white;">Campaign Details ({{invName}}, {{actType}})</h5>
                                   <h5 class="pull-right">{{date|date : "dd-MM-yyyy"}}</h5>
                                 </div>
-                                <div class="row col-md-12 panel-heading" style="border: 1px solid #ccc;">
-                                  <label class="col-md-1">Index</label>
+                                <br />
+                                <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
+
+                                  <br />
+                                <div class="col-md-12 panel-heading" style="border: 1px solid #ccc;height:75px;">
+                                  <label style="min-width:10px;">Index</label>
                                   <label class="col-md-2">Campaign Name</label>
                                   <label class="col-md-2">Inventory</label>
                                   <label class="col-md-1">Total Assigned</label>
@@ -241,8 +245,9 @@
                                   <label class="col-md-2">Average Off Location(Meters)</label>
                                   <label class="col-md-2">Images</label>
                                 </div><br>
-                                <div class="col-md-12" style="overflow-y:auto;max-height:100px;color:black">
-                                  <div class="row col-md-12" ng-repeat="item in campaignReleaseData">
+                                <div class="col-md-12" style="overflow-y:auto;max-height:300px;color:black">
+                                  <div class="col-md-12" ng-repeat="item in campaignReleaseData | filter : searchQuery">
+                                    <br />
                                     <label class="col-md-1">{{$index+1}}</label>
                                     <label class="col-md-2"><a ng-click="getDatewiseSuppliersInventory(item.proposalId,item.name)">{{item.name}}</a></label>
                                     <label class="col-md-2">{{invName}}</label>
@@ -437,7 +442,7 @@
                                     </div>
                                 </div>
                                 <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.completed.status)">
-                                    <div class="panel-hea/ding">
+                                    <div class="panel-heading">
                                         <h4 class="panel-title">
                                             Completed Campaigns
                                         </h4>
@@ -925,99 +930,102 @@
 
 
                                 <div class="col-md-12 showDisplayDetailsTable" ng-if="showDisplayDetailsTable" style="margin-top:5px;">
-                                <table class="table table-bordered campaignDetailTable">
-                                  <thead>
-                                    <tr>
-                                     <th colspan='999' style="background-color: #cb1925" class="panel-heading">
-                                        <h5>{{supplierStatus}} Society Details For {{campaignTabPropsalName}}</h5>
-                                      </th>
-                                    </tr>
-                                    <tr>
-                                      <th colspan='999' style="background-color:#ffffff;">
-                                        <input ng-model="query" placeholder="Search ..." class="form-control"  type="search"/>
-                                      </th>
-                                    </tr>
-                                    <tr>
-                                      <td>INDEX</td>
-                                      <td>Society Name</td>
-                                      <td>Society Area (SubArea)</td>
-                                      <td>Society Type</td>
-                                      <td>Flat Count</td>
-                                      <td>Leads (% by Flat Count)</td>
-                                      <td>Hot Leads (% by Leads)</td>
-                                      <td ng-if="supplierStatus == 'ongoing'">Poster</td>
-                                      <td ng-if="supplierStatus == 'ongoing'">Flier</td>
-                                      <td ng-if="supplierStatus == 'ongoing'">Standee</td>
-                                      <td ng-if="supplierStatus == 'ongoing'">Stall</td>
-                                      <td ng-if="supplierStatus == 'ongoing'">Other Images</td>
-                                      <td>Permission Box</td>
-                                    </tr>
-
-                                  </thead>
-                                      <tbody class="detailedTable">
-                                      <tr ng-repeat="supplier in supplierAndInvData |filter:query">
-                                        <td style="vertical-align:middle">{{$index + 1}}</td>
-                                        <td class="col-md-2">{{supplier.supplier.society_name}}</td>
-                                        <td class="col-md-2">{{supplier.supplier.society_locality}} <small>({{supplier.supplier.society_subarea}})</small></td>
-                                        <td class="col-md-2">{{supplier.supplier.society_type_quality}}</td>
-                                        <td class="col-md-2">{{supplier.supplier.flat_count}}</td>
-                                        <td class="col-md-2" style="color:#ffffff">{{supplier.leads_data.total_leads_count}} <small style="color:#cb1925;"> ({{supplier.leads_data.leads_flat_percentage}} %)</small></td>
-                                        <td class="col-md-2">{{supplier.leads_data.hot_leads_count}} <small style="color:#cb1925;"> ({{supplier.leads_data.hot_leads_percentage}} %)</small></td>
-                                        <td ng-if="supplier.images_data.POSTER && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.POSTER.images)">Images ({{supplier.images_data.POSTER.total_count}})</a></td>
-                                        <td ng-if="!supplier.images_data.POSTER && supplierStatus == 'ongoing'">No Images</td>
-
-                                        <td ng-if="supplier.images_data.FLIER && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.FLIER.images)">Images ({{supplier.images_data.FLIER.total_count}})</a></td>
-                                        <td ng-if="!supplier.images_data.FLIER && supplierStatus == 'ongoing'">No Images</td>
-
-                                        <td ng-if="supplier.images_data.STANDEE && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.STANDEE.images)">Images ({{supplier.images_data.STANDEE.total_count}})</a></td>
-                                        <td ng-if="!supplier.images_data.STANDEE && supplierStatus == 'ongoing'">No Images</td>
-
-                                        <td ng-if="supplier.images_data.STALL && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.STALL.images)">Images ({{supplier.images_data.STALL.total_count}})</a></td>
-                                        <td ng-if="!supplier.images_data.STALL && supplierStatus == 'ongoing'">No Images</td>
-
-                                        <td ng-if="supplierStatus == 'ongoing'">
-                                          <table class="table-responsive table table-bordered ">
-                                            <tr>
-                                              <td ng-if="supplier.images_data.BANNER && supplierStatus == 'ongoing'" style="background-color:#cb1925">BANNER</td>
-                                              <td ng-if="supplier.images_data.BANNER && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.BANNER.images)">{{supplier.images_data.BANNER.total_count}}</a></td>
-                                            </tr>
-                                            <tr>
-                                              <td ng-if="supplier.images_data['OTHER IMAGES'] && supplierStatus == 'ongoing'" style="background-color:#cb1925">OTHER IMAGES</td>
-                                              <td ng-if="supplier.images_data['OTHER IMAGES'] && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['OTHER IMAGES'].images)">{{supplier.images_data['OTHER IMAGES'].total_count}}</a></td>
-                                              <!-- <td ng-if="!supplier.images_data['OTHER IMAGES']">NA</td> -->
-                                            </tr>
-                                            <tr>
-                                              <td ng-if="supplier.images_data['CERTIFICATION DISTRIBUTION'] && supplierStatus == 'ongoing'" style="background-color:#cb1925">CERTIFICATION DISTRIBUTION</td>
-                                              <td ng-if="supplier.images_data['CERTIFICATION DISTRIBUTION'] && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['CERTIFICATION DISTRIBUTION'].images)">{{supplier.images_data['CERTIFICATION DISTRIBUTION'].total_count}}</a></td>
-                                              <!-- <td ng-if="!supplier.images_data['CERTIFICATION DISTRIBUTION']">NA</td> -->
-                                            </tr>
-                                            <tr>
-                                            <td ng-if="supplier.images_data['STALL WITH PROMOTERS'] && supplierStatus == 'ongoing'" style="background-color:#cb1925">STALL WITH PROMOTERS</td>
-                                              <td ng-if="supplier.images_data['STALL WITH PROMOTERS'] && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['STALL WITH PROMOTERS'].images)">{{supplier.images_data['STALL WITH PROMOTERS'].total_count}}</a></td>
-                                              <!-- <td ng-if="!supplier.images_data['CERTIFICATION DISTRIBUTION']">NA</td> -->
-                                            </tr>
-                                          </table>
-                                        </td>
-                                        <td></td>
-                                          <!-- <td ng-init="calculateTotalCount('GATEWAY ARCH',supplier.supplier.inv_data['GATEWAY ARCH'].total.total)" ng-show="invStatusKeys['GATEWAY ARCH'].status">{{supplier.supplier.inv_data['GATEWAY ARCH'].total.total}}
-                                          </td> -->
-                                          <!-- <t d style="vertical-align:middle" ng-if="showLeads">{{supplier.leads_data.length}}</td> -->
-
+                                  <div class="row">
+                                    <table class="table table-bordered campaignDetailTable">
+                                      <thead>
+                                        <tr>
+                                         <th colspan='999' style="background-color: #cb1925" class="panel-heading">
+                                            <h5>Society Details For {{campaignTabPropsalName}} - {{supplierStatus}}</h5>
+                                          </th>
+                                        </tr>
+                                        <tr>
+                                          <th colspan='999' style="background-color:#ffffff;">
+                                            <input ng-model="query" placeholder="Search ..." class="form-control"  type="search"/>
+                                          </th>
+                                        </tr>
+                                        <tr>
+                                          <td>INDEX</td>
+                                          <td>Society Name</td>
+                                          <td>Society Area (SubArea)</td>
+                                          <td>Society Type</td>
+                                          <td>Flat Count</td>
+                                          <td>Leads (% by Flat Count)</td>
+                                          <td>Hot Leads (% by Leads)</td>
+                                          <td ng-if="supplierStatus == 'ongoing'">Poster</td>
+                                          <td ng-if="supplierStatus == 'ongoing'">Flier</td>
+                                          <td ng-if="supplierStatus == 'ongoing'">Standee</td>
+                                          <td ng-if="supplierStatus == 'ongoing'">Stall</td>
+                                          <td ng-if="supplierStatus == 'ongoing'">Other Images</td>
+                                          <td>Permission Box</td>
                                         </tr>
 
-                                        </tbody>
-                                        <!-- <tfoot>
-                                          <tr>
-                                            <td>TOTAL</td>
-                                              <td>{{length}}</td>
-                                              <td><button type="button" name="button" class="btn btn-primary" style="width:100%;color:black">{{invStatusKeys.STALL.total}}</button></td>
-                                              <td><button type="button" name="button" class="btn btn-primary" style="width:100%;color:black">totalFlats</button></td>
-                                              <td><button type="button" name="button" class="btn btn-primary" style="width:100%;color:black">{{invStatusKeys.FLIER.total}}</button></td>
-                                              <td><button type="button" name="button" class="btn btn-primary" style="width:100%;color:black">{{invStatusKeys.STANDEE.total}}</button></td>
-                                              <td><button type="button" name="button" class="btn btn-primary" style="width:100%;color:black">{{invStatusKeys['GATEWAY ARCH'].total}}</button></td>
-                                          </tr>
-                                        </tfoot> -->
-                                    </table>
+                                      </thead>
+                                          <tbody class="detailedTable">
+                                            <div class="row">
+                                              <tr ng-repeat="supplier in supplierAndInvData |filter:query">
+                                                <td style="vertical-align:middle">{{$index + 1}}</td>
+                                                <td class="col-md-2">{{supplier.supplier.society_name}}</td>
+                                                <td class="col-md-2">{{supplier.supplier.society_locality}} <small>({{supplier.supplier.society_subarea}})</small></td>
+                                                <td class="col-md-2">{{supplier.supplier.society_type_quality}}</td>
+                                                <td class="col-md-2">{{supplier.supplier.flat_count}}</td>
+                                                <td class="col-md-2" style="color:#ffffff">{{supplier.leads_data.total_leads_count}} <small style="color:#cb1925;"> ({{supplier.leads_data.leads_flat_percentage}} %)</small></td>
+                                                <td class="col-md-2">{{supplier.leads_data.hot_leads_count}} <small style="color:#cb1925;"> ({{supplier.leads_data.hot_leads_percentage}} %)</small></td>
+                                                <td ng-if="supplier.images_data.POSTER && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.POSTER.images)">Images ({{supplier.images_data.POSTER.total_count}})</a></td>
+                                                <td ng-if="!supplier.images_data.POSTER && supplierStatus == 'ongoing'">No Images</td>
+
+                                                <td ng-if="supplier.images_data.FLIER && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.FLIER.images)">Images ({{supplier.images_data.FLIER.total_count}})</a></td>
+                                                <td ng-if="!supplier.images_data.FLIER && supplierStatus == 'ongoing'">No Images</td>
+
+                                                <td ng-if="supplier.images_data.STANDEE && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.STANDEE.images)">Images ({{supplier.images_data.STANDEE.total_count}})</a></td>
+                                                <td ng-if="!supplier.images_data.STANDEE && supplierStatus == 'ongoing'">No Images</td>
+
+                                                <td ng-if="supplier.images_data.STALL && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.STALL.images)">Images ({{supplier.images_data.STALL.total_count}})</a></td>
+                                                <td ng-if="!supplier.images_data.STALL && supplierStatus == 'ongoing'">No Images</td>
+
+                                                <td ng-if="supplierStatus == 'ongoing'">
+                                                  <table class="table-responsive table table-bordered ">
+                                                    <tr>
+                                                      <td ng-if="supplier.images_data.BANNER && supplierStatus == 'ongoing'" style="background-color:#cb1925">BANNER</td>
+                                                      <td ng-if="supplier.images_data.BANNER && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.BANNER.images)">{{supplier.images_data.BANNER.total_count}}</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td ng-if="supplier.images_data['OTHER IMAGES'] && supplierStatus == 'ongoing'" style="background-color:#cb1925">OTHER IMAGES</td>
+                                                      <td ng-if="supplier.images_data['OTHER IMAGES'] && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['OTHER IMAGES'].images)">{{supplier.images_data['OTHER IMAGES'].total_count}}</a></td>
+                                                      <!-- <td ng-if="!supplier.images_data['OTHER IMAGES']">NA</td> -->
+                                                    </tr>
+                                                    <tr>
+                                                      <td ng-if="supplier.images_data['CERTIFICATION DISTRIBUTION'] && supplierStatus == 'ongoing'" style="background-color:#cb1925">CERTIFICATION DISTRIBUTION</td>
+                                                      <td ng-if="supplier.images_data['CERTIFICATION DISTRIBUTION'] && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['CERTIFICATION DISTRIBUTION'].images)">{{supplier.images_data['CERTIFICATION DISTRIBUTION'].total_count}}</a></td>
+                                                      <!-- <td ng-if="!supplier.images_data['CERTIFICATION DISTRIBUTION']">NA</td> -->
+                                                    </tr>
+                                                    <tr>
+                                                    <td ng-if="supplier.images_data['STALL WITH PROMOTERS'] && supplierStatus == 'ongoing'" style="background-color:#cb1925">STALL WITH PROMOTERS</td>
+                                                      <td ng-if="supplier.images_data['STALL WITH PROMOTERS'] && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['STALL WITH PROMOTERS'].images)">{{supplier.images_data['STALL WITH PROMOTERS'].total_count}}</a></td>
+                                                      <!-- <td ng-if="!supplier.images_data['CERTIFICATION DISTRIBUTION']">NA</td> -->
+                                                    </tr>
+                                                  </table>
+                                                </td>
+                                                <td></td>
+                                                  <!-- <td ng-init="calculateTotalCount('GATEWAY ARCH',supplier.supplier.inv_data['GATEWAY ARCH'].total.total)" ng-show="invStatusKeys['GATEWAY ARCH'].status">{{supplier.supplier.inv_data['GATEWAY ARCH'].total.total}}
+                                                  </td> -->
+                                                  <!-- <t d style="vertical-align:middle" ng-if="showLeads">{{supplier.leads_data.length}}</td> -->
+
+                                                </tr>
+                                            </div>
+                                      </tbody>
+                                            <!-- <tfoot>
+                                              <tr>
+                                                <td>TOTAL</td>
+                                                  <td>{{length}}</td>
+                                                  <td><button type="button" name="button" class="btn btn-primary" style="width:100%;color:black">{{invStatusKeys.STALL.total}}</button></td>
+                                                  <td><button type="button" name="button" class="btn btn-primary" style="width:100%;color:black">totalFlats</button></td>
+                                                  <td><button type="button" name="button" class="btn btn-primary" style="width:100%;color:black">{{invStatusKeys.FLIER.total}}</button></td>
+                                                  <td><button type="button" name="button" class="btn btn-primary" style="width:100%;color:black">{{invStatusKeys.STANDEE.total}}</button></td>
+                                                  <td><button type="button" name="button" class="btn btn-primary" style="width:100%;color:black">{{invStatusKeys['GATEWAY ARCH'].total}}</button></td>
+                                              </tr>
+                                            </tfoot> -->
+                                        </table>
+                                  </div>
                                   </div>
 
                                 <div class="col-md-12" ng-show="showDisplayDetailsTable" style="margin-top:60px;">
@@ -1145,26 +1153,31 @@
                               <div class="col-md-12" ng-if="showSupplierTypeCountChart">
                                 <div class="panel-heading content-title">
                                   <h5 style="background:'red'">Map View for All Campaigns</h5></div>
-                                  <ng-map center="[{{supplierTypesDataList[0].center__latitude}} , {{supplierTypesDataList[0].center__longitude}}]" position="[{{latitude}},{{longitude}}]">
-                                    <marker ng-repeat="campaign in supplierTypesDataList" position="[{{campaign.center__latitude}}, {{campaign.center__longitude}}]" title="{{campaign.proposal__name}}" id="{{campaign.proposal_id}}" on-click="showDetail(event, campaign)">
-                                      <info-window id="myWindow">
-                                        <div ng-non-bindable="" style="color:black;height:120px;width:170px;">
-                                          <div class="">
-                                            <h3>{{windowDisplay.proposal__name}}</h3>
-                                          </div>
-                                          <table class="table-responsive table windowDisplayTable">
-                                            <tbody>
-                                                <tr><td>Total Suppliers</td> <td><small>{{windowDisplay.total}}</small></td></tr>
-                                            </tbody>
-                                        </table>
-                                        </div>
-                                      </info-window>
-                                    </marker>
-                                  </ng-map>
+                                  <style type="text/css">
+                                        .angular-google-map-container { height: 550px;color: black;}
+                                    </style>
+                                      <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="false"
+                                                          options="options" bounds="map.bounds" control="googlemap">
+                                          <ui-gmap-window show="show" coords='windowCoords' closeClick="closeClick()">
+                                                <div>
+                                                  <table class="table-responsive table">
+                                                    <div class="">
+                                                      <h3>{{space.title.name}}</h3>
+                                                    </div>
+                                                    <tr><td>{{space.title.STALL.key}}</td><td><small>{{space.title.STALL.total}}</small></td></tr>
+                                                    <tr><td>{{space.title.POSTER.key}}</td><td><small>{{space.title.POSTER.total}}</small></td></tr>
+                                                    <tr><td>{{space.title.STANDEE.key}}</td><td><small>{{space.title.STANDEE.total}}</small></td></tr>
+                                                    <tr><td>{{space.title.FLIER.key}}</td><td><small>{{space.title.FLIER.total}}</small></td></tr>
+                                                    <tr><td>{{space.title['GATEWAY ARCH'].key}}</td><td><small>{{space.title['GATEWAY ARCH'].total}}</small></td></tr>
+                                                  </table>
+                                                 </div>
+                                          </ui-gmap-window>
+                                          <ui-gmap-markers models="supplierAllCampaignMarkers" coords="'self'" icon="'icon'"
+                                                           options="'options'" doRebuildAll="true" click="onClick">
+                                          </ui-gmap-markers>
+                                      </ui-gmap-google-map>
                                   </div>
-
                             </div>
-
                         </div>
                     </div>
                   </div>
@@ -1305,14 +1318,19 @@
               <uib-tab  id="uib-tabs-width" ng-click="getCampaigns()" index="4">
                   <uib-tab-heading>
                     <h5 style="margin-left:-10px;"> Performance Metrics</h5>
+
                   </uib-tab-heading>
+
                   <div class="container-fluid">
                     <div class="row">
                       <div class="panel panel-default" style="color:'0000ff'">
                         <div class="col-md-12">
 
-                            <div class="panel-headding campaign-header">
+                            <div class="panel-heading campaign-header">
                               <h3 style="color:rgb(53, 9, 6)">Performance Details</h3>
+                            </div>
+                            <div class="row zeroLeads" ng-if="!campaignInventories && !showSelection">
+                              <h1>Please Select Campaign</h1>
                             </div>
                             <div class="panel-group">
                             <div class="col-md-12">
@@ -1484,9 +1502,9 @@
                                               <div id="displayedFocus" class="panel panel-danger" style="width:60%;margin-left:50px;">
                                                 <button class="btn btn-danger" name="button" style="width:100%;" ng-click="getCompareCampaigns(compCampaigns.campaigns.status)">LEADS</button>
                                               </div>
-                                              <div id="displayedFocus" class="panel panel-danger" style="width:60%;text-align:center;margin-left:50px;">
+                                              <!-- <div id="displayedFocus" class="panel panel-danger" style="width:60%;text-align:center;margin-left:50px;">
                                                 <button class="btn btn-danger" name="button" style="width:100%;">INVENTORY</button>
-                                              </div>
+                                              </div> -->
                                             </div>
                                         </div>
                                     </div>
@@ -1707,21 +1725,20 @@
                               </div>
                         </div>
 
-                        <div class="row zeroInventory" ng-if="!campaignInventories && !showSelection">
-                          <h1>Please Select Campaign</h1>
-                        </div>
+
                         <div class="row" ng-if="showPerfMetrics == perfMetrics.blank">
 
                         </div>
                         <!--START : COMPARE CAMPAIGNS LIST  -->
                           <div class="col-md-12" ng-show="compCampaigns.campaigns.value">
-                            <div class="col-md-2">
+                            <br />
+                              <div class="col-md-2 pull-right">
+                              <button class="btn btn-primary" style="margin-left:20px" ng-click="getCompareCampaignChartData()">COMPARE</button>
+                            </div>
+                            <div class="col-md-2 pull-right">
                               <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="mergedarray" class="col-md-6"  extra-settings="searchSelectAllSettings"
                               selected-model="searchSelectAllModel" translation-texts="selected_baselines_customTexts" events="events"></span>
 
-                            </div>
-                              <div class="col-md-2">
-                              <button class="btn btn-primary" style="margin-left:20px" ng-click="getCompareCampaignChartData()">COMPARE</button>
                             </div>
                           </div>
                           <!--END : COMPARE CAMPAIGNS LIST  -->
@@ -2037,17 +2054,17 @@
                             </div>
                           </div>
 
-                          <div class="col-md-6" ng-if="showPerfMetrics == perfMetrics.multipleLeads" style="margin-top:50px;">
+                          <div class="col-md-12" ng-if="showPerfMetrics == perfMetrics.multipleLeads" style="margin-top:50px;">
                             <div class="panel-heading content-title">
-                              <div class="col-md-6">
-                                <h4>Total Leads Comparison</h4>
+                              <div class="col-md-12">
+                                <h4>Average Leads of Campaign (Percentage)</h4>
                               </div>
                             </div>
                             <div class="col-md-12">
                               <nvd3 options="stackedBarChartOptions" data="stackedBarChartcampaignsData"></nvd3>
                             </div>
                           </div>
-                          <div class="col-md-6" ng-if="showPerfMetrics == perfMetrics.multipleLeads" style="height:450px;margin-top:50px;">
+                          <!-- <div class="col-md-6" ng-if="showPerfMetrics == perfMetrics.multipleLeads" style="height:450px;margin-top:50px;">
                             <div class="panel-heading content-title">
                               <div class="col-md-7">
                                 <h4> Average Leads Comparison</h4>
@@ -2059,7 +2076,7 @@
                                 chart-dataset-override="datasetOverride" chart-click="onClick">
                               </canvas>
                             </div>
-                          </div>
+                          </div> -->
                       </div>
                         <!--End : Performance metrics  -->
 

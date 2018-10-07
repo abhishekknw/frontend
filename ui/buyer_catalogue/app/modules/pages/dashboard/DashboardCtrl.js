@@ -386,6 +386,8 @@
          DashboardService.getCountOfSupplierTypesByCampaignStatus(campaignStatus)
          .then(function onSuccess(response){
            console.log(response);
+           $scope.AllCampaignData = response.data.data;
+           $scope.supplierAllCampaignMarkers = assignMarkersToMap($scope.AllCampaignData);
            if(response.data.data){
               $scope.supplierCodeCountData = formatCountData(response.data.data);
               $scope.supplierTypesData = response.data.data;
@@ -1223,11 +1225,11 @@
      angular.forEach(data, function(supplier){
        if(supplier['flat_count'] != 0){
          $scope.hotLeadsValues =  supplier.interested / supplier['flat_count'] * 100;
-         $scope.normalLeadsValues =  (supplier.total - supplier.interested)/supplier['flat_count'] * 100;
+         $scope.normalLeadsValues =  supplier.total/supplier['flat_count'] * 100;
         }
         else {
           $scope.hotLeadsValues =  supplier.interested;
-          $scope.normalLeadsValues =  supplier.total - supplier.interested;
+          $scope.normalLeadsValues =  supplier.total;
 
         }
 
@@ -1244,7 +1246,7 @@
 
      var temp_data = [
        {
-         key : "Normal Leads in %",
+         key : "Total Leads in %",
          color : constants.colorKey1,
          values : values1,
          "bar": true,
@@ -1268,11 +1270,11 @@
      angular.forEach(data, function(date){
        if(date['flat_count'] != 0){
          $scope.hotLeadsValues =  date.interested / date['flat_count'] * 100;
-         $scope.normalLeadsValues =  (date.total - date.interested)/date['flat_count'] * 100;
+         $scope.normalLeadsValues =  date.total/date['flat_count'] * 100;
         }
         else {
           $scope.hotLeadsValues =  date.interested;
-          $scope.normalLeadsValues =  date.total - date.interested;
+          $scope.normalLeadsValues =  date.total ;
 
         }
 
@@ -1287,7 +1289,7 @@
      })
      var temp_data = [
        {
-         key : "Normal Leads in %",
+         key : "Total Leads in %",
          color : constants.colorKey1,
          values : values1
        },
@@ -1306,11 +1308,11 @@
      angular.forEach(data, function(data,key){
        if(data['flat_count'] != 0){
          $scope.hotLeadsValues =  data.interested / data['flat_count'] * 100;
-         $scope.normalLeadsValues =  (data.total - data.interested)/data['flat_count'] * 100;
+         $scope.normalLeadsValues =  data.total/data['flat_count'] * 100;
         }
         else {
           $scope.hotLeadsValues =  data.interested;
-          $scope.normalLeadsValues =  data.total - data.interested;
+          $scope.normalLeadsValues =  data.total;
 
         }
        var keyWithFlatLabel =  key + ' (' + data['flat_count'] + ')';
@@ -1326,7 +1328,7 @@
 
      var temp_data = [
        {
-         key : "Normal Leads in % :",
+         key : "Total Leads in % :",
          color : constants.colorKey1,
          values : values1
          },
@@ -1346,11 +1348,11 @@
      angular.forEach(data, function(data,key){
        if(data['flat_count'] != 0){
          $scope.hotLeadsValues =  data.interested / data['flat_count'] * 100;
-         $scope.normalLeadsValues =  (data.total - data.interested)/data['flat_count'] * 100;
+         $scope.normalLeadsValues =  data.total/data['flat_count'] * 100;
         }
         else {
           $scope.hotLeadsValues =  data.interested;
-          $scope.normalLeadsValues =  data.total - data.interested;
+          $scope.normalLeadsValues =  data.total;
 
         }
          var keyWithFlatLabel =  key + ' (' + data['flat_count'] + ')';
@@ -1366,7 +1368,7 @@
 
      var temp_data = [
        {
-         key : "Normal Leads in %",
+         key : "Total Leads in %",
          color : constants.colorKey1,
          values : values1
        },
@@ -1386,11 +1388,11 @@
      angular.forEach(data, function(data,key){
        if(data['flat_count'] != 0){
          $scope.hotLeadsValues =  data.interested / data['flat_count'] * 100;
-         $scope.normalLeadsValues =  (data.total - data.interested)/data['flat_count'] * 100;
+         $scope.normalLeadsValues =  data.total/data['flat_count'] * 100;
         }
         else {
           $scope.hotLeadsValues =  data.interested;
-          $scope.normalLeadsValues =  data.total - data.interested;
+          $scope.normalLeadsValues =  data.total;
 
         }
 
@@ -1407,7 +1409,7 @@
 
      var temp_data = [
        {
-         key : "Normal Leads in %",
+         key : "Total Leads in %",
          color : constants.colorKey1,
          values : values1
        },
@@ -1520,17 +1522,29 @@
     var formatMultiBarChartDataByMultCampaigns = function(data){
       var values1 = [];
       var values2 = [];
-      angular.forEach(data, function(campaign){
+      angular.forEach(data, function(campaign, key){
+        console.log(campaign);
+        console.log(key);
+        if(campaign['flat_count'] != 0){
+          $scope.hotLeadsValues =  campaign.interested / campaign['flat_count'] * 100;
+          $scope.normalLeadsValues = campaign.total /campaign['flat_count'] * 100;
+         }
+         else {
+           $scope.hotLeadsValues =  campaign.interested;
+           $scope.normalLeadsValues =  campaign.total ;
+
+         }
+         var keyWithFlatLabel =  campaign.name + ' (' + campaign['flat_count'] + ')';
          var value1 =
-            { x : campaign.data.name, y : campaign.total - campaign.interested};
+            { x : keyWithFlatLabel, y : $scope.normalLeadsValues};
          var value2 =
-            { x : campaign.data.name, y : campaign.interested};
+            { x : keyWithFlatLabel, y : $scope.hotLeadsValues};
          values1.push(value1);
          values2.push(value2);
       })
       var temp_data = [
         {
-          key : "Normal Leads",
+          key : "Total Leads",
           color : constants.colorKey1,
           values : values1
         },
@@ -1666,6 +1680,7 @@
       $scope.showDisplayDetailsTable = true;
       $scope.map = { zoom: 13,bounds: {},center: {latitude: $scope.latitude,longitude: $scope.longitude}};
       $scope.supplierMarkers = assignMarkersToMap($scope.supplierAndInvData);
+
       uiGmapIsReady.promise()
         .then(function(instances) {
           uiGmapGoogleMapApi.then(function(maps) {
