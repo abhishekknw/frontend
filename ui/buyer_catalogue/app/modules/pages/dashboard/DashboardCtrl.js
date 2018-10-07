@@ -1641,14 +1641,23 @@
       $scope.supplierStatus = data.status;
       $scope.supplierAndInvData = $scope.campaignSupplierAndInvData[data.status];
       $scope.invStatusKeys = angular.copy(invStatusKeys);
-      $scope.countLeads = 0;
+      $scope.TotalSupplierFlatCount = 0;
+      $scope.TotalSupplierLeadsCount = 0;
+      $scope.TotalLeadsPerFlat = 0;
+      $scope.TotalSupplierHotLeadsCount = 0;
       angular.forEach($scope.supplierAndInvData, function(supplier,key){
         console.log(supplier);
         $scope.latitude = supplier.supplier.society_latitude;
         $scope.longitude = supplier.supplier.society_longitude;
         $scope.societyName = supplier.supplier.society_name;
         $scope.length = $scope.supplierAndInvData.length;
-        $scope.societyName = supplier.supplier.society_name;
+        $scope.TotalSupplierFlatCount += supplier.supplier.flat_count;
+        $scope.TotalSupplierLeadsCount += supplier.leads_data.total_leads_count;
+        $scope.TotalLeadsPerFlat += supplier.leads_data.leads_flat_percentage;
+        $scope.TotalSupplierHotLeadsCount += supplier.leads_data.hot_leads_count;
+
+          $scope.societyName = supplier.supplier.society_name;
+
           angular.forEach(supplier.supplier.inv_data, function(inv,key){
           $scope.invStatusKeys[key].status = true;
           })
@@ -1661,7 +1670,6 @@
                   comment : data.comment,
                   // distance : data.distance,
                 };
-                console.log(imagesData);
                 $scope.ImageURLListOfAll.push(imagesData);
 
             })
@@ -1669,14 +1677,16 @@
 
            angular.forEach(supplier.leads_data, function(inv,key){
             $scope.leads_data = inv;
-
+            // console.log($scope.leads_data);
             $scope.showLeads = true;
             $scope.countLeads += 1;
+
             if($scope.leads_data.is_interested){
               $scope.supplierHotLeads += 1;
             }
           })
       })
+
       $scope.showDisplayDetailsTable = true;
       $scope.map = { zoom: 13,bounds: {},center: {latitude: $scope.latitude,longitude: $scope.longitude}};
       $scope.supplierMarkers = assignMarkersToMap($scope.supplierAndInvData);
