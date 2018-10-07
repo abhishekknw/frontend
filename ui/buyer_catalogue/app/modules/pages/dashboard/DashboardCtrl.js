@@ -345,7 +345,10 @@
           $scope.campaignLabel = false;
           $scope.showLeadsDetails = false;
           $scope.showDisplayDetailsTable = false;
+          $scope.allCampaignsLeadsData = {};
+          $scope.viewCampaignLeads(true);
 
+          console.log($scope.allCampaignsLeadsData);
           DashboardService.getCampaigns(orgId, category, date)
           .then(function onSuccess(response){
             console.log(response);
@@ -380,7 +383,7 @@
         $anchorScroll('bottom');
         $scope.campaignStatusName = label;
         var campaignStatus = _.findKey($scope.campaignStatus, {'campaignLabel' : label});
-        getCountOfSupplierTypesByCampaignStatus(campaignStatus);
+        // getCountOfSupplierTypesByCampaignStatus(campaignStatus);
       }
        var getCountOfSupplierTypesByCampaignStatus = function(campaignStatus){
          DashboardService.getCountOfSupplierTypesByCampaignStatus(campaignStatus)
@@ -1971,11 +1974,36 @@ $scope.geToSupplierDetails = function(supplierId){
 $scope.checkNan = function(number){
   return isNaN(number);
 }
-$scope.viewCampaignLeads = function(){
+$scope.viewCampaignLeads = function(value){
   DashboardService.viewCampaignLeads()
   .then(function onSuccess(response){
     console.log(response);
     $scope.leadsDataCampaigns = response.data.data;
+    if(value){
+      angular.forEach($scope.leadsDataCampaigns, function(data){
+        if(!$scope.allCampaignsLeadsData.hasOwnProperty(data.campaign_status)){
+            $scope.allCampaignsLeadsData[data.campaign_status] = {};
+            $scope.allCampaignsLeadsData[data.campaign_status]['total_leads'] = 0;
+            $scope.allCampaignsLeadsData[data.campaign_status]['hot_leads'] = 0;
+            $scope.allCampaignsLeadsData[data.campaign_status]['supplier_count'] = 0;
+            $scope.allCampaignsLeadsData[data.campaign_status]['flat_count'] = 0;
+        }
+        if(data.total_leads){
+            $scope.allCampaignsLeadsData[data.campaign_status]['total_leads'] += data.total_leads;
+        }
+
+        if(data.hot_leads){
+          $scope.allCampaignsLeadsData[data.campaign_status]['hot_leads'] += data.hot_leads;
+        }
+        if(data.supplier_count){
+          $scope.allCampaignsLeadsData[data.campaign_status]['supplier_count'] += data.supplier_count;
+        }
+        if(data.flat_count){
+          $scope.allCampaignsLeadsData[data.campaign_status]['flat_count'] += data.flat_count;
+        }
+      })
+      console.log($scope.allCampaignsLeadsData);
+    }
   }).catch(function onError(response){
     console.log(response);
   })
@@ -2058,7 +2086,13 @@ $scope.viewBookingComments = function(supplier){
     console.log(response);
   })
 }
-
+$scope.addCount = function(key){
+  var total = 0;
+  angular.forEach($scope.allCampaignsLeadsData, function(data){
+    total += data[key];
+  })
+  return total;
+}
 //END
 })
 
