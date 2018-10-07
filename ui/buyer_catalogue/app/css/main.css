@@ -507,6 +507,20 @@ text-align: center;
 }
 
 
+.zeroLeads{
+  color: rgb(195, 69, 47);
+  font-size: 180px;
+margin-left: 30px;
+}
+
+
+.zeroLeads > h1{
+
+  font-size: 15px;
+  /* margin-top: 100px; */
+  left: 100px;
+
+}
 .multiselect-parent {
   color: black !important;
   border-color: black !important;
