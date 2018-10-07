@@ -609,7 +609,7 @@
                                         <td style="text-align:left;">{{data.total_leads}}</td>
                                         <td ng-if="data.flat_count != 0">{{data.hot_leads/data.flat_count * 100|limitTo:5}}</td>
                                         <td ng-if="data.flat_count == 0">NA</td>
-                                        <td ng-if="data.flat_count != 0">{{data.total_leads/data.total_leads * 100|limitTo:5}}</td>
+                                        <td ng-if="data.flat_count != 0">{{data.total_leads/data.flat_count * 100|limitTo:5}}</td>
                                         <td ng-if="data.flat_count == 0">NA</td>
                                       </tr>
                                       <tr style="background:#c2452f;font-color:#ffffff">
