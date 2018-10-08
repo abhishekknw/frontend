@@ -56,7 +56,7 @@
                                   <a ng-href="/#/CampaignList" class=" lipadding" ng-click="closeModal()">
                                     <i class="fa fa-list fa-lg"></i> List Campaigns</a>
                               </li>
-                              <li ng-class="{active: isActive('/campaignLeads')}">
+                              <li ng-class="{active: isActive('/campaignLeads')}" permission = "[perm.campaignLeads]">
                                   <a ng-href="/#/campaignLeads" class=" lipadding" ng-click="closeModal()">
                                     <i class="fa fa-columns fa-lg"></i> Campaign Leads</a>
                               </li>

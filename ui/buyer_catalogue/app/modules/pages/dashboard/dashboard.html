@@ -236,12 +236,12 @@
 
                                   <br />
                                 <div class="col-md-12 panel-heading" style="border: 1px solid #ccc;height:75px;">
-                                  <label style="min-width:10px;">Index</label>
+                                  <label class="col-md-1">Index</label>
                                   <label class="col-md-2">Campaign Name</label>
                                   <label class="col-md-2">Inventory</label>
                                   <label class="col-md-1">Total Assigned</label>
                                   <label class="col-md-1">Today Released</label>
-                                  <label class="col-md-1">Average Delay(In Hours)</label>
+                                  <label class="col-md-1">Average Delay(In Days)</label>
                                   <label class="col-md-2">Average Off Location(Meters)</label>
                                   <label class="col-md-2">Images</label>
                                 </div><br>
@@ -358,11 +358,11 @@
                       <table class="table table-bordered table-responsive">
                         <thead>
                           <tr>
-                            <th>Index</th>
+                            <!-- <th>Index</th> -->
                             <th>Campaign Name</th>
                             <th>Start Date</th>
                             <th>End Date</th>
-                            <th>Phase</br>Completed</th>
+                            <!-- <th>Phase</br>Completed</th> -->
                             <th>Campaign Status</th>
                             <th>Supplier</br> Count</th>
                             <th>Flat</br> Count</th>
@@ -373,12 +373,12 @@
                         </thead>
                         <tbody>
                           <tr ng-repeat="campaign in leadsDataCampaigns|filter : searchQuery" ng-if="campaign.total_leads">
-                            <td>{{$index + 1}}</td>
+                            <!-- <td>{{$index + 1}}</td> -->
                             <td>{{campaign.name}}</td>
                             <td>{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
                             <td ng-if="campaign.campaign_status == 'completed'">{{campaign.end_date|limitTo:10|date:mediumDate}}</td>
                             <td ng-if="campaign.campaign_status != 'completed'">NA</td>
-                            <td>{{campaign.phase_complete}}</td>
+                            <!-- <td>{{campaign.phase_complete}}</td> -->
                             <td ng-if="campaign.campaign_status == 'on_hold'">On Hold</td>
                             <td ng-if="campaign.campaign_status != 'on_hold'">{{campaign.campaign_status}}</td>
                             <td>{{campaign.supplier_count}}</td>
@@ -543,12 +543,12 @@
                             <div class="col-md-4 LeadsTable">
                               <div class="panel-heading content-title">
 
-                                <h5 style="background:'red';color:white;" ng-if="!showSingleCampaignChart">Supplier Details</h5>
+                                <h5 style="background:'red';color:white;" ng-if="!showSingleCampaignChart">All Campaign Details</h5>
                                 <h5 style="background:'red';color:white;" ng-if="showSingleCampaignChart">Supplier / Leads Details</h5>
 
                               </div>
 
-                              <div class="supplierTable-style">
+                              <div class="supplierTable-style" ng-if="showSingleCampaignChart">
                                 <table class="table-responsive table table-bordered equal-width">
                                   <thead>
                                     <tr style="font-size:12px;">
@@ -557,7 +557,8 @@
                                       <td>Flat Count</td>
                                       <td>HotLeads %</td>
                                       <td>Leads/Flat %</td>
-                                      <td>TotalLeads Count</td>
+                                      <td>Hot Leads Count</td>
+                                      <td>Total Leads Count</td>
 
                                       <!-- <td ng-if="showLeadsDetails" >Total Leads <br><small>(High Quality Leads)</small></td> -->
                                     </tr>
@@ -567,12 +568,71 @@
                                         <td style="text-align:left;">{{key}}</td>
                                         <td style="text-align:left;">{{data.total_suppliers_count}}</td>
                                         <td style="text-align:left;">{{data.flat_count}}</td>
-                                        <td style="text-align:left;">{{data.hot_leads_percentage | limitTo:4 || NA}} %</td>
-                                        <td style="text-align:left;">{{data.leads_flat_percentage| limitTo:4 || NA}} %</td>
-                                        <td style="text-align:left;">{{data.total_leads_count| limitTo:4 || NA}}</td>
+                                        <td style="text-align:left;"  ng-if="key !='upcoming'">{{data.hot_leads_percentage_by_flat_count | limitTo:4 || NA}} %</td>
+                                        <td style="text-align:left;" ng-if="key =='upcoming'">NA</td>
+                                        <td style="text-align:left;"  ng-if="key !='upcoming'">{{data.leads_flat_percentage| limitTo:4 || NA}} %</td>
+                                        <td style="text-align:left;" ng-if="key =='upcoming'">NA</td>
+                                        <td style="text-align:left;"  ng-if="key !='upcoming'">{{data.total_hot_leads_count| limitTo:4 || NA}}</td>
+                                        <td style="text-align:left;" ng-if="key =='upcoming'">NA</td>
+                                        <td style="text-align:left;"  ng-if="key !='upcoming'">{{data.total_leads_count| limitTo:4 || NA}}</td>
+                                        <td style="text-align:left;" ng-if="key =='upcoming'">NA</td>
                                         <!-- <td> {{}}</td>
                                         <td class="blinking" ng-if="showLeadsDetails && item.status != 'upcoming'">{{campaignStatusData[item.status].totalLeads||0}}({{campaignStatusData[item.status].hotLeads}})</td>
                                         <td ng-if="showLeadsDetails && item.status == 'upcoming'">NA</td> -->
+                                      </tr>
+                                      <tr style="background:#c2452f;font-color:#ffffff">
+                                        <td>Total</td>
+                                        <td>{{addCount(overallMetric,'total_suppliers_count')}}</td>
+                                        <td>{{addCount(overallMetric,'flat_count')}}</td>
+                                        <td ng-if="addCount(overallMetric,'flat_count') != 0">{{addCount(overallMetric,'total_hot_leads_count')/addCount(overallMetric,'flat_count') * 100|limitTo:5}}%</td>
+                                        <td ng-if="addCount(overallMetric,'flat_count') == 0">NA</td>
+                                        <td ng-if="addCount(overallMetric,'flat_count') != 0">{{addCount(overallMetric,'total_leads_count')/addCount(overallMetric,'flat_count') * 100|limitTo:5}}%</td>
+                                        <td ng-if="addCount(overallMetric,'flat_count') == 0">NA</td>
+                                        <td>{{addCount(overallMetric,'total_hot_leads_count')}}</td>
+                                        <td>{{addCount(overallMetric,'total_leads_count')}}</td>
+                                      </tr>
+
+                                    </tbody>
+                                    </table>
+
+                              </div>
+                              <div class="supplierTable-style" ng-if="!showSingleCampaignChart">
+                                <table class="table-responsive table table-bordered equal-width">
+                                  <thead>
+                                    <tr style="font-size:12px;">
+                                      <td>Campaign Status</td>
+                                      <td>Supplier Count</td>
+                                      <td>Flat Count</td>
+                                      <td>Hot Leads Count</td>
+                                      <td>Total Leads Count</td>
+                                      <td>Hot Leads (%)</td>
+                                      <td>Total Leads (%)</td>
+
+                                      <!-- <td ng-if="showLeadsDetails" >Total Leads <br><small>(High Quality Leads)</small></td> -->
+                                    </tr>
+                                  </thead>
+                                      <tbody>
+                                      <tr ng-repeat="(key,data) in allCampaignsLeadsData"  style="font-size:12px;">
+                                        <td style="text-align:left;">{{key}}</td>
+                                        <td style="text-align:left;">{{data.supplier_count}}</td>
+                                        <td style="text-align:left;">{{data.flat_count}}</td>
+                                        <td style="text-align:left;">{{data.hot_leads}}</td>
+                                        <td style="text-align:left;">{{data.total_leads}}</td>
+                                        <td ng-if="data.flat_count != 0">{{data.hot_leads/data.flat_count * 100|limitTo:5}}</td>
+                                        <td ng-if="data.flat_count == 0">NA</td>
+                                        <td ng-if="data.flat_count != 0">{{data.total_leads/data.flat_count * 100|limitTo:5}}</td>
+                                        <td ng-if="data.flat_count == 0">NA</td>
+                                      </tr>
+                                      <tr style="background:#c2452f;font-color:#ffffff">
+                                        <td>Total</td>
+                                        <td>{{addCount(allCampaignsLeadsData,'supplier_count')}}</td>
+                                        <td>{{addCount(allCampaignsLeadsData,'flat_count')}}</td>
+                                        <td>{{addCount(allCampaignsLeadsData,'hot_leads')}}</td>
+                                        <td>{{addCount(allCampaignsLeadsData,'total_leads')}}</td>
+                                        <td ng-if="addCount(allCampaignsLeadsData,'flat_count') != 0">{{addCount(allCampaignsLeadsData,'hot_leads')/addCount(allCampaignsLeadsData,'flat_count') * 100|limitTo:5}}%</td>
+                                        <td ng-if="addCount(allCampaignsLeadsData,'flat_count') == 0">NA</td>
+                                        <td ng-if="addCount(allCampaignsLeadsData,'flat_count') != 0">{{addCount(allCampaignsLeadsData,'total_leads')/addCount(allCampaignsLeadsData,'flat_count') * 100|limitTo:5}}%</td>
+                                        <td ng-if="addCount(allCampaignsLeadsData,'flat_count') == 0">NA</td>
                                       </tr>
 
                                     </tbody>
@@ -950,7 +1010,7 @@
                                           <td>Society Type</td>
                                           <td>Flat Count</td>
                                           <td>Leads (% by Flat Count)</td>
-                                          <td>Hot Leads (% by Leads)</td>
+                                          <td>Hot Leads (% by Flat Count)</td>
                                           <td ng-if="supplierStatus == 'ongoing'">Poster</td>
                                           <td ng-if="supplierStatus == 'ongoing'">Flier</td>
                                           <td ng-if="supplierStatus == 'ongoing'">Standee</td>
@@ -969,7 +1029,7 @@
                                                 <td class="col-md-2">{{supplier.supplier.society_type_quality}}</td>
                                                 <td class="col-md-2">{{supplier.supplier.flat_count}}</td>
                                                 <td class="col-md-2" style="color:#ffffff">{{supplier.leads_data.total_leads_count}} <small style="color:#cb1925;"> ({{supplier.leads_data.leads_flat_percentage}} %)</small></td>
-                                                <td class="col-md-2">{{supplier.leads_data.hot_leads_count}} <small style="color:#cb1925;"> ({{supplier.leads_data.hot_leads_percentage}} %)</small></td>
+                                                <td class="col-md-2"> <small style="color:#cb1925;">{{supplier.leads_data.hot_leads_count}}({{supplier.leads_data.hot_leads_percentage_by_flat_count}} %)</small></td>
                                                 <td ng-if="supplier.images_data.POSTER && supplierStatus == 'ongoing'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.POSTER.images)">Images ({{supplier.images_data.POSTER.total_count}})</a></td>
                                                 <td ng-if="!supplier.images_data.POSTER && supplierStatus == 'ongoing'">No Images</td>
 
@@ -1256,8 +1316,8 @@
             <tr>
               <th>Phase</th>
               <th>Total Booked <br>(Total Flat Count)</th>
+              <th>Confirmed Booked</th>
               <th>Verbally Booked</th>
-              <th>Tentative</th>
             </tr>
           </thead>
           <tbody>
@@ -1492,22 +1552,22 @@
                                     </div>
                                   </div>
                                   <div class="col-md-3">
-                                    <div class="panel panel-default" ng-click="getGraphicalComparision(graphicalComparision.leads.status)">
+                                    <div class="panel panel-default" ng-click="getCompareCampaigns(compCampaigns.campaigns.status)">
                                       <div class="button" type="button">
                                         <div class="panel-heading">
                                               Compare Campaigns
                                         </div>
                                       </div>
-                                        <div  class="animate-show" ng-show="graphicalComparision.leads.value">
+                                        <!-- <div  class="animate-show" ng-show="graphicalComparision.leads.value">
                                             <div class="panel-bodyDashboard camp-menu-content">
                                               <div id="displayedFocus" class="panel panel-danger" style="width:60%;margin-left:50px;">
                                                 <button class="btn btn-danger" name="button" style="width:100%;" ng-click="getCompareCampaigns(compCampaigns.campaigns.status)">LEADS</button>
                                               </div>
-                                              <!-- <div id="displayedFocus" class="panel panel-danger" style="width:60%;text-align:center;margin-left:50px;">
+                                              <div id="displayedFocus" class="panel panel-danger" style="width:60%;text-align:center;margin-left:50px;">
                                                 <button class="btn btn-danger" name="button" style="width:100%;">INVENTORY</button>
-                                              </div> -->
+                                              </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                   </div>
                               </div>
@@ -1515,7 +1575,7 @@
                         <br /><br /><br />
                         <div class="col-lg-12"  ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:30px;">
                           <div class="panel-heading content-title">
-                            <label for="heading">Leads of {{CampaignLeadsName}}</label>
+                            <h3 for="heading">Leads of {{CampaignLeadsName}}</h3>
                           </div>
                           <br /><br />
                           <div class="col-lg-6">
@@ -1593,9 +1653,13 @@
                               </div>
                             </div>
                             <div class="row">
+                              <select ng-change="sortData('flatData',sortModel)" ng-model="sortModel">
+                                <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
+                              </select>
                               <div class="outerFlat">
                                 <div class="innerFlat">
-                                  <nvd3 options="stackedBarChartFlatWise" data="stackedBarFLatCountChart"></nvd3>
+                                  <nvd3 options="locationChartOptions" data="sortedLocationData['flatData']" ng-if="togglesortedGraphs['flatData']"></nvd3>
+                                  <nvd3 options="stackedBarChartFlatWise" data="stackedBarFLatCountChart" ng-if="!togglesortedGraphs['flatData']"></nvd3>
                                 </div>
                               </div>
                             </div>
@@ -1652,9 +1716,13 @@
                                   </div>
                                 </div>
                                 <div class="col-md-12" style="height:300px">
+                                  <select ng-change="sortData('location',sortModel)" ng-model="sortModel">
+                                    <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
+                                  </select>
                                   <div class="outerFlat">
                                     <div class="innerFlat">
-                                      <nvd3 options="stackedBarChartLocationWise" data="stackedBarLocationCountChart"></nvd3>
+                                      <nvd3 options="locationChartOptions" data="sortedLocationData['location']" ng-if="togglesortedGraphs['location']"></nvd3>
+                                      <nvd3 options="stackedBarChartLocationWise" data="stackedBarLocationCountChart" ng-if="!togglesortedGraphs['location']"></nvd3>
                                     </div>
                                   </div>
                                 </div>
@@ -1666,7 +1734,7 @@
                           <div class="col-lg-6">
                             <div class="panel panel-primary">
                               <div class="panel-heading content-title">
-                                <label for="Location">Phase Summary Details</label>
+                                <label for="Location">Weekwise Summary Details</label>
                               </div>
                             </div>
                             <div class="table-style">
@@ -1713,13 +1781,17 @@
                               <div class="col-lg-6">
                                 <div class="panel panel-primary">
                                   <div class="panel-heading content-title">
-                                    <label for="flat graph">Phase Graph Summary</label>
+                                    <label for="flat graph">Weekwise Graph Summary</label>
                                   </div>
                                 </div>
                                 <div class="col-md-12" style="height:300px">
+                                  <select ng-change="sortData('weekwise',sortModel)" ng-model="sortModel">
+                                    <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
+                                  </select>
                                   <div class="outerFlat">
                                     <div class="innerFlat">
-                                      <nvd3 options="stackedBarChartPhaseWise" data="stackedBarPhaseChart"></nvd3>
+                                      <nvd3 options="locationChartOptions" data="sortedLocationData['weekwise']" ng-if="togglesortedGraphs['weekwise']"></nvd3>
+                                      <nvd3 options="stackedBarChartPhaseWise" data="stackedBarPhaseChart" ng-if="!togglesortedGraphs['weekwise']"></nvd3>
                                     </div>
                                   </div>
                                 </div>
@@ -1731,7 +1803,7 @@
 
                         </div>
                         <!--START : COMPARE CAMPAIGNS LIST  -->
-                          <div class="col-md-12" ng-show="compCampaigns.campaigns.value">
+                          <div class="col-md-12" ng-show="campaignStatus.compare_campaigns.value">
                             <br />
                               <div class="col-md-2 pull-right">
                               <button class="btn btn-primary" style="margin-left:20px" ng-click="getCompareCampaignChartData()">COMPARE</button>
@@ -2032,9 +2104,13 @@
                             </div>
 
                             <div class="col-md-12" ng-scrollable>
+                              <select ng-change="sortData('supplier',sortModel)" ng-model="sortModel">
+                                <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
+                              </select>
                               <div class="outer">
                                 <div class="inner">
-                                  <nvd3 options="stackedBarChartSocietyWise" data="stackedBarChartSupplierData"></nvd3>
+                                  <nvd3 options="locationChartOptions" data="sortedLocationData['supplier']" ng-if="togglesortedGraphs['supplier']"></nvd3>
+                                  <nvd3 options="stackedBarChartSocietyWise" data="stackedBarChartSupplierData" ng-if="!togglesortedGraphs['supplier']"></nvd3>
                                 </div>
                               </div>
                             </div>
@@ -2047,9 +2123,13 @@
                                 <h4 style="text-align: center"> Leads By Date </h4>
                             </div>
                             <div class="col-md-12" ng-scrollable>
+                              <select ng-change="sortData('datewise',sortModel)" ng-model="sortModel">
+                                <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
+                              </select>
                               <div class="outerdate">
                                 <div class="innerdate">
-                                  <nvd3 options="stackedBarChartDateWise" data="stackedBarChartDateData"></nvd3>
+                                  <nvd3 options="locationChartOptions" data="sortedLocationData['datewise']" ng-if="togglesortedGraphs['datewise']"></nvd3>
+                                  <nvd3 options="stackedBarChartDateWise" data="stackedBarChartDateData" ng-if="!togglesortedGraphs['datewise']"></nvd3>
                                 </div>
                               </div>
                             </div>
@@ -2058,7 +2138,7 @@
                           <div class="col-md-12" ng-if="showPerfMetrics == perfMetrics.multipleLeads" style="margin-top:50px;">
                             <div class="panel-heading content-title">
                               <div class="col-md-12">
-                                <h4>Average Leads of Campaign (Percentage)</h4>
+                                <h4>Comparison Of Average Leads (Percentage)</h4>
                               </div>
                             </div>
                             <div class="col-md-12">

@@ -68,6 +68,9 @@
           onhold : {
             status : 'onhold', value : false, campaignLabel : 'On Hold Campaigns', supplierLabel : 'On Hold Campaigns'
           },
+          compare_campaigns : {
+            status : 'compare_campaigns', value : false, campaignLabel : 'Compare Campaigns', supplierLabel : 'Compare Campaigns'
+          },
         };
         $scope.charts = {
           pie : { name : 'Pie Chart', value : 'pie' },
@@ -107,6 +110,8 @@
           $scope.campaignStatus.ongoing.value = false;
           $scope.campaignStatus.completed.value = false;
           $scope.campaignStatus.upcoming.value = false;
+          $scope.campaignStatus.onhold.value = false;
+          $scope.campaignStatus.compare_campaigns.value = false;
           $scope.campaignStatus[status].value = !$scope.campaignStatus[status].value;
         }
 
@@ -345,7 +350,10 @@
           $scope.campaignLabel = false;
           $scope.showLeadsDetails = false;
           $scope.showDisplayDetailsTable = false;
+          $scope.allCampaignsLeadsData = {};
+          $scope.viewCampaignLeads(true);
 
+          console.log($scope.allCampaignsLeadsData);
           DashboardService.getCampaigns(orgId, category, date)
           .then(function onSuccess(response){
             console.log(response);
@@ -380,7 +388,7 @@
         $anchorScroll('bottom');
         $scope.campaignStatusName = label;
         var campaignStatus = _.findKey($scope.campaignStatus, {'campaignLabel' : label});
-        getCountOfSupplierTypesByCampaignStatus(campaignStatus);
+        // getCountOfSupplierTypesByCampaignStatus(campaignStatus);
       }
        var getCountOfSupplierTypesByCampaignStatus = function(campaignStatus){
          DashboardService.getCountOfSupplierTypesByCampaignStatus(campaignStatus)
@@ -859,6 +867,32 @@
           }
         };
 
+        var  discreteBarChart = {
+           chart: {
+               type: 'discreteBarChart',
+               height: 450,
+               margin : {
+                   top: 20,
+                   right: 20,
+                   bottom: 50,
+                   left: 55
+               },
+               x: function(d){return d.label;},
+               y: function(d){return d.value + (1e-10);},
+               showValues: true,
+               valueFormat: function(d){
+                   return d3.format(',.2f')(d);
+               },
+               duration: 1500,
+               xAxis: {
+                   axisLabel: 'X Axis'
+               },
+               yAxis: {
+                   axisLabel: 'Y Axis',
+                   axisLabelDistance: -10
+               }
+           }
+       };
 
        // START : service call to get suppliers as campaign status
        $scope.getSuppliersOfCampaignWithStatus = function(campaign){
@@ -1444,6 +1478,7 @@
      $scope.campaignInventories = [];
      $scope.showTimeLocBtn = false;
      $scope.graphicalComparision[status].value = !$scope.graphicalComparision[status].value;
+     $scope.getCampaignsMenu($scope.campaignStatus.compare_campaigns.status);
    }
 
    $scope.searchSelectAllSettings = { enableSearch: true,
@@ -1469,6 +1504,7 @@
     $scope.getCompareCampaigns = function(status){
       $scope.compCampaigns.value = false;
       $scope.showPerfMetrics = false;
+      $scope.getCampaignsMenu($scope.campaignStatus.compare_campaigns.status);
       $scope.compCampaigns[status].value = !$scope.compCampaigns[status].value;
     }
 
@@ -1981,11 +2017,36 @@ $scope.geToSupplierDetails = function(supplierId){
 $scope.checkNan = function(number){
   return isNaN(number);
 }
-$scope.viewCampaignLeads = function(){
+$scope.viewCampaignLeads = function(value){
   DashboardService.viewCampaignLeads()
   .then(function onSuccess(response){
     console.log(response);
     $scope.leadsDataCampaigns = response.data.data;
+    if(value){
+      angular.forEach($scope.leadsDataCampaigns, function(data){
+        if(!$scope.allCampaignsLeadsData.hasOwnProperty(data.campaign_status)){
+            $scope.allCampaignsLeadsData[data.campaign_status] = {};
+            $scope.allCampaignsLeadsData[data.campaign_status]['total_leads'] = 0;
+            $scope.allCampaignsLeadsData[data.campaign_status]['hot_leads'] = 0;
+            $scope.allCampaignsLeadsData[data.campaign_status]['supplier_count'] = 0;
+            $scope.allCampaignsLeadsData[data.campaign_status]['flat_count'] = 0;
+        }
+        if(data.total_leads){
+            $scope.allCampaignsLeadsData[data.campaign_status]['total_leads'] += data.total_leads;
+        }
+
+        if(data.hot_leads){
+          $scope.allCampaignsLeadsData[data.campaign_status]['hot_leads'] += data.hot_leads;
+        }
+        if(data.supplier_count){
+          $scope.allCampaignsLeadsData[data.campaign_status]['supplier_count'] += data.supplier_count;
+        }
+        if(data.flat_count){
+          $scope.allCampaignsLeadsData[data.campaign_status]['flat_count'] += data.flat_count;
+        }
+      })
+      console.log($scope.allCampaignsLeadsData);
+    }
   }).catch(function onError(response){
     console.log(response);
   })
@@ -2068,7 +2129,110 @@ $scope.viewBookingComments = function(supplier){
     console.log(response);
   })
 }
+$scope.addCount = function(data,key){
+  var total = 0;
+  angular.forEach(data, function(item){
+    total += item[key];
+  })
+  return total;
+}
+$scope.sortMenu = [
+  {name : 'Total(ASC)', type : 'total', order : 'ASC', id : 1},
+  {name : 'Total(DESC)', type : 'total', order : 'DESC', id : 2},
+  {name : 'HotLeads(ASC)', type : 'interested', order : 'ASC', id : 3},
+  {name : 'HotLeads(DESC)', type : 'interested', order : 'DESC', id : 4},
+  {name : 'All', type : '', order : '', id : 5},
+];
+var sortMenuMap = {};
+angular.forEach($scope.sortMenu, function(data){
+  sortMenuMap[data.id] = data;
+});
+$scope.sortedLocationData = {};
+$scope.togglesortedGraphs = {
+  'location' : false,
+  'weekwise' : false,
+  'datewise' : false,
+  'flatData' : false,
+  'supplier' : false,
+}
+$scope.sortData = function(keyName,id){
+  console.log(id);
+  if(id == 5){
+    $scope.togglesortedGraphs[keyName] = false;
+  }else {
+    $scope.togglesortedGraphs[keyName] = true;
+  }
+  console.log($scope.togglesortedGraphs[keyName]);
+  if(keyName == 'location'){
+      $scope.sortedData = angular.copy($scope.LeadsByCampaign.locality_data[0]);
+  }
+  if(keyName == 'weekwise'){
+      $scope.sortedData = angular.copy($scope.LeadsByCampaign.phase_data[0]);
+  }
+  if(keyName == 'datewise'){
+      $scope.sortedData = angular.copy($scope.LeadsByCampaign.date_data);
+  }
+  if(keyName == 'flatData'){
+      $scope.sortedData = angular.copy($scope.LeadsByCampaign.flat_data);
+  }
+  if(keyName == 'supplier'){
+      $scope.sortedData = angular.copy($scope.LeadsByCampaign.supplier_data);
+  }
+  var sortable = [];
+  for (var key in $scope.sortedData) {
+      sortable.push([key, $scope.sortedData[key]]);
+  }
+  if(sortMenuMap[id].type == 'total'){
+    sortable.sort(function(a, b) {
+        a = a[1].total / a[1].flat_count * 100;
+        b = b[1].total / b[1].flat_count * 100;
+        return a-b;
+    });
+  }
+  if(sortMenuMap[id].type == 'interested'){
+    sortable.sort(function(a, b) {
+        a = a[1].interested / a[1].flat_count * 100;
+        b = b[1].interested / b[1].flat_count * 100;
+        return a-b;
+    });
+  }
 
+  console.log(key);
+  $scope.sortedLocationData[keyName] = {};
+  console.log($scope.sortedLocationData);
+
+  $scope.locationChartOptions = angular.copy(discreteBarChart);
+  if(sortMenuMap[id].order == 'ASC'){
+    $scope.sortedLocationData[keyName] = formatByLocation(sortable,keyName,sortMenuMap[id].type);
+  }
+  if(sortMenuMap[id].order == 'DESC'){
+    $scope.sortedLocationData[keyName] = formatByLocation(sortable.reverse(),keyName,sortMenuMap[id].type);
+  }
+
+
+
+console.log(sortable);
+
+
+console.log($scope.sortedLocationData);
+$scope.showLocationData = true;
+}
+
+
+var formatByLocation = function(data,key,type){
+  var temp_data = {};
+
+  temp_data['key'] = key;
+  temp_data['values'] = [];
+  angular.forEach(data, function(item){
+    var value = {
+      'label' : item[0],
+      'value' : item[1][type]/item[1].flat_count * 100
+    }
+    temp_data.values.push(value);
+  })
+  return [temp_data];
+}
 //END
 })
 
