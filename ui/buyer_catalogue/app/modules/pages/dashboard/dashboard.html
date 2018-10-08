@@ -1390,6 +1390,7 @@
                             <div class="panel-heading campaign-header">
                               <h3 style="color:rgb(53, 9, 6)">Performance Details</h3>
                             </div>
+                            <br />
                             <div class="row zeroLeads" ng-if="!campaignInventories && !showSelection">
                               <h1>Please Select Campaign</h1>
                             </div>
@@ -1653,8 +1654,17 @@
                               </div>
                             </div>
                             <div class="row">
-                              <select ng-change="sortData('flatData',sortModel)" ng-model="sortModel">
-                                <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
+                              <!-- <label for="sel1">Select list:</label>
+                              <select class="form-control" id="sel1">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                              </select> -->
+
+                              <select class="form-control" ng-change="sortData('flatData',sortModel)"  ng-model="sortModel" >
+                               <option value="" disabled>Select For Sorting</option>
+                                <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
                               </select>
                               <div class="outerFlat">
                                 <div class="innerFlat">
@@ -1716,7 +1726,8 @@
                                   </div>
                                 </div>
                                 <div class="col-md-12" style="height:300px">
-                                  <select ng-change="sortData('location',sortModel)" ng-model="sortModel">
+                                  <select class="form-control" ng-change="sortData('location',sortModel)" ng-model="sortModel">
+                                    <option value="" disabled>Select For Sorting</option>
                                     <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
                                   </select>
                                   <div class="outerFlat">
@@ -1785,7 +1796,8 @@
                                   </div>
                                 </div>
                                 <div class="col-md-12" style="height:300px">
-                                  <select ng-change="sortData('weekwise',sortModel)" ng-model="sortModel">
+                                  <select class="form-control" ng-change="sortData('weekwise',sortModel)" ng-model="sortModel">
+                                    <option value="" disabled>Select For Sorting</option>
                                     <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
                                   </select>
                                   <div class="outerFlat">
@@ -2104,7 +2116,8 @@
                             </div>
 
                             <div class="col-md-12" ng-scrollable>
-                              <select ng-change="sortData('supplier',sortModel)" ng-model="sortModel">
+                              <select class="form-control" ng-change="sortData('supplier',sortModel)" ng-model="sortModel">
+                                <option value="" disabled>Select For Sorting</option>
                                 <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
                               </select>
                               <div class="outer">
@@ -2123,7 +2136,8 @@
                                 <h4 style="text-align: center"> Leads By Date </h4>
                             </div>
                             <div class="col-md-12" ng-scrollable>
-                              <select ng-change="sortData('datewise',sortModel)" ng-model="sortModel">
+                              <select class="form-control" ng-change="sortData('datewise',sortModel)" ng-model="sortModel">
+                                <option value="" disabled>Select For Sorting</option>
                                 <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
                               </select>
                               <div class="outerdate">
