@@ -622,7 +622,7 @@
                      "grouped": true,
                      "sortDescending" : false,
                        "xAxis": {
-                       "axisLabel": "Society (Flat Count) in Percentage",
+                       "axisLabel": "campaign (Flat Count) in Percentage",
                        "showMaxMin": false,
                        "rotateLabels" : -30
                      },
@@ -1534,7 +1534,7 @@
            $scope.normalLeadsValues =  campaign.total ;
 
          }
-         var keyWithFlatLabel =  campaign.name + ' (' + campaign['flat_count'] + ')';
+         var keyWithFlatLabel =  campaign.data.name + ' (' + campaign['flat_count'] + ')';
          var value1 =
             { x : keyWithFlatLabel, y : $scope.normalLeadsValues};
          var value2 =
