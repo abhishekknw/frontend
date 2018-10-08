@@ -1653,9 +1653,13 @@
                               </div>
                             </div>
                             <div class="row">
+                              <select ng-change="sortData('flatData',sortModel)" ng-model="sortModel">
+                                <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
+                              </select>
                               <div class="outerFlat">
                                 <div class="innerFlat">
-                                  <nvd3 options="stackedBarChartFlatWise" data="stackedBarFLatCountChart"></nvd3>
+                                  <nvd3 options="locationChartOptions" data="sortedLocationData['flatData']" ng-if="togglesortedGraphs['flatData']"></nvd3>
+                                  <nvd3 options="stackedBarChartFlatWise" data="stackedBarFLatCountChart" ng-if="!togglesortedGraphs['flatData']"></nvd3>
                                 </div>
                               </div>
                             </div>
@@ -1712,9 +1716,13 @@
                                   </div>
                                 </div>
                                 <div class="col-md-12" style="height:300px">
+                                  <select ng-change="sortData('location',sortModel)" ng-model="sortModel">
+                                    <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
+                                  </select>
                                   <div class="outerFlat">
                                     <div class="innerFlat">
-                                      <nvd3 options="stackedBarChartLocationWise" data="stackedBarLocationCountChart"></nvd3>
+                                      <nvd3 options="locationChartOptions" data="sortedLocationData['location']" ng-if="togglesortedGraphs['location']"></nvd3>
+                                      <nvd3 options="stackedBarChartLocationWise" data="stackedBarLocationCountChart" ng-if="!togglesortedGraphs['location']"></nvd3>
                                     </div>
                                   </div>
                                 </div>
@@ -1777,9 +1785,13 @@
                                   </div>
                                 </div>
                                 <div class="col-md-12" style="height:300px">
+                                  <select ng-change="sortData('weekwise',sortModel)" ng-model="sortModel">
+                                    <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
+                                  </select>
                                   <div class="outerFlat">
                                     <div class="innerFlat">
-                                      <nvd3 options="stackedBarChartPhaseWise" data="stackedBarPhaseChart"></nvd3>
+                                      <nvd3 options="locationChartOptions" data="sortedLocationData['weekwise']" ng-if="togglesortedGraphs['weekwise']"></nvd3>
+                                      <nvd3 options="stackedBarChartPhaseWise" data="stackedBarPhaseChart" ng-if="!togglesortedGraphs['weekwise']"></nvd3>
                                     </div>
                                   </div>
                                 </div>
@@ -2092,9 +2104,13 @@
                             </div>
 
                             <div class="col-md-12" ng-scrollable>
+                              <select ng-change="sortData('supplier',sortModel)" ng-model="sortModel">
+                                <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
+                              </select>
                               <div class="outer">
                                 <div class="inner">
-                                  <nvd3 options="stackedBarChartSocietyWise" data="stackedBarChartSupplierData"></nvd3>
+                                  <nvd3 options="locationChartOptions" data="sortedLocationData['supplier']" ng-if="togglesortedGraphs['supplier']"></nvd3>
+                                  <nvd3 options="stackedBarChartSocietyWise" data="stackedBarChartSupplierData" ng-if="!togglesortedGraphs['supplier']"></nvd3>
                                 </div>
                               </div>
                             </div>
@@ -2107,9 +2123,13 @@
                                 <h4 style="text-align: center"> Leads By Date </h4>
                             </div>
                             <div class="col-md-12" ng-scrollable>
+                              <select ng-change="sortData('datewise',sortModel)" ng-model="sortModel">
+                                <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
+                              </select>
                               <div class="outerdate">
                                 <div class="innerdate">
-                                  <nvd3 options="stackedBarChartDateWise" data="stackedBarChartDateData"></nvd3>
+                                  <nvd3 options="locationChartOptions" data="sortedLocationData['datewise']" ng-if="togglesortedGraphs['datewise']"></nvd3>
+                                  <nvd3 options="stackedBarChartDateWise" data="stackedBarChartDateData" ng-if="!togglesortedGraphs['datewise']"></nvd3>
                                 </div>
                               </div>
                             </div>
@@ -2118,7 +2138,7 @@
                           <div class="col-md-12" ng-if="showPerfMetrics == perfMetrics.multipleLeads" style="margin-top:50px;">
                             <div class="panel-heading content-title">
                               <div class="col-md-12">
-                                <h4>Comparison By Average Leads (Percentage)</h4>
+                                <h4>Comparison Of Average Leads (Percentage)</h4>
                               </div>
                             </div>
                             <div class="col-md-12">
