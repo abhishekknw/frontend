@@ -68,6 +68,9 @@
           onhold : {
             status : 'onhold', value : false, campaignLabel : 'On Hold Campaigns', supplierLabel : 'On Hold Campaigns'
           },
+          compare_campaigns : {
+            status : 'compare_campaigns', value : false, campaignLabel : 'Compare Campaigns', supplierLabel : 'Compare Campaigns'
+          },
         };
         $scope.charts = {
           pie : { name : 'Pie Chart', value : 'pie' },
@@ -107,6 +110,8 @@
           $scope.campaignStatus.ongoing.value = false;
           $scope.campaignStatus.completed.value = false;
           $scope.campaignStatus.upcoming.value = false;
+          $scope.campaignStatus.onhold.value = false;
+          $scope.campaignStatus.compare_campaigns.value = false;
           $scope.campaignStatus[status].value = !$scope.campaignStatus[status].value;
         }
 
@@ -1447,6 +1452,7 @@
      $scope.campaignInventories = [];
      $scope.showTimeLocBtn = false;
      $scope.graphicalComparision[status].value = !$scope.graphicalComparision[status].value;
+     $scope.getCampaignsMenu($scope.campaignStatus.compare_campaigns.status);
    }
 
    $scope.searchSelectAllSettings = { enableSearch: true,
@@ -1472,6 +1478,7 @@
     $scope.getCompareCampaigns = function(status){
       $scope.compCampaigns.value = false;
       $scope.showPerfMetrics = false;
+      $scope.getCampaignsMenu($scope.campaignStatus.compare_campaigns.status);
       $scope.compCampaigns[status].value = !$scope.compCampaigns[status].value;
     }
 

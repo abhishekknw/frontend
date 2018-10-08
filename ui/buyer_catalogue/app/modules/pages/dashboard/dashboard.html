@@ -236,12 +236,12 @@
 
                                   <br />
                                 <div class="col-md-12 panel-heading" style="border: 1px solid #ccc;height:75px;">
-                                  <label style="min-width:10px;">Index</label>
+                                  <label class="col-md-1">Index</label>
                                   <label class="col-md-2">Campaign Name</label>
                                   <label class="col-md-2">Inventory</label>
                                   <label class="col-md-1">Total Assigned</label>
                                   <label class="col-md-1">Today Released</label>
-                                  <label class="col-md-1">Average Delay(In Hours)</label>
+                                  <label class="col-md-1">Average Delay(In Days)</label>
                                   <label class="col-md-2">Average Off Location(Meters)</label>
                                   <label class="col-md-2">Images</label>
                                 </div><br>
@@ -1316,8 +1316,8 @@
             <tr>
               <th>Phase</th>
               <th>Total Booked <br>(Total Flat Count)</th>
+              <th>Confirmed Booked</th>
               <th>Verbally Booked</th>
-              <th>Tentative</th>
             </tr>
           </thead>
           <tbody>
@@ -1552,22 +1552,22 @@
                                     </div>
                                   </div>
                                   <div class="col-md-3">
-                                    <div class="panel panel-default" ng-click="getGraphicalComparision(graphicalComparision.leads.status)">
+                                    <div class="panel panel-default" ng-click="getCompareCampaigns(compCampaigns.campaigns.status)">
                                       <div class="button" type="button">
                                         <div class="panel-heading">
                                               Compare Campaigns
                                         </div>
                                       </div>
-                                        <div  class="animate-show" ng-show="graphicalComparision.leads.value">
+                                        <!-- <div  class="animate-show" ng-show="graphicalComparision.leads.value">
                                             <div class="panel-bodyDashboard camp-menu-content">
                                               <div id="displayedFocus" class="panel panel-danger" style="width:60%;margin-left:50px;">
                                                 <button class="btn btn-danger" name="button" style="width:100%;" ng-click="getCompareCampaigns(compCampaigns.campaigns.status)">LEADS</button>
                                               </div>
-                                              <!-- <div id="displayedFocus" class="panel panel-danger" style="width:60%;text-align:center;margin-left:50px;">
+                                              <div id="displayedFocus" class="panel panel-danger" style="width:60%;text-align:center;margin-left:50px;">
                                                 <button class="btn btn-danger" name="button" style="width:100%;">INVENTORY</button>
-                                              </div> -->
+                                              </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                   </div>
                               </div>
@@ -1726,7 +1726,7 @@
                           <div class="col-lg-6">
                             <div class="panel panel-primary">
                               <div class="panel-heading content-title">
-                                <label for="Location">Phase Summary Details</label>
+                                <label for="Location">Weekwise Summary Details</label>
                               </div>
                             </div>
                             <div class="table-style">
@@ -1773,7 +1773,7 @@
                               <div class="col-lg-6">
                                 <div class="panel panel-primary">
                                   <div class="panel-heading content-title">
-                                    <label for="flat graph">Phase Graph Summary</label>
+                                    <label for="flat graph">Weekwise Graph Summary</label>
                                   </div>
                                 </div>
                                 <div class="col-md-12" style="height:300px">
@@ -1791,7 +1791,7 @@
 
                         </div>
                         <!--START : COMPARE CAMPAIGNS LIST  -->
-                          <div class="col-md-12" ng-show="compCampaigns.campaigns.value">
+                          <div class="col-md-12" ng-show="campaignStatus.compare_campaigns.value">
                             <br />
                               <div class="col-md-2 pull-right">
                               <button class="btn btn-primary" style="margin-left:20px" ng-click="getCompareCampaignChartData()">COMPARE</button>
@@ -2118,7 +2118,7 @@
                           <div class="col-md-12" ng-if="showPerfMetrics == perfMetrics.multipleLeads" style="margin-top:50px;">
                             <div class="panel-heading content-title">
                               <div class="col-md-12">
-                                <h4>Average Leads of Campaign (Percentage)</h4>
+                                <h4>Comparison By Average Leads (Percentage)</h4>
                               </div>
                             </div>
                             <div class="col-md-12">
