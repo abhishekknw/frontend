@@ -2096,10 +2096,10 @@ $scope.viewBookingComments = function(supplier){
     console.log(response);
   })
 }
-$scope.addCount = function(key){
+$scope.addCount = function(data,key){
   var total = 0;
-  angular.forEach($scope.allCampaignsLeadsData, function(data){
-    total += data[key];
+  angular.forEach(data, function(item){
+    total += item[key];
   })
   return total;
 }

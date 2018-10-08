@@ -580,6 +580,17 @@
                                         <td class="blinking" ng-if="showLeadsDetails && item.status != 'upcoming'">{{campaignStatusData[item.status].totalLeads||0}}({{campaignStatusData[item.status].hotLeads}})</td>
                                         <td ng-if="showLeadsDetails && item.status == 'upcoming'">NA</td> -->
                                       </tr>
+                                      <tr style="background:#c2452f;font-color:#ffffff">
+                                        <td>Total</td>
+                                        <td>{{addCount(overallMetric,'total_suppliers_count')}}</td>
+                                        <td>{{addCount(overallMetric,'flat_count')}}</td>
+                                        <td ng-if="addCount(overallMetric,'flat_count') != 0">{{addCount(overallMetric,'total_hot_leads_count')/addCount(overallMetric,'flat_count') * 100|limitTo:5}}%</td>
+                                        <td ng-if="addCount(overallMetric,'flat_count') == 0">NA</td>
+                                        <td ng-if="addCount(overallMetric,'flat_count') != 0">{{addCount(overallMetric,'total_leads_count')/addCount(overallMetric,'flat_count') * 100|limitTo:5}}%</td>
+                                        <td ng-if="addCount(overallMetric,'flat_count') == 0">NA</td>
+                                        <td>{{addCount(overallMetric,'total_hot_leads_count')}}</td>
+                                        <td>{{addCount(overallMetric,'total_leads_count')}}</td>
+                                      </tr>
 
                                     </tbody>
                                     </table>
@@ -614,14 +625,14 @@
                                       </tr>
                                       <tr style="background:#c2452f;font-color:#ffffff">
                                         <td>Total</td>
-                                        <td>{{addCount('supplier_count')}}</td>
-                                        <td>{{addCount('flat_count')}}</td>
-                                        <td>{{addCount('hot_leads')}}</td>
-                                        <td>{{addCount('total_leads')}}</td>
-                                        <td ng-if="addCount('flat_count') != 0">{{addCount('hot_leads')/addCount('flat_count') * 100|limitTo:5}}</td>
-                                        <td ng-if="addCount('flat_count') == 0">NA</td>
-                                        <td ng-if="addCount('flat_count') != 0">{{addCount('total_leads')/addCount('flat_count') * 100|limitTo:5}}</td>
-                                        <td ng-if="addCount('flat_count') == 0">NA</td>
+                                        <td>{{addCount(allCampaignsLeadsData,'supplier_count')}}</td>
+                                        <td>{{addCount(allCampaignsLeadsData,'flat_count')}}</td>
+                                        <td>{{addCount(allCampaignsLeadsData,'hot_leads')}}</td>
+                                        <td>{{addCount(allCampaignsLeadsData,'total_leads')}}</td>
+                                        <td ng-if="addCount(allCampaignsLeadsData,'flat_count') != 0">{{addCount(allCampaignsLeadsData,'hot_leads')/addCount(allCampaignsLeadsData,'flat_count') * 100|limitTo:5}}%</td>
+                                        <td ng-if="addCount(allCampaignsLeadsData,'flat_count') == 0">NA</td>
+                                        <td ng-if="addCount(allCampaignsLeadsData,'flat_count') != 0">{{addCount(allCampaignsLeadsData,'total_leads')/addCount(allCampaignsLeadsData,'flat_count') * 100|limitTo:5}}%</td>
+                                        <td ng-if="addCount(allCampaignsLeadsData,'flat_count') == 0">NA</td>
                                       </tr>
 
                                     </tbody>
