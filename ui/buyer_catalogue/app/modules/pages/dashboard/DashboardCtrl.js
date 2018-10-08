@@ -2110,6 +2110,13 @@ $scope.addCount = function(data,key){
   })
   return total;
 }
+$scope.sortData = function(){
+  $scope.localitySortedData = angular.copy($scope.LeadsByCampaign.locality_data[0]);
+  $scope.localitySortedData.sort(function(a, b){
+    return a.total-b.total;
+})
+console.log($scope.localitySortedData);
+}
 //END
 })
 

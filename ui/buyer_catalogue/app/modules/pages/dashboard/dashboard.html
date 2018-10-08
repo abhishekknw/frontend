@@ -358,11 +358,11 @@
                       <table class="table table-bordered table-responsive">
                         <thead>
                           <tr>
-                            <th>Index</th>
+                            <!-- <th>Index</th> -->
                             <th>Campaign Name</th>
                             <th>Start Date</th>
                             <th>End Date</th>
-                            <th>Phase</br>Completed</th>
+                            <!-- <th>Phase</br>Completed</th> -->
                             <th>Campaign Status</th>
                             <th>Supplier</br> Count</th>
                             <th>Flat</br> Count</th>
@@ -373,12 +373,12 @@
                         </thead>
                         <tbody>
                           <tr ng-repeat="campaign in leadsDataCampaigns|filter : searchQuery" ng-if="campaign.total_leads">
-                            <td>{{$index + 1}}</td>
+                            <!-- <td>{{$index + 1}}</td> -->
                             <td>{{campaign.name}}</td>
                             <td>{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
                             <td ng-if="campaign.campaign_status == 'completed'">{{campaign.end_date|limitTo:10|date:mediumDate}}</td>
                             <td ng-if="campaign.campaign_status != 'completed'">NA</td>
-                            <td>{{campaign.phase_complete}}</td>
+                            <!-- <td>{{campaign.phase_complete}}</td> -->
                             <td ng-if="campaign.campaign_status == 'on_hold'">On Hold</td>
                             <td ng-if="campaign.campaign_status != 'on_hold'">{{campaign.campaign_status}}</td>
                             <td>{{campaign.supplier_count}}</td>
@@ -1575,7 +1575,7 @@
                         <br /><br /><br />
                         <div class="col-lg-12"  ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:30px;">
                           <div class="panel-heading content-title">
-                            <label for="heading">Leads of {{CampaignLeadsName}}</label>
+                            <h3 for="heading">Leads of {{CampaignLeadsName}}</h3>
                           </div>
                           <br /><br />
                           <div class="col-lg-6">
