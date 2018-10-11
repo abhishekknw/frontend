@@ -71,7 +71,7 @@
                        <td>
                          <button type="button" name="button" class="col-xs-5" style="margin: 0px 9px 0px -1px;width:80px;height:70px;color:black;background-color:#ffe000;">Total Release (%)</button>
                          <!-- <button type="button" name="button" class="col-xs-3" style="margin: 0px 9px 0px -1px;width:60px;height:45px;color:black;background-color:#ffe000;">A (%)</button> -->
-                         <button type="button" name="button" class="col-xs-5" style="margin: 0px 9px 0px -1px;width:80px;height:70px;color:black;background-color:#ffe000;">Total Closure (%)</button>
+                         <!-- <button type="button" name="button" class="col-xs-5" style="margin: 0px 9px 0px -1px;width:80px;height:70px;color:black;background-color:#ffe000;">Total Closure (%)</button> -->
                         </td>
 
                      </tr>
@@ -93,11 +93,11 @@
                            <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:60px;height:35px;cursor:default;" ng-if="!item['AUDIT'].total" type="button" name="button">NA</button> -->
 
 
-                         <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;" id="greenColor" ng-if="item['CLOSURE'].actual/item['CLOSURE'].total*100==100" type="button" name="button" class="btn btn-danger">{{item['CLOSURE'].actual/item['CLOSURE'].total*100|limitTo:4||NA}}  &#10004;</button>
+                         <!-- <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;" id="greenColor" ng-if="item['CLOSURE'].actual/item['CLOSURE'].total*100==100" type="button" name="button" class="btn btn-danger">{{item['CLOSURE'].actual/item['CLOSURE'].total*100|limitTo:4||NA}}  &#10004;</button>
                          <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;" id="lightGreen" ng-if="item['CLOSURE'].actual/item['CLOSURE'].total*100 >= 75 && item['CLOSURE'].actual/item['CLOSURE'].total*100 != 100" type="button" name="button"> {{item['CLOSURE'].actual/item['CLOSURE'].total*100|limitTo:4||NA}}</button>
                          <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;" id="yellow" ng-if="item['CLOSURE'].actual/item['CLOSURE'].total*100 >= 50 && item['CLOSURE'].actual/item['CLOSURE'].total*100 < 75" type="button" name="button"> {{item['CLOSURE'].actual/item['CLOSURE'].total*100|limitTo:4||NA}}</button>
                          <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;" id="redColor" ng-if="item['CLOSURE'].actual/item['CLOSURE'].total*100 < 50" type="button" name="button">{{item['CLOSURE'].actual/item['CLOSURE'].total*100|limitTo:4||NA}}</button>
-                         <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;cursor:default;" ng-if="!item['CLOSURE'].total" type="button" name="button">NA</button>
+                         <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;cursor:default;" ng-if="!item['CLOSURE'].total" type="button" name="button">NA</button> -->
 
                          </td>
                        </tr>
@@ -116,15 +116,15 @@
                           </div>
                           <div class="col-xlg-10 col-lg-10 col-md-10 col-sm-10 col-xs-10">
                               <div class="row" ng-if="dateListKeys[date]">
-                                  <div class="col-xlg-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
+                                  <div class="col-xlg-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center" style="margin-left:140px;">
                                       <h4 class="date-tab-heading" style="color:rgb(53, 9, 6)">Release</h4>
                                   </div>
                                   <!-- <div class="col-xlg-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
                                       <h4 class="date-tab-heading" style="color:rgb(53, 9, 6)">Audit</h4>
                                   </div> -->
-                                  <div class="col-xlg-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
+                                  <!-- <div class="col-xlg-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
                                       <h4 class="date-tab-heading" style="color:rgb(53, 9, 6)">Closure</h4>
-                                  </div>
+                                  </div> -->
                               </div>
                               <div class="row zeroCampAct" ng-if="!dateListKeys[date]">
                                 <h1>NO CAMPAIGN ACTIVITY !!</h1>
@@ -133,11 +133,11 @@
                       </div>
                       <div class="row" ng-repeat="inv in invKeys">
                           <div class="col-xlg-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 dashboard-side-label" ng-if="inventoryActivityCountData[inv.header][date]">
-                              <h4>{{inv.header}}</h4>
+                              <h4 style="margin-left:140px;">{{inv.header}}</h4>
                           </div>
                           <div class="col-xlg-10 col-lg-10 col-md-10 col-sm-10 col-xs-10" ng-if="inventoryActivityCountData[inv.header][date]">
                               <div class="row">
-                                  <div class="col-xlg-6 col-lg-6 col-md-6 col-sm-6 col-xs-6" ng-repeat="act in actKeys">
+                                  <div class="col-xlg-6 col-lg-6 col-md-6 col-sm-6 col-xs-6" ng-repeat="act in actKeys" style="margin-left:140px;">
                                       <div class="form-group has-success">
                                           <div class="pie-chart-item-container ng-scope">
                                               <div class="custom-panel">
@@ -242,7 +242,7 @@
                                   <label class="col-md-1">Total Assigned</label>
                                   <label class="col-md-1">Today Released</label>
                                   <label class="col-md-1">Average Delay(In Days)</label>
-                                  <label class="col-md-2">Average Off Location(Meters)</label>
+                                  <label class="col-md-2">Average Off Location(Kms)</label>
                                   <label class="col-md-2">Images</label>
                                 </div><br>
                                 <div class="col-md-12" style="overflow-y:auto;max-height:300px;color:black">
@@ -254,10 +254,10 @@
                                     <label class="col-md-1">{{item.assigned}}</label>
                                     <label class="col-md-1">{{item.inv_count}}</label>
                                     <label class="col-md-1" ng-if="item.inv_count != 0">{{item.offTimeDays}}</label>
-                                    <label class="col-md-1" ng-if="item.inv_count == 0">Not Allowed</label>
-                                    <label class="col-md-2" ng-if="item.inv_count == 0 && item.offLocationDistance == 0">Not Allowed</label>
+                                    <label class="col-md-1" ng-if="item.inv_count == 0">Not Applicable</label>
+                                    <label class="col-md-2" ng-if="item.inv_count == 0 && item.offLocationDistance == 0">Not Applicable</label>
                                     <label class="col-md-2" ng-if="checkNan(item.offLocationDistance) || item.offLocationDistance == 0 && item.inv_count != 0">Not Applicable</label>
-                                    <label class="col-md-2" ng-if="!checkNan(item.offLocationDistance) && item.inv_count != 0 && item.offLocationDistance != 0">{{item.offLocationDistance/item.inv_count|limitTo:10||0}}</label>
+                                    <label class="col-md-2" ng-if="!checkNan(item.offLocationDistance) && item.inv_count != 0 && item.offLocationDistance != 0">{{(item.offLocationDistance/item.inv_count)/1000 |limitTo:5||0}} Km</label>
 
                                     <label class="col-md-2" ng-if="item.images.length > 0"><a data-target="#imageModal" data-toggle="modal" ng-click="setImageUrl(item,item.images)">View Images</a></label>
                                     <label class="col-md-2" ng-if="item.images.length == 0">No Image</label>
@@ -348,72 +348,7 @@
 
               </uib-tab>
 
-              <uib-tab id="uib-tabs-width" ng-click="viewCampaignLeads()" index="1">
-                  <uib-tab-heading>
-                    <h5>View Leads</h5>
-                  </uib-tab-heading>
-                  <div class="container-fluid">
-                    <div class="" ng-if="showCampaigns">
-                      <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
-                      <table class="table table-bordered table-responsive">
-                        <thead>
-                          <tr>
-                            <!-- <th>Index</th> -->
-                            <th>Campaign Name</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <!-- <th>Phase</br>Completed</th> -->
-                            <th>Campaign Status</th>
-                            <th>Supplier</br> Count</th>
-                            <th>Flat</br> Count</th>
-                            <th>Total</br> Leads</th>
-                            <th>Hot</br> Leads</th>
-                            <th>Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr ng-repeat="campaign in leadsDataCampaigns|filter : searchQuery" ng-if="campaign.total_leads">
-                            <!-- <td>{{$index + 1}}</td> -->
-                            <td>{{campaign.name}}</td>
-                            <td>{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
-                            <td ng-if="campaign.campaign_status == 'completed'">{{campaign.end_date|limitTo:10|date:mediumDate}}</td>
-                            <td ng-if="campaign.campaign_status != 'completed'">NA</td>
-                            <!-- <td>{{campaign.phase_complete}}</td> -->
-                            <td ng-if="campaign.campaign_status == 'on_hold'">On Hold</td>
-                            <td ng-if="campaign.campaign_status != 'on_hold'">{{campaign.campaign_status}}</td>
-                            <td>{{campaign.supplier_count}}</td>
-                            <td>{{campaign.flat_count}}</td>
-                            <td>{{campaign.total_leads}}</td>
-                            <td>{{campaign.hot_leads}}</td>
-                            <td>
-                              <button class="btn btn-danger" ng-click="viewLeadsForSelectedCampaign(campaign.campaign_id)">View Leads</button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class=""  ng-if="!showCampaigns" style="width:900px;overflow-x:auto">
-                      <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button>
-                    </br><br>
-                      <input type="text" class="form-control" ng-model="searchData" placeholder="search">
-                      <table class="table table-bordered table-responsive" ng-if="selectedCampaignLeads.values.length">
-                        <br/>
-                        <thead>
-                          <tr>
-                            <th>Index</th>
-                            <th ng-repeat="header in selectedCampaignLeads.headers">{{header.key_name}}</th>
-                          </tr>
-                        </thead>
-                        <tbody ng-repeat="lead in selectedCampaignLeads.values | filter : searchData" >
-                          <tr>
-                            <td>{{$index + 1}}</td>
-                            <td  ng-repeat="alias in lead">{{alias.value}}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </uib-tab>
+
 
               <uib-tab id="uib-tabs-width"  ng-click="getCampaigns()" index="2">
                   <uib-tab-heading>
@@ -1244,6 +1179,74 @@
                   </div>
               </uib-tab>
 
+
+              <uib-tab id="uib-tabs-width" ng-click="viewCampaignLeads()" index="1">
+                  <uib-tab-heading>
+                    <h5>View Leads</h5>
+                  </uib-tab-heading>
+                  <div class="container-fluid">
+                    <div class="" ng-if="showCampaigns">
+                      <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
+                      <table class="table table-bordered table-responsive">
+                        <thead>
+                          <tr>
+                            <!-- <th>Index</th> -->
+                            <th>Campaign Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <!-- <th>Phase</br>Completed</th> -->
+                            <th>Campaign Status</th>
+                            <th>Supplier</br> Count</th>
+                            <th>Flat</br> Count</th>
+                            <th>Total</br> Leads</th>
+                            <th>Hot</br> Leads</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="campaign in leadsDataCampaigns|filter : searchQuery" ng-if="campaign.total_leads">
+                            <!-- <td>{{$index + 1}}</td> -->
+                            <td>{{campaign.name}}</td>
+                            <td>{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
+                            <td ng-if="campaign.campaign_status == 'completed'">{{campaign.end_date|limitTo:10|date:mediumDate}}</td>
+                            <td ng-if="campaign.campaign_status != 'completed'">NA</td>
+                            <!-- <td>{{campaign.phase_complete}}</td> -->
+                            <td ng-if="campaign.campaign_status == 'on_hold'">On Hold</td>
+                            <td ng-if="campaign.campaign_status != 'on_hold'">{{campaign.campaign_status}}</td>
+                            <td>{{campaign.supplier_count}}</td>
+                            <td>{{campaign.flat_count}}</td>
+                            <td>{{campaign.total_leads}}</td>
+                            <td>{{campaign.hot_leads}}</td>
+                            <td>
+                              <button class="btn btn-danger" ng-click="viewLeadsForSelectedCampaign(campaign.campaign_id)">View Leads</button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class=""  ng-if="!showCampaigns" style="width:900px;overflow-x:auto">
+                      <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button>
+                    </br><br>
+                      <input type="text" class="form-control" ng-model="searchData" placeholder="search">
+                      <table class="table table-bordered table-responsive" ng-if="selectedCampaignLeads.values.length">
+                        <br/>
+                        <thead>
+                          <tr>
+                            <th>Index</th>
+                            <th ng-repeat="header in selectedCampaignLeads.headers">{{header.key_name}}</th>
+                          </tr>
+                        </thead>
+                        <tbody ng-repeat="lead in selectedCampaignLeads.values | filter : searchData" >
+                          <tr>
+                            <td>{{$index + 1}}</td>
+                            <td  ng-repeat="alias in lead">{{alias.value}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </uib-tab>
+
 <!-- START : BOOKING ENGINE -->
 <uib-tab  id="uib-tabs-width" ng-click="getCampaigns()" index="3">
     <uib-tab-heading>
@@ -1611,22 +1614,24 @@
                                   <tr>
                                     <td><small style="color:#ffffff">Total Leads (%)</small></td>
                                     <td ng-if="Data.flat_data['0-150']['flat_count'] != 0">{{Data.flat_data['0-150'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].total / Data.flat_data['0-150']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
-                                    <td ng-if="Data.flat_data['151-399']['flat_count'] != 0">{{Data.flat_data['151-399'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['151-399'].total / Data.flat_data['151-399']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
-                                    <td  ng-if="Data.flat_data['400+']['flat_count'] != 0">{{Data.flat_data['400+'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['400+'].total / Data.flat_data['400+']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
-
                                     <td ng-if="Data.flat_data['0-150']['flat_count'] == 0">{{Data.flat_data['0-150'].total}} <br> <small style="font-weight:bold">({{Data.flat_data['0-150'].total}} %)</small> </td>
+
+                                    <td ng-if="Data.flat_data['151-399']['flat_count'] != 0">{{Data.flat_data['151-399'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['151-399'].total / Data.flat_data['151-399']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
                                     <td ng-if="Data.flat_data['151-399']['flat_count'] == 0">{{Data.flat_data['151-399'].total}} <br> <small style="font-weight:bold">({{Data.flat_data['151-399'].total }} %)</small> </td>
+
+                                    <td  ng-if="Data.flat_data['400+']['flat_count'] != 0">{{Data.flat_data['400+'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['400+'].total / Data.flat_data['400+']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
                                     <td ng-if="Data.flat_data['400+']['flat_count'] == 0">{{Data.flat_data['400+'].total}} <br> <small style="font-weight:bold">({{Data.flat_data['400+'].total}} %)</small> </td>
 
                                   </tr>
                                   <tr>
                                     <td><small style="color:#ffffff">Hot Leads (%)</small></td>
                                     <td  ng-if="Data.flat_data['0-150']['flat_count'] != 0">{{Data.flat_data['0-150'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].interested / Data.flat_data['0-150']['flat_count']) * 100 |limitTo:5}} %)</small></td>
-                                    <td  ng-if="Data.flat_data['151-399']['flat_count'] != 0">{{Data.flat_data['151-399'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['151-399'].interested / Data.flat_data['151-399']['flat_count']) * 100 |limitTo:5}} %)</small></td>
-                                    <td  ng-if="Data.flat_data['400+']['flat_count'] != 0">{{Data.flat_data['400+'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['400+'].interested / Data.flat_data['400+']['flat_count']) * 100 |limitTo:5}} %)</small></td>
-
                                     <td ng-if="Data.flat_data['0-150']['flat_count'] == 0">{{Data.flat_data['0-150'].interested}} <br> <small style="font-weight:bold">({{Data.flat_data['0-150'].interested}} %)</small></td>
+
+                                    <td  ng-if="Data.flat_data['151-399']['flat_count'] != 0">{{Data.flat_data['151-399'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['151-399'].interested / Data.flat_data['151-399']['flat_count']) * 100 |limitTo:5}} %)</small></td>
                                     <td ng-if="Data.flat_data['151-399']['flat_count'] == 0">{{Data.flat_data['151-399'].interested}} <br> <small style="font-weight:bold">({{Data.flat_data['151-399'].interested }} %)</small></td>
+
+                                    <td  ng-if="Data.flat_data['400+']['flat_count'] != 0">{{Data.flat_data['400+'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['400+'].interested / Data.flat_data['400+']['flat_count']) * 100 |limitTo:5}} %)</small></td>
                                     <td ng-if="Data.flat_data['400+']['flat_count'] == 0">{{Data.flat_data['400+'].interested}} <br> <small style="font-weight:bold">({{Data.flat_data['400+'].interested }} %)</small></td>
 
                                   </tr>
@@ -2207,8 +2212,8 @@
                        </div>
                        <div class="row" style="margin-left:10px;">
                          Comment : {{image.comment}} </br>
-                         Distance : {{image.distance|limitTo:10}} mtrs, ({{image.distance/1000|limitTo:10}} kms)
-
+                         Distance : {{image.distance|limitTo:10}} mtrs, ({{image.distance/1000|limitTo:10}} kms) </br>
+                         Date and Time : {{image.timestamp|date:'medium'}}
                        </div>
                    </div>
 

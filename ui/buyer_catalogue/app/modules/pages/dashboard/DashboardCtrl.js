@@ -42,7 +42,7 @@
         $scope.actKeys = [
           {header : 'RELEASE', key : 'release', label1 : 'Released', label2 : 'UnReleased'},
           // {header : 'AUDIT', key : 'audit', label1 : 'Audited', label2 : 'UnAudited'},
-          {header : 'CLOSURE', key : 'closure', label1 : 'Closed', label2 : 'UnClosed' },
+          // {header : 'CLOSURE', key : 'closure', label1 : 'Closed', label2 : 'UnClosed' },
         ];
 
 
@@ -327,6 +327,7 @@
         }
 
         $scope.goToExecutionPage = function(images){
+          console.log(images);
           $scope.imageUrlList = [];
           angular.forEach(images, function(imageObjects){
             for(var i=0; i<imageObjects.length; i++){
@@ -885,10 +886,12 @@
                },
                duration: 1500,
                xAxis: {
-                   axisLabel: 'X Axis'
+                   axisLabel: '',
+                   "showMaxMin": false,
+                   "rotateLabels" : -30
                },
                yAxis: {
-                   axisLabel: 'Y Axis',
+                   axisLabel: 'Leads in %',
                    axisLabelDistance: -10
                }
            }
@@ -1840,6 +1843,8 @@ $scope.setImageUrl = function(item,images){
         image_url : 'http://androidtokyo.s3.amazonaws.com/' + data[i].image_path,
         comment : data[i].comment,
         distance : data[i].distance,
+        date : data[i].created_at,
+        time : data[i].created_at,
       };
       $scope.imageUrlList.push(imageData);
     }
