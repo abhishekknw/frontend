@@ -250,13 +250,22 @@
               if(!campaignData['proposalId']){
                 campaignData['proposalId'] = data.assigned[Object.keys(data.assigned)[0]][0].proposal_id;
               }
+              if(Object.keys(data.completed).length == 0){
+                var days = Math.floor((new Date() - new Date($scope.date)) / (1000 * 60 * 60 * 24));
+                campaignData['offTimeDays'] = days * Object.keys(data.assigned).length;
+              }else{
+                var total = Object.keys(data.assigned).length - Object.keys(data.completed).length;
+                var days = Math.floor((new Date() - new Date($scope.date)) / (1000 * 60 * 60 * 24));
+                campaignData['offTimeDays'] = total * days;
+              }
+
               angular.forEach(data.completed, function(items,inv){
                 campaignData.inv_count += 1;
                 campaignData[inv] = {};
                 campaignData[inv]['onLocation'] = false;
                 campaignData[inv]['onTime'] = false;
                 // campaignData[inv]['minDistance'] = 100;
-                campaignData[inv]['dayCount'] = 3;
+                campaignData[inv]['dayCount'] = undefined;
 
                   for(var i=0; i<items.length; i++){
                     campaignData['proposalId'] = items[i].proposal_id;
@@ -273,13 +282,23 @@
                   }
                   for(var i=0; i<items.length; i++){
                     var days = Math.floor((new Date(items[i].created_at) - new Date(items[i].actual_activity_date)) / (1000 * 60 * 60 * 24));
-                    console.log(days,items[i]);
                     if(days == 0){
                       campaignData[inv]['onTime'] = true;
-                      campaignData[inv]['dayCount'] = days;
+                      campaignData[inv]['dayCount'] = 0;
                       break;
-                    }else if(days < campaignData[inv]['dayCount']){
-                      campaignData[inv]['dayCount'] = days;
+                    }else if(campaignData[inv]['dayCount'] && days < campaignData[inv]['dayCount']){
+                      if(items[i].latitude)
+                        campaignData[inv]['dayCount'] = days;
+                      else {
+                        campaignData[inv]['dayCount'] = 0;
+                      }
+                    }else if(!campaignData[inv]['dayCount']){
+                      if(items[i].latitude)
+                        campaignData[inv]['dayCount'] = days;
+                      else {
+                        campaignData[inv]['dayCount'] = 0;
+                      }
+
                     }
                   }
                   if(campaignData[inv]['onLocation']){
@@ -320,6 +339,7 @@
             }else{
                 $scope.showAssignedInvTable = false;
             }
+            console.log($scope.campaignReleaseData);
             $scope.campaignDataList = [];
           }).catch(function onError(response){
             console.log(response);
@@ -1843,8 +1863,7 @@ $scope.setImageUrl = function(item,images){
         image_url : 'http://androidtokyo.s3.amazonaws.com/' + data[i].image_path,
         comment : data[i].comment,
         distance : data[i].distance,
-        date : data[i].created_at,
-        time : data[i].created_at,
+        timestamp : data[i].created_at,
       };
       $scope.imageUrlList.push(imageData);
     }
@@ -1883,7 +1902,8 @@ $scope.viewSupplierImages = function(supplierId, invType, activityType, date){
       var imageData = {
         image_url : 'http://androidtokyo.s3.amazonaws.com/' + data.image_path,
         comment : data.comment,
-        distance : data.distance
+        distance : data.distance,
+        timestamp : data.created_at
       };
       $scope.imageUrlList.push(imageData);
     })
@@ -1922,7 +1942,8 @@ $scope.getHashtagImages = function(item){
       var imageData = {
         image_url : constants.aws_campaign_images_url + data.image_path,
         comment : data.hashtag,
-        supplier_name : data.supplier_data.society_name
+        supplier_name : data.supplier_data.society_name,
+        timestamp : data.created_at
       };
       $scope.hashTagImageData.push(imageData);
     })

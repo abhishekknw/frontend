@@ -253,8 +253,10 @@
                                     <label class="col-md-2">{{invName}}</label>
                                     <label class="col-md-1">{{item.assigned}}</label>
                                     <label class="col-md-1">{{item.inv_count}}</label>
-                                    <label class="col-md-1" ng-if="item.inv_count != 0">{{item.offTimeDays}}</label>
-                                    <label class="col-md-1" ng-if="item.inv_count == 0">Not Applicable</label>
+                                    <label class="col-md-1" ng-if="(item.offTimeDays/item.assigned) > 3">3+ days</label>
+                                    <label class="col-md-1" ng-if="(item.offTimeDays/item.assigned) <= 3">{{item.offTimeDays/item.assigned|limitTo:4}}</label>
+                                    <!-- <label class="col-md-1" ng-if="item.inv_count != 0">{{}}</label> -->
+                                  <!-- <label class="col-md-1" ng-if="item.inv_count == 0">Not Applicable</label>  -->
                                     <label class="col-md-2" ng-if="item.inv_count == 0 && item.offLocationDistance == 0">Not Applicable</label>
                                     <label class="col-md-2" ng-if="checkNan(item.offLocationDistance) || item.offLocationDistance == 0 && item.inv_count != 0">Not Applicable</label>
                                     <label class="col-md-2" ng-if="!checkNan(item.offLocationDistance) && item.inv_count != 0 && item.offLocationDistance != 0">{{(item.offLocationDistance/item.inv_count)/1000 |limitTo:5||0}} Km</label>
@@ -2295,7 +2297,8 @@
                        </div>
                        <div class="row" style="margin-left:10px;">
                          Hashtag : {{image.comment}} </br>
-                         Society Name : {{image.supplier_name}}
+                         Society Name : {{image.supplier_name}}</br>
+                         Date and Time : {{image.timestamp|date:'medium'}}
 
                        </div>
                    </div>
