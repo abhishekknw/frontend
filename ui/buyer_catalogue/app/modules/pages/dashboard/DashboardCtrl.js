@@ -1863,8 +1863,7 @@ $scope.setImageUrl = function(item,images){
         image_url : 'http://androidtokyo.s3.amazonaws.com/' + data[i].image_path,
         comment : data[i].comment,
         distance : data[i].distance,
-        date : data[i].created_at,
-        time : data[i].created_at,
+        timestamp : data[i].created_at,
       };
       $scope.imageUrlList.push(imageData);
     }
@@ -1903,7 +1902,8 @@ $scope.viewSupplierImages = function(supplierId, invType, activityType, date){
       var imageData = {
         image_url : 'http://androidtokyo.s3.amazonaws.com/' + data.image_path,
         comment : data.comment,
-        distance : data.distance
+        distance : data.distance,
+        timestamp : data.created_at
       };
       $scope.imageUrlList.push(imageData);
     })
@@ -1942,7 +1942,8 @@ $scope.getHashtagImages = function(item){
       var imageData = {
         image_url : constants.aws_campaign_images_url + data.image_path,
         comment : data.hashtag,
-        supplier_name : data.supplier_data.society_name
+        supplier_name : data.supplier_data.society_name,
+        timestamp : data.created_at
       };
       $scope.hashTagImageData.push(imageData);
     })
