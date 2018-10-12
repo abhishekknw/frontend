@@ -57,19 +57,19 @@
         ];
         $scope.campaignStatus = {
           ongoing : {
-            status : 'ongoing', value : false, campaignLabel : 'Ongoing Campaigns', supplierLabel : 'Ongoing Campaigns'
+            status : 'ongoing', value : false, campaignLabel : 'Ongoing Campaigns', supplierLabel : 'Ongoing Societies'
           },
           completed : {
-            status : 'completed', value : false, campaignLabel : 'Completed Campaigns', supplierLabel : 'Completed Campaigns'
+            status : 'completed', value : false, campaignLabel : 'Completed Campaigns', supplierLabel : 'Completed Societies'
           },
           upcoming : {
-            status : 'upcoming', value : false, campaignLabel : 'Upcoming Campaigns', supplierLabel : 'Upcoming Campaigns'
+            status : 'upcoming', value : false, campaignLabel : 'Upcoming Campaigns', supplierLabel : 'Upcoming Societies'
           },
           onhold : {
-            status : 'onhold', value : false, campaignLabel : 'On Hold Campaigns', supplierLabel : 'On Hold Campaigns'
+            status : 'onhold', value : false, campaignLabel : 'On Hold Campaigns', supplierLabel : 'On Hold Societies'
           },
           compare_campaigns : {
-            status : 'compare_campaigns', value : false, campaignLabel : 'Compare Campaigns', supplierLabel : 'Compare Campaigns'
+            status : 'compare_campaigns', value : false, campaignLabel : 'Compare Campaigns', supplierLabel : 'Compare Societies'
           },
         };
         $scope.charts = {
@@ -2258,6 +2258,22 @@ var formatByLocation = function(data,key,type){
     temp_data.values.push(value);
   })
   return [temp_data];
+}
+
+$scope.addComment = function(){
+  console.log($scope.commentModal);
+  $scope.commentModal['related_to'] = constants.booking_related_comment;
+  $scope.commentModal['shortlisted_spaces_id'] = $scope.supplierDataForComment.id;
+  releaseCampaignService.addComment($scope.campaign_id,$scope.commentModal)
+  .then(function onSuccess(response){
+    console.log(response);
+    $scope.commentModal = {};
+    $scope.supplierDataForComment = undefined;
+    $('#addComments').modal('hide');
+    swal(constants.name, constants.add_data_success, constants.success);
+  }).catch(function onError(response){
+    console.log(response);
+  })
 }
 //END
 })

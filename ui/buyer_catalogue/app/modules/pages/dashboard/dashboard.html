@@ -80,11 +80,11 @@
                        <tr ng-repeat="(key,item) in historyData" ng-if="$index < 15">
                          <td class="col-xs-3" style="background-color: #8e1921;"><a ng-click="getDateData(key)">{{key| date :'d-MMM-yy'}}</a></td>
                          <td class="col-xs-6">
-                           <button class="col-xs-5 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;" id="greenColor" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100==100" type="button" name="button" class="btn btn-danger">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}  &#10004;</button>
-                           <button class="col-xs-5 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;" id="lightGreen" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 75 && item['RELEASE'].actual/item['RELEASE'].total*100 != 100" type="button" name="button"> {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
-                           <button class="col-xs-5 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;" id="yellow" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 50 && item['RELEASE'].actual/item['RELEASE'].total*100 < 75" type="button" name="button"> {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
-                           <button class="col-xs-5 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;" id="redColor" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 < 50" type="button" name="button">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
-                           <button class="col-xs-5 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;cursor:default;" ng-if="!item['RELEASE'].total" type="button" name="button">NA</button>
+                           <button class="col-xs-5 " style="width:80px;height:35px;" id="greenColor" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100==100" type="button" name="button" class="btn btn-danger">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}  &#10004;</button>
+                           <button class="col-xs-5 " style="width:80px;height:35px;" id="lightGreen" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 75 && item['RELEASE'].actual/item['RELEASE'].total*100 != 100" type="button" name="button"> {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
+                           <button class="col-xs-5 " style="width:80px;height:35px;" id="yellow" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 50 && item['RELEASE'].actual/item['RELEASE'].total*100 < 75" type="button" name="button"> {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
+                           <button class="col-xs-5 " style="width:80px;height:35px;" id="redColor" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 < 50" type="button" name="button">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
+                           <button class="col-xs-5 " style="width:80px;height:35px;cursor:default;" ng-if="!item['RELEASE'].total" type="button" name="button">NA</button>
 
                            <!-- <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="greenColor" ng-if="item['AUDIT'].actual/item['AUDIT'].total*100==100" type="button" name="button">{{item['AUDIT'].actual/item['AUDIT'].total*100|limitTo:4||NA}}  &#10004;</button>
                            <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="yellowColor" ng-if="item['AUDIT'].actual/item['AUDIT'].total*100 >= 75 &&
@@ -316,7 +316,7 @@
                           <th>Assigned</th>
                           <th>Completed</th>
                           <th>View Images</th>
-                          <th>Comments</th>
+                          <!-- <th>Comments</th> -->
                         </tr>
                       </thead>
                       <tbody ng-repeat="supplier in dateWiseSuppliers">
@@ -327,7 +327,7 @@
                           <td>{{inv.completed}}</td>
                           <td ng-if="inv.completed != 0"><a data-target="#imageModal" data-toggle="modal" ng-click="viewSupplierImages(supplier.supplier_data.supplier_id,invNameToCode[key],actType,date)">View Images</a></td>
                           <td ng-if="inv.completed == 0">No Image</td>
-                          <td><a ng-click="viewComments(key,supplier)">View Comments</a></td>
+                          <!-- <td><a ng-click="viewComments(key,supplier)">View Comments</a></td> -->
                         </tr>
                         <tr>
                        <td><b>{{supplier.supplier_data.society_name}}</b></td>
@@ -362,9 +362,17 @@
                       <div class="panel panel-default" style="color:'0000ff'">
                         <div class="col-md-12">
 
-                            <div class="panel-headding campaign-header">
+                            <!-- <div class="panel-headding campaign-header">
                               <h3 style="color:rgb(53, 9, 6)">Campaign Details</h3>
+                            </div> -->
+
+                            <div class="col-md-12 panel-heading content-title CampaignDetails">
+                                <h4 ng-if="!campaignLabel" style="text-align:center;">All Campaigns Details</h4>
+                                <h4 ng-if="campaignLabel" style="text-align:center;">Details Of {{campaignTabPropsalName}} </h4>
                             </div>
+                            <br />
+                              <br />
+  <br />  <br />  <br />
 
                             <div class="col-md-3">
 
@@ -458,12 +466,8 @@
                             </div>
 
                             <div class="col-md-5">
-                              <div class="panel-heading content-title CampaignDetails">
-                                  <h4 ng-if="!campaignLabel" style="text-align:left;">All Campaigns Details</h4>
-                                  <h4 ng-if="campaignLabel" style="text-align:left;">Details Of {{campaignTabPropsalName}} </h4>
 
-                              </div>
-                              <uib-tab-heading uib-dropdown>
+                              <!-- <uib-tab-heading uib-dropdown>
                                   <button class="btn btn-warning btn-sm pull-right" style="background-color:#fcfc5f;color:black;margin-top:10px;" uib-dropdown-toggle ng-click="$event.stopPropagation()">
                                       Select Chart <i class="caret"></i>
                                   </button>
@@ -472,7 +476,7 @@
                                         <a ng-click="$dropdownTabActive = $index+1; $tabLeftSetStatus.activeTab = 0;getChart(chart.value)">{{chart.name}}</a>
                                       </li>
                                   </ul>
-                              </uib-tab-heading>
+                              </uib-tab-heading> -->
                               <nvd3 options="options" data="campaignChartdata" ng-if="!showSingleCampaignChart"></nvd3>
                               <nvd3 options="options1" data="campaignChartdata" ng-if="showSingleCampaignChart"></nvd3>
 
@@ -577,14 +581,18 @@
 
                               </div>
 
-                                    <!-- <table class="table-responsive table table-bordered AvgLeadsTable" >
+                                    <table class="table-responsive table table-bordered AvgLeadsTable" >
+                                      <thead>
+                                        <td>Total Leads (%)</td>
+                                        <td>Hot Leads (%)</td>
+                                      </thead>
                                     <tbody>
                                       <tr>
-                                        <td>Avg Leads Per Flat (HQ): {{avgLeadsPerFlat| limitTo:4 || NA }} % ({{avgHotLeadsPerFlat|limitTo:4 || NA}} %)</td>
-                                        <td>Avg Leads Per Supplier (HQ): {{avgLeadsPerSupplier|limitTo:4 || NA}}  ({{avgHotLeadsPerSupplier|limitTo:4 || NA }} )</td>
+                                      <td>{{addCount(allCampaignsLeadsData,'total_leads')}} ({{addCount(allCampaignsLeadsData,'total_leads')/addCount(allCampaignsLeadsData,'flat_count') * 100|limitTo:5}}%)</td>
+                                        <td>{{addCount(allCampaignsLeadsData,'hot_leads')}} ({{addCount(allCampaignsLeadsData,'hot_leads')/addCount(allCampaignsLeadsData,'flat_count') * 100|limitTo:5}}%)</td>
                                       </tr>
                                     </tbody>
-                                  </table> -->
+                                  </table>
                                   </div>
                           </div>
                           </div>
@@ -954,7 +962,9 @@
                                           <td ng-if="supplierStatus == 'ongoing'">Stall</td>
                                           <td ng-if="supplierStatus == 'ongoing'">Other Images</td>
                                           <td>Permission Box</td>
-                                        </tr>
+                                          <td>Add <br> Comments</td>
+                                          <td>View <br> Comments</td>
+                                            </tr>
 
                                       </thead>
                                           <tbody class="detailedTable">
@@ -1003,6 +1013,9 @@
                                                   </table>
                                                 </td>
                                                 <td></td>
+                                                <td><button type="button" class="btn btn-danger" data-target="#addComments" data-toggle="modal" ng-click="getSupplierForComments(supplier)">Add <br> Comments</button></td>
+                                                <td><button type="button" class="btn btn-danger"   ng-click="viewComments(supplier)">View <br> Comments</button></td>
+
                                                   <!-- <td ng-init="calculateTotalCount('GATEWAY ARCH',supplier.supplier.inv_data['GATEWAY ARCH'].total.total)" ng-show="invStatusKeys['GATEWAY ARCH'].status">{{supplier.supplier.inv_data['GATEWAY ARCH'].total.total}}
                                                   </td> -->
                                                   <!-- <t d style="vertical-align:middle" ng-if="showLeads">{{supplier.leads_data.length}}</td> -->
@@ -2368,6 +2381,30 @@
         </div>
       </div>
     </div>
+    <div id="addComments" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            Add Comment For {{supplierDataForComment.name}}
+          </div>
+          <div class="col-md-12">
+            <div style="width:100%">
+            <br>
+              <label>Comments :</label>
+              <textarea class="form-control col-md-10"  rows="8" cols="200" ng-model="commentModal.comment" placeholder="Write here.."></textarea>
+            </div>
+            <br>
+          </div><br>
+          <!-- <div> -->
+            <br>
+            <button class="btn btn-success" type="button" ng-click="addComment()">Add Comment</button>
+          <!-- </div> -->
+        </br></br>
+
+        </div>
+      </div>
+    </div>
+
     <!--END : view comments modal  -->
   </body>
 </html>
