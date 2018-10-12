@@ -700,3 +700,7 @@ div.outerFlat .innerFlat { width: 500px; }
    background-color: #EEB4B4;
    color:#ffffff !important;
 }
+
+.campDetailsLabel{
+  font-size: 14px;
+}
