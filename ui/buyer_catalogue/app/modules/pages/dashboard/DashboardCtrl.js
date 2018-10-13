@@ -2251,6 +2251,10 @@ var formatByLocation = function(data,key,type){
   temp_data['key'] = key;
   temp_data['values'] = [];
   angular.forEach(data, function(item){
+    console.log(item,key);
+    if (key == 'supplier'){
+      item[0] = item[1].data.society_name;
+    }
     var value = {
       'label' : item[0],
       'value' : item[1][type]/item[1].flat_count * 100
@@ -2274,6 +2278,9 @@ $scope.addComment = function(){
   }).catch(function onError(response){
     console.log(response);
   })
+}
+$scope.openChat = function(){
+  $scope.showChat = true;
 }
 //END
 })
