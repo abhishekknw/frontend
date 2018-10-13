@@ -28,6 +28,7 @@
     <link href="css/sidePanel.css" rel="stylesheet" media="screen">
     <link href="css/custom.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
+    <link rel="stylesheet" type="text/css" href="modules/pages/dashboard/chat.css">
 
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
@@ -975,12 +976,12 @@
                                         </tr>
                                         <tr>
                                           <td>INDEX</td>
-                                          <td>Society Name</td>
+                                          <td><a ng-click="sortquery='supplier.society_name'">Society Name</a></td>
                                           <td>Society Area (SubArea)</td>
                                           <td>Society Type</td>
-                                          <td>Flat Count</td>
-                                          <td>Leads (% by Flat Count)</td>
-                                          <td>Hot Leads (% by Flat Count)</td>
+                                          <td><a ng-click="sortquery='supplier.flat_count'">Flat Count</a></td>
+                                          <td><a ng-click="sortquery='leads_data.total_leads_count'">Leads (% by Flat Count)</a></td>
+                                          <td> <a ng-click="sortquery='leads_data.hot_leads_count'">Hot Leads (% by Flat Count)</a></td>
                                           <td ng-if="supplierStatus != 'upcoming'">Poster</td>
                                           <td ng-if="supplierStatus != 'upcoming'">Flier</td>
                                           <td ng-if="supplierStatus != 'upcoming'">Standee</td>
@@ -994,7 +995,7 @@
                                       </thead>
                                           <tbody class="detailedTable">
                                             <div class="row">
-                                              <tr ng-repeat="supplier in supplierAndInvData |filter:query">
+                                              <tr ng-repeat="supplier in supplierAndInvData |filter:query | orderBy : sortquery">
                                                 <td style="vertical-align:middle">{{$index + 1}}</td>
                                                 <td class="col-md-2">{{supplier.supplier.society_name}}</td>
                                                 <td class="col-md-2">{{supplier.supplier.society_locality}} <small>({{supplier.supplier.society_subarea}})</small></td>
@@ -1039,6 +1040,25 @@
                                                 </td>
                                                 <td></td>
                                                 <td><button type="button" class="btn btn-danger" data-target="#addComments" data-toggle="modal" ng-click="getSupplierForComments(supplier)">Add <br> Comments</button></td>
+                                                <!-- <td> -->
+                                                  <!-- <button class="open-button" ng-click="openChat()">Chat</button> -->
+                                                  <!-- <div class="chat-popup" id="myForm"> -->
+                                                  <!-- <form action="/action_page.php" class="form-container"> -->
+                                                  <!-- <div class="" ng-if="showChat"> -->
+                                                    <!-- <h1>Chat</h1> -->
+
+                                                    <!-- <label for="msg"><b>Message</b></label> -->
+                                                    <!-- <textarea placeholder="Type message.." name="msg" required></textarea> -->
+
+                                                    <!-- <button type="submit" class="btn">Send</button> -->
+                                                    <!-- <button type="button" class="btn cancel" onclick="closeForm()">Close</button> -->
+                                                  <!-- </div> -->
+
+                                                  <!-- </form> -->
+                                                <!-- </div> -->
+                                                <!-- </td> -->
+
+
                                                 <td><button type="button" class="btn btn-danger"   ng-click="viewComments(supplier)">View <br> Comments</button></td>
 
                                                   <!-- <td ng-init="calculateTotalCount('GATEWAY ARCH',supplier.supplier.inv_data['GATEWAY ARCH'].total.total)" ng-show="invStatusKeys['GATEWAY ARCH'].status">{{supplier.supplier.inv_data['GATEWAY ARCH'].total.total}}
@@ -1065,7 +1085,7 @@
                                   </div>
 
                                 <div class="col-md-12" ng-show="showDisplayDetailsTable" style="margin-top:60px;">
-                                  <div class="panel-heading content-title">
+                                  <div class="panel-heading content-title">0
                                     <h5 style="background:'red'">Map View for {{campaignTabPropsalName}}</h5></div>
                                   <style type="text/css">
                                         .angular-google-map-container { height: 550px;color: black;}

@@ -2253,7 +2253,7 @@ var formatByLocation = function(data,key,type){
   angular.forEach(data, function(item){
     console.log(item,key);
     if (key == 'supplier'){
-      item[0] = item[1].data.society_name;
+      item[0] = item[1].data.society_name + " (" + item[1].data.flat_count + ")";
     }
     var value = {
       'label' : item[0],
