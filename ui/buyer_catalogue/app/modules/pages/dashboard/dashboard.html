@@ -2451,5 +2451,48 @@
     </div>
 
     <!--END : view comments modal  -->
+    <!--START: Change password modal  -->
+    <div id="changePassword" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Change Password</h3>
+          </div>
+          <form class="form-horizontal">
+            <br>
+            <small style="margin:20px;"> Note : Minimum 8 characters, at least one uppercase letter, one lowercase letter, one number and one special character:</small>
+            <div class="form-group">
+              <label class="control-label col-sm-4" for="email">Old Password:</label>
+              <div class="col-sm-6">
+                <input type="password" class="form-control" id="email" placeholder="Enter old password" ng-model="passwordModel.old_password">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4" for="email">New Password:</label>
+              <div class="col-sm-6">
+                <input type="password" class="form-control" id="email" placeholder="Enter new password" ng-model="passwordModel.password">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4" for="email">Confirm Password:</label>
+              <div class="col-sm-6">
+                <input type="password" class="form-control" id="email" placeholder="confirm password" ng-model="passwordModel.confirm_password" ng-change="validatePassword()">
+                <br>
+                <span ng-show="!isValid && passwordModel.confirm_password"><small>{{passwordError}}</small></span>
+              </div>
+
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10" style="text-align:left;margin-bottom:20px;">
+                <button class="btn btn-danger" ng-click="changeUserPassword()">Submit</button>
+              </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+    <!--END: Change password modal  -->
   </body>
 </html>
