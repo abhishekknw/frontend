@@ -8,6 +8,7 @@
     var url_base = 'v0/ui/website/';
     var url_base_proposal = 'v0/ui/proposal/';
     var url_root = 'v0/ui/';
+    var url_base_user = 'v0/';
     var DashboardService = {};
 
 
@@ -121,6 +122,11 @@
     DashboardService.viewBookingComments = function(campaignId, spaceId, relatedTo){
       var url = url_base +  campaignId + "/comment/?shortlisted_spaces_id=" + spaceId + "&related_to=" + relatedTo;
       return machadaloHttp.get(url);
+    }
+
+    DashboardService.changePassword = function(id,data){
+      var url = url_base_user + "user/" + id + "/change_password/";
+      return machadaloHttp.post(url,data);
     }
 
     return DashboardService;

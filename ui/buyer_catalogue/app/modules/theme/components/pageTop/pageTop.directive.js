@@ -13,6 +13,7 @@
     return {
       restrict: 'E',
       templateUrl: 'modules/theme/components/pageTop/pageTop.html',
+      controller : 'DashboardCtrl',
       link: function($scope, element, attrs) {
                 // $scope.perm = permissions.navBar;
                 // Do some stuff

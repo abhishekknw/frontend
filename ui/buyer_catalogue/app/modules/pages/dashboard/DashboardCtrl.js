@@ -14,6 +14,9 @@
  $scope.showCampaigns = true;
  $scope.rowCollection = [];
  $scope.userIcon = "icons/usericon.png";
+ $scope.passwordError = constants.password_error;
+ $scope.userInfo = $rootScope.globals.userInfo;
+ console.log($scope.userInfo);
  $scope.invNameToCode = {
    'POSTER' : 'PO',
    'STALL' : 'SL',
@@ -2208,6 +2211,10 @@ var formatByLocation = function(data,key,type){
   temp_data['key'] = key;
   temp_data['values'] = [];
   angular.forEach(data, function(item){
+    console.log(item,key);
+    if (key == 'supplier'){
+      item[0] = item[1].data.society_name + " (" + item[1].data.flat_count + ")";
+    }
     var value = {
       'label' : item[0],
       'value' : item[1][type]/item[1].flat_count * 100
@@ -2230,6 +2237,37 @@ $scope.addComment = function(){
   }).catch(function onError(response){
     console.log(response);
   })
+}
+$scope.openChat = function(){
+  $scope.showChat = true;
+}
+$scope.changePassword = function(){
+  console.log("hello");
+  $('#changePassword').modal('show');
+}
+$scope.changeUserPassword = function(){
+  DashboardService.changePassword($scope.userInfo.id,$scope.passwordModel)
+  .then(function onSuccess(response){
+    console.log(response);
+    $('#changePassword').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+    swal(constants.name,constants.changePassword_success,constants.success);
+    $location.path("/logout");
+  }).catch(function onError(response){
+    console.log(response);
+    commonDataShare.showErrorMessage(response);
+    swal(constants.name,constants.errorMsg,constants.error);
+    // swal(constants.name,constants.errorMsg,constants.error);
+  });
+}
+$scope.validatePassword = function(){
+  console.log("hello");
+  if($scope.passwordModel.password == $scope.passwordModel.confirm_password)
+    $scope.isValid = true;
+  else
+    $scope.isValid = false;
+  console.log($scope.isValid,$scope.model);
 }
 //END
 })
