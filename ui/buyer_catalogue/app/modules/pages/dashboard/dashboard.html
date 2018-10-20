@@ -960,7 +960,7 @@
 
 
 
-                                <div class="col-md-12 showDisplayDetailsTable" ng-if="showDisplayDetailsTable" style="margin-top:5px;">
+                                <div class="col-md-12 showDisplayDetailsTable" ng-if="showDisplayDetailsTable" style="margin-top:5px;height:500px !important;">
                                   <div class="row">
                                     <table class="table table-bordered campaignDetailTable">
                                       <thead>
@@ -976,12 +976,12 @@
                                         </tr>
                                         <tr>
                                           <td>INDEX</td>
-                                          <td><a ng-click="sortquery='supplier.society_name'">Society Name</a></td>
+                                          <td><a style="color:#000000;" ng-click="sortquery='supplier.society_name'">Society Name</a></td>
                                           <td>Society Area (SubArea)</td>
                                           <td>Society Type</td>
-                                          <td><a ng-click="sortquery='supplier.flat_count'">Flat Count</a></td>
-                                          <td><a ng-click="sortquery='leads_data.total_leads_count'">Leads (% by Flat Count)</a></td>
-                                          <td> <a ng-click="sortquery='leads_data.hot_leads_count'">Hot Leads (% by Flat Count)</a></td>
+                                          <td><a style="color:#000000;" ng-click="sortquery='supplier.flat_count'">Flat Count</a></td>
+                                          <td><a style="color:#000000;" ng-click="sortquery='leads_data.total_leads_count'">Leads (% by Flat Count)</a></td>
+                                          <td> <a style="color:#000000;" ng-click="sortquery='leads_data.hot_leads_count'">Hot Leads (% by Flat Count)</a></td>
                                           <td ng-if="supplierStatus != 'upcoming'">Poster</td>
                                           <td ng-if="supplierStatus != 'upcoming'">Flier</td>
                                           <td ng-if="supplierStatus != 'upcoming'">Standee</td>
@@ -1085,7 +1085,7 @@
                                   </div>
 
                                 <div class="col-md-12" ng-show="showDisplayDetailsTable" style="margin-top:60px;">
-                                  <div class="panel-heading content-title">0
+                                  <div class="panel-heading content-title">
                                     <h5 style="background:'red'">Map View for {{campaignTabPropsalName}}</h5></div>
                                   <style type="text/css">
                                         .angular-google-map-container { height: 550px;color: black;}
