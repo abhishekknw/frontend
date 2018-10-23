@@ -658,11 +658,18 @@ div.outer .inner { width: 1900px; }
 
 
 div.outerdate { overflow: scroll; }
-div.outerdate .innerdate { width: 1900px; }
+div.outerdate .innerdate { width: 2400px; }
 
 
 div.outerFlat { overflow: scroll; }
 div.outerFlat .innerFlat { width: 500px; }
+
+
+div.outerLocation { overflow: scroll; }
+div.outerLocation .innerLocation { width: 1000px; }
+
+div.outerPhase { overflow: scroll; }
+div.outerPhase .innerPhase { width: 1000px; }
 
 .dateHeading{
   width: 240px;

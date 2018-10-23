@@ -1795,8 +1795,8 @@
                                     <option value="" disabled>Select For Sorting</option>
                                     <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
                                   </select>
-                                  <div class="outerFlat">
-                                    <div class="innerFlat">
+                                  <div class="outerLocation">
+                                    <div class="innerLocation">
                                       <nvd3 options="locationChartOptions" data="sortedLocationData['location']" ng-if="togglesortedGraphs['location']"></nvd3>
                                       <nvd3 options="stackedBarChartLocationWise" data="stackedBarLocationCountChart" ng-if="!togglesortedGraphs['location']"></nvd3>
                                     </div>
@@ -1865,8 +1865,8 @@
                                     <option value="" disabled>Select For Sorting</option>
                                     <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
                                   </select>
-                                  <div class="outerFlat">
-                                    <div class="innerFlat">
+                                  <div class="outerPhase">
+                                    <div class="innerPhase">
                                       <nvd3 options="locationChartOptions" data="sortedLocationData['weekwise']" ng-if="togglesortedGraphs['weekwise']"></nvd3>
                                       <nvd3 options="stackedBarChartPhaseWise" data="stackedBarPhaseChart" ng-if="!togglesortedGraphs['weekwise']"></nvd3>
                                     </div>
