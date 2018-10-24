@@ -1039,27 +1039,26 @@
                                                   </table>
                                                 </td>
                                                 <td></td>
-                                                <td><button type="button" class="btn btn-danger" data-target="#addComments" data-toggle="modal" ng-click="getSupplierForComments(supplier)">Add <br> Comments</button></td>
-                                                <!-- <td> -->
-                                                  <!-- <button class="open-button" ng-click="openChat()">Chat</button> -->
-                                                  <!-- <div class="chat-popup" id="myForm"> -->
-                                                  <!-- <form action="/action_page.php" class="form-container"> -->
-                                                  <!-- <div class="" ng-if="showChat"> -->
-                                                    <!-- <h1>Chat</h1> -->
+                                                <td>
+                                                  <button type="button" class="btn btn-danger" ng-click="enableAddComments($index)">Add Comments</button>
+                                                  <div ng-if="enableComments == $index">
+                                                    <textarea name="name" rows="4" cols="20" placeholder="Enter Here.." ng-model="commentModal.comment"></textarea>
+                                                    <button class="btn btn-success form-control" ng-disabled="!commentModal.comment" ng-click="addComment(supplier)">Add</button>
+                                                  </div>
+                                                </td>
 
-                                                    <!-- <label for="msg"><b>Message</b></label> -->
-                                                    <!-- <textarea placeholder="Type message.." name="msg" required></textarea> -->
-
-                                                    <!-- <button type="submit" class="btn">Send</button> -->
-                                                    <!-- <button type="button" class="btn cancel" onclick="closeForm()">Close</button> -->
-                                                  <!-- </div> -->
-
-                                                  <!-- </form> -->
-                                                <!-- </div> -->
-                                                <!-- </td> -->
-
-
-                                                <td><button type="button" class="btn btn-danger"   ng-click="viewComments(supplier)">View <br> Comments</button></td>
+                                                <td>
+                                                  <button type="button" class="btn btn-danger" ng-click="viewComments(supplier,$index)">View Comments</button><br>
+                                                  <div class="panel panel-default" ng-if="enableViewComments == $index" style="height:100px;overflow-y:scroll;">
+                                                    <div class="talk-bubble tri-right round left-top"  ng-repeat="item in commentsData.general" style="margin-top:-20px">
+                                                      <div class="talktext" style="font-color:black">
+                                                        <p style="color:#ff0000;font-size:smaller">{{item.user_name}}</p>
+                                                        <p style="color:#000000;font-size:x-small">{{item.comment}}</p>
+                                                        <p style="color:#0000ff;font-size:xx-small;text-align:right">{{item.timestamp|date:'medium'}}</p>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </td>
 
                                                   <!-- <td ng-init="calculateTotalCount('GATEWAY ARCH',supplier.supplier.inv_data['GATEWAY ARCH'].total.total)" ng-show="invStatusKeys['GATEWAY ARCH'].status">{{supplier.supplier.inv_data['GATEWAY ARCH'].total.total}}
                                                   </td> -->
@@ -1261,6 +1260,7 @@
                             <th>Total</br> Leads</th>
                             <th>Hot</br> Leads</th>
                             <th>Action</th>
+                            <th>Email Leads</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -1279,6 +1279,9 @@
                             <td>{{campaign.hot_leads}}</td>
                             <td>
                               <button class="btn btn-danger" ng-click="viewLeadsForSelectedCampaign(campaign.campaign_id)">View Leads</button>
+                            </td>
+                            <td>
+                              <button class="btn btn-danger" ng-click="emailLeadsToSelf(campaign.campaign_id)">Email Leads</button>
                             </td>
                           </tr>
                         </tbody>

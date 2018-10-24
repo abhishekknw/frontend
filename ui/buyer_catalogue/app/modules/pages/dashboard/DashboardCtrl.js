@@ -16,6 +16,7 @@
  $scope.userIcon = "icons/usericon.png";
  $scope.passwordError = constants.password_error;
  $scope.userInfo = $rootScope.globals.userInfo;
+ $scope.commentModal = {};
  console.log($scope.userInfo);
  $scope.invNameToCode = {
    'POSTER' : 'PO',
@@ -2109,15 +2110,13 @@ $scope.backToCampaign = function(){
 //   })
 // }
 
-$scope.viewComments = function(inv,supplier){
+$scope.viewComments = function(supplier,index){
   console.log(supplier);
-  $scope.supplierDataForComment = supplier;
-  $scope.supplierNameForComment = undefined;
-  $scope.supplierNameForComment = supplier.supplier_data.society_name;
+  $scope.enableViewComments = index;
   $scope.commentsData = {};
   var relatedTo = constants.execution_related_comment;
-  var spaceId = $scope.supplierDataForComment.space_id;
-  DashboardService.viewComments($scope.proposalId,spaceId,relatedTo,inv)
+  var spaceId = supplier.shortlisted_space_id;
+  DashboardService.viewComments($scope.campaignId,spaceId,relatedTo)
   .then(function onSuccess(response){
     console.log(response);
     $scope.commentModal = {};
@@ -2125,9 +2124,9 @@ $scope.viewComments = function(inv,supplier){
     if(Object.keys($scope.commentsData).length != 0){
       $scope.viewInvForComments = Object.keys($scope.commentsData);
       $scope.selectedInvForView = $scope.viewInvForComments[0];
-      $('#viewComments').modal('show');
+      // $('#viewComments').modal('show');
     }else{
-      $('#viewComments').modal('hide');
+      // $('#viewComments').modal('hide');
       swal(constants.name,constants.no_comments_msg,constants.warning);
     }
   }).catch(function onError(response){
@@ -2267,24 +2266,21 @@ var formatByLocation = function(data,key,type){
   return [temp_data];
 }
 
-$scope.addComment = function(){
+$scope.addComment = function(supplier){
   console.log($scope.commentModal);
-  $scope.commentModal['related_to'] = constants.booking_related_comment;
-  $scope.commentModal['shortlisted_spaces_id'] = $scope.supplierDataForComment.id;
-  releaseCampaignService.addComment($scope.campaign_id,$scope.commentModal)
+  $scope.commentModal['related_to'] = constants.execution_related_comment;
+  $scope.commentModal['shortlisted_spaces_id'] = supplier.shortlisted_space_id;
+  DashboardService.addComment($scope.campaignId,$scope.commentModal)
   .then(function onSuccess(response){
     console.log(response);
     $scope.commentModal = {};
     $scope.supplierDataForComment = undefined;
-    $('#addComments').modal('hide');
     swal(constants.name, constants.add_data_success, constants.success);
   }).catch(function onError(response){
     console.log(response);
   })
 }
-$scope.openChat = function(){
-  $scope.showChat = true;
-}
+
 $scope.changePassword = function(){
   console.log("hello");
   $('#changePassword').modal('show');
@@ -2312,6 +2308,17 @@ $scope.validatePassword = function(){
   else
     $scope.isValid = false;
   console.log($scope.isValid,$scope.model);
+}
+$scope.emailLeadsToSelf = function(){
+  DashboardService.emailLeadsToSelf()
+  .then(function onSuccess(response){
+    console.log(response);
+  }).catch(function onError(response){
+    console.log(response);
+  })
+}
+$scope.enableAddComments = function(index){
+  $scope.enableComments = index;
 }
 //END
 })

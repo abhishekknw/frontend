@@ -114,8 +114,13 @@
         return machadaloHttp.get(url);
     }
 
-    DashboardService.viewComments = function(campaignId, spaceId, relatedTo, invType){
-      var url = url_base +  campaignId + "/comment/?shortlisted_spaces_id=" + spaceId + "&related_to=" + relatedTo + "&inventory_type=" + invType;
+    DashboardService.addComment = function(campaignId, data){
+      var url = url_base +  campaignId + "/comment/";
+      return machadaloHttp.post(url,data);
+    }
+
+    DashboardService.viewComments = function(campaignId, spaceId, relatedTo){
+      var url = url_base +  campaignId + "/comment/?shortlisted_spaces_id=" + spaceId + "&related_to=" + relatedTo;
       return machadaloHttp.get(url);
     }
 
