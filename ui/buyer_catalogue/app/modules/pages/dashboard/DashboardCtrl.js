@@ -2269,6 +2269,29 @@ $scope.validatePassword = function(){
     $scope.isValid = false;
   console.log($scope.isValid,$scope.model);
 }
+
+$scope.sendemails = function(campaignId){
+  DashboardService.sendemails(campaignId)
+  .then(function onSuccess(response){
+  console.log(response);
+  $scope.formDetails = response.data.data;
+
+  console.log($scope.formDetails);
+}).catch(function onError(response){
+  console.log(response);
+})
+}
+
+$scope.sendMeEmail = function(){
+  console.log($scope.formDetails);
+  DashboardService.sendMeEmail($scope.formDetails)
+  .then(function onSuccess(response){
+  console.log(response);
+
+}).catch(function onError(response){
+  console.log(response);
+})
+}
 //END
 })
 

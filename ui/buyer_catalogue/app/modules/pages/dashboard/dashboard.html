@@ -1261,6 +1261,7 @@
                             <th>Total</br> Leads</th>
                             <th>Hot</br> Leads</th>
                             <th>Action</th>
+                            <th>Send Mail</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -1279,6 +1280,9 @@
                             <td>{{campaign.hot_leads}}</td>
                             <td>
                               <button class="btn btn-danger" ng-click="viewLeadsForSelectedCampaign(campaign.campaign_id)">View Leads</button>
+                            </td>
+                            <td>
+                              <button class="btn btn-danger" data-target="#sendEmailModal" data-toggle="modal"  ng-click="sendemails(campaign.campaign_id)">Send Emails</button>
                             </td>
                           </tr>
                         </tbody>
@@ -2326,6 +2330,7 @@
     </div>
 
 
+
     <div id="imageHashtag" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -2361,6 +2366,43 @@
         </div>
       </div>
     </div>
+    <div id="sendEmailModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">{{campaignNameOnImageModal}} Send Email Details</h4>
+            <hr/>
+            <div class = "modal-body">
+
+              <table class="table table-bordered table-align">
+                <tbody  ng-repeat="form_leads in formDetails">
+                  <div class="panel-heading">
+                    {{form_leads.leads_form_name}}
+                  </div>
+                  <tr>
+                    <td class="col-md-2">
+                        <p class="input-group">
+                        Select Start Date : <input type="date" class="form-control"  ng-model="form_leads.start_date" uib-datepicker-popup="yyyy-MM-dd" is-open="phaseStartDate" datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}"/ required>
+                      </p>
+                    </td>
+                    <td class="col-md-2">
+                      <p class="input-group">
+                        Select End Date : <input type="date" class="form-control"  ng-model="form_leads.end_date" uib-datepicker-popup="yyyy-MM-dd" is-open="phaseEndDate" datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}"/ required>
+                      </p>
+                    </td>
+                    <td> <p><button type="button" name="button" class="btn btn-danger" ng-click="sendMeEmail(form_leads.leads_form_id, form_leads.leads_form_items.campaign_id)">Submit</button>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     </main>
     <!--End: Code for showing image Modal  Window -->
     <!--START: INVENTORY INFO MODAL  -->

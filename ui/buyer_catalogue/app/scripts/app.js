@@ -463,7 +463,7 @@ angular
 
       //$qProvider.errorOnUnhandledRejections(false);
       $locationProvider.hashPrefix('');
-      console.log = () => {};
+      // console.log = () => {};
 })
 .run(['$rootScope', '$window', '$location', 'AuthService','$state','$cookieStore',
      function ($rootScope, $window, $location, AuthService, $state, $cookieStore) {
