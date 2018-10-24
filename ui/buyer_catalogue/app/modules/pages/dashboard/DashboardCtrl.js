@@ -2275,8 +2275,12 @@ $scope.sendemails = function(campaignId){
   .then(function onSuccess(response){
   console.log(response);
   $scope.formDetails = response.data.data;
-
+  angular.forEach($scope.formDetails, function(data){
+  $scope.formsData = data.leads_form_name;
+  });
   console.log($scope.formDetails);
+  console.log($scope.formsData);
+  $scope.selectedForm = $scope.formsData[0];
 }).catch(function onError(response){
   console.log(response);
 })

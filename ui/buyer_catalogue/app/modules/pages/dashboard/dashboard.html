@@ -2376,22 +2376,26 @@
             <div class = "modal-body">
 
               <table class="table table-bordered table-align">
-                <tbody  ng-repeat="form_leads in formDetails">
-                  <div class="panel-heading">
-                    {{form_leads.leads_form_name}}
+                <tbody>
+                  <div class="">
+                    Select Form :
+                    <select class="form-control" ng-model="formDetails.leads_form_id">
+                        <option ng-repeat="form_name in formDetails"  value="{{form_name.leads_form_id}}">{{form_name.leads_form_name}}</option>
+                    </select>
                   </div>
+                  <br />
                   <tr>
                     <td class="col-md-2">
                         <p class="input-group">
-                        Select Start Date : <input type="date" class="form-control"  ng-model="form_leads.start_date" uib-datepicker-popup="yyyy-MM-dd" is-open="phaseStartDate" datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}"/ required>
+                        Select Start Date : <input type="date" class="form-control"  ng-model="form_name.start_date" uib-datepicker-popup="yyyy-MM-dd" is-open="phaseStartDate" datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}"/ required>
                       </p>
                     </td>
                     <td class="col-md-2">
                       <p class="input-group">
-                        Select End Date : <input type="date" class="form-control"  ng-model="form_leads.end_date" uib-datepicker-popup="yyyy-MM-dd" is-open="phaseEndDate" datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}"/ required>
+                        Select End Date : <input type="date" class="form-control"  ng-model="form_name.end_date" uib-datepicker-popup="yyyy-MM-dd" is-open="phaseEndDate" datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}"/ required>
                       </p>
                     </td>
-                    <td> <p><button type="button" name="button" class="btn btn-danger" ng-click="sendMeEmail(form_leads.leads_form_id, form_leads.leads_form_items.campaign_id)">Submit</button>
+                    <td> <p><button type="button" name="button" class="btn btn-danger" ng-click="sendMeEmail()">Submit</button>
 </td>
                   </tr>
                 </tbody>
