@@ -36,13 +36,32 @@ export default class FillChecklist extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { match, checklist } = this.props;
-    const checklistDetails = checklist.details[match.params.checklistId];
+    const { checklist } = this.props;
+    const checklistDetails = checklist.details[this.state.checklist.id];
 
     if (checklistDetails && !this.state.checklistDetails) {
-      this.setState({
+      const newState = {
         checklistDetails
-      });
+      };
+
+      const checklistEntries = {};
+      for (let i = 0, l = checklistDetails.values.length; i < l; i += 1) {
+        if (!checklistEntries[checklistDetails.values[i].row_id]) {
+          checklistEntries[checklistDetails.values[i].row_id] = {};
+        }
+        checklistEntries[checklistDetails.values[i].row_id][
+          checklistDetails.values[i].column_id
+        ] = {
+          column_id: checklistDetails.values[i].column_id,
+          cell_value: checklistDetails.values[i].value
+        };
+      }
+
+      if (Object.keys(checklistEntries).length) {
+        newState.checklistEntries = checklistEntries;
+      }
+
+      this.setState(newState);
     } else if (
       // Check fill status & redirect
       !prevProps.checklist.entryStatus &&
