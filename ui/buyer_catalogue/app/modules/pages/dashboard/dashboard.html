@@ -466,7 +466,7 @@
 
                             </div>
 
-                            <div class="col-md-5">
+                            <div class="col-md-4">
 
                               <!-- <uib-tab-heading uib-dropdown>
                                   <button class="btn btn-warning btn-sm pull-right" style="background-color:#fcfc5f;color:black;margin-top:10px;" uib-dropdown-toggle ng-click="$event.stopPropagation()">
@@ -482,7 +482,7 @@
                               <nvd3 options="options1" data="campaignChartdata" ng-if="showSingleCampaignChart"></nvd3>
 
                             </div>
-                            <div class="col-md-4 LeadsTable">
+                            <div class="col-md-5 LeadsTable">
                               <div class="panel-heading content-title">
 
                                 <h5 style="background:'red';color:white;" ng-if="!showSingleCampaignChart">All Campaign Details</h5>
@@ -960,7 +960,7 @@
 
 
 
-                                <div class="col-md-12 showDisplayDetailsTable" ng-if="showDisplayDetailsTable" style="margin-top:5px;">
+                                <div class="col-md-12 showDisplayDetailsTable" ng-if="showDisplayDetailsTable" style="margin-top:5px;height:500px !important;">
                                   <div class="row">
                                     <table class="table table-bordered campaignDetailTable">
                                       <thead>
@@ -976,12 +976,12 @@
                                         </tr>
                                         <tr>
                                           <td>INDEX</td>
-                                          <td><a ng-click="sortquery='supplier.society_name'">Society Name</a></td>
+                                          <td><a style="color:#000000;" ng-click="sortquery='supplier.society_name'">Society Name</a></td>
                                           <td>Society Area (SubArea)</td>
                                           <td>Society Type</td>
-                                          <td><a ng-click="sortquery='supplier.flat_count'">Flat Count</a></td>
-                                          <td><a ng-click="sortquery='leads_data.total_leads_count'">Leads (% by Flat Count)</a></td>
-                                          <td> <a ng-click="sortquery='leads_data.hot_leads_count'">Hot Leads (% by Flat Count)</a></td>
+                                          <td><a style="color:#000000;" ng-click="sortquery='supplier.flat_count'">Flat Count</a></td>
+                                          <td><a style="color:#000000;" ng-click="sortquery='leads_data.total_leads_count'">Leads (% by Flat Count)</a></td>
+                                          <td> <a style="color:#000000;" ng-click="sortquery='leads_data.hot_leads_count'">Hot Leads (% by Flat Count)</a></td>
                                           <td ng-if="supplierStatus != 'upcoming'">Poster</td>
                                           <td ng-if="supplierStatus != 'upcoming'">Flier</td>
                                           <td ng-if="supplierStatus != 'upcoming'">Standee</td>
@@ -1084,7 +1084,7 @@
                                   </div>
 
                                 <div class="col-md-12" ng-show="showDisplayDetailsTable" style="margin-top:60px;">
-                                  <div class="panel-heading content-title">0
+                                  <div class="panel-heading content-title">
                                     <h5 style="background:'red'">Map View for {{campaignTabPropsalName}}</h5></div>
                                   <style type="text/css">
                                         .angular-google-map-container { height: 550px;color: black;}
@@ -1261,6 +1261,7 @@
                             <th>Hot</br> Leads</th>
                             <th>Action</th>
                             <th>Email Leads</th>
+
                           </tr>
                         </thead>
                         <tbody>
@@ -1454,7 +1455,7 @@
                         <div class="col-md-12">
 
                             <div class="panel-heading campaign-header">
-                              <h3 style="color:rgb(53, 9, 6)">Performance Details</h3>
+                              <h3 style="color:#ffffff">Performance Details</h3>
                             </div>
                             <br />
                             <div class="row zeroLeads" ng-if="!campaignInventories && !showSelection">
@@ -1798,8 +1799,8 @@
                                     <option value="" disabled>Select For Sorting</option>
                                     <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
                                   </select>
-                                  <div class="outerFlat">
-                                    <div class="innerFlat">
+                                  <div class="outerLocation">
+                                    <div class="innerLocation">
                                       <nvd3 options="locationChartOptions" data="sortedLocationData['location']" ng-if="togglesortedGraphs['location']"></nvd3>
                                       <nvd3 options="stackedBarChartLocationWise" data="stackedBarLocationCountChart" ng-if="!togglesortedGraphs['location']"></nvd3>
                                     </div>
@@ -1868,8 +1869,8 @@
                                     <option value="" disabled>Select For Sorting</option>
                                     <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
                                   </select>
-                                  <div class="outerFlat">
-                                    <div class="innerFlat">
+                                  <div class="outerPhase">
+                                    <div class="innerPhase">
                                       <nvd3 options="locationChartOptions" data="sortedLocationData['weekwise']" ng-if="togglesortedGraphs['weekwise']"></nvd3>
                                       <nvd3 options="stackedBarChartPhaseWise" data="stackedBarPhaseChart" ng-if="!togglesortedGraphs['weekwise']"></nvd3>
                                     </div>
@@ -2329,6 +2330,7 @@
     </div>
 
 
+
     <div id="imageHashtag" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -2364,6 +2366,47 @@
         </div>
       </div>
     </div>
+    <div id="sendEmailModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">{{campaignNameOnImageModal}} Send Email Details</h4>
+            <hr/>
+            <div class = "modal-body">
+
+              <table class="table table-bordered table-align">
+                <tbody>
+                  <div class="">
+                    Select Form :
+                    <select class="form-control" ng-model="formDetails.leads_form_id">
+                        <option ng-repeat="form_name in formDetails"  value="{{form_name.leads_form_id}}">{{form_name.leads_form_name}}</option>
+                    </select>
+                  </div>
+                  <br />
+                  <tr>
+                    <td class="col-md-2">
+                        <p class="input-group">
+                        Select Start Date : <input type="date" class="form-control"  ng-model="form_name.start_date" uib-datepicker-popup="yyyy-MM-dd" is-open="phaseStartDate" datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}"/ required>
+                      </p>
+                    </td>
+                    <td class="col-md-2">
+                      <p class="input-group">
+                        Select End Date : <input type="date" class="form-control"  ng-model="form_name.end_date" uib-datepicker-popup="yyyy-MM-dd" is-open="phaseEndDate" datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}"/ required>
+                      </p>
+                    </td>
+                    <td> <p><button type="button" name="button" class="btn btn-danger" ng-click="sendMeEmail()">Submit</button>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     </main>
     <!--End: Code for showing image Modal  Window -->
     <!--START: INVENTORY INFO MODAL  -->

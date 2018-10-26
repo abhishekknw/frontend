@@ -134,6 +134,15 @@
       return machadaloHttp.post(url,data);
     }
 
+    DashboardService.sendemails = function(campaignId){
+      var url =  url_root  + "leads/" +  campaignId  + "/form" ;
+      return machadaloHttp.get(url);
+    }
+
+    DashboardService.sendMeEmail = function(data){
+      var url =  url_base  + "send-leads-to-self/" ;
+      return machadaloHttp.post(url,data);
+    }
     return DashboardService;
 
  }]);
