@@ -2271,8 +2271,22 @@ $scope.validatePassword = function(){
 }
 
 $scope.sendemails = function(campaignId){
-  $scope.formCampaignId = campaignId;
-  DashboardService.sendemails(campaignId)
+  console.log(campaignId);
+  $scope.sendEmailList = [];
+  angular.forEach(campaignId, function(data){
+    for(var i=0; i<data.length; i++){
+      var emailData = {
+        // start_date : ,
+        // end_date : ,
+        // leads_form_id : ,
+        // campaign_id : ,
+
+      };
+      $scope.sendEmailList.push(emailData);
+    }
+    console.log(sendEmailList);
+  }) ;
+   DashboardService.sendemails(campaignId)
   .then(function onSuccess(response){
   console.log(response);
   $scope.formDetails = response.data.data;
