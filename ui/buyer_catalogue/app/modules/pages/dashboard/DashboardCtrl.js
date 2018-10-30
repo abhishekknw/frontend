@@ -2276,43 +2276,46 @@ $scope.validatePassword = function(){
   console.log($scope.isValid,$scope.model);
 }
 
-$scope.sendemails = function(campaignId){
+$scope.getFormDetails = function(campaignId){
   console.log(campaignId);
+  $scope.campaignIdForleads = campaignId;
+  $scope.emailCampaignLeadsModel = {};
   $scope.sendEmailList = [];
-  angular.forEach(campaignId, function(data){
-    for(var i=0; i<data.length; i++){
-      var emailData = {
-        // start_date : ,
-        // end_date : ,
-        // leads_form_id : ,
-        // campaign_id : ,
-
-      };
-      $scope.sendEmailList.push(emailData);
-    }
-    console.log(sendEmailList);
-  }) ;
-   DashboardService.sendemails(campaignId)
-  .then(function onSuccess(response){
-  console.log(response);
-  $scope.formDetails = response.data.data;
-  console.log($scope.formDetails);
-  $scope.campaign_id = $scope.formDetails.leads_form_items;
-  console.log($scope.campaign_id );
-  }).catch(function onError(response){
-    console.log(response);
-  })
+  // angular.forEach(campaignId, function(data){
+  //   for(var i=0; i<data.length; i++){
+  //     var emailData = {
+  //       // start_date : ,
+  //       // end_date : ,
+  //       // leads_form_id : ,
+  //       // campaign_id : ,
+  //
+  //     };
+  //     $scope.sendEmailList.push(emailData);
+  //   }
+  //   console.log(sendEmailList);
+  // }) ;
+   DashboardService.getFormDetails(campaignId)
+    .then(function onSuccess(response){
+      console.log(response);
+      $scope.formDetails = response.data.data;
+      console.log($scope.formDetails);
+      $scope.campaign_id = $scope.formDetails.leads_form_items;
+      console.log($scope.campaign_id );
+    }).catch(function onError(response){
+        console.log(response);
+    })
 }
 
 $scope.sendMeEmail = function(){
-  console.log($scope.formDetails);
-  DashboardService.sendMeEmail($scope.formDetails)
+  console.log($scope.emailCampaignLeadsModel);
+  $scope.emailCampaignLeadsModel['campaign_id'] = $scope.campaignIdForleads;
+  DashboardService.sendMeEmail($scope.emailCampaignLeadsModel)
   .then(function onSuccess(response){
-  console.log(response);
+    console.log(response);
 
-}).catch(function onError(response){
-  console.log(response);
-})
+  }).catch(function onError(response){
+    console.log(response);
+  })
 }
 $scope.getPermissionBoxImages = function(supplier){
   DashboardService.getPermissionBoxImages($scope.campaignId, supplier.supplier.supplier_id)

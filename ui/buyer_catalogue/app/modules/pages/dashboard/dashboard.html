@@ -1284,7 +1284,7 @@
                               <button class="btn btn-danger" ng-click="viewLeadsForSelectedCampaign(campaign.campaign_id)">View Leads</button>
                             </td>
                             <td>
-                              <button class="btn btn-danger" ng-click="sendemails(campaign.campaign_id)" data-target="#sendEmailModal" data-toggle="modal">Email Leads</button>
+                              <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id)" data-target="#sendEmailModal" data-toggle="modal">Email Leads</button>
                             </td>
                           </tr>
                         </tbody>
@@ -2440,23 +2440,23 @@
                 <tbody>
                   <div class="">
                     Select Form :
-                    <select class="form-control" ng-model="formDetails.leads_form_id">
+                    <select class="form-control" ng-model="emailCampaignLeadsModel.leads_form_id">
                         <option ng-repeat="form_name in formDetails"  value="{{form_name.leads_form_id}}">{{form_name.leads_form_name}}</option>
                     </select>
                   </div>
                   <br />
                   <tr>
                     <td class="col-md-2">
-                        <p class="input-group">
-                        Select Start Date : <input type="date" class="form-control"  ng-model="form_name.start_date" uib-datepicker-popup="yyyy-MM-dd" is-open="phaseStartDate" datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}"/ required>
+                      <p class="input-group">
+                        Select Start Date(Optional): <input type="date" class="form-control"  ng-model="emailCampaignLeadsModel.start_date" uib-datepicker-popup="yyyy-MM-dd" is-open="phaseStartDate" datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}"/ required>
                       </p>
                     </td>
                     <td class="col-md-2">
                       <p class="input-group">
-                        Select End Date : <input type="date" class="form-control"  ng-model="form_name.end_date" uib-datepicker-popup="yyyy-MM-dd" is-open="phaseEndDate" datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}"/ required>
+                        Select End Date(Optional) : <input type="date" class="form-control"  ng-model="emailCampaignLeadsModel.end_date" uib-datepicker-popup="yyyy-MM-dd" is-open="phaseEndDate" datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}"/ required>
                       </p>
                     </td>
-                    <td> <p><button type="button" name="button" class="btn btn-danger" ng-click="sendMeEmail()">Submit</button>
+                    <td> <p><button type="button" name="button" class="btn btn-danger" ng-click="sendMeEmail()" ng-disabled="!emailCampaignLeadsModel.leads_form_id">Submit</button>
 </td>
                   </tr>
                 </tbody>

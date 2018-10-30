@@ -134,7 +134,7 @@
       return machadaloHttp.post(url,data);
     }
 
-    DashboardService.sendemails = function(campaignId){
+    DashboardService.getFormDetails = function(campaignId){
       var url =  url_root  + "leads/" +  campaignId  + "/form" ;
       return machadaloHttp.get(url);
     }
