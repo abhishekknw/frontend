@@ -2312,6 +2312,8 @@ $scope.sendMeEmail = function(){
   DashboardService.sendMeEmail($scope.emailCampaignLeadsModel)
   .then(function onSuccess(response){
     console.log(response);
+    $('#sendEmailModal').modal('hide');
+    swal(constants.name, constants.email_success, constants.success);
 
   }).catch(function onError(response){
     console.log(response);
