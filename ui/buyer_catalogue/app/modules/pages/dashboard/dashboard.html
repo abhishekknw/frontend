@@ -1039,7 +1039,6 @@
                                                   </table>
                                                 </td>
                                                 <td></td>
-                                                  <td></td>
                                                 <td>
                                                   <button type="button" class="btn btn-danger" ng-click="enableAddComments($index)">Add Comments</button>
                                                   <div ng-if="enableComments == $index">
@@ -1283,7 +1282,7 @@
                               <button class="btn btn-danger" ng-click="viewLeadsForSelectedCampaign(campaign.campaign_id)">View Leads</button>
                             </td>
                             <td>
-                              <button class="btn btn-danger" ng-click="emailLeadsToSelf(campaign.campaign_id)">Email Leads</button>
+                              <button class="btn btn-danger" ng-click="sendemails(campaign.campaign_id)" data-target="#sendEmailModal" data-toggle="modal">Email Leads</button>
                             </td>
                           </tr>
                         </tbody>
