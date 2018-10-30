@@ -363,6 +363,7 @@
 
         $scope.getCampaigns = function(date){
             $scope.showSupplierTypeCountChart = false;
+            $scope.selectedBookingCampaignName = undefined;
           if(!date)
             date = new Date();
           date = commonDataShare.formatDate(date);
@@ -1974,16 +1975,20 @@ var formatD3StackedBarChartData = function(data){
 }
 
 $scope.getBookingCampaigns = function(campaign){
+  $scope.headerForSupplierBookings = undefined;
   $scope.bookingPhases = [];
   $scope.bookingSuppliersData = [];
   $scope.proposalId = campaign.campaign;
+  console.log(campaign);
+  $scope.selectedBookingCampaignName = campaign.name;
   DashboardService.getBookingCampaigns(campaign.campaign)
   .then(function onSuccess(response){
     console.log(response);
       $scope.bookingPhases = response.data.data;
-      if(!$scope.bookingPhases.length){
-        swal(constants.name, "Suppliers Booking is going on.Currently, No supplier is Booked", constants.warning)
-      }
+
+      // if(!$scope.bookingPhases.length){
+        // swal(constants.name, "Suppliers Booking is going on.Currently, No supplier is Booked", constants.warning)
+      // }
   }).catch(function onError(response){
     console.log(response);
   })
@@ -1997,9 +2002,10 @@ $scope.getTotalFlatCount = function(data){
   }
   return total;
 }
-$scope.getSuppliers = function(data){
-  $scope.bookingSuppliersData = [];
-  if(data.length){
+$scope.getSuppliersOfBookingDetails = function(data,header){
+  $scope.headerForSupplierBookings = header;
+  $scope.bookingSuppliersData = {};
+  if(data){
     $scope.bookingSuppliersData = data;
   }else{
     swal(constants.name,"Suppliers Not Available In this Status",constants.warning);
@@ -2279,9 +2285,9 @@ $scope.sendemails = function(campaignId){
   console.log($scope.formDetails);
   $scope.campaign_id = $scope.formDetails.leads_form_items;
   console.log($scope.campaign_id );
-}).catch(function onError(response){
-  console.log(response);
-})
+  }).catch(function onError(response){
+    console.log(response);
+  })
 }
 
 $scope.sendMeEmail = function(){

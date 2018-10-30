@@ -1325,7 +1325,7 @@
           <div class="col-md-12">
 
               <div class="panel-headding campaign-header">
-                <h3 style="color:rgb(53, 9, 6)">Booking Details</h3>
+                <h3 class="panel-title">Booking Details</h3><br>
               </div>
 
     <div class="col-md-3">
@@ -1369,47 +1369,105 @@
                   </div>
               </div>
           </div>
-
-
       </div>
 
     </div>
     <div class="col-md-9">
-      <div class="" ng-if="!bookingPhases.length">
+      <div class="" ng-if="!selectedBookingCampaignName">
         <label style="color:#000">Please Select the Campaign</label>
       </div>
-      <div class="" ng-if="bookingPhases.length">
+      <div class="panel-title" ng-if="selectedBookingCampaignName">
+        <h3>{{selectedBookingCampaignName}}</h3>
+      </div>
+      <div class="" ng-if="bookingPhases">
         <table class="table table-bordered table-responsive">
           <thead>
             <tr>
-              <th>Phase</th>
-              <th>Total Booked <br>(Total Flat Count)</th>
-              <th>Confirmed Booked</th>
-              <th>Verbally Booked</th>
+              <th><small>Phase Details</small></th>
+              <th><small>Confirmed Booked <br>(Total Flat Count)</small></th>
+              <th><small>Verbally Booked <br>(Total Flat Count)</small></th>
+              <th><small>Followup Required <br>(Total Flat Count)</small></th>
+              <th><small>Total <br>(Total Flat Count)</small></th>
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="item in bookingPhases">
+            <tr ng-if="bookingPhases.last_completed_phase">
               <td>
                 <div class="">
-                    Phase : {{item.phase_no}}</br>
-                    Start Date : {{item.start_date|limitTo:10|date:fullDate}}</br>
-                    End Date : {{item.end_date|limitTo:10|date:fullDate}}
+                  <small>Completed Phase No : {{bookingPhases.last_completed_phase.phase_no}}</small>  </br>
+                    <small>Start Date : {{bookingPhases.last_completed_phase.start_date|limitTo:10|date:fullDate}}</small></br>
+                    <small>End Date : {{bookingPhases.last_completed_phase.end_date|limitTo:10|date:fullDate}}</small>
                 </div>
               </td>
-              <td> {{item.supplier_data.BK.length + item.supplier_data.TB.length + item.supplier_data.NB.length}} ({{getTotalFlatCount(item.supplier_data.BK) + getTotalFlatCount(item.supplier_data.TB) + getTotalFlatCount(item.supplier_data.NB)}})</td>
-              <td><a ng-click="getSuppliers(item.supplier_data.BK)">{{item.supplier_data.BK.length}}({{getTotalFlatCount(item.supplier_data.BK)}})</a></td>
-              <td><a ng-click="getSuppliers(item.supplier_data.TB)">{{item.supplier_data.TB.length}}({{getTotalFlatCount(item.supplier_data.TB)}})</a></td>
+              <td><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.supplier_data,'Last Completed Phase')">
+                    {{bookingPhases.last_completed_phase.total_booked_suppliers}} ({{bookingPhases.last_completed_phase.total_booked_flats}})
+                  </a></small>
+              </td>
+              <td><small>{{bookingPhases.last_completed_phase.verbally_booked_suppliers}} ({{bookingPhases.last_completed_phase.verbally_booked_flats}})</small></td>
+              <td><small>{{bookingPhases.last_completed_phase.followup_req_booked_suppliers}} ({{bookingPhases.last_completed_phase.followup_req_booked_flats}})</small></td>
+              <td><small>{{bookingPhases.last_completed_phase.total_booked_suppliers}} ({{bookingPhases.last_completed_phase.total_booked_flats}})</small></td>
+            </tr>
+            <tr ng-if="bookingPhases.ongoing_phase">
+              <td>
+                <div class="">
+                  <small>Ongoing Phase No : {{bookingPhases.ongoing_phase.phase_no}}</small>  </br>
+                    <small>Start Date : {{bookingPhases.ongoing_phase.start_date|limitTo:10|date:fullDate}}</small></br>
+                    <small>End Date : {{bookingPhases.ongoing_phase.end_date|limitTo:10|date:fullDate}}</small>
+                </div>
+              </td>
+              <td><small>{{bookingPhases.ongoing_phase.total_booked_suppliers}} ({{bookingPhases.ongoing_phase.total_booked_flats}})</small> </td>
+              <td><small>{{bookingPhases.ongoing_phase.verbally_booked_suppliers}} ({{bookingPhases.ongoing_phase.verbally_booked_flats}})</small></td>
+              <td><small>{{bookingPhases.ongoing_phase.followup_req_booked_suppliers}} ({{bookingPhases.ongoing_phase.followup_req_booked_flats}})</small></td>
+              <td><small>{{bookingPhases.ongoing_phase.total_booked_suppliers}} ({{bookingPhases.ongoing_phase.total_booked_flats}})</small></td>
+            </tr>
+            <tr ng-repeat="item in bookingPhases.upcoming_phases" ng-if="bookingPhases.upcoming_phases.length">
+              <td>
+                <div class="">
+                  <small>Upcoming Phase No : {{item.phase_no}}</small>  </br>
+                  <small>Start Date : {{item.start_date|limitTo:10|date:fullDate}}</small></br>
+                  <small>End Date : {{item.end_date|limitTo:10|date:fullDate}}</small>
+                </div>
+              </td>
+              <td><small>{{item.total_booked_suppliers}} ({{item.total_booked_flats}})</small> </td>
+              <td><small>{{item.verbally_booked_suppliers}} ({{item.verbally_booked_flats}})</small></td>
+              <td><small>{{item.followup_req_booked_suppliers}} ({{item.followup_req_booked_flats}})</small></td>
+              <td><small>{{item.total_booked_suppliers}} ({{item.total_booked_flats}})</small></td>
             </tr>
           </tbody>
         </table>
-        <div class="" ng-if="bookingSuppliersData.length">
+        <div class="panel-title">
+          <h4>Pipelined Suppliers</h4>
+        </div>
+        <table class="table table-responsive table-bordered">
+          <thead>
+            <tr>
+              <th>Confirmed Bookings</th>
+              <th>Not Initiated</th>
+              <th>Followup Required</th>
+              <th>Verbally Booked</th>
+              <th>Rejected</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td> <small>{{bookingPhases.pipelined_suppliers.confirm_booked.total_booked_suppliers||0}}</small> </td>
+              <td> <small>{{bookingPhases.pipelined_suppliers.confirm_booked.total_booked_suppliers||0}}</small> </td>
+              <td> <small>{{bookingPhases.pipelined_suppliers.confirm_booked.total_booked_suppliers||0}}</small> </td>
+              <td> <small>{{bookingPhases.pipelined_suppliers.confirm_booked.total_booked_suppliers||0}}</small> </td>
+              <td> <small>{{bookingPhases.pipelined_suppliers.confirm_booked.total_booked_suppliers||0}}</small> </td>
+              <td> <small>{{bookingPhases.pipelined_suppliers.confirm_booked.total_booked_suppliers||0}}</small> </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="" ng-if="headerForSupplierBookings">
           <div class="panel-heading">
-            Supplier Details
+            {{headerForSupplierBookings}} Supplier Details
           </div>
           <table class="table table-bordered table-responsive">
             <thead>
               <tr>
+                <th>Index</th>
                 <th>Supplier Name</th>
                 <th>Flat</br>Count</th>
                 <th>Tower</br>Count</th>
@@ -1420,8 +1478,9 @@
                 <th>Comments</th>
               </tr>
             </thead>
-            <tbody>
-              <tr ng-repeat="supplier in bookingSuppliersData">
+            <tbody ng-repeat="(key,values) in bookingSuppliersData">
+              <tr ng-repeat="supplier in values">
+                <td>{{$index + 1}}</td>
                 <td>{{supplier.society_name}}</td>
                 <td>{{supplier.flat_count}}</td>
                 <td>{{supplier.tower_count}}</td>
