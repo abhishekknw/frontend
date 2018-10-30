@@ -1015,7 +1015,7 @@
                                                 <td ng-if="supplier.images_data.STALL && supplierStatus != 'upcoming'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.STALL.images)">Images ({{supplier.images_data.STALL.total_count}})</a></td>
                                                 <td ng-if="!supplier.images_data.STALL && supplierStatus != 'upcoming'">No Images</td>
 
-                                                <td ng-if="supplierStatus == 'ongoing'">
+                                                <td ng-if="supplierStatus == 'ongoing' || supplierStatus == 'completed'">
                                                   <table class="table-responsive table table-bordered ">
                                                     <tr>
                                                       <td ng-if="supplier.images_data.BANNER && supplierStatus != 'upcoming'" style="background-color:#cb1925">BANNER</td>
@@ -1038,7 +1038,9 @@
                                                     </tr>
                                                   </table>
                                                 </td>
-                                                <td></td>
+                                                <td>
+                                                  <a ng-click="getPermissionBoxImages(supplier)">View</a>
+                                                </td>
                                                 <td>
                                                   <button type="button" class="btn btn-danger" ng-click="enableAddComments($index)">Add Comments</button>
                                                   <div ng-if="enableComments == $index">

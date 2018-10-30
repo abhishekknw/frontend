@@ -143,6 +143,12 @@
       var url =  url_base  + "send-leads-to-self/" ;
       return machadaloHttp.post(url,data);
     }
+
+    DashboardService.getPermissionBoxImages = function(campaignId,supplierId){
+      var url = url_base + "get-permission-box-images/" + campaignId + "/" + supplierId + "/";
+      return machadaloHttp.get(url);
+    }
+
     return DashboardService;
 
  }]);
