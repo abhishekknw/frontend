@@ -2304,8 +2304,17 @@
                           </div> -->
                       </div>
                         <!--End : Performance metrics  -->
-                        <button print-btn>Print Report</button>
+                        <!-- <div class="row" ng-if="LeadsByCampaign"> -->
 
+
+                        <button print-btn class="btn btn-primary" ng-if="showReportBtn">Print Report</button>
+
+                        <!-- </div><br> -->
+
+                          <label ng-if="showReportBtn">Select Report</label>
+                          <input type="file" ngf-select = "uploadFiles($file, 1)" class="buttonfile btn btn-primary" accept=".pdf" ng-if="showReportBtn"/>
+
+                        <button ng-click="sendReport()" ng-if="showReportBtn" class="btn btn-danger">Submit</button>
                       </div>
                   </div>
 
