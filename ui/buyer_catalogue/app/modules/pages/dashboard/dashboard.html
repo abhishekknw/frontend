@@ -2318,14 +2318,20 @@
                       </div>
                         <!--End : Performance metrics  -->
                         <br><br>
-                        <button class="btn btn-danger active notify" print-btn style="text-align:right;margin-left:30px;margin-top:20px;">Print Report</button>
-               <!-- </div><br> -->
+                        <div class="row"  ng-if="showReportBtn">
+                          <div class="col-md-6">
+                            <button class="btn btn-danger active notify" print-btn style="text-align:right;margin-left:30px;margin-top:20px;">Print Report</button>
 
-                          <label ng-if="showReportBtn">Select Report</label>
-                          <input type="file" ngf-select = "uploadFiles($file, 1)" class="buttonfile btn btn-primary" accept=".pdf" ng-if="showReportBtn"/>
+                          </div>
+                          <div class="col-md-3">
+                            <label style="color:#ffffff;">Select Report</label>
+                            <input type="file" ngf-select = "uploadFiles($file, 1)" class="buttonfile btn btn-primary" accept=".pdf" ng-if="showReportBtn"/>
+                          <br>  <button ng-click="sendReport()" ng-if="showReportBtn" class="btn btn-danger">Submit</button>
 
-                        <button ng-click="sendReport()" ng-if="showReportBtn" class="btn btn-danger">Submit</button>
-                      </div>
+                          </div>
+                        
+                        </div>
+                    </div>
                   </div>
 
               </uib-tab>
