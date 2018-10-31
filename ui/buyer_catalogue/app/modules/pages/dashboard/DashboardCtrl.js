@@ -6,7 +6,7 @@
     'use strict';
 
   angular.module('catalogueApp')
-      .controller('DashboardCtrl',function($scope,NgMap, $rootScope, baConfig, colorHelper,DashboardService, commonDataShare, constants,$location,$anchorScroll,uiGmapGoogleMapApi,uiGmapIsReady ,  $sce) {
+      .controller('DashboardCtrl',function($scope,NgMap, $rootScope, baConfig, colorHelper,DashboardService, commonDataShare, constants,$location,$anchorScroll,uiGmapGoogleMapApi,uiGmapIsReady,Upload) {
  $scope.itemsByPage=15;
  $scope.query = "";
  $scope.oneAtATime = true;
@@ -1212,10 +1212,13 @@
    }
    $scope.getLeadsByCampaign = function(campaignId,campaign){
      $scope.CampaignLeadsName = campaign.name;
+     $scope.LeadsByCampaign = {};
+     $scope.showReportBtn = false;
      // $scope.getSortedLeadsByCampaign();
      $scope.showTimeLocBtn = false;
      $scope.showinv = false;
      $scope.showSelection = true;
+     $scope.campaignIdForPerfMetrics = campaignId;
      $scope.showPerfMetrics = $scope.perfMetrics.blank;
      DashboardService.getLeadsByCampaign(campaignId)
      .then(function onSuccess(response){
@@ -1245,6 +1248,7 @@
 
        $scope.campaignLeadsData = response.data.data;
        $scope.showPerfMetrics = $scope.perfMetrics.leads;
+       $scope.showReportBtn = true;
      }).catch(function onError(response){
        console.log(response);
      })
@@ -2326,6 +2330,34 @@ $scope.getPermissionBoxImages = function(supplier){
   }).catch(function onError(response){
     console.log(response);
   })
+}
+$scope.sendReport = function(){
+  var token = $rootScope.globals.currentUser.token;
+  if ($scope.file) {
+    Upload.upload({
+        url: Config.APIBaseUrl + "v0/ui/website/send-graph-pdf/",
+        data: {
+          file: $scope.file,
+          campaign_id : $scope.campaignIdForPerfMetrics,
+          data_import_type : "base-data"
+        },
+        headers: {'Authorization': 'JWT ' + token}
+    }).then(function onSuccess(response){
+          console.log(response);
+          $scope.file = undefined;
+          swal(constants.name,constants.email_success,constants.success);
+    })
+    .catch(function onError(response) {
+        console.log(response);
+      });
+    }
+}
+var reportFile;
+$scope.uploadFiles = function(file){
+  var reportFile;
+  console.log("hello");
+  $scope.file = file;
+  console.log($scope.file);
 }
 //END
 })
