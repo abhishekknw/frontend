@@ -1784,14 +1784,6 @@
                               </div>
                             </div>
                             <div class="row">
-                              <!-- <label for="sel1">Select list:</label>
-                              <select class="form-control" id="sel1">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                              </select> -->
-
                               <select class="form-control" ng-change="sortData('flatData',sortModel)"  ng-model="sortModel" >
                                <option value="" disabled>Select For Sorting</option>
                                 <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
@@ -1805,7 +1797,7 @@
                             </div>
                           </div>
                         </div>
-
+                        <br /><br />
                         <div class="col-lg-12"  ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:50px;">
                           <div class="col-lg-6">
                             <div class="panel panel-primary">
@@ -1849,7 +1841,7 @@
                             </table>
                             </div>
                           </div>
-                              <div class="col-lg-6">
+                              <!-- <div class="col-lg-6">
                                 <div class="panel panel-primary">
                                   <div class="panel-heading content-title">
                                     <label for="flat graph">Location Graph Summary</label>
@@ -1867,10 +1859,29 @@
                                     </div>
                                   </div>
                                 </div>
+                              </div> -->
+                              <div class="col-lg-6">
+                                <div class="panel panel-primary">
+                                  <div class="panel-heading content-title">
+                                    <label for="flat graph">Location Graph Summary</label>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <select class="form-control" ng-change="sortData('location',sortModel)"  ng-model="sortModel" >
+                                   <option value="" disabled>Select For Sorting</option>
+                                    <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
+                                  </select>
+                                  <div class="outerLocation">
+                                    <div class="innerLocation">
+                                      <nvd3 options="locationChartOptions" data="sortedLocationData['location']" ng-if="togglesortedGraphs['location']"></nvd3>
+                                      <nvd3 options="stackedBarChartLocationWise" data="stackedBarLocationCountChart" ng-if="!togglesortedGraphs['location']"></nvd3>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
                         </div>
 
-
+                          <br /><br />
                         <div class="col-lg-12"  ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:120px">
                           <div class="col-lg-6">
                             <div class="panel panel-primary">
@@ -1939,7 +1950,46 @@
                                 </div>
                               </div>
                         </div>
+                          <br /><br /><br />
+                        <div class="col-md-12" ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:100px;">
+                          <div class="panel-heading content-title">
+                              <h4 style="text-align: center">Leads Per Society</h4>
+                          </div>
 
+                          <div class="col-md-12" ng-scrollable>
+                            <select class="form-control" ng-change="sortData('supplier',sortModel)" ng-model="sortModel">
+                              <option value="" disabled>Select For Sorting</option>
+                              <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
+                            </select>
+                            <div class="outer">
+                              <div class="inner">
+                                <nvd3 options="locationChartOptions" data="sortedLocationData['supplier']" ng-if="togglesortedGraphs['supplier']"></nvd3>
+                                <nvd3 options="stackedBarChartSocietyWise" data="stackedBarChartSupplierData" ng-if="!togglesortedGraphs['supplier']"></nvd3>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- <div class="col-md-6">
+                          <nvd3 options="variableoptions" data="stackedBarChartSupplierData"></nvd3>
+                          </div> -->
+                        </div>
+                          <br /><br />
+                        <div class="col-md-12" ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:50px;">
+                          <div class="panel-heading content-title">
+                              <h4 style="text-align: center"> Leads By Date </h4>
+                          </div>
+                          <div class="col-md-12" ng-scrollable>
+                            <select class="form-control" ng-change="sortData('datewise',sortModel)" ng-model="sortModel">
+                              <option value="" disabled>Select For Sorting</option>
+                              <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
+                            </select>
+                            <div class="outerdate">
+                              <div class="innerdate">
+                                <nvd3 options="locationChartOptions" data="sortedLocationData['datewise']" ng-if="togglesortedGraphs['datewise']"></nvd3>
+                                <nvd3 options="stackedBarChartDateWise" data="stackedBarChartDateData" ng-if="!togglesortedGraphs['datewise']"></nvd3>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
 
                         <div class="row" ng-if="showPerfMetrics == perfMetrics.blank">
 
@@ -2240,44 +2290,7 @@
                             </div>
                           </div>
                           <!--leads perf metrics  -->
-                          <div class="col-md-12" ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:100px;">
-                            <div class="panel-heading content-title">
-                                <h4 style="text-align: center">Leads Per Society</h4>
-                            </div>
 
-                            <div class="col-md-12" ng-scrollable>
-                              <select class="form-control" ng-change="sortData('supplier',sortModel)" ng-model="sortModel">
-                                <option value="" disabled>Select For Sorting</option>
-                                <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
-                              </select>
-                              <div class="outer">
-                                <div class="inner">
-                                  <nvd3 options="locationChartOptions" data="sortedLocationData['supplier']" ng-if="togglesortedGraphs['supplier']"></nvd3>
-                                  <nvd3 options="stackedBarChartSocietyWise" data="stackedBarChartSupplierData" ng-if="!togglesortedGraphs['supplier']"></nvd3>
-                                </div>
-                              </div>
-                            </div>
-                            <!-- <div class="col-md-6">
-                            <nvd3 options="variableoptions" data="stackedBarChartSupplierData"></nvd3>
-                            </div> -->
-                          </div>
-                          <div class="col-md-12" ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:50px;">
-                            <div class="panel-heading content-title">
-                                <h4 style="text-align: center"> Leads By Date </h4>
-                            </div>
-                            <div class="col-md-12" ng-scrollable>
-                              <select class="form-control" ng-change="sortData('datewise',sortModel)" ng-model="sortModel">
-                                <option value="" disabled>Select For Sorting</option>
-                                <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
-                              </select>
-                              <div class="outerdate">
-                                <div class="innerdate">
-                                  <nvd3 options="locationChartOptions" data="sortedLocationData['datewise']" ng-if="togglesortedGraphs['datewise']"></nvd3>
-                                  <nvd3 options="stackedBarChartDateWise" data="stackedBarChartDateData" ng-if="!togglesortedGraphs['datewise']"></nvd3>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
 
                           <div class="col-md-12" ng-if="showPerfMetrics == perfMetrics.multipleLeads" style="margin-top:50px;">
                             <div class="panel-heading content-title">
@@ -2304,7 +2317,9 @@
                           </div> -->
                       </div>
                         <!--End : Performance metrics  -->
-                        <button print-btn>Print Report</button>
+                        <br><br>
+                        <button class="btn btn-danger active notify" print-btn style="text-align:right;margin-left:30px;margin-top:20px;">Print Report</button>
+
 
                       </div>
                   </div>
