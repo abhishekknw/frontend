@@ -16,6 +16,7 @@
  $scope.userIcon = "icons/usericon.png";
  $scope.passwordError = constants.password_error;
  $scope.userInfo = $rootScope.globals.userInfo;
+ $scope.dateRangeModel = {};
  console.log($scope.userInfo);
  $scope.invNameToCode = {
    'POSTER' : 'PO',
@@ -1219,9 +1220,19 @@
      $scope.showinv = false;
      $scope.showSelection = true;
      $scope.campaignIdForPerfMetrics = campaignId;
+     $scope.campaignInfoForPerfMetrics = campaign;
      $scope.showPerfMetrics = $scope.perfMetrics.blank;
-     DashboardService.getLeadsByCampaign(campaignId)
-     .then(function onSuccess(response){
+     var result;
+     if($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date')){
+       $scope.dateRangeModel.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
+       $scope.dateRangeModel.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
+       console.log($scope.dateRangeModel);
+        result = DashboardService.getLeadsByCampaign(campaignId,$scope.dateRangeModel)
+     }else{
+        result = DashboardService.getLeadsByCampaign(campaignId)
+     }
+     // DashboardService.getLeadsByCampaign(campaignId)
+     result.then(function onSuccess(response){
        console.log(response);
        $scope.LeadsByCampaign = response.data.data;
        $scope.Data = $scope.LeadsByCampaign;

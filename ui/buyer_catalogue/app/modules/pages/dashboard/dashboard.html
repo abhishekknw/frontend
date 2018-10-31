@@ -1706,6 +1706,11 @@
                           <div class="panel-heading content-title">
                             <h3 for="heading">Leads of {{CampaignLeadsName}}</h3>
                           </div>
+                          From Date :
+                          <input type="date"  ng-model="dateRangeModel.start_date">
+                          To Date :
+                          <input type="date" ng-model="dateRangeModel.end_date">
+                          <button class="btn btn-danger" ng-click="getLeadsByCampaign(campaignIdForPerfMetrics,campaignInfoForPerfMetrics)">Submit</button>
                           <br /><br />
                           <div class="col-lg-6">
                             <div class="panel panel-primary">
