@@ -59,6 +59,7 @@ angular
     'catalogueApp.theme',
     'angular-circular-progress',
     'ngMap',
+    'AngularPrint'
 
   ])
   .config(function ($routeProvider, $stateProvider, $urlRouterProvider, $httpProvider, $qProvider, $locationProvider,cfpLoadingBarProvider) {
