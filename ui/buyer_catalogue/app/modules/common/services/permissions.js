@@ -78,7 +78,6 @@ angular
       menuDashboard       :   'can_view_dashboard_button_on_menu',
       menuChangePassword  :   'can_view_changepassword_button_on_menu',
     },
-
     pagePermissions : {
       homepage                : 'homePage',
       proposalSummaryPage     : 'proposalSummaryPage',
