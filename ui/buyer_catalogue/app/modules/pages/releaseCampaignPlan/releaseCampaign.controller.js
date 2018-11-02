@@ -937,6 +937,22 @@ $scope.multiSelect =
         })
       }
 
+      $scope.customfreebies = [
+          'WhatsappGroup',
+          'EmailGroup',
+          'Building ERP',
+          'Door to Door'
+        ];
+          $scope.addFreebies = function(freebiesData,rowIndex,index){
+          console.log(freebiesData);
+            $scope.customfreebies.push(freebiesData);
+            $scope.selectedRow = rowIndex;
+            console.log($scope.selectedRow);
+          //
+          // else
+          //   $scope.customfreebies.splice(index,1);
+          // console.log($scope.customfreebies);
+        }
 
 
 }]);//Controller function ends here
