@@ -35,7 +35,8 @@
     <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon-96x96.png">
     <link rel="stylesheet" type="text/css" href="modules/pages/DashBoard/adminDashboard/percentage-circular-bar.css">
 
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" media="screen and (max-width: 900px)" href="smallscreen.css"> -->
 
   </head>
 
@@ -1078,7 +1079,15 @@
                                                   <td>{{TotalSupplierFlatCount}}</td>
                                                   <td>{{TotalSupplierLeadsCount}}</td>
                                                   <td>{{TotalSupplierHotLeadsCount}}</td>
-                                                    <td></td>
+                                                  <td></td>
+                                                  <td></td>
+                                                  <td></td>
+                                                  <td></td>
+                                                  <td></td>
+                                                  <td></td>
+                                                  <td></td>
+                                                  <td></td>
+
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -1750,11 +1759,16 @@
                           <div class="panel-heading content-title">
                             <h3 for="heading">Leads of {{CampaignLeadsName}}</h3>
                           </div>
-                          From Date :
-                          <input type="date"  ng-model="dateRangeModel.start_date">
-                          To Date :
-                          <input type="date" ng-model="dateRangeModel.end_date">
-                          <button class="btn btn-danger" ng-click="getLeadsByCampaign(campaignIdForPerfMetrics,campaignInfoForPerfMetrics)">Submit</button>
+                          <br /><br />
+                          <div class="row pull-center">
+                            <label for="" style="color:#000000;">Select Date Range</label>
+                            <label for="" style="color:#000000;">From Date :</label>
+                            <input type="date"  style="color:#000000;" ng-model="dateRangeModel.start_date">
+                            <label for="" style="color:#000000;">To Date :</label>
+                            <input type="date" style="color:#000000;" ng-model="dateRangeModel.end_date">
+                            <button class="btn btn-danger" ng-click="getLeadsByCampaign(campaignIdForPerfMetrics,campaignInfoForPerfMetrics)">Submit</button>
+
+                          </div>
                           <br /><br />
                           <div class="col-lg-6">
                             <div class="panel panel-primary">
@@ -1837,8 +1851,14 @@
                                <option value="" disabled>Select For Sorting</option>
                                 <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
                               </select>
-                              <div class="outerFlat">
-                                <div class="innerFlat">
+                              <div class="outerFlat" ng-if="!dateRangeModel">
+                                <div class="innerFlat" ng-if="!dateRangeModel">
+                                  <nvd3 options="locationChartOptions" data="sortedLocationData['flatData']" ng-if="togglesortedGraphs['flatData']"></nvd3>
+                                  <nvd3 options="stackedBarChartFlatWise" data="stackedBarFLatCountChart" ng-if="!togglesortedGraphs['flatData']"></nvd3>
+                                </div>
+                              </div>
+                              <div ng-if="dateRangeModel">
+                                <div ng-class="{'innerFlat': !dateRangeModel.start_date}">
                                   <nvd3 options="locationChartOptions" data="sortedLocationData['flatData']" ng-if="togglesortedGraphs['flatData']"></nvd3>
                                   <nvd3 options="stackedBarChartFlatWise" data="stackedBarFLatCountChart" ng-if="!togglesortedGraphs['flatData']"></nvd3>
                                 </div>
@@ -1920,8 +1940,14 @@
                                    <option value="" disabled>Select For Sorting</option>
                                     <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
                                   </select>
-                                  <div class="outerLocation">
-                                    <div class="innerLocation">
+                                  <div class="outerLocation"  ng-if="!dateRangeModel.start_date">
+                                    <div class="innerLocation"  ng-if="!dateRangeModel.start_date">
+                                      <nvd3 options="locationChartOptions" data="sortedLocationData['location']" ng-if="togglesortedGraphs['location']"></nvd3>
+                                      <nvd3 options="stackedBarChartLocationWise" data="stackedBarLocationCountChart" ng-if="!togglesortedGraphs['location']"></nvd3>
+                                    </div>
+                                  </div>
+                                  <div ng-if="dateRangeModel.start_date">
+                                    <div ng-if="dateRangeModel.start_date">
                                       <nvd3 options="locationChartOptions" data="sortedLocationData['location']" ng-if="togglesortedGraphs['location']"></nvd3>
                                       <nvd3 options="stackedBarChartLocationWise" data="stackedBarLocationCountChart" ng-if="!togglesortedGraphs['location']"></nvd3>
                                     </div>
@@ -1990,12 +2016,19 @@
                                     <option value="" disabled>Select For Sorting</option>
                                     <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
                                   </select>
-                                  <div class="outerPhase">
-                                    <div class="innerPhase">
+                                  <div class="outerLocation"  ng-if="!dateRangeModel.start_date">
+                                    <div class="innerLocation" ng-if="!dateRangeModel.start_date">
                                       <nvd3 options="locationChartOptions" data="sortedLocationData['weekwise']" ng-if="togglesortedGraphs['weekwise']"></nvd3>
                                       <nvd3 options="stackedBarChartPhaseWise" data="stackedBarPhaseChart" ng-if="!togglesortedGraphs['weekwise']"></nvd3>
                                     </div>
                                   </div>
+                                  <div ng-if="dateRangeModel.start_date">
+                                    <div  ng-if="dateRangeModel.start_date">
+                                      <nvd3 options="locationChartOptions" data="sortedLocationData['weekwise']" ng-if="togglesortedGraphs['weekwise']"></nvd3>
+                                      <nvd3 options="stackedBarChartPhaseWise" data="stackedBarPhaseChart" ng-if="!togglesortedGraphs['weekwise']"></nvd3>
+                                    </div>
+                                  </div>
+
                                 </div>
                               </div>
                         </div>
@@ -2010,8 +2043,14 @@
                               <option value="" disabled>Select For Sorting</option>
                               <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
                             </select>
-                            <div class="outer">
-                              <div class="inner">
+                            <div  class="outer" ng-if="!dateRangeModel.start_date">
+                              <div class="inner"  ng-if="!dateRangeModel.start_date">
+                                <nvd3 options="locationChartOptions" data="sortedLocationData['supplier']" ng-if="togglesortedGraphs['supplier']"></nvd3>
+                                <nvd3 options="stackedBarChartSocietyWise" data="stackedBarChartSupplierData" ng-if="!togglesortedGraphs['supplier']"></nvd3>
+                              </div>
+                            </div>
+                            <div ng-if="dateRangeModel.start_date">
+                              <div ng-if="dateRangeModel.start_date">
                                 <nvd3 options="locationChartOptions" data="sortedLocationData['supplier']" ng-if="togglesortedGraphs['supplier']"></nvd3>
                                 <nvd3 options="stackedBarChartSocietyWise" data="stackedBarChartSupplierData" ng-if="!togglesortedGraphs['supplier']"></nvd3>
                               </div>
@@ -2031,8 +2070,14 @@
                               <option value="" disabled>Select For Sorting</option>
                               <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
                             </select>
-                            <div class="outerdate">
-                              <div class="innerdate">
+                            <div class="outerdate" ng-if="!dateRangeModel.start_date">
+                              <div class="innerdate" ng-if="!dateRangeModel.start_date">
+                                <nvd3 options="locationChartOptions" data="sortedLocationData['datewise']" ng-if="togglesortedGraphs['datewise']"></nvd3>
+                                <nvd3 options="stackedBarChartDateWise" data="stackedBarChartDateData" ng-if="!togglesortedGraphs['datewise']"></nvd3>
+                              </div>
+                            </div>
+                            <div ng-if="dateRangeModel.start_date">
+                              <div ng-if="dateRangeModel.start_date">
                                 <nvd3 options="locationChartOptions" data="sortedLocationData['datewise']" ng-if="togglesortedGraphs['datewise']"></nvd3>
                                 <nvd3 options="stackedBarChartDateWise" data="stackedBarChartDateData" ng-if="!togglesortedGraphs['datewise']"></nvd3>
                               </div>

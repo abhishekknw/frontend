@@ -9,13 +9,13 @@
       .directive('pageTop', pageTop);
 
   /** @ngInject */
-  function pageTop() {
+  function pageTop(permissions) {
     return {
       restrict: 'E',
       templateUrl: 'modules/theme/components/pageTop/pageTop.html',
       controller : 'DashboardCtrl',
       link: function($scope, element, attrs) {
-                // $scope.perm = permissions.navBar;
+                $scope.perm = permissions.navBar;
                 // Do some stuff
                 $scope.closeModal = function(){
                   $('#menuModal').modal('hide');
@@ -26,5 +26,8 @@
 
     };
   }
+
+
+
 
 })();
