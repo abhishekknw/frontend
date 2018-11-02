@@ -84,16 +84,14 @@
             <td class="">{{getInventoryPrice(filter.actual_supplier_price,key)| currency : "₹"}}</td>
             <td class="" rowspan="{{key.length}}" ng-show="$first">{{getTotalSupplierPrice(supplier)| currency : "₹"}} ({{getTotalSupplierPrice(supplier)/supplier.flat_count|limitTo:8| currency : "₹"}})</td>
             <td class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="priceform">
-              <span  ng-disabled="!supplier.phase" class="error" ng-show="priceform.price.$error.min">{{positiveNoError}}</span>
-              <input  ng-disabled="!supplier.phase" type="number" name="price" ng-model="supplier.total_negotiated_price" class="form-control spacing input-width" min="0" permission = "[permissions.addNegotiatedPrice]">
+              <span  ng-disabled="!supplier.phase_no" class="error" ng-show="priceform.price.$error.min">{{positiveNoError}}</span>
+              <input  ng-disabled="!supplier.phase_no" type="number" name="price" ng-model="supplier.total_negotiated_price" class="form-control spacing input-width" min="0" permission = "[permissions.addNegotiatedPrice]">
            <br>{{supplier.total_negotiated_price / supplier.flat_count|| 0 | limitTo:8}}  </td>
 
           <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
-            <label  ng-repeat="freebiesData in customfreebies">
-              <input type="checkbox" class="" ng-disabled="isDisable(rowIndex)"  ng-click="addFreebies(freebiesData,rowIndex,$index)"  />{{freebiesData}}
-
-              <!-- <input type="checkbox" checklist-model="selected.customfreebies" checklist-value="freebiesData"> {{freebiesData}} -->
-            </label>
+            <div ng-repeat="freebie in customFreebies">
+              <input type="checkbox" checklist-model="supplier.freebies" checklist-value="freebie"> {{freebie}}
+            </div>
           </td>
             <!-- <td style="text-align:left;" rowspan="{{key.length}}" ng-show="$first">
               <span  ng-disabled="!supplier.phase" ng-dropdown-multiselect="" options="multiSelect"  extra-settings="selected_baseline_settings"
@@ -118,7 +116,7 @@
             <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
               <div class="radio">
                      <label>
-                       <input ng-disabled="!supplier.phase" type="radio" ng-model="supplier.payment_method" value="NEFT" ng-click="getPaymentDetails(supplier,supplier.payment_method)"
+                       <input ng-disabled="!supplier.phase_no" type="radio" ng-model="supplier.payment_method" value="NEFT" ng-click="getPaymentDetails(supplier,supplier.payment_method)"
                        permission = "[permissions.viewPaymentMode,permissions.addPaymentMode]"
                        data-target="#selectedPaymentModal" data-toggle="modal">NEFT
                      </label>
@@ -126,29 +124,29 @@
 
               <div class="radio" ng-if="supplier.status != 'X'">
                 <label>
-                   <input  ng-disabled="!supplier.phase" type="radio" ng-model="supplier.payment_method" value="CHEQUE"  permission = "[permissions.addPaymentMode]"
+                   <input  ng-disabled="!supplier.phase_no" type="radio" ng-model="supplier.payment_method" value="CHEQUE"  permission = "[permissions.addPaymentMode]"
                    data-target="#selectedPaymentModal" data-toggle="modal" ng-click="getPaymentDetails(supplier,supplier.payment_method)">Cheque</label>
               </div>
               <div class="radio" ng-if="supplier.status != 'X'">
-                     <label><input  ng-disabled="!supplier.phase" type="radio" ng-model="supplier.payment_method" value="CASH" permission = "[permissions.addPaymentMode]"
+                     <label><input  ng-disabled="!supplier.phase_no" type="radio" ng-model="supplier.payment_method" value="CASH" permission = "[permissions.addPaymentMode]"
                        ng-click="getPaymentDetails(supplier,supplier.payment_method)">Cash</label>
               </div>
 
               <div style="text-align:center">
-                <a  ng-disabled="!supplier.phase" data-target="#paymentModal" data-toggle="modal" ng-click="setPayment(supplier)" permission = "[permissions.viewPaymentDetails]"><b>Details</b></a>
+                <a  ng-disabled="!supplier.phase_no" data-target="#paymentModal" data-toggle="modal" ng-click="setPayment(supplier)" permission = "[permissions.viewPaymentDetails]"><b>Details</b></a>
               </div>
             </td>
             <td class="" rowspan="{{key.length}}" ng-show="$first">
               <div class="" ng-if="supplier.payment_method == 'NEFT' || supplier.payment_method == 'CHEQUE'">
-                <input  ng-disabled="!supplier.phase" type="text" class="form-control" ng-model="supplier.transaction_or_check_number" ng-change="updateSupplierStatus(supplier)">
+                <input  ng-disabled="!supplier.phase_no" type="text" class="form-control" ng-model="supplier.transaction_or_check_number" ng-change="updateSupplierStatus(supplier)">
               </div>
             </td>
             <td class="" rowspan="{{key.length}}" ng-show="$first">
-              <a  ng-disabled="!supplier.phase" class="" data-target="#contactModal" data-toggle="modal" ng-click="setContact(supplier)"><b>View Contact Details</b></a>
+              <a  ng-disabled="!supplier.phase_no" class="" data-target="#contactModal" data-toggle="modal" ng-click="setContact(supplier)"><b>View Contact Details</b></a>
             </td>
             <!--for payment status  -->
             <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
-              <select   ng-disabled="!supplier.phase" class="form-control spacing input-width" ng-model="supplier.payment_status" permission = "[permissions.viewPaymentDetails]">
+              <select   ng-disabled="!supplier.phase_no" class="form-control spacing input-width" ng-model="supplier.payment_status" permission = "[permissions.viewPaymentDetails]">
                 <option style="width:100%;" ng-repeat="item in payment_status"
                  ng-if="supplier.payment_status == undefined ? supplier.payment_status = payment_status[0].code : 1"
                 value="{{item.code}}" ng-click="updateSupplierStatus(supplier)"
@@ -204,7 +202,7 @@
               <div class = "col-md-3"><label>Select Inventory Type </label></div>
               <div class = "col-md-3">
                 <select class="form-control" ng-model="inventoryType" ng-disabled="!phase" required>
-                <option ng-repeat="inventory in inventoryTypes" value="{{inventory}}">{{inventory}}</option>
+                  <option ng-repeat="inventory in inventoryTypes" value="{{inventory}}">{{inventory}}</option>
                 </select>
               </div>
               <!--<span class="show-error" ng-show="form.businessname.$error.pattern">Please Enter Valid Business Name</span> </div>-->

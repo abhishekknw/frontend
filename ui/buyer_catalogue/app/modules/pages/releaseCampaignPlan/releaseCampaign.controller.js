@@ -679,6 +679,7 @@ $scope.multiSelect =
              phase.start_date = new Date(phase.start_date);
              phase.end_date = new Date(phase.end_date);
            })
+           $scope.getPhases();
            $scope.editPhase = false;
          }).catch(function onError(response){
            console.log(response);
@@ -937,9 +938,9 @@ $scope.multiSelect =
         })
       }
 
-      $scope.customfreebies = [
-          'WhatsappGroup',
-          'EmailGroup',
+      $scope.customFreebies = [
+          'Whatsapp Group',
+          'Email Group',
           'Building ERP',
           'Door to Door'
         ];

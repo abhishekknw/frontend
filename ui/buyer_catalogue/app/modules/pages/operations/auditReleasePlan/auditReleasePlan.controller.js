@@ -13,6 +13,7 @@ angular.module('catalogueApp')
       }
       $scope.permissions = permissions.auditReleasePage;
       $scope.headings = [
+        // {header : 'Index'},
         {header : 'Phase'},
         {header : 'Inventory Type'},
         {header : 'Supplier Name'},
@@ -62,6 +63,7 @@ angular.module('catalogueApp')
       function init(){
         getCampaignReleaseDetails();
         getUsersList();
+        $scope.getPhases();
       }
       //get user list
       var getUsersList = function(){
@@ -78,6 +80,25 @@ angular.module('catalogueApp')
             console.log("error occured", response.status);
             commonDataShare.showErrorMessage(response);
           });
+      }
+      $scope.getPhases = function(){
+        $scope.editPhase = false;
+        auditReleasePlanService.getPhases($scope.campaign_id)
+        .then(function onSuccess(response){
+          console.log(response);
+          $scope.phaseMappingList = {};
+          angular.forEach(response.data.data, function(phase){
+            phase.start_date = new Date(phase.start_date);
+            phase.end_date = new Date(phase.end_date);
+            $scope.phaseMappingList[phase.id] = phase;
+          })
+          console.log($scope.phaseMappingList);
+          $scope.phases = response.data.data;
+          console.log($scope.phases);
+
+        }).catch(function onError(response){
+          console.log(response);
+        })
       }
       init();
 
@@ -483,6 +504,8 @@ angular.module('catalogueApp')
        console.log(response);
      })
    }
+
+
 
 
 }]);
