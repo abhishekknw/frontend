@@ -1409,13 +1409,23 @@
                     <small>End Date : {{bookingPhases.last_completed_phase.end_date|limitTo:10|date:fullDate}}</small>
                 </div>
               </td>
-              <td><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.supplier_data,'Last Completed Phase')">
-                    {{bookingPhases.last_completed_phase.total_booked_suppliers}} ({{bookingPhases.last_completed_phase.total_booked_flats}})
+              <td><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.confirmed_booked.supplier_data,'Last Completed Phase')">
+                    {{bookingPhases.last_completed_phase.confirmed_booked.supplier_count||0}} ({{bookingPhases.last_completed_phase.confirmed_booked.flat_count||0}})
                   </a></small>
               </td>
-              <td><small>{{bookingPhases.last_completed_phase.verbally_booked_suppliers}} ({{bookingPhases.last_completed_phase.verbally_booked_flats}})</small></td>
-              <td><small>{{bookingPhases.last_completed_phase.followup_req_booked_suppliers}} ({{bookingPhases.last_completed_phase.followup_req_booked_flats}})</small></td>
-              <td><small>{{bookingPhases.last_completed_phase.total_booked_suppliers}} ({{bookingPhases.last_completed_phase.total_booked_flats}})</small></td>
+              <td><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.verbally_booked.supplier_data,'Last Completed Phase')">
+                {{bookingPhases.last_completed_phase.verbally_booked.supplier_count.length||0}} ({{bookingPhases.last_completed_phase.verbally_booked.flat_count||0}})
+              </a>
+              </small>
+              </td>
+              <td><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.followup_required.supplier_data,'Last Completed Phase')">
+                {{bookingPhases.last_completed_phase.followup_required.supplier_count||0}} ({{bookingPhases.last_completed_phase.followup_required.flat_count||0}})
+                </a></small>
+              </td>
+              <td><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.total_booked.supplier_data,'Last Completed Phase')">
+                {{bookingPhases.last_completed_phase.total_booked.supplier_count.length||0}} ({{bookingPhases.last_completed_phase.total_booked.flat_count||0}})
+                </a>
+            </small></td>
             </tr>
             <tr ng-if="bookingPhases.ongoing_phase">
               <td>
@@ -1425,10 +1435,17 @@
                     <small>End Date : {{bookingPhases.ongoing_phase.end_date|limitTo:10|date:fullDate}}</small>
                 </div>
               </td>
-              <td><small>{{bookingPhases.ongoing_phase.total_booked_suppliers}} ({{bookingPhases.ongoing_phase.total_booked_flats}})</small> </td>
-              <td><small>{{bookingPhases.ongoing_phase.verbally_booked_suppliers}} ({{bookingPhases.ongoing_phase.verbally_booked_flats}})</small></td>
-              <td><small>{{bookingPhases.ongoing_phase.followup_req_booked_suppliers}} ({{bookingPhases.ongoing_phase.followup_req_booked_flats}})</small></td>
-              <td><small>{{bookingPhases.ongoing_phase.total_booked_suppliers}} ({{bookingPhases.ongoing_phase.total_booked_flats}})</small></td>
+              <td><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.confirmed_booked.supplier_data,'Ongoing Phase')">
+                {{bookingPhases.ongoing_phase.confirmed_booked.supplier_count||0}} ({{bookingPhases.ongoing_phase.confirmed_booked.flat_count||0}})
+                </a></small>
+              </td>
+              <td><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.verbally_booked.supplier_data,'Ongoing Phase')">
+                {{bookingPhases.ongoing_phase.verbally_booked.supplier_count.length||0}} ({{bookingPhases.ongoing_phase.verbally_booked.flat_count||0}})</small>
+              </a>
+              </td>
+              <td><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.followup_required.supplier_data,'Ongoing Phase')">
+                {{bookingPhases.ongoing_phase.followup_required.supplier_count||0}} ({{bookingPhases.ongoing_phase.followup_required.flat_count||0}})</small></td>
+              <td><small>{{bookingPhases.ongoing_phase.total_booked.supplier_count.length||0}} ({{bookingPhases.ongoing_phase.total_booked.flat_count||0}})</small></td>
             </tr>
             <tr ng-repeat="item in bookingPhases.upcoming_phases" ng-if="bookingPhases.upcoming_phases.length">
               <td>
@@ -1438,10 +1455,20 @@
                   <small>End Date : {{item.end_date|limitTo:10|date:fullDate}}</small>
                 </div>
               </td>
-              <td><small>{{item.total_booked_suppliers}} ({{item.total_booked_flats}})</small> </td>
-              <td><small>{{item.verbally_booked_suppliers}} ({{item.verbally_booked_flats}})</small></td>
-              <td><small>{{item.followup_req_booked_suppliers}} ({{item.followup_req_booked_flats}})</small></td>
-              <td><small>{{item.total_booked_suppliers}} ({{item.total_booked_flats}})</small></td>
+              <td ng-if="item.confirmed_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.confirmed_booked.supplier_data,'Upcoming Phase')">
+                {{item.confirmed_booked.supplier_count}} ({{item.confirmed_booked.flat_count||0}})</a>
+              </small> </td>
+              <td ng-if="item.confirmed_booked.supplier_data.length == 0"><small>0</small></td>
+              <td  ng-if="item.verbally_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.verbally_booked.supplier_data,'Upcoming Phase')">
+                {{item.verbally_booked.supplier_count.length}} ({{item.verbally_booked.flat_count||0}})</a></small></td>
+              <td ng-if="item.verbally_booked.supplier_data.length == 0"><small>0</small></td>
+              <td ng-if="item.followup_required.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.followup_required.supplier_data,'Upcoming Phase')">
+                {{item.followup_required.supplier_count}} ({{item.followup_required.flat_count||0}})</small></td>
+              <td ng-if="item.followup_required.supplier_data.length == 0"><small>0</small></td>
+              <td  ng-if="item.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.total_booked.supplier_data,'Upcoming Phase')">
+                {{item.total_booked.supplier_count.length}} ({{item.total_booked.flat_count||0}})
+                </a></small></td>
+              <td ng-if="item.total_booked.supplier_data.length == 0"><small>0</small></td>
             </tr>
           </tbody>
         </table>
@@ -1461,12 +1488,24 @@
           </thead>
           <tbody>
             <tr>
-              <td> <small>{{bookingPhases.pipelined_suppliers.confirm_booked.total_booked_suppliers||0}}</small> </td>
-              <td> <small>{{bookingPhases.pipelined_suppliers.confirm_booked.total_booked_suppliers||0}}</small> </td>
-              <td> <small>{{bookingPhases.pipelined_suppliers.confirm_booked.total_booked_suppliers||0}}</small> </td>
-              <td> <small>{{bookingPhases.pipelined_suppliers.confirm_booked.total_booked_suppliers||0}}</small> </td>
-              <td> <small>{{bookingPhases.pipelined_suppliers.confirm_booked.total_booked_suppliers||0}}</small> </td>
-              <td> <small>{{bookingPhases.pipelined_suppliers.confirm_booked.total_booked_suppliers||0}}</small> </td>
+              <td> <small>{{bookingPhases.pipeline_suppliers.confirmed_booked.supplier_count||0}}
+                 ({{bookingPhases.pipeline_suppliers.confirmed_booked.flat_count||0}})</small>
+               </td>
+              <td> <small>{{bookingPhases.pipeline_suppliers.not_initiated.supplier_count||0}}
+                    ({{bookingPhases.pipeline_suppliers.not_initiated.flat_count||0}})
+                  </small> </td>
+              <td> <small>{{bookingPhases.pipeline_suppliers.followup_required.supplier_count||0}}
+                    ({{bookingPhases.pipeline_suppliers.followup_required.flat_count||0}})
+                  </small> </td>
+              <td> <small>{{bookingPhases.pipeline_suppliers.verbally_booked.supplier_count||0}}
+                    ({{bookingPhases.pipeline_suppliers.verbally_booked.flat_count||0}})
+                  </small> </td>
+              <td> <small>{{bookingPhases.pipeline_suppliers.rejected.supplier_count||0}}
+                    ({{bookingPhases.pipeline_suppliers.rejected.flat_count||0}})
+                  </small> </td>
+              <td> <small>{{bookingPhases.pipeline_suppliers.total_booked.supplier_count||0}}
+                    ({{bookingPhases.pipeline_suppliers.total_booked.flat_count||0}})
+                  </small></td>
             </tr>
           </tbody>
         </table>
@@ -1486,10 +1525,11 @@
                 <th>Status</th>
                 <th>Map Details</th>
                 <th>Comments</th>
+                <th>Inventory Counts</th>
               </tr>
             </thead>
-            <tbody ng-repeat="(key,values) in bookingSuppliersData">
-              <tr ng-repeat="supplier in values">
+            <tbody>
+              <tr ng-repeat="supplier in bookingSuppliersData">
                 <td>{{$index + 1}}</td>
                 <td>{{supplier.society_name}}</td>
                 <td>{{supplier.flat_count}}</td>
@@ -1499,6 +1539,10 @@
                 <td>{{bookingStatusSuppliers[supplier.booking_status]}}</td>
                 <td><a href="https://www.google.com/maps/?q=+{{supplier.society_latitude}}+{{supplier.society_longitude}}" target="_blank">View Details</a></td>
                 <td><a ng-click="viewBookingComments(supplier)">View Comments</a></td>
+                <td>Poster : {{supplier.inventory_counts.POSTER}}<br>
+                Flyer : {{supplier.inventory_counts.FLYER}}<br>
+                Standee: {{supplier.inventory_counts.STANDEE}}<br>
+            Stall : {{supplier.inventory_counts.STALL}}</td>
               </tr>
             </tbody>
           </table>
