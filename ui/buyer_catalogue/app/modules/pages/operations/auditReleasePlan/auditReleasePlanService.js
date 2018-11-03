@@ -58,6 +58,11 @@ angular.module('catalogueApp')
       return machadaloHttp.get(url);
     }
 
+    auditReleasePlanService.getPhases = function(campaignId){
+      var url = url_base  + "supplier-phase/?campaign_id=" + campaignId;
+      return machadaloHttp.get(url);
+    }
+
    return auditReleasePlanService;
   return 0;
 }]);
