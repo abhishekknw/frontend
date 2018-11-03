@@ -166,6 +166,12 @@ angular
       SL : 'STALL',
       FL : 'FLYER'
     },
+
+    supplierBookingStatus : {
+      '' : 'Not Initiated',
+      BK : 'Booked',
+      VB : 'Verbally Booked',
+    },
     distanceLimit : 500,
     release : 'RELEASE',
     closure : 'CLOSURE',

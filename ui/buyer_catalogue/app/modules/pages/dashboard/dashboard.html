@@ -1505,24 +1505,40 @@
           </thead>
           <tbody>
             <tr>
-              <td> <small>{{bookingPhases.pipeline_suppliers.confirmed_booked.supplier_count||0}}
-                 ({{bookingPhases.pipeline_suppliers.confirmed_booked.flat_count||0}})</small>
-               </td>
-              <td> <small>{{bookingPhases.pipeline_suppliers.not_initiated.supplier_count||0}}
-                    ({{bookingPhases.pipeline_suppliers.not_initiated.flat_count||0}})
-                  </small> </td>
-              <td> <small>{{bookingPhases.pipeline_suppliers.followup_required.supplier_count||0}}
-                    ({{bookingPhases.pipeline_suppliers.followup_required.flat_count||0}})
-                  </small> </td>
-              <td> <small>{{bookingPhases.pipeline_suppliers.verbally_booked.supplier_count||0}}
-                    ({{bookingPhases.pipeline_suppliers.verbally_booked.flat_count||0}})
-                  </small> </td>
-              <td> <small>{{bookingPhases.pipeline_suppliers.rejected.supplier_count||0}}
-                    ({{bookingPhases.pipeline_suppliers.rejected.flat_count||0}})
-                  </small> </td>
-              <td> <small>{{bookingPhases.pipeline_suppliers.total_booked.supplier_count||0}}
-                    ({{bookingPhases.pipeline_suppliers.total_booked.flat_count||0}})
-                  </small></td>
+              <td ng-if="bookingPhases.pipeline_suppliers.confirmed_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.confirmed_booked.supplier_data,'Ongoing Phase')">
+                {{bookingPhases.pipeline_suppliers.confirmed_booked.supplier_count}} ({{bookingPhases.ongoing_phase.confirmed_booked.flat_count}})
+                </a></small>
+              </td>
+              <td ng-if="bookingPhases.pipeline_suppliers.confirmed_booked.supplier_data.length == 0"><small>0</small></td>
+
+              <td ng-if="bookingPhases.pipeline_suppliers.not_initiated.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.not_initiated.supplier_data,'Ongoing Phase')">
+                {{bookingPhases.pipeline_suppliers.not_initiated.supplier_count}} ({{bookingPhases.pipeline_suppliers.not_initiated.flat_count}})</small></td>
+                <td ng-if="bookingPhases.pipeline_suppliers.not_initiated.supplier_data.length == 0"><small>0</small></td>
+
+
+
+                <td ng-if="bookingPhases.pipeline_suppliers.followup_required.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.followup_required.supplier_data,'Ongoing Phase')">
+                  {{bookingPhases.pipeline_suppliers.followup_required.supplier_count}} ({{bookingPhases.pipeline_suppliers.followup_required.flat_count}})</small></td>
+                  <td ng-if="bookingPhases.pipeline_suppliers.followup_required.supplier_data.length == 0"><small>0</small></td>
+
+              <td ng-if="bookingPhases.pipeline_suppliers.verbally_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.verbally_booked.supplier_data,'Ongoing Phase')">
+                {{bookingPhases.pipeline_suppliers.verbally_booked.supplier_count.length}} ({{bookingPhases.pipeline_suppliers.verbally_booked.flat_count}})</small>
+              </a>
+              </td>
+              <td ng-if="bookingPhases.pipeline_suppliers.verbally_booked.supplier_data.length == 0"><small>0</small></td>
+
+
+                <td ng-if="bookingPhases.pipeline_suppliers.rejected.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.rejected.supplier_data,'Ongoing Phase')">
+                  {{bookingPhases.pipeline_suppliers.rejected.supplier_count}} ({{bookingPhases.pipeline_suppliers.rejected.flat_count}})</small></td>
+                  <td ng-if="bookingPhases.pipeline_suppliers.rejected.supplier_data.length == 0"><small>0</small></td>
+
+
+              <td ng-if="bookingPhases.pipeline_suppliers.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.total_booked.supplier_data,'Last Completed Phase')">
+                {{bookingPhases.pipeline_suppliers.total_booked.supplier_count.length}} ({{bookingPhases.pipeline_suppliers.total_booked.flat_count}})
+                </a>
+            </small></td>
+            <td ng-if="bookingPhases.pipeline_suppliers.total_booked.supplier_data.length == 0"><small>0</small></td>
+
             </tr>
           </tbody>
         </table>
@@ -1544,6 +1560,7 @@
                   <th>Map Details</th>
                   <th>Comments</th>
                   <th>Inventory Counts</th>
+                  <th>Freebies</th>
                 </tr>
               </thead>
               <tbody>
@@ -1554,13 +1571,17 @@
                   <td>{{supplier.tower_count}}</td>
                   <td>{{supplier.society_type_quality}}</td>
                   <td>{{supplier.society_locality}}({{supplier.society_subarea}})</td>
-                  <td>{{bookingStatusSuppliers[supplier.booking_status]}}</td>
+                  <td>{{supplierBookingStatus[supplier.booking_status]}}</td>
                   <td><a href="https://www.google.com/maps/?q=+{{supplier.society_latitude}}+{{supplier.society_longitude}}" target="_blank">View Details</a></td>
                   <td><a ng-click="viewBookingComments(supplier)">View Comments</a></td>
                   <td>Poster : {{supplier.inventory_counts.POSTER}}<br>
                   Flyer : {{supplier.inventory_counts.FLYER}}<br>
                   Standee: {{supplier.inventory_counts.STANDEE}}<br>
-              Stall : {{supplier.inventory_counts.STALL}}</td>
+                  Stall : {{supplier.inventory_counts.STALL}}
+                </td>
+                <td ng-repeat="freebies in supplier.freebies" ng-if="supplier.freebies">{{freebies}}</td>
+                <td ng-if="supplier.freebies === null">No Freebies</td>
+
                 </tr>
               </tbody>
             </table>

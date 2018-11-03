@@ -1993,6 +1993,7 @@ $scope.getBookingCampaigns = function(campaign){
   $scope.headerForSupplierBookings = undefined;
   $scope.bookingPhases = [];
   $scope.bookingSuppliersData = [];
+
   $scope.proposalId = campaign.campaign;
   console.log(campaign);
   $scope.selectedBookingCampaignName = campaign.name;
@@ -2020,6 +2021,7 @@ $scope.getTotalFlatCount = function(data){
 $scope.getSuppliersOfBookingDetails = function(data,header){
   $scope.headerForSupplierBookings = header;
   $scope.bookingSuppliersData = {};
+  $scope.supplierBookingStatus = constants.supplierBookingStatus;
   if(data){
     $scope.bookingSuppliersData = data;
   }else{
