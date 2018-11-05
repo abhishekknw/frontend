@@ -1571,7 +1571,7 @@
                   <td>{{supplier.tower_count}}</td>
                   <td>{{supplier.society_type_quality}}</td>
                   <td>{{supplier.society_locality}}({{supplier.society_subarea}})</td>
-                  <td>{{supplierBookingStatus[supplier.booking_status]}}</td>
+                  <td>{{supplierBookingStatus[supplier.booking_status||'Not Initiated']}}</td>
                   <td><a href="https://www.google.com/maps/?q=+{{supplier.society_latitude}}+{{supplier.society_longitude}}" target="_blank">View Details</a></td>
                   <td><a ng-click="viewBookingComments(supplier)">View Comments</a></td>
                   <td>Poster : {{supplier.inventory_counts.POSTER}}<br>
