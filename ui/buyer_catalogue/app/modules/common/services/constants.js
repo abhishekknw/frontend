@@ -170,7 +170,15 @@ angular
     supplierBookingStatus : {
       '' : 'Not Initiated',
       BK : 'Booked',
-      VB : 'Verbally Booked',
+      PB : 'Phone Booked',
+      VB : 'Visit Booked',
+      SR : 'Rejected',
+      SE : 'Email Required',
+      DP : 'Decision Pending',
+      VR : 'Visit Required',
+      CR : 'Call Required',
+      TB : 'Tentative Booking'
+
     },
     distanceLimit : 500,
     release : 'RELEASE',
