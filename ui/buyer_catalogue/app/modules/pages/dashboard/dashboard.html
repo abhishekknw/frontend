@@ -1581,7 +1581,7 @@
                 </td>
                 <td ng-if="supplier.freebies">
                   <div class="" ng-repeat="freebies in supplier.freebies">
-                      {{freebies}}
+                      {{$index + 1}} - {{freebies}}<br>
                   </div>
                   </td>
                 <td ng-if="supplier.freebies === null">No Freebies</td>
