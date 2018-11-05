@@ -1416,7 +1416,7 @@
               <td ng-if="bookingPhases.last_completed_phase.confirmed_booked.supplier_data.length == 0"><small>0</small></td>
 
               <td ng-if="bookingPhases.last_completed_phase.verbally_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.verbally_booked.supplier_data,'Last Completed Phase')">
-                {{bookingPhases.last_completed_phase.verbally_booked.supplier_count.length}} ({{bookingPhases.last_completed_phase.verbally_booked.flat_count}})
+                {{bookingPhases.last_completed_phase.verbally_booked.supplier_count}} ({{bookingPhases.last_completed_phase.verbally_booked.flat_count}})
               </a>
               </small>
               </td>
@@ -1449,7 +1449,7 @@
               </td>
               <td ng-if="bookingPhases.ongoing_phase.confirmed_booked.supplier_data.length == 0"><small>0</small></td>
               <td ng-if="bookingPhases.ongoing_phase.verbally_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.verbally_booked.supplier_data,'Ongoing Phase')">
-                {{bookingPhases.ongoing_phase.verbally_booked.supplier_count.length}} ({{bookingPhases.ongoing_phase.verbally_booked.flat_count}})</small>
+                {{bookingPhases.ongoing_phase.verbally_booked.supplier_count}} ({{bookingPhases.ongoing_phase.verbally_booked.flat_count}})</small>
               </a>
               </td>
               <td ng-if="bookingPhases.ongoing_phase.verbally_booked.supplier_data.length == 0"><small>0</small></td>
@@ -1477,7 +1477,7 @@
               </small> </td>
               <td ng-if="item.confirmed_booked.supplier_data.length == 0"><small>0</small></td>
               <td  ng-if="item.verbally_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.verbally_booked.supplier_data,'Upcoming Phase')">
-                {{item.verbally_booked.supplier_count.length}} ({{item.verbally_booked.flat_count}})</a></small></td>
+                {{item.verbally_booked.supplier_count}} ({{item.verbally_booked.flat_count}})</a></small></td>
               <td ng-if="item.verbally_booked.supplier_data.length == 0"><small>0</small></td>
               <td ng-if="item.followup_required.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.followup_required.supplier_data,'Upcoming Phase')">
                 {{item.followup_required.supplier_count}} ({{item.followup_required.flat_count}})</small></td>
