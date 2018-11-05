@@ -1579,9 +1579,9 @@
                   Standee: {{supplier.inventory_counts.STANDEE}}<br>
                   Stall : {{supplier.inventory_counts.STALL}}
                 </td>
-                <td ng-if="supplier.freebies">
+                <td style="width:130px" ng-if="supplier.freebies">
                   <div class="" ng-repeat="freebies in supplier.freebies">
-                      {{$index + 1}} - {{freebies}}<br>
+                      {{$index + 1}} : {{freebies}}<br>
                   </div>
                   </td>
                 <td ng-if="supplier.freebies === null">No Freebies</td>
