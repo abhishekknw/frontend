@@ -2380,6 +2380,14 @@ $scope.getPermissionBoxImages = function(supplier){
     console.log(response);
   })
 }
+$scope.getPermissionBoxImages = function(supplier){
+  DashboardService.getPermissionBoxImages($scope.campaignId, supplier.supplier.supplier_id)
+  .then(function onSuccess(response){
+    console.log(response);
+  }).catch(function onError(response){
+    console.log(response);
+  })
+}
 //END
 })
 
