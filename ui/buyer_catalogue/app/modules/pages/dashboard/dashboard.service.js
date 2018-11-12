@@ -70,7 +70,7 @@
       return machadaloHttp.get(url);
     }
 
-    
+
     DashboardService.getLeadsByCampaign = function(campaignId,data){
       if(data && data.hasOwnProperty('start_date') && data.hasOwnProperty('end_date')){
         var url = url_base + "dashboard/get_leads_by_campaign_new/?campaign_id=" + campaignId + "&start_date=" + data.start_date + "&end_date=" + data.end_date;
