@@ -954,6 +954,21 @@ $scope.multiSelect =
           //   $scope.customfreebies.splice(index,1);
           // console.log($scope.customfreebies);
         }
+  $scope.deleteSupplier = function(id,index){
+
+    var data = [];
+    data.push(id);
+    console.log(data,index);
+    releaseCampaignService.deleteSupplier(data)
+    .then(function onSuccess(response){
+      console.log(response);
+      $scope.releaseDetails.shortlisted_suppliers.splice(index,1);
+      $scope.$watch();
+      swal(constants.name, constants.delete_success, constants.success);
+    }).catch(function onError(response){
+      console.log(response);
+    })
+  }
 
 
 }]);//Controller function ends here

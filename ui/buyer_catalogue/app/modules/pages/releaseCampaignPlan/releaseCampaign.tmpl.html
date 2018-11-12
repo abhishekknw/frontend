@@ -57,9 +57,10 @@
             <th>Payment Status</th>
             <th>Completion Status</th>
             <th>Comments</th>
+            <th>Action</th>
           </tr>
         </thead>
-        <tbody ng-repeat="supplier in releaseDetails.shortlisted_suppliers">
+        <tbody ng-repeat="supplier in releaseDetails.shortlisted_suppliers track by $index">
           <tr ng-repeat="(key,filter) in getFilters(supplier)" ng-disabled="$index != '15'">
             <td rowspan="{{key.length}}" ng-show="$first">{{$parent.$index + 1}}</td>
             <td class="" rowspan="{{key.length}}" ng-show="$first"><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages" ng-click="getSocietyDetails(supplier,supplier.supplier_id,center,$index)" target="_blank" style="text-decoration: underline; cursor: pointer;color:blue;">{{supplier.name}}({{supplier.quality_rating}})</a></td>
@@ -173,6 +174,9 @@
             <td rowspan="{{key.length}}" ng-show="$first">
               <button type="button" class="btn btn-danger" data-target="#addComments" data-toggle="modal" ng-click="getSupplierForComments(supplier)">Add</button></br>
               <button type="button" class="btn btn-danger"   ng-click="viewComments(supplier)">View</button>
+            </td>
+            <td rowspan="{{key.length}}" ng-show="$first">
+              <button type="button" class="btn btn-danger"   ng-click="deleteSupplier(supplier.id,$parent.$index)">Delete</button>
             </td>
           </tr>
         </tbody>

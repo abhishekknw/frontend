@@ -98,5 +98,10 @@
       return machadaloHttp.get(url);
     }
 
+    releaseCampaignService.deleteSupplier = function(data){
+      var url = url_base +  "delete-shortlisted-spaces/";
+      return machadaloHttp.post(url,data);
+    }
+
     return releaseCampaignService;
 }]);
