@@ -1046,13 +1046,13 @@
                                                   <button type="button" class="btn btn-danger" ng-click="enableAddComments($index)">Add Comments</button>
                                                   <div ng-if="enableComments == $index">
                                                     <textarea name="name" rows="4" cols="20" placeholder="Enter Here.." ng-model="commentModal.comment"></textarea>
-                                                    <button class="btn btn-success form-control" ng-disabled="!commentModal.comment" ng-click="addComment(supplier)">Add</button>
+                                                    <button class="btn btn-success form-control" ng-disabled="!commentModal.comment" ng-click="addComment(supplier.shortlisted_space_id)">Add</button>
                                                   </div>
                                                 </td>
 
                                                 <td>
                                                   <button type="button" class="btn btn-danger" ng-click="viewComments(supplier,$index)">View Comments</button><br>
-                                                  <div class="panel panel-default" ng-if="enableViewComments == $index" style="height:100px;overflow-y:scroll;">
+                                                  <div class="panel panel-default" ng-if="enableViewComments == $index" style="height:100px;overflow-y:scroll;padding-top:40px;">
                                                     <div class="talk-bubble tri-right round left-top"  ng-repeat="item in commentsData.general" style="margin-top:-20px">
                                                       <div class="talktext" style="font-color:black">
                                                         <p style="color:#ff0000;font-size:smaller">{{item.user_name}}</p>

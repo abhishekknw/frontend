@@ -2096,26 +2096,27 @@ $scope.backToCampaign = function(){
 //   })
 // }
 
-$scope.viewComments = function(inv,supplier){
-  $scope.supplierDataForComment = supplier;
-  $scope.supplierNameForComment = undefined;
-  $scope.supplierNameForComment = supplier.supplier_data.society_name;
+$scope.viewComments = function(supplier,index){
+  // $scope.supplierDataForComment = supplier;
+  // $scope.supplierNameForComment = undefined;
+  // $scope.supplierNameForComment = supplier.supplier_data.society_name;
   $scope.commentsData = {};
   var relatedTo = constants.execution_related_comment;
-  var spaceId = $scope.supplierDataForComment.space_id;
-  DashboardService.viewComments($scope.proposalId,spaceId,relatedTo,inv)
+  var spaceId = supplier.shortlisted_space_id;
+  DashboardService.viewComments($scope.campaignId,spaceId,relatedTo)
   .then(function onSuccess(response){
     console.log(response);
     $scope.commentModal = {};
+    $scope.enableViewComments = index;
     $scope.commentsData = response.data.data;
-    if(Object.keys($scope.commentsData).length != 0){
-      $scope.viewInvForComments = Object.keys($scope.commentsData);
-      $scope.selectedInvForView = $scope.viewInvForComments[0];
-      $('#viewComments').modal('show');
-    }else{
-      $('#viewComments').modal('hide');
-      swal(constants.name,constants.no_comments_msg,constants.warning);
-    }
+    // if(Object.keys($scope.commentsData).length != 0){
+    //   $scope.viewInvForComments = Object.keys($scope.commentsData);
+    //   $scope.selectedInvForView = $scope.viewInvForComments[0];
+    //   $('#viewComments').modal('show');
+    // }else{
+    //   $('#viewComments').modal('hide');
+    //   swal(constants.name,constants.no_comments_msg,constants.warning);
+    // }
   }).catch(function onError(response){
     console.log(response);
   })
@@ -2246,16 +2247,17 @@ var formatByLocation = function(data,key,type){
   })
   return [temp_data];
 }
+$scope.commentModal = {};
+$scope.addComment = function(id){
 
-$scope.addComment = function(){
-  $scope.commentModal['related_to'] = constants.booking_related_comment;
-  $scope.commentModal['shortlisted_spaces_id'] = $scope.supplierDataForComment.id;
-  releaseCampaignService.addComment($scope.campaign_id,$scope.commentModal)
+  $scope.commentModal['related_to'] = constants.execution_related_comment;
+  $scope.commentModal['shortlisted_spaces_id'] = id;
+  DashboardService.addComment($scope.campaignId,$scope.commentModal)
   .then(function onSuccess(response){
     console.log(response);
     $scope.commentModal = {};
     $scope.supplierDataForComment = undefined;
-    $('#addComments').modal('hide');
+    // $('#addComments').modal('hide');
     swal(constants.name, constants.add_data_success, constants.success);
   }).catch(function onError(response){
     console.log(response);
@@ -2387,6 +2389,9 @@ $scope.getPermissionBoxImages = function(supplier){
   }).catch(function onError(response){
     console.log(response);
   })
+}
+$scope.enableAddComments = function(index){
+  $scope.enableComments = index;
 }
 //END
 })
