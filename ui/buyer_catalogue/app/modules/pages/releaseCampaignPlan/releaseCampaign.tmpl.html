@@ -176,8 +176,15 @@
               <button type="button" class="btn btn-danger"   ng-click="viewComments(supplier)">View</button>
             </td>
             <td rowspan="{{key.length}}" ng-show="$first">
-              <button type="button" class="btn btn-danger"   ng-click="deleteSupplier(supplier.id,$parent.$index)">Delete</button>
+              <button type="button" class="btn btn-danger"   ng-click="deleteSupplier(supplier.id,$parent.$index)">Delete Supplier</button>
             </td>
+            <td rowspan="{{key.length}}" ng-show="$first">
+              <button class="btn btn-primary active" ngf-select="uploadImage($file)">Upload Image</button>
+              <textarea name="name" rows="4" cols="20" placeholder="Enter Comments" ng-model="permissionBoxData.comment"></textarea>
+              <button ng-click="uploadPermissionBoxImage(supplier)" >Submit</button>
+              <button ng-click="getPermissionBoxImages(supplier)" >View</button>
+            </td>
+
           </tr>
         </tbody>
         <tfoot>

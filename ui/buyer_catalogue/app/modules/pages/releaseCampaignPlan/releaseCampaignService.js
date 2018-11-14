@@ -103,5 +103,10 @@
       return machadaloHttp.post(url,data);
     }
 
+    releaseCampaignService.getPermissionBoxImages = function(campaignId,supplierId){
+      var url = url_base +  "hashtag-images/get_permission_box_images/?campaign_id=" + campaignId + "&supplier_id=" + supplierId;
+      return machadaloHttp.get(url);
+    }
+
     return releaseCampaignService;
 }]);

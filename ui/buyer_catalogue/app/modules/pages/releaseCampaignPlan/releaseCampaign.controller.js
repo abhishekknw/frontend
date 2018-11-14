@@ -970,5 +970,50 @@ $scope.multiSelect =
     })
   }
 
+  $scope.uploadImage = function(file){
+    $scope.permissionBoxFile = file;
+  }
+  $scope.permissionBoxData = {};
+  $scope.uploadPermissionBoxImage = function(supplier){
+    // cfpLoadingBar.set(0.3)
+    console.log(supplier);
+        var token = $rootScope.globals.currentUser.token;
+        if ($scope.permissionBoxFile) {
+          cfpLoadingBar.start();
+          Upload.upload({
+              url: constants.base_url + constants.url_base + "hashtag-images/" + $scope.campaign_id +constants.upload_permission_box_image_url,
+              data: {
+                file: $scope.permissionBoxFile,
+                'comment' : $scope.permissionBoxData.comment||'',
+                'object_id' : supplier.supplier_id,
+                'hashtag' : 'Permission Box',
+                'campaign_name' : $scope.releaseDetails.campaign.name,
+                'supplier_name' : supplier.name,
+                'supplier_type_code' : 'RS'
+              },
+              headers: {'Authorization': 'JWT ' + token}
+          }).then(function onSuccess(response){
+              console.log(response);
+                // uploaded_image = {'image_path': response.data.data };
+                // inventory.images.push(uploaded_image);
+                cfpLoadingBar.complete();
+                // $("#progressBarModal").modal('hide');
+          })
+          .catch(function onError(response) {
+            cfpLoadingBar.complete();
+            console.log(response);
+          });
+        }
+      }
+      $scope.getPermissionBoxImages = function(supplier){
+        releaseCampaignService.getPermissionBoxImages($scope.campaign_id,supplier.supplier_id)
+        .then(function onSuccess(response){
+          console.log(response);
+          $scope.perBoxImageData = response.data.data;
+        }).catch(function onError(response){
+          console.log(response);
+        })
+      }
+
 
 }]);//Controller function ends here
