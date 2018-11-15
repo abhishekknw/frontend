@@ -36,10 +36,8 @@
     <link rel="stylesheet" type="text/css" href="modules/pages/DashBoard/adminDashboard/percentage-circular-bar.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" media="screen and (max-width: 900px)" href="smallscreen.css"> -->
-
+    <link href="css/smallscreen.css" rel="stylesheet" media="screen">
   </head>
-
   <body ng-cloak>
 
     <div class="body-bg"></div>
@@ -144,10 +142,10 @@
                                           <div class="pie-chart-item-container ng-scope">
                                               <div class="custom-panel">
                                                   <uib-accordion close-others="oneAtATime">
-                                                      <div uib-accordion-group  panel-class="panel panel-blur date-grid-tab custom-panel" ng-click="getAssignedIdsAndImages(date,act.header,inv.header)">
+                                                      <div uib-accordion-group  panel-class="panel panel-blur date-grid-tab custom-panel" id="custompanelmobile" ng-click="getAssignedIdsAndImages(date,act.header,inv.header)">
                                                           <div uib-accordion-heading class="container">
                                                               <div class="pie-chart-item ng-scope">
-                                                                  <div class="row" ng-if="inventoryActivityCountData[inv.header][date][act.header]">
+                                                                  <div class="row" id="activitycss" ng-if="inventoryActivityCountData[inv.header][date][act.header]">
                                                                       <div class="col-md-4">
                                                                         <h4>{{inventoryActivityCountData[inv.header][date][act.header].actual||'0'}}</h4>
                                                                         <h5>{{act.label1}}</h5>
@@ -224,6 +222,7 @@
                               </div>
                           </div>
                       </div>
+                        <div class="campaigndetailtable">
                       <div class="col-md-12" ng-if="showAssignedInvTable">
                       <!-- <div class="form-group select-page-size-wrap ">
                       </div> -->
@@ -237,40 +236,43 @@
                                 <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
 
                                   <br />
-                                <div class="col-md-12 panel-heading" style="border: 1px solid #ccc;height:75px;">
-                                  <label class="col-md-1 campDetailsLabel">Index</label>
-                                  <label class="col-md-2 campDetailsLabel">Campaign Name</label>
-                                  <label class="col-md-2 campDetailsLabel">Inventory</label>
-                                  <label class="col-md-1 campDetailsLabel">Total Assigned</label>
-                                  <label class="col-md-1 campDetailsLabel">Today Released</label>
-                                  <label class="col-md-1 campDetailsLabel">Average Delay(In Days)</label>
-                                  <label class="col-md-2 campDetailsLabel">Average Off Location(Kms)</label>
-                                  <label class="col-md-2 campDetailsLabel">Images</label>
-                                </div><br>
-                                <div class="col-md-12" style="overflow-y:auto;max-height:300px;color:black">
-                                  <div class="col-md-12" ng-repeat="item in campaignReleaseData | filter : searchQuery">
-                                    <br />
-                                    <label class="col-md-1">{{$index+1}}</label>
-                                    <label class="col-md-2"><a ng-click="getDatewiseSuppliersInventory(item.proposalId,item.name)">{{item.name}}</a></label>
-                                    <label class="col-md-2">{{invName}}</label>
-                                    <label class="col-md-1">{{item.assigned}}</label>
-                                    <label class="col-md-1">{{item.inv_count}}</label>
-                                    <label class="col-md-1" ng-if="(item.offTimeDays/item.assigned) > 3">3+ days</label>
-                                    <label class="col-md-1" ng-if="(item.offTimeDays/item.assigned) <= 3">{{item.offTimeDays/item.assigned|limitTo:4}}</label>
-                                    <!-- <label class="col-md-1" ng-if="item.inv_count != 0">{{}}</label> -->
-                                  <!-- <label class="col-md-1" ng-if="item.inv_count == 0">Not Applicable</label>  -->
-                                    <label class="col-md-2" ng-if="item.inv_count == 0 && item.offLocationDistance == 0">Not Applicable</label>
-                                    <label class="col-md-2" ng-if="checkNan(item.offLocationDistance) || item.offLocationDistance == 0 && item.inv_count != 0">Not Applicable</label>
-                                    <label class="col-md-2" ng-if="!checkNan(item.offLocationDistance) && item.inv_count != 0 && item.offLocationDistance != 0">{{(item.offLocationDistance/item.inv_count)/1000 |limitTo:5||0}} Km</label>
 
-                                    <label class="col-md-2" ng-if="item.images.length > 0"><a data-target="#imageModal" data-toggle="modal" ng-click="setImageUrl(item,item.images)">View Images</a></label>
-                                    <label class="col-md-2" ng-if="item.images.length == 0">No Image</label>
-                                    <!-- <td class="col-md-2">
-                                      <a data-target="" data-toggle="modal" ng-click="getHashtagImages(item)">View Other Images</a>
-                                    </td> -->
-                                    <!-- <label class="col-md-2">View Images</label> -->
+                                    <div class="col-md-12 panel-heading" style="border: 1px solid #ccc;height:75px;">
+                                      <label class="col-md-1 campDetailsLabel">Index</label>
+                                      <label class="col-md-2 campDetailsLabel">Campaign Name</label>
+                                      <label class="col-md-2 campDetailsLabel">Inventory</label>
+                                      <label class="col-md-1 campDetailsLabel">Total Assigned</label>
+                                      <label class="col-md-1 campDetailsLabel">Today Released</label>
+                                      <label class="col-md-1 campDetailsLabel">Average Delay(In Days)</label>
+                                      <label class="col-md-2 campDetailsLabel">Average Off Location(Kms)</label>
+                                      <label class="col-md-2 campDetailsLabel">Images</label>
+                                    </div><br>
+                                    <div class="col-md-12" style="overflow-y:auto;max-height:300px;color:black">
+                                      <div class="col-md-12" ng-repeat="item in campaignReleaseData | filter : searchQuery">
+                                        <br />
+                                        <label class="col-md-1">{{$index+1}}</label>
+                                        <label class="col-md-2"><a ng-click="getDatewiseSuppliersInventory(item.proposalId,item.name)">{{item.name}}</a></label>
+                                        <label class="col-md-2">{{invName}}</label>
+                                        <label class="col-md-1">{{item.assigned}}</label>
+                                        <label class="col-md-1">{{item.inv_count}}</label>
+                                        <label class="col-md-1" ng-if="(item.offTimeDays/item.assigned) > 3">3+ days</label>
+                                        <label class="col-md-1" ng-if="(item.offTimeDays/item.assigned) <= 3">{{item.offTimeDays/item.assigned|limitTo:4}}</label>
+                                        <!-- <label class="col-md-1" ng-if="item.inv_count != 0">{{}}</label> -->
+                                      <!-- <label class="col-md-1" ng-if="item.inv_count == 0">Not Applicable</label>  -->
+                                        <label class="col-md-2" ng-if="item.inv_count == 0 && item.offLocationDistance == 0">Not Applicable</label>
+                                        <label class="col-md-2" ng-if="checkNan(item.offLocationDistance) || item.offLocationDistance == 0 && item.inv_count != 0">Not Applicable</label>
+                                        <label class="col-md-2" ng-if="!checkNan(item.offLocationDistance) && item.inv_count != 0 && item.offLocationDistance != 0">{{(item.offLocationDistance/item.inv_count)/1000 |limitTo:5||0}} Km</label>
+
+                                        <label class="col-md-2" ng-if="item.images.length > 0"><a data-target="#imageModal" data-toggle="modal" ng-click="setImageUrl(item,item.images)">View Images</a></label>
+                                        <label class="col-md-2" ng-if="item.images.length == 0">No Image</label>
+                                        <!-- <td class="col-md-2">
+                                          <a data-target="" data-toggle="modal" ng-click="getHashtagImages(item)">View Other Images</a>
+                                        </td> -->
+                                        <!-- <label class="col-md-2">View Images</label> -->
+                                      </div>
+                                    </div>
                                   </div>
-                                </div>
+
                               <!-- <table st-safe-src="rowCollection" st-table="displayed" st-pipe="callServer" class="table-responsive table table-bordered">
                                 <thead>
                                 <tr class="sortable" >
@@ -1389,8 +1391,10 @@
       <div class="panel-title" ng-if="selectedBookingCampaignName">
         <h3>{{selectedBookingCampaignName}}</h3>
       </div>
+
       <div class="" ng-if="bookingPhases">
-        <table class="table table-bordered table-responsive">
+        <div class="col-md-12" style="overflow-x:auto">
+        <table class="table table-bordered table-responsive bookingtable">
           <thead>
             <tr>
               <th><small>Phase Details</small></th>
@@ -1489,9 +1493,11 @@
             </tr>
           </tbody>
         </table>
+      </div>
         <div class="panel-title">
           <h4>Pipelined Suppliers</h4>
         </div>
+        <div class="col-md-12" style="overflow-x:auto">
         <table class="table table-responsive table-bordered">
           <thead>
             <tr>
@@ -1542,6 +1548,7 @@
             </tr>
           </tbody>
         </table>
+      </div>
         <div class="" ng-if="headerForSupplierBookings">
           <div class="panel-heading">
             {{headerForSupplierBookings}} Supplier Details
