@@ -43,19 +43,7 @@ export default class CreateChecklistTemplate extends React.Component {
 
     const { match } = this.props;
 
-    let campaign;
-    for (let i = 0, l = this.props.campaign.list.length; i < l; i += 1) {
-      if (
-        this.props.campaign.list[i].campaign.proposal_id ===
-        match.params.campaignId
-      ) {
-        campaign = this.props.campaign.list[i];
-        break;
-      }
-    }
-
     this.state = {
-      campaign,
       checklist_name: '',
       checklist_columns: getDefaultColumns(),
       static_column_values: [
@@ -205,7 +193,7 @@ export default class CreateChecklistTemplate extends React.Component {
     };
     // Send request to create template
     this.props.postChecklistTemplate({
-      campaignId: this.state.campaign.campaign.proposal_id,
+      campaignId: this.props.match.params.campaignId,
       data
     });
   }

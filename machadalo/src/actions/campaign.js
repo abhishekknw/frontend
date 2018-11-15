@@ -4,6 +4,8 @@ import * as types from './types';
 
 import config from './../config';
 
+//Campaign List
+
 export function getCampaignsListStart() {
   return {
     type: types.GET_CAMPAIGNS_LIST_START
@@ -40,6 +42,53 @@ export function getCampaignsList() {
         console.log('Failed to fetch list of campaigns', ex);
 
         dispatch(getCampaignsListFail());
+      });
+  };
+}
+
+//Current Campaign
+
+export function getCurrentCampaignStart() {
+  return {
+    type: types.GET_CURRENT_CAMPAIGN_START
+  };
+}
+
+export function getCurrentCampaignSuccess({ currentCampaign }) {
+  return {
+    type: types.GET_CURRENT_CAMPAIGN_SUCCESS,
+    currentCampaign
+  };
+}
+
+export function getCurrentCampaignFail() {
+  return {
+    type: types.GET_CURRENT_CAMPAIGN_FAIL
+  };
+}
+
+export function getCurrentCampaign(campaignProposalId) {
+  return (dispatch, getState) => {
+    dispatch(getCurrentCampaignStart());
+
+    const { auth } = getState();
+
+    request
+      .get(
+        `${
+          config.API_URL
+        }/v0/ui/website/${campaignProposalId}/campaign-inventories/`
+      )
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(
+          getCurrentCampaignSuccess({ currentCampaign: resp.body.data })
+        );
+      })
+      .catch(ex => {
+        console.log('Failed to fetch list of current campaign', ex);
+
+        dispatch(getCurrentCampaignFail());
       });
   };
 }

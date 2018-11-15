@@ -8,16 +8,7 @@ export default class FillChecklist extends React.Component {
 
     const { match } = this.props;
 
-    let checklist;
-    for (let i = 0, l = this.props.checklist.list.length; i < l; i += 1) {
-      if (this.props.checklist.list[i].id === +match.params.checklistId) {
-        checklist = this.props.checklist.list[i];
-        break;
-      }
-    }
-
     this.state = {
-      checklist,
       checklistEntries: {}
     };
 
@@ -37,7 +28,8 @@ export default class FillChecklist extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { checklist } = this.props;
-    const checklistDetails = checklist.details[this.state.checklist.id];
+    const checklistDetails =
+      checklist.details[this.props.match.params.checklistId];
 
     if (checklistDetails && !this.state.checklistDetails) {
       const newState = {
@@ -67,9 +59,12 @@ export default class FillChecklist extends React.Component {
       !prevProps.checklist.entryStatus &&
       this.props.checklist.entryStatus === 'success'
     ) {
+      let checklistInfo = this.props.checklist.details[
+        this.props.match.params.checklistId
+      ].checklist_info;
       this.props.history.push(
-        `/r/checklist/list/${this.state.checklist.campaign_id}/${
-          this.state.checklist.supplier_id
+        `/r/checklist/list/${checklistInfo.campaign_id}/${
+          checklistInfo.supplier_id
         }`
       );
     }
@@ -99,7 +94,7 @@ export default class FillChecklist extends React.Component {
 
     // Send request to create template
     this.props.postChecklistEntries({
-      checklistId: this.state.checklist.id,
+      checklistId: this.props.match.params.checklistId,
       data: checklistEntries
     });
   }
@@ -161,13 +156,16 @@ export default class FillChecklist extends React.Component {
 
   render() {
     const { checklistDetails } = this.state;
+    let { checklist } = this.props;
 
     return (
       <div className="fillForm">
         <div className="fillForm__title">
           <h3>
             Fill Checklist{' '}
-            {this.state.checklist ? this.state.checklist.checklist_name : null}
+            {Object.keys(checklist.details).length !== 0
+              ? checklist.checklist_name
+              : null}
           </h3>
         </div>
         <div className="fillForm__form">
