@@ -44,6 +44,8 @@ angular
     captcha_error : 'Please resolve the captcha and submit!',
     login_error : 'Username or Password is Incorrect',
     email_success : 'Email sent Successfully',
+    image_empty : 'No Images Found',
+    image_success : 'Image Uploaded Successfully',
     //createproposal
     geo_location_error : 'Address or Pincode Incorrect, Please Provide Correct Information',
     center_warning : 'Do you want to create only one center ?',

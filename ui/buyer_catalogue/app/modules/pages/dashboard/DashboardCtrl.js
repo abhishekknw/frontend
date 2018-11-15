@@ -2318,7 +2318,7 @@ $scope.getFormDetails = function(campaignId){
       console.log(response);
       $scope.formDetails = response.data.data;
       console.log($scope.formDetails);
-      $scope.campaign_id = $scope.formDetails.leads_form_items;
+        $scope.campaign_id = $scope.formDetails.leads_form_items;
       console.log($scope.campaign_id );
     }).catch(function onError(response){
         console.log(response);
@@ -2338,14 +2338,7 @@ $scope.sendMeEmail = function(){
     console.log(response);
   })
 }
-$scope.getPermissionBoxImages = function(supplier){
-  DashboardService.getPermissionBoxImages($scope.campaignId, supplier.supplier.supplier_id)
-  .then(function onSuccess(response){
-    console.log(response);
-  }).catch(function onError(response){
-    console.log(response);
-  })
-}
+
 $scope.sendReport = function(){
   var token = $rootScope.globals.currentUser.token;
   if ($scope.file) {
@@ -2374,24 +2367,30 @@ $scope.uploadFiles = function(file){
   $scope.file = file;
   console.log($scope.file);
 }
-$scope.getPermissionBoxImages = function(supplier){
-  DashboardService.getPermissionBoxImages($scope.campaignId, supplier.supplier.supplier_id)
-  .then(function onSuccess(response){
-    console.log(response);
-  }).catch(function onError(response){
-    console.log(response);
-  })
-}
-$scope.getPermissionBoxImages = function(supplier){
-  DashboardService.getPermissionBoxImages($scope.campaignId, supplier.supplier.supplier_id)
-  .then(function onSuccess(response){
-    console.log(response);
-  }).catch(function onError(response){
-    console.log(response);
-  })
-}
 $scope.enableAddComments = function(index){
   $scope.enableComments = index;
+}
+$scope.getPermissionBoxImages = function(supplier){
+  console.log(supplier);
+  $scope.supplierNameForPermBox = supplier.society_name;
+  console.log($scope.supplierNameForPermBox);
+  DashboardService.getPermissionBoxImages($scope.campaignId,supplier.supplier_id)
+  .then(function onSuccess(response){
+    console.log(response);
+    if(response.data.data.length){
+        angular.forEach(response.data.data, function(data){
+          data['image_url'] = 'http://androidtokyo.s3.amazonaws.com/' + data.image_path;
+        })
+        $('#imageModalForPermBox').modal('show');
+    }else {
+      swal(constants.name, constants.image_empty, constants.warning);
+    }
+    $scope.perBoxImageData = response.data.data;
+    console.log($scope.perBoxImageData);
+
+  }).catch(function onError(response){
+    console.log(response);
+  })
 }
 //END
 })

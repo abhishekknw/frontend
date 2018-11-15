@@ -994,9 +994,11 @@ $scope.multiSelect =
               headers: {'Authorization': 'JWT ' + token}
           }).then(function onSuccess(response){
               console.log(response);
+
                 // uploaded_image = {'image_path': response.data.data };
                 // inventory.images.push(uploaded_image);
                 cfpLoadingBar.complete();
+                swal(constants.name, constants.image_success, constants.success);
                 // $("#progressBarModal").modal('hide');
           })
           .catch(function onError(response) {
@@ -1009,6 +1011,13 @@ $scope.multiSelect =
         releaseCampaignService.getPermissionBoxImages($scope.campaign_id,supplier.supplier_id)
         .then(function onSuccess(response){
           console.log(response);
+          if(response.data.data.length){
+              angular.forEach(response.data.data, function(data){
+                data['image_url'] = 'http://androidtokyo.s3.amazonaws.com/' + data.image_path;
+              })
+          }else {
+            swal(constants.name, constants.image_empty, constants.warning);
+          }
           $scope.perBoxImageData = response.data.data;
         }).catch(function onError(response){
           console.log(response);

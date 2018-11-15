@@ -1040,7 +1040,7 @@
                                                   </table>
                                                 </td>
                                                 <td>
-                                                  <a ng-click="getPermissionBoxImages(supplier)">View</a>
+                                                  <a ng-click="getPermissionBoxImages(supplier.supplier)">View</a>
                                                 </td>
                                                 <td>
                                                   <button type="button" class="btn btn-danger" ng-click="enableAddComments($index)">Add Comments</button>
@@ -2765,5 +2765,39 @@
       </div>
     </div>
     <!--END: Change password modal  -->
+    <!--START: permission box image modal -->
+    <div id="imageModalForPermBox" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Permission Box Image Details {{supplierNameForPermBox}}</h4>
+            <hr/>
+            <div class = "modal-body">
+              <div class="carousel" id="slider-1">
+                 <div class="carousel-inner">
+                   <div class="item" ng-class="{active:!$index}" ng-repeat="image in perBoxImageData">
+                     <div class="row">
+                      <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
+                    </div>
+                     <div class="row" style="margin-left:10px;">
+                       Comment : {{image.comment}} </br>
+                     </div>
+                   </div>
+
+                 </div>
+                  <a style="height:400px;" class="left carousel-control"  data-toggle="carousel" data-target = "#slider-1" role="button" data-slide="prev">
+                     <span class="glyphicon glyphicon-chevron-left"></span>
+                  </a>
+                 <a style="height:400px;" class="right carousel-control" data-toggle = "carousel" data-target = "#slider-1" role="button" data-slide="next">
+                   <span class="glyphicon glyphicon-chevron-right"></span>
+                 </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--END:permission box image modal  -->
   </body>
 </html>
