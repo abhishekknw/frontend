@@ -954,6 +954,75 @@ $scope.multiSelect =
           //   $scope.customfreebies.splice(index,1);
           // console.log($scope.customfreebies);
         }
+  $scope.deleteSupplier = function(id,index){
+
+    var data = [];
+    data.push(id);
+    console.log(data,index);
+    releaseCampaignService.deleteSupplier(data)
+    .then(function onSuccess(response){
+      console.log(response);
+      $scope.releaseDetails.shortlisted_suppliers.splice(index,1);
+      $scope.$watch();
+      swal(constants.name, constants.delete_success, constants.success);
+    }).catch(function onError(response){
+      console.log(response);
+    })
+  }
+
+  $scope.uploadImage = function(file){
+    $scope.permissionBoxFile = file;
+  }
+  $scope.permissionBoxData = {};
+  $scope.uploadPermissionBoxImage = function(supplier){
+    // cfpLoadingBar.set(0.3)
+    console.log(supplier);
+        var token = $rootScope.globals.currentUser.token;
+        if ($scope.permissionBoxFile) {
+          cfpLoadingBar.start();
+          Upload.upload({
+              url: constants.base_url + constants.url_base + "hashtag-images/" + $scope.campaign_id +constants.upload_permission_box_image_url,
+              data: {
+                file: $scope.permissionBoxFile,
+                'comment' : $scope.permissionBoxData.comment||'',
+                'object_id' : supplier.supplier_id,
+                'hashtag' : 'Permission Box',
+                'campaign_name' : $scope.releaseDetails.campaign.name,
+                'supplier_name' : supplier.name,
+                'supplier_type_code' : 'RS'
+              },
+              headers: {'Authorization': 'JWT ' + token}
+          }).then(function onSuccess(response){
+              console.log(response);
+
+                // uploaded_image = {'image_path': response.data.data };
+                // inventory.images.push(uploaded_image);
+                cfpLoadingBar.complete();
+                swal(constants.name, constants.image_success, constants.success);
+                // $("#progressBarModal").modal('hide');
+          })
+          .catch(function onError(response) {
+            cfpLoadingBar.complete();
+            console.log(response);
+          });
+        }
+      }
+      $scope.getPermissionBoxImages = function(supplier){
+        releaseCampaignService.getPermissionBoxImages($scope.campaign_id,supplier.supplier_id)
+        .then(function onSuccess(response){
+          console.log(response);
+          if(response.data.data.length){
+              angular.forEach(response.data.data, function(data){
+                data['image_url'] = 'http://androidtokyo.s3.amazonaws.com/' + data.image_path;
+              })
+          }else {
+            swal(constants.name, constants.image_empty, constants.warning);
+          }
+          $scope.perBoxImageData = response.data.data;
+        }).catch(function onError(response){
+          console.log(response);
+        })
+      }
 
 
 }]);//Controller function ends here

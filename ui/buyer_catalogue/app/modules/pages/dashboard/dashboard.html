@@ -1042,19 +1042,19 @@
                                                   </table>
                                                 </td>
                                                 <td>
-                                                  <a ng-click="getPermissionBoxImages(supplier)">View</a>
+                                                  <a ng-click="getPermissionBoxImages(supplier.supplier)">View</a>
                                                 </td>
                                                 <td>
                                                   <button type="button" class="btn btn-danger" ng-click="enableAddComments($index)">Add Comments</button>
                                                   <div ng-if="enableComments == $index">
                                                     <textarea name="name" rows="4" cols="20" placeholder="Enter Here.." ng-model="commentModal.comment"></textarea>
-                                                    <button class="btn btn-success form-control" ng-disabled="!commentModal.comment" ng-click="addComment(supplier)">Add</button>
+                                                    <button class="btn btn-success form-control" ng-disabled="!commentModal.comment" ng-click="addComment(supplier.shortlisted_space_id)">Add</button>
                                                   </div>
                                                 </td>
 
                                                 <td>
                                                   <button type="button" class="btn btn-danger" ng-click="viewComments(supplier,$index)">View Comments</button><br>
-                                                  <div class="panel panel-default" ng-if="enableViewComments == $index" style="height:100px;overflow-y:scroll;">
+                                                  <div class="panel panel-default" ng-if="enableViewComments == $index" style="height:100px;overflow-y:scroll;padding-top:40px;">
                                                     <div class="talk-bubble tri-right round left-top"  ng-repeat="item in commentsData.general" style="margin-top:-20px">
                                                       <div class="talktext" style="font-color:black">
                                                         <p style="color:#ff0000;font-size:smaller">{{item.user_name}}</p>
@@ -1420,7 +1420,7 @@
               <td ng-if="bookingPhases.last_completed_phase.confirmed_booked.supplier_data.length == 0"><small>0</small></td>
 
               <td ng-if="bookingPhases.last_completed_phase.verbally_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.verbally_booked.supplier_data,'Last Completed Phase')">
-                {{bookingPhases.last_completed_phase.verbally_booked.supplier_count.length}} ({{bookingPhases.last_completed_phase.verbally_booked.flat_count}})
+                {{bookingPhases.last_completed_phase.verbally_booked.supplier_count}} ({{bookingPhases.last_completed_phase.verbally_booked.flat_count}})
               </a>
               </small>
               </td>
@@ -1433,7 +1433,7 @@
               <td ng-if="bookingPhases.last_completed_phase.followup_required.supplier_data.length == 0"><small>0</small></td>
 
               <td ng-if="bookingPhases.last_completed_phase.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.total_booked.supplier_data,'Last Completed Phase')">
-                {{bookingPhases.last_completed_phase.total_booked.supplier_count.length}} ({{bookingPhases.last_completed_phase.total_booked.flat_count}})
+                {{bookingPhases.last_completed_phase.total_booked.supplier_count}} ({{bookingPhases.last_completed_phase.total_booked.flat_count}})
                 </a>
             </small></td>
             <td ng-if="bookingPhases.last_completed_phase.total_booked.supplier_data.length == 0"><small>0</small></td>
@@ -1453,7 +1453,7 @@
               </td>
               <td ng-if="bookingPhases.ongoing_phase.confirmed_booked.supplier_data.length == 0"><small>0</small></td>
               <td ng-if="bookingPhases.ongoing_phase.verbally_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.verbally_booked.supplier_data,'Ongoing Phase')">
-                {{bookingPhases.ongoing_phase.verbally_booked.supplier_count.length}} ({{bookingPhases.ongoing_phase.verbally_booked.flat_count}})</small>
+                {{bookingPhases.ongoing_phase.verbally_booked.supplier_count}} ({{bookingPhases.ongoing_phase.verbally_booked.flat_count}})</small>
               </a>
               </td>
               <td ng-if="bookingPhases.ongoing_phase.verbally_booked.supplier_data.length == 0"><small>0</small></td>
@@ -1462,7 +1462,7 @@
                 <td ng-if="bookingPhases.ongoing_phase.followup_required.supplier_data.length == 0"><small>0</small></td>
 
               <td ng-if="bookingPhases.ongoing_phase.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.total_booked.supplier_data,'Last Completed Phase')">
-                {{bookingPhases.ongoing_phase.total_booked.supplier_count.length}} ({{bookingPhases.ongoing_phase.total_booked.flat_count}})
+                {{bookingPhases.ongoing_phase.total_booked.supplier_count}} ({{bookingPhases.ongoing_phase.total_booked.flat_count}})
                 </a>
             </small></td>
             <td ng-if="bookingPhases.ongoing_phase.total_booked.supplier_data.length == 0"><small>0</small></td>
@@ -1481,13 +1481,13 @@
               </small> </td>
               <td ng-if="item.confirmed_booked.supplier_data.length == 0"><small>0</small></td>
               <td  ng-if="item.verbally_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.verbally_booked.supplier_data,'Upcoming Phase')">
-                {{item.verbally_booked.supplier_count.length}} ({{item.verbally_booked.flat_count}})</a></small></td>
+                {{item.verbally_booked.supplier_count}} ({{item.verbally_booked.flat_count}})</a></small></td>
               <td ng-if="item.verbally_booked.supplier_data.length == 0"><small>0</small></td>
               <td ng-if="item.followup_required.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.followup_required.supplier_data,'Upcoming Phase')">
                 {{item.followup_required.supplier_count}} ({{item.followup_required.flat_count}})</small></td>
               <td ng-if="item.followup_required.supplier_data.length == 0"><small>0</small></td>
               <td  ng-if="item.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.total_booked.supplier_data,'Upcoming Phase')">
-                {{item.total_booked.supplier_count.length}} ({{item.total_booked.flat_count}})
+                {{item.total_booked.supplier_count}} ({{item.total_booked.flat_count}})
                 </a></small></td>
               <td ng-if="item.total_booked.supplier_data.length == 0"><small>0</small></td>
             </tr>
@@ -1528,7 +1528,7 @@
                   <td ng-if="bookingPhases.pipeline_suppliers.followup_required.supplier_data.length == 0"><small>0</small></td>
 
               <td ng-if="bookingPhases.pipeline_suppliers.verbally_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.verbally_booked.supplier_data,'Ongoing Phase')">
-                {{bookingPhases.pipeline_suppliers.verbally_booked.supplier_count.length}} ({{bookingPhases.pipeline_suppliers.verbally_booked.flat_count}})</small>
+                {{bookingPhases.pipeline_suppliers.verbally_booked.supplier_count}} ({{bookingPhases.pipeline_suppliers.verbally_booked.flat_count}})</small>
               </a>
               </td>
               <td ng-if="bookingPhases.pipeline_suppliers.verbally_booked.supplier_data.length == 0"><small>0</small></td>
@@ -1540,7 +1540,7 @@
 
 
               <td ng-if="bookingPhases.pipeline_suppliers.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.total_booked.supplier_data,'Last Completed Phase')">
-                {{bookingPhases.pipeline_suppliers.total_booked.supplier_count.length}} ({{bookingPhases.pipeline_suppliers.total_booked.flat_count}})
+                {{bookingPhases.pipeline_suppliers.total_booked.supplier_count}} ({{bookingPhases.pipeline_suppliers.total_booked.flat_count}})
                 </a>
             </small></td>
             <td ng-if="bookingPhases.pipeline_suppliers.total_booked.supplier_data.length == 0"><small>0</small></td>
@@ -1578,15 +1578,19 @@
                   <td>{{supplier.tower_count}}</td>
                   <td>{{supplier.society_type_quality}}</td>
                   <td>{{supplier.society_locality}}({{supplier.society_subarea}})</td>
-                  <td>{{supplierBookingStatus[supplier.booking_status]}}</td>
+                  <td>{{supplierBookingStatus[supplier.booking_status||'Not Initiated']}}</td>
                   <td><a href="https://www.google.com/maps/?q=+{{supplier.society_latitude}}+{{supplier.society_longitude}}" target="_blank">View Details</a></td>
                   <td><a ng-click="viewBookingComments(supplier)">View Comments</a></td>
                   <td>Poster : {{supplier.inventory_counts.POSTER}}<br>
-                  Flyer : {{supplier.inventory_counts.FLYER}}<br>
+                  Flyer : {{supplier.inventory_counts.FLIER}}<br>
                   Standee: {{supplier.inventory_counts.STANDEE}}<br>
                   Stall : {{supplier.inventory_counts.STALL}}
                 </td>
-                <td ng-repeat="freebies in supplier.freebies" ng-if="supplier.freebies">{{freebies}}</td>
+                <td ng-if="supplier.freebies">
+                  <div style="width:130px" class="" ng-repeat="freebies in supplier.freebies">
+                      {{$index + 1}} : {{freebies}}<br>
+                  </div>
+                  </td>
                 <td ng-if="supplier.freebies === null">No Freebies</td>
 
                 </tr>
@@ -2768,5 +2772,39 @@
       </div>
     </div>
     <!--END: Change password modal  -->
+    <!--START: permission box image modal -->
+    <div id="imageModalForPermBox" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Permission Box Image Details {{supplierNameForPermBox}}</h4>
+            <hr/>
+            <div class = "modal-body">
+              <div class="carousel" id="slider-1">
+                 <div class="carousel-inner">
+                   <div class="item" ng-class="{active:!$index}" ng-repeat="image in perBoxImageData">
+                     <div class="row">
+                      <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
+                    </div>
+                     <div class="row" style="margin-left:10px;">
+                       Comment : {{image.comment}} </br>
+                     </div>
+                   </div>
+
+                 </div>
+                  <a style="height:400px;" class="left carousel-control"  data-toggle="carousel" data-target = "#slider-1" role="button" data-slide="prev">
+                     <span class="glyphicon glyphicon-chevron-left"></span>
+                  </a>
+                 <a style="height:400px;" class="right carousel-control" data-toggle = "carousel" data-target = "#slider-1" role="button" data-slide="next">
+                   <span class="glyphicon glyphicon-chevron-right"></span>
+                 </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--END:permission box image modal  -->
   </body>
 </html>

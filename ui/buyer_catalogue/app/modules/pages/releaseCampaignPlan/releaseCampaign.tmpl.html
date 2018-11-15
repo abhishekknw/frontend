@@ -57,9 +57,11 @@
             <th>Payment Status</th>
             <th>Completion Status</th>
             <th>Comments</th>
+            <th>Action</th>
+            <th>Permission Box</th>
           </tr>
         </thead>
-        <tbody ng-repeat="supplier in releaseDetails.shortlisted_suppliers">
+        <tbody ng-repeat="supplier in releaseDetails.shortlisted_suppliers track by $index">
           <tr ng-repeat="(key,filter) in getFilters(supplier)" ng-disabled="$index != '15'">
             <td rowspan="{{key.length}}" ng-show="$first">{{$parent.$index + 1}}</td>
             <td class="" rowspan="{{key.length}}" ng-show="$first"><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages" ng-click="getSocietyDetails(supplier,supplier.supplier_id,center,$index)" target="_blank" style="text-decoration: underline; cursor: pointer;color:blue;">{{supplier.name}}({{supplier.quality_rating}})</a></td>
@@ -174,6 +176,16 @@
               <button type="button" class="btn btn-danger" data-target="#addComments" data-toggle="modal" ng-click="getSupplierForComments(supplier)">Add</button></br>
               <button type="button" class="btn btn-danger"   ng-click="viewComments(supplier)">View</button>
             </td>
+            <td rowspan="{{key.length}}" ng-show="$first">
+              <button type="button" class="btn btn-danger"   ng-click="deleteSupplier(supplier.id,$parent.$index)">Delete Supplier</button>
+            </td>
+            <td rowspan="{{key.length}}" ng-show="$first">
+              <button class="btn btn-primary active" ngf-select="uploadImage($file)">Upload Image</button>
+              <textarea name="name" rows="4" cols="20" placeholder="Enter Comments" ng-model="permissionBoxData.comment"></textarea>
+              <button ng-click="uploadPermissionBoxImage(supplier)" >Submit</button>
+              <button ng-click="getPermissionBoxImages(supplier)" data-toggle="modal" data-target="#imageModal">View</button>
+            </td>
+
           </tr>
         </tbody>
         <tfoot>
@@ -794,4 +806,38 @@
   </div>
 </div>
 <!--END : view comments modal  -->
+<!--START: permission box image modal -->
+<div id="imageModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Permission Box Image Details</h4>
+        <hr/>
+        <div class = "modal-body">
+          <div class="carousel" id="slider">
+             <div class="carousel-inner">
+               <div class="item" ng-class="{active:!$index}" ng-repeat="image in perBoxImageData">
+                 <div class="row">
+                  <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
+                </div>
+                 <div class="row" style="margin-left:10px;">
+                   Comment : {{image.comment}} </br>
+                 </div>
+               </div>
+
+             </div>
+              <a style="height:400px;" class="left carousel-control"  data-toggle="carousel" data-target = "#slider" role="button" data-slide="prev">
+                 <span class="glyphicon glyphicon-chevron-left"></span>
+              </a>
+             <a style="height:400px;" class="right carousel-control" data-toggle = "carousel" data-target = "#slider" role="button" data-slide="next">
+               <span class="glyphicon glyphicon-chevron-right"></span>
+             </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--END:permission box image modal  -->
 </main>

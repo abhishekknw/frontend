@@ -44,6 +44,8 @@ angular
     captcha_error : 'Please resolve the captcha and submit!',
     login_error : 'Username or Password is Incorrect',
     email_success : 'Email sent Successfully',
+    image_empty : 'No Images Found',
+    image_success : 'Image Uploaded Successfully',
     //createproposal
     geo_location_error : 'Address or Pincode Incorrect, Please Provide Correct Information',
     center_warning : 'Do you want to create only one center ?',
@@ -93,6 +95,7 @@ angular
     updateData_success : 'Data updated successfully',
     updateData_error : 'Error occured while saving data',
     already_exist : 'Supplier Already Present',
+    upload_permission_box_image_url : '/upload_permission_box_image/',
     //auditReleasePlan
     inventory_date_success : 'Inventory Dates are saved successfully',
     inventory_date_error : 'Error occured while saving dates',
@@ -170,7 +173,15 @@ angular
     supplierBookingStatus : {
       '' : 'Not Initiated',
       BK : 'Booked',
-      VB : 'Verbally Booked',
+      PB : 'Phone Booked',
+      VB : 'Visit Booked',
+      SR : 'Rejected',
+      SE : 'Email Required',
+      DP : 'Decision Pending',
+      VR : 'Visit Required',
+      CR : 'Call Required',
+      TB : 'Tentative Booking'
+
     },
     distanceLimit : 500,
     release : 'RELEASE',
