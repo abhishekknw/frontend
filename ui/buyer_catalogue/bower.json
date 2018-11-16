@@ -37,7 +37,7 @@
     "angular-nvd3": "^1.0.9",
     "angular-chart.js": "^1.1.1",
     "angular-percent-circle-directive": "^1.1.1",
-    "angularjs-dropdown-multiselect": "^1.11.8",
+    "angularjs-dropdown-multiselect": "2.0.0-beta.10",
     "ng-table-to-csv": "^0.3.3",
     "angular-ui-grid": "^4.4.6",
     "js-xlsx": "^0.12.6",
@@ -119,7 +119,7 @@
     }
   },
   "resolutions": {
-    "angular": "1.5.8",
+    "angular": "~1.5",
     "js-xlsx": "~0.8.0",
     "jquery": ">=2.0.0",
     "angular-bootstrap": "~1.3.3"
