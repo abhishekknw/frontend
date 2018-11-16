@@ -148,6 +148,9 @@ $scope.addNewPhase =true;
         angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier){
           $scope.mapViewLat = supplier.latitude;
           $scope.mapViewLong = supplier.longitude;
+          if(!supplier.stall_locations){
+            supplier.stall_locations = [];
+          }
           // console.log($scope.mapViewLat);
           // console.log($scope.mapViewLong);
 
@@ -241,6 +244,7 @@ $scope.addNewPhase =true;
     $scope.getTotalSupplierPrice = function(supplier){
       var totalPrice = 0;
       angular.forEach(supplier.shortlisted_inventories, function(value, key){
+        value['days'] = value.detail[0].inventory_number_of_days;
         if(key == 'POSTER')
           totalPrice = totalPrice + value.actual_supplier_price *0.3;
         else
@@ -412,52 +416,23 @@ $scope.multiSelect =
 
     $scope.selectAllLocation=[];
 
-    $scope.stallLoc =
-    [{
-            name: "Near Entry Gate",
-            id: "1",
-
-          }, {
-            name: "Near Exit Gate",
-            id: "2",
-
-          }, {
-            name: "In Front of Tower",
-            id: "3",
-
-          }, {
-            name: "Near Garden",
-            id: "4",
-
-          },
-          {
-            name: "Near Play Area",
-            id: "5",
-
-          },
-          {
-            name: "Near Club House",
-            id: "6",
-
-          },
-          {
-            name: "Near Swimming Pool",
-            id: "7",
-
-          },{
-            name: "Near Parking Area",
-            id: "8",
-
-          },
-          {
-            name: "Near Shopping Area",
-            id: "9",
-
-          }];
-          $scope.selected_baseline = {
-           template: '<b>{{option.name}}</b>',
-           selectedToTop: true // Doesn't work
-         };
+    $scope.stallLoc = [
+      "Near Entry Gate",
+      "Near Exit Gate",
+      "In Front of Tower",
+      "Near Garden",
+      "Near Play Area",
+      "Near Club House",
+      "Near Swimming Pool",
+      "Near Parking Area",
+      "Near Shopping Area",
+    ];
+    $scope.selected_baseline = {
+       template: '<b>{{option}}</b>',
+       // selectedToTop: true,
+       smartButtonTextConverter(skip, option) { return option; },
+     };
+         $scope.customEvents = {onItemSelect: function(item) {console.log(item,$scope.selectAllLocation);}};
 
         $scope.selected_customTexts = {buttonDefaultText: 'Stall Location'};
         $scope.getRelationShipData = function(supplier){
@@ -1021,6 +996,12 @@ $scope.multiSelect =
           $scope.perBoxImageData = response.data.data;
         }).catch(function onError(response){
           console.log(response);
+        })
+      }
+      $scope.changeInventoryInDays = function(supplier,inv,filter){
+        console.log(filter);
+        angular.forEach(supplier.shortlisted_inventories[inv].detail, function(data){
+          data.inventory_number_of_days = filter.days;
         })
       }
 
