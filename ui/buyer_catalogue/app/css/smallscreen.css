@@ -9,12 +9,6 @@
   height: 150px;
   width: 180px;
 }
-.campaigndetailtable{
-  /* width: 1000px; */
-}
-.bookingtable{
-  overflow-x: auto;
-}
 }
 @media only screen and (min-width :384px) and (max-width :640px) {
 .dashboard-tab .uib-tab{

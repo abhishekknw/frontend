@@ -6,7 +6,7 @@
     'use strict';
 
   angular.module('catalogueApp')
-      .controller('DashboardCtrl',function($scope,NgMap, $rootScope, baConfig, colorHelper,DashboardService, commonDataShare, constants,$location,$anchorScroll,uiGmapGoogleMapApi,uiGmapIsReady,Upload) {
+      .controller('DashboardCtrl',function($scope,NgMap, $rootScope, baConfig, colorHelper,DashboardService, commonDataShare, constants,$location,$anchorScroll,uiGmapGoogleMapApi,uiGmapIsReady,Upload,cfpLoadingBar) {
  $scope.itemsByPage=15;
  $scope.query = "";
  $scope.oneAtATime = true;
@@ -220,12 +220,14 @@
         }
 
         $scope.getAssignedIdsAndImages = function(date,type,inventory){
+          cfpLoadingBar.start();
           $scope.dateWiseSuppliers = [];
           $scope.invName = inventory;
           $scope.actType = type;
           DashboardService.getAssignedIdsAndImages(orgId, category, type, date, inventory)
           .then(function onSuccess(response){
             console.log(response);
+            cfpLoadingBar.complete();
             $scope.campaignReleaseData = [];
             var campaignReleaseData = [];
 
@@ -363,6 +365,7 @@
 
 
         $scope.getCampaigns = function(date){
+          cfpLoadingBar.start();
             $scope.showSupplierTypeCountChart = false;
             $scope.selectedBookingCampaignName = undefined;
           if(!date)
@@ -378,6 +381,7 @@
           DashboardService.getCampaigns(orgId, category, date)
           .then(function onSuccess(response){
             console.log(response);
+            cfpLoadingBar.complete();
             $scope.searchSelectAllModel = [];
             $scope.showSingleCampaignChart = false;
             $scope.campaignData = response.data.data;
@@ -411,9 +415,11 @@
         // getCountOfSupplierTypesByCampaignStatus(campaignStatus);
       }
        var getCountOfSupplierTypesByCampaignStatus = function(campaignStatus){
+         cfpLoadingBar.start();
          DashboardService.getCountOfSupplierTypesByCampaignStatus(campaignStatus)
          .then(function onSuccess(response){
            console.log(response);
+           cfpLoadingBar.complete();
            $scope.AllCampaignData = response.data.data;
            $scope.supplierAllCampaignMarkers = assignMarkersToMap($scope.AllCampaignData);
            if(response.data.data){
@@ -917,16 +923,19 @@
        // START : service call to get suppliers as campaign status
        $scope.getSuppliersOfCampaignWithStatus = function(campaign){
          getCampaignInventoryActivitydetails(campaign.campaign);
+         cfpLoadingBar.start();
          $scope.campaignTabPropsalName = campaign.name;
          $scope.campaignLabel = true;
          $scope.getCampaignFilters(campaign.campaign);
          $scope.campaignId = campaign.campaign;
          $scope.inv = campaign;
-
          DashboardService.getSuppliersOfCampaignWithStatus(campaign.campaign)
          .then(function onSuccess(response){
-
            console.log(response);
+           cfpLoadingBar.complete();
+
+
+
            // $scope.overallMetricStatus = [
            //   { label : $scope.campaignStatus.ongoing.supplierLabel, value : $scope.campaignStatusData.ongoing.length, status : $scope.campaignStatus.ongoing.status },
            //   { label : $scope.campaignStatus.completed.supplierLabel, value : $scope.campaignStatusData.completed.length, status : $scope.campaignStatus.completed.status },
@@ -996,8 +1005,10 @@
 
 
 
-         }).catch(function onError(response){
+         }
+       ).catch(function onError(response){
            console.log(response);
+
          })
        }
        // END : service call to get suppliers as campaign status
@@ -1005,13 +1016,14 @@
 
        // START : get campaign filters
        $scope.getCampaignFilters = function(campaignId){
+         cfpLoadingBar.start();
          $scope.showTimeLocBtn = false;
          $scope.campaignId = campaignId;
          $scope.showPerfMetrics = $scope.perfMetrics.blank;
          DashboardService.getCampaignFilters(campaignId)
          .then(function onSuccess(response){
            console.log(response);
-
+           cfpLoadingBar.complete();
            $scope.campaignInventories = [];
            $scope.showinv = true;
            $scope.select = {
@@ -1033,6 +1045,7 @@
        // START : get Performance metrics data
         $scope.getPerformanceMetricsData = {};
        $scope.getPerformanceMetricsData = function(inv,perf_param){
+         cfpLoadingBar.start();
          $scope.inv = inv;
          var type = 'inv';
          if(!perf_param)
@@ -1042,6 +1055,7 @@
          DashboardService.getPerformanceMetricsData($scope.campaignId,type,inv,perf_param )
          .then(function onSuccess(response){
            console.log(response);
+           cfpLoadingBar.complete();
            $scope.performanceMetricsData = response.data.data;
            $scope.activityInvPerfData = {
              release : Object.keys($scope.performanceMetricsData.actual.release).length,
@@ -1111,11 +1125,13 @@
        }
 
      $scope.getCampaignInvTypesData = function(campaign){
+       cfpLoadingBar.start();
        $scope.proposal_id = campaign.proposal_id;
        $scope.campaignName = campaign.proposal__name;
        DashboardService.getCampaignInvTypesData($scope.proposal_id)
        .then(function onSuccess(response){
          console.log(response);
+         cfpLoadingBar.complete();
         $scope.campaignInventoryTypesData = response.data.data;
         $scope.loading = response.data.data;
         $scope.getSupplierInvTableData($scope.campaignInventoryTypesData);
@@ -1142,9 +1158,11 @@
     }
 
     var getCampaignInventoryActivitydetails = function(campaignId){
+      cfpLoadingBar.start();
     DashboardService.getCampaignInventoryActivitydetails(campaignId)
       .then(function onSuccess(response){
         console.log(response);
+        cfpLoadingBar.complete();
         $scope.campaignInventoryActivityData = response.data.data;
         }).catch(function onError(response){
       console.log(response);
@@ -1198,12 +1216,14 @@
      })
    }
    $scope.getDatewiseSuppliersInventory = function(proposalId, proposalName){
+     cfpLoadingBar.start();
      $scope.dateWiseSuppliers = [];
      $scope.selectedProposalname = proposalName;
      $scope.proposalId= proposalId;
      DashboardService.getDatewiseSuppliersInventory(proposalId, $scope.date, $scope.invName, $scope.actType)
      .then(function onSuccess(response){
        console.log(response);
+       cfpLoadingBar.complete();
        angular.forEach(response.data.data, function(data){
          $scope.dateWiseSuppliers.push(data);
        })
@@ -1212,6 +1232,7 @@
      })
    }
    $scope.getLeadsByCampaign = function(campaignId,campaign){
+     cfpLoadingBar.start();
      $scope.CampaignLeadsName = campaign.name;
      $scope.LeadsByCampaign = {};
      $scope.showReportBtn = false;
@@ -1234,6 +1255,7 @@
      // DashboardService.getLeadsByCampaign(campaignId)
      result.then(function onSuccess(response){
        console.log(response);
+       cfpLoadingBar.complete();
        $scope.LeadsByCampaign = response.data.data;
        $scope.Data = $scope.LeadsByCampaign;
        $scope.localityData =  $scope.LeadsByCampaign.locality_data;
@@ -1550,6 +1572,7 @@
 
 
     $scope.getCompareCampaignChartData = function(campaignChartData){
+      cfpLoadingBar.start();
       var proposalIdData = [];
       var proposalIdDataNames = {};
       angular.forEach($scope.searchSelectAllModel,function(data){
@@ -1561,7 +1584,7 @@
       DashboardService.getCompareCampaignChartData(proposalIdData)
       .then(function onSuccess(response){
         console.log(response);
-
+        cfpLoadingBar.complete();
         var campaignIds = Object.keys(response.data.data);
         angular.forEach(proposalIdData, function(campaignId){
           if(!(campaignIds.indexOf(campaignId) > -1)){
@@ -1710,11 +1733,15 @@
         $scope.societyName = supplier.supplier.society_name;
         $scope.length = $scope.supplierAndInvData.length;
         $scope.TotalSupplierFlatCount += supplier.supplier.flat_count;
+        if($scope.TotalSupplierLeadsCount){
         $scope.TotalSupplierLeadsCount += supplier.leads_data.total_leads_count;
-        $scope.TotalLeadsPerFlat += supplier.leads_data.leads_flat_percentage;
-        $scope.TotalSupplierHotLeadsCount += supplier.leads_data.hot_leads_count;
+         }
 
-          $scope.societyName = supplier.supplier.society_name;
+        $scope.TotalLeadsPerFlat += supplier.leads_data.leads_flat_percentage;
+        if($scope.TotalSupplierHotLeadsCount){
+          $scope.TotalSupplierHotLeadsCount += supplier.leads_data.hot_leads_count;
+        }
+        $scope.societyName = supplier.supplier.society_name;
 
           angular.forEach(supplier.supplier.inv_data, function(inv,key){
           $scope.invStatusKeys[key].status = true;
@@ -1886,6 +1913,7 @@ $scope.map;
    };
 
 $scope.viewSupplierImages = function(supplierId, invType, activityType, date){
+
     $scope.imageUrlList = [];
   DashboardService.getSupplierImages(supplierId, invType, activityType, date)
   .then(function onSuccess(response){
@@ -1990,6 +2018,7 @@ var formatD3StackedBarChartData = function(data){
 }
 
 $scope.getBookingCampaigns = function(campaign){
+  cfpLoadingBar.start();
   $scope.headerForSupplierBookings = undefined;
   $scope.bookingPhases = [];
   $scope.bookingSuppliersData = [];
@@ -2000,6 +2029,7 @@ $scope.getBookingCampaigns = function(campaign){
   DashboardService.getBookingCampaigns(campaign.campaign)
   .then(function onSuccess(response){
     console.log(response);
+    cfpLoadingBar.complete();
       $scope.bookingPhases = response.data.data;
 
       // if(!$scope.bookingPhases.length){
@@ -2035,9 +2065,11 @@ $scope.checkNan = function(number){
   return isNaN(number);
 }
 $scope.viewCampaignLeads = function(value){
+  cfpLoadingBar.start();
   DashboardService.viewCampaignLeads()
   .then(function onSuccess(response){
     console.log(response);
+    cfpLoadingBar.complete();
     $scope.leadsDataCampaigns = response.data.data;
     if(value){
       angular.forEach($scope.leadsDataCampaigns, function(data){
@@ -2068,9 +2100,11 @@ $scope.viewCampaignLeads = function(value){
   })
 }
     $scope.viewLeadsForSelectedCampaign = function(campaignId){
+      cfpLoadingBar.start();
       DashboardService.viewLeadsForSelectedCampaign(campaignId)
       .then(function onSuccess(response){
       console.log(response);
+      cfpLoadingBar.complete();
       $scope.selectedCampaignLeads = response.data.data;
       $scope.showCampaigns = false;
     }).catch(function onError(response){
@@ -2271,9 +2305,11 @@ $scope.changePassword = function(){
   $('#changePassword').modal('show');
 }
 $scope.changeUserPassword = function(){
+  cfpLoadingBar.start();
   DashboardService.changePassword($scope.userInfo.id,$scope.passwordModel)
   .then(function onSuccess(response){
     console.log(response);
+    cfpLoadingBar.complete();
     $('#changePassword').modal('hide');
     $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();
@@ -2297,6 +2333,7 @@ $scope.validatePassword = function(){
 
 $scope.getFormDetails = function(campaignId){
   console.log(campaignId);
+  cfpLoadingBar.start();
   $scope.campaignIdForleads = campaignId;
   $scope.emailCampaignLeadsModel = {};
   $scope.sendEmailList = [];
@@ -2316,6 +2353,7 @@ $scope.getFormDetails = function(campaignId){
    DashboardService.getFormDetails(campaignId)
     .then(function onSuccess(response){
       console.log(response);
+      cfpLoadingBar.complete();
       $scope.formDetails = response.data.data;
       console.log($scope.formDetails);
         $scope.campaign_id = $scope.formDetails.leads_form_items;
@@ -2326,11 +2364,13 @@ $scope.getFormDetails = function(campaignId){
 }
 
 $scope.sendMeEmail = function(){
+  cfpLoadingBar.start();
   console.log($scope.emailCampaignLeadsModel);
   $scope.emailCampaignLeadsModel['campaign_id'] = $scope.campaignIdForleads;
   DashboardService.sendMeEmail($scope.emailCampaignLeadsModel)
   .then(function onSuccess(response){
     console.log(response);
+    cfpLoadingBar.complete();
     $('#sendEmailModal').modal('hide');
     swal(constants.name, constants.email_success, constants.success);
 

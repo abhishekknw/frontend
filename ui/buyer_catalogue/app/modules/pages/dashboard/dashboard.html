@@ -510,8 +510,8 @@
                                   </thead>
                                       <tbody>
                                       <tr ng-repeat="(key,data) in overallMetric"  style="font-size:12px;">
-                                        <td style="text-align:left;"  ng-if="key != 'ongoing'">{{key}}</td>
-                                        <td style="text-align:left;background-color:green;color:#ffffff !important" ng-if="key == 'ongoing'">{{key}}</td>
+                                        <td style="text-align:left;"  ng-if="key != 'ongoing'">{{key | uppercase}}</td>
+                                        <td style="text-align:left;background-color:green;color:#ffffff !important" ng-if="key == 'ongoing'">{{key | uppercase}}</td>
                                         <td style="text-align:left;"  ng-if="key != 'ongoing'">{{data.total_suppliers_count}}</td>
                                         <td style="text-align:left;background-color:green;color:#ffffff !important"  ng-if="key == 'ongoing'">{{data.total_suppliers_count}}</td>
 
@@ -538,7 +538,7 @@
                                         <td ng-if="showLeadsDetails && item.status == 'upcoming'">NA</td> -->
                                       </tr>
                                       <tr style="background:#c2452f;font-color:#ffffff">
-                                        <td>Total</td>
+                                        <td>TOTAL</td>
                                         <td>{{addCount(overallMetric,'total_suppliers_count')}}</td>
                                         <td>{{addCount(overallMetric,'flat_count')}}</td>
                                         <td ng-if="addCount(overallMetric,'flat_count') != 0">{{addCount(overallMetric,'total_hot_leads_count')/addCount(overallMetric,'flat_count') * 100|limitTo:5}}%</td>
@@ -969,7 +969,7 @@
                                       <thead>
                                         <tr>
                                          <th colspan='999' style="background-color: #cb1925" class="panel-heading">
-                                            <h5>Society Details For {{campaignTabPropsalName}} - {{supplierStatus}}</h5>
+                                            <h5>Society Details For {{campaignTabPropsalName}} - {{supplierStatus | uppercase}}</h5>
                                           </th>
                                         </tr>
                                         <tr>
@@ -1004,8 +1004,8 @@
                                                 <td class="col-md-2">{{supplier.supplier.society_locality}} <small>({{supplier.supplier.society_subarea}})</small></td>
                                                 <td class="col-md-2">{{supplier.supplier.society_type_quality}}</td>
                                                 <td class="col-md-2">{{supplier.supplier.flat_count}}</td>
-                                                <td class="col-md-2" style="color:#ffffff">{{supplier.leads_data.total_leads_count}} <small style="color:#cb1925;"> ({{supplier.leads_data.leads_flat_percentage}} %)</small></td>
-                                                <td class="col-md-2"> <small style="color:#cb1925;">{{supplier.leads_data.hot_leads_count}}({{supplier.leads_data.hot_leads_percentage_by_flat_count}} %)</small></td>
+                                                <td class="col-md-2" style="color:#ffffff">{{supplier.leads_data.total_leads_count || 0}} <small style="color:#cb1925;"> ({{supplier.leads_data.leads_flat_percentage || 0}} %)</small></td>
+                                                <td class="col-md-2"> <small style="color:#cb1925;">{{supplier.leads_data.hot_leads_count || 0}}({{supplier.leads_data.hot_leads_percentage_by_flat_count || 0}} %)</small></td>
                                                 <td ng-if="supplier.images_data.POSTER && supplierStatus != 'upcoming'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.POSTER.images)">Images ({{supplier.images_data.POSTER.total_count}})</a></td>
                                                 <td ng-if="!supplier.images_data.POSTER && supplierStatus != 'upcoming'">No Images</td>
 
@@ -1081,14 +1081,6 @@
                                                   <td>{{TotalSupplierFlatCount}}</td>
                                                   <td>{{TotalSupplierLeadsCount}}</td>
                                                   <td>{{TotalSupplierHotLeadsCount}}</td>
-                                                  <td></td>
-                                                  <td></td>
-                                                  <td></td>
-                                                  <td></td>
-                                                  <td></td>
-                                                  <td></td>
-                                                  <td></td>
-                                                  <td></td>
 
                                                 </tr>
                                             </tfoot>
@@ -1392,9 +1384,8 @@
         <h3>{{selectedBookingCampaignName}}</h3>
       </div>
 
-      <div class="" ng-if="bookingPhases">
-        <div class="col-md-12" style="overflow-x:auto">
-        <table class="table table-bordered table-responsive bookingtable">
+      <div class="col-md-12" ng-if="bookingPhases">
+        <table class="table table-bordered table-responsive ">
           <thead>
             <tr>
               <th><small>Phase Details</small></th>
@@ -1493,7 +1484,6 @@
             </tr>
           </tbody>
         </table>
-      </div>
         <div class="panel-title">
           <h4>Pipelined Suppliers</h4>
         </div>
