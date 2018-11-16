@@ -8,9 +8,7 @@ import Sidebar from '../components/Sidebar';
 import ChecklistContainer from './ChecklistContainer';
 
 import ActionCreators from './../actions';
-
-//Actions
-import * as AuthActions from '../actions/auth';
+import Toastr from '../components/toastr';
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(ActionCreators, dispatch);
@@ -28,6 +26,7 @@ class LayoutContainer extends Component {
   render() {
     return (
       <main>
+        <Toastr />
         <Header {...this.props} />
         <Sidebar {...this.props} />
         <div className="wrapper">

@@ -6,8 +6,6 @@ export default class FillChecklist extends React.Component {
   constructor(props) {
     super(props);
 
-    const { match } = this.props;
-
     this.state = {
       checklistEntries: {}
     };
@@ -70,13 +68,15 @@ export default class FillChecklist extends React.Component {
     }
   }
 
-  handleEntryChange(rowId, columnId, value) {
+  handleEntryChange(rowId, columnId, value, inputType) {
     const newchecklistEntries = Object.assign({}, this.state.checklistEntries);
+    if (inputType === 'checkbox') {
+      value = value === 'true' ? true : false;
+    }
 
     if (!newchecklistEntries[rowId]) {
       newchecklistEntries[rowId] = {};
     }
-
     newchecklistEntries[rowId][columnId] = {
       column_id: columnId,
       cell_value: value
@@ -121,8 +121,24 @@ export default class FillChecklist extends React.Component {
           const columnId = column.column_id;
 
           const onCellChange = event => {
-            this.handleEntryChange(rowId, columnId, event.target.value);
+            if (event.target.type === 'checkbox') {
+              event.target.value = event.target.checked ? true : false;
+            }
+            this.handleEntryChange(
+              rowId,
+              columnId,
+              event.target.value,
+              event.target.type
+            );
           };
+          let dataType = 'text';
+          let inputClass = '';
+          if (column.column_type === 'BOOLEAN') {
+            dataType = 'checkbox';
+            inputClass = 'input-checkbox';
+          } else if (column.column_type === 'DATE') {
+            dataType = 'date';
+          }
 
           return (
             <div
@@ -135,12 +151,19 @@ export default class FillChecklist extends React.Component {
                     <label>{row.cell_value}</label>
                   ) : (
                     <input
-                      type="text"
+                      className={inputClass}
+                      type={dataType}
                       value={
                         checklistEntries[rowId] &&
                         checklistEntries[rowId][columnId]
                           ? checklistEntries[rowId][columnId].cell_value
                           : ''
+                      }
+                      checked={
+                        checklistEntries[rowId] &&
+                        checklistEntries[rowId][columnId]
+                          ? checklistEntries[rowId][columnId].cell_value
+                          : false
                       }
                       onChange={onCellChange}
                     />

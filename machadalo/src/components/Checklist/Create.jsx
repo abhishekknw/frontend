@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
+import { toastr } from 'react-redux-toastr';
 
 import './index.css';
 
@@ -40,8 +41,6 @@ const getDefaultColumns = () => {
 export default class CreateChecklistTemplate extends React.Component {
   constructor(props) {
     super(props);
-
-    const { match } = this.props;
 
     this.state = {
       checklist_name: '',
@@ -180,6 +179,7 @@ export default class CreateChecklistTemplate extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
+    let error = false;
     const data = {
       checklist_name: this.state.checklist_name,
       checklist_type: 'supplier',
@@ -191,6 +191,17 @@ export default class CreateChecklistTemplate extends React.Component {
       ),
       static_column_values: this.state.static_column_values
     };
+    this.state.static_column_values.forEach(static_value => {
+      console.log(static_value);
+      if (static_value.cell_value === '') {
+        error = true;
+        toastr.error('', 'Please enter data in the Static Data field');
+        return false;
+      }
+    });
+    if (error) {
+      return;
+    }
     // Send request to create template
     this.props.postChecklistTemplate({
       campaignId: this.props.match.params.campaignId,
@@ -281,6 +292,7 @@ export default class CreateChecklistTemplate extends React.Component {
                 <div className="form-control">
                   <input
                     type="text"
+                    placeholder="Static Data"
                     value={columnIndex === 0 ? row.cell_value : ''}
                     onChange={onLabelChange}
                     disabled={columnIndex !== 0}
