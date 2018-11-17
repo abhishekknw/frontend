@@ -13,17 +13,23 @@ export default class List extends React.Component {
     let campaignProposalId = this.props.match.params.campaignId;
     let supplierId = this.props.match.params.supplierId;
     this.props.getCurrentCampaign(campaignProposalId);
-    this.props.getCurrentSupplier(supplierId);
-    this.props.getSupplierChecklists({
-      campaignId: campaignProposalId,
-      supplierId: supplierId
-    });
+    if (supplierId) {
+      this.props.getCurrentSupplier(supplierId);
+      this.props.getSupplierChecklists({
+        campaignId: campaignProposalId,
+        supplierId: supplierId
+      });
+    } else {
+      this.props.getCampaignChecklists({
+        campaignId: campaignProposalId
+      });
+    }
   }
 
   renderChecklistRow(checklist, index) {
     // Remove checklist
     const onRemove = () => {
-      this.props.deleteSupplierChecklist({ checklistId: checklist.id });
+      this.props.deleteChecklist({ checklistId: checklist.checklist_id });
     };
 
     return (
@@ -50,13 +56,45 @@ export default class List extends React.Component {
   render() {
     const { supplier, campaign, checklist } = this.props;
 
+    let supplierChecklistFlag = true;
+    let headingText = 'Checklists for ',
+      checklistCreateUrl,
+      showCreateButton = false;
+
+    if (!this.props.match.params.supplierId) {
+      supplierChecklistFlag = false;
+    }
+
+    if (supplierChecklistFlag) {
+      headingText +=
+        'Supplier ' +
+        (supplier.currentSupplier ? supplier.currentSupplier.name : '');
+
+      checklistCreateUrl = `/r/checklist/create/${
+        this.props.match.params.campaignId
+      }/${this.props.match.params.supplierId}`;
+      if (campaign.currentCampaign && supplier.currentSupplier) {
+        showCreateButton = true;
+      }
+    } else {
+      headingText +=
+        'Campaign ' +
+        (campaign.currentCampaign
+          ? campaign.currentCampaign.campaign.name
+          : '');
+
+      checklistCreateUrl = `/r/checklist/create/${
+        this.props.match.params.campaignId
+      }`;
+      if (campaign.currentCampaign) {
+        showCreateButton = true;
+      }
+    }
+
     return (
       <div className="list">
         <div className="list__title">
-          <h3>
-            Checklists for supplier{' '}
-            {supplier.currentSupplier ? supplier.currentSupplier.name : ''}
-          </h3>
+          <h3>{headingText}</h3>
         </div>
         <div className="list__filter">
           <input type="text" placeholder="Search..." />
@@ -86,13 +124,8 @@ export default class List extends React.Component {
         </div>
 
         <div className="list__actions">
-          {campaign.currentCampaign && supplier.currentSupplier ? (
-            <Link
-              to={`/r/checklist/create/${this.props.match.params.campaignId}/${
-                this.props.match.params.supplierId
-              }`}
-              className="btn btn--danger"
-            >
+          {showCreateButton ? (
+            <Link to={checklistCreateUrl} className="btn btn--danger">
               Create
             </Link>
           ) : (

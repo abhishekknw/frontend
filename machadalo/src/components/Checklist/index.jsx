@@ -41,7 +41,21 @@ class Checklist extends React.Component {
             )}
           />
           <Route
+            exact
+            path={`${match.path}/create/:campaignId`}
+            render={componentProps => (
+              <Create {...this.props} {...componentProps} />
+            )}
+          />
+          <Route
             path={`${match.path}/list/:campaignId/:supplierId`}
+            render={componentProps => (
+              <List {...this.props} {...componentProps} />
+            )}
+          />
+          <Route
+            exact
+            path={`${match.path}/list/:campaignId`}
             render={componentProps => (
               <List {...this.props} {...componentProps} />
             )}

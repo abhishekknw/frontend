@@ -60,11 +60,17 @@ export default class FillChecklist extends React.Component {
       let checklistInfo = this.props.checklist.details[
         this.props.match.params.checklistId
       ].checklist_info;
-      this.props.history.push(
-        `/r/checklist/list/${checklistInfo.campaign_id}/${
-          checklistInfo.supplier_id
-        }`
-      );
+      if (checklistInfo.checklist_type === 'supplier') {
+        this.props.history.push(
+          `/r/checklist/list/${checklistInfo.campaign_id}/${
+            checklistInfo.supplier_id
+          }`
+        );
+      } else {
+        this.props.history.push(
+          `/r/checklist/list/${checklistInfo.campaign_id}`
+        );
+      }
     }
   }
 

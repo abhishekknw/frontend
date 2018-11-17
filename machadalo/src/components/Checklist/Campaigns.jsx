@@ -35,6 +35,14 @@ export default class Campaigns extends React.Component {
             Select Supplier
           </Link>
         </td>
+        <td>
+          <Link
+            to={`/r/checklist/list/${campaign.campaign.proposal_id}`}
+            className="btn btn--danger"
+          >
+            View Checklists
+          </Link>
+        </td>
       </tr>
     );
   }
@@ -58,6 +66,7 @@ export default class Campaigns extends React.Component {
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Action</th>
+                <th>Checklist</th>
               </tr>
             </thead>
             <tbody>{campaign.list.map(this.renderCampaignRow)}</tbody>
