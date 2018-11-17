@@ -97,7 +97,7 @@
     }
 
     DashboardService.getHashtagImages = function(campaignId, date){
-      var url = url_base + "hashtag_images/?campaign_id=" + campaignId + "&date=" + date;
+      var url = url_base + "hashtag-images/?campaign_id=" + campaignId + "&date=" + date;
       return machadaloHttp.get(url);
     }
 

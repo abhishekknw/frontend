@@ -338,13 +338,9 @@
                           <td>Other Images(Banner)</td>
                           <td>-</td>
                           <td>-</td>
-                          <td><a data-target="" data-toggle="modal" ng-click="getHashtagImages()">View Other Images</a></td>
+                          <td><a data-target="" data-toggle="modal" ng-click="getHashtagImages(supplier)">View Other Images</a></td>
                           <td></td>
                         </tr>
-                        <tr>
-
-                        </tr>
-
                       </tbody>
                     </table>
                   </div>
@@ -1042,7 +1038,7 @@
                                                   </table>
                                                 </td>
                                                 <td>
-                                                  <a ng-click="getPermissionBoxImages(supplier.supplier)">View</a>
+                                                  <a data-target="#imageModalForPermBox" data-toggle="modal" ng-click="getPermissionBoxImages(supplier.supplier)">View</a>
                                                 </td>
                                                 <td>
                                                   <button type="button" class="btn btn-danger" ng-click="enableAddComments($index)">Add Comments</button>
@@ -1384,7 +1380,7 @@
         <h3>{{selectedBookingCampaignName}}</h3>
       </div>
 
-      <div class="col-md-12" ng-if="bookingPhases">
+      <div class="" ng-if="bookingPhases">
         <table class="table table-bordered table-responsive ">
           <thead>
             <tr>
@@ -1487,16 +1483,15 @@
         <div class="panel-title">
           <h4>Pipelined Suppliers</h4>
         </div>
-        <div class="col-md-12" style="overflow-x:auto">
         <table class="table table-responsive table-bordered">
           <thead>
             <tr>
-              <th>Confirmed Bookings</th>
-              <th>Not Initiated</th>
-              <th>Followup Required</th>
-              <th>Verbally Booked</th>
-              <th>Rejected</th>
-              <th>Total</th>
+              <th><small>Confirmed Bookings <br>(Total Flat Count)</small></th>
+              <th><small>Not Initiated <br>(Total Flat Count)</small></th>
+              <th><small>Followup Required <br>(Total Flat Count)</small></th>
+              <th><small>Verbally Booked <br>(Total Flat Count)</small></th>
+              <th><small>Rejected <br>(Total Flat Count)</small></th>
+              <th><small>Total <br>(Total Flat Count)</small></th>
             </tr>
           </thead>
           <tbody>
@@ -1538,10 +1533,10 @@
             </tr>
           </tbody>
         </table>
-      </div>
+
         <div class="" ng-if="headerForSupplierBookings">
           <div class="panel-heading">
-            {{headerForSupplierBookings}} Supplier Details
+          Pipelined {{headerForSupplierBookings}} Supplier Details
           </div>
           <div class="col-md-12" style="overflow-x:auto">
             <table class="table table-bordered table-responsive">
@@ -1589,7 +1584,7 @@
           </div>
         </div>
       </div>
-
+      
     </div>
     </div>
     </div>
@@ -1774,7 +1769,7 @@
                                         </div>
                                     </div>
                                   </div>
-                                  <div class="col-md-3">
+                                  <div class="col-md-3" ng-hide="showReportBtn">
                                     <div class="panel panel-default" ng-click="getCompareCampaigns(compCampaigns.campaigns.status)">
                                       <div class="button" type="button">
                                         <div class="panel-heading">
@@ -2551,7 +2546,40 @@
       </div>
     </div>
 
+    <!--START: permission box image modal -->
+    <div id="imageModalForPermBox" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Permission Box Image Details {{supplierNameForPermBox}}</h4>
+            <hr/>
+            <div class = "modal-body">
+              <div class="carousel" id="slider-1">
+                 <div class="carousel-inner">
+                   <div class="item" ng-class="{active:!$index}" ng-repeat="image in perBoxImageData">
+                     <div class="row">
+                      <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
+                    </div>
+                     <div class="row" style="margin-left:10px;">
+                       Comment : {{image.comment}} </br>
+                     </div>
+                   </div>
 
+                 </div>
+                  <a style="height:400px;" class="left carousel-control"  data-toggle="carousel" data-target = "#slider-1" role="button" data-slide="prev">
+                     <span class="glyphicon glyphicon-chevron-left"></span>
+                  </a>
+                 <a style="height:400px;" class="right carousel-control" data-toggle = "carousel" data-target = "#slider-1" role="button" data-slide="next">
+                   <span class="glyphicon glyphicon-chevron-right"></span>
+                 </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--END:permission box image modal  -->
 
     <div id="imageHashtag" class="modal fade">
       <div class="modal-dialog">
@@ -2629,7 +2657,7 @@
       </div>
     </div>
 
-    </main>
+
     <!--End: Code for showing image Modal  Window -->
     <!--START: INVENTORY INFO MODAL  -->
     <div class="modal fade" id="inventoryInfoModal" role="dialog">
@@ -2762,39 +2790,6 @@
       </div>
     </div>
     <!--END: Change password modal  -->
-    <!--START: permission box image modal -->
-    <div id="imageModalForPermBox" class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Permission Box Image Details {{supplierNameForPermBox}}</h4>
-            <hr/>
-            <div class = "modal-body">
-              <div class="carousel" id="slider-1">
-                 <div class="carousel-inner">
-                   <div class="item" ng-class="{active:!$index}" ng-repeat="image in perBoxImageData">
-                     <div class="row">
-                      <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
-                    </div>
-                     <div class="row" style="margin-left:10px;">
-                       Comment : {{image.comment}} </br>
-                     </div>
-                   </div>
-
-                 </div>
-                  <a style="height:400px;" class="left carousel-control"  data-toggle="carousel" data-target = "#slider-1" role="button" data-slide="prev">
-                     <span class="glyphicon glyphicon-chevron-left"></span>
-                  </a>
-                 <a style="height:400px;" class="right carousel-control" data-toggle = "carousel" data-target = "#slider-1" role="button" data-slide="next">
-                   <span class="glyphicon glyphicon-chevron-right"></span>
-                 </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--END:permission box image modal  -->
+  </main>
   </body>
 </html>
