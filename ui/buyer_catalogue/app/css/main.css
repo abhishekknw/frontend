@@ -761,3 +761,17 @@ div.outerPhase .innerPhase { width: 1000px; }
 	border: 22px solid;
 	border-color: lightyellow transparent transparent transparent;
 }
+
+#loading-bar .bar {
+background: #8e1921;
+height: 4px;
+}
+
+#loading-bar-spinner .spinner-icon {
+width: 18px;
+height: 18px;
+border: solid 4px transparent;
+border-top-color: #c70202;
+border-left-color:#c70202;
+border-radius: 10px;
+}
