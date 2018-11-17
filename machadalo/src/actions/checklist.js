@@ -135,7 +135,7 @@ export function deleteChecklistFail() {
   };
 }
 
-export function deleteChecklist({ checklistId }) {
+export function deleteChecklist({ checklistId }, callback) {
   return (dispatch, getState) => {
     dispatch(deleteChecklistStart());
 
@@ -146,6 +146,7 @@ export function deleteChecklist({ checklistId }) {
       .set('Authorization', `JWT ${auth.token}`)
       .then(resp => {
         dispatch(deleteChecklistSuccess({ checklistId }));
+        callback();
       })
       .catch(ex => {
         console.log('Failed to delete checklist', ex);
