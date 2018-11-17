@@ -2432,6 +2432,11 @@ $scope.getPermissionBoxImages = function(supplier){
     console.log(response);
   })
 }
+
+$scope.sendEmailDetails = function(){
+  $scope.sendDetails = true;
+  console.log("Hello dropdown");
+}
 //END
 })
 
