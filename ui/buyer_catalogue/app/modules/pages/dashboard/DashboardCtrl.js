@@ -2421,7 +2421,7 @@ $scope.getPermissionBoxImages = function(supplier){
         angular.forEach(response.data.data, function(data){
           data['image_url'] = 'http://androidtokyo.s3.amazonaws.com/' + data.image_path;
         })
-        // $('#imageModalForPermBox').modal('show');
+        $('#imageModalForPermBox').modal('show');
     }else {
       swal(constants.name, constants.image_empty, constants.warning);
     }

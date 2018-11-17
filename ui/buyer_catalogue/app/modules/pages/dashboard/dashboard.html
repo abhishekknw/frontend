@@ -1038,7 +1038,7 @@
                                                   </table>
                                                 </td>
                                                 <td>
-                                                  <a data-target="#imageModalForPermBox" data-toggle="modal" ng-click="getPermissionBoxImages(supplier.supplier)">View</a>
+                                                  <a  ng-click="getPermissionBoxImages(supplier.supplier)">View</a>
                                                 </td>
                                                 <td>
                                                   <button type="button" class="btn btn-danger" ng-click="enableAddComments($index)">Add Comments</button>
@@ -2552,7 +2552,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Permission Box Image Details {{supplierNameForPermBox}}</h4>
+            <h4 class="modal-title">Permission Box Image Details For {{supplierNameForPermBox}}</h4>
             <hr/>
             <div class = "modal-body">
               <div class="carousel" id="slider-1">
