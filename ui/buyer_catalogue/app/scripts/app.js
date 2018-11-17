@@ -60,7 +60,8 @@ angular
     'angular-circular-progress',
     'ngMap',
     'AngularPrint',
-    'checklist-model'
+    'checklist-model',
+    'btorfs.multiselect'
 
   ])
   .config(function ($routeProvider, $stateProvider, $urlRouterProvider, $httpProvider, $qProvider, $locationProvider,cfpLoadingBarProvider) {

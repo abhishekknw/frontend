@@ -78,8 +78,11 @@
 
             <td class="" ng-if="key=='NA'">{{key}}</td>
             <td class="" ng-if="key!='NA'"><a class="" data-target="#invTypeModal" data-toggle="modal" ng-click="setInventoryIds(filter)" permission = "[permissions.viewInventoryIds]"><b>{{key}}</b></a>
-            <span ng-if="key=='STALL'" ng-dropdown-multiselect="" options="stallLoc"  extra-settings="selected_baseline" events="customEvents"
-            selected-model="supplier.stall_locations"  translation-texts="selected_customTexts"></span>
+
+            <!-- <span ng-if="key=='STALL'" ng-dropdown-multiselect="" options="stallLoc"  extra-settings="selected_baseline" events="customEvents"
+            selected-model="supplier.stall_locations"  translation-texts="selected_customTexts"></span> -->
+            <multiselect ng-model="supplier.stall_locations" options="stallLoc" ng-if="key=='STALL'">
+            </multiselect>
             </td>
 
             <td class="" ng-if="key=='FLIER'">{{supplier.flat_count}}</td>
