@@ -68,7 +68,7 @@ export default class CreateChecklistTemplate extends React.Component {
   }
 
   componentWillMount() {
-    if (!this.props.match.params.supplier_id) {
+    if (!this.props.match.params.supplierId) {
       this.setState({
         checklist_type: 'campaign'
       });
@@ -197,7 +197,7 @@ export default class CreateChecklistTemplate extends React.Component {
     const data = {
       checklist_name: this.state.checklist_name,
       checklist_type: this.state.checklist_type,
-      supplier_id: this.props.match.params.campaignId,
+      supplier_id: this.props.match.params.supplierId,
       checklist_columns: this.state.checklist_columns.map(item =>
         Object.assign({}, item, {
           column_type: item.column_type.value
