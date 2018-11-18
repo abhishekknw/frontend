@@ -13,11 +13,11 @@ export function autoLogin() {
   const credentials = JSON.parse(
     localStorage.getItem(constants.MACHADALO_LOCAL_STORAGE_CREDENTIALS_KEY)
   );
-  // const token = localStorage.getItem(
-  //   constants.MACHADALO_LOCAL_STORAGE_TOKEN_KEY
-  // );
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1kYWRtaW4iLCJvcmlnX2lhdCI6MTU0MDk4ODUyNSwibmFtZSI6IkFkbWluIiwiZXhwIjoxNTQwOTg4ODI1LCJ1c2VyX2lkIjoxMDcsImVtYWlsIjoiYWRtaW5AbWFjaGFkYWxvLmNvbSJ9.hRBcH9Xq8w4UA4_X4UiMKp1R51GL4s7MqA6sH1dJZts';
+  const token = localStorage.getItem(
+    constants.MACHADALO_LOCAL_STORAGE_TOKEN_KEY
+  );
+  // const token =
+  //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1kYWRtaW4iLCJvcmlnX2lhdCI6MTU0MDk4ODUyNSwibmFtZSI6IkFkbWluIiwiZXhwIjoxNTQwOTg4ODI1LCJ1c2VyX2lkIjoxMDcsImVtYWlsIjoiYWRtaW5AbWFjaGFkYWxvLmNvbSJ9.hRBcH9Xq8w4UA4_X4UiMKp1R51GL4s7MqA6sH1dJZts';
 
   if (credentials && credentials.token) {
     return dispatch => {
