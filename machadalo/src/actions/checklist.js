@@ -43,6 +43,45 @@ export function postChecklistTemplate({ campaignId, data }) {
   };
 }
 
+export function updateChecklistTemplateStart() {
+  return {
+    type: types.UPDATE_CHECKLIST_TEMPLATE_START
+  };
+}
+
+export function updateChecklistTemplateSuccess() {
+  return {
+    type: types.UPDATE_CHECKLIST_TEMPLATE_SUCCESS
+  };
+}
+
+export function updateChecklistTemplateFail() {
+  return {
+    type: types.UPDATE_CHECKLIST_TEMPLATE_FAIL
+  };
+}
+
+export function updateChecklistTemplate({ checklistId, data }) {
+  return (dispatch, getState) => {
+    dispatch(updateChecklistTemplateStart());
+
+    const { auth } = getState();
+
+    request
+      .post(`${config.API_URL}/v0/ui/checklists/${checklistId}/edit`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .send(data)
+      .then(resp => {
+        dispatch(updateChecklistTemplateSuccess());
+      })
+      .catch(ex => {
+        console.log('Failed to update checklist template', ex);
+
+        dispatch(updateChecklistTemplateFail());
+      });
+  };
+}
+
 export function getChecklistsStart() {
   return {
     type: types.GET_CHECKLISTS_START
