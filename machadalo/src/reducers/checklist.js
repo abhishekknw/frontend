@@ -56,6 +56,25 @@ export const checklist = createReducer(
         templateCreateStatus: 'error'
       });
     },
+    [types.UPDATE_CHECKLIST_TEMPLATE_START](state) {
+      const newState = Object.assign({}, state);
+
+      if (newState.templateCreateStatus) {
+        delete newState.templateCreateStatus;
+      }
+
+      return newState;
+    },
+    [types.UPDATE_CHECKLIST_TEMPLATE_SUCCESS](state) {
+      return Object.assign({}, state, {
+        templateUpdateStatus: 'success'
+      });
+    },
+    [types.UPDATE_CHECKLIST_TEMPLATE_FAIL](state) {
+      return Object.assign({}, state, {
+        templateUpdateStatus: 'error'
+      });
+    },
     [types.GET_SINGLE_CHECKLIST_SUCCESS](state, action) {
       return Object.assign({}, state, {
         details: Object.assign({}, state.details, {

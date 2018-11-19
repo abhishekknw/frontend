@@ -7,6 +7,7 @@ import Create from './Create';
 import Suppliers from './Suppliers';
 import List from './List';
 import Fill from './Fill';
+import Edit from './Edit';
 
 import './index.css';
 
@@ -64,6 +65,12 @@ class Checklist extends React.Component {
             path={`${match.path}/fill/:checklistId`}
             render={componentProps => (
               <Fill {...this.props} {...componentProps} />
+            )}
+          />
+          <Route
+            path={`${match.path}/edit/:checklistId`}
+            render={componentProps => (
+              <Edit {...this.props} {...componentProps} />
             )}
           />
         </Switch>
