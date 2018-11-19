@@ -65,6 +65,7 @@ export default class CreateChecklistTemplate extends React.Component {
     this.onRowRemove = this.onRowRemove.bind(this);
     this.onColumnRemove = this.onColumnRemove.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
 
   componentWillMount() {
@@ -97,6 +98,20 @@ export default class CreateChecklistTemplate extends React.Component {
       this.props.checklist.templateCreateStatus === 'error'
     ) {
       toastr.error('', 'Could not create checklist. Please try again later.');
+    }
+  }
+
+  onBack() {
+    const { match } = this.props;
+
+    if (this.state.checklist_type === 'supplier') {
+      this.props.history.push(
+        `/r/checklist/list/${match.params.campaignId}/${
+          match.params.supplierId
+        }`
+      );
+    } else {
+      this.props.history.push(`/r/checklist/list/${match.params.campaignId}`);
     }
   }
 
@@ -378,6 +393,15 @@ export default class CreateChecklistTemplate extends React.Component {
               <div className="createform__form__action">
                 <button type="submit" className="btn btn--danger">
                   Submit
+                </button>
+              </div>
+              <div className="createform__form__action">
+                <button
+                  type="button"
+                  className="btn btn--danger"
+                  onClick={this.onBack}
+                >
+                  Back
                 </button>
               </div>
             </div>
