@@ -775,3 +775,8 @@ border-top-color: #c70202;
 border-left-color:#c70202;
 border-radius: 10px;
 }
+
+.emailModal{
+  height: 150px;
+  text-align: justify;
+}
