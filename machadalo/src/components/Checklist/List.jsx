@@ -1,45 +1,28 @@
 // List of checklists
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { toastr } from 'react-redux-toastr';
 
 export default class List extends React.Component {
   constructor(props) {
     super(props);
 
-    const { match } = this.props;
-
-    let campaign;
-    for (let i = 0, l = this.props.campaign.list.length; i < l; i += 1) {
-      if (
-        this.props.campaign.list[i].campaign.proposal_id ===
-        match.params.campaignId
-      ) {
-        campaign = this.props.campaign.list[i];
-        break;
-      }
-    }
-
-    let supplier;
-    for (let i = 0, l = this.props.supplier.list.length; i < l; i += 1) {
-      if (this.props.supplier.list[i].supplier_id === match.params.supplierId) {
-        supplier = this.props.supplier.list[i];
-        break;
-      }
-    }
-
-    this.state = {
-      campaign,
-      supplier
-    };
-
     this.renderChecklistRow = this.renderChecklistRow.bind(this);
   }
 
   componentDidMount() {
-    if (this.state.campaign && this.state.supplier) {
+    let campaignProposalId = this.props.match.params.campaignId;
+    let supplierId = this.props.match.params.supplierId;
+    this.props.getCurrentCampaign(campaignProposalId);
+    if (supplierId) {
+      this.props.getCurrentSupplier(supplierId);
       this.props.getSupplierChecklists({
-        campaignId: this.state.campaign.campaign.proposal_id,
-        supplierId: this.state.supplier.supplier_id
+        campaignId: campaignProposalId,
+        supplierId: supplierId
+      });
+    } else {
+      this.props.getCampaignChecklists({
+        campaignId: campaignProposalId
       });
     }
   }
@@ -47,16 +30,21 @@ export default class List extends React.Component {
   renderChecklistRow(checklist, index) {
     // Remove checklist
     const onRemove = () => {
-      this.props.deleteSupplierChecklist({ checklistId: checklist.id });
+      this.props.deleteChecklist(
+        { checklistId: checklist.checklist_id },
+        () => {
+          toastr.success('', 'Checklist removed successfully');
+        }
+      );
     };
 
     return (
-      <tr key={checklist.id}>
+      <tr key={checklist.checklist_id}>
         <td>{index + 1}</td>
         <td>{checklist.checklist_name}</td>
         <td>
           <Link
-            to={`/r/checklist/fill/${checklist.id}`}
+            to={`/r/checklist/fill/${checklist.checklist_id}`}
             className="btn btn--danger"
           >
             Fill checklist
@@ -72,15 +60,47 @@ export default class List extends React.Component {
   }
 
   render() {
-    const { checklist } = this.props;
+    const { supplier, campaign, checklist } = this.props;
+
+    let supplierChecklistFlag = true;
+    let headingText = 'Checklists for ',
+      checklistCreateUrl,
+      showCreateButton = false;
+
+    if (!this.props.match.params.supplierId) {
+      supplierChecklistFlag = false;
+    }
+
+    if (supplierChecklistFlag) {
+      headingText +=
+        'Supplier ' +
+        (supplier.currentSupplier ? supplier.currentSupplier.name : '');
+
+      checklistCreateUrl = `/r/checklist/create/${
+        this.props.match.params.campaignId
+      }/${this.props.match.params.supplierId}`;
+      if (campaign.currentCampaign && supplier.currentSupplier) {
+        showCreateButton = true;
+      }
+    } else {
+      headingText +=
+        'Campaign ' +
+        (campaign.currentCampaign
+          ? campaign.currentCampaign.campaign.name
+          : '');
+
+      checklistCreateUrl = `/r/checklist/create/${
+        this.props.match.params.campaignId
+      }`;
+      if (campaign.currentCampaign) {
+        showCreateButton = true;
+      }
+    }
 
     return (
       <div className="list">
         <div className="list__title">
-          <h3>
-            Checklists for supplier{' '}
-            {this.state.supplier ? this.state.supplier.name : ''}
-          </h3>
+          <h3>{headingText}</h3>
         </div>
         <div className="list__filter">
           <input type="text" placeholder="Search..." />
@@ -110,13 +130,8 @@ export default class List extends React.Component {
         </div>
 
         <div className="list__actions">
-          {this.state.campaign && this.state.supplier ? (
-            <Link
-              to={`/r/checklist/create/${
-                this.state.campaign.campaign.proposal_id
-              }/${this.state.supplier.supplier_id}`}
-              className="btn btn--danger"
-            >
+          {showCreateButton ? (
+            <Link to={checklistCreateUrl} className="btn btn--danger">
               Create
             </Link>
           ) : (

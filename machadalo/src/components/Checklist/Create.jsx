@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
+import { toastr } from 'react-redux-toastr';
 
 import './index.css';
 
@@ -41,21 +42,8 @@ export default class CreateChecklistTemplate extends React.Component {
   constructor(props) {
     super(props);
 
-    const { match } = this.props;
-
-    let campaign;
-    for (let i = 0, l = this.props.campaign.list.length; i < l; i += 1) {
-      if (
-        this.props.campaign.list[i].campaign.proposal_id ===
-        match.params.campaignId
-      ) {
-        campaign = this.props.campaign.list[i];
-        break;
-      }
-    }
-
     this.state = {
-      campaign,
+      checklist_type: 'supplier',
       checklist_name: '',
       checklist_columns: getDefaultColumns(),
       static_column_values: [
@@ -79,6 +67,14 @@ export default class CreateChecklistTemplate extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentWillMount() {
+    if (!this.props.match.params.supplierId) {
+      this.setState({
+        checklist_type: 'campaign'
+      });
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const { match } = this.props;
 
@@ -86,16 +82,21 @@ export default class CreateChecklistTemplate extends React.Component {
       !prevProps.checklist.templateCreateStatus &&
       this.props.checklist.templateCreateStatus === 'success'
     ) {
-      this.props.history.push(
-        `/r/checklist/list/${match.params.campaignId}/${
-          match.params.supplierId
-        }`
-      );
+      toastr.success('', 'Checklist created successfully');
+      if (this.state.checklist_type === 'supplier') {
+        this.props.history.push(
+          `/r/checklist/list/${match.params.campaignId}/${
+            match.params.supplierId
+          }`
+        );
+      } else {
+        this.props.history.push(`/r/checklist/list/${match.params.campaignId}`);
+      }
     } else if (
       !prevProps.checklist.templateCreateStatus &&
       this.props.checklist.templateCreateStatus === 'error'
     ) {
-      // TODO: Show failure message
+      toastr.error('', 'Could not create checklist. Please try again later.');
     }
   }
 
@@ -192,9 +193,10 @@ export default class CreateChecklistTemplate extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
+    let error = false;
     const data = {
       checklist_name: this.state.checklist_name,
-      checklist_type: 'supplier',
+      checklist_type: this.state.checklist_type,
       supplier_id: this.props.match.params.supplierId,
       checklist_columns: this.state.checklist_columns.map(item =>
         Object.assign({}, item, {
@@ -203,9 +205,19 @@ export default class CreateChecklistTemplate extends React.Component {
       ),
       static_column_values: this.state.static_column_values
     };
+    this.state.static_column_values.forEach(static_value => {
+      if (static_value.cell_value === '') {
+        error = true;
+        toastr.error('', 'Please enter data in the Static Data field');
+        return false;
+      }
+    });
+    if (error) {
+      return;
+    }
     // Send request to create template
     this.props.postChecklistTemplate({
-      campaignId: this.state.campaign.campaign.proposal_id,
+      campaignId: this.props.match.params.campaignId,
       data
     });
   }
@@ -293,6 +305,7 @@ export default class CreateChecklistTemplate extends React.Component {
                 <div className="form-control">
                   <input
                     type="text"
+                    placeholder="Static Data"
                     value={columnIndex === 0 ? row.cell_value : ''}
                     onChange={onLabelChange}
                     disabled={columnIndex !== 0}
