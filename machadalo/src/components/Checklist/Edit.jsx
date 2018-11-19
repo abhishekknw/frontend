@@ -163,7 +163,7 @@ export default class CreateChecklistTemplate extends React.Component {
     const rows = this.state.static_column_values.slice();
 
     rows.push({
-      row_id: rows.length + 1,
+      order_id: rows.length + 1,
       cell_value: '',
       status: 'create'
     });
