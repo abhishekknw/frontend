@@ -49,6 +49,7 @@ export default class CreateChecklistTemplate extends React.Component {
   componentDidMount() {
     const { match } = this.props;
 
+    this.props.getSingleChecklistStart();
     this.props.getSingleChecklist({
       checklistId: match.params.checklistId
     });
@@ -79,7 +80,7 @@ export default class CreateChecklistTemplate extends React.Component {
 
     if (
       !prevProps.checklist.templateUpdateStatus &&
-      this.props.checklist.templateUpdateStatus === 'success'
+      checklist.templateUpdateStatus === 'success'
     ) {
       toastr.success('', 'Checklist updated successfully');
       if (
