@@ -2437,6 +2437,15 @@ $scope.sendEmailDetails = function(){
   $scope.sendDetails = true;
   console.log("Hello dropdown");
 }
+
+$scope.sendBookingEmails = function(){
+  DashboardService.sendBookingEmails()
+  .then(function onSuccess(response){
+    console.log(response);
+  }).catch(function onError(response){
+    console.log(response);
+  })
+}
 //END
 })
 

@@ -2822,9 +2822,11 @@
                       </div>
                       </br>
                       </br>
-                      <input type="email" name="" value="" placeholder="Enter Your Own Email Id" style="text-align:center;">
-                      <button type="button" name="button" ng-Click="">Submit</button>
-                    </div>
+                      <div class="row">
+                        <input type="email" name="" value="" placeholder="Enter Your Own Email Id" ng-model="emailModel.email" style="text-align:center;">
+                        <button type="button" name="button" ng-Click="sendBookingEmails()" class="btn btn-danger">Submit</button>
+                      </div>
+                      </div>
                     <div class="col-md-6 emailModal" style="background-color:#eda234">
                       <div class="panel-heading">
                         <h5>To Send Confirmed Email Click HERE</h5>
