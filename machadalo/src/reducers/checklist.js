@@ -59,8 +59,8 @@ export const checklist = createReducer(
     [types.UPDATE_CHECKLIST_TEMPLATE_START](state) {
       const newState = Object.assign({}, state);
 
-      if (newState.templateCreateStatus) {
-        delete newState.templateCreateStatus;
+      if (newState.templateUpdateStatus) {
+        delete newState.templateUpdateStatus;
       }
 
       return newState;
@@ -73,6 +73,11 @@ export const checklist = createReducer(
     [types.UPDATE_CHECKLIST_TEMPLATE_FAIL](state) {
       return Object.assign({}, state, {
         templateUpdateStatus: 'error'
+      });
+    },
+    [types.GET_SINGLE_CHECKLIST_START](state) {
+      return Object.assign({}, state, {
+        details: {}
       });
     },
     [types.GET_SINGLE_CHECKLIST_SUCCESS](state, action) {
