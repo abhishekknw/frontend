@@ -264,6 +264,21 @@
                                         <label class="col-md-2" ng-if="!checkNan(item.offLocationDistance) && item.inv_count != 0 && item.offLocationDistance != 0">{{(item.offLocationDistance/item.inv_count)/1000 |limitTo:5||0}} Km</label>
 
                                         <label class="col-md-2" ng-if="item.images.length > 0"><a data-target="#imageModal" data-toggle="modal" ng-click="setImageUrl(item,item.images)">View Images</a></label>
+                                        <!-- <label class="col-md-2" ng-if="item.images.length > 0">
+                                          <image-cropper image-url="myImageUrlOrBase64"
+                                            width="640"
+                                            height="480"
+                                            show-controls="true"
+                                            fit-on-init="false"
+                                            center-on-init="true"
+                                            api="getApiFunction"
+                                            crop-callback="myCallbackFunction"
+                                            check-cross-origin="false"
+                                            zoom-step="0.1"
+                                            action-labels="myButtonLabelsObject"
+                                          ></image-cropper>
+                                        </label> -->
+
                                         <label class="col-md-2" ng-if="item.images.length == 0">No Image</label>
                                         <!-- <td class="col-md-2">
                                           <a data-target="" data-toggle="modal" ng-click="getHashtagImages(item)">View Other Images</a>
@@ -1596,26 +1611,26 @@
   </uib-tab>
 
               <!--START : Performance Metrics -->
-              <uib-tab  id="uib-tabs-width" ng-click="getCampaigns()" index="4">
-                  <uib-tab-heading>
+              <uib-tab  id="uib-tabs-width" ng-click="getCampaigns()" index="4" >
+                  <uib-tab-heading >
                     <h5 style="margin-left:-10px;"> Performance Metrics</h5>
 
                   </uib-tab-heading>
 
                   <div class="container-fluid" print-section>
                     <div class="row">
-                      <div class="panel panel-default" style="color:'0000ff'">
+                      <div class="panel panel-default" style="color:'0000ff'" >
                         <div class="col-md-12">
 
-                            <div class="panel-heading campaign-header">
+                            <div class="panel-heading campaign-header" print-remove>
                               <h3 style="color:#ffffff">Performance Details</h3>
                             </div>
                             <br />
                             <div class="row zeroLeads" ng-if="!campaignInventories && !showSelection">
                               <h1>Please Select Campaign</h1>
                             </div>
-                            <div class="panel-group">
-                            <div class="col-md-12" print-hide>
+                            <div class="panel-group" print-remove>
+                            <div class="col-md-12" >
 
                                 <div class="col-md-3">
                                 <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.completed.status)">
@@ -1799,7 +1814,7 @@
                             <h3 for="heading">Leads of {{CampaignLeadsName}}</h3>
                           </div>
                           <br /><br />
-                          <div class="row pull-center">
+                          <div class="row pull-center" print-remove>
                             <label for="" style="color:#000000;">Select Date Range</label>
                             <label for="" style="color:#000000;">From Date :</label>
                             <input type="date"  style="color:#000000;" ng-model="dateRangeModel.start_date">
@@ -2071,7 +2086,7 @@
                                 </div>
                               </div>
                         </div>
-                          <br /><br /><br />
+                          <br /><br /><br /><br /><br /><br /><br />
                         <div class="col-md-12" ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:100px;">
                           <div class="panel-heading content-title">
                               <h4 style="text-align: center">Leads Per Society</h4>
@@ -2451,7 +2466,7 @@
                       </div>
                         <!--End : Performance metrics  -->
                         <br><br>
-                        <div class="row"  ng-if="showReportBtn">
+                        <div class="row"  ng-if="showReportBtn" print-remove>
                           <div class="col-md-6">
                             <button class="btn btn-danger active notify" print-btn style="text-align:right;margin-left:30px;margin-top:20px;">Print Report</button>
 

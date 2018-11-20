@@ -62,6 +62,7 @@ angular
     'AngularPrint',
     'checklist-model'
 
+
   ])
   .config(function ($routeProvider, $stateProvider, $urlRouterProvider, $httpProvider, $qProvider, $locationProvider,cfpLoadingBarProvider) {
       $stateProvider
@@ -348,7 +349,7 @@ angular
             controller : 'AuditReleasePlanCtrl',
             templateUrl : 'modules/pages/operations/auditReleasePlan/auditReleasePlan.tmpl.html',
             ncyBreadcrumb: {
-              label:'CampaignAndAuditPlan',
+              label:'CampaignReleaseAndAuditPlan',
               parent : 'releasePlan'
             },
             data :{
