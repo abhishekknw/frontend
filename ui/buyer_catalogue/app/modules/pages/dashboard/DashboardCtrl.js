@@ -2468,6 +2468,22 @@ $scope.sendBookingEmails = function(){
     console.log(response);
   })
 }
+
+$scope.Sort = function(val)
+   {
+       if($scope.sort == val)
+       {
+           $scope.reversesort = !$scope.reversesort;
+           //return;
+       }
+       $scope.sort = val;
+        $('td a i').each(function()
+       {
+           //alert(this.className);
+           $(this).removeClass().addClass('icon-sort');
+       });
+
+     };
 //END
 })
 
