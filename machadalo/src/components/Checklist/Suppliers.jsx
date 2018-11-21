@@ -5,32 +5,13 @@ export default class Suppliers extends React.Component {
   constructor(props) {
     super(props);
 
-    const { match } = this.props;
-
-    let campaign;
-    for (let i = 0, l = this.props.campaign.list.length; i < l; i += 1) {
-      if (
-        this.props.campaign.list[i].campaign.proposal_id ===
-        match.params.campaignId
-      ) {
-        campaign = this.props.campaign.list[i];
-        break;
-      }
-    }
-
-    this.state = {
-      campaign
-    };
-
     this.renderSupplierRow = this.renderSupplierRow.bind(this);
   }
 
   componentDidMount() {
-    if (this.state.campaign) {
-      this.props.getSuppliersList({
-        campaignProposalId: this.state.campaign.campaign.proposal_id
-      });
-    }
+    let campaignProposalId = this.props.match.params.campaignId;
+    this.props.getCurrentCampaign(campaignProposalId);
+    this.props.getSuppliersList({ campaignProposalId });
   }
 
   renderSupplierRow(supplier, index) {
@@ -45,9 +26,9 @@ export default class Suppliers extends React.Component {
         </td>
         <td>
           <Link
-            to={`/r/checklist/list/${
-              this.state.campaign.campaign.proposal_id
-            }/${supplier.supplier_id}`}
+            to={`/r/checklist/list/${this.props.match.params.campaignId}/${
+              supplier.supplier_id
+            }`}
             className="btn btn--danger"
           >
             View checklists
@@ -58,14 +39,16 @@ export default class Suppliers extends React.Component {
   }
 
   render() {
-    const { supplier } = this.props;
+    const { supplier, campaign } = this.props;
 
     return (
       <div className="list">
         <div className="list__title">
           <h3>
             Suppliers of Campaign{' '}
-            {this.state.campaign ? this.state.campaign.campaign.name : ''}
+            {campaign.currentCampaign
+              ? campaign.currentCampaign.campaign.name
+              : ''}
           </h3>
         </div>
         <div className="list__filter">
@@ -83,7 +66,9 @@ export default class Suppliers extends React.Component {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>{supplier.list.map(this.renderSupplierRow)}</tbody>
+            <tbody>
+              {supplier.list.map(this.renderSupplierRow.bind(this))}
+            </tbody>
           </table>
         </div>
       </div>

@@ -3,7 +3,8 @@ import * as types from './../actions/types';
 
 export const supplier = createReducer(
   {
-    list: []
+    list: [],
+    currentSupplier: undefined
   },
 
   {
@@ -20,6 +21,21 @@ export const supplier = createReducer(
     [types.GET_SUPPLIERS_LIST_FAIL](state) {
       return Object.assign({}, state, {
         list: []
+      });
+    },
+    [types.GET_CURRENT_SUPPLIER_START](state) {
+      return Object.assign({}, state, {
+        currentSupplier: undefined
+      });
+    },
+    [types.GET_CURRENT_SUPPLIER_SUCCESS](state, action) {
+      return Object.assign({}, state, {
+        currentSupplier: action.currentSupplier
+      });
+    },
+    [types.GET_CURRENT_SUPPLIER_FAIL](state) {
+      return Object.assign({}, state, {
+        currentSupplier: undefined
       });
     }
   }
