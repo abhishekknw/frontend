@@ -159,6 +159,11 @@
     //   var url = url_base + "campaign-list/" + campaignId + "/?email=" + ;
     //   return machadaloHttp.get(url);
     // }
+
+    DashboardService.getPhases = function(campaignId){
+      var url = url_base  + "supplier-phase/?campaign_id=" + campaignId;
+      return machadaloHttp.get(url);
+    }
     return DashboardService;
 
  }]);

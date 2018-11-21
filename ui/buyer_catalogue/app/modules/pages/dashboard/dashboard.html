@@ -975,6 +975,19 @@
 
 
                                 <div class="col-md-12 showDisplayDetailsTable" ng-if="showDisplayDetailsTable" style="margin-top:5px;height:500px !important;">
+                                  <div class="col-md-3">
+                                    <select class="form-control spacing" ng-model="phaseCode">
+                                      <option value="" disabled>FilterBy Phase</option>
+                                      <option value="{{phasesDataOfSociety.phase_no}}">ALL</option>
+                                      <option ng-repeat="phaseData in phasesDataOfSociety" value="{{phaseData.id}}">{{phaseData.phase_no}} ({{phaseData.start_date |date:mediumDate}})</option>
+                                    </select>
+                                  </div>
+                                  <!-- <div class="row">
+                                    <select name="phase" class="form-control spacing input-width-phase" ng-model="supplier.phaseNo" min="1">
+                                      <option value="" disabled>Select Phase</option>
+                                      <option ng-repeat="phase in phases | unique:'phase_no'" value="{{phase.id}}">{{phase.phase_no}}</option>
+                                    </select>
+                                  </div> -->
                                   <div class="row">
                                     <table class="table table-bordered campaignDetailTable">
                                       <thead>
@@ -990,6 +1003,7 @@
                                         </tr>
                                         <tr>
                                           <td>INDEX</td>
+                                          <td>Phase No</td>
                                           <td><a style="color:#000000;" ng-click="sortquery='supplier.society_name'">Society Name</a></td>
                                           <td>Society Area (SubArea)</td>
                                           <td>Society Type</td>
@@ -1009,8 +1023,9 @@
                                       </thead>
                                           <tbody class="detailedTable">
                                             <div class="row">
-                                              <tr ng-repeat="supplier in supplierAndInvData |filter:query | orderBy : sortquery">
+                                              <tr ng-repeat="supplier in supplierAndInvData |filter:query | filter: phaseCode | orderBy : sortquery">
                                                 <td style="vertical-align:middle">{{$index + 1}}</td>
+                                                <td style="vertical-align:middle">{{supplier.phase}}</td>
                                                 <td class="col-md-2">{{supplier.supplier.society_name}}</td>
                                                 <td class="col-md-2">{{supplier.supplier.society_locality}} <small>({{supplier.supplier.society_subarea}})</small></td>
                                                 <td class="col-md-2">{{supplier.supplier.society_type_quality}}</td>
