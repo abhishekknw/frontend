@@ -6,8 +6,9 @@
     'use strict';
 
   angular.module('catalogueApp')
-      .controller('DashboardCtrl',function($scope,NgMap, $rootScope, baConfig, colorHelper,DashboardService, commonDataShare, constants,$location,$anchorScroll,uiGmapGoogleMapApi,uiGmapIsReady,Upload,cfpLoadingBar) {
+      .controller('DashboardCtrl',function($scope,NgMap, $rootScope, baConfig, colorHelper,DashboardService, commonDataShare, constants,$location,$anchorScroll,uiGmapGoogleMapApi,uiGmapIsReady,Upload,cfpLoadingBar,$stateParams) {
  $scope.itemsByPage=15;
+ $scope.campaign_id = $stateParams.proposal_id;
  $scope.query = "";
  $scope.oneAtATime = true;
  $scope.bookingStatusSuppliers = constants.booking_status;
@@ -933,8 +934,7 @@
          .then(function onSuccess(response){
            console.log(response);
            cfpLoadingBar.complete();
-
-
+           $scope.getPhases(campaign.campaign);
 
            // $scope.overallMetricStatus = [
            //   { label : $scope.campaignStatus.ongoing.supplierLabel, value : $scope.campaignStatusData.ongoing.length, status : $scope.campaignStatus.ongoing.status },
@@ -1009,6 +1009,26 @@
        ).catch(function onError(response){
            console.log(response);
 
+         })
+       }
+
+       $scope.getPhases = function(campaignId){
+         DashboardService.getPhases(campaignId)
+         .then(function onSuccess(response){
+           console.log(response);
+           $scope.phaseMappingList = {};
+           angular.forEach(response.data.data, function(phase){
+             phase.start_date = new Date(phase.start_date);
+             phase.end_date = new Date(phase.end_date);
+             $scope.phaseMappingList[phase.no] = phase;
+
+           })
+           $scope.phaseNo = response.data.data.phase_no;
+           console.log($scope.phaseMappingList);
+           $scope.phasesDataOfSociety = response.data.data;
+           console.log($scope.phasesDataOfSociety.phase_no);
+           }).catch(function onError(response){
+           console.log(response);
          })
        }
        // END : service call to get suppliers as campaign status
@@ -1723,6 +1743,7 @@
       $scope.supplierStatus = data.status;
       $scope.supplierAndInvData = $scope.campaignSupplierAndInvData[data.status];
       $scope.invStatusKeys = angular.copy(invStatusKeys);
+
       $scope.TotalSupplierFlatCount = 0;
       $scope.TotalSupplierLeadsCount = 0;
       $scope.TotalLeadsPerFlat = 0;
@@ -1735,6 +1756,7 @@
         $scope.TotalSupplierFlatCount += supplier.supplier.flat_count;
         if($scope.TotalSupplierLeadsCount){
         $scope.TotalSupplierLeadsCount += supplier.leads_data.total_leads_count;
+        console.log($scope.TotalSupplierLeadsCount);
          }
 
         $scope.TotalLeadsPerFlat += supplier.leads_data.leads_flat_percentage;

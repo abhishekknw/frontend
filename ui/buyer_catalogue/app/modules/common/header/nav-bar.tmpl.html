@@ -48,17 +48,17 @@
                             <a ng-href="/#/dashboard" class=" lipadding" ng-click="closeModal()">
                             <i class="fa fa-dashboard fa-lg"></i>DashBoard</a>
                           </li>
-                          <li ng-class="{active: isActive('/dashboard')}">
+                          <li ng-class="{active: isActive('/dashboard')}" permission = "[perm.menuCampaignLeads]">
                             <a href="https://forms.machadalo.com" target="_blank" class=" lipadding" ng-click="closeModal()">
                               <i class="fa fa-sign-out fa-lg"></i> Supplier Forms
                             </a>
                           </li>
-                          <li ng-class="{active: isActive('/dashboard')}" permission = "[perm.menuChangePassword]">
+                          <li ng-class="{active: isActive('/dashboard')}" permission = "[perm.menuCampaignLeads]">
                             <a href="/#/loginLogs"  ng-click="closeModal()">
                           <i class="fa fa-outdent"></i> View Logs</a></li>
 
-                          <li ng-class="{active: isActive('/dashboard')}" permission = "[perm.menuChangePassword]">
-                            <a href="/#/changePassword"  ng-click="closeModal()">
+                          <li ng-class="{active: isActive('/dashboard')}" >
+                            <a data-target="#passwordModal" data-toggle="modal" ng-click="closeModal()">
                           <i class="fa fa-columns fa-lg"></i> Change Password</a></li>
 
                           <li ng-class="{active: isActive('/dashboard')}">
