@@ -156,7 +156,7 @@
     }
 
     DashboardService.sendBookingEmails = function(campaignId){
-      var url = url_base + "campaign-list/" + campaignId + "/?email=" + ;
+      var url = url_base + "campaign-list/" + campaignId + "/?email=" ;
       return machadaloHttp.get(url);
     }
     return DashboardService;
