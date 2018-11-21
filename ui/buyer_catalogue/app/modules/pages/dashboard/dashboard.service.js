@@ -155,15 +155,41 @@
       return machadaloHttp.get(url);
     }
 
-    // DashboardService.sendBookingEmails = function(campaignId){
-    //   var url = url_base + "campaign-list/" + campaignId + "/?email=" + ;
-    //   return machadaloHttp.get(url);
-    // }
 
     DashboardService.getPhases = function(campaignId){
       var url = url_base  + "supplier-phase/?campaign_id=" + campaignId;
       return machadaloHttp.get(url);
     }
+    DashboardService.sendListOfSuppliersEmail = function(campaignId,email){
+      var url = url_base + "send-booking-details/" + campaignId + "/?email=" + email;
+      return machadaloHttp.get(url);
+    }
+
+    DashboardService.sendListOfSuppliersConfirmEmail = function(campaignId){
+      var url = url_base + "send-booking-details/" + campaignId + "/";
+      return machadaloHttp.get(url);
+    }
+
+    DashboardService.sendActivationOfSuppliersEmail = function(campaignId,email){
+      var url = url_base + "send-advanced-booking-details/" + campaignId + "/?email=" + email;
+      return machadaloHttp.get(url);
+    }
+
+    DashboardService.sendActivationOfSuppliersConfirmEmail = function(campaignId){
+      var url = url_base + "send-advanced-booking-details/" + campaignId + "/";
+      return machadaloHttp.get(url);
+    }
+
+    DashboardService.sendPipelinedSuppliersEmail = function(campaignId,email){
+      var url = url_base + "send-pipeline-details/" + campaignId + "/?email=" + email;
+      return machadaloHttp.get(url);
+    }
+
+    DashboardService.sendPipelinedSuppliersConfirmEmail = function(campaignId){
+      var url = url_base + "send-pipeline-details/" + campaignId + "/";
+      return machadaloHttp.get(url);
+    }
+
     return DashboardService;
 
  }]);

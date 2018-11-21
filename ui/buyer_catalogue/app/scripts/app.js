@@ -60,7 +60,7 @@ angular
     'angular-circular-progress',
     'ngMap',
     'AngularPrint',
-    'checklist-model'
+    'checklist-model',
 
 
   ])

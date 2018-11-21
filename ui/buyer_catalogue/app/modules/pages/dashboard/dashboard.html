@@ -1069,7 +1069,7 @@
                                                   </table>
                                                 </td>
                                                 <td>
-                                                  <a data-target="#imageModalForPermBox" data-toggle="modal" ng-click="getPermissionBoxImages(supplier.supplier)">View</a>
+                                                  <a  ng-click="getPermissionBoxImages(supplier.supplier)">View</a>
                                                 </td>
                                                 <td>
                                                   <button type="button" class="btn btn-danger" ng-click="enableAddComments($index)">Add Comments</button>
@@ -1614,7 +1614,7 @@
             </table>
           </div>
         </div>
-          <button type="button" name="button" class="col-md-12 btn btn-danger" ng-click="sendEmailDetails()" data-target="#sendBookingEngineEmailModal" data-toggle="modal">Click here to Send Emails</button>
+          <button type="button" name="button" class="col-md-12 btn btn-danger" data-target="#sendBookingEngineEmailModal" data-toggle="modal">Click here to Send Emails</button>
 
 
       </div>
@@ -2586,7 +2586,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Permission Box Image Details {{supplierNameForPermBox}}</h4>
+            <h4 class="modal-title">Permission Box Image Details For {{supplierNameForPermBox}}</h4>
             <hr/>
             <div class = "modal-body">
               <div class="carousel" id="slider-1">
@@ -2833,14 +2833,15 @@
             <hr/>
             <div class = "modal-body">
 
-                   <div class="col-md-12" ng-show="sendDetails">
+                   <div class="col-md-12">
                      Select Email Type :
-                     <select class="form-control" name="" >
-                       <option value="">Booking details email</option>
-                       <option value="">Branding emails</option>
-                       <option value="">pipelined emails</option>
+                     <select class="form-control" name="" ng-model="emailModel.selected">
+                       <option disabled>Please Select</option>
+                       <option value="listOfSupplier">List Of Society Email</option>
+                       <option value="activationOfSupplier">Activation Of Society,Branding and Permission Email</option>
+                       <option value="pipelineOfSupplier">Pipelined Societies Email</option>
                      </select>
-                   </br>
+                      </br>
                      </br></br>
                        </br>
                   </div>
@@ -2854,8 +2855,8 @@
                       </br>
                       </br>
                       <div class="row">
-                        <input type="email" name="" value="" placeholder="Enter Your Own Email Id" ng-model="emailModel.email" style="text-align:center;">
-                        <button type="button" name="button" ng-Click="sendBookingEmails()" class="btn btn-danger">Submit</button>
+                        <input type="email" class="form-control"  placeholder="Enter Your Own Email Id" ng-model="emailModel.email" style="text-align:center;">
+                        <button type="button" name="button" ng-Click="sendBookingEmails()" class="btn btn-danger" ng-disabled="emailBtnDisabled">Submit</button>
                       </div>
                       </div>
                     <div class="col-md-6 emailModal" style="background-color:#eda234">
@@ -2864,7 +2865,7 @@
                       </div>
                       </br>
                       </br>
-                      <button type="button" name="button" class="btn btn-danger" style="text-align:center" ng-click="">Send Confirm Mail</button>
+                      <button type="button" name="button" class="btn btn-danger" style="text-align:center" ng-click="sendConfirmBookingEmails()" ng-disabled="emailBtnDisabled">Send Confirm Mail</button>
                     </div>
                   </div>
 

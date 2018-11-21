@@ -6,18 +6,7 @@ export default class FillChecklist extends React.Component {
   constructor(props) {
     super(props);
 
-    const { match } = this.props;
-
-    let checklist;
-    for (let i = 0, l = this.props.checklist.list.length; i < l; i += 1) {
-      if (this.props.checklist.list[i].id === +match.params.checklistId) {
-        checklist = this.props.checklist.list[i];
-        break;
-      }
-    }
-
     this.state = {
-      checklist,
       checklistEntries: {}
     };
 
@@ -37,7 +26,8 @@ export default class FillChecklist extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { checklist } = this.props;
-    const checklistDetails = checklist.details[this.state.checklist.id];
+    const checklistDetails =
+      checklist.details[this.props.match.params.checklistId];
 
     if (checklistDetails && !this.state.checklistDetails) {
       const newState = {
@@ -67,21 +57,32 @@ export default class FillChecklist extends React.Component {
       !prevProps.checklist.entryStatus &&
       this.props.checklist.entryStatus === 'success'
     ) {
-      this.props.history.push(
-        `/r/checklist/list/${this.state.checklist.campaign_id}/${
-          this.state.checklist.supplier_id
-        }`
-      );
+      let checklistInfo = this.props.checklist.details[
+        this.props.match.params.checklistId
+      ].checklist_info;
+      if (checklistInfo.checklist_type === 'supplier') {
+        this.props.history.push(
+          `/r/checklist/list/${checklistInfo.campaign_id}/${
+            checklistInfo.supplier_id
+          }`
+        );
+      } else {
+        this.props.history.push(
+          `/r/checklist/list/${checklistInfo.campaign_id}`
+        );
+      }
     }
   }
 
-  handleEntryChange(rowId, columnId, value) {
+  handleEntryChange(rowId, columnId, value, inputType) {
     const newchecklistEntries = Object.assign({}, this.state.checklistEntries);
+    if (inputType === 'checkbox') {
+      value = value === 'true' ? true : false;
+    }
 
     if (!newchecklistEntries[rowId]) {
       newchecklistEntries[rowId] = {};
     }
-
     newchecklistEntries[rowId][columnId] = {
       column_id: columnId,
       cell_value: value
@@ -99,7 +100,7 @@ export default class FillChecklist extends React.Component {
 
     // Send request to create template
     this.props.postChecklistEntries({
-      checklistId: this.state.checklist.id,
+      checklistId: this.props.match.params.checklistId,
       data: checklistEntries
     });
   }
@@ -126,8 +127,24 @@ export default class FillChecklist extends React.Component {
           const columnId = column.column_id;
 
           const onCellChange = event => {
-            this.handleEntryChange(rowId, columnId, event.target.value);
+            if (event.target.type === 'checkbox') {
+              event.target.value = event.target.checked ? true : false;
+            }
+            this.handleEntryChange(
+              rowId,
+              columnId,
+              event.target.value,
+              event.target.type
+            );
           };
+          let dataType = 'text';
+          let inputClass = '';
+          if (column.column_type === 'BOOLEAN') {
+            dataType = 'checkbox';
+            inputClass = 'input-checkbox';
+          } else if (column.column_type === 'DATE') {
+            dataType = 'date';
+          }
 
           return (
             <div
@@ -140,12 +157,19 @@ export default class FillChecklist extends React.Component {
                     <label>{row.cell_value}</label>
                   ) : (
                     <input
-                      type="text"
+                      className={inputClass}
+                      type={dataType}
                       value={
                         checklistEntries[rowId] &&
                         checklistEntries[rowId][columnId]
                           ? checklistEntries[rowId][columnId].cell_value
                           : ''
+                      }
+                      checked={
+                        checklistEntries[rowId] &&
+                        checklistEntries[rowId][columnId]
+                          ? checklistEntries[rowId][columnId].cell_value
+                          : false
                       }
                       onChange={onCellChange}
                     />
@@ -161,13 +185,16 @@ export default class FillChecklist extends React.Component {
 
   render() {
     const { checklistDetails } = this.state;
+    let { checklist } = this.props;
 
     return (
       <div className="fillForm">
         <div className="fillForm__title">
           <h3>
             Fill Checklist{' '}
-            {this.state.checklist ? this.state.checklist.checklist_name : null}
+            {Object.keys(checklist.details).length !== 0
+              ? checklist.checklist_name
+              : null}
           </h3>
         </div>
         <div className="fillForm__form">

@@ -3,7 +3,8 @@ import * as types from './../actions/types';
 
 export const campaign = createReducer(
   {
-    list: []
+    list: [],
+    currentCampaign: undefined
   },
 
   {
@@ -20,6 +21,21 @@ export const campaign = createReducer(
     [types.GET_CAMPAIGNS_LIST_FAIL](state) {
       return Object.assign({}, state, {
         list: []
+      });
+    },
+    [types.GET_CURRENT_CAMPAIGN_START](state) {
+      return Object.assign({}, state, {
+        currentCampaign: undefined
+      });
+    },
+    [types.GET_CURRENT_CAMPAIGN_SUCCESS](state, action) {
+      return Object.assign({}, state, {
+        currentCampaign: action.currentCampaign
+      });
+    },
+    [types.GET_CURRENT_CAMPAIGN_FAIL](state) {
+      return Object.assign({}, state, {
+        currentCampaign: undefined
       });
     }
   }

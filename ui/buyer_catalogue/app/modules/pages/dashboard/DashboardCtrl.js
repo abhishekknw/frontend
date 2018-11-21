@@ -18,6 +18,7 @@
  $scope.passwordError = constants.password_error;
  $scope.userInfo = $rootScope.globals.userInfo;
  $scope.dateRangeModel = {};
+ $scope.emailModel = {};
  console.log($scope.userInfo);
  $scope.invNameToCode = {
    'POSTER' : 'PO',
@@ -2443,7 +2444,7 @@ $scope.getPermissionBoxImages = function(supplier){
         angular.forEach(response.data.data, function(data){
           data['image_url'] = 'http://androidtokyo.s3.amazonaws.com/' + data.image_path;
         })
-        // $('#imageModalForPermBox').modal('show');
+        $('#imageModalForPermBox').modal('show');
     }else {
       swal(constants.name, constants.image_empty, constants.warning);
     }
@@ -2455,18 +2456,99 @@ $scope.getPermissionBoxImages = function(supplier){
   })
 }
 
-$scope.sendEmailDetails = function(){
-  $scope.sendDetails = true;
-  console.log("Hello dropdown");
-}
-
 $scope.sendBookingEmails = function(){
-  DashboardService.sendBookingEmails()
-  .then(function onSuccess(response){
-    console.log(response);
-  }).catch(function onError(response){
-    console.log(response);
-  })
+  $scope.emailBtnDisabled = true;
+  cfpLoadingBar.start();
+  if($scope.emailModel.selected == 'listOfSupplier'){
+    console.log('listOfSociet y',$scope.emailModel.email);
+    DashboardService.sendListOfSuppliersEmail($scope.proposalId,$scope.emailModel.email)
+    .then(function onSuccess(response){
+      console.log(response);
+      $scope.emailModel = {};
+      $scope.emailBtnDisabled = false;
+      cfpLoadingBar.complete();
+      swal(constants.name,constants.email_success,constants.success);
+    }).catch(function onError(response){
+      console.log(response);
+      $scope.emailBtnDisabled = false;
+      cfpLoadingBar.complete();
+    })
+  }else if ($scope.emailModel.selected == 'activationOfSupplier') {
+    console.log('activationOfSupplier');
+    DashboardService.sendActivationOfSuppliersEmail($scope.proposalId,$scope.emailModel.email)
+    .then(function onSuccess(response){
+      console.log(response);
+      $scope.emailModel = {};
+      $scope.emailBtnDisabled = false;
+      cfpLoadingBar.complete();
+      swal(constants.name,constants.email_success,constants.success);
+    }).catch(function onError(response){
+      console.log(response);
+      $scope.emailBtnDisabled = false;
+      cfpLoadingBar.complete();
+    })
+  }else if ($scope.emailModel.selected == 'pipelineOfSupplier') {
+    console.log('pipelineOfSupplier');
+    DashboardService.sendPipelinedSuppliersEmail($scope.proposalId,$scope.emailModel.email)
+    .then(function onSuccess(response){
+      console.log(response);
+      $scope.emailModel = {};
+      $scope.emailBtnDisabled = false;
+      cfpLoadingBar.complete();
+      swal(constants.name,constants.email_success,constants.success);
+    }).catch(function onError(response){
+      console.log(response);
+      $scope.emailBtnDisabled = false;
+      cfpLoadingBar.complete();
+    })
+  }
+}
+$scope.sendConfirmBookingEmails = function(){
+  $scope.emailBtnDisabled = true;
+  cfpLoadingBar.start();
+  if($scope.emailModel.selected == 'listOfSupplier'){
+    console.log('listOfSociety');
+    DashboardService.sendListOfSuppliersConfirmEmail($scope.proposalId)
+    .then(function onSuccess(response){
+      console.log(response);
+      $scope.emailModel = {};
+      $scope.emailBtnDisabled = false;
+      cfpLoadingBar.complete();
+      swal(constants.name,constants.email_success,constants.success);
+    }).catch(function onError(response){
+      console.log(response);
+      $scope.emailBtnDisabled = false;
+      cfpLoadingBar.complete();
+    })
+  }else if ($scope.emailModel.selected == 'activationOfSupplier') {
+    console.log('activationOfSupplier');
+    DashboardService.sendActivationOfSuppliersConfirmEmail($scope.proposalId)
+    .then(function onSuccess(response){
+      console.log(response);
+      $scope.emailModel = {};
+      $scope.emailBtnDisabled = false;
+      cfpLoadingBar.complete();
+      swal(constants.name,constants.email_success,constants.success);
+    }).catch(function onError(response){
+      console.log(response);
+      $scope.emailBtnDisabled = false;
+      cfpLoadingBar.complete();
+    })
+  }else if ($scope.emailModel.selected == 'pipelineOfSupplier') {
+    console.log('pipelineOfSupplier');
+    DashboardService.sendPipelinedSuppliersConfirmEmail($scope.proposalId)
+    .then(function onSuccess(response){
+      console.log(response);
+      $scope.emailModel = {};
+      $scope.emailBtnDisabled = false;
+      cfpLoadingBar.complete();
+      swal(constants.name,constants.email_success,constants.success);
+    }).catch(function onError(response){
+      console.log(response);
+      $scope.emailBtnDisabled = false;
+      cfpLoadingBar.complete();
+    })
+  }
 }
 
 $scope.Sort = function(val)

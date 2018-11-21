@@ -114,6 +114,7 @@ module.exports = function(config) {
       'bower_components/angularPrint/angularPrint.js',
       'bower_components/checklist-model/checklist-model.js',
       'bower_components/angular-mocks/angular-mocks.js',
+      'bower_components/angular-bootstrap-multiselect/dist/angular-bootstrap-multiselect.js',
       // endbower
       "app/scripts/**/*.js",
       "test/mock/**/*.js",

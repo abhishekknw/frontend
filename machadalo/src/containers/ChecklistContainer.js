@@ -10,11 +10,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  return {
-    campaign: state.campaign,
-    supplier: state.supplier,
-    checklist: state.checklist
-  };
+  return state;
 }
 
 export default connect(

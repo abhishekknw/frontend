@@ -5,14 +5,17 @@ import Header from './../Header';
 import Sidebar from './../Sidebar';
 import ChecklistContainer from './../../containers/ChecklistContainer';
 
+//Actions
+import * as AuthActions from '../../actions/auth';
+
 import './index.css';
 
 export default function Layout(props) {
-  const { match, autoLogin, auth } = props;
+  const { match, auth } = props;
 
   // Attempt auto-login, if not already logged in
   if (!auth.isLoggedIn) {
-    autoLogin();
+    props.dispatch(AuthActions.autoLogin());
   }
 
   // Redirect to login
