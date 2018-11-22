@@ -17,6 +17,7 @@
  $scope.userIcon = "icons/usericon.png";
  $scope.passwordError = constants.password_error;
  $scope.userInfo = $rootScope.globals.userInfo;
+ console.log($scope.userInfo);
  $scope.dateRangeModel = {};
  $scope.emailModel = {};
  console.log($scope.userInfo);
