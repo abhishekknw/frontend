@@ -77,9 +77,9 @@
             <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.tower_count}}</td>
 
             <td class="" ng-if="key=='NA'">{{key}}</td>
-            <td class="" ng-if="key!='NA'"><a class="" data-target="#invTypeModal" data-toggle="modal" ng-click="setInventoryIds(filter)" permission = "[permissions.viewInventoryIds]"><b>{{key}}</b></a>
+            <td class="col-md-3" ng-if="key!='NA'"><a class="" data-target="#invTypeModal" data-toggle="modal" ng-click="setInventoryIds(filter)" permission = "[permissions.viewInventoryIds]"><b>{{key}}</b></a>
 
-            <span ng-if="key=='STALL'" ng-dropdown-multiselect="" options="stallLoc"  extra-settings="selected_baseline" events="customEvents"
+            <span class="" ng-if="key=='STALL'" ng-dropdown-multiselect="" options="stallLoc"  extra-settings="selected_baseline" events="customEvents"
             selected-model="supplier.stall_locations"  translation-texts="selected_customTexts"></span>
             <!-- <multiselect ng-model="supplier.stall_locations" options="stallLoc" ng-if="key=='STALL'">
             </multiselect> -->
@@ -87,8 +87,9 @@
 
             <td class="" ng-if="key=='FLIER'">{{supplier.flat_count}}</td>
             <td class="" ng-if="key!='FLIER'">{{filter.total_count}}</td>
-            <td class=""  style="max-width:20px;">
-              <input type="number" ng-model="filter.days" ng-change="changeInventoryInDays(supplier,key,filter)">
+            <td class="">
+              <input type="number" ng-if="key!='FLIER'" style="max-width:70px;" ng-model="filter.days" ng-change="changeInventoryInDays(supplier,key,filter)">
+
             </td>
             <td class="">{{getInventoryPrice(filter.actual_supplier_price,key)| currency : "₹"}}</td>
             <td class="" rowspan="{{key.length}}" ng-show="$first">{{getTotalSupplierPrice(supplier)| currency : "₹"}} ({{getTotalSupplierPrice(supplier)/supplier.flat_count|limitTo:8| currency : "₹"}})</td>
