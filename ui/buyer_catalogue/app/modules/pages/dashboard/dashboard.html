@@ -34,6 +34,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon-96x96.png">
     <link rel="stylesheet" type="text/css" href="modules/pages/DashBoard/adminDashboard/percentage-circular-bar.css">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/2.0/css/font-awesome.css" rel="stylesheet">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/smallscreen.css" rel="stylesheet" media="screen">
@@ -956,13 +957,13 @@
                                         </tr>
                                         <tr>
                                           <td>INDEX</td>
-                                          <td>Phase No</td>
-                                          <td><a style="color:#000000;" ng-click="sortquery='supplier.society_name'">Society Name</a></td>
+                                          <td><a style="color:#000000;" ng-click="Sort('phase')">Phase No <i class="icon-sort"></i></a></td>
+                                          <td><a style="color:#000000;" ng-click="Sort('supplier.society_name')">Society Name <i class="icon-sort"></i></a></td>
                                           <td>Society Area (SubArea)</td>
                                           <td>Society Type</td>
-                                          <td><a style="color:#000000;" ng-click="sortquery='supplier.flat_count'">Flat Count</a></td>
-                                          <td><a style="color:#000000;" ng-click="sortquery='leads_data.total_leads_count'">Leads (% by Flat Count)</a></td>
-                                          <td> <a style="color:#000000;" ng-click="sortquery='leads_data.hot_leads_count'">Hot Leads (% by Flat Count)</a></td>
+                                          <td><a style="color:#000000;"  ng-click="Sort('supplier.flat_count')" >Flat Count <i class="icon-sort"></i></a></td>
+                                          <td><a style="color:#000000;"  ng-click="Sort('leads_data.total_leads_count')" >Leads (% by Flat Count) <i class="icon-sort"></i></a></td>
+                                          <td> <a style="color:#000000;" ng-click="Sort('leads_data.hot_leads_count')" >Hot Leads (% by Flat Count) <i class="icon-sort"></i></a></td>
                                           <td ng-if="supplierStatus != 'upcoming'">Poster</td>
                                           <td ng-if="supplierStatus != 'upcoming'">Flier</td>
                                           <td ng-if="supplierStatus != 'upcoming'">Standee</td>
@@ -976,7 +977,7 @@
                                       </thead>
                                           <tbody class="detailedTable">
                                             <div class="row">
-                                              <tr ng-repeat="supplier in supplierAndInvData |filter:query | filter: phaseCode | orderBy : sortquery">
+                                              <tr ng-repeat="supplier in supplierAndInvData |filter:query | filter: phaseCode | orderBy:sort:reversesort">
                                                 <td style="vertical-align:middle">{{$index + 1}}</td>
                                                 <td style="vertical-align:middle">{{supplier.phase}}</td>
                                                 <td class="col-md-2">{{supplier.supplier.society_name}}</td>
@@ -1869,7 +1870,7 @@
                               </div>
                             </div>
                             <div class="row">
-                              <select class="form-control" ng-change="sortData('flatData',sortModel)"  ng-model="sortModel" >
+                              <select class="form-control" ng-change="sortData('flatData',sortModel)"  ng-model="sortModel" print-remove>
                                <option value="" disabled>Select For Sorting</option>
                                 <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
                               </select>
@@ -1958,7 +1959,7 @@
                                   </div>
                                 </div>
                                 <div class="row">
-                                  <select class="form-control" ng-change="sortData('location',sortModel)"  ng-model="sortModel" >
+                                  <select class="form-control" ng-change="sortData('location',sortModel)"  ng-model="sortModel" print-remove>
                                    <option value="" disabled>Select For Sorting</option>
                                     <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
                                   </select>
@@ -2034,7 +2035,7 @@
                                   </div>
                                 </div>
                                 <div class="col-md-12" style="height:300px">
-                                  <select class="form-control" ng-change="sortData('weekwise',sortModel)" ng-model="sortModel">
+                                  <select class="form-control" ng-change="sortData('weekwise',sortModel)" ng-model="sortModel" print-remove>
                                     <option value="" disabled>Select For Sorting</option>
                                     <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
                                   </select>
@@ -2061,7 +2062,7 @@
                           </div>
 
                           <div class="col-md-12" ng-scrollable>
-                            <select class="form-control" ng-change="sortData('supplier',sortModel)" ng-model="sortModel">
+                            <select class="form-control" ng-change="sortData('supplier',sortModel)" ng-model="sortModel" print-remove>
                               <option value="" disabled>Select For Sorting</option>
                               <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
                             </select>
@@ -2088,7 +2089,7 @@
                               <h4 style="text-align: center"> Leads By Date </h4>
                           </div>
                           <div class="col-md-12" ng-scrollable>
-                            <select class="form-control" ng-change="sortData('datewise',sortModel)" ng-model="sortModel">
+                            <select class="form-control" ng-change="sortData('datewise',sortModel)" ng-model="sortModel" print-remove>
                               <option value="" disabled>Select For Sorting</option>
                               <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
                             </select>
