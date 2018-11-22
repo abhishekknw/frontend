@@ -252,7 +252,7 @@
                                             <th>Images</th>
                                           </tr>
                                         </thead>
-    
+
                                         <tbody>
                                           <tr ng-repeat="item in campaignReleaseData | filter : searchQuery">
                                             <td>{{$index + 1}}</td>
@@ -2443,7 +2443,7 @@
                           <div class="col-md-3">
                             <label style="color:#ffffff;">Select Report</label>
                             <input type="file" ngf-select = "uploadFiles($file, 1)" class="buttonfile btn btn-primary" accept=".pdf" ng-if="showReportBtn"/>
-                          <br>  <button ng-click="sendReport()" ng-if="showReportBtn" class="btn btn-danger">Submit</button>
+                          <br>  <button ng-click="sendReport()" ng-if="showReportBtn" class="btn btn-danger" ng-if="userInfo.is_superuser">Submit</button>
 
                           </div>
 
