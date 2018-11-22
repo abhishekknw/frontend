@@ -601,7 +601,7 @@ color: #ffffff !important;
   text-align: center;
   vertical-align: middle;
   width: 100px;
-  white-space: normal;
+  white-space: normal !important;
 }
 
 .campaigndetailtable table tbody {
@@ -620,6 +620,10 @@ color: #ffffff !important;
 .campaigndetailtable table tbody tr td {
   text-align: center;
   width: 100px;
+}
+
+.campaigndetailtable table thead tr th:nth-child(2) {
+  text-align: left;
 }
 
 .campaigndetailtable table tbody tr td:nth-child(2) {
