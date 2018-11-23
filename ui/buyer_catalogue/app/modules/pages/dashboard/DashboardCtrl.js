@@ -2293,8 +2293,9 @@ $scope.sortData = function(keyName,id){
     angular.forEach(modeValues, function(value){
       max = (value > max) ? value : max;
     })
-    var total=0,count=0;
+    var total=0,count=0,keys=[];
     angular.forEach(modeValues, function(value,key){
+      keys.push(parseInt(key));
       if(value == max){
         console.log(value,max,key);
         total += parseInt(key);
@@ -2302,6 +2303,7 @@ $scope.sortData = function(keyName,id){
       }
     })
     var mode = total/count;
+    var range = Math.max.apply(null,keys) - Math.min.apply(null,keys);
   }
   if(sortMenuMap[id].type == 'interested'){
     console.log("hot leads",sortable);
@@ -2332,14 +2334,16 @@ $scope.sortData = function(keyName,id){
     angular.forEach(modeValues, function(value){
       max = (value > max) ? value : max;
     })
-    var total=0,count=0;
+    var total=0,count=0,keys=[];
     angular.forEach(modeValues, function(value,key){
+      keys.push(parseInt(key));
       if(value == max){
         total += parseInt(key);
         count += 1;
       }
     })
     var mode = total/count;
+    var range = Math.max.apply(null,keys) - Math.min.apply(null,keys);    
   }
   $scope.sortedLocationData[keyName] = {};
 
