@@ -2215,6 +2215,8 @@ $scope.sortMenu = [
   {name : 'Total(DESC)', type : 'total', order : 'DESC', id : 2},
   {name : 'HotLeads(ASC)', type : 'interested', order : 'ASC', id : 3},
   {name : 'HotLeads(DESC)', type : 'interested', order : 'DESC', id : 4},
+  {name : 'DISTRIBUTION(HotLeads)', type : 'interested', order : 'DISTRIBUTION', id : 6},
+  {name : 'DISTRIBUTION(Total)', type : 'total', order : 'DISTRIBUTION', id : 7},
   {name : 'All', type : '', order : '', id : 5},
 ];
 var sortMenuMap = {};
@@ -2230,6 +2232,7 @@ $scope.togglesortedGraphs = {
   'supplier' : false,
 }
 $scope.sortData = function(keyName,id){
+
   if(id == 5){
     $scope.togglesortedGraphs[keyName] = false;
   }else {
@@ -2252,23 +2255,92 @@ $scope.sortData = function(keyName,id){
   }
   var sortable = [];
   for (var key in $scope.sortedData) {
+    $scope.sortedData[key]['hotPerc'] = $scope.sortedData[key]['interested'] / $scope.sortedData[key]['flat_count'] * 100;
+    $scope.sortedData[key]['totalPerc'] = $scope.sortedData[key]['total'] / $scope.sortedData[key]['flat_count'] * 100;
+    $scope.sortedData[key]['totalPercRoundOff'] = Math.round($scope.sortedData[key]['totalPerc']);
+    $scope.sortedData[key]['hotPercRoundOff'] = Math.round($scope.sortedData[key]['hotPerc']);
       sortable.push([key, $scope.sortedData[key]]);
   }
+  var mean;
   if(sortMenuMap[id].type == 'total'){
+    console.log("total",sortable);
     sortable.sort(function(a, b) {
         a = a[1].total / a[1].flat_count * 100;
         b = b[1].total / b[1].flat_count * 100;
+
         return a-b;
     });
+    var total = 0;
+    for (var key in $scope.sortedData) {
+        total += $scope.sortedData[key].totalPerc;
+    };
+    mean = total/Object.keys($scope.sortedData).length;
+    var mid = parseInt(Object.keys($scope.sortedData).length/2);
+    // console.log(sortable[mif]);
+    if(Object.keys($scope.sortedData).length%2 == 0){
+        var median = (sortable[mid][1].totalPerc + sortable[mid-1][1].totalPerc)/2;
+    }else {
+        var median = sortable[mid][1].totalPerc;
+    }
+    var mode, modeValues={};
+    angular.forEach($scope.sortedData, function(data){
+      if(!modeValues.hasOwnProperty(data.totalPercRoundOff)){
+        modeValues[data.totalPercRoundOff] = 0;
+      }
+      modeValues[data.totalPercRoundOff] += 1;
+    })
+    var max = 0;
+    angular.forEach(modeValues, function(value){
+      max = (value > max) ? value : max;
+    })
+    var total=0,count=0;
+    angular.forEach(modeValues, function(value,key){
+      if(value == max){
+        console.log(value,max,key);
+        total += parseInt(key);
+        count += 1;
+      }
+    })
+    var mode = total/count;
   }
   if(sortMenuMap[id].type == 'interested'){
+    console.log("hot leads",sortable);
     sortable.sort(function(a, b) {
         a = a[1].interested / a[1].flat_count * 100;
         b = b[1].interested / b[1].flat_count * 100;
         return a-b;
     });
+    var total = 0;
+    for (var key in $scope.sortedData) {
+        total += $scope.sortedData[key].hotPerc;
+    };
+    mean = total/Object.keys($scope.sortedData).length;
+    var mid = parseInt(Object.keys($scope.sortedData).length/2);
+    if(Object.keys($scope.sortedData).length%2 == 0){
+        var median = (sortable[mid][1].hotPerc + sortable[mid-1][1].hotPerc)/2;
+    }else {
+        var median = sortable[mid][1].hotPerc;
+    }
+    var mode, modeValues={};
+    angular.forEach($scope.sortedData, function(data){
+      if(!modeValues.hasOwnProperty(data.hotPercRoundOff)){
+        modeValues[data.hotPercRoundOff] = 0;
+      }
+      modeValues[data.hotPercRoundOff] += 1;
+    })
+    var max = 0;
+    angular.forEach(modeValues, function(value){
+      max = (value > max) ? value : max;
+    })
+    var total=0,count=0;
+    angular.forEach(modeValues, function(value,key){
+      if(value == max){
+        total += parseInt(key);
+        count += 1;
+      }
+    })
+    var mode = total/count;
   }
-
   $scope.sortedLocationData[keyName] = {};
 
   $scope.locationChartOptions = angular.copy(discreteBarChart);
@@ -2278,11 +2350,10 @@ $scope.sortData = function(keyName,id){
   if(sortMenuMap[id].order == 'DESC'){
     $scope.sortedLocationData[keyName] = formatByLocation(sortable.reverse(),keyName,sortMenuMap[id].type);
   }
-
-
-
-
-
+  if(sortMenuMap[id].order == 'DISTRIBUTION'){
+    console.log(mean,median);
+    $scope.sortedLocationData[keyName] = drawDistributionGraph(mean,median,mode);
+  }
 $scope.showLocationData = true;
 }
 
@@ -2293,7 +2364,6 @@ var formatByLocation = function(data,key,type){
   temp_data['key'] = key;
   temp_data['values'] = [];
   angular.forEach(data, function(item){
-    console.log(item,key);
     if (key == 'supplier'){
       item[0] = item[1].data.society_name + " (" + item[1].data.flat_count + ")";
     }
@@ -2303,6 +2373,7 @@ var formatByLocation = function(data,key,type){
     }
     temp_data.values.push(value);
   })
+  console.log(temp_data);
   return [temp_data];
 }
 $scope.commentModal = {};
@@ -2567,6 +2638,18 @@ $scope.Sort = function(val)
        });
 
      };
+  var drawDistributionGraph = function(mean,median,mode){
+      var data = {
+        'key' : 'Distribution Graph',
+        'values' : [
+          {label : 'Mean', value : mean},
+          {label : 'Median', value : median},
+          {label : 'Mode', value : mode},
+        ]
+      };
+      console.log(data);
+      return [data];
+  }
 //END
 })
 

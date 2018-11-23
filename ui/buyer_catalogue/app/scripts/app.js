@@ -62,7 +62,6 @@ angular
     'AngularPrint',
     'checklist-model',
 
-
   ])
   .config(function ($routeProvider, $stateProvider, $urlRouterProvider, $httpProvider, $qProvider, $locationProvider,cfpLoadingBarProvider) {
       $stateProvider
