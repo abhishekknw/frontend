@@ -591,36 +591,45 @@ color: #ffffff !important;
 }
 
 
-.campaignDetailTable{
-  height:350px !important;
-  opacity: 1;
-  overflow:auto;
+.campaigndetailtable {}
+
+.campaigndetailtable table thead tr th {
+  background: #d9534f;
   color: white;
-
-}
-
-
-.campaignDetailTable  thead {
-  background-color: #cb1925 ;
-  color: #ffffff !important;
-  }
-
-
-.campaignDetailTable  tbody {
-background-color: #fcfc5f;
-color: black;
-
-}
-
-.campaignDetailTable  tfoot {
-background-color: #cb1925 ;
-color: #ffffff !important;
-}
-
-.campaignDetailTable tfoot td {
-  color: #ffffff !important;
+  font-size: 14px;
+  font-weight: 700;
   text-align: center;
+  vertical-align: middle;
+  width: 100px;
+  white-space: normal !important;
 }
+
+.campaigndetailtable table tbody {
+  display: block;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.campaigndetailtable table thead,
+.campaigndetailtable table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.campaigndetailtable table tbody tr td {
+  text-align: center;
+  width: 100px;
+}
+
+.campaigndetailtable table thead tr th:nth-child(2) {
+  text-align: left;
+}
+
+.campaigndetailtable table tbody tr td:nth-child(2) {
+  text-align: left;
+}
+
 .CampaignDetails{
   height: 60px !important;
 }

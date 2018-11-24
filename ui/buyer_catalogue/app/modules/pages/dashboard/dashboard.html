@@ -238,87 +238,40 @@
 
                                   <br />
 
-                                    <div class="col-md-12 panel-heading" style="border: 1px solid #ccc;height:75px;">
-                                      <label class="col-md-1 campDetailsLabel">Index</label>
-                                      <label class="col-md-2 campDetailsLabel">Campaign Name</label>
-                                      <label class="col-md-2 campDetailsLabel">Inventory</label>
-                                      <label class="col-md-1 campDetailsLabel">Total Assigned</label>
-                                      <label class="col-md-1 campDetailsLabel">Today Released</label>
-                                      <label class="col-md-1 campDetailsLabel">Average Delay(In Days)</label>
-                                      <label class="col-md-2 campDetailsLabel">Average Off Location(Kms)</label>
-                                      <label class="col-md-2 campDetailsLabel">Images</label>
-                                    </div><br>
-                                    <div class="col-md-12" style="overflow-y:auto;max-height:300px;color:black">
-                                      <div class="col-md-12" ng-repeat="item in campaignReleaseData | filter : searchQuery">
-                                        <br />
-                                        <label class="col-md-1">{{$index+1}}</label>
-                                        <label class="col-md-2"><a ng-click="getDatewiseSuppliersInventory(item.proposalId,item.name)">{{item.name}}</a></label>
-                                        <label class="col-md-2">{{invName}}</label>
-                                        <label class="col-md-1">{{item.assigned}}</label>
-                                        <label class="col-md-1">{{item.inv_count}}</label>
-                                        <label class="col-md-1" ng-if="(item.offTimeDays/item.assigned) > 3">3+ days</label>
-                                        <label class="col-md-1" ng-if="(item.offTimeDays/item.assigned) <= 3">{{item.offTimeDays/item.assigned|limitTo:4}}</label>
-                                        <!-- <label class="col-md-1" ng-if="item.inv_count != 0">{{}}</label> -->
-                                      <!-- <label class="col-md-1" ng-if="item.inv_count == 0">Not Applicable</label>  -->
-                                        <label class="col-md-2" ng-if="item.inv_count == 0 && item.offLocationDistance == 0">Not Applicable</label>
-                                        <label class="col-md-2" ng-if="checkNan(item.offLocationDistance) || item.offLocationDistance == 0 && item.inv_count != 0">Not Applicable</label>
-                                        <label class="col-md-2" ng-if="!checkNan(item.offLocationDistance) && item.inv_count != 0 && item.offLocationDistance != 0">{{(item.offLocationDistance/item.inv_count)/1000 |limitTo:5||0}} Km</label>
+                                    <div class="table-responsive">
+                                      <table class="table">
+                                        <thead>
+                                          <tr>
+                                            <th>Index</th>
+                                            <th>Campaign Name</th>
+                                            <th>Inventory</th>
+                                            <th>Total Assigned</th>
+                                            <th>Today Released</th>
+                                            <th>Average Delay (In Days)</th>
+                                            <th>Average Off Location (Kms)</th>
+                                            <th>Images</th>
+                                          </tr>
+                                        </thead>
 
-                                        <label class="col-md-2" ng-if="item.images.length > 0"><a data-target="#imageModal" data-toggle="modal" ng-click="setImageUrl(item,item.images)">View Images</a></label>
-                                        <!-- <label class="col-md-2" ng-if="item.images.length > 0">
-                                          <image-cropper image-url="myImageUrlOrBase64"
-                                            width="640"
-                                            height="480"
-                                            show-controls="true"
-                                            fit-on-init="false"
-                                            center-on-init="true"
-                                            api="getApiFunction"
-                                            crop-callback="myCallbackFunction"
-                                            check-cross-origin="false"
-                                            zoom-step="0.1"
-                                            action-labels="myButtonLabelsObject"
-                                          ></image-cropper>
-                                        </label> -->
-
-                                        <label class="col-md-2" ng-if="item.images.length == 0">No Image</label>
-                                        <!-- <td class="col-md-2">
-                                          <a data-target="" data-toggle="modal" ng-click="getHashtagImages(item)">View Other Images</a>
-                                        </td> -->
-                                        <!-- <label class="col-md-2">View Images</label> -->
-                                      </div>
+                                        <tbody>
+                                          <tr ng-repeat="item in campaignReleaseData | filter : searchQuery">
+                                            <td>{{$index + 1}}</td>
+                                            <td><a ng-click="getDatewiseSuppliersInventory(item.proposalId,item.name)">{{item.name}}</a></td>
+                                            <td>{{invName}}</td>
+                                            <td>{{item.assigned}}</td>
+                                            <td>{{item.inv_count}}</td>
+                                            <td ng-if="(item.offTimeDays/item.assigned) > 3">3+ days</td>
+                                            <td ng-if="(item.offTimeDays/item.assigned) <= 3">{{item.offTimeDays/item.assigned|limitTo:4}}</td>
+                                            <td ng-if="item.inv_count == 0 && item.offLocationDistance == 0">Not Applicable</td>
+                                            <td ng-if="checkNan(item.offLocationDistance) || item.offLocationDistance == 0 && item.inv_count != 0">Not Applicable</td>
+                                            <td class="col-md-2" ng-if="!checkNan(item.offLocationDistance) && item.inv_count != 0 && item.offLocationDistance != 0">{{(item.offLocationDistance/item.inv_count)/1000 |limitTo:5||0}} Km</td>
+                                            <td class="col-md-2" ng-if="item.images.length > 0"><a data-target="#imageModal" data-toggle="modal" ng-click="setImageUrl(item,item.images)">View Images</a></td>
+                                            <td ng-if="item.images.length == 0"><label>No Image<label></td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
                                     </div>
-                                  </div>
-
-                              <!-- <table st-safe-src="rowCollection" st-table="displayed" st-pipe="callServer" class="table-responsive table table-bordered">
-                                <thead>
-                                <tr class="sortable" >
-                                    <th class="table-id" st-sort="id" st-sort-default="true" >Sr No</th>
-                                    <th ng-repeat="header in supHeaders" st-sort="{{header.key}}">{{header.header}}</th>
-                                  </thead>
-                                </tr>
-
-                                  <tbody>
-                                    <tr ng-repeat="item in campaignReleaseData  |filter:query" >
-                                      <td class="table-id">{{$index + 1}}</td>
-                                      <td><a ng-click="getDatewiseSuppliersInventory(item.proposalId,item.name)">{{item.name}}</a></td>
-                                      <td>{{invName}}</td>
-                                      <td>{{item.assigned}}</td>
-                                      <td>{{item.inv_count}}</td>
-                                      <td ng-if="item.inv_count != 0">{{item.offTimeDays}} </td>
-                                      <td ng-if="item.inv_count == 0">Not Allowed</td>
-                                      <td ng-if="item.inv_count == 0 && item.offLocationDistance == 0">Not Allowed</td>
-                                      <td ng-if="checkNan(item.offLocationDistance) || item.offLocationDistance == 0 && item.inv_count != 0">Not Applicable</td>
-                                      <td class="col-md-2" ng-if="!checkNan(item.offLocationDistance) && item.inv_count != 0 && item.offLocationDistance != 0">{{item.offLocationDistance/item.inv_count|limitTo:10||0}}
-
-                                      <td class="col-md-2" ng-if="item.images.length > 0"><a data-target="#imageModal" data-toggle="modal" ng-click="setImageUrl(item,item.images)">View Images</a></td>
-                                      <td ng-if="item.images.length == 0"><label>No Image<label></td>
-                                      <td class="col-md-2">
-                                        <a data-target="" data-toggle="modal" ng-click="getHashtagImages(item)">View Other Images</a>
-                                      </td> -->
-
-                                      <!-- </tr>
-                                  </tbody>
-                              </table> -->
+                      </div>
                           <!-- </div> -->
                       <!-- </div> -->
                 </div>
@@ -1615,7 +1568,7 @@
             </table>
           </div>
         </div>
-          <button type="button" name="button" class="col-md-12 btn btn-danger" data-target="#sendBookingEngineEmailModal" data-toggle="modal">Click here to Send Emails</button>
+          <button type="button" name="button" class="col-md-12 btn btn-danger" data-target="#sendBookingEngineEmailModal" data-toggle="modal" ng-if="userInfo.is_superuser">Click here to Send Emails</button>
 
 
       </div>
@@ -1643,7 +1596,7 @@
                               <h3 style="color:#ffffff">Performance Details</h3>
                             </div>
                             <br />
-                            <div class="row zeroLeads" ng-if="!campaignInventories && !showSelection">
+                            <div class="row zeroLeads" ng-if="!campaignInventories && !showSelection" print-remove>
                               <h1>Please Select Campaign</h1>
                             </div>
                             <div class="panel-group" print-remove>
@@ -2028,8 +1981,8 @@
                         </div>
 
                           <br /><br />
-                        <div class="col-lg-12"  ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:120px">
-                          <div class="col-lg-6">
+                        <div class="col-md-12"  ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:120px">
+                          <div class="col-md-6">
                             <div class="panel panel-primary">
                               <div class="panel-heading content-title">
                                 <label for="Location">Weekwise Summary Details</label>
@@ -2076,7 +2029,7 @@
                             </table>
                             </div>
                         </div>
-                              <div class="col-lg-6">
+                              <div class="col-md-6">
                                 <div class="panel panel-primary">
                                   <div class="panel-heading content-title">
                                     <label for="flat graph">Weekwise Graph Summary</label>
@@ -2156,11 +2109,9 @@
                           </div>
                         </div>
 
-                        <div class="row" ng-if="showPerfMetrics == perfMetrics.blank">
 
-                        </div>
                         <!--START : COMPARE CAMPAIGNS LIST  -->
-                          <div class="col-md-12" ng-show="campaignStatus.compare_campaigns.value">
+                          <div class="col-md-12" ng-show="campaignStatus.compare_campaigns.value" print-remove>
                             <br />
                               <div class="col-md-2 pull-right">
                               <button class="btn btn-primary" style="margin-left:20px" ng-click="getCompareCampaignChartData()">COMPARE</button>
@@ -2175,7 +2126,7 @@
 
 
 
-                            <div class="col-md-6" ng-if="showPerfMetrics == perfMetrics.inv" style="margin-left:5px;margin-right:-7px;">
+                            <div class="col-md-6" ng-if="showPerfMetrics == perfMetrics.inv" style="margin-left:5px;margin-right:-7px;" print-remove>
                               <div class="panel-heading content-title">
                                 <div class="col-md-7">
                                   <h4> Release Inventory </h4>
@@ -2491,7 +2442,7 @@
                           <div class="col-md-3">
                             <label style="color:#ffffff;">Select Report</label>
                             <input type="file" ngf-select = "uploadFiles($file, 1)" class="buttonfile btn btn-primary" accept=".pdf" ng-if="showReportBtn"/>
-                          <br>  <button ng-click="sendReport()" ng-if="showReportBtn" class="btn btn-danger">Submit</button>
+                          <br>  <button ng-click="sendReport()" ng-if="showReportBtn" class="btn btn-danger" ng-if="userInfo.is_superuser">Submit</button>
 
                           </div>
 
