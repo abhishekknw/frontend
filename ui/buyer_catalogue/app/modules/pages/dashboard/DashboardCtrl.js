@@ -1575,6 +1575,7 @@
     $scope.getCompareCampaigns = function(status){
       $scope.compCampaigns.value = false;
       $scope.showPerfMetrics = false;
+      $scope.showReportBtn = false;
       $scope.getCampaignsMenu($scope.campaignStatus.compare_campaigns.status);
       $scope.compCampaigns[status].value = !$scope.compCampaigns[status].value;
     }
@@ -2343,7 +2344,7 @@ $scope.sortData = function(keyName,id){
       }
     })
     var mode = total/count;
-    var range = Math.max.apply(null,keys) - Math.min.apply(null,keys);    
+    var range = Math.max.apply(null,keys) - Math.min.apply(null,keys);
   }
   $scope.sortedLocationData[keyName] = {};
 
