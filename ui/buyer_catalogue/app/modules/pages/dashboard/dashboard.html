@@ -147,11 +147,11 @@
                                                           <div uib-accordion-heading class="container">
                                                               <div class="pie-chart-item ng-scope">
                                                                   <div class="row" id="activitycss" ng-if="inventoryActivityCountData[inv.header][date][act.header]">
-                                                                      <div class="col-md-4">
+                                                                      <div class="col-md-4 mobileCampaign">
                                                                         <h4>{{inventoryActivityCountData[inv.header][date][act.header].actual||'0'}}</h4>
                                                                         <h5>{{act.label1}}</h5>
                                                                       </div>
-                                                                      <div class="col-6 col-md-4">
+                                                                      <div class="col-6 col-md-4 mobileCampaign">
                                                                           <h4>{{(inventoryActivityCountData[inv.header][date][act.header].total -
                                                                             inventoryActivityCountData[inv.header][date][act.header].actual)||'0'}}</h4>
                                                                           <h5>{{act.label2}}</h5>
@@ -223,7 +223,7 @@
                               </div>
                           </div>
                       </div>
-                        <div class="campaigndetailtable">
+                      <div class="campaigndetailtable">
                       <div class="col-md-12" ng-if="showAssignedInvTable">
                       <!-- <div class="form-group select-page-size-wrap ">
                       </div> -->
@@ -275,7 +275,7 @@
                           <!-- </div> -->
                       <!-- </div> -->
                 </div>
-                <div class="col-md-12" ng-show="dateWiseSuppliers.length">
+                <!-- <div class="col-md-12" >
                   <div class="panel-heading"  style="height:90px;">
                     <h4>Supplier Details of {{selectedProposalname}} Campaign</h4><br/>
                     <h5>Activity : {{actType}} , Date : {{date|date : "dd-MM-yyyy"}}</h5>
@@ -289,7 +289,6 @@
                           <th>Assigned</th>
                           <th>Completed</th>
                           <th>View Images</th>
-                          <!-- <th>Comments</th> -->
                         </tr>
                       </thead>
                       <tbody ng-repeat="supplier in dateWiseSuppliers">
@@ -300,7 +299,6 @@
                           <td>{{inv.completed}}</td>
                           <td ng-if="inv.completed != 0"><a data-target="#imageModal" data-toggle="modal" ng-click="viewSupplierImages(supplier.supplier_data.supplier_id,invNameToCode[key],actType,date)">View Images</a></td>
                           <td ng-if="inv.completed == 0">No Image</td>
-                          <!-- <td><a ng-click="viewComments(key,supplier)">View Comments</a></td> -->
                         </tr>
                         <tr>
                        <td><b>{{supplier.supplier_data.society_name}}</b></td>
@@ -313,7 +311,55 @@
                       </tbody>
                     </table>
                   </div>
-                </div>
+                </div> -->
+
+                <div class="campaigndetailtable">
+                <div class="col-md-12" ng-show="dateWiseSuppliers.length">
+                <!-- <div class="form-group select-page-size-wrap ">
+                </div> -->
+                  <!-- <div class="" > -->
+                          <!-- <div class=""> -->
+                          <div class="panel-heading" style="height:120px;">
+                            <h4>Supplier Details of {{selectedProposalname}} Campaign</h4><br/>
+                            <h5>Activity : {{actType}} , Date : {{date|date : "dd-MM-yyyy"}}</h5>
+                          </div>
+
+                              <div class="table-responsive">
+                                <table class="table" id="tablescroll">
+                                  <thead>
+                                    <tr>
+                                      <th>Society Name</th>
+                                      <th>Inventory Type</th>
+                                      <th>Assigned</th>
+                                      <th>Completed</th>
+                                      <th>View Images</th>
+                                      <!-- <th>Comments</th> -->
+                                    </tr>
+                                  </thead>
+                                  <tbody ng-repeat="supplier in dateWiseSuppliers">
+                                    <tr ng-repeat="(key,inv) in supplier" ng-if="key != 'supplier_data' && key != 'space_id' ">
+                                      <td><b>{{supplier.supplier_data.society_name}}</b></td>
+                                      <td>{{key}}</td>
+                                      <td>{{inv.assigned}}</td>
+                                      <td>{{inv.completed}}</td>
+                                      <td ng-if="inv.completed != 0"><a data-target="#imageModal" data-toggle="modal" ng-click="viewSupplierImages(supplier.supplier_data.supplier_id,invNameToCode[key],actType,date)">View Images</a></td>
+                                      <td ng-if="inv.completed == 0">No Image</td>
+                                      <!-- <td><a ng-click="viewComments(key,supplier)">View Comments</a></td> -->
+                                    </tr>
+                                    <tr>
+                                   <td><b>{{supplier.supplier_data.society_name}}</b></td>
+                                      <td>Other Images(Banner)</td>
+                                      <td>-</td>
+                                      <td>-</td>
+                                      <td><a data-target="" data-toggle="modal" ng-click="getHashtagImages(supplier)">View Other Images</a></td>
+                                      </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                    <!-- </div> -->
+                <!-- </div> -->
+              </div>
             </div>
 
 
@@ -1133,7 +1179,7 @@
                           </div>
 
 
-                        <div class="panel panel-default" >
+                        <div class="panel panel-default" ng-if="showSupplierTypeCountChart">
                             <div class="col-md-12">
 
                               <div class="col-md-6" id="bottom" ng-if="showSupplierTypeCountChart">
@@ -1366,7 +1412,7 @@
       </div>
 
     </div>
-    <div class="col-md-9">
+    <div class="col-md-9 campaigndetailtable">
       <div class="" ng-if="!selectedBookingCampaignName">
         <label style="color:#000">Please Select the Campaign</label>
       </div>
@@ -1374,166 +1420,172 @@
         <h3>{{selectedBookingCampaignName}}</h3>
       </div>
 
-      <div class="" ng-if="bookingPhases">
-        <table class="table table-bordered table-responsive ">
-          <thead>
-            <tr>
-              <th><small>Phase Details</small></th>
-              <th><small>Confirmed Booked <br>(Total Flat Count)</small></th>
-              <th><small>Verbally Booked <br>(Total Flat Count)</small></th>
-              <th><small>Followup Required <br>(Total Flat Count)</small></th>
-              <th><small>Total <br>(Total Flat Count)</small></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-if="bookingPhases.last_completed_phase">
-              <td>
-                <div class="">
-                  <small>Completed Phase No : {{bookingPhases.last_completed_phase.phase_no}}</small>  </br>
-                    <small>Start Date : {{bookingPhases.last_completed_phase.start_date|limitTo:10|date:fullDate}}</small></br>
-                    <small>End Date : {{bookingPhases.last_completed_phase.end_date|limitTo:10|date:fullDate}}</small>
-                </div>
-              </td>
-              <td ng-if="bookingPhases.last_completed_phase.confirmed_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.confirmed_booked.supplier_data,'Last Completed Phase')">
-                    {{bookingPhases.last_completed_phase.confirmed_booked.supplier_count}} ({{bookingPhases.last_completed_phase.confirmed_booked.flat_count}})
+      <div class="campaigndetailtable" ng-if="bookingPhases">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th><small>Phase Details</small></th>
+                <th><small>Confirmed Booked <br>(Total Flat Count)</small></th>
+                <th><small>Verbally Booked <br>(Total Flat Count)</small></th>
+                <th><small>Followup Required <br>(Total Flat Count)</small></th>
+                <th><small>Total <br>(Total Flat Count)</small></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-if="bookingPhases.last_completed_phase">
+                <td>
+                  <div class="">
+                    <small>Completed Phase No : {{bookingPhases.last_completed_phase.phase_no}}</small>  </br>
+                      <small>Start Date : {{bookingPhases.last_completed_phase.start_date|limitTo:10|date:fullDate}}</small></br>
+                      <small>End Date : {{bookingPhases.last_completed_phase.end_date|limitTo:10|date:fullDate}}</small>
+                  </div>
+                </td>
+                <td ng-if="bookingPhases.last_completed_phase.confirmed_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.confirmed_booked.supplier_data,'Last Completed Phase')">
+                      {{bookingPhases.last_completed_phase.confirmed_booked.supplier_count}} ({{bookingPhases.last_completed_phase.confirmed_booked.flat_count}})
+                    </a></small>
+                </td>
+                <td ng-if="bookingPhases.last_completed_phase.confirmed_booked.supplier_data.length == 0"><small>0</small></td>
+
+                <td ng-if="bookingPhases.last_completed_phase.verbally_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.verbally_booked.supplier_data,'Last Completed Phase')">
+                  {{bookingPhases.last_completed_phase.verbally_booked.supplier_count}} ({{bookingPhases.last_completed_phase.verbally_booked.flat_count}})
+                </a>
+                </small>
+                </td>
+                <td ng-if="bookingPhases.last_completed_phase.verbally_booked.supplier_data.length == 0"><small>0</small></td>
+
+                <td ng-if="bookingPhases.last_completed_phase.followup_required.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.followup_required.supplier_data,'Last Completed Phase')">
+                  {{bookingPhases.last_completed_phase.followup_required.supplier_count}} ({{bookingPhases.last_completed_phase.followup_required.flat_count}})
                   </a></small>
-              </td>
-              <td ng-if="bookingPhases.last_completed_phase.confirmed_booked.supplier_data.length == 0"><small>0</small></td>
+                </td>
+                <td ng-if="bookingPhases.last_completed_phase.followup_required.supplier_data.length == 0"><small>0</small></td>
 
-              <td ng-if="bookingPhases.last_completed_phase.verbally_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.verbally_booked.supplier_data,'Last Completed Phase')">
-                {{bookingPhases.last_completed_phase.verbally_booked.supplier_count}} ({{bookingPhases.last_completed_phase.verbally_booked.flat_count}})
-              </a>
-              </small>
-              </td>
-              <td ng-if="bookingPhases.last_completed_phase.verbally_booked.supplier_data.length == 0"><small>0</small></td>
+                <td ng-if="bookingPhases.last_completed_phase.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.total_booked.supplier_data,'Last Completed Phase')">
+                  {{bookingPhases.last_completed_phase.total_booked.supplier_count}} ({{bookingPhases.last_completed_phase.total_booked.flat_count}})
+                  </a>
+              </small></td>
+              <td ng-if="bookingPhases.last_completed_phase.total_booked.supplier_data.length == 0"><small>0</small></td>
 
-              <td ng-if="bookingPhases.last_completed_phase.followup_required.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.followup_required.supplier_data,'Last Completed Phase')">
-                {{bookingPhases.last_completed_phase.followup_required.supplier_count}} ({{bookingPhases.last_completed_phase.followup_required.flat_count}})
-                </a></small>
-              </td>
-              <td ng-if="bookingPhases.last_completed_phase.followup_required.supplier_data.length == 0"><small>0</small></td>
-
-              <td ng-if="bookingPhases.last_completed_phase.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.total_booked.supplier_data,'Last Completed Phase')">
-                {{bookingPhases.last_completed_phase.total_booked.supplier_count}} ({{bookingPhases.last_completed_phase.total_booked.flat_count}})
+              </tr>
+              <tr ng-if="bookingPhases.ongoing_phase">
+                <td>
+                  <div class="">
+                    <small>Ongoing Phase No : {{bookingPhases.ongoing_phase.phase_no}}</small>  </br>
+                      <small>Start Date : {{bookingPhases.ongoing_phase.start_date|limitTo:10|date:fullDate}}</small></br>
+                      <small>End Date : {{bookingPhases.ongoing_phase.end_date|limitTo:10|date:fullDate}}</small>
+                  </div>
+                </td>
+                <td ng-if="bookingPhases.ongoing_phase.confirmed_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.confirmed_booked.supplier_data,'Ongoing Phase')">
+                  {{bookingPhases.ongoing_phase.confirmed_booked.supplier_count}} ({{bookingPhases.ongoing_phase.confirmed_booked.flat_count}})
+                  </a></small>
+                </td>
+                <td ng-if="bookingPhases.ongoing_phase.confirmed_booked.supplier_data.length == 0"><small>0</small></td>
+                <td ng-if="bookingPhases.ongoing_phase.verbally_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.verbally_booked.supplier_data,'Ongoing Phase')">
+                  {{bookingPhases.ongoing_phase.verbally_booked.supplier_count}} ({{bookingPhases.ongoing_phase.verbally_booked.flat_count}})</small>
                 </a>
-            </small></td>
-            <td ng-if="bookingPhases.last_completed_phase.total_booked.supplier_data.length == 0"><small>0</small></td>
+                </td>
+                <td ng-if="bookingPhases.ongoing_phase.verbally_booked.supplier_data.length == 0"><small>0</small></td>
+                <td ng-if="bookingPhases.ongoing_phase.followup_required.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.followup_required.supplier_data,'Ongoing Phase')">
+                  {{bookingPhases.ongoing_phase.followup_required.supplier_count}} ({{bookingPhases.ongoing_phase.followup_required.flat_count}})</small></td>
+                  <td ng-if="bookingPhases.ongoing_phase.followup_required.supplier_data.length == 0"><small>0</small></td>
 
-            </tr>
-            <tr ng-if="bookingPhases.ongoing_phase">
-              <td>
-                <div class="">
-                  <small>Ongoing Phase No : {{bookingPhases.ongoing_phase.phase_no}}</small>  </br>
-                    <small>Start Date : {{bookingPhases.ongoing_phase.start_date|limitTo:10|date:fullDate}}</small></br>
-                    <small>End Date : {{bookingPhases.ongoing_phase.end_date|limitTo:10|date:fullDate}}</small>
-                </div>
-              </td>
-              <td ng-if="bookingPhases.ongoing_phase.confirmed_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.confirmed_booked.supplier_data,'Ongoing Phase')">
-                {{bookingPhases.ongoing_phase.confirmed_booked.supplier_count}} ({{bookingPhases.ongoing_phase.confirmed_booked.flat_count}})
-                </a></small>
-              </td>
-              <td ng-if="bookingPhases.ongoing_phase.confirmed_booked.supplier_data.length == 0"><small>0</small></td>
-              <td ng-if="bookingPhases.ongoing_phase.verbally_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.verbally_booked.supplier_data,'Ongoing Phase')">
-                {{bookingPhases.ongoing_phase.verbally_booked.supplier_count}} ({{bookingPhases.ongoing_phase.verbally_booked.flat_count}})</small>
-              </a>
-              </td>
-              <td ng-if="bookingPhases.ongoing_phase.verbally_booked.supplier_data.length == 0"><small>0</small></td>
-              <td ng-if="bookingPhases.ongoing_phase.followup_required.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.followup_required.supplier_data,'Ongoing Phase')">
-                {{bookingPhases.ongoing_phase.followup_required.supplier_count}} ({{bookingPhases.ongoing_phase.followup_required.flat_count}})</small></td>
-                <td ng-if="bookingPhases.ongoing_phase.followup_required.supplier_data.length == 0"><small>0</small></td>
+                <td ng-if="bookingPhases.ongoing_phase.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.total_booked.supplier_data,'Last Completed Phase')">
+                  {{bookingPhases.ongoing_phase.total_booked.supplier_count}} ({{bookingPhases.ongoing_phase.total_booked.flat_count}})
+                  </a>
+              </small></td>
+              <td ng-if="bookingPhases.ongoing_phase.total_booked.supplier_data.length == 0"><small>0</small></td>
 
-              <td ng-if="bookingPhases.ongoing_phase.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.total_booked.supplier_data,'Last Completed Phase')">
-                {{bookingPhases.ongoing_phase.total_booked.supplier_count}} ({{bookingPhases.ongoing_phase.total_booked.flat_count}})
-                </a>
-            </small></td>
-            <td ng-if="bookingPhases.ongoing_phase.total_booked.supplier_data.length == 0"><small>0</small></td>
+              </tr>
+              <tr ng-repeat="item in bookingPhases.upcoming_phases" ng-if="bookingPhases.upcoming_phases.length">
+                <td>
+                  <div class="">
+                    <small>Upcoming Phase No : {{item.phase_no}}</small>  </br>
+                    <small>Start Date : {{item.start_date|limitTo:10|date:fullDate}}</small></br>
+                    <small>End Date : {{item.end_date|limitTo:10|date:fullDate}}</small>
+                  </div>
+                </td>
+                <td ng-if="item.confirmed_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.confirmed_booked.supplier_data,'Upcoming Phase')">
+                  {{item.confirmed_booked.supplier_count}} ({{item.confirmed_booked.flat_count}})</a>
+                </small> </td>
+                <td ng-if="item.confirmed_booked.supplier_data.length == 0"><small>0</small></td>
+                <td  ng-if="item.verbally_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.verbally_booked.supplier_data,'Upcoming Phase')">
+                  {{item.verbally_booked.supplier_count}} ({{item.verbally_booked.flat_count}})</a></small></td>
+                <td ng-if="item.verbally_booked.supplier_data.length == 0"><small>0</small></td>
+                <td ng-if="item.followup_required.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.followup_required.supplier_data,'Upcoming Phase')">
+                  {{item.followup_required.supplier_count}} ({{item.followup_required.flat_count}})</small></td>
+                <td ng-if="item.followup_required.supplier_data.length == 0"><small>0</small></td>
+                <td  ng-if="item.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.total_booked.supplier_data,'Upcoming Phase')">
+                  {{item.total_booked.supplier_count}} ({{item.total_booked.flat_count}})
+                  </a></small></td>
+                <td ng-if="item.total_booked.supplier_data.length == 0"><small>0</small></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-            </tr>
-            <tr ng-repeat="item in bookingPhases.upcoming_phases" ng-if="bookingPhases.upcoming_phases.length">
-              <td>
-                <div class="">
-                  <small>Upcoming Phase No : {{item.phase_no}}</small>  </br>
-                  <small>Start Date : {{item.start_date|limitTo:10|date:fullDate}}</small></br>
-                  <small>End Date : {{item.end_date|limitTo:10|date:fullDate}}</small>
-                </div>
-              </td>
-              <td ng-if="item.confirmed_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.confirmed_booked.supplier_data,'Upcoming Phase')">
-                {{item.confirmed_booked.supplier_count}} ({{item.confirmed_booked.flat_count}})</a>
-              </small> </td>
-              <td ng-if="item.confirmed_booked.supplier_data.length == 0"><small>0</small></td>
-              <td  ng-if="item.verbally_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.verbally_booked.supplier_data,'Upcoming Phase')">
-                {{item.verbally_booked.supplier_count}} ({{item.verbally_booked.flat_count}})</a></small></td>
-              <td ng-if="item.verbally_booked.supplier_data.length == 0"><small>0</small></td>
-              <td ng-if="item.followup_required.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.followup_required.supplier_data,'Upcoming Phase')">
-                {{item.followup_required.supplier_count}} ({{item.followup_required.flat_count}})</small></td>
-              <td ng-if="item.followup_required.supplier_data.length == 0"><small>0</small></td>
-              <td  ng-if="item.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.total_booked.supplier_data,'Upcoming Phase')">
-                {{item.total_booked.supplier_count}} ({{item.total_booked.flat_count}})
-                </a></small></td>
-              <td ng-if="item.total_booked.supplier_data.length == 0"><small>0</small></td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="panel-title">
+        <div class="panel-title campaigndetailtable">
           <h4>Pipelined Suppliers</h4>
         </div>
-        <table class="table table-responsive table-bordered">
-          <thead>
-            <tr>
-              <th><small>Confirmed Bookings <br>(Total Flat Count)</small></th>
-              <th><small>Not Initiated <br>(Total Flat Count)</small></th>
-              <th><small>Followup Required <br>(Total Flat Count)</small></th>
-              <th><small>Verbally Booked <br>(Total Flat Count)</small></th>
-              <th><small>Rejected <br>(Total Flat Count)</small></th>
-              <th><small>Total <br>(Total Flat Count)</small></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td ng-if="bookingPhases.pipeline_suppliers.confirmed_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.confirmed_booked.supplier_data,'Pipelined')">
-                {{bookingPhases.pipeline_suppliers.confirmed_booked.supplier_count}} ({{bookingPhases.ongoing_phase.confirmed_booked.flat_count}})
-                </a></small>
-              </td>
-              <td ng-if="bookingPhases.pipeline_suppliers.confirmed_booked.supplier_data.length == 0"><small>0</small></td>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th><small>Confirmed Bookings <br>(Total Flat Count)</small></th>
+                <th><small>Not Initiated <br>(Total Flat Count)</small></th>
+                <th><small>Followup Required <br>(Total Flat Count)</small></th>
+                <th><small>Verbally Booked <br>(Total Flat Count)</small></th>
+                <th><small>Rejected <br>(Total Flat Count)</small></th>
+                <th><small>Total <br>(Total Flat Count)</small></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td ng-if="bookingPhases.pipeline_suppliers.confirmed_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.confirmed_booked.supplier_data,'Pipelined')">
+                  {{bookingPhases.pipeline_suppliers.confirmed_booked.supplier_count}} ({{bookingPhases.ongoing_phase.confirmed_booked.flat_count}})
+                  </a></small>
+                </td>
+                <td ng-if="bookingPhases.pipeline_suppliers.confirmed_booked.supplier_data.length == 0"><small>0</small></td>
 
-              <td ng-if="bookingPhases.pipeline_suppliers.not_initiated.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.not_initiated.supplier_data,'Pipelined')">
-                {{bookingPhases.pipeline_suppliers.not_initiated.supplier_count}} ({{bookingPhases.pipeline_suppliers.not_initiated.flat_count}})</small></td>
-                <td ng-if="bookingPhases.pipeline_suppliers.not_initiated.supplier_data.length == 0"><small>0</small></td>
-
-
-
-                <td ng-if="bookingPhases.pipeline_suppliers.followup_required.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.followup_required.supplier_data,'Pipelined')">
-                  {{bookingPhases.pipeline_suppliers.followup_required.supplier_count}} ({{bookingPhases.pipeline_suppliers.followup_required.flat_count}})</small></td>
-                  <td ng-if="bookingPhases.pipeline_suppliers.followup_required.supplier_data.length == 0"><small>0</small></td>
-
-              <td ng-if="bookingPhases.pipeline_suppliers.verbally_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.verbally_booked.supplier_data,'Pipelined')">
-                {{bookingPhases.pipeline_suppliers.verbally_booked.supplier_count}} ({{bookingPhases.pipeline_suppliers.verbally_booked.flat_count}})</small>
-              </a>
-              </td>
-              <td ng-if="bookingPhases.pipeline_suppliers.verbally_booked.supplier_data.length == 0"><small>0</small></td>
+                <td ng-if="bookingPhases.pipeline_suppliers.not_initiated.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.not_initiated.supplier_data,'Pipelined')">
+                  {{bookingPhases.pipeline_suppliers.not_initiated.supplier_count}} ({{bookingPhases.pipeline_suppliers.not_initiated.flat_count}})</small></td>
+                  <td ng-if="bookingPhases.pipeline_suppliers.not_initiated.supplier_data.length == 0"><small>0</small></td>
 
 
-                <td ng-if="bookingPhases.pipeline_suppliers.rejected.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.rejected.supplier_data,'Pipelined')">
-                  {{bookingPhases.pipeline_suppliers.rejected.supplier_count}} ({{bookingPhases.pipeline_suppliers.rejected.flat_count}})</small></td>
-                  <td ng-if="bookingPhases.pipeline_suppliers.rejected.supplier_data.length == 0"><small>0</small></td>
 
+                  <td ng-if="bookingPhases.pipeline_suppliers.followup_required.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.followup_required.supplier_data,'Pipelined')">
+                    {{bookingPhases.pipeline_suppliers.followup_required.supplier_count}} ({{bookingPhases.pipeline_suppliers.followup_required.flat_count}})</small></td>
+                    <td ng-if="bookingPhases.pipeline_suppliers.followup_required.supplier_data.length == 0"><small>0</small></td>
 
-              <td ng-if="bookingPhases.pipeline_suppliers.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.total_booked.supplier_data,'Pipelined')">
-                {{bookingPhases.pipeline_suppliers.total_booked.supplier_count}} ({{bookingPhases.pipeline_suppliers.total_booked.flat_count}})
+                <td ng-if="bookingPhases.pipeline_suppliers.verbally_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.verbally_booked.supplier_data,'Pipelined')">
+                  {{bookingPhases.pipeline_suppliers.verbally_booked.supplier_count}} ({{bookingPhases.pipeline_suppliers.verbally_booked.flat_count}})</small>
                 </a>
-            </small></td>
-            <td ng-if="bookingPhases.pipeline_suppliers.total_booked.supplier_data.length == 0"><small>0</small></td>
+                </td>
+                <td ng-if="bookingPhases.pipeline_suppliers.verbally_booked.supplier_data.length == 0"><small>0</small></td>
 
-            </tr>
-          </tbody>
-        </table>
 
-        <div class="" ng-if="headerForSupplierBookings">
+                  <td ng-if="bookingPhases.pipeline_suppliers.rejected.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.rejected.supplier_data,'Pipelined')">
+                    {{bookingPhases.pipeline_suppliers.rejected.supplier_count}} ({{bookingPhases.pipeline_suppliers.rejected.flat_count}})</small></td>
+                    <td ng-if="bookingPhases.pipeline_suppliers.rejected.supplier_data.length == 0"><small>0</small></td>
+
+
+                <td ng-if="bookingPhases.pipeline_suppliers.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.total_booked.supplier_data,'Pipelined')">
+                  {{bookingPhases.pipeline_suppliers.total_booked.supplier_count}} ({{bookingPhases.pipeline_suppliers.total_booked.flat_count}})
+                  </a>
+              </small></td>
+              <td ng-if="bookingPhases.pipeline_suppliers.total_booked.supplier_data.length == 0"><small>0</small></td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+        <div class="campaigndetailtable" ng-if="headerForSupplierBookings">
           <div class="panel-heading">
           {{headerForSupplierBookings}} Supplier Details
           </div>
-          <div class="col-md-12" style="overflow-x:auto">
-            <table class="table table-bordered table-responsive">
+          <div class="table-responsive">
+            <table class="table table-bordered">
               <thead>
                 <tr>
                   <th>Index</th>

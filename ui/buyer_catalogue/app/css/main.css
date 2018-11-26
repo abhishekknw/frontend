@@ -610,6 +610,7 @@ color: #ffffff !important;
   display: block;
   max-height: 300px;
   overflow-y: auto;
+  overflow-x: hidden; 
 }
 
 
