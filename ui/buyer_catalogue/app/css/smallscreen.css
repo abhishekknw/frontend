@@ -1,7 +1,11 @@
+[class*="col-"] {
+    width: 100%;
+}
 @media only screen and (min-width :300px) and (max-width :600px) {
   .body{
     background-color: #ffffff;
   }
+
 .dashboard-tab .uib-tab{
   min-width: 320px;
 }
@@ -14,6 +18,10 @@
   display: table;
   width: 180px;
 }
+.aligntop{
+  /* margin-top: 10px; */
+  margin-left: -10px;
+}
 .mobileCampaign{
   margin-top: 3px;
   /* padding : 3px 5px 5px 0px; */
@@ -25,6 +33,16 @@
 
 }
 }
+/*
+@media (min-width: 300px){
+
+.container > .navbar-header, .container-fluid > .navbar-header, .container > .navbar-collapse, .container-fluid > .navbar-collapse {
+    margin-right: 0;
+    margin-left: 0;
+}
+} */
+
+
 @media only screen and (min-width :384px) and (max-width :640px) {
 .dashboard-tab .uib-tab{
   min-width: 340px;
