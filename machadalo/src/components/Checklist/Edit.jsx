@@ -62,7 +62,7 @@ export default class CreateChecklistTemplate extends React.Component {
 
     if (
       checklistDetails &&
-      parseInt(match.params.checklistId) !== this.state.checklist_id
+      +match.params.checklistId !== this.state.checklist_id
     ) {
       this.setState({
         checklist_id:
