@@ -268,6 +268,7 @@ export default class CreateChecklistTemplate extends React.Component {
     data.new_checklist_columns = new_checklist_columns;
     data.new_static_column_values = new_static_column_values;
     data.delete_rows = this.state.delete_rows;
+    data.delete_columns = this.state.delete_columns;
     this.state.static_column_values.forEach(static_value => {
       if (static_value.cell_value === '') {
         error = true;
