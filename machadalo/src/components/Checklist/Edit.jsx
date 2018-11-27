@@ -10,7 +10,9 @@ const ColumnTypes = [
   { value: 'TEXT', label: 'Textbox' },
   { value: 'BOOLEAN', label: 'Checkbox' },
   { value: 'DATETIME', label: 'Date Time' },
-  { value: 'RATING', label: 'Rating' }
+  { value: 'RATING', label: 'Rating' },
+  { value: 'NUMBER', label: 'Number' },
+  { value: 'EMAIL', label: 'Email' }
 ];
 
 const getColumnOption = value => {

@@ -244,6 +244,30 @@ export default class FillChecklist extends React.Component {
             name="rating"
           />
         );
+      case 'NUMBER':
+        return (
+          <input
+            type="number"
+            value={
+              checklistEntries[rowId] && checklistEntries[rowId][columnId]
+                ? checklistEntries[rowId][columnId].cell_value
+                : ''
+            }
+            onChange={event => this.onCellChange(event, rowId, columnId)}
+          />
+        );
+      case 'EMAIL':
+        return (
+          <input
+            type="email"
+            value={
+              checklistEntries[rowId] && checklistEntries[rowId][columnId]
+                ? checklistEntries[rowId][columnId].cell_value
+                : ''
+            }
+            onChange={event => this.onCellChange(event, rowId, columnId)}
+          />
+        );
     }
   }
 
