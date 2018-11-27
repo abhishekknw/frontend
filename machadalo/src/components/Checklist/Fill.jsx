@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { DatetimePickerTrigger } from 'rc-datetime-picker';
+import StarRatings from 'react-star-ratings';
 
 import './index.css';
 
@@ -17,8 +18,9 @@ export default class FillChecklist extends React.Component {
     this.renderChecklistColumn = this.renderChecklistColumn.bind(this);
     this.renderChecklistRow = this.renderChecklistRow.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.handleDateTimeChange = this.handleDateTimeChange.bind(this);
+    this.onDateTimeChange = this.onDateTimeChange.bind(this);
     this.onCellChange = this.onCellChange.bind(this);
+    this.onRatingChange = this.onRatingChange.bind(this);
   }
 
   componentDidMount() {
@@ -128,7 +130,7 @@ export default class FillChecklist extends React.Component {
     });
   }
 
-  handleDateTimeChange(moment, rowId, columnId) {
+  onDateTimeChange(moment, rowId, columnId) {
     this.handleEntryChange(
       rowId,
       columnId,
@@ -150,6 +152,10 @@ export default class FillChecklist extends React.Component {
       event.target.value,
       event.target.type
     );
+  }
+
+  onRatingChange(newRating, rowId, columnId) {
+    this.handleEntryChange(rowId, columnId, newRating);
   }
 
   renderInputField(columnType, inputClass, checklistEntries, rowId, columnId) {
@@ -189,9 +195,7 @@ export default class FillChecklist extends React.Component {
         return (
           <DatetimePickerTrigger
             moment={this.state.moment}
-            onChange={moment =>
-              this.handleDateTimeChange(moment, rowId, columnId)
-            }
+            onChange={moment => this.onDateTimeChange(moment, rowId, columnId)}
           >
             <input
               type="text"
@@ -199,6 +203,25 @@ export default class FillChecklist extends React.Component {
               readOnly
             />
           </DatetimePickerTrigger>
+        );
+      case 'RATING':
+        return (
+          <StarRatings
+            rating={
+              checklistEntries[rowId] && checklistEntries[rowId][columnId]
+                ? checklistEntries[rowId][columnId].cell_value
+                : 0
+            }
+            starRatedColor="rgb(230, 67, 47)"
+            starHoverColor="black"
+            starDimension="20px"
+            starSpacing="1px"
+            changeRating={newRating =>
+              this.onRatingChange(newRating, rowId, columnId)
+            }
+            numberOfStars={5}
+            name="rating"
+          />
         );
     }
   }
