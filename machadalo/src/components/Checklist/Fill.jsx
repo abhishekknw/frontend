@@ -21,6 +21,7 @@ export default class FillChecklist extends React.Component {
     this.onDateTimeChange = this.onDateTimeChange.bind(this);
     this.onCellChange = this.onCellChange.bind(this);
     this.onRatingChange = this.onRatingChange.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
 
   componentDidMount() {
@@ -67,6 +68,26 @@ export default class FillChecklist extends React.Component {
       let checklistInfo = this.props.checklist.details[
         this.props.match.params.checklistId
       ].checklist_info;
+      if (checklistInfo.checklist_type === 'supplier') {
+        this.props.history.push(
+          `/r/checklist/list/${checklistInfo.campaign_id}/${
+            checklistInfo.supplier_id
+          }`
+        );
+      } else {
+        this.props.history.push(
+          `/r/checklist/list/${checklistInfo.campaign_id}`
+        );
+      }
+    }
+  }
+
+  onBack() {
+    if (this.props.checklist) {
+      let checklistInfo = this.props.checklist.details[
+        this.props.match.params.checklistId
+      ].checklist_info;
+
       if (checklistInfo.checklist_type === 'supplier') {
         this.props.history.push(
           `/r/checklist/list/${checklistInfo.campaign_id}/${
@@ -311,6 +332,15 @@ export default class FillChecklist extends React.Component {
               <div className="fillForm__form__action">
                 <button type="submit" className="btn btn--danger">
                   Submit
+                </button>
+              </div>
+              <div className="fillForm__form__action">
+                <button
+                  type="button"
+                  className="btn btn--danger"
+                  onClick={this.onBack}
+                >
+                  Back
                 </button>
               </div>
             </div>
