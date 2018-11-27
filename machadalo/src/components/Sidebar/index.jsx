@@ -51,6 +51,12 @@ export default function Sidebar({ appearance }) {
               </NavLink>
             </li>
             <li>
+              <NavLink to="/r/entity/types/create">
+                <i className="fa fa-cubes" aria-hidden="true" />
+                Entities
+              </NavLink>
+            </li>
+            <li>
               <a href="/#/dashboard">
                 <i className="fa fa-dashboard" aria-hidden="true" />
                 DashBoard
