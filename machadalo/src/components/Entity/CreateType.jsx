@@ -1,5 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
+import { toastr } from 'react-redux-toastr';
 
 const AttributeTypes = [
   { value: 'FLOAT', label: 'Float' },
@@ -39,7 +40,9 @@ export default class CreateType extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
-    console.log('Prepared data', this.state);
+    this.props.postEntity({ data: this.state }, () => {
+      toastr.success('', 'Entity created successfully');
+    });
   }
 
   onAddAttribute() {
@@ -118,9 +121,11 @@ export default class CreateType extends React.Component {
             />
           </div>
 
-          <div className="form-control">
+          <div className="form-control required-field">
+            <div>Is it required?</div>
             <input
               type="checkbox"
+              className="input-checkbox"
               value={attribute.is_required}
               onChange={onRequiredChange}
             />
