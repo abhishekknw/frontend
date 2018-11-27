@@ -1,4 +1,13 @@
 @import './../../assets/scss/partials/variables';
+@import './../../assets/scss/partials/dateTimePicker';
+
+
+
+.input-checkbox {
+  height: 25px !important;
+  width: 15px !important;
+}
+  
 
 .checklist {
   padding: 60px 0;

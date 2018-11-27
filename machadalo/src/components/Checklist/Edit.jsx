@@ -9,7 +9,7 @@ const MAX_COLUMNS = 12;
 const ColumnTypes = [
   { value: 'TEXT', label: 'Textbox' },
   { value: 'BOOLEAN', label: 'Checkbox' },
-  { value: 'DATE', label: 'Date' }
+  { value: 'DATETIME', label: 'Date Time' }
 ];
 
 const getColumnOption = value => {

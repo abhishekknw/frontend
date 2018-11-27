@@ -1,4 +1,6 @@
 import React from 'react';
+import moment from 'moment';
+import { DatetimePickerTrigger } from 'rc-datetime-picker';
 
 import './index.css';
 
@@ -7,13 +9,16 @@ export default class FillChecklist extends React.Component {
     super(props);
 
     this.state = {
-      checklistEntries: {}
+      checklistEntries: {},
+      moment: moment()
     };
 
     this.handleEntryChange = this.handleEntryChange.bind(this);
     this.renderChecklistColumn = this.renderChecklistColumn.bind(this);
     this.renderChecklistRow = this.renderChecklistRow.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.handleDateTimeChange = this.handleDateTimeChange.bind(this);
+    this.onCellChange = this.onCellChange.bind(this);
   }
 
   componentDidMount() {
@@ -117,6 +122,87 @@ export default class FillChecklist extends React.Component {
     );
   }
 
+  onDateChange(moment) {
+    this.setState({
+      moment
+    });
+  }
+
+  handleDateTimeChange(moment, rowId, columnId) {
+    this.handleEntryChange(
+      rowId,
+      columnId,
+      moment.format('YYYY-MM-DD HH:mm'),
+      'dateTime'
+    );
+    this.setState({
+      moment
+    });
+  }
+
+  onCellChange(event, rowId, columnId) {
+    if (event.target.type === 'checkbox') {
+      event.target.value = event.target.checked ? true : false;
+    }
+    this.handleEntryChange(
+      rowId,
+      columnId,
+      event.target.value,
+      event.target.type
+    );
+  }
+
+  renderInputField(columnType, inputClass, checklistEntries, rowId, columnId) {
+    switch (columnType) {
+      case 'TEXT':
+        return (
+          <input
+            className={inputClass}
+            type="text"
+            value={
+              checklistEntries[rowId] && checklistEntries[rowId][columnId]
+                ? checklistEntries[rowId][columnId].cell_value
+                : ''
+            }
+            onChange={event => this.onCellChange(event, rowId, columnId)}
+          />
+        );
+
+      case 'BOOLEAN':
+        return (
+          <input
+            className={inputClass}
+            type="checkbox"
+            checked={
+              checklistEntries[rowId] && checklistEntries[rowId][columnId]
+                ? checklistEntries[rowId][columnId].cell_value
+                : false
+            }
+            onChange={event => this.onCellChange(event, rowId, columnId)}
+          />
+        );
+      case 'DATETIME':
+        let dateValue =
+          checklistEntries[rowId] && checklistEntries[rowId][columnId]
+            ? moment(checklistEntries[rowId][columnId].cell_value)
+            : moment();
+        return (
+          <DatetimePickerTrigger
+            moment={this.state.moment}
+            onChange={moment =>
+              this.handleDateTimeChange(moment, rowId, columnId)
+            }
+          >
+            <input
+              type="text"
+              value={dateValue.format('YYYY-MM-DD HH:mm')}
+              readOnly
+            />
+          </DatetimePickerTrigger>
+        );
+    }
+  }
+
   renderChecklistRow(row, rowIndex) {
     const { checklistDetails, checklistEntries } = this.state;
     const rowId = row.row_id;
@@ -137,13 +223,9 @@ export default class FillChecklist extends React.Component {
               event.target.type
             );
           };
-          let dataType = 'text';
           let inputClass = '';
           if (column.column_type === 'BOOLEAN') {
-            dataType = 'checkbox';
             inputClass = 'input-checkbox';
-          } else if (column.column_type === 'DATE') {
-            dataType = 'date';
           }
 
           return (
@@ -156,23 +238,14 @@ export default class FillChecklist extends React.Component {
                   {columnIndex === 0 ? (
                     <label>{row.cell_value}</label>
                   ) : (
-                    <input
-                      className={inputClass}
-                      type={dataType}
-                      value={
-                        checklistEntries[rowId] &&
-                        checklistEntries[rowId][columnId]
-                          ? checklistEntries[rowId][columnId].cell_value
-                          : ''
-                      }
-                      checked={
-                        checklistEntries[rowId] &&
-                        checklistEntries[rowId][columnId]
-                          ? checklistEntries[rowId][columnId].cell_value
-                          : false
-                      }
-                      onChange={onCellChange}
-                    />
+                    this.renderInputField(
+                      column.column_type,
+                      inputClass,
+                      checklistEntries,
+                      rowId,
+                      columnId,
+                      onCellChange
+                    )
                   )}
                 </div>
               </div>
