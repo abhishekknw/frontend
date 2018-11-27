@@ -3,40 +3,51 @@ import { Route, Switch } from 'react-router-dom';
 
 import Header from './../Header';
 import Sidebar from './../Sidebar';
-import ChecklistContainer from './../../containers/ChecklistContainer';
+import Toastr from './../toastr';
 
-//Actions
-import * as AuthActions from '../../actions/auth';
+import ChecklistContainer from './../../containers/ChecklistContainer';
+import EntityContainer from './../../containers/EntityContainer';
 
 import './index.css';
 
-export default function Layout(props) {
-  const { match, auth } = props;
-
-  // Attempt auto-login, if not already logged in
-  if (!auth.isLoggedIn) {
-    props.dispatch(AuthActions.autoLogin());
+export default class Layout extends React.Component {
+  componentWillMount() {
+    // console.log(this.props);
+    // Attempt auto-login, if not already logged in
+    if (!this.props.auth.isLoggedIn) {
+      this.props.autoLogin();
+    }
   }
 
-  // Redirect to login
-  // if (auth.isLoggedOut) {
-  //   return <Redirect to="/auth/login" />;
-  // }
+  render() {
+    const { match } = this.props;
 
-  return (
-    <main>
-      <Header {...props} />
-      <Sidebar {...props} />
-      <div className="wrapper">
-        <div className="container">
-          <Switch>
-            <Route
-              path={`${match.path}/checklist`}
-              component={ChecklistContainer}
-            />
-          </Switch>
+    // Redirect to login
+    // if (auth.isLoggedOut) {
+    //   return <Redirect to="/auth/login" />;
+    // }
+
+    return (
+      <main>
+        <Toastr />
+        <Header {...this.props} />
+        <Sidebar {...this.props} />
+        <div className="wrapper">
+          <div className="container">
+            <Switch>
+              <Route
+                path={`${match.path}/checklist`}
+                component={ChecklistContainer}
+              />
+
+              <Route
+                path={`${match.path}/entity`}
+                component={EntityContainer}
+              />
+            </Switch>
+          </div>
         </div>
-      </div>
-    </main>
-  );
+      </main>
+    );
+  }
 }
