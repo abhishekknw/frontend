@@ -11,10 +11,10 @@ export function postEntityStart() {
   };
 }
 
-export function postEntitySuccess({ suppliers }) {
+export function postEntitySuccess(entity) {
   return {
     type: types.POST_ENTITY_SUCCESS,
-    suppliers
+    data: entity
   };
 }
 
@@ -35,7 +35,7 @@ export function postEntity({ data }, callback) {
       .set('Authorization', `JWT ${auth.token}`)
       .send(data)
       .then(resp => {
-        dispatch(postEntitySuccess());
+        dispatch(postEntitySuccess(resp.data));
         if (callback) {
           callback();
         }
