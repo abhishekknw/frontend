@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { DatetimePickerTrigger } from 'rc-datetime-picker';
 import StarRatings from 'react-star-ratings';
+import Select from 'react-select';
 
 import './index.css';
 
@@ -286,25 +287,25 @@ export default class FillChecklist extends React.Component {
         );
 
       case 'SELECT':
+        let options = [];
+        column.column_options.map(option => {
+          options.push({ label: option, value: option });
+        });
         return (
-          <select onChange={event => this.onCellChange(event, rowId, columnId)}>
-            {column.column_options.map(option => {
-              return (
-                <option
-                  value={option}
-                  selected={
-                    checklistEntries[rowId] &&
-                    checklistEntries[rowId][columnId] &&
-                    checklistEntries[rowId][columnId].cell_value === option
-                      ? true
-                      : false
+          <Select
+            value={
+              checklistEntries[rowId] && checklistEntries[rowId][columnId]
+                ? {
+                    label: checklistEntries[rowId][columnId].cell_value,
+                    value: checklistEntries[rowId][columnId].cell_value
                   }
-                >
-                  {option}
-                </option>
-              );
-            })}
-          </select>
+                : null
+            }
+            options={options}
+            onChange={item =>
+              this.handleEntryChange(rowId, columnId, item.value)
+            }
+          />
         );
       default:
         return;
