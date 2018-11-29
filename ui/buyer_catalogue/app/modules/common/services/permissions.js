@@ -91,6 +91,7 @@ angular
       auditReleasePage        : 'auditReleasePage',
       opsExecutionPage        : 'opsExecutionPage',
       showProposalHistoryPage : 'showProposalHistoryPage',
-      dashboardPage            : 'dashboard'
+      dashboardPage            : 'dashboard',
+      enterLeadsFromAppication : 'can_enter_leads_from_applicaton'
     },
   });
