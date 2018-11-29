@@ -1,7 +1,12 @@
 @import './../../assets/scss/partials/variables';
+@import './../../assets/scss/partials/checkbox';
 
 .entity {
   padding: 60px 0;
+
+  .required-field{
+    align-items: center;
+  }
 
   .createform {
     &__title {

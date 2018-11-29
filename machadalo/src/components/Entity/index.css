@@ -1,5 +1,13 @@
+.input-checkbox {
+  height: 25px !important;
+  width: 15px !important;
+}
+
 .entity {
   padding: 60px 0;
+}
+.entity .required-field {
+  align-items: center;
 }
 .entity .createform__title {
   text-align: center;
