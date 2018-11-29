@@ -321,17 +321,6 @@ export default class FillChecklist extends React.Component {
         {checklistDetails.column_headers.map((column, columnIndex) => {
           const columnId = column.column_id;
 
-          // const onCellChange = event => {
-          //   if (event.target.type === 'checkbox') {
-          //     event.target.value = event.target.checked ? true : false;
-          //   }
-          //   this.handleEntryChange(
-          //     rowId,
-          //     columnId,
-          //     event.target.value,
-          //     event.target.type
-          //   );
-          // };
           let inputClass = '';
           if (column.column_type === 'BOOLEAN') {
             inputClass = 'input-checkbox';
