@@ -89,7 +89,7 @@ export default class CreateType extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
-    this.props.postEntity({ data: this.state }, () => {
+    this.props.postEntityType({ data: this.state }, () => {
       toastr.success('', 'Entity created successfully');
     });
   }
