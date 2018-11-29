@@ -179,8 +179,8 @@ export default class FillChecklist extends React.Component {
     this.handleEntryChange(rowId, columnId, newRating);
   }
 
-  renderInputField(columnType, inputClass, checklistEntries, rowId, columnId) {
-    switch (columnType) {
+  renderInputField(column, inputClass, checklistEntries, rowId, columnId) {
+    switch (column.column_type) {
       case 'TEXT':
         return (
           <input
@@ -256,18 +256,36 @@ export default class FillChecklist extends React.Component {
             onChange={event => this.onCellChange(event, rowId, columnId)}
           />
         );
-      case 'EMAIL':
+
+      case 'RADIO':
         return (
-          <input
-            type="email"
-            value={
-              checklistEntries[rowId] && checklistEntries[rowId][columnId]
-                ? checklistEntries[rowId][columnId].cell_value
-                : ''
-            }
-            onChange={event => this.onCellChange(event, rowId, columnId)}
-          />
+          <div>
+            {column.column_options.map(option => {
+              return (
+                <div>
+                  <input
+                    type="radio"
+                    className={inputClass}
+                    value={option}
+                    onChange={event =>
+                      this.onCellChange(event, rowId, columnId)
+                    }
+                    checked={
+                      checklistEntries[rowId] &&
+                      checklistEntries[rowId][columnId] &&
+                      checklistEntries[rowId][columnId].cell_value === option
+                        ? true
+                        : false
+                    }
+                  />{' '}
+                  {option}
+                </div>
+              );
+            })}
+          </div>
         );
+      default:
+        return;
     }
   }
 
@@ -294,6 +312,8 @@ export default class FillChecklist extends React.Component {
           let inputClass = '';
           if (column.column_type === 'BOOLEAN') {
             inputClass = 'input-checkbox';
+          } else if (column.column_type === 'RADIO') {
+            inputClass = 'input-radio';
           }
 
           return (
@@ -307,12 +327,11 @@ export default class FillChecklist extends React.Component {
                     <label>{row.cell_value}</label>
                   ) : (
                     this.renderInputField(
-                      column.column_type,
+                      column,
                       inputClass,
                       checklistEntries,
                       rowId,
-                      columnId,
-                      onCellChange
+                      columnId
                     )
                   )}
                 </div>

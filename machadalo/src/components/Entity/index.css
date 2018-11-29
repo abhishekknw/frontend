@@ -3,6 +3,11 @@
   width: 15px !important;
 }
 
+.input-radio {
+  height: 12px !important;
+  width: 12px !important;
+}
+
 .entity {
   padding: 60px 0;
 }

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
 
+import OptionModal from '../Modals/OptionModal';
+
 import './index.css';
 
 const MAX_COLUMNS = 12;
@@ -12,7 +14,8 @@ const ColumnTypes = [
   { value: 'DATETIME', label: 'Date Time' },
   { value: 'RATING', label: 'Rating' },
   { value: 'NUMBER', label: 'Number' },
-  { value: 'EMAIL', label: 'Email' }
+  { value: 'EMAIL', label: 'Email' },
+  { value: 'RADIO', label: 'Radio' }
 ];
 
 // Get column option from string
@@ -49,6 +52,9 @@ export default class CreateChecklistTemplate extends React.Component {
       checklist_type: 'supplier',
       checklist_name: '',
       checklist_columns: getDefaultColumns(),
+      showOptionModal: false,
+      columnOptions: [''],
+      columnInfo: {},
       static_column_values: [
         {
           row_id: 1,
@@ -69,6 +75,9 @@ export default class CreateChecklistTemplate extends React.Component {
     this.onColumnRemove = this.onColumnRemove.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onBack = this.onBack.bind(this);
+    this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
+    this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
+    this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
   }
 
   componentWillMount() {
@@ -208,6 +217,40 @@ export default class CreateChecklistTemplate extends React.Component {
     });
   }
 
+  onOpenOptionModal(options, columnType, column, columnIndex) {
+    this.setState({
+      showOptionModal: true,
+      columnOptions: options,
+      columnInfo: {
+        columnType,
+        column,
+        columnIndex
+      }
+    });
+  }
+
+  onCancelOptionModal() {
+    this.setState({
+      showOptionModal: false,
+      columnOptions: [''],
+      columnInfo: {}
+    });
+  }
+
+  onSubmitOptionModal(options, columnInfo) {
+    this.setState({
+      showOptionModal: false,
+      columnOptions: [''],
+      columnInfo: {}
+    });
+
+    let newColumn = Object.assign({}, columnInfo.column, {
+      column_type: columnInfo.columnType,
+      column_options: options
+    });
+    this.handleColumnChange(newColumn, columnInfo.columnIndex);
+  }
+
   onSubmit(event) {
     event.preventDefault();
 
@@ -258,6 +301,19 @@ export default class CreateChecklistTemplate extends React.Component {
     };
 
     const onColumnTypeChange = item => {
+      if (item.value === 'RADIO' || item.value === 'SELECT') {
+        this.setState({
+          showOptionModal: true,
+          columnOptions: [''],
+          columnInfo: {
+            columnType: item,
+            column,
+            columnIndex
+          }
+        });
+        return;
+      }
+
       const newColumn = Object.assign({}, column, {
         column_type: item
       });
@@ -293,6 +349,24 @@ export default class CreateChecklistTemplate extends React.Component {
                   onClick={onRemove}
                 >
                   Remove column
+                </button>
+              ) : (
+                undefined
+              )}{' '}
+              {column.column_type && column.column_type.value === 'RADIO' ? (
+                <button
+                  type="button"
+                  className="btn btn--danger"
+                  onClick={() =>
+                    this.onOpenOptionModal(
+                      column.column_options,
+                      column.column_type,
+                      column,
+                      columnIndex
+                    )
+                  }
+                >
+                  Show Options
                 </button>
               ) : (
                 undefined
@@ -417,6 +491,13 @@ export default class CreateChecklistTemplate extends React.Component {
             )}
           </form>
         </div>
+        <OptionModal
+          showOptionModal={this.state.showOptionModal}
+          onCancel={this.onCancelOptionModal}
+          onSubmit={this.onSubmitOptionModal}
+          options={this.state.columnOptions}
+          columnInfo={this.state.columnInfo}
+        />
       </div>
     );
   }
