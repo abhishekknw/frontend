@@ -2,6 +2,15 @@ import React from 'react';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
 
+import OptionModal from '../Modals/OptionModal';
+
+const optionStyle = {
+  fontSize: '12px',
+  marginBottom: '-24px',
+  textDecoration: 'underline',
+  cursor: 'pointer'
+};
+
 const AttributeTypes = [
   { value: 'FLOAT', label: 'Float' },
   { value: 'STRING', label: 'Text' },
@@ -27,7 +36,10 @@ export default class CreateType extends React.Component {
 
     this.state = {
       name: '',
-      entity_attributes: [{ name: '', type: '', is_required: false }]
+      entity_attributes: [{ name: '', type: '', is_required: false }],
+      showOptionModal: false,
+      attributeOptions: [''],
+      attributeInfo: {}
     };
 
     this.onAddAttribute = this.onAddAttribute.bind(this);
@@ -35,6 +47,43 @@ export default class CreateType extends React.Component {
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
+    this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
+    this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
+  }
+
+  onCancelOptionModal() {
+    this.setState({
+      showOptionModal: false,
+      attributeOptions: [''],
+      attributeInfo: {}
+    });
+  }
+
+  onSubmitOptionModal(options, attributeInfo) {
+    this.setState({
+      showOptionModal: false,
+      attributeOptions: [''],
+      attributeInfo: {}
+    });
+
+    let newAttributes = Object.assign({}, attributeInfo.attribute, {
+      type: attributeInfo.attributeType,
+      options: options
+    });
+    this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
+  }
+
+  onOpenOptionModal(options, attributeType, attribute, attrIndex) {
+    this.setState({
+      showOptionModal: true,
+      attributeOptions: options,
+      attributeInfo: {
+        attributeType,
+        attribute,
+        attrIndex
+      }
+    });
   }
 
   onSubmit(event) {
@@ -85,6 +134,17 @@ export default class CreateType extends React.Component {
     };
 
     const onTypeChange = item => {
+      if (item.value === 'DROPDOWN') {
+        this.setState({
+          showOptionModal: true,
+          columnOptions: [''],
+          attributeInfo: {
+            attributeType: item.value,
+            attribute,
+            attrIndex
+          }
+        });
+      }
       const newAttribute = Object.assign({}, attribute);
 
       newAttribute.type = item.value;
@@ -119,6 +179,25 @@ export default class CreateType extends React.Component {
               value={getAttributeTypeOption(attribute.type)}
               onChange={onTypeChange}
             />
+
+            {attribute.type === 'DROPDOWN' ? (
+              <p
+                className="show-option"
+                style={optionStyle}
+                onClick={() =>
+                  this.onOpenOptionModal(
+                    attribute.options,
+                    attribute.type,
+                    attribute,
+                    attribute.attrIndex
+                  )
+                }
+              >
+                Show Options
+              </p>
+            ) : (
+              ''
+            )}
           </div>
 
           <div className="form-control required-field">
@@ -180,6 +259,13 @@ export default class CreateType extends React.Component {
             </div>
           </form>
         </div>
+        <OptionModal
+          showOptionModal={this.state.showOptionModal}
+          onCancel={this.onCancelOptionModal}
+          onSubmit={this.onSubmitOptionModal}
+          options={this.state.attributeOptions}
+          columnInfo={this.state.attributeInfo}
+        />
       </div>
     );
   }
