@@ -15,7 +15,8 @@ const ColumnTypes = [
   { value: 'RATING', label: 'Rating' },
   { value: 'NUMBER', label: 'Number' },
   { value: 'EMAIL', label: 'Email' },
-  { value: 'RADIO', label: 'Radio' }
+  { value: 'RADIO', label: 'Radio' },
+  { value: 'SELECT', label: 'Select' }
 ];
 
 // Get column option from string
@@ -353,7 +354,9 @@ export default class CreateChecklistTemplate extends React.Component {
               ) : (
                 undefined
               )}{' '}
-              {column.column_type && column.column_type.value === 'RADIO' ? (
+              {column.column_type &&
+              (column.column_type.value === 'RADIO' ||
+                column.column_type.value === 'SELECT') ? (
                 <button
                   type="button"
                   className="btn btn--danger"

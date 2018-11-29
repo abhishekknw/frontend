@@ -284,6 +284,28 @@ export default class FillChecklist extends React.Component {
             })}
           </div>
         );
+
+      case 'SELECT':
+        return (
+          <select onChange={event => this.onCellChange(event, rowId, columnId)}>
+            {column.column_options.map(option => {
+              return (
+                <option
+                  value={option}
+                  selected={
+                    checklistEntries[rowId] &&
+                    checklistEntries[rowId][columnId] &&
+                    checklistEntries[rowId][columnId].cell_value === option
+                      ? true
+                      : false
+                  }
+                >
+                  {option}
+                </option>
+              );
+            })}
+          </select>
+        );
       default:
         return;
     }
