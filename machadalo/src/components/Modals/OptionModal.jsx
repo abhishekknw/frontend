@@ -66,7 +66,7 @@ export default class OptionModal extends React.Component {
       this.handleInputChange(newOption, optionIndex);
     };
     return (
-      <div className="form-control option-container">
+      <div className="form-control option-container" key={optionIndex}>
         <input
           type="text"
           className="input-option"
