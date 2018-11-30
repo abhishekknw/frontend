@@ -90,7 +90,7 @@ export default class CreateType extends React.Component {
     event.preventDefault();
 
     this.props.postEntityType({ data: this.state }, () => {
-      toastr.success('', 'Entity created successfully');
+      toastr.success('', 'Entity Type created successfully');
     });
   }
 
@@ -216,10 +216,7 @@ export default class CreateType extends React.Component {
 
   render() {
     return (
-      <div className="createform">
-        <div className="createform__title">
-          <h3>Create Entity Type</h3>
-        </div>
+      <div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
             <div className="createform__form__inline">
