@@ -141,7 +141,7 @@ export function getCampaignChecklists({ campaignId }) {
       .then(resp => {
         let checklists = [];
         resp.body.data.forEach(checklist => {
-          if (checklist.checklist_type === 'campaign') {
+          if (checklist.checklist_info.checklist_type === 'campaign') {
             checklists.push(checklist);
           }
         });
