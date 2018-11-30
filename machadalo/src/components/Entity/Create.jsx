@@ -3,6 +3,7 @@ import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
 
 import OptionModal from '../Modals/OptionModal';
+import { parse } from 'path';
 
 const customeStyles = {
   input: () => ({
@@ -123,7 +124,11 @@ export default class Create extends React.Component {
     const onValueChange = event => {
       const newAttribute = Object.assign({}, attribute);
 
-      newAttribute.value = event.target.value;
+      if (event.target.type === 'number') {
+        newAttribute.value = parseFloat(event.target.value);
+      } else {
+        newAttribute.value = event.target.value;
+      }
 
       this.handleAttributeChange(newAttribute, attrIndex);
     };
@@ -185,8 +190,8 @@ export default class Create extends React.Component {
             onClick={() => this.onOpenOptionModal([''], attribute, attrIndex)}
           >
             {attribute.value && attribute.value.length
-              ? 'Show Options'
-              : 'Create Options'}
+              ? 'Show Inventory List'
+              : 'Create  Inventory List'}
           </button>
         );
       default:
