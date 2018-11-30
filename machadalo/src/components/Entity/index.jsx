@@ -19,13 +19,6 @@ export default class Entity extends React.Component {
         <Switch>
           <Route
             exact
-            path={`${match.path}/types/create`}
-            render={componentProps => (
-              <CreateType {...this.props} {...componentProps} />
-            )}
-          />
-          <Route
-            exact
             path={`${match.path}/create`}
             render={componentProps => (
               <Create {...this.props} {...componentProps} />
