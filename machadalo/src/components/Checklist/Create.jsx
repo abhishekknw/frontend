@@ -131,8 +131,8 @@ export default class CreateChecklistTemplate extends React.Component {
       let checklistOptions = [];
       this.props.checklist.list.forEach(checklist => {
         checklistOptions.push({
-          value: checklist.checklist_id,
-          label: checklist.checklist_name
+          value: checklist.checklist_info.checklist_id,
+          label: checklist.checklist_info.checklist_name
         });
       });
       this.setState({
@@ -283,17 +283,23 @@ export default class CreateChecklistTemplate extends React.Component {
     event.preventDefault();
 
     let error = false;
+    let checklist_columns = this.state.checklist_columns;
+    checklist_columns.forEach(item => {
+      if (typeof item.column_type !== 'string') {
+        Object.assign({}, item, {
+          column_type: item.column_type.value
+        });
+      }
+    });
+
     const data = {
       checklist_name: this.state.checklist_name,
       checklist_type: this.state.checklist_type,
       supplier_id: this.props.match.params.supplierId,
-      checklist_columns: this.state.checklist_columns.map(item =>
-        Object.assign({}, item, {
-          column_type: item.column_type.value
-        })
-      ),
+      checklist_columns,
       static_column_values: this.state.static_column_values
     };
+
     data.static_column_values.forEach(static_value => {
       if (static_value.cell_value === '') {
         error = true;
@@ -367,7 +373,11 @@ export default class CreateChecklistTemplate extends React.Component {
               <Select
                 options={ColumnTypes}
                 classNamePrefix="form-select"
-                value={column.column_type}
+                value={
+                  typeof column.column_type === 'object'
+                    ? column.column_type
+                    : getColumnOption(column.column_type)
+                }
                 onChange={onColumnTypeChange}
               />
               {columnIndex > 1 ? (
@@ -416,16 +426,10 @@ export default class CreateChecklistTemplate extends React.Component {
     let { checklist } = this.props;
 
     checklist.list.forEach(checklist => {
-      if (checklist.checklist_id === selectedChecklist.value) {
-        let static_value = [
-          {
-            row_id: 1,
-            cell_value: checklist.static_columns[0]
-          }
-        ];
+      if (checklist.checklist_info.checklist_id === selectedChecklist.value) {
         this.setState({
-          checklist_columns: Object.values(checklist.data),
-          static_column_values: static_value
+          checklist_columns: checklist.column_headers,
+          static_column_values: checklist.row_headers
         });
         return;
       }
