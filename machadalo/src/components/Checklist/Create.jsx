@@ -62,6 +62,8 @@ export default class CreateChecklistTemplate extends React.Component {
           cell_value: ''
         }
       ],
+      existingChecklistOptions: [],
+      selectedChecklist: {},
       isMaxColumnsReached: false
     };
 
@@ -79,12 +81,21 @@ export default class CreateChecklistTemplate extends React.Component {
     this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
+    this.handleSelectChecklist = this.handleSelectChecklist.bind(this);
   }
 
   componentWillMount() {
     if (!this.props.match.params.supplierId) {
       this.setState({
         checklist_type: 'campaign'
+      });
+      this.props.getCampaignChecklists({
+        campaignId: this.props.match.params.campaignId
+      });
+    } else {
+      this.props.getSupplierChecklists({
+        campaignId: this.props.match.params.campaignId,
+        supplierId: this.props.match.params.supplierId
       });
     }
   }
@@ -111,6 +122,22 @@ export default class CreateChecklistTemplate extends React.Component {
       this.props.checklist.templateCreateStatus === 'error'
     ) {
       toastr.error('', 'Could not create checklist. Please try again later.');
+    }
+
+    if (
+      this.state.existingChecklistOptions.length !==
+      this.props.checklist.list.length
+    ) {
+      let checklistOptions = [];
+      this.props.checklist.list.forEach(checklist => {
+        checklistOptions.push({
+          value: checklist.checklist_id,
+          label: checklist.checklist_name
+        });
+      });
+      this.setState({
+        existingChecklistOptions: checklistOptions
+      });
     }
   }
 
@@ -381,6 +408,30 @@ export default class CreateChecklistTemplate extends React.Component {
     );
   }
 
+  handleSelectChecklist(selectedChecklist) {
+    this.setState({
+      selectedChecklist
+    });
+
+    let { checklist } = this.props;
+
+    checklist.list.forEach(checklist => {
+      if (checklist.checklist_id === selectedChecklist.value) {
+        let static_value = [
+          {
+            row_id: 1,
+            cell_value: checklist.static_columns[0]
+          }
+        ];
+        this.setState({
+          checklist_columns: Object.values(checklist.data),
+          static_column_values: static_value
+        });
+        return;
+      }
+    });
+  }
+
   renderChecklistRow(row, rowIndex) {
     let newRow = Object.assign({}, row);
 
@@ -435,6 +486,16 @@ export default class CreateChecklistTemplate extends React.Component {
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
+            <div className="createform__form__inline">
+              <div className="form-control">
+                <label>*Select from existing checklist</label>
+                <Select
+                  options={this.state.existingChecklistOptions}
+                  value={this.state.selectedChecklist}
+                  onChange={this.handleSelectChecklist}
+                />
+              </div>
+            </div>
             <div className="createform__form__inline">
               <div className="form-control">
                 <label>*Enter Name For Checklist Form</label>
