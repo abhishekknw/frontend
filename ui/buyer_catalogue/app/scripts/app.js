@@ -439,6 +439,16 @@ angular
       //         permission : 'enterLeadsPageAccess'
       //       }
       // })
+
+      .state('enterLeadsFromApplication',{
+            url : '/enterLeadsFromApplication/:campaignId/:supplierId/:formId',
+            controller : 'enterLeadFormCtrl',
+            templateUrl : 'modules/pages/enterLeadsFromApplication/enterLeads.tmpl.html',
+            data :{
+              permission : 'enterLeadsFromAppication_access'
+            }
+      })
+
       .state('forbiddenPage',{
             url : '/forbiddenPage',
             templateUrl : 'modules/common/forbiddenErrorPage.tmpl.html',

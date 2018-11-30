@@ -936,7 +936,7 @@
          .then(function onSuccess(response){
            console.log(response);
            cfpLoadingBar.complete();
-           $scope.getPhases(campaign.campaign);
+           // $scope.getPhases(campaign.campaign);
 
            // $scope.overallMetricStatus = [
            //   { label : $scope.campaignStatus.ongoing.supplierLabel, value : $scope.campaignStatusData.ongoing.length, status : $scope.campaignStatus.ongoing.status },
@@ -1014,25 +1014,25 @@
          })
        }
 
-       $scope.getPhases = function(campaignId){
-         DashboardService.getPhases(campaignId)
-         .then(function onSuccess(response){
-           console.log(response);
-           $scope.phaseMappingList = {};
-           angular.forEach(response.data.data, function(phase){
-             phase.start_date = new Date(phase.start_date);
-             phase.end_date = new Date(phase.end_date);
-             $scope.phaseMappingList[phase.no] = phase;
-
-           })
-           $scope.phaseNo = response.data.data.phase_no;
-           console.log($scope.phaseMappingList);
-           $scope.phasesDataOfSociety = response.data.data;
-           console.log($scope.phasesDataOfSociety.phase_no);
-           }).catch(function onError(response){
-           console.log(response);
-         })
-       }
+       // $scope.getPhases = function(campaignId){
+       //   DashboardService.getPhases(campaignId)
+       //   .then(function onSuccess(response){
+       //     console.log(response);
+       //     $scope.phaseMappingList = {};
+       //     angular.forEach(response.data.data, function(phase){
+       //       phase.start_date = new Date(phase.start_date);
+       //       phase.end_date = new Date(phase.end_date);
+       //       $scope.phaseMappingList[phase.no] = phase;
+       //
+       //     })
+       //     $scope.phaseNo = response.data.data.phase_no;
+       //     console.log($scope.phaseMappingList);
+       //     $scope.phasesDataOfSociety = response.data.data;
+       //     console.log($scope.phasesDataOfSociety.phase_no);
+       //     }).catch(function onError(response){
+       //     console.log(response);
+       //   })
+       // }
        // END : service call to get suppliers as campaign status
 
 
@@ -1575,6 +1575,7 @@
     $scope.getCompareCampaigns = function(status){
       $scope.compCampaigns.value = false;
       $scope.showPerfMetrics = false;
+      $scope.showReportBtn = false;
       $scope.getCampaignsMenu($scope.campaignStatus.compare_campaigns.status);
       $scope.compCampaigns[status].value = !$scope.compCampaigns[status].value;
     }
@@ -2343,7 +2344,7 @@ $scope.sortData = function(keyName,id){
       }
     })
     var mode = total/count;
-    var range = Math.max.apply(null,keys) - Math.min.apply(null,keys);    
+    var range = Math.max.apply(null,keys) - Math.min.apply(null,keys);
   }
   $scope.sortedLocationData[keyName] = {};
 
@@ -2655,6 +2656,65 @@ $scope.Sort = function(val)
       return [data];
   }
 //END
+
+
+$scope.planets = [
+        {
+          name : 'Mercury',
+          distance : 0.4,
+          mass : 0.055
+        },
+        {
+          name : 'Venus',
+          distance : 0.7,
+          mass : 0.815
+        },
+        {
+          name : 'Earth',
+          distance: 1,
+          mass : 1
+        },
+        {
+          name : 'Mars',
+          distance : 1.5,
+          mass : 0.107
+        },
+        {
+          name : 'Ceres',
+          distance : 2.77,
+          mass :     0.00015
+        },
+        {
+          name : 'Jupiter',
+          distance : 5.2,
+          mass :   318
+        },
+        {
+          name : 'Saturn',
+          distance : 9.5,
+          mass :    95
+        },
+        {
+          name : 'Uranus',
+          distance : 19.6,
+          mass :   14
+        },
+        {
+          name : 'Neptune',
+          distance : 30,
+          mass : 17
+        },
+        {
+          name : 'Pluto',
+          distance : 39,
+          mass : 0.00218
+        },
+        {
+          name : 'Charon',
+          distance : 39,
+          mass :  0.000254
+        }
+      ];
 })
 
 

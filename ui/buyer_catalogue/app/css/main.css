@@ -575,6 +575,7 @@ margin-left: 30px;
 
 
 .showDisplayDetailsTable  tbody {
+
 background-color: #fcfc5f;
 color: black;
 
@@ -605,6 +606,17 @@ color: #ffffff !important;
 }
 
 .campaigndetailtable table tbody {
+
+  display: block;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden; 
+}
+
+
+.campaigndetailtable table tfoot {
+  /* background: #d9534f;
+  color: white; */
   display: block;
   max-height: 300px;
   overflow-y: auto;
@@ -612,12 +624,36 @@ color: #ffffff !important;
 
 .campaigndetailtable table thead,
 .campaigndetailtable table tbody tr {
+  /* border: 1px solid black; */
+  /* border-collapse: separate; */
+  /* border-spacing: 4px;   */
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+
+.campaigndetailtable table thead,
+.campaigndetailtable table tfoot tr {
+  /* background: #d9534f;
+  color: white; */
   display: table;
   width: 100%;
   table-layout: fixed;
 }
 
 .campaigndetailtable table tbody tr td {
+
+  text-align: center;
+  width: 100px;
+}
+
+
+.campaigndetailtable table tfoot tr td {
+  background: #d9534f;
+  color: #ffffff !important;
+  font-size: 14px;
+  font-weight: 700;
   text-align: center;
   width: 100px;
 }
@@ -630,6 +666,9 @@ color: #ffffff !important;
   text-align: left;
 }
 
+.campaigndetailtable table tfoot tr td:nth-child(2) {
+  text-align: left;
+}
 .CampaignDetails{
   height: 60px !important;
 }

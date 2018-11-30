@@ -56,7 +56,7 @@ body.mobile .body-bg {
   bottom: 0;
   right: 0;
   background-attachment: inherit;
-  background-color: #F0F3F4;
+  background-color: #ffffff;
 }
 body.mobile.blur-theme .body-bg::before {
   content: '';
