@@ -3,6 +3,7 @@ import moment from 'moment';
 import { DatetimePickerTrigger } from 'rc-datetime-picker';
 import StarRatings from 'react-star-ratings';
 import Select from 'react-select';
+import { toastr } from 'react-redux-toastr';
 
 import './index.css';
 
@@ -12,7 +13,8 @@ export default class FillChecklist extends React.Component {
 
     this.state = {
       checklistEntries: {},
-      moment: moment()
+      moment: moment(),
+      freezeChecklist: false
     };
 
     this.handleEntryChange = this.handleEntryChange.bind(this);
@@ -23,6 +25,7 @@ export default class FillChecklist extends React.Component {
     this.onCellChange = this.onCellChange.bind(this);
     this.onRatingChange = this.onRatingChange.bind(this);
     this.onBack = this.onBack.bind(this);
+    this.handleFreezeChecklist = this.handleFreezeChecklist.bind(this);
   }
 
   componentDidMount() {
@@ -58,6 +61,12 @@ export default class FillChecklist extends React.Component {
 
       if (Object.keys(checklistEntries).length) {
         newState.checklistEntries = checklistEntries;
+      }
+      if (
+        this.props.checklist.details[this.props.match.params.checklistId]
+          .checklist_info.status === 'frozen'
+      ) {
+        newState.freezeChecklist = true;
       }
 
       this.setState(newState);
@@ -101,6 +110,14 @@ export default class FillChecklist extends React.Component {
         );
       }
     }
+  }
+
+  handleFreezeChecklist() {
+    let freezeChecklist = this.state.freezeChecklist ? 0 : 1;
+    let checklistId = this.props.match.params.checklistId;
+    this.props.freezeChecklistEntries({ checklistId, freezeChecklist }, () => {
+      toastr.success('', 'Checklist updated successfully');
+    });
   }
 
   handleEntryChange(rowId, columnId, value, inputType) {
@@ -177,7 +194,9 @@ export default class FillChecklist extends React.Component {
   }
 
   onRatingChange(newRating, rowId, columnId) {
-    this.handleEntryChange(rowId, columnId, newRating);
+    if (!this.state.freezeChecklist) {
+      this.handleEntryChange(rowId, columnId, newRating);
+    }
   }
 
   renderInputField(column, inputClass, checklistEntries, rowId, columnId) {
@@ -193,6 +212,7 @@ export default class FillChecklist extends React.Component {
                 : ''
             }
             onChange={event => this.onCellChange(event, rowId, columnId)}
+            disabled={this.state.freezeChecklist}
           />
         );
 
@@ -207,6 +227,7 @@ export default class FillChecklist extends React.Component {
                 : false
             }
             onChange={event => this.onCellChange(event, rowId, columnId)}
+            disabled={this.state.freezeChecklist}
           />
         );
       case 'DATETIME':
@@ -223,6 +244,7 @@ export default class FillChecklist extends React.Component {
               type="text"
               value={dateValue.format('YYYY-MM-DD HH:mm')}
               readOnly
+              disabled={this.state.freezeChecklist}
             />
           </DatetimePickerTrigger>
         );
@@ -255,6 +277,7 @@ export default class FillChecklist extends React.Component {
                 : ''
             }
             onChange={event => this.onCellChange(event, rowId, columnId)}
+            disabled={this.state.freezeChecklist}
           />
         );
 
@@ -278,6 +301,7 @@ export default class FillChecklist extends React.Component {
                         ? true
                         : false
                     }
+                    disabled={this.state.freezeChecklist}
                   />{' '}
                   {option}
                 </div>
@@ -302,6 +326,7 @@ export default class FillChecklist extends React.Component {
                 : null
             }
             options={options}
+            isDisabled={this.state.freezeChecklist}
             onChange={item =>
               this.handleEntryChange(rowId, columnId, item.value)
             }
@@ -384,6 +409,17 @@ export default class FillChecklist extends React.Component {
                 : undefined}
             </div>
             <div className="fillForm__form__inline">
+              <div className="fillForm__form__action">
+                <button
+                  type="button"
+                  className="btn btn--danger"
+                  onClick={this.handleFreezeChecklist}
+                >
+                  {this.state.freezeChecklist
+                    ? 'Unfreeze Checklist'
+                    : 'Freeze Checklist'}
+                </button>
+              </div>
               <div className="fillForm__form__action">
                 <button type="submit" className="btn btn--danger">
                   Submit

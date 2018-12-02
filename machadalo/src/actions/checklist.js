@@ -275,3 +275,33 @@ export function postChecklistEntries({ checklistId, data }) {
       });
   };
 }
+
+export function freezeChecklistEntries(
+  { checklistId, freezeChecklist },
+  callback
+) {
+  return (dispatch, getState) => {
+    dispatch(postChecklistEntriesStart());
+
+    const { auth } = getState();
+
+    request
+      .put(
+        `${
+          config.API_URL
+        }/v0/ui/checklists/${checklistId}/freeze/${freezeChecklist}`
+      )
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        if (callback) {
+          callback();
+        }
+        dispatch(postChecklistEntriesSuccess());
+      })
+      .catch(ex => {
+        console.log('Failed to update checklist entries', ex);
+
+        dispatch(postChecklistEntriesFail());
+      });
+  };
+}
