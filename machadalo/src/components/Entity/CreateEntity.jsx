@@ -4,8 +4,6 @@ import { toastr } from 'react-redux-toastr';
 
 import OptionModal from '../Modals/OptionModal';
 
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-
 const customeStyles = {
   input: () => ({
     height: '24px'

@@ -163,12 +163,6 @@ export default class FillChecklist extends React.Component {
     );
   }
 
-  onDateChange(moment) {
-    this.setState({
-      moment
-    });
-  }
-
   onDateTimeChange(moment, rowId, columnId) {
     this.handleEntryChange(
       rowId,

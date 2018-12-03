@@ -5,17 +5,7 @@ import CreateEntity from './CreateEntity';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-const customeStyles = {
-  input: () => ({
-    height: '24px'
-  })
-};
-
 export default class Create extends React.Component {
-  constructor() {
-    super();
-  }
-
   render() {
     return (
       <div className="createform">

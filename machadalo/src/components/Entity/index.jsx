@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import CreateType from './CreateType';
 import Create from './Create';
 
 import './index.css';
