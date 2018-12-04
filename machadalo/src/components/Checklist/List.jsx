@@ -29,16 +29,18 @@ export default class List extends React.Component {
   renderChecklistRow(checklist, index) {
     // Remove checklist
     const onRemove = () => {
-      this.props.deleteChecklist({ checklistId: checklist.checklist_id });
+      this.props.deleteChecklist({
+        checklistId: checklist.checklist_info.checklist_id
+      });
     };
 
     return (
-      <tr key={checklist.checklist_id}>
+      <tr key={checklist.checklist_info.checklist_id}>
         <td>{index + 1}</td>
-        <td>{checklist.checklist_name}</td>
+        <td>{checklist.checklist_info.checklist_name}</td>
         <td>
           <Link
-            to={`/r/checklist/fill/${checklist.checklist_id}`}
+            to={`/r/checklist/fill/${checklist.checklist_info.checklist_id}`}
             className="btn btn--danger"
           >
             Fill Checklist
@@ -51,7 +53,7 @@ export default class List extends React.Component {
         </td>
         <td>
           <Link
-            to={`/r/checklist/edit/${checklist.checklist_id}`}
+            to={`/r/checklist/edit/${checklist.checklist_info.checklist_id}`}
             className="btn btn--danger"
           >
             Edit Checklist

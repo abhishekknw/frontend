@@ -3,13 +3,20 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
 
+import OptionModal from '../Modals/OptionModal';
+
 import './index.css';
 
 const MAX_COLUMNS = 12;
 const ColumnTypes = [
   { value: 'TEXT', label: 'Textbox' },
   { value: 'BOOLEAN', label: 'Checkbox' },
-  { value: 'DATE', label: 'Date' }
+  { value: 'DATETIME', label: 'Date Time' },
+  { value: 'RATING', label: 'Rating' },
+  { value: 'NUMBER', label: 'Number' },
+  { value: 'EMAIL', label: 'Email' },
+  { value: 'RADIO', label: 'Radio' },
+  { value: 'SELECT', label: 'Select' }
 ];
 
 const getColumnOption = value => {
@@ -30,7 +37,10 @@ export default class CreateChecklistTemplate extends React.Component {
       checklist_name: '',
       checklist_columns: [],
       static_column_values: [],
-      isMaxColumnsReached: false
+      isMaxColumnsReached: false,
+      showOptionModal: false,
+      columnOptions: [''],
+      columnInfo: {}
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -44,6 +54,9 @@ export default class CreateChecklistTemplate extends React.Component {
     this.onColumnRemove = this.onColumnRemove.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onBack = this.onBack.bind(this);
+    this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
+    this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
+    this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
   }
 
   componentDidMount() {
@@ -62,7 +75,7 @@ export default class CreateChecklistTemplate extends React.Component {
 
     if (
       checklistDetails &&
-      parseInt(match.params.checklistId) !== this.state.checklist_id
+      +match.params.checklistId !== this.state.checklist_id
     ) {
       this.setState({
         checklist_id:
@@ -158,6 +171,42 @@ export default class CreateChecklistTemplate extends React.Component {
     this.setState({
       static_column_values: rows
     });
+  }
+
+  onOpenOptionModal(options, columnType, column, columnIndex) {
+    this.setState({
+      showOptionModal: true,
+      columnOptions: options,
+      columnInfo: {
+        columnType,
+        column,
+        columnIndex
+      }
+    });
+  }
+
+  onCancelOptionModal() {
+    this.setState({
+      showOptionModal: false,
+      columnOptions: [''],
+      columnInfo: {}
+    });
+  }
+
+  onSubmitOptionModal(options, columnInfo) {
+    this.setState({
+      showOptionModal: false,
+      columnOptions: [''],
+      columnInfo: {}
+    });
+
+    let newColumn = Object.assign({}, columnInfo.column, {
+      column_type: columnInfo.columnType.value
+        ? columnInfo.columnType.value
+        : columnInfo.columnType,
+      column_options: options
+    });
+    this.handleColumnChange(newColumn, columnInfo.columnIndex);
   }
 
   onAddRow() {
@@ -297,6 +346,18 @@ export default class CreateChecklistTemplate extends React.Component {
     };
 
     const onColumnTypeChange = item => {
+      if (item.value === 'RADIO' || item.value === 'SELECT') {
+        this.setState({
+          showOptionModal: true,
+          columnOptions: [''],
+          columnInfo: {
+            columnType: item,
+            column,
+            columnIndex
+          }
+        });
+        return;
+      }
       const newColumn = Object.assign({}, column, {
         column_type: item.value
       });
@@ -332,6 +393,26 @@ export default class CreateChecklistTemplate extends React.Component {
                   onClick={onRemove}
                 >
                   Remove column
+                </button>
+              ) : (
+                undefined
+              )}{' '}
+              {column.column_type &&
+              (column.column_type === 'RADIO' ||
+                column.column_type === 'SELECT') ? (
+                <button
+                  type="button"
+                  className="btn btn--danger"
+                  onClick={() =>
+                    this.onOpenOptionModal(
+                      column.column_options,
+                      column.column_type,
+                      column,
+                      columnIndex
+                    )
+                  }
+                >
+                  Show Options
                 </button>
               ) : (
                 undefined
@@ -457,6 +538,13 @@ export default class CreateChecklistTemplate extends React.Component {
             )}
           </form>
         </div>
+        <OptionModal
+          showOptionModal={this.state.showOptionModal}
+          onCancel={this.onCancelOptionModal}
+          onSubmit={this.onSubmitOptionModal}
+          options={this.state.columnOptions}
+          columnInfo={this.state.columnInfo}
+        />
       </div>
     );
   }

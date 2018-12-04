@@ -141,7 +141,7 @@ export function getCampaignChecklists({ campaignId }) {
       .then(resp => {
         let checklists = [];
         resp.body.data.forEach(checklist => {
-          if (checklist.checklist_type === 'campaign') {
+          if (checklist.checklist_info.checklist_type === 'campaign') {
             checklists.push(checklist);
           }
         });
@@ -266,6 +266,36 @@ export function postChecklistEntries({ checklistId, data }) {
       .set('Authorization', `JWT ${auth.token}`)
       .send(data)
       .then(resp => {
+        dispatch(postChecklistEntriesSuccess());
+      })
+      .catch(ex => {
+        console.log('Failed to update checklist entries', ex);
+
+        dispatch(postChecklistEntriesFail());
+      });
+  };
+}
+
+export function freezeChecklistEntries(
+  { checklistId, freezeChecklist },
+  callback
+) {
+  return (dispatch, getState) => {
+    dispatch(postChecklistEntriesStart());
+
+    const { auth } = getState();
+
+    request
+      .put(
+        `${
+          config.API_URL
+        }/v0/ui/checklists/${checklistId}/freeze/${freezeChecklist}`
+      )
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        if (callback) {
+          callback();
+        }
         dispatch(postChecklistEntriesSuccess());
       })
       .catch(ex => {
