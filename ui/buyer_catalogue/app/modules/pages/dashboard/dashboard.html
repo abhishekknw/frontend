@@ -604,16 +604,16 @@
                                         <td ng-if="data.flat_count != 0 && key == 'ongoing'" style="text-align:left;background-color:green;color:#ffffff !important">{{data.total_leads/data.flat_count * 100|limitTo:5}}</td>
                                         <td ng-if="data.flat_count == 0">NA</td>
                                       </tr>
-                                      <tr style="background:#c2452f;font-color:#ffffff">
-                                        <td>Total</td>
-                                        <td>{{addCount(allCampaignsLeadsData,'supplier_count')}}</td>
-                                        <td>{{addCount(allCampaignsLeadsData,'flat_count')}}</td>
-                                        <td>{{addCount(allCampaignsLeadsData,'hot_leads')}}</td>
-                                        <td>{{addCount(allCampaignsLeadsData,'total_leads')}}</td>
-                                        <td ng-if="addCount(allCampaignsLeadsData,'flat_count') != 0">{{addCount(allCampaignsLeadsData,'hot_leads')/addCount(allCampaignsLeadsData,'flat_count') * 100|limitTo:5}}%</td>
-                                        <td ng-if="addCount(allCampaignsLeadsData,'flat_count') == 0">NA</td>
-                                        <td ng-if="addCount(allCampaignsLeadsData,'flat_count') != 0">{{addCount(allCampaignsLeadsData,'total_leads')/addCount(allCampaignsLeadsData,'flat_count') * 100|limitTo:5}}%</td>
-                                        <td ng-if="addCount(allCampaignsLeadsData,'flat_count') == 0">NA</td>
+                                      <tr style="background:#c2452f;">
+                                        <td style="color:#ffffff !important">Total</td>
+                                        <td style="color:#ffffff !important">{{addCount(allCampaignsLeadsData,'supplier_count')}}</td>
+                                        <td style="color:#ffffff !important">{{addCount(allCampaignsLeadsData,'flat_count')}}</td>
+                                        <td style="color:#ffffff !important">{{addCount(allCampaignsLeadsData,'hot_leads')}}</td>
+                                        <td style="color:#ffffff !important">{{addCount(allCampaignsLeadsData,'total_leads')}}</td>
+                                        <td style="color:#ffffff !important" ng-if="addCount(allCampaignsLeadsData,'flat_count') != 0">{{addCount(allCampaignsLeadsData,'hot_leads')/addCount(allCampaignsLeadsData,'flat_count') * 100|limitTo:5}}%</td>
+                                        <td style="color:#ffffff !important" ng-if="addCount(allCampaignsLeadsData,'flat_count') == 0">NA</td>
+                                        <td style="color:#ffffff !important" ng-if="addCount(allCampaignsLeadsData,'flat_count') != 0">{{addCount(allCampaignsLeadsData,'total_leads')/addCount(allCampaignsLeadsData,'flat_count') * 100|limitTo:5}}%</td>
+                                        <td style="color:#ffffff !important" ng-if="addCount(allCampaignsLeadsData,'flat_count') == 0">NA</td>
                                       </tr>
 
                                     </tbody>
@@ -623,13 +623,13 @@
 
                                     <table class="table-responsive table table-bordered AvgLeadsTable" >
                                       <thead>
-                                        <td>Total Leads (%)</td>
-                                        <td>Hot Leads (%)</td>
+                                        <td style="text-align:center;">Total Leads (%)</td>
+                                        <td style="text-align:center;">Hot Leads (%)</td>
                                       </thead>
                                     <tbody>
-                                      <tr>
-                                      <td>{{addCount(allCampaignsLeadsData,'total_leads')}} ({{addCount(allCampaignsLeadsData,'total_leads')/addCount(allCampaignsLeadsData,'flat_count') * 100|limitTo:5}}%)</td>
-                                        <td>{{addCount(allCampaignsLeadsData,'hot_leads')}} ({{addCount(allCampaignsLeadsData,'hot_leads')/addCount(allCampaignsLeadsData,'flat_count') * 100|limitTo:5}}%)</td>
+                                      <tr style="text-align:center;">
+                                      <td style="color:#ffffff !important">{{addCount(allCampaignsLeadsData,'total_leads')}} ({{addCount(allCampaignsLeadsData,'total_leads')/addCount(allCampaignsLeadsData,'flat_count') * 100|limitTo:5}}%)</td>
+                                      <td style="color:#ffffff !important">{{addCount(allCampaignsLeadsData,'hot_leads')}} ({{addCount(allCampaignsLeadsData,'hot_leads')/addCount(allCampaignsLeadsData,'flat_count') * 100|limitTo:5}}%)</td>
                                       </tr>
                                     </tbody>
                                   </table>
@@ -1030,7 +1030,7 @@
                                                   <td class="col-md-2">{{supplier.supplier.society_type_quality}}</td>
                                                   <td class="col-md-2">{{supplier.supplier.flat_count}}</td>
                                                   <td class="col-md-2" style="color:#ffffff">{{supplier.leads_data.total_leads_count || 0}} <small style="color:#cb1925;"> ({{supplier.leads_data.leads_flat_percentage || 0}} %)</small></td>
-                                                  <td class="col-md-2"> <small style="color:#cb1925;">{{supplier.leads_data.hot_leads_count || 0}}({{supplier.leads_data.hot_leads_percentage_by_flat_count || 0}} %)</small></td>
+                                                  <td class="col-md-2" style="color:#ffffff">{{supplier.leads_data.hot_leads_count || 0}} <small style="color:#cb1925;">({{supplier.leads_data.hot_leads_percentage_by_flat_count || 0}} %)</small></td>
                                                   <td ng-if="supplier.images_data.POSTER && supplierStatus != 'upcoming'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.POSTER.images)">Images ({{supplier.images_data.POSTER.total_count}})</a></td>
                                                   <td ng-if="!supplier.images_data.POSTER && supplierStatus != 'upcoming'">No Images</td>
 
@@ -1179,7 +1179,91 @@
                           </div>
 
 
-                        <div class="panel panel-default" ng-if="showSupplierTypeCountChart">
+                          <div class="col-md-12" ng-if="showAllCampaignDisplay" style="margin-top:5px;height:500px !important;">
+
+                            <!-- <div class="row">
+                              <select name="phase" class="form-control spacing input-width-phase" ng-model="supplier.phaseNo" min="1">
+                                <option value="" disabled>Select Phase</option>
+                                <option ng-repeat="phase in phases | unique:'phase_no'" value="{{phase.id}}">{{phase.phase_no}}</option>
+                              </select>
+                            </div> -->
+                            <div class="campaigndetailtable">
+                              <div class="panel-heading" style="height:70px;">
+                                <h5 style="background:'red';color:white;">All Campaign Details</h5>
+                              </div>
+                              <br />
+                              <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
+
+                                <br />
+                              <div class="table-responsive">
+                                <table class="table">
+                                  <thead>
+                                  <tr>
+                                      <th>INDEX</th>
+                                      <!-- <th>Phase No &nbsp;<a ng-click="Sort('phase')"><i class="icon-sort" style="color:white;"></i></a></th> -->
+                                      <th>Campaign Name &nbsp;<a ng-click="SortColumn('name')"><i class="icon-sort" style="color:white;"></i></a></th>
+                                      <th>Start Date</th>
+                                      <th>Campaign Status</th>
+                                      <th>Society Count</th>
+                                      <th>Flat Count &nbsp;<a ng-click="SortColumn('flat_count')" ><i class="icon-sort" style="color:white;"></i></a></th>
+                                      <th>Leads (% by Flat Count) &nbsp;<a ng-click="SortColumn('total_leads')"><i class="icon-sort" style="color:white;"></i></a></th>
+                                      <th>Hot Leads (% by Flat Count) &nbsp;<a ng-click="SortColumn('hot_leads')" ><i class="icon-sort" style="color:white;"></i></a></th>
+                                      </tr>
+                                      <tr colspan="9">
+                                        <td></td>
+                                        <td><input ng-model="f.name" class="form-control" placeholder="Search"><hr></td>
+
+                                      </tr>
+                                      <!-- <hr> -->
+                                      </thead>
+
+                                      <tbody class="detailedTable">
+                                        <div class="row">
+                                            <tr ng-repeat="allCampaign in allCampaignDetailsData |filter:searchQuery |  filter:f | orderBy:sortColumn:reversesortcolumn">
+                                            <td style="vertical-align:middle">{{$index + 1}}</td>
+                                            <td style="vertical-align:middle">{{allCampaign.name}}</td>
+                                            <td class="col-md-2">{{allCampaign.start_date | date:mediumDate}}</td>
+                                            <td class="col-md-2" style="text-transform: capitalize;">{{allCampaign.campaign_status}}</td>
+                                            <td class="col-md-2">{{allCampaign.supplier_count}}</td>
+                                            <td class="col-md-2">{{allCampaign.flat_count}}</td>
+                                            <td class="col-md-2" style="color:#ffffff">{{allCampaign.total_leads || 0}} <small style="color:#cb1925;"> ({{(allCampaign.total_leads / allCampaign.flat_count) * 100 | limitTo:5 || 0}} %)</small></td>
+                                            <td class="col-md-2" style="color:#ffffff">{{allCampaign.hot_leads || 0}} <small style="color:#cb1925;">({{(allCampaign.hot_leads / allCampaign.flat_count) * 100| limitTo:5 || 0}} %)</small></td>
+
+
+                                              <!-- <td ng-init="calculateTotalCount('GATEWAY ARCH',supplier.supplier.inv_data['GATEWAY ARCH'].total.total)" ng-show="invStatusKeys['GATEWAY ARCH'].status">{{supplier.supplier.inv_data['GATEWAY ARCH'].total.total}}
+                                              </td> -->
+                                              <!-- <t d style="vertical-align:middle" ng-if="showLeads">{{supplier.leads_data.length}}</td> -->
+
+                                            </tr>
+
+                                        </div>
+                                  </tbody>
+                                  <!-- <tfoot>
+                                    <tr>
+                                        <td>TOTAL</td>
+                                        <td></td>
+                                        <td>{{length}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{{TotalSupplierFlatCount}}</td>
+                                        <td>{{TotalSupplierLeadsCount}}</td>
+                                        <td>{{TotalSupplierHotLeadsCount}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+
+                                      </tr>
+                                  </tfoot> -->
+                                </table>
+                              </div>
+                            </div>
+                            </div>
+                        <!-- <div class="panel panel-default" ng-if="showSupplierTypeCountChart">
                             <div class="col-md-12">
 
                               <div class="col-md-6" id="bottom" ng-if="showSupplierTypeCountChart">
@@ -1274,7 +1358,7 @@
                                       </ui-gmap-google-map>
                                   </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                   </div>
               </uib-tab>
@@ -1644,7 +1728,7 @@
               <!--START : Performance Metrics -->
               <uib-tab  id="uib-tabs-width" ng-click="getCampaigns()" index="4" >
                   <uib-tab-heading >
-                    <h5 style="margin-left:-10px;"> Performance Metrics</h5>
+                    <h5 style="margin-left:-10px;"> Performance Detail</h5>
 
                   </uib-tab-heading>
 
@@ -1652,18 +1736,21 @@
                     <div class="row">
                       <div class="panel panel-default" style="color:'0000ff'" >
                         <div class="col-md-12">
-
-                            <div class="panel-heading campaign-header" print-remove>
-                              <h3 style="color:#ffffff">Performance Details</h3>
+                          <div class="row zeroLeads" ng-if="!campaignInventories && !showSelection" print-remove>
+                            <h1>Please Select Campaign</h1>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="button" type="button">
+                              <div class="panel-heading">
+                                    All Campaigns
+                              </div>
                             </div>
+                          </div>
+                            <br /><br /><br />
                             <br />
-                            <div class="row zeroLeads" ng-if="!campaignInventories && !showSelection" print-remove>
-                              <h1>Please Select Campaign</h1>
-                            </div>
                             <div class="panel-group" print-remove>
-                            <div class="col-md-12" >
-
-                                <div class="col-md-3">
+                            <div class="col-md-12">
+                              <div class="col-md-3">
                                 <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.completed.status)">
                                   <div class="button" type="button">
                                     <div class="panel-heading">

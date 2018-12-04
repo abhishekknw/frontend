@@ -71,7 +71,7 @@ angular.module('catalogueApp')
         })
       }
       getSupplierDetails(supplierId);
-      var supplierCode = $stateParams.supplierCode;0
+      var supplierCode = $stateParams.supplierCode;
       $scope.saveLeads = function(){
         $scope.modelData['campaign'] = campaignId;
         $scope.modelData['object_id'] = supplierId;

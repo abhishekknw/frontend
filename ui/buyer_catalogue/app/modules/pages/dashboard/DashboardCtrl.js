@@ -379,6 +379,7 @@
           $scope.campaignLabel = false;
           $scope.showLeadsDetails = false;
           $scope.showDisplayDetailsTable = false;
+          $scope.showAllCampaignDisplay = false;
           $scope.allCampaignsLeadsData = {};
           $scope.viewCampaignLeads(true);
           DashboardService.getCampaigns(orgId, category, date)
@@ -411,11 +412,12 @@
 
 
       $scope.pieChartClick = function(label){
-
+        console.log(label);
         $anchorScroll('bottom');
         $scope.campaignStatusName = label;
         var campaignStatus = _.findKey($scope.campaignStatus, {'campaignLabel' : label});
-        // getCountOfSupplierTypesByCampaignStatus(campaignStatus);
+        getCountOfSupplierTypesByCampaignStatus(campaignStatus);
+        $scope.showAllCampaignDisplay = true;
       }
        var getCountOfSupplierTypesByCampaignStatus = function(campaignStatus){
          cfpLoadingBar.start();
@@ -424,7 +426,7 @@
            console.log(response);
            cfpLoadingBar.complete();
            $scope.AllCampaignData = response.data.data;
-           $scope.supplierAllCampaignMarkers = assignMarkersToMap($scope.AllCampaignData);
+           // $scope.supplierAllCampaignMarkers = assignMarkersToMap($scope.AllCampaignData);
            if(response.data.data){
               $scope.supplierCodeCountData = formatCountData(response.data.data);
               $scope.supplierTypesData = response.data.data;
@@ -952,6 +954,7 @@
             });
            $scope.showLeadsDetails = false;
            $scope.showDisplayDetailsTable = false;
+           $scope.showAllCampaignDisplay = false;
            $scope.showSupplierTypeCountChart = false;
            $scope.showCampaignInvTable = false;
            $scope.showSupplierInvTable = false;
@@ -1185,7 +1188,6 @@
       .then(function onSuccess(response){
         console.log(response);
         $scope.campaignInventoryActivityData = response.data.data;
-        cfpLoadingBar.complete();
         }).catch(function onError(response){
       console.log(response);
     })
@@ -1798,6 +1800,7 @@
       })
 
       $scope.showDisplayDetailsTable = true;
+      $scope.showAllCampaignDisplay = false;
       $scope.map = { zoom: 13,bounds: {},center: {latitude: $scope.latitude,longitude: $scope.longitude}};
       $scope.supplierMarkers = assignMarkersToMap($scope.supplierAndInvData);
 
@@ -1823,7 +1826,7 @@
         // var icon;
         var checkInv = true;
         angular.forEach(suppliers, function(supplier,$index){
-
+          console.log(supplier);
               markers.push({
                   latitude: supplier.supplier.society_latitude,
                   longitude: supplier.supplier.society_longitude,
@@ -2094,6 +2097,9 @@ $scope.viewCampaignLeads = function(value){
   DashboardService.viewCampaignLeads()
   .then(function onSuccess(response){
     console.log(response);
+    $scope.allCampaignDetailsData = response.data.data;
+    console.log($scope.allCampaignDetailsData);
+    console.log($scope.allCampaignsLeadsData.total_leads);
     cfpLoadingBar.complete();
     $scope.leadsDataCampaigns = response.data.data;
     if(value){
@@ -2643,6 +2649,23 @@ $scope.Sort = function(val)
        });
 
      };
+
+
+     $scope.SortColumn = function(val)
+        {
+            if($scope.sortColumn == val)
+            {
+                $scope.reversesortcolumn = !$scope.reversesortcolumn;
+                //return;
+            }
+            $scope.sortColumn = val;
+             $('td a i').each(function()
+            {
+                //alert(this.className);
+                $(this).removeClass().addClass('icon-sort');
+            });
+
+          };
   var drawDistributionGraph = function(mean,median,mode){
       var data = {
         'key' : 'Distribution Graph',
