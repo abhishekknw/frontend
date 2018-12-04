@@ -441,7 +441,7 @@ angular
       // })
 
       .state('enterLeadsFromApplication',{
-            url : '/enterLeadsFromApplication/:campaignId/:supplierId/:formId',
+            url : '/enterLeadsFromApplication/:formId/:supplierId',
             controller : 'enterLeadFormCtrl',
             templateUrl : 'modules/pages/enterLeadsFromApplication/enterLeads.tmpl.html',
             data :{

@@ -7,16 +7,12 @@
 
     var url_base = 'v0/ui/website/';
     var url_base_leads = 'v0/ui/leads/';
+    var url_base_ui = 'v0/ui/';
 
     var enterLeadsService = {};
 
-
-        enterLeadsService.getLeads = function(campaignId){
-          var url = url_base + "leads/?campaign_id=" + campaignId;
-          return machadaloHttp.get(url);
-        }
-        enterLeadsService.getEntryListLeads = function(formId, supplierId){
-          var url = url_base_leads + formId + "/entry_list/"  + supplierId;
+        enterLeadsService.getLeadFormDetails = function(formId){
+          var url = url_base_leads + formId + "/";
           return machadaloHttp.get(url);
         }
 
@@ -25,16 +21,16 @@
           return machadaloHttp.post(url, data);
         }
 
-
-        enterLeadsService.updateLeadForm = function(formId, data){
-          var url = url_base_leads + formId + "/add_fields";
-          return machadaloHttp.put(url,data);
+        enterLeadsService.getLeadsBySupplier = function(formId,supplierId){
+          var url = url_base_leads + formId + "/entry_list/" + supplierId;
+          return machadaloHttp.get(url);
         }
 
-        enterLeadsService.removeFieldFromForm = function(formId, itemId, data){
-          var url = url_base_leads + formId + "/delete_form_element/" + itemId;
-          return machadaloHttp.put(url,data);
+        enterLeadsService.getSupplierDetails = function(supplierId){
+          var url = url_base + "supplier-details/?supplier_id=" + supplierId + "&supplier_type_code=RS";
+          return machadaloHttp.get(url);
         }
+
         return enterLeadsService;
 
  }]);
