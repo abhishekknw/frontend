@@ -1,0 +1,27 @@
+.tree-modal {
+  box-shadow: none !important;
+}
+
+.tree-icon {
+  margin-bottom: -7px;
+}
+
+.MuiTreeLeaf-button-87 {
+  margin-left: 0px !important;
+}
+
+.permission-button {
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.permission-active-button {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
