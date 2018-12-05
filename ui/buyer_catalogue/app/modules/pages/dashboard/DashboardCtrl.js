@@ -761,6 +761,47 @@
           }
         };
 
+        var weekSummaryStackedBar = {
+           "chart": {
+             "type": "multiBarChart",
+             "height": 450,
+             // "labelType" : "11",
+             "margin": {
+               "top": 100,
+               "right": 20,
+               "bottom": 145,
+               "left": 45
+             },
+             "clipEdge": true,
+             "duration": 500,
+             "grouped": true,
+             "sortDescending" : false,
+               "xAxis": {
+               "axisLabel": "WeekLy Range (Flat Count) in Percentage",
+               "axisLabelDistance" : -50,
+               "showMaxMin": false,
+               "rotateLabels" : -30
+             },
+             "yAxis": {
+               "axisLabel": "Leads in %",
+               "axisLabelDistance": -20,
+
+               "ticks" : 8
+             },
+             "legend" : {
+                     "margin": {
+                     "top": 5,
+                     "right": 3,
+                     "bottom": 5,
+                     "left": 15
+                 },
+             },
+
+             "reduceXTicks" : false
+           }
+         };
+
+
         var locationSummaryBarChart = {
            "chart": {
              "type": "multiBarChart",
@@ -1282,6 +1323,7 @@
        cfpLoadingBar.complete();
        $scope.LeadsByCampaign = response.data.data;
        $scope.Data = $scope.LeadsByCampaign;
+       console.log($scope.Data.last_week.flat_count);
        $scope.localityData =  $scope.LeadsByCampaign.locality_data;
         $scope.phaseData =  $scope.LeadsByCampaign.phase_data;
        $scope.locationHeader = [];
@@ -1293,12 +1335,14 @@
        $scope.stackedBarChartOptions = angular.copy(stackedBarChart);
        $scope.stackedBarChartSocietyWise = angular.copy(societySummaryBarChart);
        $scope.stackedBarChartDateWise = angular.copy(dateSummaryBarChart);
+       $scope.weeklyStackedBarData = angular.copy(weekSummaryStackedBar);
        $scope.stackedBarChartFlatWise = angular.copy(flatSummaryBarChart);
        $scope.stackedBarChartLocationWise = angular.copy(locationSummaryBarChart);
        $scope.stackedBarChartPhaseWise = angular.copy(phaseSummaryBarChart);
        $scope.stackedBarChartCityWise = angular.copy(citySummaryBarChart);
        $scope.stackedBarChartSupplierData = formatMultiBarChartDataForSuppliers(response.data.data.supplier_data);
        $scope.stackedBarChartDateData = formatMultiBarChartDataByDate(response.data.data.date_data);
+       $scope.stackedBarWeekSummaryData = formatWeekStackedChart(response.data.data);
        $scope.stackedBarFLatCountChart = formatFlatCountChart(response.data.data.flat_data);
        $scope.stackedBarLocationCountChart = formatLocationCountChart(response.data.data.locality_data);
        $scope.stackedBarPhaseChart = formatPhaseChart(response.data.data.phase_data);
@@ -1422,6 +1466,40 @@
           $scope.normalLeadsValues =  data.total;
 
         }
+       var keyWithFlatLabel =  key + ' (' + data['flat_count'] + ')';
+       var value1 =
+          { x : keyWithFlatLabel, y : $scope.normalLeadsValues };
+       var value2 =
+          { x : keyWithFlatLabel, y : $scope.hotLeadsValues };
+       values1.push(value1);
+       values2.push(value2);
+
+
+     })
+
+     var temp_data = [
+       {
+         key : "Total Leads in % :",
+         color : constants.colorKey1,
+         values : values1
+         },
+       {
+         key : "High Potential Leads in % :",
+         color : constants.colorKey2,
+         values : values2
+       }
+     ];
+
+     return temp_data;
+   }
+
+   var formatWeekStackedChart = function(weekDataMerged){
+     console.log(weekDataMerged);
+     var values1 = [];
+     var values2 = [];
+     angular.forEach(weekDataMerged, function(data,key){
+       console.log(data);
+       console.log(key);
        var keyWithFlatLabel =  key + ' (' + data['flat_count'] + ')';
        var value1 =
           { x : keyWithFlatLabel, y : $scope.normalLeadsValues };
@@ -1748,7 +1826,7 @@
       $scope.supplierStatus = data.status;
       $scope.supplierAndInvData = $scope.campaignSupplierAndInvData[data.status];
       $scope.invStatusKeys = angular.copy(invStatusKeys);
-
+      // console.log($scope.supplierAndInvData);
       $scope.TotalSupplierFlatCount = 0;
       $scope.TotalSupplierLeadsCount = 0;
       $scope.TotalLeadsPerFlat = 0;
@@ -1759,13 +1837,16 @@
         $scope.societyName = supplier.supplier.society_name;
         $scope.length = $scope.supplierAndInvData.length;
         $scope.TotalSupplierFlatCount += supplier.supplier.flat_count;
-        if($scope.TotalSupplierLeadsCount){
-        $scope.TotalSupplierLeadsCount += supplier.leads_data.total_leads_count;
-        console.log($scope.TotalSupplierLeadsCount);
-         }
+        console.log(supplier.leads_data.total_leads_count);
+        if(supplier.leads_data.total_leads_count){
+          $scope.TotalSupplierLeadsCount += supplier.leads_data.total_leads_count;
+        }
+
+
+         console.log($scope.TotalSupplierLeadsCount);
 
         $scope.TotalLeadsPerFlat += supplier.leads_data.leads_flat_percentage;
-        if($scope.TotalSupplierHotLeadsCount){
+        if(supplier.leads_data.hot_leads_count){
           $scope.TotalSupplierHotLeadsCount += supplier.leads_data.hot_leads_count;
         }
         $scope.societyName = supplier.supplier.society_name;
@@ -1826,7 +1907,7 @@
         // var icon;
         var checkInv = true;
         angular.forEach(suppliers, function(supplier,$index){
-          console.log(supplier);
+          // console.log(supplier);
               markers.push({
                   latitude: supplier.supplier.society_latitude,
                   longitude: supplier.supplier.society_longitude,
@@ -2096,10 +2177,28 @@ $scope.viewCampaignLeads = function(value){
   cfpLoadingBar.start();
   DashboardService.viewCampaignLeads()
   .then(function onSuccess(response){
+    $scope.AllCampaignTotalLeadsCount = 0;
+    $scope.AllCampaignHotLeadsCount = 0;
+    $scope.AllCampaignSupplierCount = 0;
+    $scope.AllCampaignFlatCount = 0;
     console.log(response);
     $scope.allCampaignDetailsData = response.data.data;
     console.log($scope.allCampaignDetailsData);
-    console.log($scope.allCampaignsLeadsData.total_leads);
+      angular.forEach($scope.allCampaignDetailsData, function(data){
+      $scope.campaignLength = data.length;
+      if(data.total_leads){
+        $scope.AllCampaignTotalLeadsCount += data.total_leads;
+      }
+      if(data.hot_leads){
+        $scope.AllCampaignHotLeadsCount += data.hot_leads;
+      }
+      if(data.supplier_count){
+        $scope.AllCampaignSupplierCount += data.supplier_count;
+      }
+      if(data.flat_count){
+        $scope.AllCampaignFlatCount += data.flat_count;
+      }
+  });
     cfpLoadingBar.complete();
     $scope.leadsDataCampaigns = response.data.data;
     if(value){
