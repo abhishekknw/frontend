@@ -1,26 +1,33 @@
 "use strict";
 angular.module('catalogueApp')
     .controller('enterLeadFormCtrl', function($scope, $rootScope, $stateParams, $window, $location, enterLeadsService ,$http, constants, permissions, commonDataShare) {
-      $scope.campaign_id = $stateParams.proposal_id;
-      console.log($scope.campaign_id, "hello");
-      console.log("hello");
-      // $scope.enterLeads = function(supplier){
-      //   console.log($scope.leadFormFields);
-      //   $scope.leadModelData = [];
-      //   $scope.leadModelData = angular.copy($scope.leadFormFields.leads_form_items);
-      //   $scope.leadFormId = $scope.leadFormFields.leads_form_id;
-      //   $scope.changeView('enterLeads',$scope.campaignInfo,$scope.leadFormFields);
-      //   $scope.supplierData = supplier;
-      //
-      //   console.log(supplier);
-      // }
-      // $scope.leadModelData = [];
-      // $scope.leadModelData = angular.copy($scope.leadFormFields.leads_form_items);
-      // $scope.leadFormId = $scope.leadFormFields.leads_form_id;
-
+      $scope.formId = $stateParams.formId;
+      $scope.supplierId = $stateParams.supplierId;
+      $scope.searchQuery = undefined;
+      var getLeadFormDetails = function(){
+        enterLeadsService.getLeadFormDetails($scope.formId)
+        .then(function onSuccess(response){
+          console.log(response);
+          $scope.loading = response;
+          $scope.leadModelData = response.data.data.leads_form_items;
+        }).catch(function onError(response){
+          console.log(response);
+        })
+      }
+      var getSupplierDetails = function(){
+        enterLeadsService.getSupplierDetails($scope.supplierId)
+        .then(function onSuccess(response){
+          console.log(response);
+          $scope.supplierData = response.data.data;
+        }).catch(function onError(response){
+          console.log(response);
+        })
+      }
+      getLeadFormDetails();
+      getSupplierDetails();
       $scope.saveLeads = function(){
         var data = {
-          supplier_id : $scope.supplierData.supplier_id,
+          supplier_id : $scope.supplierId,
           leads_form_entries : []
         };
         angular.forEach($scope.leadModelData, function(item){
@@ -30,17 +37,30 @@ angular.module('catalogueApp')
             }
             data.leads_form_entries.push(temp_data);
         });
-        console.log(data);
-        enterLeadsService.saveLeads($scope.leadFormId,data)
+
+        enterLeadsService.saveLeads($scope.formId,data)
         .then(function onSuccess(response){
           console.log(response);
           $scope.leadModelData = [];
-          $scope.leadModelData = angular.copy($scope.leadFormFields.leads_form_items);
+          getLeadFormDetails();
           swal(constants.name, constants.add_data_success, constants.success);
         }).catch(function onError(response){
           console.log(response);
         })
-
       }
+      $scope.getLeadsBySupplier = function(){
+        $scope.viewLeads = true;
+        enterLeadsService.getLeadsBySupplier($scope.formId,$scope.supplierId)
+        .then(function onSuccess(response){
+          console.log(response);
+          $scope.leadsData = response.data.data;
+        }).catch(function onError(response){
+          console.log(response);
+        })
+      }
+      $scope.changeView = function(){
+        $scope.viewLeads = false;
+      }
+
 
     });

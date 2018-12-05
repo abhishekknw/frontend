@@ -8,11 +8,14 @@
 <div class="panel">
   <div class="pageTitle">
     <h3>Leads</h3>
-    Name of Society : {{supplierData.name}}
-    Area : {{supplierData.area}}
+    Name of Society : {{supplierData.name}}<br/>
+    Area : {{supplierData.area}}<br/>
     Subarea : {{supplierData.subarea}}
   </div>
-    <form name="leadForm"  style="margin:5%;" >
+  <button class="btn btn-danger" ng-click="getLeadsBySupplier()" ng-if="!viewLeads">View Leads</button>
+  <button class="btn btn-danger" ng-click="changeView()" ng-if="viewLeads">Back</button>
+  <input type="text" class="form-control" ng-model="searchData" placeholder="search">
+    <form name="leadForm"  style="margin:5%;" ng-if="!viewLeads">
     <div class="" ng-repeat="item in leadModelData">
       <div class="form-group" style="padding-bottom:0;padding-top:0;">
         <div class="cols-sm-10" ng-if="item.key_type != 'RADIO' && item.key_type != 'CHECKBOX' && item.key_type != 'DROPDOWN' && item.key_type != 'EMAIL' && item.key_type != 'PHONE' && item.key_type != 'TEXTAREA' && !item.hot_lead_criteria">
@@ -89,10 +92,23 @@
     </div>
     <div class="form-group">
       <button class="btn btn-danger" ng-disabled="leadForm.$invalid" ng-click="saveLeads()">Submit</button>
-      <!-- <button class="btn btn-danger" ng-click="changeView('viewLeadsBySupplier',campaignInfo)">View Leads</button> -->
 
     </div>
 </form>
+<div class="" ng-if="viewLeads">
+  <table class="table table-bordered table-responsive">
+      <thead>
+          <tr>
+            <th ng-repeat="header in leadsData.headers">{{header.key_name}}</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="alias in leadsData.values | filter : search">
+          <td ng-repeat="lead in alias">{{lead.value}}</td>
+        </tr>
+      </tbody>
+  </table>
+</div>
 </div>
 
 <!-- </main> -->
