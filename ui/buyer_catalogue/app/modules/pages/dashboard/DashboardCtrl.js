@@ -426,7 +426,7 @@
            console.log(response);
            cfpLoadingBar.complete();
            $scope.AllCampaignData = response.data.data;
-           // $scope.supplierAllCampaignMarkers = assignMarkersToMap($scope.AllCampaignData);
+           $scope.supplierPanIndiaMarkers = assignPanIndiaMarkersToMap($scope.AllCampaignData);
            if(response.data.data){
               $scope.supplierCodeCountData = formatCountData(response.data.data);
               $scope.supplierTypesData = response.data.data;
@@ -1895,19 +1895,63 @@
 
     }
     $scope.windowCoords = {};
-    $scope.onClick = function(marker, eventName, model) {
+    $scope.marker = {
+      events: {
+    mouseover: function (marker, eventName, model) {
       $scope.space = model;
       $scope.campaignInventory = model;
       $scope.windowCoords.latitude = model.latitude;
       $scope.windowCoords.longitude = model.longitude;
       $scope.show = true;
     }
+}
+};
+    $scope.windowAllCoords = {};
+    $scope.markerPanIndia = {
+    mouseoverevent: {
+    mouseover: function (marker, eventName, modelAll) {
+      console.log(eventName);
+      $scope.spacePanIndia = modelAll;
+      $scope.campaignInventory = modelAll;
+      $scope.windowAllCoords.latitude = modelAll.latitude;
+      $scope.windowAllCoords.longitude = modelAll.longitude;
+      $scope.show = true;
+    }
+  }
+};
+
+    function assignPanIndiaMarkersToMap(panIndiaCampaigns) {
+        var markersOfPanIndia = [];
+        angular.forEach(panIndiaCampaigns, function(data){
+          angular.forEach(data,function(campaign){
+                markersOfPanIndia.push({
+                latitude: campaign.center__latitude,
+                longitude: campaign.center__longitude,
+                id: campaign.proposal_id,
+                // icon: 'http://www.googlemapsmarkers.com/v1/009900/',
+                options : {draggable : false},
+                dataOfPanIndia : campaign,
+                title : {
+                    name : campaign.proposal__name,
+                    society_count : campaign.total,
+
+                },
+            });
+          })
+
+
+
+
+        });
+        return markersOfPanIndia;
+
+    };
     function assignMarkersToMap(suppliers) {
         var markers = [];
         // var icon;
         var checkInv = true;
         angular.forEach(suppliers, function(supplier,$index){
-          // console.log(supplier);
+          console.log(supplier);
               markers.push({
                   latitude: supplier.supplier.society_latitude,
                   longitude: supplier.supplier.society_longitude,
@@ -1945,6 +1989,8 @@
 
     };
     $scope.supplierMarkers = [];
+    $scope.supplierPanIndiaMarkers = [];
+
     $scope.map = { zoom: 5,bounds: {},center: {latitude: 19.119,longitude: 73.48,}};
     $scope.options = { scrollwheel: false, mapTypeControl: true,
         mapTypeControlOptions: {
