@@ -1971,6 +1971,7 @@
                                 <label for="Flat">Flat Summary Details</label>
                               </div>
                             </div>
+<<<<<<< HEAD
                               <div class="campaigndetailtable">
                                 <div class="table-responsive">
                                   <table class="table table-striped" st-table="LeadsByCampaign" st-safe-src="Data">
@@ -1985,18 +1986,21 @@
                                     <tbody style="text-align:center;">
                                       <tr>
                                       <td><small style="font-weight:bold">Society Count</small></td>
+                                      <td>{{Data.overall_data.supplier_count}}</td>
                                       <td>{{Data.flat_data['0-150'].suppliers}}</td>
                                       <td>{{Data.flat_data['151-399'].suppliers}}</td>
                                       <td>{{Data.flat_data['400+'].suppliers}}</td>
                                       </tr>
                                       <tr>
                                         <td><small style="font-weight:bold">Flat Count</small></td>
+                                        <td>{{Data.overall_data.flat_count}}</td>
                                         <td>{{Data.flat_data['0-150']['flat_count']}}</td>
                                         <td>{{Data.flat_data['151-399']['flat_count']}}</td>
                                         <td>{{Data.flat_data['400+']['flat_count']}}</td>
                                       </tr>
                                       <tr>
                                         <td><small style="font-weight:bold">Total Leads (%)</small></td>
+                                        <td>{{Data.overall_data.total_leads}}</td>
                                         <td ng-if="Data.flat_data['0-150']['flat_count'] != 0">{{Data.flat_data['0-150'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].total / Data.flat_data['0-150']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
                                         <td ng-if="Data.flat_data['0-150']['flat_count'] == 0">{{Data.flat_data['0-150'].total}} <br> <small style="font-weight:bold">({{Data.flat_data['0-150'].total}} %)</small> </td>
 
@@ -2008,7 +2012,9 @@
 
                                       </tr>
                                       <tr>
-                                        <td><small style="font-weight:bold">Hot Leads (%)</small></td>
+                                        <td><small style="color:#ffffff">Hot Leads (%)</small></td>
+                                        <td>{{Data.overall_data.total_hot_leads}}
+                                          <small style="font-weight:bold">({{campaignLeadsData.overall_data.total_hot_leads/campaignLeadsData.overall_data.flat_count * 100|limitTo:5}} %)</small></td>
                                         <td  ng-if="Data.flat_data['0-150']['flat_count'] != 0">{{Data.flat_data['0-150'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].interested / Data.flat_data['0-150']['flat_count']) * 100 |limitTo:5}} %)</small></td>
                                         <td ng-if="Data.flat_data['0-150']['flat_count'] == 0">{{Data.flat_data['0-150'].interested}} <br> <small style="font-weight:bold">({{Data.flat_data['0-150'].interested}} %)</small></td>
 
@@ -2030,6 +2036,24 @@
                                 </div>
                               </div>
 
+                                  </tr>
+                                  <tr>
+                                    <td><small style="color:#ffffff">Hot Leads Ratio (%)</small></td>
+                                    <td>{{campaignLeadsData.overall_data.total_hot_leads/campaignLeadsData.overall_data.total_leads*100|limitTo:5}} %</td>
+                                    <td>{{Data.flat_data['0-150'].hot_leads_percentage |limitTo:4}} %</td>
+                                    <td>{{Data.flat_data['151-399'].hot_leads_percentage |limitTo:4}} %</td>
+                                    <td>{{Data.flat_data['400+'].hot_leads_percentage |limitTo:4}} %</td>
+                                  </tr>
+                                </tbody>
+                                <tfoot>
+                                  <tr>
+                                    <td colspan="20" class="text-center">
+                                      <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages=""></div>
+                                    </td>
+                                  </tr>
+                                </tfoot>
+                            </table>
+                            </div>
                           </div>
                             <div class="col-lg-6">
                             <div class="panel panel-primary">
@@ -2152,8 +2176,8 @@
                             </div>
                             <div ng-if="dateRangeModel">
                               <div ng-class="{'innerFlat': !dateRangeModel.start_date}">
-                                <nvd3 options="locationChartOptions" data="sortedLocationData['flatData']" ng-if="togglesortedGraphs['flatData']"></nvd3>
-                                <nvd3 options="stackedBarChartFlatWise" data="stackedBarFLatCountChart" ng-if="!togglesortedGraphs['flatData']"></nvd3>
+                                <!-- <nvd3 options="locationChartOptions" data="sortedLocationData['flatData']" ng-if="togglesortedGraphs['flatData']"></nvd3> -->
+                                <nvd3 options="stackedBarChartFlatWise" data="stackedBarThreeWeeksChart"></nvd3>
                               </div>
                             </div>
                           </div>
