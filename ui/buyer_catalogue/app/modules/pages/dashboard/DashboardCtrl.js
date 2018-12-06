@@ -1616,6 +1616,7 @@ var formatThreeWeeksSummary = function(data){
       color : constants.colorKey1,
       values:
    [
+     { x: 'Total', y: data.overall_data.total_leads/data.overall_data.flat_count *100 },
      { x: 'Last Week', y: data.last_week.total_leads/data.last_week.flat_count *100 },
      { x: 'Last Two Week', y: data.last_two_weeks.total_leads/data.last_two_weeks.flat_count *100},
      { x: 'Last Three Week', y: data.last_three_weeks.total_leads/data.last_three_weeks.flat_count *100 }
@@ -1626,6 +1627,7 @@ var formatThreeWeeksSummary = function(data){
       color : constants.colorKey2,
       values:
    [
+     { x: 'Total', y: data.overall_data.total_hot_leads/data.overall_data.flat_count *100 },
      { x: 'Last Week', y: data.last_week.total_hot_leads/data.last_week.flat_count *100 },
      { x: 'Last Two Week', y: data.last_two_weeks.total_hot_leads/data.last_two_weeks.flat_count *100  },
      { x: 'Last Three Week', y: data.last_three_weeks.total_hot_leads/data.last_three_weeks.flat_count *100  }
