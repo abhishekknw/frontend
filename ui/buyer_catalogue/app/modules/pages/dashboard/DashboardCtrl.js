@@ -2275,13 +2275,16 @@ $scope.viewCampaignLeads = function(value){
     console.log(response);
   })
 }
-    $scope.viewLeadsForSelectedCampaign = function(campaignId){
+    $scope.viewLeadsForSelectedCampaign = function(data,campaignId){
       cfpLoadingBar.start();
-      DashboardService.viewLeadsForSelectedCampaign(campaignId)
+      DashboardService.viewLeadsForSelectedCampaign(data,campaignId)
       .then(function onSuccess(response){
       console.log(response);
+      console.log(data);
       cfpLoadingBar.complete();
       $scope.selectedCampaignLeads = response.data.data;
+      console.log($scope.selectedCampaignLeads);
+      $scope.CampaignNameofLeads = data.name;
       $scope.showCampaigns = false;
     }).catch(function onError(response){
       console.log(response);
