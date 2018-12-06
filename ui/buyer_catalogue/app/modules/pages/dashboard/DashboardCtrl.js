@@ -777,7 +777,7 @@
              "grouped": true,
              "sortDescending" : false,
                "xAxis": {
-               "axisLabel": "WeekLy Range (Flat Count) in Percentage",
+               "axisLabel": "Week Wise (Flat Count) in Percentage",
                "axisLabelDistance" : -50,
                "showMaxMin": false,
                "rotateLabels" : -30
@@ -800,7 +800,6 @@
              "reduceXTicks" : false
            }
          };
-
 
         var locationSummaryBarChart = {
            "chart": {
@@ -1611,50 +1610,26 @@
    }
 //START :  code for 3 weeks summary
 var formatThreeWeeksSummary = function(data){
-  // var values1 = [];
-  // var values2 = [];
-  // angular.forEach(data, function(data,key){
-  //   if(data['flat_count'] != 0){
-  //     $scope.hotLeadsValues =  data.interested / data['flat_count'] * 100;
-  //     $scope.normalLeadsValues =  data.total/data['flat_count'] * 100;
-  //    }
-  //    else {
-  //      $scope.hotLeadsValues =  data.interested;
-  //      $scope.normalLeadsValues =  data.total;
-  //
-  //    }
-  //     var keyWithFlatLabel =  key + ' (' + data['flat_count'] + ')';
-  //   var value1 =
-  //      { x : keyWithFlatLabel, y : $scope.normalLeadsValues};
-  //   var value2 =
-  //      { x : keyWithFlatLabel, y : $scope.hotLeadsValues};
-  //   values1.push(value1);
-  //   values2.push(value2);
-  //
-  //
-  // })
-
-var values1 = [
-  {x: 'Last Week Total', y: data.last_week.total_leads/data.last_week.flat_count *100},
-  {x: 'Last Two Week Total', y: data.last_two_weeks.total_leads/data.last_week.flat_count *100},
-  {x: 'Last Three Week Total', y: data.last_three_weeks.total_leads/data.last_week.flat_count *100},
-];
-var values2 = [
-  {x: 'Last Week HotLeads', y: data.last_week.total_hot_leads/data.last_week.flat_count *100},
-  {x: 'Last Two Week HotLeads', y: data.last_two_weeks.total_hot_leads/data.last_week.flat_count *100},
-  {x: 'Last Three Week HotLeads', y: data.last_three_weeks.total_hot_leads/data.last_week.flat_count *100},
-];
-
   var temp_data = [
     {
       key : "Total Leads in %",
       color : constants.colorKey1,
-      values : values1
+      values:
+   [
+     { x: 'Last Week', y: data.last_week.total_leads/data.last_week.flat_count *100 },
+     { x: 'Last Two Week', y: data.last_two_weeks.total_leads/data.last_two_weeks.flat_count *100},
+     { x: 'Last Three Week', y: data.last_three_weeks.total_leads/data.last_three_weeks.flat_count *100 }
+   ]
     },
     {
       key : "High Potential Leads in %",
       color : constants.colorKey2,
-      values : values2
+      values:
+   [
+     { x: 'Last Week', y: data.last_week.total_hot_leads/data.last_week.flat_count *100 },
+     { x: 'Last Two Week', y: data.last_two_weeks.total_hot_leads/data.last_two_weeks.flat_count *100  },
+     { x: 'Last Three Week', y: data.last_three_weeks.total_hot_leads/data.last_three_weeks.flat_count *100  }
+   ]
     }
   ];
   console.log(temp_data);
@@ -2438,6 +2413,7 @@ $scope.togglesortedGraphs = {
   'datewise' : false,
   'flatData' : false,
   'supplier' : false,
+  'weekly' : false,
 }
 $scope.sortData = function(keyName,id){
 

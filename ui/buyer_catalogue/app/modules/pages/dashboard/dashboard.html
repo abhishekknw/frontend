@@ -2148,16 +2148,16 @@
                              <option value="" disabled>Select For Sorting</option>
                               <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
                             </select>
-                            <div class="outerFlat" ng-if="!dateRangeModel">
-                              <div class="innerFlat" ng-if="!dateRangeModel">
-                                <nvd3 options="locationChartOptions" data="sortedLocationData['flatData']" ng-if="togglesortedGraphs['flatData']"></nvd3>
-                                <nvd3 options="weeklyStackedBarData" data="stackedBarWeekSummaryData" ng-if="!togglesortedGraphs['flatData']"></nvd3>
+                            <div class="outerLocation"  ng-if="!dateRangeModel.start_date">
+                              <div class="innerLocation"  ng-if="!dateRangeModel.start_date">
+                                <nvd3 options="locationChartOptions" data="sortedLocationData['weekly']" ng-if="togglesortedGraphs['weekly']"></nvd3>
+                                <nvd3 options="weeklyStackedBarData" data="stackedBarThreeWeeksChart" ng-if="!togglesortedGraphs['weekly']"></nvd3>
                               </div>
                             </div>
-                            <div ng-if="dateRangeModel">
-                              <div ng-class="{'innerFlat': !dateRangeModel.start_date}">
-                                <!-- <nvd3 options="locationChartOptions" data="sortedLocationData['flatData']" ng-if="togglesortedGraphs['flatData']"></nvd3> -->
-                                <nvd3 options="stackedBarChartFlatWise" data="stackedBarThreeWeeksChart"></nvd3>
+                            <div ng-if="dateRangeModel.start_date">
+                              <div ng-if="dateRangeModel.start_date">
+                                <nvd3 options="locationChartOptions" data="sortedLocationData['weekly']" ng-if="togglesortedGraphs['weekly']"></nvd3>
+                                <nvd3 options="weeklyStackedBarData" data="stackedBarThreeWeeksChart" ng-if="!togglesortedGraphs['weekly']"></nvd3>
                               </div>
                             </div>
                           </div>
