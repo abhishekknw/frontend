@@ -4,22 +4,52 @@ import PermissionModal from '../Modals/PermissionModal';
 export default class PermissionList extends React.Component {
   constructor(props) {
     super();
+    this.state = {
+      showPermissionModal: false,
+      modalUserId: undefined
+    };
     this.renderPermissionRow = this.renderPermissionRow.bind(this);
+    this.handleEditUser = this.handleEditUser.bind(this);
+    this.closePermissionModal = this.closePermissionModal.bind(this);
   }
 
   componentWillMount() {
     this.props.getPermissionList();
   }
 
+  handleEditUser(userId) {
+    this.setState({
+      showPermissionModal: true,
+      modalUserId: userId
+    });
+  }
+
+  closePermissionModal() {
+    this.setState({
+      showPermissionModal: false,
+      modalUserId: undefined
+    });
+  }
+
   renderPermissionRow(permission, index) {
     return (
       <tr key={permission.id}>
         <td>{index + 1}</td>
-        <td>{permission.user_id}</td>
-        <td>Custom</td>
-        <td>{permission.created_by}</td>
         <td>
-          <button type="button" className="btn btn--danger">
+          {permission.user_id.first_name + ' ' + permission.user_id.last_name}
+        </td>
+        <td>Custom</td>
+        <td>
+          {permission.created_by.first_name +
+            ' ' +
+            permission.created_by.last_name}
+        </td>
+        <td>
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={() => this.handleEditUser(permission.user_id.id)}
+          >
             Edit
           </button>{' '}
           <button type="button" className="btn btn--danger">
@@ -50,7 +80,7 @@ export default class PermissionList extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {0 ? (
+              {settings.permissionList.length ? (
                 settings.permissionList.map(this.renderPermissionRow)
               ) : (
                 <tr>
@@ -60,7 +90,15 @@ export default class PermissionList extends React.Component {
             </tbody>
           </table>
         </div>
-        <PermissionModal {...this.props} />
+        {this.state.showPermissionModal ? (
+          <PermissionModal
+            {...this.props}
+            {...this.state}
+            onClose={this.closePermissionModal}
+          />
+        ) : (
+          ''
+        )}
       </div>
     );
   }

@@ -19,7 +19,7 @@ const customStyles = {
     minWidth: '100px',
     width: '50%',
     transform: 'translate(-50%, -50%)',
-    paddingTop: '5px'
+    padding: '15px 10px 10px'
   }
 };
 
@@ -27,88 +27,6 @@ const classes = {
   container: 'tree-modal',
   icon: 'tree-icon',
   leaf: 'TreeDemo-leaf-179'
-};
-
-const thisData = {
-  entityName: 'All Campaign',
-  type: 'campaign',
-  entityId: '564adjygy675765adfg',
-  data: [
-    {
-      entityName: "BYJU's South Delhi",
-      type: 'campaign',
-      permission: 'None',
-      entityId: '564adjygsdy675765adfg'
-    },
-    {
-      entityName: 'Urban Ladder Bangalore Live',
-      type: 'campaign',
-      permission: 'None',
-      entityId: '564adjygy6sd75765adfg'
-    },
-    {
-      entityName: "BYJU's Mumbai - Borivali to Virar",
-      type: 'campaign',
-      permission: 'None',
-      entityId: '564adjygy675we765adfg'
-    },
-    {
-      entityName: 'testcoim',
-      type: 'campaign',
-      permission: 'None',
-      entityId: '564adjygy67576a5adfg'
-    },
-    {
-      entityName: 'Test Vyoma',
-      type: 'campaign',
-      permission: 'None',
-      entityId: '564adjygy67as5765adfg'
-    },
-    {
-      entityName: "BYJU's Kanpu",
-      type: 'campaign',
-      permission: 'None',
-      entityId: '564adjygy6757qq65adfg'
-    },
-    {
-      entityName: "BYJU's Lucknow",
-      type: 'campaign',
-      permission: 'None',
-      entityId: '564adjygy675765wwadfg'
-    },
-    {
-      entityName: "BYJU'S Chandigarh",
-      type: 'campaign',
-      permission: 'None',
-      entityId: '564adjygy675765adeefg',
-      data: [
-        {
-          entityName: 'CL 1',
-          type: 'blob',
-          permission: 'None',
-          entityId: '564adjygy675765rradfg'
-        },
-        {
-          entityName: 'CL 2',
-          type: 'blob',
-          permission: 'None',
-          entityId: '564adjygy675765adttfg'
-        },
-        {
-          entityName: 'CL 3',
-          type: 'blob',
-          permission: 'None',
-          entityId: '564adjygy675765adfgyy'
-        }
-      ]
-    },
-    {
-      entityName: 'GA test 1',
-      type: 'campaign',
-      permission: 'None',
-      entityId: '564adjygy675765adfgwu'
-    }
-  ]
 };
 
 export default class PermissionModal extends React.Component {
@@ -119,14 +37,15 @@ export default class PermissionModal extends React.Component {
         entityName: 'All Campaign',
         type: 'campaign',
         entityId: 'all',
-        data: []
+        data: [],
+        userPermissionId: undefined
       }
     };
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentWillMount() {
-    console.log(this.props);
-    this.props.getUserPermission();
+    this.props.getUserPermission(this.props.modalUserId);
   }
 
   componentDidUpdate() {
@@ -135,15 +54,70 @@ export default class PermissionModal extends React.Component {
         this.props.settings.userPermission.length) ||
       (this.state.data.data.length &&
         this.props.settings.userPermission.length &&
-        this.state.data.data[0].entityId !=
+        this.state.data.data[0].entityId !==
           this.props.settings.userPermission[0].entityId)
     ) {
       let dataInfo = this.state.data;
       dataInfo.data = this.props.settings.userPermission;
       this.setState({
-        data: dataInfo
+        data: dataInfo,
+        userPermissionId: this.props.settings.currentUserPermissionId
       });
     }
+  }
+
+  onSubmit() {
+    let requestData = {
+      id: this.state.userPermissionId,
+      checklist_permissions: {
+        campaigns: {},
+        checklists: {}
+      },
+      user_id: this.props.modalUserId
+    };
+    this.state.data.data.forEach(campaignData => {
+      if (
+        campaignData.type === 'campaign' &&
+        campaignData.permission !== 'None'
+      ) {
+        if (campaignData.permission === 'Edit') {
+          requestData.checklist_permissions.campaigns[campaignData.entityId] = [
+            'EDIT',
+            'VIEW',
+            'DELETE',
+            'FILL',
+            'FREEZE',
+            'UNFREEZE'
+          ];
+        } else {
+          requestData.checklist_permissions.campaigns[campaignData.entityId] = [
+            'VIEW',
+            'FILL',
+            'FREEZE'
+          ];
+        }
+      }
+      if (campaignData.data.length) {
+        campaignData.data.forEach(checklistData => {
+          if (
+            checklistData.type === 'checklist' &&
+            checklistData.permission !== 'None'
+          ) {
+            if (checklistData.permission === 'Edit') {
+              requestData.checklist_permissions.checklists[
+                checklistData.entityId
+              ] = ['EDIT', 'VIEW', 'DELETE', 'FILL', 'FREEZE', 'UNFREEZE'];
+            } else {
+              requestData.checklist_permissions.checklists[
+                checklistData.entityId
+              ] = ['VIEW', 'FILL', 'FREEZE'];
+            }
+          }
+        });
+      }
+    });
+    console.log(requestData);
+    // this.props.postUserPermission(requestData);
   }
 
   requestTreeLeafChildrenData = (leafData, chdIndex, doExpand) => {
@@ -192,6 +166,11 @@ export default class PermissionModal extends React.Component {
           if (leaf.data && leaf.data.length) {
             leaf.data.forEach(leafData => {
               leafData.permission = 'None';
+              if (leafData.data && leafData.data.length) {
+                leafData.data.forEach(childData => {
+                  childData.permission = 'None';
+                });
+              }
             });
           }
           this.setState({ data });
@@ -217,6 +196,11 @@ export default class PermissionModal extends React.Component {
           if (leaf.data && leaf.data.length) {
             leaf.data.forEach(leafData => {
               leafData.permission = 'Edit';
+              if (leafData.data && leafData.data.length) {
+                leafData.data.forEach(childData => {
+                  childData.permission = 'Edit';
+                });
+              }
             });
           }
           this.setState({ data });
@@ -242,6 +226,11 @@ export default class PermissionModal extends React.Component {
           if (leaf.data && leaf.data.length) {
             leaf.data.forEach(leafData => {
               leafData.permission = 'Fill';
+              if (leafData.data && leafData.data.length) {
+                leafData.data.forEach(childData => {
+                  childData.permission = 'Fill';
+                });
+              }
             });
           }
           this.setState({ data });
@@ -252,10 +241,16 @@ export default class PermissionModal extends React.Component {
 
   render() {
     return (
-      <Modal isOpen={true} style={customStyles} ariaHideApp={false}>
+      <Modal
+        isOpen={this.props.showPermissionModal}
+        style={customStyles}
+        ariaHideApp={false}
+      >
+        <div className="modal-title">
+          <h3>User Permission</h3>
+        </div>
         <Tree
           className={classes.container}
-          title="User Permission"
           data={this.state.data}
           labelName="entityName"
           valueName="entityId"
@@ -263,6 +258,22 @@ export default class PermissionModal extends React.Component {
           renderLabel={this.renderTreeLeafLabel}
           getActionsData={this.getTreeLeafActionsData}
         />
+        <div className="modal-footer">
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={this.props.onClose}
+          >
+            Close
+          </button>{' '}
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={this.onSubmit}
+          >
+            Submit
+          </button>
+        </div>
       </Modal>
     );
   }

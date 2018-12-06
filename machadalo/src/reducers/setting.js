@@ -4,7 +4,8 @@ import * as types from '../actions/types';
 export const settings = createReducer(
   {
     permissionList: [],
-    userPermission: []
+    userPermission: [],
+    currentUserPermissionId: undefined
   },
 
   {
@@ -25,17 +26,20 @@ export const settings = createReducer(
     },
     [types.GET_USER_PERMISSION_START](state) {
       return Object.assign({}, state, {
-        userPermission: []
+        userPermission: [],
+        currentUserPermissionId: undefined
       });
     },
     [types.GET_USER_PERMISSION_SUCCESS](state, action) {
       return Object.assign({}, state, {
-        userPermission: action.data
+        userPermission: action.userPermission,
+        currentUserPermissionId: action.currentUserPermissionId
       });
     },
     [types.GET_USER_PERMISSION_FAIL](state) {
       return Object.assign({}, state, {
-        userPermission: []
+        userPermission: [],
+        currentUserPermissionId: undefined
       });
     }
   }
