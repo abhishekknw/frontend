@@ -1971,7 +1971,6 @@
                                 <label for="Flat">Flat Summary Details</label>
                               </div>
                             </div>
-<<<<<<< HEAD
                               <div class="campaigndetailtable">
                                 <div class="table-responsive">
                                   <table class="table table-striped" st-table="LeadsByCampaign" st-safe-src="Data">
@@ -2013,8 +2012,7 @@
                                       </tr>
                                       <tr>
                                         <td><small style="color:#ffffff">Hot Leads (%)</small></td>
-                                        <td>{{Data.overall_data.total_hot_leads}}
-                                          <small style="font-weight:bold">({{campaignLeadsData.overall_data.total_hot_leads/campaignLeadsData.overall_data.flat_count * 100|limitTo:5}} %)</small></td>
+                                        <td>{{Data.overall_data.total_hot_leads}}</td>
                                         <td  ng-if="Data.flat_data['0-150']['flat_count'] != 0">{{Data.flat_data['0-150'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].interested / Data.flat_data['0-150']['flat_count']) * 100 |limitTo:5}} %)</small></td>
                                         <td ng-if="Data.flat_data['0-150']['flat_count'] == 0">{{Data.flat_data['0-150'].interested}} <br> <small style="font-weight:bold">({{Data.flat_data['0-150'].interested}} %)</small></td>
 
@@ -2027,6 +2025,7 @@
                                       </tr>
                                       <tr>
                                         <td><small style="font-weight:bold">Hot Leads Ratio (%)</small></td>
+                                        <td>({{campaignLeadsData.overall_data.total_hot_leads/campaignLeadsData.overall_data.flat_count * 100|limitTo:5}} %)</td>
                                         <td>{{Data.flat_data['0-150'].hot_leads_percentage |limitTo:4}} %</td>
                                         <td>{{Data.flat_data['151-399'].hot_leads_percentage |limitTo:4}} %</td>
                                         <td>{{Data.flat_data['400+'].hot_leads_percentage |limitTo:4}} %</td>
@@ -2035,26 +2034,7 @@
                                   </table>
                                 </div>
                               </div>
-
-                                  </tr>
-                                  <tr>
-                                    <td><small style="color:#ffffff">Hot Leads Ratio (%)</small></td>
-                                    <td>{{campaignLeadsData.overall_data.total_hot_leads/campaignLeadsData.overall_data.total_leads*100|limitTo:5}} %</td>
-                                    <td>{{Data.flat_data['0-150'].hot_leads_percentage |limitTo:4}} %</td>
-                                    <td>{{Data.flat_data['151-399'].hot_leads_percentage |limitTo:4}} %</td>
-                                    <td>{{Data.flat_data['400+'].hot_leads_percentage |limitTo:4}} %</td>
-                                  </tr>
-                                </tbody>
-                                <tfoot>
-                                  <tr>
-                                    <td colspan="20" class="text-center">
-                                      <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages=""></div>
-                                    </td>
-                                  </tr>
-                                </tfoot>
-                            </table>
                             </div>
-                          </div>
                             <div class="col-lg-6">
                             <div class="panel panel-primary">
                               <div class="panel-heading content-title">
