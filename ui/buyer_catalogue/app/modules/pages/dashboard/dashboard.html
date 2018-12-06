@@ -1971,6 +1971,7 @@
                                 <thead>
                                   <tr>
                                     <th>Details</th>
+                                    <th>Total</th>
                                     <th>Flat Count <br> <small> < 150</small></th>
                                     <th>Flat Count <br><small>Between 150 to 400</small></th>
                                     <th>Flat Count <br> <small> > 400</small></th>
@@ -1978,19 +1979,22 @@
                               </thead>
                                 <tbody style="text-align:center;">
                                   <tr>
-                                  <td><small style="color:#ffffff">Society Count</small></td>
-                                  <td>{{Data.flat_data['0-150'].suppliers}}</td>
-                                  <td>{{Data.flat_data['151-399'].suppliers}}</td>
-                                  <td>{{Data.flat_data['400+'].suppliers}}</td>
+                                    <td><small style="color:#ffffff">Society Count</small></td>
+                                    <td>{{campaignLeadsData.overall_data.supplier_count}}</td>
+                                    <td>{{Data.flat_data['0-150'].suppliers}}</td>
+                                    <td>{{Data.flat_data['151-399'].suppliers}}</td>
+                                    <td>{{Data.flat_data['400+'].suppliers}}</td>
                                   </tr>
                                   <tr>
                                     <td><small style="color:#ffffff">Flat Count</small></td>
+                                    <td>{{campaignLeadsData.overall_data.flat_count}}</td>
                                     <td>{{Data.flat_data['0-150']['flat_count']}}</td>
                                     <td>{{Data.flat_data['151-399']['flat_count']}}</td>
                                     <td>{{Data.flat_data['400+']['flat_count']}}</td>
                                   </tr>
                                   <tr>
-                                    <td><small style="color:#ffffff">Total Leads (%)</small></td>
+                                    <td><small style="color:#ffffff">Total Leads <br>(%)</small></td>
+                                    <td>{{campaignLeadsData.overall_data.total_leads}}<br><small style="font-weight:bold">({{campaignLeadsData.overall_data.total_leads/campaignLeadsData.overall_data.flat_count * 100|limitTo:5}} %)</small></td>
                                     <td ng-if="Data.flat_data['0-150']['flat_count'] != 0">{{Data.flat_data['0-150'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].total / Data.flat_data['0-150']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
                                     <td ng-if="Data.flat_data['0-150']['flat_count'] == 0">{{Data.flat_data['0-150'].total}} <br> <small style="font-weight:bold">({{Data.flat_data['0-150'].total}} %)</small> </td>
 
@@ -2003,6 +2007,8 @@
                                   </tr>
                                   <tr>
                                     <td><small style="color:#ffffff">Hot Leads (%)</small></td>
+                                    <td>{{campaignLeadsData.overall_data.total_hot_leads}}
+                                      <small style="font-weight:bold">({{campaignLeadsData.overall_data.total_hot_leads/campaignLeadsData.overall_data.flat_count * 100|limitTo:5}} %)</small></td>
                                     <td  ng-if="Data.flat_data['0-150']['flat_count'] != 0">{{Data.flat_data['0-150'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].interested / Data.flat_data['0-150']['flat_count']) * 100 |limitTo:5}} %)</small></td>
                                     <td ng-if="Data.flat_data['0-150']['flat_count'] == 0">{{Data.flat_data['0-150'].interested}} <br> <small style="font-weight:bold">({{Data.flat_data['0-150'].interested}} %)</small></td>
 
@@ -2015,6 +2021,7 @@
                                   </tr>
                                   <tr>
                                     <td><small style="color:#ffffff">Hot Leads Ratio (%)</small></td>
+                                    <td>{{campaignLeadsData.overall_data.total_hot_leads/campaignLeadsData.overall_data.total_leads*100|limitTo:5}} %</td>
                                     <td>{{Data.flat_data['0-150'].hot_leads_percentage |limitTo:4}} %</td>
                                     <td>{{Data.flat_data['151-399'].hot_leads_percentage |limitTo:4}} %</td>
                                     <td>{{Data.flat_data['400+'].hot_leads_percentage |limitTo:4}} %</td>
@@ -2156,8 +2163,8 @@
                             </div>
                             <div ng-if="dateRangeModel">
                               <div ng-class="{'innerFlat': !dateRangeModel.start_date}">
-                                <nvd3 options="locationChartOptions" data="sortedLocationData['flatData']" ng-if="togglesortedGraphs['flatData']"></nvd3>
-                                <nvd3 options="stackedBarChartFlatWise" data="stackedBarFLatCountChart" ng-if="!togglesortedGraphs['flatData']"></nvd3>
+                                <!-- <nvd3 options="locationChartOptions" data="sortedLocationData['flatData']" ng-if="togglesortedGraphs['flatData']"></nvd3> -->
+                                <nvd3 options="stackedBarChartFlatWise" data="stackedBarThreeWeeksChart"></nvd3>
                               </div>
                             </div>
                           </div>
