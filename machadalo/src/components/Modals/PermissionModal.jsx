@@ -7,6 +7,9 @@ import './index.css';
 import Typography from '@material-ui/core/Typography';
 import FolderIcon from '@material-ui/icons/Folder';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
+import ClearIcon from '@material-ui/icons/Clear';
+import EditIcon from '@material-ui/icons/Edit';
+import TextFieldIcon from '@material-ui/icons/TextFields';
 import Tree, { getTreeLeafDataByIndexArray } from 'material-ui-tree';
 
 const customStyles = {
@@ -187,19 +190,10 @@ export default class PermissionModal extends React.Component {
   getTreeLeafActionsData = (leafData, chdIndex, expand) => {
     return [
       {
-        icon: (
-          <button
-            className={
-              leafData.permission === 'None'
-                ? 'permission-active-button'
-                : 'permission-button'
-            }
-            type="button"
-          >
-            None
-          </button>
-        ),
-        className: 'permission-icon',
+        icon: <ClearIcon />,
+        className:
+          'permission-icon' +
+          (leafData.permission === 'None' ? ' permission-selected' : ''),
         onClick: () => {
           const data = { ...this.state.data };
           const leaf = getTreeLeafDataByIndexArray(data, chdIndex, 'data');
@@ -218,19 +212,10 @@ export default class PermissionModal extends React.Component {
         }
       },
       {
-        icon: (
-          <button
-            className={
-              leafData.permission === 'Edit'
-                ? 'permission-active-button'
-                : 'permission-button'
-            }
-            type="button"
-          >
-            Edit
-          </button>
-        ),
-        className: 'permission-icon',
+        icon: <EditIcon />,
+        className:
+          'permission-icon' +
+          (leafData.permission === 'Edit' ? ' permission-selected' : ''),
         onClick: () => {
           const data = { ...this.state.data };
           const leaf = getTreeLeafDataByIndexArray(data, chdIndex, 'data');
@@ -249,19 +234,10 @@ export default class PermissionModal extends React.Component {
         }
       },
       {
-        icon: (
-          <button
-            className={
-              leafData.permission === 'Fill'
-                ? 'permission-active-button'
-                : 'permission-button'
-            }
-            type="button"
-          >
-            Fill
-          </button>
-        ),
-        className: 'permission-icon',
+        icon: <TextFieldIcon />,
+        className:
+          'permission-icon' +
+          (leafData.permission === 'Fill' ? ' permission-selected' : ''),
         onClick: () => {
           const data = { ...this.state.data };
           const leaf = getTreeLeafDataByIndexArray(data, chdIndex, 'data');
@@ -316,6 +292,7 @@ export default class PermissionModal extends React.Component {
           childrenName="data"
           renderLabel={this.renderTreeLeafLabel}
           getActionsData={this.getTreeLeafActionsData}
+          childrenCountPerPage={100}
         />
         <div className="modal-footer">
           <button

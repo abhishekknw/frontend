@@ -7,7 +7,16 @@
 }
 
 .permission-icon{
-    margin-left: 0px !important;
+    margin-left: 10px !important;
+    height: min-content !important;
+    width: min-content !important;
+    color: black !important;
+    border: 2px solid black !important;
+}
+
+.permission-selected{
+    background-color: #d9534f !important;
+    border: 2px solid #d9534f !important;
 }
 
 .permission-button{
