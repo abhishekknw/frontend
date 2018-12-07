@@ -7,6 +7,7 @@ export default class List extends React.Component {
     super(props);
 
     this.renderChecklistRow = this.renderChecklistRow.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
 
   componentDidMount() {
@@ -23,6 +24,16 @@ export default class List extends React.Component {
       this.props.getCampaignChecklists({
         campaignId: campaignProposalId
       });
+    }
+  }
+
+  onBack() {
+    let campaignProposalId = this.props.match.params.campaignId;
+    let supplierId = this.props.match.params.supplierId;
+    if (supplierId) {
+      this.props.history.push(`/r/checklist/suppliers/${campaignProposalId}`);
+    } else {
+      this.props.history.push(`/r/checklist/campaigns`);
     }
   }
 
@@ -146,6 +157,14 @@ export default class List extends React.Component {
         </div>
 
         <div className="list__actions">
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={this.onBack}
+          >
+            <i className="fa fa-arrow-left" aria-hidden="true" />
+            Back
+          </button>{' '}
           {showCreateButton ? (
             <Link to={checklistCreateUrl} className="btn btn--danger">
               Create

@@ -6,12 +6,17 @@ export default class Suppliers extends React.Component {
     super(props);
 
     this.renderSupplierRow = this.renderSupplierRow.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
 
   componentDidMount() {
     let campaignProposalId = this.props.match.params.campaignId;
     this.props.getCurrentCampaign(campaignProposalId);
     this.props.getSuppliersList({ campaignProposalId });
+  }
+
+  onBack() {
+    this.props.history.push(`/r/checklist/campaigns`);
   }
 
   renderSupplierRow(supplier, index) {
@@ -51,9 +56,12 @@ export default class Suppliers extends React.Component {
               : ''}
           </h3>
         </div>
-        <div className="list__filter">
-          <input type="text" placeholder="Search..." />
-        </div>
+        <button type="button" className="btn btn--danger" onClick={this.onBack}>
+          <i className="fa fa-arrow-left" aria-hidden="true" />
+          Back
+        </button>
+        <br />
+        <br />
         <div className="list__table">
           <table cellPadding="0" cellSpacing="0">
             <thead>
