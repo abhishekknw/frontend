@@ -52,6 +52,7 @@ export default class CreateChecklistTemplate extends React.Component {
     this.state = {
       checklist_type: 'supplier',
       checklist_name: '',
+      is_template: 'false',
       checklist_columns: getDefaultColumns(),
       showOptionModal: false,
       columnOptions: [''],
@@ -89,15 +90,8 @@ export default class CreateChecklistTemplate extends React.Component {
       this.setState({
         checklist_type: 'campaign'
       });
-      this.props.getCampaignChecklists({
-        campaignId: this.props.match.params.campaignId
-      });
-    } else {
-      this.props.getSupplierChecklists({
-        campaignId: this.props.match.params.campaignId,
-        supplierId: this.props.match.params.supplierId
-      });
     }
+    this.props.getChecklistTemplate();
   }
 
   componentDidUpdate(prevProps) {
@@ -126,10 +120,10 @@ export default class CreateChecklistTemplate extends React.Component {
 
     if (
       this.state.existingChecklistOptions.length !==
-      this.props.checklist.list.length
+      this.props.checklist.templateList.length
     ) {
       let checklistOptions = [];
-      this.props.checklist.list.forEach(checklist => {
+      this.props.checklist.templateList.forEach(checklist => {
         checklistOptions.push({
           value: checklist.checklist_info.checklist_id,
           label: checklist.checklist_info.checklist_name
@@ -156,6 +150,9 @@ export default class CreateChecklistTemplate extends React.Component {
   }
 
   handleInputChange(event) {
+    if (event.target.type === 'checkbox') {
+      event.target.value = event.target.checked ? true : false;
+    }
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -296,6 +293,7 @@ export default class CreateChecklistTemplate extends React.Component {
       checklist_name: this.state.checklist_name,
       checklist_type: this.state.checklist_type,
       supplier_id: this.props.match.params.supplierId,
+      is_template: this.state.is_template === 'true' ? true : false,
       checklist_columns,
       static_column_values: this.state.static_column_values
     };
@@ -318,6 +316,7 @@ export default class CreateChecklistTemplate extends React.Component {
     if (error) {
       return;
     }
+
     // Send request to create template
     this.props.postChecklistTemplate({
       campaignId: this.props.match.params.campaignId,
@@ -425,7 +424,7 @@ export default class CreateChecklistTemplate extends React.Component {
 
     let { checklist } = this.props;
 
-    checklist.list.forEach(checklist => {
+    checklist.templateList.forEach(checklist => {
       if (checklist.checklist_info.checklist_id === selectedChecklist.value) {
         this.setState({
           checklist_columns: checklist.column_headers,
@@ -492,7 +491,7 @@ export default class CreateChecklistTemplate extends React.Component {
           <form onSubmit={this.onSubmit}>
             <div className="createform__form__inline">
               <div className="form-control">
-                <label>*Select from existing checklist</label>
+                <label>*Select from existing checklist template</label>
                 <Select
                   options={this.state.existingChecklistOptions}
                   value={this.state.selectedChecklist}
@@ -511,6 +510,22 @@ export default class CreateChecklistTemplate extends React.Component {
                 />
               </div>
             </div>
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <input
+                      type="checkbox"
+                      className="input-checkbox"
+                      name="is_template"
+                      value={this.state.is_template}
+                      onChange={this.handleInputChange}
+                    />
+                  </td>
+                  <td>Is it template?</td>
+                </tr>
+              </tbody>
+            </table>
             <div className="createform__form__header">
               {this.state.checklist_columns.map(this.renderChecklistColumn)}
             </div>

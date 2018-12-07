@@ -305,3 +305,44 @@ export function freezeChecklistEntries(
       });
   };
 }
+
+export function getChecklistTemplateListStart() {
+  return {
+    type: types.GET_CHECKLIST_TEMPLATE_LIST_START
+  };
+}
+
+export function getChecklistTemplateListSuccess({ checklists }) {
+  return {
+    type: types.GET_CHECKLIST_TEMPLATE_LIST_SUCCESS,
+    data: checklists
+  };
+}
+
+export function getChecklistTemplateListFail() {
+  return {
+    type: types.GET_CHECKLIST_TEMPLATE_LIST_FAIL
+  };
+}
+
+export function getChecklistTemplate() {
+  return (dispatch, getState) => {
+    dispatch(getChecklistTemplateListStart());
+
+    const { auth } = getState();
+
+    request
+      .get(`${config.API_URL}/v0/ui/checklists/list_all_checklists_templates/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(
+          getChecklistTemplateListSuccess({ checklists: resp.body.data })
+        );
+      })
+      .catch(ex => {
+        console.log('Failed to fetch supplier checklists', ex);
+
+        dispatch(getChecklistTemplateListFail());
+      });
+  };
+}

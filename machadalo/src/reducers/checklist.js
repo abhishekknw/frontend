@@ -4,6 +4,7 @@ import * as types from './../actions/types';
 export const checklist = createReducer(
   {
     list: [],
+    templateList: [],
     details: {} // Checklist data by checklist id
   },
 
@@ -104,6 +105,21 @@ export const checklist = createReducer(
     [types.POST_CHECKLIST_ENTRIES_FAIL](state) {
       return Object.assign({}, state, {
         entryStatus: 'error'
+      });
+    },
+    [types.GET_CHECKLIST_TEMPLATE_LIST_START](state) {
+      return Object.assign({}, state, {
+        templateList: []
+      });
+    },
+    [types.GET_CHECKLIST_TEMPLATE_LIST_SUCCESS](state, action) {
+      return Object.assign({}, state, {
+        templateList: action.data
+      });
+    },
+    [types.GET_CHECKLIST_TEMPLATE_LIST_FAIL](state) {
+      return Object.assign({}, state, {
+        templateList: []
       });
     }
   }

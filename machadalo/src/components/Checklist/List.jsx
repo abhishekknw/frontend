@@ -125,7 +125,7 @@ export default class List extends React.Component {
                 checklist.list.map(this.renderChecklistRow)
               ) : (
                 <tr>
-                  <td colSpan="4">
+                  <td colSpan="5">
                     No checklists available. Create your first one now!
                   </td>
                 </tr>
