@@ -34,6 +34,11 @@ export default class List extends React.Component {
       });
     };
 
+    let disableEditButton = false;
+    if (checklist.checklist_info.status === 'frozen') {
+      disableEditButton = true;
+    }
+
     return (
       <tr key={checklist.checklist_info.checklist_id}>
         <td>{index + 1}</td>
@@ -52,12 +57,18 @@ export default class List extends React.Component {
           </button>
         </td>
         <td>
-          <Link
-            to={`/r/checklist/edit/${checklist.checklist_info.checklist_id}`}
-            className="btn btn--danger"
-          >
-            Edit Checklist
-          </Link>
+          {disableEditButton ? (
+            <button type="button" className="btn btn--danger" disabled>
+              Edit Checklist
+            </button>
+          ) : (
+            <Link
+              to={`/r/checklist/edit/${checklist.checklist_info.checklist_id}`}
+              className="btn btn--danger"
+            >
+              Edit Checklist
+            </Link>
+          )}
         </td>
       </tr>
     );

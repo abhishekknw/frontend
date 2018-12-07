@@ -281,11 +281,9 @@ export default class CreateChecklistTemplate extends React.Component {
 
     let error = false;
     let checklist_columns = this.state.checklist_columns;
-    checklist_columns.forEach(item => {
+    checklist_columns.map(item => {
       if (typeof item.column_type !== 'string') {
-        Object.assign({}, item, {
-          column_type: item.column_type.value
-        });
+        item.column_type = item.column_type.value;
       }
     });
 
