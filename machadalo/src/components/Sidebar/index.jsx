@@ -59,7 +59,7 @@ export default function Sidebar({ appearance }) {
             <li>
               <NavLink to="/r/settings/permissions/list">
                 <i className="fa fa-lock" aria-hidden="true" />
-                Permissions
+                Checklist Settings
               </NavLink>
             </li>
             <li>
