@@ -81,23 +81,22 @@ export function getUserPermission(userId) {
           .then(permissionResponse => {
             let userPermission = [];
             let userPermissionData = permissionResponse.body.data;
-
             checklistData.forEach(campaignInfo => {
               let campaignPermissionType = 'None';
               if (
                 userPermission !== 'no_permission_exists' &&
-                userPermissionData.checklist_permissions.camapigns[
+                userPermissionData.checklist_permissions.campaigns[
                   campaignInfo.campaign_id
                 ]
               ) {
                 if (
-                  userPermissionData.checklist_permissions.camapigns[
+                  userPermissionData.checklist_permissions.campaigns[
                     campaignInfo.campaign_id
                   ].indexOf('EDIT') !== -1
                 ) {
                   campaignPermissionType = 'Edit';
                 } else if (
-                  userPermissionData.checklist_permissions.camapigns[
+                  userPermissionData.checklist_permissions.campaigns[
                     campaignInfo.campaign_id
                   ].indexOf('FILL') !== -1
                 ) {
@@ -163,7 +162,52 @@ export function getUserPermission(userId) {
   };
 }
 
-export function updateUserPermission(data) {
+export function getAllChecklistData() {
+  return (dispatch, getState) => {
+    dispatch(getPermissionStart());
+
+    const { auth } = getState();
+
+    request
+      .get(`${config.API_URL}/v0/ui/checklists/list_all_checklists/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(checklistResponse => {
+        let checklistData = checklistResponse.body.data;
+        let userPermission = [];
+        checklistData.forEach(campaignInfo => {
+          let campaignPermissionType = 'None';
+          let permissionObject = {
+            entityName: campaignInfo.campaign_name,
+            entityId: campaignInfo.campaign_id,
+            type: 'campaign',
+            permission: campaignPermissionType,
+            data: []
+          };
+          if (campaignInfo.checklists.length) {
+            campaignInfo.checklists.forEach(checklist => {
+              let checklistPermissionType = 'None';
+              let permissionChecklistObject = {
+                entityName: checklist.checklist_name,
+                entityId: checklist.checklist_id,
+                type: 'checklist',
+                permission: checklistPermissionType
+              };
+              permissionObject.data.push(permissionChecklistObject);
+            });
+          }
+          userPermission.push(permissionObject);
+        });
+        dispatch(getPermissionSuccess(userPermission, undefined));
+      })
+      .catch(ex => {
+        console.log('Failed to fetch entity', ex);
+
+        dispatch(getPermissionFail());
+      });
+  };
+}
+
+export function updateUserPermission(data, callback) {
   return (dispatch, getState) => {
     dispatch(getPermissionStart());
 
@@ -175,6 +219,57 @@ export function updateUserPermission(data) {
       .send(data)
       .then(resp => {
         dispatch(getPermissionList());
+        if (callback) {
+          callback();
+        }
+      })
+      .catch(ex => {
+        console.log('Failed to create checklist template', ex);
+
+        dispatch(getPermissionFail());
+      });
+  };
+}
+
+export function createUserPermission(data, callback) {
+  return (dispatch, getState) => {
+    dispatch(getPermissionStart());
+
+    const { auth } = getState();
+
+    request
+      .post(`${config.API_URL}/v0/ui/checklists/permissions/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .send(data)
+      .then(resp => {
+        dispatch(getPermissionList());
+        if (callback) {
+          callback();
+        }
+      })
+      .catch(ex => {
+        console.log('Failed to create checklist template', ex);
+
+        dispatch(getPermissionFail());
+      });
+  };
+}
+
+export function deleteUserPermission(permissionId, callback) {
+  return (dispatch, getState) => {
+    dispatch(getPermissionStart());
+
+    const { auth } = getState();
+
+    request
+      .delete(`${config.API_URL}/v0/ui/checklists/permissions/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .query({ permission_id: permissionId })
+      .then(resp => {
+        dispatch(getPermissionList());
+        if (callback) {
+          callback();
+        }
       })
       .catch(ex => {
         console.log('Failed to create checklist template', ex);

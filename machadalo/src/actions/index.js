@@ -5,6 +5,7 @@ import * as CampaignActions from './campaign';
 import * as SupplierActions from './supplier';
 import * as EntityActions from './entity';
 import * as SettingActions from './setting';
+import * as UserActions from './user';
 
 export default Object.assign(
   {},
@@ -14,5 +15,6 @@ export default Object.assign(
   CampaignActions,
   SupplierActions,
   EntityActions,
-  SettingActions
+  SettingActions,
+  UserActions
 );

@@ -1,4 +1,5 @@
 import React from 'react';
+import Select from 'react-select';
 import Modal from 'react-modal';
 
 import './index.css';
@@ -37,15 +38,26 @@ export default class PermissionModal extends React.Component {
         entityName: 'All Campaign',
         type: 'campaign',
         entityId: 'all',
-        data: [],
-        userPermissionId: undefined
+        data: []
+      },
+      userPermissionId: undefined,
+      userOptions: [],
+      selectedUser: {
+        label: undefined,
+        value: undefined
       }
     };
     this.onSubmit = this.onSubmit.bind(this);
+    this.onSelectUser = this.onSelectUser.bind(this);
   }
 
   componentWillMount() {
-    this.props.getUserPermission(this.props.modalUserId);
+    if (this.props.createPermission) {
+      this.props.getUsersList();
+      this.props.getAllChecklistData();
+    } else {
+      this.props.getUserPermission(this.props.modalUserId);
+    }
   }
 
   componentDidUpdate() {
@@ -64,17 +76,46 @@ export default class PermissionModal extends React.Component {
         userPermissionId: this.props.settings.currentUserPermissionId
       });
     }
+    if (
+      (!this.state.userOptions.length && this.props.user.userList.length) ||
+      (this.state.userOptions.length &&
+        this.props.user.userList.length &&
+        this.state.userOptions[0].value !== this.props.user.userList[0].id)
+    ) {
+      let userOptions = [];
+      this.props.user.userList.forEach(userData => {
+        userOptions.push({
+          label: userData.first_name + ' ' + userData.last_name,
+          value: userData.id
+        });
+      });
+      this.setState({
+        userOptions
+      });
+    }
+  }
+
+  onSelectUser(value) {
+    this.setState({
+      selectedUser: value
+    });
   }
 
   onSubmit() {
     let requestData = {
-      id: this.state.userPermissionId,
+      id: undefined,
       checklist_permissions: {
         campaigns: {},
         checklists: {}
       },
-      user_id: this.props.modalUserId
+      user_id: undefined
     };
+    if (!this.props.createPermission) {
+      requestData.id = this.state.userPermissionId;
+      requestData.user_id = this.props.modalUserId;
+    } else {
+      requestData.user_id = this.state.selectedUser.value;
+    }
     this.state.data.data.forEach(campaignData => {
       if (
         campaignData.type === 'campaign' &&
@@ -116,8 +157,7 @@ export default class PermissionModal extends React.Component {
         });
       }
     });
-    console.log(requestData);
-    // this.props.postUserPermission(requestData);
+    this.props.onSubmit(requestData);
   }
 
   requestTreeLeafChildrenData = (leafData, chdIndex, doExpand) => {
@@ -159,6 +199,7 @@ export default class PermissionModal extends React.Component {
             None
           </button>
         ),
+        className: 'permission-icon',
         onClick: () => {
           const data = { ...this.state.data };
           const leaf = getTreeLeafDataByIndexArray(data, chdIndex, 'data');
@@ -189,6 +230,7 @@ export default class PermissionModal extends React.Component {
             Edit
           </button>
         ),
+        className: 'permission-icon',
         onClick: () => {
           const data = { ...this.state.data };
           const leaf = getTreeLeafDataByIndexArray(data, chdIndex, 'data');
@@ -219,6 +261,7 @@ export default class PermissionModal extends React.Component {
             Fill
           </button>
         ),
+        className: 'permission-icon',
         onClick: () => {
           const data = { ...this.state.data };
           const leaf = getTreeLeafDataByIndexArray(data, chdIndex, 'data');
@@ -249,6 +292,22 @@ export default class PermissionModal extends React.Component {
         <div className="modal-title">
           <h3>User Permission</h3>
         </div>
+        {this.props.createPermission ? (
+          <div className="createform__form__inline">
+            <div className="form-control">
+              <label>*Select User</label>
+              <br />
+              <Select
+                className="modal-select"
+                options={this.state.userOptions}
+                value={this.state.selectedUser}
+                onChange={this.onSelectUser}
+              />
+            </div>
+          </div>
+        ) : (
+          ''
+        )}
         <Tree
           className={classes.container}
           data={this.state.data}

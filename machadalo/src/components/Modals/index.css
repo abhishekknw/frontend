@@ -6,7 +6,7 @@
   margin-bottom: -7px;
 }
 
-.MuiTreeLeaf-button-87 {
+.permission-icon {
   margin-left: 0px !important;
 }
 
@@ -32,5 +32,10 @@
   color: white;
   padding: 1px 0px;
   border-radius: 3px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.modal-select {
+  width: 40%;
+  padding-top: 8px;
 }
