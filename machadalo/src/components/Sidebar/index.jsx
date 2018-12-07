@@ -57,6 +57,12 @@ export default function Sidebar({ appearance }) {
               </NavLink>
             </li>
             <li>
+              <NavLink to="/r/settings/permissions/list">
+                <i className="fa fa-lock" aria-hidden="true" />
+                Permissions
+              </NavLink>
+            </li>
+            <li>
               <a href="/#/dashboard">
                 <i className="fa fa-dashboard" aria-hidden="true" />
                 DashBoard
