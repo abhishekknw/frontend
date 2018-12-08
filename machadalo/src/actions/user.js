@@ -34,7 +34,7 @@ export function getUsersList() {
       .get(`${config.API_URL}/v0/ui/users/`)
       .set('Authorization', `JWT ${auth.token}`)
       .then(resp => {
-        dispatch(getUsersListSuccess(Object.values(resp.body.data)));
+        dispatch(getUsersListSuccess(resp.body.data));
       })
       .catch(ex => {
         console.log('Failed to fetch list of users', ex);
