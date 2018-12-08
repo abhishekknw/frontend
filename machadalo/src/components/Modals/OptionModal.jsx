@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 
 import '../Checklist/index.css';
+import './index.css';
 
 const customStyles = {
   content: {
@@ -12,7 +13,7 @@ const customStyles = {
     marginRight: '-50%',
     width: '50%',
     transform: 'translate(-50%, -50%)',
-    paddingTop: '5px'
+    padding: '5px 10px 10px'
   }
 };
 
@@ -85,11 +86,9 @@ export default class OptionModal extends React.Component {
         style={customStyles}
         ariaHideApp={false}
       >
-        <header>
-          <h2>Add Options</h2>
-        </header>
-        <hr />
-        <br />
+        <div className="modal-title">
+          <h3>Add Options</h3>
+        </div>
         <br />
         <div className="createform">
           <div className="createform__form">

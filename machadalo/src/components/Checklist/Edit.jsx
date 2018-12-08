@@ -37,6 +37,7 @@ export default class CreateChecklistTemplate extends React.Component {
       checklist_name: '',
       checklist_columns: [],
       static_column_values: [],
+      is_template: false,
       isMaxColumnsReached: false,
       showOptionModal: false,
       columnOptions: [''],
@@ -84,6 +85,9 @@ export default class CreateChecklistTemplate extends React.Component {
         checklist_name:
           checklist.details[match.params.checklistId].checklist_info
             .checklist_name,
+        is_template:
+          checklist.details[match.params.checklistId].checklist_info
+            .is_template,
         checklist_columns:
           checklist.details[match.params.checklistId].column_headers,
         static_column_values:
@@ -148,6 +152,9 @@ export default class CreateChecklistTemplate extends React.Component {
   }
 
   handleInputChange(event) {
+    if (event.target.type === 'checkbox') {
+      event.target.value = event.target.checked ? true : false;
+    }
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -294,7 +301,13 @@ export default class CreateChecklistTemplate extends React.Component {
     let error = false;
     let new_checklist_columns = [];
     let new_static_column_values = [];
+    let templateValue = this.state.is_template;
+
+    if (typeof templateValue === 'string') {
+      templateValue = templateValue === 'true' ? true : false;
+    }
     const data = {
+      is_template: templateValue,
       checklist_columns: this.state.checklist_columns.filter(item => {
         let newColumnFlag = true;
         if (item.status === 'create') {
@@ -471,6 +484,10 @@ export default class CreateChecklistTemplate extends React.Component {
   }
 
   render() {
+    let templateValue = this.state.is_template;
+    if (typeof templateValue === 'string') {
+      templateValue = templateValue === 'true' ? true : false;
+    }
     return (
       <div className="createform">
         <div className="createform__title">
@@ -489,6 +506,22 @@ export default class CreateChecklistTemplate extends React.Component {
                 />
               </div>
             </div>
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <input
+                      type="checkbox"
+                      className="input-checkbox"
+                      name="is_template"
+                      checked={templateValue}
+                      onChange={this.handleInputChange}
+                    />
+                  </td>
+                  <td>Is it template?</td>
+                </tr>
+              </tbody>
+            </table>
             <div className="createform__form__header">
               {this.state.checklist_columns.map(this.renderChecklistColumn)}
             </div>

@@ -7,6 +7,7 @@ export default class List extends React.Component {
     super(props);
 
     this.renderChecklistRow = this.renderChecklistRow.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
 
   componentDidMount() {
@@ -26,6 +27,16 @@ export default class List extends React.Component {
     }
   }
 
+  onBack() {
+    let campaignProposalId = this.props.match.params.campaignId;
+    let supplierId = this.props.match.params.supplierId;
+    if (supplierId) {
+      this.props.history.push(`/r/checklist/suppliers/${campaignProposalId}`);
+    } else {
+      this.props.history.push(`/r/checklist/campaigns`);
+    }
+  }
+
   renderChecklistRow(checklist, index) {
     // Remove checklist
     const onRemove = () => {
@@ -33,6 +44,11 @@ export default class List extends React.Component {
         checklistId: checklist.checklist_info.checklist_id
       });
     };
+
+    let disableEditButton = false;
+    if (checklist.checklist_info.status === 'frozen') {
+      disableEditButton = true;
+    }
 
     return (
       <tr key={checklist.checklist_info.checklist_id}>
@@ -52,12 +68,18 @@ export default class List extends React.Component {
           </button>
         </td>
         <td>
-          <Link
-            to={`/r/checklist/edit/${checklist.checklist_info.checklist_id}`}
-            className="btn btn--danger"
-          >
-            Edit Checklist
-          </Link>
+          {disableEditButton ? (
+            <button type="button" className="btn btn--danger" disabled>
+              Edit Checklist
+            </button>
+          ) : (
+            <Link
+              to={`/r/checklist/edit/${checklist.checklist_info.checklist_id}`}
+              className="btn btn--danger"
+            >
+              Edit Checklist
+            </Link>
+          )}
         </td>
       </tr>
     );
@@ -125,7 +147,7 @@ export default class List extends React.Component {
                 checklist.list.map(this.renderChecklistRow)
               ) : (
                 <tr>
-                  <td colSpan="4">
+                  <td colSpan="5">
                     No checklists available. Create your first one now!
                   </td>
                 </tr>
@@ -135,6 +157,14 @@ export default class List extends React.Component {
         </div>
 
         <div className="list__actions">
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={this.onBack}
+          >
+            <i className="fa fa-arrow-left" aria-hidden="true" />
+            Back
+          </button>{' '}
           {showCreateButton ? (
             <Link to={checklistCreateUrl} className="btn btn--danger">
               Create

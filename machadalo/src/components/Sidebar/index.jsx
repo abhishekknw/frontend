@@ -51,9 +51,15 @@ export default function Sidebar({ appearance }) {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/r/entity/types/create">
+              <NavLink to="/r/entity/create">
                 <i className="fa fa-cubes" aria-hidden="true" />
                 Entities
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/r/settings/permissions/list">
+                <i className="fa fa-lock" aria-hidden="true" />
+                Checklist Settings
               </NavLink>
             </li>
             <li>

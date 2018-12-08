@@ -5,6 +5,8 @@ import * as campaignReducer from './campaign';
 import * as supplierReducer from './supplier';
 import * as checklistReducer from './checklist';
 import * as entityReducer from './entity';
+import * as settingReducer from './setting';
+import * as userReducer from './user';
 import { reducer as toastrReducer } from 'react-redux-toastr';
 
 const reducers = combineReducers(
@@ -16,7 +18,9 @@ const reducers = combineReducers(
     campaignReducer,
     supplierReducer,
     checklistReducer,
-    entityReducer
+    entityReducer,
+    settingReducer,
+    userReducer
   )
 );
 

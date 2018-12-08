@@ -340,28 +340,28 @@
   padding-bottom: 10px;
 }
 
-.checklist {
+.settings {
   padding: 60px 0;
 }
-.checklist .list__title {
+.settings .list__title {
   text-align: center;
   background-color: #d9534f;
   color: white;
   padding: 10px 15px;
   border-radius: 3px;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
-.checklist .list__title h3 {
+.settings .list__title h3 {
   margin: 15px 0;
   font-size: 24px;
   font-weight: 500;
 }
-.checklist .list__filter {
+.settings .list__filter {
   display: block;
   height: 50px;
   margin-bottom: 20px;
 }
-.checklist .list__filter input {
+.settings .list__filter input {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -372,10 +372,10 @@
   color: #555;
   outline: none;
 }
-.checklist .list__table table {
+.settings .list__table table {
   width: 100%;
 }
-.checklist .list__table table thead tr th {
+.settings .list__table table thead tr th {
   background-color: #8e1921;
   color: white;
   font-size: 14px;
@@ -383,7 +383,7 @@
   padding: 12px;
   text-align: center;
 }
-.checklist .list__table table tbody tr td {
+.settings .list__table table tbody tr td {
   text-align: center;
   color: black;
   font-size: 14px;
@@ -392,14 +392,14 @@
   text-align: center;
   border-bottom: 1px solid #ddd;
 }
-.checklist .list__table table tbody tr:nth-child(odd) td {
+.settings .list__table table tbody tr:nth-child(odd) td {
   background-color: #f9f9f9;
 }
-.checklist .list__actions {
+.settings .list__actions {
   margin-top: 20px;
 }
-.checklist .createform__title,
-.checklist .fillForm__title {
+.settings .createform__title,
+.settings .fillForm__title {
   text-align: center;
   background-color: #d9534f;
   color: white;
@@ -407,81 +407,81 @@
   border-radius: 3px;
   margin-bottom: 50px;
 }
-.checklist .createform__title h3,
-.checklist .fillForm__title h3 {
+.settings .createform__title h3,
+.settings .fillForm__title h3 {
   margin: 15px 0;
   font-size: 24px;
   font-weight: 500;
 }
-.checklist .createform__form__header,
-.checklist .fillForm__form__header {
+.settings .createform__form__header,
+.settings .fillForm__form__header {
   display: flex;
   flex-direction: row;
   margin: 0 -10px;
   margin-bottom: 10px;
 }
-.checklist .createform__form__header input,
-.checklist .fillForm__form__header input {
+.settings .createform__form__header input,
+.settings .fillForm__form__header input {
   margin-bottom: 10px;
 }
-.checklist .createform__form__header button,
-.checklist .fillForm__form__header button {
+.settings .createform__form__header button,
+.settings .fillForm__form__header button {
   margin-top: 10px;
 }
-.checklist .createform__form__row,
-.checklist .fillForm__form__row {
+.settings .createform__form__row,
+.settings .fillForm__form__row {
   display: flex;
   flex-direction: row;
   margin: 0 -10px;
   position: relative;
 }
-.checklist .createform__form__row .form-action,
-.checklist .fillForm__form__row .form-action {
+.settings .createform__form__row .form-action,
+.settings .fillForm__form__row .form-action {
   position: absolute;
   right: -25px;
 }
-.checklist .createform__form__row .form-action button,
-.checklist .fillForm__form__row .form-action button {
+.settings .createform__form__row .form-action button,
+.settings .fillForm__form__row .form-action button {
   font-size: 16px;
 }
-.checklist .createform__form__column,
-.checklist .fillForm__form__column {
+.settings .createform__form__column,
+.settings .fillForm__form__column {
   flex: 1;
   padding: 0 10px;
   min-width: 150px;
 }
-.checklist .createform__form__inline,
-.checklist .fillForm__form__inline {
+.settings .createform__form__inline,
+.settings .fillForm__form__inline {
   display: flex;
   margin-bottom: 15px;
   align-items: flex-end;
 }
-.checklist .createform__form__action,
-.checklist .fillForm__form__action {
+.settings .createform__form__action,
+.settings .fillForm__form__action {
   margin-right: 15px;
 }
-.checklist .createform__form form .form-action,
-.checklist .fillForm__form form .form-action {
+.settings .createform__form form .form-action,
+.settings .fillForm__form form .form-action {
   margin-left: 15px;
 }
-.checklist .createform__form form .form-control,
-.checklist .fillForm__form form .form-control {
+.settings .createform__form form .form-control,
+.settings .fillForm__form form .form-control {
   display: flex;
   flex-direction: column;
   flex: 1;
 }
-.checklist .createform__form form .form-control:nth-child(n + 2),
-.checklist .fillForm__form form .form-control:nth-child(n + 2) {
+.settings .createform__form form .form-control:nth-child(n + 2),
+.settings .fillForm__form form .form-control:nth-child(n + 2) {
   margin-left: 15px;
 }
-.checklist .createform__form form .form-control label,
-.checklist .fillForm__form form .form-control label {
+.settings .createform__form form .form-control label,
+.settings .fillForm__form form .form-control label {
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 5px;
 }
-.checklist .createform__form form .form-control input,
-.checklist .fillForm__form form .form-control input {
+.settings .createform__form form .form-control input,
+.settings .fillForm__form form .form-control input {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -493,8 +493,8 @@
   color: #555;
   outline: none;
 }
-.checklist .createform__form form .form-control .form-select__control,
-.checklist .fillForm__form form .form-control .form-select__control {
+.settings .createform__form form .form-control .form-select__control,
+.settings .fillForm__form form .form-control .form-select__control {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -503,37 +503,32 @@
   width: 100%;
   background-color: white;
 }
-.checklist
+.settings
   .createform__form
   form
   .form-control
   .form-select__control
   .css-rsyb7x,
-.checklist
-  .fillForm__form
-  form
-  .form-control
-  .form-select__control
-  .css-rsyb7x {
+.settings .fillForm__form form .form-control .form-select__control .css-rsyb7x {
   position: absolute;
   top: 40%;
   transform: translateY(-50%);
   color: #555;
 }
-.checklist .createform__form form .form-control .form-select__value-container,
-.checklist .fillForm__form form .form-control .form-select__value-container {
+.settings .createform__form form .form-control .form-select__value-container,
+.settings .fillForm__form form .form-control .form-select__value-container {
   padding: 6px 12px;
   height: 34px;
   top: -1px;
 }
-.checklist .createform__form form .form-control .form-select__single-value,
-.checklist .fillForm__form form .form-control .form-select__single-value {
+.settings .createform__form form .form-control .form-select__single-value,
+.settings .fillForm__form form .form-control .form-select__single-value {
   font-size: 14px !important;
   line-height: 1.42;
   color: #555;
 }
-.checklist .createform__form form .form-control .form-select__placeholder,
-.checklist .fillForm__form form .form-control .form-select__placeholder {
+.settings .createform__form form .form-control .form-select__placeholder,
+.settings .fillForm__form form .form-control .form-select__placeholder {
   font-size: 14px;
   color: #555;
 }
