@@ -422,7 +422,7 @@
                                   <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.ongoing.status)">
                                       <div class="panel-heading">
                                           <h4 class="panel-title">
-                                              Ongoing-Campaigns
+                                              Ongoing Campaigns
                                           </h4>
                                       </div>
                                       <div id="ongoing" class="animate-show" ng-show="campaignStatus.ongoing.value">
@@ -1185,7 +1185,7 @@
                             </div> -->
                             <div class="campaigndetailtable">
                               <div class="panel-heading" style="height:70px;">
-                                <h5 style="background:'red';color:white;">All Campaign Details</h5>
+                                <h5 style="background:'red';color:white;">All Campaign Details {{supplierStatus | uppercase}}</h5>
                               </div>
                               <br />
                               <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
@@ -1215,7 +1215,7 @@
 
                                       <tbody class="detailedTable">
                                         <div class="row">
-                                            <tr ng-repeat="allCampaign in allCampaignDetailsData |filter:searchQuery |  filter:f | orderBy:sortColumn:reversesortcolumn">
+                                            <tr ng-repeat="allCampaign in campaignDetailsData |filter:searchQuery |  filter:f | orderBy:sortColumn:reversesortcolumn">
                                             <td style="vertical-align:middle">{{$index + 1}}</td>
                                             <td style="vertical-align:middle">{{allCampaign.name}}</td>
                                             <td class="col-md-2">{{allCampaign.start_date | date:mediumDate}}</td>
@@ -1478,7 +1478,7 @@
           <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.ongoing.status)">
               <div class="panel-heading">
                   <h4 class="panel-title">
-                      Ongoing-Campaigns
+                      Ongoing Campaigns
                   </h4>
               </div>
               <div id="ongoing" class="animate-show" ng-show="campaignStatus.ongoing.value">
