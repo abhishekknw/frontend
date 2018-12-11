@@ -23,3 +23,5 @@ yarn-error.log*
 package-lock.json
 ../ui/buyer_catalogue/package-lock.json
 *.css
+*.rdb
+*.log
