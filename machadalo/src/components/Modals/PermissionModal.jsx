@@ -190,7 +190,8 @@ export default class PermissionModal extends React.Component {
   getTreeLeafActionsData = (leafData, chdIndex, expand) => {
     return [
       {
-        icon: <ClearIcon />,
+        icon: <ClearIcon className="tree-action" />,
+        hint: 'None',
         className:
           'permission-icon' +
           (leafData.permission === 'None' ? ' permission-selected' : ''),
@@ -212,7 +213,8 @@ export default class PermissionModal extends React.Component {
         }
       },
       {
-        icon: <EditIcon />,
+        icon: <EditIcon className="tree-action" />,
+        hint: 'Edit',
         className:
           'permission-icon' +
           (leafData.permission === 'Edit' ? ' permission-selected' : ''),
@@ -234,7 +236,8 @@ export default class PermissionModal extends React.Component {
         }
       },
       {
-        icon: <TextFieldIcon />,
+        icon: <TextFieldIcon className="tree-action" />,
+        hint: 'Fill',
         className:
           'permission-icon' +
           (leafData.permission === 'Fill' ? ' permission-selected' : ''),

@@ -8,6 +8,7 @@ import Suppliers from './Suppliers';
 import List from './List';
 import Fill from './Fill';
 import Edit from './Edit';
+import Settings from '../Settings';
 
 import './index.css';
 
@@ -71,6 +72,12 @@ class Checklist extends React.Component {
             path={`${match.path}/edit/:checklistId`}
             render={componentProps => (
               <Edit {...this.props} {...componentProps} />
+            )}
+          />
+          <Route
+            path={`${match.path}/settings`}
+            render={componentProps => (
+              <Settings {...this.props} {...componentProps} />
             )}
           />
         </Switch>

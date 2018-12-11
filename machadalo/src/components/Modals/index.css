@@ -1,17 +1,23 @@
 .tree-modal {
   box-shadow: none !important;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .tree-icon {
   margin-bottom: -7px;
 }
 
+.tree-action {
+  font-size: 15px !important;
+}
+
 .permission-icon {
-  margin-left: 10px !important;
+  margin-left: 5px !important;
   height: min-content !important;
   width: min-content !important;
   color: black !important;
-  border: 2px solid black !important;
+  border: 1px solid black !important;
 }
 
 .permission-selected {
