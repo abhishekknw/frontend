@@ -115,7 +115,7 @@
         return machadaloHttp.get(url);
     }
 
-    DashboardService.viewLeadsForSelectedCampaign = function(campaignId){
+    DashboardService.viewLeadsForSelectedCampaign = function(data,campaignId){
         var url = url_root  + "leads/" + campaignId + "/entry_list_by_campaign_id";
         return machadaloHttp.get(url);
     }
