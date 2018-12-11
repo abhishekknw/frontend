@@ -23,3 +23,4 @@ coreapi/coreapi/coreapi/config.py
 md.sublime*
 ui/buyer_catalogue/app/scripts/config.js
 machadalo/src/config.js
+*.log
