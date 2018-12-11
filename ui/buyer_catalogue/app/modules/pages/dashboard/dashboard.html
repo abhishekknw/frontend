@@ -985,7 +985,7 @@
                                   </div> -->
                                   <div class="campaigndetailtable">
                                     <div class="panel-heading" style="height:70px;">
-                                      <h5 style="background:'red';color:white;">Society Details For {{campaignTabPropsalName}} - {{supplierStatus | uppercase}}</h5>
+                                      <h5 style="background:'red';color:white;text-transform:capitalize">Society Details For {{campaignTabPropsalName}} - {{supplierStatus}}</h5>
                                     </div>
                                     <br />
                                     <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
@@ -1105,11 +1105,11 @@
                                               <td>{{TotalSupplierFlatCount}}</td>
                                               <td>{{TotalSupplierLeadsCount || 0}}</td>
                                               <td>{{TotalSupplierHotLeadsCount || 0}}</td>
-                                              <td></td>
-                                              <td></td>
-                                              <td></td>
-                                              <td></td>
-                                              <td></td>
+                                              <td ng-if="supplierStatus != 'upcoming'"></td>
+                                              <td ng-if="supplierStatus != 'upcoming'"></td>
+                                              <td ng-if="supplierStatus != 'upcoming'"></td>
+                                              <td ng-if="supplierStatus != 'upcoming'"></td>
+                                              <td ng-if="supplierStatus != 'upcoming'"></td>
                                               <td></td>
                                               <td></td>
                                               <td></td>
@@ -1120,7 +1120,7 @@
                                   </div>
                                   </div>
 
-                                <div class="col-md-12" ng-show="showDisplayDetailsTable" style="margin-top:170px;">
+                                <div class="col-md-12" ng-show="showDisplayDetailsTable" style="margin-top:230px;">
                                   <div class="panel-heading content-title">
                                     <h5 style="background:'red'">Map View for {{campaignTabPropsalName}}</h5></div>
                                   <style type="text/css">
@@ -1185,7 +1185,7 @@
                             </div> -->
                             <div class="campaigndetailtable">
                               <div class="panel-heading" style="height:70px;">
-                                <h5 style="background:'red';color:white;">All Campaign Details {{supplierStatus | uppercase}}</h5>
+                                <h5 style="background:'red';color:white;text-transform: capitalize;">All Campaign Details - {{supplierStatus}}</h5>
                               </div>
                               <br />
                               <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
@@ -1973,6 +1973,7 @@
                                     <thead>
                                       <tr>
                                         <th style="background:#8e1921 !important">Details</th>
+                                        <th style="background:#8e1921 !important">Total</th>
                                         <th style="background:#8e1921 !important">Flat Count <br> <small> < 150</small></th>
                                         <th style="background:#8e1921 !important">Flat Count <br><small>Between 150 to 400</small></th>
                                         <th style="background:#8e1921 !important">Flat Count <br> <small> > 400</small></th>
@@ -2144,8 +2145,8 @@
                              <option value="" disabled>Select For Sorting</option>
                               <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
                             </select>
-                            <div class="outerLocation"  ng-if="!dateRangeModel.start_date">
-                              <div class="innerLocation"  ng-if="!dateRangeModel.start_date">
+                            <div class="outerFlat"  ng-if="!dateRangeModel.start_date">
+                              <div class="innerFlat"  ng-if="!dateRangeModel.start_date">
                                 <nvd3 options="locationChartOptions" data="sortedLocationData['weekly']" ng-if="togglesortedGraphs['weekly']"></nvd3>
                                 <nvd3 options="weeklyStackedBarData" data="stackedBarThreeWeeksChart" ng-if="!togglesortedGraphs['weekly']"></nvd3>
                               </div>
