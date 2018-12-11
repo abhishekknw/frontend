@@ -414,11 +414,15 @@ export default class FillChecklist extends React.Component {
                     : 'Freeze Checklist'}
                 </button>
               </div>
-              <div className="fillForm__form__action">
-                <button type="submit" className="btn btn--danger">
-                  Submit
-                </button>
-              </div>
+              {this.state.freezeChecklist ? (
+                ''
+              ) : (
+                <div className="fillForm__form__action">
+                  <button type="submit" className="btn btn--danger">
+                    Submit
+                  </button>
+                </div>
+              )}
               <div className="fillForm__form__action">
                 <button
                   type="button"

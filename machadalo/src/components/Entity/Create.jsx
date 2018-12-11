@@ -14,8 +14,8 @@ export default class Create extends React.Component {
         </div>
         <Tabs>
           <TabList>
-            <Tab>Entity Type</Tab>
-            <Tab>Entity</Tab>
+            <Tab className="react-tabs__tab entity-tab">Entity Type</Tab>
+            <Tab className="react-tabs__tab entity-tab">Entity</Tab>
           </TabList>
 
           <TabPanel>
