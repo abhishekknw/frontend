@@ -51,12 +51,12 @@ export function getLeadPermissionStart() {
 }
 
 export function getLeadPermissionSuccess(
-  userPermission,
+  leadUserPermission,
   currentUserPermissionId
 ) {
   return {
     type: types.GET_LEAD_USER_PERMISSION_SUCCESS,
-    userPermission: userPermission,
+    leadUserPermission: leadUserPermission,
     currentUserPermissionId: currentUserPermissionId
   };
 }
@@ -129,7 +129,7 @@ export function getLeadUserPermission(userId) {
                     ) {
                       leadFormPermissionType = 'Edit';
                     } else if (
-                      userPermissionData.leads_permissions.campaigns[
+                      userPermissionData.leads_permissions.leads_forms[
                         lead_form.lead_form_id
                       ].indexOf('FILL') !== -1
                     ) {
@@ -200,7 +200,8 @@ export function getAllLeadsFormData() {
           }
           userPermission.push(permissionObject);
         });
-        dispatch(getLeadPermissionSuccess(userPermission, undefined));
+
+        dispatch(getLeadPermissionSuccess(userPermission, 0));
       })
       .catch(ex => {
         console.log('Failed to fetch entity', ex);

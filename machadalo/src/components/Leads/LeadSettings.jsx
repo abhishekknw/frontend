@@ -1,5 +1,5 @@
 import React from 'react';
-import PermissionModal from '../Modals/LeadsPermissionModal';
+import PermissionModal from '../Modals/PermissionModal';
 import { toastr } from 'react-redux-toastr';
 
 import '../Checklist/index.css';
@@ -10,7 +10,9 @@ export default class LeadSettings extends React.Component {
     this.state = {
       showPermissionModal: false,
       modalUserId: undefined,
-      createPermission: false
+      createPermission: false,
+      dataInfo: [],
+      userPermissionId: undefined
     };
     this.renderPermissionRow = this.renderPermissionRow.bind(this);
     this.openCreatePermissionModal = this.openCreatePermissionModal.bind(this);
@@ -22,7 +24,22 @@ export default class LeadSettings extends React.Component {
   componentWillMount() {
     this.props.getLeadPermissionList();
   }
+  componentDidUpdate(prevProps) {
+    if (
+      (!prevProps.leads.leadUserPermission.length &&
+        this.props.leads.leadUserPermission.length) ||
+      prevProps.leads.currentUserPermissionId !==
+        this.props.leads.currentUserPermissionId
+    ) {
+      let dataInfo = this.props.leads.leadUserPermission;
+      this.setState({
+        dataInfo,
+        userPermissionId: this.props.leads.currentUserPermissionId
+      });
+    }
+  }
   handleEditUser(userId) {
+    this.props.getLeadUserPermission(userId);
     this.setState({
       showPermissionModal: true,
       modalUserId: userId,
@@ -35,12 +52,69 @@ export default class LeadSettings extends React.Component {
     });
   }
   openCreatePermissionModal() {
+    this.props.getAllLeadsFormData();
     this.setState({
       showPermissionModal: true,
       createPermission: true
     });
   }
-  onModalSubmit(requestData) {
+  onModalSubmit(state) {
+    let requestData = {
+      id: undefined,
+      leads_permissions: {
+        campaigns: {},
+        leads_forms: {}
+      },
+      user_id: undefined
+    };
+    if (!this.state.createPermission) {
+      requestData.id = this.state.userPermissionId;
+      requestData.user_id = this.state.modalUserId;
+    } else {
+      requestData.user_id = state.selectedUser.value;
+    }
+    state.data.data.forEach(campaignData => {
+      if (
+        campaignData.type === 'campaign' &&
+        campaignData.permission !== 'None'
+      ) {
+        if (campaignData.permission === 'Edit') {
+          requestData.leads_permissions.campaigns[campaignData.entityId] = [
+            'EDIT',
+            'VIEW',
+            'DELETE',
+            'FILL',
+            'FREEZE',
+            'UNFREEZE'
+          ];
+        } else {
+          requestData.leads_permissions.campaigns[campaignData.entityId] = [
+            'VIEW',
+            'FILL',
+            'FREEZE'
+          ];
+        }
+      }
+      if (campaignData.data.length) {
+        campaignData.data.forEach(leadFormData => {
+          if (
+            leadFormData.type === 'lead_form' &&
+            leadFormData.permission !== 'None'
+          ) {
+            if (leadFormData.permission === 'Edit') {
+              requestData.leads_permissions.leads_forms[
+                leadFormData.entityId
+              ] = ['EDIT', 'VIEW', 'DELETE', 'FILL'];
+            } else {
+              requestData.leads_permissions.leads_forms[
+                leadFormData.entityId
+              ] = ['VIEW', 'FILL'];
+            }
+          }
+        });
+      }
+    });
+
     this.setState({
       showPermissionModal: false,
       modalUserId: undefined,
@@ -48,11 +122,11 @@ export default class LeadSettings extends React.Component {
     });
     if (this.state.createPermission) {
       this.props.createLeadsUserPermission([requestData], () => {
-        toastr.success('', 'User Permission created successfully');
+        toastr.success('', 'User Lead Permission created successfully');
       });
     } else {
       this.props.updateLeadsUserPermission([requestData], () => {
-        toastr.success('', 'User Permission updated successfully');
+        toastr.success('', 'User Lead Permission updated successfully');
       });
     }
   }

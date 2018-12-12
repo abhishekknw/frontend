@@ -27,19 +27,19 @@ export const leads = createReducer(
 
     [types.GET_LEAD_USER_PERMISSION_START](state) {
       return Object.assign({}, state, {
-        userPermission: [],
+        leadUserPermission: [],
         currentUserPermissionId: undefined
       });
     },
     [types.GET_LEAD_USER_PERMISSION_SUCCESS](state, action) {
       return Object.assign({}, state, {
-        userPermission: action.userPermission,
+        leadUserPermission: action.leadUserPermission,
         currentUserPermissionId: action.currentUserPermissionId
       });
     },
     [types.GET_LEAD_USER_PERMISSION_FAIL](state) {
       return Object.assign({}, state, {
-        userPermission: [],
+        leadUserPermission: [],
         currentUserPermissionId: undefined
       });
     }
