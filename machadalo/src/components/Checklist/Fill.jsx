@@ -376,7 +376,24 @@ export default class FillChecklist extends React.Component {
 
   render() {
     const { checklistDetails } = this.state;
-    let { checklist } = this.props;
+    let { checklist, settings } = this.props;
+
+    let unfreezePermission = true;
+    if (this.state.freezeChecklist && checklistDetails) {
+      if (
+        settings.loggedInChecklistPermission.checklists[
+          checklistDetails.checklist_info.checklist_id
+        ]
+      ) {
+        if (
+          settings.loggedInChecklistPermission.checklists[
+            checklistDetails.checklist_info.checklist_id
+          ].indexOf('UNFREEZE') === -1
+        ) {
+          unfreezePermission = false;
+        }
+      }
+    }
 
     return (
       <div className="fillForm">
@@ -408,6 +425,7 @@ export default class FillChecklist extends React.Component {
                   type="button"
                   className="btn btn--danger"
                   onClick={this.handleFreezeChecklist}
+                  disabled={!unfreezePermission}
                 >
                   {this.state.freezeChecklist
                     ? 'Unfreeze Checklist'

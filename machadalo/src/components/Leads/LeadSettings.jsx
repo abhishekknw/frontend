@@ -31,7 +31,7 @@ export default class LeadSettings extends React.Component {
   }
   handleDeleteUser(permissionId) {
     this.props.deleteLeadsUserPermission(permissionId, () => {
-      toastr.success('', 'User Permission deleted successfully');
+      toastr.success('', 'User Lead Permission deleted successfully');
     });
   }
   openCreatePermissionModal() {

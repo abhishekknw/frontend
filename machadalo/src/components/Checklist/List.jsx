@@ -38,6 +38,25 @@ export default class List extends React.Component {
   }
 
   renderChecklistRow(checklist, index) {
+    let { settings } = this.props;
+    let editPermission = false;
+
+    if (
+      settings.loggedInChecklistPermission.checklists[
+        checklist.checklist_info.checklist_id
+      ]
+    ) {
+      if (
+        settings.loggedInChecklistPermission.checklists[
+          checklist.checklist_info.checklist_id
+        ].indexOf('EDIT') !== -1
+      ) {
+        editPermission = true;
+      }
+    } else {
+      return;
+    }
+
     // Remove checklist
     const onRemove = () => {
       this.props.deleteChecklist({
@@ -63,7 +82,12 @@ export default class List extends React.Component {
           </Link>
         </td>
         <td>
-          <button type="button" className="btn btn--danger" onClick={onRemove}>
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={onRemove}
+            disabled={!editPermission}
+          >
             Remove
           </button>
         </td>
@@ -73,12 +97,14 @@ export default class List extends React.Component {
               Edit Checklist
             </button>
           ) : (
-            <Link
+            <button
+              type="button"
               to={`/r/checklist/edit/${checklist.checklist_info.checklist_id}`}
               className="btn btn--danger"
+              disabled={!editPermission}
             >
               Edit Checklist
-            </Link>
+            </button>
           )}
         </td>
       </tr>
@@ -86,7 +112,20 @@ export default class List extends React.Component {
   }
 
   render() {
-    const { supplier, campaign, checklist } = this.props;
+    const { supplier, campaign, checklist, settings } = this.props;
+
+    let campaignId = this.props.match.params.campaignId;
+    let campaignPermission = false;
+    let emptyChecklistText =
+      'You do not have permission to create new checklist in this campaign';
+    if (
+      settings.loggedInChecklistPermission.campaigns &&
+      settings.loggedInChecklistPermission.campaigns[campaignId]
+    ) {
+      campaignPermission = true;
+      emptyChecklistText =
+        'No checklists available. Create your first one now!';
+    }
 
     let supplierChecklistFlag = true;
     let headingText = 'Checklists for ',
@@ -143,13 +182,11 @@ export default class List extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {checklist.list.length ? (
+              {checklist.list.length && campaignPermission ? (
                 checklist.list.map(this.renderChecklistRow)
               ) : (
                 <tr>
-                  <td colSpan="5">
-                    No checklists available. Create your first one now!
-                  </td>
+                  <td colSpan="5">{emptyChecklistText}</td>
                 </tr>
               )}
             </tbody>

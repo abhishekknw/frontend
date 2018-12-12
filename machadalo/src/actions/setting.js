@@ -126,7 +126,7 @@ export function getUserPermission(userId) {
                     ) {
                       checklistPermissionType = 'Edit';
                     } else if (
-                      userPermissionData.checklist_permissions.campaigns[
+                      userPermissionData.checklist_permissions.checklists[
                         checklist.checklist_id
                       ].indexOf('FILL') !== -1
                     ) {
@@ -197,7 +197,7 @@ export function getAllChecklistData() {
           }
           userPermission.push(permissionObject);
         });
-        dispatch(getPermissionSuccess(userPermission, undefined));
+        dispatch(getPermissionSuccess(userPermission, 0));
       })
       .catch(ex => {
         console.log('Failed to fetch entity', ex);
@@ -275,6 +275,50 @@ export function deleteUserPermission(permissionId, callback) {
         console.log('Failed to create checklist template', ex);
 
         dispatch(getPermissionFail());
+      });
+  };
+}
+
+export function getloggedInUserPermissionStart() {
+  return {
+    type: types.GET_LOGGED_IN_USER_PERMISSION_START
+  };
+}
+
+export function getloggedInUserPermissionSuccess(loggedInChecklistPermission) {
+  return {
+    type: types.GET_LOGGED_IN_USER_PERMISSION_SUCCESS,
+    loggedInChecklistPermission: loggedInChecklistPermission
+  };
+}
+
+export function getloggedInUserPermissionFail() {
+  return {
+    type: types.GET_LOGGED_IN_USER_PERMISSION_FAIL
+  };
+}
+
+export function getloggedInUserPermission() {
+  return (dispatch, getState) => {
+    dispatch(getloggedInUserPermissionStart());
+
+    const { auth } = getState();
+    request
+      .get(`${config.API_URL}/v0/ui/checklists/permissions/self/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        let loggedInUserPermission = resp.body.data;
+        if (loggedInUserPermission === 'no_permission_exists') {
+          loggedInUserPermission = [];
+        } else {
+          loggedInUserPermission = loggedInUserPermission.checklist_permissions;
+        }
+        dispatch(getloggedInUserPermissionSuccess(loggedInUserPermission));
+      })
+      .catch(ex => {
+        console.log('Failed to fetch entity', ex);
+
+        dispatch(getloggedInUserPermissionFail());
       });
   };
 }

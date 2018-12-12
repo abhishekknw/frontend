@@ -8,7 +8,9 @@ export default class PermissionList extends React.Component {
     this.state = {
       showPermissionModal: false,
       modalUserId: undefined,
-      createPermission: false
+      createPermission: false,
+      dataInfo: [],
+      userPermissionId: undefined
     };
     this.renderPermissionRow = this.renderPermissionRow.bind(this);
     this.handleEditUser = this.handleEditUser.bind(this);
@@ -22,7 +24,23 @@ export default class PermissionList extends React.Component {
     this.props.getPermissionList();
   }
 
+  componentDidUpdate(prevProps) {
+    if (
+      (!prevProps.settings.userPermission.length &&
+        this.props.settings.userPermission.length) ||
+      prevProps.settings.currentUserPermissionId !==
+        this.props.settings.currentUserPermissionId
+    ) {
+      let dataInfo = this.props.settings.userPermission;
+      this.setState({
+        dataInfo,
+        userPermissionId: this.props.settings.currentUserPermissionId
+      });
+    }
+  }
+
   handleEditUser(userId) {
+    this.props.getUserPermission(userId);
     this.setState({
       showPermissionModal: true,
       modalUserId: userId,
@@ -31,8 +49,8 @@ export default class PermissionList extends React.Component {
   }
 
   handleDeleteUser(permissionId) {
-    this.props.deleteUserLeadsPermission(permissionId, () => {
-      toastr.success('', 'User Leads Permission deleted successfully');
+    this.props.deleteUserPermission(permissionId, () => {
+      toastr.success('', 'User Checklist Permission deleted successfully');
     });
   }
 
@@ -45,6 +63,7 @@ export default class PermissionList extends React.Component {
   }
 
   openCreatePermissionModal() {
+    this.props.getAllChecklistData();
     this.setState({
       showPermissionModal: true,
       createPermission: true,
@@ -52,12 +71,69 @@ export default class PermissionList extends React.Component {
     });
   }
 
-  onModalSubmit(requestData) {
+  onModalSubmit(state) {
+    let requestData = {
+      id: undefined,
+      checklist_permissions: {
+        campaigns: {},
+        checklists: {}
+      },
+      user_id: undefined
+    };
+    if (!this.state.createPermission) {
+      requestData.id = this.state.userPermissionId;
+      requestData.user_id = this.state.modalUserId;
+    } else {
+      requestData.user_id = state.selectedUser.value;
+    }
+    state.data.data.forEach(campaignData => {
+      if (
+        campaignData.type === 'campaign' &&
+        campaignData.permission !== 'None'
+      ) {
+        if (campaignData.permission === 'Edit') {
+          requestData.checklist_permissions.campaigns[campaignData.entityId] = [
+            'EDIT',
+            'VIEW',
+            'DELETE',
+            'FILL',
+            'FREEZE',
+            'UNFREEZE'
+          ];
+        } else {
+          requestData.checklist_permissions.campaigns[campaignData.entityId] = [
+            'VIEW',
+            'FILL',
+            'FREEZE'
+          ];
+        }
+      }
+      if (campaignData.data.length) {
+        campaignData.data.forEach(checklistData => {
+          if (
+            checklistData.type === 'checklist' &&
+            checklistData.permission !== 'None'
+          ) {
+            if (checklistData.permission === 'Edit') {
+              requestData.checklist_permissions.checklists[
+                checklistData.entityId
+              ] = ['EDIT', 'VIEW', 'DELETE', 'FILL', 'FREEZE', 'UNFREEZE'];
+            } else {
+              requestData.checklist_permissions.checklists[
+                checklistData.entityId
+              ] = ['VIEW', 'FILL', 'FREEZE'];
+            }
+          }
+        });
+      }
+    });
+
     this.setState({
       showPermissionModal: false,
       modalUserId: undefined,
       createPermission: false
     });
+
     if (this.state.createPermission) {
       this.props.createUserPermission([requestData], () => {
         toastr.success('', 'User Permission created successfully');
