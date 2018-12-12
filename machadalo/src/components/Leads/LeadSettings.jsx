@@ -1,5 +1,5 @@
 import React from 'react';
-import PermissionModal from '../Modals/PermissionModal';
+import PermissionModal from '../Modals/LeadsPermissionModal';
 import { toastr } from 'react-redux-toastr';
 
 import '../Checklist/index.css';
@@ -14,14 +14,53 @@ export default class LeadSettings extends React.Component {
     };
     this.renderPermissionRow = this.renderPermissionRow.bind(this);
     this.openCreatePermissionModal = this.openCreatePermissionModal.bind(this);
+    this.closePermissionModal = this.closePermissionModal.bind(this);
+    this.handleEditUser = this.handleEditUser.bind(this);
+    this.handleDeleteUser = this.handleDeleteUser.bind(this);
+    this.onModalSubmit = this.onModalSubmit.bind(this);
   }
   componentWillMount() {
     this.props.getLeadPermissionList();
+  }
+  handleEditUser(userId) {
+    this.setState({
+      showPermissionModal: true,
+      modalUserId: userId,
+      createPermission: false
+    });
+  }
+  handleDeleteUser(permissionId) {
+    this.props.deleteLeadsUserPermission(permissionId, () => {
+      toastr.success('', 'User Permission deleted successfully');
+    });
   }
   openCreatePermissionModal() {
     this.setState({
       showPermissionModal: true,
       createPermission: true
+    });
+  }
+  onModalSubmit(requestData) {
+    this.setState({
+      showPermissionModal: false,
+      modalUserId: undefined,
+      createPermission: false
+    });
+    if (this.state.createPermission) {
+      this.props.createLeadsUserPermission([requestData], () => {
+        toastr.success('', 'User Permission created successfully');
+      });
+    } else {
+      this.props.updateLeadsUserPermission([requestData], () => {
+        toastr.success('', 'User Permission updated successfully');
+      });
+    }
+  }
+
+  closePermissionModal() {
+    this.setState({
+      showPermissionModal: false,
+      createPermission: false
     });
   }
   renderPermissionRow(permission, index) {
@@ -38,10 +77,18 @@ export default class LeadSettings extends React.Component {
             permission.created_by.last_name}
         </td>
         <td>
-          <button type="button" className="btn btn--danger">
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={() => this.handleEditUser(permission.user_id.id)}
+          >
             Edit
           </button>{' '}
-          <button type="button" className="btn btn--danger">
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={() => this.handleDeleteUser(permission.id)}
+          >
             Remove
           </button>
         </td>

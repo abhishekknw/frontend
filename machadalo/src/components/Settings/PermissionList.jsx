@@ -31,8 +31,8 @@ export default class PermissionList extends React.Component {
   }
 
   handleDeleteUser(permissionId) {
-    this.props.deleteUserPermission(permissionId, () => {
-      toastr.success('', 'User Permission deleted successfully');
+    this.props.deleteUserLeadsPermission(permissionId, () => {
+      toastr.success('', 'User Leads Permission deleted successfully');
     });
   }
 
