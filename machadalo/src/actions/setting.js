@@ -126,7 +126,7 @@ export function getUserPermission(userId) {
                     ) {
                       checklistPermissionType = 'Edit';
                     } else if (
-                      userPermissionData.checklist_permissions.campaigns[
+                      userPermissionData.checklist_permissions.checklists[
                         checklist.checklist_id
                       ].indexOf('FILL') !== -1
                     ) {
@@ -197,7 +197,7 @@ export function getAllChecklistData() {
           }
           userPermission.push(permissionObject);
         });
-        dispatch(getPermissionSuccess(userPermission, undefined));
+        dispatch(getPermissionSuccess(userPermission, 0));
       })
       .catch(ex => {
         console.log('Failed to fetch entity', ex);
