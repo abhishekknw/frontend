@@ -281,7 +281,7 @@ export default class CreateChecklistTemplate extends React.Component {
 
     let error = false;
     let checklist_columns = this.state.checklist_columns;
-    checklist_columns.map(item => {
+    checklist_columns.forEach(item => {
       if (typeof item.column_type !== 'string') {
         item.column_type = item.column_type.value;
       }

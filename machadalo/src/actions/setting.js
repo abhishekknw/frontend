@@ -278,3 +278,47 @@ export function deleteUserPermission(permissionId, callback) {
       });
   };
 }
+
+export function getloggedInUserPermissionStart() {
+  return {
+    type: types.GET_LOGGED_IN_USER_PERMISSION_START
+  };
+}
+
+export function getloggedInUserPermissionSuccess(loggedInChecklistPermission) {
+  return {
+    type: types.GET_LOGGED_IN_USER_PERMISSION_SUCCESS,
+    loggedInChecklistPermission: loggedInChecklistPermission
+  };
+}
+
+export function getloggedInUserPermissionFail() {
+  return {
+    type: types.GET_LOGGED_IN_USER_PERMISSION_FAIL
+  };
+}
+
+export function getloggedInUserPermission() {
+  return (dispatch, getState) => {
+    dispatch(getloggedInUserPermissionStart());
+
+    const { auth } = getState();
+    request
+      .get(`${config.API_URL}/v0/ui/checklists/permissions/self/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        let loggedInUserPermission = resp.body.data;
+        if (loggedInUserPermission === 'no_permission_exists') {
+          loggedInUserPermission = [];
+        } else {
+          loggedInUserPermission = loggedInUserPermission.checklist_permissions;
+        }
+        dispatch(getloggedInUserPermissionSuccess(loggedInUserPermission));
+      })
+      .catch(ex => {
+        console.log('Failed to fetch entity', ex);
+
+        dispatch(getloggedInUserPermissionFail());
+      });
+  };
+}
