@@ -156,8 +156,11 @@
   <div class="pageTitle">
     <h3>List Of All Suppliers Of Campaign {{campaignName}}</h3>
   </div>
+
   <div class="panel-body">
     <div>
+      <input type="text" ng-model="searchSupplier" class="form-control" placeholder="Search">
+      <br>
       <table class="table table-bordered table-responsive">
         <thead>
           <tr>
@@ -170,7 +173,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="supplier in suppliers">
+          <tr ng-repeat="supplier in suppliers|filter : searchSupplier">
             <td>{{$index+1}}</td>
             <td>{{supplier.name}}</td>
             <td>{{supplier.area}}</td>
