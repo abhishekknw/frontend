@@ -92,6 +92,6 @@ angular
       opsExecutionPage        : 'opsExecutionPage',
       showProposalHistoryPage : 'showProposalHistoryPage',
       dashboardPage            : 'dashboard',
-      enterLeadsFromAppication : 'can_enter_leads_from_applicaton'
+      enter_leads_from_application_access : 'enter_leads_from_application_access'
     },
   });

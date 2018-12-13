@@ -12,7 +12,7 @@
     var enterLeadsService = {};
 
         enterLeadsService.getLeadFormDetails = function(formId){
-          var url = url_base_leads + formId + "/";
+          var url = url_base_leads + formId + "/form_by_id/";
           return machadaloHttp.get(url);
         }
 

@@ -1,11 +1,13 @@
 <link rel="stylesheet" href="/modules/pages/enterLeads/enterLeads.tmpl.css">
 <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
+
 <div ng-loading="loading"></div> <!--For displaying loading icon-->
 <div ng-show="isEmpty" style="text-align:center;"><h2>{{msg}}</h2></div>
+<div><nav-bar></nav-bar></div>
 
 <!-- <main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading"> -->
 
-<div class="panel">
+<div class="panel" style="margin-top:20px">
   <div class="pageTitle">
     <h3>Leads</h3>
     Name of Society : {{supplierData.name}}<br/>
@@ -14,7 +16,7 @@
   </div>
   <button class="btn btn-danger" ng-click="getLeadsBySupplier()" ng-if="!viewLeads">View Leads</button>
   <button class="btn btn-danger" ng-click="changeView()" ng-if="viewLeads">Back</button>
-  <input type="text" class="form-control" ng-model="searchData" placeholder="search">
+  <input type="text" class="form-control" ng-model="searchData" placeholder="search" ng-if="viewLeads">
     <form name="leadForm"  style="margin:5%;" ng-if="!viewLeads">
     <div class="" ng-repeat="item in leadModelData">
       <div class="form-group" style="padding-bottom:0;padding-top:0;">
@@ -31,7 +33,7 @@
           {{item.key_name}}
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-            <input type="text" name="contact_phone"  class="form-control" ng-pattern="/^(\d{10})$/" ng-model="item.value" required/>
+            <input type="text" name="contact_phone"  class="form-control" ng-pattern="/^(\d{10})$/" ng-model="item.value"/>
              <span class="show-error" ng-show="leadForm.contact_phone.$error.pattern">Please Enter Valid 10 Digit Mobile Number</span>
           </div>
         </div>
@@ -99,12 +101,13 @@
   <table class="table table-bordered table-responsive">
       <thead>
           <tr>
-            <th ng-repeat="header in leadsData.headers">{{header.key_name}}</th>
+            <th ng-repeat="header in leadsData.headers" ng-if="$index != 0">{{header.key_name}}</th>
           </tr>
       </thead>
       <tbody>
         <tr ng-repeat="alias in leadsData.values | filter : search">
-          <td ng-repeat="lead in alias">{{lead.value}}</td>
+          <td>{{$index + 1}}</td>
+          <td ng-repeat="lead in alias" ng-if="$index !=0">{{lead.value}}</td>
         </tr>
       </tbody>
   </table>
