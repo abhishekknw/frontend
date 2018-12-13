@@ -5,7 +5,8 @@ export const settings = createReducer(
   {
     permissionList: [],
     userPermission: [],
-    currentUserPermissionId: undefined
+    currentUserPermissionId: undefined,
+    loggedInChecklistPermission: {}
   },
 
   {
@@ -40,6 +41,21 @@ export const settings = createReducer(
       return Object.assign({}, state, {
         userPermission: [],
         currentUserPermissionId: undefined
+      });
+    },
+    [types.GET_LOGGED_IN_USER_PERMISSION_START](state) {
+      return Object.assign({}, state, {
+        loggedInChecklistPermission: {}
+      });
+    },
+    [types.GET_LOGGED_IN_USER_PERMISSION_SUCCESS](state, action) {
+      return Object.assign({}, state, {
+        loggedInChecklistPermission: action.loggedInChecklistPermission
+      });
+    },
+    [types.GET_LOGGED_IN_USER_PERMISSION_FAIL](state) {
+      return Object.assign({}, state, {
+        loggedInChecklistPermission: {}
       });
     }
   }

@@ -35,7 +35,7 @@ const classes = {
 
 export default class PermissionModal extends React.Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       data: {
         entityName: 'All Campaign',
@@ -43,40 +43,32 @@ export default class PermissionModal extends React.Component {
         entityId: 'all',
         data: []
       },
-      userPermissionId: undefined,
       userOptions: [],
       selectedUser: {
         label: undefined,
         value: undefined
       }
     };
-    this.onSubmit = this.onSubmit.bind(this);
     this.onSelectUser = this.onSelectUser.bind(this);
   }
 
   componentWillMount() {
     if (this.props.createPermission) {
       this.props.getUsersList();
-      this.props.getAllChecklistData();
-    } else {
-      this.props.getUserPermission(this.props.modalUserId);
     }
   }
 
   componentDidUpdate() {
     if (
-      (!this.state.data.data.length &&
-        this.props.settings.userPermission.length) ||
+      (!this.state.data.data.length && this.props.dataInfo.length) ||
       (this.state.data.data.length &&
-        this.props.settings.userPermission.length &&
-        this.state.data.data[0].entityId !==
-          this.props.settings.userPermission[0].entityId)
+        this.props.dataInfo.length &&
+        this.state.data.data[0].entityId !== this.props.dataInfo[0].entityId)
     ) {
       let dataInfo = this.state.data;
-      dataInfo.data = this.props.settings.userPermission;
+      dataInfo.data = this.props.dataInfo;
       this.setState({
-        data: dataInfo,
-        userPermissionId: this.props.settings.currentUserPermissionId
+        data: dataInfo
       });
     }
     if (
@@ -102,65 +94,6 @@ export default class PermissionModal extends React.Component {
     this.setState({
       selectedUser: value
     });
-  }
-
-  onSubmit() {
-    let requestData = {
-      id: undefined,
-      checklist_permissions: {
-        campaigns: {},
-        checklists: {}
-      },
-      user_id: undefined
-    };
-    if (!this.props.createPermission) {
-      requestData.id = this.state.userPermissionId;
-      requestData.user_id = this.props.modalUserId;
-    } else {
-      requestData.user_id = this.state.selectedUser.value;
-    }
-    this.state.data.data.forEach(campaignData => {
-      if (
-        campaignData.type === 'campaign' &&
-        campaignData.permission !== 'None'
-      ) {
-        if (campaignData.permission === 'Edit') {
-          requestData.checklist_permissions.campaigns[campaignData.entityId] = [
-            'EDIT',
-            'VIEW',
-            'DELETE',
-            'FILL',
-            'FREEZE',
-            'UNFREEZE'
-          ];
-        } else {
-          requestData.checklist_permissions.campaigns[campaignData.entityId] = [
-            'VIEW',
-            'FILL',
-            'FREEZE'
-          ];
-        }
-      }
-      if (campaignData.data.length) {
-        campaignData.data.forEach(checklistData => {
-          if (
-            checklistData.type === 'checklist' &&
-            checklistData.permission !== 'None'
-          ) {
-            if (checklistData.permission === 'Edit') {
-              requestData.checklist_permissions.checklists[
-                checklistData.entityId
-              ] = ['EDIT', 'VIEW', 'DELETE', 'FILL', 'FREEZE', 'UNFREEZE'];
-            } else {
-              requestData.checklist_permissions.checklists[
-                checklistData.entityId
-              ] = ['VIEW', 'FILL', 'FREEZE'];
-            }
-          }
-        });
-      }
-    });
-    this.props.onSubmit(requestData);
   }
 
   requestTreeLeafChildrenData = (leafData, chdIndex, doExpand) => {
@@ -308,7 +241,7 @@ export default class PermissionModal extends React.Component {
           <button
             type="button"
             className="btn btn--danger"
-            onClick={this.onSubmit}
+            onClick={() => this.props.onSubmit(this.state)}
           >
             Submit
           </button>

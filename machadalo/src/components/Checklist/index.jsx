@@ -14,7 +14,7 @@ import './index.css';
 
 class Checklist extends React.Component {
   componentWillMount() {
-    this.props.getCampaignsList();
+    this.props.getloggedInUserPermission();
   }
 
   render() {

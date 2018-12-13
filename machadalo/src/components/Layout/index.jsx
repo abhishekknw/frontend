@@ -8,6 +8,7 @@ import Toastr from './../toastr';
 import ChecklistContainer from './../../containers/ChecklistContainer';
 import EntityContainer from './../../containers/EntityContainer';
 import SettingContainer from './../../containers/SettingContainer';
+import LeadsContainer from './../../containers/LeadsContainer';
 
 import './index.css';
 
@@ -50,6 +51,7 @@ export default class Layout extends React.Component {
                 path={`${match.path}/settings`}
                 component={SettingContainer}
               />
+              <Route path={`${match.path}/leads`} component={LeadsContainer} />
             </Switch>
           </div>
         </div>
