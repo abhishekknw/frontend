@@ -61,6 +61,10 @@ $scope.addNewPhase =true;
     {name:'Visit Required', code : 'VR'},
     {name:'Call Required', code : 'CR'},
   ];
+  $scope.bookingPriority = [
+    {name: 'Very High', code: 'VH'},
+    {name: 'High', code: 'HH'}
+  ];
 
 
   $scope.payment_status = [

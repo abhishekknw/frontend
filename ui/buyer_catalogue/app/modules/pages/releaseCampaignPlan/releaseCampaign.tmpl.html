@@ -49,7 +49,9 @@
             <th>Inventory Supplier Price</th>
             <th>Total Supplier Price   (Per Flat)  </th>
             <th>Negotiated Price</th>
+            <th>Cost Per Flat</th>
             <th>Freebies</th>
+            <th>Booking Priority</th>
             <th>Booking Status</th>
             <th>Phase</th>
             <th>Mode Of Payment</th>
@@ -97,7 +99,9 @@
               <span  ng-disabled="!supplier.phase_no" class="error" ng-show="priceform.price.$error.min">{{positiveNoError}}</span>
               <input  ng-disabled="!supplier.phase_no" type="number" name="price" ng-model="supplier.total_negotiated_price" class="form-control spacing input-width" min="0" permission = "[permissions.addNegotiatedPrice]">
            <br>{{supplier.total_negotiated_price / supplier.flat_count|| 0 | limitTo:8}}  </td>
-
+           <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
+               <input  ng-disabled="!supplier.phase_no" type="number"  ng-model="supplier.cost_per_flat" class="form-control spacing input-width" min="0">
+           </td>
           <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
             <div ng-repeat="freebie in customFreebies">
               <input type="checkbox" checklist-model="supplier.freebies" checklist-value="freebie"> {{freebie}}
@@ -107,6 +111,13 @@
               <span  ng-disabled="!supplier.phase" ng-dropdown-multiselect="" options="multiSelect"  extra-settings="selected_baseline_settings"
               selected-model="supplier.searchSelectAllModel" translation-texts="selected_baselines_customTexts"></span>
             </td> -->
+            <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first">
+              <select  class="form-control spacing input-width" ng-model="supplier.booking_priority">
+                <option value="" disabled>Select</option>
+                <option style="width:100%;" ng-repeat="item in bookingPriority" value="{{item.code}}">
+                  {{item.name}}</option>
+              </select>
+            </td>
             <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first">
               <select  class="form-control spacing input-width" ng-model="supplier.booking_status" permission = "[permissions.changeBookingStatus]">
                 <option style="width:100%;" ng-repeat="item in booking_status" value="{{item.code}}"
