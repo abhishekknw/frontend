@@ -430,6 +430,15 @@ angular.module('catalogueApp')
           $scope.optionForm.option = undefined;
           }
 
+          $scope.updateKeyOption = function(option,index){
+            console.log(option);
+            if(!$scope.newLeadFormFields[index].hasOwnProperty('key_options')){
+                $scope.newLeadFormFields[index]['key_options'] = [];
+            }
+            $scope.newLeadFormFields[index]['key_options'].push(option);
+            $scope.optionForm.option = undefined;
+            }
+
       $scope.getMultipleLeadForms = function(supplier){
         $scope.changeView('viewLeadForms',$scope.campaignInfo);
       }
@@ -550,4 +559,40 @@ angular.module('catalogueApp')
           console.log(response);
         })
       }
+
+      // $scope.updateForm = function(){
+      //   console.log($scope.newLeadFormFields);
+      //   campaignLeadsService.updateLeadForm($scope.leads_form_id,$scope.newLeadFormFields)
+      //   .then(function onSuccess(response){
+      //     console.log(response);
+      //     $scope.newLeadFormFields = [];
+      //     $('#addNewLeadFormFields').modal('hide');
+      //     swal(constants.name,constants.add_data_success, constants.success);
+      //     $scope.changeView('viewLeadForms',$scope.campaignInfo);
+      //   }).catch(function onError(response){
+      //     console.log(response);
+      //   })
+      // }
+
+  $scope.updateFormFields  = function(){
+    console.log($scope.newLeadFormFields);
+    var data = {
+      leads_form_name : $scope.formName.name,
+      leads_form_items : $scope.leadFormFields
+    }
+    console.log(data);
+    angular.forEach(data.leads_form_items, function(item,index){
+      item.order_id = index + 1;
+    })
+    campaignLeadsService.updateFormFields($scope.leads_form_id,data,$scope.campaignId)
+    .then(function onSuccess(response){
+      console.log(response);
+      $scope.leadFormFields = [];
+      $scope.formName.name = undefined;
+      swal(constants.name,constants.update_success,constants.success);
+      $scope.changeView('viewLeadForms',$scope.campaignInfo);
+    }).catch(function onError(response){
+      console.log(response);
+    })
+  }
     });//Controller ends here

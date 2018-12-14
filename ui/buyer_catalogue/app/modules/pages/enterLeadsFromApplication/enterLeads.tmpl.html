@@ -15,6 +15,7 @@
     Subarea : {{supplierData.subarea}}
   </div>
   <button class="btn btn-danger" ng-click="getLeadsBySupplier()" ng-if="!viewLeads">View Leads</button>
+  
   <button class="btn btn-danger" ng-click="changeView()" ng-if="viewLeads">Back</button>
   <input type="text" class="form-control" ng-model="searchData" placeholder="search" ng-if="viewLeads">
     <form name="leadForm"  style="margin:5%;" ng-if="!viewLeads">
