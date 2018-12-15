@@ -7,6 +7,7 @@ import Toastr from './../toastr';
 
 import ChecklistContainer from './../../containers/ChecklistContainer';
 import EntityContainer from './../../containers/EntityContainer';
+import InventoryContainer from './../../containers/InventoryContainer';
 import SettingContainer from './../../containers/SettingContainer';
 import LeadsContainer from './../../containers/LeadsContainer';
 
@@ -45,6 +46,10 @@ export default class Layout extends React.Component {
               <Route
                 path={`${match.path}/entity`}
                 component={EntityContainer}
+              />
+              <Route
+                path={`${match.path}/inventory`}
+                component={InventoryContainer}
               />
 
               <Route
