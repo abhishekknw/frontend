@@ -4,6 +4,38 @@ angular.module('catalogueApp')
       $scope.formId = $stateParams.formId;
       $scope.supplierId = $stateParams.supplierId;
       $scope.searchQuery = undefined;
+      $scope.leadKeyTypes = [
+        {name : 'STRING'},
+        {name : 'INT'},
+        {name : 'EMAIL'},
+        {name : 'PASSWORD'},
+        {name : 'PHONE'},
+        {name : 'RADIO'},
+        {name : 'DROPDOWN'},
+        {name : 'CHECKBOX'},
+        {name : 'TEXTAREA'},
+        {name : 'BOOLEAN'},
+        {name : 'FLOAT'},
+        {name : 'DATE'}
+      ];
+      $scope.keyTypesMap = {
+        'STRING' : 'text',
+        'INT' : 'number',
+        'EMAIL' : 'email',
+        'PASSWORD' : 'password',
+        'PHONE' : 'number',
+        'RADIO' : 'radio',
+        'CHECKBOX' : 'checkbox',
+        'TEXTAREA' : 'textarea',
+        'BOOLEAN' : 'radio',
+        'FLOAT' : 'number',
+        'DATE' : 'date'
+      }
+      var leadFormField = {
+        key_name : '',
+        key_type : '',
+        order_id : 1
+      };
       var getLeadFormDetails = function(){
         enterLeadsService.getLeadFormDetails($scope.formId)
         .then(function onSuccess(response){
