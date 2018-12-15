@@ -525,8 +525,10 @@
                                         <td style="text-align:left;background-color:green;color:#ffffff !important;text-transform: capitalize;" ng-if="key == 'ongoing'">{{key}}</td>
 
                                         <td style="text-align:left; "  ng-if="key != 'ongoing'">{{data.total_suppliers_count}}</td>
-                                        <td style="text-align:left;background-color:green;color:#ffffff !important"  ng-if="key == 'ongoing'">{{data.total_suppliers_count}}</td>
-
+                                        <td style="text-align:left;background-color:#cb1925;color:#ffffff !important"  ng-if="key == 'ongoing'">
+                                        <a id="ref" ng-mouseover="showPopover=true;" ng-mouseleave="showPopover=false;" style="color:#ffffff;background-color:#cb1925">{{data.total_suppliers_count}}
+                                        <div class="popover" ng-show="showPopover">{{key}}</div></a>
+                                        </td>
                                         <td style="text-align:left;" ng-if="key != 'ongoing'">{{data.flat_count}}</td>
                                         <td style="text-align:left;background-color:green;color:#ffffff !important" ng-if="key == 'ongoing'">{{data.flat_count}}</td>
 

@@ -42,6 +42,7 @@ angular.module('catalogueApp')
           console.log(response);
           $scope.loading = response;
           $scope.leadModelData = response.data.data.leads_form_items;
+          console.log($scope.leadModelData);
         }).catch(function onError(response){
           console.log(response);
         })

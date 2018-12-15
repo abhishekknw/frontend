@@ -610,7 +610,7 @@ color: #ffffff !important;
   display: block;
   max-height: 300px;
   overflow-y: auto;
-  overflow-x: hidden; 
+  overflow-x: hidden;
 }
 
 
@@ -827,4 +827,20 @@ border-radius: 10px;
 .emailModal{
   height: 150px;
   text-align: justify;
+}
+
+#ref {
+    position: relative;
+}
+.popover {
+    text-decoration: none;
+    color: black;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: 200px;
+    height: 60px;
+    display: block;
+    padding: 0 20px;
+    /* z-index: 100; */
 }

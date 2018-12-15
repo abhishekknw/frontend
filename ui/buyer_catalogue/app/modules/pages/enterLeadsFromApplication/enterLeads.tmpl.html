@@ -15,9 +15,11 @@
     Subarea : {{supplierData.subarea}}
   </div>
   <button class="btn btn-danger" ng-click="getLeadsBySupplier()" ng-if="!viewLeads">View Leads</button>
-  
+
   <button class="btn btn-danger" ng-click="changeView()" ng-if="viewLeads">Back</button>
-  <input type="text" class="form-control" ng-model="searchData" placeholder="search" ng-if="viewLeads">
+  <br>
+  <input type="text" class="form-control" ng-model="searchSupplier" placeholder="search" ng-if="viewLeads">
+  <br>
     <form name="leadForm"  style="margin:5%;" ng-if="!viewLeads">
     <div class="" ng-repeat="item in leadModelData">
       <div class="form-group" style="padding-bottom:0;padding-top:0;">
@@ -108,7 +110,7 @@
             </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="alias in leadsData.values | filter : search">
+          <tr ng-repeat="alias in leadsData.values | filter : searchSupplier">
             <td ng-repeat="lead in alias">{{lead.value}}</td>
           </tr>
         </tbody>

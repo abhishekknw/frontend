@@ -1012,6 +1012,7 @@
            // ];
            // console.log($scope.overallMetricStatus);
            $scope.overallMetric = response.data.data.overall_metrics;
+           console.log($scope.overallMetric);
 
             angular.forEach($scope.overallMetric , function(data,key){
               $scope.metricStatusValue = data;
@@ -2956,5 +2957,6 @@ $scope.planets = [
       ];
 })
 
-
+    $scope.showPopover=false;
+    
 })();
