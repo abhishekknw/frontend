@@ -69,7 +69,6 @@ export function getBaseInventoryFail() {
 }
 
 export function getBaseInventory() {
-  console.log('in get BAse Inventory');
   return (dispatch, getState) => {
     dispatch(getBaseInventoryStart());
 
@@ -84,6 +83,50 @@ export function getBaseInventory() {
       .catch(ex => {
         console.log('Failed to fetch base inventories', ex);
         dispatch(getBaseInventoryFail());
+      });
+  };
+}
+
+//Delete Base Inventory
+export function deleteBaseInventoryStart() {
+  return {
+    type: types.DELETE_BASE_INVENTORY_START
+  };
+}
+
+export function deleteBaseInventorySuccess(baseInventoryId) {
+  return {
+    type: types.DELETE_BASE_INVENTORY_SUCCESS,
+    baseInventoryId
+  };
+}
+
+export function deleteBaseInventoryFail() {
+  return {
+    type: types.DELETE_BASE_INVENTORY_FAIL
+  };
+}
+
+export function deleteBaseInventory({ baseInventoryId }, callback) {
+  return (dispatch, getState) => {
+    dispatch(deleteBaseInventoryStart());
+
+    const { auth } = getState();
+
+    request
+      .delete(
+        `${
+          config.API_URL
+        }/v0/ui/dynamic-inventory/base-inventory/${baseInventoryId}/`
+      )
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(deleteBaseInventorySuccess(baseInventoryId));
+        callback();
+      })
+      .catch(ex => {
+        console.log('Failed to fetch base inventories', ex);
+        dispatch(deleteBaseInventoryFail());
       });
   };
 }

@@ -36,6 +36,25 @@ export const baseInventory = createReducer(
       return Object.assign({}, state, {
         baseInventory: undefined
       });
+    },
+    [types.DELETE_BASE_INVENTORY_START](state) {
+      return Object.assign({}, state, {
+        baseInventory: undefined
+      });
+    },
+    [types.DELETE_BASE_INVENTORY_SUCCESS](state, action) {
+      const newList = state.list.slice();
+
+      for (let i = 0, l = newList.length; i < l; i += 1) {
+        if (newList[i]._id === action.baseInventoryId) {
+          newList.splice(i, 1);
+          break;
+        }
+      }
+
+      return Object.assign({}, state, {
+        list: newList
+      });
     }
   }
 );

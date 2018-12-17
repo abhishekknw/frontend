@@ -14,16 +14,17 @@ export default class List extends React.Component {
 
   renderBaseInventoryRow(baseInventory, index) {
     console.log(baseInventory, index);
+    const onRemove = () => {
+      this.props.deleteBaseInventory({
+        baseInventoryId: baseInventory._id
+      });
+    };
     return (
       <tr key={baseInventory._id}>
         <td>{index + 1}</td>
         <td>{baseInventory.name}</td>
         <td>
-          <button
-            type="button"
-            className="btn btn--danger"
-            // onClick={onRemove}
-          >
+          <button type="button" className="btn btn--danger" onClick={onRemove}>
             Remove
           </button>
         </td>
