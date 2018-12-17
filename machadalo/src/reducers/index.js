@@ -4,6 +4,7 @@ import * as authReducer from './auth';
 import * as campaignReducer from './campaign';
 import * as supplierReducer from './supplier';
 import * as checklistReducer from './checklist';
+import * as inventoryReducer from './inventory';
 import * as entityReducer from './entity';
 import * as settingReducer from './setting';
 import * as userReducer from './user';
@@ -22,7 +23,8 @@ const reducers = combineReducers(
     entityReducer,
     settingReducer,
     userReducer,
-    leadReducer
+    leadReducer,
+    inventoryReducer
   )
 );
 

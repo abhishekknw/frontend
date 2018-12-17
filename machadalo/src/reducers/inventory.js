@@ -1,28 +1,43 @@
 import createReducer from './../lib/createReducer';
 import * as types from './../actions/types';
 
-export const entity = createReducer(
+export const baseInventory = createReducer(
   {
+    list: [],
     baseInventory: undefined
   },
-
   {
+    [types.GET_BASE_INVENTORY_START](state) {
+      return Object.assign({}, state, {
+        list: []
+      });
+    },
+    [types.GET_BASE_INVENTORY_SUCCESS](state, action) {
+      return Object.assign({}, state, {
+        list: action.baseInventory
+      });
+    },
+    [types.GET_BASE_INVENTORY_FAIL](state) {
+      return Object.assign({}, state, {
+        list: []
+      });
+    },
     [types.POST_BASE_INVENTORY_START](state) {
       return Object.assign({}, state, {
-        entityType: undefined
+        baseInventory: undefined
       });
     },
     [types.POST_BASE_INVENTORY_SUCCESS](state, action) {
       return Object.assign({}, state, {
-        entityType: action.data
+        baseInventory: action.data
       });
     },
     [types.POST_BASE_INVENTORY_FAIL](state) {
       return Object.assign({}, state, {
-        entityType: undefined
+        baseInventory: undefined
       });
     }
   }
 );
 
-export { entity as default };
+export { baseInventory as default };
