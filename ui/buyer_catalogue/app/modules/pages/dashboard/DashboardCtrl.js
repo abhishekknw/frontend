@@ -1013,6 +1013,10 @@
            // console.log($scope.overallMetricStatus);
            $scope.overallMetric = response.data.data.overall_metrics;
            console.log($scope.overallMetric);
+           angular.forEach(response.data.data.ongoing , function(data,key){
+             $scope.extraLeads = data;
+             console.log($scope.extraLeads);
+           })
 
             angular.forEach($scope.overallMetric , function(data,key){
               $scope.metricStatusValue = data;
@@ -1353,6 +1357,7 @@
        console.log($scope.Data.last_week.flat_count);
        $scope.localityData =  $scope.LeadsByCampaign.locality_data;
         $scope.phaseData =  $scope.LeadsByCampaign.phase_data;
+        console.log($scope.phaseData);
        $scope.locationHeader = [];
        angular.forEach($scope.LeadsByCampaign.locality_data, function(data,key){
           $scope.value1 = key;
@@ -2958,5 +2963,5 @@ $scope.planets = [
 })
 
     $scope.showPopover=false;
-    
+
 })();

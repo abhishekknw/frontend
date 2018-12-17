@@ -996,10 +996,10 @@
                                     <div class="table-responsive">
                                       <table class="table">
                                         <thead>
-                                        <tr>
+                                         <tr>
                                             <th>INDEX</th>
                                             <th ng-click="Sort('phase')">Phase No &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
-                                            <th ng-click="Sort('supplier.society_name')">Society Name &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th style="width:200px;" ng-click="Sort('supplier.society_name')">Society Name &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                             <th>Society Area (SubArea)</th>
                                             <th>Society Type</th>
                                             <th ng-click="Sort('supplier.flat_count')" >Flat Count &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
@@ -1011,8 +1011,8 @@
                                             <th ng-if="supplierStatus != 'upcoming'">Stall</th>
                                             <th ng-if="supplierStatus != 'upcoming'">Other Images</th>
                                             <th>Permission Box</th>
-                                            <th>Add <br> Comments</th>
-                                            <th>View <br> Comments</th>
+                                            <th style="width:200px;">Add <br> Comments</th>
+                                            <th style="width:200px;">View <br> Comments</th>
                                             </tr>
                                             <tr colspan="9">
                                               <td></td>
@@ -1028,7 +1028,7 @@
                                                   <tr ng-repeat="supplier in supplierAndInvData |filter:query |filter : f | orderBy:sort:reversesort">
                                                   <td style="vertical-align:middle">{{$index + 1}}</td>
                                                   <td style="vertical-align:middle">{{supplier.phase}}</td>
-                                                  <td class="col-md-2">{{supplier.supplier.society_name}}</td>
+                                                  <td style="width:200px;" class="col-md-2">{{supplier.supplier.society_name}}</td>
                                                   <td class="col-md-2">{{supplier.supplier.society_locality}} <small>({{supplier.supplier.society_subarea}})</small></td>
                                                   <td class="col-md-2">{{supplier.supplier.society_type_quality}}</td>
                                                   <td class="col-md-2">{{supplier.supplier.flat_count}}</td>
@@ -1068,16 +1068,16 @@
                                                   <td>
                                                     <a  ng-click="getPermissionBoxImages(supplier.supplier)">View</a>
                                                   </td>
-                                                  <td>
-                                                    <button type="button" class="btn btn-danger" ng-click="enableAddComments($index)">Add</button>
+                                                  <td style="width:200px;">
+                                                    <button type="button" class="btn btn-danger" ng-click="enableAddComments($index)">Add Comments</button>
                                                     <div ng-if="enableComments == $index">
                                                       <textarea name="name" rows="4" cols="20" placeholder="Enter Here.." ng-model="commentModal.comment"></textarea>
                                                       <button class="btn btn-success form-control" ng-disabled="!commentModal.comment" ng-click="addComment(supplier.shortlisted_space_id)">Add</button>
                                                     </div>
                                                   </td>
 
-                                                  <td>
-                                                    <button type="button" class="btn btn-danger" ng-click="viewComments(supplier,$index)">View</button><br>
+                                                  <td style="width:200px;">
+                                                    <button type="button" class="btn btn-danger" ng-click="viewComments(supplier,$index)">View Comments</button><br>
                                                     <div class="panel panel-default" ng-if="enableViewComments == $index" style="height:100px;overflow-y:scroll;padding-top:40px;">
                                                       <div class="talk-bubble tri-right round left-top"  ng-repeat="item in commentsData.general" style="margin-top:-20px">
                                                         <div class="talktext" style="font-color:black">
@@ -1423,9 +1423,9 @@
                             <td>
                               <button class="btn btn-danger" ng-click="viewLeadsForSelectedCampaign(campaign,campaign.campaign_id)">View Leads</button>
                             </td>
-                            <!-- <td>
+                            <td>
                               <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id)" data-target="#sendEmailModal" data-toggle="modal">Email Leads</button>
-                            </td> -->
+                            </td>
                           </tr>
                         </tbody>
                       </table>
