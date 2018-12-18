@@ -1026,8 +1026,8 @@
                                             <tbody class="detailedTable">
                                               <div class="row">
                                                   <tr ng-repeat="supplier in supplierAndInvData |filter:query |filter : f | orderBy:sort:reversesort">
-                                                  <td style="vertical-align:middle">{{$index + 1}}</td>
-                                                  <td style="vertical-align:middle">{{supplier.phase}}</td>
+                                                  <td>{{$index + 1}}</td>
+                                                  <td>{{supplier.phase}}</td>
                                                   <td style="width:200px;" class="col-md-2">{{supplier.supplier.society_name}}</td>
                                                   <td class="col-md-2">{{supplier.supplier.society_locality}} <small>({{supplier.supplier.society_subarea}})</small></td>
                                                   <td class="col-md-2">{{supplier.supplier.society_type_quality}}</td>
@@ -1049,18 +1049,18 @@
                                                   <td ng-if="supplierStatus == 'ongoing' || supplierStatus == 'completed'">
                                                     <table class="table-responsive table table-bordered ">
                                                       <tr>
-                                                        <td style="color:#ffffff;" ng-if="supplier.images_data.BANNER && supplierStatus != 'upcoming'" style="background-color:#cb1925">BANNER <a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.BANNER.images)">({{supplier.images_data.BANNER.total_count}})</a></td>
+                                                        <td style="color:#ffffff;" ng-if="supplier.images_data.BANNER && supplierStatus != 'upcoming'" style="background-color:#cb1925"><small>Banner</small><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.BANNER.images)"><small>({{supplier.images_data.BANNER.total_count}})</small></a></td>
                                                       </tr>
                                                       <tr>
-                                                        <td style="color:#ffffff;" ng-if="supplier.images_data['OTHER IMAGES'] && supplierStatus != 'upcoming'" style="background-color:#cb1925">OTHER IMAGES <a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['OTHER IMAGES'].images)">({{supplier.images_data['OTHER IMAGES'].total_count}})</a></td>
+                                                        <td style="color:#ffffff;" ng-if="supplier.images_data['OTHER IMAGES'] && supplierStatus != 'upcoming'" style="background-color:#cb1925"><small>Others</small><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['OTHER IMAGES'].images)"><small>({{supplier.images_data['OTHER IMAGES'].total_count}})</small></a></td>
                                                         <!-- <td ng-if="!supplier.images_data['OTHER IMAGES']">NA</td> -->
                                                       </tr>
                                                       <tr>
-                                                        <td style="color:#ffffff;" ng-if="supplier.images_data['CERTIFICATION DISTRIBUTION'] && supplierStatus != 'upcoming'" style="background-color:#cb1925">CERTIFICATION DISTRIBUTION <a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['CERTIFICATION DISTRIBUTION'].images)">({{supplier.images_data['CERTIFICATION DISTRIBUTION'].total_count}})</a></td>
+                                                        <td style="color:#ffffff;" ng-if="supplier.images_data['CERTIFICATION DISTRIBUTION'] && supplierStatus != 'upcoming'" style="background-color:#cb1925"><small>Certification <br> Distribution</small><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['CERTIFICATION DISTRIBUTION'].images)"><small>({{supplier.images_data['CERTIFICATION DISTRIBUTION'].total_count}})</small></a></td>
                                                         <!-- <td ng-if="!supplier.images_data['CERTIFICATION DISTRIBUTION']">NA</td> -->
                                                       </tr>
                                                       <tr>
-                                                      <td style="color:#ffffff;" ng-if="supplier.images_data['STALL WITH PROMOTERS'] && supplierStatus != 'upcoming'" style="background-color:#cb1925">STALL WITH PROMOTERS <a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['STALL WITH PROMOTERS'].images)">({{supplier.images_data['STALL WITH PROMOTERS'].total_count}})</a></td>
+                                                      <td style="color:#ffffff;" ng-if="supplier.images_data['STALL WITH PROMOTERS'] && supplierStatus != 'upcoming'" style="background-color:#cb1925"><small>Stall With<br>Promoters</small><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['STALL WITH PROMOTERS'].images)"><small>({{supplier.images_data['STALL WITH PROMOTERS'].total_count}})</small></a></td>
                                                         <!-- <td ng-if="!supplier.images_data['CERTIFICATION DISTRIBUTION']">NA</td> -->
                                                       </tr>
                                                     </table>

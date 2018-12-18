@@ -147,7 +147,7 @@
       <div class="form-group col-md-12">
         <button class="btn btn-danger" ng-click="addLeadFormFields()" ng-if="!updateForm">Add</button>
         <button data-target="#addNewLeadFormFields" data-toggle="modal" class="btn btn-danger" style="margin:10px;" ng-if="updateForm">Add New Fields</button>
-        <button ng-click="updateFormFields" class="btn btn-danger" style="margin:10px;" ng-if="updateForm">Update Fields</button>
+        <button ng-click="updateFormFields()"  class="btn btn-danger" style="margin:10px;" ng-if="updateForm">Update Fields</button>
         <button ng-click="saveLeadForm()" style="text-align:right" class="btn btn-danger" ng-disabled="fieldForm.$invalid" ng-if="!updateForm">Submit</button>
       </div>
     </form>
