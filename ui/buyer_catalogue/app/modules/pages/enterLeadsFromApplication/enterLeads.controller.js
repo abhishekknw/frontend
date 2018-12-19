@@ -4,6 +4,7 @@ angular.module('catalogueApp')
       $scope.formId = $stateParams.formId;
       $scope.supplierId = $stateParams.supplierId;
       $scope.searchQuery = undefined;
+      $scope.editLeads = false;
       $scope.leadKeyTypes = [
         {name : 'STRING'},
         {name : 'INT'},
@@ -93,6 +94,31 @@ angular.module('catalogueApp')
       }
       $scope.changeView = function(){
         $scope.viewLeads = false;
+      }
+      $scope.getEditLeads = function(entryId){
+        console.log(entryId);
+        $scope.entryId = entryId;
+          enterLeadsService.getEditLeads($scope.formId,$scope.supplierId,entryId)
+          .then(function onSuccess(response){
+            console.log(response);
+            $scope.viewLeads = false;
+            $scope.editLeads = true;
+            $scope.leadModelData = response.data.data.leads_form_items;
+          }).catch(function onError(response){
+            console.log(response);
+          })
+      }
+      $scope.updateLeadDetails = function(entryId){
+        console.log(entryId);
+        console.log($scope.leadModelData);
+          enterLeadsService.updateLeadDetails($scope.formId,$scope.supplierId,$scope.entryId,$scope.leadModelData)
+          .then(function onSuccess(response){
+            console.log(response);
+            $scope.viewLeads = false;
+            $scope.editLeads = true;
+          }).catch(function onError(response){
+            console.log(response);
+          })
       }
 
 
