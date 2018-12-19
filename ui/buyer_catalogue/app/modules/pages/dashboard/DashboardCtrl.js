@@ -1352,9 +1352,12 @@
      result.then(function onSuccess(response){
        console.log(response);
        cfpLoadingBar.complete();
-       $scope.LeadsByCampaign = response.data.data;
-       $scope.Data = $scope.LeadsByCampaign;
-       console.log($scope.Data.last_week.flat_count);
+       if($scope.LeadsByCampaign){
+         $scope.LeadsByCampaign = response.data.data;
+         $scope.Data = $scope.LeadsByCampaign;
+         console.log($scope.Data);
+       }
+
        $scope.localityData =  $scope.LeadsByCampaign.locality_data;
         $scope.phaseData =  $scope.LeadsByCampaign.phase_data;
         console.log($scope.phaseData);
@@ -1532,9 +1535,9 @@
      var values1 = [];
      var values2 = [];
      angular.forEach(weekDataMerged, function(data,key){
-       console.log(data);
+       console.log(data.flat_count);
        console.log(key);
-       var keyWithFlatLabel =  key + ' (' + data['flat_count'] + ')';
+       var keyWithFlatLabel =  key + ' (' + key.flat_count + ')';
        var value1 =
           { x : keyWithFlatLabel, y : $scope.normalLeadsValues };
        var value2 =
@@ -1642,17 +1645,17 @@
      return temp_data;
    }
 //START :  code for 3 weeks summary
-var formatThreeWeeksSummary = function(data){
+var formatThreeWeeksSummary = function(data,key){
   var temp_data = [
     {
       key : "Total Leads in %",
       color : constants.colorKey1,
       values:
    [
-     { x: 'Total', y: data.overall_data.total_leads/data.overall_data.flat_count *100 },
-     { x: 'Last Week', y: data.last_week.total_leads/data.last_week.flat_count *100 },
-     { x: 'Last Two Week', y: data.last_two_weeks.total_leads/data.last_two_weeks.flat_count *100},
-     { x: 'Last Three Week', y: data.last_three_weeks.total_leads/data.last_three_weeks.flat_count *100 }
+     { x: 'Total' + '(' +data.overall_data.flat_count + ')' , y: data.overall_data.total_leads/data.overall_data.flat_count *100 },
+     { x: 'Last Week' + '(' +data.last_week.flat_count + ')' , y: data.last_week.total_leads/data.last_week.flat_count *100 },
+     { x: 'Last Two Week' + '(' +data.last_two_weeks.flat_count + ')' , y: data.last_two_weeks.total_leads/data.last_two_weeks.flat_count *100},
+     { x: 'Last Three Week' + '(' +data.last_three_weeks.flat_count + ')' , y: data.last_three_weeks.total_leads/data.last_three_weeks.flat_count *100 }
    ]
     },
     {
@@ -1660,10 +1663,10 @@ var formatThreeWeeksSummary = function(data){
       color : constants.colorKey2,
       values:
    [
-     { x: 'Total', y: data.overall_data.total_hot_leads/data.overall_data.flat_count *100 },
-     { x: 'Last Week', y: data.last_week.total_hot_leads/data.last_week.flat_count *100 },
-     { x: 'Last Two Week', y: data.last_two_weeks.total_hot_leads/data.last_two_weeks.flat_count *100  },
-     { x: 'Last Three Week', y: data.last_three_weeks.total_hot_leads/data.last_three_weeks.flat_count *100  }
+     { x: 'Total' + '(' +data.overall_data.flat_count + ')' , y: data.overall_data.total_hot_leads/data.overall_data.flat_count *100 },
+     { x: 'Last Week' + '(' +data.last_week.flat_count + ')' , y: data.last_week.total_hot_leads/data.last_week.flat_count *100 },
+     { x: 'Last Two Week' + '(' +data.last_two_weeks.flat_count + ')' , y: data.last_two_weeks.total_hot_leads/data.last_two_weeks.flat_count *100  },
+     { x: 'Last Three Week' + '(' +data.last_three_weeks.flat_count + ')' , y: data.last_three_weeks.total_hot_leads/data.last_three_weeks.flat_count *100  }
    ]
     }
   ];
