@@ -9,7 +9,7 @@ import './index.css';
 
 export default class Inventory extends React.Component {
   componentDidMount() {
-    // TODO: Fetch entity types
+    // TODO: Fetch inventory types
   }
 
   render() {

@@ -4,12 +4,46 @@ angular.module('catalogueApp')
       $scope.formId = $stateParams.formId;
       $scope.supplierId = $stateParams.supplierId;
       $scope.searchQuery = undefined;
+      $scope.editLeads = false;
+      $scope.leadKeyTypes = [
+        {name : 'STRING'},
+        {name : 'INT'},
+        {name : 'EMAIL'},
+        {name : 'PASSWORD'},
+        {name : 'PHONE'},
+        {name : 'RADIO'},
+        {name : 'DROPDOWN'},
+        {name : 'CHECKBOX'},
+        {name : 'TEXTAREA'},
+        {name : 'BOOLEAN'},
+        {name : 'FLOAT'},
+        {name : 'DATE'}
+      ];
+      $scope.keyTypesMap = {
+        'STRING' : 'text',
+        'INT' : 'number',
+        'EMAIL' : 'email',
+        'PASSWORD' : 'password',
+        'PHONE' : 'number',
+        'RADIO' : 'radio',
+        'CHECKBOX' : 'checkbox',
+        'TEXTAREA' : 'textarea',
+        'BOOLEAN' : 'radio',
+        'FLOAT' : 'number',
+        'DATE' : 'date'
+      }
+      var leadFormField = {
+        key_name : '',
+        key_type : '',
+        order_id : 1
+      };
       var getLeadFormDetails = function(){
         enterLeadsService.getLeadFormDetails($scope.formId)
         .then(function onSuccess(response){
           console.log(response);
           $scope.loading = response;
           $scope.leadModelData = response.data.data.leads_form_items;
+          console.log($scope.leadModelData);
         }).catch(function onError(response){
           console.log(response);
         })
@@ -60,6 +94,31 @@ angular.module('catalogueApp')
       }
       $scope.changeView = function(){
         $scope.viewLeads = false;
+      }
+      $scope.getEditLeads = function(entryId){
+        console.log(entryId);
+        $scope.entryId = entryId;
+          enterLeadsService.getEditLeads($scope.formId,$scope.supplierId,entryId)
+          .then(function onSuccess(response){
+            console.log(response);
+            $scope.viewLeads = false;
+            $scope.editLeads = true;
+            $scope.leadModelData = response.data.data.leads_form_items;
+          }).catch(function onError(response){
+            console.log(response);
+          })
+      }
+      $scope.updateLeadDetails = function(entryId){
+        console.log(entryId);
+        console.log($scope.leadModelData);
+          enterLeadsService.updateLeadDetails($scope.formId,$scope.supplierId,$scope.entryId,$scope.leadModelData)
+          .then(function onSuccess(response){
+            console.log(response);
+            $scope.viewLeads = false;
+            $scope.editLeads = true;
+          }).catch(function onError(response){
+            console.log(response);
+          })
       }
 
 

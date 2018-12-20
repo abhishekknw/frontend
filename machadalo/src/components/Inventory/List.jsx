@@ -28,13 +28,13 @@ export default class List extends React.Component {
           </button>
         </td>
         <td>
-          <button
+          <Link
             type="button"
             to={`/r/inventory/edit/${baseInventory._id}`}
             className="btn btn--danger"
           >
             Edit Checklist
-          </button>
+          </Link>
         </td>
       </tr>
     );

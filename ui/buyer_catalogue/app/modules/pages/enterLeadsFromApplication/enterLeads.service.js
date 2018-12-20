@@ -31,6 +31,16 @@
           return machadaloHttp.get(url);
         }
 
+        enterLeadsService.getEditLeads = function(formId,supplierId,entryId){
+          var url = url_base_leads + formId + "/get-leads-entry/" + supplierId + "/" + entryId + "/";
+          return machadaloHttp.get(url);
+        }
+
+        enterLeadsService.updateLeadDetails = function(formId,supplierId,entryId, data){
+          var url = url_base_leads + formId + "/update-leads-entry/" + supplierId + "/" + entryId + "/";
+          return machadaloHttp.put(url, data);
+        }
+
         return enterLeadsService;
 
  }]);

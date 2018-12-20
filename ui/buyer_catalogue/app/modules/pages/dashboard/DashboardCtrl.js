@@ -1012,6 +1012,11 @@
            // ];
            // console.log($scope.overallMetricStatus);
            $scope.overallMetric = response.data.data.overall_metrics;
+           console.log($scope.overallMetric);
+           angular.forEach(response.data.data.ongoing , function(data,key){
+             $scope.extraLeads = data;
+             console.log($scope.extraLeads);
+           })
 
             angular.forEach($scope.overallMetric , function(data,key){
               $scope.metricStatusValue = data;
@@ -1347,11 +1352,15 @@
      result.then(function onSuccess(response){
        console.log(response);
        cfpLoadingBar.complete();
-       $scope.LeadsByCampaign = response.data.data;
-       $scope.Data = $scope.LeadsByCampaign;
-       console.log($scope.Data.last_week.flat_count);
+       if($scope.LeadsByCampaign){
+         $scope.LeadsByCampaign = response.data.data;
+         $scope.Data = $scope.LeadsByCampaign;
+         console.log($scope.Data);
+       }
+
        $scope.localityData =  $scope.LeadsByCampaign.locality_data;
         $scope.phaseData =  $scope.LeadsByCampaign.phase_data;
+        console.log($scope.phaseData);
        $scope.locationHeader = [];
        angular.forEach($scope.LeadsByCampaign.locality_data, function(data,key){
           $scope.value1 = key;
@@ -1526,9 +1535,9 @@
      var values1 = [];
      var values2 = [];
      angular.forEach(weekDataMerged, function(data,key){
-       console.log(data);
+       console.log(data.flat_count);
        console.log(key);
-       var keyWithFlatLabel =  key + ' (' + data['flat_count'] + ')';
+       var keyWithFlatLabel =  key + ' (' + key.flat_count + ')';
        var value1 =
           { x : keyWithFlatLabel, y : $scope.normalLeadsValues };
        var value2 =
@@ -1636,17 +1645,17 @@
      return temp_data;
    }
 //START :  code for 3 weeks summary
-var formatThreeWeeksSummary = function(data){
+var formatThreeWeeksSummary = function(data,key){
   var temp_data = [
     {
       key : "Total Leads in %",
       color : constants.colorKey1,
       values:
    [
-     { x: 'Total', y: data.overall_data.total_leads/data.overall_data.flat_count *100 },
-     { x: 'Last Week', y: data.last_week.total_leads/data.last_week.flat_count *100 },
-     { x: 'Last Two Week', y: data.last_two_weeks.total_leads/data.last_two_weeks.flat_count *100},
-     { x: 'Last Three Week', y: data.last_three_weeks.total_leads/data.last_three_weeks.flat_count *100 }
+     { x: 'Total' + '(' +data.overall_data.flat_count + ')' , y: data.overall_data.total_leads/data.overall_data.flat_count *100 },
+     { x: 'Last Week' + '(' +data.last_week.flat_count + ')' , y: data.last_week.total_leads/data.last_week.flat_count *100 },
+     { x: 'Last Two Week' + '(' +data.last_two_weeks.flat_count + ')' , y: data.last_two_weeks.total_leads/data.last_two_weeks.flat_count *100},
+     { x: 'Last Three Week' + '(' +data.last_three_weeks.flat_count + ')' , y: data.last_three_weeks.total_leads/data.last_three_weeks.flat_count *100 }
    ]
     },
     {
@@ -1654,10 +1663,10 @@ var formatThreeWeeksSummary = function(data){
       color : constants.colorKey2,
       values:
    [
-     { x: 'Total', y: data.overall_data.total_hot_leads/data.overall_data.flat_count *100 },
-     { x: 'Last Week', y: data.last_week.total_hot_leads/data.last_week.flat_count *100 },
-     { x: 'Last Two Week', y: data.last_two_weeks.total_hot_leads/data.last_two_weeks.flat_count *100  },
-     { x: 'Last Three Week', y: data.last_three_weeks.total_hot_leads/data.last_three_weeks.flat_count *100  }
+     { x: 'Total' + '(' +data.overall_data.flat_count + ')' , y: data.overall_data.total_hot_leads/data.overall_data.flat_count *100 },
+     { x: 'Last Week' + '(' +data.last_week.flat_count + ')' , y: data.last_week.total_hot_leads/data.last_week.flat_count *100 },
+     { x: 'Last Two Week' + '(' +data.last_two_weeks.flat_count + ')' , y: data.last_two_weeks.total_hot_leads/data.last_two_weeks.flat_count *100  },
+     { x: 'Last Three Week' + '(' +data.last_three_weeks.flat_count + ')' , y: data.last_three_weeks.total_hot_leads/data.last_three_weeks.flat_count *100  }
    ]
     }
   ];
@@ -2700,16 +2709,24 @@ $scope.sendMeEmail = function(){
     console.log(response);
   })
 }
-
+$scope.reportData = {};
 $scope.sendReport = function(){
   var token = $rootScope.globals.currentUser.token;
+  var startDate,endDate;
+  if($scope.reportData.reportStartDate && $scope.reportData.reportEndDate){
+    startDate = commonDataShare.formatDate($scope.reportData.reportStartDate);
+    endDate = commonDataShare.formatDate($scope.reportData.reportEndDate);
+  }
+  console.log(startDate,endDate);
   if ($scope.file) {
     Upload.upload({
         url: Config.APIBaseUrl + "v0/ui/website/send-graph-pdf/",
         data: {
           file: $scope.file,
           campaign_id : $scope.campaignIdForPerfMetrics,
-          data_import_type : "base-data"
+          data_import_type : "base-data",
+          start_date: startDate,
+          end_date: endDate
         },
         headers: {'Authorization': 'JWT ' + token}
     }).then(function onSuccess(response){
@@ -2896,64 +2913,6 @@ $scope.Sort = function(val)
   }
 //END
 
-
-$scope.planets = [
-        {
-          name : 'Mercury',
-          distance : 0.4,
-          mass : 0.055
-        },
-        {
-          name : 'Venus',
-          distance : 0.7,
-          mass : 0.815
-        },
-        {
-          name : 'Earth',
-          distance: 1,
-          mass : 1
-        },
-        {
-          name : 'Mars',
-          distance : 1.5,
-          mass : 0.107
-        },
-        {
-          name : 'Ceres',
-          distance : 2.77,
-          mass :     0.00015
-        },
-        {
-          name : 'Jupiter',
-          distance : 5.2,
-          mass :   318
-        },
-        {
-          name : 'Saturn',
-          distance : 9.5,
-          mass :    95
-        },
-        {
-          name : 'Uranus',
-          distance : 19.6,
-          mass :   14
-        },
-        {
-          name : 'Neptune',
-          distance : 30,
-          mass : 17
-        },
-        {
-          name : 'Pluto',
-          distance : 39,
-          mass : 0.00218
-        },
-        {
-          name : 'Charon',
-          distance : 39,
-          mass :  0.000254
-        }
-      ];
 })
 
 

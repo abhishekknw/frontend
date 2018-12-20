@@ -4,17 +4,17 @@ import * as types from './types';
 
 import config from './../config';
 
-//Post Base Inventory
+//Post Entity Type
 export function postBaseInventoryStart() {
   return {
     type: types.POST_BASE_INVENTORY_START
   };
 }
 
-export function postBaseInventorySuccess(inventory) {
+export function postBaseInventorySuccess(baseInventory) {
   return {
     type: types.POST_BASE_INVENTORY_SUCCESS,
-    data: inventory
+    data: baseInventory
   };
 }
 
