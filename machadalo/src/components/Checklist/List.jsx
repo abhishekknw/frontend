@@ -162,6 +162,8 @@ export default class List extends React.Component {
       }
     }
 
+    console.log(checklist);
+
     return (
       <div className="list">
         <div className="list__title">

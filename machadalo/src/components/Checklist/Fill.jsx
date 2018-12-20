@@ -4,6 +4,8 @@ import { DatetimePickerTrigger } from 'rc-datetime-picker';
 import StarRatings from 'react-star-ratings';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
+import { MentionsInput, Mention } from 'react-mentions';
+import mentionStyle from '../../constants/react-mention-style';
 
 import './index.css';
 
@@ -14,7 +16,8 @@ export default class FillChecklist extends React.Component {
     this.state = {
       checklistEntries: {},
       moment: moment(),
-      freezeChecklist: false
+      freezeChecklist: false,
+      userOptions: []
     };
 
     this.handleEntryChange = this.handleEntryChange.bind(this);
@@ -34,6 +37,7 @@ export default class FillChecklist extends React.Component {
     this.props.getSingleChecklist({
       checklistId: match.params.checklistId
     });
+    this.props.getUsersList();
   }
 
   componentDidUpdate(prevProps) {
@@ -90,6 +94,25 @@ export default class FillChecklist extends React.Component {
         );
       }
     }
+
+    //Get all users
+    if (
+      (!this.state.userOptions.length && this.props.user.userList.length) ||
+      (this.state.userOptions.length &&
+        this.props.user.userList.length &&
+        this.state.userOptions[0].id !== this.props.user.userList[0].id)
+    ) {
+      let userOptions = [];
+      this.props.user.userList.forEach(userData => {
+        userOptions.push({
+          display: userData.first_name + ' ' + userData.last_name,
+          id: userData.id
+        });
+      });
+      this.setState({
+        userOptions
+      });
+    }
   }
 
   onBack() {
@@ -122,6 +145,7 @@ export default class FillChecklist extends React.Component {
 
   handleEntryChange(rowId, columnId, value, inputType) {
     const newchecklistEntries = Object.assign({}, this.state.checklistEntries);
+
     if (inputType === 'checkbox') {
       value = value === 'true' ? true : false;
     }
@@ -143,6 +167,48 @@ export default class FillChecklist extends React.Component {
     event.preventDefault();
 
     const { checklistEntries } = this.state;
+
+    let notificationMessage = [];
+
+    //React Mention Processing
+    for (let [Rowkey, RowObject] of Object.entries(checklistEntries)) {
+      for (let [Columnkey, ColumnObject] of Object.entries(RowObject)) {
+        let userIds = [];
+        if (typeof ColumnObject.cell_value === 'string') {
+          let str = ColumnObject.cell_value;
+          for (var i = 0; i < str.length; i++) {
+            if (str.charAt(i) === '@' && str.charAt(i + 1) === '[') {
+              let id = '',
+                j;
+              for (j = i + 2; j < str.length; j++) {
+                if (str.charAt(j) === '(') {
+                  j = j + 1;
+                  while (str.charAt(j) !== ')') {
+                    id = id + str.charAt(j);
+                    j++;
+                  }
+                  break;
+                }
+              }
+              userIds.push(parseInt(id));
+              str = str.replace('@[', '');
+              str = str.replace('](', '');
+              str = str.replace(')', '');
+              str = str.replace(id, '');
+              i = j - 6;
+            }
+          }
+          ColumnObject.cell_value = str;
+        }
+        if (userIds.length) {
+          let notificationObject = {
+            to_id: userIds,
+            notification_message: ColumnObject.cell_value
+          };
+          notificationMessage.push(notificationObject);
+        }
+      }
+    }
 
     // Send request to create template
     this.props.postChecklistEntries({
@@ -197,17 +263,17 @@ export default class FillChecklist extends React.Component {
     switch (column.column_type) {
       case 'TEXT':
         return (
-          <input
-            className={inputClass}
-            type="text"
+          <MentionsInput
+            style={mentionStyle}
             value={
               checklistEntries[rowId] && checklistEntries[rowId][columnId]
                 ? checklistEntries[rowId][columnId].cell_value
                 : ''
             }
             onChange={event => this.onCellChange(event, rowId, columnId)}
-            disabled={this.state.freezeChecklist}
-          />
+          >
+            <Mention trigger="@" data={this.state.userOptions} />
+          </MentionsInput>
         );
 
       case 'BOOLEAN':
