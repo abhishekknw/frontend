@@ -203,12 +203,14 @@ export default class FillChecklist extends React.Component {
         if (userIds.length) {
           let notificationObject = {
             to_id: userIds,
-            notification_message: ColumnObject.cell_value
+            notification_msg: ColumnObject.cell_value
           };
           notificationMessage.push(notificationObject);
         }
       }
     }
+
+    checklistEntries.notifications = notificationMessage;
 
     // Send request to create template
     this.props.postChecklistEntries({
