@@ -4,8 +4,10 @@ import * as ChecklistActions from './checklist';
 import * as CampaignActions from './campaign';
 import * as SupplierActions from './supplier';
 import * as EntityActions from './entity';
+import * as InventoryActions from './inventory';
 import * as SettingActions from './setting';
 import * as UserActions from './user';
+import * as LeadActions from './lead';
 
 export default Object.assign(
   {},
@@ -15,6 +17,8 @@ export default Object.assign(
   CampaignActions,
   SupplierActions,
   EntityActions,
+  InventoryActions,
   SettingActions,
-  UserActions
+  UserActions,
+  LeadActions
 );

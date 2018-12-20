@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="modules/pages/login/login.tmpl.css" />
 <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
 <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+<link href="css/smallscreen.css" rel="stylesheet" media="screen">
 
 <body>
   <div class="container">
@@ -14,8 +15,8 @@
       </div>
       <div class="col-sm-2"></div>
       <div class="col-sm-4"> <div>
-    <div id="login-panel" class="panel panel-default">
-        <div style="height:450px;width:330px;" class="panel-heading"> <strong><div style="letter-spacing: 0.7px; margin-left: 17px;" class="login-panel-header-text font"><center>HELLO! LOGIN TO MACHADALO</center></div></strong><br />
+    <!-- <div id="login-panel" class="panel panel-default"> -->
+        <div class="panel panel-default" id="login-panel"> <strong><div style="letter-spacing: 0.7px; margin-left: 17px;" class="login-panel-header-text font"><center>HELLO! LOGIN TO MACHADALO</center></div></strong><br />
         <form class="form-horizontal" role="form" ng-submit="login()">
           <div class="errorMessages">
               <div ng-show="error" class="error">{{error}}</div>
@@ -33,7 +34,7 @@
             <div class="g-recaptcha" data-sitekey="6Ld0AmYUAAAAAArLDS-yQjy1Ti41tDNjLSclwh5B" data-callback="login"></div>
              <div class="form-group" ng-model="disabled">
                <br />
-                <div class="col-sm-9">
+                <div class="col-sm-12">
                   <button style="text-align:center" ng-disabled="disabled"  class="font, submit-btn" type="submit" class="btn  btn-sm">LOGIN</button>
                 </div></br>
               </div>
@@ -58,7 +59,7 @@
             </tr>
         </form>
       </div>
-  </div>
+  <!-- </div> -->
 </div>
   <!--Start: Code for guestDetails Modal Window -->
   <div id="guestModal" class="modal fade">

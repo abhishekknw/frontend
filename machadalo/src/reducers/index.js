@@ -7,6 +7,7 @@ import * as checklistReducer from './checklist';
 import * as entityReducer from './entity';
 import * as settingReducer from './setting';
 import * as userReducer from './user';
+import * as leadReducer from './lead';
 import { reducer as toastrReducer } from 'react-redux-toastr';
 
 const reducers = combineReducers(
@@ -20,7 +21,8 @@ const reducers = combineReducers(
     checklistReducer,
     entityReducer,
     settingReducer,
-    userReducer
+    userReducer,
+    leadReducer
   )
 );
 

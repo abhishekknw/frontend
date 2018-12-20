@@ -445,7 +445,7 @@ angular
             controller : 'enterLeadFormCtrl',
             templateUrl : 'modules/pages/enterLeadsFromApplication/enterLeads.tmpl.html',
             data :{
-              permission : 'enterLeadsFromAppication_access'
+              permission : 'enter_leads_from_application_access'
             }
       })
 
@@ -496,8 +496,10 @@ angular
 
          var permissions = $rootScope.globals.userInfo.profile.permissions;
          var page = toState.data.permission;
+         console.log(page);
          if($rootScope.globals.currentUser && !(permissions.hasOwnProperty(page.toLowerCase()) && permissions[page.toLowerCase()]) && $location.path() != '/logout'){
            e.preventDefault();
+           console.log(permissions.hasOwnProperty(page.toLowerCase()));
            $state.go('forbiddenPage');
          }
        });
@@ -509,6 +511,7 @@ angular
          if(!$rootScope.globals.hasOwnProperty('userInfo') || !$rootScope.globals.userInfo.hasOwnProperty('profile')){
            $location.path("/login");
          }
+         console.log($rootScope.globals.userInfo);
          var category = $rootScope.globals.userInfo.profile.organisation.category;
          if (!$rootScope.globals.currentUser) {
            // if(toState.name != 'login')

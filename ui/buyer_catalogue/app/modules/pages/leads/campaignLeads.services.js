@@ -72,6 +72,11 @@
           var url = url_base_leads + formId + "/delete_form_element/" + itemId;
           return machadaloHttp.put(url,data);
         }
+
+        campaignLeadsService.updateFormFields = function(formId, data){
+          var url = url_base_leads + formId + "/edit_form";
+          return machadaloHttp.put(url,data);
+        }
         return campaignLeadsService;
 
  }]);

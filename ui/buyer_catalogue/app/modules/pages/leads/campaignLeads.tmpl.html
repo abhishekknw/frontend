@@ -105,46 +105,49 @@
         Enter Name For Lead Form* :
         <input type="text" class="form-control" ng-model="formName.name" required>
       </div>
-      <br />  <br />
-      <div ng-repeat="model in leadFormFields">
-        <div class="form-group col-md-4">
-          <label for="email">FieldName:</label>
-          <input type="text" class="form-control" ng-model="model.key_name" required>
-        </div>
-        <div class="form-group col-md-4">
-          <label for="pwd">Field Type:</label>
-          <select class="form-control" ng-model="model.key_type" required>
-            <option ng-repeat="type in leadKeyTypes" value="{{type.name}}">{{type.name}}</option>
-          </select>
-        </div>
-        <div class="form-group col-md-2">
-          <label>Action </label></br>
-          <input type="checkbox" name="" value="true"  ng-model="model.isHotLead"/>Hot Lead
-          <input type="text" ng-model="model.hot_lead_criteria" ng-if="model.isHotLead"/>
-        </div>
-        <div class="form-group col-md-2">
-          <label></label>
-          <button type="button" class="form-control btn btn-danger" ng-click="removeField($index)" ng-if="!updateForm">Remove</button>
-          <button type="button" class="form-control btn btn-danger" ng-click="removeFieldFromForm(model)" ng-if="updateForm">Remove</button>
-        </div>
-        <br />  <br />  <br />  <br />
-        <div class="col-md-12" ng-if="model.key_type=='RADIO' || model.key_type=='CHECKBOX' || model.key_type=='DROPDOWN'">
-          Add Options:
-          <br />  <br />
-          <input type="text" class="form-control" ng-model="optionForm.option">
-          <br />
-          <button class="btn btn-danger" ng-click="addKeyOption(optionForm.option,$index)">+</button>
-          <div class="" ng-repeat="option in model.key_options" style="display:inline-block;">
-            <button class="btn btn-primary">{{option}}</button>
-              <span ng-click="model.key_options.splice($index,1)" class="glyphicon glyphicon-remove-circle"></span>
+      <br />  <br />  <br />
+      <div class="row">
+        <div ng-repeat="model in leadFormFields">
+          <div class="form-group col-md-4">
+            <label for="email">FieldName:</label>
+            <input type="text" class="form-control" ng-model="model.key_name" required>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="pwd">Field Type:</label>
+            <select class="form-control" ng-model="model.key_type" required>
+              <option ng-repeat="type in leadKeyTypes" value="{{type.name}}">{{type.name}}</option>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <label>Action </label></br>
+            <input type="checkbox" name="" value="true"  ng-model="model.isHotLead"/>Hot Lead
+            <input type="text" ng-model="model.hot_lead_criteria" ng-if="model.isHotLead"/>
+          </div>
+          <div class="form-group col-md-2">
+            <label></label>
+            <button type="button" class="form-control btn btn-danger" ng-click="removeField($index)" ng-if="!updateForm">Remove</button>
+            <button type="button" class="form-control btn btn-danger" ng-click="removeFieldFromForm(model)" ng-if="updateForm">Remove</button>
+          </div>
+          <br />  <br />  <br />  <br />
+          <div class="col-md-12" ng-if="model.key_type=='RADIO' || model.key_type=='CHECKBOX' || model.key_type=='DROPDOWN'">
+            Add Options:
+            <br />  <br />
+            <input type="text" class="form-control" ng-model="optionForm.option">
+            <br />
+            <button class="btn btn-danger" ng-click="addKeyOption(optionForm.option,$index)">+</button>
+            <div class="" ng-repeat="option in model.key_options" style="display:inline-block;">
+              <button class="btn btn-primary">{{option}}</button>
+                <span ng-click="model.key_options.splice($index,1)" class="glyphicon glyphicon-remove-circle"></span>
+            </div>
+            <br />  <br />
           </div>
           <br />  <br />
         </div>
-        <br />  <br />
       </div>
       <div class="form-group col-md-12">
         <button class="btn btn-danger" ng-click="addLeadFormFields()" ng-if="!updateForm">Add</button>
         <button data-target="#addNewLeadFormFields" data-toggle="modal" class="btn btn-danger" style="margin:10px;" ng-if="updateForm">Add New Fields</button>
+        <button ng-click="updateFormFields()"  class="btn btn-danger" style="margin:10px;" ng-if="updateForm">Update Fields</button>
         <button ng-click="saveLeadForm()" style="text-align:right" class="btn btn-danger" ng-disabled="fieldForm.$invalid" ng-if="!updateForm">Submit</button>
       </div>
     </form>
@@ -156,8 +159,11 @@
   <div class="pageTitle">
     <h3>List Of All Suppliers Of Campaign {{campaignName}}</h3>
   </div>
+
   <div class="panel-body">
     <div>
+      <input type="text" ng-model="searchSupplier" class="form-control" placeholder="Search">
+      <br>
       <table class="table table-bordered table-responsive">
         <thead>
           <tr>
@@ -166,11 +172,12 @@
             <th>Area</th>
             <th>Subarea</th>
             <th>Address</th>
-            <th>Action</th>
+            <th>Platform Link</th>
+            <th>Mobile Link</th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="supplier in suppliers">
+          <tr ng-repeat="supplier in suppliers|filter : searchSupplier">
             <td>{{$index+1}}</td>
             <td>{{supplier.name}}</td>
             <td>{{supplier.area}}</td>
@@ -180,7 +187,7 @@
               <button class="btn btn-danger" ng-click="enterLeads(supplier)">Click Here To Enter Leads</button>
             </td>
             <td><button class="btn btn-danger">
-              <a ng-href="#/enterLeadsFromApplication/{{leadFormFields.leads_form_id}}/{{supplier.supplier_id}}" target="_blank">Go To Link</a></button></td>
+              <a ng-href="#/enterLeadsFromApplication/{{leadFormFields.leads_form_id}}/{{supplier.supplier_id}}" style="color:#ffffff;" target="_blank">Go To Link</a></button></td>
           </tr>
         </tbody>
       </table>
@@ -242,6 +249,7 @@
             <td>
              <button class="btn btn-danger" ng-click="changeView('importLeads',campaignInfo,item)">Import Leads</button>
            </td>
+
 
           </tr>
         </tbody>
@@ -369,6 +377,58 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title">Add New Fields In Form</h4>
+        <hr/>
+        <div class = "modal-body">
+          </br>
+          <div ng-repeat="model in newLeadFormFields">
+            <div class="form-group col-md-4">
+              <label for="email">FieldName:</label>
+              <input type="text" class="form-control" ng-model="model.key_name" required>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="pwd">Field Type:</label>
+              <select class="form-control" ng-model="model.key_type" required>
+                <option ng-repeat="type in leadKeyTypes" value="{{type.name}}">{{type.name}}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-2">
+              <label>Action </label></br>
+              <input type="checkbox" name="" value="true"  ng-model="model.isHotLead"/>Hot Lead
+              <input type="text" ng-model="model.hot_lead_criteria" ng-if="model.isHotLead"/>
+            </div>
+            <div class="form-group col-md-2">
+              <label></label>
+              <button type="button" class="form-control btn btn-danger" ng-click="removeNewField($index)">Remove</button>
+            </div>
+            <br />  <br />  <br />  <br />
+            <div class="col-md-12" ng-if="model.key_type=='RADIO' || model.key_type=='CHECKBOX' || model.key_type=='DROPDOWN'">
+              Add Options:
+              <br />  <br />
+              <input type="text" class="form-control" ng-model="optionForm.option">
+              <br />
+              <button class="btn btn-danger" ng-click="addNewKeyOption(optionForm.option,$index)">+</button>
+              <div class="" ng-repeat="option in model.key_options" style="display:inline-block;">
+                <button class="btn btn-primary">{{option}}</button>
+                  <span ng-click="model.key_options.splice($index,1)" class="glyphicon glyphicon-remove-circle"></span>
+              </div>
+              <br />  <br />
+            </div>
+            <br />  <br />
+          </div>
+          <button class="btn btn-danger" ng-click="addNewLeadFormField()">Add</button>
+          <button class="btn btn-danger" ng-click="updateLeadForm()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="updateNewLeadFormFields" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Edit Fields In Form</h4>
         <hr/>
         <div class = "modal-body">
           </br>

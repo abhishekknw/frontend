@@ -8,14 +8,22 @@ export default class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hideChecklistDropdown: true
+      hideChecklistDropdown: true,
+      hideLeadsDropdown: true
     };
     this.toggleChecklistDropdown = this.toggleChecklistDropdown.bind(this);
+    this.toggleLeadsDropdown = this.toggleLeadsDropdown.bind(this);
   }
 
   toggleChecklistDropdown() {
     this.setState({
       hideChecklistDropdown: !this.state.hideChecklistDropdown
+    });
+  }
+
+  toggleLeadsDropdown() {
+    this.setState({
+      hideLeadsDropdown: !this.state.hideLeadsDropdown
     });
   }
 
@@ -54,11 +62,28 @@ export default class Sidebar extends React.Component {
                   List Campaigns
                 </a>
               </li>
-              <li>
-                <a href="/#/campaignLeads">
-                  <i className="fa fa-columns" aria-hidden="true" />
-                  Campaign Leads
-                </a>
+              <li className="dropdown-list-parent">
+                <div className="parent-list" onClick={this.toggleLeadsDropdown}>
+                  <i className="fa fa-check-square-o" aria-hidden="true" />
+                  Leads
+                </div>
+                <ul
+                  className="dropdown-list-child"
+                  hidden={this.state.hideLeadsDropdown}
+                >
+                  <li>
+                    <NavLink to="/#/campaignLeads">
+                      <i className="fa fa-columns" aria-hidden="true" />
+                      Campaign
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/r/leads/settings">
+                      <i className="fa fa-cog" aria-hidden="true" />
+                      Settings
+                    </NavLink>
+                  </li>
+                </ul>
               </li>
               <li>
                 <NavLink to="/r/entity/create">
