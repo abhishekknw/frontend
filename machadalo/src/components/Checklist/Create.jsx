@@ -39,7 +39,7 @@ const getDefaultColumns = () => {
     },
     {
       column_name: '',
-      column_type: getColumnOption('BOOLEAN'),
+      column_type: getColumnOption('TEXT'),
       order_id: 2
     }
   ];
@@ -57,12 +57,20 @@ export default class CreateChecklistTemplate extends React.Component {
       showOptionModal: false,
       columnOptions: [''],
       columnInfo: {},
-      static_column_values: [
-        {
-          row_id: 1,
-          cell_value: ''
-        }
-      ],
+      static_column_values: {
+        '1': [
+          {
+            order_id: 1,
+            cell_value: '',
+            disabled: false
+          },
+          {
+            order_id: 2,
+            cell_value: '',
+            disabled: false
+          }
+        ]
+      },
       existingChecklistOptions: [],
       selectedChecklist: {},
       isMaxColumnsReached: false
@@ -168,10 +176,10 @@ export default class CreateChecklistTemplate extends React.Component {
     });
   }
 
-  handleRowChange(row, index) {
-    const rows = this.state.static_column_values.slice();
+  handleRowChange(newRowData, rowIndex) {
+    let rows = this.state.static_column_values;
 
-    rows.splice(index, 1, row);
+    rows[rowIndex + 1] = newRowData;
 
     this.setState({
       static_column_values: rows
@@ -179,12 +187,27 @@ export default class CreateChecklistTemplate extends React.Component {
   }
 
   onAddRow() {
-    const rows = this.state.static_column_values.slice();
+    const rows = this.state.static_column_values;
 
-    rows.push({
-      row_id: rows.length + 1,
-      cell_value: ''
-    });
+    let rowLength = Object.values(rows).length;
+
+    for (let i = 0; i < rows['1'].length; i++) {
+      if (rows[rowLength + 1]) {
+        rows[rowLength + 1].push({
+          order_id: i + 1,
+          cell_value: '',
+          disabled: false
+        });
+      } else {
+        rows[rowLength + 1] = [
+          {
+            order_id: i + 1,
+            cell_value: '',
+            disabled: false
+          }
+        ];
+      }
+    }
 
     this.setState({
       static_column_values: rows
@@ -195,6 +218,16 @@ export default class CreateChecklistTemplate extends React.Component {
     const checklistColumns = this.state.checklist_columns.slice();
 
     if (checklistColumns.length < MAX_COLUMNS) {
+      const rows = this.state.static_column_values;
+
+      for (let i = 0; i < Object.values(rows).length; i++) {
+        rows[i + 1].push({
+          order_id: checklistColumns.length + 1,
+          cell_value: '',
+          disabled: false
+        });
+      }
+
       checklistColumns.push({
         column_name: '',
         column_type: 'TEXT',
@@ -202,6 +235,7 @@ export default class CreateChecklistTemplate extends React.Component {
       });
 
       this.setState({
+        static_column_values: rows,
         checklist_columns: checklistColumns
       });
     } else {
@@ -212,16 +246,13 @@ export default class CreateChecklistTemplate extends React.Component {
   }
 
   onRowRemove(index) {
-    const rows = this.state.static_column_values.slice();
+    const rows = this.state.static_column_values;
 
-    rows.splice(index, 1);
-
-    if (!rows.length) {
-      rows.push({
-        row_id: 1,
-        cell_value: ''
-      });
+    for (let i = index + 1; i <= Object.values(rows).length; i++) {
+      rows[i] = rows[i + 1];
     }
+
+    delete rows[Object.values(rows).length];
 
     this.setState({
       static_column_values: rows
@@ -229,6 +260,7 @@ export default class CreateChecklistTemplate extends React.Component {
   }
 
   onColumnRemove(index) {
+    const rows = this.state.static_column_values;
     const checklistColumns = this.state.checklist_columns.slice();
 
     checklistColumns.splice(index, 1);
@@ -237,8 +269,20 @@ export default class CreateChecklistTemplate extends React.Component {
       checklistColumns.concat(getDefaultColumns());
     }
 
+    for (let i = 0; i < Object.values(rows).length; i++) {
+      rows[i + 1].splice(index, 1);
+      for (let j = 0; j < rows[i + 1].length; j++) {
+        rows[i + 1][j].order_id = j + 1;
+      }
+    }
+
+    for (let i = 0; i < checklistColumns.length; i++) {
+      checklistColumns[i].order_id = i + 1;
+    }
+
     this.setState({
-      checklist_columns: checklistColumns
+      checklist_columns: checklistColumns,
+      static_column_values: rows
     });
   }
 
@@ -287,22 +331,22 @@ export default class CreateChecklistTemplate extends React.Component {
       }
     });
 
+    let staticRowData = this.state.static_column_values;
+    for (let i = 0; i < Object.values(staticRowData).length; i++) {
+      staticRowData[i + 1].forEach(staticData => {
+        delete staticData.disabled;
+      });
+    }
+
     const data = {
       checklist_name: this.state.checklist_name,
       checklist_type: this.state.checklist_type,
       supplier_id: this.props.match.params.supplierId,
       is_template: this.state.is_template === 'true' ? true : false,
       checklist_columns,
-      static_column_values: this.state.static_column_values
+      static_column_values: staticRowData
     };
 
-    data.static_column_values.forEach(static_value => {
-      if (static_value.cell_value === '') {
-        error = true;
-        toastr.error('', 'Please enter data in the Static Data field');
-        return false;
-      }
-    });
     data.checklist_columns.forEach(column => {
       if (!column.column_type) {
         error = true;
@@ -332,6 +376,16 @@ export default class CreateChecklistTemplate extends React.Component {
     };
 
     const onColumnTypeChange = item => {
+      if (item.value !== 'TEXT') {
+        let rows = this.state.static_column_values;
+        for (let i = 0; i < Object.values(rows).length; i++) {
+          rows[i + 1][columnIndex].disabled = true;
+        }
+        this.setState({
+          static_column_values: rows
+        });
+      }
+
       if (item.value === 'RADIO' || item.value === 'SELECT') {
         this.setState({
           showOptionModal: true,
@@ -434,19 +488,18 @@ export default class CreateChecklistTemplate extends React.Component {
   }
 
   renderChecklistRow(row, rowIndex) {
-    let newRow = Object.assign({}, row);
+    const onLabelChange = (event, columnIndex) => {
+      let newRowData = row;
 
-    const onLabelChange = event => {
-      newRow = Object.assign({}, newRow, {
-        cell_value: event.target.value
-      });
+      newRowData[columnIndex].cell_value = event.target.value;
 
-      this.handleRowChange(newRow, rowIndex);
+      this.handleRowChange(newRowData, rowIndex);
     };
 
     const onRemove = () => {
       this.onRowRemove(rowIndex);
     };
+    let static_value = this.state.static_column_values;
 
     return (
       <div className="createform__form__row" key={`row-${rowIndex}`}>
@@ -461,20 +514,32 @@ export default class CreateChecklistTemplate extends React.Component {
                   <input
                     type="text"
                     placeholder="Static Data"
-                    value={columnIndex === 0 ? row.cell_value : ''}
-                    onChange={onLabelChange}
-                    disabled={columnIndex !== 0}
+                    value={
+                      static_value[rowIndex + 1][columnIndex]
+                        ? static_value[rowIndex + 1][columnIndex].cell_value
+                        : ''
+                    }
+                    onChange={event => onLabelChange(event, columnIndex)}
+                    disabled={
+                      static_value[rowIndex + 1][columnIndex]
+                        ? static_value[rowIndex + 1][columnIndex].disabled
+                        : true
+                    }
                   />
                 </div>
               </div>
             </div>
           );
         })}
-        <div className="form-action">
-          <button type="button" className="btn btn--link" onClick={onRemove}>
-            &times;
-          </button>
-        </div>
+        {rowIndex > 0 ? (
+          <div className="form-action">
+            <button type="button" className="btn btn--link" onClick={onRemove}>
+              &times;
+            </button>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
     );
   }
@@ -527,7 +592,9 @@ export default class CreateChecklistTemplate extends React.Component {
             <div className="createform__form__header">
               {this.state.checklist_columns.map(this.renderChecklistColumn)}
             </div>
-            {this.state.static_column_values.map(this.renderChecklistRow)}
+            {Object.values(this.state.static_column_values).map(
+              this.renderChecklistRow
+            )}
             <div className="createform__form__inline">
               <div className="createform__form__action">
                 <button
