@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Create from './Create';
 import List from './List';
+import Edit from './Edit';
 
 import './index.css';
 
@@ -29,6 +30,13 @@ export default class Inventory extends React.Component {
             path={`${match.path}/list`}
             render={componentProps => (
               <List {...this.props} {...componentProps} />
+            )}
+          />
+          <Route
+            exact
+            path={`${match.path}/edit/:baseInventoryId`}
+            render={componentProps => (
+              <Edit {...this.props} {...componentProps} />
             )}
           />
         </Switch>

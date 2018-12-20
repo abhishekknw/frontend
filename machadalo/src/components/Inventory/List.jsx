@@ -13,7 +13,6 @@ export default class List extends React.Component {
   }
 
   renderBaseInventoryRow(baseInventory, index) {
-    console.log(baseInventory, index);
     const onRemove = () => {
       this.props.deleteBaseInventory({
         baseInventoryId: baseInventory._id
@@ -42,8 +41,6 @@ export default class List extends React.Component {
   }
   render() {
     const { baseInventory } = this.props;
-    console.log(baseInventory);
-    console.log(baseInventory.list.length);
     let headingText = 'All Organisation Base Inventories';
     let emptyBaseInventoryListText =
       'No base inventory available. Create your first one now!';

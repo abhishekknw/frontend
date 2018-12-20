@@ -4,7 +4,10 @@ import * as types from './../actions/types';
 export const baseInventory = createReducer(
   {
     list: [],
-    baseInventory: undefined
+    baseAttributes: [],
+    baseInventory: undefined,
+    selectedBaseInventoryName: undefined,
+    selectedBaseInventoryId: undefined
   },
   {
     [types.GET_BASE_INVENTORY_START](state) {
@@ -54,6 +57,23 @@ export const baseInventory = createReducer(
 
       return Object.assign({}, state, {
         list: newList
+      });
+    },
+    [types.GET_BASE_INVENTORY_BY_ID_START](state) {
+      return Object.assign({}, state, {
+        baseAttributes: []
+      });
+    },
+    [types.GET_BASE_INVENTORY_BY_ID_SUCCESS](state, action) {
+      return Object.assign({}, state, {
+        selectedBaseInventoryName: action.baseInventory.name,
+        selectedBaseInventoryId: action.baseInventory._id,
+        baseAttributes: action.baseInventory.base_attributes
+      });
+    },
+    [types.GET_BASE_INVENTORY_BY_ID_FAIL](state) {
+      return Object.assign({}, state, {
+        baseAttributes: []
       });
     }
   }

@@ -130,3 +130,99 @@ export function deleteBaseInventory({ baseInventoryId }, callback) {
       });
   };
 }
+
+//Get Base Inventory By Id
+export function getBaseInventoryByIdStart() {
+  return {
+    type: types.GET_BASE_INVENTORY_BY_ID_START
+  };
+}
+
+export function getBaseInventoryByIdSuccess(baseInventory) {
+  return {
+    type: types.GET_BASE_INVENTORY_BY_ID_SUCCESS,
+    baseInventory
+  };
+}
+
+export function getBaseInventoryByIdFail() {
+  return {
+    type: types.GET_BASE_INVENTORY_BY_ID_FAIL
+  };
+}
+
+export function getBaseInventoryById({ baseInventoryId }) {
+  return (dispatch, getState) => {
+    dispatch(getBaseInventoryByIdStart());
+
+    const { auth } = getState();
+
+    request
+      .get(
+        `${
+          config.API_URL
+        }/v0/ui/dynamic-inventory/base-inventory/${baseInventoryId}/`
+      )
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(getBaseInventoryByIdSuccess(resp.body.data));
+      })
+      .catch(ex => {
+        console.log('Failed to fetch base inventories', ex);
+        dispatch(getBaseInventoryByIdFail());
+      });
+  };
+}
+
+//Put Base Inventory
+export function putBaseInventoryStart() {
+  return {
+    type: types.PUT_BASE_INVENTORY_START
+  };
+}
+
+export function putBaseInventorySuccess(inventory) {
+  return {
+    type: types.PUT_BASE_INVENTORY_SUCCESS,
+    data: inventory
+  };
+}
+
+export function putBaseInventoryFail() {
+  return {
+    type: types.PUT_BASE_INVENTORY_FAIL
+  };
+}
+
+export function putBaseInventory({ data, baseInventoryId }, callback) {
+  let req_data = {
+    name: data.name,
+    base_attributes: data.baseAttributes,
+    inventory_type: 'space_based'
+  };
+  return (dispatch, getState) => {
+    dispatch(putBaseInventoryStart());
+
+    const { auth } = getState();
+
+    request
+      .put(
+        `${
+          config.API_URL
+        }/v0/ui/dynamic-inventory/base-inventory/${baseInventoryId}/`
+      )
+      .set('Authorization', `JWT ${auth.token}`)
+      .send(req_data)
+      .then(resp => {
+        dispatch(putBaseInventorySuccess(resp.data));
+        if (callback) {
+          callback();
+        }
+      })
+      .catch(ex => {
+        console.log('Failed to create base Inventory', ex);
+
+        dispatch(putBaseInventoryFail());
+      });
+  };
+}
