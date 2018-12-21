@@ -202,7 +202,7 @@ export default class List extends React.Component {
             <i className="fa fa-arrow-left" aria-hidden="true" />
             Back
           </button>{' '}
-          {showCreateButton ? (
+          {showCreateButton && campaignPermission ? (
             <Link to={checklistCreateUrl} className="btn btn--danger">
               Create
             </Link>

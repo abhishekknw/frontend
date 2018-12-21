@@ -5,7 +5,7 @@ import Create from './Create';
 import List from './List';
 import Edit from './Edit';
 
-import './index.css';
+import './inventory.css';
 
 export default class Inventory extends React.Component {
   componentDidMount() {
