@@ -26,7 +26,9 @@
    'STALL' : 'SL',
    'STANDEE' : 'ST',
    'FLIER' : 'FL',
-   'GATEWAY ARCH' : 'GA'
+   'GATEWAY ARCH' : 'GA',
+   'SUNBOARD' : 'SB',
+   'BANNER': 'BA'
  };
  $scope.queryType = {
    'Locality' : 'Locality',
@@ -38,13 +40,17 @@
           {header : 'STALL'},
           {header : 'FLIER'},
           {header : 'GATEWAY ARCH'},
+          {header : 'BANNER'},
+          {header : 'SUNBOARD'},
         ];
         $scope.invCodes = {
           PO : 'PO',
           ST : 'ST',
           SL : 'SL',
           FL : 'FL',
-          GA : 'GA'
+          GA : 'GA',
+          SB : 'SB',
+          BA : 'BA'
         };
         $scope.actKeys = [
           {header : 'RELEASE', key : 'release', label1 : 'Released', label2 : 'UnReleased'},
@@ -168,6 +174,7 @@
               $scope.inventoryActivityCountData[key] = sortObject(data);
               $scope.invActDateList = $scope.invActDateList.concat(Object.keys($scope.inventoryActivityCountData[key]));
             })
+            console.log($scope.inventoryActivityCountData);
             $scope.invActDateList = Array.from(new Set($scope.invActDateList));
             $scope.invActDateList.sort().reverse();
             $scope.dateListKeys = {};
