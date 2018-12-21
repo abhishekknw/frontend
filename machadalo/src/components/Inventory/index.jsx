@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Create from './Create';
 
-import './index.css';
+import './inventory.css';
 
 export default class Inventory extends React.Component {
   componentDidMount() {
