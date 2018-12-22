@@ -418,52 +418,29 @@ $scope.multiSelect =
      };
 
 
-
-    $scope.selected_baselines_customTexts = {buttonDefaultText: 'Select Freebies'};
-
-    $scope.selectAllLocation=[];
-    $scope.stallLoc = [
-      "Near Entry Gate",
-      "Near Exit Gate",
-      "In Front of Tower",
-      "Near Garden",
-      "Near Play Area",
-      "Near Club House",
-      "Near Swimming Pool",
-      "Near Parking Area",
-      "Near Shopping Area",
-    ];
-    $scope.selected_baseline = {
-       template: '<b>{{option}}</b>',
-       // selectedToTop: true,
-       smartButtonTextConverter(skip, option) { return option; },
-     };
-         $scope.customEvents = {onItemSelect: function(item) {console.log(item,$scope.selectAllLocation);}};
-
-        $scope.selected_customTexts = {buttonDefaultText: 'Stall Location'};
-
-
-        $scope.sunboardAlLocation=[];
-        $scope.sunboard = [
-          "Near Entry Gate",
-          "Near Exit Gate",
-          "In Front of Tower",
-          "Near Garden",
-          "Near Play Area",
-          "Near Club House",
-          "Near Swimming Pool",
-          "Near Parking Area",
-          "Near Shopping Area",
-        ];
-        $scope.selected_baseline = {
-           template: '<b>{{option}}</b>',
-           // selectedToTop: true,
-           smartButtonTextConverter(skip, option) { return option; },
-         };
-             $scope.customEvents = {onItemSelect: function(item) {console.log(item,$scope.sunboardAlLocation);}};
-
-            $scope.selected_customTexts = {buttonDefaultText: 'Sunboard Location'};
-
+    //
+    // $scope.selected_baselines_customTexts = {buttonDefaultText: 'Select Freebies'};
+    //
+    // $scope.selectAllLocation=[];
+    // $scope.neighborhoods2 = [
+    //   "Near Entry Gate",
+    //   "Near Exit Gate",
+    //   "In Front of Tower",
+    //   "Near Garden",
+    //   "Near Play Area",
+    //   "Near Club House",
+    //   "Near Swimming Pool",
+    //   "Near Parking Area",
+    //   "Near Shopping Area",
+    // ];
+    // $scope.selected_baseline = {
+    //    template: '<b>{{option}}</b>',
+    //    // selectedToTop: true,
+    //    smartButtonTextConverter(skip, option) { return option; },
+    //  };
+    //      $scope.customEvents = {onItemSelect: function(item) {console.log(item,$scope.selectAllLocation);}};
+    //
+    //     $scope.selected_customTexts = {buttonDefaultText: 'Stall Location'};
 
         $scope.getRelationShipData = function(supplier){
           $scope.relationshipData = {};
@@ -1035,5 +1012,33 @@ $scope.multiSelect =
         })
       }
 
+      $scope.StallOptions = [
+        "Near Entry Gate",
+        "Near Exit Gate",
+        "In Front of Tower",
+        "Near Garden",
+        "Near Play Area",
+        "Near Club House",
+        "Near Swimming Pool",
+        "Near Parking Area",
+        "Near Shopping Area",
+      ];
+      $scope.SunboardOptions = [
+        "Near Entry Gate",
+        "Near Exit Gate",
+        "In Front of Tower",
+        "Near Garden",
+        "Near Play Area",
+        "Near Club House",
+        "Near Swimming Pool",
+        "Near Parking Area",
+        "Near Shopping Area",
+      ];
+      $scope.FreebiesOptions = [
+        "Whatsapp Group",
+        "Email Group",
+        "Building ERP",
+        "Door To Door",
+        ];
 
 }]);//Controller function ends here

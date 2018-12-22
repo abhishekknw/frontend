@@ -81,12 +81,20 @@
             <td class="" ng-if="key=='NA'">{{key}}</td>
             <td class="col-md-3" ng-if="key!='NA'"><a class="" data-target="#invTypeModal" data-toggle="modal" ng-click="setInventoryIds(filter)" permission = "[permissions.viewInventoryIds]"><b>{{key}}</b></a>
 
-            <span class="" ng-if="key=='STALL'" ng-dropdown-multiselect="" options="stallLoc"  extra-settings="selected_baseline" events="customEvents"
+            <!-- <span class="" ng-if="key=='STALL'" ng-dropdown-multiselect="" options="stallLoc"  extra-settings="selected_baseline" events="customEvents"
             selected-model="supplier.stall_locations"  translation-texts="selected_customTexts"></span>
-            <!-- <multiselect ng-model="supplier.stall_locations" options="stallLoc" ng-if="key=='STALL'">
-            </multiselect> -->
+
             <span class="" ng-if="key=='SUNBOARD'" ng-dropdown-multiselect="" options="sunboard"  extra-settings="selected_baseline" events="customEvents"
-            selected-model="supplier.sunboard_locations"  translation-texts="selected_customTexts"></span>
+            selected-model="supplier.sunboard_locations"  translation-texts="selected_customTexts"></span> -->
+
+            <multiselect ng-if="key=='STALL'" ng-model="supplier.stall_locations" options="StallOptions" show-select-all="true" show-unselect-all="true">
+            </multiselect>
+
+            <multiselect ng-if="key=='SUNBOARD'" ng-model="supplier.sunboard_location" options="SunboardOptions" show-select-all="true" show-unselect-all="true">
+            </multiselect>
+
+
+
             </td>
 
             <td class="" ng-if="key=='FLIER'">{{supplier.flat_count}}</td>
@@ -105,9 +113,13 @@
                <input  ng-disabled="!supplier.phase_no" type="number"  ng-model="supplier.cost_per_flat" class="form-control spacing input-width" min="0">
            </td>
           <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
+
             <div ng-repeat="freebie in customFreebies">
               <input type="checkbox" checklist-model="supplier.freebies" checklist-value="freebie"> {{freebie}}
             </div>
+            <!-- <multiselect ng-model="supplier.freebie" options="FreebiesOptions" show-select-all="true" show-unselect-all="true">
+            </multiselect> -->
+
           </td>
             <!-- <td style="text-align:left;" rowspan="{{key.length}}" ng-show="$first">
               <span  ng-disabled="!supplier.phase" ng-dropdown-multiselect="" options="multiSelect"  extra-settings="selected_baseline_settings"
