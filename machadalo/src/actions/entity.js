@@ -91,7 +91,7 @@ export function postEntity({ data }, callback) {
   };
 }
 
-//Get Entity
+//Get Entity Type List
 export function getEntityTypeListStart() {
   return {
     type: types.GET_ENTITY_TYPE_LIST_START
@@ -127,6 +127,130 @@ export function getEntityTypeList() {
         console.log('Failed to fetch entity', ex);
 
         dispatch(getEntityTypeListFail());
+      });
+  };
+}
+
+//Get Entity List
+export function getEntityListStart() {
+  return {
+    type: types.GET_ENTITY_LIST_START
+  };
+}
+
+export function getEntityListSuccess(entityList) {
+  return {
+    type: types.GET_ENTITY_LIST_SUCCESS,
+    data: entityList
+  };
+}
+
+export function getEntityListFail() {
+  return {
+    type: types.GET_ENTITY_LIST_FAIL
+  };
+}
+
+export function getEntityList() {
+  return (dispatch, getState) => {
+    dispatch(getEntityListStart());
+
+    const { auth } = getState();
+
+    request
+      .get(`${config.API_URL}/v0/ui/dynamic-entities/entity`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(getEntityListSuccess(Object.values(resp.body.data)));
+      })
+      .catch(ex => {
+        console.log('Failed to fetch entity', ex);
+
+        dispatch(getEntityListFail());
+      });
+  };
+}
+
+//Delete Entity
+export function deleteEntityStart() {
+  return {
+    type: types.DELETE_ENTITY_START
+  };
+}
+
+export function deleteEntitySuccess(entityId) {
+  return {
+    type: types.DELETE_ENTITY_SUCCESS,
+    entityId
+  };
+}
+
+export function deleteEntityFail() {
+  return {
+    type: types.DELETE_ENTITY_FAIL
+  };
+}
+
+export function deleteEntity(entityId, callback) {
+  return (dispatch, getState) => {
+    dispatch(deleteEntityStart());
+
+    const { auth } = getState();
+
+    request
+      .put(`${config.API_URL}/v0/ui/dynamic-entities/entity/${entityId}`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(deleteEntitySuccess(entityId));
+        callback();
+      })
+      .catch(ex => {
+        console.log('Failed to delete entity', ex);
+
+        dispatch(deleteEntityFail());
+      });
+  };
+}
+
+//Delete Entity Type
+export function deleteEntityTypeStart() {
+  return {
+    type: types.DELETE_ENTITY_TYPE_START
+  };
+}
+
+export function deleteEntityTypeSuccess(entityTypeId) {
+  return {
+    type: types.DELETE_ENTITY_TYPE_SUCCESS,
+    entityTypeId
+  };
+}
+
+export function deleteEntityTypeFail() {
+  return {
+    type: types.DELETE_ENTITY_TYPE_FAIL
+  };
+}
+
+export function deleteEntityType(entityTypeId, callback) {
+  return (dispatch, getState) => {
+    dispatch(deleteEntityTypeStart());
+
+    const { auth } = getState();
+
+    request
+      .put(
+        `${config.API_URL}/v0/ui/dynamic-entities/entity-type/${entityTypeId}/`
+      )
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(deleteEntityTypeSuccess(entityTypeId));
+        callback();
+      })
+      .catch(ex => {
+        console.log('Failed to delete entity type', ex);
+
+        dispatch(deleteEntityTypeFail());
       });
   };
 }

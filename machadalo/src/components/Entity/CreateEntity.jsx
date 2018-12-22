@@ -41,10 +41,11 @@ export default class CreateEntity extends React.Component {
 
   componentDidUpdate() {
     if (
-      this.state.entityTypeOption.length !== this.props.entity.entityList.length
+      this.state.entityTypeOption.length !==
+      this.props.entity.entityTypeList.length
     ) {
       let entityTypeOption = [];
-      this.props.entity.entityList.forEach(entityType => {
+      this.props.entity.entityTypeList.forEach(entityType => {
         entityTypeOption.push({
           value: entityType.id,
           label: entityType.name
@@ -214,8 +215,8 @@ export default class CreateEntity extends React.Component {
   }
 
   onSelectEntityType(selectedEntityType) {
-    let { entityList } = this.props.entity;
-    entityList.forEach(entityType => {
+    let { entityTypeList } = this.props.entity;
+    entityTypeList.forEach(entityType => {
       if (entityType.id === selectedEntityType.value) {
         this.setState({
           selectedEntityType,

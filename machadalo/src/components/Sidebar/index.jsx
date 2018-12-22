@@ -86,7 +86,7 @@ export default class Sidebar extends React.Component {
                 </ul>
               </li>
               <li>
-                <NavLink to="/r/entity/create">
+                <NavLink to="/r/entity/list">
                   <i className="fa fa-cubes" aria-hidden="true" />
                   Entities
                 </NavLink>

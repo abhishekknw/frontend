@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Create from './Create';
+import List from './List';
 
 import './index.css';
 
@@ -21,6 +22,13 @@ export default class Entity extends React.Component {
             path={`${match.path}/create`}
             render={componentProps => (
               <Create {...this.props} {...componentProps} />
+            )}
+          />
+          <Route
+            exact
+            path={`${match.path}/list`}
+            render={componentProps => (
+              <List {...this.props} {...componentProps} />
             )}
           />
         </Switch>

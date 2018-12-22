@@ -1,6 +1,7 @@
 // List of checklists
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { toastr } from 'react-redux-toastr';
 
 export default class List extends React.Component {
   constructor(props) {
@@ -64,9 +65,14 @@ export default class List extends React.Component {
 
     // Remove checklist
     const onRemove = () => {
-      this.props.deleteChecklist({
-        checklistId: checklist.checklist_info.checklist_id
-      });
+      this.props.deleteChecklist(
+        {
+          checklistId: checklist.checklist_info.checklist_id
+        },
+        () => {
+          toastr.error('', 'Checklist deleted successfully');
+        }
+      );
     };
 
     let disableEditButton = false;

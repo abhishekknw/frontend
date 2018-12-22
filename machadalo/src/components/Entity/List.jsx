@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import CreateType from './CreateType';
-import CreateEntity from './CreateEntity';
+import EntityList from './EntityList';
+import EntityTypeList from './EntityTypeList';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
@@ -11,7 +11,7 @@ export default class Create extends React.Component {
     return (
       <div className="createform">
         <div className="createform__title">
-          <h3>Create Entity/Entity Type </h3>
+          <h3>Entity/Entity Type List</h3>
         </div>
         <Tabs>
           <TabList>
@@ -21,17 +21,16 @@ export default class Create extends React.Component {
 
           <TabPanel>
             <br />
-            <CreateType {...this.props} />
+            <EntityTypeList {...this.props} />
           </TabPanel>
           <TabPanel>
             <br />
-            <CreateEntity {...this.props} />
+            <EntityList {...this.props} />
           </TabPanel>
         </Tabs>
         <div className="list__actions">
-          <Link to={'/r/entity/list'} className="btn btn--danger">
-            <i className="fa fa-arrow-left" />
-            Go To List
+          <Link to={'/r/entity/create'} className="btn btn--danger">
+            Create Entity/Entity Type
           </Link>
         </div>
       </div>
