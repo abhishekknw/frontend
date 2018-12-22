@@ -9,7 +9,7 @@ export default class Create extends React.Component {
     return (
       <div className="createform">
         <div className="createform__title">
-          <h3>Create Inventory/Base Inventory </h3>
+          <h3>Create Entity/Entity Type </h3>
         </div>
         <Tabs>
           <TabList>

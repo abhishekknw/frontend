@@ -2819,10 +2819,12 @@
                             <button class="btn btn-danger active notify" print-btn style="text-align:right;margin-left:30px;margin-top:20px;">Print Report</button>
 
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-md-3" ng-if="userInfo.is_superuser">
                             <label style="color:#ffffff;">Select Report</label>
                             <input type="file" ngf-select = "uploadFiles($file, 1)" class="buttonfile btn btn-primary" accept=".pdf" ng-if="showReportBtn"/>
-                          <br>  <button ng-click="sendReport()" ng-if="showReportBtn" class="btn btn-danger" ng-if="userInfo.is_superuser">Submit</button>
+                            <input type="date" ng-model="reportData.reportStartDate" style="color:#000000">
+                            <input type="date" ng-model="reportData.reportEndDate" style="color:#000000">
+                          <br>  <button ng-click="sendReport()" ng-if="showReportBtn" class="btn btn-danger">Submit</button>
 
                           </div>
 

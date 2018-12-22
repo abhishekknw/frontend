@@ -26,7 +26,9 @@
    'STALL' : 'SL',
    'STANDEE' : 'ST',
    'FLIER' : 'FL',
-   'GATEWAY ARCH' : 'GA'
+   'GATEWAY ARCH' : 'GA',
+   'SUNBOARD' : 'SB',
+   'BANNER': 'BA'
  };
  $scope.queryType = {
    'Locality' : 'Locality',
@@ -38,13 +40,17 @@
           {header : 'STALL'},
           {header : 'FLIER'},
           {header : 'GATEWAY ARCH'},
+          {header : 'BANNER'},
+          {header : 'SUNBOARD'},
         ];
         $scope.invCodes = {
           PO : 'PO',
           ST : 'ST',
           SL : 'SL',
           FL : 'FL',
-          GA : 'GA'
+          GA : 'GA',
+          SB : 'SB',
+          BA : 'BA'
         };
         $scope.actKeys = [
           {header : 'RELEASE', key : 'release', label1 : 'Released', label2 : 'UnReleased'},
@@ -168,6 +174,7 @@
               $scope.inventoryActivityCountData[key] = sortObject(data);
               $scope.invActDateList = $scope.invActDateList.concat(Object.keys($scope.inventoryActivityCountData[key]));
             })
+            console.log($scope.inventoryActivityCountData);
             $scope.invActDateList = Array.from(new Set($scope.invActDateList));
             $scope.invActDateList.sort().reverse();
             $scope.dateListKeys = {};
@@ -2709,16 +2716,24 @@ $scope.sendMeEmail = function(){
     console.log(response);
   })
 }
-
+$scope.reportData = {};
 $scope.sendReport = function(){
   var token = $rootScope.globals.currentUser.token;
+  var startDate,endDate;
+  if($scope.reportData.reportStartDate && $scope.reportData.reportEndDate){
+    startDate = commonDataShare.formatDate($scope.reportData.reportStartDate);
+    endDate = commonDataShare.formatDate($scope.reportData.reportEndDate);
+  }
+  console.log(startDate,endDate);
   if ($scope.file) {
     Upload.upload({
         url: Config.APIBaseUrl + "v0/ui/website/send-graph-pdf/",
         data: {
           file: $scope.file,
           campaign_id : $scope.campaignIdForPerfMetrics,
-          data_import_type : "base-data"
+          data_import_type : "base-data",
+          start_date: startDate,
+          end_date: endDate
         },
         headers: {'Authorization': 'JWT ' + token}
     }).then(function onSuccess(response){
@@ -2905,66 +2920,7 @@ $scope.Sort = function(val)
   }
 //END
 
-
-$scope.planets = [
-        {
-          name : 'Mercury',
-          distance : 0.4,
-          mass : 0.055
-        },
-        {
-          name : 'Venus',
-          distance : 0.7,
-          mass : 0.815
-        },
-        {
-          name : 'Earth',
-          distance: 1,
-          mass : 1
-        },
-        {
-          name : 'Mars',
-          distance : 1.5,
-          mass : 0.107
-        },
-        {
-          name : 'Ceres',
-          distance : 2.77,
-          mass :     0.00015
-        },
-        {
-          name : 'Jupiter',
-          distance : 5.2,
-          mass :   318
-        },
-        {
-          name : 'Saturn',
-          distance : 9.5,
-          mass :    95
-        },
-        {
-          name : 'Uranus',
-          distance : 19.6,
-          mass :   14
-        },
-        {
-          name : 'Neptune',
-          distance : 30,
-          mass : 17
-        },
-        {
-          name : 'Pluto',
-          distance : 39,
-          mass : 0.00218
-        },
-        {
-          name : 'Charon',
-          distance : 39,
-          mass :  0.000254
-        }
-      ];
 })
 
-    $scope.showPopover=false;
 
 })();

@@ -97,7 +97,9 @@ $scope.addNewPhase =true;
     {name : 'Standee(ST)', code : 'ST',   selected : false },
     {name : 'Stall(SL)',   code : 'SL',   selected : false },
     {name : 'Flyer(FL)',   code : 'FL',   selected : false },
+    {name : 'Banner(BA)',   code : 'BA',   selected : false },
     {name : 'Gateway Arch',   code : 'GA',   selected : false },
+    {name : 'SunBoard(SB)',   code : 'SB',   selected : false },
   ];
   $scope.invForComments = constants.inventoryNames;
   $scope.shortlisted = constants.shortlisted;
