@@ -8,6 +8,7 @@ export default class List extends React.Component {
 
     this.renderChecklistRow = this.renderChecklistRow.bind(this);
     this.onBack = this.onBack.bind(this);
+    this.onEdit = this.onEdit.bind(this);
   }
 
   componentDidMount() {
@@ -35,6 +36,10 @@ export default class List extends React.Component {
     } else {
       this.props.history.push(`/r/checklist/campaigns`);
     }
+  }
+
+  onEdit(checklistId) {
+    this.props.history.push(`/r/checklist/edit/${checklistId}`);
   }
 
   renderChecklistRow(checklist, index) {
@@ -99,8 +104,8 @@ export default class List extends React.Component {
           ) : (
             <button
               type="button"
-              to={`/r/checklist/edit/${checklist.checklist_info.checklist_id}`}
               className="btn btn--danger"
+              onClick={() => this.onEdit(checklist.checklist_info.checklist_id)}
               disabled={!editPermission}
             >
               Edit Checklist
