@@ -411,6 +411,13 @@ export default class CreateChecklistTemplate extends React.Component {
     };
 
     const onColumnTypeChange = item => {
+      if (item.value !== 'TEXT') {
+        let rows = Object.assign({}, this.state.static_column_values);
+        if (rows[columnIndex + 1][0].disabled === false) {
+          toastr.error('', 'Cannot change type for Static Columns');
+          return;
+        }
+      }
       if (item.value === 'RADIO' || item.value === 'SELECT') {
         this.setState({
           showOptionModal: true,
