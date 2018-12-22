@@ -47,7 +47,7 @@ export default class CreateChecklistTemplate extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.renderChecklistColumn = this.renderChecklistColumn.bind(this);
     this.renderChecklistRow = this.renderChecklistRow.bind(this);
-    this.handleRowChange = this.handleRowChange.bind(this);
+    // this.handleRowChange = this.handleRowChange.bind(this);
     this.handleColumnChange = this.handleColumnChange.bind(this);
     this.onAddRow = this.onAddRow.bind(this);
     this.onAddColumn = this.onAddColumn.bind(this);
@@ -336,7 +336,7 @@ export default class CreateChecklistTemplate extends React.Component {
       staticDataError = false;
     for (let i = 0; i < Object.values(staticRowData).length; i++) {
       staticRowData[i + 1] = staticRowData[i + 1].filter(staticData => {
-        newStaticDataFlag = true;
+        let newStaticDataFlag = true;
         if (staticData.status === 'create') {
           newStaticDataFlag = false;
           delete staticData.status;
@@ -499,6 +499,7 @@ export default class CreateChecklistTemplate extends React.Component {
                     type="text"
                     placeholder="Static Data"
                     value={
+                      static_value[columnIndex + 1] &&
                       static_value[columnIndex + 1][rowIndex]
                         ? static_value[columnIndex + 1][rowIndex].cell_value
                         : ''
