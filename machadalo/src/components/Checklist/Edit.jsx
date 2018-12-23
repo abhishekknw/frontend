@@ -47,7 +47,7 @@ export default class CreateChecklistTemplate extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.renderChecklistColumn = this.renderChecklistColumn.bind(this);
     this.renderChecklistRow = this.renderChecklistRow.bind(this);
-    // this.handleRowChange = this.handleRowChange.bind(this);
+    this.handleRowChange = this.handleRowChange.bind(this);
     this.handleColumnChange = this.handleColumnChange.bind(this);
     this.onAddRow = this.onAddRow.bind(this);
     this.onAddColumn = this.onAddColumn.bind(this);
@@ -170,6 +170,16 @@ export default class CreateChecklistTemplate extends React.Component {
     });
   }
 
+  handleRowChange(event, columnIndex, rowIndex) {
+    let rows = Object.assign({}, this.state.static_column_values);
+
+    rows[columnIndex + 1][rowIndex].cell_value = event.target.value;
+
+    this.setState({
+      static_column_values: rows
+    });
+  }
+
   onOpenOptionModal(options, columnType, column, columnIndex) {
     this.setState({
       showOptionModal: true,
@@ -213,12 +223,14 @@ export default class CreateChecklistTemplate extends React.Component {
     let rowLength = rows['1'].length;
 
     for (let i = 0; i < columnLength; i++) {
-      rows[i + 1].push({
-        row_id: rowLength + 1,
-        cell_value: '',
-        disabled: i === 0 ? false : true,
-        status: 'create'
-      });
+      if (rows[i + 1]) {
+        rows[i + 1].push({
+          row_id: rowLength + 1,
+          cell_value: '',
+          disabled: i === 0 ? false : true,
+          status: 'create'
+        });
+      }
     }
 
     this.setState({
@@ -334,34 +346,44 @@ export default class CreateChecklistTemplate extends React.Component {
 
     let staticRowData = Object.assign({}, this.state.static_column_values),
       staticDataError = false;
-    for (let i = 0; i < Object.values(staticRowData).length; i++) {
-      staticRowData[i + 1] = staticRowData[i + 1].filter(staticData => {
-        let newStaticDataFlag = true;
-        if (staticData.status === 'create') {
-          newStaticDataFlag = false;
-          delete staticData.status;
-          if (new_static_column_values[i + 1]) {
-            new_static_column_values[i + 1].push(staticData);
-          } else {
-            new_static_column_values[i + 1] = staticData;
-          }
-        }
-        if (staticData.disabled) {
-          newStaticDataFlag = false;
-        } else {
-          if (staticData.cell_value === '') {
-            staticDataError = true;
-          } else {
-            delete staticData.disabled;
-          }
-        }
-        return newStaticDataFlag;
-      });
 
-      if (!staticRowData[i + 1].length) {
-        delete staticRowData[i + 1];
+    let staticRowKeys = Object.keys(staticRowData);
+
+    staticRowKeys.forEach(i => {
+      if (staticRowData[i]) {
+        staticRowData[i] = staticRowData[i].filter(staticData => {
+          let rowFlag = true;
+          let newRowFlag = false;
+          if (staticData.status === 'create' && !staticData.disabled) {
+            delete staticData.status;
+            newRowFlag = true;
+            rowFlag = false;
+          }
+          if (staticData.disabled) {
+            rowFlag = false;
+          } else {
+            if (staticData.cell_value === '') {
+              staticDataError = true;
+            } else {
+              delete staticData.disabled;
+            }
+          }
+          if (newRowFlag) {
+            if (new_static_column_values[i]) {
+              new_static_column_values[i].push(staticData);
+            } else {
+              new_static_column_values[i] = [staticData];
+            }
+          }
+          return rowFlag;
+        });
+
+        if (!staticRowData[i].length) {
+          delete staticRowData[i];
+        }
       }
-    }
+    });
+
     const data = {
       is_template: templateValue,
       checklist_columns: this.state.checklist_columns.filter(item => {
@@ -498,13 +520,21 @@ export default class CreateChecklistTemplate extends React.Component {
                   <input
                     type="text"
                     placeholder="Static Data"
+                    onChange={event =>
+                      this.handleRowChange(event, columnIndex, rowIndex)
+                    }
                     value={
                       static_value[columnIndex + 1] &&
                       static_value[columnIndex + 1][rowIndex]
                         ? static_value[columnIndex + 1][rowIndex].cell_value
                         : ''
                     }
-                    disabled={true}
+                    disabled={
+                      static_value[columnIndex + 1] &&
+                      static_value[columnIndex + 1][rowIndex]
+                        ? static_value[columnIndex + 1][rowIndex].disabled
+                        : true
+                    }
                   />
                 </div>
               </div>

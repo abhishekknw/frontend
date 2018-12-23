@@ -337,24 +337,26 @@ export default class CreateChecklistTemplate extends React.Component {
 
     let staticRowData = Object.assign({}, this.state.static_column_values),
       staticDataError = false;
-    for (let i = 0; i < Object.values(staticRowData).length; i++) {
-      staticRowData[i + 1] = staticRowData[i + 1].filter(staticData => {
+    let staticRowKeys = Object.keys(staticRowData);
+
+    staticRowKeys.forEach(i => {
+      staticRowData[i] = staticRowData[i].filter(staticData => {
         if (staticData.disabled) {
-          return;
+          return false;
         } else {
           if (staticData.cell_value === '') {
             staticDataError = true;
           } else {
             delete staticData.disabled;
           }
-          return staticData;
+          return true;
         }
       });
 
-      if (!staticRowData[i + 1].length) {
-        delete staticRowData[i + 1];
+      if (!staticRowData[i].length) {
+        delete staticRowData[i];
       }
-    }
+    });
 
     if (staticDataError) {
       toastr.error('', 'Please fill all the static data input field');
