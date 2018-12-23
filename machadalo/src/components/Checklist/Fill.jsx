@@ -401,7 +401,7 @@ export default class FillChecklist extends React.Component {
 
   renderChecklistRow(row, rowIndex) {
     const { checklistDetails, checklistEntries } = this.state;
-    const rowId = row[rowIndex].row_id;
+    const rowId = row.row_id;
 
     return (
       <div className="fillForm__form__row" key={`row-${rowIndex}`}>
@@ -490,9 +490,7 @@ export default class FillChecklist extends React.Component {
             </div>
             <div>
               {checklistDetails && checklistDetails.row_headers
-                ? Object.values(checklistDetails.row_headers).map(
-                    this.renderChecklistRow
-                  )
+                ? checklistDetails.row_headers['1'].map(this.renderChecklistRow)
                 : undefined}
             </div>
             <div className="fillForm__form__inline">

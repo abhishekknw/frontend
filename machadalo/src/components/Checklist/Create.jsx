@@ -466,22 +466,26 @@ export default class CreateChecklistTemplate extends React.Component {
                 onChange={onColumnTypeChange}
               />
               <div>
-                <div className="checkbox-data">
-                  <input
-                    className="input-checkbox"
-                    type="checkbox"
-                    onClick={event =>
-                      this.handleStaticColumnChange(event, columnIndex)
-                    }
-                  />
+                {columnIndex !== 0 ? (
+                  <div className="checkbox-data">
+                    <input
+                      className="input-checkbox"
+                      type="checkbox"
+                      onClick={event =>
+                        this.handleStaticColumnChange(event, columnIndex)
+                      }
+                    />
 
-                  <p className="main-text">
-                    Static Data
-                    <em>
-                      (Field entered in static column cannot be changed later)
-                    </em>
-                  </p>
-                </div>
+                    <p className="main-text">
+                      Static Data
+                      <em>
+                        (Field entered in static column cannot be changed later)
+                      </em>
+                    </p>
+                  </div>
+                ) : (
+                  undefined
+                )}
                 {columnIndex > 1 ? (
                   <button
                     type="button"

@@ -356,6 +356,8 @@ export default class CreateChecklistTemplate extends React.Component {
           let newRowFlag = false;
           if (staticData.status === 'create' && !staticData.disabled) {
             delete staticData.status;
+            staticData.order_id = staticData.row_id;
+            delete staticData.row_id;
             newRowFlag = true;
             rowFlag = false;
           }
