@@ -198,10 +198,11 @@ export function deleteEntity(entityId, callback) {
     const { auth } = getState();
 
     request
-      .put(`${config.API_URL}/v0/ui/dynamic-entities/entity/${entityId}`)
+      .delete(`${config.API_URL}/v0/ui/dynamic-entities/entity/${entityId}`)
       .set('Authorization', `JWT ${auth.token}`)
       .then(resp => {
         dispatch(deleteEntitySuccess(entityId));
+        dispatch(getEntityList());
         callback();
       })
       .catch(ex => {
@@ -239,18 +240,99 @@ export function deleteEntityType(entityTypeId, callback) {
     const { auth } = getState();
 
     request
-      .put(
+      .delete(
         `${config.API_URL}/v0/ui/dynamic-entities/entity-type/${entityTypeId}/`
       )
       .set('Authorization', `JWT ${auth.token}`)
       .then(resp => {
         dispatch(deleteEntityTypeSuccess(entityTypeId));
+        dispatch(getEntityTypeList());
         callback();
       })
       .catch(ex => {
         console.log('Failed to delete entity type', ex);
 
         dispatch(deleteEntityTypeFail());
+      });
+  };
+}
+
+//Get Entity Type List
+export function getEntityTypeStart() {
+  return {
+    type: types.GET_CURRENT_ENTITY_TYPE_START
+  };
+}
+
+export function getEntityTypeSuccess(entityTypeId) {
+  return {
+    type: types.GET_CURRENT_ENTITY_TYPE_SUCCESS,
+    data: entityTypeId
+  };
+}
+
+export function getEntityTypeFail() {
+  return {
+    type: types.GET_CURRENT_ENTITY_TYPE_FAIL
+  };
+}
+
+export function getEntityType() {
+  return (dispatch, getState) => {
+    dispatch(getEntityTypeStart());
+
+    const { auth } = getState();
+
+    request
+      .get(`${config.API_URL}/v0/ui/dynamic-entities/entity-type`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(getEntityTypeSuccess(Object.values(resp.body.data)));
+      })
+      .catch(ex => {
+        console.log('Failed to fetch entity', ex);
+
+        dispatch(getEntityTypeFail());
+      });
+  };
+}
+
+//Get Current Entity
+export function getEntityStart() {
+  return {
+    type: types.GET_CURRENT_ENTITY_START
+  };
+}
+
+export function getEntitySuccess(entityId) {
+  return {
+    type: types.GET_CURRENT_ENTITY_SUCCESS,
+    data: entityId
+  };
+}
+
+export function getEntityFail() {
+  return {
+    type: types.GET_CURRENT_ENTITY_FAIL
+  };
+}
+
+export function getEntity() {
+  return (dispatch, getState) => {
+    dispatch(getEntityStart());
+
+    const { auth } = getState();
+
+    request
+      .get(`${config.API_URL}/v0/ui/dynamic-entities/entity`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(getEntitySuccess(Object.values(resp.body.data)));
+      })
+      .catch(ex => {
+        console.log('Failed to fetch entity', ex);
+
+        dispatch(getEntityFail());
       });
   };
 }
