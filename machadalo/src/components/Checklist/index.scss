@@ -32,6 +32,22 @@
   outline: none;
 }
 
+.column-data{
+  margin-bottom: 0px !important;
+}
+
+.checkbox-data{
+  display: flex;
+  input{
+    margin-top: 16px;
+    min-width: 15px;
+  }
+  .main-text em{    
+    font-size: 14px;
+    color: grey;
+  }
+}
+
 .checklist {
   padding: 60px 0;
 
@@ -178,7 +194,7 @@
       &__column {
         flex: 1;
         padding: 0 10px;
-        min-width: 150px;
+        min-width: 170px;
       }
 
       &__inline {

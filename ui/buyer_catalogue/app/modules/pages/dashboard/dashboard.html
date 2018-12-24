@@ -348,10 +348,10 @@
                                     </tr>
                                     <tr>
                                    <td><b>{{supplier.supplier_data.society_name}}</b></td>
-                                      <td>Other Images(Banner)</td>
+                                      <td>Hash Tag Images</td>
                                       <td>-</td>
                                       <td>-</td>
-                                      <td><a data-target="" data-toggle="modal" ng-click="getHashtagImages(supplier)">View Other Images</a></td>
+                                      <td><a data-target="" data-toggle="modal" ng-click="getHashtagImages(supplier)">View Images</a></td>
                                       </tr>
                                   </tbody>
                                 </table>
@@ -2819,12 +2819,10 @@
                             <button class="btn btn-danger active notify" print-btn style="text-align:right;margin-left:30px;margin-top:20px;">Print Report</button>
 
                           </div>
-                          <div class="col-md-3" ng-if="userInfo.is_superuser">
+                          <div class="col-md-3">
                             <label style="color:#ffffff;">Select Report</label>
                             <input type="file" ngf-select = "uploadFiles($file, 1)" class="buttonfile btn btn-primary" accept=".pdf" ng-if="showReportBtn"/>
-                            <input type="date" ng-model="reportData.reportStartDate" style="color:#000000">
-                            <input type="date" ng-model="reportData.reportEndDate" style="color:#000000">
-                          <br>  <button ng-click="sendReport()" ng-if="showReportBtn" class="btn btn-danger">Submit</button>
+                          <br>  <button ng-click="sendReport()" ng-if="showReportBtn" class="btn btn-danger" ng-if="userInfo.is_superuser">Submit</button>
 
                           </div>
 

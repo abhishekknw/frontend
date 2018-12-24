@@ -65,12 +65,20 @@ export default class List extends React.Component {
 
     // Remove checklist
     const onRemove = () => {
+      let campaignId = this.props.match.params.campaignId;
+      let supplierId = this.props.match.params.supplierId;
+
       this.props.deleteChecklist(
         {
           checklistId: checklist.checklist_info.checklist_id
         },
         () => {
-          toastr.error('', 'Checklist deleted successfully');
+          toastr.success('', 'Checklist deleted successfully');
+          if (supplierId) {
+            this.props.getSupplierChecklists({ campaignId, supplierId });
+          } else {
+            this.props.getCampaignChecklists({ campaignId });
+          }
         }
       );
     };

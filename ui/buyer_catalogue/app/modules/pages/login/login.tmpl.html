@@ -9,15 +9,20 @@
   </div>
   <div ng-loading="!loadingSpinner">
   </div>
-  <div class="container1" style="background-image:url(img/background.png);height:550px;">
+  <div class="container1" style="background-image:url(img/background.png);height:550px;overflow:hidden">
       <div class="col-sm-6 text-right" >
-        <p class="font-r, quote">"Every great achievement was first  considered impossible"</h1><br>
+        <p class="font-r, quote">"Every great achievement was first  considered impossible"</h1><br></p>
       </div>
-      <div class="col-sm-2"></div>
-      <div class="col-sm-4"> <div>
+      <!-- <div class="col-sm-2"></div>
+      <div class="col-sm-4"> <div> -->
     <!-- <div id="login-panel" class="panel panel-default"> -->
-        <div class="panel panel-default" id="login-panel"> <strong><div style="letter-spacing: 0.7px; margin-left: 17px;" class="login-panel-header-text font"><center>HELLO! LOGIN TO MACHADALO</center></div></strong><br />
-        <form class="form-horizontal" role="form" ng-submit="login()">
+        <div class="panel panel-default pull-right" id="login-panel">
+        <div class="row">
+          <br />
+          <strong><div style="letter-spacing: 0.7px; margin-left: 17px;" class="login-panel-header-text font">
+         <center>HELLO! LOGIN TO MACHADALO</center></div></strong>
+        </div>
+        <form class="form-horizontal" role="form" ng-submit="login()" style="margin:4%">
           <div class="errorMessages">
               <div ng-show="error" class="error">{{error}}</div>
           </div>
@@ -35,26 +40,34 @@
              <div class="form-group" ng-model="disabled">
                <br />
                 <div class="col-sm-12">
-                  <button style="text-align:center" ng-disabled="disabled"  class="font, submit-btn" type="submit" class="btn  btn-sm">LOGIN</button>
+                <center><button style="text-align:center" ng-disabled="disabled"  class="font, submit-btn" type="submit" class="btn  btn-sm">LOGIN</button>
+                </center>
                 </div></br>
               </div>
               <div class="form-group">
-                <div class="col-sm-10" style="text-align:center;">
-                  <a  data-target="#guestModal" data-toggle="modal" formnovalidate>Continue as Guest</a>
+                <div class="col-sm-10">
+                  <center><a data-target="#guestModal" data-toggle="modal" formnovalidate>Continue as Guest</a></center>
                 </div>
             </div>
+            <hr>
             <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-9, extras">
+                <div class="col-sm-offset-3 col-sm-9, extras pull-left">
                     <div class="checkbox checkbox1">
-                        <label><input  type="checkbox" >Remember me</label>
+                        <label><input  type="checkbox"> <small>Remember me</small></label>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-9, extras">
-                 <label><a href="http://www.machadalo.com">Forgot Password?</a></label>
+                <div class="col-sm-offset-3 col-sm-9, extras pull-left">
+                    <div class="checkbox checkbox1">
+                      <label><a href="http://www.machadalo.com"><small>Forgot Password?</small></a></label>
+                    </div>
                 </div>
+                <!-- <div class="col-sm-offset-3 col-sm-9, extras">
+                  <div class="row">
+
+                 </div>
+                </div> -->
             </div>
+            <hr>
             </td>
             </tr>
         </form>
