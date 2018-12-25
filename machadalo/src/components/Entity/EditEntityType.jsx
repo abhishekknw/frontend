@@ -30,13 +30,15 @@ const getAttributeTypeOption = value => {
   return { value };
 };
 
-export default class CreateType extends React.Component {
+export default class EditEntityType extends React.Component {
   constructor() {
     super();
 
     this.state = {
       name: '',
+
       entity_attributes: [{ name: '', type: '', is_required: false }],
+      currentEntityType: undefined,
       showOptionModal: false,
       attributeOptions: [''],
       attributeInfo: {}
@@ -50,6 +52,27 @@ export default class CreateType extends React.Component {
     this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.getEntityType(this.props.match.params.entityTypeId);
+  }
+
+  componentDidUpdate() {
+    if (
+      this.state.currentEntityType === undefined ||
+      (this.state.currentEntityType &&
+        this.props.entity.currentEntityType &&
+        this.state.currentEntityType.id !==
+          this.props.entity.currentEntityType.id)
+    ) {
+      this.setState({
+        currentEntityType: this.props.entity.currentEntityType,
+        entity_attributes: this.props.entity.currentEntityType
+          .entity_attributes,
+        name: this.props.entity.currentEntityType.name
+      });
+    }
   }
 
   onCancelOptionModal() {
@@ -89,10 +112,16 @@ export default class CreateType extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
-    this.props.postEntityType({ data: this.state }, () => {
-      toastr.success('', 'Entity Type created successfully');
-      this.props.history.push('/r/entity/list');
-    });
+    this.props.postEntityType(
+      {
+        data: this.state,
+        entityTypeId: this.props.match.params.entityTypeId
+      },
+      () => {
+        toastr.success('', 'Entity Type updated successfully');
+        this.props.history.push('/r/entity/list');
+      }
+    );
   }
 
   onAddAttribute() {
@@ -217,7 +246,10 @@ export default class CreateType extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="createform">
+        <div className="createform__title">
+          <h3>Edit Entity Type </h3>
+        </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
             <div className="createform__form__inline">

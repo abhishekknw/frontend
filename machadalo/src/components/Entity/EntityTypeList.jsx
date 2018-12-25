@@ -31,7 +31,7 @@ export default class List extends React.Component {
         </td>
         <td>
           <Link
-            to={`/r/entity-type/edit/${entityType.id}`}
+            to={`/r/entity/type/edit/${entityType.id}`}
             className="btn btn--danger"
           >
             Edit Entity Type

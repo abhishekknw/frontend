@@ -264,10 +264,10 @@ export function getEntityTypeStart() {
   };
 }
 
-export function getEntityTypeSuccess(entityTypeId) {
+export function getEntityTypeSuccess(entityType) {
   return {
     type: types.GET_CURRENT_ENTITY_TYPE_SUCCESS,
-    data: entityTypeId
+    data: entityType
   };
 }
 
@@ -277,23 +277,28 @@ export function getEntityTypeFail() {
   };
 }
 
-export function getEntityType() {
+export function getEntityType(entityTypeId) {
   return (dispatch, getState) => {
     dispatch(getEntityTypeStart());
 
     const { auth } = getState();
+    let data = {
+      id: '5c00009ef4a6556c40e16f32',
+      entity_attributes: [{ is_required: false, type: 'STRING', name: 'dhfg' }],
+      name: 'hsdf'
+    };
 
-    request
-      .get(`${config.API_URL}/v0/ui/dynamic-entities/entity-type`)
-      .set('Authorization', `JWT ${auth.token}`)
-      .then(resp => {
-        dispatch(getEntityTypeSuccess(Object.values(resp.body.data)));
-      })
-      .catch(ex => {
-        console.log('Failed to fetch entity', ex);
+    // request
+    //   .get(`${config.API_URL}/v0/ui/dynamic-entities/entity-type/${entityTypeId}/`)
+    //   .set('Authorization', `JWT ${auth.token}`)
+    //   .then(resp => {
+    dispatch(getEntityTypeSuccess(data));
+    // })
+    // .catch(ex => {
+    //   console.log('Failed to fetch entity', ex);
 
-        dispatch(getEntityTypeFail());
-      });
+    //   dispatch(getEntityTypeFail());
+    // });
   };
 }
 
@@ -304,10 +309,10 @@ export function getEntityStart() {
   };
 }
 
-export function getEntitySuccess(entityId) {
+export function getEntitySuccess(entity) {
   return {
     type: types.GET_CURRENT_ENTITY_SUCCESS,
-    data: entityId
+    data: entity
   };
 }
 
@@ -317,22 +322,114 @@ export function getEntityFail() {
   };
 }
 
-export function getEntity() {
+export function getEntity(entityId) {
   return (dispatch, getState) => {
     dispatch(getEntityStart());
 
     const { auth } = getState();
+    let data = {
+      organisation_id: 'MAC1421',
+      is_custom: false,
+      name: 'New',
+      created_at: '2018-12-23T05:40:53.778000',
+      created_by: '107',
+      entity_attributes: [
+        {
+          is_required: false,
+          type: 'FLOAT',
+          name: 'float',
+          value: 2.5
+        },
+        {
+          is_required: false,
+          type: 'STRING',
+          name: 'string',
+          value: 'asda'
+        },
+        {
+          is_required: false,
+          type: 'DROPDOWN',
+          name: 'select',
+          value: 'naya wala',
+          options: ['ye wala', 'naya wala']
+        },
+        {
+          is_required: false,
+          type: 'EMAIL',
+          name: 'email',
+          value: 'asdhbh@jsd.sd'
+        },
+        {
+          is_required: false,
+          type: 'INVENTORYLIST',
+          name: 'List',
+          value: ['1']
+        }
+      ],
+      id: '5c1f1fe5f4a6554d9c3cd7e0'
+    };
+
+    // request
+    //   .get(`${config.API_URL}/v0/ui/dynamic-entities/entity/${entityId}/`)
+    //   .set('Authorization', `JWT ${auth.token}`)
+    //   .then(resp => {
+    dispatch(getEntitySuccess(data));
+    // })
+    // .catch(ex => {
+    //   console.log('Failed to fetch entity', ex);
+
+    //   dispatch(getEntityFail());
+    // });
+  };
+}
+
+//Update Entity
+
+export function updateEntity({ data, entityId }, callback) {
+  return (dispatch, getState) => {
+    dispatch(postEntityStart());
+
+    const { auth } = getState();
 
     request
-      .get(`${config.API_URL}/v0/ui/dynamic-entities/entity`)
+      .put(`${config.API_URL}/v0/ui/dynamic-entities/entity/${entityId}/`)
       .set('Authorization', `JWT ${auth.token}`)
+      .send(data)
       .then(resp => {
-        dispatch(getEntitySuccess(Object.values(resp.body.data)));
+        dispatch(postEntitySuccess(resp.data));
+        if (callback) {
+          callback();
+        }
       })
       .catch(ex => {
-        console.log('Failed to fetch entity', ex);
+        console.log('Failed to create entity', ex);
+        dispatch(postEntityFail());
+      });
+  };
+}
 
-        dispatch(getEntityFail());
+export function updateEntityType({ data, entityTypeId }, callback) {
+  return (dispatch, getState) => {
+    dispatch(postEntityTypeStart());
+
+    const { auth } = getState();
+
+    request
+      .post(
+        `${config.API_URL}/v0/ui/dynamic-entities/entity-type/${entityTypeId}/`
+      )
+      .set('Authorization', `JWT ${auth.token}`)
+      .send(data)
+      .then(resp => {
+        dispatch(postEntityTypeSuccess(resp.data));
+        if (callback) {
+          callback();
+        }
+      })
+      .catch(ex => {
+        console.log('Failed to create entity', ex);
+
+        dispatch(postEntityTypeFail());
       });
   };
 }
