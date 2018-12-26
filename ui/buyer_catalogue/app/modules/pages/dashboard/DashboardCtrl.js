@@ -69,6 +69,9 @@
           {header : 'Images', key : 'images'},
         ];
         $scope.campaignStatus = {
+          overall : {
+            status : 'overall', value : false, campaignLabel : 'Overall Campaigns', supplierLabel : 'Overall Societies'
+          },
           ongoing : {
             status : 'ongoing', value : false, campaignLabel : 'Ongoing Campaigns', supplierLabel : 'Ongoing Societies'
           },
@@ -136,9 +139,11 @@
           };
         $scope.showPerfPanel = false;
         $scope.inventories = constants.inventories;
-        $scope.campaignStatusLabels = [$scope.campaignStatus.ongoing.name,$scope.campaignStatus.completed.name, $scope.campaignStatus.upcoming.name , $scope.campaignStatus.onhold.name];
+        $scope.campaignStatusLabels = [$scope.campaignStatus.ongoing.name,$scope.campaignStatus.completed.name, $scope.campaignStatus.upcoming.name , $scope.campaignStatus.onhold.name,$scope.campaignStatus.overall.name];
         $scope.pieChartDefaulOptions = { legend: { display: true, position: 'right',padding: '10px' } };
         $scope.getCampaignsMenu = function(status){
+          console.log(status);
+          $scope.campaignStatus.overall.value = false;
           $scope.campaignStatus.ongoing.value = false;
           $scope.campaignStatus.completed.value = false;
           $scope.campaignStatus.upcoming.value = false;
@@ -415,6 +420,7 @@
             $scope.searchSelectAllModel = [];
             $scope.showSingleCampaignChart = false;
             $scope.campaignData = response.data.data;
+            console.log($scope.campaignData);
             $scope.campaignAllStatusTypeData = response.data.data;
             console.log($scope.campaignData);
             $scope.mergedarray = [];
@@ -1021,7 +1027,7 @@
            $scope.overallMetric = response.data.data.overall_metrics;
            console.log($scope.overallMetric);
            angular.forEach(response.data.data.ongoing , function(data,key){
-             $scope.extraLeads = data;
+             $scope.extraLeads = data.extra_leads_data;
              console.log($scope.extraLeads);
            })
 
@@ -2918,9 +2924,23 @@ $scope.Sort = function(val)
       console.log(data);
       return [data];
   }
+
+$scope.getCampaignWiseSummary = function(){
+  console.log("hello");
+  cfpLoadingBar.start();
+     DashboardService.getCampaignWiseSummary()
+    .then(function onSuccess(response){
+      console.log(response);
+      $scope.campaignSummary = response.data.data;
+      console.log(response.data.data);
+      $scope.campaignSummaryTable = true;
+      cfpLoadingBar.complete();
+  }).catch(function onError(response){
+        console.log(response);
+    })
+}
+
 //END
 
 })
-
-
 })();

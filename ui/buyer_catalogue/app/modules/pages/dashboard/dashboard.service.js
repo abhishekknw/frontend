@@ -189,6 +189,10 @@
       var url = url_base + "send-pipeline-details/" + campaignId + "/";
       return machadaloHttp.get(url);
     }
+    DashboardService.getCampaignWiseSummary = function(){
+      var url = url_root  + "campaign/campaign-wise-summary/";
+      return machadaloHttp.get(url);
+    }
 
     return DashboardService;
 
