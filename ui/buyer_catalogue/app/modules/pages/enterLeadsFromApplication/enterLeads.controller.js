@@ -71,7 +71,7 @@ angular.module('catalogueApp')
             }
             data.leads_form_entries.push(temp_data);
         });
-
+        console.log(data);
         enterLeadsService.saveLeads($scope.formId,data)
         .then(function onSuccess(response){
           console.log(response);
@@ -120,6 +120,36 @@ angular.module('catalogueApp')
             console.log(response);
           })
       }
-
+      $scope.setCheckBoxValue = function(isSelected,index,values){
+        console.log(values);
+        if(!values.hasOwnProperty('value')){
+          values['value'] = [];
+        }
+        console.log(isSelected);
+        if(isSelected){
+          values.value.push($scope.leadChBoxKeyOptions[index].name);
+        }else {
+          console.log("hello");
+          values.value.splice(values.value.indexOf($scope.leadChBoxKeyOptions[index].name),1);
+        }
+        console.log(values,$scope.leadModelData);
+      }
+      $scope.getCheckBoxValues = function(values){
+        console.log(values);
+        $scope.leadChBoxKeyOptions = [];
+        angular.forEach(values, function(value,index){
+          $scope.leadChBoxKeyOptions[index] = {
+            name : value, selected : false
+          };
+        });
+        console.log($scope.leadChBoxKeyOptions);
+      }
+      $scope.setHotLeadValue = function(item,value,itemValue){
+        if(value){
+          item.value = item.hot_lead_criteria;
+        }else{
+          item.value = null;
+        }
+      }
 
     });

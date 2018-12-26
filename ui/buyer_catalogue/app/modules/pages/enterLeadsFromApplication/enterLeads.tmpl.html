@@ -84,7 +84,7 @@
             {{item.key_name}}
             <div class="input-group">
               <!-- <span class="form-check-input"></span> -->
-              <input type="checkbox" class="form-check-input"  value="{{item.hot_lead_criteria}}"  ng-model="hotLeadValue" ng-click="setHotLeadValue(item,hotLeadValue)" ng-checked="item.value == item.hot_lead_criteria"/>{{item.hot_lead_criteria}}
+              <input type="checkbox" class="form-check-input"  value="{{item.hot_lead_criteria}}"  ng-model="hotLeadValue" ng-click="setHotLeadValue(item,hotLeadValue,item.hot_lead_criteria)" ng-checked="item.value == item.hot_lead_criteria"/>{{item.hot_lead_criteria}}
             </div>
           </div>
         </div>
@@ -96,8 +96,8 @@
         </div>
     </div>
     <div class="form-group">
-      <button class="btn btn-danger" ng-disabled="leadForm.$invalid" ng-click="saveLeads()">Submit</button>
-      <button class="btn btn-danger" ng-disabled="leadForm.$invalid" ng-click="updateLeadDetails()">Update</button>
+      <button ng-if="!editLeads" class="btn btn-danger" ng-disabled="leadForm.$invalid" ng-click="saveLeads()">Submit</button>
+      <button ng-if="editLeads" class="btn btn-danger" ng-disabled="leadForm.$invalid" ng-click="updateLeadDetails()">Update</button>
 
     </div>
 </form>
@@ -113,7 +113,7 @@
         <tbody>
           <tr ng-repeat="alias in leadsData.values | filter : searchSupplier">
             <td ng-repeat="lead in alias">{{lead.value}}</td>
-            <td><button class="btn btn-danger" ng-click="getEditLeads(alias[0].value)">Enter Leads</button></td>
+            <td><button class="btn btn-danger" ng-click="getEditLeads(alias[0].value)">Edit</button></td>
           </tr>
         </tbody>
     </table>
