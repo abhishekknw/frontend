@@ -8,7 +8,8 @@ const optionStyle = {
   fontSize: '12px',
   marginBottom: '-24px',
   textDecoration: 'underline',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  paddingBottom: '10px'
 };
 
 const AttributeTypes = [
@@ -60,7 +61,8 @@ export default class EditEntityType extends React.Component {
 
   componentDidUpdate() {
     if (
-      this.state.currentEntityType === undefined ||
+      (this.state.currentEntityType === undefined &&
+        this.props.entity.currentEntityType) ||
       (this.state.currentEntityType &&
         this.props.entity.currentEntityType &&
         this.state.currentEntityType.id !==
@@ -112,7 +114,7 @@ export default class EditEntityType extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
-    this.props.postEntityType(
+    this.props.updateEntityType(
       {
         data: this.state,
         entityTypeId: this.props.match.params.entityTypeId

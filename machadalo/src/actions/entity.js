@@ -31,7 +31,7 @@ export function postEntityType({ data }, callback) {
     const { auth } = getState();
 
     request
-      .post(`${config.API_URL}/v0/ui/dynamic-entities/entity-type`)
+      .post(`${config.API_URL}/v0/ui/dynamic-entities/entity-type/`)
       .set('Authorization', `JWT ${auth.token}`)
       .send(data)
       .then(resp => {
@@ -75,7 +75,7 @@ export function postEntity({ data }, callback) {
     const { auth } = getState();
 
     request
-      .post(`${config.API_URL}/v0/ui/dynamic-entities/entity`)
+      .post(`${config.API_URL}/v0/ui/dynamic-entities/entity/`)
       .set('Authorization', `JWT ${auth.token}`)
       .send(data)
       .then(resp => {
@@ -118,7 +118,7 @@ export function getEntityTypeList() {
     const { auth } = getState();
 
     request
-      .get(`${config.API_URL}/v0/ui/dynamic-entities/entity-type`)
+      .get(`${config.API_URL}/v0/ui/dynamic-entities/entity-type/`)
       .set('Authorization', `JWT ${auth.token}`)
       .then(resp => {
         dispatch(getEntityTypeListSuccess(Object.values(resp.body.data)));
@@ -158,7 +158,7 @@ export function getEntityList() {
     const { auth } = getState();
 
     request
-      .get(`${config.API_URL}/v0/ui/dynamic-entities/entity`)
+      .get(`${config.API_URL}/v0/ui/dynamic-entities/entity/`)
       .set('Authorization', `JWT ${auth.token}`)
       .then(resp => {
         dispatch(getEntityListSuccess(Object.values(resp.body.data)));
@@ -198,7 +198,7 @@ export function deleteEntity(entityId, callback) {
     const { auth } = getState();
 
     request
-      .delete(`${config.API_URL}/v0/ui/dynamic-entities/entity/${entityId}`)
+      .delete(`${config.API_URL}/v0/ui/dynamic-entities/entity/${entityId}/`)
       .set('Authorization', `JWT ${auth.token}`)
       .then(resp => {
         dispatch(deleteEntitySuccess(entityId));
@@ -282,23 +282,21 @@ export function getEntityType(entityTypeId) {
     dispatch(getEntityTypeStart());
 
     const { auth } = getState();
-    let data = {
-      id: '5c00009ef4a6556c40e16f32',
-      entity_attributes: [{ is_required: false, type: 'STRING', name: 'dhfg' }],
-      name: 'hsdf'
-    };
 
-    // request
-    //   .get(`${config.API_URL}/v0/ui/dynamic-entities/entity-type/${entityTypeId}/`)
-    //   .set('Authorization', `JWT ${auth.token}`)
-    //   .then(resp => {
-    dispatch(getEntityTypeSuccess(data));
-    // })
-    // .catch(ex => {
-    //   console.log('Failed to fetch entity', ex);
+    request
+      .get(
+        `${config.API_URL}/v0/ui/dynamic-entities/entity-type/${entityTypeId}/`
+      )
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        console.log(resp.body);
+        dispatch(getEntityTypeSuccess(resp.body.data));
+      })
+      .catch(ex => {
+        console.log('Failed to fetch entity', ex);
 
-    //   dispatch(getEntityTypeFail());
-    // });
+        dispatch(getEntityTypeFail());
+      });
   };
 }
 
@@ -327,59 +325,18 @@ export function getEntity(entityId) {
     dispatch(getEntityStart());
 
     const { auth } = getState();
-    let data = {
-      organisation_id: 'MAC1421',
-      is_custom: false,
-      name: 'New',
-      created_at: '2018-12-23T05:40:53.778000',
-      created_by: '107',
-      entity_attributes: [
-        {
-          is_required: false,
-          type: 'FLOAT',
-          name: 'float',
-          value: 2.5
-        },
-        {
-          is_required: false,
-          type: 'STRING',
-          name: 'string',
-          value: 'asda'
-        },
-        {
-          is_required: false,
-          type: 'DROPDOWN',
-          name: 'select',
-          value: 'naya wala',
-          options: ['ye wala', 'naya wala']
-        },
-        {
-          is_required: false,
-          type: 'EMAIL',
-          name: 'email',
-          value: 'asdhbh@jsd.sd'
-        },
-        {
-          is_required: false,
-          type: 'INVENTORYLIST',
-          name: 'List',
-          value: ['1']
-        }
-      ],
-      id: '5c1f1fe5f4a6554d9c3cd7e0'
-    };
 
-    // request
-    //   .get(`${config.API_URL}/v0/ui/dynamic-entities/entity/${entityId}/`)
-    //   .set('Authorization', `JWT ${auth.token}`)
-    //   .then(resp => {
-    dispatch(getEntitySuccess(data));
-    // })
-    // .catch(ex => {
-    //   console.log('Failed to fetch entity', ex);
+    request
+      .get(`${config.API_URL}/v0/ui/dynamic-entities/entity/${entityId}/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(getEntitySuccess(resp.body.data));
+      })
+      .catch(ex => {
+        console.log('Failed to fetch entity', ex);
 
-    //   dispatch(getEntityFail());
-    // });
+        dispatch(getEntityFail());
+      });
   };
 }
 
@@ -415,7 +372,7 @@ export function updateEntityType({ data, entityTypeId }, callback) {
     const { auth } = getState();
 
     request
-      .post(
+      .put(
         `${config.API_URL}/v0/ui/dynamic-entities/entity-type/${entityTypeId}/`
       )
       .set('Authorization', `JWT ${auth.token}`)

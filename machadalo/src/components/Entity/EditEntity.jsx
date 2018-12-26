@@ -39,7 +39,8 @@ export default class EditEntity extends React.Component {
 
   componentDidUpdate() {
     if (
-      this.state.currentEntity === undefined ||
+      (this.state.currentEntity === undefined &&
+        this.props.entity.currentEntity) ||
       (this.state.currentEntity &&
         this.props.entity.currentEntity &&
         this.state.currentEntity.id !== this.props.entity.currentEntity.id)

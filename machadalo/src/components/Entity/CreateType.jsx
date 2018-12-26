@@ -8,7 +8,8 @@ const optionStyle = {
   fontSize: '12px',
   marginBottom: '-24px',
   textDecoration: 'underline',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  paddingBottom: '10px'
 };
 
 const AttributeTypes = [
@@ -200,6 +201,7 @@ export default class CreateType extends React.Component {
               ''
             )}
           </div>
+          <br />
 
           <div className="form-control required-field">
             <div>Is it required?</div>
