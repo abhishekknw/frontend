@@ -10,7 +10,8 @@ export default class PermissionList extends React.Component {
       modalProfileId: undefined,
       createPermission: false,
       dataInfo: [],
-      profilePermissionId: undefined
+      profilePermissionId: undefined,
+      existingProfileIds: []
     };
     this.renderPermissionRow = this.renderPermissionRow.bind(this);
     this.handleEditProfile = this.handleEditProfile.bind(this);
@@ -64,8 +65,18 @@ export default class PermissionList extends React.Component {
 
   openCreatePermissionModal() {
     this.props.getAllChecklistData();
+
+    let { permissionList } = this.props.settings;
+    let existingProfileIds = [];
+    if (permissionList.length) {
+      permissionList.forEach(permission => {
+        existingProfileIds.push(permission.profile_id.id);
+      });
+    }
+
     this.setState({
       showPermissionModal: true,
+      existingProfileIds,
       createPermission: true,
       modalProfileId: undefined
     });

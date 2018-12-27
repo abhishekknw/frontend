@@ -11,6 +11,7 @@ export default class LeadSettings extends React.Component {
       showPermissionModal: false,
       modalProfileId: undefined,
       createPermission: false,
+      existingProfileIds: [],
       dataInfo: [],
       profilePermissionId: undefined
     };
@@ -53,7 +54,15 @@ export default class LeadSettings extends React.Component {
   }
   openCreatePermissionModal() {
     this.props.getAllLeadsFormData();
+    let { leadPermissionList } = this.props.leads;
+    let existingProfileIds = [];
+    if (leadPermissionList.length) {
+      leadPermissionList.forEach(permission => {
+        existingProfileIds.push(permission.profile_id.id);
+      });
+    }
     this.setState({
+      existingProfileIds,
       showPermissionModal: true,
       createPermission: true
     });
