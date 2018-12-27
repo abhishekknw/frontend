@@ -3,7 +3,8 @@ import * as types from './../actions/types';
 
 export const user = createReducer(
   {
-    userList: []
+    userList: [],
+    currentUser: undefined
   },
 
   {
@@ -18,6 +19,21 @@ export const user = createReducer(
       });
     },
     [types.GET_USERS_LIST_FAIL](state) {
+      return Object.assign({}, state, {
+        userList: []
+      });
+    },
+    [types.GET_CURRENT_USER_START](state) {
+      return Object.assign({}, state, {
+        userList: []
+      });
+    },
+    [types.GET_CURRENT_USER_SUCCESS](state, action) {
+      return Object.assign({}, state, {
+        currentUser: action.data
+      });
+    },
+    [types.GET_CURRENT_USER_FAIL](state) {
       return Object.assign({}, state, {
         userList: []
       });

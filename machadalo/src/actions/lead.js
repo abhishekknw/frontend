@@ -46,28 +46,28 @@ export function getLeadPermissionList() {
 
 export function getLeadPermissionStart() {
   return {
-    type: types.GET_LEAD_USER_PERMISSION_START
+    type: types.GET_LEAD_USER_PROFILE_PERMISSION_START
   };
 }
 
 export function getLeadPermissionSuccess(
-  leadUserPermission,
-  currentUserPermissionId
+  leadProfilePermission,
+  currentProfilePermissionId
 ) {
   return {
-    type: types.GET_LEAD_USER_PERMISSION_SUCCESS,
-    leadUserPermission: leadUserPermission,
-    currentUserPermissionId: currentUserPermissionId
+    type: types.GET_LEAD_USER_PROFILE_PERMISSION_SUCCESS,
+    leadProfilePermission: leadProfilePermission,
+    currentProfilePermissionId: currentProfilePermissionId
   };
 }
 
 export function getLeadPermissionFail() {
   return {
-    type: types.GET_LEAD_USER_PERMISSION_FAIL
+    type: types.GET_LEAD_USER_PROFILE_PERMISSION_FAIL
   };
 }
 
-export function getLeadUserPermission(userId) {
+export function getLeadProfilePermission(profileId) {
   return (dispatch, getState) => {
     dispatch(getLeadPermissionStart());
 
@@ -79,27 +79,27 @@ export function getLeadUserPermission(userId) {
       .then(leadsFormResponse => {
         let leadsFormData = leadsFormResponse.body.data;
         request
-          .get(`${config.API_URL}/v0/ui/leads/permissions/${userId}/`)
+          .get(`${config.API_URL}/v0/ui/leads/permissions/${profileId}/`)
           .set('Authorization', `JWT ${auth.token}`)
           .then(permissionResponse => {
-            let userPermission = [];
-            let userPermissionData = permissionResponse.body.data;
+            let profilePermission = [];
+            let profilePermissionData = permissionResponse.body.data;
             leadsFormData.forEach(campaignInfo => {
               let campaignPermissionType = 'None';
               if (
-                userPermission !== 'no_permission_exists' &&
-                userPermissionData.leads_permissions.campaigns[
+                profilePermission !== 'no_permission_exists' &&
+                profilePermissionData.leads_permissions.campaigns[
                   campaignInfo.campaign_id
                 ]
               ) {
                 if (
-                  userPermissionData.leads_permissions.campaigns[
+                  profilePermissionData.leads_permissions.campaigns[
                     campaignInfo.campaign_id
                   ].indexOf('EDIT') !== -1
                 ) {
                   campaignPermissionType = 'Edit';
                 } else if (
-                  userPermissionData.leads_permissions.campaigns[
+                  profilePermissionData.leads_permissions.campaigns[
                     campaignInfo.campaign_id
                   ].indexOf('FILL') !== -1
                 ) {
@@ -117,19 +117,19 @@ export function getLeadUserPermission(userId) {
                 campaignInfo.leads_forms.forEach(lead_form => {
                   let leadFormPermissionType = 'None';
                   if (
-                    userPermission !== 'no_permission_exists' &&
-                    userPermissionData.leads_permissions.leads_forms[
+                    profilePermission !== 'no_permission_exists' &&
+                    profilePermissionData.leads_permissions.leads_forms[
                       lead_form.lead_form_id
                     ]
                   ) {
                     if (
-                      userPermissionData.leads_permissions.leads_forms[
+                      profilePermissionData.leads_permissions.leads_forms[
                         lead_form.lead_form_id
                       ].indexOf('EDIT') !== -1
                     ) {
                       leadFormPermissionType = 'Edit';
                     } else if (
-                      userPermissionData.leads_permissions.leads_forms[
+                      profilePermissionData.leads_permissions.leads_forms[
                         lead_form.lead_form_id
                       ].indexOf('FILL') !== -1
                     ) {
@@ -145,10 +145,13 @@ export function getLeadUserPermission(userId) {
                   permissionObject.data.push(permissionLeadFormObject);
                 });
               }
-              userPermission.push(permissionObject);
+              profilePermission.push(permissionObject);
             });
             dispatch(
-              getLeadPermissionSuccess(userPermission, userPermissionData.id)
+              getLeadPermissionSuccess(
+                profilePermission,
+                profilePermissionData.id
+              )
             );
           })
           .catch(ex => {
@@ -176,7 +179,7 @@ export function getAllLeadsFormData() {
       .set('Authorization', `JWT ${auth.token}`)
       .then(leadFormsResponse => {
         let leadFormData = leadFormsResponse.body.data;
-        let userPermission = [];
+        let profilePermission = [];
         leadFormData.forEach(campaignInfo => {
           let campaignPermissionType = 'None';
           let permissionObject = {
@@ -198,10 +201,10 @@ export function getAllLeadsFormData() {
               permissionObject.data.push(permissionLeadFormObject);
             });
           }
-          userPermission.push(permissionObject);
+          profilePermission.push(permissionObject);
         });
 
-        dispatch(getLeadPermissionSuccess(userPermission, 0));
+        dispatch(getLeadPermissionSuccess(profilePermission, 0));
       })
       .catch(ex => {
         console.log('Failed to fetch entity', ex);
@@ -211,7 +214,7 @@ export function getAllLeadsFormData() {
   };
 }
 
-export function updateUserPermission(data, callback) {
+export function updateProfilePermission(data, callback) {
   return (dispatch, getState) => {
     dispatch(getLeadPermissionStart());
 
@@ -235,7 +238,7 @@ export function updateUserPermission(data, callback) {
   };
 }
 
-export function updateLeadsUserPermission(data, callback) {
+export function updateLeadsProfilePermission(data, callback) {
   return (dispatch, getState) => {
     dispatch(getLeadPermissionStart());
 
@@ -259,7 +262,7 @@ export function updateLeadsUserPermission(data, callback) {
   };
 }
 
-export function createLeadsUserPermission(data, callback) {
+export function createLeadsProfilePermission(data, callback) {
   return (dispatch, getState) => {
     dispatch(getLeadPermissionStart());
 
@@ -283,7 +286,7 @@ export function createLeadsUserPermission(data, callback) {
   };
 }
 
-export function deleteLeadsUserPermission(permissionId, callback) {
+export function deleteLeadsProfilePermission(permissionId, callback) {
   return (dispatch, getState) => {
     dispatch(getLeadPermissionStart());
 

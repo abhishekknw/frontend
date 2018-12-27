@@ -7,6 +7,7 @@ import * as EntityActions from './entity';
 import * as InventoryActions from './inventory';
 import * as SettingActions from './setting';
 import * as UserActions from './user';
+import * as UserProfileActions from './userProfile';
 import * as LeadActions from './lead';
 
 export default Object.assign(
@@ -20,5 +21,6 @@ export default Object.assign(
   InventoryActions,
   SettingActions,
   UserActions,
+  UserProfileActions,
   LeadActions
 );

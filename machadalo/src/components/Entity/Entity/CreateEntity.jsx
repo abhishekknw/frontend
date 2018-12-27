@@ -2,7 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
 
-import OptionModal from '../Modals/OptionModal';
+import OptionModal from '../../Modals/OptionModal';
 
 const customeStyles = {
   input: () => ({
@@ -10,14 +10,15 @@ const customeStyles = {
   })
 };
 
-export default class EditEntity extends React.Component {
+export default class CreateEntity extends React.Component {
   constructor() {
     super();
 
     this.state = {
       name: '',
       entity_attributes: [{ name: '', type: '', is_required: false }],
-      currentEntity: undefined,
+      entityTypeOption: [],
+      selectedEntityType: {},
       attributeValue: [],
       showOptionModal: false,
       attributeValueOptions: [''],
@@ -28,27 +29,30 @@ export default class EditEntity extends React.Component {
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onSelectEntityType = this.onSelectEntityType.bind(this);
     this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
   }
 
   componentWillMount() {
-    this.props.getEntity(this.props.match.params.entityId);
+    this.props.getEntityTypeList();
   }
 
   componentDidUpdate() {
     if (
-      (this.state.currentEntity === undefined &&
-        this.props.entity.currentEntity) ||
-      (this.state.currentEntity &&
-        this.props.entity.currentEntity &&
-        this.state.currentEntity.id !== this.props.entity.currentEntity.id)
+      this.state.entityTypeOption.length !==
+      this.props.entity.entityTypeList.length
     ) {
+      let entityTypeOption = [];
+      this.props.entity.entityTypeList.forEach(entityType => {
+        entityTypeOption.push({
+          value: entityType.id,
+          label: entityType.name
+        });
+      });
       this.setState({
-        currentEntity: this.props.entity.currentEntity,
-        entity_attributes: this.props.entity.currentEntity.entity_attributes,
-        name: this.props.entity.currentEntity.name
+        entityTypeOption
       });
     }
   }
@@ -91,16 +95,13 @@ export default class EditEntity extends React.Component {
     let data = {
       name: this.state.name,
       is_custom: false,
-      entity_type_id: this.props.entity.currentEntity.entity_type_id,
+      entity_type_id: this.state.selectedEntityType.value,
       entity_attributes: this.state.entity_attributes
     };
-    this.props.updateEntity(
-      { data, entityId: this.props.match.params.entityId },
-      () => {
-        toastr.success('', 'Entity updated successfully');
-        this.props.history.push('/r/entity/list');
-      }
-    );
+    this.props.postEntity({ data }, () => {
+      toastr.success('', 'Entity created successfully');
+      this.props.history.push('/r/entity/list');
+    });
   }
 
   handleAttributeChange(attribute, index) {
@@ -186,13 +187,7 @@ export default class EditEntity extends React.Component {
           <button
             type="button"
             className="btn btn--danger"
-            onClick={() =>
-              this.onOpenOptionModal(
-                attribute.value ? attribute.value : [''],
-                attribute,
-                attrIndex
-              )
-            }
+            onClick={() => this.onOpenOptionModal([''], attribute, attrIndex)}
           >
             {attribute.value && attribute.value.length
               ? 'Show Inventory List'
@@ -220,11 +215,24 @@ export default class EditEntity extends React.Component {
     );
   }
 
+  onSelectEntityType(selectedEntityType) {
+    let { entityTypeList } = this.props.entity;
+    entityTypeList.forEach(entityType => {
+      if (entityType.id === selectedEntityType.value) {
+        this.setState({
+          selectedEntityType,
+          entity_attributes: entityType.entity_attributes
+        });
+        return;
+      }
+    });
+  }
+
   render() {
     return (
       <div className="createform">
         <div className="createform__title">
-          <h3>Edit Entity </h3>
+          <h3>Create Entity </h3>
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
@@ -236,6 +244,17 @@ export default class EditEntity extends React.Component {
                   name="name"
                   value={this.state.name}
                   onChange={this.handleInputChange}
+                />
+              </div>
+            </div>
+
+            <div className="createform__form__inline">
+              <div className="form-control">
+                <label>*Select Entity Type</label>
+                <Select
+                  options={this.state.entityTypeOption}
+                  value={this.state.selectedEntityType}
+                  onChange={this.onSelectEntityType}
                 />
               </div>
             </div>

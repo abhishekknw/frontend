@@ -4,8 +4,8 @@ import * as types from '../actions/types';
 export const settings = createReducer(
   {
     permissionList: [],
-    userPermission: [],
-    currentUserPermissionId: undefined,
+    profilePermission: [],
+    currentProfilePermissionId: undefined,
     loggedInChecklistPermission: {}
   },
 
@@ -27,20 +27,20 @@ export const settings = createReducer(
     },
     [types.GET_USER_PERMISSION_START](state) {
       return Object.assign({}, state, {
-        userPermission: [],
-        currentUserPermissionId: undefined
+        profilePermission: [],
+        currentProfilePermissionId: undefined
       });
     },
     [types.GET_USER_PERMISSION_SUCCESS](state, action) {
       return Object.assign({}, state, {
-        userPermission: action.userPermission,
-        currentUserPermissionId: action.currentUserPermissionId
+        profilePermission: action.profilePermission,
+        currentProfilePermissionId: action.currentProfilePermissionId
       });
     },
     [types.GET_USER_PERMISSION_FAIL](state) {
       return Object.assign({}, state, {
-        userPermission: [],
-        currentUserPermissionId: undefined
+        profilePermission: [],
+        currentProfilePermissionId: undefined
       });
     },
     [types.GET_LOGGED_IN_USER_PERMISSION_START](state) {

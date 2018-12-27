@@ -9,10 +9,12 @@ export default class Sidebar extends React.Component {
     super(props);
     this.state = {
       hideChecklistDropdown: true,
-      hideLeadsDropdown: true
+      hideLeadsDropdown: true,
+      hideEntitiesDropdown: true
     };
     this.toggleChecklistDropdown = this.toggleChecklistDropdown.bind(this);
     this.toggleLeadsDropdown = this.toggleLeadsDropdown.bind(this);
+    this.toggleEntitiesDropdown = this.toggleEntitiesDropdown.bind(this);
   }
 
   toggleChecklistDropdown() {
@@ -24,6 +26,12 @@ export default class Sidebar extends React.Component {
   toggleLeadsDropdown() {
     this.setState({
       hideLeadsDropdown: !this.state.hideLeadsDropdown
+    });
+  }
+
+  toggleEntitiesDropdown() {
+    this.setState({
+      hideEntitiesDropdown: !this.state.hideEntitiesDropdown
     });
   }
 
@@ -85,11 +93,37 @@ export default class Sidebar extends React.Component {
                   </li>
                 </ul>
               </li>
-              <li>
-                <NavLink to="/r/entity/list">
+              <li className="dropdown-list-parent">
+                <div
+                  className="parent-list"
+                  onClick={this.toggleEntitiesDropdown}
+                >
                   <i className="fa fa-cubes" aria-hidden="true" />
                   Entities
-                </NavLink>
+                </div>
+                <ul
+                  className="dropdown-list-child"
+                  hidden={this.state.hideEntitiesDropdown}
+                >
+                  <li>
+                    <NavLink to="/r/entity/base/list">
+                      <i className="fa fa-columns" aria-hidden="true" />
+                      Base Entity Type
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/r/entity/type/list">
+                      <i className="fa fa-cog" aria-hidden="true" />
+                      Entity Type
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/r/entity/list">
+                      <i className="fa fa-cog" aria-hidden="true" />
+                      Entity
+                    </NavLink>
+                  </li>
+                </ul>
               </li>
               <li className="dropdown-list-parent">
                 <div

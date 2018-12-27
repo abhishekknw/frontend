@@ -41,29 +41,39 @@ export default class List extends React.Component {
   render() {
     let { entityList } = this.props.entity;
     return (
-      <div className="list">
-        <div className="list__table">
-          <table cellPadding="0" cellSpacing="0">
-            <thead>
-              <tr>
-                <th>Index</th>
-                <th>Name</th>
-                <th>Action</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {entityList.length ? (
-                entityList.map(this.renderEntityRow)
-              ) : (
+      <div className="createform">
+        <div className="createform__title">
+          <h3>Entity/Entity Type List</h3>
+        </div>
+        <div className="list">
+          <div className="list__table">
+            <table cellPadding="0" cellSpacing="0">
+              <thead>
                 <tr>
-                  <td colSpan="5">
-                    No entity types available. Create your first one now!
-                  </td>
+                  <th>Index</th>
+                  <th>Name</th>
+                  <th>Action</th>
+                  <th>Action</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {entityList.length ? (
+                  entityList.map(this.renderEntityRow)
+                ) : (
+                  <tr>
+                    <td colSpan="5">
+                      No entity types available. Create your first one now!
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="list__actions">
+          <Link to={'/r/entity/create'} className="btn btn--danger">
+            Create Entity
+          </Link>
         </div>
       </div>
     );

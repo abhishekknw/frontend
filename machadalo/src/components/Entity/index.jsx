@@ -1,10 +1,12 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Create from './Create';
-import List from './List';
-import EditEntity from './EditEntity';
-import EditEntityType from './EditEntityType';
+import CreateType from './EntityType/CreateType';
+import CreateEntity from './Entity/CreateEntity';
+import EntityList from './Entity/EntityList';
+import EntityTypeList from './EntityType/EntityTypeList';
+import EditEntity from './Entity/EditEntity';
+import EditEntityType from './EntityType/EditEntityType';
 
 import './index.css';
 
@@ -23,14 +25,28 @@ export default class Entity extends React.Component {
             exact
             path={`${match.path}/create`}
             render={componentProps => (
-              <Create {...this.props} {...componentProps} />
+              <CreateEntity {...this.props} {...componentProps} />
+            )}
+          />
+          <Route
+            exact
+            path={`${match.path}/type/create`}
+            render={componentProps => (
+              <CreateType {...this.props} {...componentProps} />
+            )}
+          />
+          <Route
+            exact
+            path={`${match.path}/type/list`}
+            render={componentProps => (
+              <EntityTypeList {...this.props} {...componentProps} />
             )}
           />
           <Route
             exact
             path={`${match.path}/list`}
             render={componentProps => (
-              <List {...this.props} {...componentProps} />
+              <EntityList {...this.props} {...componentProps} />
             )}
           />
           <Route
