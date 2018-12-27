@@ -5,7 +5,6 @@ import * as campaignReducer from './campaign';
 import * as supplierReducer from './supplier';
 import * as checklistReducer from './checklist';
 import * as inventoryReducer from './inventory';
-import * as entityReducer from './entity';
 import * as entityReducer from './Entity/entity';
 import * as entityTypeReducer from './Entity/entityType';
 import * as baseEntityTypeReducer from './Entity/baseEntityType';

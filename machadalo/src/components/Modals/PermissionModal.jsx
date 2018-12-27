@@ -74,17 +74,20 @@ export default class PermissionModal extends React.Component {
     if (
       (!this.state.userProfileOptions.length &&
         this.props.userProfile.userProfileList.length) ||
-      (this.state.userProfileOptions.length &&
-        this.props.userProfile.userProfileList.length &&
-        this.state.userProfileOptions[0].value !==
-          this.props.userProfile.userProfileList[0].id)
+      0
+      // (this.state.userProfileOptions.length &&
+      //   this.props.userProfile.userProfileList.length &&
+      //   this.state.userProfileOptions[0].value !==
+      //     this.props.userProfile.userProfileList[0].id)
     ) {
       let userProfileOptions = [];
       this.props.userProfile.userProfileList.forEach(userProfileData => {
-        userProfileOptions.push({
-          label: userProfileData.name,
-          value: userProfileData.id
-        });
+        if (this.props.existingProfileIds.indexOf(userProfileData.id) === -1) {
+          userProfileOptions.push({
+            label: userProfileData.name,
+            value: userProfileData.id
+          });
+        }
       });
       this.setState({
         userProfileOptions
