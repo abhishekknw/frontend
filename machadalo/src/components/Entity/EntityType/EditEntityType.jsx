@@ -2,13 +2,14 @@ import React from 'react';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
 
-import OptionModal from '../Modals/OptionModal';
+import OptionModal from '../../Modals/OptionModal';
 
 const optionStyle = {
   fontSize: '12px',
   marginBottom: '-24px',
   textDecoration: 'underline',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  paddingBottom: '10px'
 };
 
 const AttributeTypes = [
@@ -30,13 +31,16 @@ const getAttributeTypeOption = value => {
   return { value };
 };
 
-export default class CreateType extends React.Component {
+export default class EditEntityType extends React.Component {
   constructor() {
     super();
 
     this.state = {
       name: '',
+
       entity_attributes: [{ name: '', type: '', is_required: false }],
+      base_entity_type_id: undefined,
+      currentEntityType: undefined,
       showOptionModal: false,
       attributeOptions: [''],
       attributeInfo: {}
@@ -50,6 +54,30 @@ export default class CreateType extends React.Component {
     this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.getEntityType(this.props.match.params.entityTypeId);
+  }
+
+  componentDidUpdate() {
+    if (
+      (this.state.currentEntityType === undefined &&
+        this.props.entityType.currentEntityType) ||
+      (this.state.currentEntityType &&
+        this.props.entityType.currentEntityType &&
+        this.state.currentEntityType.id !==
+          this.props.entityType.currentEntityType.id)
+    ) {
+      this.setState({
+        currentEntityType: this.props.entityType.currentEntityType,
+        entity_attributes: this.props.entityType.currentEntityType
+          .entity_attributes,
+        name: this.props.entityType.currentEntityType.name,
+        base_entity_type_id: this.props.entityType.currentEntityType
+          .base_entity_type_id
+      });
+    }
   }
 
   onCancelOptionModal() {
@@ -89,9 +117,16 @@ export default class CreateType extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
-    this.props.postEntityType({ data: this.state }, () => {
-      toastr.success('', 'Entity Type created successfully');
-    });
+    this.props.updateEntityType(
+      {
+        data: this.state,
+        entityTypeId: this.props.match.params.entityTypeId
+      },
+      () => {
+        toastr.success('', 'Entity Type updated successfully');
+        this.props.history.push('/r/entity/type/list');
+      }
+    );
   }
 
   onAddAttribute() {
@@ -216,7 +251,10 @@ export default class CreateType extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="createform">
+        <div className="createform__title">
+          <h3>Edit Entity Type </h3>
+        </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
             <div className="createform__form__inline">

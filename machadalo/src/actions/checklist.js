@@ -4,6 +4,8 @@ import * as types from './types';
 
 import config from './../config';
 
+import * as SettingAction from './setting';
+
 export function postChecklistTemplateStart() {
   return {
     type: types.POST_CHECKLIST_TEMPLATE_START
@@ -34,6 +36,7 @@ export function postChecklistTemplate({ campaignId, data }) {
       .send(data)
       .then(resp => {
         dispatch(postChecklistTemplateSuccess());
+        dispatch(SettingAction.getloggedInProfilePermission());
       })
       .catch(ex => {
         console.log('Failed to create checklist template', ex);

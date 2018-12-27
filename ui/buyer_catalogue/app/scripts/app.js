@@ -61,7 +61,7 @@ angular
     'ngMap',
     'AngularPrint',
     'checklist-model',
-
+    'btorfs.multiselect',
   ])
   .config(function ($routeProvider, $stateProvider, $urlRouterProvider, $httpProvider, $qProvider, $locationProvider,cfpLoadingBarProvider) {
       $stateProvider

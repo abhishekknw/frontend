@@ -43,18 +43,18 @@ export default class PermissionModal extends React.Component {
         entityId: 'all',
         data: []
       },
-      userOptions: [],
-      selectedUser: {
+      userProfileOptions: [],
+      selectedProfile: {
         label: undefined,
         value: undefined
       }
     };
-    this.onSelectUser = this.onSelectUser.bind(this);
+    this.onSelectProfile = this.onSelectProfile.bind(this);
   }
 
   componentWillMount() {
     if (this.props.createPermission) {
-      this.props.getUsersList();
+      this.props.getUserProfileList();
     }
   }
 
@@ -72,27 +72,29 @@ export default class PermissionModal extends React.Component {
       });
     }
     if (
-      (!this.state.userOptions.length && this.props.user.userList.length) ||
-      (this.state.userOptions.length &&
-        this.props.user.userList.length &&
-        this.state.userOptions[0].value !== this.props.user.userList[0].id)
+      (!this.state.userProfileOptions.length &&
+        this.props.userProfile.userProfileList.length) ||
+      (this.state.userProfileOptions.length &&
+        this.props.userProfile.userProfileList.length &&
+        this.state.userProfileOptions[0].value !==
+          this.props.userProfile.userProfileList[0].id)
     ) {
-      let userOptions = [];
-      this.props.user.userList.forEach(userData => {
-        userOptions.push({
-          label: userData.first_name + ' ' + userData.last_name,
-          value: userData.id
+      let userProfileOptions = [];
+      this.props.userProfile.userProfileList.forEach(userProfileData => {
+        userProfileOptions.push({
+          label: userProfileData.name,
+          value: userProfileData.id
         });
       });
       this.setState({
-        userOptions
+        userProfileOptions
       });
     }
   }
 
-  onSelectUser(value) {
+  onSelectProfile(value) {
     this.setState({
-      selectedUser: value
+      selectedProfile: value
     });
   }
 
@@ -202,18 +204,18 @@ export default class PermissionModal extends React.Component {
         ariaHideApp={false}
       >
         <div className="modal-title">
-          <h3>User Permission</h3>
+          <h3>Profile Permission</h3>
         </div>
         {this.props.createPermission ? (
           <div className="createform__form__inline">
             <div className="form-control">
-              <label>*Select User</label>
+              <label>*Select Profile</label>
               <br />
               <Select
                 className="modal-select"
-                options={this.state.userOptions}
-                value={this.state.selectedUser}
-                onChange={this.onSelectUser}
+                options={this.state.userProfileOptions}
+                value={this.state.selectedProfile}
+                onChange={this.onSelectProfile}
               />
             </div>
           </div>

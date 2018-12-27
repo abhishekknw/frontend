@@ -43,3 +43,43 @@ export function getUsersList() {
       });
   };
 }
+
+//User
+export function getCurrentUserStart() {
+  return {
+    type: types.GET_CURRENT_USER_START
+  };
+}
+
+export function getCurrentUserSuccess(user) {
+  return {
+    type: types.GET_CURRENT_USER_SUCCESS,
+    data: user
+  };
+}
+
+export function getCurrentUserFail() {
+  return {
+    type: types.GET_CURRENT_USER_FAIL
+  };
+}
+
+export function getCurrentUser() {
+  return (dispatch, getState) => {
+    dispatch(getCurrentUserStart());
+
+    const { auth } = getState();
+
+    request
+      .get(`${config.API_URL}/v0/ui/users/self/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(getCurrentUserSuccess(resp.body.data));
+      })
+      .catch(ex => {
+        console.log('Failed to fetch list of users', ex);
+
+        dispatch(getCurrentUserFail());
+      });
+  };
+}

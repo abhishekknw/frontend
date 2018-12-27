@@ -348,10 +348,10 @@
                                     </tr>
                                     <tr>
                                    <td><b>{{supplier.supplier_data.society_name}}</b></td>
-                                      <td>Other Images(Banner)</td>
+                                      <td>Hash Tag Images</td>
                                       <td>-</td>
                                       <td>-</td>
-                                      <td><a data-target="" data-toggle="modal" ng-click="getHashtagImages(supplier)">View Other Images</a></td>
+                                      <td><a data-target="" data-toggle="modal" ng-click="getHashtagImages(supplier)">View Images</a></td>
                                       </tr>
                                   </tbody>
                                 </table>
@@ -1761,9 +1761,23 @@
                             <h1>Please Select Campaign</h1>
                           </div>
                           <div class="col-md-12" print-remove>
-                            <div class="button" type="button">
-                              <div class="panel-heading" ng-click="">
+                            <!-- <div class="button" type="button" ng-click="campaignWiseSummary()">
+                              <div class="panel-heading">
                                     All Campaigns
+                              </div>
+                            </div> -->
+                            <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.overall.status)">
+                              <div class="button" type="button" ng-click="getCampaignWiseSummary()">
+                                <div class="panel-heading">
+                                      All Campaigns
+                                </div>
+                              </div>
+                              <div id="overall" class="animate-show" ng-show="campaignStatus.overall.value">
+                                  <div class="panel-bodyDashboard camp-menu-content">
+                                    <table class="table">
+
+                                    </table>
+                                  </div>
                               </div>
                             </div>
                           </div>
@@ -2489,7 +2503,40 @@
                           </div>
                         </div>
 
-
+<!-- < Start Overall Campaign Wise Summary> -->
+<div class="col-lg-12" ng-if="campaignSummaryTable">
+  <div class="panel panel-primary">
+    <div class="panel-heading content-title">
+      <label for="Location">Overall Summary Details</label>
+    </div>
+  </div>
+  <div class="campaigndetailtable">
+    <div class="table-responsive">
+      <table class="table table-striped" st-table="campaignSummary.overall" st-safe-src="campaignSummary">
+        <thead>
+            <tr>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads </th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads <br> in %</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads Ratio <br> (%)</th>
+            </tr>
+      </thead>
+        <tbody style="text-align:center;">
+          <tr ng-repeat="(key,data) in campaignSummary">
+            <td style="font-weight:bold">{{key}}</td>
+            <td>{{data.suppliers}}</td>
+            <td>{{data['flat_count']}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- < End Overall Campaign Wise Summary> -->
                         <!--START : COMPARE CAMPAIGNS LIST  -->
                           <div class="col-md-12" ng-show="campaignStatus.compare_campaigns.value" print-remove>
                             <br />
@@ -2819,12 +2866,10 @@
                             <button class="btn btn-danger active notify" print-btn style="text-align:right;margin-left:30px;margin-top:20px;">Print Report</button>
 
                           </div>
-                          <div class="col-md-3" ng-if="userInfo.is_superuser">
+                          <div class="col-md-3">
                             <label style="color:#ffffff;">Select Report</label>
                             <input type="file" ngf-select = "uploadFiles($file, 1)" class="buttonfile btn btn-primary" accept=".pdf" ng-if="showReportBtn"/>
-                            <input type="date" ng-model="reportData.reportStartDate" style="color:#000000">
-                            <input type="date" ng-model="reportData.reportEndDate" style="color:#000000">
-                          <br>  <button ng-click="sendReport()" ng-if="showReportBtn" class="btn btn-danger">Submit</button>
+                          <br>  <button ng-click="sendReport()" ng-if="showReportBtn" class="btn btn-danger" ng-if="userInfo.is_superuser">Submit</button>
 
                           </div>
 

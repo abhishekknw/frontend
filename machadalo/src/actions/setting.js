@@ -50,11 +50,14 @@ export function getPermissionStart() {
   };
 }
 
-export function getPermissionSuccess(userPermission, currentUserPermissionId) {
+export function getPermissionSuccess(
+  profilePermission,
+  currentProfilePermissionId
+) {
   return {
     type: types.GET_USER_PERMISSION_SUCCESS,
-    userPermission: userPermission,
-    currentUserPermissionId: currentUserPermissionId
+    profilePermission: profilePermission,
+    currentProfilePermissionId: currentProfilePermissionId
   };
 }
 
@@ -64,7 +67,7 @@ export function getPermissionFail() {
   };
 }
 
-export function getUserPermission(userId) {
+export function getProfilePermission(userProfileId) {
   return (dispatch, getState) => {
     dispatch(getPermissionStart());
 
@@ -76,27 +79,29 @@ export function getUserPermission(userId) {
       .then(checklistResponse => {
         let checklistData = checklistResponse.body.data;
         request
-          .get(`${config.API_URL}/v0/ui/checklists/permissions/${userId}/`)
+          .get(
+            `${config.API_URL}/v0/ui/checklists/permissions/${userProfileId}/`
+          )
           .set('Authorization', `JWT ${auth.token}`)
           .then(permissionResponse => {
-            let userPermission = [];
-            let userPermissionData = permissionResponse.body.data;
+            let profilePermission = [];
+            let profilePermissionData = permissionResponse.body.data;
             checklistData.forEach(campaignInfo => {
               let campaignPermissionType = 'None';
               if (
-                userPermission !== 'no_permission_exists' &&
-                userPermissionData.checklist_permissions.campaigns[
+                profilePermission !== 'no_permission_exists' &&
+                profilePermissionData.checklist_permissions.campaigns[
                   campaignInfo.campaign_id
                 ]
               ) {
                 if (
-                  userPermissionData.checklist_permissions.campaigns[
+                  profilePermissionData.checklist_permissions.campaigns[
                     campaignInfo.campaign_id
                   ].indexOf('EDIT') !== -1
                 ) {
                   campaignPermissionType = 'Edit';
                 } else if (
-                  userPermissionData.checklist_permissions.campaigns[
+                  profilePermissionData.checklist_permissions.campaigns[
                     campaignInfo.campaign_id
                   ].indexOf('FILL') !== -1
                 ) {
@@ -114,19 +119,19 @@ export function getUserPermission(userId) {
                 campaignInfo.checklists.forEach(checklist => {
                   let checklistPermissionType = 'None';
                   if (
-                    userPermission !== 'no_permission_exists' &&
-                    userPermissionData.checklist_permissions.checklists[
+                    profilePermission !== 'no_permission_exists' &&
+                    profilePermissionData.checklist_permissions.checklists[
                       checklist.checklist_id
                     ]
                   ) {
                     if (
-                      userPermissionData.checklist_permissions.checklists[
+                      profilePermissionData.checklist_permissions.checklists[
                         checklist.checklist_id
                       ].indexOf('EDIT') !== -1
                     ) {
                       checklistPermissionType = 'Edit';
                     } else if (
-                      userPermissionData.checklist_permissions.checklists[
+                      profilePermissionData.checklist_permissions.checklists[
                         checklist.checklist_id
                       ].indexOf('FILL') !== -1
                     ) {
@@ -142,10 +147,10 @@ export function getUserPermission(userId) {
                   permissionObject.data.push(permissionChecklistObject);
                 });
               }
-              userPermission.push(permissionObject);
+              profilePermission.push(permissionObject);
             });
             dispatch(
-              getPermissionSuccess(userPermission, userPermissionData.id)
+              getPermissionSuccess(profilePermission, profilePermissionData.id)
             );
           })
           .catch(ex => {
@@ -173,7 +178,7 @@ export function getAllChecklistData() {
       .set('Authorization', `JWT ${auth.token}`)
       .then(checklistResponse => {
         let checklistData = checklistResponse.body.data;
-        let userPermission = [];
+        let profilePermission = [];
         checklistData.forEach(campaignInfo => {
           let campaignPermissionType = 'None';
           let permissionObject = {
@@ -195,9 +200,9 @@ export function getAllChecklistData() {
               permissionObject.data.push(permissionChecklistObject);
             });
           }
-          userPermission.push(permissionObject);
+          profilePermission.push(permissionObject);
         });
-        dispatch(getPermissionSuccess(userPermission, 0));
+        dispatch(getPermissionSuccess(profilePermission, 0));
       })
       .catch(ex => {
         console.log('Failed to fetch entity', ex);
@@ -207,7 +212,7 @@ export function getAllChecklistData() {
   };
 }
 
-export function updateUserPermission(data, callback) {
+export function updateProfilePermission(data, callback) {
   return (dispatch, getState) => {
     dispatch(getPermissionStart());
 
@@ -231,7 +236,7 @@ export function updateUserPermission(data, callback) {
   };
 }
 
-export function createUserPermission(data, callback) {
+export function createProfilePermission(data, callback) {
   return (dispatch, getState) => {
     dispatch(getPermissionStart());
 
@@ -255,7 +260,7 @@ export function createUserPermission(data, callback) {
   };
 }
 
-export function deleteUserPermission(permissionId, callback) {
+export function deleteProfilePermission(permissionId, callback) {
   return (dispatch, getState) => {
     dispatch(getPermissionStart());
 
@@ -279,46 +284,51 @@ export function deleteUserPermission(permissionId, callback) {
   };
 }
 
-export function getloggedInUserPermissionStart() {
+export function getloggedInProfilePermissionStart() {
   return {
     type: types.GET_LOGGED_IN_USER_PERMISSION_START
   };
 }
 
-export function getloggedInUserPermissionSuccess(loggedInChecklistPermission) {
+export function getloggedInProfilePermissionSuccess(
+  loggedInChecklistPermission
+) {
   return {
     type: types.GET_LOGGED_IN_USER_PERMISSION_SUCCESS,
     loggedInChecklistPermission: loggedInChecklistPermission
   };
 }
 
-export function getloggedInUserPermissionFail() {
+export function getloggedInProfilePermissionFail() {
   return {
     type: types.GET_LOGGED_IN_USER_PERMISSION_FAIL
   };
 }
 
-export function getloggedInUserPermission() {
+export function getloggedInProfilePermission() {
   return (dispatch, getState) => {
-    dispatch(getloggedInUserPermissionStart());
+    dispatch(getloggedInProfilePermissionStart());
 
     const { auth } = getState();
     request
       .get(`${config.API_URL}/v0/ui/checklists/permissions/self/`)
       .set('Authorization', `JWT ${auth.token}`)
       .then(resp => {
-        let loggedInUserPermission = resp.body.data;
-        if (loggedInUserPermission === 'no_permission_exists') {
-          loggedInUserPermission = [];
+        let loggedInProfilePermission = resp.body.data;
+        if (loggedInProfilePermission === 'no_permission_exists') {
+          loggedInProfilePermission = [];
         } else {
-          loggedInUserPermission = loggedInUserPermission.checklist_permissions;
+          loggedInProfilePermission =
+            loggedInProfilePermission.checklist_permissions;
         }
-        dispatch(getloggedInUserPermissionSuccess(loggedInUserPermission));
+        dispatch(
+          getloggedInProfilePermissionSuccess(loggedInProfilePermission)
+        );
       })
       .catch(ex => {
         console.log('Failed to fetch entity', ex);
 
-        dispatch(getloggedInUserPermissionFail());
+        dispatch(getloggedInProfilePermissionFail());
       });
   };
 }

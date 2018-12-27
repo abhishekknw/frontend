@@ -9,16 +9,16 @@ export default class LeadSettings extends React.Component {
     super(props);
     this.state = {
       showPermissionModal: false,
-      modalUserId: undefined,
+      modalProfileId: undefined,
       createPermission: false,
       dataInfo: [],
-      userPermissionId: undefined
+      profilePermissionId: undefined
     };
     this.renderPermissionRow = this.renderPermissionRow.bind(this);
     this.openCreatePermissionModal = this.openCreatePermissionModal.bind(this);
     this.closePermissionModal = this.closePermissionModal.bind(this);
-    this.handleEditUser = this.handleEditUser.bind(this);
-    this.handleDeleteUser = this.handleDeleteUser.bind(this);
+    this.handleEditProfile = this.handleEditProfile.bind(this);
+    this.handleDeleteProfile = this.handleDeleteProfile.bind(this);
     this.onModalSubmit = this.onModalSubmit.bind(this);
   }
   componentWillMount() {
@@ -26,29 +26,29 @@ export default class LeadSettings extends React.Component {
   }
   componentDidUpdate(prevProps) {
     if (
-      (!prevProps.leads.leadUserPermission.length &&
-        this.props.leads.leadUserPermission.length) ||
-      prevProps.leads.currentUserPermissionId !==
-        this.props.leads.currentUserPermissionId
+      (!prevProps.leads.leadProfilePermission.length &&
+        this.props.leads.leadProfilePermission.length) ||
+      prevProps.leads.currentProfilePermissionId !==
+        this.props.leads.currentProfilePermissionId
     ) {
-      let dataInfo = this.props.leads.leadUserPermission;
+      let dataInfo = this.props.leads.leadProfilePermission;
       this.setState({
         dataInfo,
-        userPermissionId: this.props.leads.currentUserPermissionId
+        profilePermissionId: this.props.leads.currentProfilePermissionId
       });
     }
   }
-  handleEditUser(userId) {
-    this.props.getLeadUserPermission(userId);
+  handleEditProfile(profileId) {
+    this.props.getLeadProfilePermission(profileId);
     this.setState({
       showPermissionModal: true,
-      modalUserId: userId,
+      modalProfileId: profileId,
       createPermission: false
     });
   }
-  handleDeleteUser(permissionId) {
-    this.props.deleteLeadsUserPermission(permissionId, () => {
-      toastr.success('', 'User Lead Permission deleted successfully');
+  handleDeleteProfile(permissionId) {
+    this.props.deleteLeadsProfilePermission(permissionId, () => {
+      toastr.success('', 'Profile Lead Permission deleted successfully');
     });
   }
   openCreatePermissionModal() {
@@ -65,13 +65,13 @@ export default class LeadSettings extends React.Component {
         campaigns: {},
         leads_forms: {}
       },
-      user_id: undefined
+      profile_id: undefined
     };
     if (!this.state.createPermission) {
-      requestData.id = this.state.userPermissionId;
-      requestData.user_id = this.state.modalUserId;
+      requestData.id = this.state.profilePermissionId;
+      requestData.profile_id = this.state.modalProfileId;
     } else {
-      requestData.user_id = state.selectedUser.value;
+      requestData.profile_id = state.selectedProfile.value;
     }
     state.data.data.forEach(campaignData => {
       if (
@@ -117,16 +117,16 @@ export default class LeadSettings extends React.Component {
 
     this.setState({
       showPermissionModal: false,
-      modalUserId: undefined,
+      modalProfileId: undefined,
       createPermission: false
     });
     if (this.state.createPermission) {
-      this.props.createLeadsUserPermission([requestData], () => {
-        toastr.success('', 'User Lead Permission created successfully');
+      this.props.createLeadsProfilePermission([requestData], () => {
+        toastr.success('', 'Profile Lead Permission created successfully');
       });
     } else {
-      this.props.updateLeadsUserPermission([requestData], () => {
-        toastr.success('', 'User Lead Permission updated successfully');
+      this.props.updateLeadsProfilePermission([requestData], () => {
+        toastr.success('', 'Profile Lead Permission updated successfully');
       });
     }
   }
@@ -141,27 +141,21 @@ export default class LeadSettings extends React.Component {
     return (
       <tr key={permission.id}>
         <td>{index + 1}</td>
-        <td>
-          {permission.user_id.first_name + ' ' + permission.user_id.last_name}
-        </td>
+        <td>{permission.profile_id.name}</td>
         <td>Custom</td>
-        <td>
-          {permission.created_by.first_name +
-            ' ' +
-            permission.created_by.last_name}
-        </td>
+        <td>{permission.name}</td>
         <td>
           <button
             type="button"
             className="btn btn--danger"
-            onClick={() => this.handleEditUser(permission.user_id.id)}
+            onClick={() => this.handleEditProfile(permission.profile_id.id)}
           >
             Edit
           </button>{' '}
           <button
             type="button"
             className="btn btn--danger"
-            onClick={() => this.handleDeleteUser(permission.id)}
+            onClick={() => this.handleDeleteProfile(permission.id)}
           >
             Remove
           </button>
