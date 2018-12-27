@@ -31,7 +31,7 @@ const getAttributeTypeOption = value => {
   return { value };
 };
 
-export default class EditEntityType extends React.Component {
+export default class EditBaseEntityType extends React.Component {
   constructor() {
     super();
 
@@ -39,7 +39,7 @@ export default class EditEntityType extends React.Component {
       name: '',
 
       entity_attributes: [{ name: '', type: '', is_required: false }],
-      currentEntityType: undefined,
+      currentBaseEntityType: undefined,
       showOptionModal: false,
       attributeOptions: [''],
       attributeInfo: {}
@@ -56,23 +56,23 @@ export default class EditEntityType extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getEntityType(this.props.match.params.entityTypeId);
+    this.props.getBaseEntityType(this.props.match.params.baseEntityTypeId);
   }
 
   componentDidUpdate() {
     if (
       (this.state.currentEntityType === undefined &&
-        this.props.entityType.currentEntityType) ||
-      (this.state.currentEntityType &&
-        this.props.entityType.currentEntityType &&
-        this.state.currentEntityType.id !==
-          this.props.entityType.currentEntityType.id)
+        this.props.baseEntityType.currentBaseEntityType) ||
+      (this.state.currentBaseEntityType &&
+        this.props.baseEntityType.currentBaseEntityType &&
+        this.state.currentBaseEntityType.id !==
+          this.props.baseEntityType.currentBaseEntityType.id)
     ) {
       this.setState({
-        currentEntityType: this.props.entityType.currentEntityType,
-        entity_attributes: this.props.entityType.currentEntityType
+        currentBaseEntityType: this.props.baseEntityType.currentBaseEntityType,
+        entity_attributes: this.props.baseEntityType.currentBaseEntityType
           .entity_attributes,
-        name: this.props.entityType.currentEntityType.name
+        name: this.props.baseEntityType.currentBaseEntityType.name
       });
     }
   }
@@ -114,10 +114,10 @@ export default class EditEntityType extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
-    this.props.updateEntityType(
+    this.props.updateBaseEntityType(
       {
         data: this.state,
-        entityTypeId: this.props.match.params.entityTypeId
+        baseEntityTypeId: this.props.match.params.baseEntityTypeId
       },
       () => {
         toastr.success('', 'Entity Type updated successfully');

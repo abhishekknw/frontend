@@ -6,24 +6,24 @@ export default class List extends React.Component {
   constructor(props) {
     super(props);
 
-    this.renderEntityTypeRow = this.renderEntityTypeRow.bind(this);
+    this.renderBaseEntityTypeRow = this.renderBaseEntityTypeRow.bind(this);
   }
 
   componentWillMount() {
-    this.props.getEntityTypeList();
+    this.props.getBaseEntityTypeList();
   }
 
-  renderEntityTypeRow(entityType, index) {
+  renderBaseEntityTypeRow(baseEntityType, index) {
     const onRemove = () => {
-      this.props.deleteEntityType(entityType.id, () => {
-        toastr.error('', 'Entity Type deleted successfully');
+      this.props.deleteBaseEntityType(baseEntityType.id, () => {
+        toastr.error('', 'Base Entity Type deleted successfully');
       });
     };
 
     return (
-      <tr key={entityType.id}>
+      <tr key={baseEntityType.id}>
         <td>{index + 1}</td>
-        <td>{entityType.name}</td>
+        <td>{baseEntityType.name}</td>
         <td>
           <button type="button" className="btn btn--danger" onClick={onRemove}>
             Remove
@@ -31,7 +31,7 @@ export default class List extends React.Component {
         </td>
         <td>
           <Link
-            to={`/r/entity/type/edit/${entityType.id}`}
+            to={`/r/entity/base-type/edit/${baseEntityType.id}`}
             className="btn btn--danger"
           >
             Edit Entity Type
@@ -42,7 +42,7 @@ export default class List extends React.Component {
   }
 
   render() {
-    let { entityTypeList } = this.props.entityType;
+    let { baseEntityTypeList } = this.props.baseEntityType;
     return (
       <div className="createform">
         <div className="createform__title">
@@ -60,12 +60,12 @@ export default class List extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {entityTypeList.length ? (
-                  entityTypeList.map(this.renderEntityTypeRow)
+                {baseEntityTypeList.length ? (
+                  baseEntityTypeList.map(this.renderBaseEntityTypeRow)
                 ) : (
                   <tr>
                     <td colSpan="5">
-                      No entity types available. Create your first one now!
+                      No base entity types available. Create your first one now!
                     </td>
                   </tr>
                 )}
@@ -74,8 +74,8 @@ export default class List extends React.Component {
           </div>
         </div>
         <div className="list__actions">
-          <Link to={'/r/entity/type/create'} className="btn btn--danger">
-            Create Entity Type
+          <Link to={'/r/entity/base-type/create'} className="btn btn--danger">
+            Create Base Entity Type
           </Link>
         </div>
       </div>
