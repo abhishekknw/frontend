@@ -39,6 +39,7 @@ export default class EditEntityType extends React.Component {
       name: '',
 
       entity_attributes: [{ name: '', type: '', is_required: false }],
+      base_entity_type_id: undefined,
       currentEntityType: undefined,
       showOptionModal: false,
       attributeOptions: [''],
@@ -72,7 +73,9 @@ export default class EditEntityType extends React.Component {
         currentEntityType: this.props.entityType.currentEntityType,
         entity_attributes: this.props.entityType.currentEntityType
           .entity_attributes,
-        name: this.props.entityType.currentEntityType.name
+        name: this.props.entityType.currentEntityType.name,
+        base_entity_type_id: this.props.entityType.currentEntityType
+          .base_entity_type_id
       });
     }
   }

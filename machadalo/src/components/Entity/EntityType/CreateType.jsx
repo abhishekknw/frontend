@@ -38,6 +38,8 @@ export default class CreateType extends React.Component {
     this.state = {
       name: '',
       entity_attributes: [{ name: '', type: '', is_required: false }],
+      baseEntityTypeOption: [],
+      selectedBaseEntityType: {},
       showOptionModal: false,
       attributeOptions: [''],
       attributeInfo: {}
@@ -51,6 +53,29 @@ export default class CreateType extends React.Component {
     this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
+    this.onSelectBaseEntityType = this.onSelectBaseEntityType.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.getBaseEntityTypeList();
+  }
+
+  componentDidUpdate() {
+    if (
+      this.state.baseEntityTypeOption.length !==
+      this.props.baseEntityType.baseEntityTypeList.length
+    ) {
+      let baseEntityTypeOption = [];
+      this.props.baseEntityType.baseEntityTypeList.forEach(baseEntityType => {
+        baseEntityTypeOption.push({
+          value: baseEntityType.id,
+          label: baseEntityType.name
+        });
+      });
+      this.setState({
+        baseEntityTypeOption
+      });
+    }
   }
 
   onCancelOptionModal() {
@@ -90,7 +115,13 @@ export default class CreateType extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
-    this.props.postEntityType({ data: this.state }, () => {
+    let data = {
+      name: this.state.name,
+      base_entity_type_id: this.state.selectedBaseEntityType.value,
+      entity_attributes: this.state.entity_attributes
+    };
+
+    this.props.postEntityType({ data }, () => {
       toastr.success('', 'Entity Type created successfully');
       this.props.history.push('/r/entity/list');
     });
@@ -123,6 +154,19 @@ export default class CreateType extends React.Component {
   handleInputChange(event) {
     this.setState({
       [event.target.name]: event.target.value
+    });
+  }
+
+  onSelectBaseEntityType(selectedBaseEntityType) {
+    let { baseEntityTypeList } = this.props.baseEntityType;
+    baseEntityTypeList.forEach(baseEntityType => {
+      if (baseEntityType.id === selectedBaseEntityType.value) {
+        this.setState({
+          selectedBaseEntityType,
+          entity_attributes: baseEntityType.entity_attributes
+        });
+        return;
+      }
     });
   }
 
@@ -233,6 +277,17 @@ export default class CreateType extends React.Component {
                   name="name"
                   value={this.state.name}
                   onChange={this.handleInputChange}
+                />
+              </div>
+            </div>
+
+            <div className="createform__form__inline">
+              <div className="form-control">
+                <label>*Select Base Entity Type</label>
+                <Select
+                  options={this.state.baseEntityTypeOption}
+                  value={this.state.selectedBaseEntityType}
+                  onChange={this.onSelectBaseEntityType}
                 />
               </div>
             </div>

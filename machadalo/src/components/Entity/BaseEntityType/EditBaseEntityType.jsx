@@ -250,13 +250,13 @@ export default class EditBaseEntityType extends React.Component {
     return (
       <div className="createform">
         <div className="createform__title">
-          <h3>Edit Entity Type </h3>
+          <h3>Edit Base Entity Type </h3>
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
             <div className="createform__form__inline">
               <div className="form-control">
-                <label>*Enter Name For Entity Type</label>
+                <label>*Enter Name For Base Entity Type</label>
                 <input
                   type="text"
                   name="name"
