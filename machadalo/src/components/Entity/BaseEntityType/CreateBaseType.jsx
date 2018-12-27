@@ -90,7 +90,12 @@ export default class CreateBaseType extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
-    this.props.postBaseEntityType({ data: this.state }, () => {
+    let data = {
+      name: this.state.name,
+      entity_attributes: this.state.entity_attributes
+    };
+
+    this.props.postBaseEntityType({ data }, () => {
       toastr.success('', 'Base Entity Type created successfully');
       this.props.history.push('/r/entity/base-type/list');
     });

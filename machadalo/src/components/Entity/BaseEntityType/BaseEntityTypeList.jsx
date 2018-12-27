@@ -34,7 +34,7 @@ export default class List extends React.Component {
             to={`/r/entity/base-type/edit/${baseEntityType.id}`}
             className="btn btn--danger"
           >
-            Edit Entity Type
+            Edit Base Entity Type
           </Link>
         </td>
       </tr>
@@ -46,7 +46,7 @@ export default class List extends React.Component {
     return (
       <div className="createform">
         <div className="createform__title">
-          <h3>Entity Type List</h3>
+          <h3>Base Entity Type List</h3>
         </div>
         <div className="list">
           <div className="list__table">

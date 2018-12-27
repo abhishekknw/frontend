@@ -123,7 +123,7 @@ export default class CreateType extends React.Component {
 
     this.props.postEntityType({ data }, () => {
       toastr.success('', 'Entity Type created successfully');
-      this.props.history.push('/r/entity/list');
+      this.props.history.push('/r/entity/type/list');
     });
   }
 

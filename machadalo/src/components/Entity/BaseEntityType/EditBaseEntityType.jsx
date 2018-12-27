@@ -61,7 +61,7 @@ export default class EditBaseEntityType extends React.Component {
 
   componentDidUpdate() {
     if (
-      (this.state.currentEntityType === undefined &&
+      (this.state.currentBaseEntityType === undefined &&
         this.props.baseEntityType.currentBaseEntityType) ||
       (this.state.currentBaseEntityType &&
         this.props.baseEntityType.currentBaseEntityType &&
@@ -114,14 +114,19 @@ export default class EditBaseEntityType extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
+    let data = {
+      name: this.state.name,
+      entity_attributes: this.state.entity_attributes
+    };
+
     this.props.updateBaseEntityType(
       {
-        data: this.state,
+        data,
         baseEntityTypeId: this.props.match.params.baseEntityTypeId
       },
       () => {
-        toastr.success('', 'Entity Type updated successfully');
-        this.props.history.push('/r/entity/type/list');
+        toastr.success('', 'Base Entity Type updated successfully');
+        this.props.history.push('/r/entity/base-type/list');
       }
     );
   }

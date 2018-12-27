@@ -117,9 +117,15 @@ export default class EditEntityType extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
+    let data = {
+      name: this.state.name,
+      base_entity_type_id: this.state.base_entity_type_id,
+      entity_attributes: this.state.entity_attributes
+    };
+
     this.props.updateEntityType(
       {
-        data: this.state,
+        data,
         entityTypeId: this.props.match.params.entityTypeId
       },
       () => {
