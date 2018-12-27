@@ -563,6 +563,7 @@ export default class CreateChecklistTemplate extends React.Component {
                     type="text"
                     placeholder="Static Data"
                     value={
+                      static_value[columnIndex + 1] &&
                       static_value[columnIndex + 1][rowIndex]
                         ? static_value[columnIndex + 1][rowIndex].cell_value
                         : ''
@@ -571,6 +572,7 @@ export default class CreateChecklistTemplate extends React.Component {
                       this.handleRowChange(event, columnIndex, rowIndex)
                     }
                     disabled={
+                      static_value[columnIndex + 1] &&
                       static_value[columnIndex + 1][rowIndex]
                         ? static_value[columnIndex + 1][rowIndex].disabled
                         : true
