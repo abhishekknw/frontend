@@ -2170,7 +2170,7 @@
                             <div class="col-lg-6">
                             <div class="panel panel-primary">
                               <div class="panel-heading content-title">
-                                <label for="flat graph">Summary Report Graph Summary</label>
+                                <label for="flat graph">Summary Report Graph</label>
                               </div>
                             </div>
                             <div class="row">
@@ -2504,15 +2504,15 @@
                         </div>
 
 <!-- < Start Overall Campaign Wise Summary> -->
-<div class="col-lg-12" ng-if="campaignSummaryTable">
+<div class="col-lg-12" ng-if="selectAllCampaignLeads">
   <div class="panel panel-primary">
     <div class="panel-heading content-title">
-      <label for="Location">Overall Summary Details</label>
+      <label for="Location">Overall Campaign Wise Summary Details</label>
     </div>
   </div>
   <div class="campaigndetailtable">
     <div class="table-responsive">
-      <table class="table table-striped" st-table="campaignSummary.overall" st-safe-src="campaignSummary">
+      <table class="table table-striped" st-table="campaignSummary">
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
@@ -2526,15 +2526,243 @@
             </tr>
       </thead>
         <tbody style="text-align:center;">
-          <tr ng-repeat="(key,data) in campaignSummary">
-            <td style="font-weight:bold">{{key}}</td>
-            <td>{{data.suppliers}}</td>
-            <td>{{data['flat_count']}}</td>
+          <tr ng-repeat="(key,data) in overallCampaignSummary">
+            <td style="font-weight:bold">{{data.name}}</td>
+            <td>{{data.flat_count}}</td>
+            <td>{{data.total_supplier_count}}</td>
+            <td ng-if="data.flat_count != 0">{{(data.total_leads_count / data.flat_count) * 100 | limitTo:5}}%</td>
+            <td ng-if="data.flat_count == 0">NA</td>
+            <td>{{data.hot_leads_count}}</td>
+            <td ng-if="data.flat_count != 0">{{(data.hot_leads_count / data.flat_count) * 100 | limitTo:5 }}%</td>
+            <td ng-if="data.flat_count == 0">NA</td>
+            <td>{{(data.hot_leads_count / data.total_leads_count) * 100 | limitTo:5 }}%</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
+</div>
+<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+        <div class="panel panel-primary">
+          <div class="panel-heading content-title">
+            <label for="flat graph">Overall Graph Summary</label>
+          </div>
+        </div>
+        <div class="row">
+          <select class="form-control" ng-change="sortData('overall',sortModel)"  ng-model="sortModel" print-remove>
+           <option value="" disabled>Select For Sorting</option>
+            <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
+          </select>
+          <div class="outerLocation"  ng-if="!dateRangeModel.start_date">
+            <div class="innerLocation"  ng-if="!dateRangeModel.start_date">
+              <nvd3 options="locationChartOptions" data="sortedLocationData['overall']" ng-if="togglesortedGraphs['overall']"></nvd3>
+              <nvd3 options="OverallSummaryStackedBarChart" data="stackedBarAllCampaignWiseChart" ng-if="!togglesortedGraphs['overall']"></nvd3>
+            </div>
+          </div>
+          <div ng-if="dateRangeModel.start_date">
+            <div ng-if="dateRangeModel.start_date">
+              <nvd3 options="locationChartOptions" data="sortedLocationData['overall']" ng-if="togglesortedGraphs['overall']"></nvd3>
+              <nvd3 options="OverallSummaryStackedBarChart" data="stackedBarAllCampaignWiseChart" ng-if="!togglesortedGraphs['overall']"></nvd3>
+            </div>
+          </div>
+        </div>
+</div>
+<br /><br />
+<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+  <div class="panel panel-primary">
+    <div class="panel-heading content-title">
+      <label for="Location">Last Week Summary Details</label>
+    </div>
+  </div>
+  <div class="campaigndetailtable">
+    <div class="table-responsive">
+      <table class="table table-striped" st-table="campaignSummary">
+        <thead>
+            <tr>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads </th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads <br> in %</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads Ratio <br> (%)</th>
+            </tr>
+      </thead>
+        <tbody style="text-align:center;">
+          <tr ng-repeat="(key,data) in lastWeekCampaignSummary">
+            <td style="font-weight:bold">{{data.name}}</td>
+            <td>{{data.flat_count}}</td>
+            <td>{{data.total_supplier_count}}</td>
+            <td>{{data.total_leads_count}}</td>
+            <td ng-if="data.flat_count != 0">{{(data.total_leads_count / data.flat_count) * 100 | limitTo:5}}%</td>
+            <td ng-if="data.flat_count == 0">NA</td>
+            <td>{{data.hot_leads_count}}</td>
+            <td ng-if="data.flat_count != 0">{{(data.hot_leads_count / data.flat_count) * 100 | limitTo:5 }}%</td>
+            <td ng-if="data.flat_count == 0">NA</td>
+            <td>{{(data.hot_leads_count / data.total_leads_count) * 100 | limitTo:5 }}%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+        <div class="panel panel-primary">
+          <div class="panel-heading content-title">
+            <label for="flat graph">Last Week Graph Summary</label>
+          </div>
+        </div>
+        <div class="row">
+          <select class="form-control" ng-change="sortData('overall',sortModel)"  ng-model="sortModel" print-remove>
+           <option value="" disabled>Select For Sorting</option>
+            <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
+          </select>
+          <div class="outerLocation"  ng-if="!dateRangeModel.start_date">
+            <div class="innerLocation"  ng-if="!dateRangeModel.start_date">
+              <nvd3 options="locationChartOptions" data="sortedLocationData['thisweek']" ng-if="togglesortedGraphs['thisweek']"></nvd3>
+              <nvd3 options="thisWeekSummaryStackedBarChart" data="stackedBarLastWeekChart" ng-if="!togglesortedGraphs['thisweek']"></nvd3>
+            </div>
+          </div>
+          <div ng-if="dateRangeModel.start_date">
+            <div ng-if="dateRangeModel.start_date">
+              <nvd3 options="locationChartOptions" data="sortedLocationData['thisweek']" ng-if="togglesortedGraphs['thisweek']"></nvd3>
+              <nvd3 options="thisWeekSummaryStackedBarChart" data="stackedBarLastWeekChart" ng-if="!togglesortedGraphs['thisweek']"></nvd3>
+            </div>
+          </div>
+        </div>
+</div>
+<br /><br />
+
+<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+  <div class="panel panel-primary">
+    <div class="panel-heading content-title">
+      <label for="Location">Last 2 Weeks Summary Details</label>
+    </div>
+  </div>
+  <div class="campaigndetailtable">
+    <div class="table-responsive">
+      <table class="table table-striped" st-table="campaignSummary">
+        <thead>
+            <tr>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads </th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads <br> in %</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads Ratio <br> (%)</th>
+            </tr>
+      </thead>
+        <tbody style="text-align:center;">
+          <tr ng-repeat="(key,data) in last2WeeksCampaignSummary">
+            <td style="font-weight:bold">{{data.name}}</td>
+            <td>{{data.flat_count}}</td>
+            <td>{{data.total_supplier_count}}</td>
+            <td>{{data.total_leads_count}}</td>
+            <td ng-if="data.flat_count != 0">{{(data.total_leads_count / data.flat_count) * 100 | limitTo:5}}%</td>
+            <td ng-if="data.flat_count == 0">NA</td>
+            <td>{{data.hot_leads_count}}</td>
+            <td ng-if="data.flat_count != 0">{{(data.hot_leads_count / data.flat_count) * 100 | limitTo:5 }}%</td>
+            <td ng-if="data.flat_count == 0">NA</td>
+            <td>{{(data.hot_leads_count / data.total_leads_count) * 100 | limitTo:5 }}%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+        <div class="panel panel-primary">
+          <div class="panel-heading content-title">
+            <label for="flat graph">Last 2 Week Graph Summary</label>
+          </div>
+        </div>
+        <div class="row">
+          <select class="form-control" ng-change="sortData('overall',sortModel)"  ng-model="sortModel" print-remove>
+           <option value="" disabled>Select For Sorting</option>
+            <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
+          </select>
+          <div class="outerLocation"  ng-if="!dateRangeModel.start_date">
+            <div class="innerLocation"  ng-if="!dateRangeModel.start_date">
+              <nvd3 options="locationChartOptions" data="sortedLocationData['last2week']" ng-if="togglesortedGraphs['last2week']"></nvd3>
+              <nvd3 options="last2WeekSummaryStackedBarChart" data="stackedBarLast2WeeksChart" ng-if="!togglesortedGraphs['last2week']"></nvd3>
+            </div>
+          </div>
+          <div ng-if="dateRangeModel.start_date">
+            <div ng-if="dateRangeModel.start_date">
+              <nvd3 options="locationChartOptions" data="sortedLocationData['last2week']" ng-if="togglesortedGraphs['last2week']"></nvd3>
+              <nvd3 options="last2WeekSummaryStackedBarChart" data="stackedBarLast2WeeksChart" ng-if="!togglesortedGraphs['last2week']"></nvd3>
+            </div>
+          </div>
+        </div>
+</div>
+<br /><br />
+
+<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+  <div class="panel panel-primary">
+    <div class="panel-heading content-title">
+      <label for="Location">Last 3 Weeks Summary Details</label>
+    </div>
+  </div>
+  <div class="campaigndetailtable">
+    <div class="table-responsive">
+      <table class="table table-striped" st-table="campaignSummary">
+        <thead>
+            <tr>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads </th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads <br> in %</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads Ratio <br> (%)</th>
+            </tr>
+      </thead>
+        <tbody style="text-align:center;">
+          <tr ng-repeat="(key,data) in last3WeeksCampaignSummary">
+            <td style="font-weight:bold">{{data.name}}</td>
+            <td>{{data.flat_count}}</td>
+            <td>{{data.total_supplier_count}}</td>
+            <td>{{data.total_leads_count}}</td>
+            <td ng-if="data.flat_count != 0">{{(data.total_leads_count / data.flat_count) * 100 | limitTo:5}}%</td>
+            <td ng-if="data.flat_count == 0">NA</td>
+            <td>{{data.hot_leads_count}}</td>
+            <td ng-if="data.flat_count != 0">{{(data.hot_leads_count / data.flat_count) * 100 | limitTo:5 }}%</td>
+            <td ng-if="data.flat_count == 0">NA</td>
+            <td>{{(data.hot_leads_count / data.total_leads_count) * 100 | limitTo:5 }}%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+        <div class="panel panel-primary">
+          <div class="panel-heading content-title">
+            <label for="flat graph">Last 3 Week Graph Summary</label>
+          </div>
+        </div>
+        <div class="row">
+          <select class="form-control" ng-change="sortData('overall',sortModel)"  ng-model="sortModel" print-remove>
+           <option value="" disabled>Select For Sorting</option>
+            <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
+          </select>
+          <div class="outerLocation"  ng-if="!dateRangeModel.start_date">
+            <div class="innerLocation"  ng-if="!dateRangeModel.start_date">
+              <nvd3 options="locationChartOptions" data="sortedLocationData['last3week']" ng-if="togglesortedGraphs['last3week']"></nvd3>
+              <nvd3 options="last3WeekSummaryStackedBarChart" data="stackedBarLast3WeeksChart" ng-if="!togglesortedGraphs['last3week']"></nvd3>
+            </div>
+          </div>
+          <div ng-if="dateRangeModel.start_date">
+            <div ng-if="dateRangeModel.start_date">
+              <nvd3 options="locationChartOptions" data="sortedLocationData['last3week']" ng-if="togglesortedGraphs['last3week']"></nvd3>
+              <nvd3 options="last3WeekSummaryStackedBarChart" data="stackedBarLast3WeeksChart" ng-if="!togglesortedGraphs['last3week']"></nvd3>
+            </div>
+          </div>
+        </div>
 </div>
 <!-- < End Overall Campaign Wise Summary> -->
                         <!--START : COMPARE CAMPAIGNS LIST  -->
