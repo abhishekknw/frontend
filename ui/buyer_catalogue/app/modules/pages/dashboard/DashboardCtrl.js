@@ -1539,6 +1539,8 @@
           $scope.value1 = key;
           $scope.locationHeader.push($scope.value1);
        })
+       console.log($scope.LeadsByCampaign);
+      
        $scope.d3StackedBarChartData = formatD3StackedBarChartData($scope.LeadsByCampaign.supplier_data);
        $scope.stackedBarChartOptions = angular.copy(stackedBarChart);
        $scope.stackedBarChartSocietyWise = angular.copy(societySummaryBarChart);
@@ -2644,6 +2646,7 @@ $scope.togglesortedGraphs = {
   'thisweek' : false,
   'last2week' : false,
   'last3week' : false,
+  'summary' : false,
 }
 $scope.sortData = function(keyName,id){
 
@@ -2667,6 +2670,9 @@ $scope.sortData = function(keyName,id){
   if(keyName == 'supplier'){
       $scope.sortedData = angular.copy($scope.LeadsByCampaign.supplier_data);
   }
+  if(keyName == 'summary'){
+      $scope.sortedData = angular.copy($scope.LeadsByCampaign);
+  }
   if(keyName == 'overall'){
       $scope.sortedData = angular.copy($scope.overallCampaignSummary);
   }
@@ -2688,17 +2694,6 @@ $scope.sortData = function(keyName,id){
     $scope.sortedData[key]['totalPercRoundOff'] = Math.round($scope.sortedData[key]['totalPerc']);
     $scope.sortedData[key]['hotPercRoundOff'] = Math.round($scope.sortedData[key]['hotPerc']);
       sortable.push([key, $scope.sortedData[key]]);
-  }
-
-  var overallSortable = [];
-  for (var key in $scope.overallSortedData) {
-    console.log($scope.overallSortedData);
-    console.log(key);
-    $scope.overallSortedData[key]['hotPerc'] = $scope.overallSortedData[key]['hot_leads_count'] / $scope.overallSortedData[key]['flat_count'] * 100;
-    $scope.overallSortedData[key]['totalPerc'] = $scope.overallSortedData[key]['total_leads_count'] / $scope.overallSortedData[key]['flat_count'] * 100;
-    $scope.overallSortedData[key]['totalPercRoundOff'] = Math.round($scope.overallSortedData[key]['totalPerc']);
-    $scope.overallSortedData[key]['hotPercRoundOff'] = Math.round($scope.overallSortedData[key]['hotPerc']);
-      overallSortable.push([key, $scope.overallSortedData[key]]);
   }
 
   var mean;
@@ -3163,12 +3158,12 @@ $scope.getCampaignWiseSummary = function(){
      var values2 = [];
      angular.forEach(data, function(data,key){
        if(data.flat_count != 0){
-         $scope.hotLeadsValues =  data.hot_leads_count / data.flat_count * 100;
-         $scope.normalLeadsValues =  data.total_leads_count/data.flat_count * 100;
+         $scope.hotLeadsValues =  data.interested / data.flat_count * 100;
+         $scope.normalLeadsValues =  data.total/data.flat_count * 100;
         }
         else {
-          $scope.hotLeadsValues =  data.hot_leads_count;
-          $scope.normalLeadsValues =  data.total_leads_count;
+          $scope.hotLeadsValues =  data.interested;
+          $scope.normalLeadsValues =  data.total;
 
         }
          var keyWithFlatLabel =  data.name + ' (' + data.flat_count + ')';
@@ -3204,12 +3199,12 @@ $scope.getCampaignWiseSummary = function(){
      var values2 = [];
      angular.forEach(data, function(data,key){
        if(data.flat_count != 0){
-         $scope.hotLeadsValues =  data.hot_leads_count / data.flat_count * 100;
-         $scope.normalLeadsValues =  data.total_leads_count/data.flat_count * 100;
+         $scope.hotLeadsValues =  data.interested / data.flat_count * 100;
+         $scope.normalLeadsValues =  data.total/data.flat_count * 100;
         }
         else {
-          $scope.hotLeadsValues =  data.hot_leads_count;
-          $scope.normalLeadsValues =  data.total_leads_count;
+          $scope.hotLeadsValues =  data.interested;
+          $scope.normalLeadsValues =  data.total;
 
         }
          var keyWithFlatLabel =  data.name + ' (' + data.flat_count + ')';
@@ -3245,12 +3240,12 @@ $scope.getCampaignWiseSummary = function(){
      var values2 = [];
      angular.forEach(data, function(data,key){
        if(data.flat_count != 0){
-         $scope.hotLeadsValues =  data.hot_leads_count / data.flat_count * 100;
-         $scope.normalLeadsValues =  data.total_leads_count/data.flat_count * 100;
+         $scope.hotLeadsValues =  data.interested / data.flat_count * 100;
+         $scope.normalLeadsValues =  data.total/data.flat_count * 100;
         }
         else {
-          $scope.hotLeadsValues =  data.hot_leads_count;
-          $scope.normalLeadsValues =  data.total_leads_count;
+          $scope.hotLeadsValues =  data.interested;
+          $scope.normalLeadsValues =  data.total;
 
         }
          var keyWithFlatLabel =  data.name + ' (' + data.flat_count + ')';
@@ -3286,12 +3281,12 @@ $scope.getCampaignWiseSummary = function(){
      var values2 = [];
      angular.forEach(data, function(data,key){
        if(data.flat_count != 0){
-         $scope.hotLeadsValues =  data.hot_leads_count / data.flat_count * 100;
-         $scope.normalLeadsValues =  data.total_leads_count/data.flat_count * 100;
+         $scope.hotLeadsValues =  data.interested / data.flat_count * 100;
+         $scope.normalLeadsValues =  data.total/data.flat_count * 100;
         }
         else {
-          $scope.hotLeadsValues =  data.hot_leads_count;
-          $scope.normalLeadsValues =  data.total_leads_count;
+          $scope.hotLeadsValues =  data.interested;
+          $scope.normalLeadsValues =  data.total;
 
         }
          var keyWithFlatLabel =  data.name + ' (' + data.flat_count + ')';

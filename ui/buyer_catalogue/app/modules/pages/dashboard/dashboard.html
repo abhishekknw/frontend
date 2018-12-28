@@ -2174,14 +2174,14 @@
                               </div>
                             </div>
                             <div class="row">
-                              <select class="form-control" ng-change="sortData('flatData',sortModel)"  ng-model="sortModel" print-remove>
+                              <select class="form-control" ng-change="sortData('summary',sortModel)"  ng-model="sortModel" print-remove>
                                <option value="" disabled>Select For Sorting</option>
                                 <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
                               </select>
                               <div class="outerFlat"  ng-if="!dateRangeModel.start_date">
                                 <div class="innerFlat"  ng-if="!dateRangeModel.start_date">
-                                  <nvd3 options="locationChartOptions" data="sortedLocationData['weekly']" ng-if="togglesortedGraphs['weekly']"></nvd3>
-                                  <nvd3 options="weeklyStackedBarData" data="stackedBarThreeWeeksChart" ng-if="!togglesortedGraphs['weekly']"></nvd3>
+                                  <nvd3 options="locationChartOptions" data="sortedLocationData['summary']" ng-if="togglesortedGraphs['summary']"></nvd3>
+                                  <nvd3 options="weeklyStackedBarData" data="stackedBarThreeWeeksChart" ng-if="!togglesortedGraphs['summary']"></nvd3>
                                 </div>
                               </div>
                               <div ng-if="dateRangeModel.start_date">
@@ -2194,6 +2194,7 @@
                           </div>
                           </div>
                           <br /><br />
+
                           <div class="col-lg-6">
                             <div class="panel panel-primary">
                               <div class="panel-heading content-title">
@@ -2295,6 +2296,7 @@
                             </div>
                           </div>
                         </div>
+
                       <br /><br />
                         <div class="col-lg-12"  ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:50px;">
                           <div class="col-lg-6">
@@ -2450,6 +2452,7 @@
                                 </div>
                               </div>
                         </div>
+
                           <br /><br /><br /><br /><br /><br /><br />
                         <div class="col-md-12" ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:140px;">
                           <div class="panel-heading content-title">
@@ -2478,6 +2481,7 @@
                           <nvd3 options="variableoptions" data="stackedBarChartSupplierData"></nvd3>
                           </div> -->
                         </div>
+
                           <br /><br />
                         <div class="col-md-12" ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:50px;">
                           <div class="panel-heading content-title">
@@ -2530,18 +2534,131 @@
             <td style="font-weight:bold">{{data.name}}</td>
             <td>{{data.flat_count}}</td>
             <td>{{data.total_supplier_count}}</td>
-            <td ng-if="data.flat_count != 0">{{(data.total_leads_count / data.flat_count) * 100 | limitTo:5}}%</td>
+            <td>{{data.total}}</td>
+            <td ng-if="data.flat_count != 0">{{(data.total / data.flat_count) * 100 | limitTo:5}}%</td>
             <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{data.hot_leads_count}}</td>
-            <td ng-if="data.flat_count != 0">{{(data.hot_leads_count / data.flat_count) * 100 | limitTo:5 }}%</td>
+            <td>{{data.interested}}</td>
+            <td ng-if="data.flat_count != 0">{{(data.interested / data.flat_count) * 100 | limitTo:5 }}%</td>
             <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{(data.hot_leads_count / data.total_leads_count) * 100 | limitTo:5 }}%</td>
+            <td>{{(data.interested / data.total) * 100 | limitTo:5 }}%</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 </div>
+
+<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+  <div class="panel panel-primary">
+    <div class="panel-heading content-title">
+      <label for="Location">Overall Statistical Details</label>
+    </div>
+  </div>
+  <br> <br>
+  <table class="table table-striped" st-table="campaignSummary">
+    <thead>
+      <tr>
+        <th style="background:#8e1921 !important;color:#ffffff !important">Type</th>
+        <th style="background:#8e1921 !important;color:#ffffff !important">Overall</th>
+        <th style="background:#8e1921 !important;color:#ffffff !important">Last Week</th>
+        <th style="background:#8e1921 !important;color:#ffffff !important">Last 2 Week</th>
+        <th style="background:#8e1921 !important;color:#ffffff !important">Last 3 Week</th>
+      </tr>
+  </thead>
+    <tbody style="text-align:center;">
+      <tr>
+      <td><small style="font-weight:bold">Mean of Leads</small></td>
+      <td ng-if="campaignSummary.overall.all_campaigns.total_leads_analytics.percentage_by_flat">{{campaignSummary.overall.all_campaigns.total_leads_analytics.percentage_by_flat | limitTo:5}} %</td>
+      <td ng-if="!campaignSummary.overall.all_campaigns.total_leads_analytics.percentage_by_flat">NA</td>
+
+      <td ng-if="campaignSummary.last_week.all_campaigns.total_leads_analytics.percentage_by_flat">{{campaignSummary.last_week.all_campaigns.total_leads_analytics.percentage_by_flat | limitTo:5 }} %</td>
+      <td ng-if="!campaignSummary.last_week.all_campaigns.total_leads_analytics.percentage_by_flat">NA</td>
+
+      <td ng-if="campaignSummary.last_two_weeks.all_campaigns.total_leads_analytics.percentage_by_flat">{{campaignSummary.last_two_weeks.all_campaigns.total_leads_analytics.percentage_by_flat | limitTo:5 }} % </td>
+      <td ng-if="!campaignSummary.last_two_weeks.all_campaigns.total_leads_analytics.percentage_by_flat">NA </td>
+
+      <td ng-if="campaignSummary.last_three_weeks.all_campaigns.total_leads_analytics.percentage_by_flat">{{campaignSummary.last_three_weeks.all_campaigns.total_leads_analytics.percentage_by_flat | limitTo:5 }} % </td>
+      <td ng-if="!campaignSummary.last_three_weeks.all_campaigns.total_leads_analytics.percentage_by_flat">NA </td>
+
+      </tr>
+      <tr>
+      <td><small style="font-weight:bold">Mean of Hot Leads</small></td>
+      <td ng-if="campaignSummary.overall.all_campaigns.hot_leads_analytics.percentage_by_flat">{{campaignSummary.overall.all_campaigns.hot_leads_analytics.percentage_by_flat | limitTo:5}} %</td>
+      <td ng-if="!campaignSummary.overall.all_campaigns.hot_leads_analytics.percentage_by_flat">NA</td>
+
+      <td ng-if="campaignSummary.last_week.all_campaigns.hot_leads_analytics.percentage_by_flat">{{campaignSummary.last_week.all_campaigns.hot_leads_analytics.percentage_by_flat | limitTo:5 }} %</td>
+      <td ng-if="!campaignSummary.last_week.all_campaigns.hot_leads_analytics.percentage_by_flat">NA</td>
+
+      <td ng-if="campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat">{{campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat | limitTo:5 }} % </td>
+      <td ng-if="!campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat">NA </td>
+
+      <td ng-if="campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat">{{campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat | limitTo:5 }} % </td>
+      <td ng-if="!campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat">NA </td>
+
+      </tr>
+      <!-- <tr> -->
+      <!-- <td><small style="font-weight:bold">Median of Leads</small></td>
+      <td ng-if="campaignSummary.overall.all_campaigns.total_leads_analytics.median_percent_by_flat">{{campaignSummary.overall.all_campaigns.total_leads_analytics.median_percent_by_flat | limitTo:5}} %</td>
+      <td ng-if="!campaignSummary.overall.all_campaigns.total_leads_analytics.median_percent_by_flat">NA</td>
+
+      <td ng-if="campaignSummary.last_week.all_campaigns.total_leads_analytics.median_percent_by_flat">{{campaignSummary.last_week.all_campaigns.total_leads_analytics.median_percent_by_flat | limitTo:5 }} %</td>
+      <td ng-if="!campaignSummary.last_week.all_campaigns.total_leads_analytics.median_percent_by_flat">NA</td>
+
+      <td ng-if="campaignSummary.last_two_weeks.all_campaigns.total_leads_analytics.median_percent_by_flat">{{campaignSummary.last_two_weeks.all_campaigns.total_leads_analytics.median_percent_by_flat | limitTo:5 }} % </td>
+      <td ng-if="!campaignSummary.last_two_weeks.all_campaigns.total_leads_analytics.median_percent_by_flat">NA </td>
+
+      <td ng-if="campaignSummary.last_three_weeks.all_campaigns.total_leads_analytics.median_percent_by_flat">{{campaignSummary.last_three_weeks.all_campaigns.total_leads_analytics.median_percent_by_flat | limitTo:5 }} % </td>
+      <td ng-if="!campaignSummary.last_three_weeks.all_campaigns.total_leads_analytics.median_percent_by_flat">NA </td>
+  </tr>
+      <tr>
+      <td><small style="font-weight:bold">Median of Hot Leads</small></td>
+      <td ng-if="campaignSummary.overall.all_campaigns.hot_leads_analytics.median_percent_by_flat">{{campaignSummary.overall.all_campaigns.hot_leads_analytics.median_percent_by_flat | limitTo:5}} %</td>
+      <td ng-if="!campaignSummary.overall.all_campaigns.hot_leads_analytics.median_percent_by_flat">NA</td>
+
+      <td ng-if="campaignSummary.last_week.all_campaigns.hot_leads_analytics.median_percent_by_flat">{{campaignSummary.last_week.all_campaigns.hot_leads_analytics.median_percent_by_flat | limitTo:5 }} %</td>
+      <td ng-if="!campaignSummary.last_week.all_campaigns.hot_leads_analytics.median_percent_by_flat">NA</td>
+
+      <td ng-if="campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.median_percent_by_flat">{{campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.median_percent_by_flat | limitTo:5 }} % </td>
+      <td ng-if="!campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.median_percent_by_flat">NA </td>
+
+      <td ng-if="campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.median_percent_by_flat">{{campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.median_percent_by_flat | limitTo:5 }} % </td>
+      <td ng-if="!campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.median_percent_by_flat">NA </td>
+  </tr>
+      <tr>
+      <td><small style="font-weight:bold">Mode of Leads</small></td>
+      <td ng-if="campaignSummary.overall.all_campaigns.total_leads_analytics.mode_percent_by_flat">{{campaignSummary.overall.all_campaigns.total_leads_analytics.mode_percent_by_flat | limitTo:5}} %</td>
+      <td ng-if="!campaignSummary.overall.all_campaigns.total_leads_analytics.mode_percent_by_flat">NA</td>
+
+      <td ng-if="campaignSummary.last_week.all_campaigns.total_leads_analytics.mode_percent_by_flat">{{campaignSummary.last_week.all_campaigns.total_leads_analytics.mode_percent_by_flat | limitTo:5 }} %</td>
+      <td ng-if="!campaignSummary.last_week.all_campaigns.total_leads_analytics.mode_percent_by_flat">NA</td>
+
+      <td ng-if="campaignSummary.last_two_weeks.all_campaigns.total_leads_analytics.mode_percent_by_flat">{{campaignSummary.last_two_weeks.all_campaigns.total_leads_analytics.mode_percent_by_flat | limitTo:5 }} % </td>
+      <td ng-if="!campaignSummary.last_two_weeks.all_campaigns.total_leads_analytics.mode_percent_by_flat">NA </td>
+
+      <td ng-if="campaignSummary.last_three_weeks.all_campaigns.total_leads_analytics.mode_percent_by_flat">{{campaignSummary.last_three_weeks.all_campaigns.total_leads_analytics.mode_percent_by_flat | limitTo:5 }} % </td>
+      <td ng-if="!campaignSummary.last_three_weeks.all_campaigns.total_leads_analytics.mode_percent_by_flat">NA </td>
+
+      </tr>
+      <tr>
+      <td><small style="font-weight:bold">Mode of Hot Leads</small></td>
+      <td ng-if="campaignSummary.overall.all_campaigns.hot_leads_analytics.mode_percent_by_flat">{{campaignSummary.overall.all_campaigns.hot_leads_analytics.mode_percent_by_flat | limitTo:5}} %</td>
+      <td ng-if="!campaignSummary.overall.all_campaigns.hot_leads_analytics.mode_percent_by_flat">NA</td>
+
+      <td ng-if="campaignSummary.last_week.all_campaigns.hot_leads_analytics.mode_percent_by_flat">{{campaignSummary.last_week.all_campaigns.hot_leads_analytics.mode_percent_by_flat | limitTo:5 }} %</td>
+      <td ng-if="!campaignSummary.last_week.all_campaigns.hot_leads_analytics.mode_percent_by_flat">NA</td>
+
+      <td ng-if="campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.mode_percent_by_flat">{{campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.mode_percent_by_flat | limitTo:5 }} % </td>
+      <td ng-if="!campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.mode_percent_by_flat">NA </td>
+
+      <td ng-if="campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.mode_percent_by_flat">{{campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.mode_percent_by_flat | limitTo:5 }} % </td>
+      <td ng-if="!campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.mode_percent_by_flat">NA </td>
+
+      </tr> -->
+
+    </tbody>
+  </table>
+</div>
+
 <div class="col-lg-12" ng-if="selectAllCampaignLeads">
         <div class="panel panel-primary">
           <div class="panel-heading content-title">
@@ -2567,6 +2684,7 @@
           </div>
         </div>
 </div>
+
 <br /><br />
 <div class="col-lg-12" ng-if="selectAllCampaignLeads">
   <div class="panel panel-primary">
@@ -2594,19 +2712,49 @@
             <td style="font-weight:bold">{{data.name}}</td>
             <td>{{data.flat_count}}</td>
             <td>{{data.total_supplier_count}}</td>
-            <td>{{data.total_leads_count}}</td>
-            <td ng-if="data.flat_count != 0">{{(data.total_leads_count / data.flat_count) * 100 | limitTo:5}}%</td>
+            <td>{{data.total}}</td>
+            <td ng-if="data.flat_count != 0">{{(data.total / data.flat_count) * 100 | limitTo:5}}%</td>
             <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{data.hot_leads_count}}</td>
-            <td ng-if="data.flat_count != 0">{{(data.hot_leads_count / data.flat_count) * 100 | limitTo:5 }}%</td>
+            <td>{{data.interested}}</td>
+            <td ng-if="data.flat_count != 0">{{(data.interested / data.flat_count) * 100 | limitTo:5 }}%</td>
             <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{(data.hot_leads_count / data.total_leads_count) * 100 | limitTo:5 }}%</td>
+            <td>{{(data.interested / data.total) * 100 | limitTo:5 }}%</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 </div>
+
+<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+  <div class="panel panel-primary">
+    <div class="panel-heading content-title">
+      <label for="Location">Last Week Statistical Details</label>
+    </div>
+  </div>
+  <br> <br>
+  <table class="table table-striped" st-table="campaignSummary">
+    <thead>
+      <tr>
+        <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
+        <th style="background:#8e1921 !important;color:#ffffff !important">Mean of Leads</th>
+        <th style="background:#8e1921 !important;color:#ffffff !important">Mean of Hot Leads</th>
+      </tr>
+  </thead>
+    <tbody style="text-align:center;">
+      <tr ng-repeat="(key,data) in lastWeekCampaignSummary">
+          <td style="font-weight:bold">{{data.name}}</td>
+          <td ng-if="data.total_leads_analytics.percentage_by_flat">{{data.total_leads_analytics.percentage_by_flat | limitTo:5 }} %</td>
+          <td ng-if="!data.total_leads_analytics.percentage_by_flat">NA</td>
+
+          <td ng-if="data.hot_leads_analytics.percentage_by_flat">{{data.hot_leads_analytics.percentage_by_flat | limitTo:5 }} %</td>
+          <td ng-if="!data.hot_leads_analytics.percentage_by_flat">NA</td>
+
+      <tr>
+  </tbody>
+  </table>
+</div>
+
 <div class="col-lg-12" ng-if="selectAllCampaignLeads">
         <div class="panel panel-primary">
           <div class="panel-heading content-title">
@@ -2614,7 +2762,7 @@
           </div>
         </div>
         <div class="row">
-          <select class="form-control" ng-change="sortData('overall',sortModel)"  ng-model="sortModel" print-remove>
+          <select class="form-control" ng-change="sortData('thisweek',sortModel)"  ng-model="sortModel" print-remove>
            <option value="" disabled>Select For Sorting</option>
             <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
           </select>
@@ -2632,12 +2780,13 @@
           </div>
         </div>
 </div>
+
 <br /><br />
 
 <div class="col-lg-12" ng-if="selectAllCampaignLeads">
   <div class="panel panel-primary">
     <div class="panel-heading content-title">
-      <label for="Location">Last 2 Weeks Summary Details</label>
+      <label for="Location">Last Two Weeks Summary Details</label>
     </div>
   </div>
   <div class="campaigndetailtable">
@@ -2660,27 +2809,56 @@
             <td style="font-weight:bold">{{data.name}}</td>
             <td>{{data.flat_count}}</td>
             <td>{{data.total_supplier_count}}</td>
-            <td>{{data.total_leads_count}}</td>
-            <td ng-if="data.flat_count != 0">{{(data.total_leads_count / data.flat_count) * 100 | limitTo:5}}%</td>
+            <td>{{data.total}}</td>
+            <td ng-if="data.flat_count != 0">{{(data.total / data.flat_count) * 100 | limitTo:5}}%</td>
             <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{data.hot_leads_count}}</td>
-            <td ng-if="data.flat_count != 0">{{(data.hot_leads_count / data.flat_count) * 100 | limitTo:5 }}%</td>
+            <td>{{data.interested}}</td>
+            <td ng-if="data.flat_count != 0">{{(data.interested / data.flat_count) * 100 | limitTo:5 }}%</td>
             <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{(data.hot_leads_count / data.total_leads_count) * 100 | limitTo:5 }}%</td>
+            <td>{{(data.interested / data.total) * 100 | limitTo:5 }}%</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 </div>
+
+<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+  <div class="panel panel-primary">
+    <div class="panel-heading content-title">
+      <label for="Location">Last Two Week Statistical Details</label>
+    </div>
+  </div>
+  <br> <br>
+  <table class="table table-striped" st-table="campaignSummary">
+    <thead>
+      <tr>
+        <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
+        <th style="background:#8e1921 !important;color:#ffffff !important">Mean of Leads</th>
+        <th style="background:#8e1921 !important;color:#ffffff !important">Mean of Hot Leads</th>
+      </tr>
+  </thead>
+    <tbody style="text-align:center;">
+      <tr ng-repeat="(key,data) in last2WeeksCampaignSummary">
+          <td style="font-weight:bold">{{data.name}}</td>
+          <td ng-if="data.total_leads_analytics.percentage_by_flat">{{data.total_leads_analytics.percentage_by_flat | limitTo:5 }} %</td>
+          <td ng-if="!data.total_leads_analytics.percentage_by_flat">NA</td>
+
+          <td ng-if="data.hot_leads_analytics.percentage_by_flat">{{data.hot_leads_analytics.percentage_by_flat | limitTo:5 }} %</td>
+          <td ng-if="!data.hot_leads_analytics.percentage_by_flat">NA</td>
+
+      <tr>
+  </tbody>
+  </table>
+</div>
 <div class="col-lg-12" ng-if="selectAllCampaignLeads">
         <div class="panel panel-primary">
           <div class="panel-heading content-title">
-            <label for="flat graph">Last 2 Week Graph Summary</label>
+            <label for="flat graph">Last Two Week Graph Summary</label>
           </div>
         </div>
         <div class="row">
-          <select class="form-control" ng-change="sortData('overall',sortModel)"  ng-model="sortModel" print-remove>
+          <select class="form-control" ng-change="sortData('last2week',sortModel)"  ng-model="sortModel" print-remove>
            <option value="" disabled>Select For Sorting</option>
             <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
           </select>
@@ -2698,12 +2876,13 @@
           </div>
         </div>
 </div>
+
 <br /><br />
 
 <div class="col-lg-12" ng-if="selectAllCampaignLeads">
   <div class="panel panel-primary">
     <div class="panel-heading content-title">
-      <label for="Location">Last 3 Weeks Summary Details</label>
+      <label for="Location">Last Three Weeks Summary Details</label>
     </div>
   </div>
   <div class="campaigndetailtable">
@@ -2726,27 +2905,57 @@
             <td style="font-weight:bold">{{data.name}}</td>
             <td>{{data.flat_count}}</td>
             <td>{{data.total_supplier_count}}</td>
-            <td>{{data.total_leads_count}}</td>
-            <td ng-if="data.flat_count != 0">{{(data.total_leads_count / data.flat_count) * 100 | limitTo:5}}%</td>
+            <td>{{data.total}}</td>
+            <td ng-if="data.flat_count != 0">{{(data.total / data.flat_count) * 100 | limitTo:5}}%</td>
             <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{data.hot_leads_count}}</td>
-            <td ng-if="data.flat_count != 0">{{(data.hot_leads_count / data.flat_count) * 100 | limitTo:5 }}%</td>
+            <td>{{data.interested}}</td>
+            <td ng-if="data.flat_count != 0">{{(data.interested / data.flat_count) * 100 | limitTo:5 }}%</td>
             <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{(data.hot_leads_count / data.total_leads_count) * 100 | limitTo:5 }}%</td>
+            <td>{{(data.interested / data.total) * 100 | limitTo:5 }}%</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 </div>
+
+<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+  <div class="panel panel-primary">
+    <div class="panel-heading content-title">
+      <label for="Location">Last Three Week Statistical Details</label>
+    </div>
+  </div>
+  <br> <br>
+  <table class="table table-striped" st-table="campaignSummary">
+    <thead>
+      <tr>
+        <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
+        <th style="background:#8e1921 !important;color:#ffffff !important">Mean of Leads</th>
+        <th style="background:#8e1921 !important;color:#ffffff !important">Mean of Hot Leads</th>
+      </tr>
+  </thead>
+    <tbody style="text-align:center;">
+      <tr ng-repeat="(key,data) in last3WeeksCampaignSummary">
+          <td style="font-weight:bold">{{data.name}}</td>
+          <td ng-if="data.total_leads_analytics.percentage_by_flat">{{data.total_leads_analytics.percentage_by_flat | limitTo:5 }} %</td>
+          <td ng-if="!data.total_leads_analytics.percentage_by_flat">NA</td>
+
+          <td ng-if="data.hot_leads_analytics.percentage_by_flat">{{data.hot_leads_analytics.percentage_by_flat | limitTo:5 }} %</td>
+          <td ng-if="!data.hot_leads_analytics.percentage_by_flat">NA</td>
+
+      <tr>
+  </tbody>
+  </table>
+</div>
+
 <div class="col-lg-12" ng-if="selectAllCampaignLeads">
         <div class="panel panel-primary">
           <div class="panel-heading content-title">
-            <label for="flat graph">Last 3 Week Graph Summary</label>
+            <label for="flat graph">Last Three Week Graph Summary</label>
           </div>
         </div>
         <div class="row">
-          <select class="form-control" ng-change="sortData('overall',sortModel)"  ng-model="sortModel" print-remove>
+          <select class="form-control" ng-change="sortData('last3week',sortModel)"  ng-model="sortModel" print-remove>
            <option value="" disabled>Select For Sorting</option>
             <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
           </select>
