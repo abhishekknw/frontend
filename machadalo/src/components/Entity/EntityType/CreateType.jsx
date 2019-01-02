@@ -3,6 +3,7 @@ import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
 
 import OptionModal from '../../Modals/OptionModal';
+import EntitySelectionModal from '../../Modals/EntitySelectionModal';
 
 const optionStyle = {
   fontSize: '12px',
@@ -17,7 +18,9 @@ const AttributeTypes = [
   { value: 'STRING', label: 'Text' },
   { value: 'INVENTORYLIST', label: 'Inventory list' },
   { value: 'DROPDOWN', label: 'Dropdown' },
-  { value: 'EMAIL', label: 'Email' }
+  { value: 'EMAIL', label: 'Email' },
+  { value: 'ENTITY_TYPE', label: 'Entity Type' },
+  { value: 'BASE_ENTITY_TYPE', label: 'Base Entity Type' }
 ];
 
 // Get attribute type option from string
@@ -41,6 +44,7 @@ export default class CreateType extends React.Component {
       baseEntityTypeOption: [],
       selectedBaseEntityType: {},
       showOptionModal: false,
+      showEntitySelectionModal: false,
       attributeOptions: [''],
       attributeInfo: {}
     };
@@ -53,6 +57,9 @@ export default class CreateType extends React.Component {
     this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
+    this.onCancelEntityModal = this.onCancelEntityModal.bind(this);
+    this.onSubmitEntityModal = this.onSubmitEntityModal.bind(this);
+    this.onOpenEntityModal = this.onOpenEntityModal.bind(this);
     this.onSelectBaseEntityType = this.onSelectBaseEntityType.bind(this);
   }
 
@@ -120,10 +127,42 @@ export default class CreateType extends React.Component {
       base_entity_type_id: this.state.selectedBaseEntityType.value,
       entity_attributes: this.state.entity_attributes
     };
+    console.log(data);
+    // this.props.postEntityType({ data }, () => {
+    //   toastr.success('', 'Entity Type created successfully');
+    //   this.props.history.push('/r/entity/type/list');
+    // });
+  }
 
-    this.props.postEntityType({ data }, () => {
-      toastr.success('', 'Entity Type created successfully');
-      this.props.history.push('/r/entity/type/list');
+  onCancelEntityModal() {
+    this.setState({
+      showEntitySelectionModal: false,
+      attributeInfo: {}
+    });
+  }
+
+  onSubmitEntityModal(entity_data, attributeInfo) {
+    this.setState({
+      showEntitySelectionModal: false,
+      attributeInfo: {}
+    });
+
+    let newAttributes = Object.assign({}, attributeInfo.attribute, {
+      type: attributeInfo.attributeType,
+      entity_data: entity_data
+    });
+    this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
+  }
+
+  onOpenEntityModal(options, attributeType, attribute, attrIndex) {
+    this.setState({
+      showOptionModal: true,
+      attributeOptions: options,
+      attributeInfo: {
+        attributeType,
+        attribute,
+        attrIndex
+      }
     });
   }
 
@@ -190,6 +229,20 @@ export default class CreateType extends React.Component {
             attrIndex
           }
         });
+        return;
+      } else if (
+        item.value === 'ENTITY_TYPE' ||
+        item.value === 'BASE_ENTITY_TYPE'
+      ) {
+        this.setState({
+          showEntitySelectionModal: true,
+          attributeInfo: {
+            attributeType: item.value,
+            attribute,
+            attrIndex
+          }
+        });
+        return;
       }
       const newAttribute = Object.assign({}, attribute);
 
@@ -324,6 +377,17 @@ export default class CreateType extends React.Component {
           options={this.state.attributeOptions}
           columnInfo={this.state.attributeInfo}
         />
+        {this.state.showEntitySelectionModal ? (
+          <EntitySelectionModal
+            {...this.props}
+            showOptionModal={this.state.showEntitySelectionModal}
+            onCancel={this.onCancelEntityModal}
+            onSubmit={this.onSubmitEntityModal}
+            attributeInfo={this.state.attributeInfo}
+          />
+        ) : (
+          undefined
+        )}
       </div>
     );
   }
