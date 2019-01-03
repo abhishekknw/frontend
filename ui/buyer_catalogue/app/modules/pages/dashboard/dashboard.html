@@ -2078,19 +2078,22 @@
                                       <td ng-if="Data.overall_data.supplier_stats.total.percentage_by_flat">{{Data.overall_data.supplier_stats.total.percentage_by_flat | limitTo:5}} %</td>
                                       <td ng-if="!Data.overall_data.supplier_stats.total.percentage_by_flat">NA</td>
 
-                                      <td ng-if="Data.last_week.supplier_stats.total.percentage_by_flat">{{Data.last_week.supplier_stats.total.percentage_by_flat | limitTo:5 }} %</td>
-                                      <!-- <td  ng-if="Data.last_week.supplier_stats.total.percentage_by_flat > Data.overall_data.supplier_stats.total.percentage_by_flat"> <span class="glyphicon glyphicon-arrow-up"></span> </td>
-                                      <td  ng-if="Data.last_week.supplier_stats.total.percentage_by_flat < Data.overall_data.supplier_stats.total.percentage_by_flat"> <span class="glyphicon glyphicon-arrow-down"></span> </td> -->
-                                      <td ng-if="!Data.last_week.supplier_stats.total.percentage_by_flat">NA</td>
+                                      <td ng-if="Data.last_week.supplier_stats.total.percentage_by_flat">{{Data.last_week.supplier_stats.total.percentage_by_flat | limitTo:5 }} %
+                                        <span ng-if="Data.last_week.supplier_stats.total.percentage_by_flat >= Data.overall_data.supplier_stats.total.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_week.supplier_stats.total.percentage_by_flat < Data.overall_data.supplier_stats.total.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
+                                        <td ng-if="!Data.last_week.supplier_stats.total.percentage_by_flat">NA</td>
 
-                                      <td ng-if="Data.last_two_weeks.supplier_stats.total.percentage_by_flat">{{Data.last_two_weeks.supplier_stats.total.percentage_by_flat | limitTo:5 }} % </td>
-                                      <!-- <td  ng-if="Data.last_two_weeks.supplier_stats.total.percentage_by_flat > Data.overall_data.supplier_stats.total.percentage_by_flat"> <span class="glyphicon glyphicon-arrow-up"></span> </td>
-                                      <td  ng-if="Data.last_two_weeks.supplier_stats.total.percentage_by_flat < Data.overall_data.supplier_stats.total.percentage_by_flat"> <span class="glyphicon glyphicon-arrow-down"></span> </td> -->
+                                      <td ng-if="Data.last_two_weeks.supplier_stats.total.percentage_by_flat">{{Data.last_two_weeks.supplier_stats.total.percentage_by_flat | limitTo:5 }} %
+                                        <span ng-if="Data.last_two_weeks.supplier_stats.total.percentage_by_flat >= Data.overall_data.supplier_stats.total.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_two_weeks.supplier_stats.total.percentage_by_flat < Data.overall_data.supplier_stats.total.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
                                       <td ng-if="!Data.last_two_weeks.supplier_stats.total.percentage_by_flat">NA </td>
 
-                                      <td ng-if="Data.last_three_weeks.supplier_stats.total.percentage_by_flat">{{Data.last_three_weeks.supplier_stats.total.percentage_by_flat | limitTo:5 }} % </td>
-                                      <!-- <td  ng-if="Data.last_three_weeks.supplier_stats.total.percentage_by_flat > Data.overall_data.supplier_stats.total.percentage_by_flat"> <span class="glyphicon glyphicon-arrow-up"></span> </td>
-                                      <td  ng-if="Data.last_three_weeks.supplier_stats.total.percentage_by_flat < Data.overall_data.supplier_stats.total.percentage_by_flat"> <span class="glyphicon glyphicon-arrow-down"></span> </td> -->
+                                      <td ng-if="Data.last_three_weeks.supplier_stats.total.percentage_by_flat">{{Data.last_three_weeks.supplier_stats.total.percentage_by_flat | limitTo:5 }} %
+                                        <span ng-if="Data.last_three_weeks.supplier_stats.total.percentage_by_flat >= Data.overall_data.supplier_stats.total.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_three_weeks.supplier_stats.total.percentage_by_flat < Data.overall_data.supplier_stats.total.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
                                       <td ng-if="!Data.last_three_weeks.supplier_stats.total.percentage_by_flat">NA </td>
 
                                       </tr>
@@ -2099,19 +2102,22 @@
                                       <td ng-if="Data.overall_data.supplier_stats.interested.percentage_by_flat">{{Data.overall_data.supplier_stats.interested.percentage_by_flat | limitTo:5 }} %</td>
                                       <td ng-if="!Data.overall_data.supplier_stats.interested.percentage_by_flat">NA</td>
 
-                                      <td ng-if="Data.last_week.supplier_stats.interested.percentage_by_flat">{{Data.last_week.supplier_stats.interested.percentage_by_flat | limitTo:5 }} %</td>
-                                      <!-- <td ng-if="Data.last_week.supplier_stats.interested.percentage_by_flat > Data.overall_data.supplier_stats.interested.percentage_by_flat"> <span class="glyphicon glyphicon-arrow-up"></span> </td>
-                                      <td ng-if="Data.last_week.supplier_stats.interested.percentage_by_flat < Data.overall_data.supplier_stats.interested.percentage_by_flat"> <span class="glyphicon glyphicon-arrow-down"></span> </td> -->
+                                      <td ng-if="Data.last_week.supplier_stats.interested.percentage_by_flat">{{Data.last_week.supplier_stats.interested.percentage_by_flat | limitTo:5 }} %
+                                        <span ng-if="Data.last_week.supplier_stats.interested.percentage_by_flat >= Data.overall_data.supplier_stats.interested.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_week.supplier_stats.interested.percentage_by_flat < Data.overall_data.supplier_stats.interested.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
                                       <td ng-if="!Data.last_week.supplier_stats.interested.percentage_by_flat">NA</td>
 
-                                      <td ng-if="Data.last_two_weeks.supplier_stats.interested.percentage_by_flat">{{Data.last_two_weeks.supplier_stats.interested.percentage_by_flat | limitTo:5 }} %</td>
-                                      <!-- <td ng-if="Data.last_two_weeks.supplier_stats.interested.percentage_by_flat > Data.overall_data.supplier_stats.interested.percentage_by_flat"> <span class="glyphicon glyphicon-arrow-up"></span> </td>
-                                      <td ng-if="Data.last_two_weeks.supplier_stats.interested.percentage_by_flat < Data.overall_data.supplier_stats.interested.percentage_by_flat"> <span class="glyphicon glyphicon-arrow-down"></span> </td> -->
+                                      <td ng-if="Data.last_two_weeks.supplier_stats.interested.percentage_by_flat">{{Data.last_two_weeks.supplier_stats.interested.percentage_by_flat | limitTo:5 }} %
+                                        <span ng-if="Data.last_two_weeks.supplier_stats.interested.percentage_by_flat >= Data.overall_data.supplier_stats.interested.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_two_weeks.supplier_stats.interested.percentage_by_flat < Data.overall_data.supplier_stats.interested.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
                                       <td ng-if="!Data.last_two_weeks.supplier_stats.interested.percentage_by_flat">NA</td>
 
-                                      <td ng-if="Data.last_three_weeks.supplier_stats.interested.percentage_by_flat">{{Data.last_three_weeks.supplier_stats.interested.percentage_by_flat | limitTo:5 }} %</td>
-                                      <!-- <td ng-if="Data.last_three_weeks.supplier_stats.interested.percentage_by_flat > Data.overall_data.supplier_stats.interested.percentage_by_flat"> <span class="glyphicon glyphicon-arrow-up"></span> </td>
-                                      <td ng-if="Data.last_three_weeks.supplier_stats.interested.percentage_by_flat < Data.overall_data.supplier_stats.interested.percentage_by_flat"> <span class="glyphicon glyphicon-arrow-down"></span> </td> -->
+                                      <td ng-if="Data.last_three_weeks.supplier_stats.interested.percentage_by_flat">{{Data.last_three_weeks.supplier_stats.interested.percentage_by_flat | limitTo:5 }} %
+                                        <span ng-if="Data.last_three_weeks.supplier_stats.interested.percentage_by_flat >= Data.overall_data.supplier_stats.interested.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_three_weeks.supplier_stats.interested.percentage_by_flat < Data.overall_data.supplier_stats.interested.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
                                       <td ng-if="!Data.last_three_weeks.supplier_stats.interested.percentage_by_flat">NA</td>
 
                                       </tr>
@@ -2120,19 +2126,22 @@
                                       <td ng-if="Data.overall_data.supplier_stats.total.median_percent_by_flat">{{Data.overall_data.supplier_stats.total.median_percent_by_flat | limitTo:5}} %</td>
                                       <td ng-if="!Data.overall_data.supplier_stats.total.median_percent_by_flat">NA</td>
 
-                                      <td ng-if="Data.last_week.supplier_stats.total.median_percent_by_flat">{{Data.last_week.supplier_stats.total.median_percent_by_flat | limitTo:5 }} % </td>
-                                      <!-- <td  ng-if="Data.last_week.supplier_stats.total.median_percent_by_flat > Data.overall_data.supplier_stats.total.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-up"></span> </td>
-                                      <td  ng-if="Data.last_week.supplier_stats.total.median_percent_by_flat < Data.overall_data.supplier_stats.total.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-down"></span> </td> -->
+                                      <td ng-if="Data.last_week.supplier_stats.total.median_percent_by_flat">{{Data.last_week.supplier_stats.total.median_percent_by_flat | limitTo:5 }} %
+                                        <span ng-if="Data.last_week.supplier_stats.total.median_percent_by_flat >= Data.overall_data.supplier_stats.total.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_week.supplier_stats.total.median_percent_by_flat < Data.overall_data.supplier_stats.total.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
                                       <td ng-if="!Data.last_week.supplier_stats.total.median_percent_by_flat">NA </td>
 
-                                      <td ng-if="Data.last_two_weeks.supplier_stats.total.median_percent_by_flat">{{Data.last_two_weeks.supplier_stats.total.median_percent_by_flat | limitTo:5 }} % </td>
-                                      <!-- <td  ng-if="Data.last_two_weeks.supplier_stats.total.median_percent_by_flat > Data.overall_data.supplier_stats.total.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-up"></span> </td>
-                                      <td  ng-if="Data.last_two_weeks.supplier_stats.total.median_percent_by_flat < Data.overall_data.supplier_stats.total.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-down"></span> </td> -->
+                                      <td ng-if="Data.last_two_weeks.supplier_stats.total.median_percent_by_flat">{{Data.last_two_weeks.supplier_stats.total.median_percent_by_flat | limitTo:5 }} %
+                                        <span ng-if="Data.last_two_weeks.supplier_stats.total.median_percent_by_flat >= Data.overall_data.supplier_stats.total.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_two_weeks.supplier_stats.total.median_percent_by_flat < Data.overall_data.supplier_stats.total.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
                                       <td ng-if="!Data.last_two_weeks.supplier_stats.total.median_percent_by_flat">NA </td>
 
-                                      <td ng-if="Data.last_three_weeks.supplier_stats.total.median_percent_by_flat">{{Data.last_three_weeks.supplier_stats.total.median_percent_by_flat | limitTo:5}} %</td>
-                                      <!-- <td  ng-if="Data.last_three_weeks.supplier_stats.total.median_percent_by_flat > Data.overall_data.supplier_stats.total.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-up"></span> </td>
-                                      <td  ng-if="Data.last_three_weeks.supplier_stats.total.median_percent_by_flat < Data.overall_data.supplier_stats.total.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-down"></span> </td> -->
+                                      <td ng-if="Data.last_three_weeks.supplier_stats.total.median_percent_by_flat">{{Data.last_three_weeks.supplier_stats.total.median_percent_by_flat | limitTo:5}} %
+                                        <span ng-if="Data.last_three_weeks.supplier_stats.total.median_percent_by_flat >= Data.overall_data.supplier_stats.total.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_three_weeks.supplier_stats.total.median_percent_by_flat < Data.overall_data.supplier_stats.total.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
                                       <td ng-if="!Data.last_three_weeks.supplier_stats.total.median_percent_by_flat">NA</td>
                                       </tr>
                                       <tr>
@@ -2140,19 +2149,22 @@
                                       <td ng-if="Data.overall_data.supplier_stats.interested.median_percent_by_flat">{{Data.overall_data.supplier_stats.interested.median_percent_by_flat | limitTo:5 }} %</td>
                                       <td ng-if="!Data.overall_data.supplier_stats.interested.median_percent_by_flat">NA</td>
 
-                                      <td ng-if="Data.last_week.supplier_stats.interested.median_percent_by_flat">{{Data.last_week.supplier_stats.interested.median_percent_by_flat | limitTo:5 }} %</td>
-                                      <!-- <td  ng-if="Data.last_week.supplier_stats.interested.median_percent_by_flat > Data.overall_data.supplier_stats.interested.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-up"></span> </td>
-                                      <td  ng-if="Data.last_week.supplier_stats.interested.median_percent_by_flat < Data.overall_data.supplier_stats.interested.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-down"></span> </td> -->
+                                      <td ng-if="Data.last_week.supplier_stats.interested.median_percent_by_flat">{{Data.last_week.supplier_stats.interested.median_percent_by_flat | limitTo:5 }} %
+                                        <span ng-if="Data.last_week.supplier_stats.interested.median_percent_by_flat >= Data.overall_data.supplier_stats.interested.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_week.supplier_stats.interested.median_percent_by_flat < Data.overall_data.supplier_stats.interested.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
                                       <td ng-if="!Data.last_week.supplier_stats.interested.median_percent_by_flat">NA</td>
 
-                                      <td ng-if="Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat">{{Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat | limitTo:5}} %</td>
-                                      <!-- <td  ng-if="Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat > Data.overall_data.supplier_stats.interested.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-up"></span> </td>
-                                      <td  ng-if="Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat < Data.overall_data.supplier_stats.interested.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-down"></span> </td> -->
+                                      <td ng-if="Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat">{{Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat | limitTo:5}} %
+                                        <span ng-if="Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat >= Data.overall_data.supplier_stats.interested.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat < Data.overall_data.supplier_stats.interested.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
                                       <td ng-if="!Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat">NA</td>
 
-                                      <td ng-if="Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat">{{Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat | limitTo:5 }} %</td>
-                                      <!-- <td  ng-if="Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat > Data.overall_data.supplier_stats.interested.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-up"></span> </td>
-                                      <td  ng-if="Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat < Data.overall_data.supplier_stats.interested.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-down"></span> </td> -->
+                                      <td ng-if="Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat">{{Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat | limitTo:5 }} %
+                                        <span ng-if="Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat >= Data.overall_data.supplier_stats.interested.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat < Data.overall_data.supplier_stats.interested.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
                                       <td ng-if="!Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat">NA</td>
                                       </tr>
                                       <tr>
@@ -2160,19 +2172,22 @@
                                       <td ng-if="Data.overall_data.supplier_stats.total.mode_percent_by_flat">{{Data.overall_data.supplier_stats.total.mode_percent_by_flat | limitTo:5 }} % </td>
                                       <td ng-if="!Data.overall_data.supplier_stats.total.mode_percent_by_flat">NA</td>
 
-                                      <td ng-if="Data.last_week.supplier_stats.total.mode_percent_by_flat">{{Data.last_week.supplier_stats.total.mode_percent_by_flat | limitTo:5 }} % </td>
-                                      <!-- <td  ng-if="Data.last_week.supplier_stats.interested.median_percent_by_flat > Data.overall_data.supplier_stats.interested.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-up"></span> </td>
-                                      <td  ng-if="Data.last_week.supplier_stats.interested.median_percent_by_flat < Data.overall_data.supplier_stats.interested.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-down"></span> </td> -->
+                                      <td ng-if="Data.last_week.supplier_stats.total.mode_percent_by_flat">{{Data.last_week.supplier_stats.total.mode_percent_by_flat | limitTo:5 }} %
+                                        <span ng-if="Data.last_week.supplier_stats.total.mode_percent_by_flat >= Data.overall_data.supplier_stats.total.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_week.supplier_stats.total.mode_percent_by_flat < Data.overall_data.supplier_stats.total.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
                                       <td ng-if="!Data.last_week.supplier_stats.total.mode_percent_by_flat">NA </td>
 
-                                      <td ng-if="Data.last_two_weeks.supplier_stats.total.mode_percent_by_flat">{{Data.last_two_weeks.supplier_stats.total.mode_percent_by_flat | limitTo:5 }} % </td>
-                                      <!-- <td  ng-if="Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat > Data.overall_data.supplier_stats.interested.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-up"></span> </td>
-                                      <td  ng-if="Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat < Data.overall_data.supplier_stats.interested.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-down"></span> </td> -->
+                                      <td ng-if="Data.last_two_weeks.supplier_stats.total.mode_percent_by_flat">{{Data.last_two_weeks.supplier_stats.total.mode_percent_by_flat | limitTo:5 }} %
+                                        <span ng-if="Data.last_two_weeks.supplier_stats.total.mode_percent_by_flat >= Data.overall_data.supplier_stats.total.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_two_weeks.supplier_stats.total.mode_percent_by_flat < Data.overall_data.supplier_stats.total.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
                                       <td ng-if="!Data.last_two_weeks.supplier_stats.total.mode_percent_by_flat">NA</td>
 
-                                      <td ng-if="Data.last_three_weeks.supplier_stats.total.mode_percent_by_flat">{{Data.last_three_weeks.supplier_stats.total.mode_percent_by_flat | limitTo:5}} % </td>
-                                      <!-- <td  ng-if="Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat > Data.overall_data.supplier_stats.interested.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-up"></span> </td>
-                                      <td  ng-if="Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat < Data.overall_data.supplier_stats.interested.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-down"></span> </td> -->
+                                      <td ng-if="Data.last_three_weeks.supplier_stats.total.mode_percent_by_flat">{{Data.last_three_weeks.supplier_stats.total.mode_percent_by_flat | limitTo:5}} %
+                                        <span ng-if="Data.last_three_weeks.supplier_stats.total.mode_percent_by_flat >= Data.overall_data.supplier_stats.total.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_three_weeks.supplier_stats.total.mode_percent_by_flat < Data.overall_data.supplier_stats.total.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
                                       <td ng-if="!Data.last_three_weeks.supplier_stats.total.mode_percent_by_flat">NA </td>
 
                                       </tr>
@@ -2181,19 +2196,22 @@
                                       <td ng-if="Data.overall_data.supplier_stats.interested.mode_percent_by_flat">{{Data.overall_data.supplier_stats.interested.mode_percent_by_flat | limitTo:5 }} %</td>
                                       <td ng-if="!Data.overall_data.supplier_stats.interested.mode_percent_by_flat">NA</td>
 
-                                      <td ng-if="Data.last_week.supplier_stats.interested.mode_percent_by_flat">{{Data.last_week.supplier_stats.interested.mode_percent_by_flat | limitTo:5 }} %</td>
-                                      <!-- <td  ng-if="Data.last_week.supplier_stats.interested.median_percent_by_flat > Data.overall_data.supplier_stats.interested.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-up"></span> </td>
-                                      <td  ng-if="Data.last_week.supplier_stats.interested.median_percent_by_flat < Data.overall_data.supplier_stats.interested.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-down"></span> </td> -->
+                                      <td ng-if="Data.last_week.supplier_stats.interested.mode_percent_by_flat">{{Data.last_week.supplier_stats.interested.mode_percent_by_flat | limitTo:5 }} %
+                                        <span ng-if="Data.last_week.supplier_stats.interested.mode_percent_by_flat >= Data.overall_data.supplier_stats.interested.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_week.supplier_stats.interested.mode_percent_by_flat < Data.overall_data.supplier_stats.interested.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
                                       <td ng-if="!Data.last_week.supplier_stats.interested.mode_percent_by_flat">NA</td>
 
-                                      <td ng-if="Data.last_two_weeks.supplier_stats.interested.mode_percent_by_flat">{{Data.last_two_weeks.supplier_stats.interested.mode_percent_by_flat | limitTo:5 }} %</td>
-                                      <!-- <td  ng-if="Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat > Data.overall_data.supplier_stats.interested.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-up"></span> </td>
-                                      <td  ng-if="Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat < Data.overall_data.supplier_stats.interested.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-down"></span> </td> -->
+                                      <td ng-if="Data.last_two_weeks.supplier_stats.interested.mode_percent_by_flat">{{Data.last_two_weeks.supplier_stats.interested.mode_percent_by_flat | limitTo:5 }} %
+                                        <span ng-if="Data.last_two_weeks.supplier_stats.interested.mode_percent_by_flat >= Data.overall_data.supplier_stats.interested.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_two_weeks.supplier_stats.interested.mode_percent_by_flat < Data.overall_data.supplier_stats.interested.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
                                       <td ng-if="!Data.last_two_weeks.supplier_stats.interested.mode_percent_by_flat">NA</td>
 
-                                      <td ng-if="Data.last_three_weeks.supplier_stats.interested.mode_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.interested.mode_percent_by_flat | limitTo:5}} %</td>
-                                      <!-- <td  ng-if="Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat > Data.overall_data.supplier_stats.interested.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-up"></span> </td>
-                                      <td  ng-if="Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat < Data.overall_data.supplier_stats.interested.median_percent_by_flat"> <span class="glyphicon glyphicon-arrow-down"></span> </td> -->
+                                      <td ng-if="Data.last_three_weeks.supplier_stats.interested.mode_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.interested.mode_percent_by_flat | limitTo:5}} %
+                                        <span ng-if="Data.last_three_weeks.supplier_stats.interested.mode_percent_by_flat >= Data.overall_data.supplier_stats.interested.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_three_weeks.supplier_stats.interested.mode_percent_by_flat < Data.overall_data.supplier_stats.interested.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
                                       <td ng-if="!Data.last_three_weeks.supplier_stats.interested.mode_percent_by_flat">NA</td>
 
                                       </tr>
@@ -2607,30 +2625,46 @@
       <td ng-if="campaignSummary.overall.all_campaigns.total_leads_analytics.percentage_by_flat">{{campaignSummary.overall.all_campaigns.total_leads_analytics.percentage_by_flat | limitTo:5}} %</td>
       <td ng-if="!campaignSummary.overall.all_campaigns.total_leads_analytics.percentage_by_flat">NA</td>
 
-      <td ng-if="campaignSummary.last_week.all_campaigns.total_leads_analytics.percentage_by_flat">{{campaignSummary.last_week.all_campaigns.total_leads_analytics.percentage_by_flat | limitTo:5 }} %</td>
+      <td ng-if="campaignSummary.last_week.all_campaigns.total_leads_analytics.percentage_by_flat">{{campaignSummary.last_week.all_campaigns.total_leads_analytics.percentage_by_flat | limitTo:5 }} %
+      <span ng-if="campaignSummary.last_week.all_campaigns.total_leads_analytics.percentage_by_flat > campaignSummary.overall.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+      <span ng-if="campaignSummary.last_week.all_campaigns.total_leads_analytics.percentage_by_flat < campaignSummary.overall.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+      </td>
       <td ng-if="!campaignSummary.last_week.all_campaigns.total_leads_analytics.percentage_by_flat">NA</td>
 
-      <td ng-if="campaignSummary.last_two_weeks.all_campaigns.total_leads_analytics.percentage_by_flat">{{campaignSummary.last_two_weeks.all_campaigns.total_leads_analytics.percentage_by_flat | limitTo:5 }} % </td>
+      <td ng-if="campaignSummary.last_two_weeks.all_campaigns.total_leads_analytics.percentage_by_flat">{{campaignSummary.last_two_weeks.all_campaigns.total_leads_analytics.percentage_by_flat | limitTo:5 }} %
+        <span ng-if="campaignSummary.last_two_weeks.all_campaigns.total_leads_analytics.percentage_by_flat > campaignSummary.overall.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+        <span ng-if="campaignSummary.last_two_weeks.all_campaigns.total_leads_analytics.percentage_by_flat < campaignSummary.overall.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+      </td>
       <td ng-if="!campaignSummary.last_two_weeks.all_campaigns.total_leads_analytics.percentage_by_flat">NA </td>
 
-      <td ng-if="campaignSummary.last_three_weeks.all_campaigns.total_leads_analytics.percentage_by_flat">{{campaignSummary.last_three_weeks.all_campaigns.total_leads_analytics.percentage_by_flat | limitTo:5 }} % </td>
+      <td ng-if="campaignSummary.last_three_weeks.all_campaigns.total_leads_analytics.percentage_by_flat">{{campaignSummary.last_three_weeks.all_campaigns.total_leads_analytics.percentage_by_flat | limitTo:5 }} %
+        <span ng-if="campaignSummary.last_three_weeks.all_campaigns.total_leads_analytics.percentage_by_flat > campaignSummary.overall.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+        <span ng-if="campaignSummary.last_three_weeks.all_campaigns.total_leads_analytics.percentage_by_flat < campaignSummary.overall.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+      </td>
       <td ng-if="!campaignSummary.last_three_weeks.all_campaigns.total_leads_analytics.percentage_by_flat">NA </td>
-
       </tr>
       <tr>
       <td><small style="font-weight:bold">Mean of Hot Leads</small></td>
       <td ng-if="campaignSummary.overall.all_campaigns.hot_leads_analytics.percentage_by_flat">{{campaignSummary.overall.all_campaigns.hot_leads_analytics.percentage_by_flat | limitTo:5}} %</td>
       <td ng-if="!campaignSummary.overall.all_campaigns.hot_leads_analytics.percentage_by_flat">NA</td>
 
-      <td ng-if="campaignSummary.last_week.all_campaigns.hot_leads_analytics.percentage_by_flat">{{campaignSummary.last_week.all_campaigns.hot_leads_analytics.percentage_by_flat | limitTo:5 }} %</td>
+      <td ng-if="campaignSummary.last_week.all_campaigns.hot_leads_analytics.percentage_by_flat">{{campaignSummary.last_week.all_campaigns.hot_leads_analytics.percentage_by_flat | limitTo:5 }} %
+        <span ng-if="campaignSummary.last_week.all_campaigns.hot_leads_analytics.percentage_by_flat > campaignSummary.overall.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+        <span ng-if="campaignSummary.last_week.all_campaigns.hot_leads_analytics.percentage_by_flat < campaignSummary.overall.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+      </td>
       <td ng-if="!campaignSummary.last_week.all_campaigns.hot_leads_analytics.percentage_by_flat">NA</td>
 
-      <td ng-if="campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat">{{campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat | limitTo:5 }} % </td>
+      <td ng-if="campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat">{{campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat | limitTo:5 }} %
+        <span ng-if="campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat > campaignSummary.overall.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+        <span ng-if="campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat < campaignSummary.overall.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+      </td>
       <td ng-if="!campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat">NA </td>
 
-      <td ng-if="campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat">{{campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat | limitTo:5 }} % </td>
+      <td ng-if="campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat">{{campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat | limitTo:5 }} %
+        <span ng-if="campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat > campaignSummary.overall.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+        <span ng-if="campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat < campaignSummary.overall.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+      </td>
       <td ng-if="!campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat">NA </td>
-
       </tr>
       <!-- <tr> -->
       <!-- <td><small style="font-weight:bold">Median of Leads</small></td>

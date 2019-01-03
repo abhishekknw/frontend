@@ -844,3 +844,10 @@ border-radius: 10px;
     padding: 0 20px;
     /* z-index: 100; */
 }
+
+.green{
+  color: #15ff15;
+}
+.red{
+  color: #B20000;
+}
