@@ -16,7 +16,7 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
     padding: '5px 10px 10px',
     maxHeight: '550px',
-    minHeight: '300px'
+    minHeight: '200px'
   }
 };
 
@@ -39,6 +39,10 @@ export default class SelectAttributeModal extends React.Component {
     } else if (this.props.attributeInfo.attributeType === 'BASE_ENTITY_TYPE') {
       this.props.getBaseEntityTypeList();
     }
+
+    this.setState({
+      selectedEntityType: this.props.selectedModalEntityType
+    });
   }
 
   componentWillUnmount() {
@@ -64,6 +68,9 @@ export default class SelectAttributeModal extends React.Component {
           label: entityType.name,
           entity_attributes: entityType.entity_attributes.map(
             entity_attribute => {
+              if (entity_attribute.hasOwnProperty('isChecked')) {
+                return entity_attribute;
+              }
               let attribute = Object.assign({}, entity_attribute);
               attribute.isChecked = true;
               return attribute;
@@ -97,12 +104,8 @@ export default class SelectAttributeModal extends React.Component {
 
   onSubmit() {
     let { selectedEntityType } = this.state;
-    let entity_data = selectedEntityType.entity_attributes.filter(attribute => {
-      let returnValue = attribute.isChecked;
-      delete attribute.isChecked;
-      return returnValue;
-    });
-    this.props.onSubmit(entity_data, this.props.attributeInfo);
+
+    this.props.onSubmit(selectedEntityType, this.props.attributeInfo);
   }
 
   renderOptionRow(option, optionIndex) {

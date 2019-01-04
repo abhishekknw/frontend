@@ -46,7 +46,8 @@ export default class CreateType extends React.Component {
       showOptionModal: false,
       showEntitySelectionModal: false,
       attributeOptions: [''],
-      attributeInfo: {}
+      attributeInfo: {},
+      selectedModalEntityType: undefined
     };
 
     this.onAddAttribute = this.onAddAttribute.bind(this);
@@ -127,11 +128,11 @@ export default class CreateType extends React.Component {
       base_entity_type_id: this.state.selectedBaseEntityType.value,
       entity_attributes: this.state.entity_attributes
     };
-    console.log(data);
-    // this.props.postEntityType({ data }, () => {
-    //   toastr.success('', 'Entity Type created successfully');
-    //   this.props.history.push('/r/entity/type/list');
-    // });
+
+    this.props.postEntityType({ data }, () => {
+      toastr.success('', 'Entity Type created successfully');
+      this.props.history.push('/r/entity/type/list');
+    });
   }
 
   onCancelEntityModal() {
@@ -154,10 +155,10 @@ export default class CreateType extends React.Component {
     this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
   }
 
-  onOpenEntityModal(options, attributeType, attribute, attrIndex) {
+  onOpenEntityModal(attributeType, attribute, attrIndex) {
     this.setState({
-      showOptionModal: true,
-      attributeOptions: options,
+      showEntitySelectionModal: true,
+      selectedModalEntityType: attribute.entity_data,
       attributeInfo: {
         attributeType,
         attribute,
@@ -297,6 +298,24 @@ export default class CreateType extends React.Component {
             ) : (
               ''
             )}
+            {attribute.type === 'ENTITY_TYPE' ||
+            attribute.type === 'BASE_ENTITY_TYPE' ? (
+              <p
+                className="show-option"
+                style={optionStyle}
+                onClick={() =>
+                  this.onOpenEntityModal(
+                    attribute.type,
+                    attribute,
+                    attribute.attrIndex
+                  )
+                }
+              >
+                Show Attributes
+              </p>
+            ) : (
+              ''
+            )}
           </div>
           <br />
 
@@ -384,6 +403,7 @@ export default class CreateType extends React.Component {
             onCancel={this.onCancelEntityModal}
             onSubmit={this.onSubmitEntityModal}
             attributeInfo={this.state.attributeInfo}
+            selectedModalEntityType={this.state.selectedModalEntityType}
           />
         ) : (
           undefined
