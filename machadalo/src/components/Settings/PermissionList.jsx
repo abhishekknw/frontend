@@ -7,17 +7,18 @@ export default class PermissionList extends React.Component {
     super();
     this.state = {
       showPermissionModal: false,
-      modalUserId: undefined,
+      modalProfileId: undefined,
       createPermission: false,
       dataInfo: [],
-      userPermissionId: undefined
+      profilePermissionId: undefined,
+      existingProfileIds: []
     };
     this.renderPermissionRow = this.renderPermissionRow.bind(this);
-    this.handleEditUser = this.handleEditUser.bind(this);
+    this.handleEditProfile = this.handleEditProfile.bind(this);
     this.closePermissionModal = this.closePermissionModal.bind(this);
     this.openCreatePermissionModal = this.openCreatePermissionModal.bind(this);
     this.onModalSubmit = this.onModalSubmit.bind(this);
-    this.handleDeleteUser = this.handleDeleteUser.bind(this);
+    this.handleDeleteProfile = this.handleDeleteProfile.bind(this);
   }
 
   componentWillMount() {
@@ -26,48 +27,58 @@ export default class PermissionList extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (
-      (!prevProps.settings.userPermission.length &&
-        this.props.settings.userPermission.length) ||
-      prevProps.settings.currentUserPermissionId !==
-        this.props.settings.currentUserPermissionId
+      (!prevProps.settings.profilePermission.length &&
+        this.props.settings.profilePermission.length) ||
+      prevProps.settings.currentProfilePermissionId !==
+        this.props.settings.currentProfilePermissionId
     ) {
-      let dataInfo = this.props.settings.userPermission;
+      let dataInfo = this.props.settings.profilePermission;
       this.setState({
         dataInfo,
-        userPermissionId: this.props.settings.currentUserPermissionId
+        profilePermissionId: this.props.settings.currentProfilePermissionId
       });
     }
   }
 
-  handleEditUser(userId) {
-    this.props.getUserPermission(userId);
+  handleEditProfile(profileId) {
+    this.props.getProfilePermission(profileId);
     this.setState({
       showPermissionModal: true,
-      modalUserId: userId,
+      modalProfileId: profileId,
       createPermission: false
     });
   }
 
-  handleDeleteUser(permissionId) {
-    this.props.deleteUserPermission(permissionId, () => {
-      toastr.success('', 'User Checklist Permission deleted successfully');
+  handleDeleteProfile(permissionId) {
+    this.props.deleteProfilePermission(permissionId, () => {
+      toastr.success('', 'Profile Checklist Permission deleted successfully');
     });
   }
 
   closePermissionModal() {
     this.setState({
       showPermissionModal: false,
-      modalUserId: undefined,
+      modalProfileId: undefined,
       createPermission: false
     });
   }
 
   openCreatePermissionModal() {
     this.props.getAllChecklistData();
+
+    let { permissionList } = this.props.settings;
+    let existingProfileIds = [];
+    if (permissionList.length) {
+      permissionList.forEach(permission => {
+        existingProfileIds.push(permission.profile_id.id);
+      });
+    }
+
     this.setState({
       showPermissionModal: true,
+      existingProfileIds,
       createPermission: true,
-      modalUserId: undefined
+      modalProfileId: undefined
     });
   }
 
@@ -78,13 +89,13 @@ export default class PermissionList extends React.Component {
         campaigns: {},
         checklists: {}
       },
-      user_id: undefined
+      profile_id: undefined
     };
     if (!this.state.createPermission) {
-      requestData.id = this.state.userPermissionId;
-      requestData.user_id = this.state.modalUserId;
+      requestData.id = this.state.profilePermissionId;
+      requestData.profile_id = this.state.modalProfileId;
     } else {
-      requestData.user_id = state.selectedUser.value;
+      requestData.profile_id = state.selectedProfile.value;
     }
     state.data.data.forEach(campaignData => {
       if (
@@ -130,17 +141,17 @@ export default class PermissionList extends React.Component {
 
     this.setState({
       showPermissionModal: false,
-      modalUserId: undefined,
+      modalProfileId: undefined,
       createPermission: false
     });
 
     if (this.state.createPermission) {
-      this.props.createUserPermission([requestData], () => {
-        toastr.success('', 'User Permission created successfully');
+      this.props.createProfilePermission([requestData], () => {
+        toastr.success('', 'Profile Permission created successfully');
       });
     } else {
-      this.props.updateUserPermission([requestData], () => {
-        toastr.success('', 'User Permission updated successfully');
+      this.props.updateProfilePermission([requestData], () => {
+        toastr.success('', 'Profile Permission updated successfully');
       });
     }
   }
@@ -149,9 +160,7 @@ export default class PermissionList extends React.Component {
     return (
       <tr key={permission.id}>
         <td>{index + 1}</td>
-        <td>
-          {permission.user_id.first_name + ' ' + permission.user_id.last_name}
-        </td>
+        <td>{permission.profile_id.name}</td>
         <td>Custom</td>
         <td>
           {permission.created_by.first_name +
@@ -162,14 +171,14 @@ export default class PermissionList extends React.Component {
           <button
             type="button"
             className="btn btn--danger"
-            onClick={() => this.handleEditUser(permission.user_id.id)}
+            onClick={() => this.handleEditProfile(permission.profile_id.id)}
           >
             Edit
           </button>{' '}
           <button
             type="button"
             className="btn btn--danger"
-            onClick={() => this.handleDeleteUser(permission.id)}
+            onClick={() => this.handleDeleteProfile(permission.id)}
           >
             Remove
           </button>

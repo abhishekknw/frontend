@@ -4,8 +4,8 @@ import * as types from '../actions/types';
 export const leads = createReducer(
   {
     leadPermissionList: [],
-    leadUserPermission: [],
-    currentUserPermissionId: undefined
+    leadProfilePermission: [],
+    currentProfilePermissionId: undefined
   },
 
   {
@@ -25,22 +25,22 @@ export const leads = createReducer(
       });
     },
 
-    [types.GET_LEAD_USER_PERMISSION_START](state) {
+    [types.GET_LEAD_USER_PROFILE_PERMISSION_START](state) {
       return Object.assign({}, state, {
-        leadUserPermission: [],
-        currentUserPermissionId: undefined
+        leadProfilePermission: [],
+        currentProfilePermissionId: undefined
       });
     },
-    [types.GET_LEAD_USER_PERMISSION_SUCCESS](state, action) {
+    [types.GET_LEAD_USER_PROFILE_PERMISSION_SUCCESS](state, action) {
       return Object.assign({}, state, {
-        leadUserPermission: action.leadUserPermission,
-        currentUserPermissionId: action.currentUserPermissionId
+        leadProfilePermission: action.leadProfilePermission,
+        currentProfilePermissionId: action.currentProfilePermissionId
       });
     },
-    [types.GET_LEAD_USER_PERMISSION_FAIL](state) {
+    [types.GET_LEAD_USER_PROFILE_PERMISSION_FAIL](state) {
       return Object.assign({}, state, {
-        leadUserPermission: [],
-        currentUserPermissionId: undefined
+        leadProfilePermission: [],
+        currentProfilePermissionId: undefined
       });
     }
   }

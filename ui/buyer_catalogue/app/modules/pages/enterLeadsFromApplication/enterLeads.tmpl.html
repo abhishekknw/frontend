@@ -96,33 +96,29 @@
           </div>
       </div>
       <div class="form-group">
-        <button class="btn btn-danger" ng-disabled="leadForm.$invalid" ng-click="saveLeads()">Submit</button>
-        <button class="btn btn-danger" ng-disabled="leadForm.$invalid" ng-click="updateLeadDetails()">Update</button>
+        <button ng-if="!editLeads" class="btn btn-danger" ng-disabled="leadForm.$invalid" ng-click="saveLeads()">Submit</button>
+        <button ng-if="editLeads" class="btn btn-danger" ng-disabled="leadForm.$invalid" ng-click="updateLeadDetails()">Update</button>
 
       </div>
   </form>
 
   </div>
 
-<div class="row">
-  <div class="leadsdetailtable" ng-if="viewLeads">
-    <div class="table-responsive">
-      <div class="row">
-        <table class="table">
-            <thead>
-                <tr>
-                  <th ng-repeat="header in leadsData.headers">{{header.key_name}}</th>
-                </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat="alias in leadsData.values | filter : searchSupplier">
-                <td ng-repeat="lead in alias">{{lead.value}}</td>
-                <td><button class="btn btn-danger" ng-click="getEditLeads(alias[0].value)">Enter Leads</button></td>
-              </tr>
-            </tbody>
-        </table>
-      </div>
-      </div>
+<div class="leadsdetailtable" ng-if="viewLeads">
+  <div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+              <th ng-repeat="header in leadsData.headers">{{header.key_name}}</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="alias in leadsData.values | filter : searchSupplier">
+            <td ng-repeat="lead in alias">{{lead.value}}</td>
+            <td><button class="btn btn-danger" ng-click="getEditLeads(alias[0].value)">Edit</button></td>
+          </tr>
+        </tbody>
+    </table>
   </div>
 </div>
 </div>

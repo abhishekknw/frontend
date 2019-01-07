@@ -1,28 +1,82 @@
 import createReducer from './../lib/createReducer';
 import * as types from './../actions/types';
 
-export const entity = createReducer(
+export const baseInventory = createReducer(
   {
-    baseInventory: undefined
+    list: [],
+    baseAttributes: [],
+    baseInventory: undefined,
+    selectedBaseInventoryName: undefined,
+    selectedBaseInventoryId: undefined
   },
-
   {
+    [types.GET_BASE_INVENTORY_START](state) {
+      return Object.assign({}, state, {
+        list: []
+      });
+    },
+    [types.GET_BASE_INVENTORY_SUCCESS](state, action) {
+      return Object.assign({}, state, {
+        list: action.baseInventory
+      });
+    },
+    [types.GET_BASE_INVENTORY_FAIL](state) {
+      return Object.assign({}, state, {
+        list: []
+      });
+    },
     [types.POST_BASE_INVENTORY_START](state) {
       return Object.assign({}, state, {
-        entityType: undefined
+        baseInventory: undefined
       });
     },
     [types.POST_BASE_INVENTORY_SUCCESS](state, action) {
       return Object.assign({}, state, {
-        entityType: action.data
+        baseInventory: action.data
       });
     },
     [types.POST_BASE_INVENTORY_FAIL](state) {
       return Object.assign({}, state, {
-        entityType: undefined
+        baseInventory: undefined
+      });
+    },
+    [types.DELETE_BASE_INVENTORY_START](state) {
+      return Object.assign({}, state, {
+        baseInventory: undefined
+      });
+    },
+    [types.DELETE_BASE_INVENTORY_SUCCESS](state, action) {
+      const newList = state.list.slice();
+
+      for (let i = 0, l = newList.length; i < l; i += 1) {
+        if (newList[i]._id === action.baseInventoryId) {
+          newList.splice(i, 1);
+          break;
+        }
+      }
+
+      return Object.assign({}, state, {
+        list: newList
+      });
+    },
+    [types.GET_BASE_INVENTORY_BY_ID_START](state) {
+      return Object.assign({}, state, {
+        baseAttributes: []
+      });
+    },
+    [types.GET_BASE_INVENTORY_BY_ID_SUCCESS](state, action) {
+      return Object.assign({}, state, {
+        selectedBaseInventoryName: action.baseInventory.name,
+        selectedBaseInventoryId: action.baseInventory._id,
+        baseAttributes: action.baseInventory.base_attributes
+      });
+    },
+    [types.GET_BASE_INVENTORY_BY_ID_FAIL](state) {
+      return Object.assign({}, state, {
+        baseAttributes: []
       });
     }
   }
 );
 
-export { entity as default };
+export { baseInventory as default };

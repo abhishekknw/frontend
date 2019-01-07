@@ -20,6 +20,7 @@ export default class Layout extends React.Component {
     if (!this.props.auth.isLoggedIn) {
       this.props.autoLogin();
     }
+    this.props.getCurrentUser();
   }
 
   render() {

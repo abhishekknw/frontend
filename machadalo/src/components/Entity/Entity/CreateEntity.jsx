@@ -2,7 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
 
-import OptionModal from '../Modals/OptionModal';
+import OptionModal from '../../Modals/OptionModal';
 
 const customeStyles = {
   input: () => ({
@@ -41,10 +41,11 @@ export default class CreateEntity extends React.Component {
 
   componentDidUpdate() {
     if (
-      this.state.entityTypeOption.length !== this.props.entity.entityList.length
+      this.state.entityTypeOption.length !==
+      this.props.entityType.entityTypeList.length
     ) {
       let entityTypeOption = [];
-      this.props.entity.entityList.forEach(entityType => {
+      this.props.entityType.entityTypeList.forEach(entityType => {
         entityTypeOption.push({
           value: entityType.id,
           label: entityType.name
@@ -99,6 +100,7 @@ export default class CreateEntity extends React.Component {
     };
     this.props.postEntity({ data }, () => {
       toastr.success('', 'Entity created successfully');
+      this.props.history.push('/r/entity/list');
     });
   }
 
@@ -214,8 +216,8 @@ export default class CreateEntity extends React.Component {
   }
 
   onSelectEntityType(selectedEntityType) {
-    let { entityList } = this.props.entity;
-    entityList.forEach(entityType => {
+    let { entityTypeList } = this.props.entityType;
+    entityTypeList.forEach(entityType => {
       if (entityType.id === selectedEntityType.value) {
         this.setState({
           selectedEntityType,
@@ -228,7 +230,10 @@ export default class CreateEntity extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="createform">
+        <div className="createform__title">
+          <h3>Create Entity </h3>
+        </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
             <div className="createform__form__inline">
