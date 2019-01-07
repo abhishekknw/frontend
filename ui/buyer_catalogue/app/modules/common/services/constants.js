@@ -41,6 +41,7 @@ angular
     update_success : 'Updated Successfully',
     standard_organisation : 'MACHADALO',
     add_data_success : 'Added Successfully',
+    update_leads_data_success : 'Updated Leads Successfully',
     captcha_error : 'Please resolve the captcha and submit!',
     login_error : 'Username or Password is Incorrect',
     email_success : 'Email sent Successfully',

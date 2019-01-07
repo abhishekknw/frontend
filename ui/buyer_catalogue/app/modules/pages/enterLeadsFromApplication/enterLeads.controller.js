@@ -116,6 +116,8 @@ angular.module('catalogueApp')
             console.log(response);
             $scope.viewLeads = false;
             $scope.editLeads = true;
+            console.log($scope.entryId);
+            swal(constants.name, constants.update_leads_data_success, constants.success);
           }).catch(function onError(response){
             console.log(response);
           })
