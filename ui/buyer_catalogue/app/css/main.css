@@ -659,15 +659,15 @@ color: #ffffff !important;
 }
 
 .campaigndetailtable table thead tr th:nth-child(2) {
-  text-align: left;
+  text-align: center;
 }
 
 .campaigndetailtable table tbody tr td:nth-child(2) {
-  text-align: left;
+  text-align: center;
 }
 
 .campaigndetailtable table tfoot tr td:nth-child(2) {
-  text-align: left;
+  text-align: center;
 }
 .CampaignDetails{
   height: 60px !important;
@@ -846,8 +846,8 @@ border-radius: 10px;
 }
 
 .green{
-  color: #15ff15;
+  color: #15ff15 !important;
 }
 .red{
-  color: #B20000;
+  color: #B20000 !important;
 }
