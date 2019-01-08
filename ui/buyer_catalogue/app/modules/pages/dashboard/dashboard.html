@@ -2632,17 +2632,36 @@
           </tr>
           <tr>
           <td><small style="font-weight:bold">Mean of Leads</small></td>
-          <td>{{WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.mean_percent_by_flat || 'NA'  | limitTo:5}} %</td>
-          <td>{{WeeklyMISLastWeekSummary.all_campaigns.total_leads_analytics.mean_percent_by_flat || 'NA'  | limitTo:5}} %</td>
-          <td>{{WeeklyMISLast2WeekSummary.all_campaigns.total_leads_analytics.mean_percent_by_flat || 'NA'  | limitTo:5}} %</td>
-          <td>{{WeeklyMISLast3WeekSummary.all_campaigns.total_leads_analytics.mean_percent_by_flat || 'NA'  | limitTo:5}} %</td>
+          <td>{{WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %</td>
+          <td>{{WeeklyMISLastWeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
+            <span ng-if="WeeklyMISLastWeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat > WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+            <span ng-if="WeeklyMISLastWeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat < WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+
+          </td>
+          <td>{{WeeklyMISLast2WeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
+            <span ng-if="WeeklyMISLast2WeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat > WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+            <span ng-if="WeeklyMISLast2WeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat < WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+          </td>
+          <td>{{WeeklyMISLast3WeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
+            <span ng-if="WeeklyMISLast3WeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat > WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+            <span ng-if="WeeklyMISLast3WeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat < WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+          </td>
           </tr>
           <tr>
           <td><small style="font-weight:bold">Mean of Hot Leads</small></td>
-          <td>{{WeeklyMISOverallSummary.all_campaigns.hot_leads_analytics.mean_percent_by_flat || 'NA'  | limitTo:5}} %</td>
-          <td>{{WeeklyMISLastWeekSummary.all_campaigns.hot_leads_analytics.mean_percent_by_flat || 'NA'  | limitTo:5}} %</td>
-          <td>{{WeeklyMISLast2WeekSummary.all_campaigns.hot_leads_analytics.mean_percent_by_flat || 'NA'  | limitTo:5}} %</td>
-          <td>{{WeeklyMISLast3WeekSummary.all_campaigns.hot_leads_analytics.mean_percent_by_flat || 'NA'  | limitTo:5}} %</td>
+          <td>{{WeeklyMISOverallSummary.all_campaigns.hot_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %</td>
+          <td>{{WeeklyMISLastWeekSummary.all_campaigns.hot_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
+            <span ng-if="WeeklyMISLastWeekSummary.all_campaigns.hot_leads_analytics.percentage_by_flat > WeeklyMISOverallSummary.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+            <span ng-if="WeeklyMISLastWeekSummary.all_campaigns.hot_leads_analytics.percentage_by_flat < WeeklyMISOverallSummary.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+          </td>
+          <td>{{WeeklyMISLast2WeekSummary.all_campaigns.hot_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
+            <span ng-if="WeeklyMISLast2WeekSummary.all_campaigns.hot_leads_analytics.percentage_by_flat > WeeklyMISOverallSummary.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+            <span ng-if="WeeklyMISLast2WeekSummary.all_campaigns.hot_leads_analytics.percentage_by_flat < WeeklyMISOverallSummary.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+          </td>
+          <td>{{WeeklyMISLast3WeekSummary.all_campaigns.hot_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
+            <span ng-if="WeeklyMISLast3WeekSummary.all_campaigns.hot_leads_analytics.percentage_by_flat > WeeklyMISOverallSummary.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+            <span ng-if="WeeklyMISLast3WeekSummary.all_campaigns.hot_leads_analytics.percentage_by_flat < WeeklyMISOverallSummary.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+          </td>
           </tr>
         </tbody>
       </table>
