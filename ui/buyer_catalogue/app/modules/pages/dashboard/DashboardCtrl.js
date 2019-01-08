@@ -3134,14 +3134,15 @@ $scope.getCampaignWiseSummary = function(){
       $scope.showReportBtn = true;
       $scope.campaignSummary = response.data.data;
       console.log(response.data.data);
+      $scope.WeeklyMISOverallSummary = response.data.data.overall;
+      $scope.WeeklyMISLastWeekSummary = response.data.data.last_week;
+      $scope.WeeklyMISLast2WeekSummary = response.data.data.last_two_weeks;
+      $scope.WeeklyMISLast3WeekSummary = response.data.data.last_three_weeks;
       $scope.overallCampaignSummary = response.data.data.overall.campaign_wise;
-      console.log($scope.overallCampaignSummary);
       $scope.lastWeekCampaignSummary = response.data.data.last_week.campaign_wise;
-      console.log($scope.lastWeekCampaignSummary);
       $scope.last2WeeksCampaignSummary = response.data.data.last_two_weeks.campaign_wise;
-      console.log($scope.last2WeeksCampaignSummary);
       $scope.last3WeeksCampaignSummary = response.data.data.last_three_weeks.campaign_wise;
-      console.log($scope.last3WeeksCampaignSummary);
+
       $scope.stackedBarChartLocationWise = angular.copy(locationSummaryBarChart);
       $scope.OverallSummaryStackedBarChart= angular.copy(overallSummaryStackedBar);
       $scope.thisWeekSummaryStackedBarChart= angular.copy(thisWeekSummaryStackedBar);
