@@ -1540,7 +1540,7 @@
           $scope.locationHeader.push($scope.value1);
        })
        console.log($scope.LeadsByCampaign);
-      
+
        $scope.d3StackedBarChartData = formatD3StackedBarChartData($scope.LeadsByCampaign.supplier_data);
        $scope.stackedBarChartOptions = angular.copy(stackedBarChart);
        $scope.stackedBarChartSocietyWise = angular.copy(societySummaryBarChart);
@@ -2064,6 +2064,12 @@ var formatThreeWeeksSummary = function(data,key){
       'GATEWAY ARCH' : {
         status : false, total : 0
       },
+      'BANNER' : {
+        status : false, total : 0
+      },
+      'SUNBOARD' : {
+        status : false, total : 0
+      },
 
     }
 
@@ -2107,9 +2113,9 @@ var formatThreeWeeksSummary = function(data,key){
           $scope.TotalSupplierHotLeadsCount += supplier.leads_data.hot_leads_count;
         }
         $scope.societyName = supplier.supplier.society_name;
-
+          console.log(supplier.supplier.inv_data);
           angular.forEach(supplier.supplier.inv_data, function(inv,key){
-          $scope.invStatusKeys[key].status = true;
+            $scope.invStatusKeys[key].status = true;
           })
           $scope.ImageURL = function(supplier,images){
 
