@@ -2589,7 +2589,7 @@
       </thead>
         <tbody style="text-align:center;">
           <tr>
-          <td><small style="font-weight:bold">FLat Count</small></td>
+          <td><small style="font-weight:bold">Flat Count</small></td>
           <td>{{WeeklyMISOverallSummary.all_campaigns.flat_count || 'NA'}}</td>
           <td>{{WeeklyMISLastWeekSummary.all_campaigns.flat_count || 'NA'}}</td>
           <td>{{WeeklyMISLast2WeekSummary.all_campaigns.flat_count || 'NA'}}</td>
@@ -2676,8 +2676,9 @@
   </div>
 </div>
 <!-- End Weekly Master (ALL CITIES)-->
+
 <!-- < Start Overall Campaign Wise Summary> -->
-<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+<div class="col-lg-12" ng-if="selectAllCampaignLeads" style="margin-top:20px;">
   <div class="panel panel-primary">
     <div class="panel-heading content-title">
       <label for="Location">Overall Campaign Wise Summary Details</label>
@@ -2717,13 +2718,15 @@
   </div>
 </div>
 
-<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+<div class="col-lg-12" ng-if="selectAllCampaignLeads" style="margin-top:20px;">
   <div class="panel panel-primary">
     <div class="panel-heading content-title">
       <label for="Location">Overall Statistical Details</label>
     </div>
   </div>
   <br> <br>
+  <div class="campaigndetailtable">
+    <div class="table-responsive">
   <table class="table table-striped" st-table="campaignSummary">
     <thead>
       <tr>
@@ -2843,8 +2846,10 @@
     </tbody>
   </table>
 </div>
+</div>
+</div>
 
-<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+<div class="col-lg-12" ng-if="selectAllCampaignLeads" style="margin-top:20px;">
         <div class="panel panel-primary">
           <div class="panel-heading content-title">
             <label for="flat graph">Overall Graph Summary</label>
@@ -2855,8 +2860,8 @@
            <option value="" disabled>Select For Sorting</option>
             <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
           </select>
-          <div class="outerLocation"  ng-if="!dateRangeModel.start_date">
-            <div class="innerLocation"  ng-if="!dateRangeModel.start_date">
+          <div class="outer"  ng-if="!dateRangeModel.start_date">
+            <div class="inner"  ng-if="!dateRangeModel.start_date">
               <nvd3 options="locationChartOptions" data="sortedLocationData['overall']" ng-if="togglesortedGraphs['overall']"></nvd3>
               <nvd3 options="OverallSummaryStackedBarChart" data="stackedBarAllCampaignWiseChart" ng-if="!togglesortedGraphs['overall']"></nvd3>
             </div>
@@ -2871,7 +2876,7 @@
 </div>
 
 <br /><br />
-<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+<div class="col-lg-12" ng-if="selectAllCampaignLeads" style="margin-top:50px;">
   <div class="panel panel-primary">
     <div class="panel-heading content-title">
       <label for="Location">Last Week Summary Details</label>
@@ -2911,7 +2916,7 @@
   </div>
 </div>
 
-<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+<div class="col-lg-12" ng-if="selectAllCampaignLeads" style="margin-top:20px;">
   <div class="panel panel-primary">
     <div class="panel-heading content-title">
       <label for="Location">Last Week Statistical Details</label>
@@ -2940,7 +2945,7 @@
   </table>
 </div>
 
-<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+<div class="col-lg-12" ng-if="selectAllCampaignLeads" style="margin-top:20px;">
         <div class="panel panel-primary">
           <div class="panel-heading content-title">
             <label for="flat graph">Last Week Graph Summary</label>
@@ -2951,8 +2956,8 @@
            <option value="" disabled>Select For Sorting</option>
             <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
           </select>
-          <div class="outerLocation"  ng-if="!dateRangeModel.start_date">
-            <div class="innerLocation"  ng-if="!dateRangeModel.start_date">
+          <div class="outerLastWeekSummary"  ng-if="!dateRangeModel.start_date">
+            <div class="innerLastWeekSummary"  ng-if="!dateRangeModel.start_date">
               <nvd3 options="locationChartOptions" data="sortedLocationData['thisweek']" ng-if="togglesortedGraphs['thisweek']"></nvd3>
               <nvd3 options="thisWeekSummaryStackedBarChart" data="stackedBarLastWeekChart" ng-if="!togglesortedGraphs['thisweek']"></nvd3>
             </div>
@@ -2968,7 +2973,7 @@
 
 <br /><br />
 
-<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+<div class="col-lg-12" ng-if="selectAllCampaignLeads" style="margin-top:20px;">
   <div class="panel panel-primary">
     <div class="panel-heading content-title">
       <label for="Location">Last Two Weeks Summary Details</label>
@@ -3008,7 +3013,7 @@
   </div>
 </div>
 
-<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+<div class="col-lg-12" ng-if="selectAllCampaignLeads" style="margin-top:20px;">
   <div class="panel panel-primary">
     <div class="panel-heading content-title">
       <label for="Location">Last Two Week Statistical Details</label>
@@ -3036,7 +3041,7 @@
   </tbody>
   </table>
 </div>
-<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+<div class="col-lg-12" ng-if="selectAllCampaignLeads" style="margin-top:20px;">
         <div class="panel panel-primary">
           <div class="panel-heading content-title">
             <label for="flat graph">Last Two Week Graph Summary</label>
@@ -3047,8 +3052,8 @@
            <option value="" disabled>Select For Sorting</option>
             <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
           </select>
-          <div class="outerLocation"  ng-if="!dateRangeModel.start_date">
-            <div class="innerLocation"  ng-if="!dateRangeModel.start_date">
+          <div class="outerLastWeek"  ng-if="!dateRangeModel.start_date">
+            <div class="innerLastWeek"  ng-if="!dateRangeModel.start_date">
               <nvd3 options="locationChartOptions" data="sortedLocationData['last2week']" ng-if="togglesortedGraphs['last2week']"></nvd3>
               <nvd3 options="last2WeekSummaryStackedBarChart" data="stackedBarLast2WeeksChart" ng-if="!togglesortedGraphs['last2week']"></nvd3>
             </div>
@@ -3064,7 +3069,7 @@
 
 <br /><br />
 
-<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+<div class="col-lg-12" ng-if="selectAllCampaignLeads" style="margin-top:20px;">
   <div class="panel panel-primary">
     <div class="panel-heading content-title">
       <label for="Location">Last Three Weeks Summary Details</label>
@@ -3104,7 +3109,7 @@
   </div>
 </div>
 
-<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+<div class="col-lg-12" ng-if="selectAllCampaignLeads" style="margin-top:20px;">
   <div class="panel panel-primary">
     <div class="panel-heading content-title">
       <label for="Location">Last Three Week Statistical Details</label>
@@ -3133,7 +3138,7 @@
   </table>
 </div>
 
-<div class="col-lg-12" ng-if="selectAllCampaignLeads">
+<div class="col-lg-12" ng-if="selectAllCampaignLeads" style="margin-top:20px;">
         <div class="panel panel-primary">
           <div class="panel-heading content-title">
             <label for="flat graph">Last Three Week Graph Summary</label>
@@ -3144,8 +3149,8 @@
            <option value="" disabled>Select For Sorting</option>
             <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
           </select>
-          <div class="outerLocation"  ng-if="!dateRangeModel.start_date">
-            <div class="innerLocation"  ng-if="!dateRangeModel.start_date">
+          <div class="outerLastWeek"  ng-if="!dateRangeModel.start_date">
+            <div class="innerLastWeek"  ng-if="!dateRangeModel.start_date">
               <nvd3 options="locationChartOptions" data="sortedLocationData['last3week']" ng-if="togglesortedGraphs['last3week']"></nvd3>
               <nvd3 options="last3WeekSummaryStackedBarChart" data="stackedBarLast3WeeksChart" ng-if="!togglesortedGraphs['last3week']"></nvd3>
             </div>

@@ -1060,7 +1060,7 @@
              "grouped": true,
              "sortDescending" : false,
                "xAxis": {
-               "axisLabel": "This Week (Flat Count) in Percentage",
+               "axisLabel": "Last Week (Flat Count) in Percentage",
                "axisLabelDistance" : -50,
                "showMaxMin": false,
                "rotateLabels" : -30
