@@ -869,3 +869,4 @@ border-radius: 10px;
 .red{
   color: #B20000 !important;
 }
+.tick line { display: none; }
