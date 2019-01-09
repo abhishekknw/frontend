@@ -845,6 +845,15 @@ border-radius: 10px;
     /* z-index: 100; */
 }
 
+.campaigndetailtable > tbody > tr:nth-of-type(odd) > td green{
+  color: #15ff15 !important;
+}
+
+
+.campaigndetailtable > tbody > tr:nth-of-type(odd) > td red{
+  color: #B20000 !important;
+}
+
 .green{
   color: #15ff15 !important;
 }

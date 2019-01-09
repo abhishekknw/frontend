@@ -1187,8 +1187,8 @@
            angular.forEach(response.data.data.ongoing , function(data,key){
              $scope.extraLeads = data.extra_leads_data;
              console.log($scope.extraLeads);
-           })
-
+            })
+           console.log($scope.extraLeads);
             angular.forEach($scope.overallMetric , function(data,key){
               $scope.metricStatusValue = data;
               // $scope.avgLeadsPerFlat = data.total_leads_count/data.flat_count * 100;
@@ -2113,9 +2113,9 @@ var formatThreeWeeksSummary = function(data,key){
           $scope.TotalSupplierHotLeadsCount += supplier.leads_data.hot_leads_count;
         }
         $scope.societyName = supplier.supplier.society_name;
-          console.log(supplier.supplier.inv_data);
+
           angular.forEach(supplier.supplier.inv_data, function(inv,key){
-            $scope.invStatusKeys[key].status = true;
+          $scope.invStatusKeys[key].status = true;
           })
           $scope.ImageURL = function(supplier,images){
 
