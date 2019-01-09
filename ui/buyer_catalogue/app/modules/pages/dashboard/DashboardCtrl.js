@@ -2632,8 +2632,8 @@ $scope.sortMenu = [
   {name : 'Total(DESC)', type : 'total', order : 'DESC', id : 2},
   {name : 'HotLeads(ASC)', type : 'interested', order : 'ASC', id : 3},
   {name : 'HotLeads(DESC)', type : 'interested', order : 'DESC', id : 4},
-  {name : 'DISTRIBUTION(HotLeads)', type : 'interested', order : 'DISTRIBUTION', id : 6},
-  {name : 'DISTRIBUTION(Total)', type : 'total', order : 'DISTRIBUTION', id : 7},
+  // {name : 'DISTRIBUTION(HotLeads)', type : 'interested', order : 'DISTRIBUTION', id : 6},
+  // {name : 'DISTRIBUTION(Total)', type : 'total', order : 'DISTRIBUTION', id : 7},
   {name : 'All', type : '', order : '', id : 5},
 ];
 var sortMenuMap = {};
@@ -2797,10 +2797,11 @@ $scope.sortData = function(keyName,id){
   if(sortMenuMap[id].order == 'DESC'){
     $scope.sortedLocationData[keyName] = formatByLocation(sortable.reverse(),keyName,sortMenuMap[id].type);
   }
-  if(sortMenuMap[id].order == 'DISTRIBUTION'){
-    console.log(mean,median);
-    $scope.sortedLocationData[keyName] = drawDistributionGraph(mean,median,mode);
-  }
+
+  // if(sortMenuMap[id].order == 'DISTRIBUTION'){
+  //   console.log(mean,median);
+  //   $scope.sortedLocationData[keyName] = drawDistributionGraph(mean,median,mode);
+  // }
 $scope.showLocationData = true;
 }
 
@@ -3110,18 +3111,18 @@ $scope.Sort = function(val)
             });
 
           };
-  var drawDistributionGraph = function(mean,median,mode){
-      var data = {
-        'key' : 'Distribution Graph',
-        'values' : [
-          {label : 'Mean', value : mean},
-          {label : 'Median', value : median},
-          {label : 'Mode', value : mode},
-        ]
-      };
-      console.log(data);
-      return [data];
-  }
+  // var drawDistributionGraph = function(mean,median,mode){
+  //     var data = {
+  //       'key' : 'Distribution Graph',
+  //       'values' : [
+  //         {label : 'Mean', value : mean},
+  //         {label : 'Median', value : median},
+  //         {label : 'Mode', value : mode},
+  //       ]
+  //     };
+  //     console.log(data);
+  //     return [data];
+  // }
 
 $scope.getCampaignWiseSummary = function(){
   console.log("hello");
