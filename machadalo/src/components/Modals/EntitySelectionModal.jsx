@@ -109,7 +109,8 @@ export default class SelectAttributeModal extends React.Component {
   }
 
   renderOptionRow(option, optionIndex) {
-    return (
+    return option.type !== 'ENTITY_TYPE' &&
+      option.type !== 'BASE_ENTITY_TYPE' ? (
       <div className="form-control option-container" key={optionIndex}>
         <input
           type="checkbox"
@@ -120,6 +121,8 @@ export default class SelectAttributeModal extends React.Component {
         />
         {option.name}
       </div>
+    ) : (
+      <div />
     );
   }
 
