@@ -1184,13 +1184,8 @@
            // console.log($scope.overallMetricStatus);
            $scope.overallMetric = response.data.data.overall_metrics;
            console.log($scope.overallMetric);
-           angular.forEach(response.data.data.ongoing , function(data,key){
-             $scope.extraLeads = data.extra_leads_data;
-             console.log($scope.extraLeads);
-            })
-           console.log($scope.extraLeads);
             angular.forEach($scope.overallMetric , function(data,key){
-              $scope.metricStatusValue = data;
+            $scope.metricStatusValue = data;
               // $scope.avgLeadsPerFlat = data.total_leads_count/data.flat_count * 100;
             });
            $scope.showLeadsDetails = false;

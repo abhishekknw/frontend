@@ -527,10 +527,33 @@
                                         <td style="text-align:left; "  ng-if="key != 'ongoing'">{{data.total_suppliers_count}}</td>
                                         <td style="text-align:left;background-color:#cb1925;color:#ffffff !important"  ng-if="key == 'ongoing'">
                                         <a id="ref" ng-mouseover="showPopover=true;" ng-mouseleave="showPopover=false;" style="color:#ffffff;background-color:#cb1925">{{data.total_suppliers_count}}
-                                        <div class="popover" ng-show="showPopover">{{key}}</div>
-                                        <!-- <div class="popover" ng-show="showPopover">{{extraLeads}}</div> -->
-                                      </a>
-                                        </td>
+                                        <!-- <div class="popover" ng-show="showPopover">
+                                          <div class="arrow"></div> -->
+                                          <md-card ng-show="showPopover" ng-repeat="suppliers in campaignStatusData['ongoing']">
+                                           <md-card-content ng-if="suppliers.extra_leads_data.length">
+                                             <table class="table table-striped" style="width:200px;">
+                                               <thead>
+                                                 <th ng-if="suppliers.extra_leads_data.length"> <small>Date and Time</small> </th>
+                                                 <th ng-if="suppliers.extra_leads_data.length"> <small>Total Leads</small> </th>
+                                                 <th ng-if="suppliers.extra_leads_data.length"> <small>Total Hot Leads</small> </th>
+                                               </thead>
+                                               <tbody ng-repeat="supplier in suppliers.extra_leads_data">
+                                                 <h6 style="text-align:center" ng-if="suppliers.extra_leads_data.length"> <b>{{suppliers.supplier.society_name}}</b></h6>
+                                                 <tr style="text-align:center">
+                                                   <td ng-if="suppliers.extra_leads_data.length"><small>{{supplier.created_at | date:'medium'}}</small></td>
+                                                   <td ng-if="suppliers.extra_leads_data.length"><small>{{supplier.extra_leads}}</small></td>
+                                                   <td ng-if="suppliers.extra_leads_data.length"><small>{{supplier.extra_hot_leads}}</small></td>
+                                                 </tr>
+                                               </tbody>
+                                             </table>
+                                              <!-- <small> <b>{{supplier.created_at | date:'medium'}}</b> </small>
+                                             <h6>Total Leads : <small> <b>{{supplier.extra_leads}}</b> </small> Total Hot Leads : <small> <b>{{supplier.extra_hot_leads}}</b> </small></h6> -->
+                                           </md-card-content>
+                                          </md-card>
+                                        <!-- </div> -->
+                                        </a>
+
+                                      </td>
                                         <td style="text-align:left;" ng-if="key != 'ongoing'">{{data.flat_count}}</td>
                                         <td style="text-align:left;background-color:green;color:#ffffff !important" ng-if="key == 'ongoing'">{{data.flat_count}}</td>
 
