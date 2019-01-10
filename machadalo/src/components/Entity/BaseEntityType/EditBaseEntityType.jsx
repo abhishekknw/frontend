@@ -3,6 +3,7 @@ import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
 
 import OptionModal from '../../Modals/OptionModal';
+import EntitySelectionModal from '../../Modals/EntitySelectionModal';
 
 const optionStyle = {
   fontSize: '12px',
@@ -15,9 +16,10 @@ const optionStyle = {
 const AttributeTypes = [
   { value: 'FLOAT', label: 'Float' },
   { value: 'STRING', label: 'Text' },
-  { value: 'INVENTORYLIST', label: 'Inventory list' },
+  { value: 'INVENTORY_TYPE', label: 'Inventory list' },
   { value: 'DROPDOWN', label: 'Dropdown' },
-  { value: 'EMAIL', label: 'Email' }
+  { value: 'EMAIL', label: 'Email' },
+  { value: 'BASE_ENTITY_TYPE', label: 'Base Entity Type' }
 ];
 
 // Get attribute type option from string
@@ -42,7 +44,9 @@ export default class EditBaseEntityType extends React.Component {
       currentBaseEntityType: undefined,
       showOptionModal: false,
       attributeOptions: [''],
-      attributeInfo: {}
+      attributeInfo: {},
+      showEntitySelectionModal: false,
+      selectedModalEntityType: undefined
     };
 
     this.onAddAttribute = this.onAddAttribute.bind(this);
@@ -53,6 +57,9 @@ export default class EditBaseEntityType extends React.Component {
     this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
+    this.onCancelEntityModal = this.onCancelEntityModal.bind(this);
+    this.onSubmitEntityModal = this.onSubmitEntityModal.bind(this);
+    this.onOpenEntityModal = this.onOpenEntityModal.bind(this);
   }
 
   componentWillMount() {
@@ -131,6 +138,38 @@ export default class EditBaseEntityType extends React.Component {
     );
   }
 
+  onCancelEntityModal() {
+    this.setState({
+      showEntitySelectionModal: false,
+      attributeInfo: {}
+    });
+  }
+
+  onSubmitEntityModal(value, attributeInfo) {
+    this.setState({
+      showEntitySelectionModal: false,
+      attributeInfo: {}
+    });
+
+    let newAttributes = Object.assign({}, attributeInfo.attribute, {
+      type: attributeInfo.attributeType,
+      value
+    });
+    this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
+  }
+
+  onOpenEntityModal(attributeType, attribute, attrIndex) {
+    this.setState({
+      showEntitySelectionModal: true,
+      selectedModalEntityType: attribute.value,
+      attributeInfo: {
+        attributeType,
+        attribute,
+        attrIndex
+      }
+    });
+  }
+
   onAddAttribute() {
     const newAttributes = this.state.entity_attributes.slice();
 
@@ -181,6 +220,19 @@ export default class EditBaseEntityType extends React.Component {
             attrIndex
           }
         });
+      } else if (
+        item.value === 'BASE_ENTITY_TYPE' ||
+        item.value === 'INVENTORY_TYPE'
+      ) {
+        this.setState({
+          showEntitySelectionModal: true,
+          attributeInfo: {
+            attributeType: item.value,
+            attribute,
+            attrIndex
+          }
+        });
+        return;
       }
       const newAttribute = Object.assign({}, attribute);
 
@@ -231,6 +283,24 @@ export default class EditBaseEntityType extends React.Component {
                 }
               >
                 Show Options
+              </p>
+            ) : (
+              ''
+            )}
+            {attribute.type === 'BASE_ENTITY_TYPE' ||
+            attribute.type === 'INVENTORY_TYPE' ? (
+              <p
+                className="show-option"
+                style={optionStyle}
+                onClick={() =>
+                  this.onOpenEntityModal(
+                    attribute.type,
+                    attribute,
+                    attribute.attrIndex
+                  )
+                }
+              >
+                Show Attributes
               </p>
             ) : (
               ''
@@ -303,6 +373,18 @@ export default class EditBaseEntityType extends React.Component {
           options={this.state.attributeOptions}
           columnInfo={this.state.attributeInfo}
         />
+        {this.state.showEntitySelectionModal ? (
+          <EntitySelectionModal
+            {...this.props}
+            showOptionModal={this.state.showEntitySelectionModal}
+            onCancel={this.onCancelEntityModal}
+            onSubmit={this.onSubmitEntityModal}
+            attributeInfo={this.state.attributeInfo}
+            selectedModalEntityType={this.state.selectedModalEntityType}
+          />
+        ) : (
+          undefined
+        )}
       </div>
     );
   }

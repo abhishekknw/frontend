@@ -38,6 +38,8 @@ export default class SelectAttributeModal extends React.Component {
       this.props.getEntityTypeList();
     } else if (this.props.attributeInfo.attributeType === 'BASE_ENTITY_TYPE') {
       this.props.getBaseEntityTypeList();
+    } else if (this.props.attributeInfo.attributeType === 'INVENTORY_TYPE') {
+      this.props.getBaseInventory();
     }
 
     this.setState({
@@ -53,10 +55,19 @@ export default class SelectAttributeModal extends React.Component {
   }
 
   componentDidUpdate() {
-    let entityType =
-      this.props.attributeInfo.attributeType === 'ENTITY_TYPE'
-        ? 'entityType'
-        : 'baseEntityType';
+    let entityType;
+    let entityAttribute;
+    if (this.props.attributeInfo.attributeType === 'ENTITY_TYPE') {
+      entityType = 'entityType';
+      entityAttribute = 'entity_attributes';
+    } else if (this.props.attributeInfo.attributeType === 'BASE_ENTITY_TYPE') {
+      entityType = 'baseEntityType';
+      entityAttribute = 'entity_attributes';
+    } else {
+      entityType = 'baseInventory';
+      entityAttribute = 'base_attributes';
+    }
+
     if (
       this.state.entityTypeOption.length !==
       this.props[entityType][entityType + 'List'].length
@@ -66,16 +77,14 @@ export default class SelectAttributeModal extends React.Component {
         entityTypeOption.push({
           value: entityType.id,
           label: entityType.name,
-          entity_attributes: entityType.entity_attributes.map(
-            entity_attribute => {
-              if (entity_attribute.hasOwnProperty('isChecked')) {
-                return entity_attribute;
-              }
-              let attribute = Object.assign({}, entity_attribute);
-              attribute.isChecked = true;
+          attributes: entityType[entityAttribute].map(attribute => {
+            if (attribute.hasOwnProperty('isChecked')) {
               return attribute;
             }
-          )
+            let checkedAttribute = Object.assign({}, attribute);
+            checkedAttribute.isChecked = true;
+            return checkedAttribute;
+          })
         });
       });
       this.setState({
@@ -92,7 +101,7 @@ export default class SelectAttributeModal extends React.Component {
 
   handleInputChange(event, option) {
     let { selectedEntityType } = this.state;
-    selectedEntityType.entity_attributes.forEach(attribute => {
+    selectedEntityType.attributes.forEach(attribute => {
       if (attribute.name === option.name) {
         attribute.isChecked = event.target.checked;
       }
@@ -110,7 +119,8 @@ export default class SelectAttributeModal extends React.Component {
 
   renderOptionRow(option, optionIndex) {
     return option.type !== 'ENTITY_TYPE' &&
-      option.type !== 'BASE_ENTITY_TYPE' ? (
+      option.type !== 'BASE_ENTITY_TYPE' &&
+      option.type !== 'INVENTORY_TYPE' ? (
       <div className="form-control option-container" key={optionIndex}>
         <input
           type="checkbox"
@@ -129,6 +139,15 @@ export default class SelectAttributeModal extends React.Component {
   render() {
     let { attributeInfo } = this.props;
     let { selectedEntityType } = this.state;
+
+    let entityType;
+    if (attributeInfo.attributeType === 'ENTITY_TYPE') {
+      entityType = 'Entity Type';
+    } else if (attributeInfo.attributeType === 'BASE_ENTITY_TYPE') {
+      entityType = 'Base Entity Type';
+    } else {
+      entityType = 'Base Inventory';
+    }
     return (
       <Modal
         isOpen={this.props.showOptionModal}
@@ -136,24 +155,14 @@ export default class SelectAttributeModal extends React.Component {
         ariaHideApp={false}
       >
         <div className="modal-title">
-          <h3>
-            Select Attributes for{' '}
-            {attributeInfo.attributeType === 'ENTITY_TYPE'
-              ? 'Entity Type'
-              : ' Base Entity Type'}
-          </h3>
+          <h3>Select Attributes for {entityType}</h3>
         </div>
         <br />
         <div className="createform">
           <div className="createform__form">
             <div className="createform__form__inline">
               <div className="form-control">
-                <label>
-                  *Select{' '}
-                  {attributeInfo.attributeType === 'ENTITY_TYPE'
-                    ? 'Entity Type'
-                    : ' Base Entity Type'}
-                </label>
+                <label>*Select {entityType}</label>
                 <Select
                   options={this.state.entityTypeOption}
                   value={this.state.selectedEntityType}
@@ -161,9 +170,9 @@ export default class SelectAttributeModal extends React.Component {
                 />
               </div>
             </div>
-            <div className="createform__form__inline">
+            <div className="createform__form">
               {selectedEntityType
-                ? selectedEntityType.entity_attributes.map(this.renderOptionRow)
+                ? selectedEntityType.attributes.map(this.renderOptionRow)
                 : undefined}
             </div>
             <div className="modal-footer">

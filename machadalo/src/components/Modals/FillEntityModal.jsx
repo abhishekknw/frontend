@@ -60,7 +60,7 @@ export default class FillEntityModal extends React.Component {
 
   handleInputChange(event, option) {
     let { selectedEntityType } = this.state;
-    selectedEntityType.entity_attributes.forEach(attribute => {
+    selectedEntityType.attributes.forEach(attribute => {
       if (attribute.name === option.name) {
         attribute.isChecked = event.target.checked;
       }
@@ -78,6 +78,14 @@ export default class FillEntityModal extends React.Component {
 
   renderAttributeRow(attribute, attrIndex) {
     if (attribute.isChecked === false) {
+      return;
+    }
+
+    if (
+      attribute.type === 'ENTITY_TYPE' ||
+      attribute.type === 'BASE_ENTITY_TYPE' ||
+      attribute.type === 'INVENTORY_TYPE'
+    ) {
       return;
     }
     return (
@@ -98,7 +106,7 @@ export default class FillEntityModal extends React.Component {
   handleAttributeChange(attribute, index) {
     const selectedEntityType = Object.assign({}, this.state.selectedEntityType);
 
-    selectedEntityType.entity_attributes.splice(index, 1, attribute);
+    selectedEntityType.attributes.splice(index, 1, attribute);
 
     this.setState({
       selectedEntityType
@@ -175,6 +183,16 @@ export default class FillEntityModal extends React.Component {
   render() {
     let { columnInfo } = this.props;
     let { selectedEntityType } = this.state;
+
+    let entityTypeText;
+    if (columnInfo.attribute.type === 'ENTITY_TYPE') {
+      entityTypeText = 'Entity Type';
+    } else if (columnInfo.attribute.type === 'BASE_ENTITY_TYPE') {
+      entityTypeText = 'Base Entity Type';
+    } else {
+      entityTypeText = 'Base Inventory';
+    }
+
     return (
       <Modal
         isOpen={this.props.showOptionModal}
@@ -195,16 +213,12 @@ export default class FillEntityModal extends React.Component {
             <div className="createform__form">
               <div className="createform__form__inline">
                 <div className="title">
-                  {columnInfo.attribute.type +
-                    ': ' +
-                    this.state.selectedEntityType.label}
+                  {entityTypeText + ': ' + this.state.selectedEntityType.label}
                 </div>
               </div>
               <div className="createform__form">
                 {selectedEntityType
-                  ? selectedEntityType.entity_attributes.map(
-                      this.renderAttributeRow
-                    )
+                  ? selectedEntityType.attributes.map(this.renderAttributeRow)
                   : undefined}
               </div>
               <div className="modal-footer">

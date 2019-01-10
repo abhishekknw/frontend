@@ -16,7 +16,7 @@ const optionStyle = {
 const AttributeTypes = [
   { value: 'FLOAT', label: 'Float' },
   { value: 'STRING', label: 'Text' },
-  { value: 'INVENTORYLIST', label: 'Inventory list' },
+  { value: 'INVENTORY_TYPE', label: 'Inventory list' },
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' }
 ];

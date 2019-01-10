@@ -16,7 +16,7 @@ const optionStyle = {
 const AttributeTypes = [
   { value: 'FLOAT', label: 'Float' },
   { value: 'STRING', label: 'Text' },
-  { value: 'INVENTORYLIST', label: 'Inventory list' },
+  { value: 'INVENTORY_TYPE', label: 'Inventory list' },
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
   { value: 'ENTITY_TYPE', label: 'Entity Type' },
@@ -142,7 +142,7 @@ export default class CreateType extends React.Component {
     });
   }
 
-  onSubmitEntityModal(entity_data, attributeInfo) {
+  onSubmitEntityModal(value, attributeInfo) {
     this.setState({
       showEntitySelectionModal: false,
       attributeInfo: {}
@@ -150,7 +150,7 @@ export default class CreateType extends React.Component {
 
     let newAttributes = Object.assign({}, attributeInfo.attribute, {
       type: attributeInfo.attributeType,
-      entity_data: entity_data
+      value
     });
     this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
   }
@@ -158,7 +158,7 @@ export default class CreateType extends React.Component {
   onOpenEntityModal(attributeType, attribute, attrIndex) {
     this.setState({
       showEntitySelectionModal: true,
-      selectedModalEntityType: attribute.entity_data,
+      selectedModalEntityType: attribute.value,
       attributeInfo: {
         attributeType,
         attribute,
@@ -233,7 +233,8 @@ export default class CreateType extends React.Component {
         return;
       } else if (
         item.value === 'ENTITY_TYPE' ||
-        item.value === 'BASE_ENTITY_TYPE'
+        item.value === 'BASE_ENTITY_TYPE' ||
+        item.value === 'INVENTORY_TYPE'
       ) {
         this.setState({
           showEntitySelectionModal: true,
@@ -299,7 +300,8 @@ export default class CreateType extends React.Component {
               ''
             )}
             {attribute.type === 'ENTITY_TYPE' ||
-            attribute.type === 'BASE_ENTITY_TYPE' ? (
+            attribute.type === 'BASE_ENTITY_TYPE' ||
+            attribute.type === 'INVENTORY_TYPE' ? (
               <p
                 className="show-option"
                 style={optionStyle}

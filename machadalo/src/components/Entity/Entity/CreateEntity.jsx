@@ -78,7 +78,7 @@ export default class CreateEntity extends React.Component {
     });
 
     let newAttributes = Object.assign({}, attributeInfo.attribute, {
-      entity_data: currentModalEntityType
+      value: currentModalEntityType
     });
     this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
   }
@@ -219,14 +219,16 @@ export default class CreateEntity extends React.Component {
             onChange={onDropDownAttributeValueChange}
           />
         );
-      case 'INVENTORYLIST':
+      case 'INVENTORY_TYPE':
         return (
           <button
             type="button"
             className="btn btn--danger"
-            onClick={() => this.onOpenOptionModal([''], attribute, attrIndex)}
+            onClick={() =>
+              this.onOpenFillEntityModal(attribute.value, attribute, attrIndex)
+            }
           >
-            {attribute.value && attribute.value.length
+            {attribute.value && attribute.value.attributes[0].value
               ? 'Show Inventory List'
               : 'Create  Inventory List'}
           </button>
@@ -237,15 +239,10 @@ export default class CreateEntity extends React.Component {
             type="button"
             className="btn btn--danger"
             onClick={() =>
-              this.onOpenFillEntityModal(
-                attribute.entity_data,
-                attribute,
-                attrIndex
-              )
+              this.onOpenFillEntityModal(attribute.value, attribute, attrIndex)
             }
           >
-            {attribute.entityData &&
-            attribute.entityData.entity_attributes[0].value
+            {attribute.value && attribute.value.attributes[0].value
               ? 'Show Entity Type Data'
               : 'Create Entity Type Data'}
           </button>
@@ -256,15 +253,10 @@ export default class CreateEntity extends React.Component {
             type="button"
             className="btn btn--danger"
             onClick={() =>
-              this.onOpenFillEntityModal(
-                attribute.entity_data,
-                attribute,
-                attrIndex
-              )
+              this.onOpenFillEntityModal(attribute.value, attribute, attrIndex)
             }
           >
-            {attribute.entityData &&
-            attribute.entityData.entity_attributes[0].value
+            {attribute.value && attribute.value.attributes[0].value
               ? 'Show Base Entity Type Data'
               : 'Create Base Entity Type Data'}
           </button>

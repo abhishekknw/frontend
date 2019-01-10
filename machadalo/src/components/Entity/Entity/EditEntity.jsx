@@ -181,7 +181,7 @@ export default class EditEntity extends React.Component {
             onChange={onDropDownAttributeValueChange}
           />
         );
-      case 'INVENTORYLIST':
+      case 'INVENTORY_TYPE':
         return (
           <button
             type="button"

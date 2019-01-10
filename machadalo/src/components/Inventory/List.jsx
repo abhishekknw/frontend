@@ -64,8 +64,8 @@ export default class List extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {baseInventory.list.length ? (
-                baseInventory.list.map(this.renderBaseInventoryRow)
+              {baseInventory.baseInventoryList.length ? (
+                baseInventory.baseInventoryList.map(this.renderBaseInventoryRow)
               ) : (
                 <tr>
                   <td colSpan="5">{emptyBaseInventoryListText}</td>
