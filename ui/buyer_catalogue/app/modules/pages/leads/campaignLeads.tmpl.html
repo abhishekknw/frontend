@@ -134,7 +134,7 @@
             <br />  <br />
             <input type="text" class="form-control" ng-model="optionForm.option">
             <br />
-            <button class="btn btn-danger" ng-click="addKeyOption(optionForm.option,$index)">+</button>
+            <button class="btn btn-danger" ng-click="addKeyOption(optionForm.option,$index+1)">+</button>
             <div class="" ng-repeat="option in model.key_options" style="display:inline-block;">
               <button class="btn btn-primary">{{option}}</button>
                 <span ng-click="model.key_options.splice($index,1)" class="glyphicon glyphicon-remove-circle"></span>
@@ -393,7 +393,7 @@
             </div>
             <div class="form-group col-md-2">
               <label>Action </label></br>
-              <input type="checkbox" name="" value="true"  ng-model="model.isHotLead"/>Hot Lead
+              <input type="checkbox" name="" value="true"   ng-model="model.isHotLead"/>Hot Lead
               <input type="text" ng-model="model.hot_lead_criteria" ng-if="model.isHotLead"/>
             </div>
             <div class="form-group col-md-2">
