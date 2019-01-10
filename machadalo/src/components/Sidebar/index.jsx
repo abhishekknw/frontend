@@ -125,6 +125,12 @@ export default class Sidebar extends React.Component {
                   </li>
                 </ul>
               </li>
+              <li>
+                <a href="/r/inventory/list">
+                  <i className="fa fa-list" aria-hidden="true" />
+                  Inventory
+                </a>
+              </li>
               <li className="dropdown-list-parent">
                 <div
                   className="parent-list"

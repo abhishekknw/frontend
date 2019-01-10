@@ -244,7 +244,10 @@ export default class Edit extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="createform">
+        <div className="createform__title">
+          <h3>Edit Base Inventory </h3>
+        </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
             <div className="createform__form__inline">

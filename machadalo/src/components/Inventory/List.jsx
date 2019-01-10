@@ -33,7 +33,7 @@ export default class List extends React.Component {
             to={`/r/inventory/edit/${baseInventory._id}`}
             className="btn btn--danger"
           >
-            Edit Checklist
+            Edit Inventory
           </Link>
         </td>
       </tr>
