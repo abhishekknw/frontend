@@ -133,7 +133,7 @@
               </select>
             </td>
             <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first">
-              <select  class="form-control spacing input-width" ng-model="supplier.booking_status" permission = "[permissions.changeBookingStatus]">
+              <select  class="form-control spacing input-width" ng-model="supplier.booking_status" permission = "[permissions.changeBookingStatus]" ng-change="changePhase(supplier)">
                 <option style="width:100%;" ng-repeat="item in booking_status" value="{{item.code}}"
                 ng-if="supplier.booking_status == undefined ? supplier.booking_status = booking_status[0].code : 1"
                 >{{item.name}}</option>
@@ -143,6 +143,7 @@
               <input ng-disabled="supplier.booking_status != 'BK'" type="text" ng-model="phaseMappingList[supplier.phase_no].phase_no"/>
               <select  ng-disabled="supplier.booking_status != 'BK'" name="phase" class="form-control spacing input-width-phase" ng-change="setPhase(supplier,supplier.phaseNo)" ng-model="supplier.phaseNo" min="1" permission = "[permissions.addPhase, permissions.viewPhase]">
                 <option value="" disabled>Select Phase</option>
+                <!-- <option value="" >None</option> -->
                 <option ng-repeat="phase in phases | unique:'phase_no'" value="{{phase.id}}">{{phase.phase_no}}</option>
               </select>
               <span class="error" ng-show="phaseform.phase.$error.min">{{positiveNoError}}</span>
@@ -772,14 +773,14 @@
         Add Comment For {{supplierDataForComment.name}}
       </div>
       <div class="col-md-12">
-        <div class="row col-md-6" >
+        <!-- <div class="row col-md-6" >
         <br>
           <label>Select Related Inventory to Comment</label><br>
           <select class="form-control" name="" ng-model="commentModal.inventory_type">
             <option disabled="true" selected>Select Inventory</option>
             <option ng-repeat="inv in invForComments" value="{{inv.name}}">{{inv.name}}</option>
           </select></br>
-        </div>
+        </div> -->
         <div style="width:100%">
         <br>
           <label>Comments :</label>
@@ -799,20 +800,21 @@
 <!--END : add comments modal  -->
 <!--START : view comments modal  -->
 <div id="viewComments" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        View Comments For {{supplierDataForComment.name}}
-      </div>
-      <div class="modal-body">
-        <div class="">
+
+        <!-- <div class="">
           Selected Inventory :
           <select class="form-control" ng-model="selectedInvForView">
               <option ng-repeat="inv in viewInvForComments" value="{{inv}}">{{inv}}</option>
           </select>
-        </div>
+        </div> -->
         <br>
         <div>
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                View Comments For {{supplierDataForComment.name}}
+              </div>
+              <div class="modal-body">
           <table class="table-bordered table-striped">
             <tbody>
               <tr ng-repeat="item in commentsData[selectedInvForView]">
