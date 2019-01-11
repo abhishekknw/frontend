@@ -511,8 +511,8 @@
                                       <td>Campaign Status</td>
                                       <td>Supplier Count</td>
                                       <td>Flat Count</td>
-                                      <td>HotLeads %</td>
-                                      <td>Leads/Flat %</td>
+                                      <td>Hot Leads %</td>
+                                      <td>Total Leads %</td>
                                       <td>Hot Leads Count</td>
                                       <td>Total Leads Count</td>
 
@@ -525,13 +525,13 @@
                                         <td style="text-align:left;background-color:green;color:#ffffff !important;text-transform: capitalize;" ng-if="key == 'ongoing'">{{key}}</td>
 
                                         <td style="text-align:left; "  ng-if="key != 'ongoing'">{{data.total_suppliers_count}}</td>
-                                        <td style="text-align:left;background-color:#cb1925;color:#ffffff !important"  ng-if="key == 'ongoing'">
-                                        <a id="ref" ng-mouseover="showPopover=true;" ng-mouseleave="showPopover=false;" style="color:#ffffff;background-color:#cb1925">{{data.total_suppliers_count}}
+                                        <td id="ref"  ng-mouseover="showPopover=true;" ng-mouseleave="showPopover=false;"  style="text-align:left;background-color:#cb1925;color:#ffffff !important"  ng-if="key == 'ongoing'" >
+                                        <a style="color:#ffffff;background-color:#cb1925">{{data.total_suppliers_count}}
                                         <!-- <div class="popover" ng-show="showPopover">
                                           <div class="arrow"></div> -->
                                           <md-card ng-show="showPopover" ng-repeat="suppliers in campaignStatusData['ongoing']">
                                            <md-card-content ng-if="suppliers.extra_leads_data.length">
-                                             <table class="table table-striped" style="width:200px;">
+                                             <table class="table table-striped" style="width:200px;height:100px;overflow:auto;">
                                                <thead>
                                                  <th ng-if="suppliers.extra_leads_data.length"> <small>Date and Time</small> </th>
                                                  <th ng-if="suppliers.extra_leads_data.length"> <small>Total Leads</small> </th>
@@ -624,12 +624,12 @@
                                         <td style="text-align:left;" ng-if="key != 'ongoing'">{{data.total_leads}}</td>
                                         <td style="text-align:left;background-color:green;color:#ffffff !important" ng-if="key == 'ongoing'">{{data.total_leads}}</td>
 
-                                        <td ng-if="data.flat_count != 0 && key != 'ongoing'">{{data.hot_leads/data.flat_count * 100|limitTo:5}}</td>
-                                        <td ng-if="data.flat_count != 0 && key == 'ongoing'" style="text-align:left;background-color:green;color:#ffffff !important">{{data.hot_leads/data.flat_count * 100|limitTo:5}}</td>
+                                        <td ng-if="data.flat_count != 0 && key != 'ongoing'">{{data.hot_leads/data.flat_count * 100|limitTo:5}} %</td>
+                                        <td ng-if="data.flat_count != 0 && key == 'ongoing'" style="text-align:left;background-color:green;color:#ffffff !important">{{data.hot_leads/data.flat_count * 100|limitTo:5}} %</td>
                                         <td ng-if="data.flat_count == 0">NA</td>
 
-                                        <td ng-if="data.flat_count != 0 && key != 'ongoing'">{{data.total_leads/data.flat_count * 100|limitTo:5}}</td>
-                                        <td ng-if="data.flat_count != 0 && key == 'ongoing'" style="text-align:left;background-color:green;color:#ffffff !important">{{data.total_leads/data.flat_count * 100|limitTo:5}}</td>
+                                        <td ng-if="data.flat_count != 0 && key != 'ongoing'">{{data.total_leads/data.flat_count * 100|limitTo:5}} %</td>
+                                        <td ng-if="data.flat_count != 0 && key == 'ongoing'" style="text-align:left;background-color:green;color:#ffffff !important">{{data.total_leads/data.flat_count * 100|limitTo:5}} %</td>
                                         <td ng-if="data.flat_count == 0">NA</td>
                                       </tr>
                                       <tr style="background:#c2452f;">
@@ -3745,45 +3745,49 @@
     <!--END: INVENTORY INFO MODAL  -->
     <!--START : view comments modal  -->
     <div id="viewComments" class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <di v class="modal-header">
-            View Comments For {{supplierNameForComment}}
-          </div>
-          <div class="modal-body">
-            <div class="">
+
+            <!-- <div class="">
               Selected Inventory :
               <select class="form-control" ng-model="selectedInvForView">
                   <option ng-repeat="inv in viewInvForComments" value="{{inv}}">{{inv}}</option>
               </select>
             </div>
-            <br>
-            <div style="margin:20px;">
-              <table class="table-bordered table-striped" align="center">
-                <tbody>
-                  <tr ng-repeat="item in commentsData[selectedInvForView]">
-                    <td class="col-md-8">
-                      <div style="margin-top:10px;margin-bottom:10px">
-                        <img ng-src="{{userIcon}}">
-                        <b>{{item.user_name}} :</b> <br>
-                      </div>
-                      <div style="padding-left:30px">
-                        Comment : {{item.comment}}</br>
-                        <span> <small>{{item.timestamp|date:'medium'}}</small></span>
-                      </div><br>
-                    </td>
-                  <br>
-                  </tr>
-                </tbody>
-              </table>
+            <br> -->
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <div class="modal-header">
+                    View Comments For {{supplierNameForComment}}
+                  </div>
+                <div style="margin:20px;">
+                <table class="table-bordered table-striped" align="center">
+                  <tbody>
+                    <tr ng-repeat="item in commentsData[selectedInvForView]">
+                      <td class="col-md-8">
+                        <div style="margin-top:10px;margin-bottom:10px">
+                          <img ng-src="{{userIcon}}">
+                          <b>{{item.user_name}} :</b> <br>
+                        </div>
+                        <div style="padding-left:30px">
+                          Comment : {{item.comment}}</br>
+                          <span> <small>{{item.timestamp|date:'medium'}}</small></span>
+                        </div><br>
+                      </td>
+                    <br>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div><br>
+          </div>
+            </div>
+
+          <br>
           <!-- <div> -->
             <br>
           <!-- </div> -->
         </br></br>
-        </div>
-      </div>
+
     </div>
     <div id="addComments" class="modal fade">
       <div class="modal-dialog">

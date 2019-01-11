@@ -1040,5 +1040,12 @@ $scope.multiSelect =
         "Building ERP",
         "Door To Door",
         ];
+    $scope.changePhase = function(supplier){
+      if(supplier.booking_status == 'NB'){
+        console.log("hello");
+        supplier.phase_no = '';
+      }
+      console.log(supplier);
+    }
 
 }]);//Controller function ends here
