@@ -583,7 +583,7 @@ angular.module('catalogueApp')
     }
     console.log(data);
     angular.forEach(data.leads_form_items, function(item,index){
-      item.order_id = parseInt(index + 1);
+      item.order_id = parseInt(index);
     })
     campaignLeadsService.updateFormFields($scope.leads_form_id,data,$scope.campaignId)
     .then(function onSuccess(response){
