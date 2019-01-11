@@ -309,3 +309,43 @@ export function deleteLeadsProfilePermission(permissionId, callback) {
       });
   };
 }
+
+export function getCampaignsFormListStart() {
+  return {
+    type: types.GET_CAMPAIGNS_FORM_LIST_START
+  };
+}
+
+export function getCampaignsFormListSuccess(permissionList) {
+  return {
+    type: types.GET_CAMPAIGNS_FORM_LIST_SUCCESS,
+    data: permissionList
+  };
+}
+
+export function getCampaignsFormListFail() {
+  return {
+    type: types.GET_CAMPAIGNS_FORM_LIST_FAIL
+  };
+}
+
+export function getCampaignsFormList({ campaignId }) {
+  return (dispatch, getState) => {
+    dispatch(getCampaignsFormListStart());
+
+    const { auth } = getState();
+
+    request
+      .get(`${config.API_URL}/v0/ui/leads/${campaignId}/form`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        console.log(resp.body.data);
+        dispatch(getCampaignsFormListSuccess(resp.body.data));
+      })
+      .catch(ex => {
+        console.log('Failed to fetch entity', ex);
+
+        dispatch(getCampaignsFormListFail());
+      });
+  };
+}

@@ -2,8 +2,10 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import LeadSettings from './LeadSettings';
+import Campaigns from './Campaigns';
+import Forms from './Forms';
 
-export default class Entity extends React.Component {
+export default class Leads extends React.Component {
   componentDidMount() {
     // TODO: Fetch entity types
   }
@@ -19,6 +21,20 @@ export default class Entity extends React.Component {
             path={`${match.path}/settings`}
             render={componentProps => (
               <LeadSettings {...this.props} {...componentProps} />
+            )}
+          />
+          <Route
+            exact
+            path={`${match.path}/campaigns`}
+            render={componentProps => (
+              <Campaigns {...this.props} {...componentProps} />
+            )}
+          />
+          <Route
+            exact
+            path={`${match.path}/:campaignId`}
+            render={componentProps => (
+              <Forms {...this.props} {...componentProps} />
             )}
           />
         </Switch>
