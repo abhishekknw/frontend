@@ -414,17 +414,27 @@ angular.module('catalogueApp')
       // END: add lead form fields
       $scope.addKeyOption = function(option,index){
         console.log(option,index);
+        console.log(option);
+        // if($scope.updateForm){
+        //     index = index + 1;
+        // }
+        // console.log(option,index,$scope.leadFormFields) ;
+
         if(!$scope.leadFormFields[index].hasOwnProperty('key_options') || $scope.leadFormFields[index].key_options == undefined){
             $scope.leadFormFields[index]['key_options'] = [];
         }
         console.log($scope.leadFormFields[index]);
         $scope.leadFormFields[index]['key_options'].push(option);
-        $scope.optionForm.option = undefined;
+        $scope.option = undefined;
       }
 
         $scope.addNewKeyOption = function(option,index){
+          // if($scope.updateForm){
+          //     index = index + 1;
+          // }
+          // console.log(option,index,$scope.leadFormFields) ;
 
-          if(!$scope.newLeadFormFields[index].hasOwnProperty('key_options')){
+          if(!$scope.newLeadFormFields[index].hasOwnProperty('key_options' || $scope.newLeadFormFields[index].key_options == undefined )){
               $scope.newLeadFormFields[index]['key_options'] = [];
           }
           $scope.newLeadFormFields[index]['key_options'].push(option);
@@ -433,7 +443,7 @@ angular.module('catalogueApp')
 
           $scope.updateKeyOption = function(option,index){
             console.log(option);
-            if(!$scope.newLeadFormFields[index].hasOwnProperty('key_options')){
+            if(!$scope.newLeadFormFields[index].hasOwnProperty('key_options' || $scope.newLeadFormFields[index].key_options == undefined)){
                 $scope.newLeadFormFields[index]['key_options'] = [];
             }
             $scope.newLeadFormFields[index]['key_options'].push(option);

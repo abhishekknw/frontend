@@ -132,9 +132,9 @@
           <div class="col-md-12" ng-if="model.key_type=='RADIO' || model.key_type=='CHECKBOX' || model.key_type=='DROPDOWN'">
             Add Options:
             <br />  <br />
-            <input type="text" class="form-control" ng-model="optionForm.option">
+            <input type="text" class="form-control" ng-model="model.optionForm.option">
             <br />
-            <button class="btn btn-danger" ng-click="addKeyOption(optionForm.option,$index+1)">+</button>
+            <button class="btn btn-danger" ng-click="addKeyOption(model.optionForm.option,$index+1)">+</button>
             <div class="" ng-repeat="option in model.key_options" style="display:inline-block;">
               <button class="btn btn-primary">{{option}}</button>
                 <span ng-click="model.key_options.splice($index,1)" class="glyphicon glyphicon-remove-circle"></span>
@@ -404,9 +404,9 @@
             <div class="col-md-12" ng-if="model.key_type=='RADIO' || model.key_type=='CHECKBOX' || model.key_type=='DROPDOWN'">
               Add Options:
               <br />  <br />
-              <input type="text" class="form-control" ng-model="optionForm.option">
+              <input type="text" class="form-control" ng-model="model.optionForm.option">
               <br />
-              <button class="btn btn-danger" ng-click="addNewKeyOption(optionForm.option,$index)">+</button>
+              <button class="btn btn-danger" ng-click="addNewKeyOption(model.optionForm.option,$index)">+</button>
               <div class="" ng-repeat="option in model.key_options" style="display:inline-block;">
                 <button class="btn btn-primary">{{option}}</button>
                   <span ng-click="model.key_options.splice($index,1)" class="glyphicon glyphicon-remove-circle"></span>
@@ -456,9 +456,9 @@
             <div class="col-md-12" ng-if="model.key_type=='RADIO' || model.key_type=='CHECKBOX' || model.key_type=='DROPDOWN'">
               Add Options:
               <br />  <br />
-              <input type="text" class="form-control" ng-model="optionForm.option">
+              <input type="text" class="form-control" ng-model="model.optionForm.option">
               <br />
-              <button class="btn btn-danger" ng-click="addNewKeyOption(optionForm.option,$index)">+</button>
+              <button class="btn btn-danger" ng-click="addNewKeyOption(model.optionForm.option,$index+1)">+</button>
               <div class="" ng-repeat="option in model.key_options" style="display:inline-block;">
                 <button class="btn btn-primary">{{option}}</button>
                   <span ng-click="model.key_options.splice($index,1)" class="glyphicon glyphicon-remove-circle"></span>
