@@ -23,7 +23,8 @@
       <form name="leadForm"  style="margin:5%;" ng-if="!viewLeads">
       <div class="" ng-repeat="item in leadModelData">
         <div class="form-group" style="padding-bottom:0;padding-top:0;">
-          <div class="cols-sm-10" ng-if="item.key_type != 'RADIO' && item.key_type != 'CHECKBOX' && item.key_type != 'DROPDOWN' && item.key_type != 'EMAIL' && item.key_type != 'PHONE' && item.key_type != 'TEXTAREA' && !item.hot_lead_criteria">
+          <div class="cols-sm-10" ng-if="(item.key_type != 'RADIO' && item.key_type != 'CHECKBOX' && item.key_type != 'DROPDOWN' && item.key_type != 'EMAIL' && item.key_type != 'PHONE' && item.key_type != 'TEXTAREA' && !item.hot_lead_criteria) ||
+                                (item.key_type != 'RADIO' && item.key_type != 'CHECKBOX' && item.key_type != 'DROPDOWN' && item.key_type != 'EMAIL' && item.key_type != 'PHONE' && item.key_type != 'TEXTAREA' && item.hot_lead_criteria)">
             {{item.key_name}}
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
@@ -63,7 +64,8 @@
           </div>
 
           <div class="form-group" style="padding-bottom:0;padding-top:0;">
-            <div class="cols-sm-10" ng-if="item.key_type == 'RADIO' && !item.hot_lead_criteria">
+            <div class="cols-sm-10" ng-if="(item.key_type == 'RADIO' && !item.hot_lead_criteria)
+                        || (item.key_type == 'RADIO' && item.hot_lead_criteria)">
               {{item.key_name}}
               <div class="input-group" ng-repeat="option in item.key_options">
                 <!-- <span class="form-check-input"></span> -->
@@ -72,23 +74,18 @@
             </div>
           </div>
           <div class="form-group" style="padding-bottom:0;padding-top:0;">
-            <div class="cols-sm-10" ng-if="item.key_type == 'CHECKBOX' && !item.hot_lead_criteria" ng-init="getCheckBoxValues(item.key_options)">
+            <div class="cols-sm-10" ng-if="(item.key_type == 'CHECKBOX' && !item.hot_lead_criteria)
+                    || (item.key_type == 'CHECKBOX' && item.hot_lead_criteria)"
+                    ng-init="getCheckBoxValues(item.key_options)">
               {{item.key_name}}
               <div class="input-group" ng-repeat="option in leadChBoxKeyOptions">
                 <input type="checkbox" class="form-check-input"  value="{{option}}"  name="chbox" ng-model="option.selected"  ng-click="setCheckBoxValue(option.selected,$index,item)"/>{{option.name}}
               </div>
             </div>
           </div>
-          <div class="form-group" style="padding-bottom:0;padding-top:0;">
-            <div class="cols-sm-10" ng-if="item.hot_lead_criteria">
-              {{item.key_name}}
-              <div class="input-group">
-                <!-- <span class="form-check-input"></span> -->
-                <input type="checkbox" class="form-check-input"  value="{{item.hot_lead_criteria}}"  ng-model="hotLeadValue" ng-click="setHotLeadValue(item,hotLeadValue)" ng-checked="item.value == item.hot_lead_criteria"/>{{item.hot_lead_criteria}}
-              </div>
-            </div>
-          </div>
-          <div class="form-group" style="padding-bottom:0;padding-top:0;" ng-if="!item.hot_lead_criteria">
+
+          <div class="form-group" style="padding-bottom:0;padding-top:0;" ng-if="(item.key_type == 'DROPDOWN' && !item.hot_lead_criteria) ||
+                              (item.key_type == 'DROPDOWN' && item.hot_lead_criteria)">
               <span ng-if="item.key_type == 'DROPDOWN'">{{item.key_name}}</span>
               <select ng-if="item.key_type == 'DROPDOWN'" class="form-control" ng-model="item.value">
                 <option ng-repeat="option in item.key_options" value="{{option}}">{{option}}</option>

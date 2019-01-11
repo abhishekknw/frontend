@@ -952,8 +952,8 @@ $scope.multiSelect =
     })
   }
 
-  $scope.uploadImage = function(file){
-    $scope.permissionBoxFile = file;
+  $scope.uploadImagePermission = function(file){
+        $scope.permissionBoxFile = file;
   }
   $scope.permissionBoxData = {};
   $scope.uploadPermissionBoxImage = function(supplier){
@@ -966,7 +966,7 @@ $scope.multiSelect =
               url: constants.base_url + constants.url_base + "hashtag-images/" + $scope.campaign_id +constants.upload_permission_box_image_url,
               data: {
                 file: $scope.permissionBoxFile,
-                'comment' : $scope.permissionBoxData.comment||'',
+                'comment' : supplier.permissionComment||'',
                 'object_id' : supplier.supplier_id,
                 'hashtag' : 'Permission Box',
                 'campaign_name' : $scope.releaseDetails.campaign.name,
@@ -976,7 +976,7 @@ $scope.multiSelect =
               headers: {'Authorization': 'JWT ' + token}
           }).then(function onSuccess(response){
               console.log(response);
-
+                supplier.permissionComment = '';
                 // uploaded_image = {'image_path': response.data.data };
                 // inventory.images.push(uploaded_image);
                 cfpLoadingBar.complete();
@@ -987,6 +987,9 @@ $scope.multiSelect =
             cfpLoadingBar.complete();
             console.log(response);
           });
+        }
+        else {
+          swal(constants.name, "Max 2MB Supported, Your Image Size Exceeds", constants.warning);
         }
       }
       $scope.getPermissionBoxImages = function(supplier){

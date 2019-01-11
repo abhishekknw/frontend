@@ -413,13 +413,14 @@ angular.module('catalogueApp')
 
       // END: add lead form fields
       $scope.addKeyOption = function(option,index){
-
-        if(!$scope.leadFormFields[index].hasOwnProperty('key_options')){
+        console.log(option,index);
+        if(!$scope.leadFormFields[index].hasOwnProperty('key_options') || $scope.leadFormFields[index].key_options == undefined){
             $scope.leadFormFields[index]['key_options'] = [];
         }
+        console.log($scope.leadFormFields[index]);
         $scope.leadFormFields[index]['key_options'].push(option);
         $scope.optionForm.option = undefined;
-        }
+      }
 
         $scope.addNewKeyOption = function(option,index){
 
@@ -582,7 +583,7 @@ angular.module('catalogueApp')
     }
     console.log(data);
     angular.forEach(data.leads_form_items, function(item,index){
-      item.order_id = index + 1;
+      item.order_id = parseInt(index);
     })
     campaignLeadsService.updateFormFields($scope.leads_form_id,data,$scope.campaignId)
     .then(function onSuccess(response){
