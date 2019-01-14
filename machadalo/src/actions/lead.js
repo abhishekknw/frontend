@@ -349,3 +349,46 @@ export function getCampaignsFormList({ campaignId }) {
       });
   };
 }
+
+export function postLeadFormStart() {
+  return {
+    type: types.POST_LEAD_FORM_START
+  };
+}
+
+export function postLeadFormSuccess(entity) {
+  return {
+    type: types.POST_LEAD_FORM_SUCCESS,
+    data: entity
+  };
+}
+
+export function postLeadFormFail() {
+  return {
+    type: types.POST_LEAD_FORM_FAIL
+  };
+}
+
+export function postLeadForm({ data }, callback) {
+  return (dispatch, getState) => {
+    dispatch(postLeadFormStart());
+
+    const { auth } = getState();
+
+    request
+      .post(`${config.API_URL}/v0/ui/leads/${data.campaignId}/create`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .send(data)
+      .then(resp => {
+        dispatch(postLeadFormSuccess(resp.data));
+        if (callback) {
+          callback();
+        }
+      })
+      .catch(ex => {
+        console.log('Failed to create entity', ex);
+
+        dispatch(postLeadFormFail());
+      });
+  };
+}

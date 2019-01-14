@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import LeadSettings from './LeadSettings';
 import Campaigns from './Campaigns';
 import Forms from './Forms';
+import CreateForm from './CreateForm';
 
 export default class Leads extends React.Component {
   componentDidMount() {
@@ -32,9 +33,16 @@ export default class Leads extends React.Component {
           />
           <Route
             exact
-            path={`${match.path}/:campaignId`}
+            path={`${match.path}/:campaignId/form`}
             render={componentProps => (
               <Forms {...this.props} {...componentProps} />
+            )}
+          />
+          <Route
+            exact
+            path={`${match.path}/:campaignId/createForm`}
+            render={componentProps => (
+              <CreateForm {...this.props} {...componentProps} />
             )}
           />
         </Switch>
