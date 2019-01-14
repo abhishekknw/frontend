@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-import './index.css';
+import '../Checklist/index.css';
 
 export default class Campaigns extends React.Component {
   constructor() {
