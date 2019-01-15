@@ -26,7 +26,12 @@ export default class Forms extends React.Component {
       <tr key={campaignsFormList.leads_form_id}>
         <td>{campaignsFormList.leads_form_name}</td>
         <td>
-          <Link to={`/r/leads/`} className="btn btn--danger">
+          <Link
+            to={`/r/leads/${this.props.match.params.campaignId}/editForm/${
+              campaignsFormList.leads_form_id
+            }`}
+            className="btn btn--danger"
+          >
             Form Details
           </Link>
         </td>

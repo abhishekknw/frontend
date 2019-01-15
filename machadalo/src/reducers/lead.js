@@ -6,7 +6,8 @@ export const leads = createReducer(
     leadPermissionList: [],
     leadProfilePermission: [],
     currentProfilePermissionId: undefined,
-    campaignsFormList: []
+    campaignsFormList: [],
+    leadForm: {}
   },
 
   {
@@ -59,6 +60,22 @@ export const leads = createReducer(
     [types.GET_CAMPAIGNS_FORM_LIST_FAIL](state) {
       return Object.assign({}, state, {
         campaignsFormList: []
+      });
+    },
+    [types.GET_LEAD_FORM_SUCCESS](state, action) {
+      console.log(action.data);
+      return Object.assign({}, state, {
+        leadForm: action.data
+      });
+    },
+    [types.GET_LEAD_FORM_START](state) {
+      return Object.assign({}, state, {
+        leadForm: {}
+      });
+    },
+    [types.GET_LEAD_FORM_FAIL](state) {
+      return Object.assign({}, state, {
+        leadForm: {}
       });
     }
   }

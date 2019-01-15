@@ -23,7 +23,6 @@ const AttributeTypes = [
   { value: 'TEXTAREA', label: 'Textarea' },
   { value: 'DATE', label: 'Date' }
 ];
-
 // Get attribute type option from string
 const getAttributeTypeOption = value => {
   for (let i = 0, l = AttributeTypes.length; i < l; i += 1) {
@@ -35,15 +34,14 @@ const getAttributeTypeOption = value => {
   return { value };
 };
 
-export default class CreateForm extends React.Component {
+export default class EditLeadForm extends React.Component {
   constructor() {
     super();
 
     this.state = {
       name: '',
-      leads_form_items: [
-        { key_name: '', key_type: '', is_required: false, order_id: 1 }
-      ],
+      leads_form_items: [],
+      leads_form_id: '',
       showOptionModal: false,
       attributeOptions: [''],
       attributeInfo: {}
@@ -59,11 +57,31 @@ export default class CreateForm extends React.Component {
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
   }
 
-  componentWillMount() {}
+  componentWillMount() {
+    this.props.getLeadForm(this.props.match.params.leadFormId);
+  }
 
   componentDidUpdate() {
+    if (
+      Object.keys(this.props.leads.leadForm).length != 0 &&
+      this.state.leads_form_items.length == 0
+    ) {
+      let leads_form_items = this.props.leads.leadForm.leads_form_items;
+
+      let result = Object.keys(leads_form_items).map(function(key) {
+        return leads_form_items[key];
+      });
+
+      this.setState({
+        leads_form_items: result,
+        name: this.props.leads.leadForm.leads_form_name,
+        leads_form_id: this.props.leads.leadForm.leads_form_id
+      });
+    }
+
     const { match } = this.props;
     this.campaignId = match.params.campaignId;
+    console.log(this.campaignId);
   }
 
   onCancelOptionModal() {
@@ -104,18 +122,23 @@ export default class CreateForm extends React.Component {
     event.preventDefault();
 
     let data = {
-      leads_form_name: this.state.name,
-      leads_form_items: this.state.leads_form_items,
-      campaignId: this.campaignId
+      name: this.state.name,
+      leads_form_id: this.state.leads_form_id,
+      leads_form_items: this.state.leads_form_items
     };
-    console.log(data);
 
-    this.props.postLeadForm({ data }, () => {
-      toastr.success('', 'Lead Form created successfully');
-      this.props.history.push(
-        `/r/leads/${this.props.match.params.campaignId}/form`
-      );
-    });
+    this.props.updateLeadForm(
+      {
+        data,
+        leadFormId: data.leads_form_id
+      },
+      () => {
+        toastr.success('', 'Lead Form updated successfully');
+        this.props.history.push(
+          `/r/leads/${this.props.match.params.campaignId}/form`
+        );
+      }
+    );
   }
 
   onAddAttribute() {
@@ -125,7 +148,7 @@ export default class CreateForm extends React.Component {
       key_name: '',
       key_type: '',
       is_required: false,
-      order_id: newAttributes.length + 1
+      order_id: newAttributes.lenght + 1
     });
 
     this.setState({
@@ -137,7 +160,6 @@ export default class CreateForm extends React.Component {
     const attributes = this.state.leads_form_items.slice();
 
     attributes.splice(index, 1, attribute);
-
     this.setState({
       leads_form_items: attributes
     });
@@ -159,7 +181,11 @@ export default class CreateForm extends React.Component {
     };
 
     const onTypeChange = item => {
-      if (item.value === 'DROPDOWN') {
+      if (
+        item.value === 'DROPDOWN' ||
+        item.value === 'CHECKBOX' ||
+        item.value === 'RADIO'
+      ) {
         this.setState({
           showOptionModal: true,
           columnOptions: [''],
@@ -170,28 +196,7 @@ export default class CreateForm extends React.Component {
           }
         });
       }
-      if (item.value === 'RADIO') {
-        this.setState({
-          showOptionModal: true,
-          columnOptions: [''],
-          attributeInfo: {
-            attributeType: item.value,
-            attribute,
-            attrIndex
-          }
-        });
-      }
-      if (item.value === 'CHECKBOX') {
-        this.setState({
-          showOptionModal: true,
-          columnOptions: [''],
-          attributeInfo: {
-            attributeType: item.value,
-            attribute,
-            attrIndex
-          }
-        });
-      }
+
       const newAttribute = Object.assign({}, attribute);
 
       newAttribute.key_type = item.value;
@@ -235,7 +240,7 @@ export default class CreateForm extends React.Component {
                 style={optionStyle}
                 onClick={() =>
                   this.onOpenOptionModal(
-                    attribute.options,
+                    attribute.key_options,
                     attribute.key_type,
                     attribute,
                     attribute.attrIndex
@@ -248,7 +253,6 @@ export default class CreateForm extends React.Component {
               ''
             )}
           </div>
-          <br />
 
           <div className="form-control required-field">
             <div>Is it required?</div>
@@ -268,7 +272,7 @@ export default class CreateForm extends React.Component {
     return (
       <div className="createform">
         <div className="createform__title">
-          <h3>Create Lead Form </h3>
+          <h3>Edit Lead Form </h3>
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
