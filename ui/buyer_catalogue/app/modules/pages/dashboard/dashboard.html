@@ -29,7 +29,7 @@
     <link href="css/custom.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
     <link rel="stylesheet" type="text/css" href="modules/pages/dashboard/chat.css">
-
+<script data-require="jquery@*" data-semver="2.1.4" src="https://code.jquery.com/jquery-2.1.4.js"></script>
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon-96x96.png">
@@ -2013,7 +2013,7 @@
                               </div>
                               <div class="campaigndetailtable">
                                 <div class="table-responsive">
-                                  <table class="table table-striped" st-table="LeadsByCampaign" st-safe-src="Data">
+                                  <table class="table table-striped"  st-table="LeadsByCampaign" st-safe-src="Data">
                                     <thead>
                                       <tr>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Details</th>
@@ -2086,7 +2086,7 @@
 
                                     </tbody>
                                   </table>
-                                  <br> <br>
+                                  <br><br />
                                   <table class="table table-striped" st-table="LeadsByCampaign" st-safe-src="Data">
                                     <div class="panel panel-primary">
                                       <div class="panel-heading content-title">
@@ -2248,6 +2248,7 @@
 
                                     </tbody>
                                   </table>
+                                  <br />
                                 </div>
                               </div>
                             </div>
@@ -2353,6 +2354,7 @@
                                   </table>
                                 </div>
                               </div>
+                              <br>
                             </div>
                             <div class="col-lg-6">
                             <div class="panel panel-primary">
@@ -2419,6 +2421,7 @@
                                 </table>
                               </div>
                             </div>
+                            <br>
                           </div>
                               <!-- <div class="col-lg-6">
                                 <div class="panel panel-primary">
@@ -2600,7 +2603,9 @@
   </div>
   <div class="campaigndetailtable">
     <div class="table-responsive">
-      <table class="table table-striped" st-table="campaignSummary">
+    <button class="btn btn-danger pull-right" ng-click="exportToExcel('#customer1')"><span class="glyphicon glyphicon-download-alt"></span></button>
+    <br />
+      <table class="table table-striped" id="customer1" st-table="campaignSummary">
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Details</th>
@@ -2709,7 +2714,8 @@
   </div>
   <div class="campaigndetailtable">
     <div class="table-responsive">
-      <table class="table table-striped" st-table="campaignSummary">
+    <button class="btn btn-danger pull-right" ng-click="exportToExcel('#customer2')"><span class="glyphicon glyphicon-download-alt"></span></button>
+      <table class="table table-striped" id="customer2"  st-table="campaignSummary">
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
@@ -2747,10 +2753,12 @@
       <label for="Location">Overall Statistical Details</label>
     </div>
   </div>
-  <br> <br>
+  <br>
   <div class="campaigndetailtable">
-    <div class="table-responsive">
-  <table class="table table-striped" st-table="campaignSummary">
+  <div class="table-responsive">
+  <button class="btn btn-danger pull-right" ng-click="exportToExcel('#customer3')"><span class="glyphicon glyphicon-download-alt"></span></button>
+
+  <table class="table table-striped" id="customer3"  st-table="campaignSummary">
     <thead>
       <tr>
         <th style="background:#8e1921 !important;color:#ffffff !important">Type</th>
@@ -2907,7 +2915,8 @@
   </div>
   <div class="campaigndetailtable">
     <div class="table-responsive">
-      <table class="table table-striped" st-table="campaignSummary">
+      <button class="btn btn-danger pull-right" ng-click="exportToExcel('#customer4')"><span class="glyphicon glyphicon-download-alt"></span></button>
+      <table class="table table-striped" id="customer4"  st-table="campaignSummary">
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
@@ -3004,7 +3013,8 @@
   </div>
   <div class="campaigndetailtable">
     <div class="table-responsive">
-      <table class="table table-striped" st-table="campaignSummary">
+      <button class="btn btn-danger pull-right" ng-click="exportToExcel('#customer5')"><span class="glyphicon glyphicon-download-alt"></span></button>
+      <table class="table table-striped" id="customer5"  st-table="campaignSummary">
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
@@ -3100,7 +3110,8 @@
   </div>
   <div class="campaigndetailtable">
     <div class="table-responsive">
-      <table class="table table-striped" st-table="campaignSummary">
+      <button class="btn btn-danger pull-right" ng-click="exportToExcel('#customer6')"><span class="glyphicon glyphicon-download-alt"></span></button>
+      <table class="table table-striped" id="customer6"  st-table="campaignSummary">
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
