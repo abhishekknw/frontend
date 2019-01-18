@@ -130,7 +130,8 @@
           leads : 'leads',
           multipleLeads : 'multipleLeads',
           overall : 'overall',
-          blank : 'blank'
+          blank : 'blank',
+          distributedstatisticsgraphs : 'distributedstatisticsgraphs'
         };
         $scope.showPerfMetrics = false;
 
@@ -961,13 +962,33 @@
           "chart": {
             "type": "lineChart",
             "height": 450,
+            "margin": {
+              "top": 100,
+              "right": 20,
+              "bottom": 145,
+              "left": 100
+            },
             "useInteractiveGuideline": true,
-            "dispatch": {},
+            x: function(d,i){ return d.x; },
+            y: function(d){ return d.y; },
+            "dispatch": {
+                  stateChange: function(e){ console.log("stateChange"); },
+                  changeState: function(e){ console.log("changeState"); },
+                  tooltipShow: function(e){ console.log("tooltipShow"); },
+                  tooltipHide: function(e){ console.log("tooltipHide"); }
+              },
             "xAxis": {
               "axisLabel": "Campaigns",
-              tickFormat: function(d) {
-                return d.y;
-              }
+              "showMaxMin":false,
+              tickFormat : function (d) {
+                console.log($scope.x[d]);
+                          return $scope.x[d];
+                },
+              // tickFormat: function(d){
+              //   console.log($scope.x[d]);
+              //           return $scope.x[d];
+              //       },
+                     "rotateLabels" : -30
             },
             "yAxis": {
               "axisLabel": "",
@@ -3142,10 +3163,12 @@ $scope.getCampaignWiseSummary = function(){
       $scope.thisWeekSummaryStackedBarChart= angular.copy(thisWeekSummaryStackedBar);
       $scope.last2WeekSummaryStackedBarChart= angular.copy(last2WeekSummaryStackedBar);
       $scope.last3WeekSummaryStackedBarChart= angular.copy(last3WeekSummaryStackedBar);
+
       $scope.stackedBarAllCampaignWiseChart = formatAllCampaignWiseChart($scope.overallCampaignSummary);
       $scope.stackedBarLastWeekChart = formatLastWeekWiseChart($scope.lastWeekCampaignSummary);
       $scope.stackedBarLast2WeeksChart = formatLast2WeekWiseChart($scope.last2WeeksCampaignSummary);
       $scope.stackedBarLast3WeeksChart = formatLast3WeekWiseChart($scope.last3WeeksCampaignSummary);
+
       cfpLoadingBar.complete();
   }).catch(function onError(response){
         console.log(response);
@@ -3317,6 +3340,7 @@ $scope.getCampaignWiseSummary = function(){
      return temp_data;
    }
 
+
   $scope.exportData = function () {
   $('#customer1').tableExport({ type: 'csv', escape: 'false' });
   $('#customer2').tableExport({ type: 'csv', escape: 'false' });
@@ -3334,7 +3358,75 @@ $scope.getCampaignWiseSummary = function(){
   $timeout(function(){location.href=exportHref;},100); // trigger download
   }
 
-//END
+
+    $scope.getDistributionGraphsStatics = function(){
+      $scope.IsVisible = false;
+
+      console.log($scope.campaignIdForPerfMetrics);
+      var data =  {
+             "data_scope": {"1":{"category": "unordered", "level": "campaign", "match_type": 0,
+                 "values": {"exact": [$scope.campaignIdForPerfMetrics]}, "value_type": "campaign"}},
+             "data_point": {
+                 "category": "unordered",
+                 "level": ["supplier","campaign"]
+             },
+             "raw_data": [
+                 "lead", "hot_lead","flat"
+             ],
+             "metrics": [["1","3","/"],["m1",100,"*"]],
+             "statistical_information":{"stats":["z_score"], "metrics":["m1"]},
+             "higher_level_statistical_information":{"level":["campaign"],"stats":["frequency_distribution"],
+                 "metrics":["m2"]
+             }
+          }
+
+
+      DashboardService.getDistributionGraphsStatics(data)
+      .then(function onSuccess(response){
+        console.log(response);
+        $scope.lineChartLeadsDistributed = angular.copy(lineChart);
+
+        $scope.lineChartForLeadsDistributedGraphs = formatLineChartForLeadsDistributedGraph(response.data.data);
+
+
+      }).catch(function onError(response){
+        console.log(response);
+        })
+    }
+
+
+    var formatLineChartForLeadsDistributedGraph = function(data){
+        var values1 = [];
+        var index = 0;
+        $scope.x = [];
+      angular.forEach(data.higher_group_data, function(data,key){
+        angular.forEach(data['freq_dist_lead/flat*100'], function(data,key){
+          $scope.distributedGraphValue = data;
+          console.log($scope.distributedGraphValue);
+          console.log(key);
+          $scope.showPerfMetrics = $scope.perfMetrics.leads;
+          $scope.showPerfMetrics = $scope.perfMetrics.distributedstatisticsgraphs;
+
+             $scope.x.push(key);
+              var value1 =
+                 { x : index , y : data.mode};
+                index++;
+              values1.push(value1);
+            })
+
+      })
+      var temp_data = [
+        {
+          key : "Distribution Gussian Curve",
+          color : constants.colorKey1,
+          values : values1
+        }
+      ];
+
+      return temp_data;
+    }
+
+// END
 
 })
 

@@ -2594,6 +2594,53 @@
                           </div>
                         </div>
 
+                      <br />
+                      <div class="row">
+                      <button type="button" class="btn btn-danger" name="button" ng-if="showPerfMetrics == perfMetrics.leads" ng-click="getDistributionGraphsStatics()">Distribution Leads Graphs</button>
+                      <button type="button" class="btn btn-danger" name="button" ng-if="showPerfMetrics == perfMetrics.leads" ng-click="getDistributionGraphsHotLeadsStatics()">Distribution Hot Leads Graphs</button>
+                      </div>
+                      <div class="col-md-12" style="margin-top:50px;" ng-if="showPerfMetrics == perfMetrics.distributedstatisticsgraphs">
+                        <div class="col-md-12">
+                          <div class="panel-heading content-title">
+                              <h4 style="text-align: center">Distributed Graphs for MEAN MEDIAN MODE</h4>
+                          </div>
+                          <div class="col-md-12" ng-scrollable>
+                            <div class="outerdistributed">
+                              <div class="innerdistributed">
+                                <nvd3 options="lineChartLeadsDistributed" data="lineChartForLeadsDistributedGraphs"></nvd3>
+                                <nvd3 options="lineChartHotLeadsDistributed" data="lineChartForHotLeadsDistributedGraphs"></nvd3>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px;">
+                          <div class="panel-heading content-title">
+                              <h4 style="text-align: center">Summary for Distributed Graphs Statistics</h4>
+                          </div>
+                          <table class="table table-striped"  st-table="LeadsByCampaign" st-safe-src="Data">
+                            <thead>
+                                <tr>
+                                  <th style="background:#8e1921 !important;color:#ffffff !important">Mean</th>
+                                  <th style="background:#8e1921 !important;color:#ffffff !important">Median</th>
+                                  <th style="background:#8e1921 !important;color:#ffffff !important">Mode</th>
+                                  <th style="background:#8e1921 !important;color:#ffffff !important">Standard Deviation</th>
+                                  <th style="background:#8e1921 !important;color:#ffffff !important">Varian</th>
+                                </tr>
+                          </thead>
+                            <tbody style="text-align:center;">
+                              <tr>
+                                <!-- <td style="font-weight:bold">{{key}}</td> -->
+                                <td>{{Data.overall_data.supplier_stats.total.percentage_by_flat | limitTo:5}} %</td>
+                                <td>{{Data.overall_data.supplier_stats.total.median_percent_by_flat | limitTo:5}} %</td>
+                                <td>{{Data.overall_data.supplier_stats.total.mode_percent_by_flat | limitTo:5}} %</td>
+                                <td>{{Data.overall_data.supplier_stats.total.mode_percent_by_flat | limitTo:5}} %</td>
+                                <td>{{Data.overall_data.supplier_stats.total.mode_percent_by_flat | limitTo:5}} %</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                    </div>
+
 <!-- Start Weekly Master (ALL Cities)-->
 <div class="col-lg-12" ng-if="selectAllCampaignLeads">
   <div class="panel panel-primary">
