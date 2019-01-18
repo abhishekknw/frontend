@@ -2597,7 +2597,7 @@
                       <br />
                       <div class="row">
                       <button type="button" class="btn btn-danger" name="button" ng-if="showPerfMetrics == perfMetrics.leads" ng-click="getDistributionGraphsStatics()">Distribution Leads Graphs</button>
-                      <button type="button" class="btn btn-danger" name="button" ng-if="showPerfMetrics == perfMetrics.leads" ng-click="getDistributionGraphsHotLeadsStatics()">Distribution Hot Leads Graphs</button>
+                      <button type="button" class="btn btn-danger" name="button" ng-if="showPerfMetrics == perfMetrics.leads" ng-click="getDistributionGraphsStatics()">Distribution Hot Leads Graphs</button>
                       </div>
                       <div class="col-md-12" style="margin-top:50px;" ng-if="showPerfMetrics == perfMetrics.distributedstatisticsgraphs">
                         <div class="col-md-12">
@@ -2608,7 +2608,7 @@
                             <div class="outerdistributed">
                               <div class="innerdistributed">
                                 <nvd3 options="lineChartLeadsDistributed" data="lineChartForLeadsDistributedGraphs"></nvd3>
-                                <nvd3 options="lineChartHotLeadsDistributed" data="lineChartForHotLeadsDistributedGraphs"></nvd3>
+                                <nvd3 options="lineChartLeadsDistributed" data="lineChartForHotLeadsDistributedGraphs"></nvd3>
                               </div>
                             </div>
                           </div>

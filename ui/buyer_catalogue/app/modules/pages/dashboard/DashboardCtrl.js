@@ -3370,13 +3370,13 @@ $scope.getCampaignWiseSummary = function(){
                  "category": "unordered",
                  "level": ["supplier","campaign"]
              },
-             "raw_data": [
-                 "lead", "hot_lead","flat"
-             ],
-             "metrics": [["1","3","/"],["m1",100,"*"]],
-             "statistical_information":{"stats":["z_score"], "metrics":["m1"]},
+             "raw_data": ["lead", "hot_lead","flat"],
+             "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"]],
+             // "metrics": [["2","3","/"],["m1",100,"*"]],
+             // "metrics" :[["1","3","/"],["2","3","/"],["m1","100","*"],["m2","100","*"]],
+             "statistical_information":{"stats":["z_score"], "metrics":["m1","m3"]},
              "higher_level_statistical_information":{"level":["campaign"],"stats":["frequency_distribution"],
-                 "metrics":["m2"]
+             "metrics":["m2","m4"]
              }
           }
 
@@ -3387,6 +3387,7 @@ $scope.getCampaignWiseSummary = function(){
         $scope.lineChartLeadsDistributed = angular.copy(lineChart);
 
         $scope.lineChartForLeadsDistributedGraphs = formatLineChartForLeadsDistributedGraph(response.data.data);
+        $scope.lineChartForHotLeadsDistributedGraphs = formatLineChartForHotLeadsDistributedGraph(response.data.data);
 
 
       }).catch(function onError(response){
@@ -3426,6 +3427,36 @@ $scope.getCampaignWiseSummary = function(){
       return temp_data;
     }
 
+    var formatLineChartForHotLeadsDistributedGraph = function(data){
+        var values1 = [];
+        var index = 0;
+        $scope.x = [];
+      angular.forEach(data.higher_group_data, function(data,key){
+        angular.forEach(data['freq_dist_hot_lead/flat*100'], function(data,key){
+          $scope.distributedGraphValue = data;
+          console.log($scope.distributedGraphValue);
+          console.log(key);
+          $scope.showPerfMetrics = $scope.perfMetrics.leads;
+          $scope.showPerfMetrics = $scope.perfMetrics.distributedstatisticsgraphs;
+
+             $scope.x.push(key);
+              var value1 =
+                 { x : index , y : data.mode};
+                index++;
+              values1.push(value1);
+            })
+
+      })
+      var temp_data = [
+        {
+          key : "Distribution Gussian Curve",
+          color : constants.colorKey1,
+          values : values1
+        }
+      ];
+
+      return temp_data;
+    }
 // END
 
 })
