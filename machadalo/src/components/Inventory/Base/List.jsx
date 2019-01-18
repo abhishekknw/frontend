@@ -30,7 +30,7 @@ export default class List extends React.Component {
         <td>
           <Link
             type="button"
-            to={`/r/inventory/edit/${baseInventory._id}`}
+            to={`/r/inventory/base/edit/${baseInventory._id}`}
             className="btn btn--danger"
           >
             Edit Inventory
@@ -41,14 +41,11 @@ export default class List extends React.Component {
   }
   render() {
     const { baseInventory } = this.props;
-    let headingText = 'All Organisation Base Inventories';
-    let emptyBaseInventoryListText =
-      'No base inventory available. Create your first one now!';
-    let baseInventoryCreateUrl = `/r/inventory/create/`;
+
     return (
       <div className="list">
         <div className="list__title">
-          <h3>{headingText}</h3>
+          <h3>All Organisation Base Inventories</h3>
         </div>
         <div className="list__filter">
           <input type="text" placeholder="Search..." />
@@ -68,7 +65,9 @@ export default class List extends React.Component {
                 baseInventory.baseInventoryList.map(this.renderBaseInventoryRow)
               ) : (
                 <tr>
-                  <td colSpan="5">{emptyBaseInventoryListText}</td>
+                  <td colSpan="5">
+                    No base inventory available. Create your first one now!
+                  </td>
                 </tr>
               )}
             </tbody>
@@ -76,7 +75,7 @@ export default class List extends React.Component {
         </div>
 
         <div className="list__actions">
-          <Link to={baseInventoryCreateUrl} className="btn btn--danger">
+          <Link to="/r/inventory/base/create/" className="btn btn--danger">
             Create
           </Link>
         </div>

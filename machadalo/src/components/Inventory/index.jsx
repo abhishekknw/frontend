@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Create from './Create';
-import List from './List';
-import Edit from './Edit';
+import BaseCreate from './Base/Create';
+import BaseList from './Base/List';
+import BaseEdit from './Base/Edit';
 
 import './index.css';
 
@@ -20,23 +20,23 @@ export default class Inventory extends React.Component {
         <Switch>
           <Route
             exact
-            path={`${match.path}/create`}
+            path={`${match.path}/base/create`}
             render={componentProps => (
-              <Create {...this.props} {...componentProps} />
+              <BaseCreate {...this.props} {...componentProps} />
             )}
           />
           <Route
             exact
-            path={`${match.path}/list`}
+            path={`${match.path}/base/list`}
             render={componentProps => (
-              <List {...this.props} {...componentProps} />
+              <BaseList {...this.props} {...componentProps} />
             )}
           />
           <Route
             exact
-            path={`${match.path}/edit/:baseInventoryId`}
+            path={`${match.path}/base/edit/:baseInventoryId`}
             render={componentProps => (
-              <Edit {...this.props} {...componentProps} />
+              <BaseEdit {...this.props} {...componentProps} />
             )}
           />
         </Switch>

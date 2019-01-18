@@ -10,11 +10,13 @@ export default class Sidebar extends React.Component {
     this.state = {
       hideChecklistDropdown: true,
       hideLeadsDropdown: true,
-      hideEntitiesDropdown: true
+      hideEntitiesDropdown: true,
+      hideInventoryDropdown: true
     };
     this.toggleChecklistDropdown = this.toggleChecklistDropdown.bind(this);
     this.toggleLeadsDropdown = this.toggleLeadsDropdown.bind(this);
     this.toggleEntitiesDropdown = this.toggleEntitiesDropdown.bind(this);
+    this.toggleInventoryDropdown = this.toggleInventoryDropdown.bind(this);
   }
 
   toggleChecklistDropdown() {
@@ -32,6 +34,12 @@ export default class Sidebar extends React.Component {
   toggleEntitiesDropdown() {
     this.setState({
       hideEntitiesDropdown: !this.state.hideEntitiesDropdown
+    });
+  }
+
+  toggleInventoryDropdown() {
+    this.setState({
+      hideInventoryDropdown: !this.state.hideInventoryDropdown
     });
   }
 
@@ -125,11 +133,25 @@ export default class Sidebar extends React.Component {
                   </li>
                 </ul>
               </li>
-              <li>
-                <a href="/r/inventory/list">
-                  <i className="fa fa-list" aria-hidden="true" />
+              <li className="dropdown-list-parent">
+                <div
+                  className="parent-list"
+                  onClick={this.toggleInventoryDropdown}
+                >
+                  <i className="fa fa-cubes" aria-hidden="true" />
                   Inventory
-                </a>
+                </div>
+                <ul
+                  className="dropdown-list-child"
+                  hidden={this.state.hideInventoryDropdown}
+                >
+                  <li>
+                    <NavLink to="/r/inventory/base/list">
+                      <i className="fa fa-list" aria-hidden="true" />
+                      Base Inventory
+                    </NavLink>
+                  </li>
+                </ul>
               </li>
               <li className="dropdown-list-parent">
                 <div

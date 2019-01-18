@@ -2,7 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
 
-import OptionModal from '../Modals/OptionModal';
+import OptionModal from './../../Modals/OptionModal';
 
 const optionStyle = {
   fontSize: '12px',
@@ -30,13 +30,15 @@ const getAttributeTypeOption = value => {
   return { value };
 };
 
-export default class CreateType extends React.Component {
+export default class Edit extends React.Component {
   constructor() {
     super();
 
     this.state = {
       name: '',
-      base_attributes: [{ name: '', type: '', is_required: false }],
+      baseAttributes: [],
+      selectedBaseInventoryName: '',
+      selectedBaseInventoryId: undefined,
       showOptionModal: false,
       attributeOptions: [''],
       attributeInfo: {},
@@ -51,6 +53,26 @@ export default class CreateType extends React.Component {
     this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
+  }
+  componentWillMount() {
+    let baseInventoryId = this.props.match.params.baseInventoryId;
+    this.props.getBaseInventoryById({ baseInventoryId: baseInventoryId });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      (!prevProps.baseInventory.baseAttributes.length &&
+        this.props.baseInventory.baseAttributes.length) ||
+      prevProps.baseInventory.baseInventoryId !==
+        this.props.baseInventory.baseInventoryId
+    ) {
+      let baseAttributes = this.props.baseInventory.baseAttributes;
+      this.setState({
+        baseAttributes: baseAttributes,
+        selectedBaseInventoryId: this.props.baseInventory.baseInventoryId,
+        name: this.props.baseInventory.selectedBaseInventoryName
+      });
+    }
   }
 
   onCancelOptionModal() {
@@ -89,14 +111,17 @@ export default class CreateType extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-
-    this.props.postBaseInventory({ data: this.state }, () => {
-      toastr.success('', 'Base Inventory created successfully');
-    });
+    let baseInventoryId = this.props.match.params.baseInventoryId;
+    this.props.putBaseInventory(
+      { data: this.state, baseInventoryId: baseInventoryId },
+      () => {
+        toastr.success('', 'Base Inventory created successfully');
+      }
+    );
   }
 
   onAddAttribute() {
-    const newAttributes = this.state.base_attributes.slice();
+    const newAttributes = this.state.baseAttributes.slice();
 
     newAttributes.push({
       name: '',
@@ -105,17 +130,17 @@ export default class CreateType extends React.Component {
     });
 
     this.setState({
-      base_attributes: newAttributes
+      baseAttributes: newAttributes
     });
   }
 
   handleAttributeChange(attribute, index) {
-    const attributes = this.state.base_attributes.slice();
+    const attributes = this.state.baseAttributes.slice();
 
     attributes.splice(index, 1, attribute);
 
     this.setState({
-      base_attributes: attributes
+      baseAttributes: attributes
     });
   }
 
@@ -217,7 +242,10 @@ export default class CreateType extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="createform">
+        <div className="createform__title">
+          <h3>Edit Base Inventory </h3>
+        </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
             <div className="createform__form__inline">
@@ -234,7 +262,7 @@ export default class CreateType extends React.Component {
 
             <div className="createform__form__header">Attributes</div>
 
-            <div>{this.state.base_attributes.map(this.renderAttributeRow)}</div>
+            <div>{this.state.baseAttributes.map(this.renderAttributeRow)}</div>
 
             <div className="createform__form__inline">
               <div className="createform__form__action">
