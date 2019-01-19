@@ -77,6 +77,16 @@ export const baseInventory = createReducer(
       return Object.assign({}, state, {
         baseAttributes: []
       });
+    },
+    [types.GET_INVENTORY_LIST_SUCCESS](state, action) {
+      return Object.assign({}, state, {
+        inventoryList: Object.keys(action.list).map(key => action.list[key])
+      });
+    },
+    [types.GET_INVENTORY_LIST_FAIL](state) {
+      return Object.assign({}, state, {
+        inventoryList: []
+      });
     }
   }
 );

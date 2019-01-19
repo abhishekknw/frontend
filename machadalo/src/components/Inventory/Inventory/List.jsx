@@ -15,13 +15,13 @@ export default class List extends React.Component {
 
   renderInventoryItemRow(inventoryItem, index) {
     const onRemove = () => {
-      this.props.deleteInventory(inventoryItem.id, () => {
+      this.props.deleteInventory(inventoryItem._id, () => {
         toastr.error('', 'Inventory deleted successfully');
       });
     };
 
     return (
-      <tr key={inventoryItem.id}>
+      <tr key={inventoryItem._id}>
         <td>{index + 1}</td>
         <td>{inventoryItem.name}</td>
         <td>
@@ -31,10 +31,10 @@ export default class List extends React.Component {
         </td>
         <td>
           <Link
-            to={`/r/inventory/edit/${inventoryItem.id}`}
+            to={`/r/inventory/edit/${inventoryItem._id}`}
             className="btn btn--danger"
           >
-            Edit Inventory Type
+            Edit Inventory
           </Link>
         </td>
       </tr>
