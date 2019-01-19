@@ -226,3 +226,79 @@ export function putBaseInventory({ data, baseInventoryId }, callback) {
       });
   };
 }
+
+// GET Inventory List
+export function getInventoryListSuccess({ list }) {
+  return {
+    type: types.GET_INVENTORY_LIST_SUCCESS,
+    list
+  };
+}
+
+export function getInventoryListFail() {
+  return {
+    type: types.GET_INVENTORY_LIST_FAIL
+  };
+}
+
+export function getInventoryList() {
+  return (dispatch, getState) => {
+    const { auth } = getState();
+
+    request
+      .get(`${config.API_URL}/v0/ui/dynamic-inventory/inventory/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(getInventoryListSuccess({ list: resp.body.data }));
+      })
+      .catch(ex => {
+        console.log('Failed to fetch inventory list', ex);
+
+        dispatch(getInventoryListFail());
+      });
+  };
+}
+
+// POST Inventory
+export function postInventoryStart() {
+  return {
+    type: types.POST_INVENTORY_START
+  };
+}
+
+export function postInventorySuccess() {
+  return {
+    type: types.POST_INVENTORY_SUCCESS
+  };
+}
+
+export function postInventoryFail() {
+  return {
+    type: types.POST_INVENTORY_FAIL
+  };
+}
+
+export function postInventory({ data }, callback) {
+  return (dispatch, getState) => {
+    dispatch(postInventoryStart());
+
+    const { auth } = getState();
+
+    request
+      .post(`${config.API_URL}/v0/ui/dynamic-inventory/inventory/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .send(data)
+      .then(resp => {
+        dispatch(postInventorySuccess());
+
+        if (callback) {
+          callback();
+        }
+      })
+      .catch(ex => {
+        console.log('Failed to create inventory', ex);
+
+        dispatch(postInventoryFail());
+      });
+  };
+}

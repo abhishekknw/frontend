@@ -7,7 +7,9 @@ export const baseInventory = createReducer(
     baseAttributes: [],
     baseInventory: undefined,
     selectedBaseInventoryName: undefined,
-    selectedBaseInventoryId: undefined
+    selectedBaseInventoryId: undefined,
+
+    inventoryList: []
   },
   {
     [types.GET_BASE_INVENTORY_START](state) {

@@ -5,6 +5,9 @@ import BaseCreate from './Base/Create';
 import BaseList from './Base/List';
 import BaseEdit from './Base/Edit';
 
+import List from './Inventory/List';
+import Create from './Inventory/Create';
+
 import './index.css';
 
 export default class Inventory extends React.Component {
@@ -18,6 +21,7 @@ export default class Inventory extends React.Component {
     return (
       <div className="inventory">
         <Switch>
+          {/* Base Inventory */}
           <Route
             exact
             path={`${match.path}/base/create`}
@@ -37,6 +41,22 @@ export default class Inventory extends React.Component {
             path={`${match.path}/base/edit/:baseInventoryId`}
             render={componentProps => (
               <BaseEdit {...this.props} {...componentProps} />
+            )}
+          />
+
+          {/* Inventory */}
+          <Route
+            exact
+            path={`${match.path}/list`}
+            render={componentProps => (
+              <List {...this.props} {...componentProps} />
+            )}
+          />
+          <Route
+            exact
+            path={`${match.path}/create`}
+            render={componentProps => (
+              <Create {...this.props} {...componentProps} />
             )}
           />
         </Switch>
