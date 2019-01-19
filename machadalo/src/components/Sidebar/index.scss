@@ -25,6 +25,7 @@
         padding: 0;
 
         li {
+          cursor: pointer;
           font: {
             size: 14px;
             weight: $font-light;
@@ -39,6 +40,13 @@
             };
             margin-right: 5px;
             min-width: 25px;
+
+            &.caret {
+              font: {
+                size: 12px;
+              };
+              margin-left: 7px;
+            }
           }
 
           a {
@@ -46,23 +54,30 @@
             display: flex;
             align-items: center;
           }
+
+          &.dropdown-list-parent {
+            padding-right: 0;
+          }
         }
       }
     }
   }
 }
 
-.parent-list{
-  border-bottom: 1px solid #2e353d;
-  padding-bottom: 10px;
+.parent-list {
   color: white;
-  cursor: pointer;
 }
 
-.dropdown-list-parent{
-  border-bottom: 0px !important;
-}
+ul.dropdown-list-child {
+  padding-left: 30px;
 
-.dropdown-list-child{
-  padding-left: 20px !important;
+  li {
+    padding-left: 0;
+    padding-right: 0;
+
+    &:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
 }

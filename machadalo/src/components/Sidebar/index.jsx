@@ -7,12 +7,14 @@ import './index.css';
 export default class Sidebar extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       hideChecklistDropdown: true,
       hideLeadsDropdown: true,
       hideEntitiesDropdown: true,
       hideInventoryDropdown: true
     };
+
     this.toggleChecklistDropdown = this.toggleChecklistDropdown.bind(this);
     this.toggleLeadsDropdown = this.toggleLeadsDropdown.bind(this);
     this.toggleEntitiesDropdown = this.toggleEntitiesDropdown.bind(this);
@@ -82,22 +84,23 @@ export default class Sidebar extends React.Component {
                 <div className="parent-list" onClick={this.toggleLeadsDropdown}>
                   <i className="fa fa-check-square-o" aria-hidden="true" />
                   Leads
+                  <i
+                    className={classnames('fa', 'caret', {
+                      'fa-caret-right': this.state.hideLeadsDropdown,
+                      'fa-caret-down': !this.state.hideLeadsDropdown
+                    })}
+                    aria-hidden="true"
+                  />
                 </div>
                 <ul
                   className="dropdown-list-child"
                   hidden={this.state.hideLeadsDropdown}
                 >
                   <li>
-                    <NavLink to="/#/campaignLeads">
-                      <i className="fa fa-columns" aria-hidden="true" />
-                      Campaign
-                    </NavLink>
+                    <NavLink to="/#/campaignLeads">Campaign</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/r/leads/settings">
-                      <i className="fa fa-cog" aria-hidden="true" />
-                      Settings
-                    </NavLink>
+                    <NavLink to="/r/leads/settings">Settings</NavLink>
                   </li>
                 </ul>
               </li>
@@ -108,6 +111,13 @@ export default class Sidebar extends React.Component {
                 >
                   <i className="fa fa-cubes" aria-hidden="true" />
                   Entities
+                  <i
+                    className={classnames('fa', 'caret', {
+                      'fa-caret-right': this.state.hideEntitiesDropdown,
+                      'fa-caret-down': !this.state.hideEntitiesDropdown
+                    })}
+                    aria-hidden="true"
+                  />
                 </div>
                 <ul
                   className="dropdown-list-child"
@@ -115,21 +125,14 @@ export default class Sidebar extends React.Component {
                 >
                   <li>
                     <NavLink to="/r/entity/base-type/list">
-                      <i className="fa fa-columns" aria-hidden="true" />
                       Base Entity Type
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/r/entity/type/list">
-                      <i className="fa fa-columns" aria-hidden="true" />
-                      Entity Type
-                    </NavLink>
+                    <NavLink to="/r/entity/type/list">Entity Type</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/r/entity/list">
-                      <i className="fa fa-columns" aria-hidden="true" />
-                      Entity
-                    </NavLink>
+                    <NavLink to="/r/entity/list">Entity</NavLink>
                   </li>
                 </ul>
               </li>
@@ -138,8 +141,15 @@ export default class Sidebar extends React.Component {
                   className="parent-list"
                   onClick={this.toggleInventoryDropdown}
                 >
-                  <i className="fa fa-cubes" aria-hidden="true" />
+                  <i className="fa fa-cogs" aria-hidden="true" />
                   Inventory
+                  <i
+                    className={classnames('fa', 'caret', {
+                      'fa-caret-right': this.state.hideInventoryDropdown,
+                      'fa-caret-down': !this.state.hideInventoryDropdown
+                    })}
+                    aria-hidden="true"
+                  />
                 </div>
                 <ul
                   className="dropdown-list-child"
@@ -147,9 +157,12 @@ export default class Sidebar extends React.Component {
                 >
                   <li>
                     <NavLink to="/r/inventory/base/list">
-                      <i className="fa fa-list" aria-hidden="true" />
                       Base Inventory
                     </NavLink>
+                  </li>
+
+                  <li>
+                    <NavLink to="/r/inventory/list">Inventory</NavLink>
                   </li>
                 </ul>
               </li>
@@ -160,20 +173,23 @@ export default class Sidebar extends React.Component {
                 >
                   <i className="fa fa-check-square-o" aria-hidden="true" />
                   Checklists
+                  <i
+                    className={classnames('fa', 'caret', {
+                      'fa-caret-right': this.state.hideChecklistDropdown,
+                      'fa-caret-down': !this.state.hideChecklistDropdown
+                    })}
+                    aria-hidden="true"
+                  />
                 </div>
                 <ul
                   className="dropdown-list-child"
                   hidden={this.state.hideChecklistDropdown}
                 >
                   <li>
-                    <NavLink to="/r/checklist/campaigns">
-                      <i className="fa fa-columns" aria-hidden="true" />
-                      Campaign
-                    </NavLink>
+                    <NavLink to="/r/checklist/campaigns">Campaign</NavLink>
                   </li>
                   <li>
                     <NavLink to="/r/checklist/settings/permissions/list">
-                      <i className="fa fa-cog" aria-hidden="true" />
                       Settings
                     </NavLink>
                   </li>
