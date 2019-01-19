@@ -171,8 +171,8 @@ export default class FillChecklist extends React.Component {
     let notificationMessage = [];
 
     //React Mention Processing
-    for (let [Rowkey, RowObject] of Object.entries(checklistEntries)) {
-      for (let [Columnkey, ColumnObject] of Object.entries(RowObject)) {
+    for (let [RowObject] of Object.entries(checklistEntries)) {
+      for (let [ColumnObject] of Object.entries(RowObject)) {
         let userIds = [];
         if (typeof ColumnObject.cell_value === 'string') {
           let str = ColumnObject.cell_value;

@@ -3,7 +3,6 @@ import request from 'superagent';
 import * as types from './types';
 
 import config from './../config';
-import { func } from 'prop-types';
 
 //Post Entity Type
 export function postBaseInventoryStart() {

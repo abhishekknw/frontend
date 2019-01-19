@@ -15,16 +15,22 @@ export default function Header({ sidebarToggle }) {
     <header className="header header__fixed">
       <div className="container">
         <div className="header__content">
-          <a className="header__brand">
-            <img src={Logo} alt="Machadalo" />
-          </a>
+          <div className="header__brand">
+            <a
+              href="https://machadalo.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src={Logo} alt="Machadalo" />
+            </a>
+          </div>
           <div className="header__links">
             <ul>
               <li>
-                <a href="" onClick={onMenuClick}>
+                <span onClick={onMenuClick}>
                   <i className="fa fa-bars" />
                   Menu
-                </a>
+                </span>
               </li>
             </ul>
           </div>
