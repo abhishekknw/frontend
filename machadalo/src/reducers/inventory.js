@@ -87,6 +87,13 @@ export const baseInventory = createReducer(
       return Object.assign({}, state, {
         inventoryList: []
       });
+    },
+    [types.DELETE_INVENTORY_SUCCESS](state, action) {
+      return Object.assign({}, state, {
+        inventoryList: state.inventoryList.filter(
+          item => item._id !== action.inventoryId
+        )
+      });
     }
   }
 );

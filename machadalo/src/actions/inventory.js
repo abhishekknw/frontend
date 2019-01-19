@@ -3,6 +3,7 @@ import request from 'superagent';
 import * as types from './types';
 
 import config from './../config';
+import { func } from 'prop-types';
 
 //Post Entity Type
 export function postBaseInventoryStart() {
@@ -299,6 +300,44 @@ export function postInventory({ data }, callback) {
         console.log('Failed to create inventory', ex);
 
         dispatch(postInventoryFail());
+      });
+  };
+}
+
+// DELETE Inventory
+export function deleteInventorySuccess({ inventoryId }) {
+  return {
+    type: types.DELETE_INVENTORY_SUCCESS,
+    inventoryId
+  };
+}
+
+export function deleteInventoryFail() {
+  return {
+    type: types.DELETE_INVENTORY_FAIL
+  };
+}
+
+export function deleteInventory(inventoryId, callback) {
+  return (dispatch, getState) => {
+    const { auth } = getState();
+
+    request
+      .delete(
+        `${config.API_URL}/v0/ui/dynamic-inventory/inventory/${inventoryId}/`
+      )
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(deleteInventorySuccess({ inventoryId }));
+
+        if (callback) {
+          callback();
+        }
+      })
+      .catch(ex => {
+        console.log('Failed to create inventory', ex);
+
+        dispatch(deleteInventoryFail());
       });
   };
 }
