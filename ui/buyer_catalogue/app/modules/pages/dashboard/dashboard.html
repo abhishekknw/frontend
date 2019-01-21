@@ -1412,39 +1412,46 @@
                   <div class="container-fluid">
                     <div class="campaigndetailtable" ng-if="showCampaigns">
                       <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
-                      <div class="table-responsive">
+                        <div class="table-responsive">
                         <table class="table">
                       <thead>
                           <tr>
                             <!-- <th>Index</th> -->
-                            <th>Campaign Name</th>
-                            <th>Start Date</th>
+                            <th style="width:200px;" class="col-md-2">Campaign Name</th>
+                            <th ng-click="Sort('start_date')">Start Date <a><i class="icon-sort" style="color:white;"></i></a></th>
                             <th>End Date</th>
                             <!-- <th>Phase</br>Completed</th> -->
                             <th>Campaign Status</th>
-                            <th>Supplier</br> Count</th>
-                            <th>Flat</br> Count</th>
-                            <th>Total</br> Leads</th>
-                            <th>Hot</br> Leads</th>
-                            <th>Action</th>
-                            <!-- <th>Email Leads</th> -->
+                            <th style="width:100px;" class="col-md-2" ng-click="Sort('supplier_count')">Supplier</br> Count <a><i class="icon-sort" style="color:white;"></i></a></th>
+                            <th style="width:100px;" class="col-md-2" ng-click="Sort('flat_count')">Flat Count <a><i class="icon-sort" style="color:white;"></i></a></th>
+                            <th style="width:120px;" class="col-md-2" ng-click="Sort('total_leads')">Total Leads <a><i class="icon-sort" style="color:white;"></i></a></th>
+                            <th style="width:100px;" class="col-md-2" ng-click="Sort('hot_leads')">Hot Leads <a><i class="icon-sort" style="color:white;"></i></a></th>
+                            <th>View Leads</th>
+                            <th>Email Leads</th>
+
+                          </tr>
+                          <tr colspan="9">
+                            <td><input ng-model="f.name" class="form-control" placeholder="Search"><hr></td>
+                            <td></td>
+                            <td></td>
+                            <td><input ng-model="f.campaign_status" class="form-control" placeholder="Search"><hr></td>
 
                           </tr>
                         </thead>
                         <tbody>
-                          <tr ng-repeat="campaign in leadsDataCampaigns|filter : searchQuery" ng-if="campaign.total_leads">
+                          <tr ng-repeat="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort" ng-if="campaign.total_leads">
                             <!-- <td>{{$index + 1}}</td> -->
-                            <td>{{campaign.name}}</td>
+                            <td style="width:200px;" class="col-md-2">{{campaign.name}}</td>
                             <td>{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
-                            <td ng-if="campaign.campaign_status == 'completed'">{{campaign.end_date|limitTo:10|date:mediumDate}}</td>
+                            <td ng-if="campaign.campaign_status == 'completed'" style="text-transform:capitalize">{{campaign.end_date|limitTo:10|date:mediumDate}}</td>
                             <td ng-if="campaign.campaign_status != 'completed'">NA</td>
                             <!-- <td>{{campaign.phase_complete}}</td> -->
-                            <td ng-if="campaign.campaign_status == 'on_hold'">On Hold</td>
-                            <td ng-if="campaign.campaign_status != 'on_hold'">{{campaign.campaign_status}}</td>
-                            <td>{{campaign.supplier_count}}</td>
-                            <td>{{campaign.flat_count}}</td>
-                            <td>{{campaign.total_leads}}</td>
-                            <td>{{campaign.hot_leads}}</td>
+                            <td ng-if="campaign.campaign_status == 'on_hold'" style="text-transform:capitalize">OnHold</td>
+                            <td ng-if="campaign.campaign_status != 'on_hold'" style="text-transform:capitalize">{{campaign.campaign_status}}</td>
+                            <td style="width:100px;" class="col-md-2" >{{campaign.supplier_count}}</td>
+                            <td style="width:100px;" class="col-md-2" >{{campaign.flat_count}}</td>
+                            <td style="width:100px;" class="col-md-2" >{{campaign.total_leads}}</td>
+                            <td style="width:100px;" class="col-md-2" >{{campaign.hot_leads}}</td>
                             <td>
                               <button class="btn btn-danger" ng-click="viewLeadsForSelectedCampaign(campaign,campaign.campaign_id)">View Leads</button>
                             </td>
@@ -1452,6 +1459,7 @@
                               <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id)" data-target="#sendEmailModal" data-toggle="modal">Email Leads</button>
                             </td>
                           </tr>
+
                         </tbody>
                       </table>
                     </div>
@@ -1473,7 +1481,7 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr ng-repeat="lead in selectedCampaignLeads.values | filter : searchData">
+                            <tr ng-repeat="lead in selectedCampaignLeads.values | filter : searchData | filter : Code">
                               <td>{{$index + 1}}</td>
                               <td ng-repeat="alias in lead">{{alias.value}}</td>
                             </tr>
@@ -1499,8 +1507,6 @@
             </div>
 <br />
     <div class="col-md-3">
-
-
       <div class="panel-group" id="accordion">
           <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.ongoing.status)">
               <div class="panel-heading">
@@ -2608,7 +2614,7 @@
                             <div class="outerdistributed">
                               <div class="innerdistributed">
                                 <nvd3 options="lineChartLeadsDistributed" data="lineChartForLeadsDistributedGraphs"></nvd3>
-                                <nvd3 options="lineChartLeadsDistributed" data="lineChartForHotLeadsDistributedGraphs"></nvd3>
+                                <nvd3 options="lineChartHotLeadsDistributed" data="lineChartForHotLeadsDistributedGraphs"></nvd3>
                               </div>
                             </div>
                           </div>

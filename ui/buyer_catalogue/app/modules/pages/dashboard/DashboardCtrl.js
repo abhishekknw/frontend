@@ -958,7 +958,7 @@
              }
            };
 
-        var lineChart = {
+        var lineChartLeads = {
           "chart": {
             "type": "lineChart",
             "height": 450,
@@ -981,8 +981,46 @@
               "axisLabel": "Campaigns",
               "showMaxMin":false,
               tickFormat : function (d) {
-                console.log($scope.x[d]);
-                          return $scope.x[d];
+                console.log($scope.x_fre_leads[d]);
+                          return $scope.x_fre_leads[d];
+                },
+              // tickFormat: function(d){
+              //   console.log($scope.x[d]);
+              //           return $scope.x[d];
+              //       },
+                     "rotateLabels" : -30
+            },
+            "yAxis": {
+              "axisLabel": "",
+            }
+          }
+        };
+
+        var lineChartHotLeads = {
+          "chart": {
+            "type": "lineChart",
+            "height": 450,
+            "margin": {
+              "top": 100,
+              "right": 20,
+              "bottom": 145,
+              "left": 100
+            },
+            "useInteractiveGuideline": true,
+            x: function(d,i){ return d.x; },
+            y: function(d){ return d.y; },
+            "dispatch": {
+                  stateChange: function(e){ console.log("stateChange"); },
+                  changeState: function(e){ console.log("changeState"); },
+                  tooltipShow: function(e){ console.log("tooltipShow"); },
+                  tooltipHide: function(e){ console.log("tooltipHide"); }
+              },
+            "xAxis": {
+              "axisLabel": "Campaigns",
+              "showMaxMin":false,
+              tickFormat : function (d) {
+                console.log($scope.x_fre_hot_leads[d]);
+                          return $scope.x_fre_hot_leads[d];
                 },
               // tickFormat: function(d){
               //   console.log($scope.x[d]);
@@ -2464,6 +2502,7 @@ $scope.getBookingCampaigns = function(campaign){
     console.log(response);
     cfpLoadingBar.complete();
       $scope.bookingPhases = response.data.data;
+      console.log($scope.bookingPhases);
 
       // if(!$scope.bookingPhases.length){
         // swal(constants.name, "Suppliers Booking is going on.Currently, No supplier is Booked", constants.warning)
@@ -2562,6 +2601,7 @@ $scope.viewCampaignLeads = function(value){
       cfpLoadingBar.complete();
       $scope.selectedCampaignLeads = response.data.data;
       console.log($scope.selectedCampaignLeads);
+      console.log($scope.selectedCampaignLeads.values);
       $scope.CampaignNameofLeads = data.name;
       $scope.showCampaigns = false;
     }).catch(function onError(response){
@@ -3384,11 +3424,13 @@ $scope.getCampaignWiseSummary = function(){
       DashboardService.getDistributionGraphsStatics(data)
       .then(function onSuccess(response){
         console.log(response);
-        $scope.lineChartLeadsDistributed = angular.copy(lineChart);
+        $scope.lineChartLeadsDistributed = angular.copy(lineChartLeads);
+        $scope.lineChartHotLeadsDistributed = angular.copy(lineChartHotLeads);
 
         $scope.lineChartForLeadsDistributedGraphs = formatLineChartForLeadsDistributedGraph(response.data.data);
         $scope.lineChartForHotLeadsDistributedGraphs = formatLineChartForHotLeadsDistributedGraph(response.data.data);
-
+        console.log($scope.lineChartForLeadsDistributedGraphs);
+        console.log($scope.lineChartForHotLeadsDistributedGraphs);
 
       }).catch(function onError(response){
         console.log(response);
@@ -3399,7 +3441,7 @@ $scope.getCampaignWiseSummary = function(){
     var formatLineChartForLeadsDistributedGraph = function(data){
         var values1 = [];
         var index = 0;
-        $scope.x = [];
+        $scope.x_fre_leads = [];
       angular.forEach(data.higher_group_data, function(data,key){
         angular.forEach(data['freq_dist_lead/flat*100'], function(data,key){
           $scope.distributedGraphValue = data;
@@ -3408,7 +3450,7 @@ $scope.getCampaignWiseSummary = function(){
           $scope.showPerfMetrics = $scope.perfMetrics.leads;
           $scope.showPerfMetrics = $scope.perfMetrics.distributedstatisticsgraphs;
 
-             $scope.x.push(key);
+             $scope.x_fre_leads.push(key);
               var value1 =
                  { x : index , y : data.mode};
                 index++;
@@ -3430,7 +3472,7 @@ $scope.getCampaignWiseSummary = function(){
     var formatLineChartForHotLeadsDistributedGraph = function(data){
         var values1 = [];
         var index = 0;
-        $scope.x = [];
+        $scope.x_fre_hot_leads= [];
       angular.forEach(data.higher_group_data, function(data,key){
         angular.forEach(data['freq_dist_hot_lead/flat*100'], function(data,key){
           $scope.distributedGraphValue = data;
@@ -3439,7 +3481,7 @@ $scope.getCampaignWiseSummary = function(){
           $scope.showPerfMetrics = $scope.perfMetrics.leads;
           $scope.showPerfMetrics = $scope.perfMetrics.distributedstatisticsgraphs;
 
-             $scope.x.push(key);
+             $scope.x_fre_hot_leads.push(key);
               var value1 =
                  { x : index , y : data.mode};
                 index++;
