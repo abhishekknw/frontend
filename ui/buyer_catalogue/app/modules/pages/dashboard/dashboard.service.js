@@ -7,6 +7,7 @@
 
     var url_base = 'v0/ui/website/';
     var url_base_proposal = 'v0/ui/proposal/';
+    var url_analytics = 'v0/ui/analytics/';
     var url_root = 'v0/ui/';
     var url_base_user = 'v0/';
     var DashboardService = {};
@@ -194,6 +195,12 @@
       return machadaloHttp.get(url);
     }
 
+      DashboardService.getDistributionGraphsStatics = function(data){
+        console.log(data);
+      var url =  url_root  + "analytics/get-leads-data-generic/";
+      return machadaloHttp.put(url,data);
+    }
+  
     return DashboardService;
 
  }]);

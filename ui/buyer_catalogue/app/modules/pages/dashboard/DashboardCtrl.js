@@ -6,7 +6,7 @@
     'use strict';
 
   angular.module('catalogueApp')
-      .controller('DashboardCtrl',function($scope,NgMap, $rootScope, baConfig, colorHelper,DashboardService, commonDataShare, constants,$location,$anchorScroll,uiGmapGoogleMapApi,uiGmapIsReady,Upload,cfpLoadingBar,$stateParams) {
+      .controller('DashboardCtrl',function($scope,NgMap, $rootScope, baConfig, colorHelper,DashboardService, commonDataShare, constants,$location,$anchorScroll,uiGmapGoogleMapApi,uiGmapIsReady,Upload,cfpLoadingBar,$stateParams,$timeout,Excel) {
  $scope.itemsByPage=15;
  $scope.campaign_id = $stateParams.proposal_id;
  $scope.query = "";
@@ -130,7 +130,8 @@
           leads : 'leads',
           multipleLeads : 'multipleLeads',
           overall : 'overall',
-          blank : 'blank'
+          blank : 'blank',
+          distributedstatisticsgraphs : 'distributedstatisticsgraphs'
         };
         $scope.showPerfMetrics = false;
 
@@ -957,17 +958,75 @@
              }
            };
 
-        var lineChart = {
+        var lineChartLeads = {
           "chart": {
             "type": "lineChart",
             "height": 450,
+            "margin": {
+              "top": 100,
+              "right": 20,
+              "bottom": 145,
+              "left": 140
+            },
             "useInteractiveGuideline": true,
-            "dispatch": {},
+            x: function(d,i){ return d.x; },
+            y: function(d){ return d.y; },
+            "dispatch": {
+                  stateChange: function(e){ console.log("stateChange"); },
+                  changeState: function(e){ console.log("changeState"); },
+                  tooltipShow: function(e){ console.log("tooltipShow"); },
+                  tooltipHide: function(e){ console.log("tooltipHide"); }
+              },
             "xAxis": {
               "axisLabel": "Campaigns",
-              tickFormat: function(d) {
-                return d.y;
-              }
+              "showMaxMin":false,
+              tickFormat : function (d) {
+                console.log($scope.x_fre_leads[d]);
+                          return $scope.x_fre_leads[d];
+                },
+              // tickFormat: function(d){
+              //   console.log($scope.x[d]);
+              //           return $scope.x[d];
+              //       },
+                     "rotateLabels" : -30
+            },
+            "yAxis": {
+              "axisLabel": "",
+            }
+          }
+        };
+
+        var lineChartHotLeads = {
+          "chart": {
+            "type": "lineChart",
+            "height": 450,
+            "margin": {
+              "top": 100,
+              "right": 20,
+              "bottom": 145,
+              "left": 140
+            },
+            "useInteractiveGuideline": true,
+            x: function(d,i){ return d.x; },
+            y: function(d){ return d.y; },
+            "dispatch": {
+                  stateChange: function(e){ console.log("stateChange"); },
+                  changeState: function(e){ console.log("changeState"); },
+                  tooltipShow: function(e){ console.log("tooltipShow"); },
+                  tooltipHide: function(e){ console.log("tooltipHide"); }
+              },
+            "xAxis": {
+              "axisLabel": "Campaigns",
+              "showMaxMin":false,
+              tickFormat : function (d) {
+                console.log($scope.x_fre_hot_leads[d]);
+                          return $scope.x_fre_hot_leads[d];
+                },
+              // tickFormat: function(d){
+              //   console.log($scope.x[d]);
+              //           return $scope.x[d];
+              //       },
+                     "rotateLabels" : -30
             },
             "yAxis": {
               "axisLabel": "",
@@ -2443,6 +2502,7 @@ $scope.getBookingCampaigns = function(campaign){
     console.log(response);
     cfpLoadingBar.complete();
       $scope.bookingPhases = response.data.data;
+      console.log($scope.bookingPhases);
 
       // if(!$scope.bookingPhases.length){
         // swal(constants.name, "Suppliers Booking is going on.Currently, No supplier is Booked", constants.warning)
@@ -2541,6 +2601,7 @@ $scope.viewCampaignLeads = function(value){
       cfpLoadingBar.complete();
       $scope.selectedCampaignLeads = response.data.data;
       console.log($scope.selectedCampaignLeads);
+      console.log($scope.selectedCampaignLeads.values);
       $scope.CampaignNameofLeads = data.name;
       $scope.showCampaigns = false;
     }).catch(function onError(response){
@@ -3126,6 +3187,8 @@ $scope.getCampaignWiseSummary = function(){
       $scope.showPerfMetrics = $scope.perfMetrics.overall;
       $scope.selectAllCampaignLeads = true;
       $scope.showReportBtn = true;
+      $scope.lineChartForLeadsDistributedGraphs = false;
+      $scope.lineChartForHotLeadsDistributedGraphs = false;
       $scope.campaignSummary = response.data.data;
       console.log(response.data.data);
       $scope.WeeklyMISOverallSummary = response.data.data.overall;
@@ -3142,10 +3205,12 @@ $scope.getCampaignWiseSummary = function(){
       $scope.thisWeekSummaryStackedBarChart= angular.copy(thisWeekSummaryStackedBar);
       $scope.last2WeekSummaryStackedBarChart= angular.copy(last2WeekSummaryStackedBar);
       $scope.last3WeekSummaryStackedBarChart= angular.copy(last3WeekSummaryStackedBar);
+
       $scope.stackedBarAllCampaignWiseChart = formatAllCampaignWiseChart($scope.overallCampaignSummary);
       $scope.stackedBarLastWeekChart = formatLastWeekWiseChart($scope.lastWeekCampaignSummary);
       $scope.stackedBarLast2WeeksChart = formatLast2WeekWiseChart($scope.last2WeeksCampaignSummary);
       $scope.stackedBarLast3WeeksChart = formatLast3WeekWiseChart($scope.last3WeeksCampaignSummary);
+
       cfpLoadingBar.complete();
   }).catch(function onError(response){
         console.log(response);
@@ -3318,7 +3383,141 @@ $scope.getCampaignWiseSummary = function(){
    }
 
 
-//END
+  $scope.exportData = function () {
+  $('#customer1').tableExport({ type: 'csv', escape: 'false' });
+  $('#customer2').tableExport({ type: 'csv', escape: 'false' });
+  $('#customer3').tableExport({ type: 'csv', escape: 'false' });
+  $('#customer4').tableExport({ type: 'csv', escape: 'false' });
+  $('#customer5').tableExport({ type: 'csv', escape: 'false' });
+  $('#customer6').tableExport({ type: 'csv', escape: 'false' });
+
+
+  };
+
+  $scope.exportToExcel=function(tableId){ // ex: '#my-table'
+  var exportHref=Excel.tableToExcel(tableId,'WireWorkbenchDataExport');
+  console.log("hello");
+  $timeout(function(){location.href=exportHref;},100); // trigger download
+  }
+
+
+    $scope.getDistributionGraphsStatics = function(){
+      // $scope.IsVisible = false;
+$scope.IsVisible = $scope.IsVisible ? false : true;
+      console.log($scope.campaignIdForPerfMetrics);
+      var data =  {
+             "data_scope": {"1":{"category": "unordered", "level": "campaign", "match_type": 0,
+                 "values": {"exact": [$scope.campaignIdForPerfMetrics]}, "value_type": "campaign"}},
+             "data_point": {
+                 "category": "unordered",
+                 "level": ["supplier","campaign"]
+             },
+             "raw_data": ["lead", "hot_lead","flat"],
+             "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"]],
+             // "metrics": [["2","3","/"],["m1",100,"*"]],
+             // "metrics" :[["1","3","/"],["2","3","/"],["m1","100","*"],["m2","100","*"]],
+             "statistical_information":{"stats":["z_score"], "metrics":["m1","m3"]},
+             "higher_level_statistical_information":{"level":["campaign"],"stats":["frequency_distribution"],
+             "metrics":["m2","m4"]
+             }
+          }
+
+
+      DashboardService.getDistributionGraphsStatics(data)
+      .then(function onSuccess(response){
+        console.log(response);
+        $scope.lineChartLeadsDistributed = angular.copy(lineChartLeads);
+        $scope.lineChartHotLeadsDistributed = angular.copy(lineChartHotLeads);
+
+        $scope.lineChartForLeadsDistributedGraphs = formatLineChartForLeadsDistributedGraph(response.data.data);
+        $scope.lineChartForHotLeadsDistributedGraphs = formatLineChartForHotLeadsDistributedGraph(response.data.data);
+        console.log($scope.lineChartForLeadsDistributedGraphs);
+        console.log($scope.lineChartForHotLeadsDistributedGraphs);
+        $scope.selectAllCampaignLeads = false;
+      }).catch(function onError(response){
+        console.log(response);
+        })
+    }
+
+
+    var formatLineChartForLeadsDistributedGraph = function(data){
+        var values1 = [];
+        var index = 0;
+        $scope.x_fre_leads = [];
+      angular.forEach(data.higher_group_data, function(data,key){
+        angular.forEach(data['freq_dist_lead/flat*100'], function(data,key){
+          $scope.distributedGraphValue = data;
+          console.log($scope.distributedGraphValue);
+          console.log(key);
+          // $scope.showPerfMetrics = $scope.perfMetrics.leads;
+          // $scope.showPerfMetrics = $scope.perfMetrics.distributedstatisticsgraphs;
+
+             $scope.x_fre_leads.push(key);
+              var value1 =
+                 { x : index , y : data.mode};
+                index++;
+              values1.push(value1);
+            })
+
+      })
+      var temp_data = [
+        {
+          key : "Distribution Gussian Curve",
+          color : constants.colorKey1,
+          values : values1
+        }
+      ];
+
+      return temp_data;
+    }
+
+    var formatLineChartForHotLeadsDistributedGraph = function(data){
+        var values1 = [];
+        var index = 0;
+        $scope.x_fre_hot_leads= [];
+      angular.forEach(data.higher_group_data, function(data,key){
+        angular.forEach(data['freq_dist_hot_lead/flat*100'], function(data,key){
+          $scope.distributedGraphValue = data;
+          console.log($scope.distributedGraphValue);
+          console.log(key);
+          // $scope.showPerfMetrics = $scope.perfMetrics.leads;
+          // $scope.showPerfMetrics = $scope.perfMetrics.distributedstatisticsgraphs;
+
+             $scope.x_fre_hot_leads.push(key);
+              var value1 =
+                 { x : index , y : data.mode};
+                index++;
+              values1.push(value1);
+            })
+
+      })
+      var temp_data = [
+        {
+          key : "Distribution Gussian Curve",
+          color : constants.colorKey1,
+          values : values1
+        }
+      ];
+
+      return temp_data;
+    }
+// END
 
 })
+
+
 })();
+app.factory('Excel',function($window){
+        var uri='data:application/vnd.ms-excel;base64,',
+            template='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+            base64=function(s){return $window.btoa(unescape(encodeURIComponent(s)));},
+            format=function(s,c){return s.replace(/{(\w+)}/g,function(m,p){return c[p];})};
+        return {
+            tableToExcel:function(tableId,worksheetName){
+                var table=$(tableId),
+                    ctx={worksheet:worksheetName,table:table.html()},
+                    href=uri+base64(format(template,ctx));
+                return href;
+            }
+        };
+    })

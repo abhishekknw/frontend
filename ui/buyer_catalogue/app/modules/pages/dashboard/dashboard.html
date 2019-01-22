@@ -29,7 +29,7 @@
     <link href="css/custom.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
     <link rel="stylesheet" type="text/css" href="modules/pages/dashboard/chat.css">
-
+<!-- <script data-require="jquery@*" data-semver="2.1.4" src="https://code.jquery.com/jquery-2.1.4.js"></script> -->
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon-96x96.png">
@@ -65,11 +65,11 @@
                <span style="color:#ffffff;" class="glyphicon glyphicon-forward" ng-click="getRecentActivity(next)" data-toggle="tooltip" title="Go To Next Activity!"></span>
                <span style="color:#ffffff;left:16px;margin-top:1px;" class="glyphicon glyphicon-calendar pull-right" ng-click="visible=!visible;">
                <div ng-class="{'is-visible':visible}" class="menu">
-                 <table class="table-responsive table table-bordered sidePanelTable">
+                 <table class="table-responsive table table-bordered sidePanelTable" style="width:300px;">
                    <thead>
                      <tr>
-                       <td style="color:#ffffff !important;">DATE</td>
-                       <td>
+                       <td style="color:#ffffff !important;" style="width:20px">DATE</td>
+                       <td style="width:20px">
                          <button type="button" name="button" class="col-xs-5" style="margin: 0px 9px 0px -1px;width:80px;height:70px;color:black;background-color:#ffe000;">Total Release (%)</button>
                          <!-- <button type="button" name="button" class="col-xs-3" style="margin: 0px 9px 0px -1px;width:60px;height:45px;color:black;background-color:#ffe000;">A (%)</button> -->
                          <!-- <button type="button" name="button" class="col-xs-5" style="margin: 0px 9px 0px -1px;width:80px;height:70px;color:black;background-color:#ffe000;">Total Closure (%)</button> -->
@@ -80,13 +80,13 @@
                        <tbody>
                        <tr ng-repeat="(key,item) in historyData" ng-if="$index < 15">
                          <td class="col-xs-3" style="background-color: #8e1921;"><a ng-click="getDateData(key)">{{key| date :'d-MMM-yy'}}</a></td>
-                         <td class="col-xs-6">
+                         <td class="col-xs-2">
                            <button class="col-xs-5 " style="width:80px;height:35px;" id="greenColor" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100==100" type="button" name="button" class="btn btn-danger">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}  &#10004;</button>
                            <button class="col-xs-5 " style="width:80px;height:35px;" id="lightGreen" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 75 && item['RELEASE'].actual/item['RELEASE'].total*100 != 100" type="button" name="button"> {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
                            <button class="col-xs-5 " style="width:80px;height:35px;" id="yellow" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 50 && item['RELEASE'].actual/item['RELEASE'].total*100 < 75" type="button" name="button"> {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
                            <button class="col-xs-5 " style="width:80px;height:35px;" id="redColor" ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 < 50" type="button" name="button">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
                            <button class="col-xs-5 " style="width:80px;height:35px;cursor:default;" ng-if="!item['RELEASE'].total" type="button" name="button">NA</button>
-
+                          </td>
                            <!-- <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="greenColor" ng-if="item['AUDIT'].actual/item['AUDIT'].total*100==100" type="button" name="button">{{item['AUDIT'].actual/item['AUDIT'].total*100|limitTo:4||NA}}  &#10004;</button>
                            <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;" id="yellowColor" ng-if="item['AUDIT'].actual/item['AUDIT'].total*100 >= 75 &&
                            item['AUDIT'].actual/item['AUDIT'].total*100 < 100" type="button" name="button"> {{item['AUDIT'].actual/item['AUDIT'].total*100|limitTo:4||NA}}</button>
@@ -100,7 +100,7 @@
                          <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;" id="redColor" ng-if="item['CLOSURE'].actual/item['CLOSURE'].total*100 < 50" type="button" name="button">{{item['CLOSURE'].actual/item['CLOSURE'].total*100|limitTo:4||NA}}</button>
                          <button class="col-xs-3 " style="margin: 0px 7px 5px 0px;width:80px;height:35px;cursor:default;" ng-if="!item['CLOSURE'].total" type="button" name="button">NA</button> -->
 
-                         </td>
+
                        </tr>
 
                      </tbody>
@@ -1412,39 +1412,46 @@
                   <div class="container-fluid">
                     <div class="campaigndetailtable" ng-if="showCampaigns">
                       <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
-                      <div class="table-responsive">
+                        <div class="table-responsive">
                         <table class="table">
                       <thead>
                           <tr>
                             <!-- <th>Index</th> -->
-                            <th>Campaign Name</th>
-                            <th>Start Date</th>
+                            <th style="width:200px;" class="col-md-2">Campaign Name</th>
+                            <th ng-click="Sort('start_date')">Start Date <a><i class="icon-sort" style="color:white;"></i></a></th>
                             <th>End Date</th>
                             <!-- <th>Phase</br>Completed</th> -->
                             <th>Campaign Status</th>
-                            <th>Supplier</br> Count</th>
-                            <th>Flat</br> Count</th>
-                            <th>Total</br> Leads</th>
-                            <th>Hot</br> Leads</th>
-                            <th>Action</th>
-                            <!-- <th>Email Leads</th> -->
+                            <th style="width:100px;" class="col-md-2" ng-click="Sort('supplier_count')">Supplier</br> Count <a><i class="icon-sort" style="color:white;"></i></a></th>
+                            <th style="width:100px;" class="col-md-2" ng-click="Sort('flat_count')">Flat Count <a><i class="icon-sort" style="color:white;"></i></a></th>
+                            <th style="width:120px;" class="col-md-2" ng-click="Sort('total_leads')">Total Leads <a><i class="icon-sort" style="color:white;"></i></a></th>
+                            <th style="width:100px;" class="col-md-2" ng-click="Sort('hot_leads')">Hot Leads <a><i class="icon-sort" style="color:white;"></i></a></th>
+                            <th>View Leads</th>
+                            <th>Email Leads</th>
+
+                          </tr>
+                          <tr colspan="9">
+                            <td><input ng-model="f.name" class="form-control" placeholder="Search"><hr></td>
+                            <td></td>
+                            <td></td>
+                            <td><input ng-model="f.campaign_status" class="form-control" placeholder="Search"><hr></td>
 
                           </tr>
                         </thead>
                         <tbody>
-                          <tr ng-repeat="campaign in leadsDataCampaigns|filter : searchQuery" ng-if="campaign.total_leads">
+                          <tr ng-repeat="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort" ng-if="campaign.total_leads">
                             <!-- <td>{{$index + 1}}</td> -->
-                            <td>{{campaign.name}}</td>
+                            <td style="width:200px;" class="col-md-2">{{campaign.name}}</td>
                             <td>{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
-                            <td ng-if="campaign.campaign_status == 'completed'">{{campaign.end_date|limitTo:10|date:mediumDate}}</td>
+                            <td ng-if="campaign.campaign_status == 'completed'" style="text-transform:capitalize">{{campaign.end_date|limitTo:10|date:mediumDate}}</td>
                             <td ng-if="campaign.campaign_status != 'completed'">NA</td>
                             <!-- <td>{{campaign.phase_complete}}</td> -->
-                            <td ng-if="campaign.campaign_status == 'on_hold'">On Hold</td>
-                            <td ng-if="campaign.campaign_status != 'on_hold'">{{campaign.campaign_status}}</td>
-                            <td>{{campaign.supplier_count}}</td>
-                            <td>{{campaign.flat_count}}</td>
-                            <td>{{campaign.total_leads}}</td>
-                            <td>{{campaign.hot_leads}}</td>
+                            <td ng-if="campaign.campaign_status == 'on_hold'" style="text-transform:capitalize">OnHold</td>
+                            <td ng-if="campaign.campaign_status != 'on_hold'" style="text-transform:capitalize">{{campaign.campaign_status}}</td>
+                            <td style="width:100px;" class="col-md-2" >{{campaign.supplier_count}}</td>
+                            <td style="width:100px;" class="col-md-2" >{{campaign.flat_count}}</td>
+                            <td style="width:100px;" class="col-md-2" >{{campaign.total_leads}}</td>
+                            <td style="width:100px;" class="col-md-2" >{{campaign.hot_leads}}</td>
                             <td>
                               <button class="btn btn-danger" ng-click="viewLeadsForSelectedCampaign(campaign,campaign.campaign_id)">View Leads</button>
                             </td>
@@ -1452,6 +1459,7 @@
                               <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id)" data-target="#sendEmailModal" data-toggle="modal">Email Leads</button>
                             </td>
                           </tr>
+
                         </tbody>
                       </table>
                     </div>
@@ -1473,7 +1481,7 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr ng-repeat="lead in selectedCampaignLeads.values | filter : searchData">
+                            <tr ng-repeat="lead in selectedCampaignLeads.values | filter : searchData | filter : Code">
                               <td>{{$index + 1}}</td>
                               <td ng-repeat="alias in lead">{{alias.value}}</td>
                             </tr>
@@ -1499,8 +1507,6 @@
             </div>
 <br />
     <div class="col-md-3">
-
-
       <div class="panel-group" id="accordion">
           <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.ongoing.status)">
               <div class="panel-heading">
@@ -2013,7 +2019,7 @@
                               </div>
                               <div class="campaigndetailtable">
                                 <div class="table-responsive">
-                                  <table class="table table-striped" st-table="LeadsByCampaign" st-safe-src="Data">
+                                  <table class="table table-striped"  st-table="LeadsByCampaign" st-safe-src="Data">
                                     <thead>
                                       <tr>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Details</th>
@@ -2086,7 +2092,7 @@
 
                                     </tbody>
                                   </table>
-                                  <br> <br>
+                                  <br><br />
                                   <table class="table table-striped" st-table="LeadsByCampaign" st-safe-src="Data">
                                     <div class="panel panel-primary">
                                       <div class="panel-heading content-title">
@@ -2248,6 +2254,7 @@
 
                                     </tbody>
                                   </table>
+                                  <br />
                                 </div>
                               </div>
                             </div>
@@ -2353,6 +2360,7 @@
                                   </table>
                                 </div>
                               </div>
+                              <br>
                             </div>
                             <div class="col-lg-6">
                             <div class="panel panel-primary">
@@ -2419,6 +2427,7 @@
                                 </table>
                               </div>
                             </div>
+                            <br>
                           </div>
                               <!-- <div class="col-lg-6">
                                 <div class="panel panel-primary">
@@ -2591,6 +2600,94 @@
                           </div>
                         </div>
 
+                      <br />
+                      <br /><br />
+                      <br /><br />
+                    <div class="row" ng-if="showPerfMetrics == perfMetrics.leads">
+                      <button type="button" class="col-md-3 btn btn-danger pull-right" name="button" ng-click="getDistributionGraphsStatics()">Click here for Distribution Graphs</button>
+
+                      <div class="col-md-12" style="margin-top:50px;">
+                        <div class="col-md-12" ng-if="lineChartForLeadsDistributedGraphs.length">
+                          <div class="panel-heading content-title">
+                              <h4 style="text-align: center">Distributed Leads Graphs</h4>
+                          </div>
+                          <div class="col-md-12" ng-scrollable>
+                            <div class="outerdistributed">
+                              <div class="innerdistributed">
+                                <nvd3 options="lineChartLeadsDistributed" data="lineChartForLeadsDistributedGraphs"></nvd3>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-12" style="margin-top:10px;" ng-if="lineChartForLeadsDistributedGraphs.length">
+                          <div class="panel-heading content-title">
+                              <h4 style="text-align: center">Summary for Distributed Leads Statistics</h4>
+                          </div>
+                          <table class="table table-striped"  st-table="LeadsByCampaign" st-safe-src="Data">
+                            <thead>
+                                <tr>
+                                  <th style="background:#8e1921 !important;color:#ffffff !important">Mean</th>
+                                  <th style="background:#8e1921 !important;color:#ffffff !important">Median</th>
+                                  <th style="background:#8e1921 !important;color:#ffffff !important">Mode</th>
+                                  <th style="background:#8e1921 !important;color:#ffffff !important">Standard Deviation</th>
+                                  <th style="background:#8e1921 !important;color:#ffffff !important">Varian</th>
+                                </tr>
+                          </thead>
+                            <tbody style="text-align:center;">
+                              <tr>
+                                <!-- <td style="font-weight:bold">{{key}}</td> -->
+                                <td>{{Data.overall_data.supplier_stats.total.percentage_by_flat | limitTo:5}} %</td>
+                                <td>{{Data.overall_data.supplier_stats.total.median_percent_by_flat | limitTo:5}} %</td>
+                                <td>{{Data.overall_data.supplier_stats.total.mode_percent_by_flat | limitTo:5}} %</td>
+                                <td>{{Data.overall_data.supplier_stats.total.mode_percent_by_flat | limitTo:5}} %</td>
+                                <td>{{Data.overall_data.supplier_stats.total.mode_percent_by_flat | limitTo:5}} %</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="margin-top:50px;">
+                      <div class="col-md-12" ng-if="lineChartForHotLeadsDistributedGraphs.length">
+                        <div class="panel-heading content-title">
+                            <h4 style="text-align: center">Distributed Hot Leads Graphs</h4>
+                        </div>
+                        <div class="col-md-12" ng-scrollable>
+                          <div class="outerdistributed">
+                            <div class="innerdistributed">
+                              <nvd3 options="lineChartHotLeadsDistributed" data="lineChartForHotLeadsDistributedGraphs"></nvd3>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12" style="margin-top:10px;" ng-if="lineChartForHotLeadsDistributedGraphs.length">
+                        <div class="panel-heading content-title">
+                            <h4 style="text-align: center">Summary for Distributed Hot Leads Statistics</h4>
+                        </div>
+                        <table class="table table-striped"  st-table="LeadsByCampaign" st-safe-src="Data">
+                          <thead>
+                              <tr>
+                                <th style="background:#8e1921 !important;color:#ffffff !important">Mean</th>
+                                <th style="background:#8e1921 !important;color:#ffffff !important">Median</th>
+                                <th style="background:#8e1921 !important;color:#ffffff !important">Mode</th>
+                                <th style="background:#8e1921 !important;color:#ffffff !important">Standard Deviation</th>
+                                <th style="background:#8e1921 !important;color:#ffffff !important">Varian</th>
+                              </tr>
+                        </thead>
+                          <tbody style="text-align:center;">
+                            <tr>
+                              <!-- <td style="font-weight:bold">{{key}}</td> -->
+                              <td>{{Data.overall_data.supplier_stats.interested.percentage_by_flat | limitTo:5}} %</td>
+                              <td>{{Data.overall_data.supplier_stats.interested.median_percent_by_flat | limitTo:5}} %</td>
+                              <td>{{Data.overall_data.supplier_stats.interested.mode_percent_by_flat | limitTo:5}} %</td>
+                              <td>{{Data.overall_data.supplier_stats.interested.mode_percent_by_flat | limitTo:5}} %</td>
+                              <td>{{Data.overall_data.supplier_stats.interested.mode_percent_by_flat | limitTo:5}} %</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                  </div>
+                    </div>
+
 <!-- Start Weekly Master (ALL Cities)-->
 <div class="col-lg-12" ng-if="selectAllCampaignLeads">
   <div class="panel panel-primary">
@@ -2600,7 +2697,9 @@
   </div>
   <div class="campaigndetailtable">
     <div class="table-responsive">
-      <table class="table table-striped" st-table="campaignSummary">
+    <button class="btn btn-danger pull-right" ng-click="exportToExcel('#customer1')"><span class="glyphicon glyphicon-download-alt"></span></button>
+    <br />
+      <table class="table table-striped" id="customer1" st-table="campaignSummary">
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Details</th>
@@ -2709,7 +2808,8 @@
   </div>
   <div class="campaigndetailtable">
     <div class="table-responsive">
-      <table class="table table-striped" st-table="campaignSummary">
+    <button class="btn btn-danger pull-right" ng-click="exportToExcel('#customer2')"><span class="glyphicon glyphicon-download-alt"></span></button>
+      <table class="table table-striped" id="customer2"  st-table="campaignSummary">
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
@@ -2747,10 +2847,12 @@
       <label for="Location">Overall Statistical Details</label>
     </div>
   </div>
-  <br> <br>
+  <br>
   <div class="campaigndetailtable">
-    <div class="table-responsive">
-  <table class="table table-striped" st-table="campaignSummary">
+  <div class="table-responsive">
+  <button class="btn btn-danger pull-right" ng-click="exportToExcel('#customer3')"><span class="glyphicon glyphicon-download-alt"></span></button>
+
+  <table class="table table-striped" id="customer3"  st-table="campaignSummary">
     <thead>
       <tr>
         <th style="background:#8e1921 !important;color:#ffffff !important">Type</th>
@@ -2907,7 +3009,8 @@
   </div>
   <div class="campaigndetailtable">
     <div class="table-responsive">
-      <table class="table table-striped" st-table="campaignSummary">
+      <button class="btn btn-danger pull-right" ng-click="exportToExcel('#customer4')"><span class="glyphicon glyphicon-download-alt"></span></button>
+      <table class="table table-striped" id="customer4"  st-table="campaignSummary">
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
@@ -3004,7 +3107,8 @@
   </div>
   <div class="campaigndetailtable">
     <div class="table-responsive">
-      <table class="table table-striped" st-table="campaignSummary">
+      <button class="btn btn-danger pull-right" ng-click="exportToExcel('#customer5')"><span class="glyphicon glyphicon-download-alt"></span></button>
+      <table class="table table-striped" id="customer5"  st-table="campaignSummary">
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
@@ -3100,7 +3204,8 @@
   </div>
   <div class="campaigndetailtable">
     <div class="table-responsive">
-      <table class="table table-striped" st-table="campaignSummary">
+      <button class="btn btn-danger pull-right" ng-click="exportToExcel('#customer6')"><span class="glyphicon glyphicon-download-alt"></span></button>
+      <table class="table table-striped" id="customer6"  st-table="campaignSummary">
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>

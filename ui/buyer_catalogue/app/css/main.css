@@ -709,6 +709,10 @@ div.outerdate { overflow: scroll; }
 div.outerdate .innerdate { width: 2400px; }
 
 
+div.outerdistributed { overflow: scroll; }
+div.outerdistributed .innerdistributed { width: 970px; }
+
+
 div.outerFlat { overflow: scroll; }
 div.outerFlat .innerFlat { width: 500px; }
 
