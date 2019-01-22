@@ -29,7 +29,7 @@
     <link href="css/custom.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
     <link rel="stylesheet" type="text/css" href="modules/pages/dashboard/chat.css">
-<script data-require="jquery@*" data-semver="2.1.4" src="https://code.jquery.com/jquery-2.1.4.js"></script>
+<!-- <script data-require="jquery@*" data-semver="2.1.4" src="https://code.jquery.com/jquery-2.1.4.js"></script> -->
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon-96x96.png">
@@ -69,7 +69,7 @@
                    <thead>
                      <tr>
                        <td style="color:#ffffff !important;" style="width:20px">DATE</td>
-                       <td style="width:20px"> 
+                       <td style="width:20px">
                          <button type="button" name="button" class="col-xs-5" style="margin: 0px 9px 0px -1px;width:80px;height:70px;color:black;background-color:#ffe000;">Total Release (%)</button>
                          <!-- <button type="button" name="button" class="col-xs-3" style="margin: 0px 9px 0px -1px;width:60px;height:45px;color:black;background-color:#ffe000;">A (%)</button> -->
                          <!-- <button type="button" name="button" class="col-xs-5" style="margin: 0px 9px 0px -1px;width:80px;height:70px;color:black;background-color:#ffe000;">Total Closure (%)</button> -->
@@ -2601,27 +2601,27 @@
                         </div>
 
                       <br />
-                      <div class="row">
-                      <button type="button" class="btn btn-danger" name="button" ng-if="showPerfMetrics == perfMetrics.leads" ng-click="getDistributionGraphsStatics()">Distribution Leads Graphs</button>
-                      <button type="button" class="btn btn-danger" name="button" ng-if="showPerfMetrics == perfMetrics.leads" ng-click="getDistributionGraphsStatics()">Distribution Hot Leads Graphs</button>
-                      </div>
-                      <div class="col-md-12" style="margin-top:50px;" ng-if="showPerfMetrics == perfMetrics.distributedstatisticsgraphs">
-                        <div class="col-md-12">
+                      <br /><br />
+                      <br /><br />
+                    <div class="row" ng-if="showPerfMetrics == perfMetrics.leads">
+                      <button type="button" class="col-md-3 btn btn-danger pull-right" name="button" ng-click="getDistributionGraphsStatics()">Click here for Distribution Graphs</button>
+
+                      <div class="col-md-12" style="margin-top:50px;">
+                        <div class="col-md-12" ng-if="lineChartForLeadsDistributedGraphs.length">
                           <div class="panel-heading content-title">
-                              <h4 style="text-align: center">Distributed Graphs for MEAN MEDIAN MODE</h4>
+                              <h4 style="text-align: center">Distributed Leads Graphs</h4>
                           </div>
                           <div class="col-md-12" ng-scrollable>
                             <div class="outerdistributed">
                               <div class="innerdistributed">
                                 <nvd3 options="lineChartLeadsDistributed" data="lineChartForLeadsDistributedGraphs"></nvd3>
-                                <nvd3 options="lineChartHotLeadsDistributed" data="lineChartForHotLeadsDistributedGraphs"></nvd3>
                               </div>
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-12" style="margin-top:10px;">
+                        <div class="col-md-12" style="margin-top:10px;" ng-if="lineChartForLeadsDistributedGraphs.length">
                           <div class="panel-heading content-title">
-                              <h4 style="text-align: center">Summary for Distributed Graphs Statistics</h4>
+                              <h4 style="text-align: center">Summary for Distributed Leads Statistics</h4>
                           </div>
                           <table class="table table-striped"  st-table="LeadsByCampaign" st-safe-src="Data">
                             <thead>
@@ -2645,6 +2645,47 @@
                             </tbody>
                           </table>
                         </div>
+                    </div>
+                    <div class="col-md-12" style="margin-top:50px;">
+                      <div class="col-md-12" ng-if="lineChartForHotLeadsDistributedGraphs.length">
+                        <div class="panel-heading content-title">
+                            <h4 style="text-align: center">Distributed Hot Leads Graphs</h4>
+                        </div>
+                        <div class="col-md-12" ng-scrollable>
+                          <div class="outerdistributed">
+                            <div class="innerdistributed">
+                              <nvd3 options="lineChartHotLeadsDistributed" data="lineChartForHotLeadsDistributedGraphs"></nvd3>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12" style="margin-top:10px;" ng-if="lineChartForHotLeadsDistributedGraphs.length">
+                        <div class="panel-heading content-title">
+                            <h4 style="text-align: center">Summary for Distributed Hot Leads Statistics</h4>
+                        </div>
+                        <table class="table table-striped"  st-table="LeadsByCampaign" st-safe-src="Data">
+                          <thead>
+                              <tr>
+                                <th style="background:#8e1921 !important;color:#ffffff !important">Mean</th>
+                                <th style="background:#8e1921 !important;color:#ffffff !important">Median</th>
+                                <th style="background:#8e1921 !important;color:#ffffff !important">Mode</th>
+                                <th style="background:#8e1921 !important;color:#ffffff !important">Standard Deviation</th>
+                                <th style="background:#8e1921 !important;color:#ffffff !important">Varian</th>
+                              </tr>
+                        </thead>
+                          <tbody style="text-align:center;">
+                            <tr>
+                              <!-- <td style="font-weight:bold">{{key}}</td> -->
+                              <td>{{Data.overall_data.supplier_stats.interested.percentage_by_flat | limitTo:5}} %</td>
+                              <td>{{Data.overall_data.supplier_stats.interested.median_percent_by_flat | limitTo:5}} %</td>
+                              <td>{{Data.overall_data.supplier_stats.interested.mode_percent_by_flat | limitTo:5}} %</td>
+                              <td>{{Data.overall_data.supplier_stats.interested.mode_percent_by_flat | limitTo:5}} %</td>
+                              <td>{{Data.overall_data.supplier_stats.interested.mode_percent_by_flat | limitTo:5}} %</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                  </div>
                     </div>
 
 <!-- Start Weekly Master (ALL Cities)-->
