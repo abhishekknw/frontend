@@ -303,6 +303,52 @@ export function postInventory({ data }, callback) {
   };
 }
 
+// PUT Inventory
+export function putInventoryStart() {
+  return {
+    type: types.PUT_INVENTORY_START
+  };
+}
+
+export function putInventorySuccess() {
+  return {
+    type: types.PUT_INVENTORY_SUCCESS
+  };
+}
+
+export function putInventoryFail() {
+  return {
+    type: types.PUT_INVENTORY_FAIL
+  };
+}
+
+export function putInventory({ inventoryId, data }, callback) {
+  return (dispatch, getState) => {
+    dispatch(putInventoryStart());
+
+    const { auth } = getState();
+
+    request
+      .put(
+        `${config.API_URL}/v0/ui/dynamic-inventory/inventory/${inventoryId}/`
+      )
+      .set('Authorization', `JWT ${auth.token}`)
+      .send(data)
+      .then(() => {
+        dispatch(putInventorySuccess());
+
+        if (callback) {
+          callback();
+        }
+      })
+      .catch(ex => {
+        console.log('Failed to update inventory', ex);
+
+        dispatch(putInventoryFail());
+      });
+  };
+}
+
 // DELETE Inventory
 export function deleteInventorySuccess({ inventoryId }) {
   return {

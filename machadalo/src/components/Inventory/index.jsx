@@ -59,6 +59,13 @@ export default class Inventory extends React.Component {
               <Create {...this.props} {...componentProps} />
             )}
           />
+          <Route
+            exact
+            path={`${match.path}/edit/:inventoryId`}
+            render={componentProps => (
+              <Create {...this.props} {...componentProps} />
+            )}
+          />
         </Switch>
       </div>
     );
