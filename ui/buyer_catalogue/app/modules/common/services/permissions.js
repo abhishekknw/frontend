@@ -77,6 +77,7 @@ angular
       menuCampaignLeads   :   'can_view_campaignleads_button_on_menu',
       menuDashboard       :   'can_view_dashboard_button_on_menu',
       menuChangePassword  :   'can_view_changepassword_button_on_menu',
+      menuChecklist       :   'can_view_checklist_button_on_menu',
     },
     pagePermissions : {
       homepage                : 'homePage',
