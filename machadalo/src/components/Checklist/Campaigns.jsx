@@ -8,11 +8,35 @@ export default class Campaigns extends React.Component {
   constructor() {
     super();
 
+    this.state = {
+      searchFilter: ''
+    };
+
     this.renderCampaignRow = this.renderCampaignRow.bind(this);
+    this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
+    this.getFilteredList = this.getFilteredList.bind(this);
   }
 
   componentDidMount() {
     this.props.getCampaignsList();
+  }
+
+  onSearchFilterChange(event) {
+    this.setState({
+      searchFilter: event.target.value
+    });
+  }
+
+  getFilteredList(list) {
+    return list.filter(
+      item =>
+        item.campaign.name
+          .toLowerCase()
+          .replace(/[^0-9a-z]/gi, '')
+          .indexOf(
+            this.state.searchFilter.toLowerCase().replace(/[^0-9a-z]/gi, '')
+          ) !== -1
+    );
   }
 
   renderCampaignRow(campaign) {
@@ -50,13 +74,20 @@ export default class Campaigns extends React.Component {
   render() {
     const { campaign } = this.props;
 
+    const filteredList = this.getFilteredList(campaign.list);
+
     return (
       <div className="list">
         <div className="list__title">
           <h3>Campaign Checklist</h3>
         </div>
         <div className="list__filter">
-          <input type="text" placeholder="Search..." />
+          <input
+            type="text"
+            placeholder="Search..."
+            onChange={this.onSearchFilterChange}
+            value={this.state.searchFilter}
+          />
         </div>
         <div className="list__table">
           <table cellPadding="0" cellSpacing="0">
@@ -69,7 +100,7 @@ export default class Campaigns extends React.Component {
                 <th>Checklist</th>
               </tr>
             </thead>
-            <tbody>{campaign.list.map(this.renderCampaignRow)}</tbody>
+            <tbody>{filteredList.map(this.renderCampaignRow)}</tbody>
           </table>
         </div>
       </div>
