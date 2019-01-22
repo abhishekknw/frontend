@@ -966,7 +966,7 @@
               "top": 100,
               "right": 20,
               "bottom": 145,
-              "left": 100
+              "left": 140
             },
             "useInteractiveGuideline": true,
             x: function(d,i){ return d.x; },
@@ -1004,7 +1004,7 @@
               "top": 100,
               "right": 20,
               "bottom": 145,
-              "left": 100
+              "left": 140
             },
             "useInteractiveGuideline": true,
             x: function(d,i){ return d.x; },
@@ -3187,6 +3187,8 @@ $scope.getCampaignWiseSummary = function(){
       $scope.showPerfMetrics = $scope.perfMetrics.overall;
       $scope.selectAllCampaignLeads = true;
       $scope.showReportBtn = true;
+      $scope.lineChartForLeadsDistributedGraphs = false;
+      $scope.lineChartForHotLeadsDistributedGraphs = false;
       $scope.campaignSummary = response.data.data;
       console.log(response.data.data);
       $scope.WeeklyMISOverallSummary = response.data.data.overall;
@@ -3400,8 +3402,8 @@ $scope.getCampaignWiseSummary = function(){
 
 
     $scope.getDistributionGraphsStatics = function(){
-      $scope.IsVisible = false;
-
+      // $scope.IsVisible = false;
+$scope.IsVisible = $scope.IsVisible ? false : true;
       console.log($scope.campaignIdForPerfMetrics);
       var data =  {
              "data_scope": {"1":{"category": "unordered", "level": "campaign", "match_type": 0,
@@ -3431,7 +3433,7 @@ $scope.getCampaignWiseSummary = function(){
         $scope.lineChartForHotLeadsDistributedGraphs = formatLineChartForHotLeadsDistributedGraph(response.data.data);
         console.log($scope.lineChartForLeadsDistributedGraphs);
         console.log($scope.lineChartForHotLeadsDistributedGraphs);
-
+        $scope.selectAllCampaignLeads = false;
       }).catch(function onError(response){
         console.log(response);
         })
@@ -3447,8 +3449,8 @@ $scope.getCampaignWiseSummary = function(){
           $scope.distributedGraphValue = data;
           console.log($scope.distributedGraphValue);
           console.log(key);
-          $scope.showPerfMetrics = $scope.perfMetrics.leads;
-          $scope.showPerfMetrics = $scope.perfMetrics.distributedstatisticsgraphs;
+          // $scope.showPerfMetrics = $scope.perfMetrics.leads;
+          // $scope.showPerfMetrics = $scope.perfMetrics.distributedstatisticsgraphs;
 
              $scope.x_fre_leads.push(key);
               var value1 =
@@ -3478,8 +3480,8 @@ $scope.getCampaignWiseSummary = function(){
           $scope.distributedGraphValue = data;
           console.log($scope.distributedGraphValue);
           console.log(key);
-          $scope.showPerfMetrics = $scope.perfMetrics.leads;
-          $scope.showPerfMetrics = $scope.perfMetrics.distributedstatisticsgraphs;
+          // $scope.showPerfMetrics = $scope.perfMetrics.leads;
+          // $scope.showPerfMetrics = $scope.perfMetrics.distributedstatisticsgraphs;
 
              $scope.x_fre_hot_leads.push(key);
               var value1 =
