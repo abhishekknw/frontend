@@ -59,8 +59,16 @@
                             <a href="/#/loginLogs"  ng-click="closeModal()">
                           <i class="fa fa-outdent"></i> View Logs</a></li>
 
-                          <li ng-class="{active: isActive('/dashboard')}" >
+                          <!-- <li ng-class="{active: isActive('/dashboard')}" >
                             <a data-target="#passwordModal" data-toggle="modal" ng-click="closeModal()">
+                          <i class="fa fa-columns fa-lg"></i> Change Password</a></li> -->
+
+                          <!-- <li ng-class="{active: isActive('/dashboard')}" >
+                            <a ng-click="changePassword()">
+                          <i class="fa fa-columns fa-lg"></i> Change Password</a></li> -->
+
+                          <li ng-class="{active: isActive('/dashboard')}" permission = "[perm.menuChangePassword]">
+                            <a href="/#/changePassword"  ng-click="closeModal()">
                           <i class="fa fa-columns fa-lg"></i> Change Password</a></li>
 
                           <li ng-class="{active: isActive('/dashboard')}">
