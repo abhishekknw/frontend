@@ -1916,16 +1916,7 @@
                     <h5 style="margin-left:-10px;"> Performance Detail</h5>
 
                   </uib-tab-heading>
-                  <div class = "panel-body" style="text-align:center;margin-top:-20px">
-                      <div class="row">
-                        <div class="panel panel-default">
-                          <div class="panel-heading">
-                            <Label><b>Campaign Owner :</b></Label><span style="margin-left:220px">{{releaseDetails.campaign.proposal_id}}</span>
-                            <Label><b>Principal Vendor :</b></Label><span>{{releaseDetails.campaign.name}}</span>
-                            </div>
-                        </div>
-                      </div>
-                    </div>
+
                   <div class="container-fluid" print-section>
                     <div class="row">
                       <div class="panel panel-default" style="color:'0000ff'" >
@@ -2138,6 +2129,14 @@
 
 
                         <div class="col-lg-12"  ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:30px;">
+                          <div class="row">
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <Label class="pull-left"><b>Campaign Owner :</b><span>{{campaignOwner}}</span></Label>
+                                <Label><b>Principal Vendor :</b><span>{{principalVendor}}</span></Label>
+                                </div>
+                            </div>
+                          </div>
                           <div class="panel-heading content-title">
                             <h3 for="heading">Leads of {{CampaignLeadsName}}</h3>
                           </div>

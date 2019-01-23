@@ -1556,6 +1556,8 @@
      console.log(campaign);
      cfpLoadingBar.start();
      $scope.CampaignLeadsName = campaign.name;
+     $scope.principalVendor = campaign.principal_vendor;
+     $scope.campaignOwner = campaign.organisation;
      $scope.LeadsByCampaign = {};
      $scope.showReportBtn = false;
      // $scope.getSortedLeadsByCampaign();
