@@ -470,7 +470,14 @@ angular
           data : {
             permission : 'login_logs_page_access'
           }
-      });
+      }).state('editProposalDetails',{
+              url : '/editProposalDetails/:proposalId/',
+              controller : 'EditProposalDetailsCtrl',
+              templateUrl : 'modules/pages/editProposalDetails/editProposalDetails.tmpl.html',
+              data : {
+                permission : 'editProposalDetailsPage'
+              }
+        });
 
 
       //$qProvider.errorOnUnhandledRejections(false);

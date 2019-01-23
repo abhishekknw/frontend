@@ -93,6 +93,7 @@ angular
       opsExecutionPage        : 'opsExecutionPage',
       showProposalHistoryPage : 'showProposalHistoryPage',
       dashboardPage            : 'dashboard',
-      enter_leads_from_application_access : 'enter_leads_from_application_access'
+      enter_leads_from_application_access : 'enter_leads_from_application_access',
+      editProposalDetailsPage     : 'editProposalDetailsPage'
     },
   });

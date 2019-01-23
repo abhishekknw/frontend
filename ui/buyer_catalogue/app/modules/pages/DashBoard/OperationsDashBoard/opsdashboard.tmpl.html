@@ -46,7 +46,7 @@
               <th st-sort="proposal.tentative_end_date" st-skip-natural="true">End Date</th>
               <th>Create Campaign</th>
               <th>Assigned To</th>
-              <th>Download Proposal</th>
+              <th>Edit Details</th>
 
             </tr>
           </thead>
@@ -80,7 +80,8 @@
                 NA
               </td>
               <td class="cellWidthLarge">
-                <a href="{{bucket_url}}{{proposal.file_name}}" Download> Download </a>
+                <!-- <a href="{{bucket_url}}{{proposal.file_name}}" Download> Download </a> -->
+                <a ng-click="goToEditProposalDetails(proposal.proposal.proposal_id)">Edit Details</a>
               </td>
             </tr>
           </tbody>

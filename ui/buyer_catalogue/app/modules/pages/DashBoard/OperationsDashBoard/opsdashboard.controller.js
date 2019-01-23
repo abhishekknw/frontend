@@ -26,7 +26,8 @@ angular.module('catalogueApp')
         {header : 'End Date'},
         {header : 'Create Campaign'},
         {header : 'Assigned To'},
-        {header : 'Download Proposal'}
+        {header : 'Edit Details'},
+        // {header : 'Download Proposal'}
       ];
 
   var getProposalDetails = function(){
@@ -198,5 +199,8 @@ angular.module('catalogueApp')
     }
     $scope.goToCampaignList = function(){
      $location.path("/CampaignList");
+    }
+    $scope.goToEditProposalDetails = function(proposalId){
+      $location.path("/editProposalDetails/" + proposalId + "/");
     }
 }]);//Controller function ends here
