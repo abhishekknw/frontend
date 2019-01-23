@@ -30,18 +30,80 @@ const getAttributeTypeOption = value => {
   return { value };
 };
 
+// Get base inventory options list
+const getBaseInventoryOptions = baseInventory => {
+  if (baseInventory && baseInventory.length) {
+    return baseInventory.map(item => ({ label: item.name, value: item._id }));
+  }
+
+  return [];
+};
+
+// Get base inventory option by value
+const getBaseInventoryOptionByValue = (
+  baseInventoryOptions,
+  baseInventoryId
+) => {
+  for (let i = 0, l = baseInventoryOptions.length; i < l; i += 1) {
+    if (baseInventoryOptions[i].value === baseInventoryId) {
+      return baseInventoryOptions[i];
+    }
+  }
+
+  return {};
+};
+
+// Get inventory by id
+const getInventoryById = (inventoryList, inventoryId) => {
+  for (let i = 0, l = inventoryList.length; i < l; i += 1) {
+    if (inventoryList[i]._id === inventoryId) {
+      return inventoryList[i];
+    }
+  }
+
+  return {};
+};
+
 export default class Create extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    let { match } = this.props;
+    const { inventoryList } = this.props.baseInventory;
+    const baseInventoryOptions = getBaseInventoryOptions(
+      this.props.baseInventory.baseInventoryList
+    );
+    let mode = 'create'; // Options: create | edit
+    let inventoryId;
+    let inventoryName = '';
+    let selectedBaseInventory = {};
+    let inventoryAttributes = [{ name: '', type: '', is_required: false }];
+
+    if (match.params && match.params.inventoryId) {
+      mode = 'edit';
+      inventoryId = match.params.inventoryId;
+      const inventory = getInventoryById(inventoryList, inventoryId);
+
+      if (inventory && Object.keys(inventory).length) {
+        inventoryName = inventory.name;
+        inventoryAttributes = inventory.inventory_attributes;
+        selectedBaseInventory = getBaseInventoryOptionByValue(
+          baseInventoryOptions,
+          inventory.base_inventory
+        );
+      }
+    }
 
     this.state = {
-      name: '',
-      inventory_attributes: [{ name: '', type: '', is_required: false }],
-      baseInventoryOptions: [],
-      selectedBaseInventory: {},
+      name: inventoryName,
+      inventory_attributes: inventoryAttributes,
+      baseInventoryOptions,
+      selectedBaseInventory,
       showOptionModal: false,
       attributeOptions: [''],
-      attributeInfo: {}
+      attributeInfo: {},
+      mode,
+      inventoryId
     };
 
     this.onAddAttribute = this.onAddAttribute.bind(this);
@@ -55,21 +117,43 @@ export default class Create extends React.Component {
     this.onBaseInventoryChange = this.onBaseInventoryChange.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getBaseInventory();
+
+    if (this.state.mode === 'edit') {
+      this.props.getInventoryList();
+    }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    const newState = {};
+
+    const { inventoryList, baseInventoryList } = this.props.baseInventory;
+    const oldInventoryList = prevProps.baseInventory.inventoryList;
+
     if (
-      this.state.baseInventoryOptions.length !==
-      this.props.baseInventory.baseInventoryList.length
+      this.state.baseInventoryOptions.length !== baseInventoryList.length ||
+      (oldInventoryList &&
+        inventoryList &&
+        oldInventoryList.length !== inventoryList.length)
     ) {
-      const baseInventoryOptions = this.props.baseInventory.baseInventoryList.map(
-        item => ({ label: item.name, value: item._id })
+      newState.baseInventoryOptions = getBaseInventoryOptions(
+        this.props.baseInventory.baseInventoryList
       );
-      this.setState({
-        baseInventoryOptions
-      });
+
+      const inventory = getInventoryById(inventoryList, this.state.inventoryId);
+      if (Object.keys(inventory).length) {
+        newState.name = inventory.name;
+        newState.inventory_attributes = inventory.inventory_attributes;
+        newState.selectedBaseInventory = getBaseInventoryOptionByValue(
+          newState.baseInventoryOptions,
+          inventory.base_inventory
+        );
+      }
+    }
+
+    if (Object.keys(newState).length) {
+      this.setState(newState);
     }
   }
 
@@ -116,10 +200,22 @@ export default class Create extends React.Component {
       inventory_attributes: this.state.inventory_attributes
     };
 
-    this.props.postInventory({ data }, () => {
-      toastr.success('', 'Inventory created successfully');
-      this.props.history.push('/r/inventory/list');
-    });
+    if (this.state.mode === 'create') {
+      this.props.postInventory({ data }, () => {
+        toastr.success('', 'Inventory created successfully');
+        this.props.history.push('/r/inventory/list');
+      });
+    } else if (this.state.mode === 'edit') {
+      this.props.putInventory(
+        { inventoryId: this.state.inventoryId, data },
+        () => {
+          toastr.success('', 'Inventory updated successfully');
+          this.props.history.push('/r/inventory/list');
+        }
+      );
+    } else {
+      console.log('Error: Unsupported mode!');
+    }
   }
 
   onAddAttribute() {
@@ -287,6 +383,7 @@ export default class Create extends React.Component {
                   options={this.state.baseInventoryOptions}
                   value={this.state.selectedBaseInventory}
                   onChange={this.onBaseInventoryChange}
+                  isDisabled={this.state.mode === 'edit'}
                 />
               </div>
             </div>

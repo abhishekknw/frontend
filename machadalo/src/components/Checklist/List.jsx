@@ -7,9 +7,15 @@ export default class List extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      searchFilter: ''
+    };
+
     this.renderChecklistRow = this.renderChecklistRow.bind(this);
     this.onBack = this.onBack.bind(this);
     this.onEdit = this.onEdit.bind(this);
+    this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
+    this.getFilteredList = this.getFilteredList.bind(this);
   }
 
   componentDidMount() {
@@ -41,6 +47,24 @@ export default class List extends React.Component {
 
   onEdit(checklistId) {
     this.props.history.push(`/r/checklist/edit/${checklistId}`);
+  }
+
+  onSearchFilterChange(event) {
+    this.setState({
+      searchFilter: event.target.value
+    });
+  }
+
+  getFilteredList(list) {
+    return list.filter(
+      item =>
+        item.checklist_info.checklist_name
+          .toLowerCase()
+          .replace(/[^0-9a-z]/gi, '')
+          .indexOf(
+            this.state.searchFilter.toLowerCase().replace(/[^0-9a-z]/gi, '')
+          ) !== -1
+    );
   }
 
   renderChecklistRow(checklist, index) {
@@ -181,13 +205,20 @@ export default class List extends React.Component {
       }
     }
 
+    const filteredList = this.getFilteredList(checklist.list);
+
     return (
       <div className="list">
         <div className="list__title">
           <h3>{headingText}</h3>
         </div>
         <div className="list__filter">
-          <input type="text" placeholder="Search..." />
+          <input
+            type="text"
+            placeholder="Search..."
+            onChange={this.onSearchFilterChange}
+            value={this.state.searchFilter}
+          />
         </div>
         <div className="list__table">
           <table cellPadding="0" cellSpacing="0">
@@ -201,8 +232,8 @@ export default class List extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {checklist.list.length && campaignPermission ? (
-                checklist.list.map(this.renderChecklistRow)
+              {filteredList.length && campaignPermission ? (
+                filteredList.map(this.renderChecklistRow)
               ) : (
                 <tr>
                   <td colSpan="5">{emptyChecklistText}</td>
