@@ -1145,9 +1145,142 @@
                                       </table>
                                     </div>
                                   </div>
+
+                                  <div class="campaigndetailtable">
+                                    <div class="panel-heading" style="height:70px;">
+                                      <h5 style="background:'red';color:white;text-transform:capitalize">Phase Wise Details For {{campaignTabPropsalName}}- {{supplierStatus}}</h5>
+                                    </div>
+                                    <br />
+                                    <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
+
+                                      <br />
+                                    <div class="table-responsive">
+                                      <table class="table">
+                                        <thead>
+                                         <tr>
+                                            <th>INDEX</th>
+                                            <th ng-click="Sort('phase')">Phase No &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th style="width:200px;" ng-click="Sort('supplier.society_name')">Society Name &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <!-- <th>Society Area (SubArea)</th> -->
+                                            <!-- <th>Society Type</th> -->
+                                            <th ng-click="Sort('supplier.flat_count')" >Flat Count &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th ng-click="Sort('leads_data.total_leads_count')">Leads <br> (% by Flat Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th ng-click="Sort('leads_data.hot_leads_count')" >Hot Leads <br>(% by Flat Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <!-- <th ng-if="supplierStatus != 'upcoming'">Poster</th>
+                                            <th ng-if="supplierStatus != 'upcoming'">Flier</th>
+                                            <th ng-if="supplierStatus != 'upcoming'">Standee</th>
+                                            <th ng-if="supplierStatus != 'upcoming'">Stall</th>
+                                            <th ng-if="supplierStatus != 'upcoming'">Other Images</th> -->
+                                            <!-- <th>Permission Box</th> -->
+                                            <th style="width:200px;">Add Phase <br> Related Comments</th>
+                                            <th style="width:200px;">View Phase <br> Related Comments</th>
+                                            </tr>
+                                            <tr colspan="9">
+                                              <td></td>
+                                              <td><input ng-model="f.phase" class="form-control" placeholder="Search"><hr></td>
+                                              <td><input ng-model="f.supplier.society_name" class="form-control" placeholder="Search"><hr></td>
+
+                                            </tr>
+                                            <hr>
+                                            </thead>
+
+                                            <tbody class="detailedTable">
+                                              <div class="row">
+                                                  <tr ng-repeat="supplier in supplierAndInvData |filter:query |filter : f | orderBy:sort:reversesort">
+                                                  <td>{{$index + 1}}</td>
+                                                  <td>{{supplier.phase}}</td>
+                                                  <td style="width:200px;" class="col-md-2">{{supplier.supplier.society_name}}</td>
+                                                  <!-- <td class="col-md-2">{{supplier.supplier.society_locality}} <small>({{supplier.supplier.society_subarea}})</small></td> -->
+                                                  <!-- <td class="col-md-2">{{supplier.supplier.society_type_quality}}</td> -->
+                                                  <td class="col-md-2">{{supplier.supplier.flat_count}}</td>
+                                                  <td class="col-md-2" style="color:#ffffff">{{supplier.leads_data.total_leads_count || 0}} <br> <small style="color:#cb1925;"> ({{supplier.leads_data.leads_flat_percentage || 0}} %)</small></td>
+                                                  <td class="col-md-2" style="color:#ffffff">{{supplier.leads_data.hot_leads_count || 0}} <br> <small style="color:#cb1925;">({{supplier.leads_data.hot_leads_percentage_by_flat_count || 0}} %)</small></td>
+                                                  <!-- <td ng-if="supplier.images_data.POSTER && supplierStatus != 'upcoming'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.POSTER.images)">Images ({{supplier.images_data.POSTER.total_count}})</a></td>
+                                                  <td ng-if="!supplier.images_data.POSTER && supplierStatus != 'upcoming'">No Images</td>
+
+                                                  <td ng-if="supplier.images_data.FLIER && supplierStatus != 'upcoming'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.FLIER.images)">Images ({{supplier.images_data.FLIER.total_count}})</a></td>
+                                                  <td ng-if="!supplier.images_data.FLIER && supplierStatus != 'upcoming'">No Images</td>
+
+                                                  <td ng-if="supplier.images_data.STANDEE && supplierStatus != 'upcoming'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.STANDEE.images)">Images ({{supplier.images_data.STANDEE.total_count}})</a></td>
+                                                  <td ng-if="!supplier.images_data.STANDEE && supplierStatus != 'upcoming'">No Images</td>
+
+                                                  <td ng-if="supplier.images_data.STALL && supplierStatus != 'upcoming'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.STALL.images)">Images ({{supplier.images_data.STALL.total_count}})</a></td>
+                                                  <td ng-if="!supplier.images_data.STALL && supplierStatus != 'upcoming'">No Images</td> -->
+<!--
+                                                  <td ng-if="supplierStatus == 'ongoing' || supplierStatus == 'completed'">
+                                                    <table class="table-responsive table table-bordered ">
+                                                      <tr>
+                                                        <td style="color:#ffffff;" ng-if="supplier.images_data.BANNER && supplierStatus != 'upcoming'" style="background-color:#cb1925"><small>Banner</small><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.BANNER.images)"><small>({{supplier.images_data.BANNER.total_count}})</small></a></td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td style="color:#ffffff;" ng-if="supplier.images_data['OTHER IMAGES'] && supplierStatus != 'upcoming'" style="background-color:#cb1925"><small>Others</small><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['OTHER IMAGES'].images)"><small>({{supplier.images_data['OTHER IMAGES'].total_count}})</small></a></td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td style="color:#ffffff;" ng-if="supplier.images_data['CERTIFICATION DISTRIBUTION'] && supplierStatus != 'upcoming'" style="background-color:#cb1925"><small>Certification <br> Distribution</small><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['CERTIFICATION DISTRIBUTION'].images)"><small>({{supplier.images_data['CERTIFICATION DISTRIBUTION'].total_count}})</small></a></td>
+                                                      </tr>
+                                                      <tr>
+                                                      <td style="color:#ffffff;" ng-if="supplier.images_data['STALL WITH PROMOTERS'] && supplierStatus != 'upcoming'" style="background-color:#cb1925"><small>Stall With<br>Promoters</small><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['STALL WITH PROMOTERS'].images)"><small>({{supplier.images_data['STALL WITH PROMOTERS'].total_count}})</small></a></td>
+                                                      </tr>
+                                                    </table>
+                                                  </td> -->
+                                                  <!-- <td>
+                                                    <a  ng-click="getPermissionBoxImages(supplier.supplier)">View</a>
+                                                  </td> -->
+                                                  <td style="width:200px;">
+                                                    <button type="button" class="btn btn-danger" ng-click="enableAddComments($index)">Add Phase Comments</button>
+                                                    <div ng-if="enableComments == $index">
+                                                      <textarea name="name" rows="4" cols="20" placeholder="Enter Here.." ng-model="commentModal.comment"></textarea>
+                                                      <button class="btn btn-success form-control" ng-disabled="!commentModal.comment" ng-click="addComment(supplier.shortlisted_space_id)">Add</button>
+                                                    </div>
+                                                  </td>
+
+                                                  <td style="width:200px;">
+                                                    <button type="button" class="btn btn-danger" ng-click="viewComments(supplier,$index)">View Phase Comments</button><br>
+                                                    <div class="panel panel-default" ng-if="enableViewComments == $index" style="height:100px;overflow-y:scroll;padding-top:40px;">
+                                                      <div class="talk-bubble tri-right round left-top"  ng-repeat="item in commentsData.general" style="margin-top:-20px">
+                                                        <div class="talktext" style="font-color:black">
+                                                          <p style="color:#ff0000;font-size:smaller">{{item.user_name}}</p>
+                                                          <p style="color:#000000;font-size:x-small">{{item.comment}}</p>
+                                                          <p style="color:#0000ff;font-size:xx-small;text-align:right">{{item.timestamp|date:'medium'}}</p>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </td>
+
+                                                    <!-- <td ng-init="calculateTotalCount('GATEWAY ARCH',supplier.supplier.inv_data['GATEWAY ARCH'].total.total)" ng-show="invStatusKeys['GATEWAY ARCH'].status">{{supplier.supplier.inv_data['GATEWAY ARCH'].total.total}}
+                                                    </td> -->
+                                                    <!-- <t d style="vertical-align:middle" ng-if="showLeads">{{supplier.leads_data.length}}</td> -->
+
+                                                  </tr>
+
+                                              </div>
+                                        </tbody>
+                                        <tfoot>
+                                          <tr>
+                                              <td>TOTAL</td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td>{{TotalSupplierFlatCount}}</td>
+                                              <td>{{TotalSupplierLeadsCount || 0}}</td>
+                                              <td>{{TotalSupplierHotLeadsCount || 0}}</td>
+                                              <td ng-if="supplierStatus != 'upcoming'"></td>
+                                              <td ng-if="supplierStatus != 'upcoming'"></td>
+                                              <td ng-if="supplierStatus != 'upcoming'"></td>
+                                              <td ng-if="supplierStatus != 'upcoming'"></td>
+                                              <td ng-if="supplierStatus != 'upcoming'"></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                          </tr>
+                                        </tfoot>
+                                      </table>
+                                    </div>
+                                  </div>
                                   </div>
 
-                                <div class="col-md-12" ng-show="showDisplayDetailsTable" style="margin-top:230px;">
+                                <div class="col-md-12" ng-show="showDisplayDetailsTable" style="margin-top:1230px;">
                                   <div class="panel-heading content-title">
                                     <h5 style="background:'red'">Map View for {{campaignTabPropsalName}}</h5></div>
                                   <style type="text/css">

@@ -2168,6 +2168,11 @@ var formatThreeWeeksSummary = function(data,key){
         }
         $scope.societyName = supplier.supplier.society_name;
 
+        angular.forEach(supplier.phase, function(phase,key){
+         // console.log(key);
+         console.log(phase);
+
+       })
           angular.forEach(supplier.supplier.inv_data, function(inv,key){
           $scope.invStatusKeys[key].status = true;
           })
@@ -2195,6 +2200,8 @@ var formatThreeWeeksSummary = function(data,key){
               $scope.supplierHotLeads += 1;
             }
           })
+
+
       })
 
       $scope.showDisplayDetailsTable = true;
