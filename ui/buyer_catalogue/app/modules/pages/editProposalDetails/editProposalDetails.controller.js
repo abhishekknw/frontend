@@ -31,7 +31,7 @@ angular.module('catalogueApp')
           editProposalDetailsService.updateProposalDetails($scope.proposalData)
           .then(function onSuccess(response){
             console.log(response);
-
+            swal(constants.name, constants.proposal_update_success, constants.success);
           }).catch(function onError(response){
             console.log(response);
           })

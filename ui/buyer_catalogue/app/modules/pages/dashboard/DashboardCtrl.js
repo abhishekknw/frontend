@@ -1553,6 +1553,7 @@
      })
    }
    $scope.getLeadsByCampaign = function(campaignId,campaign){
+     console.log(campaign);
      cfpLoadingBar.start();
      $scope.CampaignLeadsName = campaign.name;
      $scope.LeadsByCampaign = {};
