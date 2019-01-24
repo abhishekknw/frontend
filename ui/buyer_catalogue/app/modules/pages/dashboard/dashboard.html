@@ -1656,8 +1656,8 @@
                 <td>
                   <div class="">
                     <small>Completed Phase No : {{bookingPhases.last_completed_phase.phase_no}}</small>  </br>
-                      <small>Start Date : {{bookingPhases.last_completed_phase.start_date|limitTo:10|date:fullDate}}</small></br>
-                      <small>End Date : {{bookingPhases.last_completed_phase.end_date|limitTo:10|date:fullDate}}</small>
+                      <small>Start Date : {{bookingPhases.last_completed_phase.start_date|limitTo:14|date:mediumDate}}</small></br>
+                      <small>End Date : {{bookingPhases.last_completed_phase.end_date|limitTo:14|date:mediumDate}}</small>
                   </div>
                 </td>
                 <td ng-if="bookingPhases.last_completed_phase.confirmed_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.confirmed_booked.supplier_data,'Last Completed Phase')">
