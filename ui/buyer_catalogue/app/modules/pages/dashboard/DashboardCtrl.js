@@ -466,7 +466,7 @@
            console.log(response);
            cfpLoadingBar.complete();
            $scope.AllCampaignData = response.data.data;
-           
+
            $scope.supplierPanIndiaMarkers = assignPanIndiaMarkersToMap($scope.AllCampaignData);
            if(response.data.data){
               $scope.supplierCodeCountData = formatCountData(response.data.data);
@@ -979,7 +979,7 @@
                   tooltipHide: function(e){ console.log("tooltipHide"); }
               },
             "xAxis": {
-              "axisLabel": "Campaigns",
+              "axisLabel": "Leads % Range Distribution",
               "showMaxMin":false,
               tickFormat : function (d) {
                           return $scope.x_fre_leads[d];
@@ -991,7 +991,7 @@
                      "rotateLabels" : -30
             },
             "yAxis": {
-              "axisLabel": "",
+              "axisLabel": "Supplier Count In Leads",
             }
           }
         };
@@ -1000,6 +1000,7 @@
           "chart": {
             "type": "lineChart",
             "height": 450,
+            "staggerLabels" :true,
             "margin": {
               "top": 100,
               "right": 20,
@@ -1016,7 +1017,7 @@
                   tooltipHide: function(e){ console.log("tooltipHide"); }
               },
             "xAxis": {
-              "axisLabel": "Campaigns",
+              "axisLabel": "Leads % Range Distribution",
               "showMaxMin":false,
               tickFormat : function (d) {
                 console.log($scope.x_fre_hot_leads[d]);
@@ -1029,8 +1030,8 @@
                      "rotateLabels" : -30
             },
             "yAxis": {
-              "axisLabel": "",
-            }
+            "axisLabel": "Supplier Count In Leads",
+              }
           }
         };
 
@@ -3487,7 +3488,7 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
       })
       var temp_data = [
         {
-          key : "Distribution Gussian Curve",
+          key : "Mode",
           color : constants.colorKey1,
           values : values1
         }
@@ -3518,7 +3519,7 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
       })
       var temp_data = [
         {
-          key : "Distribution Gussian Curve",
+          key : "Mode",
           color : constants.colorKey1,
           values : values1
         }
