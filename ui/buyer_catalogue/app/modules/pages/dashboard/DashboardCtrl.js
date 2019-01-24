@@ -2191,6 +2191,8 @@ var formatThreeWeeksSummary = function(data,key){
                 $scope.ImageURLListOfAll.push(imagesData);
 
             })
+
+
           }
 
            angular.forEach(supplier.leads_data, function(inv,key){
@@ -2373,6 +2375,7 @@ $scope.setImageUrl = function(item,images){
       $scope.imageUrlList.push(imageData);
     }
   })
+
 }
 // map
 
@@ -3511,8 +3514,23 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
 
       return temp_data;
     }
-// END
 
+// $scope.rotateImage=function(id){
+//   console.log("hello",id);
+//   var id = '#img_test' + id;
+//   index++;
+//   if(index%4 == 0){
+//     $(id).toggleClass('rotateImage0');
+//   }else if(index%4 == 1){
+//     $(id).toggleClass('rotateImage90');
+//   }else if (index%4 == 2) {
+//     $(id).toggleClass('rotateImage180');
+//   }else if (index%4 == 3) {
+//     $(id).toggleClass('rotateImage270');
+//   }
+//
+//
+// }
 })
 
 

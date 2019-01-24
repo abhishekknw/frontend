@@ -3743,15 +3743,19 @@
             <div class = "modal-body">
               <div class="carousel" id="slider">
                  <div class="carousel-inner">
+
                    <div class="item" ng-class="{active:!$index}" ng-repeat="image in imageUrlList">
                      <div class="row">
-                        <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
-                       </div>
+                        <img ng-src="{{image.image_url}}"  style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
                        <div class="row" style="margin-left:10px;">
                          Comment : {{image.comment}} </br>
                          Distance : {{image.distance|limitTo:10}} mtrs, ({{image.distance/1000|limitTo:10}} kms) </br>
                          Date and Time : {{image.timestamp|date:'medium'}}
-                       </div>
+                       </div> <br />
+                      </div>
+                      <!-- id="img_test{{$index}}" -->
+                      <!-- <input type="button" class="btn btn-danger pull-middle" ng-click="rotateImage($index)" value="Rotate Image"/> -->
+
                    </div>
 
                  </div>
