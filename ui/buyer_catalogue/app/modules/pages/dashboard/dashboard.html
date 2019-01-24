@@ -2718,7 +2718,7 @@
                                   <th style="background:#8e1921 !important;color:#ffffff !important">Median</th>
                                   <th style="background:#8e1921 !important;color:#ffffff !important">Mode</th>
                                   <th style="background:#8e1921 !important;color:#ffffff !important">Standard Deviation</th>
-                                  <th style="background:#8e1921 !important;color:#ffffff !important">Varian</th>
+                                  <th style="background:#8e1921 !important;color:#ffffff !important">Variance</th>
                                 </tr>
                           </thead>
                             <tbody style="text-align:center;">
@@ -2727,8 +2727,8 @@
                                 <td>{{Data.overall_data.supplier_stats.total.percentage_by_flat | limitTo:5}} %</td>
                                 <td>{{Data.overall_data.supplier_stats.total.median_percent_by_flat | limitTo:5}} %</td>
                                 <td>{{Data.overall_data.supplier_stats.total.mode_percent_by_flat | limitTo:5}} %</td>
-                                <td>{{Data.overall_data.supplier_stats.total.mode_percent_by_flat | limitTo:5}} %</td>
-                                <td>{{Data.overall_data.supplier_stats.total.mode_percent_by_flat | limitTo:5}} %</td>
+                                <td>{{standardDeviationLeads | limitTo:5}} %</td>
+                                <td>{{varianceLeads | limitTo:5}} %</td>
                               </tr>
                             </tbody>
                           </table>
@@ -2758,7 +2758,7 @@
                                 <th style="background:#8e1921 !important;color:#ffffff !important">Median</th>
                                 <th style="background:#8e1921 !important;color:#ffffff !important">Mode</th>
                                 <th style="background:#8e1921 !important;color:#ffffff !important">Standard Deviation</th>
-                                <th style="background:#8e1921 !important;color:#ffffff !important">Varian</th>
+                                <th style="background:#8e1921 !important;color:#ffffff !important">Variance</th>
                               </tr>
                         </thead>
                           <tbody style="text-align:center;">
@@ -2767,8 +2767,8 @@
                               <td>{{Data.overall_data.supplier_stats.interested.percentage_by_flat | limitTo:5}} %</td>
                               <td>{{Data.overall_data.supplier_stats.interested.median_percent_by_flat | limitTo:5}} %</td>
                               <td>{{Data.overall_data.supplier_stats.interested.mode_percent_by_flat | limitTo:5}} %</td>
-                              <td>{{Data.overall_data.supplier_stats.interested.mode_percent_by_flat | limitTo:5}} %</td>
-                              <td>{{Data.overall_data.supplier_stats.interested.mode_percent_by_flat | limitTo:5}} %</td>
+                              <td>{{standardDeviationHotLeads | limitTo:5}} %</td>
+                              <td>{{varianceHotLeads | limitTo:5}} %</td>
                             </tr>
                           </tbody>
                         </table>
@@ -3709,13 +3709,26 @@
                             <button class="btn btn-danger active notify" print-btn style="text-align:right;margin-left:30px;margin-top:20px;">Print Report</button>
 
                           </div>
-                          <div class="col-md-3">
-                            <label style="color:#ffffff;">Select Report</label>
-                            <input type="file" ngf-select = "uploadFiles($file, 1)" class="buttonfile btn btn-primary" accept=".pdf" ng-if="showReportBtn"/>
-                          <br>  <button ng-click="sendReport()" ng-if="showReportBtn" class="btn btn-danger" ng-if="userInfo.is_superuser">Submit</button>
 
+                          <div class="col-md-6" ng-if="userInfo.is_superuser">
+                            <div class="row">
+                              <label style="color:#ffffff;">Select Report</label>
+                              <input type="file" ngf-select = "uploadFiles($file, 1)" class="buttonfile btn btn-primary" accept=".pdf" ng-if="showReportBtn"/>
+                            </div>
+                            <br />
+                            <div class="row" ng-if="selectDate">
+                              <div class="row col-md-6">
+                              <label for="startDate" style="color:#000000;">Select Start Date :<input type="date" class="form-control" ng-model="reportData.reportStartDate" style="color:#000000"></label>
+                              </div>
+                              <div class="row col-md-6">
+                              <label for="endDate" style="color:#000000;">Select End Date :<input type="date" class="form-control" ng-model="reportData.reportEndDate" style="color:#000000"></label>
+                              <div class="row">
+                                <button ng-click="sendReport()" ng-if="showReportBtn" class="btn btn-danger pull-right" ng-if="userInfo.is_superuser">Submit</button>
+                              </div>
+                              </div>
+                              <br /><br /><br />
+                            </div>
                           </div>
-
                         </div>
                     </div>
                   </div>

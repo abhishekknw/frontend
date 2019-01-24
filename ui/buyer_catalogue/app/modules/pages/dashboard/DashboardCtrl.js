@@ -981,7 +981,6 @@
               "axisLabel": "Campaigns",
               "showMaxMin":false,
               tickFormat : function (d) {
-                console.log($scope.x_fre_leads[d]);
                           return $scope.x_fre_leads[d];
                 },
               // tickFormat: function(d){
@@ -1555,6 +1554,8 @@
    $scope.getLeadsByCampaign = function(campaignId,campaign){
      console.log(campaign);
      cfpLoadingBar.start();
+     $scope.lineChartForLeadsDistributedGraphs = undefined;
+     $scope.lineChartForHotLeadsDistributedGraphs = undefined;
      $scope.CampaignLeadsName = campaign.name;
      $scope.principalVendor = campaign.principal_vendor;
      $scope.campaignOwner = campaign.organisation;
@@ -3024,6 +3025,7 @@ $scope.uploadFiles = function(file){
   console.log("hello");
   $scope.file = file;
   console.log($scope.file);
+  $scope.selectDate = true;
 }
 $scope.enableAddComments = function(index){
   $scope.enableComments = index;
@@ -3430,7 +3432,7 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
              // "metrics": [["2","3","/"],["m1",100,"*"]],
              // "metrics" :[["1","3","/"],["2","3","/"],["m1","100","*"],["m2","100","*"]],
              "statistical_information":{"stats":["z_score"], "metrics":["m1","m3"]},
-             "higher_level_statistical_information":{"level":["campaign"],"stats":["frequency_distribution"],
+             "higher_level_statistical_information":{"level":["campaign"],"stats":["frequency_distribution","mean","variance_stdev"],
              "metrics":["m2","m4"]
              }
           }
@@ -3458,6 +3460,11 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
         var index = 0;
         $scope.x_fre_leads = [];
       angular.forEach(data.higher_group_data, function(data,key){
+        $scope.standardDeviationLeads = data['stdev_lead/flat*100'];
+        $scope.standardDeviationHotLeads = data['stdev_hot_lead/flat*100'];
+        $scope.varianceLeads = data['variance_lead/flat*100'];
+        $scope.varianceHotLeads = data['variance_hot_lead/flat*100'];
+
         angular.forEach(data['freq_dist_lead/flat*100'], function(data,key){
           $scope.distributedGraphValue = data;
           console.log($scope.distributedGraphValue);
