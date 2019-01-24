@@ -443,7 +443,7 @@
             ];
             $scope.options = angular.copy(doughnutChartOptions);
             $scope.options.chart.pie.dispatch['elementClick'] = function(e){ $scope.pieChartClick(e.data.label); };
-            // $scope.options.chart.pie.dispatch['elementClick'] = function(e){ $scope.getCampaignInvData(e.data); };
+            $scope.options.chart.pie.dispatch['elementClick'] = function(e){ $scope.getCampaignInvData(e.data); };
 
             $scope.showPerfPanel = $scope.perfPanel.all;
           }).catch(function onError(response){
@@ -466,6 +466,7 @@
            console.log(response);
            cfpLoadingBar.complete();
            $scope.AllCampaignData = response.data.data;
+           
            $scope.supplierPanIndiaMarkers = assignPanIndiaMarkersToMap($scope.AllCampaignData);
            if(response.data.data){
               $scope.supplierCodeCountData = formatCountData(response.data.data);
@@ -2131,15 +2132,15 @@ var formatThreeWeeksSummary = function(data,key){
 
     }
 
-    // $scope.getCampaignInvData = function(data){
-    //   console.log(data);
-    //   $scope.supplierStatus = data.status;
-    //   console.log($scope.supplierStatus);
-    //   console.log($scope.campaignAllStatusTypeData);
-    //   $scope.campaignDetailsData =$scope.campaignAllStatusTypeData[data.status];
-    //   console.log($scope.campaignDetailsData);
-    //   $scope.showAllCampaignDisplay = true;
-    // }
+    $scope.getCampaignInvData = function(data){
+      console.log(data);
+      $scope.supplierStatus = data.status;
+      console.log($scope.supplierStatus);
+      console.log($scope.campaignAllStatusTypeData);
+      $scope.campaignDetailsData =$scope.campaignAllStatusTypeData[data.status];
+      console.log($scope.campaignDetailsData);
+      $scope.showTableForAllCampaignDisplay = true;
+    }
 
     $scope.getSupplierAndInvData = function(data){
       console.log(data);
@@ -2239,7 +2240,7 @@ var formatThreeWeeksSummary = function(data,key){
     $scope.windowAllCoords = {};
     $scope.markerPanIndia = {
     mouseoverevent: {
-    mouseover: function (marker, eventName, modelAll) {
+    mouseover: function (markerPanIndia, eventName, modelAll) {
       console.log(eventName);
       $scope.spacePanIndia = modelAll;
       $scope.campaignInventory = modelAll;
@@ -2251,9 +2252,11 @@ var formatThreeWeeksSummary = function(data,key){
 };
 
     function assignPanIndiaMarkersToMap(panIndiaCampaigns) {
+      console.log("hellow",panIndiaCampaigns);
         var markersOfPanIndia = [];
         angular.forEach(panIndiaCampaigns, function(data){
           angular.forEach(data,function(campaign){
+            console.log(campaign);
                 markersOfPanIndia.push({
                 latitude: campaign.center__latitude,
                 longitude: campaign.center__longitude,
@@ -2561,6 +2564,8 @@ $scope.viewCampaignLeads = function(value){
     console.log(response);
     $scope.allCampaignDetailsData = response.data.data;
     console.log($scope.allCampaignDetailsData);
+    $scope.showTableForAllCampaignDisplay = false;
+
       angular.forEach($scope.allCampaignDetailsData, function(data){
       $scope.campaignLength = data.length;
       if(data.total_leads){

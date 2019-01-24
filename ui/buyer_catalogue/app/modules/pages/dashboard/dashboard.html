@@ -1285,14 +1285,7 @@
                           </div>
 
 
-                          <div class="col-md-12" ng-if="showAllCampaignDisplay" style="margin-top:5px;height:500px !important;">
-
-                            <!-- <div class="row">
-                              <select name="phase" class="form-control spacing input-width-phase" ng-model="supplier.phaseNo" min="1">
-                                <option value="" disabled>Select Phase</option>
-                                <option ng-repeat="phase in phases | unique:'phase_no'" value="{{phase.id}}">{{phase.phase_no}}</option>
-                              </select>
-                            </div> -->
+                          <div class="col-md-12" ng-if="showTableForAllCampaignDisplay" style="margin-top:20px;height:700px !important;">
                             <div class="campaigndetailtable">
                               <div class="panel-heading" style="height:70px;">
                                 <h5 style="background:'red';color:white;text-transform: capitalize;">All Campaign Details - {{supplierStatus}}</h5>
@@ -1306,7 +1299,6 @@
                                   <thead>
                                   <tr>
                                       <th>INDEX</th>
-                                      <!-- <th>Phase No &nbsp;<a ng-click="Sort('phase')"><i class="icon-sort" style="color:white;"></i></a></th> -->
                                       <th ng-click="SortColumn('name')">Campaign Name &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                       <th ng-click="SortColumn('start_date')">Start Date &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                       <th>Campaign Status</th>
@@ -1318,6 +1310,8 @@
                                       <tr colspan="9">
                                         <td></td>
                                         <td><input ng-model="f.name" class="form-control" placeholder="Search"><hr></td>
+                                        <td></td>
+                                          <td><input ng-model="f.campaign_status" class="form-control" placeholder="Search"><hr></td>
 
                                       </tr>
                                       <!-- <hr> -->
@@ -1325,8 +1319,8 @@
 
                                       <tbody class="detailedTable">
                                         <div class="row">
-                                            <tr ng-repeat="allCampaign in campaignDetailsData |filter:searchQuery |  filter:f | orderBy:sortColumn:reversesortcolumn">
-                                            <td style="vertical-align:middle">{{$index + 1}}</td>
+                                            <tr ng-repeat="allCampaign in allCampaignDetailsData |filter:searchQuery |  filter:f | orderBy:sortColumn:reversesortcolumn">
+                                            <td style="vertical-align:middle">{{$index  + 1}}</td>
                                             <td style="vertical-align:middle">{{allCampaign.name}}</td>
                                             <td class="col-md-2">{{allCampaign.start_date | date:mediumDate}}</td>
                                             <td class="col-md-2" style="text-transform: capitalize;">{{allCampaign.campaign_status}}</td>
@@ -1360,7 +1354,7 @@
                               </div>
                             </div>
                             </div>
-                            <div class="col-md-12" ng-show="showAllCampaignDisplay" style="margin-top:170px;">
+                            <!-- <div class="col-md-12" ng-if="showTableForAllCampaignDisplay" style="margin-top:170px;">
                               <div class="panel-heading content-title">
                                 <h5 style="background:'red'">Map View of Pan India Campaigns</h5></div>
                               <style type="text/css">
@@ -1374,19 +1368,22 @@
                                                 <div class="">
                                                   <h3>{{spacePanIndia.title.name}}</h3>
                                                 </div>
-                                                <tr><td>{{space.title.STALL.key}}</td><td><small>{{space.title.STALL.total}}</small></td></tr>
-                                                <tr><td>{{space.title.POSTER.key}}</td><td><small>{{space.title.POSTER.total}}</small></td></tr>
-                                                <tr><td>{{space.title.STANDEE.key}}</td><td><small>{{space.title.STANDEE.total}}</small></td></tr>
-                                                <tr><td>{{space.title.FLIER.key}}</td><td><small>{{space.title.FLIER.total}}</small></td></tr>
-                                                <tr><td>{{space.title['GATEWAY ARCH'].key}}</td><td><small>{{space.title['GATEWAY ARCH'].total}}</small></td></tr>
+                                                <tr><td>{{spacePanIndia.title.STALL.key}}</td><td><small>{{spacePanIndia.title.STALL.total}}</small></td></tr>
+                                                <tr><td>{{spacePanIndia.title.POSTER.key}}</td><td><small>{{spacePanIndia.title.POSTER.total}}</small></td></tr>
+                                                <tr><td>{{spacePanIndia.title.STANDEE.key}}</td><td><small>{{spacePanIndia.title.STANDEE.total}}</small></td></tr>
+                                                <tr><td>{{spacePanIndia.title.FLIER.key}}</td><td><small>{{spacePanIndia.title.FLIER.total}}</small></td></tr>
+                                                <tr><td>{{spacePanIndia.title['GATEWAY ARCH'].key}}</td><td><small>{{spacePanIndia.title['GATEWAY ARCH'].total}}</small></td></tr>
                                               </table>
                                              </div>
                                       </ui-gmap-window>
                                       <ui-gmap-markers models="supplierPanIndiaMarkers" coords="'self'" icon="'icon'"
                                                        options="'options'" doRebuildAll="true"  events="markerPanIndia.mouseoverevent">
                                       </ui-gmap-markers>
+                                      <ui-gmap-markers models="supplierPanIndiaMarkers" coords="'self'" icon="'icon'"
+                                                       options="'options'" doRebuildAll="true" events="marker.events">
+                                      </ui-gmap-markers>
                                   </ui-gmap-google-map>
-                            </div>
+                            </div> -->
                         <!-- <div class="panel panel-default" ng-if="showSupplierTypeCountChart">
                             <div class="col-md-12">
 
