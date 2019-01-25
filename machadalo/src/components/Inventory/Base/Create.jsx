@@ -161,58 +161,53 @@ export default class CreateType extends React.Component {
     };
 
     return (
-      <div className="createform">
-        <div className="createform__title">
-          <h3>Create Base Inventory</h3>
-        </div>
-        <div className="createform__form__row" key={`row-${attrIndex}`}>
-          <div className="createform__form__inline">
-            <div className="form-control">
-              <input
-                type="text"
-                placeholder="Name"
-                value={attribute.name}
-                onChange={onNameChange}
-              />
-            </div>
+      <div className="createform__form__row" key={`row-${attrIndex}`}>
+        <div className="createform__form__inline">
+          <div className="form-control">
+            <input
+              type="text"
+              placeholder="Name"
+              value={attribute.name}
+              onChange={onNameChange}
+            />
+          </div>
 
-            <div className="form-control">
-              <Select
-                options={AttributeTypes}
-                classNamePrefix="form-select"
-                value={getAttributeTypeOption(attribute.type)}
-                onChange={onTypeChange}
-              />
+          <div className="form-control">
+            <Select
+              options={AttributeTypes}
+              classNamePrefix="form-select"
+              value={getAttributeTypeOption(attribute.type)}
+              onChange={onTypeChange}
+            />
 
-              {attribute.type === 'DROPDOWN' ? (
-                <p
-                  className="show-option"
-                  style={optionStyle}
-                  onClick={() =>
-                    this.onOpenOptionModal(
-                      attribute.options,
-                      attribute.type,
-                      attribute,
-                      attribute.attrIndex
-                    )
-                  }
-                >
-                  Show Options
-                </p>
-              ) : (
-                ''
-              )}
-            </div>
+            {attribute.type === 'DROPDOWN' ? (
+              <p
+                className="show-option"
+                style={optionStyle}
+                onClick={() =>
+                  this.onOpenOptionModal(
+                    attribute.options,
+                    attribute.type,
+                    attribute,
+                    attribute.attrIndex
+                  )
+                }
+              >
+                Show Options
+              </p>
+            ) : (
+              ''
+            )}
+          </div>
 
-            <div className="form-control required-field">
-              <div>Is it required?</div>
-              <input
-                type="checkbox"
-                className="input-checkbox"
-                value={attribute.is_required}
-                onChange={onRequiredChange}
-              />
-            </div>
+          <div className="form-control required-field">
+            <div>Is it required?</div>
+            <input
+              type="checkbox"
+              className="input-checkbox"
+              value={attribute.is_required}
+              onChange={onRequiredChange}
+            />
           </div>
         </div>
       </div>
@@ -221,7 +216,10 @@ export default class CreateType extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="createform">
+        <div className="createform__title">
+          <h3>Create Base Inventory</h3>
+        </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
             <div className="createform__form__inline">
