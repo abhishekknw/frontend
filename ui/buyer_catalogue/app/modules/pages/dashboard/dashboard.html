@@ -1012,7 +1012,7 @@
                                   </div> -->
                                   <div class="campaigndetailtable">
                                     <div class="panel-heading" style="height:70px;">
-                                      <h5 style="background:'red';color:white;text-transform:capitalize">Society Details For {{campaignTabPropsalName}} - {{supplierStatus}}</h5>
+                                      <h5 style="background:'red';color:white;text-transform:capitalize">Supplier Details For {{campaignTabPropsalName}} - {{supplierStatus}}</h5>
                                     </div>
                                     <br />
                                     <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
@@ -1024,9 +1024,9 @@
                                          <tr>
                                             <th>INDEX</th>
                                             <th ng-click="Sort('phase')">Phase No &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
-                                            <th style="width:200px;" ng-click="Sort('supplier.society_name')">Society Name &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
-                                            <th>Society Area (SubArea)</th>
-                                            <th>Society Type</th>
+                                            <th style="width:200px;" ng-click="Sort('supplier.society_name')">Supplier Name &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th>Supplier Area (SubArea)</th>
+                                            <th>Supplier Type</th>
                                             <th ng-click="Sort('supplier.flat_count')" >Flat Count &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                             <th ng-click="Sort('leads_data.total_leads_count')">Leads <br> (% by Flat Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                             <th ng-click="Sort('leads_data.hot_leads_count')" >Hot Leads <br>(% by Flat Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
@@ -3757,7 +3757,7 @@
                    <div class="item" ng-class="{active:!$index}" ng-repeat="image in imageUrlList">
                      <div class="row">
                         <img ng-src="{{image.image_url}}"  style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
-                       <div class="row" style="margin-left:10px;">
+                       <div class="row" style="margin-left:20px;">
                          Comment : {{image.comment}} </br>
                          Distance : {{image.distance|limitTo:10}} mtrs, ({{image.distance/1000|limitTo:10}} kms) </br>
                          Date and Time : {{image.timestamp|date:'medium'}}
@@ -3865,7 +3865,7 @@
                      <div class="row">
                         <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
                        </div>
-                       <div class="row" style="margin-left:10px;">
+                       <div class="row" style="margin-left:20px;">
                          Hashtag : {{image.comment}} </br>
                          Society Name : {{image.supplier_name}}</br>
                          Date and Time : {{image.timestamp|date:'medium'}}
