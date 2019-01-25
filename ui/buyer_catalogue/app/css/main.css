@@ -710,7 +710,7 @@ div.outerdate .innerdate { width: 2400px; }
 
 
 div.outerdistributed { overflow: scroll; }
-div.outerdistributed .innerdistributed { width: 970px; }
+div.outerdistributed .innerdistributed { width: 1100px; }
 
 
 div.outerFlat { overflow: scroll; }
@@ -874,3 +874,18 @@ border-radius: 10px;
   color: #B20000 !important;
 }
 .tick line { display: none; }
+/*
+
+.rotateImage0 {
+  transform: rotate(0deg);
+}
+
+.rotateImage90 {
+  transform: rotate(90deg);
+}
+.rotateImage180 {
+  transform: rotate(180deg);
+}
+.rotateImage270 {
+  transform: rotate(270deg);
+} */

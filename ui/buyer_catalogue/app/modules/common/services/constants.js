@@ -47,6 +47,7 @@ angular
     email_success : 'Email sent Successfully',
     image_empty : 'No Images Found',
     image_success : 'Image Uploaded Successfully',
+    proposal_update_success : "Proposal Updated Successfully",
     //createproposal
     geo_location_error : 'Address or Pincode Incorrect, Please Provide Correct Information',
     center_warning : 'Do you want to create only one center ?',

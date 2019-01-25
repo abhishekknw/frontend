@@ -89,6 +89,12 @@ export default class PermissionModal extends React.Component {
           });
         }
       });
+      if (userProfileOptions.length === 0) {
+        userProfileOptions.push({
+          label: 'No more profiles',
+          value: undefined
+        });
+      }
       this.setState({
         userProfileOptions
       });
@@ -96,9 +102,11 @@ export default class PermissionModal extends React.Component {
   }
 
   onSelectProfile(value) {
-    this.setState({
-      selectedProfile: value
-    });
+    if (value.value) {
+      this.setState({
+        selectedProfile: value
+      });
+    }
   }
 
   requestTreeLeafChildrenData = (leafData, chdIndex, doExpand) => {

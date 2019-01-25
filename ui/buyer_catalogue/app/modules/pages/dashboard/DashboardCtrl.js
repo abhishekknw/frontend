@@ -443,7 +443,7 @@
             ];
             $scope.options = angular.copy(doughnutChartOptions);
             $scope.options.chart.pie.dispatch['elementClick'] = function(e){ $scope.pieChartClick(e.data.label); };
-            // $scope.options.chart.pie.dispatch['elementClick'] = function(e){ $scope.getCampaignInvData(e.data); };
+            $scope.options.chart.pie.dispatch['elementClick'] = function(e){ $scope.getCampaignInvData(e.data); };
 
             $scope.showPerfPanel = $scope.perfPanel.all;
           }).catch(function onError(response){
@@ -466,6 +466,7 @@
            console.log(response);
            cfpLoadingBar.complete();
            $scope.AllCampaignData = response.data.data;
+
            $scope.supplierPanIndiaMarkers = assignPanIndiaMarkersToMap($scope.AllCampaignData);
            if(response.data.data){
               $scope.supplierCodeCountData = formatCountData(response.data.data);
@@ -978,10 +979,9 @@
                   tooltipHide: function(e){ console.log("tooltipHide"); }
               },
             "xAxis": {
-              "axisLabel": "Campaigns",
+              "axisLabel": "Leads % Range Distribution",
               "showMaxMin":false,
               tickFormat : function (d) {
-                console.log($scope.x_fre_leads[d]);
                           return $scope.x_fre_leads[d];
                 },
               // tickFormat: function(d){
@@ -991,7 +991,7 @@
                      "rotateLabels" : -30
             },
             "yAxis": {
-              "axisLabel": "",
+              "axisLabel": "Supplier Count In Leads",
             }
           }
         };
@@ -1000,6 +1000,7 @@
           "chart": {
             "type": "lineChart",
             "height": 450,
+            "staggerLabels" :true,
             "margin": {
               "top": 100,
               "right": 20,
@@ -1016,7 +1017,7 @@
                   tooltipHide: function(e){ console.log("tooltipHide"); }
               },
             "xAxis": {
-              "axisLabel": "Campaigns",
+              "axisLabel": "Leads % Range Distribution",
               "showMaxMin":false,
               tickFormat : function (d) {
                 console.log($scope.x_fre_hot_leads[d]);
@@ -1029,8 +1030,8 @@
                      "rotateLabels" : -30
             },
             "yAxis": {
-              "axisLabel": "",
-            }
+            "axisLabel": "Supplier Count In Leads",
+              }
           }
         };
 
@@ -1553,8 +1554,13 @@
      })
    }
    $scope.getLeadsByCampaign = function(campaignId,campaign){
+     console.log(campaign);
      cfpLoadingBar.start();
+     $scope.lineChartForLeadsDistributedGraphs = undefined;
+     $scope.lineChartForHotLeadsDistributedGraphs = undefined;
      $scope.CampaignLeadsName = campaign.name;
+     $scope.principalVendor = campaign.principal_vendor;
+     $scope.campaignOwner = campaign.organisation;
      $scope.LeadsByCampaign = {};
      $scope.showReportBtn = false;
      // $scope.getSortedLeadsByCampaign();
@@ -2127,15 +2133,15 @@ var formatThreeWeeksSummary = function(data,key){
 
     }
 
-    // $scope.getCampaignInvData = function(data){
-    //   console.log(data);
-    //   $scope.supplierStatus = data.status;
-    //   console.log($scope.supplierStatus);
-    //   console.log($scope.campaignAllStatusTypeData);
-    //   $scope.campaignDetailsData =$scope.campaignAllStatusTypeData[data.status];
-    //   console.log($scope.campaignDetailsData);
-    //   $scope.showAllCampaignDisplay = true;
-    // }
+    $scope.getCampaignInvData = function(data){
+      console.log(data);
+      $scope.supplierStatus = data.status;
+      console.log($scope.supplierStatus);
+      console.log($scope.campaignAllStatusTypeData);
+      $scope.campaignDetailsData =$scope.campaignAllStatusTypeData[data.status];
+      console.log($scope.campaignDetailsData);
+      $scope.showTableForAllCampaignDisplay = true;
+    }
 
     $scope.getSupplierAndInvData = function(data){
       console.log(data);
@@ -2168,6 +2174,11 @@ var formatThreeWeeksSummary = function(data,key){
         }
         $scope.societyName = supplier.supplier.society_name;
 
+        angular.forEach(supplier.phase, function(phase,key){
+         // console.log(key);
+         console.log(phase);
+
+       })
           angular.forEach(supplier.supplier.inv_data, function(inv,key){
           $scope.invStatusKeys[key].status = true;
           })
@@ -2183,6 +2194,8 @@ var formatThreeWeeksSummary = function(data,key){
                 $scope.ImageURLListOfAll.push(imagesData);
 
             })
+
+
           }
 
            angular.forEach(supplier.leads_data, function(inv,key){
@@ -2195,6 +2208,8 @@ var formatThreeWeeksSummary = function(data,key){
               $scope.supplierHotLeads += 1;
             }
           })
+
+
       })
 
       $scope.showDisplayDetailsTable = true;
@@ -2226,7 +2241,7 @@ var formatThreeWeeksSummary = function(data,key){
     $scope.windowAllCoords = {};
     $scope.markerPanIndia = {
     mouseoverevent: {
-    mouseover: function (marker, eventName, modelAll) {
+    mouseover: function (markerPanIndia, eventName, modelAll) {
       console.log(eventName);
       $scope.spacePanIndia = modelAll;
       $scope.campaignInventory = modelAll;
@@ -2238,9 +2253,11 @@ var formatThreeWeeksSummary = function(data,key){
 };
 
     function assignPanIndiaMarkersToMap(panIndiaCampaigns) {
+      console.log("hellow",panIndiaCampaigns);
         var markersOfPanIndia = [];
         angular.forEach(panIndiaCampaigns, function(data){
           angular.forEach(data,function(campaign){
+            console.log(campaign);
                 markersOfPanIndia.push({
                 latitude: campaign.center__latitude,
                 longitude: campaign.center__longitude,
@@ -2363,6 +2380,7 @@ $scope.setImageUrl = function(item,images){
       $scope.imageUrlList.push(imageData);
     }
   })
+
 }
 // map
 
@@ -2547,6 +2565,8 @@ $scope.viewCampaignLeads = function(value){
     console.log(response);
     $scope.allCampaignDetailsData = response.data.data;
     console.log($scope.allCampaignDetailsData);
+    $scope.showTableForAllCampaignDisplay = false;
+
       angular.forEach($scope.allCampaignDetailsData, function(data){
       $scope.campaignLength = data.length;
       if(data.total_leads){
@@ -3011,6 +3031,7 @@ $scope.uploadFiles = function(file){
   console.log("hello");
   $scope.file = file;
   console.log($scope.file);
+  $scope.selectDate = true;
 }
 $scope.enableAddComments = function(index){
   $scope.enableComments = index;
@@ -3417,7 +3438,7 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
              // "metrics": [["2","3","/"],["m1",100,"*"]],
              // "metrics" :[["1","3","/"],["2","3","/"],["m1","100","*"],["m2","100","*"]],
              "statistical_information":{"stats":["z_score"], "metrics":["m1","m3"]},
-             "higher_level_statistical_information":{"level":["campaign"],"stats":["frequency_distribution"],
+             "higher_level_statistical_information":{"level":["campaign"],"stats":["frequency_distribution","mean","variance_stdev"],
              "metrics":["m2","m4"]
              }
           }
@@ -3445,6 +3466,11 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
         var index = 0;
         $scope.x_fre_leads = [];
       angular.forEach(data.higher_group_data, function(data,key){
+        $scope.standardDeviationLeads = data['stdev_lead/flat*100'];
+        $scope.standardDeviationHotLeads = data['stdev_hot_lead/flat*100'];
+        $scope.varianceLeads = data['variance_lead/flat*100'];
+        $scope.varianceHotLeads = data['variance_hot_lead/flat*100'];
+
         angular.forEach(data['freq_dist_lead/flat*100'], function(data,key){
           $scope.distributedGraphValue = data;
           console.log($scope.distributedGraphValue);
@@ -3462,7 +3488,7 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
       })
       var temp_data = [
         {
-          key : "Distribution Gussian Curve",
+          key : "Mode",
           color : constants.colorKey1,
           values : values1
         }
@@ -3493,7 +3519,7 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
       })
       var temp_data = [
         {
-          key : "Distribution Gussian Curve",
+          key : "Mode",
           color : constants.colorKey1,
           values : values1
         }
@@ -3501,8 +3527,23 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
 
       return temp_data;
     }
-// END
 
+// $scope.rotateImage=function(id){
+//   console.log("hello",id);
+//   var id = '#img_test' + id;
+//   index++;
+//   if(index%4 == 0){
+//     $(id).toggleClass('rotateImage0');
+//   }else if(index%4 == 1){
+//     $(id).toggleClass('rotateImage90');
+//   }else if (index%4 == 2) {
+//     $(id).toggleClass('rotateImage180');
+//   }else if (index%4 == 3) {
+//     $(id).toggleClass('rotateImage270');
+//   }
+//
+//
+// }
 })
 
 

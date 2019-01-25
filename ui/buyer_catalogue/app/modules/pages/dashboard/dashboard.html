@@ -1012,7 +1012,7 @@
                                   </div> -->
                                   <div class="campaigndetailtable">
                                     <div class="panel-heading" style="height:70px;">
-                                      <h5 style="background:'red';color:white;text-transform:capitalize">Society Details For {{campaignTabPropsalName}} - {{supplierStatus}}</h5>
+                                      <h5 style="background:'red';color:white;text-transform:capitalize">Supplier Details For {{campaignTabPropsalName}} - {{supplierStatus}}</h5>
                                     </div>
                                     <br />
                                     <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
@@ -1024,9 +1024,9 @@
                                          <tr>
                                             <th>INDEX</th>
                                             <th ng-click="Sort('phase')">Phase No &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
-                                            <th style="width:200px;" ng-click="Sort('supplier.society_name')">Society Name &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
-                                            <th>Society Area (SubArea)</th>
-                                            <th>Society Type</th>
+                                            <th style="width:200px;" ng-click="Sort('supplier.society_name')">Supplier Name &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th>Supplier Area (SubArea)</th>
+                                            <th>Supplier Type</th>
                                             <th ng-click="Sort('supplier.flat_count')" >Flat Count &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                             <th ng-click="Sort('leads_data.total_leads_count')">Leads <br> (% by Flat Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                             <th ng-click="Sort('leads_data.hot_leads_count')" >Hot Leads <br>(% by Flat Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
@@ -1145,6 +1145,89 @@
                                       </table>
                                     </div>
                                   </div>
+
+                                  <!-- <div class="campaigndetailtable">
+                                    <div class="panel-heading" style="height:70px;">
+                                      <h5 style="background:'red';color:white;text-transform:capitalize">Phase Wise Details For {{campaignTabPropsalName}}- {{supplierStatus}}</h5>
+                                    </div>
+                                    <br />
+                                    <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
+
+                                      <br />
+                                    <div class="table-responsive">
+                                      <table class="table">
+                                        <thead>
+                                         <tr>
+                                            <th>INDEX</th>
+                                            <th ng-click="Sort('phase')">Phase No &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th style="width:200px;" ng-click="Sort('supplier.society_name')">Society Name &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th ng-click="Sort('supplier.flat_count')" >Flat Count &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th ng-click="Sort('leads_data.total_leads_count')">Leads <br> (% by Flat Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th ng-click="Sort('leads_data.hot_leads_count')" >Hot Leads <br>(% by Flat Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th style="width:200px;">Add Phase <br> Related Comments</th>
+                                            <th style="width:200px;">View Phase <br> Related Comments</th>
+                                            </tr>
+                                            <tr colspan="9">
+                                              <td></td>
+                                              <td><input ng-model="f.phase" class="form-control" placeholder="Search"><hr></td>
+                                              <td><input ng-model="f.supplier.society_name" class="form-control" placeholder="Search"><hr></td>
+                                            </tr>
+                                            <hr>
+                                            </thead>
+                                            <tbody class="detailedTable">
+                                              <div class="row">
+                                                  <tr ng-repeat="supplier in supplierAndInvData |filter:query |filter : f | orderBy:sort:reversesort">
+                                                  <td>{{$index + 1}}</td>
+                                                  <td>{{supplier.phase}}</td>
+                                                  <td style="width:200px;" class="col-md-2">{{supplier.supplier.society_name}}</td>
+                                                  <td class="col-md-2">{{supplier.supplier.flat_count}}</td>
+                                                  <td class="col-md-2" style="color:#ffffff">{{supplier.leads_data.total_leads_count || 0}} <br> <small style="color:#cb1925;"> ({{supplier.leads_data.leads_flat_percentage || 0}} %)</small></td>
+                                                  <td class="col-md-2" style="color:#ffffff">{{supplier.leads_data.hot_leads_count || 0}} <br> <small style="color:#cb1925;">({{supplier.leads_data.hot_leads_percentage_by_flat_count || 0}} %)</small></td>
+                                                  <td style="width:200px;">
+                                                    <button type="button" class="btn btn-danger" ng-click="enableAddComments($index)">Add Phase Comments</button>
+                                                    <div ng-if="enableComments == $index">
+                                                      <textarea name="name" rows="4" cols="20" placeholder="Enter Here.." ng-model="commentModal.comment"></textarea>
+                                                      <button class="btn btn-success form-control" ng-disabled="!commentModal.comment" ng-click="addComment(supplier.shortlisted_space_id)">Add</button>
+                                                    </div>
+                                                  </td>
+                                                  <td style="width:200px;">
+                                                    <button type="button" class="btn btn-danger" ng-click="viewComments(supplier,$index)">View Phase Comments</button><br>
+                                                    <div class="panel panel-default" ng-if="enableViewComments == $index" style="height:100px;overflow-y:scroll;padding-top:40px;">
+                                                      <div class="talk-bubble tri-right round left-top"  ng-repeat="item in commentsData.general" style="margin-top:-20px">
+                                                        <div class="talktext" style="font-color:black">
+                                                          <p style="color:#ff0000;font-size:smaller">{{item.user_name}}</p>
+                                                          <p style="color:#000000;font-size:x-small">{{item.comment}}</p>
+                                                          <p style="color:#0000ff;font-size:xx-small;text-align:right">{{item.timestamp|date:'medium'}}</p>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </td>
+                                                </tr>
+                                              </div>
+                                        </tbody>
+                                        <tfoot>
+                                          <tr>
+                                              <td>TOTAL</td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td>{{TotalSupplierFlatCount}}</td>
+                                              <td>{{TotalSupplierLeadsCount || 0}}</td>
+                                              <td>{{TotalSupplierHotLeadsCount || 0}}</td>
+                                              <td ng-if="supplierStatus != 'upcoming'"></td>
+                                              <td ng-if="supplierStatus != 'upcoming'"></td>
+                                              <td ng-if="supplierStatus != 'upcoming'"></td>
+                                              <td ng-if="supplierStatus != 'upcoming'"></td>
+                                              <td ng-if="supplierStatus != 'upcoming'"></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                          </tr>
+                                        </tfoot>
+                                      </table>
+                                    </div>
+                                  </div> -->
                                   </div>
 
                                 <div class="col-md-12" ng-show="showDisplayDetailsTable" style="margin-top:230px;">
@@ -1202,17 +1285,10 @@
                           </div>
 
 
-                          <div class="col-md-12" ng-if="showAllCampaignDisplay" style="margin-top:5px;height:500px !important;">
-
-                            <!-- <div class="row">
-                              <select name="phase" class="form-control spacing input-width-phase" ng-model="supplier.phaseNo" min="1">
-                                <option value="" disabled>Select Phase</option>
-                                <option ng-repeat="phase in phases | unique:'phase_no'" value="{{phase.id}}">{{phase.phase_no}}</option>
-                              </select>
-                            </div> -->
+                          <div class="col-md-12" ng-if="showTableForAllCampaignDisplay" style="margin-top:20px;height:700px !important;">
                             <div class="campaigndetailtable">
                               <div class="panel-heading" style="height:70px;">
-                                <h5 style="background:'red';color:white;text-transform: capitalize;">All Campaign Details - {{supplierStatus}}</h5>
+                                <h5 style="background:'red';color:white;text-transform: capitalize;">All Campaign Details</h5>
                               </div>
                               <br />
                               <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
@@ -1223,7 +1299,6 @@
                                   <thead>
                                   <tr>
                                       <th>INDEX</th>
-                                      <!-- <th>Phase No &nbsp;<a ng-click="Sort('phase')"><i class="icon-sort" style="color:white;"></i></a></th> -->
                                       <th ng-click="SortColumn('name')">Campaign Name &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                       <th ng-click="SortColumn('start_date')">Start Date &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                       <th>Campaign Status</th>
@@ -1235,6 +1310,8 @@
                                       <tr colspan="9">
                                         <td></td>
                                         <td><input ng-model="f.name" class="form-control" placeholder="Search"><hr></td>
+                                        <td></td>
+                                          <td><input ng-model="f.campaign_status" class="form-control" placeholder="Search"><hr></td>
 
                                       </tr>
                                       <!-- <hr> -->
@@ -1242,8 +1319,8 @@
 
                                       <tbody class="detailedTable">
                                         <div class="row">
-                                            <tr ng-repeat="allCampaign in campaignDetailsData |filter:searchQuery |  filter:f | orderBy:sortColumn:reversesortcolumn">
-                                            <td style="vertical-align:middle">{{$index + 1}}</td>
+                                            <tr ng-repeat="allCampaign in allCampaignDetailsData |filter:searchQuery |  filter:f | orderBy:sortColumn:reversesortcolumn">
+                                            <td style="vertical-align:middle">{{$index  + 1}}</td>
                                             <td style="vertical-align:middle">{{allCampaign.name}}</td>
                                             <td class="col-md-2">{{allCampaign.start_date | date:mediumDate}}</td>
                                             <td class="col-md-2" style="text-transform: capitalize;">{{allCampaign.campaign_status}}</td>
@@ -1277,7 +1354,7 @@
                               </div>
                             </div>
                             </div>
-                            <div class="col-md-12" ng-show="showAllCampaignDisplay" style="margin-top:170px;">
+                            <!-- <div class="col-md-12" ng-if="showTableForAllCampaignDisplay" style="margin-top:170px;">
                               <div class="panel-heading content-title">
                                 <h5 style="background:'red'">Map View of Pan India Campaigns</h5></div>
                               <style type="text/css">
@@ -1291,19 +1368,22 @@
                                                 <div class="">
                                                   <h3>{{spacePanIndia.title.name}}</h3>
                                                 </div>
-                                                <tr><td>{{space.title.STALL.key}}</td><td><small>{{space.title.STALL.total}}</small></td></tr>
-                                                <tr><td>{{space.title.POSTER.key}}</td><td><small>{{space.title.POSTER.total}}</small></td></tr>
-                                                <tr><td>{{space.title.STANDEE.key}}</td><td><small>{{space.title.STANDEE.total}}</small></td></tr>
-                                                <tr><td>{{space.title.FLIER.key}}</td><td><small>{{space.title.FLIER.total}}</small></td></tr>
-                                                <tr><td>{{space.title['GATEWAY ARCH'].key}}</td><td><small>{{space.title['GATEWAY ARCH'].total}}</small></td></tr>
+                                                <tr><td>{{spacePanIndia.title.STALL.key}}</td><td><small>{{spacePanIndia.title.STALL.total}}</small></td></tr>
+                                                <tr><td>{{spacePanIndia.title.POSTER.key}}</td><td><small>{{spacePanIndia.title.POSTER.total}}</small></td></tr>
+                                                <tr><td>{{spacePanIndia.title.STANDEE.key}}</td><td><small>{{spacePanIndia.title.STANDEE.total}}</small></td></tr>
+                                                <tr><td>{{spacePanIndia.title.FLIER.key}}</td><td><small>{{spacePanIndia.title.FLIER.total}}</small></td></tr>
+                                                <tr><td>{{spacePanIndia.title['GATEWAY ARCH'].key}}</td><td><small>{{spacePanIndia.title['GATEWAY ARCH'].total}}</small></td></tr>
                                               </table>
                                              </div>
                                       </ui-gmap-window>
                                       <ui-gmap-markers models="supplierPanIndiaMarkers" coords="'self'" icon="'icon'"
                                                        options="'options'" doRebuildAll="true"  events="markerPanIndia.mouseoverevent">
                                       </ui-gmap-markers>
+                                      <ui-gmap-markers models="supplierPanIndiaMarkers" coords="'self'" icon="'icon'"
+                                                       options="'options'" doRebuildAll="true" events="marker.events">
+                                      </ui-gmap-markers>
                                   </ui-gmap-google-map>
-                            </div>
+                            </div> -->
                         <!-- <div class="panel panel-default" ng-if="showSupplierTypeCountChart">
                             <div class="col-md-12">
 
@@ -1573,8 +1653,8 @@
                 <td>
                   <div class="">
                     <small>Completed Phase No : {{bookingPhases.last_completed_phase.phase_no}}</small>  </br>
-                      <small>Start Date : {{bookingPhases.last_completed_phase.start_date|limitTo:10|date:fullDate}}</small></br>
-                      <small>End Date : {{bookingPhases.last_completed_phase.end_date|limitTo:10|date:fullDate}}</small>
+                      <small>Start Date : {{bookingPhases.last_completed_phase.start_date|limitTo:14|date:mediumDate}}</small></br>
+                      <small>End Date : {{bookingPhases.last_completed_phase.end_date|limitTo:14|date:mediumDate}}</small>
                   </div>
                 </td>
                 <td ng-if="bookingPhases.last_completed_phase.confirmed_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.confirmed_booked.supplier_data,'Last Completed Phase')">
@@ -1993,9 +2073,14 @@
                               </div>
                         </div>
                         <br /><br /><br />
-
-
                         <div class="col-lg-12"  ng-if="showPerfMetrics == perfMetrics.leads" style="margin-top:30px;">
+                          <div class="row">
+                                <div class="panel-heading content-title">
+                                  <label for="heading" class="pull-left"><b>Campaign Owner :</b><span>{{campaignOwner}}</span></label>
+                                  <label for="heading"><b>Principal Vendor :</b><span>{{principalVendor}}</span></label>
+                                </div>
+                          </div>
+                          <br /> <br />
                           <div class="panel-heading content-title">
                             <h3 for="heading">Leads of {{CampaignLeadsName}}</h3>
                           </div>
@@ -2630,7 +2715,7 @@
                                   <th style="background:#8e1921 !important;color:#ffffff !important">Median</th>
                                   <th style="background:#8e1921 !important;color:#ffffff !important">Mode</th>
                                   <th style="background:#8e1921 !important;color:#ffffff !important">Standard Deviation</th>
-                                  <th style="background:#8e1921 !important;color:#ffffff !important">Varian</th>
+                                  <th style="background:#8e1921 !important;color:#ffffff !important">Variance</th>
                                 </tr>
                           </thead>
                             <tbody style="text-align:center;">
@@ -2639,8 +2724,8 @@
                                 <td>{{Data.overall_data.supplier_stats.total.percentage_by_flat | limitTo:5}} %</td>
                                 <td>{{Data.overall_data.supplier_stats.total.median_percent_by_flat | limitTo:5}} %</td>
                                 <td>{{Data.overall_data.supplier_stats.total.mode_percent_by_flat | limitTo:5}} %</td>
-                                <td>{{Data.overall_data.supplier_stats.total.mode_percent_by_flat | limitTo:5}} %</td>
-                                <td>{{Data.overall_data.supplier_stats.total.mode_percent_by_flat | limitTo:5}} %</td>
+                                <td>{{standardDeviationLeads | limitTo:5}} %</td>
+                                <td>{{varianceLeads | limitTo:5}} %</td>
                               </tr>
                             </tbody>
                           </table>
@@ -2670,7 +2755,7 @@
                                 <th style="background:#8e1921 !important;color:#ffffff !important">Median</th>
                                 <th style="background:#8e1921 !important;color:#ffffff !important">Mode</th>
                                 <th style="background:#8e1921 !important;color:#ffffff !important">Standard Deviation</th>
-                                <th style="background:#8e1921 !important;color:#ffffff !important">Varian</th>
+                                <th style="background:#8e1921 !important;color:#ffffff !important">Variance</th>
                               </tr>
                         </thead>
                           <tbody style="text-align:center;">
@@ -2679,8 +2764,8 @@
                               <td>{{Data.overall_data.supplier_stats.interested.percentage_by_flat | limitTo:5}} %</td>
                               <td>{{Data.overall_data.supplier_stats.interested.median_percent_by_flat | limitTo:5}} %</td>
                               <td>{{Data.overall_data.supplier_stats.interested.mode_percent_by_flat | limitTo:5}} %</td>
-                              <td>{{Data.overall_data.supplier_stats.interested.mode_percent_by_flat | limitTo:5}} %</td>
-                              <td>{{Data.overall_data.supplier_stats.interested.mode_percent_by_flat | limitTo:5}} %</td>
+                              <td>{{standardDeviationHotLeads | limitTo:5}} %</td>
+                              <td>{{varianceHotLeads | limitTo:5}} %</td>
                             </tr>
                           </tbody>
                         </table>
@@ -3621,13 +3706,26 @@
                             <button class="btn btn-danger active notify" print-btn style="text-align:right;margin-left:30px;margin-top:20px;">Print Report</button>
 
                           </div>
-                          <div class="col-md-3">
-                            <label style="color:#ffffff;">Select Report</label>
-                            <input type="file" ngf-select = "uploadFiles($file, 1)" class="buttonfile btn btn-primary" accept=".pdf" ng-if="showReportBtn"/>
-                          <br>  <button ng-click="sendReport()" ng-if="showReportBtn" class="btn btn-danger" ng-if="userInfo.is_superuser">Submit</button>
 
+                          <div class="col-md-6" ng-if="userInfo.is_superuser">
+                            <div class="row">
+                              <label style="color:#ffffff;">Select Report</label>
+                              <input type="file" ngf-select = "uploadFiles($file, 1)" class="buttonfile btn btn-primary" accept=".pdf" ng-if="showReportBtn"/>
+                            </div>
+                            <br />
+                            <div class="row" ng-if="selectDate">
+                              <div class="row col-md-6">
+                              <label for="startDate" style="color:#000000;">Select Start Date :<input type="date" class="form-control" ng-model="reportData.reportStartDate" style="color:#000000"></label>
+                              </div>
+                              <div class="row col-md-6">
+                              <label for="endDate" style="color:#000000;">Select End Date :<input type="date" class="form-control" ng-model="reportData.reportEndDate" style="color:#000000"></label>
+                              <div class="row">
+                                <button ng-click="sendReport()" ng-if="showReportBtn" class="btn btn-danger pull-right" ng-if="userInfo.is_superuser">Submit</button>
+                              </div>
+                              </div>
+                              <br /><br /><br />
+                            </div>
                           </div>
-
                         </div>
                     </div>
                   </div>
@@ -3655,15 +3753,19 @@
             <div class = "modal-body">
               <div class="carousel" id="slider">
                  <div class="carousel-inner">
+
                    <div class="item" ng-class="{active:!$index}" ng-repeat="image in imageUrlList">
                      <div class="row">
-                        <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
-                       </div>
-                       <div class="row" style="margin-left:10px;">
+                        <img ng-src="{{image.image_url}}"  style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
+                       <div class="row" style="margin-left:20px;">
                          Comment : {{image.comment}} </br>
                          Distance : {{image.distance|limitTo:10}} mtrs, ({{image.distance/1000|limitTo:10}} kms) </br>
                          Date and Time : {{image.timestamp|date:'medium'}}
-                       </div>
+                       </div> <br />
+                      </div>
+                      <!-- id="img_test{{$index}}" -->
+                      <!-- <input type="button" class="btn btn-danger pull-middle" ng-click="rotateImage($index)" value="Rotate Image"/> -->
+
                    </div>
 
                  </div>
@@ -3763,7 +3865,7 @@
                      <div class="row">
                         <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
                        </div>
-                       <div class="row" style="margin-left:10px;">
+                       <div class="row" style="margin-left:20px;">
                          Hashtag : {{image.comment}} </br>
                          Society Name : {{image.supplier_name}}</br>
                          Date and Time : {{image.timestamp|date:'medium'}}
