@@ -489,7 +489,9 @@ export default class FillChecklist extends React.Component {
                 : undefined}
             </div>
             <div>
-              {checklistDetails && checklistDetails.row_headers
+              {checklistDetails &&
+              checklistDetails.row_headers &&
+              checklistDetails.row_headers['1']
                 ? checklistDetails.row_headers['1'].map(this.renderChecklistRow)
                 : undefined}
             </div>

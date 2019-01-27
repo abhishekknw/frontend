@@ -114,8 +114,10 @@ export default class List extends React.Component {
 
     return (
       <tr key={checklist.checklist_info.checklist_id}>
-        <td>{index + 1}</td>
-        <td>{checklist.checklist_info.checklist_name}</td>
+        <td className="hidden-xs">{index + 1}</td>
+        <td className="checklist-name">
+          {checklist.checklist_info.checklist_name}
+        </td>
         <td>
           <Link
             to={`/r/checklist/fill/${checklist.checklist_info.checklist_id}`}
@@ -224,8 +226,8 @@ export default class List extends React.Component {
           <table cellPadding="0" cellSpacing="0">
             <thead>
               <tr>
-                <th>Index</th>
-                <th>Name</th>
+                <th className="hidden-xs">Index</th>
+                <th className="checklist-name">Name</th>
                 <th>Action</th>
                 <th>Action</th>
                 <th>Action</th>
@@ -250,7 +252,7 @@ export default class List extends React.Component {
             onClick={this.onBack}
           >
             <i className="fa fa-arrow-left" aria-hidden="true" />
-            Back
+            &nbsp; Back
           </button>{' '}
           {showCreateButton && campaignPermission ? (
             <Link to={checklistCreateUrl} className="btn btn--danger">

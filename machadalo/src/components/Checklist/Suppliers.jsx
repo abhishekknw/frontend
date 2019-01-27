@@ -22,8 +22,8 @@ export default class Suppliers extends React.Component {
   renderSupplierRow(supplier, index) {
     return (
       <tr key={supplier.supplier_id}>
-        <td>{index + 1}</td>
-        <td>{supplier.name}</td>
+        <td className="hidden-xs">{index + 1}</td>
+        <td className="supplier-name">{supplier.name}</td>
         <td>{supplier.area}</td>
         <td>{supplier.subarea}</td>
         <td>
@@ -58,7 +58,7 @@ export default class Suppliers extends React.Component {
         </div>
         <button type="button" className="btn btn--danger" onClick={this.onBack}>
           <i className="fa fa-arrow-left" aria-hidden="true" />
-          Back
+          &nbsp; Back
         </button>
         <br />
         <br />
@@ -66,8 +66,8 @@ export default class Suppliers extends React.Component {
           <table cellPadding="0" cellSpacing="0">
             <thead>
               <tr>
-                <th>Index</th>
-                <th>Name</th>
+                <th className="hidden-xs">Index</th>
+                <th className="supplier-name">Name</th>
                 <th>Area</th>
                 <th>Sub-area</th>
                 <th>Address</th>
