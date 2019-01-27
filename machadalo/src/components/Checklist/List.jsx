@@ -36,13 +36,7 @@ export default class List extends React.Component {
   }
 
   onBack() {
-    let campaignProposalId = this.props.match.params.campaignId;
-    let supplierId = this.props.match.params.supplierId;
-    if (supplierId) {
-      this.props.history.push(`/r/checklist/suppliers/${campaignProposalId}`);
-    } else {
-      this.props.history.push(`/r/checklist/campaigns`);
-    }
+    this.props.history.goBack();
   }
 
   onEdit(checklistId) {
