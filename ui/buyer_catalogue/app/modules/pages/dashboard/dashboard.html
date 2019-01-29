@@ -1865,6 +1865,9 @@
                   </uib-tab-heading>
 
                   <div class="container-fluid" print-section>
+                    <!-- <div class="row pull-right">
+                      <a href="#/dynamicGraphs" target="_blank">Click for Dynamic Graphs</a>
+                    </div> -->
                     <div class="row">
                       <div class="panel panel-default" style="color:'0000ff'" >
                         <div class="col-md-12">
@@ -1877,20 +1880,39 @@
                                     All Campaigns
                               </div>
                             </div> -->
-                            <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.overall.status)">
-                              <div class="button" type="button" ng-click="getCampaignWiseSummary()">
-                                <div class="panel-heading">
-                                      All Campaigns
+                            <div class="col-md-6">
+                              <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.overall.status)">
+                                <div class="button" type="button" ng-click="getCampaignWiseSummary()">
+                                  <div class="panel-heading">
+                                        All Campaigns
+                                  </div>
+                                </div>
+                                <div id="overall" class="animate-show" ng-show="campaignStatus.overall.value">
+                                    <div class="panel-bodyDashboard camp-menu-content">
+                                      <table class="table">
+
+                                      </table>
+                                    </div>
                                 </div>
                               </div>
-                              <div id="overall" class="animate-show" ng-show="campaignStatus.overall.value">
-                                  <div class="panel-bodyDashboard camp-menu-content">
-                                    <table class="table">
-
-                                    </table>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.overall.status)">
+                                <div class="button" type="button" ng-click="getDynamicGraphsStatics()">
+                                  <div class="panel-heading">
+                                        Dynamic Graphs
                                   </div>
+                                </div>
+                                <div id="overall" class="animate-show" ng-show="campaignStatus.overall.value">
+                                    <div class="panel-bodyDashboard camp-menu-content">
+                                      <table class="table">
+
+                                      </table>
+                                    </div>
+                                </div>
                               </div>
                             </div>
+
                           </div>
                             <br /><br /><br />
                             <br />
@@ -2070,6 +2092,8 @@
                                         </div> -->
                                     </div>
                                   </div>
+                                  <br />
+
                               </div>
                         </div>
                         <br /><br /><br />
@@ -3377,6 +3401,18 @@
         </div>
 </div>
 <!-- < End Overall Campaign Wise Summary> -->
+
+<!-- dynamic Graphs -->
+<div class="col-lg-12" ng-if="dynamicGraphsUI" style="margin-top:-320px;">
+  <div class="panel panel-primary">
+    <div class="panel-heading content-title">
+      <label for="Location">Dynamic Graphs</label>
+    </div>
+  </div>
+</div>
+
+<!-- End Dynamic graphs -->
+
                         <!--START : COMPARE CAMPAIGNS LIST  -->
                           <div class="col-md-12" ng-show="campaignStatus.compare_campaigns.value" print-remove>
                             <br />

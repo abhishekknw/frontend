@@ -477,7 +477,16 @@ angular
               data : {
                 permission : 'editProposalDetailsPage'
               }
-        });
+        })
+        // .state('dynamicGraphs',{
+        //       url : '/dynamicGraphs',
+        //       controller : 'DashboarddynamicGraphsCtrl',
+        //       templateUrl : 'modules/pages/dynamicGraphs/dynamicGraphs.html',
+        //        data :{
+        //         permission : 'dashboard_dynamic_graphs'
+        //       }
+        // })
+        ;
 
 
       //$qProvider.errorOnUnhandledRejections(false);
