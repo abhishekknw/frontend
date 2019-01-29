@@ -42,14 +42,19 @@ export default class Campaigns extends React.Component {
   renderCampaignRow(campaign) {
     return (
       <tr key={campaign.id}>
-        <td>{campaign.campaign.name}</td>
-        <td>
+        <td className="campaign-name">{campaign.campaign.name}</td>
+        <td className="hidden-xs">
           {moment(campaign.campaign.tentative_start_date).format(
             'Do MMM, YYYY'
           )}
         </td>
-        <td>
+        <td className="hidden-xs">
           {moment(campaign.campaign.tentative_end_date).format('Do MMM, YYYY')}
+        </td>
+        <td className="visible-xs">
+          {moment(campaign.campaign.tentative_start_date).format('DD/MM/YY')}
+          {' - '}
+          {moment(campaign.campaign.tentative_end_date).format('DD/MM/YY')}
         </td>
         <td>
           <Link
@@ -93,9 +98,10 @@ export default class Campaigns extends React.Component {
           <table cellPadding="0" cellSpacing="0">
             <thead>
               <tr>
-                <th>Campaign Name</th>
-                <th>Start Date</th>
-                <th>End Date</th>
+                <th className="campaign-name">Campaign Name</th>
+                <th className="hidden-xs">Start Date</th>
+                <th className="hidden-xs">End Date</th>
+                <th className="visible-xs">Start - End</th>
                 <th>Action</th>
                 <th>Checklist</th>
               </tr>

@@ -7,7 +7,7 @@ import OptionModal from '../Modals/OptionModal';
 
 import './index.css';
 
-const MAX_COLUMNS = 12;
+const MAX_COLUMNS = 100;
 const ColumnTypes = [
   { value: 'TEXT', label: 'Textbox' },
   { value: 'BOOLEAN', label: 'Checkbox' },

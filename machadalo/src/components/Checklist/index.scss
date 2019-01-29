@@ -88,8 +88,34 @@
     }
 
     &__table {
+      overflow-x: auto;
+
       table {
+        max-width: 100%;
         width: 100%;
+
+        .campaign-name {
+          @media (max-width: $breakpoint-mobile) {
+            width: 70px;
+            max-width: 100px;
+          }
+        }
+
+        .supplier-name {
+          @media (max-width: $breakpoint-mobile) {
+            min-width: 70px;
+            max-width: 150px;
+          }
+        }
+
+        .campaign-name,
+        .supplier-name,
+        .checklist-name {
+          @media (max-width: $breakpoint-mobile) {
+            text-align: left;
+            word-break: break-word;
+          }
+        }
 
         thead {
           tr {
@@ -102,6 +128,21 @@
               };
               padding: 12px;
               text-align: center;
+
+              @media (max-width: $breakpoint-mobile) {
+                font: {
+                  size: 12px;
+                  weight: $font-regular;
+                };
+                padding: 5px;
+              }
+
+              &:nth-child(1) {
+                @media (max-width: $breakpoint-mobile) {
+                  max-width: 100px;
+                  text-align: left;
+                }
+              }
             }
           }
         }
@@ -119,6 +160,24 @@
               text-align: center;
               border-bottom: 1px solid #ddd;
 
+              @media (max-width: $breakpoint-mobile) {
+                font: {
+                  size: 12px;
+                  weight: $font-regular;
+                };
+                padding: 5px;
+              }
+
+              .btn {
+                @media (max-width: $breakpoint-mobile) {
+                  font: {
+                    size: 12px;
+                    weight: $font-regular;
+                  };
+                  padding-left: 8px;
+                  padding-right: 8px;
+                }
+              }
             }
 
             &:nth-child(odd) {

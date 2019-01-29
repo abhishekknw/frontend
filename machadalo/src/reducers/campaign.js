@@ -8,11 +8,6 @@ export const campaign = createReducer(
   },
 
   {
-    [types.GET_CAMPAIGNS_LIST_START](state) {
-      return Object.assign({}, state, {
-        list: []
-      });
-    },
     [types.GET_CAMPAIGNS_LIST_SUCCESS](state, action) {
       return Object.assign({}, state, {
         list: action.campaigns
