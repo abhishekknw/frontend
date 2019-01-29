@@ -2614,6 +2614,7 @@ $scope.viewCampaignLeads = function(value){
 }
     $scope.viewLeadsForSelectedCampaign = function(data,campaignId){
       cfpLoadingBar.start();
+      $scope.campaignIdForLeads = campaignId;
       DashboardService.viewLeadsForSelectedCampaign(data,campaignId)
       .then(function onSuccess(response){
       console.log(response);
@@ -2954,19 +2955,6 @@ $scope.getFormDetails = function(campaignId){
   $scope.campaignIdForleads = campaignId;
   $scope.emailCampaignLeadsModel = {};
   $scope.sendEmailList = [];
-  // angular.forEach(campaignId, function(data){
-  //   for(var i=0; i<data.length; i++){
-  //     var emailData = {
-  //       // start_date : ,
-  //       // end_date : ,
-  //       // leads_form_id : ,
-  //       // campaign_id : ,
-  //
-  //     };
-  //     $scope.sendEmailList.push(emailData);
-  //   }
-  //   console.log(sendEmailList);
-  // }) ;
    DashboardService.getFormDetails(campaignId)
     .then(function onSuccess(response){
       console.log(response);
@@ -3527,6 +3515,38 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
 
       return temp_data;
     }
+
+    $scope.getPrintLeadsInExcelData = function(campaignId){
+      var campaignIdForExcel = campaignId;
+      $scope.getFormDetails($scope.campaignIdForLeads);
+      getShortlistedSuppliers($scope.campaignIdForLeads);
+    }
+    var getShortlistedSuppliers = function(campaignId){
+      console.log("hello");
+      var supplier_code = 'RS';
+      DashboardService.getShortlistedSuppliers(campaignId, supplier_code)
+      .then(function onSuccess(response){
+        console.log(response);
+        $scope.shortlistedSuppliers = response.data.data;
+      }).catch(function onError(response){
+        console.log(response);
+      })
+    }
+
+    $scope.printLeadsInExcel = function(){
+
+      DashboardService.printLeadsInExcel($scope.printLeadsInExcelData)
+      .then(function onSuccess(response){
+        console.log(response);
+        var link = document.createElement("a");
+        link.download = "mydata.xlsx";
+        link.href = response.data.data;
+        link.click();
+      }).catch(function onError(response){
+        console.log(response);
+      })
+    }
+// END
 
 // $scope.rotateImage=function(id){
 //   console.log("hello",id);

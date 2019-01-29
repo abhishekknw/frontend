@@ -1567,6 +1567,7 @@
                             </tr>
                           </tbody>
                         </table>
+                        <button class="btn btn-danger" ng-click="getPrintLeadsInExcelData(campaignIdForLeads)" data-target="#printLeadsInExcelModal" data-toggle="modal">Print Leads In Excel</button>
                       </div>
                     </div>
                   </div>
@@ -4117,6 +4118,61 @@
       </div>
     </div>
     <!--END: Change password modal  -->
+    <!--START: Print Leads In Excel Modal  -->
+    <div id="printLeadsInExcelModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">{{campaignNameOnImageModal}} Send Email Details</h4>
+            <hr/>
+            <div class = "modal-body">
+
+              <table class="table table-bordered table-align">
+                <tbody>
+                  <div class="">
+                    Select Form :
+                    <select class="form-control" ng-model="printLeadsInExcelData.leads_form_id">
+                      <option ng-repeat="form_name in formDetails"  value="{{form_name.leads_form_id}}">{{form_name.leads_form_name}}</option>
+                    </select>
+                  </div>
+                  <br />
+                  <tr>
+                    <td class="col-md-2">
+                      <p class="input-group">
+                        Select Start Date(Optional): <input type="date" class="form-control"  ng-model="printLeadsInExcelData.start_date"  required>
+                      </p>
+                    </td>
+                    <td class="col-md-2">
+                      <p class="input-group">
+                        Select End Date(Optional) : <input type="date" class="form-control"  ng-model="printLeadsInExcelData.end_date" required>
+                      </p>
+                    </td>
+
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="col-md-2">
+                      <p class="input-group">
+                        Select By Supplier (Optional):
+                        <select class="form-control" ng-model="printLeadsInExcelData.supplier_id">
+                          <option value="" disabled>Select Supplier</option>
+                          <option  ng-repeat="supplier in shortlistedSuppliers" value="{{supplier.supplier_id}}">{{supplier.society_name}}</option>
+                        </select>
+                      </p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </br>
+              <td><button type="button" name="button" class="btn btn-danger" ng-click="printLeadsInExcel()">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--START: Print Leads In Excel Modal  -->
+
   </main>
   </body>
 </html>
