@@ -3195,6 +3195,7 @@ $scope.getCampaignWiseSummary = function(){
       console.log(response);
       $scope.showPerfMetrics = $scope.perfMetrics.overall;
       $scope.selectAllCampaignLeads = true;
+      $scope.dynamicGraphsUI = false;
       $scope.showReportBtn = true;
       $scope.lineChartForLeadsDistributedGraphs = false;
       $scope.lineChartForHotLeadsDistributedGraphs = false;
@@ -3564,6 +3565,15 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
 //
 //
 // }
+
+
+  $scope.getDynamicGraphsStatics = function(){
+    $scope.dynamicGraphsUI = true;
+    $scope.selectAllCampaignLeads = false;
+    $scope.showReportBtn = false;
+    $scope.lineChartForLeadsDistributedGraphs = false;
+    $scope.lineChartForHotLeadsDistributedGraphs = false;
+  }
 })
 
 
