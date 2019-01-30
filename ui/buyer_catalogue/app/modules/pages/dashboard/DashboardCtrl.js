@@ -3768,6 +3768,12 @@ $scope.xValues = {};
     console.log(finalData);
     return finalData;
   }
+  $scope.clearMetrics = function(){
+    $scope.dynamicData.metrics = [];
+  }
+  $scope.clearSubLevel = function(){
+    $scope.dynamicData.data_point.sublevel = undefined;
+  }
 
 
 })
