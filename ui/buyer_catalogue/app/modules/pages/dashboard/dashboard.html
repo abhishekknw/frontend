@@ -3528,7 +3528,8 @@
 <div class="row">
   <span>Sub Level :</span>
   <input type="radio" value="phase" ng-model="dynamicData.data_point.sublevel">Phase
-  <input type="radio" value="phase" ng-model="dynamicData.data_point.sublevel">Day
+  <input type="radio" value="day" ng-model="dynamicData.data_point.sublevel">Day
+  <button class="btn btn-primary" ng-click="clearSubLevel()">Clear Sublevel</button>
 </div>
 <br />
 <div class="row">
@@ -3594,7 +3595,7 @@
     <option value="*">*</option>
   </select>
   <button class="btn btn-danger" ng-click="addMetrics()">Add</button>
-  <button class="btn btn-primary" ng-click="getDynamicGraphData()">Submit</button>
+  <button class="btn btn-primary" ng-click="clearMetrics()">Clear</button>
   <br /><br /><br />
   <div class="row">
     <span></span>
