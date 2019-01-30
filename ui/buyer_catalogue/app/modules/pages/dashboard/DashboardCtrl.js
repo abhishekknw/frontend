@@ -1583,7 +1583,7 @@
      result.then(function onSuccess(response){
        console.log(response);
        $scope.selectAllCampaignLeads = false;
-
+       $scope.dynamicGraphsUI = false;
        cfpLoadingBar.complete();
        if($scope.LeadsByCampaign){
          $scope.LeadsByCampaign = response.data.data;
@@ -1730,6 +1730,7 @@
    }
 
    var formatFlatCountChart = function(data){
+     console.log(data);
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(data,key){
@@ -1766,7 +1767,7 @@
          values : values2
        }
      ];
-
+     console.log(temp_data);
      return temp_data;
    }
 
@@ -1779,7 +1780,7 @@
        console.log(key);
        var keyWithFlatLabel =  key + ' (' + key.flat_count + ')';
        var value1 =
-          { x : keyWithFlatLabel, y : $scope.normalLeadsValues };
+          { x : keyWithFlatLabel, y : $scope.normalLeadsValues};
        var value2 =
           { x : keyWithFlatLabel, y : $scope.hotLeadsValues };
        values1.push(value1);
@@ -3554,9 +3555,11 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
     $scope.lineChartForLeadsDistributedGraphs = false;
     $scope.lineChartForHotLeadsDistributedGraphs = false;
   }
+
+
+
+// write before this
 })
-
-
 })();
 app.factory('Excel',function($window){
         var uri='data:application/vnd.ms-excel;base64,',
