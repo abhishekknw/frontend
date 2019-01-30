@@ -3607,7 +3607,11 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
       'level' : [],
     },
     'raw_data' : [],
-    'metrics' : []
+    'metrics' : [],
+     'statistical_information' : {
+       'stats':["z_score"],
+       'metrics' :[]
+     },
   }
   $scope.myModel = [];
   $scope.myModel1 = [];
