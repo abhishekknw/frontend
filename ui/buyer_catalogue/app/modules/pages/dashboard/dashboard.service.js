@@ -195,12 +195,23 @@
       return machadaloHttp.get(url);
     }
 
-      DashboardService.getDistributionGraphsStatics = function(data){
-        console.log(data);
+    DashboardService.getDistributionGraphsStatics = function(data){
       var url =  url_root  + "analytics/get-leads-data-generic/";
       return machadaloHttp.put(url,data);
     }
-  
+
+    DashboardService.getShortlistedSuppliers = function(campaignId, supplier_code){
+      var url =  url_root  + "website/get-shortlisted-suppliers/" + campaignId + "/?supplier_type_code=" + supplier_code;
+      return machadaloHttp.get(url);
+    }
+
+    DashboardService.printLeadsInExcel = function(data){
+      var url =  url_root  + "leads/" + data.leads_form_id + "/generate_lead_data_excel?supplier_id=" +
+                  data.supplier_id + "&start_date=" + data.start_date + "&end_date=" +
+                  data.end_date;
+      return machadaloHttp.get(url);
+    }
+
     return DashboardService;
 
  }]);
