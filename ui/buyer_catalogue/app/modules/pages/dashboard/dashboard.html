@@ -3417,19 +3417,19 @@
   </div>
   <br />
   <div class="row" ng-if="dynamicData.data_scope['1'].category == 'unordered'">
-    <span class="col-md-2" style="color:blue;font-weight:bold">Level :</span>
+    <span class="col-md-3" style="color:blue;font-weight:bold">Level :</span>
     <input type="radio" value="supplier" ng-model="dynamicData.data_scope['1'].level">Supplier
     <input type="radio" value="campaign" ng-model="dynamicData.data_scope['1'].level"
           ng-click="getLevelValues(dynamicData.data_scope['1'].level)">Campaign
   </div>
   <div class="row" ng-if="dynamicData.data_scope['1'].category == 'geographical'">
-    <span class="col-md-2" style="color:blue;font-weight:bold">Level :</span>
+    <span class="col-md-3" style="color:blue;font-weight:bold">Level :</span>
     <input type="radio" value="city" ng-model="dynamicData.data_scope['1'].level"
           ng-click="getLevelValues(dynamicData.data_scope['1'].level)">City
     <input type="radio" value="state" ng-model="dynamicData.data_scope['1'].level">State
   </div>
   <div class="row" ng-if="dynamicData.data_scope['1'].category == 'time'">
-    <span class="col-md-2" style="color:blue;font-weight:bold">Level :</span>
+    <span class="col-md-3" style="color:blue;font-weight:bold">Level :</span>
     <input type="radio" value="day" ng-model="dynamicData.data_scope['1'].level">Day
     <input type="radio" value="month" ng-model="dynamicData.data_scope['1'].level">Month
     <input type="radio" value="year" ng-model="dynamicData.data_scope['1'].level">Year
@@ -3526,7 +3526,7 @@
 </div>
 <br />
 <div class="row">
-  <span>Sub Level :</span>
+  <span class="col-md-3" style="color:blue;font-weight:bold">Sub Level :</span>
   <input type="radio" value="phase" ng-model="dynamicData.data_point.sublevel">Phase
   <input type="radio" value="phase" ng-model="dynamicData.data_point.sublevel">Day
 </div>
@@ -3603,34 +3603,52 @@
     </div>
   </div>
 </div>
-<div class="row">
-  <span>X Axis Values : </span>
-  <input type="radio" value="campaign" ng-model="xValues.value"> Campaign
-  <input type="radio" value="supplier_name" ng-model="xValues.value"> Supplier
-  <input type="radio" value="phase" ng-model="xValues.value"> Phase
-</div>
-<div class="row">
-  <span>Y Axis Values : </span>
-  <input type="checkbox" value="campaign" ng-model="yValuesData.lead"
-    ng-click="getYValueFromData(yValuesData.lead,'lead')"> Lead
-  <input type="checkbox" value="supplier_name" ng-model="yValuesData.hot_lead"
-    ng-click="getYValueFromData(yValuesData.hot_lead,'hot_lead')"> Hot Lead
-  <input type="checkbox" value="flat" ng-model="yValuesData.flat"
-    ng-click="getYValueFromData(yValuesData.flat,'flat')"> Flat
-  <input type="checkbox" value="cost" ng-model="yValuesData.cost"
-    ng-click="getYValueFromData(yValuesData.cost,'cost')"> Cost
-  <input type="checkbox" value="cost/lead" ng-model="yValuesData.costperlead"
-    ng-click="getYValueFromData(yValuesData.costperlead,'cost/lead')"> Cost/Lead
-  <input type="checkbox" value="cost/hot_lead" ng-model="yValuesData.costperhotlead"
-    ng-click="getYValueFromData(yValuesData.costperhotlead,'cost/hot_lead')"> Cost/Hot Lead
-</div>
-<div class="row">
-  <button class="btn btn-danger" ng-click="getDynamicGraphData()">Submit</button>
 </div>
 
+<br />
+<br />
+<br />
 
-
-
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class="col-md-3 panel-heading content-title" style="color:#fff;">
+  <div class="row" style="vertical-align:middle">
+    Plot Graphs
+  </div></br>
+</div>
+<div class="col-md-8 panel panel-default pull-right" style="color:#000;">
+  <div class="row">
+    <span class="col-md-3" style="color:blue;font-weight:bold">X Axis Values : </span>
+    <input type="radio" value="campaign" ng-model="xValues.value"> Campaign
+    <input type="radio" value="supplier_name" ng-model="xValues.value"> Supplier
+    <input type="radio" value="phase" ng-model="xValues.value"> Phase
+  </div>
+  <br />
+  <div class="row">
+    <span class="col-md-3" style="color:blue;font-weight:bold">Y Axis Values : </span>
+    <input type="checkbox" value="campaign" ng-model="yValuesData.lead"
+      ng-click="getYValueFromData(yValuesData.lead,'lead')"> Lead
+    <input type="checkbox" value="supplier_name" ng-model="yValuesData.hot_lead"
+      ng-click="getYValueFromData(yValuesData.hot_lead,'hot_lead')"> Hot Lead
+    <input type="checkbox" value="flat" ng-model="yValuesData.flat"
+      ng-click="getYValueFromData(yValuesData.flat,'flat')"> Flat
+    <input type="checkbox" value="cost" ng-model="yValuesData.cost"
+      ng-click="getYValueFromData(yValuesData.cost,'cost')"> Cost
+    <input type="checkbox" value="cost/lead" ng-model="yValuesData.costperlead"
+      ng-click="getYValueFromData(yValuesData.costperlead,'cost/lead')"> Cost/Lead
+    <input type="checkbox" value="cost/hot_lead" ng-model="yValuesData.costperhotlead"
+      ng-click="getYValueFromData(yValuesData.costperhotlead,'cost/hot_lead')"> Cost/Hot Lead
+  </div>
+  <br />
+  <br />
+  <div class="row col-md-9">
+    <button class="btn btn-danger col-md-4" style="margin-left:300px" ng-click="getDynamicGraphData()">Submit</button>
+  </div>
+<br />
 </div>
 <br />
 <div class="col-md-12" ng-if="showGraph">
