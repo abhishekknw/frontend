@@ -705,7 +705,7 @@
                        "rotateLabels" : -30
                      },
                      "yAxis": {
-                       "axisLabel": "Leads in %",
+                       "axisLabel": "",
                        "axisLabelDistance": -20,
 
                        "ticks" : 8
@@ -3656,6 +3656,7 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
   }
 
   $scope.getDynamicGraphData = function(){
+    $scope.showGraph = true;
     console.log($scope.myModel);
     if($scope.myModel.length){
       console.log($scope.myModel);

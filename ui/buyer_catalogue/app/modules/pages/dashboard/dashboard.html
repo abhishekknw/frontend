@@ -3625,16 +3625,20 @@
     ng-click="getYValueFromData(yValuesData.costperhotlead,'cost/hot_lead')"> Cost/Hot Lead
 </div>
 <div class="row">
-  <button class="btn btn-submit" ng-click="getDynamicGraphData()">Submit</button>
+  <button class="btn btn-danger" ng-click="getDynamicGraphData()">Submit</button>
 </div>
 
-<div class="col-md-12">
+
+
+
+</div>
+<br />
+<div class="col-md-12" ng-if="showGraph">
+    <div class="panel-heading content-title" >
+Dynamic Graph
+   </div>
   <nvd3 options="stackedBarChartForDynamic" data="stackedBarChartDynamicData"></nvd3>
 </div>
-
-
-</div>
-
 <!-- End Dynamic graphs -->
 
                         <!--START : COMPARE CAMPAIGNS LIST  -->
