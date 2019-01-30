@@ -3507,10 +3507,8 @@
 </div>
 <div class="row">
   <span>Sub Level :</span>
-  <input type="checkbox" value="phase" ng-model="dynamicSubLevelData.phase"
-      ng-click="getSubLevelDataValue(dynamicSubLevelData.phase,'phase')">Phase
-  <input type="checkbox" value="phase" ng-model="dynamicSubLevelData.day"
-      ng-click="getSubLevelDataValue(dynamicSubLevelData.day,'day')">Day
+  <input type="radio" value="phase" ng-model="dynamicData.data_point.sublevel">Phase
+  <input type="radio" value="phase" ng-model="dynamicData.data_point.sublevel">Day
 </div>
 <div class="row">
   <span>Raw Data :</span>
@@ -3554,11 +3552,27 @@
     </span>
   </div>
 </div>
-<!-- <div class="row">
+<div class="row">
   <span>X Axis Values : </span>
-  <input type="radio" value="campaign" ng-model="xValues"> Campaign
-  <input type="radio" value="supplier" ng-model="xValues"> Supplier
-</div> -->
+  <input type="radio" value="campaign" ng-model="xValues.value"> Campaign
+  <input type="radio" value="supplier_name" ng-model="xValues.value"> Supplier
+  <input type="radio" value="phase" ng-model="xValues.value"> Phase
+</div>
+<div class="row">
+  <span>Y Axis Values : </span>
+  <input type="checkbox" value="campaign" ng-model="yValuesData.lead"
+    ng-click="getYValueFromData(yValuesData.lead,'lead')"> Lead
+  <input type="checkbox" value="supplier_name" ng-model="yValuesData.hot_lead"
+    ng-click="getYValueFromData(yValuesData.hot_lead,'hot_lead')"> Hot Lead
+  <input type="checkbox" value="flat" ng-model="yValuesData.flat"
+    ng-click="getYValueFromData(yValuesData.flat,'flat')"> Flat
+  <input type="checkbox" value="cost" ng-model="yValuesData.cost"
+    ng-click="getYValueFromData(yValuesData.cost,'cost')"> Cost
+  <input type="checkbox" value="cost/lead" ng-model="yValuesData.costperlead"
+    ng-click="getYValueFromData(yValuesData.costperlead,'cost/lead')"> Cost/Lead
+  <input type="checkbox" value="cost/hot_lead" ng-model="yValuesData.costperhotlead"
+    ng-click="getYValueFromData(yValuesData.costperhotlead,'cost/hot_lead')"> Cost/Hot Lead
+</div>
 <div class="row">
   <button class="btn btn-submit" ng-click="getDynamicGraphData()">Submit</button>
 </div>

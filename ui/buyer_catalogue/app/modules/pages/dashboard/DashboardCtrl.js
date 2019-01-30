@@ -700,7 +700,7 @@
                      "grouped": true,
                      "sortDescending" : false,
                        "xAxis": {
-                       "axisLabel": "campaign (Flat Count) in Percentage",
+                       "axisLabel": "",
                        "showMaxMin": false,
                        "rotateLabels" : -30
                      },
@@ -2581,6 +2581,10 @@ $scope.viewCampaignLeads = function(value){
     console.log(response);
     $scope.allCampaignDetailsData = response.data.data;
     $scope.dynamicValues = $scope.allCampaignDetailsData;
+    $scope.dynamicValuesCampaignIdMap = {};
+    angular.forEach($scope.dynamicValues, function(data){
+      $scope.dynamicValuesCampaignIdMap[data.campaign_id] = data;
+    })
     console.log($scope.allCampaignDetailsData);
     $scope.showTableForAllCampaignDisplay = false;
 
@@ -3692,22 +3696,32 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
     }
     console.log($scope.dynamicData);
   }
-
-  $scope.getSubLevelDataValue = function(value, type){
-    if(!$scope.dynamicData.data_point.hasOwnProperty('sublevel')){
-      $scope.dynamicData.data_point['sublevel'] = [];
-    }
+  $scope.getYValueFromData = function(value,type){
     if(value){
-      $scope.dynamicData.data_point['sublevel'].push(type);
+      $scope.yValues.push(type);
     }else {
-      var index = $scope.dynamicData.data_point['sublevel'].indexOf(type);
+      var index = $scope.yValues.indexOf(type);
       if (index > -1) {
-        $scope.dynamicData.data_point['sublevel'].splice(index, 1);
+        $scope.yValues.splice(index, 1);
       }
     }
   }
-var yValues = ['cost/lead','cost/hot_lead','lead','hot_lead'];
-var xValues = ['campaign'];
+
+  // $scope.getSubLevelDataValue = function(value, type){
+  //   if(!$scope.dynamicData.data_point.hasOwnProperty('sublevel')){
+  //     $scope.dynamicData.data_point['sublevel'] = [];
+  //   }
+  //   if(value){
+  //     $scope.dynamicData.data_point['sublevel'].push(type);
+  //   }else {
+  //     var index = $scope.dynamicDat = function(value,type)a.data_point['sublevel'].indexOf(type);
+  //     if (index > -1) {
+  //       $scope.dynamicData.data_point['sublevel'].splice(index, 1);
+  //     }
+  //   }
+  // }
+$scope.yValues = [];
+$scope.xValues = {};
   var formatDynamicData = function(data){
     console.log(data);
     var values1 = {};
@@ -3715,22 +3729,29 @@ var xValues = ['campaign'];
     var finalData = [];
     // var values2 = [];
     angular.forEach(data.lower_group_data, function(data,key){
-      angular.forEach(yValues, function(itemKey,index,item){
+      angular.forEach($scope.yValues, function(itemKey,index,item){
         console.log(itemKey,index,item);
         if(!values1.hasOwnProperty(itemKey)){
             values1[itemKey] = [];
         }
-        var temp = {
-          x: data['campaign'],
-          y: data[itemKey]
+        console.log(data[$scope.xValues.value],data,$scope.xValues.value);
+        if($scope.xValues.value == 'campaign'){
+
+          var temp = {
+            x: $scope.dynamicValuesCampaignIdMap[data[$scope.xValues.value]].name,
+            y: data[itemKey]
+          }
+        }else {
+          var temp = {
+            x: data[$scope.xValues.value],
+            y: data[itemKey]
+          }
         }
         values1[itemKey].push(temp);
       })
-      angular.forEach(xValues, function(value){
-        labels.push(data[value]);
-      })
+
     })
-    angular.forEach(yValues, function(itemKey){
+    angular.forEach($scope.yValues, function(itemKey){
       var temp_data = {
         key : itemKey,
         values : values1[itemKey]
