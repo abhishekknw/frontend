@@ -3396,79 +3396,106 @@
 <!-- < End Overall Campaign Wise Summary> -->
 
 <!-- dynamic Graphs -->
-<div class="col-lg-12" ng-if="dynamicGraphsUI" style="margin-top:20px;">
+<div class="col-lg-12" ng-if="dynamicGraphsUI" style="margin-top:20px;color:#000;">
   <div class="panel panel-primary">
     <div class="panel-heading content-title">
       <label for="Location">Dynamic Graphs</label>
     </div>
   </div>
+  <div class="panel panel-default" style="color:#000;">
+    <div class="col-md-3 panel-heading content-title" style="color:#fff;">
+      <div class="row" style="vertical-align:middle">
+        Data Scope
+      </div></br>
+    </div>
+<div class="col-md-8 panel panel-default pull-right" style="color:#000;">
   <div class="row">
-    Data Scope :
-  </div></br>
-  <div class="row">
-    <span>Category :</span>
+    <span class="col-md-3" style="color:blue;font-weight:bold">Category :</span>
     <input type="radio" value="unordered" ng-model="dynamicData.data_scope['1'].category">Unordered
     <input type="radio" value="geographical" ng-model="dynamicData.data_scope['1'].category">Geographical
     <input type="radio" value="time" ng-model="dynamicData.data_scope['1'].category">Time
   </div>
+  <br />
   <div class="row" ng-if="dynamicData.data_scope['1'].category == 'unordered'">
-    <span>Level :</span>
+    <span class="col-md-2" style="color:blue;font-weight:bold">Level :</span>
     <input type="radio" value="supplier" ng-model="dynamicData.data_scope['1'].level">Supplier
     <input type="radio" value="campaign" ng-model="dynamicData.data_scope['1'].level"
           ng-click="getLevelValues(dynamicData.data_scope['1'].level)">Campaign
   </div>
   <div class="row" ng-if="dynamicData.data_scope['1'].category == 'geographical'">
-    <span>Level :</span>
+    <span class="col-md-2" style="color:blue;font-weight:bold">Level :</span>
     <input type="radio" value="city" ng-model="dynamicData.data_scope['1'].level"
           ng-click="getLevelValues(dynamicData.data_scope['1'].level)">City
     <input type="radio" value="state" ng-model="dynamicData.data_scope['1'].level">State
   </div>
   <div class="row" ng-if="dynamicData.data_scope['1'].category == 'time'">
-    <span>Level :</span>
+    <span class="col-md-2" style="color:blue;font-weight:bold">Level :</span>
     <input type="radio" value="day" ng-model="dynamicData.data_scope['1'].level">Day
     <input type="radio" value="month" ng-model="dynamicData.data_scope['1'].level">Month
     <input type="radio" value="year" ng-model="dynamicData.data_scope['1'].level">Year
     <input type="radio" value="date" ng-model="dynamicData.data_scope['1'].level">Date
   </div>
+  <br />
   <div class="row">
-    <span>Match Type :</span>
+    <span class="col-md-3" style="color:blue;font-weight:bold">Match Type :</span>
     <input type="radio" value="0" ng-model="dynamicData.data_scope['1'].match_type"> Exact
     <input type="radio" value="1" ng-model="dynamicData.data_scope['1'].match_type"> Range
   </div>
+  <br />
   <div class="row">
-    <span>Values :
+    <span class="col-md-3" style="color:blue;font-weight:bold">Values :
     </span>
-  </div>
-  <div class="row">
-    <div class="col-md-2 pull-left" ng-if="dynamicData.data_scope['1'].level == 'campaign'">
+  <div class="">
+    <div class="col-md-6 pull-left" ng-if="dynamicData.data_scope['1'].level == 'campaign'">
       <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
       selected-model="myModel" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
     </div>
-    <div class="col-md-2 pull-left" ng-if="dynamicData.data_scope['1'].level == 'city'">
+    <div class="col-md-6 pull-left" ng-if="dynamicData.data_scope['1'].level == 'city'">
       <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
       selected-model="myModel" translation-texts="selected_baselines_customTexts_city" events="events"></span>
     </div>
-
   </div>
+  </div>
+  <br />
   <div class="row">
-    <span>Value Type :</span>
+    <span class="col-md-3" style="color:blue;font-weight:bold">Value Type :</span>
     <input type="radio"  value="campaign" ng-model="dynamicData.data_scope['1'].value_type"> Campaign
     <input type="radio"  value="locality" ng-model="dynamicData.data_scope['1'].value_type"> Locality
     <input type="radio"  value="city" ng-model="dynamicData.data_scope['1'].value_type"> City
   </div>
-</br>
+</div>
+
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<div class="col-md-3 panel-heading content-title" style="color:#fff;">
+  <div class="row" style="vertical-align:middle">
+    Data Point
+  </div></br>
+</div>
+<div class="col-md-8 panel panel-default pull-right" style="color:#000;">
+
 <div class="row">
-  <span>Data Point :</span>
-</div></br>
-<div class="row">
-  <span>Category :</span>
+ <span class="col-md-3" style="color:blue;font-weight:bold">Category :</span>
   <input type="radio" value="unordered" ng-model="dynamicData.data_point.category">Unordered
   <input type="radio" value="geographical" ng-model="dynamicData.data_point.category">Geographical
   <input type="radio" value="time" ng-model="dynamicData.data_point.category">Time
   <input type="radio" value="suppliertype" ng-model="dynamicData.data_point.category">Supplier Type
 </div>
+<br />
 <div class="row">
-  <span> Level :</span>
+  <span class="col-md-3"></span>
   <input type="checkbox" value="date" ng-model="dynamicLevelData.date"
       ng-click="getLevelDataValue(dynamicLevelData.date,'date')">Date
   <input type="checkbox" value="supplier" ng-model="dynamicLevelData.supplier"
@@ -3477,35 +3504,37 @@
       ng-click="getLevelDataValue(dynamicLevelData.campaign,'campaign')">Campaign
 </div>
 <div class="row">
-  <span> Level :</span>
+  <span class="col-md-3"></span>
   <input type="checkbox" value="locality" ng-model="dynamicLevelData.locality"
       ng-click="getLevelDataValue(dynamicLevelData.locality,'locality')">Locality
   <input type="checkbox" value="city" ng-model="dynamicLevelData.city"
       ng-click="getLevelDataValue(dynamicLevelData.city,'city')">City
 </div>
 <div class="row">
-  <span> Level :</span>
+  <span class="col-md-3"></span>
   <input type="checkbox" value="weekday" ng-model="dynamicLevelData.weekday"
       ng-click="getLevelDataValue(dynamicLevelData.weekday,'weekday')">Weekday
   <input type="checkbox" value="phase" ng-model="dynamicLevelData.phase"
       ng-click="getLevelDataValue(dynamicLevelData.phase,'phase')">Phase
 </div>
 <div class="row">
-  <span> Level :</span>
+  <span class="col-md-3"></span>
   <input type="checkbox" value="flat_count" ng-model="dynamicLevelData.flat_count"
       ng-click="getLevelDataValue(dynamicLevelData.flat_count,'flat_count')">Flat Count
   <input type="checkbox" value="qualitytype" ng-model="dynamicLevelData.qualitytype"
       ng-click="getLevelDataValue(dynamicLevelData.qualitytype,'qualitytype')">Society Quality Type
 </div>
+<br />
 <div class="row">
-  <span>Sub Level :</span>
+  <span class="col-md-3" style="color:blue;font-weight:bold">Sub Level :</span>
   <input type="checkbox" value="phase" ng-model="dynamicSubLevelData.phase"
       ng-click="getSubLevelDataValue(dynamicSubLevelData.phase,'phase')">Phase
   <input type="checkbox" value="phase" ng-model="dynamicSubLevelData.day"
       ng-click="getSubLevelDataValue(dynamicSubLevelData.day,'day')">Day
 </div>
+<br />
 <div class="row">
-  <span>Raw Data :</span>
+  <span class="col-md-3" style="color:blue;font-weight:bold">Raw Data :</span>
   <input type="checkbox"  value="lead" ng-model="dynamicRawData.lead"
       ng-click="getRawDataValue(dynamicRawData.lead,'lead')"> Lead
   <input type="checkbox"  value="hot_lead" ng-model="dynamicRawData.hot_lead"
@@ -3514,36 +3543,66 @@
       ng-click="getRawDataValue(dynamicRawData.flat,'flat')"> Flat
   <input type="checkbox"  value="cost" ng-model="dynamicRawData.cost"
       ng-click="getRawDataValue(dynamicRawData.cost,'cost')"> Cost
-</div></br>
+</div>
+</div>
+</br>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class="col-md-3 panel-heading content-title" style="color:#fff;">
+  <div class="row" style="vertical-align:middle">
+    Data Metrics
+  </div></br>
+</div>
+<div class="col-md-8 panel panel-default pull-right" style="color:#000;">
 <div class="row">
-  <span>Metrics :</span>
-</div></br>
+  <span class="col-md-2" style="color:blue;font-weight:bold">Metric :</span>
 <div class="row">
-  <select ng-model="metricsData.firstValue">
-    <option value="{{$index+1}}" ng-repeat="value in dynamicData.raw_data">{{value}}</option> Select Value
+  <select ng-model="metricsData.firstValue" class="form-control" style="width:170px;display: inline-block">
+    <option value="">Select Value</option>
+    <option value="{{$index+1}}" ng-repeat="value in dynamicData.raw_data">{{value}}</option>
   </select>
   {{values}}
-  <select ng-model="metricsData.secondValue">
+  <select ng-model="metricsData.secondValue" class="form-control" style="width:170px;display: inline-block">
+    <option value="">Select Value</option>
     <option value="{{$index+1}}" ng-repeat="value in dynamicData.raw_data">{{value}}</option> Select Value
   </select>
-  <select ng-model="metricsData.operator">
+  <select ng-model="metricsData.operator" class="form-control" style="width:170px;display: inline-block">
+    <option value="">Select Value</option>
     <option value="/">/</option>
     <option value="*">*</option>
   </select>
 </div>
+</div>
+<br />
 <div class="row">
-  <span>custom :</span>
-  <input type="text" ng-model="metricsData.firstValue">
-  <input type="text" ng-model="metricsData.secondValue">
-  <select ng-model="metricsData.operator">
+  <span class="col-md-2" style="color:blue;font-weight:bold">custom :</span>
+  <input type="text" ng-model="metricsData.firstValue" class="form-control" style="width:120px;display: inline-block">
+  <input type="text" ng-model="metricsData.secondValue" class="form-control" style="width:120px;display: inline-block">
+  <select ng-model="metricsData.operator" class="form-control" style="width:100px;display: inline-block">
     <option value="/">/</option>
     <option value="*">*</option>
   </select>
   <button class="btn btn-danger" ng-click="addMetrics()">Add</button>
+  <button class="btn btn-primary" ng-click="getDynamicGraphData()">Submit</button>
+  <br /><br /><br />
   <div class="row">
-    <span ng-repeat="value in dynamicData.metrics">{{value}}
+    <span></span>
+    <div class="col-md-3" ng-repeat="value in dynamicData.metrics">{{value}}
       <button class="btn btn-danger" ng-click="removeMetrics($index)">-</button>
-    </span>
+    </div>
   </div>
 </div>
 <!-- <div class="row">
@@ -3551,9 +3610,9 @@
   <input type="radio" value="campaign" ng-model="xValues"> Campaign
   <input type="radio" value="supplier" ng-model="xValues"> Supplier
 </div> -->
-<div class="row">
-  <button class="btn btn-submit" ng-click="getDynamicGraphData()">Submit</button>
+
 </div>
+
 <div class="col-md-12">
   <nvd3 options="stackedBarChartForDynamic" data="stackedBarChartDynamicData"></nvd3>
 </div>
