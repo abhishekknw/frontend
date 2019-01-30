@@ -1944,14 +1944,30 @@ var formatThreeWeeksSummary = function(data,key){
        selectionLimit: 4,
        showCheckAll : true,
        scrollableHeight: '300px', scrollable: true};
+   $scope.settingsForDynamicGraph = { enableSearch: true,
+       keyboardControls: true ,idProp : "{{option.campaign_id}}",
+       template: '{{option.name}}',
+       showCheckAll : true,
+       scrollableHeight: '300px', scrollable: true};
+   $scope.settingsForDynamicGraphCity = { enableSearch: true,
+       keyboardControls: true ,idProp : "id",
+       template: '{{option.name}}', smartButtonTextConverter(skip, option) { return option; },
+       showCheckAll : true,
+       scrollableHeight: '300px', scrollable: true};
 
  $scope.selected_baselines_customTexts = {buttonDefaultText: 'Select Campaigns'};
+ $scope.selected_baselines_customTexts_city = {buttonDefaultText: 'Select Cities'};
 
    $scope.events = {
 
    onItemSelect : function(item){
    }
  }
+ $scope.eventsForDynamicGraphCampaign = {
+
+   onItemSelect : function(item){
+   }
+}
 
     $scope.compCampaigns = {
       campaigns : {
@@ -2564,6 +2580,7 @@ $scope.viewCampaignLeads = function(value){
     $scope.AllCampaignFlatCount = 0;
     console.log(response);
     $scope.allCampaignDetailsData = response.data.data;
+    $scope.dynamicValues = $scope.allCampaignDetailsData;
     console.log($scope.allCampaignDetailsData);
     $scope.showTableForAllCampaignDisplay = false;
 
@@ -3574,9 +3591,158 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
     $scope.lineChartForLeadsDistributedGraphs = false;
     $scope.lineChartForHotLeadsDistributedGraphs = false;
   }
+
+  $scope.dynamicData = {
+    'data_scope' : {
+      '1' : {
+        'values' : {}
+      },
+    },
+    'data_point' : {
+      'level' : [],
+    },
+    'raw_data' : [],
+    'metrics' : []
+  }
+  $scope.myModel = [];
+  $scope.myModel1 = [];
+
+  $scope.getLevelValues = function(value){
+    console.log(value);
+    $scope.dynamicValues = [];
+    $scope.myModel = [];
+    if(value == 'campaign'){
+        $scope.getCampaigns();
+    }
+    if(value == 'city'){
+      $scope.dynamicValues = [
+        {id: 1, name: 'Mumbai'},
+        {id: 2, name: 'Delhi'},
+        {id: 3, name: 'Bangalore'},
+        {id: 4, name: 'Hyderabad'},
+        {id: 5, name: 'Chennai'},
+      ]
+    }
+
+  }
+  $scope.getRawDataValue = function(value,type){
+    console.log(value,type);
+    if(value){
+      $scope.dynamicData.raw_data.push(type);
+    }else {
+      var index = $scope.dynamicData.raw_data.indexOf(type);
+      if (index > -1) {
+        $scope.dynamicData.raw_data.splice(index, 1);
+      }
+    }
+    console.log($scope.dynamicData);
+  }
+  $scope.metricsData = {};
+  $scope.addMetrics = function(){
+    if($scope.metricsData){
+        var data = [$scope.metricsData.firstValue, $scope.metricsData.secondValue, $scope.metricsData.operator];
+        console.log(data);
+        $scope.dynamicData.metrics.push(data);
+    }
+    console.log($scope.dynamicData);
+  }
+  $scope.removeMetrics = function(index){
+    $scope.dynamicData.metrics.splice($index,1);
+  }
+
+  $scope.getDynamicGraphData = function(){
+    console.log($scope.myModel);
+    if($scope.myModel.length){
+      console.log($scope.myModel);
+      $scope.dynamicData.data_scope['1'].values['exact'] = [];
+      angular.forEach($scope.myModel, function(data){
+        if($scope.dynamicData.data_scope['1'].level == 'campaign')
+          $scope.dynamicData.data_scope['1'].values['exact'].push(data.campaign_id);
+        else if ($scope.dynamicData.data_scope['1'].level == 'city') {
+          console.log(data);
+          $scope.dynamicData.data_scope['1'].values['exact'].push(data.name);
+        }
+      })
+    }
+    // $scope.dynamicData.data_scope['1'].values['exact'] = $scope.myModel;
+    if($scope.dynamicData.data_scope['1'].values['exact'].length){
+      console.log($scope.dynamicData);
+      DashboardService.getDistributionGraphsStatics($scope.dynamicData)
+      .then(function onSuccess(response){
+        console.log(response);
+        $scope.stackedBarChartForDynamic = angular.copy(stackedBarChart);
+        $scope.stackedBarChartDynamicData = formatDynamicData(response.data.data);
+        console.log($scope.stackedBarChartDynamicData);
+      }).catch(function onError(response){
+        console.log(response);
+      })
+    }
+
+  }
+
+  $scope.getLevelDataValue = function(value,type){
+    console.log($scope.myModel);
+    if(value){
+      $scope.dynamicData.data_point['level'].push(type);
+    }else {
+      var index = $scope.dynamicData.data_point['level'].indexOf(type);
+      if (index > -1) {
+        $scope.dynamicData.data_point['level'].splice(index, 1);
+      }
+    }
+    console.log($scope.dynamicData);
+  }
+
+  $scope.getSubLevelDataValue = function(value, type){
+    if(!$scope.dynamicData.data_point.hasOwnProperty('sublevel')){
+      $scope.dynamicData.data_point['sublevel'] = [];
+    }
+    if(value){
+      $scope.dynamicData.data_point['sublevel'].push(type);
+    }else {
+      var index = $scope.dynamicData.data_point['sublevel'].indexOf(type);
+      if (index > -1) {
+        $scope.dynamicData.data_point['sublevel'].splice(index, 1);
+      }
+    }
+  }
+var yValues = ['cost/lead','cost/hot_lead','lead','hot_lead'];
+var xValues = ['campaign'];
+  var formatDynamicData = function(data){
+    console.log(data);
+    var values1 = {};
+    var labels = [];
+    var finalData = [];
+    // var values2 = [];
+    angular.forEach(data.lower_group_data, function(data,key){
+      angular.forEach(yValues, function(itemKey,index,item){
+        console.log(itemKey,index,item);
+        if(!values1.hasOwnProperty(itemKey)){
+            values1[itemKey] = [];
+        }
+        var temp = {
+          x: data['campaign'],
+          y: data[itemKey]
+        }
+        values1[itemKey].push(temp);
+      })
+      angular.forEach(xValues, function(value){
+        labels.push(data[value]);
+      })
+    })
+    angular.forEach(yValues, function(itemKey){
+      var temp_data = {
+        key : itemKey,
+        values : values1[itemKey]
+      }
+      finalData.push(temp_data);
+    })
+    console.log(finalData);
+    return finalData;
+  }
+
+
 })
-
-
 })();
 app.factory('Excel',function($window){
         var uri='data:application/vnd.ms-excel;base64,',
