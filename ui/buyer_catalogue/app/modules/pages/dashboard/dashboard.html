@@ -1520,7 +1520,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr ng-repeat="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort" ng-if="campaign.total_leads">
+                          <tr dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index ">
                             <td>{{$index + 1}}</td>
                             <td style="width:200px;" class="col-md-2">{{campaign.name}}</td>
                             <td>{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
@@ -1543,12 +1543,13 @@
 
                         </tbody>
                       </table>
-                      <div data-pagination="" data-num-pages="numOfPages()"
-                      data-current-page="curPage" data-max-size="maxSize"
-                      data-boundary-links="true"></div>
+                      <div style="text-align:center">
+                      <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ></dir-pagination-controls>
+                      </div>
+
                     </div>
                   </div>
-                    <div class="campaigndetailtable" ng-if="!showCampaigns">
+                    <div class="viewLeadstable" ng-if="!showCampaigns">
                       <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button>
                     </br><br>
                       <input type="text" class="form-control" ng-model="searchData" placeholder="search">
@@ -1565,15 +1566,21 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr ng-repeat="lead in selectedCampaignLeads.values | filter : searchData | filter : Code">
+                            <tr dir-paginate="lead in selectedCampaignLeads.values | filter : searchData | filter : Code | itemsPerPage:20 track by $index">
                               <td>{{$index + 1}}</td>
                               <td ng-repeat="alias in lead">{{alias.value}}</td>
                             </tr>
                           </tbody>
                         </table>
-                        <button class="btn btn-danger" ng-click="getPrintLeadsInExcelData(campaignIdForLeads)" data-target="#printLeadsInExcelModal" data-toggle="modal">Print Leads In Excel</button>
                       </div>
                     </div>
+                    <br /><br />
+                    <div style="text-align:center">
+                    <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ></dir-pagination-controls>
+                    </div>
+                    <br /> <br />
+                    <button class="btn btn-danger" ng-click="getPrintLeadsInExcelData(campaignIdForLeads)" data-target="#printLeadsInExcelModal" data-toggle="modal">Print Leads In Excel</button>
+                  
                   </div>
                 </uib-tab>
 

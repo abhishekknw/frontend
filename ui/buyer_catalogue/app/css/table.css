@@ -149,6 +149,7 @@ input.search-input {
 
 .pagination > li > a, .pagination > li > span {
   background: transparent;
+  background-color: #8e2321;
 }
 
 .pagination > li:first-child > a, .pagination > li:first-child > span {
@@ -318,16 +319,17 @@ th {
 .pagination > .active > span:hover,
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
-  background-color: #209e91;
   border-color: #ffffff;
+  background-color: rgb(224, 115, 113);
+  color: #000000;
 }
 
 .pagination > li > a:hover,
 .pagination > li > span:hover,
 .pagination > li > a:focus,
 .pagination > li > span:focus {
-  background-color: rgba(0, 0, 0, 0.2);
-  color: #ffffff;
+  background-color: rgb(224, 115, 113);
+  color: #000000;
 }
 
 .editable-buttons .btn-with-icon i {

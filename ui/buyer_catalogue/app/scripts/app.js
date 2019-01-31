@@ -62,6 +62,7 @@ angular
     'AngularPrint',
     'checklist-model',
     'btorfs.multiselect',
+    'angularUtils.directives.dirPagination',
   ])
   .config(function ($routeProvider, $stateProvider, $urlRouterProvider, $httpProvider, $qProvider, $locationProvider,cfpLoadingBarProvider) {
       $stateProvider
