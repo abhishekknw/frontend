@@ -613,7 +613,6 @@ color: #ffffff !important;
   overflow-x: hidden;
 }
 
-
 .campaigndetailtable table tfoot {
   /* background: #d9534f;
   color: white; */
@@ -669,6 +668,86 @@ color: #ffffff !important;
 .campaigndetailtable table tfoot tr td:nth-child(2) {
   text-align: center;
 }
+
+
+
+.viewLeadstable {}
+
+.viewLeadstable table thead tr th {
+  background:#8e1921;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  vertical-align: middle;
+  width: 100px;
+  white-space: normal !important;
+}
+
+.viewLeadstable table tbody {
+
+  display: block;
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.viewLeadstable table tfoot {
+  /* background: #d9534f;
+  color: white; */
+  display: block;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.viewLeadstable table thead,
+.viewLeadstable table tbody tr {
+  /* border: 1px solid black; */
+  /* border-collapse: separate; */
+  /* border-spacing: 4px;   */
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+
+.viewLeadstable table thead,
+.viewLeadstable table tfoot tr {
+  /* background: #d9534f;
+  color: white; */
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.viewLeadstable table tbody tr td {
+
+  text-align: center;
+  width: 100px;
+}
+
+
+.viewLeadstable table tfoot tr td {
+  background: #d9534f;
+  color: #ffffff !important;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  width: 100px;
+}
+
+.viewLeadstable table thead tr th:nth-child(2) {
+  text-align: center;
+}
+
+.viewLeadstable table tbody tr td:nth-child(2) {
+  text-align: center;
+}
+
+.viewLeadstable table tfoot tr td:nth-child(2) {
+  text-align: center;
+}
+
 .CampaignDetails{
   height: 60px !important;
 }
