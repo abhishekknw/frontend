@@ -1881,7 +1881,7 @@
                                     All Campaigns
                               </div>
                             </div> -->
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                               <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.overall.status)">
                                 <div class="button" type="button" ng-click="getCampaignWiseSummary()">
                                   <div class="panel-heading">
@@ -1897,7 +1897,7 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                               <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.overall.status)">
                                 <div class="button" type="button" ng-click="getDynamicGraphsStatics()">
                                   <div class="panel-heading">
@@ -1905,7 +1905,7 @@
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                            </div> -->
                           </div>
                             <br /><br /><br />
                             <br />
@@ -3396,7 +3396,7 @@
 <!-- < End Overall Campaign Wise Summary> -->
 
 <!-- dynamic Graphs -->
-<div class="col-lg-12" ng-if="dynamicGraphsUI" style="margin-top:20px;color:#000;">
+<!-- <div class="col-lg-12" ng-if="dynamicGraphsUI" style="margin-top:20px;color:#000;">
   <div class="panel panel-primary">
     <div class="panel-heading content-title">
       <label for="Location">Dynamic Graphs</label>
@@ -3671,8 +3671,7 @@ Dynamic Graph
    </div>
   <nvd3 options="stackedBarChartForDynamic" data="stackedBarChartDynamicData"></nvd3>
 </div>
-<!-- End Dynamic graphs -->
-
+</div> -->
                         <!--START : COMPARE CAMPAIGNS LIST  -->
                           <div class="col-md-12" ng-show="campaignStatus.compare_campaigns.value" print-remove>
                             <br />
