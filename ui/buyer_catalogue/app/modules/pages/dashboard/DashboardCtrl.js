@@ -1223,8 +1223,11 @@
            };
        // START : service call to get suppliers as campaign status
        $scope.getSuppliersOfCampaignWithStatus = function(campaign){
+         console.log(campaign);
          getCampaignInventoryActivitydetails(campaign.campaign);
          cfpLoadingBar.start();
+         $scope.principalVendor = campaign.principal_vendor;
+         $scope.campaignOwner = campaign.organisation;
          $scope.campaignTabPropsalName = campaign.name;
          $scope.campaignLabel = true;
          $scope.getCampaignFilters(campaign.campaign);
@@ -1537,8 +1540,9 @@
        })
      })
    }
-   $scope.getDatewiseSuppliersInventory = function(proposalId, proposalName){
+   $scope.getDatewiseSuppliersInventory = function(item,proposalId, proposalName){
      cfpLoadingBar.start();
+     console.log(item);
      $scope.dateWiseSuppliers = [];
      $scope.selectedProposalname = proposalName;
      $scope.proposalId= proposalId;
@@ -1547,6 +1551,7 @@
        console.log(response);
        cfpLoadingBar.complete();
        angular.forEach(response.data.data, function(data){
+         console.log(data);
          $scope.dateWiseSuppliers.push(data);
        })
      }).catch(function onError(response){
@@ -2531,6 +2536,8 @@ $scope.getBookingCampaigns = function(campaign){
 
   $scope.proposalId = campaign.campaign;
   console.log(campaign);
+  $scope.campaignOwner = campaign.organisation;
+  $scope.principalVendor = campaign.principal_vendor;
   $scope.selectedBookingCampaignName = campaign.name;
   DashboardService.getBookingCampaigns(campaign.campaign)
   .then(function onSuccess(response){
