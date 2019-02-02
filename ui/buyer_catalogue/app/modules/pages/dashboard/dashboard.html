@@ -411,14 +411,13 @@
 
                                     </div>
                                 </div>
-                                <div class="panel panel-default" >
-                                    <div class="panel-heading">
+                                <div class="panel panel-default">
+                                    <div class="row" style="width:100%;margin-left:0px;">
                                         <h4 class="panel-title">
-                                          <select class="" ng-model="selectedVendor.name" ng-change="getCampaigns()">
+                                          <select class="form-control" ng-model="selectedVendor.name" ng-change="getCampaignsByVendor()">
+                                            <option value="">Select Vendor</option>
                                             <option value="{{vendor.vendor_id}}" ng-repeat="vendor in vendorsData">{{vendor.principal_vendor}}</option>
                                           </select>
-                                          <!-- <span style="color:red;width:100%;" ng-dropdown-multiselect="" options="vendorsData" class="col-md-6"  extra-settings="settingsForDynamicGraph"
-                                          selected-model="myModel" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span> -->
                                         </h4>
                                     </div>
                                     <div class="animate-show">

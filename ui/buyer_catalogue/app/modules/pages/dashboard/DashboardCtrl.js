@@ -400,8 +400,10 @@
           })
         }
 
-
-        $scope.getCampaigns = function(date){
+        $scope.getCampaignsByVendor = function(){
+          $scope.getCampaigns(undefined,$scope.selectedVendor.name)
+        }
+        $scope.getCampaigns = function(date,vendor){
           cfpLoadingBar.start();
             $scope.showSupplierTypeCountChart = false;
             $scope.selectedBookingCampaignName = undefined;
@@ -409,6 +411,9 @@
             date = new Date();
           date = commonDataShare.formatDate(date);
           date = date + ' 00:00:00';
+          if(!vendor){
+              $scope.selectedVendor = {};
+          }
           $scope.showCampaignGraph = true;
           $scope.campaignLabel = false;
           $scope.showLeadsDetails = false;
