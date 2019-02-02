@@ -421,7 +421,7 @@
           $scope.showAllCampaignDisplay = false;
           $scope.allCampaignsLeadsData = {};
           $scope.viewCampaignLeads(true);
-          DashboardService.getCampaigns(orgId, category, date)
+          DashboardService.getCampaigns(orgId, category, date,$scope.selectedVendor.name)
           .then(function onSuccess(response){
             console.log(response);
             cfpLoadingBar.complete();
