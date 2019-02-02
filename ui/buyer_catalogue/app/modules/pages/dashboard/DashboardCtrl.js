@@ -19,6 +19,7 @@
  $scope.userInfo = $rootScope.globals.userInfo;
  console.log($scope.userInfo);
  $scope.dateRangeModel = {};
+ $scope.selectedVendor = {};
  $scope.emailModel = {};
  console.log($scope.userInfo);
  $scope.invNameToCode = {
@@ -422,16 +423,21 @@
             $scope.searchSelectAllModel = [];
             $scope.showSingleCampaignChart = false;
             $scope.campaignData = response.data.data;
-            console.log($scope.campaignData);
             $scope.campaignAllStatusTypeData = response.data.data;
             console.log($scope.campaignData);
             $scope.mergedarray = [];
-
             angular.forEach($scope.campaignData, function(data){
               angular.forEach(data,function(campaign){
                   $scope.mergedarray.push(campaign);
               })
             })
+            $scope.vendorsData = {};
+            angular.forEach($scope.mergedarray, function(data){
+              if(data.principal_vendor){
+                $scope.vendorsData[data.principal_vendor] = data;
+              }
+            })
+            console.log($scope.vendorsData);
             $scope.campaigns = [$scope.campaignData.ongoing_campaigns.length,$scope.campaignData.completed_campaigns.length,$scope.campaignData.upcoming_campaigns.length, $scope.campaignData.onhold_campaigns.length];
             console.log($scope.campaignStatus);
               $scope.campaignChartdata = [
@@ -1566,6 +1572,8 @@
      $scope.CampaignLeadsName = campaign.name;
      $scope.principalVendor = campaign.principal_vendor;
      $scope.campaignOwner = campaign.organisation;
+
+
      $scope.LeadsByCampaign = {};
      $scope.showReportBtn = false;
      // $scope.getSortedLeadsByCampaign();
@@ -1960,7 +1968,11 @@ var formatThreeWeeksSummary = function(data,key){
        template: '{{option.name}}', smartButtonTextConverter(skip, option) { return option; },
        showCheckAll : true,
        scrollableHeight: '300px', scrollable: true};
-
+       $scope.settingsForVendors = { enableSearch: true,
+           keyboardControls: true ,idProp : "{{option}}",
+           template: '{{option}}',
+           showCheckAll : true,
+           scrollableHeight: '300px', scrollable: true};
  $scope.selected_baselines_customTexts = {buttonDefaultText: 'Select Campaigns'};
  $scope.selected_baselines_customTexts_city = {buttonDefaultText: 'Select Cities'};
 
@@ -2580,7 +2592,7 @@ $scope.checkNan = function(number){
 }
 $scope.viewCampaignLeads = function(value){
   cfpLoadingBar.start();
-  DashboardService.viewCampaignLeads()
+  DashboardService.viewCampaignLeads($scope.selectedVendor.name)
   .then(function onSuccess(response){
     $scope.AllCampaignTotalLeadsCount = 0;
     $scope.AllCampaignHotLeadsCount = 0;

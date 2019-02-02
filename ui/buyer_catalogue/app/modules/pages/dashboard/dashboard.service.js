@@ -111,8 +111,8 @@
         return machadaloHttp.get(url);
     }
 
-    DashboardService.viewCampaignLeads = function(){
-        var url = url_root  + "leads/summary/";
+    DashboardService.viewCampaignLeads = function(vendor){
+        var url = url_root  + "leads/summary/?vendor=" + vendor;
         return machadaloHttp.get(url);
     }
 
