@@ -20,6 +20,7 @@
  console.log($scope.userInfo);
  $scope.dateRangeModel = {};
  $scope.selectedVendor = {};
+ $scope.vendorsData = {};
  $scope.emailModel = {};
  console.log($scope.userInfo);
  $scope.invNameToCode = {
@@ -439,7 +440,6 @@
                   $scope.mergedarray.push(campaign);
               })
             })
-            $scope.vendorsData = {};
             angular.forEach($scope.mergedarray, function(data){
               if(data.principal_vendor){
                 $scope.vendorsData[data.principal_vendor] = data;
@@ -2184,7 +2184,7 @@ var formatThreeWeeksSummary = function(data,key){
       console.log($scope.campaignDetailsData);
       $scope.showTableForAllCampaignDisplay = true;
       $scope.$apply();
-      
+
     }
 
     $scope.getSupplierAndInvData = function(data){
