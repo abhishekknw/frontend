@@ -177,6 +177,7 @@
             $scope.count = 0;
             $scope.invActDateList = [];
             $scope.inventoryActivityCountData = response.data.data;
+            $scope.showTableForAllCampaignDisplay = false;
             angular.forEach(response.data.data, function(data,key){
               $scope.isPanelOpen = !$scope.isPanelOpen;
               $scope.inventoryActivityCountData[key] = sortObject(data);
@@ -407,6 +408,8 @@
           cfpLoadingBar.start();
             $scope.showSupplierTypeCountChart = false;
             $scope.selectedBookingCampaignName = undefined;
+            $scope.showTableForAllCampaignDisplay = false;
+
           if(!date)
             date = new Date();
           date = commonDataShare.formatDate(date);
@@ -1269,7 +1272,7 @@
            $scope.showCampaignInvTable = false;
            $scope.showSupplierInvTable = false;
            $scope.showSingleCampaignChart = true;
-
+           $scope.showTableForAllCampaignDisplay = false;
            $scope.campaignStatusData = response.data.data;
            $scope.campaignSupplierAndInvData = response.data.data;
            $scope.showSupplierSocietywiseInvTable = false;
@@ -2180,6 +2183,8 @@ var formatThreeWeeksSummary = function(data,key){
       $scope.campaignDetailsData =$scope.campaignAllStatusTypeData[data.status];
       console.log($scope.campaignDetailsData);
       $scope.showTableForAllCampaignDisplay = true;
+      $scope.$apply();
+      
     }
 
     $scope.getSupplierAndInvData = function(data){
@@ -2556,6 +2561,7 @@ $scope.getBookingCampaigns = function(campaign){
   $scope.campaignOwner = campaign.organisation;
   $scope.principalVendor = campaign.principal_vendor;
   $scope.selectedBookingCampaignName = campaign.name;
+  $scope.showTableForAllCampaignDisplay = false;
   DashboardService.getBookingCampaigns(campaign.campaign)
   .then(function onSuccess(response){
     console.log(response);
