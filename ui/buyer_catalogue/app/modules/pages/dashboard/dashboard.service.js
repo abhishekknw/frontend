@@ -16,7 +16,7 @@
 
     DashboardService.getCampaigns = function(campaignId, category, date,vendor){
         if(vendor){
-          var url = url_base + "campaign-list/" + campaignId + "/?category=" + category + "&date=" +date + "/?vendor=" + vendor;
+          var url = url_base + "campaign-list/" + campaignId + "/?category=" + category + "&date=" +date + "&vendor=" + vendor;
         }else {
           var url = url_base + "campaign-list/" + campaignId + "/?category=" + category + "&date=" +date;
         }
