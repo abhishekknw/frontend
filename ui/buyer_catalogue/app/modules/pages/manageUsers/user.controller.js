@@ -352,7 +352,8 @@ angular.module('machadaloPages')
     //start:get all users list
     var getAllUsers = function(){
       console.log("users calling");
-      userService.getAllUsers()
+      var orgId = $scope.userInfo.profile.organisation.organisation_id;
+      userService.getAllUsers(orgId)
       .then(function onSuccess(response){
         console.log(response);
         $scope.usersList = response.data.data;
