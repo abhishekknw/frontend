@@ -21,6 +21,7 @@
  $scope.dateRangeModel = {};
  $scope.selectedVendor = {};
  $scope.emailModel = {};
+ $scope.vendorDataMap = {};
  console.log($scope.userInfo);
  $scope.invNameToCode = {
    'POSTER' : 'PO',
@@ -1984,6 +1985,7 @@ var formatThreeWeeksSummary = function(data,key){
  $scope.selected_baselines_customTexts = {buttonDefaultText: 'Select Campaigns'};
  $scope.selected_baselines_customTexts_city = {buttonDefaultText: 'Select Cities'};
 
+
    $scope.events = {
 
    onItemSelect : function(item){
@@ -2184,7 +2186,7 @@ var formatThreeWeeksSummary = function(data,key){
       console.log($scope.campaignDetailsData);
       $scope.showTableForAllCampaignDisplay = true;
       $scope.$apply();
-      
+
     }
 
     $scope.getSupplierAndInvData = function(data){
@@ -3504,8 +3506,10 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
 
     var formatLineChartForLeadsDistributedGraph = function(data){
         var values1 = [];
+        var values2 = [];
         var index = 0;
         $scope.x_fre_leads = [];
+        $scope.x_fre_hot_leads = [];
       angular.forEach(data.higher_group_data, function(data,key){
         $scope.standardDeviationLeads = data['stdev_lead/flat*100'];
         $scope.standardDeviationHotLeads = data['stdev_hot_lead/flat*100'];
@@ -3522,17 +3526,41 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
              $scope.x_fre_leads.push(key);
               var value1 =
                  { x : index , y : data.mode};
-                index++;
+
               values1.push(value1);
+              var value2 =
+                 { x : index , y : data.mode + 1};
+                index++;
+              values2.push(value2);
             })
+            // angular.forEach(data['freq_dist_hot_lead/flat*100'], function(data,key){
+            //   $scope.distributedGraphValue = data;
+            //   console.log($scope.distributedGraphValue);
+            //   console.log(key);
+            //   // $scope.showPerfMetrics = $scope.perfMetrics.leads;
+            //   // $scope.showPerfMetrics = $scope.perfMetrics.distributedstatisticsgraphs;
+            //
+            //      $scope.x_fre_hot_leads.push(key);
+            //       var value2 =
+            //          { x : index , y : data.mode};
+            //         index++;
+            //       values2.push(value2);
+            //     })
+
 
       })
+
       var temp_data = [
         {
           key : "Mode",
           color : constants.colorKey1,
           values : values1
         }
+        // {
+        //   key : "Hot Leads (Mode)",
+        //   color : constants.colorKey2,
+        //   values : values2
+        // }
       ];
 
       return temp_data;
@@ -3599,24 +3627,24 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
         console.log(response);
       })
     }
-// END
 
-// $scope.rotateImage=function(id){
-//   console.log("hello",id);
-//   var id = '#img_test' + id;
-//   index++;
-//   if(index%4 == 0){
-//     $(id).toggleClass('rotateImage0');
-//   }else if(index%4 == 1){
-//     $(id).toggleClass('rotateImage90');
-//   }else if (index%4 == 2) {
-//     $(id).toggleClass('rotateImage180');
-//   }else if (index%4 == 3) {
-//     $(id).toggleClass('rotateImage270');
-//   }
-//
-//
-// }
+$scope.rotateImage=function(id){
+  console.log("hello",id);
+  var index = 0;
+  var id = '#img_test' + id;
+  index = index +1;
+  if(index%4 == 0){
+    $(id).toggleClass('rotateImage0');
+  }else if(index%4 == 1){
+    $(id).toggleClass('rotateImage90');
+  }else if (index%4 == 2) {
+    $(id).toggleClass('rotateImage180');
+  }else if (index%4 == 3) {
+    $(id).toggleClass('rotateImage270');
+  }
+
+
+}
 
 
   $scope.getDynamicGraphsStatics = function(){
@@ -3662,7 +3690,6 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
         {id: 5, name: 'Chennai'},
       ]
     }
-
   }
   $scope.getRawDataValue = function(value,type){
     console.log(value,type);
@@ -3805,6 +3832,9 @@ $scope.xValues = {};
     $scope.dynamicData.data_point.sublevel = undefined;
   }
 
+
+
+  // END
 
 })
 })();

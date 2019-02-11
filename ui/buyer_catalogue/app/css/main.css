@@ -953,7 +953,7 @@ border-radius: 10px;
   color: #B20000 !important;
 }
 .tick line { display: none; }
-/*
+
 
 .rotateImage0 {
   transform: rotate(0deg);
@@ -961,10 +961,14 @@ border-radius: 10px;
 
 .rotateImage90 {
   transform: rotate(90deg);
+  width: 600px !important;
+  height: 600px !important;
+  margin-top: -30px !important;
 }
 .rotateImage180 {
   transform: rotate(180deg);
 }
 .rotateImage270 {
   transform: rotate(270deg);
-} */
+  
+}

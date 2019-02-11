@@ -3507,7 +3507,7 @@
     <input type="radio" value="supplier" ng-model="dynamicData.data_scope['1'].level">Supplier
     <input type="radio" value="campaign" ng-model="dynamicData.data_scope['1'].level"
           ng-click="getLevelValues(dynamicData.data_scope['1'].level)">Campaign
-  </div>
+    </div>
   <div class="row" ng-if="dynamicData.data_scope['1'].category == 'geographical'">
     <span class="col-md-3" style="color:blue;font-weight:bold">Level :</span>
     <input type="radio" value="city" ng-model="dynamicData.data_scope['1'].level"
@@ -3540,7 +3540,7 @@
       <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
       selected-model="myModel" translation-texts="selected_baselines_customTexts_city" events="events"></span>
     </div>
-  </div>
+    </div>
   </div>
   <br />
   <div class="row">
@@ -4137,15 +4137,15 @@ Dynamic Graph
 
                    <div class="item" ng-class="{active:!$index}" ng-repeat="image in imageUrlList">
                      <div class="row">
-                        <img ng-src="{{image.image_url}}"  style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
+                        <img ng-src="{{image.image_url}}" id="img_test{{$index}}"  style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
                        <div class="row" style="margin-left:20px;">
                          Comment : {{image.comment}} </br>
                          Distance : {{image.distance|limitTo:10}} mtrs, ({{image.distance/1000|limitTo:10}} kms) </br>
                          Date and Time : {{image.timestamp|date:'medium'}}
                        </div> <br />
                       </div>
-                      <!-- id="img_test{{$index}}" -->
-                      <!-- <input type="button" class="btn btn-danger pull-middle" ng-click="rotateImage($index)" value="Rotate Image"/> -->
+
+                      <input type="button" class="btn btn-danger pull-middle" ng-click="rotateImage($index)" value="Rotate Image"/>
 
                    </div>
 
