@@ -63,6 +63,11 @@ angular.module('catalogueApp')
       return machadaloHttp.get(url);
     }
 
+    auditReleasePlanService.getOrganisationsForAssignment = function(){
+      var url = url_base  + "organisation/get_organisations_for_assignment/";
+      return machadaloHttp.get(url);
+    }
+
    return auditReleasePlanService;
   return 0;
 }]);

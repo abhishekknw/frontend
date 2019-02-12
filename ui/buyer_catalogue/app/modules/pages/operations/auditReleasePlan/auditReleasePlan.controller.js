@@ -62,12 +62,12 @@ angular.module('catalogueApp')
       $scope.auditDates = [];
       function init(){
         getCampaignReleaseDetails();
-        getUsersList();
+        // getUsersList();
         $scope.getPhases();
       }
       //get user list
-      var getUsersList = function(){
-        commonDataShare.getUsersList()
+      $scope.getUsersList = function(orgId){
+        commonDataShare.getUsersList(orgId)
           .then(function onSuccess(response){
             $scope.userList = response.data.data;
             $scope.usersMapListWithObjects = {};
@@ -318,6 +318,7 @@ angular.module('catalogueApp')
       });
     }
      $scope.getActivityDates = function(supplier){
+        getOrganisationsForAssignment();
        $scope.invActivityData = angular.copy($scope.invActivityData_struct);
        angular.forEach(supplier.shortlisted_inventories, function(inventoryList,inventory){
           for(var i=0; i<inventoryList.detail.length; i++){
@@ -511,7 +512,15 @@ angular.module('catalogueApp')
        console.log(response);
      })
    }
-
+   var getOrganisationsForAssignment = function(){
+     auditReleasePlanService.getOrganisationsForAssignment()
+     .then(function onSuccess(response){
+       console.log(response);
+       $scope.organisationList = response.data.data;
+     }).catch(function onError(response){
+       console.log(response);
+     })
+   }
 
 
 
