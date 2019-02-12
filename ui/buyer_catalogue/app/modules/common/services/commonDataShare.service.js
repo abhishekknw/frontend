@@ -14,8 +14,13 @@ angular.module('catalogueApp')
      alert(msg);
    }
 
-   commonDataShare.getUsersList = function(){
-     var url = url_base  + "get-users-list/";
+   commonDataShare.getUsersList = function(orgId){
+     if(orgId){
+       var url = url_base  + "get-users-list/?org_id=" + orgId;
+     }else {
+        var url = url_base  + "get-users-list/";
+     }
+
      return machadaloHttp.get(url);
    }
 

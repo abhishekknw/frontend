@@ -57,8 +57,8 @@ angular.module('catalogueApp')
     	});
     }
 
-    var getUsersList = function(){
-      commonDataShare.getUsersList()
+    $scope.getUsersList = function(orgId){
+      commonDataShare.getUsersList(orgId)
         .then(function onSuccess(response){
           console.log(response);
       		$scope.userList = response.data.data;
@@ -71,7 +71,7 @@ angular.module('catalogueApp')
     }
     var init = function(){
       getProposalDetails();
-      getUsersList();
+      // getUsersList();
     }
     //Call init function TO Load reuired data initially..
     init();
@@ -138,6 +138,7 @@ angular.module('catalogueApp')
     $scope.convertProposalToCampaign = function(proposal){
       $scope.loadSpinner = false;
       $scope.currentProposal = proposal;
+      getOrganisationsForAssignment();
       opsDashBoardService.convertProposalToCampaign(proposal.proposal.proposal_id, proposal.proposal)
           .then(function onSuccess(response){
             console.log(response);
@@ -202,5 +203,14 @@ angular.module('catalogueApp')
     }
     $scope.goToEditProposalDetails = function(proposalId){
       $location.path("/editProposalDetails/" + proposalId + "/");
+    }
+    var getOrganisationsForAssignment = function(){
+      opsDashBoardService.getOrganisationsForAssignment()
+      .then(function onSuccess(response){
+        console.log(response);
+        $scope.organisationList = response.data.data;
+      }).catch(function onError(response){
+        console.log(response);
+      })
     }
 }]);//Controller function ends here
