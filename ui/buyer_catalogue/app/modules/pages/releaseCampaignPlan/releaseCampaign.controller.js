@@ -277,7 +277,7 @@ $scope.addNewPhase =true;
       $scope.search_status = false;
       console.log($scope.supplier_type_code.code,$scope.search.query);
       if($scope.supplier_type_code.code && $scope.search.query){
-        mapViewService.searchSuppliers($scope.supplier_type_code.code,$scope.search.query)
+        mapViewService.searchSuppliers($scope.supplier_type_code.code,$scope.search.query,$scope.releaseDetails.campaign.principal_vendor)
           .then(function onSuccess(response, status){
             console.log(response);
               $scope.center_index = null;
