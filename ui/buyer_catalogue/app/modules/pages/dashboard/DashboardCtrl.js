@@ -981,7 +981,7 @@
             "margin": {
               "top": 100,
               "right": 20,
-              "bottom": 145,
+              "bottom": 130,
               "left": 140
             },
             "useInteractiveGuideline": true,
@@ -994,7 +994,7 @@
                   tooltipHide: function(e){ console.log("tooltipHide"); }
               },
             "xAxis": {
-              "axisLabel": "Leads % Range Distribution",
+              "axisLabel": "Leads % and Hot Leads % Range Distribution",
               "showMaxMin":false,
               tickFormat : function (d) {
                           return $scope.x_fre_leads[d];
@@ -1006,47 +1006,8 @@
                      "rotateLabels" : -30
             },
             "yAxis": {
-              "axisLabel": "Supplier Count In Leads",
+              "axisLabel": "Mode Count In Leads and Hot Leads",
             }
-          }
-        };
-
-        var lineChartHotLeads = {
-          "chart": {
-            "type": "lineChart",
-            "height": 450,
-            "staggerLabels" :true,
-            "margin": {
-              "top": 100,
-              "right": 20,
-              "bottom": 145,
-              "left": 140
-            },
-            "useInteractiveGuideline": true,
-            x: function(d,i){ return d.x; },
-            y: function(d){ return d.y; },
-            "dispatch": {
-                  stateChange: function(e){ console.log("stateChange"); },
-                  changeState: function(e){ console.log("changeState"); },
-                  tooltipShow: function(e){ console.log("tooltipShow"); },
-                  tooltipHide: function(e){ console.log("tooltipHide"); }
-              },
-            "xAxis": {
-              "axisLabel": "Leads % Range Distribution",
-              "showMaxMin":false,
-              tickFormat : function (d) {
-                console.log($scope.x_fre_hot_leads[d]);
-                          return $scope.x_fre_hot_leads[d];
-                },
-              // tickFormat: function(d){
-              //   console.log($scope.x[d]);
-              //           return $scope.x[d];
-              //       },
-                     "rotateLabels" : -30
-            },
-            "yAxis": {
-            "axisLabel": "Supplier Count In Leads",
-              }
           }
         };
 
@@ -3491,12 +3452,9 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
       .then(function onSuccess(response){
         console.log(response);
         $scope.lineChartLeadsDistributed = angular.copy(lineChartLeads);
-        $scope.lineChartHotLeadsDistributed = angular.copy(lineChartHotLeads);
 
         $scope.lineChartForLeadsDistributedGraphs = formatLineChartForLeadsDistributedGraph(response.data.data);
-        $scope.lineChartForHotLeadsDistributedGraphs = formatLineChartForHotLeadsDistributedGraph(response.data.data);
-        console.log($scope.lineChartForLeadsDistributedGraphs);
-        console.log($scope.lineChartForHotLeadsDistributedGraphs);
+
         $scope.selectAllCampaignLeads = false;
       }).catch(function onError(response){
         console.log(response);
@@ -3509,93 +3467,55 @@ $scope.IsVisible = $scope.IsVisible ? false : true;
         var values2 = [];
         var index = 0;
         $scope.x_fre_leads = [];
-        $scope.x_fre_hot_leads = [];
-      angular.forEach(data.higher_group_data, function(data,key){
-        $scope.standardDeviationLeads = data['stdev_lead/flat*100'];
-        $scope.standardDeviationHotLeads = data['stdev_hot_lead/flat*100'];
-        $scope.varianceLeads = data['variance_lead/flat*100'];
-        $scope.varianceHotLeads = data['variance_hot_lead/flat*100'];
-
-        angular.forEach(data['freq_dist_lead/flat*100'], function(data,key){
-          $scope.distributedGraphValue = data;
-          console.log($scope.distributedGraphValue);
-          console.log(key);
-          // $scope.showPerfMetrics = $scope.perfMetrics.leads;
-          // $scope.showPerfMetrics = $scope.perfMetrics.distributedstatisticsgraphs;
-
-             $scope.x_fre_leads.push(key);
+        $scope.standardDeviationLeads = data.higher_group_data[0]['stdev_lead/flat*100'];
+        $scope.standardDeviationHotLeads = data.higher_group_data[0]['stdev_hot_lead/flat*100'];
+        $scope.varianceLeads = data.higher_group_data[0]['variance_lead/flat*100'];
+        $scope.varianceHotLeads = data.higher_group_data[0]['variance_hot_lead/flat*100'];
+      angular.forEach(data.higher_group_data[0]['freq_dist_lead/flat*100'], function(modeData,key){
+        console.log(modeData,key);
+        $scope.x_fre_leads.push(key);
+            if(modeData.hasOwnProperty('mode')){
               var value1 =
-                 { x : index , y : data.mode};
+                 { x : index , y : modeData.mode};
 
               values1.push(value1);
+            }else {
+                var value1 =
+                   { x : index , y : 0};
+
+                values1.push(value1);
+            }
+            if(data.higher_group_data[0]['freq_dist_hot_lead/flat*100'][key].hasOwnProperty('mode')){
               var value2 =
-                 { x : index , y : data.mode + 1};
-                index++;
+                 { x : index , y : data.higher_group_data[0]['freq_dist_hot_lead/flat*100'][key].mode};
               values2.push(value2);
-            })
-            // angular.forEach(data['freq_dist_hot_lead/flat*100'], function(data,key){
-            //   $scope.distributedGraphValue = data;
-            //   console.log($scope.distributedGraphValue);
-            //   console.log(key);
-            //   // $scope.showPerfMetrics = $scope.perfMetrics.leads;
-            //   // $scope.showPerfMetrics = $scope.perfMetrics.distributedstatisticsgraphs;
-            //
-            //      $scope.x_fre_hot_leads.push(key);
-            //       var value2 =
-            //          { x : index , y : data.mode};
-            //         index++;
-            //       values2.push(value2);
-            //     })
+            }else {
+                var value2 =
+                   { x : index , y : 0};
 
+                values2.push(value2);
+            }
+            index++;
 
       })
+      console.log($scope.x_fre_leads);
 
       var temp_data = [
         {
-          key : "Mode",
+          key : "Leads (Mode)",
           color : constants.colorKey1,
           values : values1
-        }
-        // {
-        //   key : "Hot Leads (Mode)",
-        //   color : constants.colorKey2,
-        //   values : values2
-        // }
-      ];
-
-      return temp_data;
-    }
-
-    var formatLineChartForHotLeadsDistributedGraph = function(data){
-        var values1 = [];
-        var index = 0;
-        $scope.x_fre_hot_leads= [];
-      angular.forEach(data.higher_group_data, function(data,key){
-        angular.forEach(data['freq_dist_hot_lead/flat*100'], function(data,key){
-          $scope.distributedGraphValue = data;
-          console.log($scope.distributedGraphValue);
-          console.log(key);
-          // $scope.showPerfMetrics = $scope.perfMetrics.leads;
-          // $scope.showPerfMetrics = $scope.perfMetrics.distributedstatisticsgraphs;
-
-             $scope.x_fre_hot_leads.push(key);
-              var value1 =
-                 { x : index , y : data.mode};
-                index++;
-              values1.push(value1);
-            })
-
-      })
-      var temp_data = [
+        },
         {
-          key : "Mode",
-          color : constants.colorKey1,
-          values : values1
+          key : "Hot Leads (Mode)",
+          color : constants.colorKey2,
+          values : values2
         }
       ];
 
       return temp_data;
     }
+
 
     $scope.getPrintLeadsInExcelData = function(campaignId){
       var campaignIdForExcel = campaignId;
