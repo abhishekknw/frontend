@@ -1562,6 +1562,8 @@
      }else{
         result = DashboardService.getLeadsByCampaign(campaignId)
      }
+     $scope.getDistributionGraphsStatics();
+
      // DashboardService.getLeadsByCampaign(campaignId)
      result.then(function onSuccess(response){
        console.log(response);
@@ -3427,9 +3429,6 @@ $scope.getCampaignWiseSummary = function(){
 
 
     $scope.getDistributionGraphsStatics = function(){
-      // $scope.IsVisible = false;
-$scope.IsVisible = $scope.IsVisible ? false : true;
-      console.log($scope.campaignIdForPerfMetrics);
       var data =  {
              "data_scope": {"1":{"category": "unordered", "level": "campaign", "match_type": 0,
                  "values": {"exact": [$scope.campaignIdForPerfMetrics]}, "value_type": "campaign"}},

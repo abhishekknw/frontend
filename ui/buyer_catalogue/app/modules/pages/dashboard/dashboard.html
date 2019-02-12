@@ -2792,12 +2792,12 @@
                       <br /><br />
                       <br /><br />
                     <div class="row" ng-if="showPerfMetrics == perfMetrics.leads">
-                      <button type="button" class="col-md-3 btn btn-danger pull-right" name="button" ng-click="getDistributionGraphsStatics()">Click here for Distribution Graphs</button>
+                      <!-- <button type="button" class="col-md-3 btn btn-danger pull-right" name="button" ng-click="getDistributionGraphsStatics()">Click here for Distribution Graphs</button> -->
 
                       <div class="col-md-12" style="margin-top:50px;">
-                        <div class="col-md-12" ng-if="lineChartForLeadsDistributedGraphs.length">
+                        <div class="col-md-12">
                           <div class="panel-heading content-title">
-                              <h4 style="text-align: center">Distributed Leads and Hot Leads Graphs</h4>
+                              <h4 style="text-align: center">Distributed Leads and Hot Leads Graphs of {{CampaignLeadsName}}</h4>
                           </div>
                           <div class="col-md-12" ng-scrollable>
                             <div class="outerdistributed">
@@ -2807,9 +2807,9 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-12" style="margin-top:10px;" ng-if="lineChartForLeadsDistributedGraphs.length">
+                        <div class="col-md-12" style="margin-top:10px;">
                           <div class="panel-heading content-title">
-                              <h4 style="text-align: center">Summary for Distributed Leads and Hot Leads Statistics</h4>
+                              <h4 style="text-align: center">Summary for Distributed Leads and Hot Leads Statistics of {{CampaignLeadsName}}</h4>
                           </div>
                           <table class="table table-striped"  st-table="LeadsByCampaign" st-safe-src="Data">
                             <thead>
