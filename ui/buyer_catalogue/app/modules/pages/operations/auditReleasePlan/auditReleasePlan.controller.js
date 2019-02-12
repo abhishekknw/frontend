@@ -108,17 +108,24 @@ angular.module('catalogueApp')
       auditReleasePlanService.getCampaignReleaseDetails($scope.campaign_id)
       	.then(function onSuccess(response){
           console.log("get values",response);
-      		$scope.releaseDetails = response.data.data;
-          $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
-          console.log(  $scope.Data);
-          setDataToModel($scope.releaseDetails.shortlisted_suppliers);
+          if(response.data.data){
+            $scope.releaseDetails = response.data.data;
+            $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
+            console.log(  $scope.Data);
+            setDataToModel($scope.releaseDetails.shortlisted_suppliers);
 
-          $scope.filteredAssignDatesList = angular.copy($scope.releaseDetails);
-          $scope.loading = response.data;
-          makeAssignDateData($scope.releaseDetails);
+            $scope.filteredAssignDatesList = angular.copy($scope.releaseDetails);
+            $scope.loading = response.data;
+            makeAssignDateData($scope.releaseDetails);
+          }else {
+            swal(constants.name, "You do not have access to Proposal", constants.warning);
+            $scope.loading = response.data;
+          }
+
       	})
       	.catch(function onError(response){
       		console.log("error occured", response);
+          $scope.loading = response.data;
           commonDataShare.showErrorMessage(response);
       	});
       }

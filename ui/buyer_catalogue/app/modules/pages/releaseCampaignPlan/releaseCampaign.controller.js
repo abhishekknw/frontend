@@ -145,34 +145,40 @@ $scope.addNewPhase =true;
     releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id)
     	.then(function onSuccess(response){
         console.log(response);
+        if(response.data.data){
+          $scope.releaseDetails = response.data.data;
+          $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
+          console.log($scope.Data);
+          console.log($scope.releaseDetails);
 
-    		$scope.releaseDetails = response.data.data;
-        $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
-        console.log($scope.Data);
-        console.log($scope.releaseDetails);
-
-        angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier,key){
-          console.log(supplier);
-          $scope.mapViewLat = supplier.latitude;
-          $scope.mapViewLong = supplier.longitude;
-          if(!supplier.stall_locations){
-            supplier.stall_locations = [];
-          }
-          // console.log($scope.mapViewLat);
-          // console.log($scope.mapViewLong);
-
-
-        })
+          angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier,key){
+            console.log(supplier);
+            $scope.mapViewLat = supplier.latitude;
+            $scope.mapViewLong = supplier.longitude;
+            if(!supplier.stall_locations){
+              supplier.stall_locations = [];
+            }
+            // console.log($scope.mapViewLat);
+            // console.log($scope.mapViewLong);
 
 
-        setDataToModel($scope.releaseDetails.shortlisted_suppliers);
-        $scope.loading = response;
-        angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier){
-          $scope.shortlistedSuppliersIdList[supplier.supplier_id] = supplier;
-        })
+          })
+
+
+          setDataToModel($scope.releaseDetails.shortlisted_suppliers);
+          $scope.loading = response;
+          angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier){
+            $scope.shortlistedSuppliersIdList[supplier.supplier_id] = supplier;
+          })
+        }else {
+          swal(constants.name, "You do not have access to Proposal", constants.warning);
+          $scope.loading = response;
+        }
+
     	})
     	.catch(function onError(response){
         console.log(response);
+        $scope.loading = response;
         commonDataShare.showErrorMessage(response);
     		console.log("error occured", response.status);
     	});
