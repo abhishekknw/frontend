@@ -3472,7 +3472,18 @@ $scope.getCampaignWiseSummary = function(){
         $scope.varianceHotLeads = data.higher_group_data[0]['variance_hot_lead/flat*100'];
       angular.forEach(data.higher_group_data[0]['freq_dist_lead/flat*100'], function(modeData,key){
         console.log(modeData,key);
-        $scope.x_fre_leads.push(key);
+
+            if(index == 0){
+              var value1 =
+                 { x : index , y : 0};
+              values1.push(value1);
+              var value2 =
+                 { x : index , y : 0};
+              values2.push(value2);
+              $scope.x_fre_leads.push('0');
+              index++;
+            }
+            $scope.x_fre_leads.push(key);
             if(modeData.hasOwnProperty('mode')){
               var value1 =
                  { x : index , y : modeData.mode};
