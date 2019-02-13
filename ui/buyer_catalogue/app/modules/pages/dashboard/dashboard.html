@@ -3756,6 +3756,21 @@ Dynamic Graph
 <div class="panel-body">
 </div>
 </div>
+<div class="panel panel-danger">
+<div class="panel-heading">Filter By Category</div>
+<div class="panel-body">
+  <br /><br />
+  <div class="row">
+  <select class="form-control" ng-model="">
+    <option value="">Select A Category</option>
+    <option value="vendor" ng-model="graphSelection.category">Vendor</option>
+    <option value="campaign">Campaign</option>
+    <option value="supplier">Supplier</option>
+  </select>
+</div>
+<br />
+</div>
+</div>
   <div class="panel panel-danger">
      <div class="panel-heading">Filter By Vendors</div>
      <div class="panel-body">
@@ -3770,7 +3785,7 @@ Dynamic Graph
              <option value="{{vendor.vendor_id}}" ng-repeat="vendor in vendorsData">{{vendor.principal_vendor}}</option>
            </select>
          </div> -->
-         <div class="col-md-6 pull-left" ng-if="dynamicData.data_scope['1'].level == 'vendor'">
+         <div class="col-md-6 pull-left" ng-if="graphSelection.category == 'vendor'">
            <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="vendorsList" class="col-md-6"  extra-settings="settingsForDynamicGraphVendor"
            selected-model="myModel" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
          </div>
@@ -3782,6 +3797,7 @@ Dynamic Graph
    <div class="panel-body">
    </div>
    </div>
+   <button type="button" name="button" class="btn btn-danger" ng-click="getGenericGraphs()">Submit</button>
  </div>
 <div class="col-md-8">
     <div class="col-md-12" ng-if="showGraph">
