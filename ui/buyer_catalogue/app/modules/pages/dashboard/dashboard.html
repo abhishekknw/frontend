@@ -406,12 +406,12 @@
                                 <div class="panel panel-default">
                                     <div ng-if="showCampaignGraph" class="panel-heading" ng-click="getCampaigns()">
                                         <h4 class="panel-title">
-                                            All Vendors Campaigns
+                                            All Campaigns
                                         </h4>
 
                                     </div>
                                 </div>
-                                <div class="panel panel-default">
+                                <!-- <div class="panel panel-default">
                                     <div class="row" style="width:100%;margin-left:0px;">
                                         <h4 class="panel-title">
                                           <select class="form-control" ng-model="selectedVendor.name" ng-change="getCampaignsByVendor()">
@@ -429,7 +429,7 @@
                                           </table>
                                       </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.completed.status)">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
@@ -1519,7 +1519,7 @@
                     <h5>View Leads</h5>
                   </uib-tab-heading>
                   <div class="container-fluid">
-                    <div class="panel panel-default">
+                    <!-- <div class="panel panel-default">
                       <div class="col-md-12">
                             <h4 class="panel-title">
                               <select class="form-control" ng-model="selectedVendor.name" ng-change="getCampaignsByVendor()">
@@ -1538,7 +1538,7 @@
                               </table>
                           </div>
                         </div>
-                    </div><br /><br />
+                    </div><br /><br /> -->
                     <div class="viewLeadstable" ng-if="showCampaigns">
                       <br /><br /><br /><br />
                       <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
@@ -1654,7 +1654,7 @@
 <br />
     <div class="col-md-3">
       <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
+        <!-- <div class="panel panel-default">
             <div class="row" style="width:100%;margin-left:0px;">
                 <h4 class="panel-title">
                   <select class="form-control" ng-model="selectedVendor.name" ng-change="getCampaignsByVendor()">
@@ -1672,7 +1672,7 @@
                   </table>
               </div>
             </div>
-        </div>
+        </div> -->
           <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.ongoing.status)">
               <div class="panel-heading">
                   <h4 class="panel-title">
