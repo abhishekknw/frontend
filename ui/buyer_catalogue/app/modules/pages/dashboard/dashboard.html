@@ -1969,7 +1969,7 @@
                                     All Campaigns
                               </div>
                             </div> -->
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                               <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.overall.status)">
                                 <div class="button" type="button" ng-click="getCampaignWiseSummary()">
                                   <div class="panel-heading">
@@ -1985,7 +1985,7 @@
                                 </div>
                               </div>
                             </div>
-                            <!-- <div class="col-md-6">
+                            <div class="col-md-6">
                               <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.overall.status)">
                                 <div class="button" type="button" ng-click="getDynamicGraphsStatics()">
                                   <div class="panel-heading">
@@ -1993,7 +1993,7 @@
                                   </div>
                                 </div>
                               </div>
-                            </div> -->
+                            </div>
                           </div>
                             <br /><br /><br />
                             <br />
@@ -3451,7 +3451,7 @@
 <!-- < End Overall Campaign Wise Summary> -->
 
 <!-- dynamic Graphs -->
-<!-- <div class="col-lg-12" ng-if="dynamicGraphsUI" style="margin-top:20px;color:#000;">
+<div class="col-lg-12" ng-if="dynamicGraphsUI" style="margin-top:20px;color:#000;">
   <div class="panel panel-primary">
     <div class="panel-heading content-title">
       <label for="Location">Dynamic Graphs</label>
@@ -3721,12 +3721,77 @@ Raw Data  </div></br>
 </div>
 <br />
 <div class="col-md-12" ng-if="showGraph">
-    <div class="panel-heading content-title" >
+    <div class="panel-heading content-title">
 Dynamic Graph
    </div>
   <nvd3 options="stackedBarChartForDynamic" data="stackedBarChartDynamicData"></nvd3>
 </div>
-</div> -->
+</div>
+
+<!-- strt with dynamic graph -->
+<div class="col-md-4">
+  <div class="panel-heading content-title">
+    Filter your Graphs
+  </div>
+<br />
+<br />
+<br />
+<div class="panel panel-danger">
+<div class="panel-heading">Filter by Time Range</div>
+<div class="panel-body">
+</div>
+</div>
+<div class="panel panel-danger">
+<div class="panel-heading">Filter By Type of Society</div>
+<div class="panel-body">
+</div>
+</div>
+<div class="panel panel-danger">
+<div class="panel-heading">Filter By Quality of Flats</div>
+<div class="panel-body">
+</div>
+</div>
+<div class="panel panel-danger">
+<div class="panel-heading">Filter By Location</div>
+<div class="panel-body">
+</div>
+</div>
+  <div class="panel panel-danger">
+     <div class="panel-heading">Filter By Vendors</div>
+     <div class="panel-body">
+       <br /><br />
+       <div class="row">
+         <input type="radio" value="vendor" ng-model="dynamicData.data_scope['1'].level"
+               ng-click="getLevelValues(dynamicData.data_scope['1'].level)" style="color:#000;">Vendors
+         <h3>Select Vendor</h3>
+         <!-- <div ng-if="dynamicData.data_scope['1'].level == 'vendor'">
+           <select class="form-control" ng-model="selectedVendor.name" ng-change="getCampaignsByVendor()">
+             <option value="">Select Vendor</option>
+             <option value="{{vendor.vendor_id}}" ng-repeat="vendor in vendorsData">{{vendor.principal_vendor}}</option>
+           </select>
+         </div> -->
+         <div class="col-md-6 pull-left" ng-if="dynamicData.data_scope['1'].level == 'vendor'">
+           <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="vendorsList" class="col-md-6"  extra-settings="settingsForDynamicGraphVendor"
+           selected-model="myModel" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
+         </div>
+       </div>
+   </div>
+   </div>
+   <div class="panel panel-danger">
+   <div class="panel-heading">Filter By Camapigns</div>
+   <div class="panel-body">
+   </div>
+   </div>
+ </div>
+<div class="col-md-8">
+    <div class="col-md-12" ng-if="showGraph">
+      <div class="panel-heading content-title">
+  Dynamic Graph
+     </div>
+    <nvd3 options="stackedBarChartForDynamic" data="stackedBarChartDynamicData"></nvd3>
+  </div>
+</div>
+<!-- end with dynamic graph -->
                         <!--START : COMPARE CAMPAIGNS LIST  -->
                           <div class="col-md-12" ng-show="campaignStatus.compare_campaigns.value" print-remove>
                             <br />

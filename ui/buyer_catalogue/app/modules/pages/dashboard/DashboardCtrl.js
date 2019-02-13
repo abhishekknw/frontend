@@ -441,12 +441,21 @@
                   $scope.mergedarray.push(campaign);
               })
             })
+            $scope.vendorsData = {};
+            $scope.distributedGraphsVendorsData = [];
+
             angular.forEach($scope.mergedarray, function(data){
+            // $scope.distributedGraphsVendorsData.push(data);
               if(data.principal_vendor){
                 $scope.vendorsData[data.principal_vendor] = data;
               }
             })
+            $scope.vendorsList = Object.keys($scope.vendorsData);
+            console.log($scope.vendorsList);
             console.log($scope.vendorsData);
+            // $scope.distributedGraphsVendorsData.push($scope.vendorsData);
+            // console.log($scope.distributedGraphsVendorsData);
+            // console.log($scope.distributedGraphsVendorsData.organisation);
             $scope.campaigns = [$scope.campaignData.ongoing_campaigns.length,$scope.campaignData.completed_campaigns.length,$scope.campaignData.upcoming_campaigns.length, $scope.campaignData.onhold_campaigns.length];
             console.log($scope.campaignStatus);
               $scope.campaignChartdata = [
@@ -1936,17 +1945,23 @@ var formatThreeWeeksSummary = function(data,key){
        showCheckAll : true,
        scrollableHeight: '300px', scrollable: true};
    $scope.settingsForDynamicGraphCity = { enableSearch: true,
-       keyboardControls: true ,idProp : "id",
+       keyboardControls: true ,idProp : "option.vendor_id",
        template: '{{option.name}}', smartButtonTextConverter(skip, option) { return option; },
        showCheckAll : true,
        scrollableHeight: '300px', scrollable: true};
-       $scope.settingsForVendors = { enableSearch: true,
-           keyboardControls: true ,idProp : "{{option}}",
-           template: '{{option}}',
-           showCheckAll : true,
-           scrollableHeight: '300px', scrollable: true};
+   $scope.settingsForDynamicGraphVendor = { enableSearch: true,
+       keyboardControls: true ,idProp : "{{option}}",
+       template: '{{option}}', smartButtonTextConverter(skip, option) {return option; },
+       showCheckAll : true,
+       scrollableHeight: '300px', scrollable: true};
+   $scope.settingsForVendors = { enableSearch: true,
+       keyboardControls: true ,idProp : "{{option}}",
+       template: '{{option}}',
+       showCheckAll : true,
+       scrollableHeight: '300px', scrollable: true};
  $scope.selected_baselines_customTexts = {buttonDefaultText: 'Select Campaigns'};
  $scope.selected_baselines_customTexts_city = {buttonDefaultText: 'Select Cities'};
+ $scope.selected_baselines_customTexts_vendor = {buttonDefaultText: 'Select Vendor'};
 
 
    $scope.events = {
@@ -2577,6 +2592,7 @@ $scope.viewCampaignLeads = function(value){
     console.log(response);
     $scope.allCampaignDetailsData = response.data.data;
     $scope.dynamicValues = $scope.allCampaignDetailsData;
+    console.log($scope.dynamicValues);
     $scope.dynamicValuesCampaignIdMap = {};
     angular.forEach($scope.dynamicValues, function(data){
       $scope.dynamicValuesCampaignIdMap[data.campaign_id] = data;
@@ -3620,6 +3636,9 @@ $scope.rotateImage=function(id){
         {id: 5, name: 'Chennai'},
       ]
     }
+    if(value == 'vendor'){
+      $scope.getCampaignsByVendor();
+    }
   }
   $scope.getRawDataValue = function(value,type){
     console.log(value,type);
@@ -3658,6 +3677,12 @@ $scope.rotateImage=function(id){
         else if ($scope.dynamicData.data_scope['1'].level == 'city') {
           console.log(data);
           $scope.dynamicData.data_scope['1'].values['exact'].push(data.name);
+        }
+        else if ($scope.dynamicData.data_scope['1'].level == 'vendor') {
+          console.log(data);
+          $scope.dynamicData.data_scope['1'].values['exact'].push(data.value);
+          console.log(data.value);
+
         }
       })
     }
@@ -3723,6 +3748,7 @@ $scope.xValues = {};
     var finalData = [];
     // var values2 = [];
     angular.forEach(data.lower_group_data, function(data,key){
+      console.log(data);
       angular.forEach($scope.yValues, function(itemKey,index,item){
         console.log(itemKey,index,item);
         if(!values1.hasOwnProperty(itemKey)){
