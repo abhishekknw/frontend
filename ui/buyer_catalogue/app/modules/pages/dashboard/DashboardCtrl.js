@@ -1080,6 +1080,48 @@
           }
         };
 
+
+               var overallVendorSummaryStackedBar = {
+                  "chart": {
+                    "type": "multiBarChart",
+                    "height": 450,
+                    // "labelType" : "11",
+                    "margin": {
+                      "top": 100,
+                      "right": 20,
+                      "bottom": 145,
+                      "left": 45
+                    },
+                    "clipEdge": true,
+                    "duration": 500,
+                    "grouped": true,
+                    "sortDescending" : false,
+                      "xAxis": {
+                      "axisLabel": "Vendor Wise (Flat Count) in Percentage",
+                      "axisLabelDistance" : -50,
+                      "showMaxMin": false,
+                      "rotateLabels" : -30
+                    },
+                    "yAxis": {
+                      "axisLabel": "Leads in %",
+                      "axisLabelDistance": -20,
+
+                      "ticks" : 8
+                    },
+                    "legend" : {
+                            "margin": {
+                            "top": 5,
+                            "right": 3,
+                            "bottom": 5,
+                            "left": 15
+                        },
+                    },
+
+                    "reduceXTicks" : false
+                  }
+                };
+
+
         var thisWeekSummaryStackedBar = {
            "chart": {
              "type": "multiBarChart",
@@ -3205,6 +3247,7 @@ $scope.Sort = function(val)
   // }
 
 $scope.getCampaignWiseSummary = function(){
+  $scope.getVendorWiseSummary();
   console.log("hello");
   cfpLoadingBar.start();
      DashboardService.getCampaignWiseSummary()
@@ -3762,6 +3805,72 @@ $scope.xValues = {};
     $scope.dynamicData.data_point.sublevel = undefined;
   }
 
+
+
+  $scope.getVendorWiseSummary = function(){
+    console.log("hello");
+    cfpLoadingBar.start();
+       DashboardService.getVendorWiseSummary()
+      .then(function onSuccess(response){
+        console.log(response);
+        $scope.vendorSummary = response.data.data;
+        $scope.overallVendorSummary = response.data.data.overall;
+        $scope.WeeklyVendorMISOverallSummary = response.data.data.overall.overall;
+        $scope.WeeklyVendorMISLastWeekSummary = response.data.data.last_week.overall;
+        $scope.WeeklyVendorMISLast2WeekSummary = response.data.data.last_two_week.overall;
+        $scope.WeeklyVendorMISLast3WeekSummary = response.data.data.last_three_week.overall;
+        console.log($scope.overallVendorSummary);
+        $scope.OverallVendorStackedBarChart= angular.copy(overallVendorSummaryStackedBar);
+        $scope.stackedBarAllVendorWiseChart = formatAllVendorWiseChart($scope.overallVendorSummary);
+
+        cfpLoadingBar.complete();
+    }).catch(function onError(response){
+          console.log(response);
+      })
+  }
+
+
+     var formatAllVendorWiseChart = function(data){
+       console.log(data);
+       var values1 = [];
+       var values2 = [];
+       angular.forEach(data, function(data,key){
+         console.log(data,key);
+         if(data.flat_count != 0){
+           $scope.hotLeadsValues =  data.interested / data.flat_count * 100;
+           $scope.normalLeadsValues =  data.total/data.flat_count * 100;
+          }
+          else {
+            $scope.hotLeadsValues =  data.interested;
+            $scope.normalLeadsValues =  data.total;
+
+          }
+           var keyWithFlatLabel =  key + ' (' + data.flat_count + ')';
+         var value1 =
+            { x : keyWithFlatLabel, y : $scope.normalLeadsValues};
+         var value2 =
+            { x : keyWithFlatLabel, y : $scope.hotLeadsValues};
+         values1.push(value1);
+         values2.push(value2);
+
+
+       })
+
+       var temp_data = [
+         {
+           key : "Total Leads in %",
+           color : constants.colorKey1,
+           values : values1
+         },
+         {
+           key : "High Potential Leads in %",
+           color : constants.colorKey2,
+           values : values2
+         }
+       ];
+
+       return temp_data;
+     }
 
 
   // END
