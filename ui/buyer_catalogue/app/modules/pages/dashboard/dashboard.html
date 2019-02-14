@@ -2984,8 +2984,8 @@
             </tr>
       </thead>
         <tbody style="text-align:center;">
-          <tr ng-repeat="(key,data) in overallVendorSummary">
-            <td style="font-weight:bold">{{key}}</td>
+          <tr ng-repeat="(key,data) in overallVendorSummary" ng-if="key != 'overall'">
+            <td style="text-transform: capitalize">{{vendorSummary.vendor_details[key].name}}</td>
             <td>{{data.flat_count}}</td>
             <td>{{data.total_supplier_count}}</td>
             <td>{{data.total}}</td>

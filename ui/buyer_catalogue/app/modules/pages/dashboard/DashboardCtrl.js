@@ -17,13 +17,11 @@
  $scope.userIcon = "icons/usericon.png";
  $scope.passwordError = constants.password_error;
  $scope.userInfo = $rootScope.globals.userInfo;
- console.log($scope.userInfo);
  $scope.dateRangeModel = {};
  $scope.selectedVendor = {};
  $scope.vendorsData = {};
  $scope.emailModel = {};
  $scope.vendorDataMap = {};
- console.log($scope.userInfo);
  $scope.invNameToCode = {
    'POSTER' : 'PO',
    'STALL' : 'SL',
@@ -147,7 +145,6 @@
         $scope.campaignStatusLabels = [$scope.campaignStatus.ongoing.name,$scope.campaignStatus.completed.name, $scope.campaignStatus.upcoming.name , $scope.campaignStatus.onhold.name,$scope.campaignStatus.overall.name];
         $scope.pieChartDefaulOptions = { legend: { display: true, position: 'right',padding: '10px' } };
         $scope.getCampaignsMenu = function(status){
-          console.log(status);
           $scope.campaignStatus.overall.value = false;
           $scope.campaignStatus.ongoing.value = false;
           $scope.campaignStatus.completed.value = false;
@@ -185,7 +182,6 @@
               $scope.inventoryActivityCountData[key] = sortObject(data);
               $scope.invActDateList = $scope.invActDateList.concat(Object.keys($scope.inventoryActivityCountData[key]));
             })
-            console.log($scope.inventoryActivityCountData);
             $scope.invActDateList = Array.from(new Set($scope.invActDateList));
             $scope.invActDateList.sort().reverse();
             $scope.dateListKeys = {};
@@ -434,7 +430,6 @@
             $scope.showSingleCampaignChart = false;
             $scope.campaignData = response.data.data;
             $scope.campaignAllStatusTypeData = response.data.data;
-            console.log($scope.campaignData);
             $scope.mergedarray = [];
             angular.forEach($scope.campaignData, function(data){
               angular.forEach(data,function(campaign){
@@ -446,9 +441,7 @@
                 $scope.vendorsData[data.principal_vendor] = data;
               }
             })
-            console.log($scope.vendorsData);
             $scope.campaigns = [$scope.campaignData.ongoing_campaigns.length,$scope.campaignData.completed_campaigns.length,$scope.campaignData.upcoming_campaigns.length, $scope.campaignData.onhold_campaigns.length];
-            console.log($scope.campaignStatus);
               $scope.campaignChartdata = [
               { label : $scope.allCampaignStatusType.ongoing.campaignLabel, value : $scope.campaignData.ongoing_campaigns.length,  status : $scope.allCampaignStatusType.ongoing.status},
               { label : $scope.allCampaignStatusType.completed.campaignLabel, value : $scope.campaignData.completed_campaigns.length, status : $scope.allCampaignStatusType.completed.status},
@@ -1264,7 +1257,6 @@
            // ];
            // console.log($scope.overallMetricStatus);
            $scope.overallMetric = response.data.data.overall_metrics;
-           console.log($scope.overallMetric);
             angular.forEach($scope.overallMetric , function(data,key){
             $scope.metricStatusValue = data;
               // $scope.avgLeadsPerFlat = data.total_leads_count/data.flat_count * 100;
@@ -1599,7 +1591,6 @@
      if($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date')){
        $scope.dateRangeModel.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
        $scope.dateRangeModel.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
-       console.log($scope.dateRangeModel);
         result = DashboardService.getLeadsByCampaign(campaignId,$scope.dateRangeModel)
      }else{
         result = DashboardService.getLeadsByCampaign(campaignId)
@@ -1620,13 +1611,11 @@
 
        $scope.localityData =  $scope.LeadsByCampaign.locality_data;
         $scope.phaseData =  $scope.LeadsByCampaign.phase_data;
-        console.log($scope.phaseData);
        $scope.locationHeader = [];
        angular.forEach($scope.LeadsByCampaign.locality_data, function(data,key){
           $scope.value1 = key;
           $scope.locationHeader.push($scope.value1);
        })
-       console.log($scope.LeadsByCampaign);
 
        $scope.d3StackedBarChartData = formatD3StackedBarChartData($scope.LeadsByCampaign.supplier_data);
        $scope.stackedBarChartOptions = angular.copy(stackedBarChart);
@@ -1757,7 +1746,6 @@
    }
 
    var formatFlatCountChart = function(data){
-     console.log(data);
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(data,key){
@@ -1771,7 +1759,6 @@
 
         }
        var keyWithFlatLabel =  key + ' (' + data['flat_count'] + ')';
-       console.log(keyWithFlatLabel,key);
        var value1 =
           { x : keyWithFlatLabel, y : $scope.normalLeadsValues };
        var value2 =
@@ -1794,18 +1781,14 @@
          values : values2
        }
      ];
-     console.log(temp_data);
      return temp_data;
    }
 
    var formatWeekStackedChart = function(weekDataMerged){
-     console.log(weekDataMerged);
      var values1 = [];
      var values2 = [];
      angular.forEach(weekDataMerged, function(data,key){
-       console.log(data.flat_count);
-       console.log(key);
-       var keyWithFlatLabel =  key + ' (' + key.flat_count + ')';
+         var keyWithFlatLabel =  key + ' (' + key.flat_count + ')';
        var value1 =
           { x : keyWithFlatLabel, y : $scope.normalLeadsValues};
        var value2 =
@@ -1909,7 +1892,6 @@
          values : values2
        }
      ];
-     console.log(temp_data);
      return temp_data;
    }
 //START :  code for 3 weeks summary
@@ -2185,23 +2167,17 @@ var formatThreeWeeksSummary = function(data,key){
     $scope.getCampaignInvData = function(data){
       console.log(data);
       $scope.supplierStatus = data.status;
-      console.log($scope.supplierStatus);
-      console.log($scope.campaignAllStatusTypeData);
       $scope.campaignDetailsData =$scope.campaignAllStatusTypeData[data.status];
-      console.log($scope.campaignDetailsData);
       $scope.showTableForAllCampaignDisplay = true;
       $scope.$apply();
 
     }
 
     $scope.getSupplierAndInvData = function(data){
-      console.log(data);
       $scope.societyCampaignName = true;
       $scope.campaignName = false;
       $scope.supplierStatus = data.status;
       $scope.supplierAndInvData = $scope.campaignSupplierAndInvData[data.status];
-      console.log($scope.campaignSupplierAndInvData);
-      console.log($scope.supplierAndInvData);
       $scope.invStatusKeys = angular.copy(invStatusKeys);
       // console.log($scope.supplierAndInvData);
       $scope.TotalSupplierFlatCount = 0;
@@ -2209,13 +2185,11 @@ var formatThreeWeeksSummary = function(data,key){
       $scope.TotalLeadsPerFlat = 0;
       $scope.TotalSupplierHotLeadsCount = 0;
       angular.forEach($scope.supplierAndInvData, function(supplier,key){
-        console.log($scope.supplierAndInvData);
         $scope.latitude = supplier.supplier.society_latitude;
         $scope.longitude = supplier.supplier.society_longitude;
         $scope.societyName = supplier.supplier.society_name;
         $scope.length = $scope.supplierAndInvData.length;
         $scope.TotalSupplierFlatCount += supplier.supplier.flat_count;
-        console.log(supplier.leads_data.total_leads_count);
         if(supplier.leads_data.total_leads_count){
           $scope.TotalSupplierLeadsCount += supplier.leads_data.total_leads_count;
         }
@@ -2225,11 +2199,6 @@ var formatThreeWeeksSummary = function(data,key){
         }
         $scope.societyName = supplier.supplier.society_name;
 
-        angular.forEach(supplier.phase, function(phase,key){
-         // console.log(key);
-         console.log(phase);
-
-       })
           angular.forEach(supplier.supplier.inv_data, function(inv,key){
           $scope.invStatusKeys[key].status = true;
           })
@@ -2251,7 +2220,6 @@ var formatThreeWeeksSummary = function(data,key){
 
            angular.forEach(supplier.leads_data, function(inv,key){
             $scope.leads_data = inv;
-            // console.log($scope.leads_data);
             $scope.showLeads = true;
             $scope.countLeads += 1;
 
@@ -2293,7 +2261,6 @@ var formatThreeWeeksSummary = function(data,key){
     $scope.markerPanIndia = {
     mouseoverevent: {
     mouseover: function (markerPanIndia, eventName, modelAll) {
-      console.log(eventName);
       $scope.spacePanIndia = modelAll;
       $scope.campaignInventory = modelAll;
       $scope.windowAllCoords.latitude = modelAll.latitude;
@@ -2304,11 +2271,9 @@ var formatThreeWeeksSummary = function(data,key){
 };
 
     function assignPanIndiaMarkersToMap(panIndiaCampaigns) {
-      console.log("hellow",panIndiaCampaigns);
         var markersOfPanIndia = [];
         angular.forEach(panIndiaCampaigns, function(data){
           angular.forEach(data,function(campaign){
-            console.log(campaign);
                 markersOfPanIndia.push({
                 latitude: campaign.center__latitude,
                 longitude: campaign.center__longitude,
@@ -2574,7 +2539,6 @@ $scope.getBookingCampaigns = function(campaign){
     console.log(response);
     cfpLoadingBar.complete();
       $scope.bookingPhases = response.data.data;
-      console.log($scope.bookingPhases);
 
       // if(!$scope.bookingPhases.length){
         // swal(constants.name, "Suppliers Booking is going on.Currently, No supplier is Booked", constants.warning)
@@ -2623,7 +2587,6 @@ $scope.viewCampaignLeads = function(value){
     angular.forEach($scope.dynamicValues, function(data){
       $scope.dynamicValuesCampaignIdMap[data.campaign_id] = data;
     })
-    console.log($scope.allCampaignDetailsData);
     $scope.showTableForAllCampaignDisplay = false;
 
       angular.forEach($scope.allCampaignDetailsData, function(data){
@@ -2677,11 +2640,8 @@ $scope.viewCampaignLeads = function(value){
       DashboardService.viewLeadsForSelectedCampaign(data,campaignId)
       .then(function onSuccess(response){
       console.log(response);
-      console.log(data);
       cfpLoadingBar.complete();
       $scope.selectedCampaignLeads = response.data.data;
-      console.log($scope.selectedCampaignLeads);
-      console.log($scope.selectedCampaignLeads.values);
       $scope.CampaignNameofLeads = data.name;
       $scope.showCampaigns = false;
     }).catch(function onError(response){
@@ -2827,8 +2787,6 @@ $scope.sortData = function(keyName,id){
   }
   var sortable = [];
   for (var key in $scope.sortedData) {
-    console.log($scope.sortedData);
-    console.log(key);
     $scope.sortedData[key]['hotPerc'] = $scope.sortedData[key]['interested'] / $scope.sortedData[key]['flat_count'] * 100;
     $scope.sortedData[key]['totalPerc'] = $scope.sortedData[key]['total'] / $scope.sortedData[key]['flat_count'] * 100;
     $scope.sortedData[key]['totalPercRoundOff'] = Math.round($scope.sortedData[key]['totalPerc']);
@@ -2838,7 +2796,6 @@ $scope.sortData = function(keyName,id){
 
   var mean;
     if(sortMenuMap[id].type == 'total'){
-    console.log("total",sortable);
     sortable.sort(function(a, b) {
         a = a[1].total / a[1].flat_count * 100;
         b = b[1].total / b[1].flat_count * 100;
@@ -2870,10 +2827,8 @@ $scope.sortData = function(keyName,id){
     })
     var total=0,count=0,keys=[];
     angular.forEach(modeValues, function(value,key){
-      console.log(key);
       keys.push(parseInt(key));
       if(value == max){
-        console.log(value,max,key);
         total += parseInt(key);
         count += 1;
       }
@@ -2882,7 +2837,6 @@ $scope.sortData = function(keyName,id){
     var range = Math.max.apply(null,keys) - Math.min.apply(null,keys);
   }
   if(sortMenuMap[id].type == 'interested'){
-    console.log("hot leads",sortable);
     sortable.sort(function(a, b) {
         a = a[1].interested / a[1].flat_count * 100;
         b = b[1].interested / b[1].flat_count * 100;
@@ -2955,7 +2909,6 @@ var formatByLocation = function(data,key,type){
     }
     temp_data.values.push(value);
   })
-  console.log(temp_data);
   return [temp_data];
 }
 $scope.commentModal = {};
@@ -2978,7 +2931,6 @@ $scope.openChat = function(){
   $scope.showChat = true;
 }
 $scope.changePassword = function(){
-  console.log("hello");
   $('#changePassword').modal('show');
 }
 $scope.changeUserPassword = function(){
@@ -3000,16 +2952,13 @@ $scope.changeUserPassword = function(){
   });
 }
 $scope.validatePassword = function(){
-  console.log("hello");
   if($scope.passwordModel.password == $scope.passwordModel.confirm_password)
     $scope.isValid = true;
   else
     $scope.isValid = false;
-  console.log($scope.isValid,$scope.model);
 }
 
 $scope.getFormDetails = function(campaignId){
-  console.log(campaignId);
   cfpLoadingBar.start();
   $scope.campaignIdForleads = campaignId;
   $scope.emailCampaignLeadsModel = {};
@@ -3019,9 +2968,7 @@ $scope.getFormDetails = function(campaignId){
       console.log(response);
       cfpLoadingBar.complete();
       $scope.formDetails = response.data.data;
-      console.log($scope.formDetails);
         $scope.campaign_id = $scope.formDetails.leads_form_items;
-      console.log($scope.campaign_id );
     }).catch(function onError(response){
         console.log(response);
     })
@@ -3029,7 +2976,6 @@ $scope.getFormDetails = function(campaignId){
 
 $scope.sendMeEmail = function(){
   cfpLoadingBar.start();
-  console.log($scope.emailCampaignLeadsModel);
   $scope.emailCampaignLeadsModel['campaign_id'] = $scope.campaignIdForleads;
   DashboardService.sendMeEmail($scope.emailCampaignLeadsModel)
   .then(function onSuccess(response){
@@ -3050,7 +2996,6 @@ $scope.sendReport = function(){
     startDate = commonDataShare.formatDate($scope.reportData.reportStartDate);
     endDate = commonDataShare.formatDate($scope.reportData.reportEndDate);
   }
-  console.log(startDate,endDate);
   if ($scope.file) {
     Upload.upload({
         url: Config.APIBaseUrl + "v0/ui/website/send-graph-pdf/",
@@ -3075,16 +3020,13 @@ $scope.sendReport = function(){
 var reportFile;
 $scope.uploadFiles = function(file){
   var reportFile;
-  console.log("hello");
   $scope.file = file;
-  console.log($scope.file);
   $scope.selectDate = true;
 }
 $scope.enableAddComments = function(index){
   $scope.enableComments = index;
 }
 $scope.getPermissionBoxImages = function(supplier){
-  console.log(supplier);
   $scope.supplierNameForPermBox = supplier.society_name;
   console.log($scope.supplierNameForPermBox);
   DashboardService.getPermissionBoxImages($scope.campaignId,supplier.supplier_id)
@@ -3099,7 +3041,6 @@ $scope.getPermissionBoxImages = function(supplier){
       swal(constants.name, constants.image_empty, constants.warning);
     }
     $scope.perBoxImageData = response.data.data;
-    console.log($scope.perBoxImageData);
 
   }).catch(function onError(response){
     console.log(response);
@@ -3110,7 +3051,6 @@ $scope.sendBookingEmails = function(){
   $scope.emailBtnDisabled = true;
   cfpLoadingBar.start();
   if($scope.emailModel.selected == 'listOfSupplier'){
-    console.log('listOfSociet y',$scope.emailModel.email);
     DashboardService.sendListOfSuppliersEmail($scope.proposalId,$scope.emailModel.email)
     .then(function onSuccess(response){
       console.log(response);
@@ -3124,7 +3064,6 @@ $scope.sendBookingEmails = function(){
       cfpLoadingBar.complete();
     })
   }else if ($scope.emailModel.selected == 'activationOfSupplier') {
-    console.log('activationOfSupplier');
     DashboardService.sendActivationOfSuppliersEmail($scope.proposalId,$scope.emailModel.email)
     .then(function onSuccess(response){
       console.log(response);
@@ -3138,7 +3077,6 @@ $scope.sendBookingEmails = function(){
       cfpLoadingBar.complete();
     })
   }else if ($scope.emailModel.selected == 'pipelineOfSupplier') {
-    console.log('pipelineOfSupplier');
     DashboardService.sendPipelinedSuppliersEmail($scope.proposalId,$scope.emailModel.email)
     .then(function onSuccess(response){
       console.log(response);
@@ -3157,7 +3095,6 @@ $scope.sendConfirmBookingEmails = function(){
   $scope.emailBtnDisabled = true;
   cfpLoadingBar.start();
   if($scope.emailModel.selected == 'listOfSupplier'){
-    console.log('listOfSociety');
     DashboardService.sendListOfSuppliersConfirmEmail($scope.proposalId)
     .then(function onSuccess(response){
       console.log(response);
@@ -3171,7 +3108,6 @@ $scope.sendConfirmBookingEmails = function(){
       cfpLoadingBar.complete();
     })
   }else if ($scope.emailModel.selected == 'activationOfSupplier') {
-    console.log('activationOfSupplier');
     DashboardService.sendActivationOfSuppliersConfirmEmail($scope.proposalId)
     .then(function onSuccess(response){
       console.log(response);
@@ -3185,7 +3121,6 @@ $scope.sendConfirmBookingEmails = function(){
       cfpLoadingBar.complete();
     })
   }else if ($scope.emailModel.selected == 'pipelineOfSupplier') {
-    console.log('pipelineOfSupplier');
     DashboardService.sendPipelinedSuppliersConfirmEmail($scope.proposalId)
     .then(function onSuccess(response){
       console.log(response);
@@ -3248,7 +3183,6 @@ $scope.Sort = function(val)
 
 $scope.getCampaignWiseSummary = function(){
   $scope.getVendorWiseSummary();
-  console.log("hello");
   cfpLoadingBar.start();
      DashboardService.getCampaignWiseSummary()
     .then(function onSuccess(response){
@@ -3289,7 +3223,6 @@ $scope.getCampaignWiseSummary = function(){
 
 
    var formatAllCampaignWiseChart = function(data){
-     console.log(data);
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(data,key){
@@ -3330,7 +3263,6 @@ $scope.getCampaignWiseSummary = function(){
    }
 
    var formatLastWeekWiseChart = function(data){
-     console.log(data);
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(data,key){
@@ -3371,7 +3303,6 @@ $scope.getCampaignWiseSummary = function(){
    }
 
    var formatLast2WeekWiseChart = function(data){
-     console.log(data);
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(data,key){
@@ -3466,7 +3397,6 @@ $scope.getCampaignWiseSummary = function(){
 
   $scope.exportToExcel=function(tableId){ // ex: '#my-table'
   var exportHref=Excel.tableToExcel(tableId,'WireWorkbenchDataExport');
-  console.log("hello");
   $timeout(function(){location.href=exportHref;},100); // trigger download
   }
 
@@ -3514,7 +3444,6 @@ $scope.getCampaignWiseSummary = function(){
         $scope.varianceLeads = data.higher_group_data[0]['variance_lead/flat*100'];
         $scope.varianceHotLeads = data.higher_group_data[0]['variance_hot_lead/flat*100'];
       angular.forEach(data.higher_group_data[0]['freq_dist_lead/flat*100'], function(modeData,key){
-        console.log(modeData,key);
 
             if(index == 0){
               var value1 =
@@ -3551,7 +3480,6 @@ $scope.getCampaignWiseSummary = function(){
             index++;
 
       })
-      console.log($scope.x_fre_leads);
 
       var temp_data = [
         {
@@ -3576,7 +3504,6 @@ $scope.getCampaignWiseSummary = function(){
       getShortlistedSuppliers($scope.campaignIdForLeads);
     }
     var getShortlistedSuppliers = function(campaignId){
-      console.log("hello");
       var supplier_code = 'RS';
       DashboardService.getShortlistedSuppliers(campaignId, supplier_code)
       .then(function onSuccess(response){
@@ -3602,7 +3529,6 @@ $scope.getCampaignWiseSummary = function(){
     }
 
 $scope.rotateImage=function(id){
-  console.log("hello",id);
   var index = 0;
   var id = '#img_test' + id;
   index = index +1;
@@ -3648,7 +3574,6 @@ $scope.rotateImage=function(id){
   $scope.myModel1 = [];
 
   $scope.getLevelValues = function(value){
-    console.log(value);
     $scope.dynamicValues = [];
     $scope.myModel = [];
     if(value == 'campaign'){
@@ -3665,7 +3590,6 @@ $scope.rotateImage=function(id){
     }
   }
   $scope.getRawDataValue = function(value,type){
-    console.log(value,type);
     if(value){
       $scope.dynamicData.raw_data.push(type);
     }else {
@@ -3674,16 +3598,13 @@ $scope.rotateImage=function(id){
         $scope.dynamicData.raw_data.splice(index, 1);
       }
     }
-    console.log($scope.dynamicData);
   }
   $scope.metricsData = {};
   $scope.addMetrics = function(){
     if($scope.metricsData){
         var data = [$scope.metricsData.firstValue, $scope.metricsData.secondValue, $scope.metricsData.operator];
-        console.log(data);
         $scope.dynamicData.metrics.push(data);
     }
-    console.log($scope.dynamicData);
   }
   $scope.removeMetrics = function(index){
     $scope.dynamicData.metrics.splice($index,1);
@@ -3691,28 +3612,23 @@ $scope.rotateImage=function(id){
 
   $scope.getDynamicGraphData = function(){
     $scope.showGraph = true;
-    console.log($scope.myModel);
     if($scope.myModel.length){
-      console.log($scope.myModel);
       $scope.dynamicData.data_scope['1'].values['exact'] = [];
       angular.forEach($scope.myModel, function(data){
         if($scope.dynamicData.data_scope['1'].level == 'campaign')
           $scope.dynamicData.data_scope['1'].values['exact'].push(data.campaign_id);
         else if ($scope.dynamicData.data_scope['1'].level == 'city') {
-          console.log(data);
           $scope.dynamicData.data_scope['1'].values['exact'].push(data.name);
         }
       })
     }
     // $scope.dynamicData.data_scope['1'].values['exact'] = $scope.myModel;
     if($scope.dynamicData.data_scope['1'].values['exact'].length){
-      console.log($scope.dynamicData);
       DashboardService.getDistributionGraphsStatics($scope.dynamicData)
       .then(function onSuccess(response){
         console.log(response);
         $scope.stackedBarChartForDynamic = angular.copy(stackedBarChart);
         $scope.stackedBarChartDynamicData = formatDynamicData(response.data.data);
-        console.log($scope.stackedBarChartDynamicData);
       }).catch(function onError(response){
         console.log(response);
       })
@@ -3722,7 +3638,6 @@ $scope.rotateImage=function(id){
 
 
   $scope.getLevelDataValue = function(value,type){
-    console.log($scope.myModel);
     if(value){
       $scope.dynamicData.data_point['level'].push(type);
     }else {
@@ -3731,7 +3646,6 @@ $scope.rotateImage=function(id){
         $scope.dynamicData.data_point['level'].splice(index, 1);
       }
     }
-    console.log($scope.dynamicData);
   }
   $scope.getYValueFromData = function(value,type){
     if(value){
@@ -3760,18 +3674,15 @@ $scope.rotateImage=function(id){
 $scope.yValues = [];
 $scope.xValues = {};
   var formatDynamicData = function(data){
-    console.log(data);
     var values1 = {};
     var labels = [];
     var finalData = [];
     // var values2 = [];
     angular.forEach(data.lower_group_data, function(data,key){
       angular.forEach($scope.yValues, function(itemKey,index,item){
-        console.log(itemKey,index,item);
         if(!values1.hasOwnProperty(itemKey)){
             values1[itemKey] = [];
         }
-        console.log(data[$scope.xValues.value],data,$scope.xValues.value);
         if($scope.xValues.value == 'campaign'){
 
           var temp = {
@@ -3795,7 +3706,6 @@ $scope.xValues = {};
       }
       finalData.push(temp_data);
     })
-    console.log(finalData);
     return finalData;
   }
   $scope.clearMetrics = function(){
@@ -3808,18 +3718,17 @@ $scope.xValues = {};
 
 
   $scope.getVendorWiseSummary = function(){
-    console.log("hello");
     cfpLoadingBar.start();
        DashboardService.getVendorWiseSummary()
       .then(function onSuccess(response){
         console.log(response);
         $scope.vendorSummary = response.data.data;
+        $scope.vendorName = response.data.data.vendor_details;
         $scope.overallVendorSummary = response.data.data.overall;
         $scope.WeeklyVendorMISOverallSummary = response.data.data.overall.overall;
         $scope.WeeklyVendorMISLastWeekSummary = response.data.data.last_week.overall;
         $scope.WeeklyVendorMISLast2WeekSummary = response.data.data.last_two_week.overall;
         $scope.WeeklyVendorMISLast3WeekSummary = response.data.data.last_three_week.overall;
-        console.log($scope.overallVendorSummary);
         $scope.OverallVendorStackedBarChart= angular.copy(overallVendorSummaryStackedBar);
         $scope.stackedBarAllVendorWiseChart = formatAllVendorWiseChart($scope.overallVendorSummary);
 
@@ -3831,11 +3740,9 @@ $scope.xValues = {};
 
 
      var formatAllVendorWiseChart = function(data){
-       console.log(data);
        var values1 = [];
        var values2 = [];
        angular.forEach(data, function(data,key){
-         console.log(data,key);
          if(data.flat_count != 0){
            $scope.hotLeadsValues =  data.interested / data.flat_count * 100;
            $scope.normalLeadsValues =  data.total/data.flat_count * 100;
@@ -3845,13 +3752,17 @@ $scope.xValues = {};
             $scope.normalLeadsValues =  data.total;
 
           }
-           var keyWithFlatLabel =  key + ' (' + data.flat_count + ')';
-         var value1 =
-            { x : keyWithFlatLabel, y : $scope.normalLeadsValues};
-         var value2 =
-            { x : keyWithFlatLabel, y : $scope.hotLeadsValues};
-         values1.push(value1);
-         values2.push(value2);
+          if(key != 'overall'){
+            $scope.vendorKeyName = $scope.vendorSummary.vendor_details[key].name;
+            var keyWithFlatLabel =  $scope.vendorKeyName + ' (' + data.flat_count + ')';
+          var value1 =
+             { x : keyWithFlatLabel, y : $scope.normalLeadsValues};
+          var value2 =
+             { x : keyWithFlatLabel, y : $scope.hotLeadsValues};
+          values1.push(value1);
+          values2.push(value2);
+          }
+
 
 
        })
