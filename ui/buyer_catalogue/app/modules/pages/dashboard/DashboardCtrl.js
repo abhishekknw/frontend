@@ -24,7 +24,15 @@
  $scope.emailModel = {};
  $scope.vendorDataMap = {};
  $scope.selectedVendors = [];
+ $scope.selectedCities = [];
  $scope.selectedDynamicCampaigns = [];
+ $scope.cityLists = [
+   {id: 1, name: 'Mumbai'},
+   {id: 2, name: 'Delhi'},
+   {id: 3, name: 'Bangalore'},
+   {id: 4, name: 'Hyderabad'},
+   {id: 5, name: 'Chennai'},
+ ]
  console.log($scope.userInfo);
  $scope.invNameToCode = {
    'POSTER' : 'PO',
@@ -1948,7 +1956,7 @@ var formatThreeWeeksSummary = function(data,key){
        scrollableHeight: '300px', scrollable: true};
    $scope.settingsForDynamicGraphCity = { enableSearch: true,
        keyboardControls: true ,idProp : "option",
-       template: '{{option}}', smartButtonTextConverter(skip, option) { return option; },
+       template: '{{option.name}}', smartButtonTextConverter(skip, option) { return option; },
        showCheckAll : true,
        scrollableHeight: '300px', scrollable: true};
    $scope.settingsForDynamicGraphVendor = { enableSearch: true,
@@ -3630,13 +3638,7 @@ $scope.rotateImage=function(id){
         $scope.getCampaigns();
     }
     if(value == 'city'){
-      $scope.dynamicValues = [
-        {id: 1, name: 'Mumbai'},
-        {id: 2, name: 'Delhi'},
-        {id: 3, name: 'Bangalore'},
-        {id: 4, name: 'Hyderabad'},
-        {id: 5, name: 'Chennai'},
-      ]
+
     }
     if(value == 'vendor'){
       $scope.getCampaignsByVendor();
