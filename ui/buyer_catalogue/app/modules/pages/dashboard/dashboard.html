@@ -3734,19 +3734,24 @@ Dynamic Graph
     Filter your Graphs
   </div>
 <br />
-<br />
-<br />
 <div class="panel panel-danger">
 <div class="panel-heading">Filter by Time Range</div>
-<div class="panel-body" style="color:#000000">
-  <label>Start Date :</label>
+<div class="panel-body">
+  <br /> <br />
+<div class="row" style="color:#000;">
+  <label>Start Date :  </label>
   <span>
     <input type="date" ng-model="graphSelection.startDate">
   </span>
-  <label>End Date :</label>
-  <span>
-    <input type="date" ng-model="graphSelection.endDate">
-  </span>
+</div>
+<br />
+  <div class="row" style="color:#000">
+    <label>  End Date :  </label>
+    <span>
+      <input type="date" ng-model="graphSelection.endDate">
+    </span>
+</div>
+<br />
 </div>
 </div>
 <div class="panel panel-danger">
@@ -3769,6 +3774,7 @@ Dynamic Graph
     <option value="city">City</option>
     <option value="locality">Locality</option>
   </select>
+  <br />
 </div>
 <div class="col-md-6 pull-left" ng-if="graphSelection.locality == 'city'">
   <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="cityLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
@@ -3827,10 +3833,30 @@ Dynamic Graph
 
  </div>
 <div class="col-md-8">
-    <div class="col-md-12" >
+    <div class="col-md-12">
       <div class="panel-heading content-title">
   Dynamic Graph
      </div>
+     <br />
+       <div class="row" style="color:#123456;">
+         <div class="col-md-4">
+           <input type="checkbox" value="leadsValues"> <small> LEADS %</small>
+           <br />
+           <input type="checkbox" value="hotleadsValues"> <small> HOT LEADS %</small>
+         </div>
+        <div class="col-md-4">
+          <input type="checkbox" value="costleads"><small> COST PER LEADS</small>
+          <br />
+          <input type="checkbox" value="costhotleads"><small> COST PER HOT LEADS</small>
+         </div>
+         <div class="col-md-4">
+           <input type="checkbox" value="costFixedMeeting"><small> COST PER MEETING FIXED</small>
+           <br />
+           <input type="checkbox" value="costCompletedMeeting"><small> COST PER MEETING COMPLETED</small>
+           <br />
+           <input type="checkbox" value="costConversion"><small> COST PER CONVERSION</small>
+         </div>
+       </div>
     <nvd3 options="stackedBarChartForDynamic" data="stackedBarChartDynamicData"></nvd3>
   </div>
 </div>
@@ -3844,7 +3870,6 @@ Dynamic Graph
                             <div class="col-md-2 pull-right">
                               <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="mergedarray" class="col-md-6"  extra-settings="searchSelectAllSettings"
                               selected-model="searchSelectAllModel" translation-texts="selected_baselines_customTexts" events="events"></span>
-
                             </div>
                           </div>
                           <!--END : COMPARE CAMPAIGNS LIST  -->
