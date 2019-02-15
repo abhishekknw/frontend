@@ -40,6 +40,8 @@ export default class SelectAttributeModal extends React.Component {
       this.props.getBaseEntityTypeList();
     } else if (this.props.attributeInfo.attributeType === 'INVENTORY_TYPE') {
       this.props.getBaseInventory();
+    } else if (this.props.attributeInfo.attributeType === 'INVENTORY') {
+      this.props.getInventoryList();
     }
 
     this.setState({
@@ -56,26 +58,39 @@ export default class SelectAttributeModal extends React.Component {
 
   componentDidUpdate() {
     let entityType;
+    let listKey;
     let entityAttribute;
+    let optionValueKey = 'id';
     if (this.props.attributeInfo.attributeType === 'ENTITY_TYPE') {
       entityType = 'entityType';
+      listKey = 'entityTypeList';
       entityAttribute = 'entity_attributes';
     } else if (this.props.attributeInfo.attributeType === 'BASE_ENTITY_TYPE') {
       entityType = 'baseEntityType';
+      listKey = 'baseEntityTypeList';
       entityAttribute = 'entity_attributes';
-    } else {
+    } else if (this.props.attributeInfo.attributeType === 'INVENTORY_TYPE') {
       entityType = 'baseInventory';
+      listKey = 'baseInventoryList';
       entityAttribute = 'base_attributes';
+      optionValueKey = '_id';
+    } else if (this.props.attributeInfo.attributeType === 'INVENTORY') {
+      entityType = 'baseInventory';
+      listKey = 'inventoryList';
+      entityAttribute = 'inventory_attributes';
+      optionValueKey = '_id';
+    } else {
+      // Unsupported attribute
     }
 
     if (
       this.state.entityTypeOption.length !==
-      this.props[entityType][entityType + 'List'].length
+      this.props[entityType][listKey].length
     ) {
       let entityTypeOption = [];
-      this.props[entityType][entityType + 'List'].forEach(entityType => {
+      this.props[entityType][listKey].forEach(entityType => {
         entityTypeOption.push({
-          value: entityType.id,
+          value: entityType[optionValueKey],
           label: entityType.name,
           attributes: entityType[entityAttribute].map(attribute => {
             if (attribute.hasOwnProperty('isChecked')) {
@@ -120,7 +135,8 @@ export default class SelectAttributeModal extends React.Component {
   renderOptionRow(option, optionIndex) {
     return option.type !== 'ENTITY_TYPE' &&
       option.type !== 'BASE_ENTITY_TYPE' &&
-      option.type !== 'INVENTORY_TYPE' ? (
+      option.type !== 'INVENTORY_TYPE' &&
+      option.type !== 'INVENTORY' ? (
       <div className="form-control option-container" key={optionIndex}>
         <input
           type="checkbox"
@@ -145,9 +161,12 @@ export default class SelectAttributeModal extends React.Component {
       entityType = 'Entity Type';
     } else if (attributeInfo.attributeType === 'BASE_ENTITY_TYPE') {
       entityType = 'Base Entity Type';
-    } else {
+    } else if (attributeInfo.attributeType === 'INVENTORY_TYPE') {
       entityType = 'Base Inventory';
+    } else if (attributeInfo.attributeType === 'INVENTORY') {
+      entityType = 'Inventory';
     }
+
     return (
       <Modal
         isOpen={this.props.showOptionModal}
