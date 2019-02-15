@@ -1947,8 +1947,8 @@ var formatThreeWeeksSummary = function(data,key){
        showCheckAll : true,
        scrollableHeight: '300px', scrollable: true};
    $scope.settingsForDynamicGraphCity = { enableSearch: true,
-       keyboardControls: true ,idProp : "option.vendor_id",
-       template: '{{option.name}}', smartButtonTextConverter(skip, option) { return option; },
+       keyboardControls: true ,idProp : "option",
+       template: '{{option}}', smartButtonTextConverter(skip, option) { return option; },
        showCheckAll : true,
        scrollableHeight: '300px', scrollable: true};
    $scope.settingsForDynamicGraphVendor = { enableSearch: true,
