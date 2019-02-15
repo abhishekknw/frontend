@@ -3451,7 +3451,7 @@
 <!-- < End Overall Campaign Wise Summary> -->
 
 <!-- dynamic Graphs -->
-<div class="col-lg-12" ng-if="dynamicGraphsUI" style="margin-top:20px;color:#000;">
+<!-- <div class="col-lg-12" ng-if="dynamicGraphsUI" style="margin-top:20px;color:#000;">
   <div class="panel panel-primary">
     <div class="panel-heading content-title">
       <label for="Location">Dynamic Graphs</label>
@@ -3726,7 +3726,7 @@ Dynamic Graph
    </div>
   <nvd3 options="stackedBarChartForDynamic" data="stackedBarChartDynamicData"></nvd3>
 </div>
-</div>
+</div> -->
 
 <!-- strt with dynamic graph -->
 <div class="col-md-4">
@@ -3738,7 +3738,15 @@ Dynamic Graph
 <br />
 <div class="panel panel-danger">
 <div class="panel-heading">Filter by Time Range</div>
-<div class="panel-body">
+<div class="panel-body" style="color:#000000">
+  <label>Start Date :</label>
+  <span>
+    <input type="date" ng-model="graphSelection.startDate">
+  </span>
+  <label>End Date :</label>
+  <span>
+    <input type="date" ng-model="graphSelection.endDate">
+  </span>
 </div>
 </div>
 <div class="panel panel-danger">
@@ -3761,7 +3769,7 @@ Dynamic Graph
 <div class="panel-body">
   <br /><br />
   <div class="row form-group">
-  <select class="form-control">
+  <select class="form-control" ng-model="graphSelection.category">
     <option value="" ng-disabled>Select A Category</option>
     <option value="vendor">Vendor</option>
     <option value="campaign">Campaign</option>
@@ -3771,11 +3779,11 @@ Dynamic Graph
 <br />
 <div class="col-md-6 pull-left" ng-if="graphSelection.category == 'vendor'">
     <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="vendorsList" class="col-md-6"  extra-settings="settingsForDynamicGraphVendor"
-    selected-model="myModel" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
+    selected-model="selectedVendors" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
 </div>
 <div class="col-md-6 pull-left" ng-if="graphSelection.category == 'campaign'">
    <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
-   selected-model="myModel" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
+   selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
 </div>
 </div>
 </div>
@@ -3789,7 +3797,7 @@ Dynamic Graph
          <h3>Select Vendor</h3>
        <div class="col-md-6 pull-left" ng-if="graphSelection.category == 'vendor'">
            <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="vendorsList" class="col-md-6"  extra-settings="settingsForDynamicGraphVendor"
-           selected-model="myModel" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
+           selected-model="selectedVendors" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
          </div>
        </div>
    </div>
@@ -3799,10 +3807,11 @@ Dynamic Graph
    <div class="panel-body">
    </div>
    </div> -->
-   <button type="button" name="button" class="btn btn-danger" ng-click="getGenericGraphs()">Submit</button>
+   <button type="button" name="button" class="btn btn-danger" ng-click="getGenericGraphData()">Submit</button>
+
  </div>
 <div class="col-md-8">
-    <div class="col-md-12" ng-if="showGraph">
+    <div class="col-md-12" >
       <div class="panel-heading content-title">
   Dynamic Graph
      </div>
