@@ -4014,6 +4014,36 @@ $scope.xValues = {
               angular.forEach($scope.selectedVendors, function(data){
                 reqData.data_scope['1'].values.exact.push($scope.vendorsData[data].vendor_id);
               });
+        }else if (
+              $scope.selectedCities.length
+            ) {
+              console.log("hello");
+              var reqData = {
+
+                  "data_scope":{
+                    "1":
+                        {"category":"geographical","level":"city","match_type":0,
+                            "values":{"exact":[]},
+                            "value_type":"city"
+
+                        },
+                      // "1":{"category":"time","level":"time","match_type":1,
+                      //         "values":{"range":[]},
+                      //         "value_type":"time"
+                      //
+                      //     }
+                      },
+                  "data_point":{"category":"unordered","level":["campaign"]},
+                  "raw_data":["lead","hot_lead","flat","cost"],
+                  "metrics":[["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"]]
+                }
+
+
+              angular.forEach($scope.selectedCities, function(data){
+                reqData.data_scope['1'].values.exact.push(data.name);
+              });
+              // reqData.data_scope['1'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
+              // reqData.data_scope['1'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
         }
 
 
