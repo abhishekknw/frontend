@@ -23,6 +23,7 @@
  $scope.vendorsData = {};
  $scope.emailModel = {};
  $scope.vendorDataMap = {};
+ $scope.vendorsData = {};
  $scope.selectedVendors = [];
  $scope.selectedCities = [];
  $scope.selectedDynamicCampaigns = [];
@@ -464,7 +465,6 @@
                   $scope.mergedarray.push(campaign);
               })
             })
-            $scope.vendorsData = {};
             $scope.distributedGraphsVendorsData = [];
 
             angular.forEach($scope.mergedarray, function(data){
