@@ -32,7 +32,20 @@
    {id: 3, name: 'Bangalore'},
    {id: 4, name: 'Hyderabad'},
    {id: 5, name: 'Chennai'},
- ]
+ ];
+ $scope.dynamicGraphYValuesMap = {
+   'lead/flat*100': 'Leads %',
+   'hot_lead/flat*100': 'Hot Leads %',
+   'cost/lead': 'Cost Per Lead',
+   'cost/hot_lead': 'Cost per Hot Lead'
+ };
+ $scope.dynamicGraphYKeysMap = {
+   'leadsPerc': 'lead/flat*100',
+   'hotleadsPerc': 'hot_lead/flat*100',
+   'costPerLeads': 'cost/lead',
+   'costPerHotLeads': 'cost/hot_lead'
+ }
+
  console.log($scope.userInfo);
  $scope.invNameToCode = {
    'POSTER' : 'PO',
@@ -3743,9 +3756,9 @@ $scope.rotateImage=function(id){
   //     }
   //   }
   // }
-$scope.yValues = ['lead/flat*100','hot_lead/flat*100','cost/lead','cost/hot_lead'];
+$scope.yValues = [];
 $scope.xValues = {
-  value : 'campaign'
+  value : ''
 };
   var formatDynamicData = function(data){
     console.log(data);
@@ -3779,7 +3792,7 @@ $scope.xValues = {
     })
     angular.forEach($scope.yValues, function(itemKey){
       var temp_data = {
-        key : itemKey,
+        key : $scope.dynamicGraphYValuesMap[itemKey],
         values : values1[itemKey]
       }
       finalData.push(temp_data);
@@ -3795,12 +3808,19 @@ $scope.xValues = {
   }
   $scope.graphSelection = {
     category : {},
-    dateRange : {}
+    dateRange : {},
+    Yvalues : {
+      leadsPerc : false,
+      hotleadsPerc : false,
+      costPerLeads : false,
+      costPerHotLeads : false
+    }
   };
 
   $scope.getGenericGraphData = function(){
     if($scope.graphSelection.dateRange.startDate && $scope.graphSelection.category == 'campaign'
         && $scope.selectedDynamicCampaigns.length){
+          $scope.xValues.value = 'campaign_name';
           var reqData = {
             "data_scope":{
                 "1":
@@ -3827,6 +3847,7 @@ $scope.xValues = {
         } else if ($scope.graphSelection.dateRange.startDate && (
             $scope.graphSelection.category == 'vendor' &&
             $scope.selectedVendors.length )) {
+              $scope.xValues.value = 'vendor_name';
               var reqData = {
                 "data_scope":{
                     "1":
@@ -3876,6 +3897,7 @@ $scope.xValues = {
               // reqData.data_scope['1'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
         } else if ($scope.graphSelection.dateRange.startDate &&
                      $scope.graphSelection.category == 'campaign' && $scope.selectedDynamicCampaigns.length == 0) {
+                       $scope.xValues.value = 'campaign_name';
                        var reqData = {
                          "data_scope":{
                              "1":
@@ -3895,6 +3917,7 @@ $scope.xValues = {
         }else if ($scope.graphSelection.dateRange.startDate && (
             $scope.graphSelection.category == 'campaign' &&
             $scope.selectedDynamicCampaigns.length )) {
+              $scope.xValues.value = 'campaign_name';
               var reqData = {
                 "data_scope":{
                     "1":
@@ -3922,6 +3945,7 @@ $scope.xValues = {
         }else if ($scope.graphSelection.dateRange.startDate && (
             $scope.graphSelection.category == 'campaign' &&
             $scope.selectedDynamicCampaigns.length && $scope.graphSelection.specificParam == 'qualitytype' )) {
+              $scope.xValues.value = 'campaign_name';
               var reqData = {
                 "data_scope":{
                     "1":
@@ -3949,6 +3973,7 @@ $scope.xValues = {
         }else if ($scope.graphSelection.dateRange.startDate && (
             $scope.graphSelection.category == 'campaign' &&
             $scope.selectedDynamicCampaigns.length && $scope.graphSelection.specificParam == 'flattype' )) {
+              $scope.xValues.value = 'campaign_name';
               var reqData = {
                 "data_scope":{
                     "1":
@@ -3976,6 +4001,7 @@ $scope.xValues = {
             $scope.graphSelection.category == 'campaign' &&
               $scope.selectedDynamicCampaigns.length
             )) {
+              $scope.xValues.value = 'campaign_name';
               var reqData = {
                 "data_scope":{
                     "1":
@@ -3997,6 +4023,7 @@ $scope.xValues = {
             $scope.graphSelection.category == 'vendor' &&
               $scope.selectedVendors.length
             )) {
+              $scope.xValues.value = 'vendor_name';
               var reqData = {
                 "data_scope":{
                     "1":
@@ -4018,6 +4045,7 @@ $scope.xValues = {
               $scope.selectedCities.length
             ) {
               console.log("hello");
+              $scope.xValues.value = 'campaign_name';
               var reqData = {
 
                   "data_scope":{
@@ -4045,74 +4073,14 @@ $scope.xValues = {
               // reqData.data_scope['1'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
               // reqData.data_scope['1'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
         }
-
-
-  //   if($scope.graphSelection.category == 'vendor'){
-  //     var reqData = {
-  //       "data_scope": {"1":{"category": "unordered", "level": "vendor", "match_type": 0,
-  //           "values": {"exact": []}, "value_type": "vendor"}},
-  //       "data_point": {
-  //           "category": "unordered",
-  //           "level": ["campaign"]
-  //       },
-  //       "raw_data": ["lead","hot_lead","flat"],
-  //       "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"]]
-  //
-  //     }
-  //     console.log($scope.vendorsData);
-  //     angular.forEach($scope.selectedVendors, function(data){
-  //       console.log(data);
-  //       reqData.data_scope['1'].values.exact.push($scope.vendorsData[data].vendor_id);
-  //     })
-  //   }else if ($scope.graphSelection.category == 'campaign') {
-  //     var reqData = {
-  //       "data_scope": {"1":{"category": "unordered", "level": "campaign", "match_type": 0,
-  //           "values": {}, "value_type": "campaign"}},
-  //       "data_point": {
-  //           "category": "unordered",
-  //           "level": ["campaign"]
-  //       },
-  //       "raw_data": ["lead", "hot_lead","flat"],
-  //       "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"]]
-  //     }
-  //     if($scope.selectedDynamicCampaigns.length){
-  //       console.log($scope.selectedDynamicCampaigns);
-  //       reqData.data_scope['1'].values['exact'] = [];
-  //       angular.forEach($scope.selectedDynamicCampaigns, function(data){
-  //         reqData.data_scope['1'].values.exact.push(data.campaign_id);
-  //       })
-  //     }
-  //     if($scope.graphSelection.startDate && $scope.graphSelection.endDate){
-  //           reqData.data_scope["2"] = {
-  //             "category":"time","level":"time","match_type":1,
-  //                     "values":{"range":[]},
-  //                     "value_type":"time"
-  //           }
-  //           reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.startDate));
-  //           reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.endDate));
-  //         }
-  //   }else if ($scope.graphSelection.locality == 'city') {
-  //     reqData = {
-  //        "data_scope": {"1":{"category": "geographical", "level": "city", "match_type": 0,
-  //            "values": {"exact": []}, "value_type": "city"}},
-  //        "data_point": {
-  //            "category": "unordered",
-  //            "level": ["campaign"]
-  //        },
-  //        "raw_data": ["lead","hot_lead","flat"],
-  //        "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"]]
-  //     }
-  //   angular.forEach($scope.selectedCities, function(data){
-  //     reqData.data_scope['1'].values.exact.push(data.name);
-  //   })
-  // }
     console.log(reqData);
     if(reqData){
       DashboardService.getDistributionGraphsStatics(reqData)
       .then(function onSuccess(response){
         console.log(response);
+        $scope.initialDynamicGraphData = response.data.data;
         $scope.stackedBarChartForDynamic = angular.copy(stackedBarChart);
-        $scope.stackedBarChartDynamicData = formatDynamicData(response.data.data);
+        $scope.stackedBarChartDynamicData = formatDynamicData($scope.initialDynamicGraphData);
         console.log($scope.stackedBarChartDynamicData);
       }).catch(function onError(response){
         console.log(response);
@@ -4122,6 +4090,16 @@ $scope.xValues = {
 
   $scope.clearDatesFromDynamicGraph = function(){
     $scope.graphSelection.dateRange = {};
+  }
+  $scope.changeDynamicGraph = function(){
+    console.log($scope.graphSelection);
+    $scope.yValues = [];
+    angular.forEach($scope.graphSelection.Yvalues, function(data,key){
+      console.log(data);
+      if(data)
+        $scope.yValues.push($scope.dynamicGraphYKeysMap[key]);
+    })
+    $scope.stackedBarChartDynamicData = formatDynamicData($scope.initialDynamicGraphData);
   }
   // $scope.getGenericGraphData();
 
