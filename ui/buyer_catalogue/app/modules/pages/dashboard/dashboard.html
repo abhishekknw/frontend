@@ -3741,11 +3741,14 @@ Dynamic Graph
 <div class="panel-body" style="color:#000000">
   <label>Start Date :</label>
   <span>
-    <input type="date" ng-model="graphSelection.startDate">
+    <input type="date" ng-model="graphSelection.dateRange.startDate">
   </span>
   <label>End Date :</label>
   <span>
-    <input type="date" ng-model="graphSelection.endDate">
+    <input type="date" ng-model="graphSelection.dateRange.endDate">
+  </span>
+  <span>
+    <button class="btn btn-primary" ng-click="clearDatesFromDynamicGraph()">Clear Dates</button>
   </span>
 </div>
 </div>
