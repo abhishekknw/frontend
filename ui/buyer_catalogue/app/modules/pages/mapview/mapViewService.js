@@ -37,8 +37,9 @@
     }
 
     //added to search suppliers based on supplier code and search text
-    mapViewService.searchSuppliers = function(code,searchtext){
-        var url = url_base + 'supplier-search/?' + "search=" + searchtext + "&supplier_type_code=" + code ;
+    mapViewService.searchSuppliers = function(code,searchtext,vendorId){
+        var url = url_base + 'supplier-search/?' + "search=" + searchtext + "&supplier_type_code=" + code
+                                  + "&vendor=" + vendorId;
         return machadaloHttp.get(url);
     }
 

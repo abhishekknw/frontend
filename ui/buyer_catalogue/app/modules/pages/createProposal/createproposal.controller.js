@@ -14,7 +14,7 @@ angular.module('catalogueApp')
 		{name:"Retail Shop", code:"RE", selected:"false"},
 	];
 	$scope.proposalheaders = [
-        {header : 'Advertising Area'},
+			  {header : 'Advertising Area'},
         {header : 'Location Address'},
         {header : 'City'},
         {header : 'Area'},
@@ -67,6 +67,7 @@ angular.module('catalogueApp')
 		//for centers if proposal is editable
 		createProposalService.getProposalCenters($window.localStorage.proposal_id)
 		.then(function onSuccess(response){
+			console.log(response);
 			$scope.centers = response.data.data;
 			for(var i=0; i<$scope.centers.length; i++){
 				$scope.addCenter();
@@ -239,4 +240,19 @@ angular.module('catalogueApp')
 				$scope.loadingSpinner = true;
 	    }
 		}
+
+
+		var getVendors = function(){
+	      var category = 'SUPPLIER_AGENCY';
+	      createProposalService.getVendors(category)
+	      .then(function onSuccess(response){
+	        console.log(response);
+					$scope.vendors = response.data.data;
+					console.log($scope.vendors);
+	        $scope.model.vendorData = [1,2,3];
+	      }).catch(function onError(response){
+	        console.log(response);
+	      })
+	    }
+	    getVendors();
 });
