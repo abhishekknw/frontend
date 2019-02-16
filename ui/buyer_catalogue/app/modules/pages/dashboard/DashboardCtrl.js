@@ -3456,9 +3456,9 @@ $scope.getCampaignWiseSummary = function(){
               index++;
             }
             $scope.x_fre_leads.push(key);
-            if(modeData.hasOwnProperty('mode')){
+            if(modeData.hasOwnProperty('mean')){
               var value1 =
-                 { x : index , y : modeData.mode};
+                 { x : index , y : modeData.mean};
 
               values1.push(value1);
             }else {
@@ -3467,9 +3467,9 @@ $scope.getCampaignWiseSummary = function(){
 
                 values1.push(value1);
             }
-            if(data.higher_group_data[0]['freq_dist_hot_lead/flat*100'][key].hasOwnProperty('mode')){
+            if(data.higher_group_data[0]['freq_dist_hot_lead/flat*100'][key].hasOwnProperty('mean')){
               var value2 =
-                 { x : index , y : data.higher_group_data[0]['freq_dist_hot_lead/flat*100'][key].mode};
+                 { x : index , y : data.higher_group_data[0]['freq_dist_hot_lead/flat*100'][key].mean};
               values2.push(value2);
             }else {
                 var value2 =
@@ -3483,12 +3483,12 @@ $scope.getCampaignWiseSummary = function(){
 
       var temp_data = [
         {
-          key : "Leads (Mode)",
+          key : "Leads (Mean) %",
           color : constants.colorKey1,
           values : values1
         },
         {
-          key : "Hot Leads (Mode)",
+          key : "Hot Leads (Mean) %",
           color : constants.colorKey2,
           values : values2
         }
