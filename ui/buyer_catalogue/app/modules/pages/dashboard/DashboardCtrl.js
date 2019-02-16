@@ -36,8 +36,8 @@
  $scope.dynamicGraphYValuesMap = {
    'lead/flat*100': 'Leads %',
    'hot_lead/flat*100': 'Hot Leads %',
-   'cost/lead': 'Cost Per Lead',
-   'cost/hot_lead': 'Cost per Hot Lead'
+   'cost/lead': 'Cost Per Lead (Rs)',
+   'cost/hot_lead': 'Cost Per Hot Lead (Rs)'
  };
  $scope.dynamicGraphYKeysMap = {
    'leadsPerc': 'lead/flat*100',
@@ -3777,7 +3777,7 @@ $scope.xValues = {
         console.log(specificXValue);
         if(specificXValue){
           console.log("hello");
-          var temp_label = data[$scope.xValues.value] + " (" + data[specificXValue] + ")";
+          var temp_label = data[$scope.xValues.value] + " (" + data[specificXValue] + ")" ;
           var temp = {
             x: temp_label,
             y: data[itemKey]
