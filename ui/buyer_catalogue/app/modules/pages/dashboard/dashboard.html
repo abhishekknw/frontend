@@ -3729,7 +3729,8 @@ Dynamic Graph
 </div> -->
 
 <!-- strt with dynamic graph -->
-<div class="col-md-4">
+<div class="row" ng-if="dynamicGraphsUI">
+<div class="col-md-3">
   <div class="panel-heading content-title">
     Filter your Graphs
   </div>
@@ -3854,7 +3855,7 @@ Dynamic Graph
    <button type="button" name="button" class="btn btn-danger" ng-click="getGenericGraphData()">Submit</button>
 
  </div>
-<div class="col-md-8">
+<div class="col-md-9">
     <div class="col-md-12">
       <div class="panel-heading content-title">
   Dynamic Graph
@@ -3881,6 +3882,7 @@ Dynamic Graph
        </div>
     <nvd3 options="stackedBarChartForDynamic" data="stackedBarChartDynamicData"></nvd3>
   </div>
+</div>
 </div>
 <!-- end with dynamic graph -->
                         <!--START : COMPARE CAMPAIGNS LIST  -->
