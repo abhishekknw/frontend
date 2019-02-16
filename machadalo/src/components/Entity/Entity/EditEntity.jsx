@@ -3,6 +3,7 @@ import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
 
 import OptionModal from '../../Modals/OptionModal';
+import FillEntityModal from '../../Modals/FillEntityModal';
 
 const customeStyles = {
   input: () => ({
@@ -21,7 +22,8 @@ export default class EditEntity extends React.Component {
       attributeValue: [],
       showOptionModal: false,
       attributeValueOptions: [''],
-      attributeValueInfo: {}
+      attributeValueInfo: {},
+      showFillEntityModal: false
     };
 
     this.renderAttributeRow = this.renderAttributeRow.bind(this);
@@ -31,6 +33,9 @@ export default class EditEntity extends React.Component {
     this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
+    this.onCancelFillEntityModal = this.onCancelFillEntityModal.bind(this);
+    this.onSubmitFillEntityModal = this.onSubmitFillEntityModal.bind(this);
+    this.onOpenFillEntityModal = this.onOpenFillEntityModal.bind(this);
   }
 
   componentWillMount() {
@@ -51,6 +56,37 @@ export default class EditEntity extends React.Component {
         name: this.props.entity.currentEntity.name
       });
     }
+  }
+
+  onCancelFillEntityModal() {
+    this.setState({
+      showFillEntityModal: false,
+      currentModalEntityType: undefined
+    });
+  }
+
+  onSubmitFillEntityModal(currentModalEntityType, attributeInfo) {
+    this.setState({
+      showFillEntityModal: false,
+      currentModalEntityType: undefined,
+      attributeValueInfo: {}
+    });
+
+    let newAttributes = Object.assign({}, attributeInfo.attribute, {
+      value: currentModalEntityType
+    });
+    this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
+  }
+
+  onOpenFillEntityModal(currentModalEntityType, attribute, attrIndex) {
+    this.setState({
+      showFillEntityModal: true,
+      currentModalEntityType,
+      attributeValueInfo: {
+        attribute,
+        attrIndex
+      }
+    });
   }
 
   onCancelOptionModal() {
@@ -187,7 +223,7 @@ export default class EditEntity extends React.Component {
             type="button"
             className="btn btn--danger"
             onClick={() =>
-              this.onOpenOptionModal(
+              this.onOpenFillEntityModal(
                 attribute.value ? attribute.value : [''],
                 attribute,
                 attrIndex
@@ -195,8 +231,52 @@ export default class EditEntity extends React.Component {
             }
           >
             {attribute.value && attribute.value.length
+              ? 'Show Base Inventory List'
+              : 'Create Base Inventory List'}
+          </button>
+        );
+
+      case 'INVENTORY':
+        return (
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={() =>
+              this.onOpenFillEntityModal(attribute.value, attribute, attrIndex)
+            }
+          >
+            {attribute.value && attribute.value.attributes[0].value
               ? 'Show Inventory List'
-              : 'Create  Inventory List'}
+              : 'Create Inventory List'}
+          </button>
+        );
+
+      case 'ENTITY_TYPE':
+        return (
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={() =>
+              this.onOpenFillEntityModal(attribute.value, attribute, attrIndex)
+            }
+          >
+            {attribute.value && attribute.value.attributes[0].value
+              ? 'Show Entity Type Data'
+              : 'Create Entity Type Data'}
+          </button>
+        );
+      case 'BASE_ENTITY_TYPE':
+        return (
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={() =>
+              this.onOpenFillEntityModal(attribute.value, attribute, attrIndex)
+            }
+          >
+            {attribute.value && attribute.value.attributes[0].value
+              ? 'Show Base Entity Type Data'
+              : 'Create Base Entity Type Data'}
           </button>
         );
       default:
@@ -262,6 +342,18 @@ export default class EditEntity extends React.Component {
           options={this.state.attributeValueOptions}
           columnInfo={this.state.attributeValueInfo}
         />
+
+        {this.state.showFillEntityModal ? (
+          <FillEntityModal
+            showOptionModal={this.state.showFillEntityModal}
+            onCancel={this.onCancelFillEntityModal}
+            onSubmit={this.onSubmitFillEntityModal}
+            columnInfo={this.state.attributeValueInfo}
+            selectedEntityType={this.state.currentModalEntityType}
+          />
+        ) : (
+          undefined
+        )}
       </div>
     );
   }
