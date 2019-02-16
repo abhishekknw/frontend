@@ -144,6 +144,12 @@
         <h4 class="modal-title">Assign Campaign to Operations Manager</h4>
         <hr/>
         <div class = "modal-body">
+          <div class = "row">
+          <label>Select Organisation:</label>
+            <select ng-model= "orgId" ng-change="getUsersList(orgId)">
+              <option ng-repeat = "org in organisationList" value = "{{org.organisation_id}}">{{org.name}}</option>
+            </select>
+          </div>
         <div class = "row">
         <label>Assign to:</label>
           <select ng-model= "userId">

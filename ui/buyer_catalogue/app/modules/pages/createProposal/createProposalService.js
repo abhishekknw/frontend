@@ -48,5 +48,11 @@
       	// var url = url_base + proposal_id;
     	return machadaloHttp.get(url);
     }
+
+    createProposalService.getVendors = function(category){
+     var url = url_base1 + "website/organisation/?category=" + category;
+     return machadaloHttp.get(url);
+   }
+
   	return createProposalService;
   }]);

@@ -3850,7 +3850,30 @@ $scope.xValues = {
           });
           reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
           reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
-    }else if($scope.graphSelection.dateRange.startDate && $scope.graphSelection.category == 'campaign'
+    }else if (
+        $scope.graphSelection.category == 'campaign' &&
+        $scope.selectedDynamicCampaigns.length && $scope.graphSelection.specificParam == 'qualitytype' ) {
+          $scope.xValues.value = 'qualitytype';
+          specificXValue = 'campaign_name';
+          var reqData = {
+            "data_scope":{
+                "1":
+                    {"category":"unordered","level":"campaign","match_type":0,
+                        "values":{"exact":[]},
+                        "value_type":"campaign"
+
+                    },
+                },
+            "data_point":{"category":"unordered","level":["qualitytype"]},
+            "raw_data":["lead","hot_lead","flat","cost"],
+            "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"]]
+          }
+
+          angular.forEach($scope.selectedDynamicCampaigns, function(data){
+            reqData.data_scope['1'].values.exact.push(data.campaign_id);
+          });
+    }
+    else if($scope.graphSelection.dateRange.startDate && $scope.graphSelection.category == 'campaign'
         && $scope.selectedDynamicCampaigns.length){
           $scope.xValues.value = 'campaign_name';
           var reqData = {

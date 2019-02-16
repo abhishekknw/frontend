@@ -229,10 +229,26 @@ export default class CreateEntity extends React.Component {
             }
           >
             {attribute.value && attribute.value.attributes[0].value
-              ? 'Show Inventory List'
-              : 'Create  Inventory List'}
+              ? 'Show Base Inventory List'
+              : 'Create Base Inventory List'}
           </button>
         );
+
+      case 'INVENTORY':
+        return (
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={() =>
+              this.onOpenFillEntityModal(attribute.value, attribute, attrIndex)
+            }
+          >
+            {attribute.value && attribute.value.attributes[0].value
+              ? 'Show Inventory List'
+              : 'Create Inventory List'}
+          </button>
+        );
+
       case 'ENTITY_TYPE':
         return (
           <button
