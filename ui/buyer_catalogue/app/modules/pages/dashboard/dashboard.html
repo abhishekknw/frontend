@@ -3738,28 +3738,52 @@ Dynamic Graph
 <div class="panel-heading">Filter by Time Range</div>
 <div class="panel-body">
   <br /> <br />
-<div class="row" style="color:#000;">
+<div class="row" style="color:#808080;">
   <label>Start Date :  </label>
   <span>
     <input type="date" ng-model="graphSelection.dateRange.startDate">
   </span>
-  <label>End Date :</label>
+  </div>
+  <br />
+  <div class="row" style="color:#808080;">
+  <label>  End Date :</label>
   <span>
     <input type="date" ng-model="graphSelection.dateRange.endDate">
   </span>
+</div>
+<br />
+<div class="row">
   <span>
-    <button class="btn btn-primary" ng-click="clearDatesFromDynamicGraph()">Clear Dates</button>
+    <button class="btn btn-primary pull-right"  ng-click="clearDatesFromDynamicGraph()">Clear Dates</button>
   </span>
 </div>
-</div>
-<div class="panel panel-danger">
-<div class="panel-heading">Filter By Type of Society</div>
-<div class="panel-body">
+<br />
 </div>
 </div>
 <div class="panel panel-danger">
-<div class="panel-heading">Filter By Quality of Flats</div>
+<div class="panel-heading">Filter By Type of Cases</div>
 <div class="panel-body">
+  <br /><br />
+  <div class="row form-group">
+    <label for="" style="color:#808080;">Select Type of Case</label>
+  <select class="form-control" name="">
+    <option value=""></option>
+    <option value="societyType" ng-click="societyTypeDrop">Filter By Type of Societies</option>
+    <option value="flatType" ng-click="flatTypeDrop">Filter By Quality of Flats</option>
+  </select>
+</div>
+  <br />
+  <div class="row" ng-if="societyTypeDrop">
+    <input type="radio" name="" value=""> Standard
+    <input type="radio" name="" value=""> Medium High
+    <input type="radio" name="" value=""> High
+    <input type="radio" name="" value=""> Ultra High
+  </div>
+  <div class="row" ng-if="flatTypeDrop">
+    <input type="radio" name="" value=""> 0 - 150
+    <input type="radio" name="" value=""> 150 - 400
+    <input type="radio" name="" value=""> 400 +
+  </div>
 </div>
 </div>
 <div class="panel panel-danger">
@@ -3767,8 +3791,8 @@ Dynamic Graph
 <div class="panel-body">
   <br /><br />
   <div class="row form-group">
+    <label for="" style="color:#808080;">Select a Location</label>
   <select class="form-control" ng-model="graphSelection.locality">
-    <option value="" ng-disabled>Select Location</option>
     <option value="city">City</option>
     <option value="locality">Locality</option>
   </select>
@@ -3789,13 +3813,13 @@ Dynamic Graph
 <div class="panel-body">
   <br /><br />
   <div class="row form-group">
-  <select class="form-control" ng-model="graphSelection.category">
-    <option value="" ng-disabled>Select A Category</option>
-    <option value="vendor">Vendor</option>
-    <option value="campaign">Campaign</option>
-    <option value="supplier">Supplier</option>
-  </select>
-</div>
+    <label for="" style="color:#808080;">Select a Category</label>
+    <select class="form-control"  ng-model="graphSelection.category">
+      <option value="vendor">Vendor</option>
+      <option value="campaign">Campaign</option>
+      <option value="supplier">Supplier</option>
+    </select>
+  </div>
 <br />
 <div class="col-md-6 pull-left" ng-if="graphSelection.category == 'vendor'">
     <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="vendorsList" class="col-md-6"  extra-settings="settingsForDynamicGraphVendor"
