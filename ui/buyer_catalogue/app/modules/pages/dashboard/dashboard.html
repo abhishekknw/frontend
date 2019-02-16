@@ -3730,48 +3730,71 @@ Dynamic Graph
 
 <!-- strt with dynamic graph -->
 <div class="row" ng-if="dynamicGraphsUI">
-<div class="col-md-3">
+<div class="col-md-4">
   <div class="panel-heading content-title">
     Filter your Graphs
   </div>
 <br />
-<div class="panel panel-danger">
-<div class="panel-heading">Filter by Time Range</div>
-<div class="panel-body">
-  <br /> <br />
-<div class="row" style="color:#808080;">
-  <label>Start Date :  </label>
-  <span>
-    <input type="date" ng-model="graphSelection.dateRange.startDate">
-  </span>
-  </div>
-  <br />
+  <div class="panel panel-danger">
+  <div class="panel-heading">Filter by Time Range</div>
+  <div class="panel-body">
+    <br /> <br />
+    <small>
+      <div class="col-md-6 pull-left" style="margin-left:-50px;color:#808080;">
+        <div class="form-group">
+          <label>Start Date :  </label>
+          <span>
+            <input type="date" ng-model="graphSelection.dateRange.startDate">
+          </span>
+        </div>
+        </div>
+        <div class="col-md-6" style="color:#808080;margin-left:10px">
+          <div class="form-group">
+          <label>  End Date :</label>
+            <span>
+              <input type="date" ng-model="graphSelection.dateRange.endDate">
+            </span>
+            </div>
+        </div>
+        <div class="row" style="color:#808080;margin-left:50px;margin-top:10px;">
+          <div class="form-group">
+            <span>
+              <button class="btn btn-primary glyphicon glyphicon-trash pull-right" ng-click="clearDatesFromDynamicGraph()"></button>
+            </span>
+          </div>
+        </div>
+    </small>
+
+    <!-- <br /><br /> <br />
   <div class="row" style="color:#808080;">
-  <label>  End Date :</label>
-  <span>
-    <input type="date" ng-model="graphSelection.dateRange.endDate">
-  </span>
-</div>
-<br />
-<div class="row">
-  <span>
-    <button class="btn btn-primary pull-right"  ng-click="clearDatesFromDynamicGraph()">Clear Dates</button>
-  </span>
-</div>
-<br />
-</div>
-</div>
+    <label>Start Date :  </label>
+    <span>
+      <input type="date" ng-model="graphSelection.dateRange.startDate">
+    </span>
+    </div>
+    <br />
+    <div class="row" style="color:#808080;">
+    <label>  End Date :</label>
+    <span>
+      <input type="date" ng-model="graphSelection.dateRange.endDate">
+    </span>
+  </div>
+  <br /> -->
+  </div>
+  </div>
 <div class="panel panel-danger">
 <div class="panel-heading">Filter By Type of Cases</div>
 <div class="panel-body">
   <br /><br />
   <div class="row form-group">
-    <label for="" style="color:#808080;">Select Type of Case</label>
-  <select class="form-control" name="">
-    <option value=""></option>
-    <option value="societyType" ng-click="societyTypeDrop">Filter By Type of Societies</option>
-    <option value="flatType" ng-click="flatTypeDrop">Filter By Quality of Flats</option>
-  </select>
+    <small>
+      <label for="" style="color:#808080;">Select Type of Case</label>
+    <select class="form-control" name="">
+      <option value=""></option>
+      <option value="societyType" ng-click="societyTypeDrop">Filter By Type of Societies</option>
+      <option value="flatType" ng-click="flatTypeDrop">Filter By Quality of Flats</option>
+    </select>
+  </small>
 </div>
   <br />
   <div class="row" ng-if="societyTypeDrop">
@@ -3792,11 +3815,13 @@ Dynamic Graph
 <div class="panel-body">
   <br /><br />
   <div class="row form-group">
-    <label for="" style="color:#808080;">Select a Location</label>
-  <select class="form-control" ng-model="graphSelection.locality">
-    <option value="city">City</option>
-    <option value="locality">Locality</option>
-  </select>
+    <small>
+      <label for="" style="color:#808080;">Select a Location</label>
+    <select class="form-control" ng-model="graphSelection.locality">
+      <option value="city">City</option>
+      <option value="locality">Locality</option>
+    </select>
+    </small>
   <br />
 </div>
 <div class="col-md-6 pull-left" ng-if="graphSelection.locality == 'city'">
@@ -3814,12 +3839,14 @@ Dynamic Graph
 <div class="panel-body">
   <br /><br />
   <div class="row form-group">
-    <label for="" style="color:#808080;">Select a Category</label>
-    <select class="form-control"  ng-model="graphSelection.category">
-      <option value="vendor">Vendor</option>
-      <option value="campaign">Campaign</option>
-      <option value="supplier">Supplier</option>
-    </select>
+    <small>
+      <label for="" style="color:#808080;">Select a Category</label>
+      <select class="form-control"  ng-model="graphSelection.category">
+        <option value="vendor">Vendor</option>
+        <option value="campaign">Campaign</option>
+        <option value="supplier">Supplier</option>
+      </select>
+    </small>
   </div>
 <br />
 <div class="col-md-6 pull-left" ng-if="graphSelection.category == 'vendor'">
@@ -3855,12 +3882,13 @@ Dynamic Graph
    <button type="button" name="button" class="btn btn-danger" ng-click="getGenericGraphData()">Submit</button>
 
  </div>
-<div class="col-md-9">
+<div class="col-md-8">
     <div class="col-md-12">
       <div class="panel-heading content-title">
   Dynamic Graph
      </div>
      <br />
+
        <div class="row" style="color:#123456;">
          <div class="col-md-4">
            <input type="checkbox" value="leadsValues"> <small> LEADS %</small>
@@ -3880,7 +3908,12 @@ Dynamic Graph
            <input type="checkbox" value="costConversion"><small> COST PER CONVERSION</small>
          </div>
        </div>
-    <nvd3 options="stackedBarChartForDynamic" data="stackedBarChartDynamicData"></nvd3>
+       <br />
+       <br />
+       <br />
+       <div class="panel panel-danger">
+         <nvd3 options="stackedBarChartForDynamic" data="stackedBarChartDynamicData"></nvd3>
+       </div>
   </div>
 </div>
 </div>
