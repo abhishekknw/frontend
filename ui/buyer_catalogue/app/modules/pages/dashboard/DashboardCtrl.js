@@ -3774,10 +3774,12 @@ $scope.xValues = {
             values1[itemKey] = [];
         }
         console.log(data[$scope.xValues.value],data,$scope.xValues.value);
-        if($scope.xValues.value == 'campaign'){
-
+        console.log(specificXValue);
+        if(specificXValue){
+          console.log("hello");
+          var temp_label = data[$scope.xValues.value] + " (" + data[specificXValue] + ")";
           var temp = {
-            x: data[$scope.xValues.value],
+            x: temp_label,
             y: data[itemKey]
           }
         }else {
@@ -3816,9 +3818,39 @@ $scope.xValues = {
       costPerHotLeads : false
     }
   };
-
+  var specificXValue = undefined;
   $scope.getGenericGraphData = function(){
-    if($scope.graphSelection.dateRange.startDate && $scope.graphSelection.category == 'campaign'
+    specificXValue = undefined;
+    if ($scope.graphSelection.dateRange.startDate && (
+        $scope.graphSelection.category == 'campaign' &&
+        $scope.selectedDynamicCampaigns.length && $scope.graphSelection.specificParam == 'qualitytype' )) {
+          $scope.xValues.value = 'qualitytype';
+          specificXValue = 'campaign_name';
+          var reqData = {
+            "data_scope":{
+                "1":
+                    {"category":"unordered","level":"campaign","match_type":0,
+                        "values":{"exact":[]},
+                        "value_type":"campaign"
+
+                    },
+                "2":{"category":"time","level":"time","match_type":1,
+                        "values":{"range":[]},
+                        "value_type":"time"
+
+                    }
+                },
+            "data_point":{"category":"unordered","level":["qualitytype"]},
+            "raw_data":["lead","hot_lead","flat","cost"],
+            "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"]]
+          }
+
+          angular.forEach($scope.selectedDynamicCampaigns, function(data){
+            reqData.data_scope['1'].values.exact.push(data.campaign_id);
+          });
+          reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
+          reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
+    }else if($scope.graphSelection.dateRange.startDate && $scope.graphSelection.category == 'campaign'
         && $scope.selectedDynamicCampaigns.length){
           $scope.xValues.value = 'campaign_name';
           var reqData = {
@@ -3933,34 +3965,6 @@ $scope.xValues = {
                         }
                     },
                 "data_point":{"category":"unordered","level":["campaign"]},
-                "raw_data":["lead","hot_lead","flat","cost"],
-                "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"]]
-              }
-
-              angular.forEach($scope.selectedDynamicCampaigns, function(data){
-                reqData.data_scope['1'].values.exact.push(data.campaign_id);
-              });
-              reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
-              reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
-        }else if ($scope.graphSelection.dateRange.startDate && (
-            $scope.graphSelection.category == 'campaign' &&
-            $scope.selectedDynamicCampaigns.length && $scope.graphSelection.specificParam == 'qualitytype' )) {
-              $scope.xValues.value = 'campaign_name';
-              var reqData = {
-                "data_scope":{
-                    "1":
-                        {"category":"unordered","level":"campaign","match_type":0,
-                            "values":{"exact":[]},
-                            "value_type":"campaign"
-
-                        },
-                    "2":{"category":"time","level":"time","match_type":1,
-                            "values":{"range":[]},
-                            "value_type":"time"
-
-                        }
-                    },
-                "data_point":{"category":"unordered","level":["qualitytype"]},
                 "raw_data":["lead","hot_lead","flat","cost"],
                 "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"]]
               }
