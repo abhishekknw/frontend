@@ -3463,24 +3463,21 @@
     <small>
       <div class="col-md-6 pull-left" style="margin-left:-50px;color:#808080;">
         <div class="form-group">
-          <label>Start Date :  </label>
-          <span>
-            <input type="date" ng-model="graphSelection.dateRange.startDate">
+          <label><small> Start Date :  </small></label>
+          <span><small><input type="date" style="width:110px;" ng-model="graphSelection.dateRange.startDate"></small>
           </span>
         </div>
         </div>
         <div class="col-md-6" style="color:#808080;margin-left:10px">
           <div class="form-group">
-          <label>  End Date :</label>
-            <span>
-              <input type="date" ng-model="graphSelection.dateRange.endDate">
+          <label><small>  End Date :</small></label>
+            <span><small><input type="date" ng-model="graphSelection.dateRange.endDate"></small>
             </span>
             </div>
         </div>
-        <div class="row" style="color:#808080;margin-left:50px;margin-top:10px;">
+        <div class="row" style="color:#808080;margin-top:10px;">
           <div class="form-group">
-            <span>
-              <button class="btn btn-primary glyphicon glyphicon-trash pull-right" ng-click="clearDatesFromDynamicGraph()"></button>
+            <span><small><button style="margin-right:-25px;" class="btn btn-primary glyphicon glyphicon-trash pull-right" ng-click="clearDatesFromDynamicGraph()"></button></small>
             </span>
           </div>
         </div>
@@ -3509,7 +3506,7 @@
   <br /><br />
   <div class="row form-group">
     <small>
-      <label for="" style="color:#808080;">Select Type of Case</label>
+      <label for="" style="color:#808080;"><small>Select Type of Case</small></label>
     <select class="form-control" name="">
       <option value=""></option>
       <option value="societyType" ng-click="societyTypeDrop">Filter By Type of Societies</option>
@@ -3537,7 +3534,7 @@
   <br /><br />
   <div class="row form-group">
     <small>
-      <label for="" style="color:#808080;">Select a Location</label>
+      <label for="" style="color:#808080;"><small> Select a Location</small></label>
     <select class="form-control" ng-model="graphSelection.locality">
       <option value="city">City</option>
       <option value="locality">Locality</option>
@@ -3561,7 +3558,7 @@
   <br /><br />
   <div class="row form-group">
     <small>
-      <label for="" style="color:#808080;">Select a Category</label>
+      <label for="" style="color:#808080;"><small> Select a Category</small></label>
       <select class="form-control"  ng-model="graphSelection.category">
         <option value="vendor">Vendor</option>
         <option value="campaign">Campaign</option>
