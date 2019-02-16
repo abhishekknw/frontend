@@ -3515,13 +3515,13 @@
   </small>
 </div>
   <br />
-  <div class="row" ng-if="societyTypeDrop">
+  <div class="row" ng-if="graphSelection.specificParam == 'qualitytype'">
     <input type="radio" name="" value=""> Standard
     <input type="radio" name="" value=""> Medium High
     <input type="radio" name="" value=""> High
     <input type="radio" name="" value=""> Ultra High
   </div>
-  <div class="row" ng-if="flatTypeDrop">
+  <div class="row" ng-if="graphSelection.specificParam == 'flattype'">
     <input type="radio" name="" value=""> 0 - 150
     <input type="radio" name="" value=""> 150 - 400
     <input type="radio" name="" value=""> 400 +
