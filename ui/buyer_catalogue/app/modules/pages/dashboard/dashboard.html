@@ -2859,38 +2859,38 @@
                 <div class="col-md-12">
                   <div class="col-md-4">
                     <div class="panel panel-danger">
-                      <div class="panel-heading">Filters by Time</div>
+                      <div class="panel-heading" style="background:#cb1925">Filter by Time</div>
                       <div class="panel-body">
-                        <br /> <br />
+                        <br /><br />
                         <small>
                           <div class="row" style="margin-left:-50px;color:#808080;">
-                            <div class="col-md-2"><label for="">Date Range</label></div>
-                            <div class="col-md-5">
+                            <label for="">Date Range</label>
+                            <br />
+                            <div class="col-md-6">
                               <div class="form-group">
                                 <label><small> Start Date :  </small></label>
                                 <span><small><input type="date" style="width:110px !important" ng-model="graphSelection.dateRange.startDate"></small>
                                 </span>
                               </div>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                               <div class="form-group">
                               <label><small>  End Date :</small></label>
                                 <span><small><input type="date" style="width:110px !important" ng-model="graphSelection.dateRange.endDate"></small>
                                 </span>
                                 </div>
                             </div>
-                            <br />
                             <p style="text-align:center;color:#808080">OR</p>
+                            <label for="">Phase</label>
                             <br />
-                            <div class="col-md-2"><label for="">Phase</label></div>
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                               <div class="form-group">
                                 <label><small> Start :  </small></label>
                                 <span><small><input type="text" style="width:110px !important" placeholder="1" width="110px;" ng-model="graphSelection.phaseRange"></small>
                                 </span>
                               </div>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                               <div class="form-group">
                               <label><small>  End :</small></label>
                                 <span><small><input type="text" style="width:110px !important" placeholder="87" ng-model="graphSelection.phaseRange"></small>
@@ -2930,7 +2930,7 @@
                   </div>
                   <div class="col-md-4" style="color:#808080;">
                     <div class="panel panel-danger">
-                    <div class="panel-heading">Filter By Parameters</div>
+                    <div class="panel-heading"  style="background:#cb1925">Filter By Parameters</div>
                     <div class="panel-body">
                       <br /><br />
                       <div class="row form-group">
@@ -2956,9 +2956,9 @@
                             <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="sizeOfFlatsLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
                             selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
                           </div>
-                          <br />
+
                           <p style="text-align:center;color:#808080">OR</p>
-                          <br />
+
                           <label for="" style="color:#808080;">Booking Parameters</label>
                           <select class="form-control" ng-model="graphSelection.specificParam.booking">
                             <option value=""></option>
@@ -2976,34 +2976,30 @@
                             </div>
                       </small>
                     </div>
-                      <br />
                     </div>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="panel panel-danger">
-                    <div class="panel-heading">Filter By City</div>
+                    <div class="panel-heading"  style="background:#cb1925">Filter By City</div>
                     <div class="panel-body">
                       <br /><br />
                       <div class="row form-group">
                         <small>
-                          <p style="color:#808080;">Select City :</p>
-                            <div class="col-md-3 pull-left">
+                          <p style="color:#808080;margin-left:-20px;">Select City :</p>
+                            <div class="col-md-3 pull-left" style="margin-left:-20px;">
                             <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="cityLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
                               selected-model="selectedCities_temp" translation-texts="selected_baselines_customTexts_city" events="events"></span>
                             </div>
-
                           <div class="pull-right" style="color:#808080;margin-top:-17px;"  ng-if="selectedCities_temp.length">
-                              <p style="color:#808080">Select Campaign :</p>
-                              <div class="row">
+                              <p style="color:#808080;margin-left:10px">Select Campaign :</p>
+                              <div class="row" style="margin-left:10px">
                                  <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
                                  selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
                               </div>
                             </div>
                         </small>
-                      <br />
                     </div>
-
                     <div class="col-md-6 pull-left" ng-if="graphSelection.locality == 'locality'">
                         <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="localityList" class="col-md-6"  extra-settings="settingsForDynamicGraphVendor"
                         selected-model="selectedLocalities" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
@@ -3012,13 +3008,13 @@
                     </div>
                     <p style="color:#808080;text-align:center">OR</p>
                     <div class="panel panel-danger">
-                    <div class="panel-heading">Filter By Vendor</div>
+                    <div class="panel-heading"  style="background:#cb1925">Filter By Vendor</div>
                     <div class="panel-body">
                       <br /><br />
                       <div class="row form-group">
                         <small>
-                          <p style="color:#808080;">Select Vendors :</p>
-                            <div class="col-md-3 pull-left">
+                          <p style="color:#808080;margin-left:-20px;">Select Vendors :</p>
+                            <div class="col-md-3 pull-left" style="margin-left:-20px;">
                               <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="vendorsList" class="col-md-6"  extra-settings="settingsForDynamicGraphVendor"
                               selected-model="selectedVendors" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
                         </div>
