@@ -26,6 +26,7 @@
  $scope.selectedVendors = [];
  $scope.selectedCities = [];
  $scope.selectedCities_temp = [];
+ $scope.selectedVendors_temp = [];
  $scope.selectedDynamicCampaigns = [];
  $scope.typeOfSocietyLists = [
    {id: 1, name: 'Ultra High'},
@@ -3836,6 +3837,7 @@ $scope.xValues = {
     if($scope.selectedDynamicCampaigns.length){
       $scope.graphSelection.category = 'campaign';
     }
+
     if ($scope.graphSelection.dateRange.startDate && (
         $scope.graphSelection.category == 'campaign' &&
         $scope.selectedDynamicCampaigns.length && $scope.graphSelection.specificParam == 'qualitytype' )) {
