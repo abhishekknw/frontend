@@ -2847,7 +2847,7 @@
 
                 <!-- strt with dynamic graph -->
                 <div class="row col-md-12" ng-if="dynamicGraphsUI">
-                  <div style="color:#000000;" class="assign-date">
+                  <div style="color:#000000;margin-left:20px;" class="assign-date">
                     <input type="checkbox" ng-model="applyClickedFilters" permission = "[permissions.assignDates]">
                     <label><h4>Apply Filters<h4></label>
                   </div>
@@ -2886,14 +2886,14 @@
                             <div class="col-md-5">
                               <div class="form-group">
                                 <label><small> Start :  </small></label>
-                                <span><small><input type="text" style="width:110px !important" placeholder="1" width="110px;" ng-model="graphSelection.dateRange.startDate"></small>
+                                <span><small><input type="text" style="width:110px !important" placeholder="1" width="110px;" ng-model="graphSelection.phaseRange"></small>
                                 </span>
                               </div>
                             </div>
                             <div class="col-md-5">
                               <div class="form-group">
                               <label><small>  End :</small></label>
-                                <span><small><input type="text" style="width:110px !important" placeholder="87" ng-model="graphSelection.dateRange.endDate"></small>
+                                <span><small><input type="text" style="width:110px !important" placeholder="87" ng-model="graphSelection.phaseRange"></small>
                                 </span>
                                 </div>
                             </div>
@@ -2987,23 +2987,19 @@
                       <br /><br />
                       <div class="row form-group">
                         <small>
-                            <div class="col-md-6 pull-left">
-                              <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="cityLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
+                          <p style="color:#808080;">Select City :</p>
+                            <div class="col-md-3 pull-left">
+                            <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="cityLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
                               selected-model="selectedCities_temp" translation-texts="selected_baselines_customTexts_city" events="events"></span>
                             </div>
-                          <br />
-                          <br /><br />
-                          <div class="row" ng-if="selectedCities_temp.length">
-                            <div class="row" style="color:#808080">
-                                <p style="color:#808080">Select Campaign :</p>
-                            </div>
-                            <div class="col-md-4">
-                              <div class="col-md-6 pull-right">
+
+                          <div class="pull-right" style="color:#808080;margin-top:-17px;"  ng-if="selectedCities_temp.length">
+                              <p style="color:#808080">Select Campaign :</p>
+                              <div class="row">
                                  <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
                                  selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
                               </div>
                             </div>
-                          </div>
                         </small>
                       <br />
                     </div>
@@ -3021,25 +3017,23 @@
                       <br /><br />
                       <div class="row form-group">
                         <small>
-                          <div class="col-md-6 pull-left">
+                          <p style="color:#808080;">Select Vendors :</p>
+                            <div class="col-md-3 pull-left">
                               <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="vendorsList" class="col-md-6"  extra-settings="settingsForDynamicGraphVendor"
-                              selected-model="selectedVendors" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
-                          </div>
-                        </small>
-                      </div>
-
-                    <div class="row" ng-if="selectedVendors.length">
-                      <div class="row" style="color:#808080">
-                          <p style="color:#808080">Select Campaign :</p>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="col-md-6 pull-right">
-                           <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
-                           selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
+                              selected-model="selectedVendors_temp" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
                         </div>
+
+                          <div class="pull-right" style="color:#808080;margin-top:-17px;"  ng-if="selectedVendors_temp.length">
+                              <p style="color:#808080">Select Campaign :</p>
+                              <div class="row">
+                                 <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
+                                 selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
+                              </div>
+                            </div>
+                        </small>
+                        <small>
                       </div>
-                    </div>
-                  </div>
+                      </div>
                     </div>
                   </div>
 
@@ -3064,11 +3058,33 @@
                    <div class="panel-body">
                    </div>
                    </div> -->
-                   <button type="button" name="button" class="col-md-12 btn btn-danger" ng-click="getGenericGraphData()">Submit</button>
+                   <button type="button" name="button" class="col-md-8 col-md-offset-2 btn btn-danger" ng-click="getGenericGraphData()">Submit</button>
 
                  </div>
                 <div class="col-md-12" style="margin-top:20px;">
                     <div class="col-md-12">
+                      <!-- <div class="panel-heading content-title">
+                        <div class="col-md-4" ng-if="graphSelection.dateRange">
+                        <div class="col-md-8">
+                            <p style="color:#fff">From : {{graphSelection.dateRange.startDate | date : 'mediumDate'}}</p>
+                            <br />
+                            <p style="color:#fff">To : {{graphSelection.dateRange.endDate | date : 'mediumDate'}}</p>
+                          </div>
+                        </div>
+                        <div class="col-md-4" ng-if="graphSelection.phaseRange">
+                        <div class="col-md-8">
+                            <p style="color:#fff">From : {{graphSelection.dateRange.startDate | date : 'mediumDate'}}</p>
+                            <br />
+                            <p style="color:#fff">To : {{graphSelection.dateRange.endDate | date : 'mediumDate'}}</p>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+
+                        </div>
+                        <div class="col-md-4">
+
+                        </div>
+                      </div> -->
                       <div class="panel-heading content-title">
                         Graph Based On Filters
                      </div>

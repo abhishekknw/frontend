@@ -26,6 +26,7 @@
  $scope.selectedVendors = [];
  $scope.selectedCities = [];
  $scope.selectedCities_temp = [];
+ $scope.selectedVendors_temp = [];
  $scope.selectedDynamicCampaigns = [];
  $scope.typeOfSocietyLists = [
    {id: 1, name: 'Ultra High'},
@@ -3835,6 +3836,9 @@ $scope.xValues = {
     specificXValue = undefined;
     if($scope.selectedDynamicCampaigns.length){
       $scope.graphSelection.category = 'campaign';
+    }
+    if($scope.selectedDynamicCampaigns.length){
+      $scope.graphSelection.category = 'vendor';
     }
     if ($scope.graphSelection.dateRange.startDate && (
         $scope.graphSelection.category == 'campaign' &&
