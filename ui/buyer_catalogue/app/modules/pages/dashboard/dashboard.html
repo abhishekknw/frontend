@@ -3020,10 +3020,10 @@
                           <p style="color:#808080;">Select Vendors :</p>
                             <div class="col-md-3 pull-left">
                               <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="vendorsList" class="col-md-6"  extra-settings="settingsForDynamicGraphVendor"
-                              selected-model="selectedVendors_temp" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
+                              selected-model="selectedVendors" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
                         </div>
 
-                          <div class="pull-right" style="color:#808080;margin-top:-17px;"  ng-if="selectedVendors_temp.length">
+                          <div class="pull-right" style="color:#808080;margin-top:-17px;"  ng-if="selectedVendors.length">
                               <p style="color:#808080">Select Campaign :</p>
                               <div class="row">
                                  <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
@@ -3145,10 +3145,10 @@
 
 <!-- start with graph filtered table wise  -->
 
-<div class="col-lg-12" ng-if="selectAllCampaignLeads" style="margin-top:20px;">
+<div class="col-lg-12" ng-if="applyClickedFilters" style="margin-top:20px;">
   <div class="panel panel-primary">
     <div class="panel-heading content-title">
-      <label for="Location">Vendor Wise Summary Details</label>
+      <label for="Location">Campaign Filtered Summary Details</label>
     </div>
   </div>
   <div class="campaigndetailtable">
