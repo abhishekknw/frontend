@@ -66,13 +66,19 @@
    'lead/flat*100': 'Leads %',
    'hot_lead/flat*100': 'Hot Leads %',
    'cost/lead': 'Cost Per Lead (Rs)',
-   'cost/hot_lead': 'Cost Per Hot Lead (Rs)'
+   'cost/hot_lead': 'Cost Per Hot Lead (Rs)',
+   'cost/hotness_level_2': 'Cost per Meeting Fixed',
+   'cost/hotness_level_3': 'Cost per Meeting Completed',
+   'cost/hotness_level_4': 'Cost per Conversion'
  };
  $scope.dynamicGraphYKeysMap = {
    'leadsPerc': 'lead/flat*100',
    'hotleadsPerc': 'hot_lead/flat*100',
    'costPerLeads': 'cost/lead',
-   'costPerHotLeads': 'cost/hot_lead'
+   'costPerHotLeads': 'cost/hot_lead',
+   'costPerMeetingFixed': 'cost/hotness_level_2',
+   'costPerMeetingCompleted': 'cost/hotness_level_3',
+   'costPerConversion': 'cost/hotness_level_4'
  }
 
  console.log($scope.userInfo);
@@ -3836,8 +3842,8 @@ $scope.xValues = {
                     }
                 },
             "data_point":{"category":"unordered","level":["qualitytype"]},
-            "raw_data":["lead","hot_lead","flat","cost"],
-            "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"]]
+            "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4"],
+            "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"],["4","6","/"],["4","7","/"]]
           }
 
           angular.forEach($scope.selectedDynamicCampaigns, function(data){
@@ -3860,8 +3866,8 @@ $scope.xValues = {
                     },
                 },
             "data_point":{"category":"unordered","level":["qualitytype"]},
-            "raw_data":["lead","hot_lead","flat","cost"],
-            "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"]]
+            "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4",["4","6","/"],["4","7","/"]],
+            "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"]]
           }
 
           angular.forEach($scope.selectedDynamicCampaigns, function(data){
@@ -3886,8 +3892,8 @@ $scope.xValues = {
                     }
                 },
             "data_point":{"category":"unordered","level":["campaign"]},
-            "raw_data":["lead","hot_lead","flat","cost"],
-            "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"]]
+            "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4",["4","6","/"],["4","7","/"]],
+            "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"]]
           }
           angular.forEach($scope.selectedDynamicCampaigns, function(data){
             reqData.data_scope['1'].values.exact.push(data.campaign_id);
@@ -3913,8 +3919,8 @@ $scope.xValues = {
                         }
                     },
                 "data_point":{"category":"unordered","level":["vendor"]},
-                "raw_data":["lead","hot_lead","flat","cost"],
-                "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"]]
+                "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4",["4","6","/"],["4","7","/"]],
+                "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"]]
               }
 
               angular.forEach($scope.selectedVendors, function(data){
@@ -3958,8 +3964,8 @@ $scope.xValues = {
                                  },
                              },
                          "data_point":{"category":"unordered","level":["campaign"]},
-                         "raw_data":["lead","hot_lead","flat","cost"],
-                         "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"]]
+                         "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4"],
+                         "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"],["4","6","/"],["4","7","/"]]
                        }
                        reqData.data_scope['1'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
                        reqData.data_scope['1'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
@@ -3983,8 +3989,8 @@ $scope.xValues = {
                         }
                     },
                 "data_point":{"category":"unordered","level":["campaign"]},
-                "raw_data":["lead","hot_lead","flat","cost"],
-                "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"]]
+                "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4"],
+                "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"],["4","6","/"],["4","7","/"]]
               }
 
               angular.forEach($scope.selectedDynamicCampaigns, function(data){
@@ -4010,8 +4016,8 @@ $scope.xValues = {
                         }
                     },
                 "data_point":{"category":"unordered","level":["flattype"]},
-                "raw_data":["lead","hot_lead","flat","cost"],
-                "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"]]
+                "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4"],
+                "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"],["4","6","/"],["4","7","/"]]
               }
 
               angular.forEach($scope.selectedDynamicCampaigns, function(data){
@@ -4033,9 +4039,9 @@ $scope.xValues = {
 
                         },
                     },
-                "data_point":{"category":"unordered","level":["flattype"]},
-                "raw_data":["lead","hot_lead","flat","cost"],
-                "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"]]
+                "data_point":{"category":"unordered","level":["campaign"]},
+                "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4"],
+                "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"],["4","6","/"],["4","7","/"]]
               }
 
               angular.forEach($scope.selectedDynamicCampaigns, function(data){
@@ -4056,8 +4062,8 @@ $scope.xValues = {
                         },
                     },
                 "data_point":{"category":"unordered","level":["vendor"]},
-                "raw_data":["lead","hot_lead","flat","cost"],
-                "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"]]
+                "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4"],
+                "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"],["4","6","/"],["4","7","/"]]
               }
 
               angular.forEach($scope.selectedVendors, function(data){
@@ -4084,8 +4090,8 @@ $scope.xValues = {
                       //     }
                       },
                   "data_point":{"category":"unordered","level":["campaign"]},
-                  "raw_data":["lead","hot_lead","flat","cost"],
-                  "metrics":[["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"]]
+                  "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4"],
+                  "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"],["4","6","/"],["4","7","/"]]
                 }
 
 
