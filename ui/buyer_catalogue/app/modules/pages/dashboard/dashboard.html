@@ -2989,11 +2989,11 @@
                         <small>
                             <div class="col-md-6 pull-left">
                               <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="cityLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
-                              selected-model="selectedCities" translation-texts="selected_baselines_customTexts_city" events="events"></span>
+                              selected-model="selectedCities_temp" translation-texts="selected_baselines_customTexts_city" events="events"></span>
                             </div>
                           <br />
                           <br /><br />
-                          <div class="row" ng-if="selectedCities.length">
+                          <div class="row" ng-if="selectedCities_temp.length">
                             <div class="row" style="color:#808080">
                                 <p style="color:#808080">Select Campaign :</p>
                             </div>
@@ -3082,6 +3082,13 @@
                            <input type="checkbox" value="leadsValues" ng-model="graphSelection.Yvalues.leadsPerc" ng-click="changeDynamicGraph()"> <small> LEADS %</small>
                            <br />
                            <input type="checkbox" value="hotleadsValues" ng-model="graphSelection.Yvalues.hotleadsPerc" ng-click="changeDynamicGraph()"> <small> HOT LEADS %</small>
+                           <br />
+                           <input type="checkbox" value="hotleadsValues" ng-model="graphSelection.Yvalues.meetingFixedPerc" ng-click="changeDynamicGraph()"> <small> MEETING FIXED %</small>
+                           <br />
+                           <input type="checkbox" value="hotleadsValues" ng-model="graphSelection.Yvalues.meetingCompletedPerc" ng-click="changeDynamicGraph()"> <small> MEETING COMPLETED %</small>
+                           <br />
+                           <input type="checkbox" value="hotleadsValues" ng-model="graphSelection.Yvalues.conversionPerc" ng-click="changeDynamicGraph()"> <small> CONVERSION %</small>
+
                          </div>
                         <div class="col-md-4">
                           <input type="checkbox" value="costleads" ng-model="graphSelection.Yvalues.costPerLeads" ng-click="changeDynamicGraph()"><small> COST PER LEADS</small>

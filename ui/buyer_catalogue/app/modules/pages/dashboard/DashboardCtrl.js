@@ -25,6 +25,7 @@
  $scope.vendorsData = {};
  $scope.selectedVendors = [];
  $scope.selectedCities = [];
+ $scope.selectedCities_temp = [];
  $scope.selectedDynamicCampaigns = [];
  $scope.typeOfSocietyLists = [
    {id: 1, name: 'Ultra High'},
@@ -35,7 +36,7 @@
  $scope.sizeOfFlatsLists = [
    {id: 1, name: '1-150'},
    {id: 2, name: '150-400'},
-   {id: 3, name: '400 +'},  
+   {id: 3, name: '400 +'},
  ];
  $scope.freebiesLists = [
    {id: 1, name: 'Whatsapp Group'},
@@ -65,6 +66,9 @@
  $scope.dynamicGraphYValuesMap = {
    'lead/flat*100': 'Leads %',
    'hot_lead/flat*100': 'Hot Leads %',
+   'hotness_level_2/flat*100': 'Meeting Fixed %',
+   'hotness_level_3/flat*100': 'Meeting Completed %',
+   'hotness_level_4/flat*100': 'Conversion %',
    'cost/lead': 'Cost Per Lead (Rs)',
    'cost/hot_lead': 'Cost Per Hot Lead (Rs)',
    'cost/hotness_level_2': 'Cost per Meeting Fixed',
@@ -74,6 +78,9 @@
  $scope.dynamicGraphYKeysMap = {
    'leadsPerc': 'lead/flat*100',
    'hotleadsPerc': 'hot_lead/flat*100',
+   'meetingFixedPerc': 'hotness_level_2/flat*100',
+   'meetingCompletedPerc': 'hotness_level_3/flat*100',
+   'conversionPerc': 'hotness_level_4/flat*100',
    'costPerLeads': 'cost/lead',
    'costPerHotLeads': 'cost/hot_lead',
    'costPerMeetingFixed': 'cost/hotness_level_2',
@@ -81,6 +88,10 @@
    'costPerConversion': 'cost/hotness_level_4'
  }
 
+ var raw_data_global = ["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4"];
+ var metrics_global = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["5","3","/"],["m5",100,"*"],
+ ["6","3","/"],["m7",100,"*"],["7","3","/"],["m9",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"]
+ ,["4","6","/"],["4","7","/"]];
  console.log($scope.userInfo);
  $scope.invNameToCode = {
    'POSTER' : 'PO',
@@ -3822,6 +3833,9 @@ $scope.xValues = {
   var specificXValue = undefined;
   $scope.getGenericGraphData = function(){
     specificXValue = undefined;
+    if($scope.selectedDynamicCampaigns.length){
+      $scope.graphSelection.category = 'campaign';
+    }
     if ($scope.graphSelection.dateRange.startDate && (
         $scope.graphSelection.category == 'campaign' &&
         $scope.selectedDynamicCampaigns.length && $scope.graphSelection.specificParam == 'qualitytype' )) {
@@ -3842,8 +3856,8 @@ $scope.xValues = {
                     }
                 },
             "data_point":{"category":"unordered","level":["qualitytype"]},
-            "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4"],
-            "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"],["4","6","/"],["4","7","/"]]
+            "raw_data":raw_data_global,
+            "metrics": metrics_global
           }
 
           angular.forEach($scope.selectedDynamicCampaigns, function(data){
@@ -3866,9 +3880,9 @@ $scope.xValues = {
                     },
                 },
             "data_point":{"category":"unordered","level":["qualitytype"]},
-            "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4",["4","6","/"],["4","7","/"]],
-            "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"]]
-          }
+            "raw_data":raw_data_global,
+            "metrics": metrics_global
+            }
 
           angular.forEach($scope.selectedDynamicCampaigns, function(data){
             reqData.data_scope['1'].values.exact.push(data.campaign_id);
@@ -3892,8 +3906,8 @@ $scope.xValues = {
                     }
                 },
             "data_point":{"category":"unordered","level":["campaign"]},
-            "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4",["4","6","/"],["4","7","/"]],
-            "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"]]
+            "raw_data":raw_data_global,
+            "metrics": metrics_global
           }
           angular.forEach($scope.selectedDynamicCampaigns, function(data){
             reqData.data_scope['1'].values.exact.push(data.campaign_id);
@@ -3919,8 +3933,8 @@ $scope.xValues = {
                         }
                     },
                 "data_point":{"category":"unordered","level":["vendor"]},
-                "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4",["4","6","/"],["4","7","/"]],
-                "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"]]
+                "raw_data":raw_data_global,
+                "metrics": metrics_global
               }
 
               angular.forEach($scope.selectedVendors, function(data){
@@ -3964,8 +3978,8 @@ $scope.xValues = {
                                  },
                              },
                          "data_point":{"category":"unordered","level":["campaign"]},
-                         "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4"],
-                         "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"],["4","6","/"],["4","7","/"]]
+                         "raw_data":raw_data_global,
+                         "metrics": metrics_global
                        }
                        reqData.data_scope['1'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
                        reqData.data_scope['1'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
@@ -3989,10 +4003,9 @@ $scope.xValues = {
                         }
                     },
                 "data_point":{"category":"unordered","level":["campaign"]},
-                "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4"],
-                "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"],["4","6","/"],["4","7","/"]]
+                "raw_data":raw_data_global,
+                "metrics": metrics_global
               }
-
               angular.forEach($scope.selectedDynamicCampaigns, function(data){
                 reqData.data_scope['1'].values.exact.push(data.campaign_id);
               });
@@ -4016,8 +4029,8 @@ $scope.xValues = {
                         }
                     },
                 "data_point":{"category":"unordered","level":["flattype"]},
-                "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4"],
-                "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"],["4","6","/"],["4","7","/"]]
+                "raw_data":raw_data_global,
+                "metrics": metrics_global
               }
 
               angular.forEach($scope.selectedDynamicCampaigns, function(data){
@@ -4040,8 +4053,8 @@ $scope.xValues = {
                         },
                     },
                 "data_point":{"category":"unordered","level":["campaign"]},
-                "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4"],
-                "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"],["4","6","/"],["4","7","/"]]
+                "raw_data":raw_data_global,
+                "metrics": metrics_global
               }
 
               angular.forEach($scope.selectedDynamicCampaigns, function(data){
@@ -4062,8 +4075,8 @@ $scope.xValues = {
                         },
                     },
                 "data_point":{"category":"unordered","level":["vendor"]},
-                "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4"],
-                "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"],["4","6","/"],["4","7","/"]]
+                "raw_data":raw_data_global,
+                "metrics": metrics_global
               }
 
               angular.forEach($scope.selectedVendors, function(data){
@@ -4090,8 +4103,8 @@ $scope.xValues = {
                       //     }
                       },
                   "data_point":{"category":"unordered","level":["campaign"]},
-                  "raw_data":["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4"],
-                  "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"],["4","6","/"],["4","7","/"]]
+                  "raw_data":raw_data_global,
+                  "metrics": metrics_global
                 }
 
 
