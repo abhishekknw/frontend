@@ -4129,6 +4129,7 @@ $scope.xValues = {
 
         console.log($scope.stackedBarChartForDynamic);
         $scope.stackedBarChartDynamicData = formatDynamicData($scope.initialDynamicGraphData);
+        setLabelsOnBars();
         console.log($scope.stackedBarChartDynamicData);
       }).catch(function onError(response){
         console.log(response);
@@ -4148,6 +4149,7 @@ $scope.xValues = {
         $scope.yValues.push($scope.dynamicGraphYKeysMap[key]);
     })
     $scope.stackedBarChartDynamicData = formatDynamicData($scope.initialDynamicGraphData);
+    setLabelsOnBars();
   }
   // $scope.getGenericGraphData();
 
@@ -4246,6 +4248,47 @@ $scope.xValues = {
          temp_data.values.push(value);
        })
        return [temp_data];
+     }
+
+     var setLabelsOnBars = function(){
+       $timeout(function () {
+         d3.selectAll('.nv-multibar .nv-group').each(function(group){
+           var g = d3.select(this);
+
+           // Remove previous labels if there is any
+           g.selectAll('text').remove();
+           g.selectAll('.nv-bar').each(function(bar){
+           var b = d3.select(this);
+           var barWidth = b.attr('width');
+           var barHeight = b.attr('height');
+
+           g.append('text')
+             // Transforms shift the origin point then the x and y of the bar
+             // is altered by this transform. In order to align the labels
+             // we need to apply this transform to those.
+             .attr('transform', b.attr('transform'))
+             .text(function(){
+               // No decimals format and eliminate zero values
+               if (bar.y === 0) {
+                 return;
+               }
+               return parseFloat(bar.y).toFixed(0);
+             })
+             .attr('y', function(){
+               // Center label vertically
+               var height = this.getBBox().height;
+               return parseFloat(b.attr('y')) + 15; // 15 is the label's margin from the top of bar
+             })
+             .attr('x', function(){
+               // Center label horizontally
+               var width = this.getBBox().width;
+               return parseFloat(b.attr('x')) + (parseFloat(barWidth) / 2) - (width / 2);
+             })
+             .style("stroke","black")
+             .attr('class', 'bar-values');
+           });
+         });
+       }, 1000);
      }
 
   // END
