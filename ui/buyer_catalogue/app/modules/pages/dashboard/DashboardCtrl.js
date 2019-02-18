@@ -26,13 +26,42 @@
  $scope.selectedVendors = [];
  $scope.selectedCities = [];
  $scope.selectedDynamicCampaigns = [];
+ $scope.typeOfSocietyLists = [
+   {id: 1, name: 'Ultra High'},
+   {id: 2, name: 'High'},
+   {id: 3, name: 'Medium High'},
+   {id: 4, name: 'Standard'},
+ ];
+ $scope.sizeOfFlatsLists = [
+   {id: 1, name: '1-150'},
+   {id: 2, name: '150-400'},
+   {id: 3, name: '400 +'},  
+ ];
+ $scope.freebiesLists = [
+   {id: 1, name: 'Whatsapp Group'},
+   {id: 2, name: 'Email Group'},
+   {id: 3, name: 'Building ERP'},
+   {id: 4, name: 'Door To Door'},
+ ];
  $scope.cityLists = [
    {id: 1, name: 'Mumbai'},
    {id: 2, name: 'Delhi'},
    {id: 3, name: 'Bangalore'},
    {id: 4, name: 'Hyderabad'},
    {id: 5, name: 'Chennai'},
+   {id: 6, name: 'Ludhiana'},
+   {id: 7, name: 'Kanpur'},
+   {id: 8, name: 'Lucknow'},
+   {id: 9, name: 'Jaipur'},
+   {id: 10, name: 'Vijaywada'},
+  {id: 11, name: 'Vishakhapattanam'},
+  {id: 12, name: 'Coimbatore'},
+  {id: 13, name: 'Thiruvananthpuram'},
+  {id: 14, name: 'Madurai'},
+  {id: 15 , name: 'Chandigarh'},
+  {id: 16, name: 'Noida'},
  ];
+
  $scope.dynamicGraphYValuesMap = {
    'lead/flat*100': 'Leads %',
    'hot_lead/flat*100': 'Hot Leads %',
@@ -2012,6 +2041,11 @@ var formatThreeWeeksSummary = function(data,key){
  $scope.selected_baselines_customTexts = {buttonDefaultText: 'Select Campaigns'};
  $scope.selected_baselines_customTexts_city = {buttonDefaultText: 'Select Cities'};
  $scope.selected_baselines_customTexts_vendor = {buttonDefaultText: 'Select Vendor'};
+ $scope.selected_baselines_customTexts_qualityTypesociety = {buttonDefaultText: 'Select Type of Society'};
+ $scope.selected_baselines_customTexts_sizeOfFlats = {buttonDefaultText: 'Select Size of Flats'};
+ $scope.selected_baselines_customTexts_freebies = {buttonDefaultText: 'Select Freebies'};
+
+
 
 
    $scope.events = {
@@ -3225,13 +3259,14 @@ $scope.Sort = function(val)
 
 $scope.getCampaignWiseSummary = function(){
   $scope.getVendorWiseSummary();
+  $scope.getDynamicGraphsStatics();
   cfpLoadingBar.start();
      DashboardService.getCampaignWiseSummary()
     .then(function onSuccess(response){
       console.log(response);
       $scope.showPerfMetrics = $scope.perfMetrics.overall;
       $scope.selectAllCampaignLeads = true;
-      $scope.dynamicGraphsUI = false;
+      $scope.dynamicGraphsUI = true;
       $scope.showReportBtn = true;
       $scope.lineChartForLeadsDistributedGraphs = false;
       $scope.lineChartForHotLeadsDistributedGraphs = false;
@@ -3589,7 +3624,6 @@ $scope.rotateImage=function(id){
 
 
   $scope.getDynamicGraphsStatics = function(){
-    $scope.dynamicGraphsUI = true;
     $scope.selectAllCampaignLeads = false;
     $scope.showReportBtn = false;
     $scope.lineChartForLeadsDistributedGraphs = false;
@@ -3768,6 +3802,10 @@ $scope.xValues = {
   $scope.graphSelection = {
     category : {},
     dateRange : {},
+    specificParam : {
+      society: {},
+      booking: {},
+    },
     Yvalues : {
       leadsPerc : false,
       hotleadsPerc : false,
@@ -4153,7 +4191,6 @@ $scope.xValues = {
 
        return temp_data;
      }
-
 
   // END
 
