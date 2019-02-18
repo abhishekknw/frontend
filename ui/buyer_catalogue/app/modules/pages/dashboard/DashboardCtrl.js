@@ -3790,12 +3790,12 @@ $scope.xValues = {
           var temp_label = data[$scope.xValues.value] + " (" + data[specificXValue] + ")" ;
           var temp = {
             x: temp_label,
-            y: data[itemKey]
+            y: data[itemKey]||0
           }
         }else {
           var temp = {
             x: data[$scope.xValues.value],
-            y: data[itemKey]
+            y: data[itemKey]||0
           }
         }
         values1[itemKey].push(temp);
@@ -4277,7 +4277,7 @@ $scope.xValues = {
              .attr('y', function(){
                // Center label vertically
                var height = this.getBBox().height;
-               return parseFloat(b.attr('y')) + 15; // 15 is the label's margin from the top of bar
+               return parseFloat(b.attr('y')) - 2; // 15 is the label's margin from the top of bar
              })
              .attr('x', function(){
                // Center label horizontally
