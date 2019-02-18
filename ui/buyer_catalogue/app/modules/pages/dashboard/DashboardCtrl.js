@@ -88,7 +88,7 @@
    'costPerConversion': 'cost/hotness_level_4'
  }
 
- var raw_data_global = ["lead","hot_lead","flat","cost","hotness_level_2","hotness_level_3","hotness_level_4"];
+ var raw_data_global = ["lead","hot_lead","flat","cost_flat","hotness_level_2","hotness_level_3","hotness_level_4"];
  var metrics_global = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["5","3","/"],["m5",100,"*"],
  ["6","3","/"],["m7",100,"*"],["7","3","/"],["m9",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"]
  ,["4","6","/"],["4","7","/"]];
