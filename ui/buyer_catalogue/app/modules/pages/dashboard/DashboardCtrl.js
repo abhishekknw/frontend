@@ -4123,6 +4123,11 @@ $scope.xValues = {
         console.log(response);
         $scope.initialDynamicGraphData = response.data.data;
         $scope.stackedBarChartForDynamic = angular.copy(stackedBarChart);
+        if($scope.initialDynamicGraphData.lower_group_data.length > 4){
+          $scope.stackedBarChartForDynamic.chart['width'] = $scope.initialDynamicGraphData.lower_group_data.length * 300;
+        }
+
+        console.log($scope.stackedBarChartForDynamic);
         $scope.stackedBarChartDynamicData = formatDynamicData($scope.initialDynamicGraphData);
         console.log($scope.stackedBarChartDynamicData);
       }).catch(function onError(response){
