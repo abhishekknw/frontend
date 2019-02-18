@@ -69,11 +69,11 @@
    'hotness_level_2/flat*100': 'Meeting Fixed %',
    'hotness_level_3/flat*100': 'Meeting Completed %',
    'hotness_level_4/flat*100': 'Conversion %',
-   'cost/lead': 'Cost Per Lead (Rs)',
-   'cost/hot_lead': 'Cost Per Hot Lead (Rs)',
-   'cost/hotness_level_2': 'Cost per Meeting Fixed',
-   'cost/hotness_level_3': 'Cost per Meeting Completed',
-   'cost/hotness_level_4': 'Cost per Conversion'
+   'cost_flat/lead': 'Cost Per Lead (Rs)',
+   'cost_flat/hot_lead': 'Cost Per Hot Lead (Rs)',
+   'cost_flat/hotness_level_2': 'Cost per Meeting Fixed',
+   'cost_flat/hotness_level_3': 'Cost per Meeting Completed',
+   'cost_flat/hotness_level_4': 'Cost per Conversion'
  };
  $scope.dynamicGraphYKeysMap = {
    'leadsPerc': 'lead/flat*100',
