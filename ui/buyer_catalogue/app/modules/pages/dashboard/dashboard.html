@@ -3070,7 +3070,7 @@
                 <div class="col-md-12" style="margin-top:20px;">
                     <div class="col-md-12">
                       <div class="panel-heading content-title">
-                  Graph Based On Filters
+                        Graph Based On Filters
                      </div>
                      <br />
 
@@ -3091,11 +3091,12 @@
 
                          </div>
                         <div class="col-md-4">
-                          <input type="checkbox" value="costleads" ng-model="graphSelection.Yvalues.costPerLeads" ng-click="changeDynamicGraph()"><small> COST PER LEADS</small>
-                          <br />
-                          <input type="checkbox" value="costhotleads" ng-model="graphSelection.Yvalues.costPerHotLeads" ng-click="changeDynamicGraph()"><small> COST PER HOT LEADS</small>
                          </div>
                          <div class="col-md-4">
+                           <input type="checkbox" value="costleads" ng-model="graphSelection.Yvalues.costPerLeads" ng-click="changeDynamicGraph()"><small> COST PER LEADS</small>
+                           <br />
+                           <input type="checkbox" value="costhotleads" ng-model="graphSelection.Yvalues.costPerHotLeads" ng-click="changeDynamicGraph()"><small> COST PER HOT LEADS</small>
+                           <br />
                            <input type="checkbox" value="costFixedMeeting"><small> COST PER MEETING FIXED</small>
                            <br />
                            <input type="checkbox" value="costCompletedMeeting"><small> COST PER MEETING COMPLETED</small>
@@ -3136,32 +3137,30 @@
   </div>
   <div class="campaigndetailtable">
     <div class="table-responsive">
-    <button class="btn btn-danger pull-right" ng-click="exportToExcel('#customer10')"><span class="glyphicon glyphicon-download-alt"></span></button>
-      <table class="table table-striped" id="customer10"  st-table="campaignSummary">
+    <button class="btn btn-danger pull-right" ng-click="exportToExcel('#customer20')"><span class="glyphicon glyphicon-download-alt"></span></button>
+      <table class="table table-striped" id="customer20"  st-table="campaignSummary">
         <thead>
             <tr>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Vendor Name</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Name</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads </th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads <br> in %</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads Ratio <br> (%)</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Cost Per Leads <br> (%)</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Cost Per Hot Leads <br> (%)</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Cost Per Meeting Fixed  <br> (%) </th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Cost Per Meeting Completed <br> (%)</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Cost Per Conversion <br> (%)</th>
             </tr>
       </thead>
         <tbody style="text-align:center;">
-          <tr ng-repeat="(key,data) in overallVendorSummary" ng-if="key != 'overall'">
-            <td style="text-transform: capitalize">{{vendorSummary.vendor_details[key].name}}</td>
-            <td>{{data.flat_count}}</td>
-            <td>{{data.total_supplier_count}}</td>
-            <td>{{data.total}}</td>
-            <td ng-if="data.flat_count != 0">{{(data.total / data.flat_count) * 100 | limitTo:5}}%</td>
-            <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{data.interested}}</td>
-            <td ng-if="data.flat_count != 0">{{(data.interested / data.flat_count) * 100 | limitTo:5 }}%</td>
-            <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{(data.interested / data.total) * 100 | limitTo:5 }}%</td>
+          <tr ng-repeat="(key,data) in initialDynamicGraphData.lower_group_data">
+            <td style="text-transform: capitalize">{{data.campaign_name}}</td>
+            <td>{{data.lead}}</td>
+            <td>{{data.hot_lead}}</td>
+            <td>{{data['cost_flat/lead']}} <br> ({{data['lead/flat*100']}} %)</td>
+            <td>{{data['cost_flat/hot_lead']}} <br> ({{data['hot_lead/flat*100']}} %)</td>
+            <td>{{data['cost_flat/hotness_level_2']}} <br> ({{data['hotness_level_2/flat*100']}} %)</td>
+            <td>{{data['cost_flat/hotness_level_3']}} <br>({{data['hotness_level_3/flat*100']}} %)</td>
+            <td>{{data['cost_flat/hotness_level_4']}} <br> ({{data['hotness_level_4/flat*100']}} %)</td>
           </tr>
         </tbody>
       </table>
