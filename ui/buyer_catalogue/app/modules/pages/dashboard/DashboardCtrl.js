@@ -4210,6 +4210,36 @@ $scope.xValues = {
 
        return temp_data;
      }
+     $scope.dynamicGraphSelectedOrder = {};
+     $scope.dynamicSortedGraphOptions = angular.copy(discreteBarChart);
+
+     $scope.sortDynamicData = function(order){
+       $scope.dynamicOrderData = angular.copy($scope.initialDynamicGraphData.lower_group_data);
+       $scope.dynamicOrderData.sort(function(a,b){
+         console.log(a,b);
+         return a[$scope.dynamicGraphSelectedOrder.value] - b[$scope.dynamicGraphSelectedOrder.value];
+       });
+       if(order == 'DESC'){
+         $scope.dynamicOrderData.reverse();
+       }
+        $scope.dynamicSortedGraphData = formatSortedDynamicGraphData($scope.dynamicOrderData);
+        console.log($scope.dynamicOrderData,$scope.dynamicSortedGraphData);
+     }
+
+     var formatSortedDynamicGraphData = function(data){
+       var temp_data = {};
+
+       temp_data['key'] = "Sample";
+       temp_data['values'] = [];
+       angular.forEach(data, function(item){
+         var value = {
+           'label' : item.campaign_name,
+           'value' : item[$scope.dynamicGraphSelectedOrder.value]
+         }
+         temp_data.values.push(value);
+       })
+       return [temp_data];
+     }
 
   // END
 

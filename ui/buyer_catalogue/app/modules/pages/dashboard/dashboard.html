@@ -3106,10 +3106,22 @@
                        <br />
                        <br />
                        <br />
+                       <div class="row" ng-if="stackedBarChartDynamicData">
+                         <select class="form-control" name="" ng-model="dynamicGraphSelectedOrder.value" ng-change="sortDynamicData('ASC')">
+                           <option value="" disabled>Select Order</option>
+                           <option value="">All</option>
+                           <option value="{{value}}" ng-repeat="value in yValues">{{dynamicGraphYValuesMap[value]}}</option>
+                         </select>
+                       </div>
+                       <div class="row" ng-if="dynamicGraphSelectedOrder.value">
+                         <button ng-click="sortDynamicData('ASC')" class="btn btn-danger">Ascending</button>
+                         <button ng-click="sortDynamicData('DESC')" class="btn btn-danger">Descending</button>
+                       </div>
                        <div class="panel panel-danger">
                          <div class="dynamicOuterGraphs">
                            <div class="dynamicInnerGraphs">
-                         <nvd3 options="stackedBarChartForDynamic" data="stackedBarChartDynamicData"></nvd3>
+                         <nvd3 options="stackedBarChartForDynamic" data="stackedBarChartDynamicData" ng-if="!dynamicGraphSelectedOrder.value"></nvd3>
+                         <nvd3 options="dynamicSortedGraphOptions" data="dynamicSortedGraphData" ng-if="dynamicGraphSelectedOrder.value"></nvd3>
                        </div>
                      </div>
                        </div>
