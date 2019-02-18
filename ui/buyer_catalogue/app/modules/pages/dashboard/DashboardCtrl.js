@@ -81,11 +81,11 @@
    'meetingFixedPerc': 'hotness_level_2/flat*100',
    'meetingCompletedPerc': 'hotness_level_3/flat*100',
    'conversionPerc': 'hotness_level_4/flat*100',
-   'costPerLeads': 'cost/lead',
-   'costPerHotLeads': 'cost/hot_lead',
-   'costPerMeetingFixed': 'cost/hotness_level_2',
-   'costPerMeetingCompleted': 'cost/hotness_level_3',
-   'costPerConversion': 'cost/hotness_level_4'
+   'costPerLeads': 'cost_flat/lead',
+   'costPerHotLeads': 'cost_flat/hot_lead',
+   'costPerMeetingFixed': 'cost_flat/hotness_level_2',
+   'costPerMeetingCompleted': 'cost_flat/hotness_level_3',
+   'costPerConversion': 'cost_flat/hotness_level_4'
  }
 
  var raw_data_global = ["lead","hot_lead","flat","cost_flat","hotness_level_2","hotness_level_3","hotness_level_4"];
