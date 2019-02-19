@@ -4383,6 +4383,10 @@ var tooltipDynamicGraphData = [];
          });
        }, 1000);
      }
+     $scope.applyClickedFilters = {};
+     $scope.changeApplyFilters = function(){
+       console.log($scope.applyClickedFilters);
+     }
 
   // END
 

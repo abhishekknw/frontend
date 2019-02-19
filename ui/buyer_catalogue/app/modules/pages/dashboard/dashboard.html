@@ -2848,13 +2848,13 @@
                 <!-- strt with dynamic graph -->
                 <div class="row col-md-12" ng-if="dynamicGraphsUI">
                   <div style="color:#000000;margin-left:20px;" class="assign-date">
-                    <input type="checkbox" ng-model="applyClickedFilters">
+                    <input type="checkbox" ng-model="applyClickedFilters.value" value="true" ng-change="changeApplyFilters()">
                     <label><h4>Apply Filters<h4></label>
                   </div>
 
 
                           <!-- strt with dynamic graph -->
-                <form name = "form" ng-if="applyClickedFilters">
+                <form name = "form" ng-if="applyClickedFilters.value">
                 <div class="row panel panel-default" ng-if="dynamicGraphsUI">
                 <div class="col-md-12">
                   <div class="col-md-4">
@@ -3156,7 +3156,7 @@
 
 <!-- start with graph filtered table wise  -->
 
-<div class="col-lg-12" ng-if="applyClickedFilters" style="margin-top:20px;">
+<div class="col-lg-12" ng-if="applyClickedFilters.value" style="margin-top:20px;">
   <div class="panel panel-primary">
     <div class="panel-heading content-title">
       <label for="Location">Campaign Filtered Summary Details</label>
@@ -3198,7 +3198,7 @@
 
 
                 <!-- Start Weekly VendorMaster (ALL Cities)-->
-                <div class="col-lg-12" ng-if="selectAllCampaignLeads">
+                <div class="col-lg-12" ng-if="selectAllCampaignLeads && !applyClickedFilters.value">
                   <div class="panel panel-primary">
                     <div class="panel-heading content-title">
                       <label for="Location">Weekly Vendor Master MIS Summary (ALL VENDORS)</label>
