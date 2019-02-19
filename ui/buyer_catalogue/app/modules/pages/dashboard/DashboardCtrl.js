@@ -87,7 +87,30 @@
    'costPerMeetingFixed': 'cost_flat/hotness_level_2',
    'costPerMeetingCompleted': 'cost_flat/hotness_level_3',
    'costPerConversion': 'cost_flat/hotness_level_4'
+ };
+ var dynamicPricingKeys = {
+   'Leads %': {
+     name: 'Cost Per Lead',
+     value: 'cost_flat/lead',
+   },
+   'Hot Leads %': {
+     name: 'Cost Per Hot Lead',
+     value: 'cost_flat/hot_lead',
+   },
+   'Meeting Fixed %': {
+     name: 'Cost Per Meeting Fixed',
+     value: 'cost_flat/hotness_level_2',
+   },
+   'Meeting Completed %': {
+     name: 'Cost Per Meeting Completed',
+     value: 'cost_flat/hotness_level_3',
+   },
+   'Conversion %': {
+     name: 'Cost Per Conversion',
+     value: 'cost_flat/hotness_level_4',
+   }
  }
+
 
  var raw_data_global = ["lead","hot_lead","flat","cost_flat","hotness_level_2","hotness_level_3","hotness_level_4"];
  var metrics_global = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["5","3","/"],["m5",100,"*"],
@@ -798,7 +821,8 @@
                        "axisLabel": "",
                        "axisLabelDistance": -20,
 
-                       "ticks" : 8
+                       "ticks" : 8,
+
                      },
                      "legend" : {
                              "margin": {
@@ -808,6 +832,43 @@
                              "left": 15
                          },
                      },
+                     tooltip: {
+                      contentGenerator: function (e) {
+                        console.log(e,tooltipDynamicGraphData);
+                        var series = e.series[0];
+                        if (series.value === null) return;
+                        console.log(tooltipDynamicGraphData[e.index][dynamicPricingKeys[e.data.key]]);
+                        var rows =
+                          "<tr>" +
+                            "<td class='key'>" + 'Name: ' + "</td>" +
+                            "<td class='x-value'>" + e.value + "</td>" +
+                          "</tr>" +
+                          "<tr>" +
+                            "<td class='key'>" + 'Value In (%): ' + "</td>" +
+                            "<td class='x-value'><strong>" + (series.value?series.value.toFixed(2):0) + "</strong></td>" +
+                          "</tr>" +
+                          "<tr>" +
+                            "<td class='key'>" + dynamicPricingKeys[e.data.key]['name'] + ':' + "</td>" +
+                            "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[e.data.key]['value']]  + "</strong></td>" +
+                          "</tr>";
+
+                        var header =
+                          "<thead>" +
+                            "<tr>" +
+                              "<td class='legend-color-guide'><div style='background-color: " + series.color + ";'></div></td>" +
+                              "<td class='key'><strong>" + series.key + "</strong></td>" +
+                            "</tr>" +
+                          "</thead>";
+
+                        return "<table>" +
+                            header +
+                            "<tbody>" +
+                              rows +
+                            "</tbody>" +
+                          "</table>";
+                      }
+                    },
+
 
                      "reduceXTicks" : false
                    }
@@ -3715,7 +3776,6 @@ $scope.rotateImage=function(id){
           console.log(data);
           $scope.dynamicData.data_scope['1'].values['exact'].push(data.value);
           console.log(data.value);
-
         }
       })
     }
@@ -3730,9 +3790,7 @@ $scope.rotateImage=function(id){
         console.log(response);
       })
     }
-
   }
-
 
   $scope.getLevelDataValue = function(value,type){
     if(value){
@@ -3772,21 +3830,25 @@ $scope.yValues = [];
 $scope.xValues = {
   value : ''
 };
+var tooltipDynamicGraphData = [];
   var formatDynamicData = function(data){
     var values1 = {};
     var labels = [];
     var finalData = [];
+    tooltipDynamicGraphData = []
     // var values2 = [];
     angular.forEach(data.lower_group_data, function(data,key){
       console.log(data);
+      tooltipDynamicGraphData.push(data);
       angular.forEach($scope.yValues, function(itemKey,index,item){
         if(!values1.hasOwnProperty(itemKey)){
             values1[itemKey] = [];
         }
         console.log(data[$scope.xValues.value],data,$scope.xValues.value);
         console.log(specificXValue);
+        console.log(itemKey,data);
         if(specificXValue){
-          console.log("hello");
+          // console.log();
           var temp_label = data[$scope.xValues.value] + " (" + data[specificXValue] + ")" ;
           var temp = {
             x: temp_label,
@@ -3809,6 +3871,7 @@ $scope.xValues = {
       }
       finalData.push(temp_data);
     })
+    console.log(tooltipDynamicGraphData);
     return finalData;
   }
   $scope.clearMetrics = function(){
@@ -3837,6 +3900,10 @@ $scope.xValues = {
     if($scope.selectedDynamicCampaigns.length){
       $scope.graphSelection.category = 'campaign';
     }
+    if($scope.selectedVendors.length){
+      $scope.graphSelection.category = 'vendor';
+    }
+
 
     if ($scope.graphSelection.dateRange.startDate && (
         $scope.graphSelection.category == 'campaign' &&
@@ -3849,12 +3916,10 @@ $scope.xValues = {
                     {"category":"unordered","level":"campaign","match_type":0,
                         "values":{"exact":[]},
                         "value_type":"campaign"
-
                     },
                 "2":{"category":"time","level":"time","match_type":1,
                         "values":{"range":[]},
                         "value_type":"time"
-
                     }
                 },
             "data_point":{"category":"unordered","level":["qualitytype"]},
@@ -4126,7 +4191,8 @@ $scope.xValues = {
         if($scope.initialDynamicGraphData.lower_group_data.length > 4){
           $scope.stackedBarChartForDynamic.chart['width'] = $scope.initialDynamicGraphData.lower_group_data.length * 300;
         }
-
+        // $scope.stackedBarChartForDynamic.chart.yAxis['tickFormat'] =
+        //   function(d) {console.log(d); return d3.format(",")(d)};
         console.log($scope.stackedBarChartForDynamic);
         $scope.stackedBarChartDynamicData = formatDynamicData($scope.initialDynamicGraphData);
         setLabelsOnBars();
@@ -4272,7 +4338,7 @@ $scope.xValues = {
                if (bar.y === 0) {
                  return;
                }
-               return parseFloat(bar.y).toFixed(0);
+               return parseFloat(bar.y).toFixed(2) + "%";
              })
              .attr('y', function(){
                // Center label vertically
