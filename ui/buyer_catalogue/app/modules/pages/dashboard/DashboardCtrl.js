@@ -116,6 +116,11 @@
  var metrics_global = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["5","3","/"],["m5",100,"*"],
  ["6","3","/"],["m7",100,"*"],["7","3","/"],["m9",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"]
  ,["4","6","/"],["4","7","/"]];
+
+ var raw_data_basic = ["lead","hot_lead","flat","hotness_level_2","hotness_level_3","hotness_level_4"];
+ var metrics_basic = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","3","/"],["m5",100,"*"],
+["5","3","/"],["m7",100,"*"],["6","3","/"],["m9",100,"*"]];
+
  console.log($scope.userInfo);
  $scope.invNameToCode = {
    'POSTER' : 'PO',
@@ -3905,7 +3910,7 @@ var tooltipDynamicGraphData = [];
     }
 
 
-    if ($scope.graphSelection.dateRange.startDate && (
+    if ((
         $scope.graphSelection.category == 'campaign' &&
         $scope.selectedDynamicCampaigns.length && $scope.graphSelection.specificParam == 'qualitytype' )) {
           $scope.xValues.value = 'qualitytype';
@@ -4127,6 +4132,28 @@ var tooltipDynamicGraphData = [];
               angular.forEach($scope.selectedDynamicCampaigns, function(data){
                 reqData.data_scope['1'].values.exact.push(data.campaign_id);
               });
+        }else if (
+            $scope.graphSelection.category == 'vendor' &&
+              $scope.selectedVendors.length && $scope.selectedDynamicCampaigns.length
+            ) {
+              $scope.xValues.value = 'campaign_name';
+              var reqData = {
+                "data_scope":{
+                    "1":
+                        {"category":"unordered","level":"vendor","match_type":0,
+                            "values":{"exact":[]},
+                            "value_type":"vendor"
+
+                        },
+                    },
+                "data_point":{"category":"unordered","level":["campaign"]},
+                "raw_data":raw_data_global,
+                "metrics": metrics_global
+              }
+
+              angular.forEach($scope.selectedVendors, function(data){
+                reqData.data_scope['1'].values.exact.push($scope.vendorsData[data].vendor_id);
+              });
         } else if (!$scope.graphSelection.dateRange.startDate && (
             $scope.graphSelection.category == 'vendor' &&
               $scope.selectedVendors.length
@@ -4150,7 +4177,7 @@ var tooltipDynamicGraphData = [];
                 reqData.data_scope['1'].values.exact.push($scope.vendorsData[data].vendor_id);
               });
         }else if (
-              $scope.selectedCities.length
+              $scope.selectedCities_temp.length
             ) {
               console.log("hello");
               $scope.xValues.value = 'campaign_name';
