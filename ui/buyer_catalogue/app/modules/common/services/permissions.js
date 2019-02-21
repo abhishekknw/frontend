@@ -96,4 +96,8 @@ angular
       enter_leads_from_application_access : 'enter_leads_from_application_access',
       editProposalDetailsPage     : 'editProposalDetailsPage'
     },
+
+    dashboard : {
+      brandingEmailButton : 'can_view_brandingemailbutton',
+    }
   });

@@ -202,6 +202,10 @@
       var url = url_root  + "campaign/campaign-wise-summary/";
       return machadaloHttp.get(url);
     }
+    DashboardService.getVendorWiseSummary = function(){
+      var url = url_base  + "vendor-wise-summary/";
+      return machadaloHttp.get(url);
+    }
 
     DashboardService.getDistributionGraphsStatics = function(data){
       var url =  url_root  + "analytics/get-leads-data-generic/";
