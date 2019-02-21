@@ -120,6 +120,8 @@
  var raw_data_basic = ["lead","hot_lead","flat","hotness_level_2","hotness_level_3","hotness_level_4"];
  var metrics_basic = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","3","/"],["m5",100,"*"],
 ["5","3","/"],["m7",100,"*"],["6","3","/"],["m9",100,"*"]];
+var raw_data_basic_temp = ["lead","hot_lead","flat"];
+var metrics_basic_temp = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"]];
 
  console.log($scope.userInfo);
  $scope.invNameToCode = {
@@ -3849,23 +3851,25 @@ var tooltipDynamicGraphData = [];
         if(!values1.hasOwnProperty(itemKey)){
             values1[itemKey] = [];
         }
-        console.log(data[$scope.xValues.value],data,$scope.xValues.value);
-        console.log(specificXValue);
-        console.log(itemKey,data);
         if(specificXValue){
-          // console.log();
-          var temp_label = data[$scope.xValues.value] + " (" + data[specificXValue] + ")" ;
-          var temp = {
-            x: temp_label,
-            y: data[itemKey]||0
+          if(data[$scope.xValues.value] != null){
+            var temp_label = data[$scope.xValues.value] + " (" + data[specificXValue] + ")" ;
+            var temp = {
+              x: temp_label,
+              y: data[itemKey]||0
+            }
+            values1[itemKey].push(temp);
           }
+
         }else {
-          var temp = {
-            x: data[$scope.xValues.value],
-            y: data[itemKey]||0
+          if(data[$scope.xValues.value] != null){
+            var temp = {
+              x: data[$scope.xValues.value],
+              y: data[itemKey]||0
+            }
+            values1[itemKey].push(temp);
           }
         }
-        values1[itemKey].push(temp);
       })
 
     })
@@ -3910,33 +3914,30 @@ var tooltipDynamicGraphData = [];
     }
 
 
-    if ((
-        $scope.graphSelection.category == 'campaign' &&
-        $scope.selectedDynamicCampaigns.length && $scope.graphSelection.specificParam == 'qualitytype' )) {
-          $scope.xValues.value = 'qualitytype';
-          specificXValue = 'campaign_name';
-          var reqData = {
-            "data_scope":{
-                "1":
-                    {"category":"unordered","level":"campaign","match_type":0,
-                        "values":{"exact":[]},
-                        "value_type":"campaign"
-                    },
-                "2":{"category":"time","level":"time","match_type":1,
-                        "values":{"range":[]},
-                        "value_type":"time"
-                    }
-                },
-            "data_point":{"category":"unordered","level":["qualitytype"]},
-            "raw_data":raw_data_global,
-            "metrics": metrics_global
+    if ($scope.graphSelection.specificParam.society == 'qualitytype' ) {
+          if($scope.selectedDynamicCampaigns.length){
+            $scope.xValues.value = 'qualitytype';
+            specificXValue = 'campaign_name';
+            var reqData = {
+              "data_scope":{
+                  "1":
+                      {"category":"unordered","level":"campaign","match_type":0,
+                          "values":{"exact":[]},
+                          "value_type":"campaign"
+                      },
+                  },
+              "data_point":{"category":"unordered","level":["qualitytype"]},
+              "raw_data":raw_data_basic_temp,
+              "metrics": metrics_basic_temp
+            }
+
+            angular.forEach($scope.selectedDynamicCampaigns, function(data){
+              reqData.data_scope['1'].values.exact.push(data.campaign_id);
+            });
+            // reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
+            // reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
           }
 
-          angular.forEach($scope.selectedDynamicCampaigns, function(data){
-            reqData.data_scope['1'].values.exact.push(data.campaign_id);
-          });
-          reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
-          reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
     }else if (
         $scope.graphSelection.category == 'campaign' &&
         $scope.selectedDynamicCampaigns.length && $scope.graphSelection.specificParam == 'qualitytype' ) {
@@ -4188,21 +4189,15 @@ var tooltipDynamicGraphData = [];
                         {"category":"geographical","level":"city","match_type":0,
                             "values":{"exact":[]},
                             "value_type":"city"
-
                         },
-                      // "1":{"category":"time","level":"time","match_type":1,
-                      //         "values":{"range":[]},
-                      //         "value_type":"time"
-                      //
-                      //     }
                       },
-                  "data_point":{"category":"unordered","level":["campaign"]},
+                  "data_point":{"category":"geographical","level":["city"]},
                   "raw_data":raw_data_global,
                   "metrics": metrics_global
                 }
 
 
-              angular.forEach($scope.selectedCities, function(data){
+              angular.forEach($scope.selectedCities_temp, function(data){
                 reqData.data_scope['1'].values.exact.push(data.name);
               });
               // reqData.data_scope['1'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
