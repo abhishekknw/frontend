@@ -6,8 +6,10 @@
     'use strict';
 
   angular.module('catalogueApp')
-      .controller('DashboardCtrl',function($scope,NgMap, $rootScope, baConfig, colorHelper,DashboardService, commonDataShare, constants,$location,$anchorScroll,uiGmapGoogleMapApi,uiGmapIsReady,Upload,cfpLoadingBar,$stateParams,$timeout,Excel) {
+      .controller('DashboardCtrl',function($scope,NgMap, $rootScope, baConfig, colorHelper,DashboardService, commonDataShare, constants,$location,$anchorScroll,uiGmapGoogleMapApi,uiGmapIsReady,Upload,cfpLoadingBar,$stateParams,$timeout,Excel, permissions) {
  $scope.itemsByPage=15;
+ $scope.permissions = permissions.dashboard;
+ console.log($scope.permissions);
  $scope.campaign_id = $stateParams.proposal_id;
  $scope.query = "";
  $scope.oneAtATime = true;
