@@ -40,8 +40,8 @@
  ];
  $scope.sizeOfFlatsLists = [
    {id: 1, name: '1-150'},
-   {id: 2, name: '150-400'},
-   {id: 3, name: '400 +'},
+   {id: 2, name: '151-400'},
+   {id: 3, name: '401+'},
  ];
  $scope.freebiesLists = [
    {id: 1, name: 'Whatsapp Group'},
@@ -3853,7 +3853,7 @@ var tooltipDynamicGraphData = [];
     angular.forEach(data.lower_group_data, function(data,key){
       console.log(data,data[$scope.xValues.value],selectedSpecificItems);
       tooltipDynamicGraphData.push(data);
-      if(selectedSpecificItems.indexOf(data[$scope.xValues.value]) > -1){
+      if(selectedSpecificItems.indexOf(data[$scope.xValues.value]) > -1 || !selectedSpecificItems.length){
         angular.forEach($scope.yValues, function(itemKey,index,item){
           if(!values1.hasOwnProperty(itemKey)){
               values1[itemKey] = [];
@@ -3901,6 +3901,7 @@ var tooltipDynamicGraphData = [];
   $scope.graphSelection = {
     category : {},
     dateRange : {},
+    phaseRange: {},
     specificParam : {
       society: {},
       booking: {},
@@ -3943,6 +3944,59 @@ var tooltipDynamicGraphData = [];
               "raw_data":raw_data_basic_temp,
               "metrics": metrics_basic_temp
             }
+
+            angular.forEach($scope.selectedDynamicCampaigns, function(data){
+              reqData.data_scope['1'].values.exact.push(data.campaign_id);
+            });
+            // reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
+            // reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
+          }
+
+    }else if ($scope.graphSelection.specificParam.society == 'sizeOfFlats' ) {
+          if($scope.selectedDynamicCampaigns.length){
+            $scope.xValues.value = 'flattype';
+            specificXValue = 'campaign_name';
+            selectedSpecificItems = [];
+            angular.forEach($scope.selectedSizeOfFlats, function(data){
+              selectedSpecificItems.push(data.name);
+            })
+            var reqData = {
+              "data_scope":{
+                  "1":
+                      {"category":"unordered","level":"campaign","match_type":0,
+                          "values":{"exact":[]},
+                          "value_type":"campaign"
+                      },
+                  },
+              "data_point":{"category":"unordered","level":["flattype"]},
+              "raw_data":raw_data_basic_temp,
+              "metrics": metrics_basic_temp
+            }
+
+            angular.forEach($scope.selectedDynamicCampaigns, function(data){
+              reqData.data_scope['1'].values.exact.push(data.campaign_id);
+            });
+            // reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
+            // reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
+          }
+
+    }else if ($scope.graphSelection.phaseRange.start) {
+          if($scope.selectedDynamicCampaigns.length){
+            $scope.xValues.value = 'phase';
+            specificXValue = 'campaign_name';
+            selectedSpecificItems = [];
+            var reqData = {
+                    "data_scope": {"1":{"category": "unordered", "level": "campaign", "match_type": 0,
+                        "values": {"exact": []}, "value_type": "campaign"}},
+                    "data_point": {
+                        "category": "time",
+                        "level": ["date"],
+                        "sublevel": "phase"
+                    },
+                    "raw_data": [
+                        "lead","hot_lead","flat"
+                    ]
+                }
 
             angular.forEach($scope.selectedDynamicCampaigns, function(data){
               reqData.data_scope['1'].values.exact.push(data.campaign_id);
@@ -4344,7 +4398,7 @@ var tooltipDynamicGraphData = [];
        console.log($scope.dynamicGraphSelectedOrder.value);
        angular.forEach(data, function(item){
 
-         if(selectedSpecificItems.indexOf(item[$scope.xValues.value]) > -1){
+         if(selectedSpecificItems.indexOf(item[$scope.xValues.value]) > -1 || !selectedSpecificItems.length){
            if(item[$scope.xValues.value]){
              if(specificXValue){
                var value = {
