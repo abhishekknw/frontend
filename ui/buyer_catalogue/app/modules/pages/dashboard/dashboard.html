@@ -3180,8 +3180,9 @@
             </tr>
       </thead>
         <tbody style="text-align:center;">
-          <tr ng-repeat="(key,data) in initialDynamicGraphData.lower_group_data">
-            <td style="text-transform: capitalize">{{data.campaign_name}}</td>
+          <tr ng-repeat="(key,data) in initialDynamicGraphData.lower_group_data" ng-if="data[xValues.value]">
+            <td  style="text-transform: capitalize">{{data[xValues.value]}}
+              <label ng-if="specificXValueLabel">({{data[specificXValueLabel]}})</label></td>
             <td>{{data.lead}}</td>
             <td>{{data.hot_lead}}</td>
             <td>{{data['cost_flat/lead']}} <br> ({{data['lead/flat*100']}} %)</td>

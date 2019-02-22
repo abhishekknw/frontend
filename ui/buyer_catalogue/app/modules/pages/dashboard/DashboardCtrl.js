@@ -3842,7 +3842,10 @@ var tooltipDynamicGraphData = [];
     var values1 = {};
     var labels = [];
     var finalData = [];
-    tooltipDynamicGraphData = []
+    tooltipDynamicGraphData = [];
+    if(specificXValue){
+      $scope.specificXValueLabel = specificXValue;
+    }
     // var values2 = [];
     angular.forEach(data.lower_group_data, function(data,key){
       console.log(data);
@@ -4328,12 +4331,24 @@ var tooltipDynamicGraphData = [];
        temp_data['key'] = "Sample";
        temp_data['values'] = [];
        console.log($scope.xValues.value);
+       console.log($scope.dynamicGraphSelectedOrder.value);
        angular.forEach(data, function(item){
-         var value = {
-           'label' : item[$scope.xValues.value],
-           'value' : item[$scope.dynamicGraphSelectedOrder.value]
+         if(item[$scope.xValues.value]){
+           if(specificXValue){
+             var value = {
+               'label' : item[$scope.xValues.value] + "(" + item[specificXValue] + ")",
+               'value' : item[$scope.dynamicGraphSelectedOrder.value]
+             }
+             temp_data.values.push(value);
+           }else{
+             var value = {
+               'label' : item[$scope.xValues.value],
+               'value' : item[$scope.dynamicGraphSelectedOrder.value]
+             }
+             temp_data.values.push(value);
+           }
+
          }
-         temp_data.values.push(value);
        })
        return [temp_data];
      }
