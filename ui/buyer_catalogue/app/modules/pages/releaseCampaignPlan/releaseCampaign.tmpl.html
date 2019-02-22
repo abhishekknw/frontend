@@ -28,16 +28,14 @@
 
 <!-- <div class="container"> -->
   <div class="panel-body table-style">
+    <div class="col-md-6">
+      <select class="col-md-6 form-control" name="">
+        <option value="">All</option>
+        <option value="">Assigned</option>
+      </select>
+    </div>
       <table st-table="releaseDetails.shortlisted_suppliers" st-safe-src="Data" class="table table-striped">
         <thead>
-          <tr>
-            <th colspan='999' style="background-color:#ffffff;">
-              <select colspan='999' class="form-control" name="">
-                <option value="">All</option>
-                <option value="">Assigned</option>
-              </select>
-            </th>
-          </tr>
           <tr>
             <th colspan='999' style="background-color:#ffffff;">
               <input st-search="" placeholder="Search ..." class="form-control"  type="search"/>
