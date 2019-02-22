@@ -30,6 +30,7 @@
  $scope.selectedDynamicCampaigns = [];
  $scope.selectedTyeOfSocieties = [];
  $scope.selectedSizeOfFlats = [];
+ var selectedSpecificItems = [];
 
  $scope.typeOfSocietyLists = [
    {id: 1, name: 'Ultra High'},
@@ -3849,34 +3850,36 @@ var tooltipDynamicGraphData = [];
     if(specificXValue){
       $scope.specificXValueLabel = specificXValue;
     }
-    // var values2 = [];
     angular.forEach(data.lower_group_data, function(data,key){
-      console.log(data);
+      console.log(data,data[$scope.xValues.value],selectedSpecificItems);
       tooltipDynamicGraphData.push(data);
-      angular.forEach($scope.yValues, function(itemKey,index,item){
-        if(!values1.hasOwnProperty(itemKey)){
-            values1[itemKey] = [];
-        }
-        if(specificXValue){
-          if(data[$scope.xValues.value] != null){
-            var temp_label = data[$scope.xValues.value] + " (" + data[specificXValue] + ")" ;
-            var temp = {
-              x: temp_label,
-              y: data[itemKey]||0
-            }
-            values1[itemKey].push(temp);
+      if(selectedSpecificItems.indexOf(data[$scope.xValues.value]) > -1){
+        angular.forEach($scope.yValues, function(itemKey,index,item){
+          if(!values1.hasOwnProperty(itemKey)){
+              values1[itemKey] = [];
           }
+          if(specificXValue){
+            if(data[$scope.xValues.value] != null){
+              var temp_label = data[$scope.xValues.value] + " (" + data[specificXValue] + ")" ;
+              var temp = {
+                x: temp_label,
+                y: data[itemKey]||0
+              }
+              values1[itemKey].push(temp);
+            }
 
-        }else {
-          if(data[$scope.xValues.value] != null){
-            var temp = {
-              x: data[$scope.xValues.value],
-              y: data[itemKey]||0
+          }else {
+            if(data[$scope.xValues.value] != null){
+              var temp = {
+                x: data[$scope.xValues.value],
+                y: data[itemKey]||0
+              }
+              values1[itemKey].push(temp);
             }
-            values1[itemKey].push(temp);
           }
-        }
-      })
+        })
+      }
+
 
     })
     angular.forEach($scope.yValues, function(itemKey){
@@ -3924,6 +3927,10 @@ var tooltipDynamicGraphData = [];
           if($scope.selectedDynamicCampaigns.length){
             $scope.xValues.value = 'qualitytype';
             specificXValue = 'campaign_name';
+            selectedSpecificItems = [];
+            angular.forEach($scope.selectedTyeOfSocieties, function(data){
+              selectedSpecificItems.push(data.name);
+            })
             var reqData = {
               "data_scope":{
                   "1":
@@ -4336,21 +4343,24 @@ var tooltipDynamicGraphData = [];
        console.log($scope.xValues.value);
        console.log($scope.dynamicGraphSelectedOrder.value);
        angular.forEach(data, function(item){
-         if(item[$scope.xValues.value]){
-           if(specificXValue){
-             var value = {
-               'label' : item[$scope.xValues.value] + "(" + item[specificXValue] + ")",
-               'value' : item[$scope.dynamicGraphSelectedOrder.value]
-             }
-             temp_data.values.push(value);
-           }else{
-             var value = {
-               'label' : item[$scope.xValues.value],
-               'value' : item[$scope.dynamicGraphSelectedOrder.value]
-             }
-             temp_data.values.push(value);
-           }
 
+         if(selectedSpecificItems.indexOf(item[$scope.xValues.value]) > -1){
+           if(item[$scope.xValues.value]){
+             if(specificXValue){
+               var value = {
+                 'label' : item[$scope.xValues.value] + "(" + item[specificXValue] + ")",
+                 'value' : item[$scope.dynamicGraphSelectedOrder.value]
+               }
+               temp_data.values.push(value);
+             }else{
+               var value = {
+                 'label' : item[$scope.xValues.value],
+                 'value' : item[$scope.dynamicGraphSelectedOrder.value]
+               }
+               temp_data.values.push(value);
+             }
+
+           }
          }
        })
        return [temp_data];
