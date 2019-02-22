@@ -4181,7 +4181,7 @@ var tooltipDynamicGraphData = [];
               $scope.selectedCities_temp.length
             ) {
               console.log("hello");
-              $scope.xValues.value = 'campaign_name';
+              $scope.xValues.value = 'city';
               var reqData = {
 
                   "data_scope":{
