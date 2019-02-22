@@ -2670,18 +2670,18 @@ $scope.backToCampaign = function(){
 // }
 
 $scope.viewComments = function(supplier,index){
-  // $scope.supplierDataForComment = supplier;
+  $scope.societyViewNameForComments = supplier.supplier.society_name;
   // $scope.supplierNameForComment = undefined;
   // $scope.supplierNameForComment = supplier.supplier_data.society_name;
-  $scope.commentsData = {};
+  $scope.commentsData = [];
   var relatedTo = constants.execution_related_comment;
   var spaceId = supplier.shortlisted_space_id;
   DashboardService.viewComments($scope.campaignId,spaceId,relatedTo)
   .then(function onSuccess(response){
     console.log(response);
     $scope.commentModal = {};
-    $scope.enableViewComments = index;
     $scope.commentsData = response.data.data;
+    console.log($scope.commentsData);
     // if(Object.keys($scope.commentsData).length != 0){
     //   $scope.viewInvForComments = Object.keys($scope.commentsData);
     //   $scope.selectedInvForView = $scope.viewInvForComments[0];
@@ -2914,10 +2914,13 @@ var formatByLocation = function(data,key,type){
   return [temp_data];
 }
 $scope.commentModal = {};
-$scope.addComment = function(id){
-
+$scope.addComment = function(){
+  console.log($scope.supplierShorlistedSpaceId);
   $scope.commentModal['related_to'] = constants.execution_related_comment;
-  $scope.commentModal['shortlisted_spaces_id'] = id;
+  $scope.commentModal['shortlisted_spaces_id'] = $scope.supplierShorlistedSpaceId;
+  console.log($scope.commentModal);
+  // var spaceId = supplier.shortlisted_space_id;
+  // console.log(spaceId);
   DashboardService.addComment($scope.campaignId,$scope.commentModal)
   .then(function onSuccess(response){
     console.log(response);
@@ -3025,8 +3028,10 @@ $scope.uploadFiles = function(file){
   $scope.file = file;
   $scope.selectDate = true;
 }
-$scope.enableAddComments = function(index){
-  $scope.enableComments = index;
+$scope.enableAddComments = function(supplier){
+  console.log(supplier);
+  $scope.supplierShorlistedSpaceId = supplier.shortlisted_space_id;
+$scope.societyNameForComments = supplier.supplier.society_name;
 }
 $scope.getPermissionBoxImages = function(supplier){
   $scope.supplierNameForPermBox = supplier.society_name;
