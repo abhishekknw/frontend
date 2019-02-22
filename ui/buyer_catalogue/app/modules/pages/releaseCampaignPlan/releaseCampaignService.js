@@ -108,5 +108,11 @@
       return machadaloHttp.get(url);
     }
 
+    releaseCampaignService.setUserForBooking = function(data){
+      var url = url_base + 'supplier-assignment/';
+      return machadaloHttp.post(url,data);
+    }
+
+
     return releaseCampaignService;
 }]);

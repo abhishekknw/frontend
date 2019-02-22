@@ -7,6 +7,7 @@ angular.module('catalogueApp')
   $scope.campaign_manager = constants.campaign_manager;
   $scope.editPaymentDetails = true;
   $scope.commentModal = {};
+  $scope.userData = {};
   $scope.assign = {};
   $scope.body = {
     message : '',
@@ -14,6 +15,7 @@ angular.module('catalogueApp')
   $scope.editContactDetails = true;
   $scope.addContactDetails = true;
   $scope.userIcon = "icons/usericon.png";
+  $scope.userInfo = $rootScope.globals.userInfo;
 $scope.addNewPhase = true;
   if($rootScope.globals.userInfo.is_superuser == true){
     $scope.backButton = true;
@@ -145,7 +147,7 @@ $scope.addNewPhase =true;
     releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id)
     	.then(function onSuccess(response){
         console.log(response);
-
+        getUsersList();
     		$scope.releaseDetails = response.data.data;
         $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
         console.log($scope.Data);
@@ -193,6 +195,28 @@ $scope.addNewPhase =true;
                  supplier.phase_no = id;
                  console.log(supplier.phase_no);
              }
+
+    $scope.setUserForBooking = function() {
+      console.log($scope.userSupplierData);
+      $scope.societySupplierName = $scope.userSupplierData.supplierName;
+      var data = {
+        assigned_by: $scope.userInfo.id,
+        assigned_to_ids:  [parseInt($scope.userData.user)],
+        campaign_id: $scope.campaign_id,
+        supplier_id: $scope.userSupplierData.supplier_id,
+        supplierName: $scope.userSupplierData.name,
+      }
+      console.log(data);
+      $scope.societySupplierName = data.supplierName;
+      releaseCampaignService.setUserForBooking(data)
+      .then(function onSuccess(response){
+        console.log(response);
+
+      swal(constants.name,constants.assign_success,constants.success);
+      })
+      .catch(function onError(response){
+      });
+    }
 
     $scope.emptyList = {NA:'NA'};
     $scope.getFilters = function(supplier){
@@ -648,6 +672,7 @@ $scope.multiSelect =
          })
        }
 
+
        $scope.editPhaseDetails = function(){
          $scope.editPhase = true;
        }
@@ -819,7 +844,8 @@ $scope.multiSelect =
          commonDataShare.getUsersList()
            .then(function onSuccess(response){
              $scope.userList = response.data.data;
-             $scope.usersMapListWithObjects = {};
+             $scope.selectedUsers = [];
+             $scope.usersMapListWithObjects = [];
              angular.forEach($scope.userList, function(data){
                $scope.usersMapListWithObjects[data.id] = data;
              })
@@ -831,6 +857,16 @@ $scope.multiSelect =
            });
        }
 
+       $scope.settingsForUsers = { enableSearch: true,
+           keyboardControls: true ,idProp : "id",
+           template: '{{option.username}}', smartButtonTextConverter(skip, option) { return option; },
+           showCheckAll : true,
+           scrollableHeight: '300px', scrollable: true};
+           $scope.selected_baselines_customTexts_users = {buttonDefaultText: 'Select Users'};
+           $scope.eventsForUsers = {
+             onItemSelect : function(item){
+             }
+          }
        $scope.initialiseImportSheet = function(){
          getUsersList();
          getProposalCenters();
@@ -1049,6 +1085,10 @@ $scope.multiSelect =
         supplier.phase_no = '';
       }
       console.log(supplier);
+    }
+    $scope.setUserSupplier = function(supplier){
+      console.log(supplier);
+      $scope.userSupplierData = supplier;
     }
 
 }]);//Controller function ends here
