@@ -3948,8 +3948,6 @@ var tooltipDynamicGraphData = [];
             angular.forEach($scope.selectedDynamicCampaigns, function(data){
               reqData.data_scope['1'].values.exact.push(data.campaign_id);
             });
-            // reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
-            // reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
           }
 
     }else if ($scope.graphSelection.specificParam.society == 'sizeOfFlats' ) {
@@ -3993,9 +3991,8 @@ var tooltipDynamicGraphData = [];
                         "level": ["date"],
                         "sublevel": "phase"
                     },
-                    "raw_data": [
-                        "lead","hot_lead","flat"
-                    ]
+                    "raw_data": raw_data_basic_temp,
+                    "metrics" : metrics_basic_temp
                 }
 
             angular.forEach($scope.selectedDynamicCampaigns, function(data){
