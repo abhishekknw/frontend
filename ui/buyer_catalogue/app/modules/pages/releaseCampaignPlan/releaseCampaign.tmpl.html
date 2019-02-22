@@ -13,7 +13,7 @@
   <div class="pageTitle">
       <h3>Booking Plan</h3>
   </div>
-    <div class = "panel-body" style="text-align:center;margin-top:-20px">
+    <div class="panel-body" style="text-align:center;margin-top:-20px">
         <div class="row">
           <div class="panel panel-default">
             <div class="panel-heading">
@@ -30,6 +30,14 @@
   <div class="panel-body table-style">
       <table st-table="releaseDetails.shortlisted_suppliers" st-safe-src="Data" class="table table-striped">
         <thead>
+          <tr>
+            <th colspan='999' style="background-color:#ffffff;">
+              <select colspan='999' class="form-control" name="">
+                <option value="">All</option>
+                <option value="">Assigned</option>
+              </select>
+            </th>
+          </tr>
           <tr>
             <th colspan='999' style="background-color:#ffffff;">
               <input st-search="" placeholder="Search ..." class="form-control"  type="search"/>
