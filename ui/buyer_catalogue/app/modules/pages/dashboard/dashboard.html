@@ -2882,7 +2882,7 @@
                                 </span>
                                 </div>
                             </div>
-                            <p style="text-align:center;color:#808080">OR</p>
+                            <p style="text-align:center;color:#cb1925;font-weight: bold;">OR</p>
                             <label for="">Phase</label>
                             <br />
                             <div class="col-md-6">
@@ -2959,7 +2959,7 @@
                             selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
                           </div>
 
-                          <p style="text-align:center;color:#808080">OR</p>
+                          <p style="text-align:center;color:#cb1925;font-weight: bold;">OR</p>
 
                           <label for="" style="color:#808080;">Booking Parameters</label>
                           <select class="form-control" ng-model="graphSelection.specificParam.booking">
@@ -3009,7 +3009,8 @@
                     </div>
                     </div>
                     </div>
-                    <p style="color:#808080;text-align:center">OR</p>
+                    <p style="color:#cb1925;text-align:center;font-weight: bold;">OR</p>
+                    <br />
                     <div class="panel panel-danger">
                     <div class="panel-heading"  style="background:#cb1925">Filter By Vendor</div>
                     <div class="panel-body">
@@ -3093,20 +3094,16 @@
                          <!-- <input type="checkbox" value="percentageValues" ng-model="graphSelection.Yvalues"><small>In Percentage</small>
                          <input type="checkbox" value="percentageValues" ng-model="graphSelection.Yvalues"><small></small> -->
 
-                         <div class="col-md-4">
+                         <div class="col-md-12">
                            <input type="checkbox" value="leadsValues" ng-model="graphSelection.Yvalues.leadsPerc" ng-click="changeDynamicGraph()"> <small> LEADS %</small>
-                           <br />
                            <input type="checkbox" value="hotleadsValues" ng-model="graphSelection.Yvalues.hotleadsPerc" ng-click="changeDynamicGraph()"> <small> HOT LEADS %</small>
-                           <br />
                            <input type="checkbox" value="hotleadsValues" ng-model="graphSelection.Yvalues.meetingFixedPerc" ng-click="changeDynamicGraph()"> <small> MEETING FIXED %</small>
-                           <br />
                            <input type="checkbox" value="hotleadsValues" ng-model="graphSelection.Yvalues.meetingCompletedPerc" ng-click="changeDynamicGraph()"> <small> MEETING COMPLETED %</small>
-                           <br />
                            <input type="checkbox" value="hotleadsValues" ng-model="graphSelection.Yvalues.conversionPerc" ng-click="changeDynamicGraph()"> <small> CONVERSION %</small>
 
                          </div>
-                        <div class="col-md-4">
-                         </div>
+                        <!-- <div class="col-md-4">
+                         </div> -->
                          <!-- <div class="col-md-4">
                            <input type="checkbox" value="costleads" ng-model="graphSelection.Yvalues.costPerLeads" ng-click="changeDynamicGraph()"><small> COST PER LEADS</small>
                            <br />

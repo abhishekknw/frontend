@@ -28,6 +28,9 @@
  $scope.selectedCities_temp = [];
  $scope.selectedVendors_temp = [];
  $scope.selectedDynamicCampaigns = [];
+ $scope.selectedTyeOfSocieties = [];
+ $scope.selectedSizeOfFlats = [];
+
  $scope.typeOfSocietyLists = [
    {id: 1, name: 'Ultra High'},
    {id: 2, name: 'High'},
