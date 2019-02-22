@@ -4180,7 +4180,6 @@ var tooltipDynamicGraphData = [];
         }else if (
               $scope.selectedCities_temp.length
             ) {
-              console.log("hello");
               $scope.xValues.value = 'city';
               var reqData = {
 
@@ -4328,9 +4327,10 @@ var tooltipDynamicGraphData = [];
 
        temp_data['key'] = "Sample";
        temp_data['values'] = [];
+       console.log($scope.xValues.value);
        angular.forEach(data, function(item){
          var value = {
-           'label' : item.campaign_name,
+           'label' : item[$scope.xValues.value],
            'value' : item[$scope.dynamicGraphSelectedOrder.value]
          }
          temp_data.values.push(value);
