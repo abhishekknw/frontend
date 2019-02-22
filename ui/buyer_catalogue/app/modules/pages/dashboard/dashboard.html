@@ -3095,12 +3095,21 @@
                          <input type="checkbox" value="percentageValues" ng-model="graphSelection.Yvalues"><small></small> -->
 
                          <div class="col-md-12">
-                           <input type="checkbox" value="leadsValues" ng-model="graphSelection.Yvalues.leadsPerc" ng-click="changeDynamicGraph()"> <small> LEADS %</small>
-                           <input type="checkbox" value="hotleadsValues" ng-model="graphSelection.Yvalues.hotleadsPerc" ng-click="changeDynamicGraph()"> <small> HOT LEADS %</small>
-                           <input type="checkbox" value="hotleadsValues" ng-model="graphSelection.Yvalues.meetingFixedPerc" ng-click="changeDynamicGraph()"> <small> MEETING FIXED %</small>
-                           <input type="checkbox" value="hotleadsValues" ng-model="graphSelection.Yvalues.meetingCompletedPerc" ng-click="changeDynamicGraph()"> <small> MEETING COMPLETED %</small>
-                           <input type="checkbox" value="hotleadsValues" ng-model="graphSelection.Yvalues.conversionPerc" ng-click="changeDynamicGraph()"> <small> CONVERSION %</small>
-
+                           <div class="col-md-2">
+                             <input type="checkbox" style="width:20px;height:20px;" value="leadsValues" ng-model="graphSelection.Yvalues.leadsPerc" ng-click="changeDynamicGraph()"> <small> LEADS %</small>
+                           </div>
+                           <div class="col-md-2">
+                             <input type="checkbox" style="width:20px;height:20px;" value="hotleadsValues" ng-model="graphSelection.Yvalues.hotleadsPerc" ng-click="changeDynamicGraph()"> <small> HOT LEADS %</small>
+                           </div>
+                           <div class="col-md-2">
+                             <input type="checkbox" style="width:20px;height:20px;" value="hotleadsValues" ng-model="graphSelection.Yvalues.meetingFixedPerc" ng-click="changeDynamicGraph()"> <small> MEETING FIXED %</small>
+                           </div>
+                           <div class="col-md-3">
+                             <input type="checkbox" style="width:20px;height:20px;" value="hotleadsValues" ng-model="graphSelection.Yvalues.meetingCompletedPerc" ng-click="changeDynamicGraph()"> <small> MEETING COMPLETED %</small>
+                           </div>
+                           <div class="col-md-3">
+                             <input type="checkbox" style="width:20px;height:20px;" value="hotleadsValues" ng-model="graphSelection.Yvalues.conversionPerc" ng-click="changeDynamicGraph()"> <small> CONVERSION %</small>
+                           </div>
                          </div>
                         <!-- <div class="col-md-4">
                          </div> -->
