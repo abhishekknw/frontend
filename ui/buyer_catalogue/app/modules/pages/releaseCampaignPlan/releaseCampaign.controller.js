@@ -143,35 +143,15 @@ $scope.addNewPhase =true;
     $scope.saveDetails = function(){
       // alert("vidhi");
     };
-      $scope.Data = [];
     releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id)
     	.then(function onSuccess(response){
         console.log(response);
         getUsersList();
-    		$scope.releaseDetails = response.data.data;
-        $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
-        console.log($scope.Data);
-        console.log($scope.releaseDetails);
-
-        angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier,key){
-          console.log(supplier);
-          $scope.mapViewLat = supplier.latitude;
-          $scope.mapViewLong = supplier.longitude;
-          if(!supplier.stall_locations){
-            supplier.stall_locations = [];
-          }
-          // console.log($scope.mapViewLat);
-          // console.log($scope.mapViewLong);
-
-
-        })
-
-
-        setDataToModel($scope.releaseDetails.shortlisted_suppliers);
-        $scope.loading = response;
-        angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier){
-          $scope.shortlistedSuppliersIdList[supplier.supplier_id] = supplier;
-        })
+        $scope.initialReleaseData = response.data.data;
+        console.log($scope.initialReleaseData);
+    		$scope.releaseDetails = $scope.initialReleaseData;
+        getAssignedSuppliers();
+        // formatData();
     	})
     	.catch(function onError(response){
         console.log(response);
@@ -1089,6 +1069,69 @@ $scope.multiSelect =
     $scope.setUserSupplier = function(supplier){
       console.log(supplier);
       $scope.userSupplierData = supplier;
+    }
+    var getAssignedSuppliers = function(){
+      releaseCampaignService.getAssignedSuppliers($scope.campaignId, $scope.userInfo.id)
+      .then(function onSuccess(response){
+        console.log(response);
+        $scope.assignedData = response.data.data;
+        $scope.assignedDataIdsList = {};
+        $scope.assignedDataFinal = [];
+        angular.forEach($scope.assignedData, function(data){
+          $scope.assignedDataIdsList[data.supplier_id] = data;
+        })
+        angular.forEach($scope.initialReleaseData.shortlisted_suppliers, function(data){
+          if($scope.assignedDataIdsList.hasOwnProperty(data.supplier_id)){
+            $scope.assignedDataFinal.push(data);
+          }
+          })
+          console.log($scope.assignedDataFinal,$scope.initialReleaseData);
+        $scope.releaseDetails.shortlisted_suppliers = [];
+        $scope.releaseDetails.shortlisted_suppliers = angular.copy($scope.assignedDataFinal);
+
+        formatData();
+      }).catch(function onError(response){
+        console.log(response);
+      })
+    }
+    var formatData = function(){
+      // $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
+      // console.log($scope.Data);
+      console.log($scope.releaseDetails);
+
+      angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier,key){
+        console.log(supplier);
+        $scope.mapViewLat = supplier.latitude;
+        $scope.mapViewLong = supplier.longitude;
+        if(!supplier.stall_locations){
+          supplier.stall_locations = [];
+        }
+        // console.log($scope.mapViewLat);
+        // console.log($scope.mapViewLong);
+
+
+      })
+
+
+      setDataToModel($scope.releaseDetails.shortlisted_suppliers);
+      $scope.loading = true;
+      angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier){
+        $scope.shortlistedSuppliersIdList[supplier.supplier_id] = supplier;
+      })
+    }
+    $scope.selectedUser = {};
+    $scope.changeSupplierData = function(){
+      console.log("hello");
+      if($scope.selectedUser.value == 'all'){
+        $scope.releaseDetails = angular.copy($scope.initialReleaseData);
+        console.log($scope.releaseDetails);
+        formatData();
+      }
+      if($scope.selectedUser.value == 'assigned'){
+        $scope.releaseDetails.shortlisted_suppliers = $scope.assignedDataFinal;
+        console.log($scope.releaseDetails);
+        formatData();
+      }
     }
 
 }]);//Controller function ends here
