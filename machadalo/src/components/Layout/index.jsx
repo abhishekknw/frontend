@@ -10,6 +10,7 @@ import EntityContainer from './../../containers/EntityContainer';
 import InventoryContainer from './../../containers/InventoryContainer';
 import SettingContainer from './../../containers/SettingContainer';
 import LeadsContainer from './../../containers/LeadsContainer';
+import BookingContainer from './../../containers/BookingContainer';
 
 import './index.css';
 
@@ -57,7 +58,13 @@ export default class Layout extends React.Component {
                 path={`${match.path}/settings`}
                 component={SettingContainer}
               />
+
               <Route path={`${match.path}/leads`} component={LeadsContainer} />
+
+              <Route
+                path={`${match.path}/booking`}
+                component={BookingContainer}
+              />
             </Switch>
           </div>
         </div>
