@@ -2942,12 +2942,12 @@
                             <option value=""></option>
                             <option value="qualitytype" ng-click="societyTypeDrop">Type of Society</option>
                             <option value="sizeOfFlats" ng-click="flatTypeDrop">Size of Flats</option>
-                            <option value="flatType" ng-click="flatTypeDrop">Type of Flats</option>
-                            <option value="flatPrice" ng-click="flatTypeDrop">Price of Flats</option>
-                            <option value="flatRent" ng-click="flatTypeDrop">Rent of Flats</option>
-                            <option value="noOfCitizen" ng-click="flatTypeDrop">No of Senior Citizen</option>
-                            <option value="noOfChildren" ng-click="flatTypeDrop">No of Children</option>
-                            <option value="workingWomen" ng-click="flatTypeDrop">Percentage Working Women</option>
+                            <option value="flatType" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Type of Flats</option>
+                            <option value="flatPrice" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Price of Flats</option>
+                            <option value="flatRent" ng-click="flatTypeDrop"  ng-disabled="graphSelection.specificParam.society">Rent of Flats</option>
+                            <option value="noOfCitizen" ng-click="flatTypeDrop"  ng-disabled="graphSelection.specificParam.society">No of Senior Citizen</option>
+                            <option value="noOfChildren" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">No of Children</option>
+                            <option value="workingWomen" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Percentage Working Women</option>
                           </select>
                           <br />
                           <div class="row" ng-if="graphSelection.specificParam.society == 'qualitytype'" style="margin-left:30px">
@@ -2964,12 +2964,12 @@
                           <label for="" style="color:#808080;">Booking Parameters</label>
                           <select class="form-control" ng-model="graphSelection.specificParam.booking">
                             <option value=""></option>
-                            <option value="freebies" ng-click="societyTypeDrop">Freebies Allowed</option>
-                            <option value="preHype" ng-click="flatTypeDrop">Pre-Hype Allowed</option>
-                            <option value="posterAllowed" ng-click="flatTypeDrop">Poster Allowed</option>
-                            <option value="StandeeAllowed" ng-click="flatTypeDrop">Standee Allowed</option>
-                            <option value="StallAllowed" ng-click="flatTypeDrop">Stall Allowed</option>
-                            <option value="StallLocation" ng-click="flatTypeDrop">Stall Location</option>
+                            <option value="freebies" ng-click="societyTypeDrop" ng-disabled="graphSelection.specificParam.booking">Freebies Allowed</option>
+                            <option value="preHype" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Pre-Hype Allowed</option>
+                            <option value="posterAllowed" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Poster Allowed</option>
+                            <option value="StandeeAllowed" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Standee Allowed</option>
+                            <option value="StallAllowed" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Stall Allowed</option>
+                            <option value="StallLocation" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Stall Location</option>
                             </select>
                             <br />
                             <div class="row" ng-if="graphSelection.specificParam.booking == 'freebies'" style="margin-left:30px">
