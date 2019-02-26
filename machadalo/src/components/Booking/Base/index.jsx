@@ -1,33 +1,43 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-// import './index.css';
+import List from './List';
+import Create from './Create';
 
-export default class BaseBooking extends React.Component {
+import './index.css';
+
+export default class BaseBooking extends Component {
   componentDidMount() {
     // TODO: Fetch entity types
   }
 
   render() {
-    let { match } = this.props;
+    const { match } = this.props;
 
     return (
-      <div className="booking">
+      <div className="booking-base">
         <Switch>
-          {/*<Route
+          <Route
             exact
             path={`${match.path}/list`}
             render={componentProps => (
-              <Base {...this.props} {...componentProps} />
+              <List {...this.props} {...componentProps} />
             )}
           />
           <Route
             exact
-            path={`${match.path}/edit`}
+            path={`${match.path}/create`}
             render={componentProps => (
-              <Campaigns {...this.props} {...componentProps} />
+              <Create {...this.props} {...componentProps} />
             )}
-          />*/}
+          />
+          <Route
+            exact
+            path={`${match.path}/edit/:baseBookingId`}
+            render={componentProps => (
+              <Create {...this.props} {...componentProps} />
+            )}
+          />
         </Switch>
       </div>
     );
