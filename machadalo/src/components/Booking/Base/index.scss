@@ -132,6 +132,30 @@
           margin-bottom: 20px;
         }
 
+        .entity {
+          display: flex;
+          flex-direction: row;
+          padding: 0;
+
+          &__header {
+            background: $text-primary;
+            color: #ffffff;
+            margin: 15px 0;
+          }
+
+          &--unselect {
+            text-decoration: line-through;
+          }
+
+          .form-control {
+            &:nth-child(1) {
+              flex: none;
+              padding-right: 0;
+              min-width: 40px;
+            }
+          }
+        }
+
         .form-control {
           display: flex;
           flex-direction: row;
@@ -152,6 +176,23 @@
               weight: $font-regular;
             };
             line-height: 1.5;
+          }
+
+          p {
+            font: {
+              size: 14px;
+              weight: $font-regular;
+            };
+            line-height: 1;
+          }
+
+          h4 {
+            font: {
+              size: 15px;
+              weight: $font-medium;
+            };
+            line-height: 1;
+            margin: 10px 0;
           }
 
           input[type="text"],
