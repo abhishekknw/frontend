@@ -3277,6 +3277,8 @@
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Name</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Quality Type</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Flat Type</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Cost Per Leads <br> (%)</th>
@@ -3288,7 +3290,13 @@
       </thead>
         <tbody style="text-align:center;">
           <tr ng-repeat="(key,data) in initialDynamicGraphData.lower_group_data">
-            <td style="text-transform: capitalize">{{data.campaign_name}}</td>
+            <td ng-if="!data.city && !data.vendor_name" style="text-transform: capitalize">{{data.campaign_name}}</td>
+            <td ng-if="data.city" style="text-transform: capitalize">{{data.city}}</td>
+            <td ng-if="data.vendor_name" style="text-transform: capitalize">{{data.vendor_name}}</td>
+            <td ng-if="data.qualitytype">{{data.qualitytype}}</td>
+            <td ng-if="!data.qualitytype">NA</td>
+            <td ng-if="data.flattype">{{data.flattype}}</td>
+            <td ng-if="!data.flattype">NA</td>
             <td>{{data.lead}}</td>
             <td>{{data.hot_lead}}</td>
             <td>{{data['cost_flat/lead']}} <br> ({{data['lead/flat*100']}} %)</td>
