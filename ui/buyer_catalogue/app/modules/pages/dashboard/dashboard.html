@@ -2871,16 +2871,27 @@
                             <div class="col-md-6">
                               <div class="form-group">
                                 <label><small> Start Date :  </small></label>
-                                <span><small><input type="date" style="width:110px !important" ng-model="graphSelection.dateRange.startDate"></small>
+                                <span><small><input type="date" style="width:110px !important" ng-model="graphSelection.dateRange.startDate">
+                                  {{graphSelection.dateRange.startDate}}
+                                </small>
                                 </span>
                               </div>
                             </div>
                             <div class="col-md-6">
                               <div class="form-group">
                               <label><small>  End Date :</small></label>
-                                <span><small><input type="date" style="width:110px !important" ng-model="graphSelection.dateRange.endDate"></small>
+                                <span><small><input type="date" style="width:110px !important" ng-model="graphSelection.dateRange.endDate">
+                                  {{graphSelection.dateRange.endDate}}
+                                </small>
                                 </span>
                                 </div>
+                            </div>
+                            <div class="pull-left" style="color:#808080;margin-top:-17px;"  ng-if="graphSelection.dateRange.length">
+                              <p style="color:#808080;margin-left:-10px">Select Campaign :</p>
+                              <div class="row">
+                                 <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
+                                 selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
+                              </div>
                             </div>
                             <p style="text-align:center;color:#cb1925;font-weight: bold;">OR</p>
                             <label for="">Phase</label>
@@ -2888,14 +2899,14 @@
                             <div class="col-md-6">
                               <div class="form-group">
                                 <label><small> Start :  </small></label>
-                                <span><small><input type="text" style="width:110px !important" placeholder="1" width="110px;" ng-model="graphSelection.phaseRange"></small>
+                                <span><small><input type="text" style="width:110px !important" placeholder="1" width="110px;" ng-model="graphSelection.phaseRange.start"></small>
                                 </span>
                               </div>
                             </div>
                             <div class="col-md-6">
                               <div class="form-group">
                               <label><small>  End :</small></label>
-                                <span><small><input type="text" style="width:110px !important" placeholder="87" ng-model="graphSelection.phaseRange"></small>
+                                <span><small><input type="text" style="width:110px !important" placeholder="87" ng-model="graphSelection.phaseRange.end"></small>
                                 </span>
                                 </div>
                             </div>
@@ -2904,12 +2915,7 @@
                             <!-- <div class="row" style="color:#808080;margin-left:10px">
 
                             </div> -->
-                            <!-- <div class="row" style="color:#808080;margin-top:10px;">
-                              <div class="form-group">
-                                <span><small><button style="margin-right:-25px;" class="btn btn-primary glyphicon glyphicon-trash pull-right" ng-click="clearDatesFromDynamicGraph()"></button></small>
-                                </span>
-                              </div>
-                            </div> -->
+
                         </small>
 
                         <!-- <br /><br /> <br />
@@ -2939,8 +2945,7 @@
                         <small>
                           <label for="" style="color:#808080;">Society Parameters</label>
                           <select class="form-control" ng-model="graphSelection.specificParam.society">
-                            <option value=""></option>
-                            <option value="qualitytype" ng-click="societyTypeDrop">Type of Society</option>
+                            <option value="qualitytype" ng-click="societyTypeDrop">Size of Society</option>
                             <option value="sizeOfFlats" ng-click="flatTypeDrop">Size of Flats</option>
                             <option value="flatType" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Type of Flats</option>
                             <option value="flatPrice" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Price of Flats</option>
@@ -2950,20 +2955,18 @@
                             <option value="workingWomen" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Percentage Working Women</option>
                           </select>
                           <br />
-                          <div class="row" ng-if="graphSelection.specificParam.society == 'qualitytype'" style="margin-left:30px">
-                            <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="typeOfSocietyLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
-                            selected-model="selectedTyeOfSocieties" translation-texts="selected_baselines_customTexts_qualityTypesociety" events="events"></span>
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'qualitytype'">
+                            <span class="multiselectParentDropdown" style="color:red;width:100%;" ng-dropdown-multiselect="" options="typeOfSocietyLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
+                            selected-model="selectedTypeOfSocieties" translation-texts="selected_baselines_customTexts_qualityTypesociety" events="events"></span>
                           </div>
-                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfFlats'" style="margin-left:30px">
-                            <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="sizeOfFlatsLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfFlats'">
+                            <span class="multiselectParentDropdown" style="color:red;width:100%;" ng-dropdown-multiselect="" options="sizeOfFlatsLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
                             selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
                           </div>
-
-                          <p style="text-align:center;color:#cb1925;font-weight: bold;">OR</p>
+                        <p style="text-align:center;color:#cb1925;font-weight: bold;">OR</p>
 
                           <label for="" style="color:#808080;">Booking Parameters</label>
-                          <select class="form-control" ng-model="graphSelection.specificParam.booking">
-                            <option value=""></option>
+                          <select class="form-control multiselectParentDropdown" ng-model="graphSelection.specificParam.booking">
                             <option value="freebies" ng-click="societyTypeDrop" ng-disabled="graphSelection.specificParam.booking">Freebies Allowed</option>
                             <option value="preHype" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Pre-Hype Allowed</option>
                             <option value="posterAllowed" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Poster Allowed</option>
@@ -2990,21 +2993,13 @@
                         <small>
                           <p style="color:#808080;margin-left:-20px;">Select City :</p>
                             <div class="col-md-3 pull-left" style="margin-left:-20px;">
-                            <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="cityLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
+                            <span  class="multiselectParentDropdown" style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="cityLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
                               selected-model="selectedCities_temp" translation-texts="selected_baselines_customTexts_city" events="events"></span>
-                            </div>
-                            <br /><br />  <br /><br />
-                          <div class="pull-left" style="color:#808080;margin-top:-17px;"  ng-if="selectedCities_temp.length">
-                              <p style="color:#808080;margin-left:-10px">Select Campaign :</p>
-                              <div class="row">
-                                 <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
-                                 selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
-                              </div>
                             </div>
                         </small>
                     </div>
                     <div class="col-md-6 pull-left" ng-if="graphSelection.locality == 'locality'">
-                        <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="localityList" class="col-md-6"  extra-settings="settingsForDynamicGraphVendor"
+                        <span class="multiselectParentDropdown" style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="localityList" class="col-md-6"  extra-settings="settingsForDynamicGraphVendor"
                         selected-model="selectedLocalities" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
                     </div>
                     </div>
@@ -3019,17 +3014,9 @@
                         <small>
                           <p style="color:#808080;margin-left:-20px;">Select Vendors :</p>
                             <div class="col-md-3 pull-left" style="margin-left:-20px;">
-                              <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="vendorsList" class="col-md-6"  extra-settings="settingsForDynamicGraphVendor"
+                              <span class="multiselectParentDropdown" style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="vendorsList" class="col-md-6"  extra-settings="settingsForDynamicGraphVendor"
                               selected-model="selectedVendors" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
                         </div>
-                        <br /><br /><br />
-                          <div class="pull-left" style="color:#808080;"  ng-if="selectedVendors.length">
-                              <p style="color:#808080">Select Campaign :</p>
-                              <div class="row">
-                                 <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
-                                 selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
-                              </div>
-                            </div>
                         </small>
                         <small>
                       </div>
@@ -3058,7 +3045,27 @@
                    <div class="panel-body">
                    </div>
                    </div> -->
-                   <button type="button" name="button" class="col-md-8 col-md-offset-2 btn btn-danger" ng-click="getGenericGraphData()">Submit</button>
+                   <br /><br />  <br /><br /> <br />
+                   <div class="row">
+                     <div class="col-md-6" style="color:#808080;"  ng-if="applyClickedFilters.value || selectedTypeOfSocieties.length || selectedSizeOfFlats.length || selectedCities_temp.length || graphSelection.dateRange.startDate || graphSelection.dateRange.endDate || selectedVendors.length">
+                       <p style="color:#808080;">Select Campaign :</p>
+                       <div class="row">
+                          <span class="multiselectParentDropdown" style="color:red;width:100%;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
+                          selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
+                       </div>
+                     </div>
+                   </div>
+                   <br /><br />
+                   <div class="row">
+                     <div class="form-group">
+                       <span><small>
+                         <div class="col-md-12">
+                           <button type="button" name="button" class="col-md-9 btn btn-danger pull-left" ng-click="getGenericGraphData()">Submit</button>
+                           <button class="col-md-3 btn btn-primary pull-right" ng-click="clearDatesFromDynamicGraph()">Reset All</button></small>
+                         </div>
+                       </span>
+                     </div>
+                   </div>
 
                  </div>
                 <div class="col-md-12" style="margin-top:20px;">
@@ -3087,6 +3094,7 @@
                       </div> -->
                       <div class="panel-heading content-title">
                         Graph Based On Filters
+                        <p ng-if="graphSelection.dateRange.length">From :{{graphSelection.dateRange.startDate}} To :{{graphSelection.dateRange.endDate}} </p>
                      </div>
                      <br />
 
@@ -3164,6 +3172,97 @@
 <br />
 
 <!-- start with graph filtered table wise  -->
+
+<div class="col-lg-12" ng-if="applyClickedFilters.value && initialDynamicGraphData.lower_group_data.length" style="margin-top:20px;">
+  <div class="panel panel-primary">
+    <div class="panel-heading content-title">
+      <label for="Location">Campaign Filtered with Weekly Summary Details</label>
+    </div>
+  </div>
+  <div class="campaigndetailtable">
+    <div class="table-responsive">
+    <button class="btn btn-danger pull-right" ng-click="exportToExcel('#customer20')"><span class="glyphicon glyphicon-download-alt"></span></button>
+      <table class="table table-striped" id="customer20"  st-table="campaignSummary">
+        <thead>
+            <tr>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Details</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Overall</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Last Week</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Last 2 Weeks</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Last 3 Weeks</th>
+              </tr>
+      </thead>
+        <tbody style="text-align:center;">
+          <tr>
+          <td><small style="font-weight:bold">Flat Count</small></td>
+          <td>{{initalDynamicTableData.flat || 'NA'}}</td>
+          <td>{{WeeklyVendorMISLastWeekSummary.flat_count || 'NA'}}</td>
+          <td>{{WeeklyVendorMISLast2WeekSummary.flat_count || 'NA'}}</td>
+          <td>{{WeeklyVendorMISLast3WeekSummary.flat_count || 'NA'}}</td>
+          </tr>
+          <tr>
+          <td><small style="font-weight:bold">Total Leads</small></td>
+          <td>{{initalDynamicTableData.lead || 'NA'}}</td>
+          <td>{{WeeklyVendorMISLastWeekSummary.total || 'NA'}}</td>
+          <td>{{WeeklyVendorMISLast2WeekSummary.total || 'NA'}}</td>
+          <td>{{WeeklyVendorMISLast3WeekSummary.total || 'NA'}}</td>
+          </tr>
+          <tr>
+          <td><small style="font-weight:bold">Hot Leads</small></td>
+          <td>{{initalDynamicTableData.hot_lead || 'NA'}}</td>
+          <td>{{WeeklyVendorMISLastWeekSummary.interested || 'NA'}}</td>
+          <td>{{WeeklyVendorMISLast2WeekSummary.interested || 'NA'}}</td>
+          <td>{{WeeklyVendorMISLast3WeekSummary.interested || 'NA'}}</td>
+          </tr>
+          <tr>
+          <td><small style="font-weight:bold">Cost Per Leads <br> (Leads %)</small></td>
+          <td>{{initalDynamicTableData['cost_flat/lead']}} <br> ({{initalDynamicTableData['lead/flat*100'] | limitTo:5}}) %</td>
+          <td>({{(WeeklyVendorMISLastWeekSummary.total / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}}) %</td>
+          <td>({{(WeeklyVendorMISLast2WeekSummary.total / WeeklyVendorMISLast2WeekSummary.flat_count)  * 100 | limitTo:5}}) %</td>
+          <td>({{(WeeklyVendorMISLast3WeekSummary.total / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}}) %</td>
+          </tr>
+          <tr>
+          <td><small style="font-weight:bold">Cost Per Hot Leads <br> (Hot Leads %)</small></td>
+          <td>{{initalDynamicTableData['cost_flat/hot_lead']}} <br> ({{initalDynamicTableData['hot_lead/flat*100'] | limitTo:5}}) %</td>
+          <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+          <td>{{(WeeklyVendorMISLast2WeekSummary.interested / WeeklyVendorMISLast2WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+          <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+          </tr>
+
+          <tr>
+
+          <td><small style="font-weight:bold">Cost Per Meeting Fixed <br> (Meeting Fixed %)</small></td>
+          <td>{{initalDynamicTableData['cost_flat/hotness_level_2']}} <br> ({{initalDynamicTableData['hot_lead/flat*100'] | limitTo:5}}) %</td>
+          <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+          <td>{{(WeeklyVendorMISLast2WeekSummary.interested / WeeklyVendorMISLast2WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+          <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+          </tr>
+          <tr>
+          <td><small style="font-weight:bold">Cost Per Meeting Completed <br> (Meeting Completed %)</small></td>
+          <td>{{initalDynamicTableData['cost_flat/hotness_level_3']}} <br> ({{initalDynamicTableData['hot_lead/flat*100'] | limitTo:5}}) %</td>
+          <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+          <td>{{(WeeklyVendorMISLast2WeekSummary.interested / WeeklyVendorMISLast2WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+          <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+          </tr>
+          <tr>
+          <td><small style="font-weight:bold">Cost Per Meeting Conversion <br> (Meeting Conversion %)</small></td>
+          <td>{{initalDynamicTableData['cost_flat/hotness_level_4']}} <br> ({{initalDynamicTableData['hot_lead/flat*100'] | limitTo:5}}) %</td>
+          <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+          <td>{{(WeeklyVendorMISLast2WeekSummary.interested / WeeklyVendorMISLast2WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+          <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+          </tr>
+          <tr>
+          <td><small style="font-weight:bold">Hot Leads Ratio (%)</small></td>
+          <td>{{(initalDynamicTableData.hot_lead / initalDynamicTableData.lead)  * 100 | limitTo:5}} %</td>
+          <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.total)  * 100 | limitTo:5}} %</td>
+          <td>{{(WeeklyVendorMISLast2WeekSummary.interested / WeeklyVendorMISLast2WeekSummary.total)  * 100 | limitTo:5}} %</td>
+          <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.total)  * 100 | limitTo:5}} %</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
 <div class="col-lg-12" ng-if="applyClickedFilters.value && initialDynamicGraphData.lower_group_data.length" style="margin-top:20px;">
   <div class="panel panel-primary">
