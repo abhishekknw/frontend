@@ -3897,6 +3897,7 @@ var tooltipDynamicGraphData = [];
   $scope.graphSelection = {
     category : {},
     dateRange : {},
+    phaseRange : {},
     specificParam : {
       society: {},
       booking: {},
@@ -4219,28 +4220,7 @@ var tooltipDynamicGraphData = [];
                               reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
                               reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
                             }
-                            // else if (!$scope.graphSelection.dateRange.startDate && ($scope.graphSelection.phaseRange.length)){
-                            //                       alert("only Phase Range and Campaign Selected");
-                            //                       $scope.xValues.value = 'campaign_name';
-                            //                       var reqData = {"data_scope":{
-                            //                          "1":
-                            //                              {"category":"unordered","level":"campaign","match_type":0,
-                            //                                  "values":{"exact":[]},
-                            //                                  "value_type":"campaign"
-                            //                              }
-                            //                          },
-                            //                      "data_point":{"category":"time","level": ["date"], "sublevel": "phase",
-                            //                      "value_ranges":  {"phase":[]},"range_type":1},
-                            //                         "raw_data":raw_data_global,
-                            //                         "metrics": metrics_global
-                            //                       }
-                            //                       angular.forEach($scope.selectedDynamicCampaigns, function(data){
-                            //                         reqData.data_scope['1'].values.exact.push(data.campaign_id);
-                            //                       });
-                            //                       reqData.data_point.value_ranges.phase.push(commonDataShare.formatDate($scope.graphSelection.phaseRange.start));
-                            //                       reqData.data_point.value_ranges.phase.push(commonDataShare.formatDate($scope.graphSelection.phaseRange.end));
-                            //
-                            //        }
+
                             else if ($scope.selectedSizeOfFlats.length) {
                                            if($scope.selectedDynamicCampaigns.length){
                                              alert("only Flat Type selected");
@@ -4342,8 +4322,32 @@ var tooltipDynamicGraphData = [];
                                           // reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
                                           // reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
                                           }
-                                        } else if ($scope.applyClickedFilters.value
-                                        ) {
+                                        }  else if ($scope.graphSelection.phaseRange.start
+                                          && $scope.selectedDynamicCampaigns.length){
+                                            console.log($scope.graphSelection.phaseRange.start);
+                                                                alert("only Phase Range and Campaign Selected");
+                                                                $scope.xValues.value = 'campaign_name';
+                                                                var reqData = {"data_scope":{
+                                                                   "1":
+                                                                       {"category":"unordered","level":"campaign","match_type":0,
+                                                                           "values":{"exact":[]},
+                                                                           "value_type":"campaign"
+                                                                       }
+                                                                   },
+                                                               "data_point":{"category":"time","level": ["date"], "sublevel": "phase",
+                                                               "value_ranges":  {"phase":[]},"range_type":1},
+                                                                  "raw_data":Raw_Data_Only_Cost,
+                                                                  "metrics": Raw_Metric_Only_Cost
+                                                                }
+                                                                angular.forEach($scope.selectedDynamicCampaigns, function(data){
+                                                                  reqData.data_scope['1'].values.exact.push(data.campaign_id);
+                                                                });
+                                                                reqData.data_point.value_ranges.phase.push($scope.graphSelection.phaseRange.start);
+                                                                reqData.data_point.value_ranges.phase.push($scope.graphSelection.phaseRange.end);
+
+                                                 }
+                                         else if ($scope.applyClickedFilters.value)
+                                          {
                                                   alert("By Default Campaign");
                                                   $scope.xValues.value = 'campaign_name';
                                                   var reqData =
@@ -4360,6 +4364,7 @@ var tooltipDynamicGraphData = [];
                                                     reqData.data_scope['1'].values.exact.push(data.campaign_id);
                                                   });
                                                 }
+
     console.log(reqData);
     if(reqData){
       DashboardService.getDistributionGraphsStatics(reqData)
@@ -4392,6 +4397,7 @@ var tooltipDynamicGraphData = [];
     $scope.selectedCities_temp = [];
     $scope.selectedSizeOfFlats = [];
     $scope.selectedVendors = [];
+    $scope.graphSelection.phaseRange = {};
     $scope.selectedTypeOfSocieties = [];
     $scope.graphSelection.specificParam = [];
   }
