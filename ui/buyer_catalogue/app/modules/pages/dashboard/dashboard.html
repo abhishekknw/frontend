@@ -2872,7 +2872,6 @@
                               <div class="form-group">
                                 <label><small> Start Date :  </small></label>
                                 <span><small><input type="date" style="width:110px !important" ng-model="graphSelection.dateRange.startDate">
-                                  {{graphSelection.dateRange.startDate}}
                                 </small>
                                 </span>
                               </div>
@@ -2881,7 +2880,6 @@
                               <div class="form-group">
                               <label><small>  End Date :</small></label>
                                 <span><small><input type="date" style="width:110px !important" ng-model="graphSelection.dateRange.endDate">
-                                  {{graphSelection.dateRange.endDate}}
                                 </small>
                                 </span>
                                 </div>
@@ -3099,9 +3097,41 @@
                      <br />
 
                        <div class="row" style="color:#123456;">
-                         <!-- <input type="checkbox" value="percentageValues" ng-model="graphSelection.Yvalues"><small>In Percentage</small>
-                         <input type="checkbox" value="percentageValues" ng-model="graphSelection.Yvalues"><small></small> -->
 
+                         <div class="col-md-12 panel panel-default">
+                           <div class="table-responsive">
+                             <table class="table">
+                               <thead>
+                               <tr>
+                                   <th>From</th>
+                                   <th>To</th>
+                                   <th>Society Parameters</th>
+                                   <th>Booking Parameters</th>
+                                   <th>City</th>
+                                   <th>Vendor</th>
+                                   </tr>
+                                   </thead>
+                                   <tbody>
+                                     <div class="row">
+                                         <tr ng-repeat="filters in initialDynamicGraphData.lower_group_data">
+                                         <td ng-if="graphSelection.dateRange.length">{{graphSelection.dateRange.startDate | date : 'mediumDate'}}</td>
+                                         <td ng-if="!graphSelection.dateRange.length">NA</td>
+                                         <td ng-if="graphSelection.dateRange.length">{{graphSelection.dateRange.endDate  | date : 'mediumDate'}}</td>
+                                         <td ng-if="!graphSelection.dateRange.length">NA</td>
+                                         <td ng-if="filters.qualitytype">{{filters.qualitytype}}</td>
+                                         <td ng-if="!filters.qualitytype">NA</td>
+                                         <td ng-if="filters.flattype">{{initalDynamicTableData.flattype}}</td>
+                                         <td ng-if="!filters.flattype">NA</td>
+                                         <td ng-if="filters.selectedCities_temp">{{initalDynamicTableData.city}}</td>
+                                         <td ng-if="!filters.selectedCities_temp">NA</td>
+                                         <td ng-if="filters.selectedVendors">{{initalDynamicTableData.vendor_name}}</td>
+                                         <td ng-if="!filters.selectedVendors">NA</td>
+                                         </tr>
+                                     </div>
+                               </tbody>
+                             </table>
+                           </div>
+                         </div>
                          <div class="col-md-12">
                            <div class="col-md-2">
                              <input type="checkbox" style="width:20px;height:20px;" value="leadsValues" ng-model="graphSelection.Yvalues.leadsPerc" ng-click="changeDynamicGraph()"> <small> LEADS %</small>

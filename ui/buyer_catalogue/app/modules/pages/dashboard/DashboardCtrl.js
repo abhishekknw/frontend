@@ -4255,8 +4255,8 @@ var tooltipDynamicGraphData = [];
                                                  },
                                              "data_point":{"category":"unordered","level":["flattype"],
                                              "value_ranges": {"flattype":[]}},
-                                               "raw_data":raw_data_basic_temp,
-                                               "metrics": metrics_basic_temp
+                                               "raw_data":Raw_Data_Only_Cost,
+                                               "metrics": Raw_Metric_Only_Cost,
                                              }
 
                                              angular.forEach($scope.selectedDynamicCampaigns, function(data){
@@ -4329,8 +4329,8 @@ var tooltipDynamicGraphData = [];
                                               },
                                           "data_point":{"category":"unordered","level":["qualitytype"],
                                           "value_ranges": {"qualitytype":[]}},
-                                            "raw_data":raw_data_basic_temp,
-                                            "metrics": metrics_basic_temp
+                                            "raw_data":Raw_Data_Only_Cost,
+                                            "metrics": Raw_Metric_Only_Cost
                                           }
 
                                           angular.forEach($scope.selectedDynamicCampaigns, function(data){
