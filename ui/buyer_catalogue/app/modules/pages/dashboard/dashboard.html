@@ -2887,7 +2887,7 @@
                             <div class="pull-left" style="color:#808080;margin-top:-17px;"  ng-if="graphSelection.dateRange.length">
                               <p style="color:#808080;margin-left:-10px">Select Campaign :</p>
                               <div class="row">
-                                 <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
+                                 <span style="color:red;width:100%;margin-left:-30px;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
                                  selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
                               </div>
                             </div>
@@ -2933,6 +2933,21 @@
                       <br /> -->
                       </div>
                       </div>
+                      <br />
+                      <div class="panel panel-danger">
+                      <div class="panel-heading"  style="background:#cb1925">Select Campaign</div>
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-md-6" style="color:#808080;"  ng-if="applyClickedFilters.value || selectedTypeOfSocieties.length || selectedSizeOfFlats.length || selectedCities_temp.length || selectedbookingParameters.length || graphSelection.dateRange.startDate || graphSelection.phaseRange.start || graphSelection.dateRange.endDate || selectedVendors.length">
+                            <br /><br />
+                            <div class="row">
+                               <span class="multiselectParentDropdown" style="color:red;width:100%;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
+                               selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                      </div>
                   </div>
                   <div class="col-md-4" style="color:#808080;">
                     <div class="panel panel-danger">
@@ -2961,23 +2976,30 @@
                             <span class="multiselectParentDropdown" style="color:red;width:100%;" ng-dropdown-multiselect="" options="sizeOfFlatsLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
                             selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
                           </div>
+                          <br />
                         <p style="text-align:center;color:#cb1925;font-weight: bold;">OR</p>
 
-                          <label for="" style="color:#808080;">Booking Parameters</label>
-                          <select class="form-control multiselectParentDropdown" ng-model="graphSelection.specificParam.booking">
+                          <!-- <label for="" style="color:#808080;">Booking Parameters</label> -->
+                          <!-- <select class="form-control multiselectParentDropdown" ng-model="graphSelection.specificParam.booking">
                             <option value="freebies" ng-click="societyTypeDrop" ng-disabled="graphSelection.specificParam.booking">Freebies Allowed</option>
                             <option value="preHype" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Pre-Hype Allowed</option>
                             <option value="posterAllowed" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Poster Allowed</option>
-                            <option value="StandeeAllowed" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Standee Allowed</option>
+                            <option value="StandeeAllowed" ng-click="flatTypeDrop">Standee Allowed</option>
+                            <option value="FlierAllowed" ng-click="flatTypeDrop">Flier Allowed</option>
                             <option value="StallAllowed" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Stall Allowed</option>
                             <option value="StallLocation" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Stall Location</option>
-                            </select>
+                            </select> -->
                             <br />
                             <div class="row" ng-if="graphSelection.specificParam.booking == 'freebies'" style="margin-left:30px">
                               <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="freebiesLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
                               selected-model="selectedFreebies" translation-texts="selected_baselines_customTexts_freebies" events="events"></span>
                             </div>
-                      </small>
+                            <p style="color:#808080;margin-left:-20px;">Booking Parameters :</p>
+                              <div class="col-md-3 pull-left" style="margin-left:-22px;">
+                              <span class="multiselectParentDropdown" ng-dropdown-multiselect="" options="BookingParametersLists" class="col-md-6"  extra-settings="settingsForDynamicGraphBookingParameters"
+                              selected-model="selectedbookingParameters" ng-disabled="BookingParametersLists.isDisabled == 'true'" translation-texts="selected_baselines_customTexts_booking_parameters" events="events"></span>
+                            </div>
+                        </small>
                     </div>
                     </div>
                     </div>
@@ -3044,15 +3066,15 @@
                    </div>
                    </div> -->
                    <br /><br />  <br /><br /> <br />
-                   <div class="row">
-                     <div class="col-md-6" style="color:#808080;"  ng-if="applyClickedFilters.value || selectedTypeOfSocieties.length || selectedSizeOfFlats.length || selectedCities_temp.length || graphSelection.dateRange.startDate || graphSelection.phaseRange.start || graphSelection.dateRange.endDate || selectedVendors.length">
+                   <!-- <div class="row">
+                     <div class="col-md-6" style="color:#808080;"  ng-if="applyClickedFilters.value || selectedTypeOfSocieties.length || selectedSizeOfFlats.length || selectedCities_temp.length || selectedbookingParameters.length || graphSelection.dateRange.startDate || graphSelection.phaseRange.start || graphSelection.dateRange.endDate || selectedVendors.length">
                        <p style="color:#808080;">Select Campaign :</p>
                        <div class="row">
                           <span class="multiselectParentDropdown" style="color:red;width:100%;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
                           selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
                        </div>
                      </div>
-                   </div>
+                   </div> -->
                    <br /><br />
                    <div class="row">
                      <div class="form-group">
@@ -3122,6 +3144,8 @@
                                          <td ng-if="!filters.qualitytype">NA</td>
                                          <td ng-if="filters.flattype">{{initalDynamicTableData.flattype}}</td>
                                          <td ng-if="!filters.flattype">NA</td>
+                                         <td ng-if="filters.fliertype">{{initalDynamicTableData.fliertype}}</td>
+                                         <td ng-if="!filters.fliertype">NA</td>
                                          <td ng-if="filters.selectedCities_temp">{{initalDynamicTableData.city}}</td>
                                          <td ng-if="!filters.selectedCities_temp">NA</td>
                                          <td ng-if="filters.selectedVendors">{{initalDynamicTableData.vendor_name}}</td>
