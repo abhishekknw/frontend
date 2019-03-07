@@ -61,6 +61,24 @@ const getBaseEntityTypeOption = (baseEntityTypeList, baseEntityTypeId) => {
   return { id: baseEntityTypeId };
 };
 
+const validate = data => {
+  const errors = {};
+
+  if (!data.name.trim()) {
+    errors.name = {
+      message: 'Please enter a name for base booking'
+    };
+  }
+
+  if (!data.base_entity_type_id) {
+    errors.baseEntityTypeId = {
+      message: 'Please select a base entity type'
+    };
+  }
+
+  return errors;
+};
+
 export default class CreateBaseBooking extends React.Component {
   constructor() {
     super();
@@ -74,7 +92,8 @@ export default class CreateBaseBooking extends React.Component {
       ],
       entities: [],
       baseEntityTypeId: null,
-      selectedBaseEntityType: null
+      selectedBaseEntityType: null,
+      errors: {}
     };
 
     this.onAddAttributeClick = this.onAddAttributeClick.bind(this);
@@ -150,7 +169,16 @@ export default class CreateBaseBooking extends React.Component {
         .map(item => ({ name: item.name, is_required: item.is_required }))
     };
 
-    console.log('data', data);
+    const errors = validate(data);
+    console.log('validationResult: ', errors);
+
+    if (Object.keys(errors).length) {
+      this.setState({
+        errors
+      });
+    } else {
+      console.log('data', data);
+    }
   }
 
   handleInputChange(event) {
@@ -304,7 +332,7 @@ export default class CreateBaseBooking extends React.Component {
     const { baseEntityType } = this.props;
     const { baseEntityTypeList } = baseEntityType;
 
-    const { entities } = this.state;
+    const { entities, errors } = this.state;
 
     return (
       <div className="booking-base__create create">
@@ -322,7 +350,13 @@ export default class CreateBaseBooking extends React.Component {
                   name="name"
                   value={this.state.name}
                   onChange={this.handleInputChange}
+                  className={classnames({ error: errors.name })}
                 />
+                {errors.name ? (
+                  <p className="message message--error">
+                    {errors.name.message}
+                  </p>
+                ) : null}
               </div>
             </div>
 
@@ -345,9 +379,11 @@ export default class CreateBaseBooking extends React.Component {
             <div className="create__form__header">Base Entity Type</div>
 
             <div className="create__form__body">
-              <div className="form-control">
+              <div className="form-control form-control--column">
                 <Select
-                  className="select"
+                  className={classnames('select', {
+                    error: errors.baseEntityTypeId
+                  })}
                   placeholder="Select Base Entity Type"
                   options={baseEntityTypeList}
                   getOptionValue={option => option.id}
@@ -358,6 +394,11 @@ export default class CreateBaseBooking extends React.Component {
                   )}
                   onChange={this.onBaseEntityTypeChange}
                 />
+                {errors.baseEntityTypeId ? (
+                  <p className="message message--error">
+                    {errors.baseEntityTypeId.message}
+                  </p>
+                ) : null}
               </div>
 
               {entities && entities.length ? (

@@ -207,6 +207,7 @@
             width: 100%;
             outline: none;
             padding: 6px 12px;
+            margin-bottom: 5px;
           }
 
           input[type="checkbox"] {
@@ -214,10 +215,12 @@
           }
 
           .select {
+            margin-bottom: 5px;
+            width: 100%;
+
             &> div {
               background: transparent;
             }
-            width: 100%;
 
             input {
               height: auto;
