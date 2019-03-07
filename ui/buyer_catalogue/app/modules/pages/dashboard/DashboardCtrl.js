@@ -3950,7 +3950,7 @@ var tooltipDynamicGraphData = [];
   if ($scope.graphSelection.dateRange.startDate &&
     ($scope.selectedTypeOfSocieties.length && $scope.selectedSizeOfFlats.length &&
                  $scope.selectedDynamicCampaigns.length )) {
-                 alert("Date range + society parameter(society and Flat - together) and Campaign Selected");
+                 // alert("Date range + society parameter(society and Flat - together) and Campaign Selected");
                  $scope.xValues.value = 'campaign_name';
                  // $scope.xValues.value = 'qualitytype';
                  // specificXValue = 'campaign_name';
@@ -3987,7 +3987,7 @@ var tooltipDynamicGraphData = [];
            }else if ($scope.graphSelection.dateRange.startDate &&
     ($scope.selectedTypeOfSocieties.length &&
                  $scope.selectedDynamicCampaigns.length )) {
-                 alert("Date range + society parameter(society) and Campaign Selected");
+                 // alert("Date range + society parameter(society) and Campaign Selected");
                  $scope.xValues.value = 'qualitytype';
                  specificXValue = 'campaign_name';
                  var reqData = {
@@ -4020,7 +4020,7 @@ var tooltipDynamicGraphData = [];
            }else if ($scope.graphSelection.dateRange.startDate &&
              ($scope.selectedSizeOfFlats.length &&
                           $scope.selectedDynamicCampaigns.length )) {
-                          alert("Date range + society parameter(flat) and Campaign Selected");
+                          // alert("Date range + society parameter(flat) and Campaign Selected");
                           $scope.xValues.value = 'flattype';
                           specificXValue = 'campaign_name';
                           var reqData = {
@@ -4054,7 +4054,7 @@ var tooltipDynamicGraphData = [];
                        ($scope.selectedSizeOfFlats.length &&
                        $scope.selectedTypeOfSocieties.length &&
                        $scope.selectedDynamicCampaigns.length )) {
-                 alert("only society type and Campaign Selected and Flat Type");
+                 // alert("only society type and Campaign Selected and Flat Type");
                  $scope.xValues.value = 'qualitytype';
                  $scope.xValues.value = 'flattype';
                  specificXValue = 'campaign_name';
@@ -4106,7 +4106,7 @@ var tooltipDynamicGraphData = [];
                 }else if ($scope.graphSelection.dateRange.startDate && (
                            $scope.graphSelection.category == 'vendor' &&
                            $scope.selectedVendors.length )) {
-                             alert("only Date Range Type and Vendor Selected");
+                             // alert("only Date Range Type and Vendor Selected");
                              $scope.xValues.value = 'vendor_name';
                              var reqData = {
                                "data_scope":{
@@ -4137,7 +4137,7 @@ var tooltipDynamicGraphData = [];
                                  $scope.graphSelection.category == 'vendor' &&
                                  $scope.selectedVendors.length
                                ){
-                                   alert("Vendor + Campaign Selected");
+                                   // alert("Vendor + Campaign Selected");
                                    $scope.xValues.value = 'vendor_name';
                                    specificXValue = 'campaign_name';
                                    var reqData = {
@@ -4164,7 +4164,7 @@ var tooltipDynamicGraphData = [];
 
                     }else if($scope.graphSelection.dateRange.startDate && $scope.graphSelection.category == 'campaign'
                   && $scope.selectedDynamicCampaigns.length){
-                    alert("only Date Range Type + Campaign Selected");
+                    // alert("only Date Range Type + Campaign Selected");
                     $scope.xValues.value = 'campaign_name';
                     var reqData = {
                       "data_scope":{
@@ -4194,7 +4194,7 @@ var tooltipDynamicGraphData = [];
                   }else if (
                          $scope.graphSelection.category == 'campaign' &&
                          $scope.selectedDynamicCampaigns.length && $scope.graphSelection.specificParam == 'qualitytype' ) {
-                           alert("only Society Quality Type and Campaign Selected");
+                           // alert("only Society Quality Type and Campaign Selected");
                            $scope.xValues.value = 'qualitytype';
                            specificXValue = 'campaign_name';
                            var reqData = {
@@ -4216,7 +4216,7 @@ var tooltipDynamicGraphData = [];
                            });
                      } else if($scope.graphSelection.dateRange.startDate && $scope.graphSelection.category == 'campaign'
                             && $scope.selectedDynamicCampaigns.length){
-                              alert("only Date Range Type + Campaign Selected");
+                              // alert("only Date Range Type + Campaign Selected");
                               $scope.xValues.value = 'campaign_name';
                               var reqData = {
                                 "data_scope":{
@@ -4245,7 +4245,7 @@ var tooltipDynamicGraphData = [];
 
                             else if ($scope.selectedSizeOfFlats.length) {
                                            if($scope.selectedDynamicCampaigns.length){
-                                             alert("only Flat Type selected");
+                                             // alert("only Flat Type selected");
                                              $scope.xValues.value = 'flattype';
                                              specificXValue = 'campaign_name';
                                              var reqData = {"data_scope":{
@@ -4273,7 +4273,7 @@ var tooltipDynamicGraphData = [];
                      else if (
                        $scope.selectedCities_temp.length
                              ) {
-                               alert("only city");
+                               // alert("only city");
                                $scope.xValues.value = 'city';
                                  var reqData = {
 
@@ -4298,7 +4298,7 @@ var tooltipDynamicGraphData = [];
                                     $scope.graphSelection.category == 'vendor' &&
                                       $scope.selectedVendors.length
                                     )) {
-                                      alert("Only Vendor Selected");
+                                      // alert("Only Vendor Selected");
                                       $scope.xValues.value = 'vendor_name';
                                       var reqData = {
                                         "data_scope":{
@@ -4319,7 +4319,7 @@ var tooltipDynamicGraphData = [];
                                       });
                                 } else if ($scope.graphSelection.specificParam.society == 'qualitytype' ) {
                                         if($scope.selectedDynamicCampaigns.length){
-                                          alert("only Society Quality Type selected");
+                                          // alert("only Society Quality Type selected");
                                           $scope.xValues.value = 'qualitytype';
                                           specificXValue = 'campaign_name';
                                           var reqData = {"data_scope":{
@@ -4347,8 +4347,8 @@ var tooltipDynamicGraphData = [];
                                         }  else if ($scope.graphSelection.phaseRange.start
                                           && $scope.selectedDynamicCampaigns.length){
                                             console.log($scope.graphSelection.phaseRange.start);
-                                                                alert("only Phase Range and Campaign Selected");
-                                                                $scope.xValues.value = 'campaign_name';
+                                                                // alert("only Phase Range and Campaign Selected");
+                                                                $scope.xValues.value = 'phase';
                                                                 var reqData = {"data_scope":{
                                                                    "1":
                                                                        {"category":"unordered","level":"campaign","match_type":0,
@@ -4361,6 +4361,7 @@ var tooltipDynamicGraphData = [];
                                                                   "raw_data":raw_data_global,
                                                                   "metrics": metrics_global
                                                                 }
+
                                                                 angular.forEach($scope.selectedDynamicCampaigns, function(data){
                                                                   reqData.data_scope['1'].values.exact.push(data.campaign_id);
                                                                 });
@@ -4370,9 +4371,9 @@ var tooltipDynamicGraphData = [];
                                                  }
                                                  else if ($scope.selectedbookingParameters.length) {
                                                          if($scope.selectedDynamicCampaigns.length){
-                                                           alert("only Booking Parameter Types Selected");
-                                                           $scope.xValues.value = 'fliertype';
-                                                           specificXValue = 'campaign_name';
+                                                           // alert("only Booking Parameter Types Selected");
+                                                           $scope.xValues.value = 'campaign_name';
+                                                           specificXValue = 'fliertype';
                                                            var reqData = {
                                                           "data_scope":{
                                                         	"1":{"category":"unordered","level":"campaign","match_type":0,
@@ -4392,7 +4393,7 @@ var tooltipDynamicGraphData = [];
                                                          }
                                          else if ($scope.applyClickedFilters.value)
                                           {
-                                                  alert("By Default Campaign");
+                                                  // alert("By Default Campaign");
                                                   $scope.xValues.value = 'campaign_name';
                                                   var reqData =
                                                     { "data_scope":

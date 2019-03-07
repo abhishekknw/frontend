@@ -3111,50 +3111,17 @@
 
                         </div>
                       </div> -->
-                      <div class="panel-heading content-title">
+                      <div class="panel-heading content-title" style="height:60px;">
                         Graph Based On Filters
-                        <p ng-if="graphSelection.dateRange.length">From :{{graphSelection.dateRange.startDate}} To :{{graphSelection.dateRange.endDate}} </p>
-                     </div>
+                        <div class="row">
+                          <br />
+                          <p ng-if="graphSelection.dateRange.startDate || graphSelection.dateRange.endDate" style="color:#fff">Date : {{graphSelection.dateRange.startDate | date : 'mediumDate'}} - {{graphSelection.dateRange.endDate | date : 'mediumDate'}}</p>
+                          <p ng-if="graphSelection.phaseRange.start || graphSelection.phaseRange.end" style="color:#fff">Phase : {{graphSelection.phaseRange.start}} - Phase : {{graphSelection.phaseRange.end}}</p>
+                        </div>
+                        <br />
+                       </div>
                      <br />
-
                        <div class="row" style="color:#123456;">
-
-                         <div class="col-md-12 panel panel-default">
-                           <div class="table-responsive">
-                             <table class="table">
-                               <thead>
-                               <tr>
-                                   <th>From</th>
-                                   <th>To</th>
-                                   <th>Society Parameters</th>
-                                   <th>Booking Parameters</th>
-                                   <th>City</th>
-                                   <th>Vendor</th>
-                                   </tr>
-                                   </thead>
-                                   <tbody>
-                                     <div class="row">
-                                         <tr ng-repeat="filters in initialDynamicGraphData.lower_group_data">
-                                         <td ng-if="graphSelection.dateRange.length">{{graphSelection.dateRange.startDate | date : 'mediumDate'}}</td>
-                                         <td ng-if="!graphSelection.dateRange.length">NA</td>
-                                         <td ng-if="graphSelection.dateRange.length">{{graphSelection.dateRange.endDate  | date : 'mediumDate'}}</td>
-                                         <td ng-if="!graphSelection.dateRange.length">NA</td>
-                                         <td ng-if="filters.qualitytype">{{filters.qualitytype}}</td>
-                                         <td ng-if="!filters.qualitytype">NA</td>
-                                         <td ng-if="filters.flattype">{{initalDynamicTableData.flattype}}</td>
-                                         <td ng-if="!filters.flattype">NA</td>
-                                         <td ng-if="filters.fliertype">{{initalDynamicTableData.fliertype}}</td>
-                                         <td ng-if="!filters.fliertype">NA</td>
-                                         <td ng-if="filters.selectedCities_temp">{{initalDynamicTableData.city}}</td>
-                                         <td ng-if="!filters.selectedCities_temp">NA</td>
-                                         <td ng-if="filters.selectedVendors">{{initalDynamicTableData.vendor_name}}</td>
-                                         <td ng-if="!filters.selectedVendors">NA</td>
-                                         </tr>
-                                     </div>
-                               </tbody>
-                             </table>
-                           </div>
-                         </div>
                          <div class="col-md-12">
                            <div class="col-md-2">
                              <input type="checkbox" style="width:20px;height:20px;" value="leadsValues" ng-model="graphSelection.Yvalues.leadsPerc" ng-click="changeDynamicGraph()"> <small> LEADS %</small>
