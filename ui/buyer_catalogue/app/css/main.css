@@ -796,6 +796,10 @@ div.outerFlat { overflow: scroll; }
 div.outerFlat .innerFlat { width: 500px; }
 
 
+div.dynamicOuterGraphs { overflow: scroll; }
+div.dynamicOuterGraphs .dynamicInnerGraphs { width: 1000px; }
+
+
 div.outerLocation { overflow: scroll; }
 div.outerLocation .innerLocation { width: 1000px; }
 
@@ -974,4 +978,14 @@ border-radius: 10px;
 .rotateImage270 {
   transform: rotate(270deg);
 
+}
+
+.multiselectParentDropdown .btn .caret{
+    margin-left: 100px;
+  }
+
+.multiselectParentDropdown .multiselect-parent .dropdown-toggle  {
+  width : 270px;
+  margin-left : 10px;
+}
 }
