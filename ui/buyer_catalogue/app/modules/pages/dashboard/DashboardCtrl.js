@@ -4401,9 +4401,9 @@ var tooltipDynamicGraphData = [];
                                                       "1":{"category":"unordered","level":"campaign","match_type":0,
                                                       "values":{"exact":[]},"value_type":"campaign"}},
                                                      "data_point":{"category":"unordered","level": ["campaign"]},
-                                                      "raw_data":["lead","hot_lead","flat","cost_flat"],
-                                                      "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"]]
-                                                    }
+                                                      "raw_data":raw_data_global,
+                                                      "metrics": metrics_global
+                                                   }
 
                                                   angular.forEach($scope.selectedDynamicCampaigns, function(data){
                                                     reqData.data_scope['1'].values.exact.push(data.campaign_id);
