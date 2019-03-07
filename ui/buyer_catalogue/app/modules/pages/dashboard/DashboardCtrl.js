@@ -3880,6 +3880,12 @@ var tooltipDynamicGraphData = [];
           if(specificXValue){
             if(data[$scope.xValues.value] != null){
               var temp_label = data[$scope.xValues.value] + " (" + data[specificXValue] + ")" ;
+              if(specificXValue2){
+                console.log("hello");
+                var temp_label = data[$scope.xValues.value] + ", " + data[specificXValue2] +
+                 "( " + data[specificXValue] + " )"
+              }
+
               var temp = {
                 x: temp_label,
                 y: data[itemKey]||0
@@ -3933,8 +3939,10 @@ var tooltipDynamicGraphData = [];
     }
   };
   var specificXValue = undefined;
+  var specificXValue2 = undefined;
   $scope.getGenericGraphData = function(){
     specificXValue = undefined;
+    specificXValue2 = undefined;
     if($scope.selectedDynamicCampaigns.length){
       $scope.graphSelection.category = 'campaign';
     }
@@ -4056,8 +4064,9 @@ var tooltipDynamicGraphData = [];
                        $scope.selectedDynamicCampaigns.length )) {
                  // alert("only society type and Campaign Selected and Flat Type");
                  $scope.xValues.value = 'qualitytype';
-                 $scope.xValues.value = 'flattype';
+                 // $scope.xValues.value = 'flattype';
                  specificXValue = 'campaign_name';
+                 specificXValue2 = 'flattype';
                  var reqData = {
                     "data_scope":{
                    	"1":{"category":"unordered","level":"campaign","match_type":0,
@@ -4556,9 +4565,18 @@ var tooltipDynamicGraphData = [];
          if(selectedSpecificItems.indexOf(item[$scope.xValues.value]) > -1 || !selectedSpecificItems.length){
            if(item[$scope.xValues.value]){
              if(specificXValue){
-               var value = {
-                 'label' : item[$scope.xValues.value] + "(" + item[specificXValue] + ")",
-                 'value' : item[$scope.dynamicGraphSelectedOrder.value]
+               console.log(specificXValue2);
+               if(specificXValue2){
+                 var value = {
+                   'label' : item[$scope.xValues.value] + ", " + item[specificXValue2] +
+                    "( " + item[specificXValue] + " )",
+                   'value' : item[$scope.dynamicGraphSelectedOrder.value]
+                 }
+               }else {
+                 var value = {
+                   'label' : item[$scope.xValues.value] + "(" + item[specificXValue] + ")",
+                   'value' : item[$scope.dynamicGraphSelectedOrder.value]
+                 }
                }
                temp_data.values.push(value);
              }else{
