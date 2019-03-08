@@ -1199,7 +1199,35 @@ var metrics_basic_temp = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"
                }
            }
        };
-
+       var  dynamicDiscreteBarChart = {
+          chart: {
+              type: 'discreteBarChart',
+              "height": 450,
+              // "labelType" : "11",
+              "margin": {
+                "top": 100,
+                "right": 20,
+                "bottom": 200,
+                "left": 60
+              },
+              x: function(d){return d.label;},
+              y: function(d){return d.value + (1e-10);},
+              showValues: true,
+              valueFormat: function(d){
+                  return d3.format(',.2f')(d);
+              },
+              duration: 1500,
+              xAxis: {
+                  axisLabel: '',
+                  "showMaxMin": false,
+                  "rotateLabels" : -30
+              },
+              yAxis: {
+                  axisLabel: 'Leads in %',
+                  axisLabelDistance: -10
+              }
+          }
+       };
        var overallSummaryStackedBar = {
           "chart": {
             "type": "multiBarChart",
@@ -4541,7 +4569,7 @@ var tooltipDynamicGraphData = [];
        return temp_data;
      }
      $scope.dynamicGraphSelectedOrder = {};
-     $scope.dynamicSortedGraphOptions = angular.copy(discreteBarChart);
+     $scope.dynamicSortedGraphOptions = angular.copy(dynamicDiscreteBarChart);
 
      $scope.sortDynamicData = function(order){
        $scope.dynamicOrderData = angular.copy($scope.initialDynamicGraphData.lower_group_data);

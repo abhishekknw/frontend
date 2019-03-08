@@ -3166,10 +3166,12 @@
                            <option value="{{value}}" ng-repeat="value in yValues">{{dynamicGraphYValuesMap[value]}}</option>
                          </select>
                        </div>
+                       <br />
                        <div class="row" ng-if="dynamicGraphSelectedOrder.value">
                          <button ng-click="sortDynamicData('ASC')" class="btn btn-danger">Ascending</button>
                          <button ng-click="sortDynamicData('DESC')" class="btn btn-danger">Descending</button>
                        </div>
+                       <br /> 
                        <div class="panel panel-danger" style="height:500px;">
                          <div class="dynamicOuterGraphs" style="height:500px;">
                            <div class="dynamicInnerGraphs" style="height:500px;">
