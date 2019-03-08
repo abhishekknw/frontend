@@ -3959,9 +3959,10 @@ var tooltipDynamicGraphData = [];
     ($scope.selectedTypeOfSocieties.length && $scope.selectedSizeOfFlats.length &&
                  $scope.selectedDynamicCampaigns.length )) {
                  // alert("Date range + society parameter(society and Flat - together) and Campaign Selected");
-                 $scope.xValues.value = 'campaign_name';
-                 // $scope.xValues.value = 'qualitytype';
-                 // specificXValue = 'campaign_name';
+                 $scope.xValues.value = 'qualitytype';
+                 // $scope.xValues.value = 'flattype';
+                 specificXValue = 'campaign_name';
+                 specificXValue2 = 'flattype';
                  var reqData = {
                    "data_scope":{
                        "1":
@@ -3976,20 +3977,22 @@ var tooltipDynamicGraphData = [];
 
                            }
                        },
-                       "data_point":{"category":"unordered","level": ["qualitytype","flattype"]},
-					             "value_ranges": {"flattype":[],"qualitytype":[]},
+                       "data_point":{"category":"unordered","level": ["qualitytype","flattype"],
+					             "value_ranges": {"flattype":[],"qualitytype":[]}},
                         "raw_data": raw_data_global,
                        "metrics": metrics_global,
                  }
                    angular.forEach($scope.selectedDynamicCampaigns, function(data){
                      reqData.data_scope['1'].values.exact.push(data.campaign_id);
                   });
-                   angular.forEach($scope.selectedTypeOfSocieties, function(data){
-                   reqData.data_point.value_ranges.qualitytype.push(data.name);
-                  });
-                  angular.forEach($scope.selectedSizeOfFlats, function(data){
-                    reqData.data_point.value_ranges.flattype.push(data.name);
-                  });
+                  angular.forEach($scope.selectedTypeOfSocieties, function(data){
+                    console.log(data);
+                  reqData.data_point.value_ranges.qualitytype.push(data.name);
+                 });
+                 angular.forEach($scope.selectedSizeOfFlats, function(data){
+                   console.log(data);
+                 reqData.data_point.value_ranges.flattype.push(data.name);
+                });
                  reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
                  reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
            }else if ($scope.graphSelection.dateRange.startDate &&
