@@ -829,8 +829,8 @@ var metrics_basic_temp = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"
                      "margin": {
                        "top": 100,
                        "right": 20,
-                       "bottom": 145,
-                       "left": 45
+                       "bottom": 200,
+                       "left": 60
                      },
                      "clipEdge": true,
                      "duration": 500,

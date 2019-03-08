@@ -3170,9 +3170,9 @@
                          <button ng-click="sortDynamicData('ASC')" class="btn btn-danger">Ascending</button>
                          <button ng-click="sortDynamicData('DESC')" class="btn btn-danger">Descending</button>
                        </div>
-                       <div class="panel panel-danger">
-                         <div class="dynamicOuterGraphs">
-                           <div class="dynamicInnerGraphs">
+                       <div class="panel panel-danger" style="height:500px;">
+                         <div class="dynamicOuterGraphs" style="height:500px;">
+                           <div class="dynamicInnerGraphs" style="height:500px;">
                          <nvd3 options="stackedBarChartForDynamic" data="stackedBarChartDynamicData" ng-if="!dynamicGraphSelectedOrder.value"></nvd3>
                          <nvd3 options="dynamicSortedGraphOptions" data="dynamicSortedGraphData" ng-if="dynamicGraphSelectedOrder.value"></nvd3>
                        </div>
