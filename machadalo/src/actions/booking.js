@@ -43,4 +43,44 @@ export function postBaseBooking({ data }) {
       });
   };
 }
+
+const getBaseBookingListStart = () => {
+  return {
+    type: types.GET_BASE_BOOKING_LIST_START
+  };
+};
+
+const getBaseBookingListSuccess = ({ list }) => {
+  return {
+    type: types.GET_BASE_BOOKING_LIST_SUCCESS,
+    list
+  };
+};
+
+const getBaseBookingListFail = () => {
+  return {
+    type: types.GET_BASE_BOOKING_LIST_FAIL
+  };
+};
+
+export function getBaseBookingList() {
+  return (dispatch, getState) => {
+    dispatch(getBaseBookingListStart());
+
+    const { auth } = getState();
+
+    request
+      .get(`${config.API_URL}/v0/ui/dynamic-booking/base-booking-template/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(getBaseBookingListSuccess({ list: resp.body.data }));
+      })
+      .catch(ex => {
+        console.log('Failed to fetch list of base bookings', ex);
+
+        dispatch(getBaseBookingListFail());
+      });
+  };
+}
+
 /* Base Booking: End */
