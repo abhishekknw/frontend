@@ -8,11 +8,35 @@ export default class Campaigns extends React.Component {
   constructor() {
     super();
 
+    this.state = {
+      searchFilter: ''
+    };
+
+    this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
+    this.getFilteredList = this.getFilteredList.bind(this);
     this.renderCampaignRow = this.renderCampaignRow.bind(this);
   }
 
   componentDidMount() {
     this.props.getCampaignsList();
+  }
+
+  onSearchFilterChange(event) {
+    this.setState({
+      searchFilter: event.target.value
+    });
+  }
+
+  getFilteredList(list) {
+    return list.filter(
+      item =>
+        item.campaign.name
+          .toLowerCase()
+          .replace(/[^0-9a-z]/gi, '')
+          .indexOf(
+            this.state.searchFilter.toLowerCase().replace(/[^0-9a-z]/gi, '')
+          ) !== -1
+    );
   }
 
   renderCampaignRow(campaign) {
@@ -43,7 +67,9 @@ export default class Campaigns extends React.Component {
   }
 
   render() {
+    const { searchFilter } = this.state;
     const { campaign, actions } = this.props;
+    const list = this.getFilteredList(campaign.list);
 
     return (
       <div className="campaign">
@@ -52,7 +78,12 @@ export default class Campaigns extends React.Component {
             <h3>Campaigns</h3>
           </div>
           <div className="list__filter">
-            <input type="text" placeholder="Search..." />
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchFilter}
+              onChange={this.onSearchFilterChange}
+            />
           </div>
           <div className="list__table">
             <table cellPadding="0" cellSpacing="0">
@@ -66,7 +97,7 @@ export default class Campaigns extends React.Component {
                   ))}
                 </tr>
               </thead>
-              <tbody>{campaign.list.map(this.renderCampaignRow)}</tbody>
+              <tbody>{list.map(this.renderCampaignRow)}</tbody>
             </table>
           </div>
         </div>
