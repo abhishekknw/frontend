@@ -3,7 +3,8 @@ import * as types from './../actions/types';
 
 export const booking = createReducer(
   {
-    baseBookingList: []
+    baseBookingList: [],
+    bookingTemplateList: []
   },
   {
     [types.POST_BASE_BOOKING_START](state) {
@@ -46,6 +47,26 @@ export const booking = createReducer(
         ...state,
         isFetchingBaseBooking: false,
         baseBookingList: []
+      };
+    },
+    [types.GET_BOOKING_TEMPLATE_LIST_START](state) {
+      return {
+        ...state,
+        isFetchingBookingTemplate: true
+      };
+    },
+    [types.GET_BOOKING_TEMPLATE_LIST_SUCCESS](state, action) {
+      return {
+        ...state,
+        isFetchingBookingTemplate: false,
+        bookingTemplateList: action.list
+      };
+    },
+    [types.GET_BOOKING_TEMPLATE_LIST_FAIL](state) {
+      return {
+        ...state,
+        isFetchingBookingTemplate: false,
+        bookingTemplateList: []
       };
     }
   }

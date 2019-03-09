@@ -82,5 +82,46 @@ export function getBaseBookingList() {
       });
   };
 }
-
 /* Base Booking: End */
+
+/* Booking Template: Start */
+const getBookingTemplateListStart = () => {
+  return {
+    type: types.GET_BOOKING_TEMPLATE_LIST_START
+  };
+};
+
+const getBookingTemplateListSuccess = ({ list }) => {
+  return {
+    type: types.GET_BOOKING_TEMPLATE_LIST_SUCCESS,
+    list
+  };
+};
+
+const getBookingTemplateListFail = () => {
+  return {
+    type: types.GET_BOOKING_TEMPLATE_LIST_FAIL
+  };
+};
+
+export function getBookingTemplateList() {
+  return (dispatch, getState) => {
+    dispatch(getBookingTemplateListStart());
+
+    const { auth } = getState();
+
+    // TODO: Update URL to fetch booking templates
+    request
+      .get(`${config.API_URL}/v0/ui/dynamic-booking/base-booking-template/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(getBookingTemplateListSuccess({ list: resp.body.data }));
+      })
+      .catch(ex => {
+        console.log('Failed to fetch list of booking templates', ex);
+
+        dispatch(getBookingTemplateListFail());
+      });
+  };
+}
+/* Booking Template: End */

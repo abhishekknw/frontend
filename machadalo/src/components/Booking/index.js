@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Base from './Base';
+import Template from './Template';
 import Campaigns from './Campaigns';
 
 import './index.css';
@@ -21,6 +22,12 @@ export default class Booking extends React.Component {
             path={`${match.path}/base`}
             render={componentProps => (
               <Base {...this.props} {...componentProps} />
+            )}
+          />
+          <Route
+            path={`${match.path}/template`}
+            render={componentProps => (
+              <Template {...this.props} {...componentProps} />
             )}
           />
           <Route

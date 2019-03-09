@@ -226,7 +226,12 @@ export default class Sidebar extends React.Component {
                     <NavLink to="/r/booking/base/list">Base Booking</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/r/booking/campaigns">Real Booking</NavLink>
+                    <NavLink to="/r/booking/template/list">
+                      Booking Templates
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/r/booking/campaigns">Manage Booking</NavLink>
                   </li>
                 </ul>
               </li>
