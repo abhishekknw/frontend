@@ -1,6 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import Select from 'react-select';
+import { toastr } from 'react-redux-toastr';
 
 const AttributeTypes = [
   { value: 'FLOAT', label: 'Float' },
@@ -111,8 +112,21 @@ export default class CreateBaseBooking extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { baseEntityType: prevBaseEntityType } = prevProps;
-    const { baseEntityType: newBaseEntityType } = this.props;
+    const {
+      baseEntityType: prevBaseEntityType,
+      booking: prevBooking
+    } = prevProps;
+    const {
+      baseEntityType: newBaseEntityType,
+      booking: newBooking,
+      history
+    } = this.props;
+    const { isCreatingBaseBooking: prevIsCreatingBaseBooking } = prevBooking;
+    const {
+      isCreatingBaseBooking: newIsCreatingBaseBooking,
+      postBaseBookingSuccess,
+      postBaseBookingError
+    } = newBooking;
 
     if (
       !this.state.selectedBaseEntityType &&
@@ -130,6 +144,24 @@ export default class CreateBaseBooking extends React.Component {
         )
       });
     }
+
+    if (
+      prevIsCreatingBaseBooking &&
+      !newIsCreatingBaseBooking &&
+      postBaseBookingSuccess
+    ) {
+      toastr.success('', 'Base Booking created successfully');
+      history.push(`/r/booking/base/list`);
+    } else if (
+      prevIsCreatingBaseBooking &&
+      !newIsCreatingBaseBooking &&
+      postBaseBookingError
+    ) {
+      toastr.error(
+        '',
+        'Failed to create Base Booking. Please try again later.'
+      );
+    }
   }
 
   onAddAttributeClick() {
@@ -145,10 +177,17 @@ export default class CreateBaseBooking extends React.Component {
   }
 
   onBaseEntityTypeChange(option) {
+    const { errors } = this.state;
+
+    if (errors.baseEntityTypeId && option.id) {
+      delete errors.baseEntityTypeId;
+    }
+
     this.setState(
       {
         baseEntityTypeId: option.id,
-        selectedBaseEntityType: null
+        selectedBaseEntityType: null,
+        errors
       },
       () => {
         this.props.getBaseEntityType(this.state.baseEntityTypeId);
@@ -157,8 +196,9 @@ export default class CreateBaseBooking extends React.Component {
   }
 
   onSubmit() {
-    // TODO: Submit form data
+    // Submit form data
     const { name, attributes, baseEntityTypeId, entities } = this.state;
+    const { postBaseBooking } = this.props;
 
     const data = {
       name,
@@ -170,20 +210,26 @@ export default class CreateBaseBooking extends React.Component {
     };
 
     const errors = validate(data);
-    console.log('validationResult: ', errors);
 
     if (Object.keys(errors).length) {
       this.setState({
         errors
       });
     } else {
-      console.log('data', data);
+      postBaseBooking({ data });
     }
   }
 
   handleInputChange(event) {
+    const { errors } = this.state;
+
+    if (errors[event.target.name] && event.target.value) {
+      delete errors[event.target.name];
+    }
+
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
+      errors
     });
   }
 
