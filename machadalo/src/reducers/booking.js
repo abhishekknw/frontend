@@ -68,6 +68,28 @@ export const booking = createReducer(
         isFetchingBookingTemplate: false,
         bookingTemplateList: []
       };
+    },
+    [types.POST_BOOKING_TEMPLATE_START](state) {
+      return {
+        ...state,
+        isCreatingBookingTemplate: true,
+        postBookingTemplateSuccess: false,
+        postBookingTemplateError: false
+      };
+    },
+    [types.POST_BOOKING_TEMPLATE_SUCCESS](state) {
+      return {
+        ...state,
+        isCreatingBookingTemplate: false,
+        postBookingTemplateSuccess: true
+      };
+    },
+    [types.POST_BOOKING_TEMPLATE_FAIL](state) {
+      return {
+        ...state,
+        isCreatingBookingTemplate: false,
+        postBookingTemplateError: true
+      };
     }
   }
 );

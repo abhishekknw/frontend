@@ -110,9 +110,8 @@ export function getBookingTemplateList() {
 
     const { auth } = getState();
 
-    // TODO: Update URL to fetch booking templates
     request
-      .get(`${config.API_URL}/v0/ui/dynamic-booking/base-booking-template/`)
+      .get(`${config.API_URL}/v0/ui/dynamic-booking/booking-template/`)
       .set('Authorization', `JWT ${auth.token}`)
       .then(resp => {
         dispatch(getBookingTemplateListSuccess({ list: resp.body.data }));
@@ -121,6 +120,45 @@ export function getBookingTemplateList() {
         console.log('Failed to fetch list of booking templates', ex);
 
         dispatch(getBookingTemplateListFail());
+      });
+  };
+}
+
+const postBookingTemplateStart = () => {
+  return {
+    type: types.POST_BOOKING_TEMPLATE_START
+  };
+};
+
+const postBookingTemplateSuccess = () => {
+  return {
+    type: types.POST_BOOKING_TEMPLATE_SUCCESS
+  };
+};
+
+const postBookingTemplateFail = () => {
+  return {
+    type: types.POST_BOOKING_TEMPLATE_FAIL
+  };
+};
+
+export function postBookingTemplate({ data }) {
+  return (dispatch, getState) => {
+    dispatch(postBookingTemplateStart());
+
+    const { auth } = getState();
+
+    request
+      .post(`${config.API_URL}/v0/ui/dynamic-booking/booking-template/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .send(data)
+      .then(resp => {
+        dispatch(postBookingTemplateSuccess());
+      })
+      .catch(ex => {
+        console.log('Failed to fetch list of booking templates', ex);
+
+        dispatch(postBookingTemplateFail());
       });
   };
 }
