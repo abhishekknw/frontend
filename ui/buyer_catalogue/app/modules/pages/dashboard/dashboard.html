@@ -2864,8 +2864,8 @@
                       <div class="panel-body">
                         <br /><br />
                         <small>
-                          <div class="row" style="margin-left:-50px;color:#808080;">
-                            <label for="">Date Range</label>
+                          <div class="row" style="margin-left:-50px;color:#000000;">
+                            <label for="" style="margin-left:10px;">Date Range</label>
                             <br />
                             <div class="col-md-6">
                               <div class="form-group">
@@ -2883,15 +2883,8 @@
                                 </span>
                                 </div>
                             </div>
-                            <div class="pull-left" style="color:#808080;margin-top:-17px;"  ng-if="graphSelection.dateRange.length">
-                              <p style="color:#808080;margin-left:-10px">Select Campaign :</p>
-                              <div class="row">
-                                 <span style="color:red;width:100%;margin-left:-30px;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
-                                 selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
-                              </div>
-                            </div>
                             <p style="text-align:center;color:#cb1925;font-weight: bold;">OR</p>
-                            <label for="">Phase</label>
+                            <label for="" style="margin-left:10px;">Phase</label>
                             <br />
                             <div class="col-md-6">
                               <div class="form-group">
@@ -2933,11 +2926,12 @@
                       </div>
                       </div>
                       <br />
-                      <div class="panel panel-danger">
+                      <!-- <div class="panel panel-danger">
                       <div class="panel-heading"  style="background:#cb1925">Select Campaign</div>
                       <div class="panel-body">
                         <div class="row">
-                          <div class="col-md-6" style="color:#808080;"  ng-if="applyClickedFilters.value || selectedTypeOfSocieties.length || selectedSizeOfFlats.length || selectedCities_temp.length || selectedbookingParameters.length || graphSelection.dateRange.startDate || graphSelection.phaseRange.start || graphSelection.dateRange.endDate || selectedVendors.length">
+                          <div class="col-md-6" style="color:#808080;"  ng-if="applyClickedFilters.value || selectedTypeOfSocieties.length || selectedSizeOfFlats.length || selectedCities_temp.length
+                           || selectedbookingParameters.length || graphSelection.dateRange.startDate || graphSelection.phaseRange.start || graphSelection.dateRange.endDate || selectedVendors.length">
                             <br /><br />
                             <div class="row">
                                <span class="multiselectParentDropdown" style="color:red;width:100%;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
@@ -2946,7 +2940,7 @@
                           </div>
                         </div>
                         </div>
-                      </div>
+                      </div> -->
                   </div>
                   <div class="col-md-4" style="color:#808080;">
                     <div class="panel panel-danger">
@@ -2955,7 +2949,7 @@
                       <br /><br />
                       <div class="row form-group">
                         <small>
-                          <label for="" style="color:#808080;">Society Parameters</label>
+                          <p style="color:#000000;">Society Parameters :</p>
                           <select class="form-control" ng-model="graphSelection.specificParam.society">
                             <option value="qualitytype" ng-click="societyTypeDrop">Size of Society</option>
                             <option value="sizeOfFlats" ng-click="flatTypeDrop">Size of Flats</option>
@@ -2968,11 +2962,11 @@
                           </select>
                           <br />
                           <div class="row" ng-if="graphSelection.specificParam.society == 'qualitytype'">
-                            <span class="multiselectParentDropdown" style="color:red;width:100%;" ng-dropdown-multiselect="" options="typeOfSocietyLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="typeOfSocietyLists" extra-settings="settingsForDynamicGraphCity"
                             selected-model="selectedTypeOfSocieties" translation-texts="selected_baselines_customTexts_qualityTypesociety" events="events"></span>
                           </div>
                           <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfFlats'">
-                            <span class="multiselectParentDropdown" style="color:red;width:100%;" ng-dropdown-multiselect="" options="sizeOfFlatsLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfFlatsLists" extra-settings="settingsForDynamicGraphCity"
                             selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
                           </div>
                           <br />
@@ -2993,9 +2987,9 @@
                               <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="freebiesLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
                               selected-model="selectedFreebies" translation-texts="selected_baselines_customTexts_freebies" events="events"></span>
                             </div>
-                            <p style="color:#808080;margin-left:-20px;">Booking Parameters :</p>
-                              <div class="col-md-3 pull-left" style="margin-left:-22px;">
-                              <span class="multiselectParentDropdown" ng-dropdown-multiselect="" options="BookingParametersLists" class="col-md-6"  extra-settings="settingsForDynamicGraphBookingParameters"
+                            <p style="color:#000000;">Booking Parameters :</p>
+                              <div class="col-md-3 pull-left" style="margin-left:-20px;">
+                              <span class="multiselectParentDropdown" ng-dropdown-multiselect="" options="BookingParametersLists" extra-settings="settingsForDynamicGraphBookingParameters"
                               selected-model="selectedbookingParameters" ng-disabled="BookingParametersLists.isDisabled == 'true'" translation-texts="selected_baselines_customTexts_booking_parameters" events="events"></span>
                             </div>
                         </small>
@@ -3010,8 +3004,8 @@
                       <br /><br />
                       <div class="row form-group">
                         <small>
-                          <p style="color:#808080;margin-left:-20px;">Select City :</p>
-                            <div class="col-md-3 pull-left" style="margin-left:-20px;">
+                          <p style="color:#000000;">Select City :</p>
+                            <div class="col-md-3 pull-left">
                             <span  class="multiselectParentDropdown" style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="cityLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
                               selected-model="selectedCities_temp" translation-texts="selected_baselines_customTexts_city" events="events"></span>
                             </div>
@@ -3020,6 +3014,17 @@
                     <div class="col-md-6 pull-left" ng-if="graphSelection.locality == 'locality'">
                         <span class="multiselectParentDropdown" style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="localityList" class="col-md-6"  extra-settings="settingsForDynamicGraphVendor"
                         selected-model="selectedLocalities" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6" style="color:#808080;"  ng-if="selectedCities_temp.length">
+                        <br />
+                        <div class="row">
+                          <p style="color:#808080;margin-left:-20px;">Select Campaign :</p>
+                           <span class="multiselectParentDropdown" style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
+                           selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
+                        </div>
+                        <br />
+                      </div>
                     </div>
                     </div>
                     </div>
@@ -3031,13 +3036,24 @@
                       <br /><br />
                       <div class="row form-group">
                         <small>
-                          <p style="color:#808080;margin-left:-20px;">Select Vendors :</p>
-                            <div class="col-md-3 pull-left" style="margin-left:-20px;">
+                          <p style="color:#000000;">Select Vendors :</p>
+                            <div class="col-md-3 pull-left">
                               <span class="multiselectParentDropdown" style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="vendorsList" class="col-md-6"  extra-settings="settingsForDynamicGraphVendor"
                               selected-model="selectedVendors" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
                         </div>
                         </small>
                         <small>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6" style="color:#808080;"  ng-if="selectedVendors.length">
+                          <br />
+                          <div class="row">
+                            <p style="color:#808080;margin-left:-20px;">Select Campaign :</p>
+                             <span class="multiselectParentDropdown" style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
+                             selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
+                          </div>
+                          <br />
+                        </div>
                       </div>
                       </div>
                     </div>
@@ -3171,7 +3187,7 @@
                          <button ng-click="sortDynamicData('ASC')" class="btn btn-danger">Ascending</button>
                          <button ng-click="sortDynamicData('DESC')" class="btn btn-danger">Descending</button>
                        </div>
-                       <br /> 
+                       <br />
                        <div class="panel panel-danger" style="height:500px;">
                          <div class="dynamicOuterGraphs" style="height:500px;">
                            <div class="dynamicInnerGraphs" style="height:500px;">

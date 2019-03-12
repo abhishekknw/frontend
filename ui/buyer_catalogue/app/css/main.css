@@ -981,11 +981,18 @@ border-radius: 10px;
 }
 
 .multiselectParentDropdown .btn .caret{
-    margin-left: 100px;
+    margin-left: 80px;
   }
 
 .multiselectParentDropdown .multiselect-parent .dropdown-toggle  {
-  width : 270px;
-  margin-left : 10px;
-}
+  width : 230px;
+  }
+
+.multiselectDropdown .btn .caret{
+  margin-left: 40px;
+  }
+
+.multiselectDropdown .multiselect-parent .dropdown-toggle  {
+ width : 210px;
+  }
 }
