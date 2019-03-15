@@ -244,4 +244,43 @@ export function postBookingTemplate({ data }) {
       });
   };
 }
+
+const deleteBookingTemplateStart = () => {
+  return {
+    type: types.DELETE_BOOKING_TEMPLATE_START
+  };
+};
+
+const deleteBookingTemplateSuccess = ({ id }) => {
+  return {
+    type: types.DELETE_BOOKING_TEMPLATE_SUCCESS,
+    id
+  };
+};
+
+const deleteBookingTemplateEnd = () => {
+  return {
+    type: types.DELETE_BOOKING_TEMPLATE_FAIL
+  };
+};
+
+export function deleteBookingTemplate({ id }) {
+  return (dispatch, getState) => {
+    dispatch(deleteBookingTemplateStart());
+
+    const { auth } = getState();
+
+    request
+      .delete(`${config.API_URL}/v0/ui/dynamic-booking/booking-template/${id}/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(() => {
+        dispatch(deleteBookingTemplateSuccess({ id }));
+      })
+      .catch(ex => {
+        console.log('Failed to delete booking template', ex);
+
+        dispatch(deleteBookingTemplateEnd());
+      });
+  };
+}
 /* Booking Template: End */
