@@ -44,6 +44,47 @@ export function postBaseBooking({ data }) {
   };
 }
 
+export function putBaseBookingStart() {
+  return {
+    type: types.PUT_BASE_BOOKING_START
+  };
+}
+
+export function putBaseBookingSuccess() {
+  return {
+    type: types.PUT_BASE_BOOKING_SUCCESS
+  };
+}
+
+export function putBaseBookingFail() {
+  return {
+    type: types.PUT_BASE_BOOKING_FAIL
+  };
+}
+
+export function putBaseBooking({ id, data }) {
+  return (dispatch, getState) => {
+    dispatch(putBaseBookingStart());
+
+    const { auth } = getState();
+
+    request
+      .put(
+        `${config.API_URL}/v0/ui/dynamic-booking/base-booking-template/${id}/`
+      )
+      .set('Authorization', `JWT ${auth.token}`)
+      .send(data)
+      .then(resp => {
+        dispatch(putBaseBookingSuccess());
+      })
+      .catch(ex => {
+        console.log('Failed to create base booking', ex);
+
+        dispatch(putBaseBookingFail());
+      });
+  };
+}
+
 const getBaseBookingListStart = () => {
   return {
     type: types.GET_BASE_BOOKING_LIST_START

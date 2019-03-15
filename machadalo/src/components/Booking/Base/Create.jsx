@@ -81,18 +81,37 @@ const validate = data => {
 };
 
 export default class CreateBaseBooking extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    const { match } = this.props;
+    const { params } = match;
+    const { baseBookingId } = params;
+    const baseBooking = this.getBaseBookingById({ id: baseBookingId });
+    let attributes = [
+      {
+        ...getRawAttribute()
+      }
+    ];
+    let entities = [];
+
+    if (baseBookingId && baseBooking && baseBooking.id) {
+      // Find the base booking matching `baseBookingId`
+      attributes = baseBooking.booking_attributes;
+      entities = baseBooking.entity_attributes.map(item => ({
+        ...item,
+        selected: true,
+        allowRequired: item.is_required
+      }));
+    }
 
     this.state = {
-      name: '',
-      attributes: [
-        {
-          ...getRawAttribute()
-        }
-      ],
-      entities: [],
-      baseEntityTypeId: null,
+      isEditMode: !!baseBookingId,
+      baseBookingId,
+      name: baseBooking.name || '',
+      attributes,
+      entities,
+      baseEntityTypeId: baseBooking.base_entity_type_id,
       selectedBaseEntityType: null,
       errors: {}
     };
@@ -121,11 +140,17 @@ export default class CreateBaseBooking extends React.Component {
       booking: newBooking,
       history
     } = this.props;
-    const { isCreatingBaseBooking: prevIsCreatingBaseBooking } = prevBooking;
+    const {
+      isCreatingBaseBooking: prevIsCreatingBaseBooking,
+      isUpdatingBaseBooking: prevIsUpdatingBaseBooking
+    } = prevBooking;
     const {
       isCreatingBaseBooking: newIsCreatingBaseBooking,
       postBaseBookingSuccess,
-      postBaseBookingError
+      postBaseBookingError,
+      isUpdatingBaseBooking: newIsUpdatingBaseBooking,
+      putBaseBookingSuccess,
+      putBaseBookingError
     } = newBooking;
 
     if (
@@ -160,6 +185,24 @@ export default class CreateBaseBooking extends React.Component {
       toastr.error(
         '',
         'Failed to create Base Booking. Please try again later.'
+      );
+    }
+
+    if (
+      prevIsUpdatingBaseBooking &&
+      !newIsUpdatingBaseBooking &&
+      putBaseBookingSuccess
+    ) {
+      toastr.success('', 'Base Booking updated successfully');
+      history.push(`/r/booking/base/list`);
+    } else if (
+      prevIsUpdatingBaseBooking &&
+      !newIsUpdatingBaseBooking &&
+      putBaseBookingError
+    ) {
+      toastr.error(
+        '',
+        'Failed to update Base Booking. Please try again later.'
       );
     }
   }
@@ -197,8 +240,15 @@ export default class CreateBaseBooking extends React.Component {
 
   onSubmit() {
     // Submit form data
-    const { name, attributes, baseEntityTypeId, entities } = this.state;
-    const { postBaseBooking } = this.props;
+    const {
+      name,
+      attributes,
+      baseEntityTypeId,
+      entities,
+      isEditMode,
+      baseBookingId
+    } = this.state;
+    const { putBaseBooking, postBaseBooking } = this.props;
 
     const data = {
       name,
@@ -216,8 +266,25 @@ export default class CreateBaseBooking extends React.Component {
         errors
       });
     } else {
-      postBaseBooking({ data });
+      if (isEditMode) {
+        putBaseBooking({ id: baseBookingId, data });
+      } else {
+        postBaseBooking({ data });
+      }
     }
+  }
+
+  getBaseBookingById({ id }) {
+    const { booking } = this.props;
+    const { baseBookingList } = booking;
+
+    for (let i = 0, l = baseBookingList.length; i < l; i += 1) {
+      if (baseBookingList[i].id === id) {
+        return baseBookingList[i];
+      }
+    }
+
+    return {};
   }
 
   handleInputChange(event) {

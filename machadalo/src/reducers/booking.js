@@ -29,6 +29,28 @@ export const booking = createReducer(
         postBaseBookingError: true
       };
     },
+    [types.PUT_BASE_BOOKING_START](state) {
+      return {
+        ...state,
+        isUpdatingBaseBooking: true,
+        putBaseBookingSuccess: false,
+        putBaseBookingError: false
+      };
+    },
+    [types.PUT_BASE_BOOKING_SUCCESS](state) {
+      return {
+        ...state,
+        isUpdatingBaseBooking: false,
+        putBaseBookingSuccess: true
+      };
+    },
+    [types.PUT_BASE_BOOKING_FAIL](state) {
+      return {
+        ...state,
+        isUpdatingBaseBooking: false,
+        putBaseBookingError: true
+      };
+    },
     [types.GET_BASE_BOOKING_LIST_START](state) {
       return {
         ...state,
