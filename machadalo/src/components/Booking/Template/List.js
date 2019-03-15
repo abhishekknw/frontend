@@ -46,7 +46,7 @@ export default class ListBookingTemplate extends Component {
         <td>{bookingTemplate.name}</td>
         <td>
           <Link
-            to={`/r/booking/base/edit/${bookingTemplate.id}`}
+            to={`/r/booking/template/edit/${bookingTemplate.id}`}
             className="btn btn--danger"
           >
             Edit

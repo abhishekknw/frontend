@@ -109,21 +109,36 @@ const validate = data => {
 };
 
 export default class CreateBookingTemplate extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    const { match } = this.props;
+    const { params } = match;
+    const { bookingTemplateId } = params;
+    const bookingTemplate = this.getBookingTemplateById({
+      id: bookingTemplateId
+    });
+    let attributes = [
+      {
+        ...getRawAttribute()
+      }
+    ];
+
+    if (bookingTemplateId && bookingTemplate && bookingTemplate.id) {
+      // Find the booking template matching `bookingTemplateId`
+      attributes = bookingTemplate.booking_attributes;
+    }
 
     this.state = {
-      name: '',
-      attributes: [
-        {
-          ...getRawAttribute()
-        }
-      ],
+      isEditMode: !!bookingTemplateId,
+      bookingTemplateId,
+      name: bookingTemplate.name || '',
+      attributes,
       baseBookingAttributes: [],
       baseBookingId: null,
       selectedBaseBooking: null,
       selectedEntityAttributes: [],
-      entityTypeId: null,
+      entityTypeId: bookingTemplate.entity_type_id,
       selectedEntityType: null,
       errors: {}
     };
@@ -158,12 +173,16 @@ export default class CreateBookingTemplate extends React.Component {
     const { booking: prevBooking } = prevProps;
     const { booking: newBooking, history } = this.props;
     const {
-      isCreatingBookingTemplate: prevIsCreatingBookingTemplate
+      isCreatingBookingTemplate: prevIsCreatingBookingTemplate,
+      isUpdatingBookingTemplate: prevIsUpdatingBookingTemplate
     } = prevBooking;
     const {
       isCreatingBookingTemplate: newIsCreatingBookingTemplate,
       postBookingTemplateSuccess,
-      postBookingTemplateError
+      postBookingTemplateError,
+      isUpdatingBookingTemplate: newIsUpdatingBookingTemplate,
+      putBookingTemplateSuccess,
+      putBookingTemplateError
     } = newBooking;
 
     if (
@@ -181,6 +200,24 @@ export default class CreateBookingTemplate extends React.Component {
       toastr.error(
         '',
         'Failed to create Booking Template. Please try again later.'
+      );
+    }
+
+    if (
+      prevIsUpdatingBookingTemplate &&
+      !newIsUpdatingBookingTemplate &&
+      putBookingTemplateSuccess
+    ) {
+      toastr.success('', 'Booking Template updated successfully');
+      history.push(`/r/booking/template/list`);
+    } else if (
+      prevIsUpdatingBookingTemplate &&
+      !newIsUpdatingBookingTemplate &&
+      putBookingTemplateError
+    ) {
+      toastr.error(
+        '',
+        'Failed to update Booking Template. Please try again later.'
       );
     }
   }
@@ -264,21 +301,21 @@ export default class CreateBookingTemplate extends React.Component {
       baseBookingId,
       baseBookingAttributes,
       entityTypeId,
-      selectedEntityAttributes
+      selectedEntityAttributes,
+      isEditMode,
+      bookingTemplateId
     } = this.state;
-    const { postBookingTemplate } = this.props;
+    const { postBookingTemplate, putBookingTemplate } = this.props;
 
     const data = {
       name,
       base_booking_template_id: baseBookingId,
       booking_attributes: attributes.concat(
-        baseBookingAttributes
-          .filter(item => item.selected)
-          .map(item => ({
-            name: item.name,
-            is_required: item.is_required,
-            type: item.type
-          }))
+        baseBookingAttributes.filter(item => item.selected).map(item => ({
+          name: item.name,
+          is_required: item.is_required,
+          type: item.type
+        }))
       ),
       entity_type_id: entityTypeId,
       entity_attributes: selectedEntityAttributes
@@ -293,8 +330,25 @@ export default class CreateBookingTemplate extends React.Component {
         errors
       });
     } else {
-      postBookingTemplate({ data });
+      if (isEditMode) {
+        putBookingTemplate({ id: bookingTemplateId, data });
+      } else {
+        postBookingTemplate({ data });
+      }
     }
+  }
+
+  getBookingTemplateById({ id }) {
+    const { booking } = this.props;
+    const { bookingTemplateList } = booking;
+
+    for (let i = 0, l = bookingTemplateList.length; i < l; i += 1) {
+      if (bookingTemplateList[i].id === id) {
+        return bookingTemplateList[i];
+      }
+    }
+
+    return {};
   }
 
   handleInputChange(event) {

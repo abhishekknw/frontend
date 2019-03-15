@@ -245,6 +245,45 @@ export function postBookingTemplate({ data }) {
   };
 }
 
+const putBookingTemplateStart = () => {
+  return {
+    type: types.PUT_BOOKING_TEMPLATE_START
+  };
+};
+
+const putBookingTemplateSuccess = () => {
+  return {
+    type: types.PUT_BOOKING_TEMPLATE_SUCCESS
+  };
+};
+
+const putBookingTemplateFail = () => {
+  return {
+    type: types.PUT_BOOKING_TEMPLATE_FAIL
+  };
+};
+
+export function putBookingTemplate({ id, data }) {
+  return (dispatch, getState) => {
+    dispatch(putBookingTemplateStart());
+
+    const { auth } = getState();
+
+    request
+      .put(`${config.API_URL}/v0/ui/dynamic-booking/booking-template/${id}/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .send(data)
+      .then(resp => {
+        dispatch(putBookingTemplateSuccess());
+      })
+      .catch(ex => {
+        console.log('Failed to update booking template', ex);
+
+        dispatch(putBookingTemplateFail());
+      });
+  };
+}
+
 const deleteBookingTemplateStart = () => {
   return {
     type: types.DELETE_BOOKING_TEMPLATE_START
