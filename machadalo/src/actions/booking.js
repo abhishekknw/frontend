@@ -82,6 +82,47 @@ export function getBaseBookingList() {
       });
   };
 }
+
+const deleteBaseBookingStart = () => {
+  return {
+    type: types.DELETE_BASE_BOOKING_START
+  };
+};
+
+const deleteBaseBookingSuccess = ({ id }) => {
+  return {
+    type: types.DELETE_BASE_BOOKING_SUCCESS,
+    id
+  };
+};
+
+const deleteBaseBookingEnd = () => {
+  return {
+    type: types.DELETE_BASE_BOOKING_FAIL
+  };
+};
+
+export function deleteBaseBooking({ id }) {
+  return (dispatch, getState) => {
+    dispatch(deleteBaseBookingStart());
+
+    const { auth } = getState();
+
+    request
+      .delete(
+        `${config.API_URL}/v0/ui/dynamic-booking/base-booking-template/${id}/`
+      )
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(() => {
+        dispatch(deleteBaseBookingSuccess({ id }));
+      })
+      .catch(ex => {
+        console.log('Failed to delete base booking', ex);
+
+        dispatch(deleteBaseBookingEnd());
+      });
+  };
+}
 /* Base Booking: End */
 
 /* Booking Template: Start */

@@ -37,6 +37,10 @@ export default class ListBaseBooking extends Component {
   }
 
   renderBaseBookingRow(baseBooking) {
+    const onRemove = () => {
+      this.props.deleteBaseBooking(baseBooking);
+    };
+
     return (
       <tr key={baseBooking.id}>
         <td>{baseBooking.name}</td>
@@ -49,7 +53,7 @@ export default class ListBaseBooking extends Component {
           </Link>
         </td>
         <td>
-          <button type="button" className="btn btn--danger">
+          <button type="button" className="btn btn--danger" onClick={onRemove}>
             Remove
           </button>
         </td>
