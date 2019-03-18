@@ -72,7 +72,7 @@
   {id: 16, name: 'Noida'},
  ];
  $scope.BookingParametersLists = [
-   {id: 1, name: 'Freebies Allowed', value: 'freebiestype' , isDisabled : 'true'},
+   {id: 1, name: 'Freebies Allowed', value: 'freebiestype'},
    {id: 2, name: 'Pre-Hype Allowed', value: 'preHypetype'},
    {id: 3, name: 'Poster Allowed'  , value: 'postertype'},
    {id: 4, name: 'Standee Allowed' , value: 'standeetype'},
@@ -3968,6 +3968,46 @@ var tooltipDynamicGraphData = [];
   };
   var specificXValue = undefined;
   var specificXValue2 = undefined;
+
+ $scope.getCampaignsWiseForCity = function()
+ {
+   console.log("hello");
+   var dataCity =
+   {
+   "cities" : [],
+   "vendor" : []
+    }
+    angular.forEach($scope.selectedCities_temp, function(data){
+      console.log(data);
+      dataCity.cities.push(data.name);
+    });
+    angular.forEach($scope.selectedVendors, function(data){
+      dataCity.vendor.push($scope.vendorsData[data].vendor_id);
+    });
+      console.log(dataCity);
+    DashboardService.getCampaignsWiseForCity(dataCity)
+  .then(function onSuccess(response){
+    console.log(response);
+    $scope.selectedDynamicCampaigns = response.data.data;
+    $scope.dynamicValuesCampaigns = $scope.selectedDynamicCampaigns;
+    console.log($scope.dynamicValuesCampaigns);
+    $scope.dynamicValuesCampaignIdMap = {};
+    angular.forEach($scope.dynamicValuesCampaigns, function(data){
+      console.log(data);
+      $scope.dynamicValuesCampaignIdMap[data.campaign_id] = data;
+    })
+    $scope.dynamicValuesVendor = $scope.selectedDynamicVendors;
+    console.log($scope.dynamicValuesVendor);
+    $scope.dynamicValuesCampaignIdMap = {};
+    angular.forEach($scope.dynamicValuesVendor, function(data){
+      console.log(data);
+      $scope.dynamicValuesCampaignIdMap[data.campaign_id] = data;
+    })
+    }).catch(function onError(response){
+      console.log(response);
+  })
+ }
+
   $scope.getGenericGraphData = function(){
     specificXValue = undefined;
     specificXValue2 = undefined;
@@ -4668,6 +4708,46 @@ var tooltipDynamicGraphData = [];
      $scope.changeApplyFilters = function(){
     }
 
+
+    $scope.graphSelection.phaseRange = false;
+    $scope.graphSelection.dateRange = false;
+    $scope.BookingParameters = false;
+    $scope.graphSelection.specificParam.society = false;
+    $scope.selectedVendorParameters = false;
+    $scope.selectedCityParameters = false;
+
+    $scope.DisabledClicked = function(){
+      $scope.selectAnyPhase = false;
+      $scope.selectAnyDate = true;
+      // $scope.graphSelection.phaseRange = {};
+      }
+    $scope.DisabledClickedPhase = function(){
+      $scope.selectAnyPhase = true;
+      $scope.selectAnyDate = false;
+    }
+    $scope.DisabledClickedSociety = function(){
+    $scope.checkboxChecked = false;
+    $scope.checkboxCheckedSociety = true;
+    $scope.selectedbookingParameters = [];
+    }
+    $scope.DisabledClickedBooking = function(){
+    $scope.checkboxCheckedSociety = false;
+    $scope.checkboxChecked = true;
+    $scope.graphSelection.specificParam.society = [];
+    $scope.selectedTypeOfSocieties = [];
+    $scope.selectedSizeOfFlats = [];
+    // $scope.graphSelection.specificParam.society = [];
+    }
+    $scope.DisabledClickedCity = function(){
+    $scope.checkboxCheckedCity = true;
+    $scope.checkboxCheckedVendor = false;
+    $scope.selectedVendors = [];
+    }
+    $scope.DisabledClickedVendor = function(){
+      $scope.checkboxCheckedCity = false;
+      $scope.checkboxCheckedVendor = true;
+      $scope.selectedCities_temp = [];
+    }
   // END
 
 })
