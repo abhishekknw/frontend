@@ -102,6 +102,7 @@ $scope.addNewPhase =true;
     {name : 'SunBoard(SB)',   code : 'SB',   selected : false },
   ];
   $scope.invForComments = constants.inventoryNames;
+  $scope.commentsType = constants.comments_type;
   $scope.shortlisted = constants.shortlisted;
   $scope.buffered = constants.buffered;
   $scope.removed = constants.removed;
@@ -887,7 +888,7 @@ $scope.multiSelect =
        }
        $scope.addComment = function(){
          console.log($scope.commentModal);
-         $scope.commentModal['related_to'] = constants.booking_related_comment;
+         // $scope.commentModal['related_to'] = constants.booking_related_comment;
          $scope.commentModal['shortlisted_spaces_id'] = $scope.supplierDataForComment.id;
          releaseCampaignService.addComment($scope.campaign_id,$scope.commentModal)
          .then(function onSuccess(response){
@@ -903,11 +904,19 @@ $scope.multiSelect =
       $scope.getSupplierForComments = function(supplier){
         $scope.supplierDataForComment = supplier;
       }
+      $scope.selectedCommentForView = {};
       $scope.viewComments = function(supplier){
         $scope.supplierDataForComment = supplier;
         $scope.commentsData = {};
-        var relatedTo = constants.booking_related_comment;
+
+        console.log(relatedTo);
+        if($scope.selectedCommentForView.type == undefined){
+            $scope.selectedCommentForView.type = $scope.commentsType[1];
+        }
+        var relatedTo = $scope.selectedCommentForView.type;
+
         var spaceId = $scope.supplierDataForComment.id;
+
         releaseCampaignService.viewComments($scope.campaign_id,spaceId,relatedTo)
         .then(function onSuccess(response){
           console.log(response);
