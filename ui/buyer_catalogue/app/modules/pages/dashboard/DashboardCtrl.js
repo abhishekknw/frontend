@@ -2893,6 +2893,7 @@ $scope.viewComments = function(supplier,index){
     $scope.commentModal = {};
     $scope.enableViewComments = index;
     $scope.commentsData = response.data.data;
+    
     // if(Object.keys($scope.commentsData).length != 0){
     //   $scope.viewInvForComments = Object.keys($scope.commentsData);
     //   $scope.selectedInvForView = $scope.viewInvForComments[0];
@@ -2910,7 +2911,7 @@ $scope.viewBookingComments = function(supplier){
   $scope.supplierNameForComment = undefined;
   $scope.supplierNameForComment = supplier.society_name;
   $scope.commentsData = {};
-  var relatedTo = constants.booking_related_comment;
+  var relatedTo = constants.execution_related_comment;
   var spaceId = supplier.space_id;
   DashboardService.viewBookingComments($scope.proposalId,spaceId,relatedTo)
   .then(function onSuccess(response){
