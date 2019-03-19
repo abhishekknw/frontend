@@ -2151,7 +2151,7 @@ var formatThreeWeeksSummary = function(data,key){
        scrollableHeight: '300px', scrollable: true};
    $scope.settingsForDynamicGraph = { enableSearch: true,
        keyboardControls: true ,idProp : "{{option.campaign_id}}",
-       template: '{{option.name}}',
+       template: '{{option.campaign_name}}',
        showCheckAll : true,
        scrollableHeight: '300px', scrollable: true};
    $scope.settingsForDynamicGraphCity = { enableSearch: true,
@@ -2193,6 +2193,8 @@ var formatThreeWeeksSummary = function(data,key){
  $scope.eventsForDynamicGraphCampaign = {
 
    onItemSelect : function(item){
+     console.log(item);
+
    }
 }
 
@@ -3790,7 +3792,7 @@ $scope.rotateImage=function(id){
     $scope.dynamicValues = [];
     $scope.myModel = [];
     if(value == 'campaign'){
-        $scope.getCampaigns();
+        getCampaignsWiseForCity();
     }
     if(value == 'city'){
 
@@ -3969,49 +3971,11 @@ var tooltipDynamicGraphData = [];
   var specificXValue = undefined;
   var specificXValue2 = undefined;
 
- $scope.getCampaignsWiseForCity = function()
- {
-   console.log("hello");
-   var dataCity =
-   {
-   "cities" : [],
-   "vendor" : []
-    }
-    angular.forEach($scope.selectedCities_temp, function(data){
-      console.log(data);
-      dataCity.cities.push(data.name);
-    });
-    angular.forEach($scope.selectedVendors, function(data){
-      dataCity.vendor.push($scope.vendorsData[data].vendor_id);
-    });
-      console.log(dataCity);
-    DashboardService.getCampaignsWiseForCity(dataCity)
-  .then(function onSuccess(response){
-    console.log(response);
-    $scope.selectedDynamicCampaigns = response.data.data;
-    $scope.dynamicValuesCampaigns = $scope.selectedDynamicCampaigns;
-    console.log($scope.dynamicValuesCampaigns);
-    $scope.dynamicValuesCampaignIdMap = {};
-    angular.forEach($scope.dynamicValuesCampaigns, function(data){
-      console.log(data);
-      $scope.dynamicValuesCampaignIdMap[data.campaign_id] = data;
-    })
-    $scope.dynamicValuesVendor = $scope.selectedDynamicVendors;
-    console.log($scope.dynamicValuesVendor);
-    $scope.dynamicValuesCampaignIdMap = {};
-    angular.forEach($scope.dynamicValuesVendor, function(data){
-      console.log(data);
-      $scope.dynamicValuesCampaignIdMap[data.campaign_id] = data;
-    })
-    }).catch(function onError(response){
-      console.log(response);
-  })
- }
-
-  $scope.getGenericGraphData = function(){
+   $scope.getGenericGraphData = function(){
     specificXValue = undefined;
     specificXValue2 = undefined;
     if($scope.selectedDynamicCampaigns.length){
+      console.log($scope.selectedDynamicCampaigns);
       $scope.graphSelection.category = 'campaign';
     }
     if($scope.selectedVendors.length){
@@ -4020,13 +3984,19 @@ var tooltipDynamicGraphData = [];
     if($scope.selectedTypeOfSocieties.length){
       $scope.graphSelection.category = 'qualitytype';
 
-    }if($scope.selectedSizeOfFlats.length){
+    }
+    if($scope.selectedbookingParameters.length){
+      console.log($scope.selectedbookingParameters);
+      $scope.graphSelection.category = $scope.BookingParametersLists.value;
+    }
+
+    if($scope.selectedSizeOfFlats.length){
       $scope.graphSelection.category = 'flattype';
 }
   if ($scope.graphSelection.dateRange.startDate &&
-    ($scope.selectedTypeOfSocieties.length && $scope.selectedSizeOfFlats.length &&
-                 $scope.selectedDynamicCampaigns.length )) {
-                 // alert("Date range + society parameter(society and Flat - together) and Campaign Selected");
+    ($scope.selectedTypeOfSocieties.length && $scope.selectedSizeOfFlats.length
+                 && $scope.selectedDynamicCampaigns.length )) {
+                 alert("Date range + society parameter(society and Flat - together) and City Campaign Selected");
                  $scope.xValues.value = 'qualitytype';
                  // $scope.xValues.value = 'flattype';
                  specificXValue = 'campaign_name';
@@ -4051,6 +4021,7 @@ var tooltipDynamicGraphData = [];
                        "metrics": metrics_global,
                  }
                    angular.forEach($scope.selectedDynamicCampaigns, function(data){
+                     console.log(data);
                      reqData.data_scope['1'].values.exact.push(data.campaign_id);
                   });
                   angular.forEach($scope.selectedTypeOfSocieties, function(data){
@@ -4064,44 +4035,13 @@ var tooltipDynamicGraphData = [];
                  reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
                  reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
            }else if ($scope.graphSelection.dateRange.startDate &&
-    ($scope.selectedTypeOfSocieties.length &&
-                 $scope.selectedDynamicCampaigns.length )) {
-                 // alert("Date range + society parameter(society) and Campaign Selected");
-                 $scope.xValues.value = 'qualitytype';
-                 specificXValue = 'campaign_name';
-                 var reqData = {
-                   "data_scope":{
-                       "1":
-                           {"category":"unordered","level":"campaign","match_type":0,
-                               "values":{"exact":[]},
-                               "value_type":"campaign"
-
-                           },
-                       "2":{"category":"time","level":"time","match_type":1,
-                               "values":{"range":[]},
-                               "value_type":"time"
-
-                           }
-                       },
-                       "data_point":{"category":"unordered","level": ["qualitytype"],
-                       "value_ranges": {"qualitytype":[]}},
-                       "raw_data": raw_data_global,
-                      "metrics": metrics_global,
-                 }
-                   angular.forEach($scope.selectedDynamicCampaigns, function(data){
-                     reqData.data_scope['1'].values.exact.push(data.campaign_id);
-                  });
-                   angular.forEach($scope.selectedTypeOfSocieties, function(data){
-                   reqData.data_point.value_ranges.qualitytype.push(data.name);
-                  });
-                 reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
-                 reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
-           }else if ($scope.graphSelection.dateRange.startDate &&
-             ($scope.selectedSizeOfFlats.length &&
-                          $scope.selectedDynamicCampaigns.length )) {
-                          // alert("Date range + society parameter(flat) and Campaign Selected");
-                          $scope.xValues.value = 'flattype';
+             ($scope.selectedTypeOfSocieties.length && $scope.selectedSizeOfFlats.length
+                          && $scope.selectedDynamicCampaigns.length )) {
+                          alert("Date range + society parameter(society and Flat - together) and Vendor Campaign Selected");
+                          $scope.xValues.value = 'qualitytype';
+                          // $scope.xValues.value = 'flattype';
                           specificXValue = 'campaign_name';
+                          specificXValue2 = 'flattype';
                           var reqData = {
                             "data_scope":{
                                 "1":
@@ -4116,24 +4056,79 @@ var tooltipDynamicGraphData = [];
 
                                     }
                                 },
-                                "data_point":{"category":"unordered","level": ["flattype"],
-                                "value_ranges": {"flattype":[]}},
-                                "raw_data": raw_data_global,
-                               "metrics": metrics_global,
+                                "data_point":{"category":"unordered","level": ["qualitytype","flattype"],
+         					             "value_ranges": {"flattype":[],"qualitytype":[]}},
+                                 "raw_data": raw_data_global,
+                                "metrics": metrics_global,
                           }
                             angular.forEach($scope.selectedDynamicCampaigns, function(data){
+                              console.log(data);
                               reqData.data_scope['1'].values.exact.push(data.campaign_id);
                            });
-                            angular.forEach($scope.selectedSizeOfFlats, function(data){
-                            reqData.data_point.value_ranges.flattype.push(data.name);
-                           });
+                           angular.forEach($scope.selectedTypeOfSocieties, function(data){
+                             console.log(data);
+                           reqData.data_point.value_ranges.qualitytype.push(data.name);
+                          });
+                          angular.forEach($scope.selectedSizeOfFlats, function(data){
+                            console.log(data);
+                          reqData.data_point.value_ranges.flattype.push(data.name);
+                         });
                           reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
                           reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
-                    }else if(!$scope.graphSelection.dateRange.startDate &&
+                    }else if ($scope.graphSelection.dateRange.startDate &&
+                      ($scope.selectedbookingParameters.length && $scope.selectedDynamicCampaigns.length )) {
+                                   alert("Date range + Booking(multiselect) and City Campaign Selected");
+                                   // specificXValue = 'campaign_name';
+                                   // angular.forEach($scope.selectedbookingParameters, function(data){
+                                   //   console.log(data);
+                                   //    $scope.xValues.value = data.name;
+                                   // });
+
+                                   $scope.xValues.value = 'campaign_name';
+                                   specificXValue = 'fliertype';
+                                   specificXValue2 = 'standeetype';
+
+                                   // $scope.xValues.value = 'campaign_name';
+                                   // angular.forEach($scope.selectedbookingParameters, function(data){
+                                   //   console.log(data);
+                                   //   specificXValue = data.value;
+                                   // });
+
+                                   var reqData = {
+                                     "data_scope":{
+                                         "1":
+                                              {"category":"unordered","level":"campaign","match_type":0,
+                                                 "values":{"exact":[]},
+                                                 "value_type":"campaign"
+
+                                             },
+                                         "2":{"category":"time","level":"time","match_type":1,
+                                                 "values":{"range":[]},
+                                                 "value_type":"time"
+
+                                             }
+                                         },
+                                         "data_point":{"category":"unordered","level": []},
+                                          "raw_data": raw_data_global,
+                                         "metrics": metrics_global,
+                                   }
+                                     angular.forEach($scope.selectedDynamicCampaigns, function(data){
+                                       console.log(data);
+                                       reqData.data_scope['1'].values.exact.push(data.campaign_id);
+                                    });
+                                    angular.forEach($scope.selectedbookingParameters, function(data){
+                                      console.log(data);
+                                      reqData.data_point.level.push(data.value);
+                                    });
+                                   reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
+                                   reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
+                             }
+
+                    else if(!$scope.graphSelection.dateRange.startDate &&
                        ($scope.selectedSizeOfFlats.length &&
-                       $scope.selectedTypeOfSocieties.length &&
-                       $scope.selectedDynamicCampaigns.length )) {
-                 // alert("only society type and Campaign Selected and Flat Type");
+                       $scope.selectedTypeOfSocieties.length && $scope.selectedCities_temp.length
+                        && $scope.selectedDynamicCampaigns.length )) {
+                 alert("only society type and Campaign Selected and Flat Type");
                  $scope.xValues.value = 'qualitytype';
                  // $scope.xValues.value = 'flattype';
                  specificXValue = 'campaign_name';
@@ -4453,7 +4448,11 @@ var tooltipDynamicGraphData = [];
                                                          if($scope.selectedDynamicCampaigns.length){
                                                            // alert("only Booking Parameter Types Selected");
                                                            $scope.xValues.value = 'campaign_name';
-                                                           specificXValue = 'fliertype';
+                                                           angular.forEach($scope.selectedbookingParameters, function(data){
+                                                             console.log(data);
+                                                              specificXValue = data.value;
+                                                           });
+
                                                            var reqData = {
                                                           "data_scope":{
                                                         	"1":{"category":"unordered","level":"campaign","match_type":0,
@@ -4467,6 +4466,7 @@ var tooltipDynamicGraphData = [];
                                                              reqData.data_scope['1'].values.exact.push(data.campaign_id);
                                                            });
                                                            angular.forEach($scope.selectedbookingParameters, function(data){
+                                                             console.log(data);
                                                              reqData.data_point.level.push(data.value);
                                                            });
                                                          }
@@ -4527,7 +4527,8 @@ var tooltipDynamicGraphData = [];
     $scope.graphSelection.phaseRange = {};
     $scope.selectedTypeOfSocieties = [];
     $scope.graphSelection.specificParam = [];
-
+    $scope.dynamicValuesCampaigns = [];
+    $scope.dynamicValuesVendor = [];
   }
   $scope.changeDynamicGraph = function(){
     console.log($scope.graphSelection);
@@ -4704,10 +4705,48 @@ var tooltipDynamicGraphData = [];
          });
        }, 1000);
      }
-     $scope.applyClickedFilters = {};
-     $scope.changeApplyFilters = function(){
-    }
 
+    var getCampaignsWiseForCity = function()
+    {
+      console.log("hello");
+      var dataCity =
+      {
+      "cities" : [],
+      "vendor" : []
+       }
+       angular.forEach($scope.selectedCities_temp, function(data){
+         console.log(data);
+         dataCity.cities.push(data.name);
+       });
+       angular.forEach($scope.selectedVendors, function(data){
+         dataCity.vendor.push($scope.vendorsData[data].vendor_id);
+       });
+         console.log(dataCity);
+       DashboardService.getCampaignsWiseForCity(dataCity)
+     .then(function onSuccess(response){
+       console.log(response);
+       $scope.selectedCampaignsCityWise = response.data.data;
+       $scope.dynamicValuesCampaigns = $scope.selectedCampaignsCityWise;
+       console.log($scope.selectedCampaignsCityWise);
+      }).catch(function onError(response){
+         console.log(response);
+     })
+    }
+      $scope.dynamicValuesCityWiseCampaignIdMap = {};
+    angular.forEach($scope.dynamicValuesCampaigns, function(data){
+      console.log(data);
+      $scope.dynamicValuesCityWiseCampaignIdMap[data.campaign_id] = data;
+    })
+    console.log($scope.selectedDynamicCampaigns.length);
+    $scope.dynamicValuesVendor = $scope.selectedCampaignsCityWise;
+    console.log($scope.dynamicValuesVendor);
+    $scope.dynamicValuesVendorWiseCampaignIdMap = {};
+    angular.forEach($scope.dynamicValuesVendor, function(data){
+    $scope.dynamicValuesVendorWiseCampaignIdMap[data.campaign_id] = data;
+    })
+    $scope.applyClickedFilters = {};
+    $scope.changeApplyFilters = function(){
+   }
 
     $scope.graphSelection.phaseRange = false;
     $scope.graphSelection.dateRange = false;
@@ -4733,6 +4772,11 @@ var tooltipDynamicGraphData = [];
     $scope.DisabledClickedBooking = function(){
     $scope.checkboxCheckedSociety = false;
     $scope.checkboxChecked = true;
+    angular.forEach($scope.selectedbookingParameters, function(data){
+      console.log(data);
+      var specificXValue = data.value;
+      console.log(specificXValue);
+    });
     $scope.graphSelection.specificParam.society = [];
     $scope.selectedTypeOfSocieties = [];
     $scope.selectedSizeOfFlats = [];
@@ -4741,14 +4785,18 @@ var tooltipDynamicGraphData = [];
     $scope.DisabledClickedCity = function(){
     $scope.checkboxCheckedCity = true;
     $scope.checkboxCheckedVendor = false;
+    getCampaignsWiseForCity();
+    $scope.dynamicValuesCampaigns = [];
     $scope.selectedVendors = [];
     }
     $scope.DisabledClickedVendor = function(){
       $scope.checkboxCheckedCity = false;
       $scope.checkboxCheckedVendor = true;
+      getCampaignsWiseForCity();
       $scope.selectedCities_temp = [];
     }
   // END
+
 
 })
 })();

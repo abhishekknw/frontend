@@ -3010,7 +3010,7 @@
                       <div class="row form-group" style="color:#000000;">
                         <small>
                           <!-- <p style="color:#000000;">Select City :</p> -->
-                          <input type="checkbox" name="" value="" ng-model="checkboxCheckedCity" ng-checked="!checkboxCheckedVendor"> Select City
+                          <input type="checkbox" name="" value="" ng-model="checkboxCheckedCity"  ng-checked="!checkboxCheckedVendor"> Select City
                           <br />
                             <div class="col-md-3 pull-left" ng-click="DisabledClickedCity()" ng-show="checkboxCheckedCity" ng-hide="checkboxCheckedVendor">
                             <span  class="multiselectParentDropdown" style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="cityLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
@@ -3027,7 +3027,7 @@
                         <br />
                         <div class="row">
                           <p style="color:#808080;">Select Campaign</p>
-                           <span class="multiselectDropdown" ng-click="getCampaignsWiseForCity()" style="color:red;width:100%;" ng-dropdown-multiselect="" options="dynamicValuesCampaigns" class="col-md-6"  extra-settings="settingsForDynamicGraph"
+                           <span class="multiselectDropdown" style="color:red;width:100%;" ng-dropdown-multiselect="" options="dynamicValuesCampaigns" class="col-md-6"  extra-settings="settingsForDynamicGraph"
                            selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
                         </div>
                         <br />
