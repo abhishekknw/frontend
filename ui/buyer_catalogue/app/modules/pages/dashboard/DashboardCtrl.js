@@ -3915,9 +3915,6 @@ var tooltipDynamicGraphData = [];
                 var temp_label = data[$scope.xValues.value] + ", " + data[specificXValue2] +
                  "( " + data[specificXValue] + " )"
               }
-              if(dataValueSpecificKey){
-                console.log("hello");
-                var temp_label = data[$scope.xValues.value] + ", " + data[dataValueSpecificKey]}
 
               var temp = {
                 x: temp_label,
@@ -3973,12 +3970,11 @@ var tooltipDynamicGraphData = [];
   };
   var specificXValue = undefined;
   var specificXValue2 = undefined;
-  var dataValueSpecificKey = undefined;
 
    $scope.getGenericGraphData = function(){
     specificXValue = undefined;
     specificXValue2 = undefined;
-    dataValueSpecificKey = undefined;
+
     if($scope.selectedDynamicCampaigns.length){
       console.log($scope.selectedDynamicCampaigns);
       $scope.graphSelection.category = 'campaign';
@@ -4075,13 +4071,13 @@ var tooltipDynamicGraphData = [];
                            reqData.data_point.value_ranges.qualitytype.push(data.name);
                           });
                           angular.forEach($scope.selectedSizeOfFlats, function(data){
-                            console.log(data);
+                          console.log(data);
                           reqData.data_point.value_ranges.flattype.push(data.name);
                          });
                           reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
                           reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
                     }else if ($scope.graphSelection.dateRange.startDate &&
-                      ($scope.selectedbookingParameters.length && $scope.selectedDynamicCampaigns.length )) {
+                             ($scope.selectedbookingParameters.length && $scope.selectedDynamicCampaigns.length )) {
                                    alert("Date range + Booking(multiselect) and City Campaign Selected");
                                    // specificXValue = 'campaign_name';
                                    // angular.forEach($scope.selectedbookingParameters, function(data){
@@ -4090,20 +4086,20 @@ var tooltipDynamicGraphData = [];
                                    // });
 
                                    $scope.xValues.value = 'campaign_name';
-
-                                   var specficSelectedValue = 0;
-                                   angular.forEach($scope.selectedbookingParameters, function(data){
-                                     console.log(data);
-                                     specficSelectedValue = specficSelectedValue + 1;
-                                     var dataSpecific = {
-                                       "specificXValue" : "specificXValue" + specficSelectedValue,
-                                     }
-                                     console.log(specficSelectedValue);
-                                     console.log(dataSpecific.specificXValue);
-                                     var dataValueSpecificKey = data.value;
-                                     console.log(dataValueSpecificKey);
-
-                                   });
+                                   //
+                                   // var specficSelectedValue = 0;
+                                   // angular.forEach($scope.selectedbookingParameters, function(data){
+                                   //   console.log(data);
+                                   //   specficSelectedValue = specficSelectedValue + 1;
+                                   //   var dataSpecific = {
+                                   //     "specificXValue" : "specificXValue" + specficSelectedValue,
+                                   //   }
+                                   //   console.log(specficSelectedValue);
+                                   //   console.log(dataSpecific.specificXValue);
+                                   //   var dataValueSpecificKey = data.value;
+                                   //   console.log(dataValueSpecificKey);
+                                   //
+                                   // });
                                    // $scope.xValues.value = 'campaign_name';
                                    // angular.forEach($scope.selectedbookingParameters, function(data){
                                    //   console.log(data);
@@ -4661,12 +4657,7 @@ var tooltipDynamicGraphData = [];
                    'value' : item[$scope.dynamicGraphSelectedOrder.value]
                  }
                }
-               if(dataValueSpecificKey){
-                 var value = {
-                   'label' : item[$scope.xValues.value] + ", " + item[dataValueSpecificKey],
-                   'value' : item[$scope.dynamicGraphSelectedOrder.value]
-                 }
-               }
+
                else {
                  var value = {
                    'label' : item[$scope.xValues.value] + "(" + item[specificXValue] + ")",
@@ -4751,6 +4742,8 @@ var tooltipDynamicGraphData = [];
        $scope.selectedCampaignsCityWise = response.data.data;
        $scope.dynamicValuesCampaigns = $scope.selectedCampaignsCityWise;
        console.log($scope.selectedCampaignsCityWise);
+       $scope.dynamicValuesVendor = $scope.selectedCampaignsCityWise;
+       console.log($scope.dynamicValuesVendor);
       }).catch(function onError(response){
          console.log(response);
      })
@@ -4760,9 +4753,6 @@ var tooltipDynamicGraphData = [];
       console.log(data);
       $scope.dynamicValuesCityWiseCampaignIdMap[data.campaign_id] = data;
     })
-    console.log($scope.selectedDynamicCampaigns.length);
-    $scope.dynamicValuesVendor = $scope.selectedCampaignsCityWise;
-    console.log($scope.dynamicValuesVendor);
     $scope.dynamicValuesVendorWiseCampaignIdMap = {};
     angular.forEach($scope.dynamicValuesVendor, function(data){
     $scope.dynamicValuesVendorWiseCampaignIdMap[data.campaign_id] = data;
