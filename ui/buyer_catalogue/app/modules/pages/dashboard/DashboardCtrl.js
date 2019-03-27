@@ -4747,7 +4747,7 @@ var tooltipDynamicGraphData = [];
       console.log("hello");
      var dataVendor =
        {
-       "vendor" : [],
+       "vendors" : [],
         }
 
        angular.forEach($scope.selectedVendors, function(data){
