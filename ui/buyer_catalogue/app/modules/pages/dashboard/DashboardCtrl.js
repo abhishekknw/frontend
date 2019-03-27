@@ -4751,7 +4751,7 @@ var tooltipDynamicGraphData = [];
         }
 
        angular.forEach($scope.selectedVendors, function(data){
-         dataVendor.vendor.push($scope.vendorsData[data].vendor_id);
+         dataVendor.vendors.push($scope.vendorsData[data].vendor_id);
        });
          console.log(dataVendor);
        DashboardService.getCampaignsWiseForVendor(dataVendor)
