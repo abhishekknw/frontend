@@ -4085,8 +4085,16 @@ var tooltipDynamicGraphData = [];
                                    //    $scope.xValues.value = data.name;
                                    // });
 
-                                   $scope.xValues.value = 'campaign_name';
-                                   //
+                                   if ($scope.selectedbookingParameters == 'standeetype') {
+                                     $scope.xValues.value = 'campaign_name';
+                                    specificXValue = 'standeetype';
+                                   }
+                                   if ($scope.selectedbookingParameters == 'fliertype') {
+                                     $scope.xValues.value = 'campaign_name';
+                                    specificXValue = 'fliertype';
+                                   }
+                                   //  specificXValue2 = 'standeetype';
+                                   // specificXValue = 'fliertype';
                                    // var specficSelectedValue = 0;
                                    // angular.forEach($scope.selectedbookingParameters, function(data){
                                    //   console.log(data);
@@ -4714,15 +4722,13 @@ var tooltipDynamicGraphData = [];
       var dataCity =
       {
       "cities" : [],
-      "vendor" : []
        }
+
        angular.forEach($scope.selectedCities_temp, function(data){
          console.log(data);
          dataCity.cities.push(data.name);
        });
-       angular.forEach($scope.selectedVendors, function(data){
-         dataCity.vendor.push($scope.vendorsData[data].vendor_id);
-       });
+
          console.log(dataCity);
        DashboardService.getCampaignsWiseForCity(dataCity)
      .then(function onSuccess(response){
@@ -4736,6 +4742,31 @@ var tooltipDynamicGraphData = [];
          console.log(response);
      })
     }
+    var getCampaignsWiseForVendor = function()
+    {
+      console.log("hello");
+     var dataVendor =
+       {
+       "vendor" : [],
+        }
+
+       angular.forEach($scope.selectedVendors, function(data){
+         dataVendor.vendor.push($scope.vendorsData[data].vendor_id);
+       });
+         console.log(dataVendor);
+       DashboardService.getCampaignsWiseForVendor(dataVendor)
+     .then(function onSuccess(response){
+       console.log(response);
+       $scope.selectedCampaignsCityWise = response.data.data;
+       $scope.dynamicValuesCampaigns = $scope.selectedCampaignsCityWise;
+       console.log($scope.selectedCampaignsCityWise);
+       $scope.dynamicValuesVendor = $scope.selectedCampaignsCityWise;
+       console.log($scope.dynamicValuesVendor);
+      }).catch(function onError(response){
+         console.log(response);
+     })
+    }
+
       $scope.dynamicValuesCityWiseCampaignIdMap = {};
     angular.forEach($scope.dynamicValuesCampaigns, function(data){
       console.log(data);
@@ -4793,7 +4824,7 @@ var tooltipDynamicGraphData = [];
     $scope.DisabledClickedVendor = function(){
       $scope.checkboxCheckedCity = false;
       $scope.checkboxCheckedVendor = true;
-      getCampaignsWiseForCity();
+      getCampaignsWiseForVendor();
       $scope.selectedCities_temp = [];
     }
   // END

@@ -229,6 +229,12 @@
         console.log(url);
       return machadaloHttp.put(url,dataCity);
     }
+    DashboardService.getCampaignsWiseForVendor = function(dataVendor){
+      console.log(dataVendor);
+        var url =  url_analytics + "city-vendor-campaigns/";
+        console.log(url);
+      return machadaloHttp.put(url,dataVendor);
+    }
     return DashboardService;
 
  }]);
