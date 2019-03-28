@@ -2864,46 +2864,41 @@
                       <div class="panel-body">
                         <br /><br />
                         <small>
-                          <div class="row" style="margin-left:-50px;color:#808080;">
-                            <label for="">Date Range</label>
+                          <div class="row" style="margin-left:-50px;color:#000000;">
+                            <input type="checkbox" name="" value="" style="margin-left:10px;" ng-click="DisabledClicked()" ng-checked="!selectAnyPhase"> Date Range
+                            <!-- <label for="" style="margin-left:10px;"> Date Range</label> -->
                             <br />
                             <div class="col-md-6">
-                              <div class="form-group">
+                              <div class="form-group" ng-show="selectAnyDate" ng-hide="selectAnyPhase" ng-model="selectAnyDate">
                                 <label><small> Start Date :  </small></label>
-                                <span><small><input type="date" style="width:110px !important" ng-model="graphSelection.dateRange.startDate">
+                                <span><small><input type="date" ng-click="DisabledClicked()" style="width:110px !important" ng-model="graphSelection.dateRange.startDate">
                                 </small>
                                 </span>
                               </div>
                             </div>
                             <div class="col-md-6">
-                              <div class="form-group">
+                              <div class="form-group" ng-show="selectAnyDate" ng-hide="selectAnyPhase" ng-model="selectAnyDate">
                               <label><small>  End Date :</small></label>
-                                <span><small><input type="date" style="width:110px !important" ng-model="graphSelection.dateRange.endDate">
+                                <span><small><input type="date" ng-click="DisabledClicked()" style="width:110px !important" ng-model="graphSelection.dateRange.endDate">
                                 </small>
                                 </span>
                                 </div>
                             </div>
-                            <div class="pull-left" style="color:#808080;margin-top:-17px;"  ng-if="graphSelection.dateRange.length">
-                              <p style="color:#808080;margin-left:-10px">Select Campaign :</p>
-                              <div class="row">
-                                 <span style="color:red;width:100%;margin-left:-30px;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
-                                 selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
-                              </div>
-                            </div>
                             <p style="text-align:center;color:#cb1925;font-weight: bold;">OR</p>
-                            <label for="">Phase</label>
+                            <input type="checkbox" name="" value="" style="margin-left:10px;" ng-click="DisabledClickedPhase()" ng-checked="!selectAnyDate"> Phase
+                            <!-- <label for="" style="margin-left:10px;">Phase</label> -->
                             <br />
                             <div class="col-md-6">
-                              <div class="form-group">
+                              <div class="form-group" ng-show="selectAnyPhase" ng-hide="selectAnyDate" ng-model="selectAnyPhase">
                                 <label><small> Start :  </small></label>
-                                <span><small><input type="text" style="width:110px !important" placeholder="1" width="110px;" ng-model="graphSelection.phaseRange.start"></small>
+                                <span><small><input type="text" ng-click="DisabledClickedPhase()" style="width:110px !important" placeholder="1" width="110px;" ng-model="graphSelection.phaseRange.start" ></small>
                                 </span>
                               </div>
                             </div>
                             <div class="col-md-6">
-                              <div class="form-group">
+                              <div class="form-group" ng-show="selectAnyPhase" ng-hide="selectAnyDate" ng-model="selectAnyPhase">
                               <label><small>  End :</small></label>
-                                <span><small><input type="text" style="width:110px !important" placeholder="87" ng-model="graphSelection.phaseRange.end"></small>
+                                <span><small><input type="text" ng-click="DisabledClickedPhase()" style="width:110px !important" placeholder="87" ng-model="graphSelection.phaseRange.end"></small>
                                 </span>
                                 </div>
                             </div>
@@ -2933,11 +2928,12 @@
                       </div>
                       </div>
                       <br />
-                      <div class="panel panel-danger">
+                      <!-- <div class="panel panel-danger">
                       <div class="panel-heading"  style="background:#cb1925">Select Campaign</div>
                       <div class="panel-body">
                         <div class="row">
-                          <div class="col-md-6" style="color:#808080;"  ng-if="applyClickedFilters.value || selectedTypeOfSocieties.length || selectedSizeOfFlats.length || selectedCities_temp.length || selectedbookingParameters.length || graphSelection.dateRange.startDate || graphSelection.phaseRange.start || graphSelection.dateRange.endDate || selectedVendors.length">
+                          <div class="col-md-6" style="color:#808080;"  ng-if="applyClickedFilters.value || selectedTypeOfSocieties.length || selectedSizeOfFlats.length || selectedCities_temp.length
+                           || selectedbookingParameters.length || graphSelection.dateRange.startDate || graphSelection.phaseRange.start || graphSelection.dateRange.endDate || selectedVendors.length">
                             <br /><br />
                             <div class="row">
                                <span class="multiselectParentDropdown" style="color:red;width:100%;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
@@ -2946,17 +2942,18 @@
                           </div>
                         </div>
                         </div>
-                      </div>
+                      </div> -->
                   </div>
                   <div class="col-md-4" style="color:#808080;">
                     <div class="panel panel-danger">
                     <div class="panel-heading"  style="background:#cb1925">Filter By Parameters</div>
                     <div class="panel-body">
                       <br /><br />
-                      <div class="row form-group">
+                      <div class="row form-group" style="color:#000000">
                         <small>
-                          <label for="" style="color:#808080;">Society Parameters</label>
-                          <select class="form-control" ng-model="graphSelection.specificParam.society">
+                          <input type="checkbox" name="" value="" ng-model="checkboxCheckedSociety" ng-checked="!checkboxChecked"> Society Parameters
+                            <!-- <p style="color:#000000;">Society Parameters :</p> -->
+                          <select class="form-control" ng-click="DisabledClickedSociety()" ng-model="graphSelection.specificParam.society" ng-show="checkboxCheckedSociety" ng-hide="checkboxChecked">
                             <option value="qualitytype" ng-click="societyTypeDrop">Size of Society</option>
                             <option value="sizeOfFlats" ng-click="flatTypeDrop">Size of Flats</option>
                             <option value="flatType" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Type of Flats</option>
@@ -2968,11 +2965,11 @@
                           </select>
                           <br />
                           <div class="row" ng-if="graphSelection.specificParam.society == 'qualitytype'">
-                            <span class="multiselectParentDropdown" style="color:red;width:100%;" ng-dropdown-multiselect="" options="typeOfSocietyLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="typeOfSocietyLists" extra-settings="settingsForDynamicGraphCity"
                             selected-model="selectedTypeOfSocieties" translation-texts="selected_baselines_customTexts_qualityTypesociety" events="events"></span>
                           </div>
                           <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfFlats'">
-                            <span class="multiselectParentDropdown" style="color:red;width:100%;" ng-dropdown-multiselect="" options="sizeOfFlatsLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfFlatsLists" extra-settings="settingsForDynamicGraphCity"
                             selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
                           </div>
                           <br />
@@ -2989,14 +2986,16 @@
                             <option value="StallLocation" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Stall Location</option>
                             </select> -->
                             <br />
+                            <input type="checkbox" name="" value=""  ng-model="checkboxChecked" ng-checked="!checkboxCheckedSociety"> Booking Parameters
+                            <br />
+                              <div class="col-md-3 pull-left" ng-click="DisabledClickedBooking()" style="margin-left:-20px;" ng-show="checkboxChecked" ng-hide="checkboxCheckedSociety">
+                              <span class="multiselectParentDropdown" ng-dropdown-multiselect="" options="BookingParametersLists" extra-settings="settingsForDynamicGraphBookingParameters"
+                              selected-model="selectedbookingParameters" translation-texts="selected_baselines_customTexts_booking_parameters" events="events"></span>
+                            </div>
+
                             <div class="row" ng-if="graphSelection.specificParam.booking == 'freebies'" style="margin-left:30px">
                               <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="freebiesLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
                               selected-model="selectedFreebies" translation-texts="selected_baselines_customTexts_freebies" events="events"></span>
-                            </div>
-                            <p style="color:#808080;margin-left:-20px;">Booking Parameters :</p>
-                              <div class="col-md-3 pull-left" style="margin-left:-22px;">
-                              <span class="multiselectParentDropdown" ng-dropdown-multiselect="" options="BookingParametersLists" class="col-md-6"  extra-settings="settingsForDynamicGraphBookingParameters"
-                              selected-model="selectedbookingParameters" ng-disabled="BookingParametersLists.isDisabled == 'true'" translation-texts="selected_baselines_customTexts_booking_parameters" events="events"></span>
                             </div>
                         </small>
                     </div>
@@ -3008,10 +3007,12 @@
                     <div class="panel-heading"  style="background:#cb1925">Filter By City</div>
                     <div class="panel-body">
                       <br /><br />
-                      <div class="row form-group">
+                      <div class="row form-group" style="color:#000000;">
                         <small>
-                          <p style="color:#808080;margin-left:-20px;">Select City :</p>
-                            <div class="col-md-3 pull-left" style="margin-left:-20px;">
+                          <!-- <p style="color:#000000;">Select City :</p> -->
+                          <input type="checkbox" name="" value="" ng-model="checkboxCheckedCity"  ng-checked="!checkboxCheckedVendor"> Select City
+                          <br />
+                            <div class="col-md-3 pull-left" ng-click="DisabledClickedCity()" ng-show="checkboxCheckedCity" ng-hide="checkboxCheckedVendor">
                             <span  class="multiselectParentDropdown" style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="cityLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
                               selected-model="selectedCities_temp" translation-texts="selected_baselines_customTexts_city" events="events"></span>
                             </div>
@@ -3021,23 +3022,47 @@
                         <span class="multiselectParentDropdown" style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="localityList" class="col-md-6"  extra-settings="settingsForDynamicGraphVendor"
                         selected-model="selectedLocalities" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
                     </div>
+                    <div class="row">
+                      <div class="col-md-6" style="color:#808080;"  ng-if="selectedCities_temp.length">
+                        <br />
+                        <div class="row">
+                          <p style="color:#808080;">Select Campaign</p>
+                           <span class="multiselectDropdown" style="color:red;width:100%;" ng-dropdown-multiselect="" options="dynamicValuesCampaigns" class="col-md-6"  extra-settings="settingsForDynamicGraph"
+                           selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
+                        </div>
+                        <br />
+                      </div>
+                    </div>
                     </div>
                     </div>
                     <p style="color:#cb1925;text-align:center;font-weight: bold;">OR</p>
                     <br />
-                    <div class="panel panel-danger">
+                    <div class="panel panel-danger" style="color:#000000;">
                     <div class="panel-heading"  style="background:#cb1925">Filter By Vendor</div>
                     <div class="panel-body">
                       <br /><br />
                       <div class="row form-group">
                         <small>
-                          <p style="color:#808080;margin-left:-20px;">Select Vendors :</p>
-                            <div class="col-md-3 pull-left" style="margin-left:-20px;">
+                          <!-- <p style="color:#000000;">Select Vendors :</p> -->
+                          <input type="checkbox" name="" value="" ng-model="checkboxCheckedVendor" ng-checked="!checkboxCheckedCity"> Select Vendor
+                          <br />
+                            <div class="col-md-3 pull-left" ng-click="DisabledClickedVendor()" ng-show="checkboxCheckedVendor" ng-hide="checkboxCheckedCity">
                               <span class="multiselectParentDropdown" style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="vendorsList" class="col-md-6"  extra-settings="settingsForDynamicGraphVendor"
                               selected-model="selectedVendors" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
                         </div>
                         </small>
                         <small>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6" style="color:#808080;"  ng-if="selectedVendors.length">
+                          <br />
+                          <div class="row">
+                            <p style="color:#808080;">Select Campaign</p>
+                             <span class="multiselectDropdown" style="color:red;width:100%;" ng-dropdown-multiselect="" options="dynamicValuesVendor" class="col-md-6"  extra-settings="settingsForDynamicGraph"
+                             selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
+                          </div>
+                          <br />
+                        </div>
                       </div>
                       </div>
                     </div>
@@ -3079,7 +3104,7 @@
                      <div class="form-group">
                        <span><small>
                          <div class="col-md-12">
-                           <button type="button" name="button" class="col-md-9 btn btn-danger pull-left" ng-click="getGenericGraphData()">Submit</button>
+                           <button type="button" name="button" class="col-md-9 btn btn-danger pull-left" ng-model="checkAllElements" ng-click="getGenericGraphData()">Submit</button>
                            <button class="col-md-3 btn btn-primary pull-right" ng-click="clearDatesFromDynamicGraph()">Reset All</button></small>
                          </div>
                        </span>
@@ -3111,12 +3136,12 @@
 
                         </div>
                       </div> -->
-                      <div class="panel-heading content-title" style="height:60px;">
+                      <div class="panel-heading content-title" style="height:70px;">
                         Graph Based On Filters
                         <div class="row">
                           <br />
-                          <p ng-if="graphSelection.dateRange.startDate || graphSelection.dateRange.endDate" style="color:#fff">Date : {{graphSelection.dateRange.startDate | date : 'mediumDate'}} - {{graphSelection.dateRange.endDate | date : 'mediumDate'}}</p>
-                          <p ng-if="graphSelection.phaseRange.start || graphSelection.phaseRange.end" style="color:#fff">Phase : {{graphSelection.phaseRange.start}} - Phase : {{graphSelection.phaseRange.end}}</p>
+                          <p ng-if="selectAnyDate" style="color:#fff">Date : {{graphSelection.dateRange.startDate | date : 'mediumDate'}} - {{graphSelection.dateRange.endDate | date : 'mediumDate'}}</p>
+                          <p ng-if="selectAnyPhase" style="color:#fff">Phase : {{graphSelection.phaseRange.start}} - Phase : {{graphSelection.phaseRange.end}}</p>
                         </div>
                         <br />
                        </div>
@@ -3124,7 +3149,7 @@
                        <div class="row" style="color:#123456;">
                          <div class="col-md-12">
                            <div class="col-md-2">
-                             <input type="checkbox" style="width:20px;height:20px;" value="leadsValues" ng-model="graphSelection.Yvalues.leadsPerc" ng-click="changeDynamicGraph()"> <small> LEADS %</small>
+                             <input type="checkbox" style="width:20px;height:20px;" value="leadsValues" ng-model="graphSelection.Yvalues.leadsPerc" ng-click="changeDynamicGraph()" ng-checked="applyClickedFilters.value"> <small> LEADS %</small>
                            </div>
                            <div class="col-md-2">
                              <input type="checkbox" style="width:20px;height:20px;" value="hotleadsValues" ng-model="graphSelection.Yvalues.hotleadsPerc" ng-click="changeDynamicGraph()"> <small> HOT LEADS %</small>
@@ -3171,7 +3196,7 @@
                          <button ng-click="sortDynamicData('ASC')" class="btn btn-danger">Ascending</button>
                          <button ng-click="sortDynamicData('DESC')" class="btn btn-danger">Descending</button>
                        </div>
-                       <br /> 
+                       <br />
                        <div class="panel panel-danger" style="height:500px;">
                          <div class="dynamicOuterGraphs" style="height:500px;">
                            <div class="dynamicInnerGraphs" style="height:500px;">
