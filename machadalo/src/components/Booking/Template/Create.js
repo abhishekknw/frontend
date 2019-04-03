@@ -814,7 +814,9 @@ export default class CreateBookingTemplate extends React.Component {
                 : null}
             </div>
 
-            <div className="create__form__header">Attributes</div>
+            <div className="create__form__header">
+              Booking Template Attributes
+            </div>
 
             <div className="create__form__body">
               {this.state.attributes.map(this.renderAttributeRow)}

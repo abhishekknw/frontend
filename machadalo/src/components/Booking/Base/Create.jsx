@@ -556,7 +556,7 @@ export default class CreateBaseBooking extends React.Component {
               </div>
             </div>
 
-            <div className="create__form__header">Attributes</div>
+            <div className="create__form__header">Base Booking Attributes</div>
 
             <div className="create__form__body">
               {this.state.attributes.map(this.renderAttributeRow)}
