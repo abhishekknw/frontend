@@ -359,14 +359,7 @@ export default class CreateBaseBooking extends React.Component {
     attributes[index] = attribute;
 
     this.setState({
-      attributes,
-      optionModalVisibility:
-        attribute.type === 'DROPDOWN' || attribute.type === 'MULTISELECT',
-      attributeInfo: {
-        attributeType: attribute.type,
-        attribute,
-        attrIndex: index
-      }
+      attributes
     });
   }
 
@@ -394,7 +387,21 @@ export default class CreateBaseBooking extends React.Component {
 
       newAttribute.type = option.value;
 
-      this.handleAttributeChange(newAttribute, index);
+      this.setState(
+        {
+          optionModalVisibility:
+            newAttribute.type === 'DROPDOWN' ||
+            newAttribute.type === 'MULTISELECT',
+          attributeInfo: {
+            attributeType: newAttribute.type,
+            attribute: newAttribute,
+            attrIndex: index
+          }
+        },
+        () => {
+          this.handleAttributeChange(newAttribute, index);
+        }
+      );
     };
 
     const onRequiredChange = event => {

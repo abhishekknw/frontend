@@ -1,7 +1,18 @@
 import React from 'react';
 import classnames from 'classnames';
 import Select from 'react-select';
+import OptionModal from './../../Modals/OptionModal';
 import { toastr } from 'react-redux-toastr';
+
+const optionStyle = {
+  fontSize: '12px',
+  margin: '0',
+  position: 'absolute',
+  bottom: '-20px',
+  textDecoration: 'underline',
+  cursor: 'pointer',
+  paddingBottom: '10px'
+};
 
 const AttributeTypes = [
   { value: 'FLOAT', label: 'Float' },
@@ -140,7 +151,10 @@ export default class CreateBookingTemplate extends React.Component {
       selectedEntityAttributes: [],
       entityTypeId: bookingTemplate.entity_type_id,
       selectedEntityType: null,
-      errors: {}
+      errors: {},
+      optionModalVisibility: false,
+      columnOptions: [''],
+      attributeInfo: {}
     };
 
     this.onAddAttributeClick = this.onAddAttributeClick.bind(this);
@@ -162,6 +176,9 @@ export default class CreateBookingTemplate extends React.Component {
     this.renderEntityTypeAttributeRow = this.renderEntityTypeAttributeRow.bind(
       this
     );
+    this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
+    this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
+    this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
   }
 
   componentDidMount() {
@@ -293,6 +310,42 @@ export default class CreateBookingTemplate extends React.Component {
     });
   }
 
+  onOpenOptionModal(options, attributeType, attribute, attrIndex) {
+    this.setState({
+      optionModalVisibility: true,
+      columnOptions: options,
+      attributeInfo: {
+        attributeType,
+        attribute,
+        attrIndex
+      }
+    });
+  }
+
+  onCancelOptionModal() {
+    this.setState({
+      optionModalVisibility: false,
+      columnOptions: [''],
+      attributeInfo: {}
+    });
+  }
+
+  onSubmitOptionModal(options, attributeInfo) {
+    const attributes = [...this.state.attributes];
+
+    attributes[attributeInfo.attrIndex] = {
+      ...attributes[attributeInfo.attrIndex],
+      options
+    };
+
+    this.setState({
+      attributes,
+      optionModalVisibility: false,
+      columnOptions: [''],
+      attributeInfo: {}
+    });
+  }
+
   onSubmit() {
     // Submit form data
     const {
@@ -408,7 +461,21 @@ export default class CreateBookingTemplate extends React.Component {
 
       newAttribute.type = option.value;
 
-      this.handleAttributeChange(newAttribute, index);
+      this.setState(
+        {
+          optionModalVisibility:
+            newAttribute.type === 'DROPDOWN' ||
+            newAttribute.type === 'MULTISELECT',
+          attributeInfo: {
+            attributeType: newAttribute.type,
+            attribute: newAttribute,
+            attrIndex: index
+          }
+        },
+        () => {
+          this.handleAttributeChange(newAttribute, index);
+        }
+      );
     };
 
     const onRequiredChange = event => {
@@ -436,6 +503,22 @@ export default class CreateBookingTemplate extends React.Component {
             value={getAttributeTypeOption(attribute.type)}
             onChange={onTypeChange}
           />
+          {attribute.type === 'DROPDOWN' || attribute.type === 'MULTISELECT' ? (
+            <p
+              className="show-option"
+              style={optionStyle}
+              onClick={() =>
+                this.onOpenOptionModal(
+                  attribute.options,
+                  attribute.type,
+                  attribute,
+                  attribute.attrIndex
+                )
+              }
+            >
+              Show Options
+            </p>
+          ) : null}
         </div>
         <div className="form-control form-control--row-vertical-center">
           <input
@@ -758,6 +841,13 @@ export default class CreateBookingTemplate extends React.Component {
             Submit
           </button>
         </div>
+        <OptionModal
+          showOptionModal={this.state.optionModalVisibility}
+          onCancel={this.onCancelOptionModal}
+          onSubmit={this.onSubmitOptionModal}
+          options={this.state.columnOptions}
+          columnInfo={this.state.attributeInfo}
+        />
       </div>
     );
   }
