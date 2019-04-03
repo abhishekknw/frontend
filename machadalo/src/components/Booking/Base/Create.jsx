@@ -1,7 +1,18 @@
 import React from 'react';
 import classnames from 'classnames';
 import Select from 'react-select';
+import OptionModal from './../../Modals/OptionModal';
 import { toastr } from 'react-redux-toastr';
+
+const optionStyle = {
+  fontSize: '12px',
+  margin: '0',
+  position: 'absolute',
+  bottom: '-20px',
+  textDecoration: 'underline',
+  cursor: 'pointer',
+  paddingBottom: '10px'
+};
 
 const AttributeTypes = [
   { value: 'FLOAT', label: 'Float' },
@@ -113,7 +124,10 @@ export default class CreateBaseBooking extends React.Component {
       entities,
       baseEntityTypeId: baseBooking.base_entity_type_id,
       selectedBaseEntityType: null,
-      errors: {}
+      errors: {},
+      optionModalVisibility: false,
+      columnOptions: [''],
+      attributeInfo: {}
     };
 
     this.onAddAttributeClick = this.onAddAttributeClick.bind(this);
@@ -124,6 +138,9 @@ export default class CreateBaseBooking extends React.Component {
     this.handleEntityChange = this.handleEntityChange.bind(this);
     this.renderAttributeRow = this.renderAttributeRow.bind(this);
     this.renderEntityRow = this.renderEntityRow.bind(this);
+    this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
+    this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
+    this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
   }
 
   componentDidMount() {
@@ -219,6 +236,42 @@ export default class CreateBaseBooking extends React.Component {
     });
   }
 
+  onOpenOptionModal(options, attributeType, attribute, attrIndex) {
+    this.setState({
+      optionModalVisibility: true,
+      columnOptions: options,
+      attributeInfo: {
+        attributeType,
+        attribute,
+        attrIndex
+      }
+    });
+  }
+
+  onCancelOptionModal() {
+    this.setState({
+      optionModalVisibility: false,
+      columnOptions: [''],
+      attributeInfo: {}
+    });
+  }
+
+  onSubmitOptionModal(options, attributeInfo) {
+    const attributes = [...this.state.attributes];
+
+    attributes[attributeInfo.attrIndex] = {
+      ...attributes[attributeInfo.attrIndex],
+      options
+    };
+
+    this.setState({
+      attributes,
+      optionModalVisibility: false,
+      columnOptions: [''],
+      attributeInfo: {}
+    });
+  }
+
   onBaseEntityTypeChange(option) {
     const { errors } = this.state;
 
@@ -306,7 +359,14 @@ export default class CreateBaseBooking extends React.Component {
     attributes[index] = attribute;
 
     this.setState({
-      attributes
+      attributes,
+      optionModalVisibility:
+        attribute.type === 'DROPDOWN' || attribute.type === 'MULTISELECT',
+      attributeInfo: {
+        attributeType: attribute.type,
+        attribute,
+        attrIndex: index
+      }
     });
   }
 
@@ -362,6 +422,22 @@ export default class CreateBaseBooking extends React.Component {
             value={getAttributeTypeOption(attribute.type)}
             onChange={onTypeChange}
           />
+          {attribute.type === 'DROPDOWN' || attribute.type === 'MULTISELECT' ? (
+            <p
+              className="show-option"
+              style={optionStyle}
+              onClick={() =>
+                this.onOpenOptionModal(
+                  attribute.options,
+                  attribute.type,
+                  attribute,
+                  attribute.attrIndex
+                )
+              }
+            >
+              Show Options
+            </p>
+          ) : null}
         </div>
         <div className="form-control form-control--row-vertical-center">
           <input
@@ -548,6 +624,13 @@ export default class CreateBaseBooking extends React.Component {
             Submit
           </button>
         </div>
+        <OptionModal
+          showOptionModal={this.state.optionModalVisibility}
+          onCancel={this.onCancelOptionModal}
+          onSubmit={this.onSubmitOptionModal}
+          options={this.state.columnOptions}
+          columnInfo={this.state.attributeInfo}
+        />
       </div>
     );
   }
