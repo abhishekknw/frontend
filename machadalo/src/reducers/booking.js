@@ -176,6 +176,28 @@ export const booking = createReducer(
         ...state,
         isDeletingBookingTemplate: false
       };
+    },
+    [types.POST_BOOKING_START](state) {
+      return {
+        ...state,
+        isUpdatingBooking: true,
+        postBookingSuccess: false,
+        postBookingError: false
+      };
+    },
+    [types.POST_BOOKING_SUCCESS](state) {
+      return {
+        ...state,
+        isUpdatingBooking: false,
+        postBookingSuccess: true
+      };
+    },
+    [types.POST_BOOKING_FAIL](state) {
+      return {
+        ...state,
+        isUpdatingBooking: false,
+        postBookingError: true
+      };
     }
   }
 );

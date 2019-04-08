@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Base from './Base';
 import Template from './Template';
 import Campaigns from './Campaigns';
+import Edit from './Edit';
 
 import './index.css';
 
@@ -35,6 +36,13 @@ export default class Booking extends React.Component {
             path={`${match.path}/campaigns`}
             render={componentProps => (
               <Campaigns {...this.props} {...componentProps} />
+            )}
+          />
+          <Route
+            exact
+            path={`${match.path}/edit/:campaignId`}
+            render={componentProps => (
+              <Edit {...this.props} {...componentProps} />
             )}
           />
         </Switch>

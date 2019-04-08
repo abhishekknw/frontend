@@ -323,3 +323,45 @@ export function deleteBookingTemplate({ id }) {
   };
 }
 /* Booking Template: End */
+
+/*Booking: Start */
+export function postBookingStart() {
+  return {
+    type: types.POST_BOOKING_START
+  };
+}
+
+export function postBookingSuccess() {
+  return {
+    type: types.POST_BOOKING_SUCCESS
+  };
+}
+
+export function postBookingFail() {
+  return {
+    type: types.POST_BOOKING_FAIL
+  };
+}
+
+export function postBooking({ data }) {
+  return (dispatch, getState) => {
+    dispatch(postBookingStart());
+
+    const { auth } = getState();
+
+    request
+      .post(`${config.API_URL}/v0/ui/dynamic-booking/booking-data/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .send(data)
+      .then(resp => {
+        dispatch(postBookingSuccess());
+      })
+      .catch(ex => {
+        console.log('Failed to create  booking', ex);
+
+        dispatch(postBookingFail());
+      });
+  };
+}
+
+/* Booking: End */

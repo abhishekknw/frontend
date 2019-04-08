@@ -56,7 +56,11 @@ export default class Campaigns extends React.Component {
         <td>
           {actions.map((item, index) => {
             return (
-              <Link key={index} to={item.href} className="btn btn--danger">
+              <Link
+                key={index}
+                to={`${item.href}/${campaign.campaign.proposal_id}`}
+                className="btn btn--danger"
+              >
                 {item.buttonLabel}
               </Link>
             );
