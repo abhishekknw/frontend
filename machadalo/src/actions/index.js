@@ -11,6 +11,7 @@ import * as SettingActions from './setting';
 import * as UserActions from './user';
 import * as UserProfileActions from './userProfile';
 import * as LeadActions from './lead';
+import * as BookingActions from './booking';
 
 export default Object.assign(
   {},
@@ -26,5 +27,6 @@ export default Object.assign(
   SettingActions,
   UserActions,
   UserProfileActions,
-  LeadActions
+  LeadActions,
+  BookingActions
 );

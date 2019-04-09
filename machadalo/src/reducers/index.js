@@ -12,6 +12,7 @@ import * as settingReducer from './setting';
 import * as userReducer from './user';
 import * as userProfileReducer from './userProfile';
 import * as leadReducer from './lead';
+import * as bookingReducer from './booking';
 import { reducer as toastrReducer } from 'react-redux-toastr';
 
 const reducers = combineReducers(
@@ -31,7 +32,8 @@ const reducers = combineReducers(
     leadReducer,
     inventoryReducer,
     userProfileReducer,
-    leadReducer
+    leadReducer,
+    bookingReducer
   )
 );
 

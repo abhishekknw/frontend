@@ -7,7 +7,8 @@ import EntitySelectionModal from '../../Modals/EntitySelectionModal';
 
 const optionStyle = {
   fontSize: '12px',
-  marginBottom: '-24px',
+  margin: '0',
+  marginTop: '5px',
   textDecoration: 'underline',
   cursor: 'pointer',
   paddingBottom: '10px'

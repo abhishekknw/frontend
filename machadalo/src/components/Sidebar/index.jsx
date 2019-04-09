@@ -12,13 +12,15 @@ export default class Sidebar extends React.Component {
       hideChecklistDropdown: true,
       hideLeadsDropdown: true,
       hideEntitiesDropdown: true,
-      hideInventoryDropdown: true
+      hideInventoryDropdown: true,
+      hideBookingDropdown: true
     };
 
     this.toggleChecklistDropdown = this.toggleChecklistDropdown.bind(this);
     this.toggleLeadsDropdown = this.toggleLeadsDropdown.bind(this);
     this.toggleEntitiesDropdown = this.toggleEntitiesDropdown.bind(this);
     this.toggleInventoryDropdown = this.toggleInventoryDropdown.bind(this);
+    this.toggleBookingDropdown = this.toggleBookingDropdown.bind(this);
   }
 
   toggleChecklistDropdown() {
@@ -42,6 +44,12 @@ export default class Sidebar extends React.Component {
   toggleInventoryDropdown() {
     this.setState({
       hideInventoryDropdown: !this.state.hideInventoryDropdown
+    });
+  }
+
+  toggleBookingDropdown() {
+    this.setState({
+      hideBookingDropdown: !this.state.hideBookingDropdown
     });
   }
 
@@ -192,6 +200,38 @@ export default class Sidebar extends React.Component {
                     <NavLink to="/r/checklist/settings/permissions/list">
                       Settings
                     </NavLink>
+                  </li>
+                </ul>
+              </li>
+              <li className="dropdown-list-parent">
+                <div
+                  className="parent-list"
+                  onClick={this.toggleBookingDropdown}
+                >
+                  <i className="fa fa-check-square-o" aria-hidden="true" />
+                  Booking Engine
+                  <i
+                    className={classnames('fa', 'caret', {
+                      'fa-caret-right': this.state.hideBookingDropdown,
+                      'fa-caret-down': !this.state.hideBookingDropdown
+                    })}
+                    aria-hidden="true"
+                  />
+                </div>
+                <ul
+                  className="dropdown-list-child"
+                  hidden={this.state.hideBookingDropdown}
+                >
+                  <li>
+                    <NavLink to="/r/booking/base/list">Base Booking</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/r/booking/template/list">
+                      Booking Templates
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/r/booking/campaigns">Manage Booking</NavLink>
                   </li>
                 </ul>
               </li>
