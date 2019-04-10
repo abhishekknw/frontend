@@ -25,17 +25,20 @@ export const entity = createReducer(
     },
     [types.GET_ENTITY_LIST_START](state) {
       return Object.assign({}, state, {
-        entityList: []
+        entityList: [],
+        isFetchingEntityList: true
       });
     },
     [types.GET_ENTITY_LIST_SUCCESS](state, action) {
       return Object.assign({}, state, {
-        entityList: action.data
+        entityList: action.data,
+        isFetchingEntityList: false
       });
     },
     [types.GET_ENTITY_LIST_FAIL](state) {
       return Object.assign({}, state, {
-        entityList: []
+        entityList: [],
+        isFetchingEntityList: false
       });
     },
     [types.GET_CURRENT_ENTITY_START](state) {

@@ -53,11 +53,12 @@ export default class EditBooking extends React.Component {
   componentDidMount() {
     this.props.getBookingTemplateList();
     this.props.getEntityList();
+    this.props.getBookingList({ campaignId: this.getCampaignId() });
   }
 
   componentDidUpdate(prevProps) {
-    const { booking: prevBooking } = prevProps;
-    const { booking: newBooking, history } = this.props;
+    const { booking: prevBooking, entity: prevEntity } = prevProps;
+    const { booking: newBooking, entity: newEntity, history } = this.props;
     const { isUpdatingBooking: prevIsUpdatingBooking } = prevBooking;
     const {
       postBookingSuccess,
@@ -74,6 +75,39 @@ export default class EditBooking extends React.Component {
       postBookingError
     ) {
       toastr.error('', 'Failed to update  Booking. Please try again later.');
+    }
+
+    if (
+      (prevBooking.isFetchingBookingTemplate &&
+        !newBooking.isFetchingBookingTemplate) ||
+      (prevEntity.isFetchingEntityList && !newEntity.isFetchingEntityList) ||
+      (prevBooking.isFetchingBooking && !newBooking.isFetchingBooking)
+    ) {
+      const bookingId = this.getBookingId();
+      const booking = this.getBookingById({
+        id: bookingId
+      });
+
+      let attributes = [];
+      let bookingTemplate = {};
+      let entity = {};
+      if (bookingId && booking && booking.id) {
+        attributes = booking.booking_attributes;
+        bookingTemplate = this.getBookingTemplateById({
+          id: booking.booking_template_id
+        });
+        entity = this.getEntityById({ id: booking.entity_id });
+      }
+
+      this.setState({
+        isEditMode: !!bookingId,
+        bookingId,
+        bookingTemplateId: booking.booking_template_id,
+        bookingTemplate,
+        entity,
+        entityId: booking.entity_id,
+        attributes
+      });
     }
   }
 
