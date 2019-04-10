@@ -62,11 +62,17 @@ angular.module('catalogueApp')
         opsExecutionPlanService.getOpsExecutionImageDetails($scope.campaign_id)
         	.then(function onSuccess(response){
             console.log(response);
-        		$scope.campaignData = response.data.data;
-            createList();
-            if($scope.campaignData.length == 0)
-              $scope.hideData = false;//change to true doing for testing
-                $scope.loading = response.data;
+            if(response.data.data){
+              $scope.campaignData = response.data.data;
+              createList();
+              if($scope.campaignData.length == 0)
+                $scope.hideData = false;//change to true doing for testing
+                  $scope.loading = response.data;
+            }else {
+              swal(constants.name, "You do not have access to Proposal", constants.warning);
+              $scope.loading = response;
+            }
+
         	})
         	.catch(function onError(response){
             $scope.hideData = true;

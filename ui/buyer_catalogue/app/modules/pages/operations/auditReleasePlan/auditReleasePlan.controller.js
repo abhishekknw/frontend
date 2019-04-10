@@ -62,12 +62,12 @@ angular.module('catalogueApp')
       $scope.auditDates = [];
       function init(){
         getCampaignReleaseDetails();
-        getUsersList();
+        // getUsersList();
         $scope.getPhases();
       }
       //get user list
-      var getUsersList = function(){
-        commonDataShare.getUsersList()
+      $scope.getUsersList = function(orgId){
+        commonDataShare.getUsersList(orgId)
           .then(function onSuccess(response){
             $scope.userList = response.data.data;
             $scope.usersMapListWithObjects = {};
@@ -108,17 +108,24 @@ angular.module('catalogueApp')
       auditReleasePlanService.getCampaignReleaseDetails($scope.campaign_id)
       	.then(function onSuccess(response){
           console.log("get values",response);
-      		$scope.releaseDetails = response.data.data;
-          $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
-          console.log(  $scope.Data);
-          setDataToModel($scope.releaseDetails.shortlisted_suppliers);
+          if(response.data.data){
+            $scope.releaseDetails = response.data.data;
+            $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
+            console.log(  $scope.Data);
+            setDataToModel($scope.releaseDetails.shortlisted_suppliers);
 
-          $scope.filteredAssignDatesList = angular.copy($scope.releaseDetails);
-          $scope.loading = response.data;
-          makeAssignDateData($scope.releaseDetails);
+            $scope.filteredAssignDatesList = angular.copy($scope.releaseDetails);
+            $scope.loading = response.data;
+            makeAssignDateData($scope.releaseDetails);
+          }else {
+            swal(constants.name, "You do not have access to Proposal", constants.warning);
+            $scope.loading = response.data;
+          }
+
       	})
       	.catch(function onError(response){
       		console.log("error occured", response);
+          $scope.loading = response.data;
           commonDataShare.showErrorMessage(response);
       	});
       }
@@ -311,6 +318,7 @@ angular.module('catalogueApp')
       });
     }
      $scope.getActivityDates = function(supplier){
+        getOrganisationsForAssignment();
        $scope.invActivityData = angular.copy($scope.invActivityData_struct);
        angular.forEach(supplier.shortlisted_inventories, function(inventoryList,inventory){
           for(var i=0; i<inventoryList.detail.length; i++){
@@ -504,7 +512,15 @@ angular.module('catalogueApp')
        console.log(response);
      })
    }
-
+   var getOrganisationsForAssignment = function(){
+     auditReleasePlanService.getOrganisationsForAssignment()
+     .then(function onSuccess(response){
+       console.log(response);
+       $scope.organisationList = response.data.data;
+     }).catch(function onError(response){
+       console.log(response);
+     })
+   }
 
 
 

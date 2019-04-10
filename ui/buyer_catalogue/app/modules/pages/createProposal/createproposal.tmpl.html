@@ -26,8 +26,16 @@
   					<div class="col-md-3"><label class="spacing">Tentative Budget</label></div>
   					<div class="col-md-3"><input type="number" ng-model="model.tentative_cost" class="form-control spacing"></div>
   				</div>
-
-  			</div>
+          <div class="row basic-info">
+  					<div class="col-md-3"><label class="spacing">Principal Vendor</label></div>
+  					<div class="col-md-3">
+            <select name="createPrincipalVendor" class="form-control input-size" ng-click="getVendors()" ng-model="model.principal_vendor" required>
+              <!-- <option value="">Select Principal Vendor</option> -->
+              <option  ng-repeat="vendor in vendors" value="{{vendor.organisation_id}}" required>{{vendor.name}}</option>
+            </select>
+            </div>
+  				</div>
+        </div>
   		</div>
   	</form>
     <form class="row addButton">
@@ -43,7 +51,7 @@
     			</thead>
     			<tbody ng-repeat="center in model.centers track by $index">
     				<tr>
-    					<td>
+            	<td>
                 <input type="text" ng-if="center.isEditProposal" ng-model="center.center.center_name" class="form-control spacing input-size" required>
                 <input type="text" ng-if="!center.isEditProposal" ng-model="center.center.center_name" class="form-control spacing input-size" readonly>
               </td>
@@ -81,7 +89,7 @@
                 </div>
                 <!-- <input type="checkbox"  ng-click="checkSpace('CP',center)">Corporate Parks -->
               </td>
-    					<td><button class="btn btn-danger spacing" ng-click="removeCenter($index)">Remove</button></td>
+            	<td><button class="btn btn-danger spacing" ng-click="removeCenter($index)">Remove</button></td>
     				</tr>
     			</tbody>
     		</table>

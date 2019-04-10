@@ -223,7 +223,18 @@
                   data.end_date;
       return machadaloHttp.get(url);
     }
-
+    DashboardService.getCampaignsWiseForCity = function(dataCity){
+      console.log(dataCity);
+        var url =  url_analytics + "city-vendor-campaigns/";
+        console.log(url);
+      return machadaloHttp.put(url,dataCity);
+    }
+    DashboardService.getCampaignsWiseForVendor = function(dataVendor){
+      console.log(dataVendor);
+        var url =  url_analytics + "city-vendor-campaigns/";
+        console.log(url);
+      return machadaloHttp.put(url,dataVendor);
+    }
     return DashboardService;
 
  }]);
