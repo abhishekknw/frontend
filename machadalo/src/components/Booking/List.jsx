@@ -124,18 +124,12 @@ export default class ListBooking extends Component {
           >
             Create
           </Link>
-          <Link
-            to={`/r/booking/create/${this.getCampaignId()}`}
-            className="btn btn--danger"
-          >
+          <button className="btn btn--danger" disabled>
             Campaign Release and Audit Plan
-          </Link>
-          <Link
-            to={`/r/booking/create/${this.getCampaignId()}`}
-            className="btn btn--danger"
-          >
+          </button>
+          <button className="btn btn--danger" disabled>
             Manage Phases
-          </Link>
+          </button>
         </div>
       </div>
     );
