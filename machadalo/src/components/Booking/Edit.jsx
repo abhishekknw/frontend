@@ -3,9 +3,9 @@ import classnames from 'classnames';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
 
-const getFilteredEntityList = (list, entityTypeId) => {
-  if (entityTypeId) {
-    return list.filter(entity => entity.entity_type_id === entityTypeId);
+const getFilteredEntityList = (list, entityId) => {
+  if (entityId) {
+    return list.filter(entity => entity.entity_type_id === entityId);
   } else {
     return list;
   }
@@ -15,13 +15,31 @@ export default class EditBooking extends React.Component {
   constructor(props) {
     super(props);
 
+    const bookingId = this.getBookingId();
+    const booking = this.getBookingById({
+      id: bookingId
+    });
+
+    let attributes = [];
+    let bookingTemplate = {};
+    let entity = {};
+    if (bookingId && booking && booking.id) {
+      attributes = booking.booking_attributes;
+      bookingTemplate = this.getBookingTemplateById({
+        id: booking.booking_template_id
+      });
+      entity = this.getEntityById({ id: booking.entity_id });
+    }
+
     this.state = {
+      isEditMode: !!bookingId,
+      bookingId,
       errors: {},
-      bookingTemplateId: '',
-      bookingTemplate: {},
-      entity: {},
-      entityTypeId: '',
-      attributes: []
+      bookingTemplateId: booking.booking_template_id,
+      bookingTemplate,
+      entity,
+      entityId: booking.entity_id,
+      attributes
     };
 
     // this.handleInputChange = this.handleInputChange.bind(this);
@@ -69,7 +87,8 @@ export default class EditBooking extends React.Component {
     this.setState({
       bookingTemplate: template,
       bookingTemplateId: template.id,
-      entityTypeId: template.entity_type_id
+      entityId: template.entity_type_id,
+      attributes: template.booking_attributes
     });
   }
 
@@ -97,17 +116,64 @@ export default class EditBooking extends React.Component {
       attributes
     } = this.state;
 
-    const { match } = this.props;
-
     const data = {
       booking_template_id: bookingTemplateId,
       entity_id: entity.id,
-      campaign_id: match.params.campaignId,
+      campaign_id: this.getCampaignId(),
       organisation_id: bookingTemplate.organisation_id,
       booking_attributes: attributes
     };
 
     this.props.postBooking({ data });
+  }
+
+  getCampaignId() {
+    const { match } = this.props;
+    return match.params.campaignId;
+  }
+
+  getBookingId() {
+    const { match } = this.props;
+    return match.params.bookingId;
+  }
+
+  getBookingById({ id }) {
+    const { booking } = this.props;
+    const { bookingList } = booking;
+
+    for (let i = 0, l = bookingList.length; i < l; i += 1) {
+      if (bookingList[i].id === id) {
+        return bookingList[i];
+      }
+    }
+
+    return {};
+  }
+
+  getBookingTemplateById({ id }) {
+    const { booking } = this.props;
+    const { bookingTemplateList } = booking;
+
+    for (let i = 0, l = bookingTemplateList.length; i < l; i += 1) {
+      if (bookingTemplateList[i].id === id) {
+        return bookingTemplateList[i];
+      }
+    }
+
+    return {};
+  }
+
+  getEntityById({ id }) {
+    const { entity } = this.props;
+    const { entityList } = entity;
+
+    for (let i = 0, l = entityList.length; i < l; i += 1) {
+      if (entityList[i].id === id) {
+        return entityList[i];
+      }
+    }
+
+    return {};
   }
 
   renderBookingAttributeRow(attribute, index) {
@@ -207,14 +273,13 @@ export default class EditBooking extends React.Component {
   }
 
   render() {
-    const { errors, bookingTemplate } = this.state;
+    const { errors, attributes } = this.state;
     const { booking, entity } = this.props;
     const { entityList } = entity;
     const { bookingTemplateList } = booking;
-    const { booking_attributes } = bookingTemplate;
     const filterEntityList = getFilteredEntityList(
       entityList,
-      this.state.entityTypeId
+      this.state.entityId
     );
 
     return (
@@ -264,7 +329,7 @@ export default class EditBooking extends React.Component {
                 ) : null}
               </div>
 
-              {booking_attributes && booking_attributes.length ? (
+              {attributes && attributes.length ? (
                 <div className="entity entity__header">
                   <div className="form-control">&nbsp;</div>
                   <div className="form-control">
@@ -277,8 +342,8 @@ export default class EditBooking extends React.Component {
                 </div>
               ) : null}
 
-              {booking_attributes && booking_attributes.length
-                ? booking_attributes.map(this.renderBookingAttributeRow)
+              {attributes && attributes.length
+                ? attributes.map(this.renderBookingAttributeRow)
                 : null}
             </div>
 

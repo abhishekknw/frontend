@@ -47,6 +47,14 @@ export default class ListBooking extends Component {
             Edit
           </Link>
         </td>
+        <td>
+          <Link
+            to={`/r/booking/remove/${this.getCampaignId()}/${booking.id}`}
+            className="btn btn--danger"
+          >
+            Remove
+          </Link>
+        </td>
       </tr>
     );
   }
@@ -85,6 +93,7 @@ export default class ListBooking extends Component {
                   <th>{attribute.name}</th>
                 ))}
                 <th>Action</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -107,6 +116,18 @@ export default class ListBooking extends Component {
             className="btn btn--danger"
           >
             Create
+          </Link>
+          <Link
+            to={`/r/booking/create/${this.getCampaignId()}`}
+            className="btn btn--danger"
+          >
+            Campaign Release and Audit Plan
+          </Link>
+          <Link
+            to={`/r/booking/create/${this.getCampaignId()}`}
+            className="btn btn--danger"
+          >
+            Manage Phases
           </Link>
         </div>
       </div>
