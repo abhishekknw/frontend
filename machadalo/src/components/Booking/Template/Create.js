@@ -512,7 +512,7 @@ export default class CreateBookingTemplate extends React.Component {
                   attribute.options,
                   attribute.type,
                   attribute,
-                  attribute.attrIndex
+                  index
                 )
               }
             >
