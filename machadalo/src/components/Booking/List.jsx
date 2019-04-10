@@ -39,6 +39,13 @@ export default class ListBooking extends Component {
         {booking.booking_attributes.map(attribute => (
           <td>{attribute.value}</td>
         ))}
+        {booking.entity_attributes.map(attribute => (
+          <td>
+            {typeof attribute.value === 'string'
+              ? attribute.value
+              : attribute.type}
+          </td>
+        ))}
         <td>
           <Link
             to={`/r/booking/edit/${this.getCampaignId()}/${booking.id}`}
@@ -67,7 +74,7 @@ export default class ListBooking extends Component {
     let attributes = [];
 
     if (list && list.length) {
-      attributes = list[0].booking_attributes;
+      attributes = list[0].booking_attributes.concat(list[0].entity_attributes);
     }
 
     return (
