@@ -5,8 +5,8 @@ import Campaigns from './../Campaign';
 export default function BookingCampaigns(props) {
   const actions = [
     {
-      href: `/r/booking/edit`,
-      buttonLabel: 'Edit Booking',
+      href: `/r/booking/list`,
+      buttonLabel: 'View Bookings',
       headerLabel: 'Action'
     }
   ];

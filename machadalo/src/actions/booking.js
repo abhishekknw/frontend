@@ -325,23 +325,23 @@ export function deleteBookingTemplate({ id }) {
 /* Booking Template: End */
 
 /*Booking: Start */
-export function postBookingStart() {
+const postBookingStart = () => {
   return {
     type: types.POST_BOOKING_START
   };
-}
+};
 
-export function postBookingSuccess() {
+const postBookingSuccess = () => {
   return {
     type: types.POST_BOOKING_SUCCESS
   };
-}
+};
 
-export function postBookingFail() {
+const postBookingFail = () => {
   return {
     type: types.POST_BOOKING_FAIL
   };
-}
+};
 
 export function postBooking({ data }) {
   return (dispatch, getState) => {
@@ -357,11 +357,53 @@ export function postBooking({ data }) {
         dispatch(postBookingSuccess());
       })
       .catch(ex => {
-        console.log('Failed to create  booking', ex);
+        console.log('Failed to create booking', ex);
 
         dispatch(postBookingFail());
       });
   };
 }
 
+const getBookingStart = () => {
+  return {
+    type: types.GET_BOOKING_START
+  };
+};
+
+const getBookingSuccess = ({ list }) => {
+  return {
+    type: types.GET_BOOKING_SUCCESS,
+    list
+  };
+};
+
+const getBookingFail = () => {
+  return {
+    type: types.GET_BOOKING_FAIL
+  };
+};
+
+export function getBookingList({ campaignId }) {
+  return (dispatch, getState) => {
+    dispatch(getBookingStart());
+
+    const { auth } = getState();
+
+    request
+      .get(
+        `${
+          config.API_URL
+        }/v0/ui/dynamic-booking/booking-data/campaign/${campaignId}/`
+      )
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(getBookingSuccess({ list: resp.body.data }));
+      })
+      .catch(ex => {
+        console.log('Failed to fetch list of bookings', ex);
+
+        dispatch(getBookingFail());
+      });
+  };
+}
 /* Booking: End */

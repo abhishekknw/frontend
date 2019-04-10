@@ -4,7 +4,8 @@ import * as types from './../actions/types';
 export const booking = createReducer(
   {
     baseBookingList: [],
-    bookingTemplateList: []
+    bookingTemplateList: [],
+    bookingList: []
   },
   {
     [types.POST_BASE_BOOKING_START](state) {
@@ -175,6 +176,26 @@ export const booking = createReducer(
       return {
         ...state,
         isDeletingBookingTemplate: false
+      };
+    },
+    [types.GET_BOOKING_START](state) {
+      return {
+        ...state,
+        isFetchingBooking: true
+      };
+    },
+    [types.GET_BOOKING_SUCCESS](state, action) {
+      return {
+        ...state,
+        isFetchingBooking: false,
+        bookingList: action.list
+      };
+    },
+    [types.GET_BOOKING_FAIL](state) {
+      return {
+        ...state,
+        isFetchingBooking: false,
+        bookingList: []
       };
     },
     [types.POST_BOOKING_START](state) {
