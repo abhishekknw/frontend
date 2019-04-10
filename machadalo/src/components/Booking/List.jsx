@@ -41,7 +41,9 @@ export default class ListBooking extends Component {
         ))}
         {booking.entity_attributes.map(attribute => (
           <td>
-            {typeof attribute.value === 'string'
+            {attribute.type === 'STRING' ||
+            attribute.type === 'FLOAT' ||
+            attribute.type === 'EMAIL'
               ? attribute.value
               : attribute.type}
           </td>
