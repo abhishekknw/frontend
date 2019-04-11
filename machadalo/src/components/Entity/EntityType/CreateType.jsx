@@ -111,13 +111,6 @@ export default class CreateType extends React.Component {
   }
 
   onOpenOptionModal(options, attributeType, attribute, attrIndex) {
-    console.log(
-      'options, attributeType, attribute, attrIndex: ',
-      options,
-      attributeType,
-      attribute,
-      attrIndex
-    );
     this.setState({
       showOptionModal: true,
       attributeOptions: options,
@@ -222,6 +215,9 @@ export default class CreateType extends React.Component {
   }
 
   renderAttributeRow(attribute, attrIndex) {
+    const isDisabled =
+      attribute.hasOwnProperty('is_editable') && !attribute.is_editable;
+
     const onNameChange = event => {
       const newAttribute = Object.assign({}, attribute);
 
@@ -282,6 +278,7 @@ export default class CreateType extends React.Component {
               placeholder="Name"
               value={attribute.name}
               onChange={onNameChange}
+              disabled={isDisabled}
             />
           </div>
 
@@ -291,6 +288,7 @@ export default class CreateType extends React.Component {
               classNamePrefix="form-select"
               value={getAttributeTypeOption(attribute.type)}
               onChange={onTypeChange}
+              isDisabled={isDisabled}
             />
 
             {attribute.type === 'DROPDOWN' ? (
@@ -335,8 +333,9 @@ export default class CreateType extends React.Component {
             <input
               type="checkbox"
               className="input-checkbox"
-              value={attribute.is_required}
+              checked={attribute.is_required}
               onChange={onRequiredChange}
+              disabled={isDisabled}
             />
           </div>
         </div>

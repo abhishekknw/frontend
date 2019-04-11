@@ -208,6 +208,9 @@ export default class EditEntityType extends React.Component {
   }
 
   renderAttributeRow(attribute, attrIndex) {
+    const isDisabled =
+      attribute.hasOwnProperty('is_editable') && !attribute.is_editable;
+
     const onNameChange = event => {
       const newAttribute = Object.assign({}, attribute);
 
@@ -267,6 +270,7 @@ export default class EditEntityType extends React.Component {
               placeholder="Name"
               value={attribute.name}
               onChange={onNameChange}
+              disabled={isDisabled}
             />
           </div>
 
@@ -276,6 +280,7 @@ export default class EditEntityType extends React.Component {
               classNamePrefix="form-select"
               value={getAttributeTypeOption(attribute.type)}
               onChange={onTypeChange}
+              isDisabled={isDisabled}
             />
 
             {attribute.type === 'DROPDOWN' ? (
@@ -321,6 +326,7 @@ export default class EditEntityType extends React.Component {
               className="input-checkbox"
               value={attribute.is_required}
               onChange={onRequiredChange}
+              disabled={isDisabled}
             />
           </div>
         </div>
