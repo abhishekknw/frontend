@@ -287,6 +287,10 @@ export default class EditBooking extends React.Component {
           />
         );
         break;
+
+      default:
+        console.log('Unsupported attribute type');
+        break;
     }
 
     return (
