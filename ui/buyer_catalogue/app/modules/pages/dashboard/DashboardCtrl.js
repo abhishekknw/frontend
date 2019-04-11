@@ -1795,6 +1795,8 @@ var metrics_basic_temp = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"
      // DashboardService.getLeadsByCampaign(campaignId)
      result.then(function onSuccess(response){
        console.log(response);
+       $scope.dateRangeModel.start_date = new Date($scope.dateRangeModel.start_date);
+       $scope.dateRangeModel.end_date = new Date($scope.dateRangeModel.end_date);
        $scope.selectAllCampaignLeads = false;
        $scope.dynamicGraphsUI = false;
        cfpLoadingBar.complete();
@@ -2115,7 +2117,7 @@ var formatThreeWeeksSummary = function(data,key){
    ]
     }
   ];
-  console.log(temp_data);
+  // console.log(temp_data);
   return temp_data;
 }
 //END :  code for 3 weeks summary
@@ -2895,7 +2897,7 @@ $scope.viewComments = function(supplier,index){
     $scope.commentModal = {};
     $scope.enableViewComments = index;
     $scope.commentsData = response.data.data;
-    
+
     // if(Object.keys($scope.commentsData).length != 0){
     //   $scope.viewInvForComments = Object.keys($scope.commentsData);
     //   $scope.selectedInvForView = $scope.viewInvForComments[0];
