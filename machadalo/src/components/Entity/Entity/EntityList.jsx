@@ -6,11 +6,35 @@ export default class List extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      searchFilter: ''
+    };
+
+    this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
+    this.getFilteredList = this.getFilteredList.bind(this);
     this.renderEntityRow = this.renderEntityRow.bind(this);
   }
 
   componentWillMount() {
     this.props.getEntityList();
+  }
+
+  onSearchFilterChange(event) {
+    this.setState({
+      searchFilter: event.target.value
+    });
+  }
+
+  getFilteredList(list) {
+    return list.filter(
+      item =>
+        item.name
+          .toLowerCase()
+          .replace(/[^0-9a-z]/gi, '')
+          .indexOf(
+            this.state.searchFilter.toLowerCase().replace(/[^0-9a-z]/gi, '')
+          ) !== -1
+    );
   }
 
   renderEntityRow(entity, index) {
@@ -39,13 +63,24 @@ export default class List extends React.Component {
   }
 
   render() {
-    let { entityList } = this.props.entity;
+    const { searchFilter } = this.state;
+    const { entityList } = this.props.entity;
+    const list = this.getFilteredList(entityList);
+
     return (
-      <div className="createform">
-        <div className="createform__title">
-          <h3>Entity List</h3>
-        </div>
+      <div className="entity-list">
         <div className="list">
+          <div className="list__title">
+            <h3>Entity List</h3>
+          </div>
+          <div className="list__filter">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchFilter}
+              onChange={this.onSearchFilterChange}
+            />
+          </div>
           <div className="list__table">
             <table cellPadding="0" cellSpacing="0">
               <thead>
@@ -57,8 +92,8 @@ export default class List extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {entityList.length ? (
-                  entityList.map(this.renderEntityRow)
+                {list.length ? (
+                  list.map(this.renderEntityRow)
                 ) : (
                   <tr>
                     <td colSpan="5">
