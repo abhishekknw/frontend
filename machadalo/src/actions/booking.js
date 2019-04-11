@@ -324,46 +324,7 @@ export function deleteBookingTemplate({ id }) {
 }
 /* Booking Template: End */
 
-/*Booking: Start */
-const postBookingStart = () => {
-  return {
-    type: types.POST_BOOKING_START
-  };
-};
-
-const postBookingSuccess = () => {
-  return {
-    type: types.POST_BOOKING_SUCCESS
-  };
-};
-
-const postBookingFail = () => {
-  return {
-    type: types.POST_BOOKING_FAIL
-  };
-};
-
-export function postBooking({ data }) {
-  return (dispatch, getState) => {
-    dispatch(postBookingStart());
-
-    const { auth } = getState();
-
-    request
-      .post(`${config.API_URL}/v0/ui/dynamic-booking/booking-data/`)
-      .set('Authorization', `JWT ${auth.token}`)
-      .send(data)
-      .then(resp => {
-        dispatch(postBookingSuccess());
-      })
-      .catch(ex => {
-        console.log('Failed to create booking', ex);
-
-        dispatch(postBookingFail());
-      });
-  };
-}
-
+/* Booking: Start */
 const getBookingStart = () => {
   return {
     type: types.GET_BOOKING_START
@@ -403,6 +364,83 @@ export function getBookingList({ campaignId }) {
         console.log('Failed to fetch list of bookings', ex);
 
         dispatch(getBookingFail());
+      });
+  };
+}
+const postBookingStart = () => {
+  return {
+    type: types.POST_BOOKING_START
+  };
+};
+
+const postBookingSuccess = () => {
+  return {
+    type: types.POST_BOOKING_SUCCESS
+  };
+};
+
+const postBookingFail = () => {
+  return {
+    type: types.POST_BOOKING_FAIL
+  };
+};
+
+export function postBooking({ data }) {
+  return (dispatch, getState) => {
+    dispatch(postBookingStart());
+
+    const { auth } = getState();
+
+    request
+      .post(`${config.API_URL}/v0/ui/dynamic-booking/booking-data/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .send(data)
+      .then(resp => {
+        dispatch(postBookingSuccess());
+      })
+      .catch(ex => {
+        console.log('Failed to create booking', ex);
+
+        dispatch(postBookingFail());
+      });
+  };
+}
+
+const putBookingStart = () => {
+  return {
+    type: types.PUT_BOOKING_START
+  };
+};
+
+const putBookingSuccess = () => {
+  return {
+    type: types.PUT_BOOKING_SUCCESS
+  };
+};
+
+const putBookingFail = () => {
+  return {
+    type: types.PUT_BOOKING_FAIL
+  };
+};
+
+export function putBooking({ id, data }) {
+  return (dispatch, getState) => {
+    dispatch(putBookingStart());
+
+    const { auth } = getState();
+
+    request
+      .put(`${config.API_URL}/v0/ui/dynamic-booking/booking-data/${id}/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .send(data)
+      .then(resp => {
+        dispatch(putBookingSuccess());
+      })
+      .catch(ex => {
+        console.log('Failed to update booking', ex);
+
+        dispatch(putBookingFail());
       });
   };
 }
