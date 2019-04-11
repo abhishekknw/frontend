@@ -363,17 +363,22 @@ export default class CreateBookingTemplate extends React.Component {
     const data = {
       name,
       base_booking_template_id: baseBookingId,
-      booking_attributes: attributes.concat(
+      booking_attributes: attributes.filter(item => !!item.name).concat(
         baseBookingAttributes.filter(item => item.selected).map(item => ({
           name: item.name,
           is_required: item.is_required,
-          type: item.type
+          type: item.type,
+          options: item.options
         }))
       ),
       entity_type_id: entityTypeId,
       entity_attributes: selectedEntityAttributes
         .filter(item => item.selected)
-        .map(item => ({ name: item.name, is_required: item.is_required }))
+        .map(item => ({
+          name: item.name,
+          is_required: item.is_required,
+          options: item.options
+        }))
     };
 
     const errors = validate(data);

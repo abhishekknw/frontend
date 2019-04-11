@@ -201,7 +201,7 @@ export const booking = createReducer(
     [types.POST_BOOKING_START](state) {
       return {
         ...state,
-        isUpdatingBooking: true,
+        isCreatingBooking: true,
         postBookingSuccess: false,
         postBookingError: false
       };
@@ -209,15 +209,37 @@ export const booking = createReducer(
     [types.POST_BOOKING_SUCCESS](state) {
       return {
         ...state,
-        isUpdatingBooking: false,
+        isCreatingBooking: false,
         postBookingSuccess: true
       };
     },
     [types.POST_BOOKING_FAIL](state) {
       return {
         ...state,
-        isUpdatingBooking: false,
+        isCreatingBooking: false,
         postBookingError: true
+      };
+    },
+    [types.PUT_BOOKING_START](state) {
+      return {
+        ...state,
+        isUpdatingBooking: true,
+        putBookingSuccess: false,
+        putBookingError: false
+      };
+    },
+    [types.PUT_BOOKING_SUCCESS](state) {
+      return {
+        ...state,
+        isUpdatingBooking: false,
+        putBookingSuccess: true
+      };
+    },
+    [types.PUT_BOOKING_FAIL](state) {
+      return {
+        ...state,
+        isUpdatingBooking: false,
+        putBookingError: true
       };
     },
     [types.DELETE_BOOKING_START](state) {

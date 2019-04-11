@@ -59,22 +59,33 @@ export default class EditBooking extends React.Component {
   componentDidUpdate(prevProps) {
     const { booking: prevBooking, entity: prevEntity } = prevProps;
     const { booking: newBooking, entity: newEntity, history } = this.props;
-    const { isUpdatingBooking: prevIsUpdatingBooking } = prevBooking;
-    const {
-      postBookingSuccess,
-      postBookingError,
-      isUpdatingBooking: newIsUpdatingBooking
-    } = newBooking;
 
-    if (prevIsUpdatingBooking && !newIsUpdatingBooking && postBookingSuccess) {
-      toastr.success('', 'Booking updated successfully');
-      history.push(`/r/booking/campaigns`);
-    } else if (
-      prevIsUpdatingBooking &&
-      !newIsUpdatingBooking &&
-      postBookingError
+    if (
+      prevBooking.isCreatingBooking &&
+      !newBooking.isCreatingBooking &&
+      newBooking.postBookingSuccess
     ) {
-      toastr.error('', 'Failed to update  Booking. Please try again later.');
+      toastr.success('', 'Booking created successfully');
+      history.push(`/r/booking/list/${this.getCampaignId()}`);
+    } else if (
+      prevBooking.isCreatingBooking &&
+      !newBooking.isCreatingBooking &&
+      newBooking.putBookingError
+    ) {
+      toastr.error('', 'Failed to create booking. Please try again later.');
+    } else if (
+      prevBooking.isUpdatingBooking &&
+      !newBooking.isUpdatingBooking &&
+      newBooking.putBookingSuccess
+    ) {
+      toastr.success('', 'Booking updated successfully');
+      history.push(`/r/booking/list/${this.getCampaignId()}`);
+    } else if (
+      prevBooking.isUpdatingBooking &&
+      !newBooking.isUpdatingBooking &&
+      newBooking.putBookingError
+    ) {
+      toastr.error('', 'Failed to update Booking. Please try again later.');
     }
 
     if (
@@ -147,8 +158,11 @@ export default class EditBooking extends React.Component {
       bookingTemplateId,
       bookingTemplate,
       entity,
-      attributes
+      attributes,
+      isEditMode,
+      bookingId
     } = this.state;
+    const { postBooking, putBooking } = this.props;
 
     const data = {
       booking_template_id: bookingTemplateId,
@@ -158,7 +172,11 @@ export default class EditBooking extends React.Component {
       booking_attributes: attributes
     };
 
-    this.props.postBooking({ data });
+    if (isEditMode) {
+      putBooking({ id: bookingId, data });
+    } else {
+      postBooking({ data });
+    }
   }
 
   getCampaignId() {
