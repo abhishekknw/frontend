@@ -406,4 +406,43 @@ export function getBookingList({ campaignId }) {
       });
   };
 }
+
+const deleteBookingStart = () => {
+  return {
+    type: types.DELETE_BOOKING_START
+  };
+};
+
+const deleteBookingSuccess = ({ id }) => {
+  return {
+    type: types.DELETE_BOOKING_SUCCESS,
+    id
+  };
+};
+
+const deleteBookingEnd = () => {
+  return {
+    type: types.DELETE_BOOKING_FAIL
+  };
+};
+
+export function deleteBooking({ id }) {
+  return (dispatch, getState) => {
+    dispatch(deleteBookingStart());
+
+    const { auth } = getState();
+
+    request
+      .delete(`${config.API_URL}/v0/ui/dynamic-booking/booking-data/${id}/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(() => {
+        dispatch(deleteBookingSuccess({ id }));
+      })
+      .catch(ex => {
+        console.log('Failed to delete booking', ex);
+
+        dispatch(deleteBookingEnd());
+      });
+  };
+}
 /* Booking: End */

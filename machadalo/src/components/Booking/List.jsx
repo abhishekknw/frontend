@@ -34,6 +34,12 @@ export default class ListBooking extends Component {
   }
 
   renderBookingRow(booking) {
+    const onRemove = () => {
+      if (window.confirm('Are you sure you want to remove this booking?')) {
+        this.props.deleteBooking(booking);
+      }
+    };
+
     return (
       <tr key={booking.id}>
         {booking.booking_attributes.map(attribute => (
@@ -57,12 +63,9 @@ export default class ListBooking extends Component {
           </Link>
         </td>
         <td>
-          <Link
-            to={`/r/booking/remove/${this.getCampaignId()}/${booking.id}`}
-            className="btn btn--danger"
-          >
+          <button type="button" className="btn btn--danger" onClick={onRemove}>
             Remove
-          </Link>
+          </button>
         </td>
       </tr>
     );
