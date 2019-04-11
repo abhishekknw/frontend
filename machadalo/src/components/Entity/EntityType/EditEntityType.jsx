@@ -287,7 +287,7 @@ export default class EditEntityType extends React.Component {
                     attribute.options,
                     attribute.type,
                     attribute,
-                    attribute.attrIndex
+                    attrIndex
                   )
                 }
               >
@@ -304,11 +304,7 @@ export default class EditEntityType extends React.Component {
                 className="show-option"
                 style={optionStyle}
                 onClick={() =>
-                  this.onOpenEntityModal(
-                    attribute.type,
-                    attribute,
-                    attribute.attrIndex
-                  )
+                  this.onOpenEntityModal(attribute.type, attribute, attrIndex)
                 }
               >
                 Show Attributes
