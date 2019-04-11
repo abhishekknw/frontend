@@ -111,6 +111,13 @@ export default class CreateType extends React.Component {
   }
 
   onOpenOptionModal(options, attributeType, attribute, attrIndex) {
+    console.log(
+      'options, attributeType, attribute, attrIndex: ',
+      options,
+      attributeType,
+      attribute,
+      attrIndex
+    );
     this.setState({
       showOptionModal: true,
       attributeOptions: options,
@@ -184,9 +191,11 @@ export default class CreateType extends React.Component {
   }
 
   handleAttributeChange(attribute, index) {
-    const attributes = this.state.entity_attributes.slice();
+    const attributes = [...this.state.entity_attributes];
 
-    attributes.splice(index, 1, attribute);
+    attributes[index] = {
+      ...attribute
+    };
 
     this.setState({
       entity_attributes: attributes
@@ -293,7 +302,7 @@ export default class CreateType extends React.Component {
                     attribute.options,
                     attribute.type,
                     attribute,
-                    attribute.attrIndex
+                    attrIndex
                   )
                 }
               >
@@ -310,11 +319,7 @@ export default class CreateType extends React.Component {
                 className="show-option"
                 style={optionStyle}
                 onClick={() =>
-                  this.onOpenEntityModal(
-                    attribute.type,
-                    attribute,
-                    attribute.attrIndex
-                  )
+                  this.onOpenEntityModal(attribute.type, attribute, attrIndex)
                 }
               >
                 Show Attributes

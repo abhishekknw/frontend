@@ -219,6 +219,26 @@ export const booking = createReducer(
         isUpdatingBooking: false,
         postBookingError: true
       };
+    },
+    [types.DELETE_BOOKING_START](state) {
+      return {
+        ...state,
+        isDeletingBooking: true
+      };
+    },
+    [types.DELETE_BOOKING_SUCCESS](state, action) {
+      const { bookingList } = state;
+      return {
+        ...state,
+        isDeletingBooking: false,
+        bookingList: bookingList.filter(item => item.id !== action.id)
+      };
+    },
+    [types.DELETE_BOOKING_FAIL](state) {
+      return {
+        ...state,
+        isDeletingBooking: false
+      };
     }
   }
 );
