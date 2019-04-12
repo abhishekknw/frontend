@@ -773,17 +773,17 @@
         Add Comment For {{supplierDataForComment.name}}
       </div>
       <div class="col-md-12">
-        <!-- <div class="row col-md-6" >
+        <div class="row col-md-6" >
         <br>
-          <label>Select Related Inventory to Comment</label><br>
-          <select class="form-control" name="" ng-model="commentModal.inventory_type">
-            <option disabled="true" selected>Select Inventory</option>
-            <option ng-repeat="inv in invForComments" value="{{inv.name}}">{{inv.name}}</option>
+          <label>Select Comment Type</label><br>
+          <select class="form-control" name="" ng-model="commentModal.related_to">
+            <option disabled="true" selected>Select Comment Type</option>
+            <option ng-repeat="comment in commentsType" value="{{comment}}">{{comment}}</option>
           </select></br>
-        </div> -->
+        </div>
         <div style="width:100%">
         <br>
-          <label>Comments :</label>
+          <!-- <label>Comments :</label> -->
           <textarea class="form-control col-md-10"  rows="8" cols="200" ng-model="commentModal.comment" placeholder="Write here.."></textarea>
         </div>
         <br>
@@ -801,13 +801,7 @@
 <!--START : view comments modal  -->
 <div id="viewComments" class="modal fade">
 
-        <!-- <div class="">
-          Selected Inventory :
-          <select class="form-control" ng-model="selectedInvForView">
-              <option ng-repeat="inv in viewInvForComments" value="{{inv}}">{{inv}}</option>
-          </select>
-        </div> -->
-        <br>
+
         <div>
           <div class="modal-dialog">
             <div class="modal-content">
@@ -815,6 +809,13 @@
                 View Comments For {{supplierDataForComment.name}}
               </div>
               <div class="modal-body">
+                <div class="">
+                  Selected Comment Type :
+                  <select class="form-control" ng-model="selectedCommentForView.type" ng-change="viewComments(supplierDataForComment)">
+                      <option ng-repeat="comment in commentsType" value="{{comment}}">{{comment}}</option>
+                  </select>
+                </div>
+                <br>
           <table class="table-bordered table-striped">
             <tbody>
               <tr ng-repeat="item in commentsData[selectedInvForView]">

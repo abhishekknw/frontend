@@ -21,7 +21,6 @@ angular.module('catalogueApp')
         {header : 'Address'},
         {header : 'AdInventory Id'},
         {header : 'Activity Date'},
-        {header : 'Comments'},
       ];
       $scope.audit_dates = [
         {header : 'Audit Date'},

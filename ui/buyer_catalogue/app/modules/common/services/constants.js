@@ -206,7 +206,11 @@ angular
       {name : 'FLYER'},
       {name : 'GATEWAY ARCH'},
     ],
-    booking_related_comment : 'BOOKING',
-    execution_related_comment : 'EXECUTION',
+    comments_type : [
+      'INTERNAL',
+      'EXTERNAL'
+    ],
+    booking_related_comment : 'INTERNAL',
+    execution_related_comment : 'EXTERNAL',
     no_comments_msg : 'No Comments Available',
     });
