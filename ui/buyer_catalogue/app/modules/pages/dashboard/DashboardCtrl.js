@@ -4085,34 +4085,29 @@ var tooltipDynamicGraphData = [];
                                    //    $scope.xValues.value = data.name;
                                    // });
 
-                                   if ($scope.selectedbookingParameters == 'standeetype') {
                                      $scope.xValues.value = 'campaign_name';
-                                    specificXValue = 'standeetype';
-                                   }
-                                   if ($scope.selectedbookingParameters == 'fliertype') {
-                                     $scope.xValues.value = 'campaign_name';
+                                    specificXValue2 = 'standeetype';
                                     specificXValue = 'fliertype';
-                                   }
                                    //  specificXValue2 = 'standeetype';
                                    // specificXValue = 'fliertype';
-                                   // var specficSelectedValue = 0;
-                                   // angular.forEach($scope.selectedbookingParameters, function(data){
-                                   //   console.log(data);
-                                   //   specficSelectedValue = specficSelectedValue + 1;
-                                   //   var dataSpecific = {
-                                   //     "specificXValue" : "specificXValue" + specficSelectedValue,
-                                   //   }
-                                   //   console.log(specficSelectedValue);
-                                   //   console.log(dataSpecific.specificXValue);
-                                   //   var dataValueSpecificKey = data.value;
-                                   //   console.log(dataValueSpecificKey);
-                                   //
-                                   // });
-                                   // $scope.xValues.value = 'campaign_name';
-                                   // angular.forEach($scope.selectedbookingParameters, function(data){
-                                   //   console.log(data);
-                                   //   specificXValue = data.value;
-                                   // });
+                                   var specficSelectedValue = 0;
+                                   angular.forEach($scope.selectedbookingParameters, function(data){
+                                     console.log(data);
+                                     specficSelectedValue = specficSelectedValue + 1;
+                                     var dataSpecific = {
+                                       "specificXValue" : "specificXValue" + specficSelectedValue,
+                                     }
+                                     console.log(specficSelectedValue);
+                                     console.log(dataSpecific.specificXValue);
+                                     var dataValueSpecificKey = data.value;
+                                     console.log(dataValueSpecificKey);
+
+                                   });
+                                   $scope.xValues.value = 'campaign_name';
+                                   angular.forEach($scope.selectedbookingParameters, function(data){
+                                     console.log(data);
+                                     specificXValue = data.value;
+                                   });
 
                                    var reqData = {
                                      "data_scope":{
