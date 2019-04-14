@@ -147,9 +147,9 @@ $scope.addNewPhase =true;
     	.then(function onSuccess(response){
         console.log(response);
         getUsersList();
-        $scope.initialReleaseData = response.data.data;
+        $scope.initialReleaseData = angular.copy(response.data.data);
         console.log($scope.initialReleaseData);
-    		$scope.releaseDetails = $scope.initialReleaseData;
+    		$scope.releaseDetails = angular.copy($scope.initialReleaseData);
         getAssignedSuppliers();
         // formatData();
     	})
@@ -1071,7 +1071,7 @@ $scope.multiSelect =
       $scope.userSupplierData = supplier;
     }
     var getAssignedSuppliers = function(){
-      releaseCampaignService.getAssignedSuppliers($scope.campaignId, $scope.userInfo.id)
+      releaseCampaignService.getAssignedSuppliers($scope.campaign_id, $scope.userInfo.id)
       .then(function onSuccess(response){
         console.log(response);
         $scope.assignedData = response.data.data;
