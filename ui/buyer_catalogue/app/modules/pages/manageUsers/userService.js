@@ -32,8 +32,8 @@ angular.module('machadaloPages')
       return machadaloHttp.post(url,data);
     }
 
-    userService.getAllUsers = function(){
-      var url = url_base_user + "user/";
+    userService.getAllUsers = function(orgId){
+      var url = url_base_user + "user/?organisation_id=" + orgId;
       return machadaloHttp.get(url);
     }
 

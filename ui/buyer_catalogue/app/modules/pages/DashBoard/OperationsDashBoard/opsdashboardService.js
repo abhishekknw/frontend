@@ -41,5 +41,10 @@
       return machadaloHttp.get(url);
     }
 
+    opsDashBoard.getOrganisationsForAssignment = function(){
+      var url = url_base  + "organisation/get_organisations_for_assignment/";
+      return machadaloHttp.get(url);
+    }
+
     return opsDashBoard;
 }]);

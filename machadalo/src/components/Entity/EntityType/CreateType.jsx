@@ -7,7 +7,8 @@ import EntitySelectionModal from '../../Modals/EntitySelectionModal';
 
 const optionStyle = {
   fontSize: '12px',
-  marginBottom: '-24px',
+  margin: '0',
+  marginTop: '5px',
   textDecoration: 'underline',
   cursor: 'pointer',
   paddingBottom: '10px'
@@ -16,7 +17,8 @@ const optionStyle = {
 const AttributeTypes = [
   { value: 'FLOAT', label: 'Float' },
   { value: 'STRING', label: 'Text' },
-  { value: 'INVENTORY_TYPE', label: 'Inventory list' },
+  { value: 'INVENTORY', label: 'Inventory' },
+  { value: 'INVENTORY_TYPE', label: 'Base Inventory' },
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
   { value: 'ENTITY_TYPE', label: 'Entity Type' },
@@ -109,6 +111,13 @@ export default class CreateType extends React.Component {
   }
 
   onOpenOptionModal(options, attributeType, attribute, attrIndex) {
+    console.log(
+      'options, attributeType, attribute, attrIndex: ',
+      options,
+      attributeType,
+      attribute,
+      attrIndex
+    );
     this.setState({
       showOptionModal: true,
       attributeOptions: options,
@@ -182,9 +191,11 @@ export default class CreateType extends React.Component {
   }
 
   handleAttributeChange(attribute, index) {
-    const attributes = this.state.entity_attributes.slice();
+    const attributes = [...this.state.entity_attributes];
 
-    attributes.splice(index, 1, attribute);
+    attributes[index] = {
+      ...attribute
+    };
 
     this.setState({
       entity_attributes: attributes
@@ -234,7 +245,8 @@ export default class CreateType extends React.Component {
       } else if (
         item.value === 'ENTITY_TYPE' ||
         item.value === 'BASE_ENTITY_TYPE' ||
-        item.value === 'INVENTORY_TYPE'
+        item.value === 'INVENTORY_TYPE' ||
+        item.value === 'INVENTORY'
       ) {
         this.setState({
           showEntitySelectionModal: true,
@@ -290,7 +302,7 @@ export default class CreateType extends React.Component {
                     attribute.options,
                     attribute.type,
                     attribute,
-                    attribute.attrIndex
+                    attrIndex
                   )
                 }
               >
@@ -301,16 +313,13 @@ export default class CreateType extends React.Component {
             )}
             {attribute.type === 'ENTITY_TYPE' ||
             attribute.type === 'BASE_ENTITY_TYPE' ||
-            attribute.type === 'INVENTORY_TYPE' ? (
+            attribute.type === 'INVENTORY_TYPE' ||
+            attribute.type === 'INVENTORY' ? (
               <p
                 className="show-option"
                 style={optionStyle}
                 onClick={() =>
-                  this.onOpenEntityModal(
-                    attribute.type,
-                    attribute,
-                    attribute.attrIndex
-                  )
+                  this.onOpenEntityModal(attribute.type, attribute, attrIndex)
                 }
               >
                 Show Attributes

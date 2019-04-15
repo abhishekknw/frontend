@@ -7,7 +7,8 @@ import EntitySelectionModal from '../../Modals/EntitySelectionModal';
 
 const optionStyle = {
   fontSize: '12px',
-  marginBottom: '-24px',
+  margin: '0',
+  marginTop: '5px',
   textDecoration: 'underline',
   cursor: 'pointer',
   paddingBottom: '10px'
@@ -16,7 +17,8 @@ const optionStyle = {
 const AttributeTypes = [
   { value: 'FLOAT', label: 'Float' },
   { value: 'STRING', label: 'Text' },
-  { value: 'INVENTORY_TYPE', label: 'Inventory list' },
+  { value: 'INVENTORY', label: 'Inventory' },
+  { value: 'INVENTORY_TYPE', label: 'Base Inventory' },
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
   { value: 'BASE_ENTITY_TYPE', label: 'Base Entity Type' }
@@ -222,7 +224,8 @@ export default class EditBaseEntityType extends React.Component {
         });
       } else if (
         item.value === 'BASE_ENTITY_TYPE' ||
-        item.value === 'INVENTORY_TYPE'
+        item.value === 'INVENTORY_TYPE' ||
+        item.value === 'INVENTORY'
       ) {
         this.setState({
           showEntitySelectionModal: true,
@@ -278,7 +281,7 @@ export default class EditBaseEntityType extends React.Component {
                     attribute.options,
                     attribute.type,
                     attribute,
-                    attribute.attrIndex
+                    attrIndex
                   )
                 }
               >
@@ -288,16 +291,13 @@ export default class EditBaseEntityType extends React.Component {
               ''
             )}
             {attribute.type === 'BASE_ENTITY_TYPE' ||
-            attribute.type === 'INVENTORY_TYPE' ? (
+            attribute.type === 'INVENTORY_TYPE' ||
+            attribute.type === 'INVENTORY' ? (
               <p
                 className="show-option"
                 style={optionStyle}
                 onClick={() =>
-                  this.onOpenEntityModal(
-                    attribute.type,
-                    attribute,
-                    attribute.attrIndex
-                  )
+                  this.onOpenEntityModal(attribute.type, attribute, attrIndex)
                 }
               >
                 Show Attributes
