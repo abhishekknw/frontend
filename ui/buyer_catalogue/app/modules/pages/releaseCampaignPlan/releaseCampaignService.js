@@ -108,5 +108,16 @@
       return machadaloHttp.get(url);
     }
 
+    releaseCampaignService.setUserForBooking = function(data){
+      var url = url_base + 'supplier-assignment/';
+      return machadaloHttp.post(url,data);
+    }
+
+    releaseCampaignService.getAssignedSuppliers = function(campaignId, id){
+      var url = url_base + 'supplier-assignment/?campaign_id=' + campaignId + "&id=" + id;
+      return machadaloHttp.get(url);
+    }
+
+
     return releaseCampaignService;
 }]);

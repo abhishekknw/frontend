@@ -7,6 +7,7 @@ angular.module('catalogueApp')
   $scope.campaign_manager = constants.campaign_manager;
   $scope.editPaymentDetails = true;
   $scope.commentModal = {};
+  $scope.userData = {};
   $scope.assign = {};
   $scope.body = {
     message : '',
@@ -14,6 +15,7 @@ angular.module('catalogueApp')
   $scope.editContactDetails = true;
   $scope.addContactDetails = true;
   $scope.userIcon = "icons/usericon.png";
+  $scope.userInfo = $rootScope.globals.userInfo;
 $scope.addNewPhase = true;
   if($rootScope.globals.userInfo.is_superuser == true){
     $scope.backButton = true;
@@ -142,10 +144,16 @@ $scope.addNewPhase =true;
     $scope.saveDetails = function(){
       // alert("vidhi");
     };
-      $scope.Data = [];
     releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id)
     	.then(function onSuccess(response){
         console.log(response);
+        getUsersList();
+        $scope.initialReleaseData = angular.copy(response.data.data);
+        console.log($scope.initialReleaseData);
+    		$scope.releaseDetails = angular.copy($scope.initialReleaseData);
+        getAssignedSuppliers();
+        // formatData();
+        // -------------
         if(response.data.data){
           $scope.releaseDetails = response.data.data;
           $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
@@ -175,7 +183,7 @@ $scope.addNewPhase =true;
           swal(constants.name, "You do not have access to Proposal", constants.warning);
           $scope.loading = response;
         }
-
+// ---------------
     	})
     	.catch(function onError(response){
         console.log(response);
@@ -200,6 +208,28 @@ $scope.addNewPhase =true;
                  supplier.phase_no = id;
                  console.log(supplier.phase_no);
              }
+
+    $scope.setUserForBooking = function() {
+      console.log($scope.userSupplierData);
+      $scope.societySupplierName = $scope.userSupplierData.supplierName;
+      var data = {
+        assigned_by: $scope.userInfo.id,
+        assigned_to_ids:  [parseInt($scope.userData.user)],
+        campaign_id: $scope.campaign_id,
+        supplier_id: $scope.userSupplierData.supplier_id,
+        supplierName: $scope.userSupplierData.name,
+      }
+      console.log(data);
+      $scope.societySupplierName = data.supplierName;
+      releaseCampaignService.setUserForBooking(data)
+      .then(function onSuccess(response){
+        console.log(response);
+
+      swal(constants.name,constants.assign_success,constants.success);
+      })
+      .catch(function onError(response){
+      });
+    }
 
     $scope.emptyList = {NA:'NA'};
     $scope.getFilters = function(supplier){
@@ -655,6 +685,7 @@ $scope.multiSelect =
          })
        }
 
+
        $scope.editPhaseDetails = function(){
          $scope.editPhase = true;
        }
@@ -826,7 +857,8 @@ $scope.multiSelect =
          commonDataShare.getUsersList()
            .then(function onSuccess(response){
              $scope.userList = response.data.data;
-             $scope.usersMapListWithObjects = {};
+             $scope.selectedUsers = [];
+             $scope.usersMapListWithObjects = [];
              angular.forEach($scope.userList, function(data){
                $scope.usersMapListWithObjects[data.id] = data;
              })
@@ -838,6 +870,16 @@ $scope.multiSelect =
            });
        }
 
+       $scope.settingsForUsers = { enableSearch: true,
+           keyboardControls: true ,idProp : "id",
+           template: '{{option.username}}', smartButtonTextConverter(skip, option) { return option; },
+           showCheckAll : true,
+           scrollableHeight: '300px', scrollable: true};
+           $scope.selected_baselines_customTexts_users = {buttonDefaultText: 'Select Users'};
+           $scope.eventsForUsers = {
+             onItemSelect : function(item){
+             }
+          }
        $scope.initialiseImportSheet = function(){
          getUsersList();
          getProposalCenters();
@@ -1064,6 +1106,73 @@ $scope.multiSelect =
         supplier.phase_no = '';
       }
       console.log(supplier);
+    }
+    $scope.setUserSupplier = function(supplier){
+      console.log(supplier);
+      $scope.userSupplierData = supplier;
+    }
+    var getAssignedSuppliers = function(){
+      releaseCampaignService.getAssignedSuppliers($scope.campaign_id, $scope.userInfo.id)
+      .then(function onSuccess(response){
+        console.log(response);
+        $scope.assignedData = response.data.data;
+        $scope.assignedDataIdsList = {};
+        $scope.assignedDataFinal = [];
+        angular.forEach($scope.assignedData, function(data){
+          $scope.assignedDataIdsList[data.supplier_id] = data;
+        })
+        angular.forEach($scope.initialReleaseData.shortlisted_suppliers, function(data){
+          if($scope.assignedDataIdsList.hasOwnProperty(data.supplier_id)){
+            $scope.assignedDataFinal.push(data);
+          }
+          })
+          console.log($scope.assignedDataFinal,$scope.initialReleaseData);
+        $scope.releaseDetails.shortlisted_suppliers = [];
+        $scope.releaseDetails.shortlisted_suppliers = angular.copy($scope.assignedDataFinal);
+
+        formatData();
+      }).catch(function onError(response){
+        console.log(response);
+      })
+    }
+    var formatData = function(){
+      // $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
+      // console.log($scope.Data);
+      console.log($scope.releaseDetails);
+
+      angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier,key){
+        console.log(supplier);
+        $scope.mapViewLat = supplier.latitude;
+        $scope.mapViewLong = supplier.longitude;
+        if(!supplier.stall_locations){
+          supplier.stall_locations = [];
+        }
+        // console.log($scope.mapViewLat);
+        // console.log($scope.mapViewLong);
+
+
+      })
+
+
+      setDataToModel($scope.releaseDetails.shortlisted_suppliers);
+      $scope.loading = true;
+      angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier){
+        $scope.shortlistedSuppliersIdList[supplier.supplier_id] = supplier;
+      })
+    }
+    $scope.selectedUser = {};
+    $scope.changeSupplierData = function(){
+      console.log("hello");
+      if($scope.selectedUser.value == 'all'){
+        $scope.releaseDetails = angular.copy($scope.initialReleaseData);
+        console.log($scope.releaseDetails);
+        formatData();
+      }
+      if($scope.selectedUser.value == 'assigned'){
+        $scope.releaseDetails.shortlisted_suppliers = $scope.assignedDataFinal;
+        console.log($scope.releaseDetails);
+        formatData();
+      }
     }
 
 }]);//Controller function ends here

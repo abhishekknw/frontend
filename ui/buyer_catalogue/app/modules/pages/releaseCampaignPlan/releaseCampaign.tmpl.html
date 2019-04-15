@@ -13,7 +13,7 @@
   <div class="pageTitle">
       <h3>Booking Plan</h3>
   </div>
-    <div class = "panel-body" style="text-align:center;margin-top:-20px">
+    <div class="panel-body" style="text-align:center;margin-top:-20px">
         <div class="row">
           <div class="panel panel-default">
             <div class="panel-heading">
@@ -28,7 +28,13 @@
 
 <!-- <div class="container"> -->
   <div class="panel-body table-style">
-      <table st-table="releaseDetails.shortlisted_suppliers" st-safe-src="Data" class="table table-striped">
+    <div class="col-md-6">
+      <select class="col-md-6 form-control" name="" ng-model="selectedUser.value" ng-change="changeSupplierData()">
+        <option value="all">All</option>
+        <option value="assigned">Assigned</option>
+      </select>
+    </div>
+      <table st-table="releaseDetails.shortlisted_suppliers"  class="table table-striped">
         <thead>
           <tr>
             <th colspan='999' style="background-color:#ffffff;">
@@ -54,6 +60,7 @@
             <th>Booking Priority</th>
             <th>Booking Status</th>
             <th>Phase</th>
+            <th>Select User</th>
             <th>Mode Of Payment</th>
             <th>Transaction/Cheque Number</th>
             <th>Contacts</th>
@@ -148,6 +155,30 @@
               </select>
               <span class="error" ng-show="phaseform.phase.$error.min">{{positiveNoError}}</span>
             </td>
+            <td rowspan="{{key.length}}" ng-show="$first">
+              <button type="button" class="btn btn-danger"name="button" data-toggle="modal" data-target="#addUserModal" ng-click="setUserSupplier(supplier)">Assign User</button>
+                <div id="addUserModal" class="modal fade">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Assign Users</h4>
+                        <hr/>
+                        <div class = "modal-body" style = "height: 300px;">
+                          <!-- <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="usersMapListWithObjects" class="col-md-6"  extra-settings="settingsForUsers"
+                          selected-model="selectedUsers" translation-texts="selected_baselines_customTexts_users" events="eventsForUsers"></span> -->
+                          <select name="users" class="form-control spacing input-width-phase"  ng-model="userData.user" min="1" >
+                            <option value="" disabled>Select User</option>
+                            <option ng-repeat="user in usersMapListWithObjects | unique:'id'" value="{{user.id}}">{{user.username}}</option>
+                          </select>
+                          <br />
+                          <button type="button" class="btn btn-danger" name="button" ng-click="setUserForBooking()">Assign</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
             <!--mode of payment  -->
             <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
               <div class="radio">
