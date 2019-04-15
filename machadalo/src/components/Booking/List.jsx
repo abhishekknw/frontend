@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import CommentsModal from './../Modals/CommentsModal';
+
 export default class ListBooking extends Component {
   constructor() {
     super();
 
     this.state = {
-      searchFilter: ''
+      searchFilter: '',
+      selectedBooking: null,
+      isCommentsModalVisible: false
     };
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
+    this.onCommentsChange = this.onCommentsChange.bind(this);
+    this.onCommentsModalClose = this.onCommentsModalClose.bind(this);
     this.getFilteredList = this.getFilteredList.bind(this);
     this.renderBookingRow = this.renderBookingRow.bind(this);
   }
@@ -24,6 +30,22 @@ export default class ListBooking extends Component {
     });
   }
 
+  onCommentsChange(comments) {
+    const { selectedBooking } = this.state;
+
+    this.props.putBooking({
+      id: selectedBooking.id,
+      data: { ...selectedBooking, comments }
+    });
+  }
+
+  onCommentsModalClose() {
+    this.setState({
+      isCommentsModalVisible: false,
+      selectedBooking: null
+    });
+  }
+
   getCampaignId() {
     const { match } = this.props;
     return match.params.campaignId;
@@ -34,6 +56,14 @@ export default class ListBooking extends Component {
   }
 
   renderBookingRow(booking) {
+    const onComments = () => {
+      // TODO: Show Modal with comments list & add comment button
+      this.setState({
+        selectedBooking: booking,
+        isCommentsModalVisible: true
+      });
+    };
+
     const onRemove = () => {
       if (window.confirm('Are you sure you want to remove this booking?')) {
         this.props.deleteBooking(booking);
@@ -55,6 +85,15 @@ export default class ListBooking extends Component {
           </td>
         ))}
         <td>
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={onComments}
+          >
+            Comments
+          </button>
+        </td>
+        <td>
           <Link
             to={`/r/booking/edit/${this.getCampaignId()}/${booking.id}`}
             className="btn btn--danger"
@@ -72,7 +111,11 @@ export default class ListBooking extends Component {
   }
 
   render() {
-    const { searchFilter } = this.state;
+    const {
+      searchFilter,
+      selectedBooking,
+      isCommentsModalVisible
+    } = this.state;
     const { booking } = this.props;
     const { bookingList } = booking;
     const list = this.getFilteredList(bookingList);
@@ -106,6 +149,7 @@ export default class ListBooking extends Component {
                 ))}
                 <th>Action</th>
                 <th>Action</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -136,6 +180,16 @@ export default class ListBooking extends Component {
             Manage Phases
           </button>
         </div>
+
+        {selectedBooking ? (
+          <CommentsModal
+            comments={selectedBooking.comments || {}}
+            onChange={this.onCommentsChange}
+            onClose={this.onCommentsModalClose}
+            isVisible={isCommentsModalVisible}
+            user={this.props.user.currentUser}
+          />
+        ) : null}
       </div>
     );
   }

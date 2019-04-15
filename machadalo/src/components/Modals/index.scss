@@ -105,3 +105,17 @@
     }
   }
 }
+
+.modal-comments {
+  &__add {
+    form {
+      display: flex;
+
+      .select,
+      input[type="text"] {
+        flex: 1;
+        margin-right: 20px;
+      }
+    }
+  }
+}
