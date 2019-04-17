@@ -11,6 +11,16 @@ const getFilteredEntityList = (list, entityId) => {
   }
 };
 
+const getInventoryAttributes = entity => {
+  if (entity && entity.entity_attributes && entity.entity_attributes.length) {
+    return entity.entity_attributes
+      .filter(item => item.type === 'INVENTORY')
+      .map(item => ({ ...item.value, count: 1 }));
+  }
+
+  return [];
+};
+
 export default class EditBooking extends React.Component {
   constructor(props) {
     super(props);
@@ -23,12 +33,14 @@ export default class EditBooking extends React.Component {
     let attributes = [];
     let bookingTemplate = {};
     let entity = {};
+    let inventories = [];
     if (bookingId && booking && booking.id) {
       attributes = booking.booking_attributes;
       bookingTemplate = this.getBookingTemplateById({
         id: booking.booking_template_id
       });
       entity = this.getEntityById({ id: booking.entity_id });
+      inventories = getInventoryAttributes(entity);
     }
 
     this.state = {
@@ -39,14 +51,16 @@ export default class EditBooking extends React.Component {
       bookingTemplate,
       entity,
       entityId: booking.entity_id,
-      attributes
+      attributes,
+      inventories
     };
 
-    // this.handleInputChange = this.handleInputChange.bind(this);
     this.onBookingTemplateChange = this.onBookingTemplateChange.bind(this);
     this.onEntityChange = this.onEntityChange.bind(this);
     this.renderBookingAttributeRow = this.renderBookingAttributeRow.bind(this);
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
+    this.renderInventoryRow = this.renderInventoryRow.bind(this);
+    this.handleInventoryChange = this.handleInventoryChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -102,12 +116,14 @@ export default class EditBooking extends React.Component {
       let attributes = [];
       let bookingTemplate = {};
       let entity = {};
+      let inventories = [];
       if (bookingId && booking && booking.id) {
         attributes = booking.booking_attributes;
         bookingTemplate = this.getBookingTemplateById({
           id: booking.booking_template_id
         });
         entity = this.getEntityById({ id: booking.entity_id });
+        inventories = getInventoryAttributes(entity);
       }
 
       this.setState({
@@ -117,7 +133,8 @@ export default class EditBooking extends React.Component {
         bookingTemplate,
         entity,
         entityId: booking.entity_id,
-        attributes
+        attributes,
+        inventories
       });
     }
   }
@@ -139,7 +156,8 @@ export default class EditBooking extends React.Component {
 
   onEntityChange(entity) {
     this.setState({
-      entity: entity
+      entity: entity,
+      inventories: getInventoryAttributes(entity)
     });
   }
 
@@ -150,6 +168,16 @@ export default class EditBooking extends React.Component {
 
     this.setState({
       attributes
+    });
+  }
+
+  handleInventoryChange(inventory, index) {
+    const inventories = [...this.state.inventories];
+
+    inventories[index] = inventory;
+
+    this.setState({
+      inventories
     });
   }
 
@@ -312,7 +340,7 @@ export default class EditBooking extends React.Component {
     }
 
     return (
-      <div className={classnames('entity')} key={index}>
+      <div className="entity" key={index}>
         <div className="form-control">&nbsp;</div>
         <div className="form-control">
           <p>
@@ -328,8 +356,39 @@ export default class EditBooking extends React.Component {
     );
   }
 
+  renderInventoryRow(inventory, index) {
+    const onCountChange = event => {
+      if (
+        event.target.value &&
+        !isNaN(+event.target.value) &&
+        +event.target.value >= 0
+      ) {
+        const newInventory = { ...inventory, count: +event.target.value };
+
+        this.handleInventoryChange(newInventory, index);
+      }
+    };
+
+    return (
+      <div className="entity" key={index}>
+        <div className="form-control">&nbsp;</div>
+        <div className="form-control">
+          <p>{inventory.label}</p>
+        </div>
+
+        <div className="form-control">
+          <input
+            type="number"
+            onChange={onCountChange}
+            value={inventory.count}
+          />
+        </div>
+      </div>
+    );
+  }
+
   render() {
-    const { errors, attributes } = this.state;
+    const { errors, attributes, inventories } = this.state;
     const { booking, entity } = this.props;
     const { entityList } = entity;
     const { bookingTemplateList } = booking;
@@ -423,6 +482,23 @@ export default class EditBooking extends React.Component {
                   </p>
                 ) : null}
               </div>
+
+              {inventories && inventories.length ? (
+                <div className="entity entity__header">
+                  <div className="form-control">&nbsp;</div>
+                  <div className="form-control">
+                    <h4>Inventory</h4>
+                  </div>
+
+                  <div className="form-control">
+                    <h4>Count</h4>
+                  </div>
+                </div>
+              ) : null}
+
+              {inventories && inventories.length
+                ? inventories.map(this.renderInventoryRow)
+                : null}
             </div>
           </form>
         </div>
