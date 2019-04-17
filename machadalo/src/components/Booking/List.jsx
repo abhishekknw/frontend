@@ -31,6 +31,7 @@ export default class ListBooking extends Component {
   }
 
   onCommentsChange(comments) {
+    console.log('comments: ', comments);
     const { selectedBooking } = this.state;
 
     this.props.putBooking({

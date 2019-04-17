@@ -107,14 +107,75 @@
 }
 
 .modal-comments {
+  &__list {
+    .comment {
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid #ddd;
+
+      &__text {
+        font: {
+          size: 14px;
+        };
+        margin: 5px 0;
+      }
+
+      &__details {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font: {
+          size: 12px;
+        };
+
+        &__type {
+          margin: 0;
+          text-transform: capitalize;
+        }
+
+        &__date {
+          margin: 0;
+          flex: 1;
+        }
+      }
+    }
+  }
+
   &__add {
     form {
       display: flex;
+      flex-direction: row;
+      align-items: center;
 
-      .select,
-      input[type="text"] {
+      .form-control {
         flex: 1;
         margin-right: 20px;
+
+        input {
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          color: #555;
+          font-size: 14px;
+          height: 38px;
+          width: 100%;
+          outline: none;
+          padding: 6px 12px;
+          margin-bottom: 0;
+        }
+
+        .select {
+          margin-bottom: 0;
+          width: 100%;
+
+          &> div {
+            background: transparent;
+          }
+
+          input {
+            height: auto;
+          }
+        }
       }
     }
   }
