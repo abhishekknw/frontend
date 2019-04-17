@@ -76,23 +76,17 @@ export default class CommentsModal extends React.Component {
     });
   }
 
-  // handleCommentRemove(index) {
-  //   const options = [...this.state.options];
+  handleCommentRemove(index) {
+    const { comments, onChange } = this.props;
 
-  //   options.splice(index, 1);
+    comments.splice(index, 1);
 
-  //   if (!options.length) {
-  //     options.push('');
-  //   }
-
-  //   this.setState({
-  //     options
-  //   });
-  // }
+    onChange(comments);
+  }
 
   renderCommentRow(comment, index) {
     const onRemove = () => {
-      // this.handleCommentRemove(index);
+      this.handleCommentRemove(index);
     };
 
     return (
