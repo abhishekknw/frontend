@@ -1065,7 +1065,7 @@
                                             <th ng-if="supplierStatus != 'upcoming'">Standee</th>
                                             <th ng-if="supplierStatus != 'upcoming'">Stall</th>
                                             <th ng-if="supplierStatus != 'upcoming'">Other Images</th>
-                                            <th>Permission Box</th>
+                                            <!-- <th>Permission Box</th> -->
                                             <th style="width:200px;">Add <br> Comments</th>
                                             <th style="width:200px;">View <br> Comments</th>
                                             </tr>
@@ -1080,7 +1080,7 @@
 
                                             <tbody class="detailedTable">
                                               <div class="row">
-                                                  <tr ng-repeat="supplier in supplierAndInvData |filter:query |filter : f | orderBy:sort:reversesort">
+                                                  <tr ng-repeat="supplier in supplierAndInvData |filter:searchQuery |filter : f | orderBy:sort:reversesort">
                                                   <td>{{$index + 1}}</td>
                                                   <td>{{supplier.phase}}</td>
                                                   <td style="width:200px;" class="col-md-2">{{supplier.supplier.society_name}}</td>
@@ -1118,10 +1118,15 @@
                                                       <td style="color:#ffffff;" ng-if="supplier.images_data['STALL WITH PROMOTERS'] && supplierStatus != 'upcoming'" style="background-color:#cb1925"><small>Stall With<br>Promoters</small><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['STALL WITH PROMOTERS'].images)"><small>({{supplier.images_data['STALL WITH PROMOTERS'].total_count}})</small></a></td>
                                                         <!-- <td ng-if="!supplier.images_data['CERTIFICATION DISTRIBUTION']">NA</td> -->
                                                       </tr>
+                                                      <tr>
+                                                      <td style="color:#ffffff;" ng-if="supplier.images_data['Permission Box'] && supplierStatus != 'upcoming'" style="background-color:#cb1925"><small>Permission<br>Letter</small><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['Permission Box'].images)"><small>({{supplier.images_data['Permission Box'].total_count}})</small></a></td>
+                                                        <!-- <td ng-if="!supplier.images_data['CERTIFICATION DISTRIBUTION']">NA</td> -->
+                                                      </tr>
+                                                      <tr>
+                                                      <td style="color:#ffffff;" ng-if="supplier.images_data.RECEIPT && supplierStatus != 'upcoming'" style="background-color:#cb1925"><small>Receipt</small><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.RECEIPT.images)"><small>({{supplier.images_data.RECEIPT.total_count}})</small></a></td>
+                                                        <!-- <td ng-if="!supplier.images_data['CERTIFICATION DISTRIBUTION']">NA</td> -->
+                                                      </tr>
                                                     </table>
-                                                  </td>
-                                                  <td>
-                                                    <a  ng-click="getPermissionBoxImages(supplier.supplier)">View</a>
                                                   </td>
                                                   <td style="width:200px;">
                                                     <button type="button" class="btn btn-danger" ng-click="enableAddComments(supplier)" data-toggle="modal" data-target="#AddMyComments">Add Comments</button>
@@ -1211,7 +1216,6 @@
                                               <td ng-if="supplierStatus != 'upcoming'"></td>
                                               <td ng-if="supplierStatus != 'upcoming'"></td>
                                               <td ng-if="supplierStatus != 'upcoming'"></td>
-                                              <td></td>
                                               <td></td>
                                               <td></td>
                                           </tr>
@@ -4614,7 +4618,6 @@
                        <div class="row" style="margin-left:10px;">
                          Comment : {{image.comment}} </br>
                          Distance : {{image.distance|limitTo:10}} mtrs, ({{image.distance/1000|limitTo:10}} kms)
-
                        </div>
                    </div>
 
@@ -4633,7 +4636,7 @@
     </div>
 
     <!--START: permission box image modal -->
-    <div id="imageModalForPermBox" class="modal fade">
+    <!-- <div id="imageModalForPermBox" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -4664,7 +4667,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!--END:permission box image modal  -->
 
     <div id="imageHashtag" class="modal fade">
