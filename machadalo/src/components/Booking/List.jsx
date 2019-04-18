@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import CommentsModal from './../Modals/CommentsModal';
+import PhaseModal from './../Modals/PhaseModal';
 
 export default class ListBooking extends Component {
   constructor() {
@@ -10,12 +11,15 @@ export default class ListBooking extends Component {
     this.state = {
       searchFilter: '',
       selectedBooking: null,
-      isCommentsModalVisible: false
+      isCommentsModalVisible: false,
+      isPhaseModalVisible: false
     };
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
     this.onCommentsChange = this.onCommentsChange.bind(this);
     this.onCommentsModalClose = this.onCommentsModalClose.bind(this);
+    this.onManagePhaseClick = this.onManagePhaseClick.bind(this);
+    this.onPhaseModalClose = this.onPhaseModalClose.bind(this);
     this.getFilteredList = this.getFilteredList.bind(this);
     this.renderBookingRow = this.renderBookingRow.bind(this);
   }
@@ -44,6 +48,18 @@ export default class ListBooking extends Component {
     this.setState({
       isCommentsModalVisible: false,
       selectedBooking: null
+    });
+  }
+
+  onManagePhaseClick() {
+    this.setState({
+      isPhaseModalVisible: true
+    });
+  }
+
+  onPhaseModalClose() {
+    this.setState({
+      isPhaseModalVisible: false
     });
   }
 
@@ -115,7 +131,8 @@ export default class ListBooking extends Component {
     const {
       searchFilter,
       selectedBooking,
-      isCommentsModalVisible
+      isCommentsModalVisible,
+      isPhaseModalVisible
     } = this.state;
     const { booking } = this.props;
     const { bookingList } = booking;
@@ -174,10 +191,14 @@ export default class ListBooking extends Component {
           >
             Create
           </Link>
-          <button className="btn btn--danger" disabled>
+          <button type="button" className="btn btn--danger" disabled>
             Campaign Release and Audit Plan
           </button>
-          <button className="btn btn--danger" disabled>
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={this.onManagePhaseClick}
+          >
             Manage Phases
           </button>
         </div>
@@ -191,6 +212,13 @@ export default class ListBooking extends Component {
             user={this.props.user.currentUser}
           />
         ) : null}
+
+        <PhaseModal
+          {...this.props}
+          onClose={this.onPhaseModalClose}
+          isVisible={isPhaseModalVisible}
+          campaign={{ campaignId: this.getCampaignId() }}
+        />
       </div>
     );
   }

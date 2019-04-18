@@ -139,6 +139,48 @@
         }
       }
     }
+
+    table {
+      width: 100%;
+
+      thead {
+        tr {
+          th {
+            background-color: #8e1921;
+            color: white;
+            font: {
+              size: 14px;
+              weight: $font-medium;
+            }
+            padding: 12px;
+            text-align: center;
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          td {
+            text-align: center;
+            color: black;
+            font: {
+              size: 14px;
+              weight: $font-regular;
+            }
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+          }
+
+          &:nth-child(odd) {
+            td {
+              background-color: #f9f9f9;
+            }
+          }
+        }
+      }
+    }
+
   }
 
   &__add {
