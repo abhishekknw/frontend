@@ -1127,8 +1127,8 @@ $scope.multiSelect =
           }
           })
           console.log($scope.assignedDataFinal,$scope.initialReleaseData);
-        $scope.releaseDetails.shortlisted_suppliers = [];
-        $scope.releaseDetails.shortlisted_suppliers = angular.copy($scope.assignedDataFinal);
+        // $scope.releaseDetails.shortlisted_suppliers = [];
+        // $scope.releaseDetails.shortlisted_suppliers = angular.copy($scope.assignedDataFinal);
 
         formatData();
       }).catch(function onError(response){
