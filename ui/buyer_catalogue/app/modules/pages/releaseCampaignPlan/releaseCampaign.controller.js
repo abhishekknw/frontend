@@ -1126,7 +1126,7 @@ $scope.multiSelect =
             $scope.assignedDataFinal.push(data);
           }
           })
-          console.log($scope.assignedDataFinal,$scope.initialReleaseData);
+          // console.log($scope.assignedDataFinal,$scope.initialReleaseData);
         $scope.releaseDetails.shortlisted_suppliers = [];
         $scope.releaseDetails.shortlisted_suppliers = angular.copy($scope.assignedDataFinal);
 
@@ -1138,7 +1138,7 @@ $scope.multiSelect =
     var formatData = function(){
       // $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
       // console.log($scope.Data);
-      console.log($scope.releaseDetails);
+      // console.log($scope.releaseDetails);
 
       angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier,key){
         console.log(supplier);
