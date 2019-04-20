@@ -28,12 +28,12 @@
 
 <!-- <div class="container"> -->
   <div class="panel-body table-style">
-    <div class="col-md-6">
+    <!-- <div class="col-md-6">
       <select class="col-md-6 form-control" name="" ng-model="selectedUser.value" ng-change="changeSupplierData()">
         <option value="all">All</option>
         <option value="assigned">Assigned</option>
       </select>
-    </div>
+    </div> -->
       <table st-table="releaseDetails.shortlisted_suppliers"  class="table table-striped">
         <thead>
           <tr>
@@ -60,7 +60,7 @@
             <th>Booking Priority</th>
             <th>Booking Status</th>
             <th>Phase</th>
-            <th>Select User</th>
+            <!-- <th>Select User</th> -->
             <th>Mode Of Payment</th>
             <th>Transaction/Cheque Number</th>
             <th>Contacts</th>
@@ -155,7 +155,7 @@
               </select>
               <span class="error" ng-show="phaseform.phase.$error.min">{{positiveNoError}}</span>
             </td>
-            <td rowspan="{{key.length}}" ng-show="$first">
+            <!-- <td rowspan="{{key.length}}" ng-show="$first">
               <button type="button" class="btn btn-danger"name="button" data-toggle="modal" data-target="#addUserModal" ng-click="setUserSupplier(supplier)">Assign User</button>
                 <div id="addUserModal" class="modal fade">
                   <div class="modal-dialog">
@@ -165,8 +165,6 @@
                         <h4 class="modal-title">Assign Users</h4>
                         <hr/>
                         <div class = "modal-body" style = "height: 300px;">
-                          <!-- <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="usersMapListWithObjects" class="col-md-6"  extra-settings="settingsForUsers"
-                          selected-model="selectedUsers" translation-texts="selected_baselines_customTexts_users" events="eventsForUsers"></span> -->
                           <select name="users" class="form-control spacing input-width-phase"  ng-model="userData.user" min="1" >
                             <option value="" disabled>Select User</option>
                             <option ng-repeat="user in usersMapListWithObjects | unique:'id'" value="{{user.id}}">{{user.username}}</option>
@@ -178,7 +176,7 @@
                     </div>
                   </div>
                 </div>
-              </td>
+              </td> -->
             <!--mode of payment  -->
             <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
               <div class="radio">
@@ -255,7 +253,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="20" class="text-center" ng-if="selectedUser.value == 'all'">
+            <td colspan="20" class="text-center">
               <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages=""></div>
             </td>
           </tr>

@@ -151,7 +151,7 @@ $scope.addNewPhase =true;
         $scope.initialReleaseData = angular.copy(response.data.data);
         console.log($scope.initialReleaseData);
     		$scope.releaseDetails = angular.copy($scope.initialReleaseData);
-        getAssignedSuppliers();
+        // getAssignedSuppliers();
         // formatData();
         // -------------
         if(response.data.data){
@@ -949,14 +949,18 @@ $scope.multiSelect =
       $scope.selectedCommentForView = {};
       $scope.viewComments = function(supplier){
         $scope.supplierDataForComment = supplier;
+        console.log(supplier);
         $scope.commentsData = {};
-
-        console.log(relatedTo);
+        console.log($scope.commentsData);
+        // console.log(relatedTo);
+        console.log($scope.selectedCommentForView.type);
         if($scope.selectedCommentForView.type == undefined){
-            $scope.selectedCommentForView.type = $scope.commentsType[1];
+            $scope.selectedCommentForView.type = $scope.commentsType[0];
+            console.log($scope.commentsType);
         }
-        var relatedTo = $scope.selectedCommentForView.type;
 
+        var relatedTo = $scope.selectedCommentForView.type;
+        console.log(relatedTo);
         var spaceId = $scope.supplierDataForComment.id;
 
         releaseCampaignService.viewComments($scope.campaign_id,spaceId,relatedTo)
@@ -1126,7 +1130,6 @@ $scope.multiSelect =
             $scope.assignedDataFinal.push(data);
           }
           })
-          // console.log($scope.assignedDataFinal,$scope.initialReleaseData);
         $scope.releaseDetails.shortlisted_suppliers = [];
         $scope.releaseDetails.shortlisted_suppliers = angular.copy($scope.assignedDataFinal);
 
