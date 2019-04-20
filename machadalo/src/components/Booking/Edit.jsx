@@ -188,7 +188,8 @@ export default class EditBooking extends React.Component {
       entity,
       attributes,
       isEditMode,
-      bookingId
+      bookingId,
+      inventories
     } = this.state;
     const { postBooking, putBooking } = this.props;
 
@@ -197,7 +198,8 @@ export default class EditBooking extends React.Component {
       entity_id: entity.id,
       campaign_id: this.getCampaignId(),
       organisation_id: bookingTemplate.organisation_id,
-      booking_attributes: attributes
+      booking_attributes: attributes,
+      booking_data: inventories
     };
 
     if (isEditMode) {
