@@ -3908,6 +3908,10 @@ var tooltipDynamicGraphData = [];
     angular.forEach(data.lower_group_data, function(data,key){
       console.log(data,data[$scope.xValues.value],selectedSpecificItems);
       tooltipDynamicGraphData.push(data);
+      angular.forEach(data,function(FlatData){
+        $scope.FlatCountOVerallLowerORderGroup = data.flat;
+      })
+      console.log($scope.FlatCountOVerallLowerORderGroup);
       if(selectedSpecificItems.indexOf(data[$scope.xValues.value]) > -1 || !selectedSpecificItems.length){
         angular.forEach($scope.yValues, function(itemKey,index,item){
           if(!values1.hasOwnProperty(itemKey)){
@@ -3915,11 +3919,13 @@ var tooltipDynamicGraphData = [];
           }
           if(specificXValue){
             if(data[$scope.xValues.value] != null){
-              var temp_label = data[$scope.xValues.value] + " (" + data[specificXValue] + ")" ;
+              var temp_label = data[$scope.xValues.value] + " (" + data[specificXValue] + ")" +
+          " (" +   $scope.FlatCountOVerallLowerORderGroup  + ")";
               if(specificXValue2){
                 console.log("hello");
                 var temp_label = data[$scope.xValues.value] + ", " + data[specificXValue2] +
-                 "( " + data[specificXValue] + " )"
+                 "( " + data[specificXValue] + " )" +  " (" +
+                 $scope.FlatCountOVerallLowerORderGroup + ")";
               }
 
               var temp = {
