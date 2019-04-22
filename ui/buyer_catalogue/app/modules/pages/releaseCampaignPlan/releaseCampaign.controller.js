@@ -149,21 +149,22 @@ $scope.addNewPhase =true;
         getUsersList();
         getAssignedSuppliers();
         $scope.initialReleaseData = Object.assign({}, response.data.data);
+
+        for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
+          $scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price = parseInt($scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price, 10);
+          $scope.mapViewLat = $scope.initialReleaseData.shortlisted_suppliers[i].latitude;
+          $scope.mapViewLong = $scope.initialReleaseData.shortlisted_suppliers[i].longitude;
+          $scope.shortlistedSuppliersIdList[$scope.initialReleaseData.shortlisted_suppliers[i].supplier_id] = $scope.initialReleaseData.shortlisted_suppliers[i];
+
+          if (!$scope.initialReleaseData.shortlisted_suppliers[i].stall_locations) {
+            $scope.initialReleaseData.shortlisted_suppliers[i].stall_locations = [];
+          }
+        }
+
         $scope.releaseDetails = {};
 
-        if (response.data.data) {
-          $scope.releaseDetails = Object.assign({}, response.data.data);
-
-          angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier,key){
-            supplier.total_negotiated_price = parseInt(supplier.total_negotiated_price, 10);
-            $scope.mapViewLat = supplier.latitude;
-            $scope.mapViewLong = supplier.longitude;
-            $scope.shortlistedSuppliersIdList[supplier.supplier_id] = supplier;
-
-            if (!supplier.stall_locations) {
-              supplier.stall_locations = [];
-            }
-          });
+        if ($scope.initialReleaseData) {
+          $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
 
           // setDataToModel($scope.releaseDetails.shortlisted_suppliers);
           $scope.loading = !!response;

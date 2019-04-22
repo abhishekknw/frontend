@@ -34,7 +34,7 @@
         <option value="assigned">Assigned</option>
       </select>
     </div>
-      <table st-table="releaseDetails.shortlisted_suppliers"  class="table table-striped">
+      <table st-table="suppliersList" st-safe-src="releaseDetails.shortlisted_suppliers" class="table table-striped">
         <thead>
           <tr>
             <th colspan='999' style="background-color:#ffffff;">
@@ -71,7 +71,7 @@
             <th>Permission Box</th>
           </tr>
         </thead>
-        <tbody ng-repeat="supplier in releaseDetails.shortlisted_suppliers track by $index">
+        <tbody ng-repeat="supplier in suppliersList track by $index">
           <tr ng-repeat="(key,filter) in getFilters(supplier)" ng-disabled="$index != '15'">
             <td rowspan="{{key.length}}" ng-show="$first">{{$parent.$index + 1}}</td>
             <td class="" rowspan="{{key.length}}" ng-show="$first"><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages" ng-click="getSocietyDetails(supplier,supplier.supplier_id,center,$index)" target="_blank" style="text-decoration: underline; cursor: pointer;color:blue;">{{supplier.name}}({{supplier.quality_rating}})</a></td>
