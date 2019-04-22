@@ -156,7 +156,7 @@ $scope.addNewPhase =true;
           console.log('supplier count', $scope.releaseDetails.shortlisted_suppliers.length);
 
           angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier,key){
-            supplier.total_negotiated_price = +suppliers[i].total_negotiated_price;
+            supplier.total_negotiated_price = +supplier[i].total_negotiated_price;
             $scope.mapViewLat = supplier.latitude;
             $scope.mapViewLong = supplier.longitude;
             $scope.shortlistedSuppliersIdList[supplier.supplier_id] = supplier;
