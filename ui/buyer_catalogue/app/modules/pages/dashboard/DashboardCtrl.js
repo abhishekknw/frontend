@@ -4253,6 +4253,56 @@ var tooltipDynamicGraphData = [];
                      reqData.data_point.value_ranges.flattype.push(data.name);
                    });
            }
+           else if(!$scope.graphSelection.dateRange.startDate &&
+              ($scope.selectedTypeOfSocieties.length && $scope.selectedCities_temp.length
+               && $scope.selectedDynamicCampaigns.length )) {
+        // alert("only society type and Campaign Selected");
+        $scope.xValues.value = 'qualitytype';
+        // $scope.xValues.value = 'flattype';
+        specificXValue = 'campaign_name';
+
+        var reqData = {
+           "data_scope":{
+            "1":{"category":"unordered","level":"campaign","match_type":0,
+            "values":{"exact":[]},"value_type":"campaign"}},
+           "data_point":{"category":"unordered","level": ["qualitytype"],
+           "value_ranges": {"qualitytype":[]}},
+           "raw_data": raw_data_global,
+          "metrics": metrics_global,
+          }
+          angular.forEach($scope.selectedDynamicCampaigns, function(data){
+            reqData.data_scope['1'].values.exact.push(data.campaign_id);
+          });
+          angular.forEach($scope.selectedTypeOfSocieties, function(data){
+            reqData.data_point.value_ranges.qualitytype.push(data.name);
+          });
+
+  }
+  else if(!$scope.graphSelection.dateRange.startDate &&
+     ($scope.selectedSizeOfFlats.length && $scope.selectedCities_temp.length
+      && $scope.selectedDynamicCampaigns.length )) {
+// alert("only flat type and Campaign Selected");
+$scope.xValues.value = 'flattype';
+// $scope.xValues.value = 'flattype';
+specificXValue = 'campaign_name';
+
+var reqData = {
+  "data_scope":{
+   "1":{"category":"unordered","level":"campaign","match_type":0,
+   "values":{"exact":[]},"value_type":"campaign"}},
+  "data_point":{"category":"unordered","level": ["flattype"],
+  "value_ranges": {"flattype":[]}},
+  "raw_data": raw_data_global,
+ "metrics": metrics_global,
+ }
+ angular.forEach($scope.selectedDynamicCampaigns, function(data){
+   reqData.data_scope['1'].values.exact.push(data.campaign_id);
+ });
+ angular.forEach($scope.selectedSizeOfFlats, function(data){
+   reqData.data_point.value_ranges.flattype.push(data.name);
+ });
+
+}
            else if (!$scope.graphSelection.dateRange.startDate && ($scope.graphSelection.phaseRange.length
              && $scope.selectedDynamicCampaigns.length
             )){
