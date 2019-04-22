@@ -28,12 +28,12 @@
 
 <!-- <div class="container"> -->
   <div class="panel-body table-style">
-    <!-- <div class="col-md-6">
+    <div class="col-md-6">
       <select class="col-md-6 form-control" name="" ng-model="selectedUser.value" ng-change="changeSupplierData()">
         <option value="all">All</option>
         <option value="assigned">Assigned</option>
       </select>
-    </div> -->
+    </div>
       <table st-table="releaseDetails.shortlisted_suppliers"  class="table table-striped">
         <thead>
           <tr>
@@ -60,7 +60,7 @@
             <th>Booking Priority</th>
             <th>Booking Status</th>
             <th>Phase</th>
-            <!-- <th>Select User</th> -->
+            <th>Select User</th>
             <th>Mode Of Payment</th>
             <th>Transaction/Cheque Number</th>
             <th>Contacts</th>
@@ -155,7 +155,7 @@
               </select>
               <span class="error" ng-show="phaseform.phase.$error.min">{{positiveNoError}}</span>
             </td>
-            <!-- <td rowspan="{{key.length}}" ng-show="$first">
+            <td rowspan="{{key.length}}" ng-show="$first">
               <button type="button" class="btn btn-danger"name="button" data-toggle="modal" data-target="#addUserModal" ng-click="setUserSupplier(supplier)">Assign User</button>
                 <div id="addUserModal" class="modal fade">
                   <div class="modal-dialog">
@@ -176,7 +176,7 @@
                     </div>
                   </div>
                 </div>
-              </td> -->
+              </td>
             <!--mode of payment  -->
             <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
               <div class="radio">

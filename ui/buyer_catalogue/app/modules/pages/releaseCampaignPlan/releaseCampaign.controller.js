@@ -151,7 +151,7 @@ $scope.addNewPhase =true;
         $scope.initialReleaseData = angular.copy(response.data.data);
         console.log($scope.initialReleaseData);
     		$scope.releaseDetails = angular.copy($scope.initialReleaseData);
-        // getAssignedSuppliers();
+        getAssignedSuppliers();
         // formatData();
         // -------------
         if(response.data.data){
