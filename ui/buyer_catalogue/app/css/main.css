@@ -783,6 +783,8 @@ color: #ffffff !important;
 div.outer { overflow: scroll; }
 div.outer .inner { width: 1900px; }
 
+div.outerSociety { overflow: scroll; }
+div.outerSociety .innerSociety { width: 2800px; }
 
 div.outerdate { overflow: scroll; }
 div.outerdate .innerdate { width: 2400px; }

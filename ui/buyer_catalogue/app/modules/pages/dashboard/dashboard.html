@@ -2794,14 +2794,14 @@
                               <option value="" disabled>Select For Sorting</option>
                               <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
                             </select>
-                            <div  class="outer" ng-if="!dateRangeModel.start_date">
-                              <div class="inner"  ng-if="!dateRangeModel.start_date">
+                            <div  class="outerSociety" ng-if="!dateRangeModel.start_date">
+                              <div class="innerSociety"  ng-if="!dateRangeModel.start_date">
                                 <nvd3 options="locationChartOptions" data="sortedLocationData['supplier']" ng-if="togglesortedGraphs['supplier']"></nvd3>
                                 <nvd3 options="stackedBarChartSocietyWise" data="stackedBarChartSupplierData" ng-if="!togglesortedGraphs['supplier']"></nvd3>
                               </div>
                             </div>
-                            <div ng-if="dateRangeModel.start_date">
-                              <div ng-if="dateRangeModel.start_date">
+                            <div class="outerSociety"  ng-if="dateRangeModel.start_date">
+                              <div class="innerSociety" ng-if="dateRangeModel.start_date">
                                 <nvd3 options="locationChartOptions" data="sortedLocationData['supplier']" ng-if="togglesortedGraphs['supplier']"></nvd3>
                                 <nvd3 options="stackedBarChartSocietyWise" data="stackedBarChartSupplierData" ng-if="!togglesortedGraphs['supplier']"></nvd3>
                               </div>
@@ -2822,14 +2822,14 @@
                               <option value="" disabled>Select For Sorting</option>
                               <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
                             </select>
-                            <div class="outerdate" ng-if="!dateRangeModel.start_date">
-                              <div class="innerdate" ng-if="!dateRangeModel.start_date">
+                            <div class="outerSociety" ng-if="!dateRangeModel.start_date">
+                              <div class="innerSociety" ng-if="!dateRangeModel.start_date">
                                 <nvd3 options="locationChartOptions" data="sortedLocationData['datewise']" ng-if="togglesortedGraphs['datewise']"></nvd3>
                                 <nvd3 options="stackedBarChartDateWise" data="stackedBarChartDateData" ng-if="!togglesortedGraphs['datewise']"></nvd3>
                               </div>
                             </div>
-                            <div ng-if="dateRangeModel.start_date">
-                              <div ng-if="dateRangeModel.start_date">
+                            <div class="outerSociety" ng-if="dateRangeModel.start_date">
+                              <div class="innerSociety" ng-if="dateRangeModel.start_date">
                                 <nvd3 options="locationChartOptions" data="sortedLocationData['datewise']" ng-if="togglesortedGraphs['datewise']"></nvd3>
                                 <nvd3 options="stackedBarChartDateWise" data="stackedBarChartDateData" ng-if="!togglesortedGraphs['datewise']"></nvd3>
                               </div>
