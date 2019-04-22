@@ -153,10 +153,9 @@ $scope.addNewPhase =true;
 
         if (response.data.data) {
           $scope.releaseDetails = Object.assign({}, response.data.data);
-          console.log('supplier count', $scope.releaseDetails.shortlisted_suppliers.length);
 
           angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier,key){
-            supplier.total_negotiated_price = +supplier[i].total_negotiated_price;
+            supplier.total_negotiated_price = parseInt(supplier.total_negotiated_price, 10);
             $scope.mapViewLat = supplier.latitude;
             $scope.mapViewLong = supplier.longitude;
             $scope.shortlistedSuppliersIdList[supplier.supplier_id] = supplier;
@@ -182,7 +181,6 @@ $scope.addNewPhase =true;
 
       var setDataToModel = function(suppliers){
         for(var i=0;i<suppliers.length;i++){
-          console.log(suppliers);
           suppliers[i].total_negotiated_price = parseInt(suppliers[i].total_negotiated_price);
           // angular.forEach($scope.phases, function(phase){
           //   suppliers[i].phase_no = parseInt(phase.id);
@@ -304,7 +302,6 @@ $scope.addNewPhase =true;
       if($scope.supplier_type_code.code && $scope.search.query){
         mapViewService.searchSuppliers($scope.supplier_type_code.code,$scope.search.query,$scope.releaseDetails.campaign.principal_vendor)
           .then(function onSuccess(response, status){
-            console.log(response);
               $scope.center_index = null;
             $scope.supplierData = response.data.data;
             if($scope.supplierData.length > 0){
