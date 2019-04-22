@@ -146,11 +146,9 @@ $scope.addNewPhase =true;
     };
     releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id)
     	.then(function onSuccess(response){
-        console.log(response);
         getUsersList();
-        $scope.initialReleaseData = angular.copy(response.data.data);
-        console.log($scope.initialReleaseData);
-    		$scope.releaseDetails = angular.copy($scope.initialReleaseData);
+        $scope.initialReleaseData = Object.assign({}, response.data.data);
+    		$scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
         getAssignedSuppliers();
         // formatData();
         // -------------
@@ -1163,19 +1161,19 @@ $scope.multiSelect =
         $scope.shortlistedSuppliersIdList[supplier.supplier_id] = supplier;
       })
     }
-    $scope.selectedUser = {};
-    $scope.changeSupplierData = function(){
-      console.log("hello");
-      if($scope.selectedUser.value == 'all'){
-        $scope.releaseDetails = angular.copy($scope.initialReleaseData);
-        console.log($scope.releaseDetails);
-        formatData();
+    $scope.selectedUser = { value: 'assigned' };
+    $scope.changeSupplierData = function() {
+      switch ($scope.selectedUser.value) {
+        case 'all':
+          $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
+          break;
+
+        case 'assigned':
+          $scope.releaseDetails.shortlisted_suppliers = $scope.assignedDataFinal;
+          break;
       }
-      if($scope.selectedUser.value == 'assigned'){
-        $scope.releaseDetails.shortlisted_suppliers = $scope.assignedDataFinal;
-        console.log($scope.releaseDetails);
-        formatData();
-      }
+
+      formatData();
     }
 
 }]);//Controller function ends here
