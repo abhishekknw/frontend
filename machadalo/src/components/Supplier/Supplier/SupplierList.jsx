@@ -12,11 +12,11 @@ export default class List extends React.Component {
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
     this.getFilteredList = this.getFilteredList.bind(this);
-    this.renderEntityRow = this.renderEntityRow.bind(this);
+    this.renderSupplierRow = this.renderSupplierRow.bind(this);
   }
 
   componentWillMount() {
-    this.props.getEntityList();
+    this.props.getSupplierList();
   }
 
   onSearchFilterChange(event) {
@@ -37,25 +37,28 @@ export default class List extends React.Component {
     );
   }
 
-  renderEntityRow(entity, index) {
+  renderSupplierRow(supplier, index) {
     const onRemove = () => {
-      this.props.deleteEntity(entity.id, () => {
-        toastr.error('', 'Entity deleted successfully');
+      this.props.deleteSupplier(supplier.id, () => {
+        toastr.error('', 'Supplier deleted successfully');
       });
     };
 
     return (
-      <tr key={entity.id}>
+      <tr key={supplier.id}>
         <td>{index + 1}</td>
-        <td>{entity.name}</td>
+        <td>{supplier.name}</td>
         <td>
           <button type="button" className="btn btn--danger" onClick={onRemove}>
             Remove
           </button>
         </td>
         <td>
-          <Link to={`/r/entity/edit/${entity.id}`} className="btn btn--danger">
-            Edit Entity
+          <Link
+            to={`/r/supplier/edit/${supplier.id}`}
+            className="btn btn--danger"
+          >
+            Edit Supplier
           </Link>
         </td>
       </tr>
@@ -64,14 +67,14 @@ export default class List extends React.Component {
 
   render() {
     const { searchFilter } = this.state;
-    const { entityList } = this.props.entity;
-    const list = this.getFilteredList(entityList);
+    const { supplierList } = this.props.supplier;
+    const list = this.getFilteredList(supplierList);
 
     return (
-      <div className="entity-list">
+      <div className="supplier-list">
         <div className="list">
           <div className="list__title">
-            <h3>Entity List</h3>
+            <h3>Supplier List</h3>
           </div>
           <div className="list__filter">
             <input
@@ -93,11 +96,11 @@ export default class List extends React.Component {
               </thead>
               <tbody>
                 {list.length ? (
-                  list.map(this.renderEntityRow)
+                  list.map(this.renderSupplierRow)
                 ) : (
                   <tr>
                     <td colSpan="5">
-                      No entity types available. Create your first one now!
+                      No supplier types available. Create your first one now!
                     </td>
                   </tr>
                 )}
@@ -106,8 +109,8 @@ export default class List extends React.Component {
           </div>
         </div>
         <div className="list__actions">
-          <Link to={'/r/entity/create'} className="btn btn--danger">
-            Create Entity
+          <Link to={'/r/supplier/create'} className="btn btn--danger">
+            Create Supplier
           </Link>
         </div>
       </div>

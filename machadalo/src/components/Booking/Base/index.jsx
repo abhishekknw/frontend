@@ -8,7 +8,7 @@ import './index.css';
 
 export default class BaseBooking extends Component {
   componentDidMount() {
-    // TODO: Fetch entity types
+    // TODO: Fetch supplier types
   }
 
   render() {

@@ -132,15 +132,15 @@ export default class Sidebar extends React.Component {
                   hidden={this.state.hideEntitiesDropdown}
                 >
                   <li>
-                    <NavLink to="/r/entity/base-type/list">
-                      Base Entity Type
+                    <NavLink to="/r/supplier/base-type/list">
+                      Base Supplier Type
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/r/entity/type/list">Entity Type</NavLink>
+                    <NavLink to="/r/supplier/type/list">Supplier Type</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/r/entity/list">Entity</NavLink>
+                    <NavLink to="/r/supplier/list">Supplier</NavLink>
                   </li>
                 </ul>
               </li>

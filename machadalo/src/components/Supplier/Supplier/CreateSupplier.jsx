@@ -3,7 +3,7 @@ import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
 
 import OptionModal from '../../Modals/OptionModal';
-import FillEntityModal from '../../Modals/FillEntityModal';
+import FillSupplierModal from '../../Modals/FillSupplierModal';
 
 const customeStyles = {
   input: () => ({
@@ -11,82 +11,82 @@ const customeStyles = {
   })
 };
 
-export default class CreateEntity extends React.Component {
+export default class CreateSupplier extends React.Component {
   constructor() {
     super();
 
     this.state = {
       name: '',
-      entity_attributes: [{ name: '', type: '', is_required: false }],
-      entityTypeOption: [],
-      selectedEntityType: {},
+      supplier_attributes: [{ name: '', type: '', is_required: false }],
+      supplierTypeOption: [],
+      selectedSupplierType: {},
       attributeValue: [],
       showOptionModal: false,
       attributeValueOptions: [''],
       attributeValueInfo: {},
-      showFillEntityModal: false,
-      currentModalEntityType: undefined
+      showFillSupplierModal: false,
+      currentModalSupplierType: undefined
     };
 
     this.renderAttributeRow = this.renderAttributeRow.bind(this);
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.onSelectEntityType = this.onSelectEntityType.bind(this);
+    this.onSelectSupplierType = this.onSelectSupplierType.bind(this);
     this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
-    this.onCancelFillEntityModal = this.onCancelFillEntityModal.bind(this);
-    this.onSubmitFillEntityModal = this.onSubmitFillEntityModal.bind(this);
-    this.onOpenFillEntityModal = this.onOpenFillEntityModal.bind(this);
+    this.onCancelFillSupplierModal = this.onCancelFillSupplierModal.bind(this);
+    this.onSubmitFillSupplierModal = this.onSubmitFillSupplierModal.bind(this);
+    this.onOpenFillSupplierModal = this.onOpenFillSupplierModal.bind(this);
   }
 
   componentWillMount() {
-    this.props.getEntityTypeList();
+    this.props.getSupplierTypeList();
   }
 
   componentDidUpdate() {
     if (
-      this.state.entityTypeOption.length !==
-      this.props.entityType.entityTypeList.length
+      this.state.supplierTypeOption.length !==
+      this.props.supplierType.supplierTypeList.length
     ) {
-      let entityTypeOption = [];
-      this.props.entityType.entityTypeList.forEach(entityType => {
-        entityTypeOption.push({
-          value: entityType.id,
-          label: entityType.name
+      let supplierTypeOption = [];
+      this.props.supplierType.supplierTypeList.forEach(supplierType => {
+        supplierTypeOption.push({
+          value: supplierType.id,
+          label: supplierType.name
         });
       });
       this.setState({
-        entityTypeOption
+        supplierTypeOption
       });
     }
   }
 
-  onCancelFillEntityModal() {
+  onCancelFillSupplierModal() {
     this.setState({
-      showFillEntityModal: false,
-      currentModalEntityType: undefined
+      showFillSupplierModal: false,
+      currentModalSupplierType: undefined
     });
   }
 
-  onSubmitFillEntityModal(currentModalEntityType, attributeInfo) {
+  onSubmitFillSupplierModal(currentModalSupplierType, attributeInfo) {
     this.setState({
-      showFillEntityModal: false,
-      currentModalEntityType: undefined,
+      showFillSupplierModal: false,
+      currentModalSupplierType: undefined,
       attributeValueInfo: {}
     });
 
     let newAttributes = Object.assign({}, attributeInfo.attribute, {
-      value: currentModalEntityType
+      value: currentModalSupplierType
     });
     this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
   }
 
-  onOpenFillEntityModal(currentModalEntityType, attribute, attrIndex) {
+  onOpenFillSupplierModal(currentModalSupplierType, attribute, attrIndex) {
     this.setState({
-      showFillEntityModal: true,
-      currentModalEntityType,
+      showFillSupplierModal: true,
+      currentModalSupplierType,
       attributeValueInfo: {
         attribute,
         attrIndex
@@ -132,22 +132,22 @@ export default class CreateEntity extends React.Component {
     let data = {
       name: this.state.name,
       is_custom: false,
-      entity_type_id: this.state.selectedEntityType.value,
-      entity_attributes: this.state.entity_attributes
+      supplier_type_id: this.state.selectedSupplierType.value,
+      supplier_attributes: this.state.supplier_attributes
     };
-    this.props.postEntity({ data }, () => {
-      toastr.success('', 'Entity created successfully');
-      this.props.history.push('/r/entity/list');
+    this.props.postSupplier({ data }, () => {
+      toastr.success('', 'Supplier created successfully');
+      this.props.history.push('/r/supplier/list');
     });
   }
 
   handleAttributeChange(attribute, index) {
-    const attributes = this.state.entity_attributes.slice();
+    const attributes = this.state.supplier_attributes.slice();
 
     attributes.splice(index, 1, attribute);
 
     this.setState({
-      entity_attributes: attributes
+      supplier_attributes: attributes
     });
   }
 
@@ -225,7 +225,11 @@ export default class CreateEntity extends React.Component {
             type="button"
             className="btn btn--danger"
             onClick={() =>
-              this.onOpenFillEntityModal(attribute.value, attribute, attrIndex)
+              this.onOpenFillSupplierModal(
+                attribute.value,
+                attribute,
+                attrIndex
+              )
             }
           >
             {attribute.value && attribute.value.attributes[0].value
@@ -240,7 +244,11 @@ export default class CreateEntity extends React.Component {
             type="button"
             className="btn btn--danger"
             onClick={() =>
-              this.onOpenFillEntityModal(attribute.value, attribute, attrIndex)
+              this.onOpenFillSupplierModal(
+                attribute.value,
+                attribute,
+                attrIndex
+              )
             }
           >
             {attribute.value && attribute.value.attributes[0].value
@@ -249,32 +257,40 @@ export default class CreateEntity extends React.Component {
           </button>
         );
 
-      case 'ENTITY_TYPE':
+      case 'SUPPLIER_TYPE':
         return (
           <button
             type="button"
             className="btn btn--danger"
             onClick={() =>
-              this.onOpenFillEntityModal(attribute.value, attribute, attrIndex)
+              this.onOpenFillSupplierModal(
+                attribute.value,
+                attribute,
+                attrIndex
+              )
             }
           >
             {attribute.value && attribute.value.attributes[0].value
-              ? 'Show Entity Type Data'
-              : 'Create Entity Type Data'}
+              ? 'Show Supplier Type Data'
+              : 'Create Supplier Type Data'}
           </button>
         );
-      case 'BASE_ENTITY_TYPE':
+      case 'BASE_SUPPLIER_TYPE':
         return (
           <button
             type="button"
             className="btn btn--danger"
             onClick={() =>
-              this.onOpenFillEntityModal(attribute.value, attribute, attrIndex)
+              this.onOpenFillSupplierModal(
+                attribute.value,
+                attribute,
+                attrIndex
+              )
             }
           >
             {attribute.value && attribute.value.attributes[0].value
-              ? 'Show Base Entity Type Data'
-              : 'Create Base Entity Type Data'}
+              ? 'Show Base Supplier Type Data'
+              : 'Create Base Supplier Type Data'}
           </button>
         );
       default:
@@ -298,13 +314,13 @@ export default class CreateEntity extends React.Component {
     );
   }
 
-  onSelectEntityType(selectedEntityType) {
-    let { entityTypeList } = this.props.entityType;
-    entityTypeList.forEach(entityType => {
-      if (entityType.id === selectedEntityType.value) {
+  onSelectSupplierType(selectedSupplierType) {
+    let { supplierTypeList } = this.props.supplierType;
+    supplierTypeList.forEach(supplierType => {
+      if (supplierType.id === selectedSupplierType.value) {
         this.setState({
-          selectedEntityType,
-          entity_attributes: entityType.entity_attributes
+          selectedSupplierType,
+          supplier_attributes: supplierType.supplier_attributes
         });
         return;
       }
@@ -315,13 +331,13 @@ export default class CreateEntity extends React.Component {
     return (
       <div className="createform">
         <div className="createform__title">
-          <h3>Create Entity </h3>
+          <h3>Create Supplier </h3>
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
             <div className="createform__form__inline">
               <div className="form-control">
-                <label>*Enter Name For Entity</label>
+                <label>*Enter Name For Supplier</label>
                 <input
                   type="text"
                   name="name"
@@ -333,11 +349,11 @@ export default class CreateEntity extends React.Component {
 
             <div className="createform__form__inline">
               <div className="form-control">
-                <label>*Select Entity Type</label>
+                <label>*Select Supplier Type</label>
                 <Select
-                  options={this.state.entityTypeOption}
-                  value={this.state.selectedEntityType}
-                  onChange={this.onSelectEntityType}
+                  options={this.state.supplierTypeOption}
+                  value={this.state.selectedSupplierType}
+                  onChange={this.onSelectSupplierType}
                 />
               </div>
             </div>
@@ -345,7 +361,7 @@ export default class CreateEntity extends React.Component {
             <div className="createform__form__header">Attributes</div>
 
             <div>
-              {this.state.entity_attributes.map(this.renderAttributeRow)}
+              {this.state.supplier_attributes.map(this.renderAttributeRow)}
             </div>
 
             <div className="createform__form__inline">
@@ -365,13 +381,13 @@ export default class CreateEntity extends React.Component {
           columnInfo={this.state.attributeValueInfo}
         />
 
-        {this.state.showFillEntityModal ? (
-          <FillEntityModal
-            showOptionModal={this.state.showFillEntityModal}
-            onCancel={this.onCancelFillEntityModal}
-            onSubmit={this.onSubmitFillEntityModal}
+        {this.state.showFillSupplierModal ? (
+          <FillSupplierModal
+            showOptionModal={this.state.showFillSupplierModal}
+            onCancel={this.onCancelFillSupplierModal}
+            onSubmit={this.onSubmitFillSupplierModal}
             columnInfo={this.state.attributeValueInfo}
-            selectedEntityType={this.state.currentModalEntityType}
+            selectedSupplierType={this.state.currentModalSupplierType}
           />
         ) : (
           undefined

@@ -11,7 +11,7 @@ import './index.css';
 
 export default class Booking extends React.Component {
   componentDidMount() {
-    // TODO: Fetch entity types
+    // TODO: Fetch supplier types
   }
 
   render() {

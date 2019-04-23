@@ -1,48 +1,48 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import CreateType from './EntityType/CreateType';
-import CreateBaseType from './BaseEntityType/CreateBaseType';
-import CreateEntity from './Entity/CreateEntity';
-import EntityList from './Entity/EntityList';
-import EntityTypeList from './EntityType/EntityTypeList';
-import BaseEntityTypeList from './BaseEntityType/BaseEntityTypeList';
-import EditEntity from './Entity/EditEntity';
-import EditEntityType from './EntityType/EditEntityType';
-import EditBaseEntityType from './BaseEntityType/EditBaseEntityType';
+import CreateType from './SupplierType/CreateType';
+import CreateBaseType from './BaseSupplierType/CreateBaseType';
+import CreateSupplier from './Supplier/CreateSupplier';
+import SupplierList from './Supplier/SupplierList';
+import SupplierTypeList from './SupplierType/SupplierTypeList';
+import BaseSupplierTypeList from './BaseSupplierType/BaseSupplierTypeList';
+import EditSupplier from './Supplier/EditSupplier';
+import EditSupplierType from './SupplierType/EditSupplierType';
+import EditBaseSupplierType from './BaseSupplierType/EditBaseSupplierType';
 
 import './index.css';
 
-export default class Entity extends React.Component {
+export default class Supplier extends React.Component {
   componentDidMount() {
-    // TODO: Fetch entity types
+    // TODO: Fetch supplier types
   }
 
   render() {
     let { match } = this.props;
 
     return (
-      <div className="entity">
+      <div className="supplier">
         <Switch>
           <Route
             exact
             path={`${match.path}/create`}
             render={componentProps => (
-              <CreateEntity {...this.props} {...componentProps} />
+              <CreateSupplier {...this.props} {...componentProps} />
             )}
           />
           <Route
             exact
             path={`${match.path}/list`}
             render={componentProps => (
-              <EntityList {...this.props} {...componentProps} />
+              <SupplierList {...this.props} {...componentProps} />
             )}
           />
           <Route
             exact
-            path={`${match.path}/edit/:entityId`}
+            path={`${match.path}/edit/:supplierId`}
             render={componentProps => (
-              <EditEntity {...this.props} {...componentProps} />
+              <EditSupplier {...this.props} {...componentProps} />
             )}
           />
           <Route
@@ -56,14 +56,14 @@ export default class Entity extends React.Component {
             exact
             path={`${match.path}/type/list`}
             render={componentProps => (
-              <EntityTypeList {...this.props} {...componentProps} />
+              <SupplierTypeList {...this.props} {...componentProps} />
             )}
           />
           <Route
             exact
-            path={`${match.path}/type/edit/:entityTypeId`}
+            path={`${match.path}/type/edit/:supplierTypeId`}
             render={componentProps => (
-              <EditEntityType {...this.props} {...componentProps} />
+              <EditSupplierType {...this.props} {...componentProps} />
             )}
           />
           <Route
@@ -77,14 +77,14 @@ export default class Entity extends React.Component {
             exact
             path={`${match.path}/base-type/list`}
             render={componentProps => (
-              <BaseEntityTypeList {...this.props} {...componentProps} />
+              <BaseSupplierTypeList {...this.props} {...componentProps} />
             )}
           />
           <Route
             exact
-            path={`${match.path}/base-type/edit/:baseEntityTypeId`}
+            path={`${match.path}/base-type/edit/:baseSupplierTypeId`}
             render={componentProps => (
-              <EditBaseEntityType {...this.props} {...componentProps} />
+              <EditBaseSupplierType {...this.props} {...componentProps} />
             )}
           />
         </Switch>

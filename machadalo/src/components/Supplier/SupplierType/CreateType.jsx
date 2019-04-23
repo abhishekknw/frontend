@@ -3,7 +3,7 @@ import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
 
 import OptionModal from '../../Modals/OptionModal';
-import EntitySelectionModal from '../../Modals/EntitySelectionModal';
+import SupplierSelectionModal from '../../Modals/SupplierSelectionModal';
 
 const optionStyle = {
   fontSize: '12px',
@@ -21,8 +21,8 @@ const AttributeTypes = [
   { value: 'INVENTORY_TYPE', label: 'Base Inventory' },
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
-  { value: 'ENTITY_TYPE', label: 'Entity Type' },
-  { value: 'BASE_ENTITY_TYPE', label: 'Base Entity Type' }
+  { value: 'SUPPLIER_TYPE', label: 'Supplier Type' },
+  { value: 'BASE_SUPPLIER_TYPE', label: 'Base Supplier Type' }
 ];
 
 // Get attribute type option from string
@@ -36,21 +36,20 @@ const getAttributeTypeOption = value => {
   return { value };
 };
 
-export default class EditEntityType extends React.Component {
+export default class CreateType extends React.Component {
   constructor() {
     super();
 
     this.state = {
       name: '',
-
-      entity_attributes: [{ name: '', type: '', is_required: false }],
-      base_entity_type_id: undefined,
-      currentEntityType: undefined,
-      showEntitySelectionModal: false,
+      supplier_attributes: [{ name: '', type: '', is_required: false }],
+      baseSupplierTypeOption: [],
+      selectedBaseSupplierType: {},
       showOptionModal: false,
+      showSupplierSelectionModal: false,
       attributeOptions: [''],
       attributeInfo: {},
-      selectedModalEntityType: undefined
+      selectedModalSupplierType: undefined
     };
 
     this.onAddAttribute = this.onAddAttribute.bind(this);
@@ -61,31 +60,32 @@ export default class EditEntityType extends React.Component {
     this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
-    this.onCancelEntityModal = this.onCancelEntityModal.bind(this);
-    this.onSubmitEntityModal = this.onSubmitEntityModal.bind(this);
-    this.onOpenEntityModal = this.onOpenEntityModal.bind(this);
+    this.onCancelSupplierModal = this.onCancelSupplierModal.bind(this);
+    this.onSubmitSupplierModal = this.onSubmitSupplierModal.bind(this);
+    this.onOpenSupplierModal = this.onOpenSupplierModal.bind(this);
+    this.onSelectBaseSupplierType = this.onSelectBaseSupplierType.bind(this);
   }
 
   componentWillMount() {
-    this.props.getEntityType(this.props.match.params.entityTypeId);
+    this.props.getBaseSupplierTypeList();
   }
 
   componentDidUpdate() {
     if (
-      (this.state.currentEntityType === undefined &&
-        this.props.entityType.currentEntityType) ||
-      (this.state.currentEntityType &&
-        this.props.entityType.currentEntityType &&
-        this.state.currentEntityType.id !==
-          this.props.entityType.currentEntityType.id)
+      this.state.baseSupplierTypeOption.length !==
+      this.props.baseSupplierType.baseSupplierTypeList.length
     ) {
+      let baseSupplierTypeOption = [];
+      this.props.baseSupplierType.baseSupplierTypeList.forEach(
+        baseSupplierType => {
+          baseSupplierTypeOption.push({
+            value: baseSupplierType.id,
+            label: baseSupplierType.name
+          });
+        }
+      );
       this.setState({
-        currentEntityType: this.props.entityType.currentEntityType,
-        entity_attributes: this.props.entityType.currentEntityType
-          .entity_attributes,
-        name: this.props.entityType.currentEntityType.name,
-        base_entity_type_id: this.props.entityType.currentEntityType
-          .base_entity_type_id
+        baseSupplierTypeOption
       });
     }
   }
@@ -129,32 +129,26 @@ export default class EditEntityType extends React.Component {
 
     let data = {
       name: this.state.name,
-      base_entity_type_id: this.state.base_entity_type_id,
-      entity_attributes: this.state.entity_attributes
+      base_supplier_type_id: this.state.selectedBaseSupplierType.value,
+      supplier_attributes: this.state.supplier_attributes
     };
 
-    this.props.updateEntityType(
-      {
-        data,
-        entityTypeId: this.props.match.params.entityTypeId
-      },
-      () => {
-        toastr.success('', 'Entity Type updated successfully');
-        this.props.history.push('/r/entity/type/list');
-      }
-    );
+    this.props.postSupplierType({ data }, () => {
+      toastr.success('', 'Supplier Type created successfully');
+      this.props.history.push('/r/supplier/type/list');
+    });
   }
 
-  onCancelEntityModal() {
+  onCancelSupplierModal() {
     this.setState({
-      showEntitySelectionModal: false,
+      showSupplierSelectionModal: false,
       attributeInfo: {}
     });
   }
 
-  onSubmitEntityModal(value, attributeInfo) {
+  onSubmitSupplierModal(value, attributeInfo) {
     this.setState({
-      showEntitySelectionModal: false,
+      showSupplierSelectionModal: false,
       attributeInfo: {}
     });
 
@@ -165,10 +159,10 @@ export default class EditEntityType extends React.Component {
     this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
   }
 
-  onOpenEntityModal(attributeType, attribute, attrIndex) {
+  onOpenSupplierModal(attributeType, attribute, attrIndex) {
     this.setState({
-      showEntitySelectionModal: true,
-      selectedModalEntityType: attribute.value,
+      showSupplierSelectionModal: true,
+      selectedModalSupplierType: attribute.value,
       attributeInfo: {
         attributeType,
         attribute,
@@ -178,7 +172,7 @@ export default class EditEntityType extends React.Component {
   }
 
   onAddAttribute() {
-    const newAttributes = this.state.entity_attributes.slice();
+    const newAttributes = this.state.supplier_attributes.slice();
 
     newAttributes.push({
       name: '',
@@ -187,23 +181,38 @@ export default class EditEntityType extends React.Component {
     });
 
     this.setState({
-      entity_attributes: newAttributes
+      supplier_attributes: newAttributes
     });
   }
 
   handleAttributeChange(attribute, index) {
-    const attributes = this.state.entity_attributes.slice();
+    const attributes = [...this.state.supplier_attributes];
 
-    attributes.splice(index, 1, attribute);
+    attributes[index] = {
+      ...attribute
+    };
 
     this.setState({
-      entity_attributes: attributes
+      supplier_attributes: attributes
     });
   }
 
   handleInputChange(event) {
     this.setState({
       [event.target.name]: event.target.value
+    });
+  }
+
+  onSelectBaseSupplierType(selectedBaseSupplierType) {
+    let { baseSupplierTypeList } = this.props.baseSupplierType;
+    baseSupplierTypeList.forEach(baseSupplierType => {
+      if (baseSupplierType.id === selectedBaseSupplierType.value) {
+        this.setState({
+          selectedBaseSupplierType,
+          supplier_attributes: baseSupplierType.supplier_attributes
+        });
+        return;
+      }
     });
   }
 
@@ -230,14 +239,15 @@ export default class EditEntityType extends React.Component {
             attrIndex
           }
         });
+        return;
       } else if (
-        item.value === 'ENTITY_TYPE' ||
-        item.value === 'BASE_ENTITY_TYPE' ||
+        item.value === 'SUPPLIER_TYPE' ||
+        item.value === 'BASE_SUPPLIER_TYPE' ||
         item.value === 'INVENTORY_TYPE' ||
         item.value === 'INVENTORY'
       ) {
         this.setState({
-          showEntitySelectionModal: true,
+          showSupplierSelectionModal: true,
           attributeInfo: {
             attributeType: item.value,
             attribute,
@@ -301,15 +311,15 @@ export default class EditEntityType extends React.Component {
             ) : (
               ''
             )}
-            {attribute.type === 'ENTITY_TYPE' ||
-            attribute.type === 'BASE_ENTITY_TYPE' ||
+            {attribute.type === 'SUPPLIER_TYPE' ||
+            attribute.type === 'BASE_SUPPLIER_TYPE' ||
             attribute.type === 'INVENTORY_TYPE' ||
             attribute.type === 'INVENTORY' ? (
               <p
                 className="show-option"
                 style={optionStyle}
                 onClick={() =>
-                  this.onOpenEntityModal(attribute.type, attribute, attrIndex)
+                  this.onOpenSupplierModal(attribute.type, attribute, attrIndex)
                 }
               >
                 Show Attributes
@@ -318,13 +328,14 @@ export default class EditEntityType extends React.Component {
               ''
             )}
           </div>
+          <br />
 
           <div className="form-control required-field">
             <div>Is it required?</div>
             <input
               type="checkbox"
               className="input-checkbox"
-              value={attribute.is_required}
+              checked={attribute.is_required}
               onChange={onRequiredChange}
               disabled={isDisabled}
             />
@@ -338,13 +349,13 @@ export default class EditEntityType extends React.Component {
     return (
       <div className="createform">
         <div className="createform__title">
-          <h3>Edit Entity Type </h3>
+          <h3>Create Supplier Type </h3>
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
             <div className="createform__form__inline">
               <div className="form-control">
-                <label>*Enter Name For Entity Type</label>
+                <label>*Enter Name For Supplier Type</label>
                 <input
                   type="text"
                   name="name"
@@ -354,10 +365,21 @@ export default class EditEntityType extends React.Component {
               </div>
             </div>
 
+            <div className="createform__form__inline">
+              <div className="form-control">
+                <label>*Select Base Supplier Type</label>
+                <Select
+                  options={this.state.baseSupplierTypeOption}
+                  value={this.state.selectedBaseSupplierType}
+                  onChange={this.onSelectBaseSupplierType}
+                />
+              </div>
+            </div>
+
             <div className="createform__form__header">Attributes</div>
 
             <div>
-              {this.state.entity_attributes.map(this.renderAttributeRow)}
+              {this.state.supplier_attributes.map(this.renderAttributeRow)}
             </div>
 
             <div className="createform__form__inline">
@@ -386,14 +408,14 @@ export default class EditEntityType extends React.Component {
           options={this.state.attributeOptions}
           columnInfo={this.state.attributeInfo}
         />
-        {this.state.showEntitySelectionModal ? (
-          <EntitySelectionModal
+        {this.state.showSupplierSelectionModal ? (
+          <SupplierSelectionModal
             {...this.props}
-            showOptionModal={this.state.showEntitySelectionModal}
-            onCancel={this.onCancelEntityModal}
-            onSubmit={this.onSubmitEntityModal}
+            showOptionModal={this.state.showSupplierSelectionModal}
+            onCancel={this.onCancelSupplierModal}
+            onSubmit={this.onSubmitSupplierModal}
             attributeInfo={this.state.attributeInfo}
-            selectedModalEntityType={this.state.selectedModalEntityType}
+            selectedModalSupplierType={this.state.selectedModalSupplierType}
           />
         ) : (
           undefined

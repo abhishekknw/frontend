@@ -4,7 +4,7 @@ import * as types from './types';
 
 import config from './../config';
 
-//Post Entity Type
+//Post Supplier Type
 export function postBaseInventoryStart() {
   return {
     type: types.POST_BASE_INVENTORY_START

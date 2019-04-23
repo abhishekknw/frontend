@@ -92,7 +92,7 @@ export default class ListBooking extends Component {
         {booking.booking_attributes.map(attribute => (
           <td>{attribute.value}</td>
         ))}
-        {booking.entity_attributes.map(attribute => (
+        {booking.supplier_attributes.map(attribute => (
           <td>
             {attribute.type === 'STRING' ||
             attribute.type === 'FLOAT' ||
@@ -140,7 +140,9 @@ export default class ListBooking extends Component {
     let attributes = [];
 
     if (list && list.length) {
-      attributes = list[0].booking_attributes.concat(list[0].entity_attributes);
+      attributes = list[0].booking_attributes.concat(
+        list[0].supplier_attributes
+      );
     }
 
     return (
