@@ -41,7 +41,9 @@ export default class CreateBaseType extends React.Component {
 
     this.state = {
       name: '',
-      entity_attributes: [{ name: '', type: '', is_required: false }],
+      entity_attributes: [
+        { name: '', type: '', is_required: false, is_editable: true }
+      ],
       showOptionModal: false,
       attributeOptions: [''],
       attributeInfo: {},
@@ -148,7 +150,8 @@ export default class CreateBaseType extends React.Component {
     newAttributes.push({
       name: '',
       type: '',
-      is_required: false
+      is_required: false,
+      is_editable: true
     });
 
     this.setState({
@@ -215,9 +218,19 @@ export default class CreateBaseType extends React.Component {
     };
 
     const onRequiredChange = event => {
-      const newAttribute = Object.assign({}, attribute);
+      const newAttribute = {
+        ...attribute,
+        is_required: !!event.target.checked
+      };
 
-      newAttribute.is_required = !!event.target.checked;
+      this.handleAttributeChange(newAttribute, attrIndex);
+    };
+
+    const onEditableChange = event => {
+      const newAttribute = {
+        ...attribute,
+        is_editable: !!event.target.checked
+      };
 
       this.handleAttributeChange(newAttribute, attrIndex);
     };
@@ -283,8 +296,17 @@ export default class CreateBaseType extends React.Component {
             <input
               type="checkbox"
               className="input-checkbox"
-              value={attribute.is_required}
+              checked={attribute.is_required}
               onChange={onRequiredChange}
+            />
+          </div>
+          <div className="form-control required-field">
+            <div>Is it editable?</div>
+            <input
+              type="checkbox"
+              className="input-checkbox"
+              checked={attribute.is_editable}
+              onChange={onEditableChange}
             />
           </div>
         </div>
