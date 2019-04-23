@@ -1,7 +1,7 @@
 import createReducer from '../lib/createReducer';
 import * as types from '../actions/types';
 
-export const supplier = createReducer(
+export const supplierStatic = createReducer(
   {
     list: [],
     currentSupplier: undefined
@@ -41,4 +41,4 @@ export const supplier = createReducer(
   }
 );
 
-export { supplier as default };
+export { supplierStatic as default };

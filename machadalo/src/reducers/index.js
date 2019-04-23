@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import * as appearanceReducer from './appearance';
 import * as authReducer from './auth';
 import * as campaignReducer from './campaign';
-import * as supplierStaticReducer from './supplier';
+import * as supplierStaticReducer from './supplier_static';
 import * as checklistReducer from './checklist';
 import * as inventoryReducer from './inventory';
 import * as supplierReducer from './Supplier/supplier';
