@@ -1,6 +1,8 @@
 import React from 'react';
 
-const getConsolidatedList = list => {
+import AssignModal from './../Modals/AssignModal';
+
+const getConsolidatedList = (list) => {
   const listMap = {};
   let key = '';
 
@@ -23,12 +25,15 @@ export default class AuditPlan extends React.Component {
 
     this.state = {
       supplierById: {},
-      searchFilter: ''
+      searchFilter: '',
+      isAssignModalVisible: false,
     };
 
     this.getCampaignId = this.getCampaignId.bind(this);
     this.renderAuditPlanRow = this.renderAuditPlanRow.bind(this);
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
+    this.onManageActivity = this.onManageActivity.bind(this);
+    this.onAssignModalClose = this.onAssignModalClose.bind(this);
   }
 
   componentDidMount() {
@@ -41,10 +46,7 @@ export default class AuditPlan extends React.Component {
     const { supplier: prevSupplier } = prevProps;
     const { supplier: newSupplier } = this.props;
 
-    if (
-      prevSupplier.isFetchingSupplierList &&
-      !newSupplier.isFetchingSupplierList
-    ) {
+    if (prevSupplier.isFetchingSupplierList && !newSupplier.isFetchingSupplierList) {
       const { supplierList } = newSupplier;
       const supplierById = {};
 
@@ -53,14 +55,27 @@ export default class AuditPlan extends React.Component {
       }
 
       this.setState({
-        supplierById
+        supplierById,
       });
     }
   }
 
   onSearchFilterChange(event) {
     this.setState({
-      searchFilter: event.target.value
+      searchFilter: event.target.value,
+    });
+  }
+
+  onManageActivity(activity) {
+    this.setState({
+      selectedInventory: activity,
+      isAssignModalVisible: true,
+    });
+  }
+
+  onAssignModalClose() {
+    this.setState({
+      isAssignModalVisible: false,
     });
   }
 
@@ -69,22 +84,26 @@ export default class AuditPlan extends React.Component {
     return match.params.campaignId;
   }
 
-  renderAuditPlanRow(plan) {
+  renderAuditPlanRow(inventory) {
     let supplierName = '';
-    if (this.state.supplierById[plan.supplier_id]) {
-      supplierName = this.state.supplierById[plan.supplier_id].name;
+    if (this.state.supplierById[inventory.supplier_id]) {
+      supplierName = this.state.supplierById[inventory.supplier_id].name;
     }
 
+    const onManageClick = () => {
+      this.onManageActivity(inventory);
+    };
+
     return (
-      <tr key={plan.id}>
+      <tr key={inventory.id}>
         <td>1</td>
         <td>
-          {plan.inventory_name} ({plan.count})
+          {inventory.inventory_name} ({inventory.count})
         </td>
         <td>{supplierName}</td>
         <td>-</td>
         <td>
-          <button type="button" className="btn btn--danger">
+          <button type="button" className="btn btn--danger" onClick={onManageClick}>
             Manage Date
           </button>
         </td>
@@ -95,7 +114,7 @@ export default class AuditPlan extends React.Component {
   render() {
     const { booking } = this.props;
     const { campaignInventoryList } = booking;
-    const { searchFilter } = this.state;
+    const { searchFilter, selectedInventory, isAssignModalVisible } = this.state;
 
     const list = getConsolidatedList(campaignInventoryList);
 
@@ -136,6 +155,13 @@ export default class AuditPlan extends React.Component {
             </tbody>
           </table>
         </div>
+        <AssignModal
+          {...this.props}
+          inventory={selectedInventory}
+          onClose={this.onAssignModalClose}
+          isVisible={isAssignModalVisible}
+          campaign={{ campaignId: this.getCampaignId() }}
+        />
       </div>
     );
   }
