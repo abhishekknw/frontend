@@ -484,3 +484,47 @@ export function deleteBooking({ id }) {
   };
 }
 /* Booking: End */
+
+/* Campaign Inventory: Start */
+const getCampaignInventoryStart = () => {
+  return {
+    type: types.GET_CAMPAIGN_INVENTORY_START
+  };
+};
+
+const getCampaignInventorySuccess = ({ list }) => {
+  return {
+    type: types.GET_CAMPAIGN_INVENTORY_SUCCESS,
+    list
+  };
+};
+
+const getCampaignInventoryFail = () => {
+  return {
+    type: types.GET_CAMPAIGN_INVENTORY_FAIL
+  };
+};
+
+export function getCampaignInventoryList({ campaignId }) {
+  return (dispatch, getState) => {
+    dispatch(getCampaignInventoryStart());
+
+    const { auth } = getState();
+
+    request
+      .get(
+        `${
+          config.API_URL
+        }/v0/ui/dynamic-booking/booking-inventory/campaign/${campaignId}/`
+      )
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        dispatch(getCampaignInventorySuccess({ list: resp.body.data }));
+      })
+      .catch(ex => {
+        console.log('Failed to fetch list of bookings', ex);
+
+        dispatch(getCampaignInventoryFail());
+      });
+  };
+}

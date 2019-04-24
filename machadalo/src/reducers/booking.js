@@ -5,7 +5,8 @@ export const booking = createReducer(
   {
     baseBookingList: [],
     bookingTemplateList: [],
-    bookingList: []
+    bookingList: [],
+    campaignInventoryList: []
   },
   {
     [types.POST_BASE_BOOKING_START](state) {
@@ -260,6 +261,26 @@ export const booking = createReducer(
       return {
         ...state,
         isDeletingBooking: false
+      };
+    },
+    [types.GET_CAMPAIGN_INVENTORY_START](state) {
+      return {
+        ...state,
+        isFetchingCampaignInventory: true
+      };
+    },
+    [types.GET_CAMPAIGN_INVENTORY_SUCCESS](state, action) {
+      return {
+        ...state,
+        isFetchingCampaignInventory: false,
+        campaignInventoryList: action.list
+      };
+    },
+    [types.GET_CAMPAIGN_INVENTORY_FAIL](state) {
+      return {
+        ...state,
+        isFetchingCampaignInventory: false,
+        campaignInventoryList: []
       };
     }
   }

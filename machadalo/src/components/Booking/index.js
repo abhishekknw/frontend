@@ -6,6 +6,7 @@ import Template from './Template';
 import Campaigns from './Campaigns';
 import List from './List';
 import Edit from './Edit';
+import AuditPlan from './AuditPlan';
 
 import './index.css';
 
@@ -58,6 +59,13 @@ export default class Booking extends React.Component {
             path={`${match.path}/edit/:campaignId/:bookingId`}
             render={componentProps => (
               <Edit {...this.props} {...componentProps} />
+            )}
+          />
+          <Route
+            exact
+            path={`${match.path}/plan/:campaignId`}
+            render={componentProps => (
+              <AuditPlan {...this.props} {...componentProps} />
             )}
           />
         </Switch>
