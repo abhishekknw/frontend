@@ -2,9 +2,16 @@ import React from 'react';
 
 const getConsolidatedList = list => {
   const listMap = {};
+  let key = '';
 
   for (let i = 0, l = list.length; i < l; i += 1) {
-    listMap[`${list[i].supplier_id}-${list[i].inventory_name}`] = list[i];
+    key = `${list[i].supplier_id}-${list[i].inventory_name}`;
+
+    if (!listMap[key]) {
+      listMap[key] = { ...list[i], count: 1 };
+    } else {
+      listMap[key].count += 1;
+    }
   }
 
   return Object.values(listMap);
@@ -26,8 +33,8 @@ export default class AuditPlan extends React.Component {
 
   componentDidMount() {
     const { getCampaignInventoryList, getSupplierList } = this.props;
-    getCampaignInventoryList({ campaignId: this.getCampaignId() });
     getSupplierList();
+    getCampaignInventoryList({ campaignId: this.getCampaignId() });
   }
 
   componentDidUpdate(prevProps) {
@@ -71,8 +78,11 @@ export default class AuditPlan extends React.Component {
     return (
       <tr key={plan.id}>
         <td>1</td>
-        <td>{plan.inventory_name}</td>
+        <td>
+          {plan.inventory_name} ({plan.count})
+        </td>
         <td>{supplierName}</td>
+        <td>-</td>
         <td>
           <button type="button" className="btn btn--danger">
             Manage Date
@@ -83,8 +93,6 @@ export default class AuditPlan extends React.Component {
   }
 
   render() {
-    console.log('props', this.props);
-
     const { booking } = this.props;
     const { campaignInventoryList } = booking;
     const { searchFilter } = this.state;
@@ -113,7 +121,8 @@ export default class AuditPlan extends React.Component {
                 <th>Phase</th>
                 <th>Inventory</th>
                 <th>Supplier Name</th>
-                <th>Activity Date</th>
+                <th>Assigned Date</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
