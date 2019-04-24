@@ -25,6 +25,16 @@ const getInventoryAttributes = supplier => {
   return [];
 };
 
+const getDropdownOption = (options, value) => {
+  for (let i = 0, l = options.length; i < l; i += 1) {
+    if (options[i].value === value) {
+      return options[i];
+    }
+  }
+
+  return null;
+};
+
 export default class EditBooking extends React.Component {
   constructor(props) {
     super(props);
@@ -303,17 +313,18 @@ export default class EditBooking extends React.Component {
         break;
 
       case 'DROPDOWN':
+        const options = attribute.options.map(option => ({
+          label: option,
+          value: option
+        }));
         typeInput = (
           <Select
             className={classnames('select')}
-            options={attribute.options.map(option => ({
-              label: option,
-              value: option
-            }))}
+            options={options}
             getOptionValue={option => option.label}
             getOptionLabel={option => option.value}
             onChange={handleAttributeInputChange}
-            value={attribute.value}
+            value={getDropdownOption(options, attribute.value)}
           />
         );
         break;
@@ -336,7 +347,7 @@ export default class EditBooking extends React.Component {
             getOptionValue={option => option}
             getOptionLabel={option => option}
             onChange={handleAttributeInputChange}
-            value={attribute.value}
+            value={getDropdownOption(attribute.options, attribute.value)}
           />
         );
         break;
