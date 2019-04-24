@@ -19,7 +19,7 @@ const getInventoryAttributes = supplier => {
   ) {
     return supplier.supplier_attributes
       .filter(item => item.type === 'INVENTORY')
-      .map(item => ({ ...item.value, count: 1 }));
+      .map(item => ({ name: item.value.label, count: 1 }));
   }
 
   return [];
@@ -214,7 +214,7 @@ export default class EditBooking extends React.Component {
       campaign_id: this.getCampaignId(),
       organisation_id: bookingTemplate.organisation_id,
       booking_attributes: attributes,
-      booking_data: inventories
+      inventory_counts: inventories
     };
 
     if (isEditMode) {
@@ -391,7 +391,7 @@ export default class EditBooking extends React.Component {
       <div className="supplier" key={index}>
         <div className="form-control">&nbsp;</div>
         <div className="form-control">
-          <p>{inventory.label}</p>
+          <p>{inventory.name}</p>
         </div>
 
         <div className="form-control">
@@ -407,7 +407,6 @@ export default class EditBooking extends React.Component {
 
   render() {
     const { errors, attributes, inventories } = this.state;
-    console.log('inventories: ', inventories);
     const { booking, supplier } = this.props;
     const { supplierList } = supplier;
     const { bookingTemplateList } = booking;
