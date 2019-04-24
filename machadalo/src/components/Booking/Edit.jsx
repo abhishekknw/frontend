@@ -210,7 +210,7 @@ export default class EditBooking extends React.Component {
 
     const data = {
       booking_template_id: bookingTemplateId,
-      Supplier_id: supplier.id,
+      supplier_id: supplier.id,
       campaign_id: this.getCampaignId(),
       organisation_id: bookingTemplate.organisation_id,
       booking_attributes: attributes,
@@ -262,11 +262,11 @@ export default class EditBooking extends React.Component {
 
   getSupplierById({ id }) {
     const { supplier } = this.props;
-    const { SupplierList } = supplier;
+    const { supplierList } = supplier;
 
-    for (let i = 0, l = SupplierList.length; i < l; i += 1) {
-      if (SupplierList[i].id === id) {
-        return SupplierList[i];
+    for (let i = 0, l = supplierList.length; i < l; i += 1) {
+      if (supplierList[i].id === id) {
+        return supplierList[i];
       }
     }
 
