@@ -5,19 +5,19 @@ import { toastr } from 'react-redux-toastr';
 
 const getFilteredSupplierList = (list, SupplierId) => {
   if (SupplierId) {
-    return list.filter(Supplier => Supplier.Supplier_type_id === SupplierId);
+    return list.filter(supplier => supplier.Supplier_type_id === SupplierId);
   } else {
     return list;
   }
 };
 
-const getInventoryAttributes = Supplier => {
+const getInventoryAttributes = supplier => {
   if (
-    Supplier &&
-    Supplier.Supplier_attributes &&
-    Supplier.Supplier_attributes.length
+    supplier &&
+    supplier.Supplier_attributes &&
+    supplier.Supplier_attributes.length
   ) {
-    return Supplier.Supplier_attributes.filter(
+    return supplier.Supplier_attributes.filter(
       item => item.type === 'INVENTORY'
     ).map(item => ({ ...item.value, count: 1 }));
   }
@@ -36,15 +36,15 @@ export default class EditBooking extends React.Component {
 
     let attributes = [];
     let bookingTemplate = {};
-    let Supplier = {};
+    let supplier = {};
     let inventories = [];
     if (bookingId && booking && booking.id) {
       attributes = booking.booking_attributes;
       bookingTemplate = this.getBookingTemplateById({
         id: booking.booking_template_id
       });
-      Supplier = this.getSupplierById({ id: booking.Supplier_id });
-      inventories = getInventoryAttributes(Supplier);
+      supplier = this.getSupplierById({ id: booking.Supplier_id });
+      inventories = getInventoryAttributes(supplier);
     }
 
     this.state = {
@@ -53,7 +53,7 @@ export default class EditBooking extends React.Component {
       errors: {},
       bookingTemplateId: booking.booking_template_id,
       bookingTemplate,
-      Supplier,
+      supplier,
       SupplierId: booking.Supplier_id,
       attributes,
       inventories
@@ -75,8 +75,8 @@ export default class EditBooking extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { booking: prevBooking, Supplier: prevSupplier } = prevProps;
-    const { booking: newBooking, Supplier: newSupplier, history } = this.props;
+    const { booking: prevBooking, supplier: prevSupplier } = prevProps;
+    const { booking: newBooking, supplier: newSupplier, history } = this.props;
 
     if (
       prevBooking.isCreatingBooking &&
@@ -120,15 +120,15 @@ export default class EditBooking extends React.Component {
 
       let attributes = [];
       let bookingTemplate = {};
-      let Supplier = {};
+      let supplier = {};
       let inventories = [];
       if (bookingId && booking && booking.id) {
         attributes = booking.booking_attributes;
         bookingTemplate = this.getBookingTemplateById({
           id: booking.booking_template_id
         });
-        Supplier = this.getSupplierById({ id: booking.Supplier_id });
-        inventories = getInventoryAttributes(Supplier);
+        supplier = this.getSupplierById({ id: booking.Supplier_id });
+        inventories = getInventoryAttributes(supplier);
       }
 
       this.setState({
@@ -136,7 +136,7 @@ export default class EditBooking extends React.Component {
         bookingId,
         bookingTemplateId: booking.booking_template_id,
         bookingTemplate,
-        Supplier,
+        supplier,
         SupplierId: booking.Supplier_id,
         attributes,
         inventories
@@ -159,10 +159,10 @@ export default class EditBooking extends React.Component {
     });
   }
 
-  onSupplierChange(Supplier) {
+  onSupplierChange(supplier) {
     this.setState({
-      Supplier: Supplier,
-      inventories: getInventoryAttributes(Supplier)
+      supplier: supplier,
+      inventories: getInventoryAttributes(supplier)
     });
   }
 
@@ -190,7 +190,7 @@ export default class EditBooking extends React.Component {
     const {
       bookingTemplateId,
       bookingTemplate,
-      Supplier,
+      supplier,
       attributes,
       isEditMode,
       bookingId,
@@ -200,7 +200,7 @@ export default class EditBooking extends React.Component {
 
     const data = {
       booking_template_id: bookingTemplateId,
-      Supplier_id: Supplier.id,
+      Supplier_id: supplier.id,
       campaign_id: this.getCampaignId(),
       organisation_id: bookingTemplate.organisation_id,
       booking_attributes: attributes,
@@ -251,8 +251,8 @@ export default class EditBooking extends React.Component {
   }
 
   getSupplierById({ id }) {
-    const { Supplier } = this.props;
-    const { SupplierList } = Supplier;
+    const { supplier } = this.props;
+    const { SupplierList } = supplier;
 
     for (let i = 0, l = SupplierList.length; i < l; i += 1) {
       if (SupplierList[i].id === id) {
@@ -347,7 +347,7 @@ export default class EditBooking extends React.Component {
     }
 
     return (
-      <div className="Supplier" key={index}>
+      <div className="supplier" key={index}>
         <div className="form-control">&nbsp;</div>
         <div className="form-control">
           <p>
@@ -377,7 +377,7 @@ export default class EditBooking extends React.Component {
     };
 
     return (
-      <div className="Supplier" key={index}>
+      <div className="supplier" key={index}>
         <div className="form-control">&nbsp;</div>
         <div className="form-control">
           <p>{inventory.label}</p>
@@ -396,11 +396,11 @@ export default class EditBooking extends React.Component {
 
   render() {
     const { errors, attributes, inventories } = this.state;
-    const { booking, Supplier } = this.props;
-    const { SupplierList } = Supplier;
+    const { booking, supplier } = this.props;
+    const { supplierList } = supplier;
     const { bookingTemplateList } = booking;
     const filterSupplierList = getFilteredSupplierList(
-      SupplierList,
+      supplierList,
       this.state.SupplierId
     );
 
@@ -452,7 +452,7 @@ export default class EditBooking extends React.Component {
               </div>
 
               {attributes && attributes.length ? (
-                <div className="Supplier Supplier__header">
+                <div className="supplier Supplier__header">
                   <div className="form-control">&nbsp;</div>
                   <div className="form-control">
                     <h4>Field</h4>
@@ -469,29 +469,29 @@ export default class EditBooking extends React.Component {
                 : null}
             </div>
 
-            <div className="create__form__header">Select Supplier</div>
+            <div className="create__form__header">Select supplier</div>
 
             <div className="create__form__body">
               <div className="form-control form-control--column">
                 <Select
                   className={classnames('select', {
-                    error: errors.Supplier
+                    error: errors.supplier
                   })}
                   options={filterSupplierList}
                   getOptionValue={option => option.id}
                   getOptionLabel={option => option.name}
-                  value={this.state.Supplier}
+                  value={this.state.supplier}
                   onChange={this.onSupplierChange}
                 />
-                {errors.Supplier ? (
+                {errors.supplier ? (
                   <p className="message message--error">
-                    {errors.Supplier.message}
+                    {errors.supplier.message}
                   </p>
                 ) : null}
               </div>
 
               {inventories && inventories.length ? (
-                <div className="Supplier Supplier__header">
+                <div className="supplier Supplier__header">
                   <div className="form-control">&nbsp;</div>
                   <div className="form-control">
                     <h4>Inventory</h4>
