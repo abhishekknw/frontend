@@ -3,9 +3,9 @@ import classnames from 'classnames';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
 
-const getFilteredSupplierList = (list, SupplierId) => {
-  if (SupplierId) {
-    return list.filter(supplier => supplier.Supplier_type_id === SupplierId);
+const getFilteredSupplierList = (list, supplierId) => {
+  if (supplierId) {
+    return list.filter(supplier => supplier.supplier_type_id === supplierId);
   } else {
     return list;
   }
@@ -14,12 +14,12 @@ const getFilteredSupplierList = (list, SupplierId) => {
 const getInventoryAttributes = supplier => {
   if (
     supplier &&
-    supplier.Supplier_attributes &&
-    supplier.Supplier_attributes.length
+    supplier.supplier_attributes &&
+    supplier.supplier_attributes.length
   ) {
-    return supplier.Supplier_attributes.filter(
-      item => item.type === 'INVENTORY'
-    ).map(item => ({ ...item.value, count: 1 }));
+    return supplier.supplier_attributes
+      .filter(item => item.type === 'INVENTORY')
+      .map(item => ({ ...item.value, count: 1 }));
   }
 
   return [];
@@ -53,7 +53,7 @@ export default class EditBooking extends React.Component {
       bookingTemplate = this.getBookingTemplateById({
         id: booking.booking_template_id
       });
-      supplier = this.getSupplierById({ id: booking.Supplier_id });
+      supplier = this.getSupplierById({ id: booking.supplier_id });
       inventories = getInventoryAttributes(supplier);
     }
 
@@ -64,7 +64,7 @@ export default class EditBooking extends React.Component {
       bookingTemplateId: booking.booking_template_id,
       bookingTemplate,
       supplier,
-      SupplierId: booking.Supplier_id,
+      supplierId: booking.supplier_id,
       attributes,
       inventories
     };
@@ -137,7 +137,7 @@ export default class EditBooking extends React.Component {
         bookingTemplate = this.getBookingTemplateById({
           id: booking.booking_template_id
         });
-        supplier = this.getSupplierById({ id: booking.Supplier_id });
+        supplier = this.getSupplierById({ id: booking.supplier_id });
         inventories = getInventoryAttributes(supplier);
       }
 
@@ -147,7 +147,7 @@ export default class EditBooking extends React.Component {
         bookingTemplateId: booking.booking_template_id,
         bookingTemplate,
         supplier,
-        SupplierId: booking.Supplier_id,
+        supplierId: booking.supplier_id,
         attributes,
         inventories
       });
@@ -164,7 +164,7 @@ export default class EditBooking extends React.Component {
     this.setState({
       bookingTemplate: template,
       bookingTemplateId: template.id,
-      SupplierId: template.Supplier_type_id,
+      supplierId: template.supplier_type_id,
       attributes: template.booking_attributes
     });
   }
@@ -407,12 +407,13 @@ export default class EditBooking extends React.Component {
 
   render() {
     const { errors, attributes, inventories } = this.state;
+    console.log('inventories: ', inventories);
     const { booking, supplier } = this.props;
     const { supplierList } = supplier;
     const { bookingTemplateList } = booking;
     const filterSupplierList = getFilteredSupplierList(
       supplierList,
-      this.state.SupplierId
+      this.state.supplierId
     );
 
     return (
@@ -463,7 +464,7 @@ export default class EditBooking extends React.Component {
               </div>
 
               {attributes && attributes.length ? (
-                <div className="supplier Supplier__header">
+                <div className="supplier supplier__header">
                   <div className="form-control">&nbsp;</div>
                   <div className="form-control">
                     <h4>Field</h4>
@@ -502,7 +503,7 @@ export default class EditBooking extends React.Component {
               </div>
 
               {inventories && inventories.length ? (
-                <div className="supplier Supplier__header">
+                <div className="supplier supplier__header">
                   <div className="form-control">&nbsp;</div>
                   <div className="form-control">
                     <h4>Inventory</h4>
