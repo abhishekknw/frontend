@@ -37,9 +37,12 @@ export default class AuditPlan extends React.Component {
   }
 
   componentDidMount() {
-    const { getCampaignInventoryList, getSupplierList } = this.props;
+    const { getCampaignInventoryList, getSupplierList, getUsersList } = this.props;
     getSupplierList();
     getCampaignInventoryList({ campaignId: this.getCampaignId() });
+
+    // Fetch users list for AssignModal
+    getUsersList();
   }
 
   componentDidUpdate(prevProps) {
@@ -155,13 +158,15 @@ export default class AuditPlan extends React.Component {
             </tbody>
           </table>
         </div>
-        <AssignModal
-          {...this.props}
-          inventory={selectedInventory}
-          onClose={this.onAssignModalClose}
-          isVisible={isAssignModalVisible}
-          campaign={{ campaignId: this.getCampaignId() }}
-        />
+        {isAssignModalVisible ? (
+          <AssignModal
+            {...this.props}
+            inventory={selectedInventory}
+            onClose={this.onAssignModalClose}
+            isVisible={isAssignModalVisible}
+            campaign={{ campaignId: this.getCampaignId() }}
+          />
+        ) : null}
       </div>
     );
   }

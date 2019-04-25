@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { DatetimePickerTrigger } from 'rc-datetime-picker';
 import Select from 'react-select';
 import moment from 'moment';
+import { toastr } from 'react-redux-toastr';
 
 import './index.css';
 
@@ -18,11 +19,24 @@ const customStyles = {
   },
 };
 
+const getUserById = (users, userId) => {
+  for (let i = 0, l = users.length; i < l; i += 1) {
+    // eslint-disable-next-line
+    if (users[i].id == userId) {
+      // Use == match, since userId is sometimes numeric, sometimes string
+      return users[i];
+    }
+  }
+
+  return {};
+};
+
 export default class AssignModal extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      isEditMode: false,
       release: {
         date: moment(),
         user: '',
@@ -43,11 +57,70 @@ export default class AssignModal extends React.Component {
     this.handleClosureUserChange = this.handleClosureUserChange.bind(this);
     this.handleAuditDateChange = this.handleAuditDateChange.bind(this);
     this.handleAuditUserChange = this.handleAuditUserChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
-    // TODO: Fetch assigned
-    this.props.getUsersList();
+    const { getAssignmentList, campaign } = this.props;
+
+    // Fetch assignments
+    getAssignmentList(campaign);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { booking: prevBooking } = prevProps;
+    const { booking: newBooking, inventory, onClose, user } = this.props;
+
+    if (
+      prevBooking.isCreatingAssignment &&
+      !newBooking.isCreatingAssignment &&
+      newBooking.postAssignmentSuccess
+    ) {
+      toastr.success('', 'Assignment created successfully');
+      onClose();
+    } else if (
+      prevBooking.isCreatingAssignment &&
+      !newBooking.isCreatingAssignment &&
+      newBooking.putAssignmentError
+    ) {
+      toastr.error('', 'Failed to create assignment. Please try again later.');
+    } else if (
+      prevBooking.isUpdatingAssignment &&
+      !newBooking.isUpdatingAssignment &&
+      newBooking.putAssignmentSuccess
+    ) {
+      toastr.success('', 'Assignemnt updated successfully');
+      onClose();
+    } else if (
+      prevBooking.isUpdatingAssignment &&
+      !newBooking.isUpdatingAssignment &&
+      newBooking.putAssignmentError
+    ) {
+      toastr.error('', 'Failed to update Assignment. Please try again later.');
+    }
+
+    if (prevBooking.isFetchingAssignment && !newBooking.isFetchingAssignment) {
+      const key = `${inventory.supplier_id}-${inventory.inventory_name}`;
+      const assignments = newBooking.assignmentList[key];
+
+      if (assignments && Object.keys(assignments).length) {
+        this.setState({
+          isEditMode: true,
+          release: {
+            date: moment(assignments.RELEASE.activity_date),
+            user: getUserById(user.userList, assignments.RELEASE[0].assigned_to_id),
+          },
+          closure: {
+            date: moment(assignments.CLOSURE.activity_date),
+            user: getUserById(user.userList, assignments.CLOSURE[0].assigned_to_id),
+          },
+          audit: {
+            date: moment(assignments.AUDIT.activity_date),
+            user: getUserById(user.userList, assignments.AUDIT[0].assigned_to_id),
+          },
+        });
+      }
+    }
   }
 
   handleReleaseDateChange(date) {
@@ -98,19 +171,41 @@ export default class AssignModal extends React.Component {
     });
   }
 
-  onSubmit(type) {
-    const { campaign, inventory } = this.props;
-    const group = this.state[type];
+  onSubmit() {
+    const { campaign, inventory, postAssignment, putAssignment } = this.props;
+    const { release, closure, audit, isEditMode } = this.state;
 
     const data = {
-      ...campaign,
+      campaign_id: campaign.campaignId,
       inventory_name: inventory.inventory_name,
-      assigned_to_id: group.user.id,
-      activity_type: type.toUpperCase(),
-      activity_date: moment(group.date).format('YYYY-MM-DD'),
+      supplier_id: inventory.supplier_id,
+      activity_list: [
+        {
+          assigned_to_id: release.user.id,
+          activity_type: 'RELEASE',
+          activity_date: moment(release.date).format('YYYY-MM-DD'),
+        },
+        {
+          assigned_to_id: closure.user.id,
+          activity_type: 'CLOSURE',
+          activity_date: moment(closure.date).format('YYYY-MM-DD'),
+        },
+        {
+          assigned_to_id: audit.user.id,
+          activity_type: 'AUDIT',
+          activity_date: moment(audit.date).format('YYYY-MM-DD'),
+        },
+      ],
     };
 
-    console.log('data: ', data);
+    if (isEditMode) {
+      putAssignment({
+        ...campaign,
+        data,
+      });
+    } else {
+      postAssignment({ data });
+    }
   }
 
   render() {
@@ -191,11 +286,7 @@ export default class AssignModal extends React.Component {
             </form>
           </div>
           <div className="modal__footer">
-            <button
-              type="button"
-              className="btn btn--danger"
-              onClick={this.onSubmit.bind(this, 'release')}
-            >
+            <button type="button" className="btn btn--danger" onClick={this.onSubmit}>
               Save
             </button>
             <button type="button" className="btn btn--danger" onClick={onClose}>

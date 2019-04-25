@@ -6,7 +6,8 @@ export const booking = createReducer(
     baseBookingList: [],
     bookingTemplateList: [],
     bookingList: [],
-    campaignInventoryList: []
+    campaignInventoryList: [],
+    assignmentList: {},
   },
   {
     [types.POST_BASE_BOOKING_START](state) {
@@ -14,21 +15,21 @@ export const booking = createReducer(
         ...state,
         isCreatingBaseBooking: true,
         postBaseBookingSuccess: false,
-        postBaseBookingError: false
+        postBaseBookingError: false,
       };
     },
     [types.POST_BASE_BOOKING_SUCCESS](state) {
       return {
         ...state,
         isCreatingBaseBooking: false,
-        postBaseBookingSuccess: true
+        postBaseBookingSuccess: true,
       };
     },
     [types.POST_BASE_BOOKING_FAIL](state) {
       return {
         ...state,
         isCreatingBaseBooking: false,
-        postBaseBookingError: true
+        postBaseBookingError: true,
       };
     },
     [types.PUT_BASE_BOOKING_START](state) {
@@ -36,47 +37,47 @@ export const booking = createReducer(
         ...state,
         isUpdatingBaseBooking: true,
         putBaseBookingSuccess: false,
-        putBaseBookingError: false
+        putBaseBookingError: false,
       };
     },
     [types.PUT_BASE_BOOKING_SUCCESS](state) {
       return {
         ...state,
         isUpdatingBaseBooking: false,
-        putBaseBookingSuccess: true
+        putBaseBookingSuccess: true,
       };
     },
     [types.PUT_BASE_BOOKING_FAIL](state) {
       return {
         ...state,
         isUpdatingBaseBooking: false,
-        putBaseBookingError: true
+        putBaseBookingError: true,
       };
     },
     [types.GET_BASE_BOOKING_LIST_START](state) {
       return {
         ...state,
-        isFetchingBaseBooking: true
+        isFetchingBaseBooking: true,
       };
     },
     [types.GET_BASE_BOOKING_LIST_SUCCESS](state, action) {
       return {
         ...state,
         isFetchingBaseBooking: false,
-        baseBookingList: action.list
+        baseBookingList: action.list,
       };
     },
     [types.GET_BASE_BOOKING_LIST_FAIL](state) {
       return {
         ...state,
         isFetchingBaseBooking: false,
-        baseBookingList: []
+        baseBookingList: [],
       };
     },
     [types.DELETE_BASE_BOOKING_START](state) {
       return {
         ...state,
-        isDeletingBaseBooking: true
+        isDeletingBaseBooking: true,
       };
     },
     [types.DELETE_BASE_BOOKING_SUCCESS](state, action) {
@@ -84,33 +85,33 @@ export const booking = createReducer(
       return {
         ...state,
         isDeletingBaseBooking: false,
-        baseBookingList: baseBookingList.filter(item => item.id !== action.id)
+        baseBookingList: baseBookingList.filter((item) => item.id !== action.id),
       };
     },
     [types.DELETE_BASE_BOOKING_FAIL](state) {
       return {
         ...state,
-        isDeletingBaseBooking: false
+        isDeletingBaseBooking: false,
       };
     },
     [types.GET_BOOKING_TEMPLATE_LIST_START](state) {
       return {
         ...state,
-        isFetchingBookingTemplate: true
+        isFetchingBookingTemplate: true,
       };
     },
     [types.GET_BOOKING_TEMPLATE_LIST_SUCCESS](state, action) {
       return {
         ...state,
         isFetchingBookingTemplate: false,
-        bookingTemplateList: action.list
+        bookingTemplateList: action.list,
       };
     },
     [types.GET_BOOKING_TEMPLATE_LIST_FAIL](state) {
       return {
         ...state,
         isFetchingBookingTemplate: false,
-        bookingTemplateList: []
+        bookingTemplateList: [],
       };
     },
     [types.POST_BOOKING_TEMPLATE_START](state) {
@@ -118,21 +119,21 @@ export const booking = createReducer(
         ...state,
         isCreatingBookingTemplate: true,
         postBookingTemplateSuccess: false,
-        postBookingTemplateError: false
+        postBookingTemplateError: false,
       };
     },
     [types.POST_BOOKING_TEMPLATE_SUCCESS](state) {
       return {
         ...state,
         isCreatingBookingTemplate: false,
-        postBookingTemplateSuccess: true
+        postBookingTemplateSuccess: true,
       };
     },
     [types.POST_BOOKING_TEMPLATE_FAIL](state) {
       return {
         ...state,
         isCreatingBookingTemplate: false,
-        postBookingTemplateError: true
+        postBookingTemplateError: true,
       };
     },
     [types.PUT_BOOKING_TEMPLATE_START](state) {
@@ -140,27 +141,27 @@ export const booking = createReducer(
         ...state,
         isUpdatingBookingTemplate: true,
         putBookingTemplateSuccess: false,
-        putBookingTemplateError: false
+        putBookingTemplateError: false,
       };
     },
     [types.PUT_BOOKING_TEMPLATE_SUCCESS](state) {
       return {
         ...state,
         isUpdatingBookingTemplate: false,
-        putBookingTemplateSuccess: true
+        putBookingTemplateSuccess: true,
       };
     },
     [types.PUT_BOOKING_TEMPLATE_FAIL](state) {
       return {
         ...state,
         isUpdatingBookingTemplate: false,
-        putBookingTemplateError: true
+        putBookingTemplateError: true,
       };
     },
     [types.DELETE_BOOKING_TEMPLATE_START](state) {
       return {
         ...state,
-        isDeletingBookingTemplate: true
+        isDeletingBookingTemplate: true,
       };
     },
     [types.DELETE_BOOKING_TEMPLATE_SUCCESS](state, action) {
@@ -168,35 +169,33 @@ export const booking = createReducer(
       return {
         ...state,
         isDeletingBookingTemplate: false,
-        bookingTemplateList: bookingTemplateList.filter(
-          item => item.id !== action.id
-        )
+        bookingTemplateList: bookingTemplateList.filter((item) => item.id !== action.id),
       };
     },
     [types.DELETE_BOOKING_TEMPLATE_FAIL](state) {
       return {
         ...state,
-        isDeletingBookingTemplate: false
+        isDeletingBookingTemplate: false,
       };
     },
     [types.GET_BOOKING_START](state) {
       return {
         ...state,
-        isFetchingBooking: true
+        isFetchingBooking: true,
       };
     },
     [types.GET_BOOKING_SUCCESS](state, action) {
       return {
         ...state,
         isFetchingBooking: false,
-        bookingList: action.list
+        bookingList: action.list,
       };
     },
     [types.GET_BOOKING_FAIL](state) {
       return {
         ...state,
         isFetchingBooking: false,
-        bookingList: []
+        bookingList: [],
       };
     },
     [types.POST_BOOKING_START](state) {
@@ -204,21 +203,21 @@ export const booking = createReducer(
         ...state,
         isCreatingBooking: true,
         postBookingSuccess: false,
-        postBookingError: false
+        postBookingError: false,
       };
     },
     [types.POST_BOOKING_SUCCESS](state) {
       return {
         ...state,
         isCreatingBooking: false,
-        postBookingSuccess: true
+        postBookingSuccess: true,
       };
     },
     [types.POST_BOOKING_FAIL](state) {
       return {
         ...state,
         isCreatingBooking: false,
-        postBookingError: true
+        postBookingError: true,
       };
     },
     [types.PUT_BOOKING_START](state) {
@@ -226,27 +225,27 @@ export const booking = createReducer(
         ...state,
         isUpdatingBooking: true,
         putBookingSuccess: false,
-        putBookingError: false
+        putBookingError: false,
       };
     },
     [types.PUT_BOOKING_SUCCESS](state) {
       return {
         ...state,
         isUpdatingBooking: false,
-        putBookingSuccess: true
+        putBookingSuccess: true,
       };
     },
     [types.PUT_BOOKING_FAIL](state) {
       return {
         ...state,
         isUpdatingBooking: false,
-        putBookingError: true
+        putBookingError: true,
       };
     },
     [types.DELETE_BOOKING_START](state) {
       return {
         ...state,
-        isDeletingBooking: true
+        isDeletingBooking: true,
       };
     },
     [types.DELETE_BOOKING_SUCCESS](state, action) {
@@ -254,35 +253,113 @@ export const booking = createReducer(
       return {
         ...state,
         isDeletingBooking: false,
-        bookingList: bookingList.filter(item => item.id !== action.id)
+        bookingList: bookingList.filter((item) => item.id !== action.id),
       };
     },
     [types.DELETE_BOOKING_FAIL](state) {
       return {
         ...state,
-        isDeletingBooking: false
+        isDeletingBooking: false,
       };
     },
     [types.GET_CAMPAIGN_INVENTORY_START](state) {
       return {
         ...state,
-        isFetchingCampaignInventory: true
+        isFetchingCampaignInventory: true,
       };
     },
     [types.GET_CAMPAIGN_INVENTORY_SUCCESS](state, action) {
       return {
         ...state,
         isFetchingCampaignInventory: false,
-        campaignInventoryList: action.list
+        campaignInventoryList: action.list,
       };
     },
     [types.GET_CAMPAIGN_INVENTORY_FAIL](state) {
       return {
         ...state,
         isFetchingCampaignInventory: false,
-        campaignInventoryList: []
+        campaignInventoryList: [],
       };
-    }
+    },
+    [types.GET_ASSIGNMENT_START](state) {
+      return {
+        ...state,
+        isFetchingAssignment: true,
+      };
+    },
+    [types.GET_ASSIGNMENT_SUCCESS](state, action) {
+      const assignmentList = {};
+      let key = '';
+      for (let i = 0, l = action.list.length; i < l; i += 1) {
+        key = `${action.list[i].supplier_id}-${action.list[i].inventory_name}`;
+        if (!assignmentList[key]) {
+          assignmentList[key] = {
+            RELEASE: [],
+            CLOSURE: [],
+            AUDIT: [],
+          };
+        }
+
+        assignmentList[key][action.list[i].activity_type].push(action.list[i]);
+      }
+      return {
+        ...state,
+        isFetchingAssignment: false,
+        assignmentList,
+      };
+    },
+    [types.GET_ASSIGNMENT_FAIL](state) {
+      return {
+        ...state,
+        isFetchingAssignment: false,
+        assignmentList: {},
+      };
+    },
+    [types.POST_ASSIGNMENT_START](state) {
+      return {
+        ...state,
+        isCreatingAssignment: true,
+        postAssignmentSuccess: false,
+        postAssignmentError: false,
+      };
+    },
+    [types.POST_ASSIGNMENT_SUCCESS](state) {
+      return {
+        ...state,
+        isCreatingAssignment: false,
+        postAssignmentSuccess: true,
+      };
+    },
+    [types.POST_ASSIGNMENT_FAIL](state) {
+      return {
+        ...state,
+        isCreatingAssignment: false,
+        postAssignmentError: true,
+      };
+    },
+    [types.PUT_ASSIGNMENT_START](state) {
+      return {
+        ...state,
+        isUpdatingAssignment: true,
+        putAssignmentSuccess: false,
+        putAssignmentError: false,
+      };
+    },
+    [types.PUT_ASSIGNMENT_SUCCESS](state) {
+      return {
+        ...state,
+        isUpdatingAssignment: false,
+        putAssignmentSuccess: true,
+      };
+    },
+    [types.PUT_ASSIGNMENT_FAIL](state) {
+      return {
+        ...state,
+        isUpdatingAssignment: false,
+        putAssignmentError: true,
+      };
+    },
   }
 );
 
