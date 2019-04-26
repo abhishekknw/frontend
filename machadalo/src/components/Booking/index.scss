@@ -186,6 +186,109 @@
   }
 }
 
+.manage-image {
+  &__title {
+    text-align: center;
+    background-color: #d9534f;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 3px;
+    margin-bottom: 20px;
+
+    h3 {
+      margin: 15px 0;
+      font: {
+        size: 24px;
+        weight: $font-medium;
+      }
+    }
+  }
+
+  &__filters {
+    display: flex;
+    height: 50px;
+    margin-bottom: 20px;
+
+    .form-control {
+      display: flex;
+      flex-direction: row;
+      flex: 1;
+      padding: 0 15px;
+      position: relative;
+      align-items: center;
+
+      .select {
+        margin-bottom: 5px;
+        width: 100%;
+        outline: none;
+  
+        &> div {
+          background: transparent;
+        }
+  
+        input {
+          height: auto;
+          outline: none !important;
+        }
+      }
+    }
+  }
+
+  &__table {
+    table {
+      width: 100%;
+
+      thead {
+        tr {
+          th {
+            background-color: #8e1921;
+            color: white;
+            font: {
+              size: 14px;
+              weight: $font-medium;
+            }
+            padding: 12px;
+            text-align: center;
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          td {
+            text-align: center;
+            color: black;
+            font: {
+              size: 14px;
+              weight: $font-regular;
+            }
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+          }
+
+          &:nth-child(odd) {
+            td {
+              background-color: #f9f9f9;
+            }
+          }
+        }
+      }
+    }
+
+    &__action {
+    }
+  }
+
+  &__actions {
+    margin-top: 20px;
+
+    .btn {
+      margin-right: 10px;
+    }
+  }
+}
+
 .create {
     &__title {
       text-align: center;

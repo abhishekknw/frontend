@@ -260,3 +260,23 @@
     }
   }
 }
+
+.modal-view-image {
+  position: relative;
+  .modal__body {
+    display: flex;
+    flex-direction: column;
+
+    &__image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .modal__action {
+    position: absolute;
+    right: -20px;
+    top: -20px;
+  }
+}

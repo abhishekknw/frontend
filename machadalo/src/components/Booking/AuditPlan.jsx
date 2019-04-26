@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import AssignModal from './../Modals/AssignModal';
 
@@ -88,12 +89,13 @@ export default class AuditPlan extends React.Component {
   }
 
   renderAuditPlanRow(inventory) {
+    console.log('inventory: ', inventory);
     let supplierName = '';
     if (this.state.supplierById[inventory.supplier_id]) {
       supplierName = this.state.supplierById[inventory.supplier_id].name;
     }
 
-    const onManageClick = () => {
+    const onManageDateClick = () => {
       this.onManageActivity(inventory);
     };
 
@@ -106,9 +108,17 @@ export default class AuditPlan extends React.Component {
         <td>{supplierName}</td>
         <td>-</td>
         <td>
-          <button type="button" className="btn btn--danger" onClick={onManageClick}>
+          <button type="button" className="btn btn--danger" onClick={onManageDateClick}>
             Manage Date
           </button>
+        </td>
+        <td>
+          <Link
+            to={`/r/booking/plan/${this.getCampaignId()}/image/supplier/${inventory.supplier_id}`}
+            className="btn btn--danger"
+          >
+            Manage Image
+          </Link>
         </td>
       </tr>
     );
@@ -144,6 +154,7 @@ export default class AuditPlan extends React.Component {
                 <th>Inventory</th>
                 <th>Supplier Name</th>
                 <th>Assigned Date</th>
+                <th>Action</th>
                 <th>Action</th>
               </tr>
             </thead>
