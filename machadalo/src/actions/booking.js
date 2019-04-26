@@ -621,7 +621,7 @@ export function putAssignment({ campaignId, data }) {
     const { auth } = getState();
 
     request
-      .put(`${config.API_URL}/v0/ui/dynamic-booking/booking-assignment/${campaignId}/`)
+      .put(`${config.API_URL}/v0/ui/dynamic-booking/booking-assignment/campaign/${campaignId}/`)
       .set('Authorization', `JWT ${auth.token}`)
       .send(data)
       .then(() => {
