@@ -3,11 +3,14 @@ import Select from 'react-select';
 import ViewImageModal from '../Modals/ViewImagesModal';
 
 const getFilteredList = (list, assignmentList) => {
-  const filteredList = list.map((item) => [
-    ...assignmentList[item].RELEASE,
-    ...assignmentList[item].AUDIT,
-    ...assignmentList[item].CLOSURE,
-  ]);
+  const filteredList = list
+    .map((item) => [
+      ...assignmentList[item].RELEASE,
+      ...assignmentList[item].AUDIT,
+      ...assignmentList[item].CLOSURE,
+    ])
+    .reduce((acc, item) => acc.concat(item), []);
+
   return filteredList;
 };
 
@@ -205,7 +208,7 @@ export default class ManageImage extends React.Component {
             </thead>
             <tbody>
               {list && list.length ? (
-                list[0].map(this.renderListRow)
+                list.map(this.renderListRow)
               ) : (
                 <tr>
                   <td colSpan="5">No releases available!</td>

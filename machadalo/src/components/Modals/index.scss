@@ -263,14 +263,22 @@
 
 .modal-view-image {
   position: relative;
+  padding: 10px;
+
   .modal__body {
     display: flex;
     flex-direction: column;
+    margin: 0;
 
     &__image {
       display: flex;
       justify-content: center;
       align-items: center;
+
+      img {
+        width: 400px;
+        height: 400px;
+      }
     }
   }
 
@@ -278,5 +286,9 @@
     position: absolute;
     right: -20px;
     top: -20px;
+
+    button {
+      font-size: 28px;
+    }
   }
 }

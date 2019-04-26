@@ -22,12 +22,12 @@ export default function ViewImageModal({ isVisible, onClose }) {
       <div className="modal modal-view-image">
         <div className="modal__body">
           <div className="modal__body__image">
-            <img src={url} />
+            <img src={url} alt="" />
           </div>
         </div>
         <div className="modal__action">
-          <button type="button" className="btn btn--danger" onClick={onClose}>
-            x
+          <button type="button" className="btn btn--link" onClick={onClose}>
+            &#10005;
           </button>
         </div>
       </div>
