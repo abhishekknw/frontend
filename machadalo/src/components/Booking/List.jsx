@@ -148,7 +148,7 @@ export default class ListBooking extends Component {
     return (
       <div className="booking__list list">
         <div className="list__title">
-          <h3>Bookings - List</h3>
+          <h3> - List</h3>
         </div>
 
         <div className="list__filter">
@@ -193,9 +193,12 @@ export default class ListBooking extends Component {
           >
             Create
           </Link>
-          <button type="button" className="btn btn--danger" disabled>
+          <Link
+            to={`/r/booking/plan/${this.getCampaignId()}`}
+            className="btn btn--danger"
+          >
             Campaign Release and Audit Plan
-          </button>
+          </Link>
           <button
             type="button"
             className="btn btn--danger"
