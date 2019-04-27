@@ -3908,6 +3908,10 @@ var tooltipDynamicGraphData = [];
     angular.forEach(data.lower_group_data, function(data,key){
       console.log(data,data[$scope.xValues.value],selectedSpecificItems);
       tooltipDynamicGraphData.push(data);
+      angular.forEach(data,function(FlatData){
+        $scope.FlatCountOVerallLowerORderGroup = data.flat;
+      })
+      console.log($scope.FlatCountOVerallLowerORderGroup);
       if(selectedSpecificItems.indexOf(data[$scope.xValues.value]) > -1 || !selectedSpecificItems.length){
         angular.forEach($scope.yValues, function(itemKey,index,item){
           if(!values1.hasOwnProperty(itemKey)){
@@ -3915,11 +3919,13 @@ var tooltipDynamicGraphData = [];
           }
           if(specificXValue){
             if(data[$scope.xValues.value] != null){
-              var temp_label = data[$scope.xValues.value] + " (" + data[specificXValue] + ")" ;
+              var temp_label = data[$scope.xValues.value] + " (" + data[specificXValue] + ")" +
+          " (" +   $scope.FlatCountOVerallLowerORderGroup  + ")";
               if(specificXValue2){
                 console.log("hello");
                 var temp_label = data[$scope.xValues.value] + ", " + data[specificXValue2] +
-                 "( " + data[specificXValue] + " )"
+                 "( " + data[specificXValue] + " )" +  " (" +
+                 $scope.FlatCountOVerallLowerORderGroup + ")";
               }
 
               var temp = {
@@ -4247,6 +4253,56 @@ var tooltipDynamicGraphData = [];
                      reqData.data_point.value_ranges.flattype.push(data.name);
                    });
            }
+           else if(!$scope.graphSelection.dateRange.startDate &&
+              ($scope.selectedTypeOfSocieties.length && $scope.selectedCities_temp.length
+               && $scope.selectedDynamicCampaigns.length )) {
+        // alert("only society type and Campaign Selected");
+        $scope.xValues.value = 'qualitytype';
+        // $scope.xValues.value = 'flattype';
+        specificXValue = 'campaign_name';
+
+        var reqData = {
+           "data_scope":{
+            "1":{"category":"unordered","level":"campaign","match_type":0,
+            "values":{"exact":[]},"value_type":"campaign"}},
+           "data_point":{"category":"unordered","level": ["qualitytype"],
+           "value_ranges": {"qualitytype":[]}},
+           "raw_data": raw_data_global,
+          "metrics": metrics_global,
+          }
+          angular.forEach($scope.selectedDynamicCampaigns, function(data){
+            reqData.data_scope['1'].values.exact.push(data.campaign_id);
+          });
+          angular.forEach($scope.selectedTypeOfSocieties, function(data){
+            reqData.data_point.value_ranges.qualitytype.push(data.name);
+          });
+
+  }
+  else if(!$scope.graphSelection.dateRange.startDate &&
+     ($scope.selectedSizeOfFlats.length && $scope.selectedCities_temp.length
+      && $scope.selectedDynamicCampaigns.length )) {
+// alert("only flat type and Campaign Selected");
+$scope.xValues.value = 'flattype';
+// $scope.xValues.value = 'flattype';
+specificXValue = 'campaign_name';
+
+var reqData = {
+  "data_scope":{
+   "1":{"category":"unordered","level":"campaign","match_type":0,
+   "values":{"exact":[]},"value_type":"campaign"}},
+  "data_point":{"category":"unordered","level": ["flattype"],
+  "value_ranges": {"flattype":[]}},
+  "raw_data": raw_data_global,
+ "metrics": metrics_global,
+ }
+ angular.forEach($scope.selectedDynamicCampaigns, function(data){
+   reqData.data_scope['1'].values.exact.push(data.campaign_id);
+ });
+ angular.forEach($scope.selectedSizeOfFlats, function(data){
+   reqData.data_point.value_ranges.flattype.push(data.name);
+ });
+
+}
            else if (!$scope.graphSelection.dateRange.startDate && ($scope.graphSelection.phaseRange.length
              && $scope.selectedDynamicCampaigns.length
             )){

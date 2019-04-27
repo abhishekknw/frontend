@@ -146,55 +146,42 @@ $scope.addNewPhase =true;
     };
     releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id)
     	.then(function onSuccess(response){
-        console.log(response);
         getUsersList();
-        $scope.initialReleaseData = angular.copy(response.data.data);
-        console.log($scope.initialReleaseData);
-    		$scope.releaseDetails = angular.copy($scope.initialReleaseData);
         getAssignedSuppliers();
-        // formatData();
-        // -------------
-        if(response.data.data){
-          $scope.releaseDetails = response.data.data;
-          $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
-          console.log($scope.Data);
-          console.log($scope.releaseDetails);
+        $scope.initialReleaseData = Object.assign({}, response.data.data);
 
-          angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier,key){
-            console.log(supplier);
-            $scope.mapViewLat = supplier.latitude;
-            $scope.mapViewLong = supplier.longitude;
-            if(!supplier.stall_locations){
-              supplier.stall_locations = [];
-            }
-            // console.log($scope.mapViewLat);
-            // console.log($scope.mapViewLong);
+        for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
+          $scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price = parseInt($scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price, 10);
+          $scope.mapViewLat = $scope.initialReleaseData.shortlisted_suppliers[i].latitude;
+          $scope.mapViewLong = $scope.initialReleaseData.shortlisted_suppliers[i].longitude;
+          $scope.shortlistedSuppliersIdList[$scope.initialReleaseData.shortlisted_suppliers[i].supplier_id] = $scope.initialReleaseData.shortlisted_suppliers[i];
 
+          if (!$scope.initialReleaseData.shortlisted_suppliers[i].stall_locations) {
+            $scope.initialReleaseData.shortlisted_suppliers[i].stall_locations = [];
+          }
+        }
 
-          })
+        $scope.releaseDetails = {};
 
+        if ($scope.initialReleaseData) {
+          $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
 
-          setDataToModel($scope.releaseDetails.shortlisted_suppliers);
-          $scope.loading = response;
-          angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier){
-            $scope.shortlistedSuppliersIdList[supplier.supplier_id] = supplier;
-          })
-        }else {
+          // setDataToModel($scope.releaseDetails.shortlisted_suppliers);
+          $scope.loading = !!response;
+        } else {
           swal(constants.name, "You do not have access to Proposal", constants.warning);
-          $scope.loading = response;
+          $scope.loading = !!response;
         }
 // ---------------
     	})
     	.catch(function onError(response){
-        console.log(response);
-        $scope.loading = response;
+        $scope.loading = !!response;
         commonDataShare.showErrorMessage(response);
     		console.log("error occured", response.status);
     	});
 
       var setDataToModel = function(suppliers){
         for(var i=0;i<suppliers.length;i++){
-          console.log(suppliers);
           suppliers[i].total_negotiated_price = parseInt(suppliers[i].total_negotiated_price);
           // angular.forEach($scope.phases, function(phase){
           //   suppliers[i].phase_no = parseInt(phase.id);
@@ -316,7 +303,6 @@ $scope.addNewPhase =true;
       if($scope.supplier_type_code.code && $scope.search.query){
         mapViewService.searchSuppliers($scope.supplier_type_code.code,$scope.search.query,$scope.releaseDetails.campaign.principal_vendor)
           .then(function onSuccess(response, status){
-            console.log(response);
               $scope.center_index = null;
             $scope.supplierData = response.data.data;
             if($scope.supplierData.length > 0){
@@ -949,14 +935,18 @@ $scope.multiSelect =
       $scope.selectedCommentForView = {};
       $scope.viewComments = function(supplier){
         $scope.supplierDataForComment = supplier;
+        console.log(supplier);
         $scope.commentsData = {};
-
-        console.log(relatedTo);
+        console.log($scope.commentsData);
+        // console.log(relatedTo);
+        console.log($scope.selectedCommentForView.type);
         if($scope.selectedCommentForView.type == undefined){
-            $scope.selectedCommentForView.type = $scope.commentsType[1];
+            $scope.selectedCommentForView.type = $scope.commentsType[0];
+            console.log($scope.commentsType);
         }
-        var relatedTo = $scope.selectedCommentForView.type;
 
+        var relatedTo = $scope.selectedCommentForView.type;
+        console.log(relatedTo);
         var spaceId = $scope.supplierDataForComment.id;
 
         releaseCampaignService.viewComments($scope.campaign_id,spaceId,relatedTo)
@@ -1114,23 +1104,18 @@ $scope.multiSelect =
     var getAssignedSuppliers = function(){
       releaseCampaignService.getAssignedSuppliers($scope.campaign_id, $scope.userInfo.id)
       .then(function onSuccess(response){
-        console.log(response);
-        $scope.assignedData = response.data.data;
-        $scope.assignedDataIdsList = {};
-        $scope.assignedDataFinal = [];
-        angular.forEach($scope.assignedData, function(data){
-          $scope.assignedDataIdsList[data.supplier_id] = data;
-        })
-        angular.forEach($scope.initialReleaseData.shortlisted_suppliers, function(data){
-          if($scope.assignedDataIdsList.hasOwnProperty(data.supplier_id)){
-            $scope.assignedDataFinal.push(data);
-          }
-          })
-          console.log($scope.assignedDataFinal,$scope.initialReleaseData);
-        $scope.releaseDetails.shortlisted_suppliers = [];
-        $scope.releaseDetails.shortlisted_suppliers = angular.copy($scope.assignedDataFinal);
+        $scope.assignedSuppliers = [];
+        var assignedSuppliers = response.data.data;
+        var assignedSuppliersMap = {};
+        for (var i = 0, l = assignedSuppliers.length; i < l; i += 1) {
+          assignedSuppliersMap[assignedSuppliers[i].supplier_id] = true;
+        }
 
-        formatData();
+        for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
+          if (assignedSuppliersMap[$scope.initialReleaseData.shortlisted_suppliers[i].supplier_id]) {
+            $scope.assignedSuppliers.push($scope.initialReleaseData.shortlisted_suppliers[i]);
+          }
+        }
       }).catch(function onError(response){
         console.log(response);
       })
@@ -1138,7 +1123,7 @@ $scope.multiSelect =
     var formatData = function(){
       // $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
       // console.log($scope.Data);
-      console.log($scope.releaseDetails);
+      // console.log($scope.releaseDetails);
 
       angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier,key){
         console.log(supplier);
@@ -1160,19 +1145,19 @@ $scope.multiSelect =
         $scope.shortlistedSuppliersIdList[supplier.supplier_id] = supplier;
       })
     }
-    $scope.selectedUser = {};
-    $scope.changeSupplierData = function(){
-      console.log("hello");
-      if($scope.selectedUser.value == 'all'){
-        $scope.releaseDetails = angular.copy($scope.initialReleaseData);
-        console.log($scope.releaseDetails);
-        formatData();
+    $scope.selectedUser = { value: 'all' };
+    $scope.changeSupplierData = function() {
+      switch ($scope.selectedUser.value) {
+        case 'all':
+          $scope.releaseDetails.shortlisted_suppliers = $scope.initialReleaseData.shortlisted_suppliers;
+          break;
+
+        case 'assigned':
+          $scope.releaseDetails.shortlisted_suppliers = $scope.assignedSuppliers;
+          break;
       }
-      if($scope.selectedUser.value == 'assigned'){
-        $scope.releaseDetails.shortlisted_suppliers = $scope.assignedDataFinal;
-        console.log($scope.releaseDetails);
-        formatData();
-      }
+
+      // formatData();
     }
 
 }]);//Controller function ends here

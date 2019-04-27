@@ -34,7 +34,7 @@
         <option value="assigned">Assigned</option>
       </select>
     </div>
-      <table st-table="releaseDetails.shortlisted_suppliers"  class="table table-striped">
+      <table st-table="suppliersList" st-safe-src="releaseDetails.shortlisted_suppliers" class="table table-striped">
         <thead>
           <tr>
             <th colspan='999' style="background-color:#ffffff;">
@@ -71,7 +71,7 @@
             <th>Permission Box</th>
           </tr>
         </thead>
-        <tbody ng-repeat="supplier in releaseDetails.shortlisted_suppliers track by $index">
+        <tbody ng-repeat="supplier in suppliersList track by $index">
           <tr ng-repeat="(key,filter) in getFilters(supplier)" ng-disabled="$index != '15'">
             <td rowspan="{{key.length}}" ng-show="$first">{{$parent.$index + 1}}</td>
             <td class="" rowspan="{{key.length}}" ng-show="$first"><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages" ng-click="getSocietyDetails(supplier,supplier.supplier_id,center,$index)" target="_blank" style="text-decoration: underline; cursor: pointer;color:blue;">{{supplier.name}}({{supplier.quality_rating}})</a></td>
@@ -115,7 +115,7 @@
             <td class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="priceform">
               <span  ng-disabled="!supplier.phase_no" class="error" ng-show="priceform.price.$error.min">{{positiveNoError}}</span>
               <input  ng-disabled="!supplier.phase_no" type="number" name="price" ng-model="supplier.total_negotiated_price" class="form-control spacing input-width" min="0" permission = "[permissions.addNegotiatedPrice]">
-           <br>{{supplier.total_negotiated_price / supplier.flat_count|| 0 | limitTo:8}}  </td>
+           <br>{{(supplier.total_negotiated_price / supplier.flat_count)|| 0 | limitTo:8}}  </td>
            <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
                <input  ng-disabled="!supplier.phase_no" type="number"  ng-model="supplier.cost_per_flat" class="form-control spacing input-width" min="0">
            </td>
@@ -165,8 +165,6 @@
                         <h4 class="modal-title">Assign Users</h4>
                         <hr/>
                         <div class = "modal-body" style = "height: 300px;">
-                          <!-- <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="usersMapListWithObjects" class="col-md-6"  extra-settings="settingsForUsers"
-                          selected-model="selectedUsers" translation-texts="selected_baselines_customTexts_users" events="eventsForUsers"></span> -->
                           <select name="users" class="form-control spacing input-width-phase"  ng-model="userData.user" min="1" >
                             <option value="" disabled>Select User</option>
                             <option ng-repeat="user in usersMapListWithObjects | unique:'id'" value="{{user.id}}">{{user.username}}</option>
@@ -379,13 +377,13 @@
 
                 </tr>
                 <tr ng-if="!editContactDetails" ng-repeat="contact in payment.contacts">
-                  <td class="alignment"><input type="text" ng-model="contact.salutation"></td>
-                  <td class="alignment"><input type="text" ng-model="contact.name"></td>
-                  <td class="alignment"><input type="text" ng-model="contact.contact_type"></td>
-                  <td class="alignment"><input type="email" ng-model="contact.email"></td>
-                  <td class="alignment"><input type="int" ng-model="contact.std_code"></td>
-                  <td class="alignment"><input type="tel" ng-model="contact.landline"></td>
-                  <td class="alignment"><input type="phone" ng-model="contact.mobile"></td>
+                  <td class="alignment"><input type="text" placeholder="Mr/Mrs" ng-model="contact.salutation"></td>
+                  <td class="alignment"><input type="text" placeholder="Name of the Person" ng-model="contact.name"></td>
+                  <td class="alignment"><input type="text" placeholder="Manager/Secretary/Chairman/Treasurer/Committe Member" ng-model="contact.contact_type"></td>
+                  <td class="alignment"><input type="email" placeholder="Email of the Person" ng-model="contact.email"></td>
+                  <td class="alignment"><input type="int" placeholder="022/+91" ng-model="contact.std_code"></td>
+                  <td class="alignment"><input type="tel" placeholder="Landline No" ng-model="contact.landline"></td>
+                  <td class="alignment"><input type="phone" placeholder="Mobile No" ng-model="contact.mobile"></td>
                   <td class="alignment">
                     <button type="button" name="button" ng-click="removeContact($index)">Remove</button>
                   </td>
