@@ -37,7 +37,7 @@ export function getPermissionList() {
         dispatch(getPermissionListSuccess(resp.body.data));
       })
       .catch(ex => {
-        console.log('Failed to fetch entity', ex);
+        console.log('Failed to fetch supplier', ex);
 
         dispatch(getPermissionListFail());
       });
@@ -109,8 +109,8 @@ export function getProfilePermission(userProfileId) {
                 }
               }
               let permissionObject = {
-                entityName: campaignInfo.campaign_name,
-                entityId: campaignInfo.campaign_id,
+                supplierName: campaignInfo.campaign_name,
+                supplierId: campaignInfo.campaign_id,
                 type: 'campaign',
                 permission: campaignPermissionType,
                 data: []
@@ -139,8 +139,8 @@ export function getProfilePermission(userProfileId) {
                     }
                   }
                   let permissionChecklistObject = {
-                    entityName: checklist.checklist_name,
-                    entityId: checklist.checklist_id,
+                    supplierName: checklist.checklist_name,
+                    supplierId: checklist.checklist_id,
                     type: 'checklist',
                     permission: checklistPermissionType
                   };
@@ -154,13 +154,13 @@ export function getProfilePermission(userProfileId) {
             );
           })
           .catch(ex => {
-            console.log('Failed to fetch entity', ex);
+            console.log('Failed to fetch supplier', ex);
 
             dispatch(getPermissionFail());
           });
       })
       .catch(ex => {
-        console.log('Failed to fetch entity', ex);
+        console.log('Failed to fetch supplier', ex);
 
         dispatch(getPermissionFail());
       });
@@ -182,8 +182,8 @@ export function getAllChecklistData() {
         checklistData.forEach(campaignInfo => {
           let campaignPermissionType = 'None';
           let permissionObject = {
-            entityName: campaignInfo.campaign_name,
-            entityId: campaignInfo.campaign_id,
+            supplierName: campaignInfo.campaign_name,
+            supplierId: campaignInfo.campaign_id,
             type: 'campaign',
             permission: campaignPermissionType,
             data: []
@@ -192,8 +192,8 @@ export function getAllChecklistData() {
             campaignInfo.checklists.forEach(checklist => {
               let checklistPermissionType = 'None';
               let permissionChecklistObject = {
-                entityName: checklist.checklist_name,
-                entityId: checklist.checklist_id,
+                supplierName: checklist.checklist_name,
+                supplierId: checklist.checklist_id,
                 type: 'checklist',
                 permission: checklistPermissionType
               };
@@ -205,7 +205,7 @@ export function getAllChecklistData() {
         dispatch(getPermissionSuccess(profilePermission, 0));
       })
       .catch(ex => {
-        console.log('Failed to fetch entity', ex);
+        console.log('Failed to fetch supplier', ex);
 
         dispatch(getPermissionFail());
       });
@@ -326,7 +326,7 @@ export function getloggedInProfilePermission() {
         );
       })
       .catch(ex => {
-        console.log('Failed to fetch entity', ex);
+        console.log('Failed to fetch supplier', ex);
 
         dispatch(getloggedInProfilePermissionFail());
       });

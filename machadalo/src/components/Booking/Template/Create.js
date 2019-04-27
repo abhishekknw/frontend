@@ -32,15 +32,15 @@ const BaseBookingAttributeTypes = [
 ];
 
 // TODO: Move to constants
-const EntityTypeAttributeTypes = [
+const SupplierTypeAttributeTypes = [
   { value: 'FLOAT', label: 'Float' },
   { value: 'STRING', label: 'Text' },
   { value: 'INVENTORY', label: 'Inventory' },
   { value: 'INVENTORY_TYPE', label: 'Base Inventory' },
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
-  { value: 'ENTITY_TYPE', label: 'Entity Type' },
-  { value: 'BASE_ENTITY_TYPE', label: 'Base Entity Type' }
+  { value: 'SUPPLIER_TYPE', label: 'Supplier Type' },
+  { value: 'BASE_SUPPLIER_TYPE', label: 'Base Supplier Type' }
 ];
 
 // Get attribute type option from string
@@ -65,11 +65,11 @@ const getBaseBookingAttributeOption = value => {
   return { value };
 };
 
-// Get entity type attribute option from entity type
-const getEntityTypeAttributeOption = value => {
-  for (let i = 0, l = EntityTypeAttributeTypes.length; i < l; i += 1) {
-    if (EntityTypeAttributeTypes[i].value === value) {
-      return EntityTypeAttributeTypes[i];
+// Get supplier type attribute option from supplier type
+const getSupplierTypeAttributeOption = value => {
+  for (let i = 0, l = SupplierTypeAttributeTypes.length; i < l; i += 1) {
+    if (SupplierTypeAttributeTypes[i].value === value) {
+      return SupplierTypeAttributeTypes[i];
     }
   }
 
@@ -110,9 +110,9 @@ const validate = data => {
     };
   }
 
-  if (!data.entity_type_id) {
-    errors.entityTypeId = {
-      message: 'Please select an entity type'
+  if (!data.supplier_type_id) {
+    errors.supplierTypeId = {
+      message: 'Please select an supplier type'
     };
   }
 
@@ -148,9 +148,9 @@ export default class CreateBookingTemplate extends React.Component {
       baseBookingAttributes: [],
       baseBookingId: null,
       selectedBaseBooking: null,
-      selectedEntityAttributes: [],
-      entityTypeId: bookingTemplate.entity_type_id,
-      selectedEntityType: null,
+      selectedSupplierAttributes: [],
+      supplierTypeId: bookingTemplate.supplier_type_id,
+      selectedSupplierType: null,
       errors: {},
       optionModalVisibility: false,
       columnOptions: [''],
@@ -159,21 +159,21 @@ export default class CreateBookingTemplate extends React.Component {
 
     this.onAddAttributeClick = this.onAddAttributeClick.bind(this);
     this.onBaseBookingChange = this.onBaseBookingChange.bind(this);
-    this.onEntityTypeChange = this.onEntityTypeChange.bind(this);
+    this.onSupplierTypeChange = this.onSupplierTypeChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
     this.handleBaseBookingAttributeChange = this.handleBaseBookingAttributeChange.bind(
       this
     );
-    this.handleEntityTypeAttributeChange = this.handleEntityTypeAttributeChange.bind(
+    this.handleSupplierTypeAttributeChange = this.handleSupplierTypeAttributeChange.bind(
       this
     );
     this.renderAttributeRow = this.renderAttributeRow.bind(this);
     this.renderBaseBookingAttributeRow = this.renderBaseBookingAttributeRow.bind(
       this
     );
-    this.renderEntityTypeAttributeRow = this.renderEntityTypeAttributeRow.bind(
+    this.renderSupplierTypeAttributeRow = this.renderSupplierTypeAttributeRow.bind(
       this
     );
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
@@ -183,7 +183,7 @@ export default class CreateBookingTemplate extends React.Component {
 
   componentDidMount() {
     this.props.getBaseBookingList();
-    this.props.getEntityTypeList();
+    this.props.getSupplierTypeList();
   }
 
   componentDidUpdate(prevProps) {
@@ -266,44 +266,44 @@ export default class CreateBookingTemplate extends React.Component {
         selected: true,
         allowRequired: item.is_required
       })),
-      entityTypeId: null,
-      selectedEntityType: null,
-      selectedEntityAttributes: [],
+      supplierTypeId: null,
+      selectedSupplierType: null,
+      selectedSupplierAttributes: [],
       errors
     });
   }
 
-  onEntityTypeChange(option) {
+  onSupplierTypeChange(option) {
     const { selectedBaseBooking, errors } = this.state;
 
-    if (errors.entityTypeId && option.id) {
-      delete errors.entityTypeId;
+    if (errors.supplierTypeId && option.id) {
+      delete errors.supplierTypeId;
     }
 
-    const requiredBaseBookingEntityAttriutesMap = {};
+    const requiredBaseBookingSupplierAttriutesMap = {};
     if (selectedBaseBooking && selectedBaseBooking.id) {
       for (
-        let i = 0, l = selectedBaseBooking.entity_attributes.length;
+        let i = 0, l = selectedBaseBooking.supplier_attributes.length;
         i < l;
         i += 1
       ) {
-        if (selectedBaseBooking.entity_attributes[i].is_required) {
-          requiredBaseBookingEntityAttriutesMap[
-            selectedBaseBooking.entity_attributes[i].name
-          ] = selectedBaseBooking.entity_attributes[i];
+        if (selectedBaseBooking.supplier_attributes[i].is_required) {
+          requiredBaseBookingSupplierAttriutesMap[
+            selectedBaseBooking.supplier_attributes[i].name
+          ] = selectedBaseBooking.supplier_attributes[i];
         }
       }
     }
 
     this.setState({
-      entityTypeId: option.id,
-      selectedEntityType: { ...option },
+      supplierTypeId: option.id,
+      selectedSupplierType: { ...option },
 
-      selectedEntityAttributes: option.entity_attributes.map(item => ({
+      selectedSupplierAttributes: option.supplier_attributes.map(item => ({
         ...item,
         selected: true,
         // Disable attribute unselect, if an attribute is marked as required in booking template
-        disabled: !!requiredBaseBookingEntityAttriutesMap[item.name],
+        disabled: !!requiredBaseBookingSupplierAttriutesMap[item.name],
         allowRequired: item.is_required
       })),
       errors
@@ -353,8 +353,8 @@ export default class CreateBookingTemplate extends React.Component {
       attributes,
       baseBookingId,
       baseBookingAttributes,
-      entityTypeId,
-      selectedEntityAttributes,
+      supplierTypeId,
+      selectedSupplierAttributes,
       isEditMode,
       bookingTemplateId
     } = this.state;
@@ -371,8 +371,8 @@ export default class CreateBookingTemplate extends React.Component {
           options: item.options
         }))
       ),
-      entity_type_id: entityTypeId,
-      entity_attributes: selectedEntityAttributes
+      supplier_type_id: supplierTypeId,
+      supplier_attributes: selectedSupplierAttributes
         .filter(item => item.selected)
         .map(item => ({
           name: item.name,
@@ -442,13 +442,15 @@ export default class CreateBookingTemplate extends React.Component {
     });
   }
 
-  handleEntityTypeAttributeChange(entity, index) {
-    const selectedEntityAttributes = [...this.state.selectedEntityAttributes];
+  handleSupplierTypeAttributeChange(supplier, index) {
+    const selectedSupplierAttributes = [
+      ...this.state.selectedSupplierAttributes
+    ];
 
-    selectedEntityAttributes[index] = entity;
+    selectedSupplierAttributes[index] = supplier;
 
     this.setState({
-      selectedEntityAttributes
+      selectedSupplierAttributes
     });
   }
 
@@ -605,29 +607,29 @@ export default class CreateBookingTemplate extends React.Component {
     );
   }
 
-  renderEntityTypeAttributeRow(entity, index) {
+  renderSupplierTypeAttributeRow(supplier, index) {
     const onSelectChange = event => {
-      const newEntity = { ...entity };
+      const newSupplier = { ...supplier };
 
-      newEntity.selected = !!event.target.checked;
+      newSupplier.selected = !!event.target.checked;
 
-      this.handleEntityTypeAttributeChange(newEntity, index);
+      this.handleSupplierTypeAttributeChange(newSupplier, index);
     };
 
     const onRequiredChange = event => {
-      const newEntity = { ...entity };
+      const newSupplier = { ...supplier };
 
-      newEntity.is_required = !!event.target.checked;
+      newSupplier.is_required = !!event.target.checked;
 
-      this.handleEntityTypeAttributeChange(newEntity, index);
+      this.handleSupplierTypeAttributeChange(newSupplier, index);
     };
 
-    const attributeOption = getEntityTypeAttributeOption(entity.type);
+    const attributeOption = getSupplierTypeAttributeOption(supplier.type);
 
     return (
       <div
         className={classnames('static-attribute', {
-          'static-attribute--unselect': !entity.selected
+          'static-attribute--unselect': !supplier.selected
         })}
         key={index}
       >
@@ -635,29 +637,29 @@ export default class CreateBookingTemplate extends React.Component {
           <input
             type="checkbox"
             className="input-checkbox"
-            checked={entity.selected}
+            checked={supplier.selected}
             onChange={onSelectChange}
-            disabled={entity.disabled}
+            disabled={supplier.disabled}
           />
         </div>
 
         <div className="form-control">
-          <p>{entity.name}</p>
+          <p>{supplier.name}</p>
         </div>
 
         <div className="form-control">
           <p>{attributeOption.label}</p>
         </div>
 
-        {entity.allowRequired ? (
+        {supplier.allowRequired ? (
           <div className="form-control form-control--row-vertical-center">
             <input
               type="checkbox"
               id={`static-attribute-${index}-is-required`}
               className="input-checkbox"
-              checked={entity.is_required}
+              checked={supplier.is_required}
               onChange={onRequiredChange}
-              disabled={!entity.allowRequired}
+              disabled={!supplier.allowRequired}
             />
             <label htmlFor={`static-attribute-${index}-is-required`}>
               Required
@@ -673,25 +675,26 @@ export default class CreateBookingTemplate extends React.Component {
   }
 
   render() {
-    const { booking, entityType } = this.props;
+    const { booking, supplierType } = this.props;
     const { baseBookingList } = booking;
-    let { entityTypeList } = entityType;
+    let { supplierTypeList } = supplierType;
     const {
       baseBookingAttributes,
       selectedBaseBooking,
-      selectedEntityAttributes,
+      selectedSupplierAttributes,
       errors
     } = this.state;
 
-    // Filter entity types list, based on selected base entity type in base booking
+    // Filter supplier types list, based on selected base supplier type in base booking
     if (
       selectedBaseBooking &&
       selectedBaseBooking.id &&
-      selectedBaseBooking.base_entity_type_id
+      selectedBaseBooking.base_supplier_type_id
     ) {
-      entityTypeList = entityTypeList.filter(
+      supplierTypeList = supplierTypeList.filter(
         item =>
-          item.base_entity_type_id === selectedBaseBooking.base_entity_type_id
+          item.base_supplier_type_id ===
+          selectedBaseBooking.base_supplier_type_id
       );
     }
 
@@ -769,32 +772,33 @@ export default class CreateBookingTemplate extends React.Component {
                 : null}
             </div>
 
-            <div className="create__form__header">Entity Type</div>
+            <div className="create__form__header">Supplier Type</div>
 
             <div className="create__form__body">
               <div className="form-control form-control--column">
                 <Select
                   className={classnames('select', {
-                    error: errors.entityTypeId
+                    error: errors.supplierTypeId
                   })}
-                  placeholder="Select Entity Type"
-                  options={entityTypeList}
+                  placeholder="Select Supplier Type"
+                  options={supplierTypeList}
                   getOptionValue={option => option.id}
                   getOptionLabel={option => option.name}
                   value={getOptionFromList(
-                    entityTypeList,
-                    this.state.entityTypeId
+                    supplierTypeList,
+                    this.state.supplierTypeId
                   )}
-                  onChange={this.onEntityTypeChange}
+                  onChange={this.onSupplierTypeChange}
                 />
-                {errors.entityTypeId ? (
+                {errors.supplierTypeId ? (
                   <p className="message message--error">
-                    {errors.entityTypeId.message}
+                    {errors.supplierTypeId.message}
                   </p>
                 ) : null}
               </div>
 
-              {selectedEntityAttributes && selectedEntityAttributes.length ? (
+              {selectedSupplierAttributes &&
+              selectedSupplierAttributes.length ? (
                 <div className="static-attribute static-attribute__header">
                   <div className="form-control">&nbsp;</div>
 
@@ -812,9 +816,9 @@ export default class CreateBookingTemplate extends React.Component {
                 </div>
               ) : null}
 
-              {selectedEntityAttributes && selectedEntityAttributes.length
-                ? selectedEntityAttributes.map(
-                    this.renderEntityTypeAttributeRow
+              {selectedSupplierAttributes && selectedSupplierAttributes.length
+                ? selectedSupplierAttributes.map(
+                    this.renderSupplierTypeAttributeRow
                   )
                 : null}
             </div>

@@ -26,54 +26,54 @@ const customSelectStyles = {
   })
 };
 
-export default class FillEntityModal extends React.Component {
+export default class FillSupplierModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedEntityType: undefined
+      selectedSupplierType: undefined
     };
     this.renderAttributeRow = this.renderAttributeRow.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.onSelectEntityType = this.onSelectEntityType.bind(this);
+    this.onSelectSupplierType = this.onSelectSupplierType.bind(this);
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
     this.renderInputField = this.renderInputField.bind(this);
   }
 
   componentWillMount() {
     this.setState({
-      selectedEntityType: this.props.selectedEntityType
+      selectedSupplierType: this.props.selectedSupplierType
     });
   }
 
   componentWillUnmount() {
     this.setState({
-      selectedEntityType: undefined
+      selectedSupplierType: undefined
     });
   }
 
-  onSelectEntityType(selectedEntityType) {
+  onSelectSupplierType(selectedSupplierType) {
     this.setState({
-      selectedEntityType
+      selectedSupplierType
     });
   }
 
   handleInputChange(event, option) {
-    let { selectedEntityType } = this.state;
-    selectedEntityType.attributes.forEach(attribute => {
+    let { selectedSupplierType } = this.state;
+    selectedSupplierType.attributes.forEach(attribute => {
       if (attribute.name === option.name) {
         attribute.isChecked = event.target.checked;
       }
     });
     this.setState({
-      selectedEntityType
+      selectedSupplierType
     });
   }
 
   onSubmit() {
-    let { selectedEntityType } = this.state;
+    let { selectedSupplierType } = this.state;
 
-    this.props.onSubmit(selectedEntityType, this.props.columnInfo);
+    this.props.onSubmit(selectedSupplierType, this.props.columnInfo);
   }
 
   renderAttributeRow(attribute, attrIndex) {
@@ -82,15 +82,15 @@ export default class FillEntityModal extends React.Component {
     }
 
     if (
-      attribute.type === 'ENTITY_TYPE' ||
-      attribute.type === 'BASE_ENTITY_TYPE' ||
+      attribute.type === 'SUPPLIER_TYPE' ||
+      attribute.type === 'BASE_SUPPLIER_TYPE' ||
       attribute.type === 'INVENTORY_TYPE'
     ) {
       return;
     }
     return (
       <div className="createform__form__row" key={`row-${attrIndex}`}>
-        <div className="createform__form__inline entity-modal-input">
+        <div className="createform__form__inline supplier-modal-input">
           <div className="form-control">
             <input type="text" value={attribute.name} disabled />
           </div>
@@ -104,12 +104,15 @@ export default class FillEntityModal extends React.Component {
   }
 
   handleAttributeChange(attribute, index) {
-    const selectedEntityType = Object.assign({}, this.state.selectedEntityType);
+    const selectedSupplierType = Object.assign(
+      {},
+      this.state.selectedSupplierType
+    );
 
-    selectedEntityType.attributes.splice(index, 1, attribute);
+    selectedSupplierType.attributes.splice(index, 1, attribute);
 
     this.setState({
-      selectedEntityType
+      selectedSupplierType
     });
   }
 
@@ -182,15 +185,15 @@ export default class FillEntityModal extends React.Component {
 
   render() {
     let { columnInfo } = this.props;
-    let { selectedEntityType } = this.state;
+    let { selectedSupplierType } = this.state;
 
-    let entityTypeText;
-    if (columnInfo.attribute.type === 'ENTITY_TYPE') {
-      entityTypeText = 'Entity Type';
-    } else if (columnInfo.attribute.type === 'BASE_ENTITY_TYPE') {
-      entityTypeText = 'Base Entity Type';
+    let supplierTypeText;
+    if (columnInfo.attribute.type === 'SUPPLIER_TYPE') {
+      supplierTypeText = 'Supplier Type';
+    } else if (columnInfo.attribute.type === 'BASE_SUPPLIER_TYPE') {
+      supplierTypeText = 'Base Supplier Type';
     } else {
-      entityTypeText = 'Base Inventory';
+      supplierTypeText = 'Base Inventory';
     }
 
     return (
@@ -202,9 +205,9 @@ export default class FillEntityModal extends React.Component {
         <div className="modal-title">
           <h3>
             Fill Attributes for{' '}
-            {selectedEntityType.type === 'ENTITY_TYPE'
-              ? 'Entity Type'
-              : ' Base Entity Type'}
+            {selectedSupplierType.type === 'SUPPLIER_TYPE'
+              ? 'Supplier Type'
+              : ' Base Supplier Type'}
           </h3>
         </div>
         <br />
@@ -213,19 +216,23 @@ export default class FillEntityModal extends React.Component {
             <div className="createform__form">
               <div className="createform__form__inline">
                 <div className="title">
-                  {entityTypeText + ': ' + this.state.selectedEntityType.label}
+                  {supplierTypeText +
+                    ': ' +
+                    this.state.selectedSupplierType.label}
                 </div>
               </div>
               <div className="createform__form">
-                {selectedEntityType
-                  ? selectedEntityType.attributes.map(this.renderAttributeRow)
+                {selectedSupplierType
+                  ? selectedSupplierType.attributes.map(this.renderAttributeRow)
                   : undefined}
               </div>
               <div className="modal-footer">
                 <button
                   type="button"
                   className="btn btn--danger"
-                  onClick={() => this.onSubmit(selectedEntityType, columnInfo)}
+                  onClick={() =>
+                    this.onSubmit(selectedSupplierType, columnInfo)
+                  }
                 >
                   Submit
                 </button>{' '}

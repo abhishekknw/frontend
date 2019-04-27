@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import ActionCreators from './../actions';
+import ActionCreators from '../actions';
 
-import Entity from './../components/Entity';
+import Supplier from './../components/Supplier';
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(ActionCreators, dispatch);
@@ -16,4 +16,4 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Entity);
+)(Supplier);

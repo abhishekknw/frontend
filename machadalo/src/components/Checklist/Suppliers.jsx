@@ -44,7 +44,7 @@ export default class Suppliers extends React.Component {
   }
 
   render() {
-    const { supplier, campaign } = this.props;
+    const { supplierStatic, campaign } = this.props;
 
     return (
       <div className="list">
@@ -75,7 +75,7 @@ export default class Suppliers extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {supplier.list.map(this.renderSupplierRow.bind(this))}
+              {supplierStatic.list.map(this.renderSupplierRow.bind(this))}
             </tbody>
           </table>
         </div>

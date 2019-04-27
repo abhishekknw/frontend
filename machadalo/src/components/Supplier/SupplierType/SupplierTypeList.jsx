@@ -6,24 +6,24 @@ export default class List extends React.Component {
   constructor(props) {
     super(props);
 
-    this.renderEntityTypeRow = this.renderEntityTypeRow.bind(this);
+    this.renderSupplierTypeRow = this.renderSupplierTypeRow.bind(this);
   }
 
   componentWillMount() {
-    this.props.getEntityTypeList();
+    this.props.getSupplierTypeList();
   }
 
-  renderEntityTypeRow(entityType, index) {
+  renderSupplierTypeRow(supplierType, index) {
     const onRemove = () => {
-      this.props.deleteEntityType(entityType.id, () => {
-        toastr.error('', 'Entity Type deleted successfully');
+      this.props.deleteSupplierType(supplierType.id, () => {
+        toastr.error('', 'Supplier Type deleted successfully');
       });
     };
 
     return (
-      <tr key={entityType.id}>
+      <tr key={supplierType.id}>
         <td>{index + 1}</td>
-        <td>{entityType.name}</td>
+        <td>{supplierType.name}</td>
         <td>
           <button type="button" className="btn btn--danger" onClick={onRemove}>
             Remove
@@ -31,10 +31,10 @@ export default class List extends React.Component {
         </td>
         <td>
           <Link
-            to={`/r/entity/type/edit/${entityType.id}`}
+            to={`/r/supplier/type/edit/${supplierType.id}`}
             className="btn btn--danger"
           >
-            Edit Entity Type
+            Edit Supplier Type
           </Link>
         </td>
       </tr>
@@ -42,11 +42,11 @@ export default class List extends React.Component {
   }
 
   render() {
-    let { entityTypeList } = this.props.entityType;
+    let { supplierTypeList } = this.props.supplierType;
     return (
       <div className="createform">
         <div className="createform__title">
-          <h3>Entity Type List</h3>
+          <h3>Supplier Type List</h3>
         </div>
         <div className="list">
           <div className="list__table">
@@ -60,12 +60,12 @@ export default class List extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {entityTypeList.length ? (
-                  entityTypeList.map(this.renderEntityTypeRow)
+                {supplierTypeList.length ? (
+                  supplierTypeList.map(this.renderSupplierTypeRow)
                 ) : (
                   <tr>
                     <td colSpan="5">
-                      No entity types available. Create your first one now!
+                      No supplier types available. Create your first one now!
                     </td>
                   </tr>
                 )}
@@ -74,8 +74,8 @@ export default class List extends React.Component {
           </div>
         </div>
         <div className="list__actions">
-          <Link to={'/r/entity/type/create'} className="btn btn--danger">
-            Create Entity Type
+          <Link to={'/r/supplier/type/create'} className="btn btn--danger">
+            Create Supplier Type
           </Link>
         </div>
       </div>

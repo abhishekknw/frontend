@@ -22,14 +22,14 @@ const AttributeTypes = [
   { value: 'MULTISELECT', label: 'Multi Select' }
 ];
 
-const EntityTypes = [
+const SupplierTypes = [
   { value: 'FLOAT', label: 'Float' },
   { value: 'STRING', label: 'Text' },
   { value: 'INVENTORY', label: 'Inventory' },
   { value: 'INVENTORY_TYPE', label: 'Base Inventory' },
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
-  { value: 'BASE_ENTITY_TYPE', label: 'Base Entity Type' }
+  { value: 'BASE_SUPPLIER_TYPE', label: 'Base Supplier Type' }
 ];
 
 // Get attribute type option from string
@@ -43,11 +43,11 @@ const getAttributeTypeOption = value => {
   return { value };
 };
 
-// Get base entity type option from entity type
-const getEntityTypeOption = value => {
-  for (let i = 0, l = EntityTypes.length; i < l; i += 1) {
-    if (EntityTypes[i].value === value) {
-      return EntityTypes[i];
+// Get base supplier type option from supplier type
+const getSupplierTypeOption = value => {
+  for (let i = 0, l = SupplierTypes.length; i < l; i += 1) {
+    if (SupplierTypes[i].value === value) {
+      return SupplierTypes[i];
     }
   }
 
@@ -63,14 +63,17 @@ const getRawAttribute = () => {
   };
 };
 
-const getBaseEntityTypeOption = (baseEntityTypeList, baseEntityTypeId) => {
-  for (let i = 0, l = baseEntityTypeList.length; i < l; i += 1) {
-    if (baseEntityTypeId === baseEntityTypeList[i].id) {
-      return baseEntityTypeList[i];
+const getBaseSupplierTypeOption = (
+  baseSupplierTypeList,
+  baseSupplierTypeId
+) => {
+  for (let i = 0, l = baseSupplierTypeList.length; i < l; i += 1) {
+    if (baseSupplierTypeId === baseSupplierTypeList[i].id) {
+      return baseSupplierTypeList[i];
     }
   }
 
-  return { id: baseEntityTypeId };
+  return { id: baseSupplierTypeId };
 };
 
 const validate = data => {
@@ -82,9 +85,9 @@ const validate = data => {
     };
   }
 
-  if (!data.base_entity_type_id) {
-    errors.baseEntityTypeId = {
-      message: 'Please select a base entity type'
+  if (!data.base_supplier_type_id) {
+    errors.baseSupplierTypeId = {
+      message: 'Please select a base supplier type'
     };
   }
 
@@ -104,12 +107,12 @@ export default class CreateBaseBooking extends React.Component {
         ...getRawAttribute()
       }
     ];
-    let entities = [];
+    let suppliers = [];
 
     if (baseBookingId && baseBooking && baseBooking.id) {
       // Find the base booking matching `baseBookingId`
       attributes = baseBooking.booking_attributes;
-      entities = baseBooking.entity_attributes.map(item => ({
+      suppliers = baseBooking.supplier_attributes.map(item => ({
         ...item,
         selected: true,
         allowRequired: item.is_required
@@ -121,9 +124,9 @@ export default class CreateBaseBooking extends React.Component {
       baseBookingId,
       name: baseBooking.name || '',
       attributes,
-      entities,
-      baseEntityTypeId: baseBooking.base_entity_type_id,
-      selectedBaseEntityType: null,
+      suppliers,
+      baseSupplierTypeId: baseBooking.base_supplier_type_id,
+      selectedBaseSupplierType: null,
       errors: {},
       optionModalVisibility: false,
       columnOptions: [''],
@@ -131,29 +134,29 @@ export default class CreateBaseBooking extends React.Component {
     };
 
     this.onAddAttributeClick = this.onAddAttributeClick.bind(this);
-    this.onBaseEntityTypeChange = this.onBaseEntityTypeChange.bind(this);
+    this.onBaseSupplierTypeChange = this.onBaseSupplierTypeChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
-    this.handleEntityChange = this.handleEntityChange.bind(this);
+    this.handleSupplierChange = this.handleSupplierChange.bind(this);
     this.renderAttributeRow = this.renderAttributeRow.bind(this);
-    this.renderEntityRow = this.renderEntityRow.bind(this);
+    this.renderSupplierRow = this.renderSupplierRow.bind(this);
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
     this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
   }
 
   componentDidMount() {
-    this.props.getBaseEntityTypeList();
+    this.props.getBaseSupplierTypeList();
   }
 
   componentDidUpdate(prevProps) {
     const {
-      baseEntityType: prevBaseEntityType,
+      baseSupplierType: prevBaseSupplierType,
       booking: prevBooking
     } = prevProps;
     const {
-      baseEntityType: newBaseEntityType,
+      baseSupplierType: newBaseSupplierType,
       booking: newBooking,
       history
     } = this.props;
@@ -171,13 +174,13 @@ export default class CreateBaseBooking extends React.Component {
     } = newBooking;
 
     if (
-      !this.state.selectedBaseEntityType &&
-      !prevBaseEntityType.currentBaseEntityType &&
-      newBaseEntityType.currentBaseEntityType
+      !this.state.selectedBaseSupplierType &&
+      !prevBaseSupplierType.currentBaseSupplierType &&
+      newBaseSupplierType.currentBaseSupplierType
     ) {
       this.setState({
-        selectedBaseEntityType: newBaseEntityType.currentBaseEntityType,
-        entities: newBaseEntityType.currentBaseEntityType.entity_attributes.map(
+        selectedBaseSupplierType: newBaseSupplierType.currentBaseSupplierType,
+        suppliers: newBaseSupplierType.currentBaseSupplierType.supplier_attributes.map(
           item => ({
             ...item,
             selected: true,
@@ -272,21 +275,21 @@ export default class CreateBaseBooking extends React.Component {
     });
   }
 
-  onBaseEntityTypeChange(option) {
+  onBaseSupplierTypeChange(option) {
     const { errors } = this.state;
 
-    if (errors.baseEntityTypeId && option.id) {
-      delete errors.baseEntityTypeId;
+    if (errors.baseSupplierTypeId && option.id) {
+      delete errors.baseSupplierTypeId;
     }
 
     this.setState(
       {
-        baseEntityTypeId: option.id,
-        selectedBaseEntityType: null,
+        baseSupplierTypeId: option.id,
+        selectedBaseSupplierType: null,
         errors
       },
       () => {
-        this.props.getBaseEntityType(this.state.baseEntityTypeId);
+        this.props.getBaseSupplierType(this.state.baseSupplierTypeId);
       }
     );
   }
@@ -296,8 +299,8 @@ export default class CreateBaseBooking extends React.Component {
     const {
       name,
       attributes,
-      baseEntityTypeId,
-      entities,
+      baseSupplierTypeId,
+      suppliers,
       isEditMode,
       baseBookingId
     } = this.state;
@@ -306,8 +309,8 @@ export default class CreateBaseBooking extends React.Component {
     const data = {
       name,
       booking_attributes: attributes,
-      base_entity_type_id: baseEntityTypeId,
-      entity_attributes: entities
+      base_supplier_type_id: baseSupplierTypeId,
+      supplier_attributes: suppliers
         .filter(item => item.selected)
         .map(item => ({ name: item.name, is_required: item.is_required }))
     };
@@ -363,13 +366,13 @@ export default class CreateBaseBooking extends React.Component {
     });
   }
 
-  handleEntityChange(entity, index) {
-    const entities = [...this.state.entities];
+  handleSupplierChange(supplier, index) {
+    const suppliers = [...this.state.suppliers];
 
-    entities[index] = entity;
+    suppliers[index] = supplier;
 
     this.setState({
-      entities
+      suppliers
     });
   }
 
@@ -460,29 +463,29 @@ export default class CreateBaseBooking extends React.Component {
     );
   }
 
-  renderEntityRow(entity, index) {
+  renderSupplierRow(supplier, index) {
     const onSelectChange = event => {
-      const newEntity = { ...entity };
+      const newSupplier = { ...supplier };
 
-      newEntity.selected = !!event.target.checked;
+      newSupplier.selected = !!event.target.checked;
 
-      this.handleEntityChange(newEntity, index);
+      this.handleSupplierChange(newSupplier, index);
     };
 
     const onRequiredChange = event => {
-      const newEntity = { ...entity };
+      const newSupplier = { ...supplier };
 
-      newEntity.is_required = !!event.target.checked;
+      newSupplier.is_required = !!event.target.checked;
 
-      this.handleEntityChange(newEntity, index);
+      this.handleSupplierChange(newSupplier, index);
     };
 
-    const entityOption = getEntityTypeOption(entity.type);
+    const supplierOption = getSupplierTypeOption(supplier.type);
 
     return (
       <div
-        className={classnames('entity', {
-          'entity--unselect': !entity.selected
+        className={classnames('supplier', {
+          'supplier--unselect': !supplier.selected
         })}
         key={index}
       >
@@ -490,30 +493,30 @@ export default class CreateBaseBooking extends React.Component {
           <input
             type="checkbox"
             className="input-checkbox"
-            checked={entity.selected}
+            checked={supplier.selected}
             onChange={onSelectChange}
           />
         </div>
 
         <div className="form-control">
-          <p>{entity.name}</p>
+          <p>{supplier.name}</p>
         </div>
 
         <div className="form-control">
-          <p>{entityOption.label}</p>
+          <p>{supplierOption.label}</p>
         </div>
 
-        {entity.allowRequired ? (
+        {supplier.allowRequired ? (
           <div className="form-control form-control--row-vertical-center">
             <input
               type="checkbox"
-              id={`entity-${index}-is-required`}
+              id={`supplier-${index}-is-required`}
               className="input-checkbox"
-              checked={entity.is_required}
+              checked={supplier.is_required}
               onChange={onRequiredChange}
-              disabled={!entity.allowRequired}
+              disabled={!supplier.allowRequired}
             />
-            <label htmlFor={`entity-${index}-is-required`}>Required</label>
+            <label htmlFor={`supplier-${index}-is-required`}>Required</label>
           </div>
         ) : (
           <div className="form-control form-control--row-vertical-center">
@@ -525,10 +528,10 @@ export default class CreateBaseBooking extends React.Component {
   }
 
   render() {
-    const { baseEntityType } = this.props;
-    const { baseEntityTypeList } = baseEntityType;
+    const { baseSupplierType } = this.props;
+    const { baseSupplierTypeList } = baseSupplierType;
 
-    const { entities, errors } = this.state;
+    const { suppliers, errors } = this.state;
 
     return (
       <div className="booking-base__create create">
@@ -572,33 +575,33 @@ export default class CreateBaseBooking extends React.Component {
               </button>
             </div>
 
-            <div className="create__form__header">Base Entity Type</div>
+            <div className="create__form__header">Base Supplier Type</div>
 
             <div className="create__form__body">
               <div className="form-control form-control--column">
                 <Select
                   className={classnames('select', {
-                    error: errors.baseEntityTypeId
+                    error: errors.baseSupplierTypeId
                   })}
-                  placeholder="Select Base Entity Type"
-                  options={baseEntityTypeList}
+                  placeholder="Select Base Supplier Type"
+                  options={baseSupplierTypeList}
                   getOptionValue={option => option.id}
                   getOptionLabel={option => option.name}
-                  value={getBaseEntityTypeOption(
-                    baseEntityTypeList,
-                    this.state.baseEntityTypeId
+                  value={getBaseSupplierTypeOption(
+                    baseSupplierTypeList,
+                    this.state.baseSupplierTypeId
                   )}
-                  onChange={this.onBaseEntityTypeChange}
+                  onChange={this.onBaseSupplierTypeChange}
                 />
-                {errors.baseEntityTypeId ? (
+                {errors.baseSupplierTypeId ? (
                   <p className="message message--error">
-                    {errors.baseEntityTypeId.message}
+                    {errors.baseSupplierTypeId.message}
                   </p>
                 ) : null}
               </div>
 
-              {entities && entities.length ? (
-                <div className="entity entity__header">
+              {suppliers && suppliers.length ? (
+                <div className="supplier supplier__header">
                   <div className="form-control">&nbsp;</div>
 
                   <div className="form-control">
@@ -615,8 +618,8 @@ export default class CreateBaseBooking extends React.Component {
                 </div>
               ) : null}
 
-              {entities && entities.length
-                ? entities.map(this.renderEntityRow)
+              {suppliers && suppliers.length
+                ? suppliers.map(this.renderSupplierRow)
                 : null}
             </div>
           </form>

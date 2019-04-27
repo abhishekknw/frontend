@@ -2,25 +2,25 @@ import request from 'superagent';
 
 import * as types from './types';
 
-import config from './../config';
+import config from '../config';
 
 //Supplier List
 export function getSuppliersListStart() {
   return {
-    type: types.GET_SUPPLIERS_LIST_START
+    type: types.GET_SUPPLIERS_STATIC_LIST_START
   };
 }
 
 export function getSuppliersListSuccess({ suppliers }) {
   return {
-    type: types.GET_SUPPLIERS_LIST_SUCCESS,
+    type: types.GET_SUPPLIERS_STATIC_LIST_SUCCESS,
     suppliers
   };
 }
 
 export function getSuppliersListFail() {
   return {
-    type: types.GET_SUPPLIERS_LIST_FAIL
+    type: types.GET_SUPPLIERS_STATIC_LIST_FAIL
   };
 }
 

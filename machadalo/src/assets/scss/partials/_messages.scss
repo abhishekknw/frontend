@@ -22,4 +22,20 @@
   &--error {
     color: $text-error;
   }
+
+  &--empty {
+    color: $text-grey;
+    font: {
+      style: italic;
+      weight: $font-light;
+    };
+  }
+
+  &--emphasis {
+    color: $text-grey;
+    font: {
+      style: italic;
+      weight: $font-medium;
+    };
+  }
 }

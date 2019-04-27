@@ -24,20 +24,22 @@ export default class SelectAttributeModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      entityTypeOption: [],
-      selectedEntityType: undefined
+      supplierTypeOption: [],
+      selectedSupplierType: undefined
     };
     this.renderOptionRow = this.renderOptionRow.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.onSelectEntityType = this.onSelectEntityType.bind(this);
+    this.onSelectSupplierType = this.onSelectSupplierType.bind(this);
   }
 
   componentWillMount() {
-    if (this.props.attributeInfo.attributeType === 'ENTITY_TYPE') {
-      this.props.getEntityTypeList();
-    } else if (this.props.attributeInfo.attributeType === 'BASE_ENTITY_TYPE') {
-      this.props.getBaseEntityTypeList();
+    if (this.props.attributeInfo.attributeType === 'SUPPLIER_TYPE') {
+      this.props.getSupplierTypeList();
+    } else if (
+      this.props.attributeInfo.attributeType === 'BASE_SUPPLIER_TYPE'
+    ) {
+      this.props.getBaseSupplierTypeList();
     } else if (this.props.attributeInfo.attributeType === 'INVENTORY_TYPE') {
       this.props.getBaseInventory();
     } else if (this.props.attributeInfo.attributeType === 'INVENTORY') {
@@ -45,54 +47,56 @@ export default class SelectAttributeModal extends React.Component {
     }
 
     this.setState({
-      selectedEntityType: this.props.selectedModalEntityType
+      selectedSupplierType: this.props.selectedModalSupplierType
     });
   }
 
   componentWillUnmount() {
     this.setState({
-      entityTypeOption: [],
-      selectedEntityType: undefined
+      supplierTypeOption: [],
+      selectedSupplierType: undefined
     });
   }
 
   componentDidUpdate() {
-    let entityType;
+    let supplierType;
     let listKey;
-    let entityAttribute;
+    let supplierAttribute;
     let optionValueKey = 'id';
-    if (this.props.attributeInfo.attributeType === 'ENTITY_TYPE') {
-      entityType = 'entityType';
-      listKey = 'entityTypeList';
-      entityAttribute = 'entity_attributes';
-    } else if (this.props.attributeInfo.attributeType === 'BASE_ENTITY_TYPE') {
-      entityType = 'baseEntityType';
-      listKey = 'baseEntityTypeList';
-      entityAttribute = 'entity_attributes';
+    if (this.props.attributeInfo.attributeType === 'SUPPLIER_TYPE') {
+      supplierType = 'supplierType';
+      listKey = 'supplierTypeList';
+      supplierAttribute = 'supplier_attributes';
+    } else if (
+      this.props.attributeInfo.attributeType === 'BASE_SUPPLIER_TYPE'
+    ) {
+      supplierType = 'baseSupplierType';
+      listKey = 'baseSupplierTypeList';
+      supplierAttribute = 'supplier_attributes';
     } else if (this.props.attributeInfo.attributeType === 'INVENTORY_TYPE') {
-      entityType = 'baseInventory';
+      supplierType = 'baseInventory';
       listKey = 'baseInventoryList';
-      entityAttribute = 'base_attributes';
+      supplierAttribute = 'base_attributes';
       optionValueKey = '_id';
     } else if (this.props.attributeInfo.attributeType === 'INVENTORY') {
-      entityType = 'baseInventory';
+      supplierType = 'baseInventory';
       listKey = 'inventoryList';
-      entityAttribute = 'inventory_attributes';
+      supplierAttribute = 'inventory_attributes';
       optionValueKey = '_id';
     } else {
       // Unsupported attribute
     }
 
     if (
-      this.state.entityTypeOption.length !==
-      this.props[entityType][listKey].length
+      this.state.supplierTypeOption.length !==
+      this.props[supplierType][listKey].length
     ) {
-      let entityTypeOption = [];
-      this.props[entityType][listKey].forEach(entityType => {
-        entityTypeOption.push({
-          value: entityType[optionValueKey],
-          label: entityType.name,
-          attributes: entityType[entityAttribute].map(attribute => {
+      let supplierTypeOption = [];
+      this.props[supplierType][listKey].forEach(supplierType => {
+        supplierTypeOption.push({
+          value: supplierType[optionValueKey],
+          label: supplierType.name,
+          attributes: supplierType[supplierAttribute].map(attribute => {
             if (attribute.hasOwnProperty('isChecked')) {
               return attribute;
             }
@@ -103,38 +107,38 @@ export default class SelectAttributeModal extends React.Component {
         });
       });
       this.setState({
-        entityTypeOption
+        supplierTypeOption
       });
     }
   }
 
-  onSelectEntityType(selectedEntityType) {
+  onSelectSupplierType(selectedSupplierType) {
     this.setState({
-      selectedEntityType
+      selectedSupplierType
     });
   }
 
   handleInputChange(event, option) {
-    let { selectedEntityType } = this.state;
-    selectedEntityType.attributes.forEach(attribute => {
+    let { selectedSupplierType } = this.state;
+    selectedSupplierType.attributes.forEach(attribute => {
       if (attribute.name === option.name) {
         attribute.isChecked = event.target.checked;
       }
     });
     this.setState({
-      selectedEntityType
+      selectedSupplierType
     });
   }
 
   onSubmit() {
-    let { selectedEntityType } = this.state;
+    let { selectedSupplierType } = this.state;
 
-    this.props.onSubmit(selectedEntityType, this.props.attributeInfo);
+    this.props.onSubmit(selectedSupplierType, this.props.attributeInfo);
   }
 
   renderOptionRow(option, optionIndex) {
-    return option.type !== 'ENTITY_TYPE' &&
-      option.type !== 'BASE_ENTITY_TYPE' &&
+    return option.type !== 'SUPPLIER_TYPE' &&
+      option.type !== 'BASE_SUPPLIER_TYPE' &&
       option.type !== 'INVENTORY_TYPE' &&
       option.type !== 'INVENTORY' ? (
       <div className="form-control option-container" key={optionIndex}>
@@ -154,17 +158,17 @@ export default class SelectAttributeModal extends React.Component {
 
   render() {
     let { attributeInfo } = this.props;
-    let { selectedEntityType } = this.state;
+    let { selectedSupplierType } = this.state;
 
-    let entityType;
-    if (attributeInfo.attributeType === 'ENTITY_TYPE') {
-      entityType = 'Entity Type';
-    } else if (attributeInfo.attributeType === 'BASE_ENTITY_TYPE') {
-      entityType = 'Base Entity Type';
+    let supplierType;
+    if (attributeInfo.attributeType === 'SUPPLIER_TYPE') {
+      supplierType = 'Supplier Type';
+    } else if (attributeInfo.attributeType === 'BASE_SUPPLIER_TYPE') {
+      supplierType = 'Base Supplier Type';
     } else if (attributeInfo.attributeType === 'INVENTORY_TYPE') {
-      entityType = 'Base Inventory';
+      supplierType = 'Base Inventory';
     } else if (attributeInfo.attributeType === 'INVENTORY') {
-      entityType = 'Inventory';
+      supplierType = 'Inventory';
     }
 
     return (
@@ -174,31 +178,31 @@ export default class SelectAttributeModal extends React.Component {
         ariaHideApp={false}
       >
         <div className="modal-title">
-          <h3>Select Attributes for {entityType}</h3>
+          <h3>Select Attributes for {supplierType}</h3>
         </div>
         <br />
         <div className="createform">
           <div className="createform__form">
             <div className="createform__form__inline">
               <div className="form-control">
-                <label>*Select {entityType}</label>
+                <label>*Select {supplierType}</label>
                 <Select
-                  options={this.state.entityTypeOption}
-                  value={this.state.selectedEntityType}
-                  onChange={this.onSelectEntityType}
+                  options={this.state.supplierTypeOption}
+                  value={this.state.selectedSupplierType}
+                  onChange={this.onSelectSupplierType}
                 />
               </div>
             </div>
             <div className="createform__form">
-              {selectedEntityType
-                ? selectedEntityType.attributes.map(this.renderOptionRow)
+              {selectedSupplierType
+                ? selectedSupplierType.attributes.map(this.renderOptionRow)
                 : undefined}
             </div>
             <div className="modal-footer">
               <button
                 type="button"
                 className="btn btn--danger"
-                onClick={() => this.onSubmit(selectedEntityType)}
+                onClick={() => this.onSubmit(selectedSupplierType)}
               >
                 Submit
               </button>{' '}

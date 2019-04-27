@@ -2,17 +2,18 @@ import { combineReducers } from 'redux';
 import * as appearanceReducer from './appearance';
 import * as authReducer from './auth';
 import * as campaignReducer from './campaign';
-import * as supplierReducer from './supplier';
+import * as supplierStaticReducer from './supplier_static';
 import * as checklistReducer from './checklist';
 import * as inventoryReducer from './inventory';
-import * as entityReducer from './Entity/entity';
-import * as entityTypeReducer from './Entity/entityType';
-import * as baseEntityTypeReducer from './Entity/baseEntityType';
+import * as supplierReducer from './Supplier/supplier';
+import * as supplierTypeReducer from './Supplier/supplierType';
+import * as baseSupplierTypeReducer from './Supplier/baseSupplierType';
 import * as settingReducer from './setting';
 import * as userReducer from './user';
 import * as userProfileReducer from './userProfile';
 import * as leadReducer from './lead';
 import * as bookingReducer from './booking';
+import * as phaseReducer from './phase';
 import { reducer as toastrReducer } from 'react-redux-toastr';
 
 const reducers = combineReducers(
@@ -22,18 +23,19 @@ const reducers = combineReducers(
     appearanceReducer,
     authReducer,
     campaignReducer,
-    supplierReducer,
+    supplierStaticReducer,
     checklistReducer,
-    entityReducer,
-    entityTypeReducer,
-    baseEntityTypeReducer,
+    supplierReducer,
+    supplierTypeReducer,
+    baseSupplierTypeReducer,
     settingReducer,
     userReducer,
     leadReducer,
     inventoryReducer,
     userProfileReducer,
     leadReducer,
-    bookingReducer
+    bookingReducer,
+    phaseReducer
   )
 );
 

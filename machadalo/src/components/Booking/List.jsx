@@ -1,15 +1,25 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import CommentsModal from './../Modals/CommentsModal';
+import PhaseModal from './../Modals/PhaseModal';
+
 export default class ListBooking extends Component {
   constructor() {
     super();
 
     this.state = {
-      searchFilter: ''
+      searchFilter: '',
+      selectedBooking: null,
+      isCommentsModalVisible: false,
+      isPhaseModalVisible: false
     };
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
+    this.onCommentsChange = this.onCommentsChange.bind(this);
+    this.onCommentsModalClose = this.onCommentsModalClose.bind(this);
+    this.onManagePhaseClick = this.onManagePhaseClick.bind(this);
+    this.onPhaseModalClose = this.onPhaseModalClose.bind(this);
     this.getFilteredList = this.getFilteredList.bind(this);
     this.renderBookingRow = this.renderBookingRow.bind(this);
   }
@@ -24,6 +34,35 @@ export default class ListBooking extends Component {
     });
   }
 
+  onCommentsChange(comments) {
+    console.log('comments: ', comments);
+    const { selectedBooking } = this.state;
+
+    this.props.putBooking({
+      id: selectedBooking.id,
+      data: { ...selectedBooking, comments }
+    });
+  }
+
+  onCommentsModalClose() {
+    this.setState({
+      isCommentsModalVisible: false,
+      selectedBooking: null
+    });
+  }
+
+  onManagePhaseClick() {
+    this.setState({
+      isPhaseModalVisible: true
+    });
+  }
+
+  onPhaseModalClose() {
+    this.setState({
+      isPhaseModalVisible: false
+    });
+  }
+
   getCampaignId() {
     const { match } = this.props;
     return match.params.campaignId;
@@ -34,6 +73,14 @@ export default class ListBooking extends Component {
   }
 
   renderBookingRow(booking) {
+    const onComments = () => {
+      // TODO: Show Modal with comments list & add comment button
+      this.setState({
+        selectedBooking: booking,
+        isCommentsModalVisible: true
+      });
+    };
+
     const onRemove = () => {
       if (window.confirm('Are you sure you want to remove this booking?')) {
         this.props.deleteBooking(booking);
@@ -45,7 +92,7 @@ export default class ListBooking extends Component {
         {booking.booking_attributes.map(attribute => (
           <td>{attribute.value}</td>
         ))}
-        {booking.entity_attributes.map(attribute => (
+        {booking.supplier_attributes.map(attribute => (
           <td>
             {attribute.type === 'STRING' ||
             attribute.type === 'FLOAT' ||
@@ -54,6 +101,15 @@ export default class ListBooking extends Component {
               : attribute.type}
           </td>
         ))}
+        <td>
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={onComments}
+          >
+            Comments
+          </button>
+        </td>
         <td>
           <Link
             to={`/r/booking/edit/${this.getCampaignId()}/${booking.id}`}
@@ -72,14 +128,21 @@ export default class ListBooking extends Component {
   }
 
   render() {
-    const { searchFilter } = this.state;
+    const {
+      searchFilter,
+      selectedBooking,
+      isCommentsModalVisible,
+      isPhaseModalVisible
+    } = this.state;
     const { booking } = this.props;
     const { bookingList } = booking;
     const list = this.getFilteredList(bookingList);
     let attributes = [];
 
     if (list && list.length) {
-      attributes = list[0].booking_attributes.concat(list[0].entity_attributes);
+      attributes = list[0].booking_attributes.concat(
+        list[0].supplier_attributes
+      );
     }
 
     return (
@@ -106,6 +169,7 @@ export default class ListBooking extends Component {
                 ))}
                 <th>Action</th>
                 <th>Action</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -129,13 +193,34 @@ export default class ListBooking extends Component {
           >
             Create
           </Link>
-          <button className="btn btn--danger" disabled>
+          <button type="button" className="btn btn--danger" disabled>
             Campaign Release and Audit Plan
           </button>
-          <button className="btn btn--danger" disabled>
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={this.onManagePhaseClick}
+          >
             Manage Phases
           </button>
         </div>
+
+        {selectedBooking ? (
+          <CommentsModal
+            comments={selectedBooking.comments || {}}
+            onChange={this.onCommentsChange}
+            onClose={this.onCommentsModalClose}
+            isVisible={isCommentsModalVisible}
+            user={this.props.user.currentUser}
+          />
+        ) : null}
+
+        <PhaseModal
+          {...this.props}
+          onClose={this.onPhaseModalClose}
+          isVisible={isPhaseModalVisible}
+          campaign={{ campaignId: this.getCampaignId() }}
+        />
       </div>
     );
   }

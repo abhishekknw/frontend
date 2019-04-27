@@ -3,12 +3,26 @@ import classnames from 'classnames';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
 
-const getFilteredEntityList = (list, entityId) => {
-  if (entityId) {
-    return list.filter(entity => entity.entity_type_id === entityId);
+const getFilteredSupplierList = (list, SupplierId) => {
+  if (SupplierId) {
+    return list.filter(supplier => supplier.Supplier_type_id === SupplierId);
   } else {
     return list;
   }
+};
+
+const getInventoryAttributes = supplier => {
+  if (
+    supplier &&
+    supplier.Supplier_attributes &&
+    supplier.Supplier_attributes.length
+  ) {
+    return supplier.Supplier_attributes.filter(
+      item => item.type === 'INVENTORY'
+    ).map(item => ({ ...item.value, count: 1 }));
+  }
+
+  return [];
 };
 
 export default class EditBooking extends React.Component {
@@ -22,13 +36,15 @@ export default class EditBooking extends React.Component {
 
     let attributes = [];
     let bookingTemplate = {};
-    let entity = {};
+    let supplier = {};
+    let inventories = [];
     if (bookingId && booking && booking.id) {
       attributes = booking.booking_attributes;
       bookingTemplate = this.getBookingTemplateById({
         id: booking.booking_template_id
       });
-      entity = this.getEntityById({ id: booking.entity_id });
+      supplier = this.getSupplierById({ id: booking.Supplier_id });
+      inventories = getInventoryAttributes(supplier);
     }
 
     this.state = {
@@ -37,28 +53,30 @@ export default class EditBooking extends React.Component {
       errors: {},
       bookingTemplateId: booking.booking_template_id,
       bookingTemplate,
-      entity,
-      entityId: booking.entity_id,
-      attributes
+      supplier,
+      SupplierId: booking.Supplier_id,
+      attributes,
+      inventories
     };
 
-    // this.handleInputChange = this.handleInputChange.bind(this);
     this.onBookingTemplateChange = this.onBookingTemplateChange.bind(this);
-    this.onEntityChange = this.onEntityChange.bind(this);
+    this.onSupplierChange = this.onSupplierChange.bind(this);
     this.renderBookingAttributeRow = this.renderBookingAttributeRow.bind(this);
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
+    this.renderInventoryRow = this.renderInventoryRow.bind(this);
+    this.handleInventoryChange = this.handleInventoryChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
     this.props.getBookingTemplateList();
-    this.props.getEntityList();
+    this.props.getSupplierList();
     this.props.getBookingList({ campaignId: this.getCampaignId() });
   }
 
   componentDidUpdate(prevProps) {
-    const { booking: prevBooking, entity: prevEntity } = prevProps;
-    const { booking: newBooking, entity: newEntity, history } = this.props;
+    const { booking: prevBooking, supplier: prevSupplier } = prevProps;
+    const { booking: newBooking, supplier: newSupplier, history } = this.props;
 
     if (
       prevBooking.isCreatingBooking &&
@@ -91,7 +109,8 @@ export default class EditBooking extends React.Component {
     if (
       (prevBooking.isFetchingBookingTemplate &&
         !newBooking.isFetchingBookingTemplate) ||
-      (prevEntity.isFetchingEntityList && !newEntity.isFetchingEntityList) ||
+      (prevSupplier.isFetchingSupplierList &&
+        !newSupplier.isFetchingSupplierList) ||
       (prevBooking.isFetchingBooking && !newBooking.isFetchingBooking)
     ) {
       const bookingId = this.getBookingId();
@@ -101,13 +120,15 @@ export default class EditBooking extends React.Component {
 
       let attributes = [];
       let bookingTemplate = {};
-      let entity = {};
+      let supplier = {};
+      let inventories = [];
       if (bookingId && booking && booking.id) {
         attributes = booking.booking_attributes;
         bookingTemplate = this.getBookingTemplateById({
           id: booking.booking_template_id
         });
-        entity = this.getEntityById({ id: booking.entity_id });
+        supplier = this.getSupplierById({ id: booking.Supplier_id });
+        inventories = getInventoryAttributes(supplier);
       }
 
       this.setState({
@@ -115,9 +136,10 @@ export default class EditBooking extends React.Component {
         bookingId,
         bookingTemplateId: booking.booking_template_id,
         bookingTemplate,
-        entity,
-        entityId: booking.entity_id,
-        attributes
+        supplier,
+        SupplierId: booking.Supplier_id,
+        attributes,
+        inventories
       });
     }
   }
@@ -132,14 +154,15 @@ export default class EditBooking extends React.Component {
     this.setState({
       bookingTemplate: template,
       bookingTemplateId: template.id,
-      entityId: template.entity_type_id,
+      SupplierId: template.Supplier_type_id,
       attributes: template.booking_attributes
     });
   }
 
-  onEntityChange(entity) {
+  onSupplierChange(supplier) {
     this.setState({
-      entity: entity
+      supplier: supplier,
+      inventories: getInventoryAttributes(supplier)
     });
   }
 
@@ -153,23 +176,35 @@ export default class EditBooking extends React.Component {
     });
   }
 
+  handleInventoryChange(inventory, index) {
+    const inventories = [...this.state.inventories];
+
+    inventories[index] = inventory;
+
+    this.setState({
+      inventories
+    });
+  }
+
   onSubmit() {
     const {
       bookingTemplateId,
       bookingTemplate,
-      entity,
+      supplier,
       attributes,
       isEditMode,
-      bookingId
+      bookingId,
+      inventories
     } = this.state;
     const { postBooking, putBooking } = this.props;
 
     const data = {
       booking_template_id: bookingTemplateId,
-      entity_id: entity.id,
+      Supplier_id: supplier.id,
       campaign_id: this.getCampaignId(),
       organisation_id: bookingTemplate.organisation_id,
-      booking_attributes: attributes
+      booking_attributes: attributes,
+      booking_data: inventories
     };
 
     if (isEditMode) {
@@ -215,13 +250,13 @@ export default class EditBooking extends React.Component {
     return {};
   }
 
-  getEntityById({ id }) {
-    const { entity } = this.props;
-    const { entityList } = entity;
+  getSupplierById({ id }) {
+    const { supplier } = this.props;
+    const { SupplierList } = supplier;
 
-    for (let i = 0, l = entityList.length; i < l; i += 1) {
-      if (entityList[i].id === id) {
-        return entityList[i];
+    for (let i = 0, l = SupplierList.length; i < l; i += 1) {
+      if (SupplierList[i].id === id) {
+        return SupplierList[i];
       }
     }
 
@@ -312,7 +347,7 @@ export default class EditBooking extends React.Component {
     }
 
     return (
-      <div className={classnames('entity')} key={index}>
+      <div className="supplier" key={index}>
         <div className="form-control">&nbsp;</div>
         <div className="form-control">
           <p>
@@ -328,14 +363,45 @@ export default class EditBooking extends React.Component {
     );
   }
 
+  renderInventoryRow(inventory, index) {
+    const onCountChange = event => {
+      if (
+        event.target.value &&
+        !isNaN(+event.target.value) &&
+        +event.target.value >= 0
+      ) {
+        const newInventory = { ...inventory, count: +event.target.value };
+
+        this.handleInventoryChange(newInventory, index);
+      }
+    };
+
+    return (
+      <div className="supplier" key={index}>
+        <div className="form-control">&nbsp;</div>
+        <div className="form-control">
+          <p>{inventory.label}</p>
+        </div>
+
+        <div className="form-control">
+          <input
+            type="number"
+            onChange={onCountChange}
+            value={inventory.count}
+          />
+        </div>
+      </div>
+    );
+  }
+
   render() {
-    const { errors, attributes } = this.state;
-    const { booking, entity } = this.props;
-    const { entityList } = entity;
+    const { errors, attributes, inventories } = this.state;
+    const { booking, supplier } = this.props;
+    const { supplierList } = supplier;
     const { bookingTemplateList } = booking;
-    const filterEntityList = getFilteredEntityList(
-      entityList,
-      this.state.entityId
+    const filterSupplierList = getFilteredSupplierList(
+      supplierList,
+      this.state.SupplierId
     );
 
     return (
@@ -386,7 +452,7 @@ export default class EditBooking extends React.Component {
               </div>
 
               {attributes && attributes.length ? (
-                <div className="entity entity__header">
+                <div className="supplier Supplier__header">
                   <div className="form-control">&nbsp;</div>
                   <div className="form-control">
                     <h4>Field</h4>
@@ -403,26 +469,43 @@ export default class EditBooking extends React.Component {
                 : null}
             </div>
 
-            <div className="create__form__header">Select Entity</div>
+            <div className="create__form__header">Select supplier</div>
 
             <div className="create__form__body">
               <div className="form-control form-control--column">
                 <Select
                   className={classnames('select', {
-                    error: errors.entity
+                    error: errors.supplier
                   })}
-                  options={filterEntityList}
+                  options={filterSupplierList}
                   getOptionValue={option => option.id}
                   getOptionLabel={option => option.name}
-                  value={this.state.entity}
-                  onChange={this.onEntityChange}
+                  value={this.state.supplier}
+                  onChange={this.onSupplierChange}
                 />
-                {errors.entity ? (
+                {errors.supplier ? (
                   <p className="message message--error">
-                    {errors.entity.message}
+                    {errors.supplier.message}
                   </p>
                 ) : null}
               </div>
+
+              {inventories && inventories.length ? (
+                <div className="supplier Supplier__header">
+                  <div className="form-control">&nbsp;</div>
+                  <div className="form-control">
+                    <h4>Inventory</h4>
+                  </div>
+
+                  <div className="form-control">
+                    <h4>Count</h4>
+                  </div>
+                </div>
+              ) : null}
+
+              {inventories && inventories.length
+                ? inventories.map(this.renderInventoryRow)
+                : null}
             </div>
           </form>
         </div>
