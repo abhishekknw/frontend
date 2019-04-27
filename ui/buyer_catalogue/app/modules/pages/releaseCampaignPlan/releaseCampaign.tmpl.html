@@ -377,13 +377,13 @@
 
                 </tr>
                 <tr ng-if="!editContactDetails" ng-repeat="contact in payment.contacts">
-                  <td class="alignment"><input type="text" ng-model="contact.salutation"></td>
-                  <td class="alignment"><input type="text" ng-model="contact.name"></td>
-                  <td class="alignment"><input type="text" ng-model="contact.contact_type"></td>
-                  <td class="alignment"><input type="email" ng-model="contact.email"></td>
-                  <td class="alignment"><input type="int" ng-model="contact.std_code"></td>
-                  <td class="alignment"><input type="tel" ng-model="contact.landline"></td>
-                  <td class="alignment"><input type="phone" ng-model="contact.mobile"></td>
+                  <td class="alignment"><input type="text" placeholder="Mr/Mrs" ng-model="contact.salutation"></td>
+                  <td class="alignment"><input type="text" placeholder="Name of the Person" ng-model="contact.name"></td>
+                  <td class="alignment"><input type="text" placeholder="Manager/Secretary/Chairman/Treasurer/Committe Member" ng-model="contact.contact_type"></td>
+                  <td class="alignment"><input type="email" placeholder="Email of the Person" ng-model="contact.email"></td>
+                  <td class="alignment"><input type="int" placeholder="022/+91" ng-model="contact.std_code"></td>
+                  <td class="alignment"><input type="tel" placeholder="Landline No" ng-model="contact.landline"></td>
+                  <td class="alignment"><input type="phone" placeholder="Mobile No" ng-model="contact.mobile"></td>
                   <td class="alignment">
                     <button type="button" name="button" ng-click="removeContact($index)">Remove</button>
                   </td>
