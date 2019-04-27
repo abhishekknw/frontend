@@ -847,6 +847,8 @@ $scope.multiSelect =
              $scope.usersMapListWithObjects = [];
              angular.forEach($scope.userList, function(data){
                $scope.usersMapListWithObjects[data.id] = data;
+               $scope.UserDataAssigned = data.username;
+               console.log($scope.UserDataAssigned);
              })
              console.log($scope.usersMapListWithObjects);
            })
@@ -1002,6 +1004,9 @@ $scope.multiSelect =
   $scope.uploadImagePermission = function(file){
         $scope.permissionBoxFile = file;
   }
+  $scope.uploadImageReceipt = function(file){
+        $scope.ReceiptFile = file;
+  }
   $scope.permissionBoxData = {};
   $scope.uploadPermissionBoxImage = function(supplier){
     // cfpLoadingBar.set(0.3)
@@ -1039,6 +1044,43 @@ $scope.multiSelect =
           swal(constants.name, "Max 2MB Supported, Your Image Size Exceeds", constants.warning);
         }
       }
+      $scope.ReceiptData = {};
+      $scope.uploadReceiptImage = function(supplier){
+        // cfpLoadingBar.set(0.3)
+        console.log(supplier);
+            var token = $rootScope.globals.currentUser.token;
+            if ($scope.ReceiptFile) {
+              cfpLoadingBar.start();
+              Upload.upload({
+                  url: constants.base_url + constants.url_base + "hashtag-images/" + $scope.campaign_id +constants.upload_receipt_url,
+                  data: {
+                    file: $scope.ReceiptFile,
+                    'comment' : supplier.receiptComment||'',
+                    'object_id' : supplier.supplier_id,
+                    'hashtag' : 'Receipt',
+                    'campaign_name' : $scope.releaseDetails.campaign.name,
+                    'supplier_name' : supplier.name,
+                    'supplier_type_code' : 'RS'
+                  },
+                  headers: {'Authorization': 'JWT ' + token}
+              }).then(function onSuccess(response){
+                  console.log(response);
+                    supplier.receiptComment = '';
+                    // uploaded_image = {'image_path': response.data.data };
+                    // inventory.images.push(uploaded_image);
+                    cfpLoadingBar.complete();
+                    swal(constants.name, constants.image_success, constants.success);
+                    // $("#progressBarModal").modal('hide');
+              })
+              .catch(function onError(response) {
+                cfpLoadingBar.complete();
+                console.log(response);
+              });
+            }
+            else {
+              swal(constants.name, "Max 2MB Supported, Your Image Size Exceeds", constants.warning);
+            }
+          }
       $scope.getPermissionBoxImages = function(supplier){
         releaseCampaignService.getPermissionBoxImages($scope.campaign_id,supplier.supplier_id)
         .then(function onSuccess(response){
@@ -1051,6 +1093,22 @@ $scope.multiSelect =
             swal(constants.name, constants.image_empty, constants.warning);
           }
           $scope.perBoxImageData = response.data.data;
+        }).catch(function onError(response){
+          console.log(response);
+        })
+      }
+      $scope.getReceiptBoxImages = function(supplier){
+        releaseCampaignService.getReceiptBoxImages($scope.campaign_id,supplier.supplier_id)
+        .then(function onSuccess(response){
+          console.log(response);
+          if(response.data.data.length){
+              angular.forEach(response.data.data, function(data){
+                data['image_url'] = 'http://androidtokyo.s3.amazonaws.com/' + data.image_path;
+              })
+          }else {
+            swal(constants.name, constants.image_empty, constants.warning);
+          }
+          $scope.perReceiptImageData = response.data.data;
         }).catch(function onError(response){
           console.log(response);
         })

@@ -99,6 +99,7 @@ angular
     updateData_error : 'Error occured while saving data',
     already_exist : 'Supplier Already Present',
     upload_permission_box_image_url : '/upload_permission_box_image/',
+    upload_receipt_url : '/upload_receipt_image/',
     //auditReleasePlan
     inventory_date_success : 'Inventory Dates are saved successfully',
     inventory_date_error : 'Error occured while saving dates',

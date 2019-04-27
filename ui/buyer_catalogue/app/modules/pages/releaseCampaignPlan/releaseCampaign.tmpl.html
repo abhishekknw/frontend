@@ -69,6 +69,7 @@
             <th>Comments</th>
             <th>Action</th>
             <th>Permission Box</th>
+            <th>Receipt</th>
           </tr>
         </thead>
         <tbody ng-repeat="supplier in suppliersList track by $index">
@@ -164,6 +165,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">Assign Users</h4>
                         <hr/>
+                        <p>{{UserDataAssigned}}</p>
                         <div class = "modal-body" style = "height: 300px;">
                           <select name="users" class="form-control spacing input-width-phase"  ng-model="userData.user" min="1" >
                             <option value="" disabled>Select User</option>
@@ -247,6 +249,12 @@
               <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Permission Box" ng-model="supplier.permissionComment"></textarea>
               <button ng-click="uploadPermissionBoxImage(supplier)" >Submit</button>
               <button ng-click="getPermissionBoxImages(supplier)" data-toggle="modal" data-target="#imageModal">View</button>
+            </td>
+            <td rowspan="{{key.length}}" ng-show="$first">
+              <button class="btn btn-primary active" ngf-select="uploadImageReceipt($file)" ngf-max-size="2MB">Upload Image</button>
+              <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Receipt" ng-model="supplier.receiptComment"></textarea>
+              <button ng-click="uploadReceiptImage(supplier)" >Submit</button>
+              <button ng-click="getReceiptBoxImages(supplier)" data-toggle="modal" data-target="#imageReceiptModal">View</button>
             </td>
 
           </tr>
@@ -883,6 +891,39 @@
           <div class="carousel" id="slider">
              <div class="carousel-inner">
                <div class="item" ng-class="{active:!$index}" ng-repeat="image in perBoxImageData">
+                 <div class="row">
+                  <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
+                </div>
+                 <div class="row" style="margin-left:10px;">
+                   Comment : {{image.comment}} </br>
+                 </div>
+               </div>
+
+             </div>
+              <a style="height:400px;" class="left carousel-control"  data-toggle="carousel" data-target = "#slider" role="button" data-slide="prev">
+                 <span class="glyphicon glyphicon-chevron-left"></span>
+              </a>
+             <a style="height:400px;" class="right carousel-control" data-toggle = "carousel" data-target = "#slider" role="button" data-slide="next">
+               <span class="glyphicon glyphicon-chevron-right"></span>
+             </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="imageReceiptModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Receipt Image Details</h4>
+        <hr/>
+        <div class = "modal-body">
+          <div class="carousel" id="slider">
+             <div class="carousel-inner">
+               <div class="item" ng-class="{active:!$index}" ng-repeat="image in perReceiptImageData">
                  <div class="row">
                   <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
                 </div>
