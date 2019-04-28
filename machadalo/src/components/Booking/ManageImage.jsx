@@ -1,8 +1,12 @@
 import React from 'react';
 import Select from 'react-select';
 import ViewImageModal from '../Modals/ViewImagesModal';
+import UploadImageModal from '../Modals/UploadImageModal';
 
 const getFilteredList = (list, assignmentList) => {
+  console.log('assignmentList: ', assignmentList);
+  console.log('list: ', list);
+
   const filteredList = list
     .map((item) => [
       ...assignmentList[item].RELEASE,
@@ -25,11 +29,19 @@ export default class ManageImage extends React.Component {
   constructor(props) {
     super(props);
 
+    const { booking, supplier, match } = props;
+    const supplierId = match.params.supplierId;
+    const { assignmentList } = booking;
+    const assignmentListKeys = Object.keys(assignmentList);
+
     this.state = {
       supplierById: {},
       searchFilter: '',
       userById: '',
       isViewImageModalVisible: false,
+      isUploadImageModalVisible: false,
+      selectedRow: {},
+      tableList: getFilteredList(assignmentListKeys, assignmentList),
     };
 
     this.getCampaignId = this.getCampaignId.bind(this);
@@ -38,6 +50,7 @@ export default class ManageImage extends React.Component {
     this.onViewImageClick = this.onViewImageClick.bind(this);
     this.onUploadImageClick = this.onUploadImageClick.bind(this);
     this.onViewImageModalClose = this.onViewImageModalClose.bind(this);
+    this.onUploadImageModalClose = this.onUploadImageModalClose.bind(this);
   }
 
   componentDidMount() {
@@ -91,7 +104,11 @@ export default class ManageImage extends React.Component {
     });
   }
 
-  onSupplierChange() {}
+  // onSupplierChange(supplier) {
+  //   this.setState({
+  //     tableList: ,
+  //   });
+  // }
 
   onActivityTypeChange() {}
 
@@ -106,11 +123,22 @@ export default class ManageImage extends React.Component {
     });
   }
 
-  onUploadImageClick() {}
+  onUploadImageClick(item) {
+    this.setState({
+      isUploadImageModalVisible: true,
+      selectedRow: item,
+    });
+  }
 
   onViewImageModalClose() {
     this.setState({
       isViewImageModalVisible: false,
+    });
+  }
+
+  onUploadImageModalClose() {
+    this.setState({
+      isUploadImageModalVisible: false,
     });
   }
 
@@ -158,12 +186,17 @@ export default class ManageImage extends React.Component {
   render() {
     const { booking, supplier, match } = this.props;
     const supplierId = match.params.supplierId;
-    const { assignmentList } = booking;
-    const { supplierById, isViewImageModalVisible } = this.state;
+    // const { assignmentList } = booking;
+    const {
+      supplierById,
+      isViewImageModalVisible,
+      isUploadImageModalVisible,
+      selectedRow,
+    } = this.state;
 
-    const assignmentListKeys = Object.keys(assignmentList);
-    const list = getFilteredList(assignmentListKeys, assignmentList);
-    console.log('list: ', list);
+    // const assignmentListKeys = Object.keys(assignmentList);
+    // const list = getFilteredList(assignmentListKeys, assignmentList);
+    // console.log('list1: ', list);
 
     return (
       <div className="booking-base__create manage-image">
@@ -207,8 +240,8 @@ export default class ManageImage extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {list && list.length ? (
-                list.map(this.renderListRow)
+              {tableList && tableList.length ? (
+                tableList.map(this.renderListRow)
               ) : (
                 <tr>
                   <td colSpan="5">No releases available!</td>
@@ -221,6 +254,15 @@ export default class ManageImage extends React.Component {
           <ViewImageModal
             onClose={this.onViewImageModalClose}
             isVisible={isViewImageModalVisible}
+          />
+        ) : null}
+        {isUploadImageModalVisible ? (
+          <UploadImageModal
+            {...this.props}
+            onClose={this.onUploadImageModalClose}
+            isVisible={isUploadImageModalVisible}
+            item={selectedRow}
+            inventoriesList={list}
           />
         ) : null}
       </div>

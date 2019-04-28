@@ -31,6 +31,7 @@ export function postBaseBooking({ data }) {
 
     request
       .post(`${config.API_URL}/v0/ui/dynamic-booking/base-booking-template/`)
+      .type('form')
       .set('Authorization', `JWT ${auth.token}`)
       .send(data)
       .then((resp) => {
@@ -635,3 +636,45 @@ export function putAssignment({ campaignId, data }) {
   };
 }
 /* Assignment: End */
+
+// Upload Image
+
+const uploadImageStart = () => {
+  return {
+    type: types.UPLOAD_IMAGE_START,
+  };
+};
+
+const uploadImageSuccess = () => {
+  return {
+    type: types.UPLOAD_IMAGE_SUCCESS,
+  };
+};
+
+const uploadImageFail = () => {
+  return {
+    type: types.UPLOAD_IMAGE_FAIL,
+  };
+};
+
+export function uploadImage(data) {
+  console.log('uploadImage: ', data);
+  return (dispatch, getState) => {
+    dispatch(uploadImageStart());
+
+    const { auth } = getState();
+
+    request
+      .post(`${config.API_URL}/v0/ui/dynamic-booking/upload-inventory-image-generic/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .send(data)
+      .then((resp) => {
+        dispatch(uploadImageSuccess());
+      })
+      .catch((ex) => {
+        console.log('Failed to create assignment', ex);
+
+        dispatch(uploadImageFail());
+      });
+  };
+}
