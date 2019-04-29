@@ -3,23 +3,36 @@ import Select from 'react-select';
 import ViewImageModal from '../Modals/ViewImagesModal';
 import UploadImageModal from '../Modals/UploadImageModal';
 
-const getFilteredList = (list, assignmentList) => {
+const getFilteredList = (list, assignmentList, filters) => {
   const filteredList = list
     .map((item) => [
       ...assignmentList[item].RELEASE,
       ...assignmentList[item].AUDIT,
       ...assignmentList[item].CLOSURE,
     ])
-    .reduce((acc, item) => acc.concat(item), []);
+    .reduce((acc, item) => acc.concat(item), [])
+    .filter((item) => {
+      // If supplier match fails
+      if (filters.supplierId && filters.supplierId !== item.supplier_id) {
+        return false;
+      }
+
+      // If activity type match fails
+      if (filters.activityType && filters.activityType !== item.activity_type) {
+        return false;
+      }
+
+      return true;
+    });
 
   return filteredList;
 };
 
 const ActivityTypes = [
+  { value: 'ALL', label: 'All' },
   { value: 'RELEASE', label: 'Release' },
   { value: 'AUDIT', label: 'Audit' },
   { value: 'CLOSURE', label: 'Closure' },
-  { value: 'ALL', label: 'All' },
 ];
 
 export default class ManageImage extends React.Component {
@@ -33,6 +46,8 @@ export default class ManageImage extends React.Component {
       isViewImageModalVisible: false,
       isUploadImageModalVisible: false,
       selectedRow: {},
+      filterActivityType: ActivityTypes[0],
+      filterSupplier: {},
     };
 
     this.getCampaignId = this.getCampaignId.bind(this);
@@ -42,6 +57,8 @@ export default class ManageImage extends React.Component {
     this.onUploadImageClick = this.onUploadImageClick.bind(this);
     this.onViewImageModalClose = this.onViewImageModalClose.bind(this);
     this.onUploadImageModalClose = this.onUploadImageModalClose.bind(this);
+    this.onSupplierFilterChange = this.onSupplierFilterChange.bind(this);
+    this.onActivityTypeChange = this.onActivityTypeChange.bind(this);
   }
 
   componentDidMount() {
@@ -95,13 +112,17 @@ export default class ManageImage extends React.Component {
     });
   }
 
-  // onSupplierChange(supplier) {
-  //   this.setState({
-  //     tableList: ,
-  //   });
-  // }
+  onSupplierFilterChange(option) {
+    this.setState({
+      filterSupplier: option,
+    });
+  }
 
-  onActivityTypeChange() {}
+  onActivityTypeChange(option) {
+    this.setState({
+      filterActivityType: option,
+    });
+  }
 
   getCampaignId() {
     const { match } = this.props;
@@ -183,10 +204,16 @@ export default class ManageImage extends React.Component {
       isViewImageModalVisible,
       isUploadImageModalVisible,
       selectedRow,
+      filterSupplier,
+      filterActivityType,
     } = this.state;
 
     const assignmentListKeys = Object.keys(assignmentList);
-    const list = getFilteredList(assignmentListKeys, assignmentList);
+    const selectedSupplierId = filterSupplier.id || supplierId;
+    const list = getFilteredList(assignmentListKeys, assignmentList, {
+      activityType: filterActivityType.value !== 'ALL' ? filterActivityType.value : '',
+      supplierId: selectedSupplierId,
+    });
 
     return (
       <div className="booking-base__create manage-image">
@@ -201,8 +228,8 @@ export default class ManageImage extends React.Component {
               options={supplier.supplierList}
               getOptionValue={(option) => option.id}
               getOptionLabel={(option) => option.name}
-              value={supplierById[supplierId]}
-              onChange={this.onSupplierChange}
+              value={supplierById[selectedSupplierId]}
+              onChange={this.onSupplierFilterChange}
               placeholder="Select Supplier"
             />
           </div>
@@ -211,6 +238,7 @@ export default class ManageImage extends React.Component {
               className="select"
               options={ActivityTypes}
               onChange={this.onActivityTypeChange}
+              value={filterActivityType}
               placeholder="Select Activity Type"
             />
           </div>
