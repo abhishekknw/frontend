@@ -360,6 +360,28 @@ export const booking = createReducer(
         putAssignmentError: true,
       };
     },
+    [types.UPLOAD_IMAGE_START](state) {
+      return {
+        ...state,
+        isUploadingImage: true,
+        uploadImageSuccess: false,
+        uploadImageError: false,
+      };
+    },
+    [types.UPLOAD_IMAGE_SUCCESS](state) {
+      return {
+        ...state,
+        isUploadingImage: false,
+        uploadImageSuccess: true,
+      };
+    },
+    [types.UPLOAD_IMAGE_FAIL](state) {
+      return {
+        ...state,
+        isUploadingImage: false,
+        uploadImageError: true,
+      };
+    },
   }
 );
 

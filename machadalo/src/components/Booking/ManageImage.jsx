@@ -4,9 +4,6 @@ import ViewImageModal from '../Modals/ViewImagesModal';
 import UploadImageModal from '../Modals/UploadImageModal';
 
 const getFilteredList = (list, assignmentList) => {
-  console.log('assignmentList: ', assignmentList);
-  console.log('list: ', list);
-
   const filteredList = list
     .map((item) => [
       ...assignmentList[item].RELEASE,
@@ -29,11 +26,6 @@ export default class ManageImage extends React.Component {
   constructor(props) {
     super(props);
 
-    const { booking, supplier, match } = props;
-    const supplierId = match.params.supplierId;
-    const { assignmentList } = booking;
-    const assignmentListKeys = Object.keys(assignmentList);
-
     this.state = {
       supplierById: {},
       searchFilter: '',
@@ -41,7 +33,6 @@ export default class ManageImage extends React.Component {
       isViewImageModalVisible: false,
       isUploadImageModalVisible: false,
       selectedRow: {},
-      tableList: getFilteredList(assignmentListKeys, assignmentList),
     };
 
     this.getCampaignId = this.getCampaignId.bind(this);
@@ -186,7 +177,7 @@ export default class ManageImage extends React.Component {
   render() {
     const { booking, supplier, match } = this.props;
     const supplierId = match.params.supplierId;
-    // const { assignmentList } = booking;
+    const { assignmentList } = booking;
     const {
       supplierById,
       isViewImageModalVisible,
@@ -194,9 +185,8 @@ export default class ManageImage extends React.Component {
       selectedRow,
     } = this.state;
 
-    // const assignmentListKeys = Object.keys(assignmentList);
-    // const list = getFilteredList(assignmentListKeys, assignmentList);
-    // console.log('list1: ', list);
+    const assignmentListKeys = Object.keys(assignmentList);
+    const list = getFilteredList(assignmentListKeys, assignmentList);
 
     return (
       <div className="booking-base__create manage-image">
@@ -240,11 +230,11 @@ export default class ManageImage extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {tableList && tableList.length ? (
-                tableList.map(this.renderListRow)
+              {list && list.length ? (
+                list.map(this.renderListRow)
               ) : (
                 <tr>
-                  <td colSpan="5">No releases available!</td>
+                  <td colSpan="7">No releases available!</td>
                 </tr>
               )}
             </tbody>

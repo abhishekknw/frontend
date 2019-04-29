@@ -50,7 +50,6 @@ export default class UploadImageModal extends React.Component {
   constructor(props) {
     super(props);
     const { supplier, item } = props;
-    console.log('supplier: ', getSupplierById(supplier.supplierList, item.supplier_id));
 
     this.state = {
       activityType: getActivityType(ActivityTypes, item.activity_type),
@@ -73,7 +72,19 @@ export default class UploadImageModal extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentDidMount() {}
+  componentDidUpdate(prevProps) {
+    const { booking: prevBooking } = prevProps;
+    const { booking: newBooking, onClose } = this.props;
+
+    if (prevBooking.isUploadingImage && !newBooking.isUploadingImage) {
+      if (newBooking.uploadImageSuccess) {
+        toastr.success('', 'Image uploaded successfully');
+        onClose();
+      } else {
+        toastr.error('', 'Failed to upload image!');
+      }
+    }
+  }
 
   getSupplierInventories(supplierId) {
     const { inventoriesList } = this.props;
@@ -124,8 +135,8 @@ export default class UploadImageModal extends React.Component {
   }
 
   onSubmit() {
-    const { item, uploadImage } = this.props;
-    console.log('item: ', item);
+    const { uploadImage } = this.props;
+
     const {
       activityType,
       selectedSupplier,
@@ -135,7 +146,6 @@ export default class UploadImageModal extends React.Component {
       inventory,
       comment,
     } = this.state;
-    console.log('inventory: ', inventory);
 
     let form = new FormData();
     form.append('file', uploadedImage);
@@ -143,21 +153,18 @@ export default class UploadImageModal extends React.Component {
     form.append('activity_type', activityType.value);
     form.append('actual_activity_date', moment(actualActivityDate).format('YYYY-MM-DD'));
     form.append('inventory_name', inventory.inventory_name);
-    form.append('booking_inventory_activity_id', inventory.booking_inventory_id);
-    form.append('lat', '');
-    form.append('long', '');
+    form.append('booking_inventory_activity_id', inventory.id);
+    form.append('lat', 51.509669);
+    form.append('long', 12.376294);
     form.append('activity_date', moment(activityDate).format('YYYY-MM-DD'));
     form.append('comment', comment);
-
-    console.log('form: ', form);
 
     uploadImage(form);
   }
 
   render() {
-    const { isVisible, onClose, supplier, item } = this.props;
-    console.log('this.props: ', this.props);
-    // const { userList } = user;
+    const { isVisible, onClose, supplier } = this.props;
+
     const {
       activityType,
       selectedSupplier,

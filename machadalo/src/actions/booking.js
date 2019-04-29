@@ -658,7 +658,6 @@ const uploadImageFail = () => {
 };
 
 export function uploadImage(data) {
-  console.log('uploadImage: ', data);
   return (dispatch, getState) => {
     dispatch(uploadImageStart());
 
@@ -672,7 +671,7 @@ export function uploadImage(data) {
         dispatch(uploadImageSuccess());
       })
       .catch((ex) => {
-        console.log('Failed to create assignment', ex);
+        console.log('Failed to upload image', ex);
 
         dispatch(uploadImageFail());
       });
