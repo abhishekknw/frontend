@@ -129,9 +129,10 @@ export default class ManageImage extends React.Component {
     return match.params.campaignId;
   }
 
-  onViewImageClick() {
+  onViewImageClick(item) {
     this.setState({
       isViewImageModalVisible: true,
+      selectedRow: item,
     });
   }
 
@@ -272,6 +273,7 @@ export default class ManageImage extends React.Component {
           <ViewImageModal
             onClose={this.onViewImageModalClose}
             isVisible={isViewImageModalVisible}
+            item={selectedRow}
           />
         ) : null}
         {isUploadImageModalVisible ? (
