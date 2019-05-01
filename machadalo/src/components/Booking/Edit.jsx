@@ -3,9 +3,9 @@ import classnames from 'classnames';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
 
-const getFilteredSupplierList = (list, SupplierId) => {
-  if (SupplierId) {
-    return list.filter(supplier => supplier.Supplier_type_id === SupplierId);
+const getFilteredSupplierList = (list, supplierId) => {
+  if (supplierId) {
+    return list.filter(supplier => supplier.supplier_type_id === supplierId);
   } else {
     return list;
   }
@@ -14,15 +14,25 @@ const getFilteredSupplierList = (list, SupplierId) => {
 const getInventoryAttributes = supplier => {
   if (
     supplier &&
-    supplier.Supplier_attributes &&
-    supplier.Supplier_attributes.length
+    supplier.supplier_attributes &&
+    supplier.supplier_attributes.length
   ) {
-    return supplier.Supplier_attributes.filter(
-      item => item.type === 'INVENTORY'
-    ).map(item => ({ ...item.value, count: 1 }));
+    return supplier.supplier_attributes
+      .filter(item => item.type === 'INVENTORY')
+      .map(item => ({ name: item.value.label, count: 1 }));
   }
 
   return [];
+};
+
+const getDropdownOption = (options, value) => {
+  for (let i = 0, l = options.length; i < l; i += 1) {
+    if (options[i].value === value) {
+      return options[i];
+    }
+  }
+
+  return null;
 };
 
 export default class EditBooking extends React.Component {
@@ -43,7 +53,7 @@ export default class EditBooking extends React.Component {
       bookingTemplate = this.getBookingTemplateById({
         id: booking.booking_template_id
       });
-      supplier = this.getSupplierById({ id: booking.Supplier_id });
+      supplier = this.getSupplierById({ id: booking.supplier_id });
       inventories = getInventoryAttributes(supplier);
     }
 
@@ -54,7 +64,7 @@ export default class EditBooking extends React.Component {
       bookingTemplateId: booking.booking_template_id,
       bookingTemplate,
       supplier,
-      SupplierId: booking.Supplier_id,
+      supplierId: booking.supplier_id,
       attributes,
       inventories
     };
@@ -127,7 +137,7 @@ export default class EditBooking extends React.Component {
         bookingTemplate = this.getBookingTemplateById({
           id: booking.booking_template_id
         });
-        supplier = this.getSupplierById({ id: booking.Supplier_id });
+        supplier = this.getSupplierById({ id: booking.supplier_id });
         inventories = getInventoryAttributes(supplier);
       }
 
@@ -137,7 +147,7 @@ export default class EditBooking extends React.Component {
         bookingTemplateId: booking.booking_template_id,
         bookingTemplate,
         supplier,
-        SupplierId: booking.Supplier_id,
+        supplierId: booking.supplier_id,
         attributes,
         inventories
       });
@@ -154,7 +164,7 @@ export default class EditBooking extends React.Component {
     this.setState({
       bookingTemplate: template,
       bookingTemplateId: template.id,
-      SupplierId: template.Supplier_type_id,
+      supplierId: template.supplier_type_id,
       attributes: template.booking_attributes
     });
   }
@@ -200,11 +210,11 @@ export default class EditBooking extends React.Component {
 
     const data = {
       booking_template_id: bookingTemplateId,
-      Supplier_id: supplier.id,
+      supplier_id: supplier.id,
       campaign_id: this.getCampaignId(),
       organisation_id: bookingTemplate.organisation_id,
       booking_attributes: attributes,
-      booking_data: inventories
+      inventory_counts: inventories
     };
 
     if (isEditMode) {
@@ -252,11 +262,11 @@ export default class EditBooking extends React.Component {
 
   getSupplierById({ id }) {
     const { supplier } = this.props;
-    const { SupplierList } = supplier;
+    const { supplierList } = supplier;
 
-    for (let i = 0, l = SupplierList.length; i < l; i += 1) {
-      if (SupplierList[i].id === id) {
-        return SupplierList[i];
+    for (let i = 0, l = supplierList.length; i < l; i += 1) {
+      if (supplierList[i].id === id) {
+        return supplierList[i];
       }
     }
 
@@ -303,17 +313,18 @@ export default class EditBooking extends React.Component {
         break;
 
       case 'DROPDOWN':
+        const options = attribute.options.map(option => ({
+          label: option,
+          value: option
+        }));
         typeInput = (
           <Select
             className={classnames('select')}
-            options={attribute.options.map(option => ({
-              label: option,
-              value: option
-            }))}
+            options={options}
             getOptionValue={option => option.label}
             getOptionLabel={option => option.value}
             onChange={handleAttributeInputChange}
-            value={attribute.value}
+            value={getDropdownOption(options, attribute.value)}
           />
         );
         break;
@@ -336,7 +347,7 @@ export default class EditBooking extends React.Component {
             getOptionValue={option => option}
             getOptionLabel={option => option}
             onChange={handleAttributeInputChange}
-            value={attribute.value}
+            value={getDropdownOption(attribute.options, attribute.value)}
           />
         );
         break;
@@ -380,7 +391,7 @@ export default class EditBooking extends React.Component {
       <div className="supplier" key={index}>
         <div className="form-control">&nbsp;</div>
         <div className="form-control">
-          <p>{inventory.label}</p>
+          <p>{inventory.name}</p>
         </div>
 
         <div className="form-control">
@@ -401,7 +412,7 @@ export default class EditBooking extends React.Component {
     const { bookingTemplateList } = booking;
     const filterSupplierList = getFilteredSupplierList(
       supplierList,
-      this.state.SupplierId
+      this.state.supplierId
     );
 
     return (
@@ -452,7 +463,7 @@ export default class EditBooking extends React.Component {
               </div>
 
               {attributes && attributes.length ? (
-                <div className="supplier Supplier__header">
+                <div className="supplier supplier__header">
                   <div className="form-control">&nbsp;</div>
                   <div className="form-control">
                     <h4>Field</h4>
@@ -491,7 +502,7 @@ export default class EditBooking extends React.Component {
               </div>
 
               {inventories && inventories.length ? (
-                <div className="supplier Supplier__header">
+                <div className="supplier supplier__header">
                   <div className="form-control">&nbsp;</div>
                   <div className="form-control">
                     <h4>Inventory</h4>
