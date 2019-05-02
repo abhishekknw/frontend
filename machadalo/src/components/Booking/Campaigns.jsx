@@ -7,8 +7,8 @@ export default function BookingCampaigns(props) {
     {
       href: `/r/booking/list`,
       buttonLabel: 'View Bookings',
-      headerLabel: 'Action'
-    }
+      headerLabel: 'Action',
+    },
   ];
 
   return <Campaigns {...props} actions={actions} />;
