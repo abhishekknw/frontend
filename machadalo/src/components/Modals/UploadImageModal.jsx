@@ -86,10 +86,14 @@ export default class UploadImageModal extends React.Component {
     }
   }
 
-  getSupplierInventories(supplierId) {
+  getSupplierInventories(supplierId, activityType) {
     const { inventoriesList } = this.props;
 
-    return inventoriesList.filter((item) => supplierId === item.supplier_id);
+    return inventoriesList.filter(
+      (item) =>
+        supplierId === item.supplier_id &&
+        (activityType === 'ALL' || activityType === item.activity_type)
+    );
   }
 
   handleInventoryChange(inventory) {
@@ -131,6 +135,7 @@ export default class UploadImageModal extends React.Component {
   handleSupplierChange(supplier) {
     this.setState({
       selectedSupplier: supplier,
+      inventory: null,
     });
   }
 
@@ -208,7 +213,7 @@ export default class UploadImageModal extends React.Component {
                 <div className="form-control">
                   <Select
                     className="select"
-                    options={this.getSupplierInventories(selectedSupplier.id)}
+                    options={this.getSupplierInventories(selectedSupplier.id, activityType.value)}
                     getOptionValue={(option) => option.booking_inventory_id}
                     getOptionLabel={(option) => option.inventory_name}
                     onChange={this.handleInventoryChange}

@@ -31,7 +31,6 @@ export function postBaseBooking({ data }) {
 
     request
       .post(`${config.API_URL}/v0/ui/dynamic-booking/base-booking-template/`)
-      .type('form')
       .set('Authorization', `JWT ${auth.token}`)
       .send(data)
       .then((resp) => {
