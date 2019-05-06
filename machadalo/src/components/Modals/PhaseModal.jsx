@@ -13,8 +13,8 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     width: '50%',
-    transform: 'translate(-50%, -50%)'
-  }
+    transform: 'translate(-50%, -50%)',
+  },
 };
 
 export default class PhaseModal extends React.Component {
@@ -25,7 +25,7 @@ export default class PhaseModal extends React.Component {
       phases: [],
       phaseNumber: '',
       startDate: moment(),
-      endDate: moment()
+      endDate: moment(),
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -52,28 +52,28 @@ export default class PhaseModal extends React.Component {
         {
           phase_no: phaseNumber,
           start_date: startDate.toISOString(),
-          end_date: endDate.toISOString()
-        }
+          end_date: endDate.toISOString(),
+        },
       ],
-      ...campaign
+      ...campaign,
     });
   }
 
   handleInputChange(event) {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   }
 
   handleStartDateChange(startDate) {
     this.setState({
-      startDate
+      startDate,
     });
   }
 
   handleEndDateChange(endDate) {
     this.setState({
-      endDate
+      endDate,
     });
   }
 
@@ -105,7 +105,6 @@ export default class PhaseModal extends React.Component {
   render() {
     const { isVisible, onClose, phase } = this.props;
     const { phaseList } = phase;
-    console.log('phaseList: ', phaseList);
     const { phaseNumber, startDate, endDate } = this.state;
 
     return (
@@ -149,27 +148,13 @@ export default class PhaseModal extends React.Component {
                   />
                 </div>
                 <div className="form-control">
-                  <DatetimePickerTrigger
-                    moment={startDate}
-                    onChange={this.handleStartDateChange}
-                  >
-                    <input
-                      type="text"
-                      value={startDate.format('YYYY-MM-DD')}
-                      readOnly
-                    />
+                  <DatetimePickerTrigger moment={startDate} onChange={this.handleStartDateChange}>
+                    <input type="text" value={startDate.format('YYYY-MM-DD')} readOnly />
                   </DatetimePickerTrigger>
                 </div>
                 <div className="form-control">
-                  <DatetimePickerTrigger
-                    moment={endDate}
-                    onChange={this.handleEndDateChange}
-                  >
-                    <input
-                      type="text"
-                      value={endDate.format('YYYY-MM-DD')}
-                      readOnly
-                    />
+                  <DatetimePickerTrigger moment={endDate} onChange={this.handleEndDateChange}>
+                    <input type="text" value={endDate.format('YYYY-MM-DD')} readOnly />
                   </DatetimePickerTrigger>
                 </div>
                 <div>
