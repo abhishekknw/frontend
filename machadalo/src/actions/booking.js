@@ -635,3 +635,44 @@ export function putAssignment({ campaignId, data }) {
   };
 }
 /* Assignment: End */
+
+// Upload Image
+
+const uploadImageStart = () => {
+  return {
+    type: types.UPLOAD_IMAGE_START,
+  };
+};
+
+const uploadImageSuccess = () => {
+  return {
+    type: types.UPLOAD_IMAGE_SUCCESS,
+  };
+};
+
+const uploadImageFail = () => {
+  return {
+    type: types.UPLOAD_IMAGE_FAIL,
+  };
+};
+
+export function uploadImage(data) {
+  return (dispatch, getState) => {
+    dispatch(uploadImageStart());
+
+    const { auth } = getState();
+
+    request
+      .post(`${config.API_URL}/v0/ui/dynamic-booking/upload-inventory-image-generic/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .send(data)
+      .then((resp) => {
+        dispatch(uploadImageSuccess());
+      })
+      .catch((ex) => {
+        console.log('Failed to upload image', ex);
+
+        dispatch(uploadImageFail());
+      });
+  };
+}
