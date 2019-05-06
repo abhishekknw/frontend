@@ -16,9 +16,9 @@ angular.module('catalogueApp')
 
    commonDataShare.getUsersList = function(orgId){
      if(orgId){
-       var url = url_base  + "get-users-list/?org_id=" + orgId;
+       var url = url_base  + "get-users-minimal-list/?org_id=" + orgId;
      }else {
-        var url = url_base  + "get-users-list/";
+        var url = url_base  + "get-users-minimal-list/";
      }
 
      return machadaloHttp.get(url);

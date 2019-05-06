@@ -1,4 +1,5 @@
 @import './../../assets/scss/partials/modals';
+@import "node_modules/react-image-gallery/styles/scss/image-gallery.scss";
 
 .tree-modal {
   box-shadow: none !important;
@@ -269,15 +270,19 @@
     display: flex;
     flex-direction: column;
     margin: 0;
+    padding-top: 20px;
+  
+    .originalStyle {
+      .image-gallery-image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-    &__image {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      img {
-        width: 400px;
-        height: 400px;
+        img {
+          height: 300px;
+          width: auto;
+          max-width: 100%;
+        }
       }
     }
   }
