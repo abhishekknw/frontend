@@ -3,7 +3,7 @@ import Select from 'react-select';
 import ViewImageModal from '../Modals/ViewImagesModal';
 import UploadImageModal from '../Modals/UploadImageModal';
 
-const getFilteredList = (list, assignmentList, filters) => {
+const getFilteredList = (list, assignmentList, filters = {}) => {
   const filteredList = list
     .map((item) => [
       ...assignmentList[item].RELEASE,
@@ -182,6 +182,7 @@ export default class ManageImage extends React.Component {
         <td>{item.activity_type}</td>
         <td>{item.activity_date}</td>
         <td>{userName}</td>
+        <td>{item.inventory_images ? item.inventory_images.length : '0'}</td>
         <td>
           <button type="button" className="btn btn--danger" onClick={viewImageClick}>
             View Images
@@ -254,6 +255,7 @@ export default class ManageImage extends React.Component {
                 <th>Activity Type</th>
                 <th>Activity date</th>
                 <th>Assigned User</th>
+                <th>Images</th>
                 <th>Action</th>
                 <th>Action</th>
               </tr>
@@ -282,7 +284,7 @@ export default class ManageImage extends React.Component {
             onClose={this.onUploadImageModalClose}
             isVisible={isUploadImageModalVisible}
             item={selectedRow}
-            inventoriesList={list}
+            inventoriesList={getFilteredList(assignmentListKeys, assignmentList)}
           />
         ) : null}
       </div>
