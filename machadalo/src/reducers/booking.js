@@ -301,7 +301,10 @@ export const booking = createReducer(
           };
         }
 
-        assignmentList[key][action.list[i].activity_type].push(action.list[i]);
+        assignmentList[key][action.list[i].activity_type].push({
+          ...action.list[i],
+          inventory_name: `${action.list[i].inventory_name} ${i + 1}`,
+        });
       }
       return {
         ...state,

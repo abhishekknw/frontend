@@ -5,21 +5,17 @@ import { toastr } from 'react-redux-toastr';
 
 const getFilteredSupplierList = (list, supplierId) => {
   if (supplierId) {
-    return list.filter(supplier => supplier.supplier_type_id === supplierId);
+    return list.filter((supplier) => supplier.supplier_type_id === supplierId);
   } else {
     return list;
   }
 };
 
-const getInventoryAttributes = supplier => {
-  if (
-    supplier &&
-    supplier.supplier_attributes &&
-    supplier.supplier_attributes.length
-  ) {
+const getInventoryAttributes = (supplier) => {
+  if (supplier && supplier.supplier_attributes && supplier.supplier_attributes.length) {
     return supplier.supplier_attributes
-      .filter(item => item.type === 'INVENTORY')
-      .map(item => ({ name: item.value.label, count: 1 }));
+      .filter((item) => item.type === 'INVENTORY')
+      .map((item) => ({ name: item.value.label, count: 1 }));
   }
 
   return [];
@@ -41,20 +37,22 @@ export default class EditBooking extends React.Component {
 
     const bookingId = this.getBookingId();
     const booking = this.getBookingById({
-      id: bookingId
+      id: bookingId,
     });
 
     let attributes = [];
     let bookingTemplate = {};
     let supplier = {};
+    let phase = {};
     let inventories = [];
     if (bookingId && booking && booking.id) {
       attributes = booking.booking_attributes;
       bookingTemplate = this.getBookingTemplateById({
-        id: booking.booking_template_id
+        id: booking.booking_template_id,
       });
       supplier = this.getSupplierById({ id: booking.supplier_id });
       inventories = getInventoryAttributes(supplier);
+      phase = this.getPhaseById({ id: booking.phase_id });
     }
 
     this.state = {
@@ -66,10 +64,12 @@ export default class EditBooking extends React.Component {
       supplier,
       supplierId: booking.supplier_id,
       attributes,
-      inventories
+      inventories,
+      phase,
     };
 
     this.onBookingTemplateChange = this.onBookingTemplateChange.bind(this);
+    this.onPhaseChange = this.onPhaseChange.bind(this);
     this.onSupplierChange = this.onSupplierChange.bind(this);
     this.renderBookingAttributeRow = this.renderBookingAttributeRow.bind(this);
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
@@ -79,14 +79,16 @@ export default class EditBooking extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getBookingTemplateList();
-    this.props.getSupplierList();
-    this.props.getBookingList({ campaignId: this.getCampaignId() });
+    const { getBookingTemplateList, getSupplierList, getBookingList, getPhaseList } = this.props;
+    getBookingTemplateList();
+    getSupplierList();
+    getBookingList({ campaignId: this.getCampaignId() });
+    getPhaseList({ campaignId: this.getCampaignId() });
   }
 
   componentDidUpdate(prevProps) {
-    const { booking: prevBooking, supplier: prevSupplier } = prevProps;
-    const { booking: newBooking, supplier: newSupplier, history } = this.props;
+    const { booking: prevBooking, supplier: prevSupplier, phase: prevPhase } = prevProps;
+    const { booking: newBooking, supplier: newSupplier, phase: newPhase, history } = this.props;
 
     if (
       prevBooking.isCreatingBooking &&
@@ -117,28 +119,28 @@ export default class EditBooking extends React.Component {
     }
 
     if (
-      (prevBooking.isFetchingBookingTemplate &&
-        !newBooking.isFetchingBookingTemplate) ||
-      (prevSupplier.isFetchingSupplierList &&
-        !newSupplier.isFetchingSupplierList) ||
+      (prevBooking.isFetchingBookingTemplate && !newBooking.isFetchingBookingTemplate) ||
+      (prevSupplier.isFetchingSupplierList && !newSupplier.isFetchingSupplierList) ||
       (prevBooking.isFetchingBooking && !newBooking.isFetchingBooking)
     ) {
       const bookingId = this.getBookingId();
       const booking = this.getBookingById({
-        id: bookingId
+        id: bookingId,
       });
 
       let attributes = [];
       let bookingTemplate = {};
       let supplier = {};
+      let phase = {};
       let inventories = [];
       if (bookingId && booking && booking.id) {
         attributes = booking.booking_attributes;
         bookingTemplate = this.getBookingTemplateById({
-          id: booking.booking_template_id
+          id: booking.booking_template_id,
         });
         supplier = this.getSupplierById({ id: booking.supplier_id });
         inventories = getInventoryAttributes(supplier);
+        phase = this.getPhaseById({ id: booking.phase_id });
       }
 
       this.setState({
@@ -149,7 +151,19 @@ export default class EditBooking extends React.Component {
         supplier,
         supplierId: booking.supplier_id,
         attributes,
-        inventories
+        inventories,
+        phase,
+      });
+    }
+
+    if (prevPhase.isFetchingPhase && !newPhase.isFetchingPhase) {
+      const bookingId = this.getBookingId();
+      const booking = this.getBookingById({
+        id: bookingId,
+      });
+
+      this.setState({
+        phase: this.getPhaseById({ id: booking.phase_id }),
       });
     }
   }
@@ -165,14 +179,20 @@ export default class EditBooking extends React.Component {
       bookingTemplate: template,
       bookingTemplateId: template.id,
       supplierId: template.supplier_type_id,
-      attributes: template.booking_attributes
+      attributes: template.booking_attributes,
     });
   }
 
   onSupplierChange(supplier) {
     this.setState({
       supplier: supplier,
-      inventories: getInventoryAttributes(supplier)
+      inventories: getInventoryAttributes(supplier),
+    });
+  }
+
+  onPhaseChange(phase) {
+    this.setState({
+      phase,
     });
   }
 
@@ -182,7 +202,7 @@ export default class EditBooking extends React.Component {
     attributes[index] = attribute;
 
     this.setState({
-      attributes
+      attributes,
     });
   }
 
@@ -192,7 +212,7 @@ export default class EditBooking extends React.Component {
     inventories[index] = inventory;
 
     this.setState({
-      inventories
+      inventories,
     });
   }
 
@@ -204,7 +224,8 @@ export default class EditBooking extends React.Component {
       attributes,
       isEditMode,
       bookingId,
-      inventories
+      inventories,
+      phase,
     } = this.state;
     const { postBooking, putBooking } = this.props;
 
@@ -214,7 +235,8 @@ export default class EditBooking extends React.Component {
       campaign_id: this.getCampaignId(),
       organisation_id: bookingTemplate.organisation_id,
       booking_attributes: attributes,
-      inventory_counts: inventories
+      inventory_counts: inventories,
+      phase_id: phase.id,
     };
 
     if (isEditMode) {
@@ -273,14 +295,24 @@ export default class EditBooking extends React.Component {
     return {};
   }
 
+  getPhaseById({ id }) {
+    const { phase } = this.props;
+    const { phaseList } = phase;
+
+    for (let i = 0, l = phaseList.length; i < l; i += 1) {
+      if (phaseList[i].id === id) {
+        return phaseList[i];
+      }
+    }
+
+    return {};
+  }
+
   renderBookingAttributeRow(attribute, index) {
-    const handleAttributeInputChange = event => {
+    const handleAttributeInputChange = (event) => {
       const newAttribute = { ...attribute };
 
-      if (
-        newAttribute.type === 'DROPDOWN' ||
-        newAttribute.type === 'MULTISELECT'
-      ) {
+      if (newAttribute.type === 'DROPDOWN' || newAttribute.type === 'MULTISELECT') {
         newAttribute.value = event.value;
       } else {
         newAttribute.value = event.target.value;
@@ -294,35 +326,27 @@ export default class EditBooking extends React.Component {
     switch (attribute.type) {
       case 'FLOAT':
         typeInput = (
-          <input
-            type="number"
-            onChange={handleAttributeInputChange}
-            value={attribute.value}
-          />
+          <input type="number" onChange={handleAttributeInputChange} value={attribute.value} />
         );
         break;
 
       case 'STRING':
         typeInput = (
-          <input
-            type="text"
-            onChange={handleAttributeInputChange}
-            value={attribute.value}
-          />
+          <input type="text" onChange={handleAttributeInputChange} value={attribute.value} />
         );
         break;
 
       case 'DROPDOWN':
-        const options = attribute.options.map(option => ({
+        const options = attribute.options.map((option) => ({
           label: option,
-          value: option
+          value: option,
         }));
         typeInput = (
           <Select
             className={classnames('select')}
             options={options}
-            getOptionValue={option => option.label}
-            getOptionLabel={option => option.value}
+            getOptionValue={(option) => option.label}
+            getOptionLabel={(option) => option.value}
             onChange={handleAttributeInputChange}
             value={getDropdownOption(options, attribute.value)}
           />
@@ -331,11 +355,7 @@ export default class EditBooking extends React.Component {
 
       case 'EMAIL':
         typeInput = (
-          <input
-            type="email"
-            onChange={handleAttributeInputChange}
-            value={attribute.value}
-          />
+          <input type="email" onChange={handleAttributeInputChange} value={attribute.value} />
         );
         break;
 
@@ -344,8 +364,8 @@ export default class EditBooking extends React.Component {
           <Select
             className={classnames('select')}
             options={attribute.options}
-            getOptionValue={option => option}
-            getOptionLabel={option => option}
+            getOptionValue={(option) => option}
+            getOptionLabel={(option) => option}
             onChange={handleAttributeInputChange}
             value={getDropdownOption(attribute.options, attribute.value)}
           />
@@ -363,9 +383,7 @@ export default class EditBooking extends React.Component {
         <div className="form-control">
           <p>
             {attribute.name}
-            {attribute.is_required ? (
-              <span style={{ color: '#e2402e' }}>*</span>
-            ) : null}
+            {attribute.is_required ? <span style={{ color: '#e2402e' }}>*</span> : null}
           </p>
         </div>
 
@@ -375,12 +393,9 @@ export default class EditBooking extends React.Component {
   }
 
   renderInventoryRow(inventory, index) {
-    const onCountChange = event => {
-      if (
-        event.target.value &&
-        !isNaN(+event.target.value) &&
-        +event.target.value >= 0
-      ) {
+    const { isEditMode } = this.state;
+    const onCountChange = (event) => {
+      if (event.target.value && !isNaN(+event.target.value) && +event.target.value >= 0) {
         const newInventory = { ...inventory, count: +event.target.value };
 
         this.handleInventoryChange(newInventory, index);
@@ -399,6 +414,7 @@ export default class EditBooking extends React.Component {
             type="number"
             onChange={onCountChange}
             value={inventory.count}
+            disabled={isEditMode}
           />
         </div>
       </div>
@@ -406,14 +422,12 @@ export default class EditBooking extends React.Component {
   }
 
   render() {
-    const { errors, attributes, inventories } = this.state;
-    const { booking, supplier } = this.props;
+    const { errors, attributes, inventories, isEditMode } = this.state;
+    const { booking, supplier, phase } = this.props;
     const { supplierList } = supplier;
     const { bookingTemplateList } = booking;
-    const filterSupplierList = getFilteredSupplierList(
-      supplierList,
-      this.state.supplierId
-    );
+    const { phaseList } = phase;
+    const filterSupplierList = getFilteredSupplierList(supplierList, this.state.supplierId);
 
     return (
       <div className="booking-base__create create">
@@ -447,18 +461,16 @@ export default class EditBooking extends React.Component {
               <div className="form-control form-control--column">
                 <Select
                   className={classnames('select', {
-                    error: errors.bookingTemplateId
+                    error: errors.bookingTemplateId,
                   })}
                   options={bookingTemplateList}
-                  getOptionValue={option => option.id}
-                  getOptionLabel={option => option.name}
+                  getOptionValue={(option) => option.id}
+                  getOptionLabel={(option) => option.name}
                   value={this.state.bookingTemplate}
                   onChange={this.onBookingTemplateChange}
                 />
                 {errors.bookingTemplateId ? (
-                  <p className="message message--error">
-                    {errors.bookingTemplateId.message}
-                  </p>
+                  <p className="message message--error">{errors.bookingTemplateId.message}</p>
                 ) : null}
               </div>
 
@@ -486,18 +498,17 @@ export default class EditBooking extends React.Component {
               <div className="form-control form-control--column">
                 <Select
                   className={classnames('select', {
-                    error: errors.supplier
+                    error: errors.supplier,
                   })}
                   options={filterSupplierList}
-                  getOptionValue={option => option.id}
-                  getOptionLabel={option => option.name}
+                  getOptionValue={(option) => option.id}
+                  getOptionLabel={(option) => option.name}
                   value={this.state.supplier}
                   onChange={this.onSupplierChange}
+                  isDisabled={isEditMode}
                 />
                 {errors.supplier ? (
-                  <p className="message message--error">
-                    {errors.supplier.message}
-                  </p>
+                  <p className="message message--error">{errors.supplier.message}</p>
                 ) : null}
               </div>
 
@@ -514,19 +525,33 @@ export default class EditBooking extends React.Component {
                 </div>
               ) : null}
 
-              {inventories && inventories.length
-                ? inventories.map(this.renderInventoryRow)
-                : null}
+              {inventories && inventories.length ? inventories.map(this.renderInventoryRow) : null}
+            </div>
+
+            <div className="create__form__header">Select phase</div>
+
+            <div className="create__form__body">
+              <div className="form-control form-control--column">
+                <Select
+                  className={classnames('select', {
+                    error: errors.phaseId,
+                  })}
+                  options={phaseList}
+                  getOptionValue={(option) => option.id}
+                  getOptionLabel={(option) => option.phase_no}
+                  value={this.state.phase}
+                  onChange={this.onPhaseChange}
+                />
+                {errors.phaseId ? (
+                  <p className="message message--error">{errors.phaseId.message}</p>
+                ) : null}
+              </div>
             </div>
           </form>
         </div>
 
         <div className="create__actions">
-          <button
-            type="button"
-            className="btn btn--danger"
-            onClick={this.onSubmit}
-          >
+          <button type="button" className="btn btn--danger" onClick={this.onSubmit}>
             Submit
           </button>
         </div>

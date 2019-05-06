@@ -12,7 +12,7 @@ export default class ListBooking extends Component {
       searchFilter: '',
       selectedBooking: null,
       isCommentsModalVisible: false,
-      isPhaseModalVisible: false
+      isPhaseModalVisible: false,
     };
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
@@ -30,7 +30,7 @@ export default class ListBooking extends Component {
 
   onSearchFilterChange(event) {
     this.setState({
-      searchFilter: event.target.value
+      searchFilter: event.target.value,
     });
   }
 
@@ -40,26 +40,26 @@ export default class ListBooking extends Component {
 
     this.props.putBooking({
       id: selectedBooking.id,
-      data: { ...selectedBooking, comments }
+      data: { ...selectedBooking, comments },
     });
   }
 
   onCommentsModalClose() {
     this.setState({
       isCommentsModalVisible: false,
-      selectedBooking: null
+      selectedBooking: null,
     });
   }
 
   onManagePhaseClick() {
     this.setState({
-      isPhaseModalVisible: true
+      isPhaseModalVisible: true,
     });
   }
 
   onPhaseModalClose() {
     this.setState({
-      isPhaseModalVisible: false
+      isPhaseModalVisible: false,
     });
   }
 
@@ -77,7 +77,7 @@ export default class ListBooking extends Component {
       // TODO: Show Modal with comments list & add comment button
       this.setState({
         selectedBooking: booking,
-        isCommentsModalVisible: true
+        isCommentsModalVisible: true,
       });
     };
 
@@ -89,24 +89,18 @@ export default class ListBooking extends Component {
 
     return (
       <tr key={booking.id}>
-        {booking.booking_attributes.map(attribute => (
+        {booking.booking_attributes.map((attribute) => (
           <td>{attribute.value}</td>
         ))}
-        {booking.supplier_attributes.map(attribute => (
+        {booking.supplier_attributes.map((attribute) => (
           <td>
-            {attribute.type === 'STRING' ||
-            attribute.type === 'FLOAT' ||
-            attribute.type === 'EMAIL'
+            {attribute.type === 'STRING' || attribute.type === 'FLOAT' || attribute.type === 'EMAIL'
               ? attribute.value
               : attribute.type}
           </td>
         ))}
         <td>
-          <button
-            type="button"
-            className="btn btn--danger"
-            onClick={onComments}
-          >
+          <button type="button" className="btn btn--danger" onClick={onComments}>
             Comments
           </button>
         </td>
@@ -132,7 +126,7 @@ export default class ListBooking extends Component {
       searchFilter,
       selectedBooking,
       isCommentsModalVisible,
-      isPhaseModalVisible
+      isPhaseModalVisible,
     } = this.state;
     const { booking } = this.props;
     const { bookingList } = booking;
@@ -140,15 +134,13 @@ export default class ListBooking extends Component {
     let attributes = [];
 
     if (list && list.length) {
-      attributes = list[0].booking_attributes.concat(
-        list[0].supplier_attributes
-      );
+      attributes = list[0].booking_attributes.concat(list[0].supplier_attributes);
     }
 
     return (
       <div className="booking__list list">
         <div className="list__title">
-          <h3> - List</h3>
+          <h3>Booking - List</h3>
         </div>
 
         <div className="list__filter">
@@ -164,7 +156,7 @@ export default class ListBooking extends Component {
           <table cellPadding="0" cellSpacing="0">
             <thead>
               <tr>
-                {attributes.map(attribute => (
+                {attributes.map((attribute) => (
                   <th>{attribute.name}</th>
                 ))}
                 <th>Action</th>
@@ -177,9 +169,7 @@ export default class ListBooking extends Component {
                 list.map(this.renderBookingRow)
               ) : (
                 <tr>
-                  <td colSpan="5">
-                    No booking templates available. Create your first one now!
-                  </td>
+                  <td colSpan="5">No booking templates available. Create your first one now!</td>
                 </tr>
               )}
             </tbody>
@@ -187,23 +177,13 @@ export default class ListBooking extends Component {
         </div>
 
         <div className="list__actions">
-          <Link
-            to={`/r/booking/create/${this.getCampaignId()}`}
-            className="btn btn--danger"
-          >
+          <Link to={`/r/booking/create/${this.getCampaignId()}`} className="btn btn--danger">
             Create
           </Link>
-          <Link
-            to={`/r/booking/plan/${this.getCampaignId()}`}
-            className="btn btn--danger"
-          >
+          <Link to={`/r/booking/plan/${this.getCampaignId()}`} className="btn btn--danger">
             Campaign Release and Audit Plan
           </Link>
-          <button
-            type="button"
-            className="btn btn--danger"
-            onClick={this.onManagePhaseClick}
-          >
+          <button type="button" className="btn btn--danger" onClick={this.onManagePhaseClick}>
             Manage Phases
           </button>
         </div>
