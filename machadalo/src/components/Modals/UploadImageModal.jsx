@@ -129,6 +129,7 @@ export default class UploadImageModal extends React.Component {
   handleActivityChange(type) {
     this.setState({
       activityType: type,
+      inventory: null,
     });
   }
 
@@ -214,7 +215,7 @@ export default class UploadImageModal extends React.Component {
                   <Select
                     className="select"
                     options={this.getSupplierInventories(selectedSupplier.id, activityType.value)}
-                    getOptionValue={(option) => option.booking_inventory_id}
+                    getOptionValue={(option) => option.id}
                     getOptionLabel={(option) => option.inventory_name}
                     onChange={this.handleInventoryChange}
                     value={inventory}
