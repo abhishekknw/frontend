@@ -74,9 +74,10 @@
  $scope.BookingParametersLists = [
    {id: 1, name: 'Freebies Allowed', value: 'freebiestype'},
    {id: 2, name: 'Pre-Hype Allowed', value: 'preHypetype'},
-   {id: 3, name: 'Poster Allowed'  , value: 'postertype'},
+   {id: 3, name: 'Poster Allowed'  , value: 'nbpostertype'},
    {id: 4, name: 'Standee Allowed' , value: 'standeetype'},
    {id: 5, name: 'Flier Allowed'   , value: 'fliertype'},
+   {id: 5, name: 'Banner Allowed'   , value: 'bannertype'},
    {id: 6, name: 'Stall Allowed'   , value: 'stalltype'},
    {id: 7, name: 'Stall Location'  , value: 'stalltype'},
  ];
@@ -86,8 +87,8 @@
    'hotness_level_2/flat*100': 'Meeting Fixed %',
    'hotness_level_3/flat*100': 'Meeting Completed %',
    'hotness_level_4/flat*100': 'Conversion %',
-   'cost_flat/lead': 'Cost Per Lead (Rs)',
-   'cost_flat/hot_lead': 'Cost Per Hot Lead (Rs)',
+   'flat*cost_flat/lead': 'Cost Per Lead (Rs)',
+   'flat*cost_flat/hot_lead': 'Cost Per Hot Lead (Rs)',
    'cost_flat/hotness_level_2': 'Cost per Meeting Fixed',
    'cost_flat/hotness_level_3': 'Cost per Meeting Completed',
    'cost_flat/hotness_level_4': 'Cost per Conversion'
@@ -107,11 +108,11 @@
  var dynamicPricingKeys = {
    'Leads %': {
      name: 'Cost Per Lead',
-     value: 'cost_flat/lead',
+     value: 'flat*cost_flat/lead',
    },
    'Hot Leads %': {
      name: 'Cost Per Hot Lead',
-     value: 'cost_flat/hot_lead',
+     value: 'flat*cost_flat/hot_lead',
    },
    'Meeting Fixed %': {
      name: 'Cost Per Meeting Fixed',
@@ -130,9 +131,10 @@
  var Raw_Metric_Only_Cost = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"]];
 
  var raw_data_global = ["lead","hot_lead","flat","cost_flat","hotness_level_2","hotness_level_3","hotness_level_4"];
- var metrics_global = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["5","3","/"],["m5",100,"*"],
- ["6","3","/"],["m7",100,"*"],["7","3","/"],["m9",100,"*"],["4","1","/"],["4","2","/"],["4","5","/"]
- ,["4","6","/"],["4","7","/"]];
+ var metrics_global = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["5","3","/"]
+ ,["m5",100,"*"],["6","3","/"],["m7",100,"*"],["7","3","/"],["m9",100,"*"],["4","1","/"],
+ ["4","2","/"],["4","5","/"],["4","6","/"],["4","7","/"],
+ ["3","4","*"],["m16","1","/"],["m16","2","/"]];
 
  var raw_data_basic = ["lead","hot_lead","flat","hotness_level_2","hotness_level_3","hotness_level_4"];
  var metrics_basic = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","3","/"],["m5",100,"*"],
@@ -864,15 +866,15 @@ var metrics_basic_temp = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"
                         console.log(tooltipDynamicGraphData[e.index][dynamicPricingKeys[e.data.key]]);
                         var rows =
                           "<tr>" +
-                            "<td class='key'>" + 'Name: ' + "</td>" +
+                            "<td class='key'>" + 'Name : ' + "</td>" +
                             "<td class='x-value'>" + e.value + "</td>" +
                           "</tr>" +
                           "<tr>" +
-                            "<td class='key'>" + 'Value In (%): ' + "</td>" +
+                            "<td class='key'>" + 'Value In (%) : ' + "</td>" +
                             "<td class='x-value'><strong>" + (series.value?series.value.toFixed(2):0) + "</strong></td>" +
                           "</tr>" +
                           "<tr>" +
-                            "<td class='key'>" + dynamicPricingKeys[e.data.key]['name'] + ':' + "</td>" +
+                            "<td class='key'>" + dynamicPricingKeys[e.data.key]['name'] + ' (RS)' + ' :' + "</td>" +
                             "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[e.data.key]['value']]  + "</strong></td>" +
                           "</tr>";
 
@@ -4091,34 +4093,40 @@ var tooltipDynamicGraphData = [];
                     }else if ($scope.graphSelection.dateRange.startDate &&
                              ($scope.selectedbookingParameters.length && $scope.selectedDynamicCampaigns.length )) {
                                    // alert("Date range + Booking(multiselect) and City Campaign Selected");
+
                                    // specificXValue = 'campaign_name';
                                    // angular.forEach($scope.selectedbookingParameters, function(data){
                                    //   console.log(data);
                                    //    $scope.xValues.value = data.name;
                                    // });
 
-                                     $scope.xValues.value = 'campaign_name';
-                                    specificXValue2 = 'standeetype';
-                                    specificXValue = 'fliertype';
+                                     // $scope.xValues.value = 'campaign_name';
+                                    // specificXValue2 = 'binary_fields';
+
                                    //  specificXValue2 = 'standeetype';
                                    // specificXValue = 'fliertype';
-                                   var specficSelectedValue = 0;
-                                   angular.forEach($scope.selectedbookingParameters, function(data){
-                                     console.log(data);
-                                     specficSelectedValue = specficSelectedValue + 1;
-                                     var dataSpecific = {
-                                       "specificXValue" : "specificXValue" + specficSelectedValue,
-                                     }
-                                     console.log(specficSelectedValue);
-                                     console.log(dataSpecific.specificXValue);
-                                     var dataValueSpecificKey = data.value;
-                                     console.log(dataValueSpecificKey);
+                                   // var specficSelectedValue = 0;
+                                   // angular.forEach($scope.selectedbookingParameters, function(data){
+                                   //   console.log(data);
+                                   //   specficSelectedValue = specficSelectedValue + 1;
+                                   //   var dataSpecific = {
+                                   //     "specificXValue" : "specificXValue" + specficSelectedValue,
+                                   //   }
+                                   //   console.log(specficSelectedValue);
+                                   //   console.log(dataSpecific.specificXValue);
+                                   //   var dataValueSpecificKey = data.value;
+                                   //   console.log(dataValueSpecificKey);
+                                   //
+                                   // });
+                                   // $scope.xValues.value = 'campaign_name';
 
-                                   });
-                                   $scope.xValues.value = 'campaign_name';
                                    angular.forEach($scope.selectedbookingParameters, function(data){
                                      console.log(data);
-                                     specificXValue = data.value;
+                                     // specificXValue = data.value;
+                                     // specificXValue = 'campaign_name';
+                                     // $scope.xValues.value = 'binary_fields';
+                                     $scope.xValues.value = 'campaign_name';
+                                     specificXValue = 'binary_fields';
                                    });
 
                                    var reqData = {
@@ -4135,7 +4143,9 @@ var tooltipDynamicGraphData = [];
 
                                              }
                                          },
-                                         "data_point":{"category":"unordered","level": []},
+                                         "data_point":{"category":"unordered","level": [],
+                                         "custom_binary_field_labels": {"nbpostertype": {"true": "Poster", "false": "No Poster"}}
+                                       },
                                           "raw_data": raw_data_global,
                                          "metrics": metrics_global,
                                    }
@@ -4536,8 +4546,10 @@ var reqData = {
                                                            });
                                                          }
                                                          }
+                                     // console.log($scope.applyClickedFilters.value);
                                          else if ($scope.applyClickedFilters.value)
                                           {
+
                                                   // alert("By Default Campaign");
                                                   $scope.xValues.value = 'campaign_name';
                                                   var reqData =
