@@ -34,11 +34,11 @@
         <option value="assigned">Assigned</option>
       </select>
     </div>
-      <table st-table="suppliersList" st-safe-src="releaseDetails.shortlisted_suppliers" class="table table-striped">
+      <table class="table table-striped">
         <thead>
           <tr>
             <th colspan='999' style="background-color:#ffffff;">
-              <input st-search="" placeholder="Search ..." class="form-control"  type="search"/>
+              <!-- <input st-search="" placeholder="Search ..." class="form-control"  type="search"/> -->
             </th>
           </tr>
           <tr>
@@ -47,8 +47,8 @@
             <th>Area,(Sub Area)</th>
             <th>Address</th>
             <th>RelationShip Data</th>
-            <th st-sort="flat_count" st-skip-natural="true">Flat Count</th>
-            <th st-sort="tower_count" st-skip-natural="true">Tower Count</th>
+            <th>Flat Count</th>
+            <th>Tower Count</th>
             <th>Inventory Type</th>
             <th>Inventory Count</th>
             <th>Inventory Days</th>
@@ -72,8 +72,9 @@
             <th>Receipt</th>
           </tr>
         </thead>
-        <tbody ng-repeat="supplier in suppliersList track by $index">
-          <tr ng-repeat="(key,filter) in getFilters(supplier)" ng-disabled="$index != '15'">
+        <tbody dir-paginate="supplier in releaseDetails.shortlisted_suppliers | itemsPerPage: suppliersPerPage" total-items="totalSuppliers" current-page="pagination.current"
+         track by "$index">
+          <tr ng-repeat="(key,filter) in supplier.shortlisted_inventories" ng-disabled="$index != '15'">
             <td rowspan="{{key.length}}" ng-show="$first">{{$parent.$index + 1}}</td>
             <td class="" rowspan="{{key.length}}" ng-show="$first"><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages" ng-click="getSocietyDetails(supplier,supplier.supplier_id,center,$index)" target="_blank" style="text-decoration: underline; cursor: pointer;color:blue;">{{supplier.name}}({{supplier.quality_rating}})</a></td>
             <td class="" rowspan="{{key.length}}" ng-show="$first">
@@ -111,8 +112,8 @@
               <input type="number" ng-if="key!='FLIER'" style="max-width:70px;" ng-model="filter.days" ng-change="changeInventoryInDays(supplier,key,filter)">
 
             </td>
-            <td class="">{{getInventoryPrice(filter.actual_supplier_price,key)| currency : "₹"}}</td>
-            <td class="" rowspan="{{key.length}}" ng-show="$first">{{getTotalSupplierPrice(supplier)| currency : "₹"}} ({{getTotalSupplierPrice(supplier)/supplier.flat_count|limitTo:8| currency : "₹"}})</td>
+            <td class="">{{filter.price| currency : "₹"}}</td>
+            <td class="" rowspan="{{key.length}}" ng-show="$first">{{filter.totalPrice| currency : "₹"}} ({{filter.totalPrice/supplier.flat_count|limitTo:8| currency : "₹"}})</td>
             <td class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="priceform">
               <span  ng-disabled="!supplier.phase_no" class="error" ng-show="priceform.price.$error.min">{{positiveNoError}}</span>
               <input  ng-disabled="!supplier.phase_no" type="number" name="price" ng-model="supplier.total_negotiated_price" class="form-control spacing input-width" min="0" permission = "[permissions.addNegotiatedPrice]">
@@ -260,11 +261,12 @@
           </tr>
         </tbody>
         <tfoot>
-          <tr>
+          <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
+          <!-- <tr>
             <td colspan="20" class="text-center">
               <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages=""></div>
             </td>
-          </tr>
+          </tr> -->
         </tfoot>
       </table>
   </div>

@@ -144,41 +144,61 @@ $scope.addNewPhase =true;
     $scope.saveDetails = function(){
       // alert("vidhi");
     };
-    releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id)
-    	.then(function onSuccess(response){
-        getUsersList();
-        getAssignedSuppliers();
-        $scope.initialReleaseData = Object.assign({}, response.data.data);
+    $scope.totalSuppliers = 0;
+    $scope.suppliersPerPage = 10;
+    // $scope.pageNo = 1;
+    $scope.pagination = {
+        current: 1
+    };
+    $scope.pageChanged = function(newPage) {
+        getResultsPage(newPage);
+    };
+    var assigned = 0;
+    var getResultsPage = function(newPage){
+      releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id, newPage, assigned)
+      	.then(function onSuccess(response){
+          getUsersList();
+          // getAssignedSuppliers();
 
-        for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
-          $scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price = parseInt($scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price, 10);
-          $scope.mapViewLat = $scope.initialReleaseData.shortlisted_suppliers[i].latitude;
-          $scope.mapViewLong = $scope.initialReleaseData.shortlisted_suppliers[i].longitude;
-          $scope.shortlistedSuppliersIdList[$scope.initialReleaseData.shortlisted_suppliers[i].supplier_id] = $scope.initialReleaseData.shortlisted_suppliers[i];
+          $scope.initialReleaseData = Object.assign({}, response.data.data);
+          $scope.totalSuppliers = $scope.initialReleaseData.total_count;
 
-          if (!$scope.initialReleaseData.shortlisted_suppliers[i].stall_locations) {
-            $scope.initialReleaseData.shortlisted_suppliers[i].stall_locations = [];
+          for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
+            $scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price = parseInt($scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price, 10);
+            $scope.mapViewLat = $scope.initialReleaseData.shortlisted_suppliers[i].latitude;
+            $scope.mapViewLong = $scope.initialReleaseData.shortlisted_suppliers[i].longitude;
+            $scope.shortlistedSuppliersIdList[$scope.initialReleaseData.shortlisted_suppliers[i].supplier_id] = $scope.initialReleaseData.shortlisted_suppliers[i];
+            if(Object.keys($scope.initialReleaseData.shortlisted_suppliers[i].shortlisted_inventories).length == 0){
+              $scope.initialReleaseData.shortlisted_suppliers[i].shortlisted_inventories['NA'] = 'NA';
+            }
+            $scope.getTotalSupplierPrice($scope.initialReleaseData.shortlisted_suppliers[i]);
+
+
+            if (!$scope.initialReleaseData.shortlisted_suppliers[i].stall_locations) {
+              $scope.initialReleaseData.shortlisted_suppliers[i].stall_locations = [];
+            }
           }
-        }
 
-        $scope.releaseDetails = {};
+          $scope.releaseDetails = {};
 
-        if ($scope.initialReleaseData) {
-          $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
+          if ($scope.initialReleaseData) {
+            $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
 
-          // setDataToModel($scope.releaseDetails.shortlisted_suppliers);
+            // setDataToModel($scope.releaseDetails.shortlisted_suppliers);
+            $scope.loading = !!response;
+          } else {
+            swal(constants.name, "You do not have access to Proposal", constants.warning);
+            $scope.loading = !!response;
+          }
+          console.log("final",$scope.initialReleaseData);
+      	})
+      	.catch(function onError(response){
           $scope.loading = !!response;
-        } else {
-          swal(constants.name, "You do not have access to Proposal", constants.warning);
-          $scope.loading = !!response;
-        }
-// ---------------
-    	})
-    	.catch(function onError(response){
-        $scope.loading = !!response;
-        commonDataShare.showErrorMessage(response);
-    		console.log("error occured", response.status);
-    	});
+          commonDataShare.showErrorMessage(response);
+      		console.log("error occured", response.status);
+      	});
+      }
+      getResultsPage(1);
 
       var setDataToModel = function(suppliers){
         for(var i=0;i<suppliers.length;i++){
@@ -220,9 +240,9 @@ $scope.addNewPhase =true;
 
     $scope.emptyList = {NA:'NA'};
     $scope.getFilters = function(supplier){
+      return $scope.emptyList;
       var keys = Object.keys(supplier.shortlisted_inventories);
       if(keys.length > 0){
-        $scope.inventory_type = supplier.shortlisted_inventories
         return supplier.shortlisted_inventories;
       }
       else{
@@ -275,13 +295,26 @@ $scope.addNewPhase =true;
     $scope.getTotalSupplierPrice = function(supplier){
       var totalPrice = 0;
       angular.forEach(supplier.shortlisted_inventories, function(value, key){
-        value['days'] = value.detail[0].inventory_number_of_days;
-        if(key == 'POSTER')
-          totalPrice = totalPrice + value.actual_supplier_price *0.3;
-        else
-          totalPrice += value.actual_supplier_price;
-      })
-      return totalPrice;
+        value['totalPrice'] = 0;
+        value['price'] = 0;
+        if(key != 'NA'){
+          value['days'] = value.detail[0].inventory_number_of_days;
+          if(key == 'POSTER'){
+            value['totalPrice'] = value['totalPrice'] + value.actual_supplier_price *0.3;
+            value['price'] = value.actual_supplier_price *0.3;
+          }
+
+          else{
+            value['totalPrice'] += value.actual_supplier_price;
+            value['price'] = value.actual_supplier_price;
+          }
+        }
+        else {
+          value['totalPrice'] = 0;
+        }
+        })
+
+      // return totalPrice;
     }
     //Start: code added to search & show all suppliers on add societies tab
     $scope.supplier_names = [
@@ -848,9 +881,7 @@ $scope.multiSelect =
              angular.forEach($scope.userList, function(data){
                $scope.usersMapListWithObjects[data.id] = data;
                $scope.UserDataAssigned = data.username;
-               console.log($scope.UserDataAssigned);
              })
-             console.log($scope.usersMapListWithObjects);
            })
            .catch(function onError(response){
              console.log("error occured", response.status);
@@ -1159,25 +1190,25 @@ $scope.multiSelect =
       console.log(supplier);
       $scope.userSupplierData = supplier;
     }
-    var getAssignedSuppliers = function(){
-      releaseCampaignService.getAssignedSuppliers($scope.campaign_id, $scope.userInfo.id)
-      .then(function onSuccess(response){
-        $scope.assignedSuppliers = [];
-        var assignedSuppliers = response.data.data;
-        var assignedSuppliersMap = {};
-        for (var i = 0, l = assignedSuppliers.length; i < l; i += 1) {
-          assignedSuppliersMap[assignedSuppliers[i].supplier_id] = true;
-        }
-
-        for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
-          if (assignedSuppliersMap[$scope.initialReleaseData.shortlisted_suppliers[i].supplier_id]) {
-            $scope.assignedSuppliers.push($scope.initialReleaseData.shortlisted_suppliers[i]);
-          }
-        }
-      }).catch(function onError(response){
-        console.log(response);
-      })
-    }
+    // var getAssignedSuppliers = function(){
+    //   releaseCampaignService.getAssignedSuppliers($scope.campaign_id, $scope.userInfo.id)
+    //   .then(function onSuccess(response){
+    //     $scope.assignedSuppliers = [];
+    //     var assignedSuppliers = response.data.data;
+    //     var assignedSuppliersMap = {};
+    //     for (var i = 0, l = assignedSuppliers.length; i < l; i += 1) {
+    //       assignedSuppliersMap[assignedSuppliers[i].supplier_id] = true;
+    //     }
+    //
+    //     for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
+    //       if (assignedSuppliersMap[$scope.initialReleaseData.shortlisted_suppliers[i].supplier_id]) {
+    //         $scope.assignedSuppliers.push($scope.initialReleaseData.shortlisted_suppliers[i]);
+    //       }
+    //     }
+    //   }).catch(function onError(response){
+    //     console.log(response);
+    //   })
+    // }
     var formatData = function(){
       // $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
       // console.log($scope.Data);
@@ -1207,11 +1238,15 @@ $scope.multiSelect =
     $scope.changeSupplierData = function() {
       switch ($scope.selectedUser.value) {
         case 'all':
-          $scope.releaseDetails.shortlisted_suppliers = $scope.initialReleaseData.shortlisted_suppliers;
+          assigned = 0;
+          getResultsPage(1);
+          // $scope.releaseDetails.shortlisted_suppliers = $scope.initialReleaseData.shortlisted_suppliers;
           break;
 
         case 'assigned':
-          $scope.releaseDetails.shortlisted_suppliers = $scope.assignedSuppliers;
+          assigned = 1;
+          getResultsPage(1);
+          // $scope.releaseDetails.shortlisted_suppliers = $scope.assignedSuppliers;
           break;
       }
 
