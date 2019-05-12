@@ -59,8 +59,19 @@ angular.module('catalogueApp')
 
 
       $scope.auditDates = [];
+      $scope.totalSuppliers = 0;
+      $scope.suppliersPerPage = 10;
+      var supplierIdForSearch;
+      // $scope.pageNo = 1;
+      $scope.pagination = {
+          current: 1
+      };
+      $scope.pageChanged = function(newPage) {
+          getResultsPage(newPage);
+      };
       function init(){
-        getCampaignReleaseDetails();
+        getResultsPage(1);
+        // getCampaignReleaseDetails();
         // getUsersList();
         $scope.getPhases();
       }
@@ -79,6 +90,9 @@ angular.module('catalogueApp')
             console.log("error occured", response.status);
             commonDataShare.showErrorMessage(response);
           });
+      }
+      var getResultsPage = function(newPage){
+        getCampaignReleaseDetails(newPage);
       }
       $scope.getPhases = function(){
         $scope.editPhase = false;
@@ -102,13 +116,14 @@ angular.module('catalogueApp')
       init();
 
       //initial call to get release Data
-      function getCampaignReleaseDetails(){
+      function getCampaignReleaseDetails(newPage){
         $scope.Data = [];
-      auditReleasePlanService.getCampaignReleaseDetails($scope.campaign_id)
+      auditReleasePlanService.getCampaignReleaseDetails($scope.campaign_id, newPage, supplierIdForSearch)
       	.then(function onSuccess(response){
           console.log("get values",response);
           if(response.data.data){
             $scope.releaseDetails = response.data.data;
+            $scope.totalSuppliers = $scope.releaseDetails.total_count;
             $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
             console.log(  $scope.Data);
             setDataToModel($scope.releaseDetails.shortlisted_suppliers);
@@ -519,6 +534,27 @@ angular.module('catalogueApp')
      }).catch(function onError(response){
        console.log(response);
      })
+   }
+
+   var searchSupplierBySelection = function(){
+     auditReleasePlanService.searchSupplierBySelection($scope.campaign_id)
+     .then(function onSuccess(response){
+       console.log(response);
+       $scope.allShortlistedSuppliers = response.data.data;
+     }).catch(function onError(response){
+       console.log(response);
+     })
+   }
+   searchSupplierBySelection();
+
+   $scope.getSearchedSupplierData = function(supplier){
+     supplierIdForSearch = supplier.supplier_id;
+     getResultsPage(1);
+   }
+
+   $scope.resetSupplierData = function(){
+     supplierIdForSearch = undefined;
+     getResultsPage(1);
    }
 
 
