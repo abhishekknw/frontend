@@ -53,24 +53,24 @@
    {id: 3, name: 'Building ERP'},
    {id: 4, name: 'Door To Door'},
  ];
- $scope.cityLists = [
-   {id: 1, name: 'Mumbai'},
-   {id: 2, name: 'Delhi'},
-   {id: 3, name: 'Bangalore'},
-   {id: 4, name: 'Hyderabad'},
-   {id: 5, name: 'Chennai'},
-   {id: 6, name: 'Ludhiana'},
-   {id: 7, name: 'Kanpur'},
-   {id: 8, name: 'Lucknow'},
-   {id: 9, name: 'Jaipur'},
-   {id: 10, name: 'Vijaywada'},
-  {id: 11, name: 'Vishakhapattanam'},
-  {id: 12, name: 'Coimbatore'},
-  {id: 13, name: 'Thiruvananthpuram'},
-  {id: 14, name: 'Madurai'},
-  {id: 15 , name: 'Chandigarh'},
-  {id: 16, name: 'Noida'},
- ];
+ // $scope.cityLists = [
+ //   {id: 1, name: 'Mumbai'},
+ //   {id: 2, name: 'Delhi'},
+ //   {id: 3, name: 'Bangalore'},
+ //   {id: 4, name: 'Hyderabad'},
+ //   {id: 5, name: 'Chennai'},
+ //   {id: 6, name: 'Ludhiana'},
+ //   {id: 7, name: 'Kanpur'},
+ //   {id: 8, name: 'Lucknow'},
+ //   {id: 9, name: 'Jaipur'},
+ //   {id: 10, name: 'Vijaywada'},
+ //  {id: 11, name: 'Vishakhapattanam'},
+ //  {id: 12, name: 'Coimbatore'},
+ //  {id: 13, name: 'Thiruvananthpuram'},
+ //  {id: 14, name: 'Madurai'},
+ //  {id: 15 , name: 'Chandigarh'},
+ //  {id: 16, name: 'Noida'},
+ // ];
  $scope.BookingParametersLists = [
    {id: 1, name: 'Freebies Allowed', value: 'freebiestype'},
    {id: 2, name: 'Pre-Hype Allowed', value: 'preHypetype'},
@@ -866,7 +866,7 @@ var metrics_basic_temp = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"
                         console.log(tooltipDynamicGraphData[e.index][dynamicPricingKeys[e.data.key]]);
                         var rows =
                           "<tr>" +
-                            "<td class='key'>" + 'Name : ' + "</td>" +
+                            "<td class='key'>"  + 'Name : ' + "</td>" +
                             "<td class='x-value'>" + e.value + "</td>" +
                           "</tr>" +
                           "<tr>" +
@@ -2159,6 +2159,16 @@ var formatThreeWeeksSummary = function(data,key){
        showCheckAll : true,
        scrollableHeight: '300px', scrollable: true};
    $scope.settingsForDynamicGraphCity = { enableSearch: true,
+       keyboardControls: true ,idProp : "option",
+       template: '{{option}}', smartButtonTextConverter(skip, option) { return option; },
+       showCheckAll : true,
+       scrollableHeight: '300px', scrollable: true};
+   $scope.settingsForDynamicGraphSociety = { enableSearch: true,
+       keyboardControls: true ,idProp : "option",
+       template: '{{option.name}}', smartButtonTextConverter(skip, option) { return option; },
+       showCheckAll : true,
+       scrollableHeight: '300px', scrollable: true};
+   $scope.settingsForDynamicGraphFlatType = { enableSearch: true,
        keyboardControls: true ,idProp : "option",
        template: '{{option.name}}', smartButtonTextConverter(skip, option) { return option; },
        showCheckAll : true,
@@ -3802,9 +3812,7 @@ $scope.rotateImage=function(id){
     if(value == 'campaign'){
         getCampaignsWiseForCity();
     }
-    if(value == 'city'){
 
-    }
     if(value == 'vendor'){
       $scope.getCampaignsByVendor();
     }
@@ -3921,19 +3929,22 @@ var tooltipDynamicGraphData = [];
           }
           if(specificXValue){
             if(data[$scope.xValues.value] != null){
-              var temp_label = data[$scope.xValues.value] + " (" + data[specificXValue] + ")" +
-          " (" +   $scope.FlatCountOVerallLowerORderGroup  + ")";
+              var temp_label = data[$scope.xValues.value] +
+               " (" + data[specificXValue] + ")" +
+               " (" + $scope.FlatCountOVerallLowerORderGroup  + ")";
               if(specificXValue2){
-                console.log("hello");
-                var temp_label = data[$scope.xValues.value] + ", " + data[specificXValue2] +
-                 "( " + data[specificXValue] + " )" +  " (" +
+              var temp_label = data[$scope.xValues.value] +
+              ", " + data[specificXValue2] +
+              "( " + data[specificXValue] + " )" +  " (" +
                  $scope.FlatCountOVerallLowerORderGroup + ")";
               }
+              console.log(temp_label);
 
               var temp = {
                 x: temp_label,
                 y: data[itemKey]||0
               }
+              console.log(temp);
               values1[itemKey].push(temp);
             }
 
@@ -4717,15 +4728,16 @@ var reqData = {
                console.log(specificXValue2);
                if(specificXValue2){
                  var value = {
-                   'label' : item[$scope.xValues.value] + ", " + item[specificXValue2] +
-                    "( " + item[specificXValue] + " )",
+                   'label' : item[$scope.xValues.value] + item[specificXValue2]
+                    + "( " + item[specificXValue] + " )",
                    'value' : item[$scope.dynamicGraphSelectedOrder.value]
                  }
                }
 
                else {
                  var value = {
-                   'label' : item[$scope.xValues.value] + "(" + item[specificXValue] + ")",
+                   'label' :item[$scope.xValues.value]
+                 + "(" + item[specificXValue] + ")" ,
                    'value' : item[$scope.dynamicGraphSelectedOrder.value]
                  }
                }
@@ -4795,7 +4807,7 @@ var reqData = {
 
        angular.forEach($scope.selectedCities_temp, function(data){
          console.log(data);
-         dataCity.cities.push(data.name);
+         dataCity.cities.push(data);
        });
 
          console.log(dataCity);
@@ -4887,6 +4899,15 @@ var reqData = {
     $scope.checkboxCheckedCity = true;
     $scope.checkboxCheckedVendor = false;
     getCampaignsWiseForCity();
+    $scope.cityLists = [];
+    DashboardService.getCityUsers()
+  .then(function onSuccess(response){
+    console.log(response);
+    $scope.cityLists = response.data.data.list_of_cities;
+    console.log($scope.cityLists);
+     }).catch(function onError(response){
+      console.log(response);
+  })
     $scope.dynamicValuesCampaigns = [];
     $scope.selectedVendors = [];
     }

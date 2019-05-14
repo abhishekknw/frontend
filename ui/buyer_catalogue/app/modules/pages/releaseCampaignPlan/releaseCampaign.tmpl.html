@@ -165,11 +165,11 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">Assign Users</h4>
                         <hr/>
-                        <p>{{UserDataAssigned}}</p>
+
                         <div class = "modal-body" style = "height: 300px;">
                           <select name="users" class="form-control spacing input-width-phase"  ng-model="userData.user" min="1" >
                             <option value="" disabled>Select User</option>
-                            <option ng-repeat="user in usersMapListWithObjects | unique:'id'" value="{{user.id}}">{{user.username}}</option>
+                            <option ng-repeat="user in usersMapListWithObjects  | orderBy:'username' | unique:'id'" value="{{user.id}}">{{user.username}}</option>
                           </select>
                           <br />
                           <button type="button" class="btn btn-danger" name="button" ng-click="setUserForBooking()">Assign</button>
