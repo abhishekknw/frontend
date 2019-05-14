@@ -1122,10 +1122,9 @@
                                                       <td style="color:#ffffff;" ng-if="supplier.images_data['Permission Box'] && supplierStatus != 'upcoming'" style="background-color:#cb1925"><small>Permission<br>Letter</small><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data['Permission Box'].images)"><small>({{supplier.images_data['Permission Box'].total_count}})</small></a></td>
                                                         <!-- <td ng-if="!supplier.images_data['CERTIFICATION DISTRIBUTION']">NA</td> -->
                                                       </tr>
-                                                      <tr>
+                                                      <!-- <tr>
                                                       <td style="color:#ffffff;" ng-if="supplier.images_data.RECEIPT && supplierStatus != 'upcoming'" style="background-color:#cb1925"><small>Receipt</small><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.RECEIPT.images)"><small>({{supplier.images_data.RECEIPT.total_count}})</small></a></td>
-                                                        <!-- <td ng-if="!supplier.images_data['CERTIFICATION DISTRIBUTION']">NA</td> -->
-                                                      </tr>
+                                                      </tr> -->
                                                     </table>
                                                   </td>
                                                   <td style="width:200px;">
@@ -3013,11 +3012,11 @@
                           </select>
                           <br />
                           <div class="row" ng-if="graphSelection.specificParam.society == 'qualitytype'">
-                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="typeOfSocietyLists" extra-settings="settingsForDynamicGraphCity"
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="typeOfSocietyLists" extra-settings="settingsForDynamicGraphSociety"
                             selected-model="selectedTypeOfSocieties" translation-texts="selected_baselines_customTexts_qualityTypesociety" events="events"></span>
                           </div>
                           <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfFlats'">
-                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfFlatsLists" extra-settings="settingsForDynamicGraphCity"
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfFlatsLists" extra-settings="settingsForDynamicGraphFlatType"
                             selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
                           </div>
                           <br />

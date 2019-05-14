@@ -235,6 +235,10 @@
         console.log(url);
       return machadaloHttp.put(url,dataVendor);
     }
+    DashboardService.getCityUsers = function(){
+        var url =  url_root + "campaign/user-cities/";
+      return machadaloHttp.get(url);
+    }
     return DashboardService;
 
  }]);
