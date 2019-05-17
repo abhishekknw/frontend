@@ -20,6 +20,7 @@ const AttributeTypes = [
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
   { value: 'MULTISELECT', label: 'Multi Select' },
+  { value: 'HASHTAG', label: 'Hashtag Images' },
 ];
 
 // TODO: Move to constants
@@ -29,6 +30,7 @@ const BaseBookingAttributeTypes = [
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
   { value: 'MULTISELECT', label: 'Multi Select' },
+  { value: 'HASHTAG', label: 'Hashtag Images' },
 ];
 
 // TODO: Move to constants
@@ -38,6 +40,7 @@ const SupplierTypeAttributeTypes = [
   { value: 'INVENTORY', label: 'Inventory' },
   { value: 'INVENTORY_TYPE', label: 'Base Inventory' },
   { value: 'DROPDOWN', label: 'Dropdown' },
+  { value: 'Hashtag Images', label: 'Hashtag' },
   { value: 'EMAIL', label: 'Email' },
   { value: 'SUPPLIER_TYPE', label: 'Supplier Type' },
   { value: 'BASE_SUPPLIER_TYPE', label: 'Base Supplier Type' },
@@ -450,7 +453,9 @@ export default class CreateBookingTemplate extends React.Component {
       this.setState(
         {
           optionModalVisibility:
-            newAttribute.type === 'DROPDOWN' || newAttribute.type === 'MULTISELECT',
+            newAttribute.type === 'DROPDOWN' ||
+            newAttribute.type === 'MULTISELECT' ||
+            newAttribute.type === 'HASHTAG',
           attributeInfo: {
             attributeType: newAttribute.type,
             attribute: newAttribute,
@@ -483,7 +488,9 @@ export default class CreateBookingTemplate extends React.Component {
             value={getAttributeTypeOption(attribute.type)}
             onChange={onTypeChange}
           />
-          {attribute.type === 'DROPDOWN' || attribute.type === 'MULTISELECT' ? (
+          {attribute.type === 'DROPDOWN' ||
+          attribute.type === 'MULTISELECT' ||
+          attribute.type === 'HASHTAG' ? (
             <p
               className="show-option"
               style={optionStyle}
