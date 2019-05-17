@@ -22,9 +22,11 @@ const getInventoryAttributes = (supplier) => {
 };
 
 const getDropdownOption = (options, value) => {
-  for (let i = 0, l = options.length; i < l; i += 1) {
-    if (options[i].value === value) {
-      return options[i];
+  if (options) {
+    for (let i = 0, l = options.length; i < l; i += 1) {
+      if (options[i].value === value) {
+        return options[i];
+      }
     }
   }
 
@@ -75,6 +77,8 @@ export default class EditBooking extends React.Component {
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
     this.renderInventoryRow = this.renderInventoryRow.bind(this);
     this.handleInventoryChange = this.handleInventoryChange.bind(this);
+    this.handleImageChange = this.handleImageChange.bind(this);
+    this.onUpload = this.onUpload.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -216,6 +220,31 @@ export default class EditBooking extends React.Component {
     });
   }
 
+  handleImageChange(event) {
+    this.setState({
+      uploadedImage: event.target.files[0],
+    });
+  }
+
+  onUpload(index) {
+    console.log(index);
+    const { supplier, attributes, bookingId, isEditMode, uploadedImage } = this.state;
+    console.log(attributes);
+    const { uploadHashtagImage } = this.props;
+
+    let data = new FormData();
+    data.append('file', uploadedImage);
+    data.append('supplier_id', supplier.id);
+    data.append('campaign_id', this.getCampaignId());
+    data.append('hashtag', attributes[index].value);
+    data.append('name', attributes[index].name);
+    data.append('comment', attributes[index].comment || '');
+
+    if (isEditMode) {
+      uploadHashtagImage({ id: bookingId, data });
+    }
+  }
+
   onSubmit() {
     const {
       bookingTemplateId,
@@ -312,7 +341,11 @@ export default class EditBooking extends React.Component {
     const handleAttributeInputChange = (event) => {
       const newAttribute = { ...attribute };
 
-      if (newAttribute.type === 'DROPDOWN' || newAttribute.type === 'MULTISELECT') {
+      if (
+        newAttribute.type === 'DROPDOWN' ||
+        newAttribute.type === 'MULTISELECT' ||
+        newAttribute.type === 'HASHTAG'
+      ) {
         newAttribute.value = event.value;
       } else {
         newAttribute.value = event.target.value;
@@ -337,7 +370,7 @@ export default class EditBooking extends React.Component {
         break;
 
       case 'DROPDOWN':
-        const options = attribute.options.map((option) => ({
+        let options = attribute.options.map((option) => ({
           label: option,
           value: option,
         }));
@@ -369,6 +402,45 @@ export default class EditBooking extends React.Component {
             onChange={handleAttributeInputChange}
             value={getDropdownOption(attribute.options, attribute.value)}
           />
+        );
+        break;
+
+      case 'HASHTAG':
+        options = attribute.options.map((option) => ({
+          label: option,
+          value: option,
+        }));
+        typeInput = (
+          <div>
+            <div className="form-control">
+              <input
+                type="file"
+                id="uploadedImage"
+                accept="image/png, image/jpeg"
+                onChange={this.handleImageChange}
+              />
+            </div>
+            <div>
+              <br />
+              <Select
+                className={classnames('select')}
+                options={options}
+                getOptionValue={(option) => option.label}
+                getOptionLabel={(option) => option.value}
+                onChange={handleAttributeInputChange}
+                value={getDropdownOption(options, attribute.value)}
+              />
+            </div>
+            <div>
+              <button
+                type="button"
+                className="btn btn--danger"
+                onClick={() => this.onUpload(index)}
+              >
+                Upload
+              </button>
+            </div>
+          </div>
         );
         break;
 

@@ -385,6 +385,28 @@ export const booking = createReducer(
         uploadImageError: true,
       };
     },
+    [types.UPLOAD_HASHTAG_IMAGE_START](state) {
+      return {
+        ...state,
+        isUploadingImage: true,
+        uploadImageSuccess: false,
+        uploadImageError: false,
+      };
+    },
+    [types.UPLOAD_HASHTAG_IMAGE_SUCCESS](state) {
+      return {
+        ...state,
+        isUploadingImage: false,
+        uploadImageSuccess: true,
+      };
+    },
+    [types.UPLOAD_HASHTAG_IMAGE_FAIL](state) {
+      return {
+        ...state,
+        isUploadingImage: false,
+        uploadImageError: true,
+      };
+    },
   }
 );
 
