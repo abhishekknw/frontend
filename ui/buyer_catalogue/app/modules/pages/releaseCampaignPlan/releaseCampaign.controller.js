@@ -154,8 +154,9 @@ $scope.addNewPhase =true;
         getResultsPage(newPage);
     };
     var assigned = 0;
+    var supplierIdForSearch;
     var getResultsPage = function(newPage){
-      releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id, newPage, assigned)
+      releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id, newPage, assigned, supplierIdForSearch)
       	.then(function onSuccess(response){
           getUsersList();
           // getAssignedSuppliers();
@@ -1236,6 +1237,7 @@ $scope.multiSelect =
     }
     $scope.selectedUser = { value: 'all' };
     $scope.changeSupplierData = function() {
+      supplierIdForSearch = undefined;
       switch ($scope.selectedUser.value) {
         case 'all':
           assigned = 0;
@@ -1252,5 +1254,22 @@ $scope.multiSelect =
 
       // formatData();
     }
+
+    var searchSupplierBySelection = function(){
+      releaseCampaignService.searchSupplierBySelection($scope.campaign_id)
+      .then(function onSuccess(response){
+        console.log(response);
+        $scope.allShortlistedSuppliers = response.data.data;
+      }).catch(function onError(response){
+        console.log(response);
+      })
+    }
+    searchSupplierBySelection();
+
+    $scope.getSearchedSupplierData = function(supplier){
+      supplierIdForSearch = supplier.supplier_id;
+      getResultsPage(1);
+    }
+
 
 }]);//Controller function ends here

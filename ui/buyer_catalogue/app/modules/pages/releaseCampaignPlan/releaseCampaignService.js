@@ -9,8 +9,14 @@
     var releaseCampaignService = {};
 
 
-    releaseCampaignService.getCampaignReleaseDetails = function(proposal_id, page, assigned){
-         var url = url_base + proposal_id + "/campaign-inventories/?page=" + page + "&assigned=" + assigned;
+    releaseCampaignService.getCampaignReleaseDetails = function(proposal_id, page, assigned, supplierId){
+      if(supplierId){
+        var url = url_base + proposal_id + "/campaign-inventories/?page=" + page + "&assigned=" + assigned
+                                       + "&search=" + supplierId;
+      }else{
+        var url = url_base + proposal_id + "/campaign-inventories/?page=" + page + "&assigned=" + assigned;
+      }
+
     	return machadaloHttp.get(url);
     }
 
@@ -119,6 +125,10 @@
 
     releaseCampaignService.getAssignedSuppliers = function(campaignId, id){
       var url = url_base + 'supplier-assignment/?campaign_id=' + campaignId + "&id=" + id;
+      return machadaloHttp.get(url);
+    }
+    releaseCampaignService.searchSupplierBySelection = function(campaignId){
+      var url = url_base + campaignId + "/list_suppliers/";
       return machadaloHttp.get(url);
     }
 
