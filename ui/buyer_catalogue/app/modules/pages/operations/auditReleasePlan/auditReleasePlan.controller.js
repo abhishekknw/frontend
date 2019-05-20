@@ -122,7 +122,12 @@ angular.module('catalogueApp')
       	.then(function onSuccess(response){
           console.log("get values",response);
           if(response.data.data){
+            if(response.data.data.shortlisted_suppliers.length == 1 &&
+                response.data.data.shortlisted_suppliers[0].phase_no == undefined){
+              swal(constants.name, "Phase Not Found for this Supplier, Please Assign Phase At Booking Page", constants.warning);
+            }
             $scope.releaseDetails = response.data.data;
+
             $scope.totalSuppliers = $scope.releaseDetails.total_count;
             $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
             console.log(  $scope.Data);
@@ -145,7 +150,7 @@ angular.module('catalogueApp')
       }
       var makeAssignDateData = function(data){
         $scope.phaseData = [], $scope.phases = [];
-        $scope.phaseData =  $filter('unique')(data.shortlisted_suppliers,'phase');
+        $scope.phaseData =  $filter('unique')(data.shortlisted_suppliers,'phase_no');
         $scope.inventoryTypes = Object.keys(data.shortlisted_suppliers[0].shortlisted_inventories);
         angular.forEach($scope.phaseData, function(phase){
           if(phase.phase != null)
@@ -541,6 +546,7 @@ angular.module('catalogueApp')
      .then(function onSuccess(response){
        console.log(response);
        $scope.allShortlistedSuppliers = response.data.data;
+       console.log($scope.allShortlistedSuppliers);
      }).catch(function onError(response){
        console.log(response);
      })
