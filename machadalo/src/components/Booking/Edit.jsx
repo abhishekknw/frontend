@@ -47,6 +47,7 @@ export default class EditBooking extends React.Component {
     let supplier = {};
     let phase = {};
     let inventories = [];
+    let comment = undefined;
     if (bookingId && booking && booking.id) {
       attributes = booking.booking_attributes;
       bookingTemplate = this.getBookingTemplateById({
@@ -68,6 +69,7 @@ export default class EditBooking extends React.Component {
       attributes,
       inventories,
       phase,
+      comment,
     };
 
     this.onBookingTemplateChange = this.onBookingTemplateChange.bind(this);
@@ -75,6 +77,7 @@ export default class EditBooking extends React.Component {
     this.onSupplierChange = this.onSupplierChange.bind(this);
     this.renderBookingAttributeRow = this.renderBookingAttributeRow.bind(this);
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
+    this.handleCommentInputChange = this.handleCommentInputChange.bind(this);
     this.renderInventoryRow = this.renderInventoryRow.bind(this);
     this.handleInventoryChange = this.handleInventoryChange.bind(this);
     this.handleImageChange = this.handleImageChange.bind(this);
@@ -200,6 +203,13 @@ export default class EditBooking extends React.Component {
     });
   }
 
+  handleCommentInputChange(event) {
+    console.log(event.target.value);
+    this.setState({
+      comment: event.target.value,
+    });
+  }
+
   handleAttributeChange(attribute, index) {
     const attributes = [...this.state.attributes];
 
@@ -228,7 +238,7 @@ export default class EditBooking extends React.Component {
 
   onUpload(index) {
     console.log(index);
-    const { supplier, attributes, bookingId, isEditMode, uploadedImage } = this.state;
+    const { supplier, attributes, bookingId, isEditMode, uploadedImage, comment } = this.state;
     console.log(attributes);
     const { uploadHashtagImage } = this.props;
 
@@ -238,7 +248,7 @@ export default class EditBooking extends React.Component {
     data.append('campaign_id', this.getCampaignId());
     data.append('hashtag', attributes[index].value);
     data.append('name', attributes[index].name);
-    data.append('comment', attributes[index].comment || '');
+    data.append('comment', comment);
 
     if (isEditMode) {
       uploadHashtagImage({ id: bookingId, data });
@@ -340,6 +350,7 @@ export default class EditBooking extends React.Component {
   renderBookingAttributeRow(attribute, index) {
     const handleAttributeInputChange = (event) => {
       const newAttribute = { ...attribute };
+      console.log(event.value);
 
       if (
         newAttribute.type === 'DROPDOWN' ||
@@ -432,6 +443,9 @@ export default class EditBooking extends React.Component {
               />
             </div>
             <div>
+              <input type="text" onChange={this.handleCommentInputChange} />
+            </div>
+            <div>
               <button
                 type="button"
                 className="btn btn--danger"
@@ -450,7 +464,7 @@ export default class EditBooking extends React.Component {
     }
 
     return (
-      <div className="supplier" key={index}>
+      <div key={index}>
         <div className="form-control">&nbsp;</div>
         <div className="form-control">
           <p>
