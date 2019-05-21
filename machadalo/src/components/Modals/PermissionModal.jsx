@@ -23,14 +23,14 @@ const customStyles = {
     minWidth: '100px',
     width: '50%',
     transform: 'translate(-50%, -50%)',
-    padding: '15px 10px 10px'
-  }
+    padding: '15px 10px 10px',
+  },
 };
 
 const classes = {
   container: 'tree-modal',
   icon: 'tree-icon',
-  leaf: 'TreeDemo-leaf-179'
+  leaf: 'TreeDemo-leaf-179',
 };
 
 export default class PermissionModal extends React.Component {
@@ -41,13 +41,13 @@ export default class PermissionModal extends React.Component {
         entityName: 'All Campaign',
         type: 'campaign',
         entityId: 'all',
-        data: []
+        data: [],
       },
       userProfileOptions: [],
       selectedProfile: {
         label: undefined,
-        value: undefined
-      }
+        value: undefined,
+      },
     };
     this.onSelectProfile = this.onSelectProfile.bind(this);
   }
@@ -68,12 +68,11 @@ export default class PermissionModal extends React.Component {
       let dataInfo = this.state.data;
       dataInfo.data = this.props.dataInfo;
       this.setState({
-        data: dataInfo
+        data: dataInfo,
       });
     }
     if (
-      (!this.state.userProfileOptions.length &&
-        this.props.userProfile.userProfileList.length) ||
+      (!this.state.userProfileOptions.length && this.props.userProfile.userProfileList.length) ||
       0
       // (this.state.userProfileOptions.length &&
       //   this.props.userProfile.userProfileList.length &&
@@ -81,24 +80,32 @@ export default class PermissionModal extends React.Component {
       //     this.props.userProfile.userProfileList[0].id)
     ) {
       let userProfileOptions = [];
-      this.props.userProfile.userProfileList.forEach(userProfileData => {
+      this.props.userProfile.userProfileList.forEach((userProfileData) => {
         if (this.props.existingProfileIds.indexOf(userProfileData.id) === -1) {
           userProfileOptions.push({
             label: userProfileData.name,
-            value: userProfileData.id
+            value: userProfileData.id,
           });
         }
       });
+      if (userProfileOptions.length === 0) {
+        userProfileOptions.push({
+          label: 'No more profiles',
+          value: undefined,
+        });
+      }
       this.setState({
-        userProfileOptions
+        userProfileOptions,
       });
     }
   }
 
   onSelectProfile(value) {
-    this.setState({
-      selectedProfile: value
-    });
+    if (value.value) {
+      this.setState({
+        selectedProfile: value,
+      });
+    }
   }
 
   requestTreeLeafChildrenData = (leafData, chdIndex, doExpand) => {
@@ -131,81 +138,74 @@ export default class PermissionModal extends React.Component {
         icon: <ClearIcon className="tree-action" />,
         hint: 'None',
         className:
-          'permission-icon' +
-          (leafData.permission === 'None' ? ' permission-selected' : ''),
+          'permission-icon' + (leafData.permission === 'None' ? ' permission-selected' : ''),
         onClick: () => {
           const data = { ...this.state.data };
           const leaf = getTreeLeafDataByIndexArray(data, chdIndex, 'data');
           leaf.permission = 'None';
           if (leaf.data && leaf.data.length) {
-            leaf.data.forEach(leafData => {
+            leaf.data.forEach((leafData) => {
               leafData.permission = 'None';
               if (leafData.data && leafData.data.length) {
-                leafData.data.forEach(childData => {
+                leafData.data.forEach((childData) => {
                   childData.permission = 'None';
                 });
               }
             });
           }
           this.setState({ data });
-        }
+        },
       },
       {
         icon: <EditIcon className="tree-action" />,
         hint: 'Edit',
         className:
-          'permission-icon' +
-          (leafData.permission === 'Edit' ? ' permission-selected' : ''),
+          'permission-icon' + (leafData.permission === 'Edit' ? ' permission-selected' : ''),
         onClick: () => {
           const data = { ...this.state.data };
           const leaf = getTreeLeafDataByIndexArray(data, chdIndex, 'data');
           leaf.permission = 'Edit';
           if (leaf.data && leaf.data.length) {
-            leaf.data.forEach(leafData => {
+            leaf.data.forEach((leafData) => {
               leafData.permission = 'Edit';
               if (leafData.data && leafData.data.length) {
-                leafData.data.forEach(childData => {
+                leafData.data.forEach((childData) => {
                   childData.permission = 'Edit';
                 });
               }
             });
           }
           this.setState({ data });
-        }
+        },
       },
       {
         icon: <TextFieldIcon className="tree-action" />,
         hint: 'Fill',
         className:
-          'permission-icon' +
-          (leafData.permission === 'Fill' ? ' permission-selected' : ''),
+          'permission-icon' + (leafData.permission === 'Fill' ? ' permission-selected' : ''),
         onClick: () => {
           const data = { ...this.state.data };
           const leaf = getTreeLeafDataByIndexArray(data, chdIndex, 'data');
           leaf.permission = 'Fill';
           if (leaf.data && leaf.data.length) {
-            leaf.data.forEach(leafData => {
+            leaf.data.forEach((leafData) => {
               leafData.permission = 'Fill';
               if (leafData.data && leafData.data.length) {
-                leafData.data.forEach(childData => {
+                leafData.data.forEach((childData) => {
                   childData.permission = 'Fill';
                 });
               }
             });
           }
           this.setState({ data });
-        }
-      }
+        },
+      },
     ];
   };
 
   render() {
     return (
-      <Modal
-        isOpen={this.props.showPermissionModal}
-        style={customStyles}
-        ariaHideApp={false}
-      >
+      <Modal isOpen={this.props.showPermissionModal} style={customStyles} ariaHideApp={false}>
         <div className="modal-title">
           <h3>Profile Permission</h3>
         </div>
@@ -236,11 +236,7 @@ export default class PermissionModal extends React.Component {
           childrenCountPerPage={100}
         />
         <div className="modal-footer">
-          <button
-            type="button"
-            className="btn btn--danger"
-            onClick={this.props.onClose}
-          >
+          <button type="button" className="btn btn--danger" onClick={this.props.onClose}>
             Close
           </button>{' '}
           <button

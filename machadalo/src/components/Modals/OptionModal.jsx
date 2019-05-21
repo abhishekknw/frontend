@@ -1,7 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
 
-import '../Checklist/index.css';
 import './index.css';
 
 const customStyles = {
@@ -13,15 +12,14 @@ const customStyles = {
     marginRight: '-50%',
     width: '50%',
     transform: 'translate(-50%, -50%)',
-    padding: '5px 10px 10px'
-  }
+  },
 };
 
 export default class OptionModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      options: ['']
+      options: [''],
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.renderOptionRow = this.renderOptionRow.bind(this);
@@ -29,13 +27,9 @@ export default class OptionModal extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      this.props.options &&
-      prevProps.options &&
-      prevProps.options[0] !== this.props.options[0]
-    ) {
+    if (this.props.options && prevProps.options && prevProps.options[0] !== this.props.options[0]) {
       this.setState({
-        options: this.props.options
+        options: this.props.options,
       });
     }
   }
@@ -46,28 +40,47 @@ export default class OptionModal extends React.Component {
     newOptions.push('');
 
     this.setState({
-      options: newOptions
+      options: newOptions,
     });
   }
 
   handleInputChange(option, index) {
-    let options = this.state.options.slice();
+    const options = [...this.state.options];
 
     options.splice(index, 1, option);
 
     this.setState({
-      options: options
+      options: options,
+    });
+  }
+
+  handleOptionRemove(index) {
+    const options = [...this.state.options];
+
+    options.splice(index, 1);
+
+    if (!options.length) {
+      options.push('');
+    }
+
+    this.setState({
+      options,
     });
   }
 
   renderOptionRow(option, optionIndex) {
-    const onOptionChange = event => {
+    const onOptionChange = (event) => {
       let newOption = event.target.value;
 
       this.handleInputChange(newOption, optionIndex);
     };
+
+    const onRemove = () => {
+      this.handleOptionRemove(optionIndex);
+    };
+
     return (
-      <div className="form-control option-container" key={optionIndex}>
+      <div className="form-control option" key={optionIndex}>
         <input
           type="text"
           className="input-option"
@@ -75,51 +88,37 @@ export default class OptionModal extends React.Component {
           placeholder="Enter Option"
           onChange={onOptionChange}
         />
+        <div className="option__actions">
+          <button type="button" className="btn btn--link" onClick={onRemove}>
+            Remove
+          </button>
+        </div>
       </div>
     );
   }
 
   render() {
     return (
-      <Modal
-        isOpen={this.props.showOptionModal}
-        style={customStyles}
-        ariaHideApp={false}
-      >
-        <div className="modal-title">
-          <h3>Add Options</h3>
-        </div>
-        <br />
-        <div className="createform">
-          <div className="createform__form">
-            <div className="createform__form__inline">
-              {this.state.options.map(this.renderOptionRow)}
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn--danger"
-                onClick={this.addOptionRow}
-              >
-                Add Option
-              </button>{' '}
-              <button
-                type="button"
-                className="btn btn--danger"
-                onClick={() =>
-                  this.props.onSubmit(this.state.options, this.props.columnInfo)
-                }
-              >
-                Submit
-              </button>{' '}
-              <button
-                type="button"
-                className="btn btn--danger"
-                onClick={this.props.onCancel}
-              >
-                Close
-              </button>
-            </div>
+      <Modal isOpen={this.props.showOptionModal} style={customStyles} ariaHideApp={false}>
+        <div className="modal modal-options">
+          <div className="modal__header">
+            <h3>Add Options</h3>
+          </div>
+          <div className="modal__body">{this.state.options.map(this.renderOptionRow)}</div>
+          <div className="modal__footer">
+            <button type="button" className="btn btn--danger" onClick={this.addOptionRow}>
+              Add Option
+            </button>
+            <button
+              type="button"
+              className="btn btn--danger"
+              onClick={() => this.props.onSubmit(this.state.options, this.props.columnInfo)}
+            >
+              Submit
+            </button>
+            <button type="button" className="btn btn--danger" onClick={this.props.onCancel}>
+              Close
+            </button>
           </div>
         </div>
       </Modal>

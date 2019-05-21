@@ -7,14 +7,19 @@
 
     var url_base = 'v0/ui/website/';
     var url_base_proposal = 'v0/ui/proposal/';
+    var url_analytics = 'v0/ui/analytics/';
     var url_root = 'v0/ui/';
     var url_base_user = 'v0/';
     var DashboardService = {};
 
 
 
-    DashboardService.getCampaigns = function(campaignId, category, date){
-        var url = url_base + "campaign-list/" + campaignId + "/?category=" + category + "&date=" +date ;
+    DashboardService.getCampaigns = function(campaignId, category, date,vendor){
+        if(vendor){
+          var url = url_base + "campaign-list/" + campaignId + "/?category=" + category + "&date=" +date + "&vendor=" + vendor;
+        }else {
+          var url = url_base + "campaign-list/" + campaignId + "/?category=" + category + "&date=" +date;
+        }
         return machadaloHttp.get(url);
     }
 
@@ -110,8 +115,12 @@
         return machadaloHttp.get(url);
     }
 
-    DashboardService.viewCampaignLeads = function(){
+    DashboardService.viewCampaignLeads = function(vendor){
+      if(vendor){
+        var url = url_root  + "leads/summary/?vendor=" + vendor;
+      }else{
         var url = url_root  + "leads/summary/";
+      }
         return machadaloHttp.get(url);
     }
 
@@ -193,7 +202,43 @@
       var url = url_root  + "campaign/campaign-wise-summary/";
       return machadaloHttp.get(url);
     }
+    DashboardService.getVendorWiseSummary = function(){
+      var url = url_base  + "vendor-wise-summary/";
+      return machadaloHttp.get(url);
+    }
 
+    DashboardService.getDistributionGraphsStatics = function(data){
+      var url =  url_root  + "analytics/get-leads-data-generic/";
+      return machadaloHttp.put(url,data);
+    }
+
+    DashboardService.getShortlistedSuppliers = function(campaignId, supplier_code){
+      var url =  url_root  + "website/get-shortlisted-suppliers/" + campaignId + "/?supplier_type_code=" + supplier_code;
+      return machadaloHttp.get(url);
+    }
+
+    DashboardService.printLeadsInExcel = function(data){
+      var url =  url_root  + "leads/" + data.leads_form_id + "/generate_lead_data_excel?supplier_id=" +
+                  data.supplier_id + "&start_date=" + data.start_date + "&end_date=" +
+                  data.end_date;
+      return machadaloHttp.get(url);
+    }
+    DashboardService.getCampaignsWiseForCity = function(dataCity){
+      console.log(dataCity);
+        var url =  url_analytics + "city-vendor-campaigns/";
+        console.log(url);
+      return machadaloHttp.put(url,dataCity);
+    }
+    DashboardService.getCampaignsWiseForVendor = function(dataVendor){
+      console.log(dataVendor);
+        var url =  url_analytics + "city-vendor-campaigns/";
+        console.log(url);
+      return machadaloHttp.put(url,dataVendor);
+    }
+    DashboardService.getCityUsers = function(){
+        var url =  url_root + "campaign/user-cities/";
+      return machadaloHttp.get(url);
+    }
     return DashboardService;
 
  }]);

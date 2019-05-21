@@ -62,6 +62,7 @@ angular
     'AngularPrint',
     'checklist-model',
     'btorfs.multiselect',
+    'angularUtils.directives.dirPagination',
   ])
   .config(function ($routeProvider, $stateProvider, $urlRouterProvider, $httpProvider, $qProvider, $locationProvider,cfpLoadingBarProvider) {
       $stateProvider
@@ -470,7 +471,23 @@ angular
           data : {
             permission : 'login_logs_page_access'
           }
-      });
+      }).state('editProposalDetails',{
+              url : '/editProposalDetails/:proposalId/',
+              controller : 'EditProposalDetailsCtrl',
+              templateUrl : 'modules/pages/editProposalDetails/editProposalDetails.tmpl.html',
+              data : {
+                permission : 'editProposalDetailsPage'
+              }
+        })
+        // .state('dynamicGraphs',{
+        //       url : '/dynamicGraphs',
+        //       controller : 'DashboarddynamicGraphsCtrl',
+        //       templateUrl : 'modules/pages/dynamicGraphs/dynamicGraphs.html',
+        //        data :{
+        //         permission : 'dashboard_dynamic_graphs'
+        //       }
+        // })
+        ;
 
 
       //$qProvider.errorOnUnhandledRejections(false);

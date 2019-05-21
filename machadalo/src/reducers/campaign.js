@@ -4,40 +4,35 @@ import * as types from './../actions/types';
 export const campaign = createReducer(
   {
     list: [],
-    currentCampaign: undefined
+    currentCampaign: undefined,
   },
 
   {
-    [types.GET_CAMPAIGNS_LIST_START](state) {
-      return Object.assign({}, state, {
-        list: []
-      });
-    },
     [types.GET_CAMPAIGNS_LIST_SUCCESS](state, action) {
       return Object.assign({}, state, {
-        list: action.campaigns
+        list: action.campaigns,
       });
     },
     [types.GET_CAMPAIGNS_LIST_FAIL](state) {
       return Object.assign({}, state, {
-        list: []
+        list: [],
       });
     },
     [types.GET_CURRENT_CAMPAIGN_START](state) {
       return Object.assign({}, state, {
-        currentCampaign: undefined
+        currentCampaign: undefined,
       });
     },
     [types.GET_CURRENT_CAMPAIGN_SUCCESS](state, action) {
       return Object.assign({}, state, {
-        currentCampaign: action.currentCampaign
+        currentCampaign: action.currentCampaign,
       });
     },
     [types.GET_CURRENT_CAMPAIGN_FAIL](state) {
       return Object.assign({}, state, {
-        currentCampaign: undefined
+        currentCampaign: undefined,
       });
-    }
+    },
   }
 );
 

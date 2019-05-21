@@ -7,6 +7,7 @@ angular.module('catalogueApp')
   $scope.campaign_manager = constants.campaign_manager;
   $scope.editPaymentDetails = true;
   $scope.commentModal = {};
+  $scope.userData = {};
   $scope.assign = {};
   $scope.body = {
     message : '',
@@ -14,6 +15,7 @@ angular.module('catalogueApp')
   $scope.editContactDetails = true;
   $scope.addContactDetails = true;
   $scope.userIcon = "icons/usericon.png";
+  $scope.userInfo = $rootScope.globals.userInfo;
 $scope.addNewPhase = true;
   if($rootScope.globals.userInfo.is_superuser == true){
     $scope.backButton = true;
@@ -102,6 +104,7 @@ $scope.addNewPhase =true;
     {name : 'SunBoard(SB)',   code : 'SB',   selected : false },
   ];
   $scope.invForComments = constants.inventoryNames;
+  $scope.commentsType = constants.comments_type;
   $scope.shortlisted = constants.shortlisted;
   $scope.buffered = constants.buffered;
   $scope.removed = constants.removed;
@@ -141,45 +144,44 @@ $scope.addNewPhase =true;
     $scope.saveDetails = function(){
       // alert("vidhi");
     };
-      $scope.Data = [];
     releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id)
     	.then(function onSuccess(response){
-        console.log(response);
+        getUsersList();
+        getAssignedSuppliers();
+        $scope.initialReleaseData = Object.assign({}, response.data.data);
 
-    		$scope.releaseDetails = response.data.data;
-        $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
-        console.log($scope.Data);
-        console.log($scope.releaseDetails);
+        for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
+          $scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price = parseInt($scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price, 10);
+          $scope.mapViewLat = $scope.initialReleaseData.shortlisted_suppliers[i].latitude;
+          $scope.mapViewLong = $scope.initialReleaseData.shortlisted_suppliers[i].longitude;
+          $scope.shortlistedSuppliersIdList[$scope.initialReleaseData.shortlisted_suppliers[i].supplier_id] = $scope.initialReleaseData.shortlisted_suppliers[i];
 
-        angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier,key){
-          console.log(supplier);
-          $scope.mapViewLat = supplier.latitude;
-          $scope.mapViewLong = supplier.longitude;
-          if(!supplier.stall_locations){
-            supplier.stall_locations = [];
+          if (!$scope.initialReleaseData.shortlisted_suppliers[i].stall_locations) {
+            $scope.initialReleaseData.shortlisted_suppliers[i].stall_locations = [];
           }
-          // console.log($scope.mapViewLat);
-          // console.log($scope.mapViewLong);
+        }
 
+        $scope.releaseDetails = {};
 
-        })
+        if ($scope.initialReleaseData) {
+          $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
 
-
-        setDataToModel($scope.releaseDetails.shortlisted_suppliers);
-        $scope.loading = response;
-        angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier){
-          $scope.shortlistedSuppliersIdList[supplier.supplier_id] = supplier;
-        })
+          // setDataToModel($scope.releaseDetails.shortlisted_suppliers);
+          $scope.loading = !!response;
+        } else {
+          swal(constants.name, "You do not have access to Proposal", constants.warning);
+          $scope.loading = !!response;
+        }
+// ---------------
     	})
     	.catch(function onError(response){
-        console.log(response);
+        $scope.loading = !!response;
         commonDataShare.showErrorMessage(response);
     		console.log("error occured", response.status);
     	});
 
       var setDataToModel = function(suppliers){
         for(var i=0;i<suppliers.length;i++){
-          console.log(suppliers);
           suppliers[i].total_negotiated_price = parseInt(suppliers[i].total_negotiated_price);
           // angular.forEach($scope.phases, function(phase){
           //   suppliers[i].phase_no = parseInt(phase.id);
@@ -193,6 +195,28 @@ $scope.addNewPhase =true;
                  supplier.phase_no = id;
                  console.log(supplier.phase_no);
              }
+
+    $scope.setUserForBooking = function() {
+      console.log($scope.userSupplierData);
+      $scope.societySupplierName = $scope.userSupplierData.supplierName;
+      var data = {
+        assigned_by: $scope.userInfo.id,
+        assigned_to_ids:  [parseInt($scope.userData.user)],
+        campaign_id: $scope.campaign_id,
+        supplier_id: $scope.userSupplierData.supplier_id,
+        supplierName: $scope.userSupplierData.name,
+      }
+      console.log(data);
+      $scope.societySupplierName = data.supplierName;
+      releaseCampaignService.setUserForBooking(data)
+      .then(function onSuccess(response){
+        console.log(response);
+
+      swal(constants.name,constants.assign_success,constants.success);
+      })
+      .catch(function onError(response){
+      });
+    }
 
     $scope.emptyList = {NA:'NA'};
     $scope.getFilters = function(supplier){
@@ -277,9 +301,8 @@ $scope.addNewPhase =true;
       $scope.search_status = false;
       console.log($scope.supplier_type_code.code,$scope.search.query);
       if($scope.supplier_type_code.code && $scope.search.query){
-        mapViewService.searchSuppliers($scope.supplier_type_code.code,$scope.search.query)
+        mapViewService.searchSuppliers($scope.supplier_type_code.code,$scope.search.query,$scope.releaseDetails.campaign.principal_vendor)
           .then(function onSuccess(response, status){
-            console.log(response);
               $scope.center_index = null;
             $scope.supplierData = response.data.data;
             if($scope.supplierData.length > 0){
@@ -648,6 +671,7 @@ $scope.multiSelect =
          })
        }
 
+
        $scope.editPhaseDetails = function(){
          $scope.editPhase = true;
        }
@@ -819,7 +843,8 @@ $scope.multiSelect =
          commonDataShare.getUsersList()
            .then(function onSuccess(response){
              $scope.userList = response.data.data;
-             $scope.usersMapListWithObjects = {};
+             $scope.selectedUsers = [];
+             $scope.usersMapListWithObjects = [];
              angular.forEach($scope.userList, function(data){
                $scope.usersMapListWithObjects[data.id] = data;
              })
@@ -831,6 +856,16 @@ $scope.multiSelect =
            });
        }
 
+       $scope.settingsForUsers = { enableSearch: true,
+           keyboardControls: true ,idProp : "id",
+           template: '{{option.username}}', smartButtonTextConverter(skip, option) { return option; },
+           showCheckAll : true,
+           scrollableHeight: '300px', scrollable: true};
+           $scope.selected_baselines_customTexts_users = {buttonDefaultText: 'Select Users'};
+           $scope.eventsForUsers = {
+             onItemSelect : function(item){
+             }
+          }
        $scope.initialiseImportSheet = function(){
          getUsersList();
          getProposalCenters();
@@ -881,7 +916,7 @@ $scope.multiSelect =
        }
        $scope.addComment = function(){
          console.log($scope.commentModal);
-         $scope.commentModal['related_to'] = constants.booking_related_comment;
+         // $scope.commentModal['related_to'] = constants.booking_related_comment;
          $scope.commentModal['shortlisted_spaces_id'] = $scope.supplierDataForComment.id;
          releaseCampaignService.addComment($scope.campaign_id,$scope.commentModal)
          .then(function onSuccess(response){
@@ -897,11 +932,23 @@ $scope.multiSelect =
       $scope.getSupplierForComments = function(supplier){
         $scope.supplierDataForComment = supplier;
       }
+      $scope.selectedCommentForView = {};
       $scope.viewComments = function(supplier){
         $scope.supplierDataForComment = supplier;
+        console.log(supplier);
         $scope.commentsData = {};
-        var relatedTo = constants.booking_related_comment;
+        console.log($scope.commentsData);
+        // console.log(relatedTo);
+        console.log($scope.selectedCommentForView.type);
+        if($scope.selectedCommentForView.type == undefined){
+            $scope.selectedCommentForView.type = $scope.commentsType[0];
+            console.log($scope.commentsType);
+        }
+
+        var relatedTo = $scope.selectedCommentForView.type;
+        console.log(relatedTo);
         var spaceId = $scope.supplierDataForComment.id;
+
         releaseCampaignService.viewComments($scope.campaign_id,spaceId,relatedTo)
         .then(function onSuccess(response){
           console.log(response);
@@ -955,6 +1002,9 @@ $scope.multiSelect =
   $scope.uploadImagePermission = function(file){
         $scope.permissionBoxFile = file;
   }
+  $scope.uploadImageReceipt = function(file){
+        $scope.ReceiptFile = file;
+  }
   $scope.permissionBoxData = {};
   $scope.uploadPermissionBoxImage = function(supplier){
     // cfpLoadingBar.set(0.3)
@@ -992,6 +1042,43 @@ $scope.multiSelect =
           swal(constants.name, "Max 2MB Supported, Your Image Size Exceeds", constants.warning);
         }
       }
+      $scope.ReceiptData = {};
+      $scope.uploadReceiptImage = function(supplier){
+        // cfpLoadingBar.set(0.3)
+        console.log(supplier);
+            var token = $rootScope.globals.currentUser.token;
+            if ($scope.ReceiptFile) {
+              cfpLoadingBar.start();
+              Upload.upload({
+                  url: constants.base_url + constants.url_base + "hashtag-images/" + $scope.campaign_id +constants.upload_receipt_url,
+                  data: {
+                    file: $scope.ReceiptFile,
+                    'comment' : supplier.receiptComment||'',
+                    'object_id' : supplier.supplier_id,
+                    'hashtag' : 'Receipt',
+                    'campaign_name' : $scope.releaseDetails.campaign.name,
+                    'supplier_name' : supplier.name,
+                    'supplier_type_code' : 'RS'
+                  },
+                  headers: {'Authorization': 'JWT ' + token}
+              }).then(function onSuccess(response){
+                  console.log(response);
+                    supplier.receiptComment = '';
+                    // uploaded_image = {'image_path': response.data.data };
+                    // inventory.images.push(uploaded_image);
+                    cfpLoadingBar.complete();
+                    swal(constants.name, constants.image_success, constants.success);
+                    // $("#progressBarModal").modal('hide');
+              })
+              .catch(function onError(response) {
+                cfpLoadingBar.complete();
+                console.log(response);
+              });
+            }
+            else {
+              swal(constants.name, "Max 2MB Supported, Your Image Size Exceeds", constants.warning);
+            }
+          }
       $scope.getPermissionBoxImages = function(supplier){
         releaseCampaignService.getPermissionBoxImages($scope.campaign_id,supplier.supplier_id)
         .then(function onSuccess(response){
@@ -1004,6 +1091,22 @@ $scope.multiSelect =
             swal(constants.name, constants.image_empty, constants.warning);
           }
           $scope.perBoxImageData = response.data.data;
+        }).catch(function onError(response){
+          console.log(response);
+        })
+      }
+      $scope.getReceiptBoxImages = function(supplier){
+        releaseCampaignService.getReceiptBoxImages($scope.campaign_id,supplier.supplier_id)
+        .then(function onSuccess(response){
+          console.log(response);
+          if(response.data.data.length){
+              angular.forEach(response.data.data, function(data){
+                data['image_url'] = 'http://androidtokyo.s3.amazonaws.com/' + data.image_path;
+              })
+          }else {
+            swal(constants.name, constants.image_empty, constants.warning);
+          }
+          $scope.perReceiptImageData = response.data.data;
         }).catch(function onError(response){
           console.log(response);
         })
@@ -1049,6 +1152,68 @@ $scope.multiSelect =
         supplier.phase_no = '';
       }
       console.log(supplier);
+    }
+    $scope.setUserSupplier = function(supplier){
+      console.log(supplier);
+      $scope.userSupplierData = supplier;
+    }
+    var getAssignedSuppliers = function(){
+      releaseCampaignService.getAssignedSuppliers($scope.campaign_id, $scope.userInfo.id)
+      .then(function onSuccess(response){
+        $scope.assignedSuppliers = [];
+        var assignedSuppliers = response.data.data;
+        var assignedSuppliersMap = {};
+        for (var i = 0, l = assignedSuppliers.length; i < l; i += 1) {
+          assignedSuppliersMap[assignedSuppliers[i].supplier_id] = true;
+        }
+
+        for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
+          if (assignedSuppliersMap[$scope.initialReleaseData.shortlisted_suppliers[i].supplier_id]) {
+            $scope.assignedSuppliers.push($scope.initialReleaseData.shortlisted_suppliers[i]);
+          }
+        }
+      }).catch(function onError(response){
+        console.log(response);
+      })
+    }
+    var formatData = function(){
+      // $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
+      // console.log($scope.Data);
+      // console.log($scope.releaseDetails);
+
+      angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier,key){
+        console.log(supplier);
+        $scope.mapViewLat = supplier.latitude;
+        $scope.mapViewLong = supplier.longitude;
+        if(!supplier.stall_locations){
+          supplier.stall_locations = [];
+        }
+        // console.log($scope.mapViewLat);
+        // console.log($scope.mapViewLong);
+
+
+      })
+
+
+      setDataToModel($scope.releaseDetails.shortlisted_suppliers);
+      $scope.loading = true;
+      angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier){
+        $scope.shortlistedSuppliersIdList[supplier.supplier_id] = supplier;
+      })
+    }
+    $scope.selectedUser = { value: 'all' };
+    $scope.changeSupplierData = function() {
+      switch ($scope.selectedUser.value) {
+        case 'all':
+          $scope.releaseDetails.shortlisted_suppliers = $scope.initialReleaseData.shortlisted_suppliers;
+          break;
+
+        case 'assigned':
+          $scope.releaseDetails.shortlisted_suppliers = $scope.assignedSuppliers;
+          break;
+      }
+
+      // formatData();
     }
 
 }]);//Controller function ends here

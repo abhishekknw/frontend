@@ -13,7 +13,7 @@
   <div class="pageTitle">
       <h3>Booking Plan</h3>
   </div>
-    <div class = "panel-body" style="text-align:center;margin-top:-20px">
+    <div class="panel-body" style="text-align:center;margin-top:-20px">
         <div class="row">
           <div class="panel panel-default">
             <div class="panel-heading">
@@ -28,7 +28,13 @@
 
 <!-- <div class="container"> -->
   <div class="panel-body table-style">
-      <table st-table="releaseDetails.shortlisted_suppliers" st-safe-src="Data" class="table table-striped">
+    <div class="col-md-6">
+      <select class="col-md-6 form-control" name="" ng-model="selectedUser.value" ng-change="changeSupplierData()">
+        <option value="all">All</option>
+        <option value="assigned">Assigned</option>
+      </select>
+    </div>
+      <table st-table="suppliersList" st-safe-src="releaseDetails.shortlisted_suppliers" class="table table-striped">
         <thead>
           <tr>
             <th colspan='999' style="background-color:#ffffff;">
@@ -54,6 +60,7 @@
             <th>Booking Priority</th>
             <th>Booking Status</th>
             <th>Phase</th>
+            <th>Select User</th>
             <th>Mode Of Payment</th>
             <th>Transaction/Cheque Number</th>
             <th>Contacts</th>
@@ -62,9 +69,10 @@
             <th>Comments</th>
             <th>Action</th>
             <th>Permission Box</th>
+            <th>Receipt</th>
           </tr>
         </thead>
-        <tbody ng-repeat="supplier in releaseDetails.shortlisted_suppliers track by $index">
+        <tbody ng-repeat="supplier in suppliersList track by $index">
           <tr ng-repeat="(key,filter) in getFilters(supplier)" ng-disabled="$index != '15'">
             <td rowspan="{{key.length}}" ng-show="$first">{{$parent.$index + 1}}</td>
             <td class="" rowspan="{{key.length}}" ng-show="$first"><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages" ng-click="getSocietyDetails(supplier,supplier.supplier_id,center,$index)" target="_blank" style="text-decoration: underline; cursor: pointer;color:blue;">{{supplier.name}}({{supplier.quality_rating}})</a></td>
@@ -108,7 +116,7 @@
             <td class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="priceform">
               <span  ng-disabled="!supplier.phase_no" class="error" ng-show="priceform.price.$error.min">{{positiveNoError}}</span>
               <input  ng-disabled="!supplier.phase_no" type="number" name="price" ng-model="supplier.total_negotiated_price" class="form-control spacing input-width" min="0" permission = "[permissions.addNegotiatedPrice]">
-           <br>{{supplier.total_negotiated_price / supplier.flat_count|| 0 | limitTo:8}}  </td>
+           <br>{{(supplier.total_negotiated_price / supplier.flat_count)|| 0 | limitTo:8}}  </td>
            <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
                <input  ng-disabled="!supplier.phase_no" type="number"  ng-model="supplier.cost_per_flat" class="form-control spacing input-width" min="0">
            </td>
@@ -148,6 +156,29 @@
               </select>
               <span class="error" ng-show="phaseform.phase.$error.min">{{positiveNoError}}</span>
             </td>
+            <td rowspan="{{key.length}}" ng-show="$first">
+              <button type="button" class="btn btn-danger"name="button" data-toggle="modal" data-target="#addUserModal" ng-click="setUserSupplier(supplier)">Assign User</button>
+                <div id="addUserModal" class="modal fade">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Assign Users</h4>
+                        <hr/>
+
+                        <div class = "modal-body" style = "height: 300px;">
+                          <select name="users" class="form-control spacing input-width-phase"  ng-model="userData.user" min="1" >
+                            <option value="" disabled>Select User</option>
+                            <option ng-repeat="user in usersMapListWithObjects  | orderBy:'username' | unique:'id'" value="{{user.id}}">{{user.username}}</option>
+                          </select>
+                          <br />
+                          <button type="button" class="btn btn-danger" name="button" ng-click="setUserForBooking()">Assign</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
             <!--mode of payment  -->
             <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
               <div class="radio">
@@ -218,6 +249,12 @@
               <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Permission Box" ng-model="supplier.permissionComment"></textarea>
               <button ng-click="uploadPermissionBoxImage(supplier)" >Submit</button>
               <button ng-click="getPermissionBoxImages(supplier)" data-toggle="modal" data-target="#imageModal">View</button>
+            </td>
+            <td rowspan="{{key.length}}" ng-show="$first">
+              <button class="btn btn-primary active" ngf-select="uploadImageReceipt($file)" ngf-max-size="2MB">Upload Image</button>
+              <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Receipt" ng-model="supplier.receiptComment"></textarea>
+              <button ng-click="uploadReceiptImage(supplier)" >Submit</button>
+              <button ng-click="getReceiptBoxImages(supplier)" data-toggle="modal" data-target="#imageReceiptModal">View</button>
             </td>
 
           </tr>
@@ -348,13 +385,13 @@
 
                 </tr>
                 <tr ng-if="!editContactDetails" ng-repeat="contact in payment.contacts">
-                  <td class="alignment"><input type="text" ng-model="contact.salutation"></td>
-                  <td class="alignment"><input type="text" ng-model="contact.name"></td>
-                  <td class="alignment"><input type="text" ng-model="contact.contact_type"></td>
-                  <td class="alignment"><input type="email" ng-model="contact.email"></td>
-                  <td class="alignment"><input type="int" ng-model="contact.std_code"></td>
-                  <td class="alignment"><input type="tel" ng-model="contact.landline"></td>
-                  <td class="alignment"><input type="phone" ng-model="contact.mobile"></td>
+                  <td class="alignment"><input type="text" placeholder="Mr/Mrs" ng-model="contact.salutation"></td>
+                  <td class="alignment"><input type="text" placeholder="Name of the Person" ng-model="contact.name"></td>
+                  <td class="alignment"><input type="text" placeholder="Manager/Secretary/Chairman/Treasurer/Committe Member" ng-model="contact.contact_type"></td>
+                  <td class="alignment"><input type="email" placeholder="Email of the Person" ng-model="contact.email"></td>
+                  <td class="alignment"><input type="int" placeholder="022/+91" ng-model="contact.std_code"></td>
+                  <td class="alignment"><input type="tel" placeholder="Landline No" ng-model="contact.landline"></td>
+                  <td class="alignment"><input type="phone" placeholder="Mobile No" ng-model="contact.mobile"></td>
                   <td class="alignment">
                     <button type="button" name="button" ng-click="removeContact($index)">Remove</button>
                   </td>
@@ -773,17 +810,17 @@
         Add Comment For {{supplierDataForComment.name}}
       </div>
       <div class="col-md-12">
-        <!-- <div class="row col-md-6" >
+        <div class="row col-md-6" >
         <br>
-          <label>Select Related Inventory to Comment</label><br>
-          <select class="form-control" name="" ng-model="commentModal.inventory_type">
-            <option disabled="true" selected>Select Inventory</option>
-            <option ng-repeat="inv in invForComments" value="{{inv.name}}">{{inv.name}}</option>
+          <label>Select Comment Type</label><br>
+          <select class="form-control" name="" ng-model="commentModal.related_to">
+            <option disabled="true" selected>Select Comment Type</option>
+            <option ng-repeat="comment in commentsType" value="{{comment}}">{{comment}}</option>
           </select></br>
-        </div> -->
+        </div>
         <div style="width:100%">
         <br>
-          <label>Comments :</label>
+          <!-- <label>Comments :</label> -->
           <textarea class="form-control col-md-10"  rows="8" cols="200" ng-model="commentModal.comment" placeholder="Write here.."></textarea>
         </div>
         <br>
@@ -801,13 +838,7 @@
 <!--START : view comments modal  -->
 <div id="viewComments" class="modal fade">
 
-        <!-- <div class="">
-          Selected Inventory :
-          <select class="form-control" ng-model="selectedInvForView">
-              <option ng-repeat="inv in viewInvForComments" value="{{inv}}">{{inv}}</option>
-          </select>
-        </div> -->
-        <br>
+
         <div>
           <div class="modal-dialog">
             <div class="modal-content">
@@ -815,6 +846,13 @@
                 View Comments For {{supplierDataForComment.name}}
               </div>
               <div class="modal-body">
+                <div class="">
+                  Selected Comment Type :
+                  <select class="form-control" ng-model="selectedCommentForView.type" ng-change="viewComments(supplierDataForComment)">
+                      <option ng-repeat="comment in commentsType" value="{{comment}}">{{comment}}</option>
+                  </select>
+                </div>
+                <br>
           <table class="table-bordered table-striped">
             <tbody>
               <tr ng-repeat="item in commentsData[selectedInvForView]">
@@ -853,6 +891,39 @@
           <div class="carousel" id="slider">
              <div class="carousel-inner">
                <div class="item" ng-class="{active:!$index}" ng-repeat="image in perBoxImageData">
+                 <div class="row">
+                  <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
+                </div>
+                 <div class="row" style="margin-left:10px;">
+                   Comment : {{image.comment}} </br>
+                 </div>
+               </div>
+
+             </div>
+              <a style="height:400px;" class="left carousel-control"  data-toggle="carousel" data-target = "#slider" role="button" data-slide="prev">
+                 <span class="glyphicon glyphicon-chevron-left"></span>
+              </a>
+             <a style="height:400px;" class="right carousel-control" data-toggle = "carousel" data-target = "#slider" role="button" data-slide="next">
+               <span class="glyphicon glyphicon-chevron-right"></span>
+             </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="imageReceiptModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Receipt Image Details</h4>
+        <hr/>
+        <div class = "modal-body">
+          <div class="carousel" id="slider">
+             <div class="carousel-inner">
+               <div class="item" ng-class="{active:!$index}" ng-repeat="image in perReceiptImageData">
                  <div class="row">
                   <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
                 </div>

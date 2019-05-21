@@ -613,7 +613,6 @@ color: #ffffff !important;
   overflow-x: hidden;
 }
 
-
 .campaigndetailtable table tfoot {
   /* background: #d9534f;
   color: white; */
@@ -669,6 +668,86 @@ color: #ffffff !important;
 .campaigndetailtable table tfoot tr td:nth-child(2) {
   text-align: center;
 }
+
+
+
+.viewLeadstable {}
+
+.viewLeadstable table thead tr th {
+  background:#8e1921;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  vertical-align: middle;
+  width: 100px;
+  white-space: normal !important;
+}
+
+.viewLeadstable table tbody {
+
+  display: block;
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.viewLeadstable table tfoot {
+  /* background: #d9534f;
+  color: white; */
+  display: block;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.viewLeadstable table thead,
+.viewLeadstable table tbody tr {
+  /* border: 1px solid black; */
+  /* border-collapse: separate; */
+  /* border-spacing: 4px;   */
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+
+.viewLeadstable table thead,
+.viewLeadstable table tfoot tr {
+  /* background: #d9534f;
+  color: white; */
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.viewLeadstable table tbody tr td {
+
+  text-align: center;
+  width: 100px;
+}
+
+
+.viewLeadstable table tfoot tr td {
+  background: #d9534f;
+  color: #ffffff !important;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  width: 100px;
+}
+
+.viewLeadstable table thead tr th:nth-child(2) {
+  text-align: center;
+}
+
+.viewLeadstable table tbody tr td:nth-child(2) {
+  text-align: center;
+}
+
+.viewLeadstable table tfoot tr td:nth-child(2) {
+  text-align: center;
+}
+
 .CampaignDetails{
   height: 60px !important;
 }
@@ -704,18 +783,31 @@ color: #ffffff !important;
 div.outer { overflow: scroll; }
 div.outer .inner { width: 1900px; }
 
+div.outerSociety { overflow: scroll; }
+div.outerSociety .innerSociety { width: 2800px; }
 
 div.outerdate { overflow: scroll; }
 div.outerdate .innerdate { width: 2400px; }
+
+
+div.outerdistributed { overflow: scroll; }
+div.outerdistributed .innerdistributed { width: 1160px; }
 
 
 div.outerFlat { overflow: scroll; }
 div.outerFlat .innerFlat { width: 500px; }
 
 
+div.dynamicOuterGraphs { overflow: scroll; }
+div.dynamicOuterGraphs .dynamicInnerGraphs { width: 1000px; }
+
+
 div.outerLocation { overflow: scroll; }
 div.outerLocation .innerLocation { width: 1000px; }
 
+
+div.outerVendor { overflow: scroll; }
+div.outerVendor .innerVendor { width: 1200px; }
 
 div.outerLastWeek { overflow: scroll; }
 div.outerLastWeek .innerLastWeek { width: 1400px; }
@@ -870,3 +962,39 @@ border-radius: 10px;
   color: #B20000 !important;
 }
 .tick line { display: none; }
+
+
+.rotateImage0 {
+  transform: rotate(0deg);
+}
+
+.rotateImage90 {
+  transform: rotate(90deg);
+  width: 600px !important;
+  height: 600px !important;
+  margin-top: -30px !important;
+}
+.rotateImage180 {
+  transform: rotate(180deg);
+}
+.rotateImage270 {
+  transform: rotate(270deg);
+
+}
+
+.multiselectParentDropdown .btn .caret{
+    margin-left: 80px;
+  }
+
+.multiselectParentDropdown .multiselect-parent .dropdown-toggle  {
+  width : 230px;
+  }
+
+.multiselectDropdown .btn .caret{
+  margin-left: 40px;
+  }
+
+.multiselectDropdown .multiselect-parent .dropdown-toggle  {
+ width : 210px;
+  }
+}

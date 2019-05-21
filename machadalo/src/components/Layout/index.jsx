@@ -6,10 +6,11 @@ import Sidebar from './../Sidebar';
 import Toastr from './../toastr';
 
 import ChecklistContainer from './../../containers/ChecklistContainer';
-import EntityContainer from './../../containers/EntityContainer';
+import SupplierContainer from './../../containers/SupplierContainer';
 import InventoryContainer from './../../containers/InventoryContainer';
 import SettingContainer from './../../containers/SettingContainer';
 import LeadsContainer from './../../containers/LeadsContainer';
+import BookingContainer from './../../containers/BookingContainer';
 
 import './index.css';
 
@@ -39,25 +40,16 @@ export default class Layout extends React.Component {
         <div className="wrapper">
           <div className="container">
             <Switch>
-              <Route
-                path={`${match.path}/checklist`}
-                component={ChecklistContainer}
-              />
+              <Route path={`${match.path}/checklist`} component={ChecklistContainer} />
 
-              <Route
-                path={`${match.path}/entity`}
-                component={EntityContainer}
-              />
-              <Route
-                path={`${match.path}/inventory`}
-                component={InventoryContainer}
-              />
+              <Route path={`${match.path}/supplier`} component={SupplierContainer} />
+              <Route path={`${match.path}/inventory`} component={InventoryContainer} />
 
-              <Route
-                path={`${match.path}/settings`}
-                component={SettingContainer}
-              />
+              <Route path={`${match.path}/settings`} component={SettingContainer} />
+
               <Route path={`${match.path}/leads`} component={LeadsContainer} />
+
+              <Route path={`${match.path}/booking`} component={BookingContainer} />
             </Switch>
           </div>
         </div>

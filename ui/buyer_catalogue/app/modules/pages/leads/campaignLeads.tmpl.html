@@ -131,17 +131,23 @@
           <br />  <br />  <br />  <br />
           <div class="col-md-12" ng-if="model.key_type=='RADIO' || model.key_type=='CHECKBOX' || model.key_type=='DROPDOWN'">
             Add Options:
-            <br />  <br />
-            <input type="text" class="form-control" ng-model="model.optionForm.option">
             <br />
-            <button class="btn btn-danger" ng-click="addKeyOption(model.optionForm.option,$index+1)">+</button>
+            <div class="col-md-12">
+              <div class="col-md-4">
+                <input type="text" class="form-control" ng-model="model.optionForm.option">
+              </div>
+              <div class="col-md-4">
+                <button class="btn btn-danger" ng-click="addKeyOption(model.optionForm.option,$index+1)">+</button>
+              </div>
+            </div>
+            <br /> <br />
             <div class="" ng-repeat="option in model.key_options" style="display:inline-block;">
               <button class="btn btn-primary">{{option}}</button>
                 <span ng-click="model.key_options.splice($index,1)" class="glyphicon glyphicon-remove-circle"></span>
             </div>
-            <br />  <br />
-          </div>
           <br />  <br />
+          </div>
+          <br />  <br /><br />
         </div>
       </div>
       <div class="form-group col-md-12">
@@ -403,17 +409,23 @@
             <br />  <br />  <br />  <br />
             <div class="col-md-12" ng-if="model.key_type=='RADIO' || model.key_type=='CHECKBOX' || model.key_type=='DROPDOWN'">
               Add Options:
-              <br />  <br />
-              <input type="text" class="form-control" ng-model="model.optionForm.option">
               <br />
-              <button class="btn btn-danger" ng-click="addNewKeyOption(model.optionForm.option,$index)">+</button>
+              <div class="col-md-12">
+                <div class="col-md-4">
+                  <input type="text" class="form-control" ng-model="model.optionForm.option">
+                </div>
+                <div class="col-md-4">
+                  <button class="btn btn-danger" ng-click="addKeyOption(model.optionForm.option,$index)">+</button>
+                </div>
+              </div>
+              <br /> <br />
               <div class="" ng-repeat="option in model.key_options" style="display:inline-block;">
                 <button class="btn btn-primary">{{option}}</button>
                   <span ng-click="model.key_options.splice($index,1)" class="glyphicon glyphicon-remove-circle"></span>
               </div>
-              <br />  <br />
-            </div>
             <br />  <br />
+            </div>
+            <br />  <br /><br />
           </div>
           <button class="btn btn-danger" ng-click="addNewLeadFormField()">Add</button>
           <button class="btn btn-danger" ng-click="updateLeadForm()">Submit</button>
@@ -455,17 +467,23 @@
             <br />  <br />  <br />  <br />
             <div class="col-md-12" ng-if="model.key_type=='RADIO' || model.key_type=='CHECKBOX' || model.key_type=='DROPDOWN'">
               Add Options:
-              <br />  <br />
-              <input type="text" class="form-control" ng-model="model.optionForm.option">
               <br />
-              <button class="btn btn-danger" ng-click="addNewKeyOption(model.optionForm.option,$index+1)">+</button>
+              <div class="col-md-12">
+                <div class="col-md-4">
+                  <input type="text" class="form-control" ng-model="model.optionForm.option">
+                </div>
+                <div class="col-md-4">
+                  <button class="btn btn-danger" ng-click="addKeyOption(model.optionForm.option,$index+1)">+</button>
+                </div>
+              </div>
+              <br /> <br />
               <div class="" ng-repeat="option in model.key_options" style="display:inline-block;">
                 <button class="btn btn-primary">{{option}}</button>
                   <span ng-click="model.key_options.splice($index,1)" class="glyphicon glyphicon-remove-circle"></span>
               </div>
-              <br />  <br />
-            </div>
             <br />  <br />
+            </div>
+            <br />  <br /><br />
           </div>
           <button class="btn btn-danger" ng-click="addNewLeadFormField()">Add</button>
           <button class="btn btn-danger" ng-click="updateLeadForm()">Submit</button>

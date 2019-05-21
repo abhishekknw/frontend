@@ -77,6 +77,7 @@ angular
       menuCampaignLeads   :   'can_view_campaignleads_button_on_menu',
       menuDashboard       :   'can_view_dashboard_button_on_menu',
       menuChangePassword  :   'can_view_changepassword_button_on_menu',
+      menuChecklist       :   'can_view_checklist_button_on_menu',
     },
     pagePermissions : {
       homepage                : 'homePage',
@@ -92,6 +93,11 @@ angular
       opsExecutionPage        : 'opsExecutionPage',
       showProposalHistoryPage : 'showProposalHistoryPage',
       dashboardPage            : 'dashboard',
-      enter_leads_from_application_access : 'enter_leads_from_application_access'
+      enter_leads_from_application_access : 'enter_leads_from_application_access',
+      editProposalDetailsPage     : 'editProposalDetailsPage'
     },
+
+    dashboard : {
+      brandingEmailButton : 'can_view_brandingemailbutton',
+    }
   });

@@ -107,6 +107,21 @@
       var url = url_base +  "hashtag-images/get_permission_box_images/?campaign_id=" + campaignId + "&supplier_id=" + supplierId;
       return machadaloHttp.get(url);
     }
+    releaseCampaignService.getReceiptBoxImages = function(campaignId,supplierId){
+      var url = url_base +  "hashtag-images/get_receipt_images/?campaign_id=" + campaignId + "&supplier_id=" + supplierId;
+      return machadaloHttp.get(url);
+    }
+
+    releaseCampaignService.setUserForBooking = function(data){
+      var url = url_base + 'supplier-assignment/';
+      return machadaloHttp.post(url,data);
+    }
+
+    releaseCampaignService.getAssignedSuppliers = function(campaignId, id){
+      var url = url_base + 'supplier-assignment/?campaign_id=' + campaignId + "&id=" + id;
+      return machadaloHttp.get(url);
+    }
+
 
     return releaseCampaignService;
 }]);

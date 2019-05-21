@@ -6,8 +6,10 @@
     'use strict';
 
   angular.module('catalogueApp')
-      .controller('DashboardCtrl',function($scope,NgMap, $rootScope, baConfig, colorHelper,DashboardService, commonDataShare, constants,$location,$anchorScroll,uiGmapGoogleMapApi,uiGmapIsReady,Upload,cfpLoadingBar,$stateParams) {
+      .controller('DashboardCtrl',function($scope,NgMap, $rootScope, baConfig, colorHelper,DashboardService, commonDataShare, constants,$location,$anchorScroll,uiGmapGoogleMapApi,uiGmapIsReady,Upload,cfpLoadingBar,$stateParams,$timeout,Excel, permissions) {
  $scope.itemsByPage=15;
+ $scope.permissions = permissions.dashboard;
+ console.log($scope.permissions);
  $scope.campaign_id = $stateParams.proposal_id;
  $scope.query = "";
  $scope.oneAtATime = true;
@@ -17,9 +19,129 @@
  $scope.userIcon = "icons/usericon.png";
  $scope.passwordError = constants.password_error;
  $scope.userInfo = $rootScope.globals.userInfo;
- console.log($scope.userInfo);
  $scope.dateRangeModel = {};
+ $scope.selectedVendor = {};
+ $scope.vendorsData = {};
  $scope.emailModel = {};
+ $scope.vendorDataMap = {};
+ $scope.vendorsData = {};
+ $scope.selectedVendors = [];
+ $scope.selectedCities = [];
+ $scope.selectedCities_temp = [];
+ $scope.selectedbookingParameters = [];
+ $scope.selectedVendors_temp = [];
+ $scope.selectedDynamicCampaigns = [];
+ $scope.selectedTypeOfSocieties = [];
+ $scope.selectedSizeOfFlats = [];
+ var selectedSpecificItems = [];
+
+
+ $scope.typeOfSocietyLists = [
+   {id: 1, name: 'Ultra High'},
+   {id: 2, name: 'High'},
+   {id: 3, name: 'Medium High'},
+   {id: 4, name: 'Standard'},
+ ];
+ $scope.sizeOfFlatsLists = [
+   {id: 1, name: '1-150'},
+   {id: 2, name: '151-400'},
+   {id: 3, name: '401+'},
+ ];
+ $scope.freebiesLists = [
+   {id: 1, name: 'Whatsapp Group'},
+   {id: 2, name: 'Email Group'},
+   {id: 3, name: 'Building ERP'},
+   {id: 4, name: 'Door To Door'},
+ ];
+ // $scope.cityLists = [
+ //   {id: 1, name: 'Mumbai'},
+ //   {id: 2, name: 'Delhi'},
+ //   {id: 3, name: 'Bangalore'},
+ //   {id: 4, name: 'Hyderabad'},
+ //   {id: 5, name: 'Chennai'},
+ //   {id: 6, name: 'Ludhiana'},
+ //   {id: 7, name: 'Kanpur'},
+ //   {id: 8, name: 'Lucknow'},
+ //   {id: 9, name: 'Jaipur'},
+ //   {id: 10, name: 'Vijaywada'},
+ //  {id: 11, name: 'Vishakhapattanam'},
+ //  {id: 12, name: 'Coimbatore'},
+ //  {id: 13, name: 'Thiruvananthpuram'},
+ //  {id: 14, name: 'Madurai'},
+ //  {id: 15 , name: 'Chandigarh'},
+ //  {id: 16, name: 'Noida'},
+ // ];
+ $scope.BookingParametersLists = [
+   {id: 1, name: 'Freebies Allowed', value: 'freebiestype'},
+   {id: 2, name: 'Pre-Hype Allowed', value: 'preHypetype'},
+   {id: 3, name: 'Poster Allowed'  , value: 'nbpostertype'},
+   {id: 4, name: 'Standee Allowed' , value: 'standeetype'},
+   {id: 5, name: 'Flier Allowed'   , value: 'fliertype'},
+   {id: 5, name: 'Banner Allowed'   , value: 'bannertype'},
+   {id: 6, name: 'Stall Allowed'   , value: 'stalltype'},
+   {id: 7, name: 'Stall Location'  , value: 'stalltype'},
+ ];
+ $scope.dynamicGraphYValuesMap = {
+   'lead/flat*100': 'Leads %',
+   'hot_lead/flat*100': 'Hot Leads %',
+   'hotness_level_2/flat*100': 'Meeting Fixed %',
+   'hotness_level_3/flat*100': 'Meeting Completed %',
+   'hotness_level_4/flat*100': 'Conversion %',
+   'flat*cost_flat/lead': 'Cost Per Lead (Rs)',
+   'flat*cost_flat/hot_lead': 'Cost Per Hot Lead (Rs)',
+   'cost_flat/hotness_level_2': 'Cost per Meeting Fixed',
+   'cost_flat/hotness_level_3': 'Cost per Meeting Completed',
+   'cost_flat/hotness_level_4': 'Cost per Conversion'
+ };
+ $scope.dynamicGraphYKeysMap = {
+   'leadsPerc': 'lead/flat*100',
+   'hotleadsPerc': 'hot_lead/flat*100',
+   'meetingFixedPerc': 'hotness_level_2/flat*100',
+   'meetingCompletedPerc': 'hotness_level_3/flat*100',
+   'conversionPerc': 'hotness_level_4/flat*100',
+   'costPerLeads': 'cost_flat/lead',
+   'costPerHotLeads': 'cost_flat/hot_lead',
+   'costPerMeetingFixed': 'cost_flat/hotness_level_2',
+   'costPerMeetingCompleted': 'cost_flat/hotness_level_3',
+   'costPerConversion': 'cost_flat/hotness_level_4'
+ };
+ var dynamicPricingKeys = {
+   'Leads %': {
+     name: 'Cost Per Lead',
+     value: 'flat*cost_flat/lead',
+   },
+   'Hot Leads %': {
+     name: 'Cost Per Hot Lead',
+     value: 'flat*cost_flat/hot_lead',
+   },
+   'Meeting Fixed %': {
+     name: 'Cost Per Meeting Fixed',
+     value: 'cost_flat/hotness_level_2',
+   },
+   'Meeting Completed %': {
+     name: 'Cost Per Meeting Completed',
+     value: 'cost_flat/hotness_level_3',
+   },
+   'Conversion %': {
+     name: 'Cost Per Conversion',
+     value: 'cost_flat/hotness_level_4',
+   }
+ }
+ var Raw_Data_Only_Cost = ["lead","hot_lead","flat","cost_flat"];
+ var Raw_Metric_Only_Cost = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"]];
+
+ var raw_data_global = ["lead","hot_lead","flat","cost_flat","hotness_level_2","hotness_level_3","hotness_level_4"];
+ var metrics_global = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["5","3","/"]
+ ,["m5",100,"*"],["6","3","/"],["m7",100,"*"],["7","3","/"],["m9",100,"*"],["4","1","/"],
+ ["4","2","/"],["4","5","/"],["4","6","/"],["4","7","/"],
+ ["3","4","*"],["m16","1","/"],["m16","2","/"]];
+
+ var raw_data_basic = ["lead","hot_lead","flat","hotness_level_2","hotness_level_3","hotness_level_4"];
+ var metrics_basic = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","3","/"],["m5",100,"*"],
+["5","3","/"],["m7",100,"*"],["6","3","/"],["m9",100,"*"]];
+var raw_data_basic_temp = ["lead","hot_lead","flat"];
+var metrics_basic_temp = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"]];
+
  console.log($scope.userInfo);
  $scope.invNameToCode = {
    'POSTER' : 'PO',
@@ -130,7 +252,8 @@
           leads : 'leads',
           multipleLeads : 'multipleLeads',
           overall : 'overall',
-          blank : 'blank'
+          blank : 'blank',
+          distributedstatisticsgraphs : 'distributedstatisticsgraphs'
         };
         $scope.showPerfMetrics = false;
 
@@ -143,7 +266,6 @@
         $scope.campaignStatusLabels = [$scope.campaignStatus.ongoing.name,$scope.campaignStatus.completed.name, $scope.campaignStatus.upcoming.name , $scope.campaignStatus.onhold.name,$scope.campaignStatus.overall.name];
         $scope.pieChartDefaulOptions = { legend: { display: true, position: 'right',padding: '10px' } };
         $scope.getCampaignsMenu = function(status){
-          console.log(status);
           $scope.campaignStatus.overall.value = false;
           $scope.campaignStatus.ongoing.value = false;
           $scope.campaignStatus.completed.value = false;
@@ -175,12 +297,12 @@
             $scope.count = 0;
             $scope.invActDateList = [];
             $scope.inventoryActivityCountData = response.data.data;
+            $scope.showTableForAllCampaignDisplay = false;
             angular.forEach(response.data.data, function(data,key){
               $scope.isPanelOpen = !$scope.isPanelOpen;
               $scope.inventoryActivityCountData[key] = sortObject(data);
               $scope.invActDateList = $scope.invActDateList.concat(Object.keys($scope.inventoryActivityCountData[key]));
             })
-            console.log($scope.inventoryActivityCountData);
             $scope.invActDateList = Array.from(new Set($scope.invActDateList));
             $scope.invActDateList.sort().reverse();
             $scope.dateListKeys = {};
@@ -398,15 +520,22 @@
           })
         }
 
-
-        $scope.getCampaigns = function(date){
+        $scope.getCampaignsByVendor = function(){
+          $scope.getCampaigns(undefined,$scope.selectedVendor.name)
+        }
+        $scope.getCampaigns = function(date,vendor){
           cfpLoadingBar.start();
             $scope.showSupplierTypeCountChart = false;
             $scope.selectedBookingCampaignName = undefined;
+            $scope.showTableForAllCampaignDisplay = false;
+
           if(!date)
             date = new Date();
           date = commonDataShare.formatDate(date);
           date = date + ' 00:00:00';
+          if(!vendor){
+              $scope.selectedVendor = {};
+          }
           $scope.showCampaignGraph = true;
           $scope.campaignLabel = false;
           $scope.showLeadsDetails = false;
@@ -414,25 +543,36 @@
           $scope.showAllCampaignDisplay = false;
           $scope.allCampaignsLeadsData = {};
           $scope.viewCampaignLeads(true);
-          DashboardService.getCampaigns(orgId, category, date)
+          DashboardService.getCampaigns(orgId, category, date,$scope.selectedVendor.name)
           .then(function onSuccess(response){
             console.log(response);
             cfpLoadingBar.complete();
             $scope.searchSelectAllModel = [];
             $scope.showSingleCampaignChart = false;
             $scope.campaignData = response.data.data;
-            console.log($scope.campaignData);
             $scope.campaignAllStatusTypeData = response.data.data;
-            console.log($scope.campaignData);
             $scope.mergedarray = [];
-
             angular.forEach($scope.campaignData, function(data){
               angular.forEach(data,function(campaign){
                   $scope.mergedarray.push(campaign);
               })
             })
+            $scope.distributedGraphsVendorsData = [];
+
+            angular.forEach($scope.mergedarray, function(data){
+            // $scope.distributedGraphsVendorsData.push(data);
+              if(data.principal_vendor){
+                $scope.vendorsData[data.principal_vendor] = data;
+              }
+            })
+
+            $scope.vendorsList = Object.keys($scope.vendorsData);
+            console.log($scope.vendorsList);
+            console.log($scope.vendorsData);
+            // $scope.distributedGraphsVendorsData.push($scope.vendorsData);
+            // console.log($scope.distributedGraphsVendorsData);
+            // console.log($scope.distributedGraphsVendorsData.organisation);
             $scope.campaigns = [$scope.campaignData.ongoing_campaigns.length,$scope.campaignData.completed_campaigns.length,$scope.campaignData.upcoming_campaigns.length, $scope.campaignData.onhold_campaigns.length];
-            console.log($scope.campaignStatus);
               $scope.campaignChartdata = [
               { label : $scope.allCampaignStatusType.ongoing.campaignLabel, value : $scope.campaignData.ongoing_campaigns.length,  status : $scope.allCampaignStatusType.ongoing.status},
               { label : $scope.allCampaignStatusType.completed.campaignLabel, value : $scope.campaignData.completed_campaigns.length, status : $scope.allCampaignStatusType.completed.status},
@@ -442,7 +582,7 @@
             ];
             $scope.options = angular.copy(doughnutChartOptions);
             $scope.options.chart.pie.dispatch['elementClick'] = function(e){ $scope.pieChartClick(e.data.label); };
-            // $scope.options.chart.pie.dispatch['elementClick'] = function(e){ $scope.getCampaignInvData(e.data); };
+            $scope.options.chart.pie.dispatch['elementClick'] = function(e){ $scope.getCampaignInvData(e.data); };
 
             $scope.showPerfPanel = $scope.perfPanel.all;
           }).catch(function onError(response){
@@ -465,6 +605,7 @@
            console.log(response);
            cfpLoadingBar.complete();
            $scope.AllCampaignData = response.data.data;
+
            $scope.supplierPanIndiaMarkers = assignPanIndiaMarkersToMap($scope.AllCampaignData);
            if(response.data.data){
               $scope.supplierCodeCountData = formatCountData(response.data.data);
@@ -690,23 +831,24 @@
                      "margin": {
                        "top": 100,
                        "right": 20,
-                       "bottom": 145,
-                       "left": 45
+                       "bottom": 200,
+                       "left": 60
                      },
                      "clipEdge": true,
                      "duration": 500,
                      "grouped": true,
                      "sortDescending" : false,
                        "xAxis": {
-                       "axisLabel": "campaign (Flat Count) in Percentage",
+                       "axisLabel": "",
                        "showMaxMin": false,
                        "rotateLabels" : -30
                      },
                      "yAxis": {
-                       "axisLabel": "Leads in %",
+                       "axisLabel": "",
                        "axisLabelDistance": -20,
 
-                       "ticks" : 8
+                       "ticks" : 8,
+
                      },
                      "legend" : {
                              "margin": {
@@ -716,6 +858,43 @@
                              "left": 15
                          },
                      },
+                     tooltip: {
+                      contentGenerator: function (e) {
+                        console.log(e,tooltipDynamicGraphData);
+                        var series = e.series[0];
+                        if (series.value === null) return;
+                        console.log(tooltipDynamicGraphData[e.index][dynamicPricingKeys[e.data.key]]);
+                        var rows =
+                          "<tr>" +
+                            "<td class='key'>" + 'Name : ' + "</td>" +
+                            "<td class='x-value'>" + e.value + "</td>" +
+                          "</tr>" +
+                          "<tr>" +
+                            "<td class='key'>" + 'Value In (%) : ' + "</td>" +
+                            "<td class='x-value'><strong>" + (series.value?series.value.toFixed(2):0) + "</strong></td>" +
+                          "</tr>" +
+                          "<tr>" +
+                            "<td class='key'>" + dynamicPricingKeys[e.data.key]['name'] + ' (RS)' + ' :' + "</td>" +
+                            "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[e.data.key]['value']]  + "</strong></td>" +
+                          "</tr>";
+
+                        var header =
+                          "<thead>" +
+                            "<tr>" +
+                              "<td class='legend-color-guide'><div style='background-color: " + series.color + ";'></div></td>" +
+                              "<td class='key'><strong>" + series.key + "</strong></td>" +
+                            "</tr>" +
+                          "</thead>";
+
+                        return "<table>" +
+                            header +
+                            "<tbody>" +
+                              rows +
+                            "</tbody>" +
+                          "</table>";
+                      }
+                    },
+
 
                      "reduceXTicks" : false
                    }
@@ -957,20 +1136,39 @@
              }
            };
 
-        var lineChart = {
+        var lineChartLeads = {
           "chart": {
             "type": "lineChart",
             "height": 450,
+            "margin": {
+              "top": 100,
+              "right": 20,
+              "bottom": 130,
+              "left": 140
+            },
             "useInteractiveGuideline": true,
-            "dispatch": {},
+            x: function(d,i){ return d.x; },
+            y: function(d){ return d.y; },
+            "dispatch": {
+                  stateChange: function(e){ console.log("stateChange"); },
+                  changeState: function(e){ console.log("changeState"); },
+                  tooltipShow: function(e){ console.log("tooltipShow"); },
+                  tooltipHide: function(e){ console.log("tooltipHide"); }
+              },
             "xAxis": {
-              "axisLabel": "Campaigns",
-              tickFormat: function(d) {
-                return d.y;
-              }
+              "axisLabel": "Leads % and Hot Leads % Range Distribution",
+              "showMaxMin":false,
+              tickFormat : function (d) {
+                          return $scope.x_fre_leads[d];
+                },
+              // tickFormat: function(d){
+              //   console.log($scope.x[d]);
+              //           return $scope.x[d];
+              //       },
+                     "rotateLabels" : -30
             },
             "yAxis": {
-              "axisLabel": "",
+              "axisLabel": "Mode Count In Leads and Hot Leads",
             }
           }
         };
@@ -1003,7 +1201,35 @@
                }
            }
        };
-
+       var  dynamicDiscreteBarChart = {
+          chart: {
+              type: 'discreteBarChart',
+              "height": 450,
+              // "labelType" : "11",
+              "margin": {
+                "top": 100,
+                "right": 20,
+                "bottom": 200,
+                "left": 60
+              },
+              x: function(d){return d.label;},
+              y: function(d){return d.value + (1e-10);},
+              showValues: true,
+              valueFormat: function(d){
+                  return d3.format(',.2f')(d);
+              },
+              duration: 1500,
+              xAxis: {
+                  axisLabel: '',
+                  "showMaxMin": false,
+                  "rotateLabels" : -30
+              },
+              yAxis: {
+                  axisLabel: 'Leads in %',
+                  axisLabelDistance: -10
+              }
+          }
+       };
        var overallSummaryStackedBar = {
           "chart": {
             "type": "multiBarChart",
@@ -1043,6 +1269,48 @@
             "reduceXTicks" : false
           }
         };
+
+
+               var overallVendorSummaryStackedBar = {
+                  "chart": {
+                    "type": "multiBarChart",
+                    "height": 450,
+                    // "labelType" : "11",
+                    "margin": {
+                      "top": 100,
+                      "right": 20,
+                      "bottom": 145,
+                      "left": 45
+                    },
+                    "clipEdge": true,
+                    "duration": 500,
+                    "grouped": true,
+                    "sortDescending" : false,
+                      "xAxis": {
+                      "axisLabel": "Vendor Wise (Flat Count) in Percentage",
+                      "axisLabelDistance" : -50,
+                      "showMaxMin": false,
+                      "rotateLabels" : -30
+                    },
+                    "yAxis": {
+                      "axisLabel": "Leads in %",
+                      "axisLabelDistance": -20,
+
+                      "ticks" : 8
+                    },
+                    "legend" : {
+                            "margin": {
+                            "top": 5,
+                            "right": 3,
+                            "bottom": 5,
+                            "left": 15
+                        },
+                    },
+
+                    "reduceXTicks" : false
+                  }
+                };
+
 
         var thisWeekSummaryStackedBar = {
            "chart": {
@@ -1163,8 +1431,11 @@
            };
        // START : service call to get suppliers as campaign status
        $scope.getSuppliersOfCampaignWithStatus = function(campaign){
+         console.log(campaign);
          getCampaignInventoryActivitydetails(campaign.campaign);
          cfpLoadingBar.start();
+         $scope.principalVendor = campaign.principal_vendor;
+         $scope.campaignOwner = campaign.organisation;
          $scope.campaignTabPropsalName = campaign.name;
          $scope.campaignLabel = true;
          $scope.getCampaignFilters(campaign.campaign);
@@ -1183,7 +1454,6 @@
            // ];
            // console.log($scope.overallMetricStatus);
            $scope.overallMetric = response.data.data.overall_metrics;
-           console.log($scope.overallMetric);
             angular.forEach($scope.overallMetric , function(data,key){
             $scope.metricStatusValue = data;
               // $scope.avgLeadsPerFlat = data.total_leads_count/data.flat_count * 100;
@@ -1195,7 +1465,7 @@
            $scope.showCampaignInvTable = false;
            $scope.showSupplierInvTable = false;
            $scope.showSingleCampaignChart = true;
-
+           $scope.showTableForAllCampaignDisplay = false;
            $scope.campaignStatusData = response.data.data;
            $scope.campaignSupplierAndInvData = response.data.data;
            $scope.showSupplierSocietywiseInvTable = false;
@@ -1477,8 +1747,9 @@
        })
      })
    }
-   $scope.getDatewiseSuppliersInventory = function(proposalId, proposalName){
+   $scope.getDatewiseSuppliersInventory = function(item,proposalId, proposalName){
      cfpLoadingBar.start();
+     console.log(item);
      $scope.dateWiseSuppliers = [];
      $scope.selectedProposalname = proposalName;
      $scope.proposalId= proposalId;
@@ -1487,6 +1758,7 @@
        console.log(response);
        cfpLoadingBar.complete();
        angular.forEach(response.data.data, function(data){
+         console.log(data);
          $scope.dateWiseSuppliers.push(data);
        })
      }).catch(function onError(response){
@@ -1494,8 +1766,15 @@
      })
    }
    $scope.getLeadsByCampaign = function(campaignId,campaign){
+     console.log(campaign);
      cfpLoadingBar.start();
+     $scope.lineChartForLeadsDistributedGraphs = undefined;
+     $scope.lineChartForHotLeadsDistributedGraphs = undefined;
      $scope.CampaignLeadsName = campaign.name;
+     $scope.principalVendor = campaign.principal_vendor;
+     $scope.campaignOwner = campaign.organisation;
+
+
      $scope.LeadsByCampaign = {};
      $scope.showReportBtn = false;
      // $scope.getSortedLeadsByCampaign();
@@ -1509,16 +1788,19 @@
      if($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date')){
        $scope.dateRangeModel.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
        $scope.dateRangeModel.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
-       console.log($scope.dateRangeModel);
         result = DashboardService.getLeadsByCampaign(campaignId,$scope.dateRangeModel)
      }else{
         result = DashboardService.getLeadsByCampaign(campaignId)
      }
+     $scope.getDistributionGraphsStatics();
+
      // DashboardService.getLeadsByCampaign(campaignId)
      result.then(function onSuccess(response){
        console.log(response);
+       $scope.dateRangeModel.start_date = new Date($scope.dateRangeModel.start_date);
+       $scope.dateRangeModel.end_date = new Date($scope.dateRangeModel.end_date);
        $scope.selectAllCampaignLeads = false;
-
+       $scope.dynamicGraphsUI = false;
        cfpLoadingBar.complete();
        if($scope.LeadsByCampaign){
          $scope.LeadsByCampaign = response.data.data;
@@ -1528,13 +1810,11 @@
 
        $scope.localityData =  $scope.LeadsByCampaign.locality_data;
         $scope.phaseData =  $scope.LeadsByCampaign.phase_data;
-        console.log($scope.phaseData);
        $scope.locationHeader = [];
        angular.forEach($scope.LeadsByCampaign.locality_data, function(data,key){
           $scope.value1 = key;
           $scope.locationHeader.push($scope.value1);
        })
-       console.log($scope.LeadsByCampaign);
 
        $scope.d3StackedBarChartData = formatD3StackedBarChartData($scope.LeadsByCampaign.supplier_data);
        $scope.stackedBarChartOptions = angular.copy(stackedBarChart);
@@ -1678,7 +1958,6 @@
 
         }
        var keyWithFlatLabel =  key + ' (' + data['flat_count'] + ')';
-       console.log(keyWithFlatLabel,key);
        var value1 =
           { x : keyWithFlatLabel, y : $scope.normalLeadsValues };
        var value2 =
@@ -1701,20 +1980,16 @@
          values : values2
        }
      ];
-
      return temp_data;
    }
 
    var formatWeekStackedChart = function(weekDataMerged){
-     console.log(weekDataMerged);
      var values1 = [];
      var values2 = [];
      angular.forEach(weekDataMerged, function(data,key){
-       console.log(data.flat_count);
-       console.log(key);
-       var keyWithFlatLabel =  key + ' (' + key.flat_count + ')';
+         var keyWithFlatLabel =  key + ' (' + key.flat_count + ')';
        var value1 =
-          { x : keyWithFlatLabel, y : $scope.normalLeadsValues };
+          { x : keyWithFlatLabel, y : $scope.normalLeadsValues};
        var value2 =
           { x : keyWithFlatLabel, y : $scope.hotLeadsValues };
        values1.push(value1);
@@ -1816,7 +2091,6 @@
          values : values2
        }
      ];
-     console.log(temp_data);
      return temp_data;
    }
 //START :  code for 3 weeks summary
@@ -1845,7 +2119,7 @@ var formatThreeWeeksSummary = function(data,key){
    ]
     }
   ];
-  console.log(temp_data);
+  // console.log(temp_data);
   return temp_data;
 }
 //END :  code for 3 weeks summary
@@ -1879,14 +2153,64 @@ var formatThreeWeeksSummary = function(data,key){
        selectionLimit: 4,
        showCheckAll : true,
        scrollableHeight: '300px', scrollable: true};
-
+   $scope.settingsForDynamicGraph = { enableSearch: true,
+       keyboardControls: true ,idProp : "{{option.campaign_id}}",
+       template: '{{option.campaign_name}}',
+       showCheckAll : true,
+       scrollableHeight: '300px', scrollable: true};
+   $scope.settingsForDynamicGraphCity = { enableSearch: true,
+       keyboardControls: true ,idProp : "option",
+       template: '{{option}}', smartButtonTextConverter(skip, option) { return option; },
+       showCheckAll : true,
+       scrollableHeight: '300px', scrollable: true};
+   $scope.settingsForDynamicGraphSociety = { enableSearch: true,
+       keyboardControls: true ,idProp : "option",
+       template: '{{option.name}}', smartButtonTextConverter(skip, option) { return option; },
+       showCheckAll : true,
+       scrollableHeight: '300px', scrollable: true};
+   $scope.settingsForDynamicGraphFlatType = { enableSearch: true,
+       keyboardControls: true ,idProp : "option",
+       template: '{{option.name}}', smartButtonTextConverter(skip, option) { return option; },
+       showCheckAll : true,
+       scrollableHeight: '300px', scrollable: true};
+   $scope.settingsForDynamicGraphVendor = { enableSearch: true,
+       keyboardControls: true ,idProp : "{{option}}",
+       template: '{{option}}', smartButtonTextConverter(skip, option) {return option; },
+       showCheckAll : true,
+       scrollableHeight: '300px', scrollable: true};
+  $scope.settingsForDynamicGraphBookingParameters = { enableSearch: true,
+       keyboardControls: true ,idProp : "option",
+       template: '{{option.name}}', smartButtonTextConverter(skip, option) {return option; },
+       showCheckAll : true,
+       scrollableHeight: '300px', scrollable: true};
+   $scope.settingsForVendors = { enableSearch: true,
+       keyboardControls: true ,idProp : "{{option}}",
+       template: '{{option}}',
+       showCheckAll : true,
+       scrollableHeight: '300px', scrollable: true};
  $scope.selected_baselines_customTexts = {buttonDefaultText: 'Select Campaigns'};
+ $scope.selected_baselines_customTexts_city = {buttonDefaultText: 'Select Cities'};
+ $scope.selected_baselines_customTexts_booking_parameters = {buttonDefaultText: 'Select Parameters'};
+ $scope.selected_baselines_customTexts_vendor = {buttonDefaultText: 'Select Vendor'};
+ $scope.selected_baselines_customTexts_qualityTypesociety = {buttonDefaultText: 'Select Type of Society'};
+ $scope.selected_baselines_customTexts_sizeOfFlats = {buttonDefaultText: 'Select Size of Flats'};
+ $scope.selected_baselines_customTexts_freebies = {buttonDefaultText: 'Select Freebies'};
+
+
+
 
    $scope.events = {
 
    onItemSelect : function(item){
    }
  }
+ $scope.eventsForDynamicGraphCampaign = {
+
+   onItemSelect : function(item){
+     console.log(item);
+
+   }
+}
 
     $scope.compCampaigns = {
       campaigns : {
@@ -2068,24 +2392,20 @@ var formatThreeWeeksSummary = function(data,key){
 
     }
 
-    // $scope.getCampaignInvData = function(data){
-    //   console.log(data);
-    //   $scope.supplierStatus = data.status;
-    //   console.log($scope.supplierStatus);
-    //   console.log($scope.campaignAllStatusTypeData);
-    //   $scope.campaignDetailsData =$scope.campaignAllStatusTypeData[data.status];
-    //   console.log($scope.campaignDetailsData);
-    //   $scope.showAllCampaignDisplay = true;
-    // }
+    $scope.getCampaignInvData = function(data){
+      console.log(data);
+      $scope.supplierStatus = data.status;
+      $scope.campaignDetailsData =$scope.campaignAllStatusTypeData[data.status];
+      $scope.showTableForAllCampaignDisplay = true;
+      $scope.$apply();
+
+    }
 
     $scope.getSupplierAndInvData = function(data){
-      console.log(data);
       $scope.societyCampaignName = true;
       $scope.campaignName = false;
       $scope.supplierStatus = data.status;
       $scope.supplierAndInvData = $scope.campaignSupplierAndInvData[data.status];
-      console.log($scope.campaignSupplierAndInvData);
-      console.log($scope.supplierAndInvData);
       $scope.invStatusKeys = angular.copy(invStatusKeys);
       // console.log($scope.supplierAndInvData);
       $scope.TotalSupplierFlatCount = 0;
@@ -2093,13 +2413,11 @@ var formatThreeWeeksSummary = function(data,key){
       $scope.TotalLeadsPerFlat = 0;
       $scope.TotalSupplierHotLeadsCount = 0;
       angular.forEach($scope.supplierAndInvData, function(supplier,key){
-        console.log($scope.supplierAndInvData);
         $scope.latitude = supplier.supplier.society_latitude;
         $scope.longitude = supplier.supplier.society_longitude;
         $scope.societyName = supplier.supplier.society_name;
         $scope.length = $scope.supplierAndInvData.length;
         $scope.TotalSupplierFlatCount += supplier.supplier.flat_count;
-        console.log(supplier.leads_data.total_leads_count);
         if(supplier.leads_data.total_leads_count){
           $scope.TotalSupplierLeadsCount += supplier.leads_data.total_leads_count;
         }
@@ -2124,11 +2442,12 @@ var formatThreeWeeksSummary = function(data,key){
                 $scope.ImageURLListOfAll.push(imagesData);
 
             })
+
+
           }
 
            angular.forEach(supplier.leads_data, function(inv,key){
             $scope.leads_data = inv;
-            // console.log($scope.leads_data);
             $scope.showLeads = true;
             $scope.countLeads += 1;
 
@@ -2136,6 +2455,8 @@ var formatThreeWeeksSummary = function(data,key){
               $scope.supplierHotLeads += 1;
             }
           })
+
+
       })
 
       $scope.showDisplayDetailsTable = true;
@@ -2167,8 +2488,7 @@ var formatThreeWeeksSummary = function(data,key){
     $scope.windowAllCoords = {};
     $scope.markerPanIndia = {
     mouseoverevent: {
-    mouseover: function (marker, eventName, modelAll) {
-      console.log(eventName);
+    mouseover: function (markerPanIndia, eventName, modelAll) {
       $scope.spacePanIndia = modelAll;
       $scope.campaignInventory = modelAll;
       $scope.windowAllCoords.latitude = modelAll.latitude;
@@ -2304,6 +2624,7 @@ $scope.setImageUrl = function(item,images){
       $scope.imageUrlList.push(imageData);
     }
   })
+
 }
 // map
 
@@ -2437,7 +2758,10 @@ $scope.getBookingCampaigns = function(campaign){
 
   $scope.proposalId = campaign.campaign;
   console.log(campaign);
+  $scope.campaignOwner = campaign.organisation;
+  $scope.principalVendor = campaign.principal_vendor;
   $scope.selectedBookingCampaignName = campaign.name;
+  $scope.showTableForAllCampaignDisplay = false;
   DashboardService.getBookingCampaigns(campaign.campaign)
   .then(function onSuccess(response){
     console.log(response);
@@ -2478,7 +2802,7 @@ $scope.checkNan = function(number){
 }
 $scope.viewCampaignLeads = function(value){
   cfpLoadingBar.start();
-  DashboardService.viewCampaignLeads()
+  DashboardService.viewCampaignLeads($scope.selectedVendor.name)
   .then(function onSuccess(response){
     $scope.AllCampaignTotalLeadsCount = 0;
     $scope.AllCampaignHotLeadsCount = 0;
@@ -2486,7 +2810,14 @@ $scope.viewCampaignLeads = function(value){
     $scope.AllCampaignFlatCount = 0;
     console.log(response);
     $scope.allCampaignDetailsData = response.data.data;
-    console.log($scope.allCampaignDetailsData);
+    $scope.dynamicValues = $scope.allCampaignDetailsData;
+    console.log($scope.dynamicValues);
+    $scope.dynamicValuesCampaignIdMap = {};
+    angular.forEach($scope.dynamicValues, function(data){
+      $scope.dynamicValuesCampaignIdMap[data.campaign_id] = data;
+    })
+    $scope.showTableForAllCampaignDisplay = false;
+
       angular.forEach($scope.allCampaignDetailsData, function(data){
       $scope.campaignLength = data.length;
       if(data.total_leads){
@@ -2534,13 +2865,12 @@ $scope.viewCampaignLeads = function(value){
 }
     $scope.viewLeadsForSelectedCampaign = function(data,campaignId){
       cfpLoadingBar.start();
+      $scope.campaignIdForLeads = campaignId;
       DashboardService.viewLeadsForSelectedCampaign(data,campaignId)
       .then(function onSuccess(response){
       console.log(response);
-      console.log(data);
       cfpLoadingBar.complete();
       $scope.selectedCampaignLeads = response.data.data;
-      console.log($scope.selectedCampaignLeads);
       $scope.CampaignNameofLeads = data.name;
       $scope.showCampaigns = false;
     }).catch(function onError(response){
@@ -2567,17 +2897,16 @@ $scope.backToCampaign = function(){
 // }
 
 $scope.viewComments = function(supplier,index){
-  // $scope.supplierDataForComment = supplier;
+  $scope.societyViewNameForComments = supplier.supplier.society_name;
   // $scope.supplierNameForComment = undefined;
   // $scope.supplierNameForComment = supplier.supplier_data.society_name;
-  $scope.commentsData = {};
+  $scope.commentsData = [];
   var relatedTo = constants.execution_related_comment;
   var spaceId = supplier.shortlisted_space_id;
   DashboardService.viewComments($scope.campaignId,spaceId,relatedTo)
   .then(function onSuccess(response){
     console.log(response);
     $scope.commentModal = {};
-    $scope.enableViewComments = index;
     $scope.commentsData = response.data.data;
     // if(Object.keys($scope.commentsData).length != 0){
     //   $scope.viewInvForComments = Object.keys($scope.commentsData);
@@ -2596,7 +2925,7 @@ $scope.viewBookingComments = function(supplier){
   $scope.supplierNameForComment = undefined;
   $scope.supplierNameForComment = supplier.society_name;
   $scope.commentsData = {};
-  var relatedTo = constants.booking_related_comment;
+  var relatedTo = constants.execution_related_comment;
   var spaceId = supplier.space_id;
   DashboardService.viewBookingComments($scope.proposalId,spaceId,relatedTo)
   .then(function onSuccess(response){
@@ -2686,8 +3015,6 @@ $scope.sortData = function(keyName,id){
   }
   var sortable = [];
   for (var key in $scope.sortedData) {
-    console.log($scope.sortedData);
-    console.log(key);
     $scope.sortedData[key]['hotPerc'] = $scope.sortedData[key]['interested'] / $scope.sortedData[key]['flat_count'] * 100;
     $scope.sortedData[key]['totalPerc'] = $scope.sortedData[key]['total'] / $scope.sortedData[key]['flat_count'] * 100;
     $scope.sortedData[key]['totalPercRoundOff'] = Math.round($scope.sortedData[key]['totalPerc']);
@@ -2697,7 +3024,6 @@ $scope.sortData = function(keyName,id){
 
   var mean;
     if(sortMenuMap[id].type == 'total'){
-    console.log("total",sortable);
     sortable.sort(function(a, b) {
         a = a[1].total / a[1].flat_count * 100;
         b = b[1].total / b[1].flat_count * 100;
@@ -2729,10 +3055,8 @@ $scope.sortData = function(keyName,id){
     })
     var total=0,count=0,keys=[];
     angular.forEach(modeValues, function(value,key){
-      console.log(key);
       keys.push(parseInt(key));
       if(value == max){
-        console.log(value,max,key);
         total += parseInt(key);
         count += 1;
       }
@@ -2741,7 +3065,6 @@ $scope.sortData = function(keyName,id){
     var range = Math.max.apply(null,keys) - Math.min.apply(null,keys);
   }
   if(sortMenuMap[id].type == 'interested'){
-    console.log("hot leads",sortable);
     sortable.sort(function(a, b) {
         a = a[1].interested / a[1].flat_count * 100;
         b = b[1].interested / b[1].flat_count * 100;
@@ -2814,14 +3137,16 @@ var formatByLocation = function(data,key,type){
     }
     temp_data.values.push(value);
   })
-  console.log(temp_data);
   return [temp_data];
 }
 $scope.commentModal = {};
-$scope.addComment = function(id){
-
+$scope.addComment = function(){
+  console.log($scope.supplierShorlistedSpaceId);
   $scope.commentModal['related_to'] = constants.execution_related_comment;
-  $scope.commentModal['shortlisted_spaces_id'] = id;
+  $scope.commentModal['shortlisted_spaces_id'] = $scope.supplierShorlistedSpaceId;
+  console.log($scope.commentModal);
+  // var spaceId = supplier.shortlisted_space_id;
+  // console.log(spaceId);
   DashboardService.addComment($scope.campaignId,$scope.commentModal)
   .then(function onSuccess(response){
     console.log(response);
@@ -2837,7 +3162,6 @@ $scope.openChat = function(){
   $scope.showChat = true;
 }
 $scope.changePassword = function(){
-  console.log("hello");
   $('#changePassword').modal('show');
 }
 $scope.changeUserPassword = function(){
@@ -2859,41 +3183,23 @@ $scope.changeUserPassword = function(){
   });
 }
 $scope.validatePassword = function(){
-  console.log("hello");
   if($scope.passwordModel.password == $scope.passwordModel.confirm_password)
     $scope.isValid = true;
   else
     $scope.isValid = false;
-  console.log($scope.isValid,$scope.model);
 }
 
 $scope.getFormDetails = function(campaignId){
-  console.log(campaignId);
   cfpLoadingBar.start();
   $scope.campaignIdForleads = campaignId;
   $scope.emailCampaignLeadsModel = {};
   $scope.sendEmailList = [];
-  // angular.forEach(campaignId, function(data){
-  //   for(var i=0; i<data.length; i++){
-  //     var emailData = {
-  //       // start_date : ,
-  //       // end_date : ,
-  //       // leads_form_id : ,
-  //       // campaign_id : ,
-  //
-  //     };
-  //     $scope.sendEmailList.push(emailData);
-  //   }
-  //   console.log(sendEmailList);
-  // }) ;
    DashboardService.getFormDetails(campaignId)
     .then(function onSuccess(response){
       console.log(response);
       cfpLoadingBar.complete();
       $scope.formDetails = response.data.data;
-      console.log($scope.formDetails);
         $scope.campaign_id = $scope.formDetails.leads_form_items;
-      console.log($scope.campaign_id );
     }).catch(function onError(response){
         console.log(response);
     })
@@ -2901,7 +3207,6 @@ $scope.getFormDetails = function(campaignId){
 
 $scope.sendMeEmail = function(){
   cfpLoadingBar.start();
-  console.log($scope.emailCampaignLeadsModel);
   $scope.emailCampaignLeadsModel['campaign_id'] = $scope.campaignIdForleads;
   DashboardService.sendMeEmail($scope.emailCampaignLeadsModel)
   .then(function onSuccess(response){
@@ -2922,7 +3227,6 @@ $scope.sendReport = function(){
     startDate = commonDataShare.formatDate($scope.reportData.reportStartDate);
     endDate = commonDataShare.formatDate($scope.reportData.reportEndDate);
   }
-  console.log(startDate,endDate);
   if ($scope.file) {
     Upload.upload({
         url: Config.APIBaseUrl + "v0/ui/website/send-graph-pdf/",
@@ -2947,15 +3251,15 @@ $scope.sendReport = function(){
 var reportFile;
 $scope.uploadFiles = function(file){
   var reportFile;
-  console.log("hello");
   $scope.file = file;
-  console.log($scope.file);
+  $scope.selectDate = true;
 }
-$scope.enableAddComments = function(index){
-  $scope.enableComments = index;
+$scope.enableAddComments = function(supplier){
+  console.log(supplier);
+  $scope.supplierShorlistedSpaceId = supplier.shortlisted_space_id;
+$scope.societyNameForComments = supplier.supplier.society_name;
 }
 $scope.getPermissionBoxImages = function(supplier){
-  console.log(supplier);
   $scope.supplierNameForPermBox = supplier.society_name;
   console.log($scope.supplierNameForPermBox);
   DashboardService.getPermissionBoxImages($scope.campaignId,supplier.supplier_id)
@@ -2970,7 +3274,6 @@ $scope.getPermissionBoxImages = function(supplier){
       swal(constants.name, constants.image_empty, constants.warning);
     }
     $scope.perBoxImageData = response.data.data;
-    console.log($scope.perBoxImageData);
 
   }).catch(function onError(response){
     console.log(response);
@@ -2981,7 +3284,6 @@ $scope.sendBookingEmails = function(){
   $scope.emailBtnDisabled = true;
   cfpLoadingBar.start();
   if($scope.emailModel.selected == 'listOfSupplier'){
-    console.log('listOfSociet y',$scope.emailModel.email);
     DashboardService.sendListOfSuppliersEmail($scope.proposalId,$scope.emailModel.email)
     .then(function onSuccess(response){
       console.log(response);
@@ -2995,7 +3297,6 @@ $scope.sendBookingEmails = function(){
       cfpLoadingBar.complete();
     })
   }else if ($scope.emailModel.selected == 'activationOfSupplier') {
-    console.log('activationOfSupplier');
     DashboardService.sendActivationOfSuppliersEmail($scope.proposalId,$scope.emailModel.email)
     .then(function onSuccess(response){
       console.log(response);
@@ -3009,7 +3310,6 @@ $scope.sendBookingEmails = function(){
       cfpLoadingBar.complete();
     })
   }else if ($scope.emailModel.selected == 'pipelineOfSupplier') {
-    console.log('pipelineOfSupplier');
     DashboardService.sendPipelinedSuppliersEmail($scope.proposalId,$scope.emailModel.email)
     .then(function onSuccess(response){
       console.log(response);
@@ -3028,7 +3328,6 @@ $scope.sendConfirmBookingEmails = function(){
   $scope.emailBtnDisabled = true;
   cfpLoadingBar.start();
   if($scope.emailModel.selected == 'listOfSupplier'){
-    console.log('listOfSociety');
     DashboardService.sendListOfSuppliersConfirmEmail($scope.proposalId)
     .then(function onSuccess(response){
       console.log(response);
@@ -3042,7 +3341,6 @@ $scope.sendConfirmBookingEmails = function(){
       cfpLoadingBar.complete();
     })
   }else if ($scope.emailModel.selected == 'activationOfSupplier') {
-    console.log('activationOfSupplier');
     DashboardService.sendActivationOfSuppliersConfirmEmail($scope.proposalId)
     .then(function onSuccess(response){
       console.log(response);
@@ -3056,7 +3354,6 @@ $scope.sendConfirmBookingEmails = function(){
       cfpLoadingBar.complete();
     })
   }else if ($scope.emailModel.selected == 'pipelineOfSupplier') {
-    console.log('pipelineOfSupplier');
     DashboardService.sendPipelinedSuppliersConfirmEmail($scope.proposalId)
     .then(function onSuccess(response){
       console.log(response);
@@ -3118,14 +3415,18 @@ $scope.Sort = function(val)
   // }
 
 $scope.getCampaignWiseSummary = function(){
-  console.log("hello");
+  $scope.getVendorWiseSummary();
+  $scope.getDynamicGraphsStatics();
   cfpLoadingBar.start();
      DashboardService.getCampaignWiseSummary()
     .then(function onSuccess(response){
       console.log(response);
       $scope.showPerfMetrics = $scope.perfMetrics.overall;
       $scope.selectAllCampaignLeads = true;
+      $scope.dynamicGraphsUI = true;
       $scope.showReportBtn = true;
+      $scope.lineChartForLeadsDistributedGraphs = false;
+      $scope.lineChartForHotLeadsDistributedGraphs = false;
       $scope.campaignSummary = response.data.data;
       console.log(response.data.data);
       $scope.WeeklyMISOverallSummary = response.data.data.overall;
@@ -3142,10 +3443,12 @@ $scope.getCampaignWiseSummary = function(){
       $scope.thisWeekSummaryStackedBarChart= angular.copy(thisWeekSummaryStackedBar);
       $scope.last2WeekSummaryStackedBarChart= angular.copy(last2WeekSummaryStackedBar);
       $scope.last3WeekSummaryStackedBarChart= angular.copy(last3WeekSummaryStackedBar);
+
       $scope.stackedBarAllCampaignWiseChart = formatAllCampaignWiseChart($scope.overallCampaignSummary);
       $scope.stackedBarLastWeekChart = formatLastWeekWiseChart($scope.lastWeekCampaignSummary);
       $scope.stackedBarLast2WeeksChart = formatLast2WeekWiseChart($scope.last2WeeksCampaignSummary);
       $scope.stackedBarLast3WeeksChart = formatLast3WeekWiseChart($scope.last3WeeksCampaignSummary);
+
       cfpLoadingBar.complete();
   }).catch(function onError(response){
         console.log(response);
@@ -3154,7 +3457,6 @@ $scope.getCampaignWiseSummary = function(){
 
 
    var formatAllCampaignWiseChart = function(data){
-     console.log(data);
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(data,key){
@@ -3195,7 +3497,6 @@ $scope.getCampaignWiseSummary = function(){
    }
 
    var formatLastWeekWiseChart = function(data){
-     console.log(data);
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(data,key){
@@ -3236,7 +3537,6 @@ $scope.getCampaignWiseSummary = function(){
    }
 
    var formatLast2WeekWiseChart = function(data){
-     console.log(data);
      var values1 = [];
      var values2 = [];
      angular.forEach(data, function(data,key){
@@ -3318,7 +3618,1321 @@ $scope.getCampaignWiseSummary = function(){
    }
 
 
-//END
+  $scope.exportData = function () {
+  $('#customer1').tableExport({ type: 'csv', escape: 'false' });
+  $('#customer2').tableExport({ type: 'csv', escape: 'false' });
+  $('#customer3').tableExport({ type: 'csv', escape: 'false' });
+  $('#customer4').tableExport({ type: 'csv', escape: 'false' });
+  $('#customer5').tableExport({ type: 'csv', escape: 'false' });
+  $('#customer6').tableExport({ type: 'csv', escape: 'false' });
+
+
+  };
+
+  $scope.exportToExcel=function(tableId){ // ex: '#my-table'
+  var exportHref=Excel.tableToExcel(tableId,'WireWorkbenchDataExport');
+  $timeout(function(){location.href=exportHref;},100); // trigger download
+  }
+
+
+    $scope.getDistributionGraphsStatics = function(){
+      var data =  {
+             "data_scope": {"1":{"category": "unordered", "level": "campaign", "match_type": 0,
+                 "values": {"exact": [$scope.campaignIdForPerfMetrics]}, "value_type": "campaign"}},
+             "data_point": {
+                 "category": "unordered",
+                 "level": ["supplier","campaign"]
+             },
+             "raw_data": ["lead", "hot_lead","flat"],
+             "metrics": [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"]],
+             // "metrics": [["2","3","/"],["m1",100,"*"]],
+             // "metrics" :[["1","3","/"],["2","3","/"],["m1","100","*"],["m2","100","*"]],
+             "statistical_information":{"stats":["z_score"], "metrics":["m1","m3"]},
+             "higher_level_statistical_information":{"level":["campaign"],"stats":["frequency_distribution","mean","variance_stdev"],
+             "metrics":["m2","m4"]
+             }
+          }
+
+
+      DashboardService.getDistributionGraphsStatics(data)
+      .then(function onSuccess(response){
+        console.log(response);
+        $scope.lineChartLeadsDistributed = angular.copy(lineChartLeads);
+
+        $scope.lineChartForLeadsDistributedGraphs = formatLineChartForLeadsDistributedGraph(response.data.data);
+
+        $scope.selectAllCampaignLeads = false;
+      }).catch(function onError(response){
+        console.log(response);
+        })
+    }
+
+
+    var formatLineChartForLeadsDistributedGraph = function(data){
+        var values1 = [];
+        var values2 = [];
+        var index = 0;
+        $scope.x_fre_leads = [];
+        $scope.standardDeviationLeads = data.higher_group_data[0]['stdev_lead/flat*100'];
+        $scope.standardDeviationHotLeads = data.higher_group_data[0]['stdev_hot_lead/flat*100'];
+        $scope.varianceLeads = data.higher_group_data[0]['variance_lead/flat*100'];
+        $scope.varianceHotLeads = data.higher_group_data[0]['variance_hot_lead/flat*100'];
+      angular.forEach(data.higher_group_data[0]['freq_dist_lead/flat*100'], function(modeData,key){
+
+            if(index == 0){
+              var value1 =
+                 { x : index , y : 0};
+              values1.push(value1);
+              var value2 =
+                 { x : index , y : 0};
+              values2.push(value2);
+              $scope.x_fre_leads.push('0');
+              index++;
+            }
+            $scope.x_fre_leads.push(key);
+            if(modeData.hasOwnProperty('mean')){
+              var value1 =
+                 { x : index , y : modeData.mean};
+
+              values1.push(value1);
+            }else {
+                var value1 =
+                   { x : index , y : 0};
+
+                values1.push(value1);
+            }
+            if(data.higher_group_data[0]['freq_dist_hot_lead/flat*100'][key].hasOwnProperty('mean')){
+              var value2 =
+                 { x : index , y : data.higher_group_data[0]['freq_dist_hot_lead/flat*100'][key].mean};
+              values2.push(value2);
+            }else {
+                var value2 =
+                   { x : index , y : 0};
+
+                values2.push(value2);
+            }
+            index++;
+
+      })
+
+      var temp_data = [
+        {
+          key : "Leads (Mean) %",
+          color : constants.colorKey1,
+          values : values1
+        },
+        {
+          key : "Hot Leads (Mean) %",
+          color : constants.colorKey2,
+          values : values2
+        }
+      ];
+
+      return temp_data;
+    }
+
+
+    $scope.getPrintLeadsInExcelData = function(campaignId){
+      var campaignIdForExcel = campaignId;
+      $scope.getFormDetails($scope.campaignIdForLeads);
+      getShortlistedSuppliers($scope.campaignIdForLeads);
+    }
+    var getShortlistedSuppliers = function(campaignId){
+      var supplier_code = 'RS';
+      DashboardService.getShortlistedSuppliers(campaignId, supplier_code)
+      .then(function onSuccess(response){
+        console.log(response);
+        $scope.shortlistedSuppliers = response.data.data;
+      }).catch(function onError(response){
+        console.log(response);
+      })
+    }
+
+    $scope.printLeadsInExcel = function(){
+
+      DashboardService.printLeadsInExcel($scope.printLeadsInExcelData)
+      .then(function onSuccess(response){
+        console.log(response);
+        var link = document.createElement("a");
+        link.download = "mydata.xlsx";
+        link.href = response.data.data;
+        link.click();
+      }).catch(function onError(response){
+        console.log(response);
+      })
+    }
+
+$scope.rotateImage=function(id){
+  var index = 0;
+  var id = '#img_test' + id;
+  index = index +1;
+  if(index%4 == 0){
+    $(id).toggleClass('rotateImage0');
+  }else if(index%4 == 1){
+    $(id).toggleClass('rotateImage90');
+  }else if (index%4 == 2) {
+    $(id).toggleClass('rotateImage180');
+  }else if (index%4 == 3) {
+    $(id).toggleClass('rotateImage270');
+  }
+
+
+}
+
+
+  $scope.getDynamicGraphsStatics = function(){
+    $scope.selectAllCampaignLeads = false;
+    $scope.showReportBtn = false;
+    $scope.lineChartForLeadsDistributedGraphs = false;
+    $scope.lineChartForHotLeadsDistributedGraphs = false;
+  }
+
+  $scope.dynamicData = {
+    'data_scope' : {
+      '1' : {
+        'values' : {}
+      },
+    },
+    'data_point' : {
+      'level' : [],
+    },
+    'raw_data' : [],
+    'metrics' : [],
+     'statistical_information' : {
+       'stats':["z_score"],
+       'metrics' :[]
+     },
+  }
+  $scope.myModel = [];
+  $scope.myModel1 = [];
+
+  $scope.getLevelValues = function(value){
+    $scope.dynamicValues = [];
+    $scope.myModel = [];
+    if(value == 'campaign'){
+        getCampaignsWiseForCity();
+    }
+
+    if(value == 'vendor'){
+      $scope.getCampaignsByVendor();
+    }
+  }
+  $scope.getRawDataValue = function(value,type){
+    if(value){
+      $scope.dynamicData.raw_data.push(type);
+    }else {
+      var index = $scope.dynamicData.raw_data.indexOf(type);
+      if (index > -1) {
+        $scope.dynamicData.raw_data.splice(index, 1);
+      }
+    }
+  }
+  $scope.metricsData = {};
+  $scope.addMetrics = function(){
+    if($scope.metricsData){
+        var data = [$scope.metricsData.firstValue, $scope.metricsData.secondValue, $scope.metricsData.operator];
+        $scope.dynamicData.metrics.push(data);
+    }
+  }
+  $scope.removeMetrics = function(index){
+    $scope.dynamicData.metrics.splice($index,1);
+  }
+
+  $scope.getDynamicGraphData = function(){
+    $scope.showGraph = true;
+    if($scope.myModel.length){
+      $scope.dynamicData.data_scope['1'].values['exact'] = [];
+      angular.forEach($scope.myModel, function(data){
+        if($scope.dynamicData.data_scope['1'].level == 'campaign')
+          $scope.dynamicData.data_scope['1'].values['exact'].push(data.campaign_id);
+        else if ($scope.dynamicData.data_scope['1'].level == 'city') {
+          $scope.dynamicData.data_scope['1'].values['exact'].push(data.name);
+        }
+        else if ($scope.dynamicData.data_scope['1'].level == 'vendor') {
+          console.log(data);
+          $scope.dynamicData.data_scope['1'].values['exact'].push(data.value);
+          console.log(data.value);
+        }
+      })
+    }
+    // $scope.dynamicData.data_scope['1'].values['exact'] = $scope.myModel;
+    if($scope.dynamicData.data_scope['1'].values['exact'].length){
+      DashboardService.getDistributionGraphsStatics($scope.dynamicData)
+      .then(function onSuccess(response){
+        console.log(response);
+        $scope.stackedBarChartForDynamic = angular.copy(stackedBarChart);
+        $scope.stackedBarChartDynamicData = formatDynamicData(response.data.data);
+      }).catch(function onError(response){
+        console.log(response);
+      })
+    }
+  }
+
+  $scope.getLevelDataValue = function(value,type){
+    if(value){
+      $scope.dynamicData.data_point['level'].push(type);
+    }else {
+      var index = $scope.dynamicData.data_point['level'].indexOf(type);
+      if (index > -1) {
+        $scope.dynamicData.data_point['level'].splice(index, 1);
+      }
+    }
+  }
+  $scope.getYValueFromData = function(value,type){
+    if(value){
+      $scope.yValues.push(type);
+    }else {
+      var index = $scope.yValues.indexOf(type);
+      if (index > -1) {
+        $scope.yValues.splice(index, 1);
+      }
+    }
+  }
+
+  // $scope.getSubLevelDataValue = function(value, type){
+  //   if(!$scope.dynamicData.data_point.hasOwnProperty('sublevel')){
+  //     $scope.dynamicData.data_point['sublevel'] = [];
+  //   }
+  //   if(value){
+  //     $scope.dynamicData.data_point['sublevel'].push(type);
+  //   }else {
+  //     var index = $scope.dynamicDat = function(value,type)a.data_point['sublevel'].indexOf(type);
+  //     if (index > -1) {
+  //       $scope.dynamicData.data_point['sublevel'].splice(index, 1);
+  //     }
+  //   }
+  // }
+$scope.yValues = [];
+$scope.xValues = {
+  value : ''
+};
+var tooltipDynamicGraphData = [];
+  var formatDynamicData = function(data){
+    var values1 = {};
+    var labels = [];
+    var finalData = [];
+    tooltipDynamicGraphData = [];
+    if(specificXValue){
+      $scope.specificXValueLabel = specificXValue;
+    }
+    angular.forEach(data.lower_group_data, function(data,key){
+      console.log(data,data[$scope.xValues.value],selectedSpecificItems);
+      tooltipDynamicGraphData.push(data);
+      angular.forEach(data,function(FlatData){
+        $scope.FlatCountOVerallLowerORderGroup = data.flat;
+      })
+      console.log($scope.FlatCountOVerallLowerORderGroup);
+      if(selectedSpecificItems.indexOf(data[$scope.xValues.value]) > -1 || !selectedSpecificItems.length){
+        angular.forEach($scope.yValues, function(itemKey,index,item){
+          if(!values1.hasOwnProperty(itemKey)){
+              values1[itemKey] = [];
+          }
+          if(specificXValue){
+            if(data[$scope.xValues.value] != null){
+              var temp_label = data[$scope.xValues.value] +
+               " (" + data[specificXValue] + ")" +
+               " (" + $scope.FlatCountOVerallLowerORderGroup  + ")";
+              if(specificXValue2){
+              var temp_label = data[$scope.xValues.value] +
+              ", " + data[specificXValue2] +
+              "( " + data[specificXValue] + " )" +  " (" +
+                 $scope.FlatCountOVerallLowerORderGroup + ")";
+              }
+              console.log(temp_label);
+
+              var temp = {
+                x: temp_label,
+                y: data[itemKey]||0
+              }
+              console.log(temp);
+              values1[itemKey].push(temp);
+            }
+
+          }else {
+            if(data[$scope.xValues.value] != null){
+              var temp = {
+                x: data[$scope.xValues.value],
+                y: data[itemKey]||0
+              }
+              values1[itemKey].push(temp);
+            }
+          }
+        })
+      }
+
+
+    })
+    angular.forEach($scope.yValues, function(itemKey){
+      var temp_data = {
+        key : $scope.dynamicGraphYValuesMap[itemKey],
+        values : values1[itemKey]
+      }
+      finalData.push(temp_data);
+    })
+    console.log(tooltipDynamicGraphData);
+    return finalData;
+  }
+  $scope.clearMetrics = function(){
+    $scope.dynamicData.metrics = [];
+  }
+  $scope.clearSubLevel = function(){
+    $scope.dynamicData.data_point.sublevel = undefined;
+  }
+  $scope.graphSelection = {
+    category : {},
+    dateRange : {},
+    phaseRange : {},
+    specificParam : {
+      society: {},
+      booking: {},
+    },
+    Yvalues : {
+      leadsPerc : false,
+      hotleadsPerc : false,
+      costPerLeads : false,
+      costPerHotLeads : false
+    }
+  };
+  var specificXValue = undefined;
+  var specificXValue2 = undefined;
+
+   $scope.getGenericGraphData = function(){
+    specificXValue = undefined;
+    specificXValue2 = undefined;
+
+    if($scope.selectedDynamicCampaigns.length){
+      console.log($scope.selectedDynamicCampaigns);
+      $scope.graphSelection.category = 'campaign';
+    }
+    if($scope.selectedVendors.length){
+      $scope.graphSelection.category = 'vendor';
+    }
+    if($scope.selectedTypeOfSocieties.length){
+      $scope.graphSelection.category = 'qualitytype';
+
+    }
+    if($scope.selectedbookingParameters.length){
+      console.log($scope.selectedbookingParameters);
+      $scope.graphSelection.category = $scope.BookingParametersLists.value;
+    }
+
+    if($scope.selectedSizeOfFlats.length){
+      $scope.graphSelection.category = 'flattype';
+}
+  if ($scope.graphSelection.dateRange.startDate &&
+    ($scope.selectedTypeOfSocieties.length && $scope.selectedSizeOfFlats.length
+                 && $scope.selectedDynamicCampaigns.length )) {
+                 // alert("Date range + society parameter(society and Flat - together) and City Campaign Selected");
+                 $scope.xValues.value = 'qualitytype';
+                 // $scope.xValues.value = 'flattype';
+                 specificXValue = 'campaign_name';
+                 specificXValue2 = 'flattype';
+                 var reqData = {
+                   "data_scope":{
+                       "1":
+                           {"category":"unordered","level":"campaign","match_type":0,
+                               "values":{"exact":[]},
+                               "value_type":"campaign"
+
+                           },
+                       "2":{"category":"time","level":"time","match_type":1,
+                               "values":{"range":[]},
+                               "value_type":"time"
+
+                           }
+                       },
+                       "data_point":{"category":"unordered","level": ["qualitytype","flattype"],
+					             "value_ranges": {"flattype":[],"qualitytype":[]}},
+                        "raw_data": raw_data_global,
+                       "metrics": metrics_global,
+                 }
+                   angular.forEach($scope.selectedDynamicCampaigns, function(data){
+                     console.log(data);
+                     reqData.data_scope['1'].values.exact.push(data.campaign_id);
+                  });
+                  angular.forEach($scope.selectedTypeOfSocieties, function(data){
+                    console.log(data);
+                  reqData.data_point.value_ranges.qualitytype.push(data.name);
+                 });
+                 angular.forEach($scope.selectedSizeOfFlats, function(data){
+                   console.log(data);
+                 reqData.data_point.value_ranges.flattype.push(data.name);
+                });
+                 reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
+                 reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
+           }else if ($scope.graphSelection.dateRange.startDate &&
+             ($scope.selectedTypeOfSocieties.length && $scope.selectedSizeOfFlats.length
+                          && $scope.selectedDynamicCampaigns.length )) {
+                          // alert("Date range + society parameter(society and Flat - together) and Vendor Campaign Selected");
+                          $scope.xValues.value = 'qualitytype';
+                          // $scope.xValues.value = 'flattype';
+                          specificXValue = 'campaign_name';
+                          specificXValue2 = 'flattype';
+                          var reqData = {
+                            "data_scope":{
+                                "1":
+                                    {"category":"unordered","level":"campaign","match_type":0,
+                                        "values":{"exact":[]},
+                                        "value_type":"campaign"
+
+                                    },
+                                "2":{"category":"time","level":"time","match_type":1,
+                                        "values":{"range":[]},
+                                        "value_type":"time"
+
+                                    }
+                                },
+                                "data_point":{"category":"unordered","level": ["qualitytype","flattype"],
+         					             "value_ranges": {"flattype":[],"qualitytype":[]}},
+                                 "raw_data": raw_data_global,
+                                "metrics": metrics_global,
+                          }
+                            angular.forEach($scope.selectedDynamicCampaigns, function(data){
+                              console.log(data);
+                              reqData.data_scope['1'].values.exact.push(data.campaign_id);
+                           });
+                           angular.forEach($scope.selectedTypeOfSocieties, function(data){
+                             console.log(data);
+                           reqData.data_point.value_ranges.qualitytype.push(data.name);
+                          });
+                          angular.forEach($scope.selectedSizeOfFlats, function(data){
+                          console.log(data);
+                          reqData.data_point.value_ranges.flattype.push(data.name);
+                         });
+                          reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
+                          reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
+                    }else if ($scope.graphSelection.dateRange.startDate &&
+                             ($scope.selectedbookingParameters.length && $scope.selectedDynamicCampaigns.length )) {
+                                   // alert("Date range + Booking(multiselect) and City Campaign Selected");
+
+                                   // specificXValue = 'campaign_name';
+                                   // angular.forEach($scope.selectedbookingParameters, function(data){
+                                   //   console.log(data);
+                                   //    $scope.xValues.value = data.name;
+                                   // });
+
+                                     // $scope.xValues.value = 'campaign_name';
+                                    // specificXValue2 = 'binary_fields';
+
+                                   //  specificXValue2 = 'standeetype';
+                                   // specificXValue = 'fliertype';
+                                   // var specficSelectedValue = 0;
+                                   // angular.forEach($scope.selectedbookingParameters, function(data){
+                                   //   console.log(data);
+                                   //   specficSelectedValue = specficSelectedValue + 1;
+                                   //   var dataSpecific = {
+                                   //     "specificXValue" : "specificXValue" + specficSelectedValue,
+                                   //   }
+                                   //   console.log(specficSelectedValue);
+                                   //   console.log(dataSpecific.specificXValue);
+                                   //   var dataValueSpecificKey = data.value;
+                                   //   console.log(dataValueSpecificKey);
+                                   //
+                                   // });
+                                   // $scope.xValues.value = 'campaign_name';
+
+                                   angular.forEach($scope.selectedbookingParameters, function(data){
+                                     console.log(data);
+                                     // specificXValue = data.value;
+                                     // specificXValue = 'campaign_name';
+                                     // $scope.xValues.value = 'binary_fields';
+                                     $scope.xValues.value = 'campaign_name';
+                                     specificXValue = 'binary_fields';
+                                   });
+
+                                   var reqData = {
+                                     "data_scope":{
+                                         "1":
+                                              {"category":"unordered","level":"campaign","match_type":0,
+                                                 "values":{"exact":[]},
+                                                 "value_type":"campaign"
+
+                                             },
+                                         "2":{"category":"time","level":"time","match_type":1,
+                                                 "values":{"range":[]},
+                                                 "value_type":"time"
+
+                                             }
+                                         },
+                                         "data_point":{"category":"unordered","level": [],
+                                         "custom_binary_field_labels": {"nbpostertype": {"true": "Poster", "false": "No Poster"}}
+                                       },
+                                          "raw_data": raw_data_global,
+                                         "metrics": metrics_global,
+                                   }
+                                     angular.forEach($scope.selectedDynamicCampaigns, function(data){
+                                       console.log(data);
+                                       reqData.data_scope['1'].values.exact.push(data.campaign_id);
+                                    });
+                                    angular.forEach($scope.selectedbookingParameters, function(data){
+                                      console.log(data);
+                                      reqData.data_point.level.push(data.value);
+                                    });
+                                   reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
+                                   reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
+                             }
+
+                             else if ($scope.graphSelection.dateRange.startDate &&
+                             ($scope.selectedTypeOfSocieties.length &&
+                                   $scope.selectedDynamicCampaigns.length )) {
+                                   // alert("Date range + society parameter(society) and Campaign Selected");
+                                   $scope.xValues.value = 'qualitytype';
+                                   specificXValue = 'campaign_name';
+                                   var reqData = {
+                                     "data_scope":{
+                                         "1":
+                                             {"category":"unordered","level":"campaign","match_type":0,
+                                                 "values":{"exact":[]},
+                                                 "value_type":"campaign"
+
+                                             },
+                                         "2":{"category":"time","level":"time","match_type":1,
+                                                 "values":{"range":[]},
+                                                 "value_type":"time"
+
+                                             }
+                                         },
+                                         "data_point":{"category":"unordered","level": ["qualitytype"],
+                                         "value_ranges": {"qualitytype":[]}},
+                                         "raw_data": raw_data_global,
+                                        "metrics": metrics_global,
+                                   }
+                                     angular.forEach($scope.selectedDynamicCampaigns, function(data){
+                                       reqData.data_scope['1'].values.exact.push(data.campaign_id);
+                                    });
+                                     angular.forEach($scope.selectedTypeOfSocieties, function(data){
+                                     reqData.data_point.value_ranges.qualitytype.push(data.name);
+                                    });
+                                   reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
+                                   reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
+                             }
+
+                             else if ($scope.graphSelection.dateRange.startDate &&
+                               ($scope.selectedSizeOfFlats.length &&
+                                            $scope.selectedDynamicCampaigns.length )) {
+                                            // alert("Date range + society parameter(flat) and Campaign Selected");
+                                            $scope.xValues.value = 'flattype';
+                                            specificXValue = 'campaign_name';
+                                            var reqData = {
+                                              "data_scope":{
+                                                  "1":
+                                                      {"category":"unordered","level":"campaign","match_type":0,
+                                                          "values":{"exact":[]},
+                                                          "value_type":"campaign"
+
+                                                      },
+                                                  "2":{"category":"time","level":"time","match_type":1,
+                                                          "values":{"range":[]},
+                                                          "value_type":"time"
+
+                                                      }
+                                                  },
+                                                  "data_point":{"category":"unordered","level": ["flattype"],
+                                                  "value_ranges": {"flattype":[]}},
+                                                  "raw_data": raw_data_global,
+                                                 "metrics": metrics_global,
+                                            }
+                                              angular.forEach($scope.selectedDynamicCampaigns, function(data){
+                                                reqData.data_scope['1'].values.exact.push(data.campaign_id);
+                                             });
+                                              angular.forEach($scope.selectedSizeOfFlats, function(data){
+                                              reqData.data_point.value_ranges.flattype.push(data.name);
+                                             });
+                                            reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
+                                            reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
+                                      }
+                    else if(!$scope.graphSelection.dateRange.startDate &&
+                       ($scope.selectedSizeOfFlats.length &&
+                       $scope.selectedTypeOfSocieties.length && $scope.selectedCities_temp.length
+                        && $scope.selectedDynamicCampaigns.length )) {
+                 // alert("only society type and Campaign Selected and Flat Type");
+                 $scope.xValues.value = 'qualitytype';
+                 // $scope.xValues.value = 'flattype';
+                 specificXValue = 'campaign_name';
+                 specificXValue2 = 'flattype';
+                 var reqData = {
+                    "data_scope":{
+                   	"1":{"category":"unordered","level":"campaign","match_type":0,
+                   	"values":{"exact":[]},"value_type":"campaign"}},
+                    "data_point":{"category":"unordered","level": ["qualitytype","flattype"],
+                    "value_ranges": {"flattype":[],"qualitytype":[]}},
+                    "raw_data": raw_data_global,
+                   "metrics": metrics_global,
+                   }
+                   angular.forEach($scope.selectedDynamicCampaigns, function(data){
+                     reqData.data_scope['1'].values.exact.push(data.campaign_id);
+                   });
+                   angular.forEach($scope.selectedTypeOfSocieties, function(data){
+                     reqData.data_point.value_ranges.qualitytype.push(data.name);
+                   });
+                   angular.forEach($scope.selectedSizeOfFlats, function(data){
+                     reqData.data_point.value_ranges.flattype.push(data.name);
+                   });
+           }
+           else if(!$scope.graphSelection.dateRange.startDate &&
+              ($scope.selectedTypeOfSocieties.length && $scope.selectedCities_temp.length
+               && $scope.selectedDynamicCampaigns.length )) {
+        // alert("only society type and Campaign Selected");
+        $scope.xValues.value = 'qualitytype';
+        // $scope.xValues.value = 'flattype';
+        specificXValue = 'campaign_name';
+
+        var reqData = {
+           "data_scope":{
+            "1":{"category":"unordered","level":"campaign","match_type":0,
+            "values":{"exact":[]},"value_type":"campaign"}},
+           "data_point":{"category":"unordered","level": ["qualitytype"],
+           "value_ranges": {"qualitytype":[]}},
+           "raw_data": raw_data_global,
+          "metrics": metrics_global,
+          }
+          angular.forEach($scope.selectedDynamicCampaigns, function(data){
+            reqData.data_scope['1'].values.exact.push(data.campaign_id);
+          });
+          angular.forEach($scope.selectedTypeOfSocieties, function(data){
+            reqData.data_point.value_ranges.qualitytype.push(data.name);
+          });
+
+  }
+  else if(!$scope.graphSelection.dateRange.startDate &&
+     ($scope.selectedSizeOfFlats.length && $scope.selectedCities_temp.length
+      && $scope.selectedDynamicCampaigns.length )) {
+// alert("only flat type and Campaign Selected");
+$scope.xValues.value = 'flattype';
+// $scope.xValues.value = 'flattype';
+specificXValue = 'campaign_name';
+
+var reqData = {
+  "data_scope":{
+   "1":{"category":"unordered","level":"campaign","match_type":0,
+   "values":{"exact":[]},"value_type":"campaign"}},
+  "data_point":{"category":"unordered","level": ["flattype"],
+  "value_ranges": {"flattype":[]}},
+  "raw_data": raw_data_global,
+ "metrics": metrics_global,
+ }
+ angular.forEach($scope.selectedDynamicCampaigns, function(data){
+   reqData.data_scope['1'].values.exact.push(data.campaign_id);
+ });
+ angular.forEach($scope.selectedSizeOfFlats, function(data){
+   reqData.data_point.value_ranges.flattype.push(data.name);
+ });
+
+}
+           else if (!$scope.graphSelection.dateRange.startDate && ($scope.graphSelection.phaseRange.length
+             && $scope.selectedDynamicCampaigns.length
+            )){
+                                 // alert("only Phase Range and Campaign Selected");
+                                 $scope.xValues.value = 'campaign_name';
+                                 var reqData = {"data_scope":{
+                                    "1":
+                                        {"category":"unordered","level":"campaign","match_type":0,
+                                            "values":{"exact":[]},
+                                            "value_type":"campaign"
+                                        }
+                                    },
+                                "data_point":{"category":"time","level": ["date"], "sublevel": "phase",
+                                "value_ranges":  {"phase":[]},"range_type":1},
+                                   "raw_data":raw_data_global,
+                                   "metrics": metrics_global
+                                 }
+                                 angular.forEach($scope.selectedDynamicCampaigns, function(data){
+                                   reqData.data_scope['1'].values.exact.push(data.campaign_id);
+                                 });
+                                 reqData.data_point.value_ranges.phase.push(commonDataShare.formatDate($scope.graphSelection.phaseRange.start));
+                                 reqData.data_point.value_ranges.phase.push(commonDataShare.formatDate($scope.graphSelection.phaseRange.end));
+
+                  }
+      else if ($scope.graphSelection.dateRange.startDate && (
+                           $scope.graphSelection.category == 'vendor' &&
+                           $scope.selectedVendors.length )) {
+                             // alert("only Date Range Type and Vendor Selected");
+                             $scope.xValues.value = 'vendor_name';
+                             var reqData = {
+                               "data_scope":{
+                                   "1":
+                                       {"category":"unordered","level":"vendor","match_type":0,
+                                           "values":{"exact":[]},
+                                           "value_type":"vendor"
+
+                                       },
+                                   "2":{"category":"time","level":"time","match_type":1,
+                                           "values":{"range":[]},
+                                           "value_type":"time"
+
+                                       }
+                                   },
+                               "data_point":{"category":"unordered","level":["vendor"]},
+                               "raw_data":raw_data_global,
+                               "metrics": metrics_global
+                             }
+
+                             angular.forEach($scope.selectedVendors, function(data){
+                               reqData.data_scope['1'].values.exact.push($scope.vendorsData[data].vendor_id);
+                             });
+                             reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
+                             reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
+                       }else if (
+                        $scope.selectedDynamicCampaigns.length &&
+                                 $scope.graphSelection.category == 'vendor' &&
+                                 $scope.selectedVendors.length
+                               ){
+                                   // alert("Vendor + Campaign Selected");
+                                   $scope.xValues.value = 'vendor_name';
+                                   specificXValue = 'campaign_name';
+                                   var reqData = {
+                                     "data_scope":{
+                                         "1":
+                                             {"category":"unordered","level":"vendor","match_type":0,
+                                                 "values":{"exact":[]},
+                                                 "value_type":"vendor"
+
+                                             },
+                                         },
+                                         "data_point":{"category":"unordered","level": ["campaign"],
+                                        "value_ranges": {"campaign":[]}},
+                                        "raw_data": raw_data_global,
+                                       "metrics": metrics_global,
+                                   }
+
+                                   angular.forEach($scope.selectedVendors, function(data){
+                                     reqData.data_scope['1'].values.exact.push($scope.vendorsData[data].vendor_id);
+                                   });
+                                   angular.forEach($scope.selectedDynamicCampaigns, function(data){
+                                     reqData.data_point.value_ranges.campaign.push(data.campaign_id);
+                                  });
+
+                    }
+
+                            else if ($scope.selectedSizeOfFlats.length) {
+                                           if($scope.selectedDynamicCampaigns.length){
+                                             // alert("only Flat Type selected");
+                                             $scope.xValues.value = 'flattype';
+                                             specificXValue = 'campaign_name';
+                                             var reqData = {"data_scope":{
+                                                 "1":
+                                                     {"category":"unordered","level":"campaign","match_type":0,
+                                                         "values":{"exact":[]},
+                                                         "value_type":"campaign"
+                                                     }
+                                                 },
+                                             "data_point":{"category":"unordered","level":["flattype"],
+                                             "value_ranges": {"flattype":[]}},
+                                               "raw_data":raw_data_global,
+                                               "metrics": metrics_global,
+                                             }
+
+                                             angular.forEach($scope.selectedDynamicCampaigns, function(data){
+                                               reqData.data_scope['1'].values.exact.push(data.campaign_id);
+                                             });
+                                             angular.forEach($scope.selectedSizeOfFlats, function(data){
+                                               reqData.data_point.value_ranges.flattype.push(data.name);
+                                             });
+                                           }
+
+                                     }
+                     else if (
+                       $scope.selectedCities_temp.length
+                             ) {
+                               // alert("only city");
+                               $scope.xValues.value = 'city';
+                                 var reqData = {
+
+                                     "data_scope":{
+                                       "1":
+                                           {"category":"geographical","level":"city","match_type":0,
+                                               "values":{"exact":[]},
+                                               "value_type":"city"
+                                           },
+                                         },
+                                     "data_point":{"category":"geographical","level":["city"]},
+                                     "raw_data":raw_data_global,
+                                     "metrics": metrics_global
+                                   }
+
+
+                               angular.forEach($scope.selectedCities_temp, function(data){
+                                 reqData.data_scope['1'].values.exact.push(data.name);
+                               });
+                          }
+                           else if (!$scope.graphSelection.dateRange.startDate && (
+                                    $scope.graphSelection.category == 'vendor' &&
+                                      $scope.selectedVendors.length
+                                    )) {
+                                      // alert("Only Vendor Selected");
+                                      $scope.xValues.value = 'vendor_name';
+                                      var reqData = {
+                                        "data_scope":{
+                                            "1":
+                                                {"category":"unordered","level":"vendor","match_type":0,
+                                                    "values":{"exact":[]},
+                                                    "value_type":"vendor"
+
+                                                },
+                                            },
+                                        "data_point":{"category":"unordered","level":["vendor"]},
+                                        "raw_data":raw_data_global,
+                                        "metrics": metrics_global
+                                      }
+
+                                      angular.forEach($scope.selectedVendors, function(data){
+                                        reqData.data_scope['1'].values.exact.push($scope.vendorsData[data].vendor_id);
+                                      });
+                                } else if ($scope.graphSelection.specificParam.society == 'qualitytype' ) {
+                                        if($scope.selectedDynamicCampaigns.length){
+                                          // alert("only Society Quality Type selected");
+                                          $scope.xValues.value = 'qualitytype';
+                                          specificXValue = 'campaign_name';
+                                          var reqData = {"data_scope":{
+                                              "1":
+                                                  {"category":"unordered","level":"campaign","match_type":0,
+                                                      "values":{"exact":[]},
+                                                      "value_type":"campaign"
+                                                  }
+                                              },
+                                          "data_point":{"category":"unordered","level":["qualitytype"],
+                                          "value_ranges": {"qualitytype":[]}},
+                                            "raw_data":raw_data_global,
+                                            "metrics": metrics_global
+                                          }
+
+                                          angular.forEach($scope.selectedDynamicCampaigns, function(data){
+                                            reqData.data_scope['1'].values.exact.push(data.campaign_id);
+                                          });
+                                          angular.forEach($scope.selectedTypeOfSocieties, function(data){
+                                            reqData.data_point.value_ranges.qualitytype.push(data.name);
+                                          });
+                                          // reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
+                                          // reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
+                                          }
+                                        }  else if ($scope.graphSelection.phaseRange.start
+                                          && $scope.selectedDynamicCampaigns.length){
+                                            console.log($scope.graphSelection.phaseRange.start);
+                                                                // alert("only Phase Range and Campaign Selected");
+                                                                $scope.xValues.value = 'phase';
+                                                                var reqData = {"data_scope":{
+                                                                   "1":
+                                                                       {"category":"unordered","level":"campaign","match_type":0,
+                                                                           "values":{"exact":[]},
+                                                                           "value_type":"campaign"
+                                                                       }
+                                                                   },
+                                                               "data_point":{"category":"time","level": ["date"], "sublevel": "phase",
+                                                               "value_ranges":  {"phase":[]},"range_type":1},
+                                                                  "raw_data":raw_data_global,
+                                                                  "metrics": metrics_global
+                                                                }
+
+                                                                angular.forEach($scope.selectedDynamicCampaigns, function(data){
+                                                                  reqData.data_scope['1'].values.exact.push(data.campaign_id);
+                                                                });
+                                                                reqData.data_point.value_ranges.phase.push($scope.graphSelection.phaseRange.start);
+                                                                reqData.data_point.value_ranges.phase.push($scope.graphSelection.phaseRange.end);
+
+                                                 }
+                                                 else if ($scope.selectedbookingParameters.length) {
+                                                         if($scope.selectedDynamicCampaigns.length){
+                                                           // alert("only Booking Parameter Types Selected");
+                                                           $scope.xValues.value = 'campaign_name';
+                                                           angular.forEach($scope.selectedbookingParameters, function(data){
+                                                             console.log(data);
+                                                              specificXValue = data.value;
+                                                           });
+
+                                                           var reqData = {
+                                                          "data_scope":{
+                                                        	"1":{"category":"unordered","level":"campaign","match_type":0,
+                                                        	"values":{"exact":[]},"value_type":"campaign"}},
+                                                          "data_point":{"category":"unordered","level": []},
+                                                          "raw_data":raw_data_global,
+                                                          "metrics": metrics_global
+                                                           }
+
+                                                           angular.forEach($scope.selectedDynamicCampaigns, function(data){
+                                                             reqData.data_scope['1'].values.exact.push(data.campaign_id);
+                                                           });
+                                                           angular.forEach($scope.selectedbookingParameters, function(data){
+                                                             console.log(data);
+                                                             reqData.data_point.level.push(data.value);
+                                                           });
+                                                         }
+                                                         }
+                                     // console.log($scope.applyClickedFilters.value);
+                                         else if ($scope.applyClickedFilters.value)
+                                          {
+
+                                                  // alert("By Default Campaign");
+                                                  $scope.xValues.value = 'campaign_name';
+                                                  var reqData =
+                                                    { "data_scope":
+                                                    {
+                                                      "1":{"category":"unordered","level":"campaign","match_type":0,
+                                                      "values":{"exact":[]},"value_type":"campaign"}},
+                                                     "data_point":{"category":"unordered","level": ["campaign"]},
+                                                      "raw_data":raw_data_global,
+                                                      "metrics": metrics_global
+                                                   }
+
+                                                  angular.forEach($scope.selectedDynamicCampaigns, function(data){
+                                                    reqData.data_scope['1'].values.exact.push(data.campaign_id);
+                                                  });
+                                                }
+
+    console.log(reqData);
+    if(reqData){
+      DashboardService.getDistributionGraphsStatics(reqData)
+      .then(function onSuccess(response){
+        console.log(response);
+        $scope.initialDynamicGraphData = response.data.data;
+        console.log($scope.initialDynamicGraphData);
+        angular.forEach($scope.initialDynamicGraphData.lower_group_data, function(data){
+          console.log(data);
+          $scope.initalDynamicTableData = data ;
+        })
+        $scope.stackedBarChartForDynamic = angular.copy(stackedBarChart);
+        if($scope.initialDynamicGraphData.lower_group_data.length > 4){
+          $scope.stackedBarChartForDynamic.chart['width'] = $scope.initialDynamicGraphData.lower_group_data.length * 300;
+        }
+        // $scope.stackedBarChartForDynamic.chart.yAxis['tickFormat'] =
+        //   function(d) {console.log(d); return d3.format(",")(d)};
+        console.log($scope.stackedBarChartForDynamic);
+        $scope.stackedBarChartDynamicData = formatDynamicData($scope.initialDynamicGraphData);
+        setLabelsOnBars();
+        console.log($scope.stackedBarChartDynamicData);
+      }).catch(function onError(response){
+        console.log(response);
+      })
+    }
+  }
+
+  $scope.clearDatesFromDynamicGraph = function(){
+    $scope.graphSelection.dateRange = {};
+    $scope.selectedDynamicCampaigns = [];
+    $scope.selectedCities_temp = [];
+    $scope.selectedbookingParameters = [];
+    $scope.selectedSizeOfFlats = [];
+    $scope.selectedVendors = [];
+    $scope.graphSelection.phaseRange = {};
+    $scope.selectedTypeOfSocieties = [];
+    $scope.graphSelection.specificParam = [];
+    $scope.dynamicValuesCampaigns = [];
+    $scope.dynamicValuesVendor = [];
+  }
+  $scope.changeDynamicGraph = function(){
+    console.log($scope.graphSelection);
+    $scope.yValues = [];
+    angular.forEach($scope.graphSelection.Yvalues, function(data,key){
+      console.log(data);
+      if(data)
+        $scope.yValues.push($scope.dynamicGraphYKeysMap[key]);
+    })
+    $scope.stackedBarChartDynamicData = formatDynamicData($scope.initialDynamicGraphData);
+    setLabelsOnBars();
+  }
+  // $scope.getGenericGraphData();
+
+
+  $scope.getVendorWiseSummary = function(){
+    cfpLoadingBar.start();
+       DashboardService.getVendorWiseSummary()
+      .then(function onSuccess(response){
+        console.log(response);
+        $scope.vendorSummary = response.data.data;
+        $scope.vendorName = response.data.data.vendor_details;
+        $scope.overallVendorSummary = response.data.data.overall;
+        $scope.WeeklyVendorMISOverallSummary = response.data.data.overall.overall;
+        $scope.WeeklyVendorMISLastWeekSummary = response.data.data.last_week.overall;
+        $scope.WeeklyVendorMISLast2WeekSummary = response.data.data.last_two_week.overall;
+        $scope.WeeklyVendorMISLast3WeekSummary = response.data.data.last_three_week.overall;
+        $scope.OverallVendorStackedBarChart= angular.copy(overallVendorSummaryStackedBar);
+        $scope.stackedBarAllVendorWiseChart = formatAllVendorWiseChart($scope.overallVendorSummary);
+
+        cfpLoadingBar.complete();
+    }).catch(function onError(response){
+          console.log(response);
+      })
+  }
+
+
+     var formatAllVendorWiseChart = function(data){
+       var values1 = [];
+       var values2 = [];
+       angular.forEach(data, function(data,key){
+         if(data.flat_count != 0){
+           $scope.hotLeadsValues =  data.interested / data.flat_count * 100;
+           $scope.normalLeadsValues =  data.total/data.flat_count * 100;
+          }
+          else {
+            $scope.hotLeadsValues =  data.interested;
+            $scope.normalLeadsValues =  data.total;
+
+          }
+          if(key != 'overall'){
+            $scope.vendorKeyName = $scope.vendorSummary.vendor_details[key].name;
+            var keyWithFlatLabel =  $scope.vendorKeyName + ' (' + data.flat_count + ')';
+          var value1 =
+             { x : keyWithFlatLabel, y : $scope.normalLeadsValues};
+          var value2 =
+             { x : keyWithFlatLabel, y : $scope.hotLeadsValues};
+          values1.push(value1);
+          values2.push(value2);
+          }
+
+
+
+       })
+
+       var temp_data = [
+         {
+           key : "Total Leads in %",
+           color : constants.colorKey1,
+           values : values1
+         },
+         {
+           key : "High Potential Leads in %",
+           color : constants.colorKey2,
+           values : values2
+         }
+       ];
+
+       return temp_data;
+     }
+     $scope.dynamicGraphSelectedOrder = {};
+     $scope.dynamicSortedGraphOptions = angular.copy(dynamicDiscreteBarChart);
+
+     $scope.sortDynamicData = function(order){
+       $scope.dynamicOrderData = angular.copy($scope.initialDynamicGraphData.lower_group_data);
+       $scope.dynamicOrderData.sort(function(a,b){
+         console.log(a,b);
+         return a[$scope.dynamicGraphSelectedOrder.value] - b[$scope.dynamicGraphSelectedOrder.value];
+       });
+       if(order == 'DESC'){
+         $scope.dynamicOrderData.reverse();
+       }
+        $scope.dynamicSortedGraphData = formatSortedDynamicGraphData($scope.dynamicOrderData);
+        console.log($scope.dynamicOrderData,$scope.dynamicSortedGraphData);
+     }
+
+     var formatSortedDynamicGraphData = function(data){
+       var temp_data = {};
+
+       temp_data['key'] = "Sample";
+       temp_data['values'] = [];
+       console.log($scope.xValues.value);
+       console.log($scope.dynamicGraphSelectedOrder.value);
+       angular.forEach(data, function(item){
+
+         if(selectedSpecificItems.indexOf(item[$scope.xValues.value]) > -1 || !selectedSpecificItems.length){
+           if(item[$scope.xValues.value]){
+             if(specificXValue){
+               console.log(specificXValue2);
+               if(specificXValue2){
+                 var value = {
+                   'label' : item[$scope.xValues.value] + item[specificXValue2]
+                    + "( " + item[specificXValue] + " )",
+                   'value' : item[$scope.dynamicGraphSelectedOrder.value]
+                 }
+               }
+
+               else {
+                 var value = {
+                   'label' :item[$scope.xValues.value]
+                 + "(" + item[specificXValue] + ")" ,
+                   'value' : item[$scope.dynamicGraphSelectedOrder.value]
+                 }
+               }
+               temp_data.values.push(value);
+             }else{
+               var value = {
+                 'label' : item[$scope.xValues.value],
+                 'value' : item[$scope.dynamicGraphSelectedOrder.value]
+               }
+               temp_data.values.push(value);
+             }
+
+           }
+         }
+       })
+       return [temp_data];
+     }
+
+     var setLabelsOnBars = function(){
+       $timeout(function () {
+         d3.selectAll('.nv-multibar .nv-group').each(function(group){
+           var g = d3.select(this);
+
+           // Remove previous labels if there is any
+           g.selectAll('text').remove();
+           g.selectAll('.nv-bar').each(function(bar){
+           var b = d3.select(this);
+           var barWidth = b.attr('width');
+           var barHeight = b.attr('height');
+
+           g.append('text')
+             // Transforms shift the origin point then the x and y of the bar
+             // is altered by this transform. In order to align the labels
+             // we need to apply this transform to those.
+             .attr('transform', b.attr('transform'))
+             .text(function(){
+               // No decimals format and eliminate zero values
+               if (bar.y === 0) {
+                 return;
+               }
+               return parseFloat(bar.y).toFixed(2) + "%";
+             })
+             .attr('y', function(){
+               // Center label vertically
+               var height = this.getBBox().height;
+               return parseFloat(b.attr('y')) - 2; // 15 is the label's margin from the top of bar
+             })
+             .attr('x', function(){
+               // Center label horizontally
+               var width = this.getBBox().width;
+               return parseFloat(b.attr('x')) + (parseFloat(barWidth) / 2) - (width / 2);
+             })
+             .style("stroke","black")
+             .attr('class', 'bar-values');
+           });
+         });
+       }, 1000);
+     }
+
+    var getCampaignsWiseForCity = function()
+    {
+      console.log("hello");
+      var dataCity =
+      {
+      "cities" : [],
+       }
+
+       angular.forEach($scope.selectedCities_temp, function(data){
+         console.log(data);
+         dataCity.cities.push(data);
+       });
+
+         console.log(dataCity);
+       DashboardService.getCampaignsWiseForCity(dataCity)
+     .then(function onSuccess(response){
+       console.log(response);
+       $scope.selectedCampaignsCityWise = response.data.data;
+       $scope.dynamicValuesCampaigns = $scope.selectedCampaignsCityWise;
+       console.log($scope.selectedCampaignsCityWise);
+       $scope.dynamicValuesVendor = $scope.selectedCampaignsCityWise;
+       console.log($scope.dynamicValuesVendor);
+      }).catch(function onError(response){
+         console.log(response);
+     })
+    }
+    var getCampaignsWiseForVendor = function()
+    {
+      console.log("hello");
+     var dataVendor =
+       {
+       "vendors" : [],
+        }
+
+       angular.forEach($scope.selectedVendors, function(data){
+         dataVendor.vendors.push($scope.vendorsData[data].vendor_id);
+       });
+         console.log(dataVendor);
+       DashboardService.getCampaignsWiseForVendor(dataVendor)
+     .then(function onSuccess(response){
+       console.log(response);
+       $scope.selectedCampaignsCityWise = response.data.data;
+       $scope.dynamicValuesCampaigns = $scope.selectedCampaignsCityWise;
+       console.log($scope.selectedCampaignsCityWise);
+       $scope.dynamicValuesVendor = $scope.selectedCampaignsCityWise;
+       console.log($scope.dynamicValuesVendor);
+      }).catch(function onError(response){
+         console.log(response);
+     })
+    }
+
+      $scope.dynamicValuesCityWiseCampaignIdMap = {};
+    angular.forEach($scope.dynamicValuesCampaigns, function(data){
+      console.log(data);
+      $scope.dynamicValuesCityWiseCampaignIdMap[data.campaign_id] = data;
+    })
+    $scope.dynamicValuesVendorWiseCampaignIdMap = {};
+    angular.forEach($scope.dynamicValuesVendor, function(data){
+    $scope.dynamicValuesVendorWiseCampaignIdMap[data.campaign_id] = data;
+    })
+    $scope.applyClickedFilters = {};
+    $scope.changeApplyFilters = function(){
+   }
+
+    $scope.graphSelection.phaseRange = false;
+    $scope.graphSelection.dateRange = false;
+    $scope.BookingParameters = false;
+    $scope.graphSelection.specificParam.society = false;
+    $scope.selectedVendorParameters = false;
+    $scope.selectedCityParameters = false;
+
+    $scope.DisabledClicked = function(){
+      $scope.selectAnyPhase = false;
+      $scope.selectAnyDate = true;
+      // $scope.graphSelection.phaseRange = {};
+      }
+    $scope.DisabledClickedPhase = function(){
+      $scope.selectAnyPhase = true;
+      $scope.selectAnyDate = false;
+    }
+    $scope.DisabledClickedSociety = function(){
+    $scope.checkboxChecked = false;
+    $scope.checkboxCheckedSociety = true;
+    $scope.selectedbookingParameters = [];
+    }
+    $scope.DisabledClickedBooking = function(){
+    $scope.checkboxCheckedSociety = false;
+    $scope.checkboxChecked = true;
+    angular.forEach($scope.selectedbookingParameters, function(data){
+      console.log(data);
+      var specificXValue = data.value;
+      console.log(specificXValue);
+    });
+    $scope.graphSelection.specificParam.society = [];
+    $scope.selectedTypeOfSocieties = [];
+    $scope.selectedSizeOfFlats = [];
+    // $scope.graphSelection.specificParam.society = [];
+    }
+    $scope.DisabledClickedCity = function(){
+    $scope.checkboxCheckedCity = true;
+    $scope.checkboxCheckedVendor = false;
+    getCampaignsWiseForCity();
+    $scope.cityLists = [];
+    DashboardService.getCityUsers()
+  .then(function onSuccess(response){
+    console.log(response);
+    $scope.cityLists = response.data.data.list_of_cities;
+    console.log($scope.cityLists);
+     }).catch(function onError(response){
+      console.log(response);
+  })
+    $scope.dynamicValuesCampaigns = [];
+    $scope.selectedVendors = [];
+    }
+    $scope.DisabledClickedVendor = function(){
+      $scope.checkboxCheckedCity = false;
+      $scope.checkboxCheckedVendor = true;
+      getCampaignsWiseForVendor();
+      $scope.selectedCities_temp = [];
+    }
+  // END
+
 
 })
 })();
+app.factory('Excel',function($window){
+        var uri='data:application/vnd.ms-excel;base64,',
+            template='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+            base64=function(s){return $window.btoa(unescape(encodeURIComponent(s)));},
+            format=function(s,c){return s.replace(/{(\w+)}/g,function(m,p){return c[p];})};
+        return {
+            tableToExcel:function(tableId,worksheetName){
+                var table=$(tableId),
+                    ctx={worksheet:worksheetName,table:table.html()},
+                    href=uri+base64(format(template,ctx));
+                return href;
+            }
+        };
+    })

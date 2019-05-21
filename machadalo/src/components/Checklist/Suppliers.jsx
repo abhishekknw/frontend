@@ -16,14 +16,14 @@ export default class Suppliers extends React.Component {
   }
 
   onBack() {
-    this.props.history.push(`/r/checklist/campaigns`);
+    this.props.history.goBack();
   }
 
   renderSupplierRow(supplier, index) {
     return (
       <tr key={supplier.supplier_id}>
-        <td>{index + 1}</td>
-        <td>{supplier.name}</td>
+        <td className="hidden-xs">{index + 1}</td>
+        <td className="supplier-name">{supplier.name}</td>
         <td>{supplier.area}</td>
         <td>{supplier.subarea}</td>
         <td>
@@ -31,9 +31,7 @@ export default class Suppliers extends React.Component {
         </td>
         <td>
           <Link
-            to={`/r/checklist/list/${this.props.match.params.campaignId}/${
-              supplier.supplier_id
-            }`}
+            to={`/r/checklist/list/${this.props.match.params.campaignId}/${supplier.supplier_id}`}
             className="btn btn--danger"
           >
             View checklists
@@ -44,21 +42,19 @@ export default class Suppliers extends React.Component {
   }
 
   render() {
-    const { supplier, campaign } = this.props;
+    const { supplierStatic, campaign } = this.props;
 
     return (
       <div className="list">
         <div className="list__title">
           <h3>
             Suppliers of Campaign{' '}
-            {campaign.currentCampaign
-              ? campaign.currentCampaign.campaign.name
-              : ''}
+            {campaign.currentCampaign ? campaign.currentCampaign.campaign.name : ''}
           </h3>
         </div>
         <button type="button" className="btn btn--danger" onClick={this.onBack}>
           <i className="fa fa-arrow-left" aria-hidden="true" />
-          Back
+          &nbsp; Back
         </button>
         <br />
         <br />
@@ -66,17 +62,15 @@ export default class Suppliers extends React.Component {
           <table cellPadding="0" cellSpacing="0">
             <thead>
               <tr>
-                <th>Index</th>
-                <th>Name</th>
+                <th className="hidden-xs">Index</th>
+                <th className="supplier-name">Name</th>
                 <th>Area</th>
                 <th>Sub-area</th>
                 <th>Address</th>
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
-              {supplier.list.map(this.renderSupplierRow.bind(this))}
-            </tbody>
+            <tbody>{supplierStatic.list.map(this.renderSupplierRow.bind(this))}</tbody>
           </table>
         </div>
       </div>

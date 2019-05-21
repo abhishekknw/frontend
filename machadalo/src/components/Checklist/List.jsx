@@ -7,9 +7,15 @@ export default class List extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      searchFilter: '',
+    };
+
     this.renderChecklistRow = this.renderChecklistRow.bind(this);
     this.onBack = this.onBack.bind(this);
     this.onEdit = this.onEdit.bind(this);
+    this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
+    this.getFilteredList = this.getFilteredList.bind(this);
   }
 
   componentDidMount() {
@@ -20,38 +26,44 @@ export default class List extends React.Component {
       this.props.getCurrentSupplier(supplierId);
       this.props.getSupplierChecklists({
         campaignId: campaignProposalId,
-        supplierId: supplierId
+        supplierId: supplierId,
       });
     } else {
       this.props.getCampaignChecklists({
-        campaignId: campaignProposalId
+        campaignId: campaignProposalId,
       });
     }
   }
 
   onBack() {
-    let campaignProposalId = this.props.match.params.campaignId;
-    let supplierId = this.props.match.params.supplierId;
-    if (supplierId) {
-      this.props.history.push(`/r/checklist/suppliers/${campaignProposalId}`);
-    } else {
-      this.props.history.push(`/r/checklist/campaigns`);
-    }
+    this.props.history.goBack();
   }
 
   onEdit(checklistId) {
     this.props.history.push(`/r/checklist/edit/${checklistId}`);
   }
 
+  onSearchFilterChange(event) {
+    this.setState({
+      searchFilter: event.target.value,
+    });
+  }
+
+  getFilteredList(list) {
+    return list.filter(
+      (item) =>
+        item.checklist_info.checklist_name
+          .toLowerCase()
+          .replace(/[^0-9a-z]/gi, '')
+          .indexOf(this.state.searchFilter.toLowerCase().replace(/[^0-9a-z]/gi, '')) !== -1
+    );
+  }
+
   renderChecklistRow(checklist, index) {
     let { settings } = this.props;
     let editPermission = false;
 
-    if (
-      settings.loggedInChecklistPermission.checklists[
-        checklist.checklist_info.checklist_id
-      ]
-    ) {
+    if (settings.loggedInChecklistPermission.checklists[checklist.checklist_info.checklist_id]) {
       if (
         settings.loggedInChecklistPermission.checklists[
           checklist.checklist_info.checklist_id
@@ -70,7 +82,7 @@ export default class List extends React.Component {
 
       this.props.deleteChecklist(
         {
-          checklistId: checklist.checklist_info.checklist_id
+          checklistId: checklist.checklist_info.checklist_id,
         },
         () => {
           toastr.success('', 'Checklist deleted successfully');
@@ -90,8 +102,8 @@ export default class List extends React.Component {
 
     return (
       <tr key={checklist.checklist_info.checklist_id}>
-        <td>{index + 1}</td>
-        <td>{checklist.checklist_info.checklist_name}</td>
+        <td className="hidden-xs">{index + 1}</td>
+        <td className="checklist-name">{checklist.checklist_info.checklist_name}</td>
         <td>
           <Link
             to={`/r/checklist/fill/${checklist.checklist_info.checklist_id}`}
@@ -135,15 +147,13 @@ export default class List extends React.Component {
 
     let campaignId = this.props.match.params.campaignId;
     let campaignPermission = false;
-    let emptyChecklistText =
-      'You do not have permission to create new checklist in this campaign';
+    let emptyChecklistText = 'You do not have permission to create new checklist in this campaign';
     if (
       settings.loggedInChecklistPermission.campaigns &&
       settings.loggedInChecklistPermission.campaigns[campaignId]
     ) {
       campaignPermission = true;
-      emptyChecklistText =
-        'No checklists available. Create your first one now!';
+      emptyChecklistText = 'No checklists available. Create your first one now!';
     }
 
     let supplierChecklistFlag = true;
@@ -156,30 +166,25 @@ export default class List extends React.Component {
     }
 
     if (supplierChecklistFlag) {
-      headingText +=
-        'Supplier ' +
-        (supplier.currentSupplier ? supplier.currentSupplier.name : '');
+      headingText += 'Supplier ' + (supplier.currentSupplier ? supplier.currentSupplier.name : '');
 
-      checklistCreateUrl = `/r/checklist/create/${
-        this.props.match.params.campaignId
-      }/${this.props.match.params.supplierId}`;
+      checklistCreateUrl = `/r/checklist/create/${this.props.match.params.campaignId}/${
+        this.props.match.params.supplierId
+      }`;
       if (campaign.currentCampaign && supplier.currentSupplier) {
         showCreateButton = true;
       }
     } else {
       headingText +=
-        'Campaign ' +
-        (campaign.currentCampaign
-          ? campaign.currentCampaign.campaign.name
-          : '');
+        'Campaign ' + (campaign.currentCampaign ? campaign.currentCampaign.campaign.name : '');
 
-      checklistCreateUrl = `/r/checklist/create/${
-        this.props.match.params.campaignId
-      }`;
+      checklistCreateUrl = `/r/checklist/create/${this.props.match.params.campaignId}`;
       if (campaign.currentCampaign) {
         showCreateButton = true;
       }
     }
+
+    const filteredList = this.getFilteredList(checklist.list);
 
     return (
       <div className="list">
@@ -187,22 +192,27 @@ export default class List extends React.Component {
           <h3>{headingText}</h3>
         </div>
         <div className="list__filter">
-          <input type="text" placeholder="Search..." />
+          <input
+            type="text"
+            placeholder="Search..."
+            onChange={this.onSearchFilterChange}
+            value={this.state.searchFilter}
+          />
         </div>
         <div className="list__table">
           <table cellPadding="0" cellSpacing="0">
             <thead>
               <tr>
-                <th>Index</th>
-                <th>Name</th>
+                <th className="hidden-xs">Index</th>
+                <th className="checklist-name">Name</th>
                 <th>Action</th>
                 <th>Action</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {checklist.list.length && campaignPermission ? (
-                checklist.list.map(this.renderChecklistRow)
+              {filteredList.length && campaignPermission ? (
+                filteredList.map(this.renderChecklistRow)
               ) : (
                 <tr>
                   <td colSpan="5">{emptyChecklistText}</td>
@@ -213,13 +223,9 @@ export default class List extends React.Component {
         </div>
 
         <div className="list__actions">
-          <button
-            type="button"
-            className="btn btn--danger"
-            onClick={this.onBack}
-          >
+          <button type="button" className="btn btn--danger" onClick={this.onBack}>
             <i className="fa fa-arrow-left" aria-hidden="true" />
-            Back
+            &nbsp; Back
           </button>{' '}
           {showCreateButton && campaignPermission ? (
             <Link to={checklistCreateUrl} className="btn btn--danger">

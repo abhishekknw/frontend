@@ -26,6 +26,7 @@ angular
     btn_success : 'btn-success',
     warn_user_msg : 'Are You Sure?',
     save_success : 'Saved successfully',
+    assign_success : 'Assigned successfully',
     delete_success : 'Deleted Successfully',
     save_error : 'Some error occured, Data not saved',
     shortlisted : 'Shortlisted',
@@ -47,6 +48,7 @@ angular
     email_success : 'Email sent Successfully',
     image_empty : 'No Images Found',
     image_success : 'Image Uploaded Successfully',
+    proposal_update_success : "Proposal Updated Successfully",
     //createproposal
     geo_location_error : 'Address or Pincode Incorrect, Please Provide Correct Information',
     center_warning : 'Do you want to create only one center ?',
@@ -97,6 +99,7 @@ angular
     updateData_error : 'Error occured while saving data',
     already_exist : 'Supplier Already Present',
     upload_permission_box_image_url : '/upload_permission_box_image/',
+    upload_receipt_url : '/upload_receipt_image/',
     //auditReleasePlan
     inventory_date_success : 'Inventory Dates are saved successfully',
     inventory_date_error : 'Error occured while saving dates',
@@ -205,7 +208,11 @@ angular
       {name : 'FLYER'},
       {name : 'GATEWAY ARCH'},
     ],
-    booking_related_comment : 'BOOKING',
-    execution_related_comment : 'EXECUTION',
+    comments_type : [
+      'INTERNAL',
+      'EXTERNAL'
+    ],
+    booking_related_comment : 'INTERNAL',
+    execution_related_comment : 'EXTERNAL',
     no_comments_msg : 'No Comments Available',
     });

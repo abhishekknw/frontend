@@ -7,31 +7,49 @@ import './index.css';
 export default class Sidebar extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       hideChecklistDropdown: true,
       hideLeadsDropdown: true,
-      hideEntitiesDropdown: true
+      hideEntitiesDropdown: true,
+      hideInventoryDropdown: true,
+      hideBookingDropdown: true,
     };
+
     this.toggleChecklistDropdown = this.toggleChecklistDropdown.bind(this);
     this.toggleLeadsDropdown = this.toggleLeadsDropdown.bind(this);
     this.toggleEntitiesDropdown = this.toggleEntitiesDropdown.bind(this);
+    this.toggleInventoryDropdown = this.toggleInventoryDropdown.bind(this);
+    this.toggleBookingDropdown = this.toggleBookingDropdown.bind(this);
   }
 
   toggleChecklistDropdown() {
     this.setState({
-      hideChecklistDropdown: !this.state.hideChecklistDropdown
+      hideChecklistDropdown: !this.state.hideChecklistDropdown,
     });
   }
 
   toggleLeadsDropdown() {
     this.setState({
-      hideLeadsDropdown: !this.state.hideLeadsDropdown
+      hideLeadsDropdown: !this.state.hideLeadsDropdown,
     });
   }
 
   toggleEntitiesDropdown() {
     this.setState({
-      hideEntitiesDropdown: !this.state.hideEntitiesDropdown
+      hideEntitiesDropdown: !this.state.hideEntitiesDropdown,
+    });
+  }
+
+  toggleInventoryDropdown() {
+    this.setState({
+      hideInventoryDropdown: !this.state.hideInventoryDropdown,
+    });
+  }
+
+  toggleBookingDropdown() {
+    this.setState({
+      hideBookingDropdown: !this.state.hideBookingDropdown,
     });
   }
 
@@ -40,7 +58,7 @@ export default class Sidebar extends React.Component {
     return (
       <aside
         className={classnames('sidebar', {
-          'sidebar--collapsed': !appearance.isSidebarVisible
+          'sidebar--collapsed': !appearance.isSidebarVisible,
         })}
       >
         <div className="sidebar__menu">
@@ -74,86 +92,111 @@ export default class Sidebar extends React.Component {
                 <div className="parent-list" onClick={this.toggleLeadsDropdown}>
                   <i className="fa fa-check-square-o" aria-hidden="true" />
                   Leads
+                  <i
+                    className={classnames('fa', 'caret', {
+                      'fa-caret-right': this.state.hideLeadsDropdown,
+                      'fa-caret-down': !this.state.hideLeadsDropdown,
+                    })}
+                    aria-hidden="true"
+                  />
                 </div>
-                <ul
-                  className="dropdown-list-child"
-                  hidden={this.state.hideLeadsDropdown}
-                >
+                <ul className="dropdown-list-child" hidden={this.state.hideLeadsDropdown}>
                   <li>
-                    <NavLink to="/#/campaignLeads">
-                      <i className="fa fa-columns" aria-hidden="true" />
-                      Campaign
-                    </NavLink>
+                    <NavLink to="/#/campaignLeads">Campaign</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/r/leads/settings">
-                      <i className="fa fa-cog" aria-hidden="true" />
-                      Settings
-                    </NavLink>
+                    <NavLink to="/r/leads/settings">Settings</NavLink>
                   </li>
                 </ul>
               </li>
               <li className="dropdown-list-parent">
-                <div
-                  className="parent-list"
-                  onClick={this.toggleEntitiesDropdown}
-                >
+                <div className="parent-list" onClick={this.toggleEntitiesDropdown}>
                   <i className="fa fa-cubes" aria-hidden="true" />
                   Entities
+                  <i
+                    className={classnames('fa', 'caret', {
+                      'fa-caret-right': this.state.hideEntitiesDropdown,
+                      'fa-caret-down': !this.state.hideEntitiesDropdown,
+                    })}
+                    aria-hidden="true"
+                  />
                 </div>
-                <ul
-                  className="dropdown-list-child"
-                  hidden={this.state.hideEntitiesDropdown}
-                >
+                <ul className="dropdown-list-child" hidden={this.state.hideEntitiesDropdown}>
                   <li>
-                    <NavLink to="/r/entity/base-type/list">
-                      <i className="fa fa-columns" aria-hidden="true" />
-                      Base Entity Type
-                    </NavLink>
+                    <NavLink to="/r/supplier/base-type/list">Base Supplier Type</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/r/entity/type/list">
-                      <i className="fa fa-columns" aria-hidden="true" />
-                      Entity Type
-                    </NavLink>
+                    <NavLink to="/r/supplier/type/list">Supplier Type</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/r/entity/list">
-                      <i className="fa fa-columns" aria-hidden="true" />
-                      Entity
-                    </NavLink>
+                    <NavLink to="/r/supplier/list">Supplier</NavLink>
                   </li>
                 </ul>
               </li>
-              <li>
-                <a href="/r/inventory/list">
-                  <i className="fa fa-list" aria-hidden="true" />
+              <li className="dropdown-list-parent">
+                <div className="parent-list" onClick={this.toggleInventoryDropdown}>
+                  <i className="fa fa-cogs" aria-hidden="true" />
                   Inventory
-                </a>
+                  <i
+                    className={classnames('fa', 'caret', {
+                      'fa-caret-right': this.state.hideInventoryDropdown,
+                      'fa-caret-down': !this.state.hideInventoryDropdown,
+                    })}
+                    aria-hidden="true"
+                  />
+                </div>
+                <ul className="dropdown-list-child" hidden={this.state.hideInventoryDropdown}>
+                  <li>
+                    <NavLink to="/r/inventory/base/list">Base Inventory</NavLink>
+                  </li>
+
+                  <li>
+                    <NavLink to="/r/inventory/list">Inventory</NavLink>
+                  </li>
+                </ul>
               </li>
               <li className="dropdown-list-parent">
-                <div
-                  className="parent-list"
-                  onClick={this.toggleChecklistDropdown}
-                >
+                <div className="parent-list" onClick={this.toggleChecklistDropdown}>
                   <i className="fa fa-check-square-o" aria-hidden="true" />
                   Checklists
+                  <i
+                    className={classnames('fa', 'caret', {
+                      'fa-caret-right': this.state.hideChecklistDropdown,
+                      'fa-caret-down': !this.state.hideChecklistDropdown,
+                    })}
+                    aria-hidden="true"
+                  />
                 </div>
-                <ul
-                  className="dropdown-list-child"
-                  hidden={this.state.hideChecklistDropdown}
-                >
+                <ul className="dropdown-list-child" hidden={this.state.hideChecklistDropdown}>
                   <li>
-                    <NavLink to="/r/checklist/campaigns">
-                      <i className="fa fa-columns" aria-hidden="true" />
-                      Campaign
-                    </NavLink>
+                    <NavLink to="/r/checklist/campaigns">Campaign</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/r/checklist/settings/permissions/list">
-                      <i className="fa fa-cog" aria-hidden="true" />
-                      Settings
-                    </NavLink>
+                    <NavLink to="/r/checklist/settings/permissions/list">Settings</NavLink>
+                  </li>
+                </ul>
+              </li>
+              <li className="dropdown-list-parent">
+                <div className="parent-list" onClick={this.toggleBookingDropdown}>
+                  <i className="fa fa-check-square-o" aria-hidden="true" />
+                  Booking Engine
+                  <i
+                    className={classnames('fa', 'caret', {
+                      'fa-caret-right': this.state.hideBookingDropdown,
+                      'fa-caret-down': !this.state.hideBookingDropdown,
+                    })}
+                    aria-hidden="true"
+                  />
+                </div>
+                <ul className="dropdown-list-child" hidden={this.state.hideBookingDropdown}>
+                  <li>
+                    <NavLink to="/r/booking/base/list">Base Booking</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/r/booking/template/list">Booking Templates</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/r/booking/campaigns">Manage Booking</NavLink>
                   </li>
                 </ul>
               </li>

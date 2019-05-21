@@ -140,9 +140,8 @@
              </div><br>
 
                </td>
-               <td class="col-md-8">
-                 <!-- <textarea rows="4" cols="50" name="comments"  ng-model="filter.detail.comments" ng-change="addComments(filter.detail,filter.detail.comments)"class="form-control spacing"  permission = "[permissions.addComments]"></textarea> -->
-                 <!-- <td> -->
+               <!-- <td class="col-md-8">
+
                  <div class="">
                     <button type="button" class="btn btn-danger" data-target="#addComments" data-toggle="modal" ng-click="getSupplierForComments(supplier)">Add</button></br>
                  </div>
@@ -150,8 +149,7 @@
                     <button type="button" class="btn btn-danger"   ng-click="viewComments(supplier)">View</button>
                  </div>
 
-                 <!-- </td> -->
-               </td>
+               </td> -->
              </tr>
            </tbody>
            <tfoot>
@@ -214,19 +212,30 @@
      <!--End: Code for Audit Date Modal Window -->
      <!--Start: Code for manage date Modal Window -->
      <div id="manageDatesModal" class="modal fade">
-       <div class="modal-dialog" style="width:700px">
+       <div class="modal-dialog" style="width:800px">
          <div class="modal-content">
            <div class="modal-header">
              <button type="button" class="close" data-dismiss="modal" ng-click="resetData()" aria-hidden="true">&times;</button>
              <h4 class="modal-title">Manage Activity Dates</h4>
              <hr/>
              <div class = "modal-body" style = "width: 650px; height: 300px;">
+               <div class="col-md-3">
+                 <label>Select Organisation:</label>
+                   <select ng-model= "orgId" ng-change="getUsersList(orgId)" class="form-control">
+                     <option ng-repeat = "org in organisationList" value = "{{org.organisation_id}}">{{org.name}}</option>
+                   </select>
+               </div>
                <div class="modal-body col-md-4 table-responsive" style="width: 650px; height: 350px">
                    <table class="table table-bordered table-align">
                      <tbody>
+                       <tr>
+                         <td>Activity</td>
+                         <td>Date</td>
+                         <td>Select User</td>
+                       </tr>
                        <tr ng-repeat = "inventory in invActivityData">
                          <td class="col-md-1">{{inventory.activity_type}}</td>
-                         <td class="col-md-2">
+                         <td class="col-md-3">
                            <!-- <input type="text" ng-model="inventory.act_date.date" ng-change="setDate(inventory.act_date.date)" class="form-control col-md-2" uib-datepicker-popup="yyyy-MM-dd" is-open="popup1" min-date="today" datepicker-options="dateOptions" close-text="Close"  ng-model-options="{timezone:'UTC'}"/>
                            <button type="button" class="btn btn-default" ng-click="popup1 = true"><i class="glyphicon glyphicon-calendar"></i></button> -->
                            <p class="input-group">
@@ -236,7 +245,8 @@
                              </span>
                            </p>
                          </td>
-                         <td class="col-md-2">
+
+                         <td class="col-md-3">
                            <select class="form-control spacing" ng-model="inventory.act_date.userCode">
                              <option ng-repeat="user in userList" value="{{user.id}}">{{user.username}}</option>
                            </select>
@@ -412,7 +422,7 @@
      </div>
 
      <!--START : add comments modal  -->
-     <div id="addComments" class="modal fade">
+     <!-- <div id="addComments" class="modal fade">
        <div class="modal-dialog">
          <div class="modal-content">
            <div class="modal-header">
@@ -442,10 +452,10 @@
 
          </div>
        </div>
-     </div>
+     </div> -->
      <!--END : add comments modal  -->
      <!--START : view comments modal  -->
-     <div id="viewComments" class="modal fade">
+     <!-- <div id="viewComments" class="modal fade">
        <div class="modal-dialog">
          <div class="modal-content">
            <div class="modal-header">
@@ -478,10 +488,8 @@
                </table>
              </div>
            </div><br>
-           <!-- <div> -->
              <br>
-           <!-- </div> -->
          </br></br>
          </div>
        </div>
-     </div>
+     </div> -->
