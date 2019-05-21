@@ -847,8 +847,6 @@ $scope.multiSelect =
              $scope.usersMapListWithObjects = [];
              angular.forEach($scope.userList, function(data){
                $scope.usersMapListWithObjects[data.id] = data;
-               $scope.UserDataAssigned = data.username;
-               console.log($scope.UserDataAssigned);
              })
              console.log($scope.usersMapListWithObjects);
            })
