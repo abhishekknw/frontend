@@ -158,6 +158,7 @@ export default class CreateType extends React.Component {
       name: this.state.name,
       base_supplier_type_id: this.state.selectedBaseSupplierType.value,
       supplier_attributes: this.state.supplier_attributes,
+      inventory_list: this.state.inventory_list,
     };
 
     this.props.postSupplierType({ data }, () => {
@@ -387,8 +388,54 @@ export default class CreateType extends React.Component {
     });
   }
 
-  renderInventoryRow(inventory) {
-    return <div key={inventory._id}>{inventory.name}</div>;
+  renderInventoryRow(inventory, index) {
+    const onAttributeChange = (attribute, attributeIndex, event) => {
+      const newInventory = { ...inventory };
+      newInventory.inventory_attributes[attributeIndex].value = !!event.target.checked;
+
+      const newInventoryList = this.state.inventory_list.slice();
+      newInventoryList[index] = newInventory;
+
+      this.setState({
+        inventory_list: newInventoryList,
+      });
+    };
+
+    const onInventoryRemove = () => {
+      const newInventoryList = this.state.inventory_list.slice();
+      newInventoryList.splice(index, 1);
+
+      this.setState({
+        inventory_list: newInventoryList,
+      });
+    };
+
+    return (
+      <div className="inventory-row" key={inventory.name}>
+        <div key={inventory._id} className="inventory-row__heading">
+          {inventory.name}
+        </div>
+        <div className="inventory-row__items">
+          {inventory.inventory_attributes.map((attribute, index) => (
+            <div className="item" key={attribute.name}>
+              <input
+                type="checkbox"
+                className="input-checkbox"
+                checked={attribute.value || attribute.is_required}
+                onChange={onAttributeChange.bind(this, attribute, index)}
+                disabled={attribute.is_required}
+              />
+              {attribute.name}
+            </div>
+          ))}
+        </div>
+        <div className="inventory-row__action">
+          <button type="button" className="btn btn--link" onClick={onInventoryRemove}>
+            Remove
+          </button>
+        </div>
+      </div>
+    );
   }
 
   render() {
