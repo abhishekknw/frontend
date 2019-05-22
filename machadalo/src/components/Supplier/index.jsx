@@ -1,14 +1,13 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import CreateType from './SupplierType/CreateType';
+import EditType from './SupplierType/Edit';
 import CreateBaseType from './BaseSupplierType/CreateBaseType';
 import CreateSupplier from './Supplier/CreateSupplier';
 import SupplierList from './Supplier/SupplierList';
 import SupplierTypeList from './SupplierType/SupplierTypeList';
 import BaseSupplierTypeList from './BaseSupplierType/BaseSupplierTypeList';
 import EditSupplier from './Supplier/EditSupplier';
-import EditSupplierType from './SupplierType/EditSupplierType';
 import EditBaseSupplierType from './BaseSupplierType/EditBaseSupplierType';
 
 import './index.css';
@@ -27,63 +26,49 @@ export default class Supplier extends React.Component {
           <Route
             exact
             path={`${match.path}/create`}
-            render={componentProps => (
-              <CreateSupplier {...this.props} {...componentProps} />
-            )}
+            render={(componentProps) => <CreateSupplier {...this.props} {...componentProps} />}
           />
           <Route
             exact
             path={`${match.path}/list`}
-            render={componentProps => (
-              <SupplierList {...this.props} {...componentProps} />
-            )}
+            render={(componentProps) => <SupplierList {...this.props} {...componentProps} />}
           />
           <Route
             exact
             path={`${match.path}/edit/:supplierId`}
-            render={componentProps => (
-              <EditSupplier {...this.props} {...componentProps} />
-            )}
+            render={(componentProps) => <EditSupplier {...this.props} {...componentProps} />}
           />
           <Route
             exact
             path={`${match.path}/type/create`}
-            render={componentProps => (
-              <CreateType {...this.props} {...componentProps} />
-            )}
+            render={(componentProps) => <EditType {...this.props} {...componentProps} />}
           />
           <Route
             exact
             path={`${match.path}/type/list`}
-            render={componentProps => (
-              <SupplierTypeList {...this.props} {...componentProps} />
-            )}
+            render={(componentProps) => <SupplierTypeList {...this.props} {...componentProps} />}
           />
           <Route
             exact
             path={`${match.path}/type/edit/:supplierTypeId`}
-            render={componentProps => (
-              <EditSupplierType {...this.props} {...componentProps} />
-            )}
+            render={(componentProps) => <EditType {...this.props} {...componentProps} />}
           />
           <Route
             exact
             path={`${match.path}/base-type/create`}
-            render={componentProps => (
-              <CreateBaseType {...this.props} {...componentProps} />
-            )}
+            render={(componentProps) => <CreateBaseType {...this.props} {...componentProps} />}
           />
           <Route
             exact
             path={`${match.path}/base-type/list`}
-            render={componentProps => (
+            render={(componentProps) => (
               <BaseSupplierTypeList {...this.props} {...componentProps} />
             )}
           />
           <Route
             exact
             path={`${match.path}/base-type/edit/:baseSupplierTypeId`}
-            render={componentProps => (
+            render={(componentProps) => (
               <EditBaseSupplierType {...this.props} {...componentProps} />
             )}
           />

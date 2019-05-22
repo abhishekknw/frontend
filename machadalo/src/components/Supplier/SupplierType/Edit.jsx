@@ -36,11 +36,27 @@ const getAttributeTypeOption = (value) => {
   return { value };
 };
 
+const getOption = (options, value, { optionValueKey }) => {
+  if (!options || !options.length) return {};
+
+  for (let i = 0, l = options.length; i < l; i += 1) {
+    if (options[i][optionValueKey] === value) {
+      return options[i];
+    }
+  }
+
+  return {};
+};
+
 export default class CreateType extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    const suplierTypeId = this.getSupplierTypeId();
 
     this.state = {
+      isEditMode: !!suplierTypeId,
+      suplierTypeId,
       name: '',
       supplier_attributes: [{ name: '', type: '', is_required: false }],
       baseSupplierTypeOption: [],
@@ -70,51 +86,56 @@ export default class CreateType extends React.Component {
     this.onAddInventory = this.onAddInventory.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getBaseSupplierTypeList();
     this.props.getInventoryList();
+    this.props.getSupplierType(this.props.match.params.supplierTypeId);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    const { supplierType: prevSupplierType } = prevProps;
+    const { baseSupplierType: newBaseSupplierType, supplierType: newSupplierType } = this.props;
+    const newState = {};
+
     if (
-      this.state.baseSupplierTypeOption.length !==
-      this.props.baseSupplierType.baseSupplierTypeList.length
+      this.state.baseSupplierTypeOption.length !== newBaseSupplierType.baseSupplierTypeList.length
     ) {
       let baseSupplierTypeOption = [];
-      this.props.baseSupplierType.baseSupplierTypeList.forEach((baseSupplierType) => {
+      newBaseSupplierType.baseSupplierTypeList.forEach((baseSupplierType) => {
         baseSupplierTypeOption.push({
           value: baseSupplierType.id,
           label: baseSupplierType.name,
         });
       });
-      this.setState({
-        baseSupplierTypeOption,
-      });
+
+      newState.baseSupplierTypeOption = baseSupplierTypeOption;
+
+      if (newSupplierType.currentSupplierType) {
+        newState.selectedBaseSupplierType = getOption(
+          baseSupplierTypeOption,
+          newSupplierType.currentSupplierType.base_supplier_type_id,
+          { optionValueKey: 'value' }
+        );
+      }
     }
 
-    // if (
-    //   this.state.supplierTypeOption.length !==
-    //   this.props.supplierType.supplierTypeList.length
-    // ) {
-    //   let supplierTypeOption = [];
-    //   this.props.supplierType.supplierTypeList.forEach(supplierType => {
-    //     supplierTypeOption.push({
-    //       value: supplierType[optionValueKey],
-    //       label: supplierType.name,
-    //       attributes: supplierType[supplierAttribute].map(attribute => {
-    //         if (attribute.hasOwnProperty('isChecked')) {
-    //           return attribute;
-    //         }
-    //         let checkedAttribute = Object.assign({}, attribute);
-    //         checkedAttribute.isChecked = true;
-    //         return checkedAttribute;
-    //       })
-    //     });
-    //   });
-    //   this.setState({
-    //     supplierTypeOption
-    //   });
-    // }
+    if (
+      this.state.isEditMode &&
+      !prevSupplierType.currentSupplierType &&
+      newSupplierType.currentSupplierType
+    ) {
+      newState.name = newSupplierType.currentSupplierType.name;
+      newState.selectedBaseSupplierType = getOption(
+        this.state.baseSupplierTypeOption,
+        newSupplierType.currentSupplierType.base_supplier_type_id,
+        { optionValueKey: 'value' }
+      );
+      newState.supplier_attributes = newSupplierType.currentSupplierType.supplier_attributes;
+    }
+
+    if (Object.keys(newState).length) {
+      this.setState(newState);
+    }
   }
 
   onCancelOptionModal() {
@@ -154,6 +175,9 @@ export default class CreateType extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
+    const { isEditMode, suplierTypeId } = this.state;
+    const { history } = this.props;
+
     let data = {
       name: this.state.name,
       base_supplier_type_id: this.state.selectedBaseSupplierType.value,
@@ -161,10 +185,23 @@ export default class CreateType extends React.Component {
       inventory_list: this.state.inventory_list,
     };
 
-    this.props.postSupplierType({ data }, () => {
-      toastr.success('', 'Supplier Type created successfully');
-      this.props.history.push('/r/supplier/type/list');
-    });
+    if (isEditMode) {
+      this.props.updateSupplierType(
+        {
+          data,
+          suplierTypeId,
+        },
+        () => {
+          toastr.success('', 'Supplier Type updated successfully');
+          history.push('/r/supplier/type/list');
+        }
+      );
+    } else {
+      this.props.postSupplierType({ data }, () => {
+        toastr.success('', 'Supplier Type created successfully');
+        this.props.history.push('/r/supplier/type/list');
+      });
+    }
   }
 
   onCancelSupplierModal() {
@@ -229,6 +266,11 @@ export default class CreateType extends React.Component {
       supplier_attributes: newAttributes,
     });
   }
+
+  getSupplierTypeId = () => {
+    const { match } = this.props;
+    return match.params.supplierTypeId;
+  };
 
   handleAttributeChange(attribute, index) {
     const attributes = [...this.state.supplier_attributes];
@@ -440,7 +482,7 @@ export default class CreateType extends React.Component {
 
   render() {
     const { baseInventory } = this.props;
-    const { inventory_list } = this.state;
+    const { isEditMode, inventory_list } = this.state;
 
     const usedInventoryIds = inventory_list.map((item) => item._id);
     const inventoryList = baseInventory.inventoryList.filter(
@@ -450,7 +492,7 @@ export default class CreateType extends React.Component {
     return (
       <div className="createform">
         <div className="createform__title">
-          <h3>Create Supplier Type </h3>
+          <h3>Supplier Type - {isEditMode ? 'Edit' : 'Create'}</h3>
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
