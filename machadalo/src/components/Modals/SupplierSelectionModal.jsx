@@ -16,8 +16,8 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
     padding: '5px 10px 10px',
     maxHeight: '550px',
-    minHeight: '200px'
-  }
+    minHeight: '200px',
+  },
 };
 
 export default class SelectAttributeModal extends React.Component {
@@ -25,7 +25,7 @@ export default class SelectAttributeModal extends React.Component {
     super(props);
     this.state = {
       supplierTypeOption: [],
-      selectedSupplierType: undefined
+      selectedSupplierType: undefined,
     };
     this.renderOptionRow = this.renderOptionRow.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -36,9 +36,7 @@ export default class SelectAttributeModal extends React.Component {
   componentWillMount() {
     if (this.props.attributeInfo.attributeType === 'SUPPLIER_TYPE') {
       this.props.getSupplierTypeList();
-    } else if (
-      this.props.attributeInfo.attributeType === 'BASE_SUPPLIER_TYPE'
-    ) {
+    } else if (this.props.attributeInfo.attributeType === 'BASE_SUPPLIER_TYPE') {
       this.props.getBaseSupplierTypeList();
     } else if (this.props.attributeInfo.attributeType === 'INVENTORY_TYPE') {
       this.props.getBaseInventory();
@@ -47,14 +45,14 @@ export default class SelectAttributeModal extends React.Component {
     }
 
     this.setState({
-      selectedSupplierType: this.props.selectedModalSupplierType
+      selectedSupplierType: this.props.selectedModalSupplierType,
     });
   }
 
   componentWillUnmount() {
     this.setState({
       supplierTypeOption: [],
-      selectedSupplierType: undefined
+      selectedSupplierType: undefined,
     });
   }
 
@@ -67,9 +65,7 @@ export default class SelectAttributeModal extends React.Component {
       supplierType = 'supplierType';
       listKey = 'supplierTypeList';
       supplierAttribute = 'supplier_attributes';
-    } else if (
-      this.props.attributeInfo.attributeType === 'BASE_SUPPLIER_TYPE'
-    ) {
+    } else if (this.props.attributeInfo.attributeType === 'BASE_SUPPLIER_TYPE') {
       supplierType = 'baseSupplierType';
       listKey = 'baseSupplierTypeList';
       supplierAttribute = 'supplier_attributes';
@@ -87,46 +83,43 @@ export default class SelectAttributeModal extends React.Component {
       // Unsupported attribute
     }
 
-    if (
-      this.state.supplierTypeOption.length !==
-      this.props[supplierType][listKey].length
-    ) {
+    if (this.state.supplierTypeOption.length !== this.props[supplierType][listKey].length) {
       let supplierTypeOption = [];
-      this.props[supplierType][listKey].forEach(supplierType => {
+      this.props[supplierType][listKey].forEach((supplierType) => {
         supplierTypeOption.push({
           value: supplierType[optionValueKey],
           label: supplierType.name,
-          attributes: supplierType[supplierAttribute].map(attribute => {
+          attributes: supplierType[supplierAttribute].map((attribute) => {
             if (attribute.hasOwnProperty('isChecked')) {
               return attribute;
             }
             let checkedAttribute = Object.assign({}, attribute);
             checkedAttribute.isChecked = true;
             return checkedAttribute;
-          })
+          }),
         });
       });
       this.setState({
-        supplierTypeOption
+        supplierTypeOption,
       });
     }
   }
 
   onSelectSupplierType(selectedSupplierType) {
     this.setState({
-      selectedSupplierType
+      selectedSupplierType,
     });
   }
 
   handleInputChange(event, option) {
     let { selectedSupplierType } = this.state;
-    selectedSupplierType.attributes.forEach(attribute => {
+    selectedSupplierType.attributes.forEach((attribute) => {
       if (attribute.name === option.name) {
         attribute.isChecked = event.target.checked;
       }
     });
     this.setState({
-      selectedSupplierType
+      selectedSupplierType,
     });
   }
 
@@ -146,7 +139,7 @@ export default class SelectAttributeModal extends React.Component {
           type="checkbox"
           className="input-checkbox"
           checked={option.isChecked}
-          onChange={event => this.handleInputChange(event, option)}
+          onChange={(event) => this.handleInputChange(event, option)}
           disabled={option.isRequired}
         />
         {option.name}
@@ -159,6 +152,7 @@ export default class SelectAttributeModal extends React.Component {
   render() {
     let { attributeInfo } = this.props;
     let { selectedSupplierType } = this.state;
+    console.log('this.props: ', this.props);
 
     let supplierType;
     if (attributeInfo.attributeType === 'SUPPLIER_TYPE') {
@@ -172,11 +166,7 @@ export default class SelectAttributeModal extends React.Component {
     }
 
     return (
-      <Modal
-        isOpen={this.props.showOptionModal}
-        style={customStyles}
-        ariaHideApp={false}
-      >
+      <Modal isOpen={this.props.showOptionModal} style={customStyles} ariaHideApp={false}>
         <div className="modal-title">
           <h3>Select Attributes for {supplierType}</h3>
         </div>
@@ -206,11 +196,7 @@ export default class SelectAttributeModal extends React.Component {
               >
                 Submit
               </button>{' '}
-              <button
-                type="button"
-                className="btn btn--danger"
-                onClick={this.props.onCancel}
-              >
+              <button type="button" className="btn btn--danger" onClick={this.props.onCancel}>
                 Close
               </button>
             </div>

@@ -11,7 +11,7 @@ const optionStyle = {
   marginTop: '5px',
   textDecoration: 'underline',
   cursor: 'pointer',
-  paddingBottom: '10px'
+  paddingBottom: '10px',
 };
 
 const AttributeTypes = [
@@ -22,11 +22,11 @@ const AttributeTypes = [
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
   { value: 'SUPPLIER_TYPE', label: 'Supplier Type' },
-  { value: 'BASE_SUPPLIER_TYPE', label: 'Base Supplier Type' }
+  { value: 'BASE_SUPPLIER_TYPE', label: 'Base Supplier Type' },
 ];
 
 // Get attribute type option from string
-const getAttributeTypeOption = value => {
+const getAttributeTypeOption = (value) => {
   for (let i = 0, l = AttributeTypes.length; i < l; i += 1) {
     if (AttributeTypes[i].value === value) {
       return AttributeTypes[i];
@@ -49,7 +49,8 @@ export default class CreateType extends React.Component {
       showSupplierSelectionModal: false,
       attributeOptions: [''],
       attributeInfo: {},
-      selectedModalSupplierType: undefined
+      selectedModalSupplierType: undefined,
+      inventory_list: [],
     };
 
     this.onAddAttribute = this.onAddAttribute.bind(this);
@@ -64,10 +65,14 @@ export default class CreateType extends React.Component {
     this.onSubmitSupplierModal = this.onSubmitSupplierModal.bind(this);
     this.onOpenSupplierModal = this.onOpenSupplierModal.bind(this);
     this.onSelectBaseSupplierType = this.onSelectBaseSupplierType.bind(this);
+    this.renderInventoryRow = this.renderInventoryRow.bind(this);
+    this.onInventoryChange = this.onInventoryChange.bind(this);
+    this.onAddInventory = this.onAddInventory.bind(this);
   }
 
   componentWillMount() {
     this.props.getBaseSupplierTypeList();
+    this.props.getInventoryList();
   }
 
   componentDidUpdate() {
@@ -76,25 +81,47 @@ export default class CreateType extends React.Component {
       this.props.baseSupplierType.baseSupplierTypeList.length
     ) {
       let baseSupplierTypeOption = [];
-      this.props.baseSupplierType.baseSupplierTypeList.forEach(
-        baseSupplierType => {
-          baseSupplierTypeOption.push({
-            value: baseSupplierType.id,
-            label: baseSupplierType.name
-          });
-        }
-      );
+      this.props.baseSupplierType.baseSupplierTypeList.forEach((baseSupplierType) => {
+        baseSupplierTypeOption.push({
+          value: baseSupplierType.id,
+          label: baseSupplierType.name,
+        });
+      });
       this.setState({
-        baseSupplierTypeOption
+        baseSupplierTypeOption,
       });
     }
+
+    // if (
+    //   this.state.supplierTypeOption.length !==
+    //   this.props.supplierType.supplierTypeList.length
+    // ) {
+    //   let supplierTypeOption = [];
+    //   this.props.supplierType.supplierTypeList.forEach(supplierType => {
+    //     supplierTypeOption.push({
+    //       value: supplierType[optionValueKey],
+    //       label: supplierType.name,
+    //       attributes: supplierType[supplierAttribute].map(attribute => {
+    //         if (attribute.hasOwnProperty('isChecked')) {
+    //           return attribute;
+    //         }
+    //         let checkedAttribute = Object.assign({}, attribute);
+    //         checkedAttribute.isChecked = true;
+    //         return checkedAttribute;
+    //       })
+    //     });
+    //   });
+    //   this.setState({
+    //     supplierTypeOption
+    //   });
+    // }
   }
 
   onCancelOptionModal() {
     this.setState({
       showOptionModal: false,
       attributeOptions: [''],
-      attributeInfo: {}
+      attributeInfo: {},
     });
   }
 
@@ -102,12 +129,12 @@ export default class CreateType extends React.Component {
     this.setState({
       showOptionModal: false,
       attributeOptions: [''],
-      attributeInfo: {}
+      attributeInfo: {},
     });
 
     let newAttributes = Object.assign({}, attributeInfo.attribute, {
       type: attributeInfo.attributeType,
-      options: options
+      options: options,
     });
     this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
   }
@@ -119,8 +146,8 @@ export default class CreateType extends React.Component {
       attributeInfo: {
         attributeType,
         attribute,
-        attrIndex
-      }
+        attrIndex,
+      },
     });
   }
 
@@ -130,7 +157,7 @@ export default class CreateType extends React.Component {
     let data = {
       name: this.state.name,
       base_supplier_type_id: this.state.selectedBaseSupplierType.value,
-      supplier_attributes: this.state.supplier_attributes
+      supplier_attributes: this.state.supplier_attributes,
     };
 
     this.props.postSupplierType({ data }, () => {
@@ -142,19 +169,19 @@ export default class CreateType extends React.Component {
   onCancelSupplierModal() {
     this.setState({
       showSupplierSelectionModal: false,
-      attributeInfo: {}
+      attributeInfo: {},
     });
   }
 
   onSubmitSupplierModal(value, attributeInfo) {
     this.setState({
       showSupplierSelectionModal: false,
-      attributeInfo: {}
+      attributeInfo: {},
     });
 
     let newAttributes = Object.assign({}, attributeInfo.attribute, {
       type: attributeInfo.attributeType,
-      value
+      value,
     });
     this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
   }
@@ -166,8 +193,25 @@ export default class CreateType extends React.Component {
       attributeInfo: {
         attributeType,
         attribute,
-        attrIndex
-      }
+        attrIndex,
+      },
+    });
+  }
+
+  onInventoryChange(selectedInventory) {
+    this.setState({
+      selectedInventory,
+    });
+  }
+
+  onAddInventory() {
+    const { inventory_list, selectedInventory } = this.state;
+
+    inventory_list.push(selectedInventory);
+
+    this.setState({
+      inventory_list,
+      selectedInventory: null,
     });
   }
 
@@ -177,11 +221,11 @@ export default class CreateType extends React.Component {
     newAttributes.push({
       name: '',
       type: '',
-      is_required: false
+      is_required: false,
     });
 
     this.setState({
-      supplier_attributes: newAttributes
+      supplier_attributes: newAttributes,
     });
   }
 
@@ -189,27 +233,27 @@ export default class CreateType extends React.Component {
     const attributes = [...this.state.supplier_attributes];
 
     attributes[index] = {
-      ...attribute
+      ...attribute,
     };
 
     this.setState({
-      supplier_attributes: attributes
+      supplier_attributes: attributes,
     });
   }
 
   handleInputChange(event) {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   }
 
   onSelectBaseSupplierType(selectedBaseSupplierType) {
     let { baseSupplierTypeList } = this.props.baseSupplierType;
-    baseSupplierTypeList.forEach(baseSupplierType => {
+    baseSupplierTypeList.forEach((baseSupplierType) => {
       if (baseSupplierType.id === selectedBaseSupplierType.value) {
         this.setState({
           selectedBaseSupplierType,
-          supplier_attributes: baseSupplierType.supplier_attributes
+          supplier_attributes: baseSupplierType.supplier_attributes,
         });
         return;
       }
@@ -217,10 +261,9 @@ export default class CreateType extends React.Component {
   }
 
   renderAttributeRow(attribute, attrIndex) {
-    const isDisabled =
-      attribute.hasOwnProperty('is_editable') && !attribute.is_editable;
+    const isDisabled = attribute.hasOwnProperty('is_editable') && !attribute.is_editable;
 
-    const onNameChange = event => {
+    const onNameChange = (event) => {
       const newAttribute = Object.assign({}, attribute);
 
       newAttribute.name = event.target.value;
@@ -228,7 +271,7 @@ export default class CreateType extends React.Component {
       this.handleAttributeChange(newAttribute, attrIndex);
     };
 
-    const onTypeChange = item => {
+    const onTypeChange = (item) => {
       if (item.value === 'DROPDOWN') {
         this.setState({
           showOptionModal: true,
@@ -236,8 +279,8 @@ export default class CreateType extends React.Component {
           attributeInfo: {
             attributeType: item.value,
             attribute,
-            attrIndex
-          }
+            attrIndex,
+          },
         });
         return;
       } else if (
@@ -251,8 +294,8 @@ export default class CreateType extends React.Component {
           attributeInfo: {
             attributeType: item.value,
             attribute,
-            attrIndex
-          }
+            attrIndex,
+          },
         });
         return;
       }
@@ -263,7 +306,7 @@ export default class CreateType extends React.Component {
       this.handleAttributeChange(newAttribute, attrIndex);
     };
 
-    const onRequiredChange = event => {
+    const onRequiredChange = (event) => {
       const newAttribute = Object.assign({}, attribute);
 
       newAttribute.is_required = !!event.target.checked;
@@ -298,12 +341,7 @@ export default class CreateType extends React.Component {
                 className="show-option"
                 style={optionStyle}
                 onClick={() =>
-                  this.onOpenOptionModal(
-                    attribute.options,
-                    attribute.type,
-                    attribute,
-                    attrIndex
-                  )
+                  this.onOpenOptionModal(attribute.options, attribute.type, attribute, attrIndex)
                 }
               >
                 Show Options
@@ -318,9 +356,7 @@ export default class CreateType extends React.Component {
               <p
                 className="show-option"
                 style={optionStyle}
-                onClick={() =>
-                  this.onOpenSupplierModal(attribute.type, attribute, attrIndex)
-                }
+                onClick={() => this.onOpenSupplierModal(attribute.type, attribute, attrIndex)}
               >
                 Show Attributes
               </p>
@@ -345,7 +381,25 @@ export default class CreateType extends React.Component {
     );
   }
 
+  onSelectSupplierType(selectedSupplierType) {
+    this.setState({
+      selectedSupplierType,
+    });
+  }
+
+  renderInventoryRow(inventory) {
+    return <div key={inventory._id}>{inventory.name}</div>;
+  }
+
   render() {
+    const { baseInventory } = this.props;
+    const { inventory_list } = this.state;
+
+    const usedInventoryIds = inventory_list.map((item) => item._id);
+    const inventoryList = baseInventory.inventoryList.filter(
+      (item) => usedInventoryIds.indexOf(item._id) === -1
+    );
+
     return (
       <div className="createform">
         <div className="createform__title">
@@ -378,18 +432,38 @@ export default class CreateType extends React.Component {
 
             <div className="createform__form__header">Attributes</div>
 
-            <div>
-              {this.state.supplier_attributes.map(this.renderAttributeRow)}
+            <div>{this.state.supplier_attributes.map(this.renderAttributeRow)}</div>
+
+            <div className="createform__form__inline">
+              <div className="createform__form__action">
+                <button type="button" className="btn btn--danger" onClick={this.onAddAttribute}>
+                  Add Attribute
+                </button>
+              </div>
+            </div>
+
+            <div className="createform__form__header">Inventory</div>
+
+            <div>{this.state.inventory_list.map(this.renderInventoryRow)}</div>
+
+            <div className="createform__form__row">
+              <div className="createform__form__inline">
+                <div className="form-control">
+                  <Select
+                    options={inventoryList}
+                    getOptionLabel={(option) => option.name}
+                    getOptionValue={(option) => option._id}
+                    value={this.state.selectedInventory}
+                    onChange={this.onInventoryChange}
+                  />
+                </div>
+              </div>
             </div>
 
             <div className="createform__form__inline">
               <div className="createform__form__action">
-                <button
-                  type="button"
-                  className="btn btn--danger"
-                  onClick={this.onAddAttribute}
-                >
-                  Add Attribute
+                <button type="button" className="btn btn--danger" onClick={this.onAddInventory}>
+                  Add Inventory
                 </button>
               </div>
 

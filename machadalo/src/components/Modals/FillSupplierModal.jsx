@@ -96,7 +96,11 @@ export default class FillSupplierModal extends React.Component {
   onSubmit() {
     const { selectedSupplierType, pricingRows } = this.state;
 
-    this.props.onSubmit(selectedSupplierType, this.props.columnInfo, pricingRows);
+    this.props.onSubmit(
+      selectedSupplierType,
+      this.props.columnInfo,
+      pricingRows.map((item) => ({ ...item, days: item.days.value }))
+    );
   }
 
   renderAttributeRow(attribute, attrIndex) {
