@@ -36,9 +36,12 @@ export default class FillSupplierModal extends React.Component {
     super(props);
     this.state = {
       selectedSupplierType: undefined,
-      days: 0,
-      price: null,
-      pricingRows: [1],
+      pricingRows: [
+        {
+          days: null,
+          price: null,
+        },
+      ],
     };
     this.renderAttributeRow = this.renderAttributeRow.bind(this);
     this.renderPricingRow = this.renderPricingRow.bind(this);
@@ -47,8 +50,6 @@ export default class FillSupplierModal extends React.Component {
     this.onSelectSupplierType = this.onSelectSupplierType.bind(this);
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
     this.renderInputField = this.renderInputField.bind(this);
-    this.onDaysChange = this.onDaysChange.bind(this);
-    this.onPriceChange = this.onPriceChange.bind(this);
     this.onAddPricingClick = this.onAddPricingClick.bind(this);
   }
 
@@ -80,10 +81,6 @@ export default class FillSupplierModal extends React.Component {
     });
   }
 
-  onDaysChange() {}
-
-  onPriceChange() {}
-
   handleInputChange(event, option) {
     let { selectedSupplierType } = this.state;
     selectedSupplierType.attributes.forEach((attribute) => {
@@ -97,9 +94,9 @@ export default class FillSupplierModal extends React.Component {
   }
 
   onSubmit() {
-    let { selectedSupplierType } = this.state;
+    const { selectedSupplierType, pricingRows } = this.state;
 
-    this.props.onSubmit(selectedSupplierType, this.props.columnInfo);
+    this.props.onSubmit(selectedSupplierType, this.props.columnInfo, pricingRows);
   }
 
   renderAttributeRow(attribute, attrIndex) {
@@ -152,24 +149,33 @@ export default class FillSupplierModal extends React.Component {
       });
     };
 
+    const onCancel = () => {
+      const { pricingRows } = this.state;
+      pricingRows.splice(index, 1);
+      this.setState({
+        pricingRows,
+      });
+    };
+
     return (
       <div className="createform__form__inline supplier-modal-input" key={index}>
         <div className="form-control">
           <Select
             options={DaysOptions}
             value={row.days}
-            onChange={this.onDaysChange}
+            onChange={onDaysChange}
             classNamePrefix="form-select"
           />
         </div>
         <div className="form-control">
-          <input
-            type="number"
-            placeholder="Price"
-            value={row.price}
-            onChange={this.onPriceChange}
-          />
+          <input type="number" placeholder="Price" value={row.price} onChange={onPriceChange} />
         </div>
+        {''}
+        {this.state.pricingRows.length > 1 ? (
+          <button type="button" className="btn btn--link" onClick={onCancel}>
+            X
+          </button>
+        ) : null}
       </div>
     );
   }

@@ -7,8 +7,8 @@ import FillSupplierModal from '../../Modals/FillSupplierModal';
 
 const customeStyles = {
   input: () => ({
-    height: '24px'
-  })
+    height: '24px',
+  }),
 };
 
 export default class CreateSupplier extends React.Component {
@@ -25,7 +25,7 @@ export default class CreateSupplier extends React.Component {
       attributeValueOptions: [''],
       attributeValueInfo: {},
       showFillSupplierModal: false,
-      currentModalSupplierType: undefined
+      currentModalSupplierType: undefined,
     };
 
     this.renderAttributeRow = this.renderAttributeRow.bind(this);
@@ -46,19 +46,16 @@ export default class CreateSupplier extends React.Component {
   }
 
   componentDidUpdate() {
-    if (
-      this.state.supplierTypeOption.length !==
-      this.props.supplierType.supplierTypeList.length
-    ) {
+    if (this.state.supplierTypeOption.length !== this.props.supplierType.supplierTypeList.length) {
       let supplierTypeOption = [];
-      this.props.supplierType.supplierTypeList.forEach(supplierType => {
+      this.props.supplierType.supplierTypeList.forEach((supplierType) => {
         supplierTypeOption.push({
           value: supplierType.id,
-          label: supplierType.name
+          label: supplierType.name,
         });
       });
       this.setState({
-        supplierTypeOption
+        supplierTypeOption,
       });
     }
   }
@@ -66,20 +63,23 @@ export default class CreateSupplier extends React.Component {
   onCancelFillSupplierModal() {
     this.setState({
       showFillSupplierModal: false,
-      currentModalSupplierType: undefined
+      currentModalSupplierType: undefined,
     });
   }
 
-  onSubmitFillSupplierModal(currentModalSupplierType, attributeInfo) {
+  onSubmitFillSupplierModal(currentModalSupplierType, attributeInfo, pricingDetails) {
     this.setState({
       showFillSupplierModal: false,
       currentModalSupplierType: undefined,
-      attributeValueInfo: {}
+      attributeValueInfo: {},
     });
 
     let newAttributes = Object.assign({}, attributeInfo.attribute, {
-      value: currentModalSupplierType
+      value: currentModalSupplierType,
+      pricing: pricingDetails,
     });
+
+    console.log('newAttributes: ', newAttributes);
     this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
   }
 
@@ -89,8 +89,8 @@ export default class CreateSupplier extends React.Component {
       currentModalSupplierType,
       attributeValueInfo: {
         attribute,
-        attrIndex
-      }
+        attrIndex,
+      },
     });
   }
 
@@ -98,7 +98,7 @@ export default class CreateSupplier extends React.Component {
     this.setState({
       showOptionModal: false,
       attributeValueOptions: [''],
-      attributeValueInfo: {}
+      attributeValueInfo: {},
     });
   }
 
@@ -106,11 +106,11 @@ export default class CreateSupplier extends React.Component {
     this.setState({
       showOptionModal: false,
       attributeValueOptions: [''],
-      attributeValueInfo: {}
+      attributeValueInfo: {},
     });
 
     let newAttributes = Object.assign({}, attributeInfo.attribute, {
-      value: options
+      value: options,
     });
     this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
   }
@@ -121,8 +121,8 @@ export default class CreateSupplier extends React.Component {
       attributeValueOptions: options,
       attributeValueInfo: {
         attribute,
-        attrIndex
-      }
+        attrIndex,
+      },
     });
   }
 
@@ -133,7 +133,8 @@ export default class CreateSupplier extends React.Component {
       name: this.state.name,
       is_custom: false,
       supplier_type_id: this.state.selectedSupplierType.value,
-      supplier_attributes: this.state.supplier_attributes
+      supplier_attributes: this.state.supplier_attributes,
+      price: this.state.pricingDetails,
     };
     this.props.postSupplier({ data }, () => {
       toastr.success('', 'Supplier created successfully');
@@ -147,18 +148,18 @@ export default class CreateSupplier extends React.Component {
     attributes.splice(index, 1, attribute);
 
     this.setState({
-      supplier_attributes: attributes
+      supplier_attributes: attributes,
     });
   }
 
   handleInputChange(event) {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   }
 
   renderInputField(attribute, attrIndex) {
-    const onValueChange = event => {
+    const onValueChange = (event) => {
       const newAttribute = Object.assign({}, attribute);
 
       if (event.target.type === 'number') {
@@ -170,7 +171,7 @@ export default class CreateSupplier extends React.Component {
       this.handleAttributeChange(newAttribute, attrIndex);
     };
 
-    const onDropDownAttributeValueChange = newValue => {
+    const onDropDownAttributeValueChange = (newValue) => {
       const newAttribute = Object.assign({}, attribute);
 
       newAttribute.value = newValue.value;
@@ -208,7 +209,7 @@ export default class CreateSupplier extends React.Component {
         );
       case 'DROPDOWN':
         let attributeValueOptions = [];
-        attribute.options.forEach(option => {
+        attribute.options.forEach((option) => {
           attributeValueOptions.push({ label: option, value: option });
         });
         return (
@@ -224,13 +225,7 @@ export default class CreateSupplier extends React.Component {
           <button
             type="button"
             className="btn btn--danger"
-            onClick={() =>
-              this.onOpenFillSupplierModal(
-                attribute.value,
-                attribute,
-                attrIndex
-              )
-            }
+            onClick={() => this.onOpenFillSupplierModal(attribute.value, attribute, attrIndex)}
           >
             {attribute.value && attribute.value.attributes[0].value
               ? 'Show Base Inventory List'
@@ -243,13 +238,7 @@ export default class CreateSupplier extends React.Component {
           <button
             type="button"
             className="btn btn--danger"
-            onClick={() =>
-              this.onOpenFillSupplierModal(
-                attribute.value,
-                attribute,
-                attrIndex
-              )
-            }
+            onClick={() => this.onOpenFillSupplierModal(attribute.value, attribute, attrIndex)}
           >
             {attribute.value && attribute.value.attributes[0].value
               ? 'Show Inventory List'
@@ -262,13 +251,7 @@ export default class CreateSupplier extends React.Component {
           <button
             type="button"
             className="btn btn--danger"
-            onClick={() =>
-              this.onOpenFillSupplierModal(
-                attribute.value,
-                attribute,
-                attrIndex
-              )
-            }
+            onClick={() => this.onOpenFillSupplierModal(attribute.value, attribute, attrIndex)}
           >
             {attribute.value && attribute.value.attributes[0].value
               ? 'Show Supplier Type Data'
@@ -280,13 +263,7 @@ export default class CreateSupplier extends React.Component {
           <button
             type="button"
             className="btn btn--danger"
-            onClick={() =>
-              this.onOpenFillSupplierModal(
-                attribute.value,
-                attribute,
-                attrIndex
-              )
-            }
+            onClick={() => this.onOpenFillSupplierModal(attribute.value, attribute, attrIndex)}
           >
             {attribute.value && attribute.value.attributes[0].value
               ? 'Show Base Supplier Type Data'
@@ -306,9 +283,7 @@ export default class CreateSupplier extends React.Component {
             <input type="text" value={attribute.name} disabled />
           </div>
 
-          <div className="form-control">
-            {this.renderInputField(attribute, attrIndex)}
-          </div>
+          <div className="form-control">{this.renderInputField(attribute, attrIndex)}</div>
         </div>
       </div>
     );
@@ -316,11 +291,11 @@ export default class CreateSupplier extends React.Component {
 
   onSelectSupplierType(selectedSupplierType) {
     let { supplierTypeList } = this.props.supplierType;
-    supplierTypeList.forEach(supplierType => {
+    supplierTypeList.forEach((supplierType) => {
       if (supplierType.id === selectedSupplierType.value) {
         this.setState({
           selectedSupplierType,
-          supplier_attributes: supplierType.supplier_attributes
+          supplier_attributes: supplierType.supplier_attributes,
         });
         return;
       }
@@ -360,9 +335,7 @@ export default class CreateSupplier extends React.Component {
 
             <div className="createform__form__header">Attributes</div>
 
-            <div>
-              {this.state.supplier_attributes.map(this.renderAttributeRow)}
-            </div>
+            <div>{this.state.supplier_attributes.map(this.renderAttributeRow)}</div>
 
             <div className="createform__form__inline">
               <div className="createform__form__action">
