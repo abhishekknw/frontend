@@ -464,7 +464,7 @@ export default class EditBooking extends React.Component {
     }
 
     return (
-      <div key={index}>
+      <div className="supplier" key={index}>
         <div className="form-control">&nbsp;</div>
         <div className="form-control">
           <p>
