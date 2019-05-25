@@ -11,7 +11,7 @@ const optionStyle = {
   bottom: '-20px',
   textDecoration: 'underline',
   cursor: 'pointer',
-  paddingBottom: '10px'
+  paddingBottom: '10px',
 };
 
 const AttributeTypes = [
@@ -19,7 +19,7 @@ const AttributeTypes = [
   { value: 'STRING', label: 'Text' },
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
-  { value: 'MULTISELECT', label: 'Multi Select' }
+  { value: 'MULTISELECT', label: 'Multi Select' },
 ];
 
 // TODO: Move to constants
@@ -28,7 +28,7 @@ const BaseBookingAttributeTypes = [
   { value: 'STRING', label: 'Text' },
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
-  { value: 'MULTISELECT', label: 'Multi Select' }
+  { value: 'MULTISELECT', label: 'Multi Select' },
 ];
 
 // TODO: Move to constants
@@ -40,11 +40,11 @@ const SupplierTypeAttributeTypes = [
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
   { value: 'SUPPLIER_TYPE', label: 'Supplier Type' },
-  { value: 'BASE_SUPPLIER_TYPE', label: 'Base Supplier Type' }
+  { value: 'BASE_SUPPLIER_TYPE', label: 'Base Supplier Type' },
 ];
 
 // Get attribute type option from string
-const getAttributeTypeOption = value => {
+const getAttributeTypeOption = (value) => {
   for (let i = 0, l = AttributeTypes.length; i < l; i += 1) {
     if (AttributeTypes[i].value === value) {
       return AttributeTypes[i];
@@ -55,7 +55,7 @@ const getAttributeTypeOption = value => {
 };
 
 // Get base booking attribute option from base booking attribute
-const getBaseBookingAttributeOption = value => {
+const getBaseBookingAttributeOption = (value) => {
   for (let i = 0, l = BaseBookingAttributeTypes.length; i < l; i += 1) {
     if (BaseBookingAttributeTypes[i].value === value) {
       return BaseBookingAttributeTypes[i];
@@ -66,7 +66,7 @@ const getBaseBookingAttributeOption = value => {
 };
 
 // Get supplier type attribute option from supplier type
-const getSupplierTypeAttributeOption = value => {
+const getSupplierTypeAttributeOption = (value) => {
   for (let i = 0, l = SupplierTypeAttributeTypes.length; i < l; i += 1) {
     if (SupplierTypeAttributeTypes[i].value === value) {
       return SupplierTypeAttributeTypes[i];
@@ -81,7 +81,7 @@ const getRawAttribute = () => {
   return {
     name: '',
     type: 'STRING',
-    is_required: false
+    is_required: false,
   };
 };
 
@@ -95,24 +95,24 @@ const getOptionFromList = (list, id) => {
   return { id };
 };
 
-const validate = data => {
+const validate = (data) => {
   const errors = {};
 
   if (!data.name.trim()) {
     errors.name = {
-      message: 'Please enter a name for booking template'
+      message: 'Please enter a name for booking template',
     };
   }
 
   if (!data.base_booking_template_id) {
     errors.baseBookingId = {
-      message: 'Please select a base booking template'
+      message: 'Please select a base booking template',
     };
   }
 
   if (!data.supplier_type_id) {
     errors.supplierTypeId = {
-      message: 'Please select an supplier type'
+      message: 'Please select an supplier type',
     };
   }
 
@@ -127,12 +127,12 @@ export default class CreateBookingTemplate extends React.Component {
     const { params } = match;
     const { bookingTemplateId } = params;
     const bookingTemplate = this.getBookingTemplateById({
-      id: bookingTemplateId
+      id: bookingTemplateId,
     });
     let attributes = [
       {
-        ...getRawAttribute()
-      }
+        ...getRawAttribute(),
+      },
     ];
 
     if (bookingTemplateId && bookingTemplate && bookingTemplate.id) {
@@ -154,7 +154,7 @@ export default class CreateBookingTemplate extends React.Component {
       errors: {},
       optionModalVisibility: false,
       columnOptions: [''],
-      attributeInfo: {}
+      attributeInfo: {},
     };
 
     this.onAddAttributeClick = this.onAddAttributeClick.bind(this);
@@ -163,19 +163,11 @@ export default class CreateBookingTemplate extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
-    this.handleBaseBookingAttributeChange = this.handleBaseBookingAttributeChange.bind(
-      this
-    );
-    this.handleSupplierTypeAttributeChange = this.handleSupplierTypeAttributeChange.bind(
-      this
-    );
+    this.handleBaseBookingAttributeChange = this.handleBaseBookingAttributeChange.bind(this);
+    this.handleSupplierTypeAttributeChange = this.handleSupplierTypeAttributeChange.bind(this);
     this.renderAttributeRow = this.renderAttributeRow.bind(this);
-    this.renderBaseBookingAttributeRow = this.renderBaseBookingAttributeRow.bind(
-      this
-    );
-    this.renderSupplierTypeAttributeRow = this.renderSupplierTypeAttributeRow.bind(
-      this
-    );
+    this.renderBaseBookingAttributeRow = this.renderBaseBookingAttributeRow.bind(this);
+    this.renderSupplierTypeAttributeRow = this.renderSupplierTypeAttributeRow.bind(this);
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
     this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
@@ -191,7 +183,7 @@ export default class CreateBookingTemplate extends React.Component {
     const { booking: newBooking, history } = this.props;
     const {
       isCreatingBookingTemplate: prevIsCreatingBookingTemplate,
-      isUpdatingBookingTemplate: prevIsUpdatingBookingTemplate
+      isUpdatingBookingTemplate: prevIsUpdatingBookingTemplate,
     } = prevBooking;
     const {
       isCreatingBookingTemplate: newIsCreatingBookingTemplate,
@@ -199,7 +191,7 @@ export default class CreateBookingTemplate extends React.Component {
       postBookingTemplateError,
       isUpdatingBookingTemplate: newIsUpdatingBookingTemplate,
       putBookingTemplateSuccess,
-      putBookingTemplateError
+      putBookingTemplateError,
     } = newBooking;
 
     if (
@@ -214,10 +206,7 @@ export default class CreateBookingTemplate extends React.Component {
       !newIsCreatingBookingTemplate &&
       postBookingTemplateError
     ) {
-      toastr.error(
-        '',
-        'Failed to create Booking Template. Please try again later.'
-      );
+      toastr.error('', 'Failed to create Booking Template. Please try again later.');
     }
 
     if (
@@ -232,10 +221,7 @@ export default class CreateBookingTemplate extends React.Component {
       !newIsUpdatingBookingTemplate &&
       putBookingTemplateError
     ) {
-      toastr.error(
-        '',
-        'Failed to update Booking Template. Please try again later.'
-      );
+      toastr.error('', 'Failed to update Booking Template. Please try again later.');
     }
   }
 
@@ -243,11 +229,11 @@ export default class CreateBookingTemplate extends React.Component {
     const attributes = [...this.state.attributes];
 
     attributes.push({
-      ...getRawAttribute()
+      ...getRawAttribute(),
     });
 
     this.setState({
-      attributes
+      attributes,
     });
   }
 
@@ -261,15 +247,15 @@ export default class CreateBookingTemplate extends React.Component {
     this.setState({
       baseBookingId: option.id,
       selectedBaseBooking: { ...option },
-      baseBookingAttributes: option.booking_attributes.map(item => ({
+      baseBookingAttributes: option.booking_attributes.map((item) => ({
         ...item,
         selected: true,
-        allowRequired: item.is_required
+        allowRequired: item.is_required,
       })),
       supplierTypeId: null,
       selectedSupplierType: null,
       selectedSupplierAttributes: [],
-      errors
+      errors,
     });
   }
 
@@ -282,15 +268,10 @@ export default class CreateBookingTemplate extends React.Component {
 
     const requiredBaseBookingSupplierAttriutesMap = {};
     if (selectedBaseBooking && selectedBaseBooking.id) {
-      for (
-        let i = 0, l = selectedBaseBooking.supplier_attributes.length;
-        i < l;
-        i += 1
-      ) {
+      for (let i = 0, l = selectedBaseBooking.supplier_attributes.length; i < l; i += 1) {
         if (selectedBaseBooking.supplier_attributes[i].is_required) {
-          requiredBaseBookingSupplierAttriutesMap[
-            selectedBaseBooking.supplier_attributes[i].name
-          ] = selectedBaseBooking.supplier_attributes[i];
+          requiredBaseBookingSupplierAttriutesMap[selectedBaseBooking.supplier_attributes[i].name] =
+            selectedBaseBooking.supplier_attributes[i];
         }
       }
     }
@@ -299,14 +280,14 @@ export default class CreateBookingTemplate extends React.Component {
       supplierTypeId: option.id,
       selectedSupplierType: { ...option },
 
-      selectedSupplierAttributes: option.supplier_attributes.map(item => ({
+      selectedSupplierAttributes: option.supplier_attributes.map((item) => ({
         ...item,
         selected: true,
         // Disable attribute unselect, if an attribute is marked as required in booking template
         disabled: !!requiredBaseBookingSupplierAttriutesMap[item.name],
-        allowRequired: item.is_required
+        allowRequired: item.is_required,
       })),
-      errors
+      errors,
     });
   }
 
@@ -317,8 +298,8 @@ export default class CreateBookingTemplate extends React.Component {
       attributeInfo: {
         attributeType,
         attribute,
-        attrIndex
-      }
+        attrIndex,
+      },
     });
   }
 
@@ -326,7 +307,7 @@ export default class CreateBookingTemplate extends React.Component {
     this.setState({
       optionModalVisibility: false,
       columnOptions: [''],
-      attributeInfo: {}
+      attributeInfo: {},
     });
   }
 
@@ -335,14 +316,14 @@ export default class CreateBookingTemplate extends React.Component {
 
     attributes[attributeInfo.attrIndex] = {
       ...attributes[attributeInfo.attrIndex],
-      options
+      options,
     };
 
     this.setState({
       attributes,
       optionModalVisibility: false,
       columnOptions: [''],
-      attributeInfo: {}
+      attributeInfo: {},
     });
   }
 
@@ -356,36 +337,52 @@ export default class CreateBookingTemplate extends React.Component {
       supplierTypeId,
       selectedSupplierAttributes,
       isEditMode,
-      bookingTemplateId
+      bookingTemplateId,
     } = this.state;
     const { postBookingTemplate, putBookingTemplate } = this.props;
-
-    const data = {
-      name,
-      base_booking_template_id: baseBookingId,
-      booking_attributes: attributes.filter(item => !!item.name).concat(
-        baseBookingAttributes.filter(item => item.selected).map(item => ({
-          name: item.name,
-          is_required: item.is_required,
-          type: item.type,
-          options: item.options
-        }))
-      ),
-      supplier_type_id: supplierTypeId,
-      supplier_attributes: selectedSupplierAttributes
-        .filter(item => item.selected)
-        .map(item => ({
-          name: item.name,
-          is_required: item.is_required,
-          options: item.options
-        }))
-    };
+    let data = {};
+    if (isEditMode) {
+      data = {
+        name,
+        base_booking_template_id: baseBookingId,
+        booking_attributes: attributes.filter((item) => !!item.name),
+        supplier_type_id: supplierTypeId,
+        supplier_attributes: selectedSupplierAttributes
+          .filter((item) => item.selected)
+          .map((item) => ({
+            name: item.name,
+            is_required: item.is_required,
+            options: item.options,
+          })),
+      };
+    } else {
+      data = {
+        name,
+        base_booking_template_id: baseBookingId,
+        booking_attributes: attributes.filter((item) => !!item.name).concat(
+          baseBookingAttributes.filter((item) => item.selected).map((item) => ({
+            name: item.name,
+            is_required: item.is_required,
+            type: item.type,
+            options: item.options,
+          }))
+        ),
+        supplier_type_id: supplierTypeId,
+        supplier_attributes: selectedSupplierAttributes
+          .filter((item) => item.selected)
+          .map((item) => ({
+            name: item.name,
+            is_required: item.is_required,
+            options: item.options,
+          })),
+      };
+    }
 
     const errors = validate(data);
 
     if (Object.keys(errors).length) {
       this.setState({
-        errors
+        errors,
       });
     } else {
       if (isEditMode) {
@@ -418,7 +415,7 @@ export default class CreateBookingTemplate extends React.Component {
 
     this.setState({
       [event.target.name]: event.target.value,
-      errors
+      errors,
     });
   }
 
@@ -428,7 +425,7 @@ export default class CreateBookingTemplate extends React.Component {
     attributes[index] = attribute;
 
     this.setState({
-      attributes
+      attributes,
     });
   }
 
@@ -438,24 +435,22 @@ export default class CreateBookingTemplate extends React.Component {
     baseBookingAttributes[index] = attribute;
 
     this.setState({
-      baseBookingAttributes
+      baseBookingAttributes,
     });
   }
 
   handleSupplierTypeAttributeChange(supplier, index) {
-    const selectedSupplierAttributes = [
-      ...this.state.selectedSupplierAttributes
-    ];
+    const selectedSupplierAttributes = [...this.state.selectedSupplierAttributes];
 
     selectedSupplierAttributes[index] = supplier;
 
     this.setState({
-      selectedSupplierAttributes
+      selectedSupplierAttributes,
     });
   }
 
   renderAttributeRow(attribute, index) {
-    const onNameChange = event => {
+    const onNameChange = (event) => {
       const newAttribute = { ...attribute };
 
       newAttribute.name = event.target.value;
@@ -463,7 +458,7 @@ export default class CreateBookingTemplate extends React.Component {
       this.handleAttributeChange(newAttribute, index);
     };
 
-    const onTypeChange = option => {
+    const onTypeChange = (option) => {
       const newAttribute = { ...attribute };
 
       newAttribute.type = option.value;
@@ -471,13 +466,12 @@ export default class CreateBookingTemplate extends React.Component {
       this.setState(
         {
           optionModalVisibility:
-            newAttribute.type === 'DROPDOWN' ||
-            newAttribute.type === 'MULTISELECT',
+            newAttribute.type === 'DROPDOWN' || newAttribute.type === 'MULTISELECT',
           attributeInfo: {
             attributeType: newAttribute.type,
             attribute: newAttribute,
-            attrIndex: index
-          }
+            attrIndex: index,
+          },
         },
         () => {
           this.handleAttributeChange(newAttribute, index);
@@ -485,7 +479,7 @@ export default class CreateBookingTemplate extends React.Component {
       );
     };
 
-    const onRequiredChange = event => {
+    const onRequiredChange = (event) => {
       const newAttribute = { ...attribute };
 
       newAttribute.is_required = !!event.target.checked;
@@ -496,12 +490,7 @@ export default class CreateBookingTemplate extends React.Component {
     return (
       <div className="attribute" key={index}>
         <div className="form-control">
-          <input
-            type="text"
-            placeholder="Name"
-            value={attribute.name}
-            onChange={onNameChange}
-          />
+          <input type="text" placeholder="Name" value={attribute.name} onChange={onNameChange} />
         </div>
         <div className="form-control">
           <Select
@@ -515,12 +504,7 @@ export default class CreateBookingTemplate extends React.Component {
               className="show-option"
               style={optionStyle}
               onClick={() =>
-                this.onOpenOptionModal(
-                  attribute.options,
-                  attribute.type,
-                  attribute,
-                  index
-                )
+                this.onOpenOptionModal(attribute.options, attribute.type, attribute, index)
               }
             >
               Show Options
@@ -542,7 +526,7 @@ export default class CreateBookingTemplate extends React.Component {
   }
 
   renderBaseBookingAttributeRow(attribute, index) {
-    const onSelectChange = event => {
+    const onSelectChange = (event) => {
       const newAttribute = { ...attribute };
 
       newAttribute.selected = !!event.target.checked;
@@ -550,7 +534,7 @@ export default class CreateBookingTemplate extends React.Component {
       this.handleBaseBookingAttributeChange(newAttribute, index);
     };
 
-    const onRequiredChange = event => {
+    const onRequiredChange = (event) => {
       const newAttribute = { ...attribute };
 
       newAttribute.is_required = !!event.target.checked;
@@ -563,7 +547,7 @@ export default class CreateBookingTemplate extends React.Component {
     return (
       <div
         className={classnames('static-attribute', {
-          'static-attribute--unselect': !attribute.selected
+          'static-attribute--unselect': !attribute.selected,
         })}
         key={index}
       >
@@ -594,9 +578,7 @@ export default class CreateBookingTemplate extends React.Component {
               onChange={onRequiredChange}
               disabled={!attribute.allowRequired}
             />
-            <label htmlFor={`static-attribute-${index}-is-required`}>
-              Required
-            </label>
+            <label htmlFor={`static-attribute-${index}-is-required`}>Required</label>
           </div>
         ) : (
           <div className="form-control form-control--row-vertical-center">
@@ -608,7 +590,7 @@ export default class CreateBookingTemplate extends React.Component {
   }
 
   renderSupplierTypeAttributeRow(supplier, index) {
-    const onSelectChange = event => {
+    const onSelectChange = (event) => {
       const newSupplier = { ...supplier };
 
       newSupplier.selected = !!event.target.checked;
@@ -616,7 +598,7 @@ export default class CreateBookingTemplate extends React.Component {
       this.handleSupplierTypeAttributeChange(newSupplier, index);
     };
 
-    const onRequiredChange = event => {
+    const onRequiredChange = (event) => {
       const newSupplier = { ...supplier };
 
       newSupplier.is_required = !!event.target.checked;
@@ -629,7 +611,7 @@ export default class CreateBookingTemplate extends React.Component {
     return (
       <div
         className={classnames('static-attribute', {
-          'static-attribute--unselect': !supplier.selected
+          'static-attribute--unselect': !supplier.selected,
         })}
         key={index}
       >
@@ -661,9 +643,7 @@ export default class CreateBookingTemplate extends React.Component {
               onChange={onRequiredChange}
               disabled={!supplier.allowRequired}
             />
-            <label htmlFor={`static-attribute-${index}-is-required`}>
-              Required
-            </label>
+            <label htmlFor={`static-attribute-${index}-is-required`}>Required</label>
           </div>
         ) : (
           <div className="form-control form-control--row-vertical-center">
@@ -682,7 +662,7 @@ export default class CreateBookingTemplate extends React.Component {
       baseBookingAttributes,
       selectedBaseBooking,
       selectedSupplierAttributes,
-      errors
+      errors,
     } = this.state;
 
     // Filter supplier types list, based on selected base supplier type in base booking
@@ -692,9 +672,7 @@ export default class CreateBookingTemplate extends React.Component {
       selectedBaseBooking.base_supplier_type_id
     ) {
       supplierTypeList = supplierTypeList.filter(
-        item =>
-          item.base_supplier_type_id ===
-          selectedBaseBooking.base_supplier_type_id
+        (item) => item.base_supplier_type_id === selectedBaseBooking.base_supplier_type_id
       );
     }
 
@@ -717,9 +695,7 @@ export default class CreateBookingTemplate extends React.Component {
                   className={classnames({ error: errors.name })}
                 />
                 {errors.name ? (
-                  <p className="message message--error">
-                    {errors.name.message}
-                  </p>
+                  <p className="message message--error">{errors.name.message}</p>
                 ) : null}
               </div>
             </div>
@@ -730,22 +706,17 @@ export default class CreateBookingTemplate extends React.Component {
               <div className="form-control form-control--column">
                 <Select
                   className={classnames('select', {
-                    error: errors.baseBookingId
+                    error: errors.baseBookingId,
                   })}
                   placeholder="Select Base Booking"
                   options={baseBookingList}
-                  getOptionValue={option => option.id}
-                  getOptionLabel={option => option.name}
-                  value={getOptionFromList(
-                    baseBookingList,
-                    this.state.baseBookingId
-                  )}
+                  getOptionValue={(option) => option.id}
+                  getOptionLabel={(option) => option.name}
+                  value={getOptionFromList(baseBookingList, this.state.baseBookingId)}
                   onChange={this.onBaseBookingChange}
                 />
                 {errors.baseBookingId ? (
-                  <p className="message message--error">
-                    {errors.baseBookingId.message}
-                  </p>
+                  <p className="message message--error">{errors.baseBookingId.message}</p>
                 ) : null}
               </div>
 
@@ -778,27 +749,21 @@ export default class CreateBookingTemplate extends React.Component {
               <div className="form-control form-control--column">
                 <Select
                   className={classnames('select', {
-                    error: errors.supplierTypeId
+                    error: errors.supplierTypeId,
                   })}
                   placeholder="Select Supplier Type"
                   options={supplierTypeList}
-                  getOptionValue={option => option.id}
-                  getOptionLabel={option => option.name}
-                  value={getOptionFromList(
-                    supplierTypeList,
-                    this.state.supplierTypeId
-                  )}
+                  getOptionValue={(option) => option.id}
+                  getOptionLabel={(option) => option.name}
+                  value={getOptionFromList(supplierTypeList, this.state.supplierTypeId)}
                   onChange={this.onSupplierTypeChange}
                 />
                 {errors.supplierTypeId ? (
-                  <p className="message message--error">
-                    {errors.supplierTypeId.message}
-                  </p>
+                  <p className="message message--error">{errors.supplierTypeId.message}</p>
                 ) : null}
               </div>
 
-              {selectedSupplierAttributes &&
-              selectedSupplierAttributes.length ? (
+              {selectedSupplierAttributes && selectedSupplierAttributes.length ? (
                 <div className="static-attribute static-attribute__header">
                   <div className="form-control">&nbsp;</div>
 
@@ -817,26 +782,18 @@ export default class CreateBookingTemplate extends React.Component {
               ) : null}
 
               {selectedSupplierAttributes && selectedSupplierAttributes.length
-                ? selectedSupplierAttributes.map(
-                    this.renderSupplierTypeAttributeRow
-                  )
+                ? selectedSupplierAttributes.map(this.renderSupplierTypeAttributeRow)
                 : null}
             </div>
 
-            <div className="create__form__header">
-              Booking Template Attributes
-            </div>
+            <div className="create__form__header">Booking Template Attributes</div>
 
             <div className="create__form__body">
               {this.state.attributes.map(this.renderAttributeRow)}
             </div>
 
             <div className="create__form__actions">
-              <button
-                type="button"
-                className="btn btn--danger"
-                onClick={this.onAddAttributeClick}
-              >
+              <button type="button" className="btn btn--danger" onClick={this.onAddAttributeClick}>
                 Add Attribute
               </button>
             </div>
@@ -844,11 +801,7 @@ export default class CreateBookingTemplate extends React.Component {
         </div>
 
         <div className="create__actions">
-          <button
-            type="button"
-            className="btn btn--danger"
-            onClick={this.onSubmit}
-          >
+          <button type="button" className="btn btn--danger" onClick={this.onSubmit}>
             Submit
           </button>
         </div>
