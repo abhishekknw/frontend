@@ -31,6 +31,19 @@ const getDropdownOption = (options, value) => {
   return null;
 };
 
+const getMultiselectOptions = (options, values) => {
+  if (!values) return [];
+
+  const newOptions = [];
+  for (let i = 0, l = options.length; i < l; i += 1) {
+    if (values.indexOf(options[i].value) !== -1) {
+      newOptions.push(options[i]);
+    }
+  }
+
+  return newOptions;
+};
+
 export default class EditBooking extends React.Component {
   constructor(props) {
     super(props);
@@ -312,8 +325,10 @@ export default class EditBooking extends React.Component {
     const handleAttributeInputChange = (event) => {
       const newAttribute = { ...attribute };
 
-      if (newAttribute.type === 'DROPDOWN' || newAttribute.type === 'MULTISELECT') {
+      if (newAttribute.type === 'DROPDOWN') {
         newAttribute.value = event.value;
+      } else if (newAttribute.type === 'MULTISELECT') {
+        newAttribute.value = event.map((item) => item.value);
       } else {
         newAttribute.value = event.target.value;
       }
@@ -336,7 +351,7 @@ export default class EditBooking extends React.Component {
         );
         break;
 
-      case 'DROPDOWN':
+      case 'DROPDOWN': {
         const options = attribute.options.map((option) => ({
           label: option,
           value: option,
@@ -352,6 +367,7 @@ export default class EditBooking extends React.Component {
           />
         );
         break;
+      }
 
       case 'EMAIL':
         typeInput = (
@@ -359,18 +375,24 @@ export default class EditBooking extends React.Component {
         );
         break;
 
-      case 'MULTISELECT':
+      case 'MULTISELECT': {
+        const options = attribute.options.map((option) => ({
+          label: option,
+          value: option,
+        }));
         typeInput = (
           <Select
             className={classnames('select')}
-            options={attribute.options}
-            getOptionValue={(option) => option}
-            getOptionLabel={(option) => option}
+            options={options}
+            getOptionValue={(option) => option.label}
+            getOptionLabel={(option) => option.value}
             onChange={handleAttributeInputChange}
-            value={getDropdownOption(attribute.options, attribute.value)}
+            value={getMultiselectOptions(options, attribute.value)}
+            isMulti
           />
         );
         break;
+      }
 
       default:
         console.log('Unsupported attribute type');
