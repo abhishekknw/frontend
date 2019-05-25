@@ -11,7 +11,7 @@ const optionStyle = {
   marginTop: '5px',
   textDecoration: 'underline',
   cursor: 'pointer',
-  paddingBottom: '10px'
+  paddingBottom: '10px',
 };
 
 const AttributeTypes = [
@@ -22,11 +22,12 @@ const AttributeTypes = [
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
   { value: 'SUPPLIER_TYPE', label: 'Supplier Type' },
-  { value: 'BASE_SUPPLIER_TYPE', label: 'Base Supplier Type' }
+  { value: 'BASE_SUPPLIER_TYPE', label: 'Base Supplier Type' },
+  { value: 'DATE_TIME', label: 'Date' },
 ];
 
 // Get attribute type option from string
-const getAttributeTypeOption = value => {
+const getAttributeTypeOption = (value) => {
   for (let i = 0, l = AttributeTypes.length; i < l; i += 1) {
     if (AttributeTypes[i].value === value) {
       return AttributeTypes[i];
@@ -50,7 +51,7 @@ export default class EditSupplierType extends React.Component {
       showOptionModal: false,
       attributeOptions: [''],
       attributeInfo: {},
-      selectedModalSupplierType: undefined
+      selectedModalSupplierType: undefined,
     };
 
     this.onAddAttribute = this.onAddAttribute.bind(this);
@@ -76,16 +77,13 @@ export default class EditSupplierType extends React.Component {
         this.props.supplierType.currentSupplierType) ||
       (this.state.currentSupplierType &&
         this.props.supplierType.currentSupplierType &&
-        this.state.currentSupplierType.id !==
-          this.props.supplierType.currentSupplierType.id)
+        this.state.currentSupplierType.id !== this.props.supplierType.currentSupplierType.id)
     ) {
       this.setState({
         currentSupplierType: this.props.supplierType.currentSupplierType,
-        supplier_attributes: this.props.supplierType.currentSupplierType
-          .supplier_attributes,
+        supplier_attributes: this.props.supplierType.currentSupplierType.supplier_attributes,
         name: this.props.supplierType.currentSupplierType.name,
-        base_supplier_type_id: this.props.supplierType.currentSupplierType
-          .base_supplier_type_id
+        base_supplier_type_id: this.props.supplierType.currentSupplierType.base_supplier_type_id,
       });
     }
   }
@@ -94,7 +92,7 @@ export default class EditSupplierType extends React.Component {
     this.setState({
       showOptionModal: false,
       attributeOptions: [''],
-      attributeInfo: {}
+      attributeInfo: {},
     });
   }
 
@@ -102,12 +100,12 @@ export default class EditSupplierType extends React.Component {
     this.setState({
       showOptionModal: false,
       attributeOptions: [''],
-      attributeInfo: {}
+      attributeInfo: {},
     });
 
     let newAttributes = Object.assign({}, attributeInfo.attribute, {
       type: attributeInfo.attributeType,
-      options: options
+      options: options,
     });
     this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
   }
@@ -119,8 +117,8 @@ export default class EditSupplierType extends React.Component {
       attributeInfo: {
         attributeType,
         attribute,
-        attrIndex
-      }
+        attrIndex,
+      },
     });
   }
 
@@ -130,13 +128,13 @@ export default class EditSupplierType extends React.Component {
     let data = {
       name: this.state.name,
       base_supplier_type_id: this.state.base_supplier_type_id,
-      supplier_attributes: this.state.supplier_attributes
+      supplier_attributes: this.state.supplier_attributes,
     };
 
     this.props.updateSupplierType(
       {
         data,
-        supplierTypeId: this.props.match.params.supplierTypeId
+        supplierTypeId: this.props.match.params.supplierTypeId,
       },
       () => {
         toastr.success('', 'Supplier Type updated successfully');
@@ -148,19 +146,19 @@ export default class EditSupplierType extends React.Component {
   onCancelSupplierModal() {
     this.setState({
       showSupplierSelectionModal: false,
-      attributeInfo: {}
+      attributeInfo: {},
     });
   }
 
   onSubmitSupplierModal(value, attributeInfo) {
     this.setState({
       showSupplierSelectionModal: false,
-      attributeInfo: {}
+      attributeInfo: {},
     });
 
     let newAttributes = Object.assign({}, attributeInfo.attribute, {
       type: attributeInfo.attributeType,
-      value
+      value,
     });
     this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
   }
@@ -172,8 +170,8 @@ export default class EditSupplierType extends React.Component {
       attributeInfo: {
         attributeType,
         attribute,
-        attrIndex
-      }
+        attrIndex,
+      },
     });
   }
 
@@ -183,11 +181,11 @@ export default class EditSupplierType extends React.Component {
     newAttributes.push({
       name: '',
       type: '',
-      is_required: false
+      is_required: false,
     });
 
     this.setState({
-      supplier_attributes: newAttributes
+      supplier_attributes: newAttributes,
     });
   }
 
@@ -197,21 +195,20 @@ export default class EditSupplierType extends React.Component {
     attributes.splice(index, 1, attribute);
 
     this.setState({
-      supplier_attributes: attributes
+      supplier_attributes: attributes,
     });
   }
 
   handleInputChange(event) {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   }
 
   renderAttributeRow(attribute, attrIndex) {
-    const isDisabled =
-      attribute.hasOwnProperty('is_editable') && !attribute.is_editable;
+    const isDisabled = attribute.hasOwnProperty('is_editable') && !attribute.is_editable;
 
-    const onNameChange = event => {
+    const onNameChange = (event) => {
       const newAttribute = Object.assign({}, attribute);
 
       newAttribute.name = event.target.value;
@@ -219,7 +216,7 @@ export default class EditSupplierType extends React.Component {
       this.handleAttributeChange(newAttribute, attrIndex);
     };
 
-    const onTypeChange = item => {
+    const onTypeChange = (item) => {
       if (item.value === 'DROPDOWN') {
         this.setState({
           showOptionModal: true,
@@ -227,8 +224,8 @@ export default class EditSupplierType extends React.Component {
           attributeInfo: {
             attributeType: item.value,
             attribute,
-            attrIndex
-          }
+            attrIndex,
+          },
         });
       } else if (
         item.value === 'SUPPLIER_TYPE' ||
@@ -241,8 +238,8 @@ export default class EditSupplierType extends React.Component {
           attributeInfo: {
             attributeType: item.value,
             attribute,
-            attrIndex
-          }
+            attrIndex,
+          },
         });
         return;
       }
@@ -253,7 +250,7 @@ export default class EditSupplierType extends React.Component {
       this.handleAttributeChange(newAttribute, attrIndex);
     };
 
-    const onRequiredChange = event => {
+    const onRequiredChange = (event) => {
       const newAttribute = Object.assign({}, attribute);
 
       newAttribute.is_required = !!event.target.checked;
@@ -288,12 +285,7 @@ export default class EditSupplierType extends React.Component {
                 className="show-option"
                 style={optionStyle}
                 onClick={() =>
-                  this.onOpenOptionModal(
-                    attribute.options,
-                    attribute.type,
-                    attribute,
-                    attrIndex
-                  )
+                  this.onOpenOptionModal(attribute.options, attribute.type, attribute, attrIndex)
                 }
               >
                 Show Options
@@ -308,9 +300,7 @@ export default class EditSupplierType extends React.Component {
               <p
                 className="show-option"
                 style={optionStyle}
-                onClick={() =>
-                  this.onOpenSupplierModal(attribute.type, attribute, attrIndex)
-                }
+                onClick={() => this.onOpenSupplierModal(attribute.type, attribute, attrIndex)}
               >
                 Show Attributes
               </p>
@@ -356,17 +346,11 @@ export default class EditSupplierType extends React.Component {
 
             <div className="createform__form__header">Attributes</div>
 
-            <div>
-              {this.state.supplier_attributes.map(this.renderAttributeRow)}
-            </div>
+            <div>{this.state.supplier_attributes.map(this.renderAttributeRow)}</div>
 
             <div className="createform__form__inline">
               <div className="createform__form__action">
-                <button
-                  type="button"
-                  className="btn btn--danger"
-                  onClick={this.onAddAttribute}
-                >
+                <button type="button" className="btn btn--danger" onClick={this.onAddAttribute}>
                   Add Attribute
                 </button>
               </div>
