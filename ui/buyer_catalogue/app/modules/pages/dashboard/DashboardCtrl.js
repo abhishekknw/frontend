@@ -866,7 +866,7 @@ var metrics_basic_temp = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"
                         console.log(tooltipDynamicGraphData[e.index][dynamicPricingKeys[e.data.key]]);
                         var rows =
                           "<tr>" +
-                            "<td class='key'>" + 'Name : ' + "</td>" +
+                            "<td class='key'>"  + 'Name : ' + "</td>" +
                             "<td class='x-value'>" + e.value + "</td>" +
                           "</tr>" +
                           "<tr>" +

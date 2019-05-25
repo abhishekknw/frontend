@@ -7,8 +7,13 @@ angular.module('catalogueApp')
    var auditReleasePlanService = {};
 
 
-   auditReleasePlanService.getCampaignReleaseDetails = function(proposal_id){
-        var url = url_base + proposal_id + "/campaign-inventories/";
+   auditReleasePlanService.getCampaignReleaseDetails = function(proposal_id, page, supplierId){
+     if(supplierId){
+       var url = url_base + proposal_id + "/campaign-inventories/?page=" + page
+                                      + "&search=" + supplierId;
+     }else{
+       var url = url_base + proposal_id + "/campaign-inventories/?page=" + page;
+     }
      return machadaloHttp.get(url);
    }
 
@@ -65,6 +70,11 @@ angular.module('catalogueApp')
 
     auditReleasePlanService.getOrganisationsForAssignment = function(){
       var url = url_base  + "organisation/get_organisations_for_assignment/";
+      return machadaloHttp.get(url);
+    }
+
+    auditReleasePlanService.searchSupplierBySelection = function(campaignId){
+      var url = url_base + campaignId + "/list_suppliers/";
       return machadaloHttp.get(url);
     }
 

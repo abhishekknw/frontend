@@ -343,18 +343,9 @@ export default class CreateBookingTemplate extends React.Component {
       bookingTemplateId,
     } = this.state;
     const { postBookingTemplate, putBookingTemplate } = this.props;
-
     const data = {
       name,
       base_booking_template_id: baseBookingId,
-      booking_attributes: attributes.filter((item) => !!item.name).concat(
-        baseBookingAttributes.filter((item) => item.selected).map((item) => ({
-          name: item.name,
-          is_required: item.is_required,
-          type: item.type,
-          options: item.options,
-        }))
-      ),
       supplier_type_id: supplierTypeId,
       supplier_attributes: selectedSupplierAttributes
         .filter((item) => item.selected)
@@ -364,6 +355,18 @@ export default class CreateBookingTemplate extends React.Component {
           options: item.options,
         })),
     };
+    if (isEditMode) {
+      data.booking_attributes = attributes.filter((item) => !!item.name);
+    } else {
+      data.booking_attributes = attributes.filter((item) => !!item.name).concat(
+        baseBookingAttributes.filter((item) => item.selected).map((item) => ({
+          name: item.name,
+          is_required: item.is_required,
+          type: item.type,
+          options: item.options,
+        }))
+      );
+    }
 
     const errors = validate(data);
 
