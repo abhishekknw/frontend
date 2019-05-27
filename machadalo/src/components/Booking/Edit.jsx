@@ -2,6 +2,8 @@ import React from 'react';
 import classnames from 'classnames';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
+import { DatetimePickerTrigger } from 'rc-datetime-picker';
+import moment from 'moment';
 
 const getFilteredSupplierList = (list, supplierId) => {
   if (supplierId) {
@@ -76,6 +78,7 @@ export default class EditBooking extends React.Component {
     this.renderInventoryRow = this.renderInventoryRow.bind(this);
     this.handleInventoryChange = this.handleInventoryChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
   }
 
   componentDidMount() {
@@ -213,6 +216,14 @@ export default class EditBooking extends React.Component {
 
     this.setState({
       inventories,
+    });
+  }
+
+  handleDateChange(date, index) {
+    const { attributes } = this.state;
+    attributes[index].value = date.format('YYYY-MM-DD');
+    this.setState({
+      attributes,
     });
   }
 
@@ -371,6 +382,17 @@ export default class EditBooking extends React.Component {
           />
         );
         break;
+
+      case 'DATETIME':
+        typeInput = (
+          <DatetimePickerTrigger
+            key={index}
+            moment={moment(attribute.value)}
+            onChange={(e) => this.handleDateChange(e, index)}
+          >
+            <input type="text" value={attribute.value} readOnly />
+          </DatetimePickerTrigger>
+        );
 
       default:
         console.log('Unsupported attribute type');
