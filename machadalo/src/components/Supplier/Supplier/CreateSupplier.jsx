@@ -161,7 +161,7 @@ export default class CreateSupplier extends React.Component {
 
   handleDateChange(date, index) {
     const { supplier_attributes } = this.state;
-    supplier_attributes[index].value = date;
+    supplier_attributes[index].value = date.format('YYYY-MM-DD');
     this.setState({
       supplier_attributes,
     });
@@ -284,7 +284,7 @@ export default class CreateSupplier extends React.Component {
             moment={moment(attribute.value)}
             onChange={(e) => this.handleDateChange(e, attrIndex)}
           >
-            <input type="text" value={attribute.value.format('YYYY-MM-DD')} readOnly />
+            <input type="text" value={attribute.value} readOnly />
           </DatetimePickerTrigger>
         );
       default:
