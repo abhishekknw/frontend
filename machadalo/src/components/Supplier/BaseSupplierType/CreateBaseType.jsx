@@ -22,7 +22,7 @@ const AttributeTypes = [
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
   { value: 'BASE_SUPPLIER_TYPE', label: 'Base Supplier Type' },
-  { value: 'DATE_TIME', label: 'Date' },
+  { value: 'DATETIME', label: 'Date' },
 ];
 
 // Get attribute type option from string

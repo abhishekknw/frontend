@@ -20,6 +20,7 @@ const AttributeTypes = [
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
   { value: 'MULTISELECT', label: 'Multi Select' },
+  { value: 'DATETIME', label: 'Date' },
 ];
 
 // TODO: Move to constants
@@ -29,6 +30,7 @@ const BaseBookingAttributeTypes = [
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
   { value: 'MULTISELECT', label: 'Multi Select' },
+  { value: 'DATETIME', label: 'Date' },
 ];
 
 // TODO: Move to constants
@@ -41,6 +43,7 @@ const SupplierTypeAttributeTypes = [
   { value: 'EMAIL', label: 'Email' },
   { value: 'SUPPLIER_TYPE', label: 'Supplier Type' },
   { value: 'BASE_SUPPLIER_TYPE', label: 'Base Supplier Type' },
+  { value: 'DATETIME', label: 'Date' },
 ];
 
 // Get attribute type option from string

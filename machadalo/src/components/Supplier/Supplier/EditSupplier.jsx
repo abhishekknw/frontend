@@ -280,7 +280,7 @@ export default class EditSupplier extends React.Component {
               : 'Create Base Supplier Type Data'}
           </button>
         );
-      case 'DATE_TIME':
+      case 'DATETIME':
         return (
           <DatetimePickerTrigger
             moment={moment(attribute.value)}
