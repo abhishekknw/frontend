@@ -11,7 +11,7 @@ const optionStyle = {
   bottom: '-20px',
   textDecoration: 'underline',
   cursor: 'pointer',
-  paddingBottom: '10px'
+  paddingBottom: '10px',
 };
 
 const AttributeTypes = [
@@ -19,7 +19,8 @@ const AttributeTypes = [
   { value: 'STRING', label: 'Text' },
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
-  { value: 'MULTISELECT', label: 'Multi Select' }
+  { value: 'MULTISELECT', label: 'Multi Select' },
+  { value: 'DATE_TIME', label: 'Date' },
 ];
 
 const SupplierTypes = [
@@ -29,11 +30,12 @@ const SupplierTypes = [
   { value: 'INVENTORY_TYPE', label: 'Base Inventory' },
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
-  { value: 'BASE_SUPPLIER_TYPE', label: 'Base Supplier Type' }
+  { value: 'BASE_SUPPLIER_TYPE', label: 'Base Supplier Type' },
+  { value: 'DATE_TIME', label: 'Date' },
 ];
 
 // Get attribute type option from string
-const getAttributeTypeOption = value => {
+const getAttributeTypeOption = (value) => {
   for (let i = 0, l = AttributeTypes.length; i < l; i += 1) {
     if (AttributeTypes[i].value === value) {
       return AttributeTypes[i];
@@ -44,7 +46,7 @@ const getAttributeTypeOption = value => {
 };
 
 // Get base supplier type option from supplier type
-const getSupplierTypeOption = value => {
+const getSupplierTypeOption = (value) => {
   for (let i = 0, l = SupplierTypes.length; i < l; i += 1) {
     if (SupplierTypes[i].value === value) {
       return SupplierTypes[i];
@@ -59,14 +61,11 @@ const getRawAttribute = () => {
   return {
     name: '',
     type: 'STRING',
-    is_required: false
+    is_required: false,
   };
 };
 
-const getBaseSupplierTypeOption = (
-  baseSupplierTypeList,
-  baseSupplierTypeId
-) => {
+const getBaseSupplierTypeOption = (baseSupplierTypeList, baseSupplierTypeId) => {
   for (let i = 0, l = baseSupplierTypeList.length; i < l; i += 1) {
     if (baseSupplierTypeId === baseSupplierTypeList[i].id) {
       return baseSupplierTypeList[i];
@@ -76,18 +75,18 @@ const getBaseSupplierTypeOption = (
   return { id: baseSupplierTypeId };
 };
 
-const validate = data => {
+const validate = (data) => {
   const errors = {};
 
   if (!data.name.trim()) {
     errors.name = {
-      message: 'Please enter a name for base booking'
+      message: 'Please enter a name for base booking',
     };
   }
 
   if (!data.base_supplier_type_id) {
     errors.baseSupplierTypeId = {
-      message: 'Please select a base supplier type'
+      message: 'Please select a base supplier type',
     };
   }
 
@@ -104,18 +103,18 @@ export default class CreateBaseBooking extends React.Component {
     const baseBooking = this.getBaseBookingById({ id: baseBookingId });
     let attributes = [
       {
-        ...getRawAttribute()
-      }
+        ...getRawAttribute(),
+      },
     ];
     let suppliers = [];
 
     if (baseBookingId && baseBooking && baseBooking.id) {
       // Find the base booking matching `baseBookingId`
       attributes = baseBooking.booking_attributes;
-      suppliers = baseBooking.supplier_attributes.map(item => ({
+      suppliers = baseBooking.supplier_attributes.map((item) => ({
         ...item,
         selected: true,
-        allowRequired: item.is_required
+        allowRequired: item.is_required,
       }));
     }
 
@@ -130,7 +129,7 @@ export default class CreateBaseBooking extends React.Component {
       errors: {},
       optionModalVisibility: false,
       columnOptions: [''],
-      attributeInfo: {}
+      attributeInfo: {},
     };
 
     this.onAddAttributeClick = this.onAddAttributeClick.bind(this);
@@ -151,18 +150,11 @@ export default class CreateBaseBooking extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      baseSupplierType: prevBaseSupplierType,
-      booking: prevBooking
-    } = prevProps;
-    const {
-      baseSupplierType: newBaseSupplierType,
-      booking: newBooking,
-      history
-    } = this.props;
+    const { baseSupplierType: prevBaseSupplierType, booking: prevBooking } = prevProps;
+    const { baseSupplierType: newBaseSupplierType, booking: newBooking, history } = this.props;
     const {
       isCreatingBaseBooking: prevIsCreatingBaseBooking,
-      isUpdatingBaseBooking: prevIsUpdatingBaseBooking
+      isUpdatingBaseBooking: prevIsUpdatingBaseBooking,
     } = prevBooking;
     const {
       isCreatingBaseBooking: newIsCreatingBaseBooking,
@@ -170,7 +162,7 @@ export default class CreateBaseBooking extends React.Component {
       postBaseBookingError,
       isUpdatingBaseBooking: newIsUpdatingBaseBooking,
       putBaseBookingSuccess,
-      putBaseBookingError
+      putBaseBookingError,
     } = newBooking;
 
     if (
@@ -180,50 +172,26 @@ export default class CreateBaseBooking extends React.Component {
     ) {
       this.setState({
         selectedBaseSupplierType: newBaseSupplierType.currentBaseSupplierType,
-        suppliers: newBaseSupplierType.currentBaseSupplierType.supplier_attributes.map(
-          item => ({
-            ...item,
-            selected: true,
-            allowRequired: item.is_required
-          })
-        )
+        suppliers: newBaseSupplierType.currentBaseSupplierType.supplier_attributes.map((item) => ({
+          ...item,
+          selected: true,
+          allowRequired: item.is_required,
+        })),
       });
     }
 
-    if (
-      prevIsCreatingBaseBooking &&
-      !newIsCreatingBaseBooking &&
-      postBaseBookingSuccess
-    ) {
+    if (prevIsCreatingBaseBooking && !newIsCreatingBaseBooking && postBaseBookingSuccess) {
       toastr.success('', 'Base Booking created successfully');
       history.push(`/r/booking/base/list`);
-    } else if (
-      prevIsCreatingBaseBooking &&
-      !newIsCreatingBaseBooking &&
-      postBaseBookingError
-    ) {
-      toastr.error(
-        '',
-        'Failed to create Base Booking. Please try again later.'
-      );
+    } else if (prevIsCreatingBaseBooking && !newIsCreatingBaseBooking && postBaseBookingError) {
+      toastr.error('', 'Failed to create Base Booking. Please try again later.');
     }
 
-    if (
-      prevIsUpdatingBaseBooking &&
-      !newIsUpdatingBaseBooking &&
-      putBaseBookingSuccess
-    ) {
+    if (prevIsUpdatingBaseBooking && !newIsUpdatingBaseBooking && putBaseBookingSuccess) {
       toastr.success('', 'Base Booking updated successfully');
       history.push(`/r/booking/base/list`);
-    } else if (
-      prevIsUpdatingBaseBooking &&
-      !newIsUpdatingBaseBooking &&
-      putBaseBookingError
-    ) {
-      toastr.error(
-        '',
-        'Failed to update Base Booking. Please try again later.'
-      );
+    } else if (prevIsUpdatingBaseBooking && !newIsUpdatingBaseBooking && putBaseBookingError) {
+      toastr.error('', 'Failed to update Base Booking. Please try again later.');
     }
   }
 
@@ -231,11 +199,11 @@ export default class CreateBaseBooking extends React.Component {
     const attributes = [...this.state.attributes];
 
     attributes.push({
-      ...getRawAttribute()
+      ...getRawAttribute(),
     });
 
     this.setState({
-      attributes
+      attributes,
     });
   }
 
@@ -246,8 +214,8 @@ export default class CreateBaseBooking extends React.Component {
       attributeInfo: {
         attributeType,
         attribute,
-        attrIndex
-      }
+        attrIndex,
+      },
     });
   }
 
@@ -255,7 +223,7 @@ export default class CreateBaseBooking extends React.Component {
     this.setState({
       optionModalVisibility: false,
       columnOptions: [''],
-      attributeInfo: {}
+      attributeInfo: {},
     });
   }
 
@@ -264,14 +232,14 @@ export default class CreateBaseBooking extends React.Component {
 
     attributes[attributeInfo.attrIndex] = {
       ...attributes[attributeInfo.attrIndex],
-      options
+      options,
     };
 
     this.setState({
       attributes,
       optionModalVisibility: false,
       columnOptions: [''],
-      attributeInfo: {}
+      attributeInfo: {},
     });
   }
 
@@ -286,7 +254,7 @@ export default class CreateBaseBooking extends React.Component {
       {
         baseSupplierTypeId: option.id,
         selectedBaseSupplierType: null,
-        errors
+        errors,
       },
       () => {
         this.props.getBaseSupplierType(this.state.baseSupplierTypeId);
@@ -302,7 +270,7 @@ export default class CreateBaseBooking extends React.Component {
       baseSupplierTypeId,
       suppliers,
       isEditMode,
-      baseBookingId
+      baseBookingId,
     } = this.state;
     const { putBaseBooking, postBaseBooking } = this.props;
 
@@ -311,15 +279,15 @@ export default class CreateBaseBooking extends React.Component {
       booking_attributes: attributes,
       base_supplier_type_id: baseSupplierTypeId,
       supplier_attributes: suppliers
-        .filter(item => item.selected)
-        .map(item => ({ name: item.name, is_required: item.is_required }))
+        .filter((item) => item.selected)
+        .map((item) => ({ name: item.name, is_required: item.is_required })),
     };
 
     const errors = validate(data);
 
     if (Object.keys(errors).length) {
       this.setState({
-        errors
+        errors,
       });
     } else {
       if (isEditMode) {
@@ -352,7 +320,7 @@ export default class CreateBaseBooking extends React.Component {
 
     this.setState({
       [event.target.name]: event.target.value,
-      errors
+      errors,
     });
   }
 
@@ -362,7 +330,7 @@ export default class CreateBaseBooking extends React.Component {
     attributes[index] = attribute;
 
     this.setState({
-      attributes
+      attributes,
     });
   }
 
@@ -372,12 +340,12 @@ export default class CreateBaseBooking extends React.Component {
     suppliers[index] = supplier;
 
     this.setState({
-      suppliers
+      suppliers,
     });
   }
 
   renderAttributeRow(attribute, index) {
-    const onNameChange = event => {
+    const onNameChange = (event) => {
       const newAttribute = { ...attribute };
 
       newAttribute.name = event.target.value;
@@ -385,7 +353,7 @@ export default class CreateBaseBooking extends React.Component {
       this.handleAttributeChange(newAttribute, index);
     };
 
-    const onTypeChange = option => {
+    const onTypeChange = (option) => {
       const newAttribute = { ...attribute };
 
       newAttribute.type = option.value;
@@ -393,13 +361,12 @@ export default class CreateBaseBooking extends React.Component {
       this.setState(
         {
           optionModalVisibility:
-            newAttribute.type === 'DROPDOWN' ||
-            newAttribute.type === 'MULTISELECT',
+            newAttribute.type === 'DROPDOWN' || newAttribute.type === 'MULTISELECT',
           attributeInfo: {
             attributeType: newAttribute.type,
             attribute: newAttribute,
-            attrIndex: index
-          }
+            attrIndex: index,
+          },
         },
         () => {
           this.handleAttributeChange(newAttribute, index);
@@ -407,7 +374,7 @@ export default class CreateBaseBooking extends React.Component {
       );
     };
 
-    const onRequiredChange = event => {
+    const onRequiredChange = (event) => {
       const newAttribute = { ...attribute };
 
       newAttribute.is_required = !!event.target.checked;
@@ -418,12 +385,7 @@ export default class CreateBaseBooking extends React.Component {
     return (
       <div className="attribute" key={index}>
         <div className="form-control">
-          <input
-            type="text"
-            placeholder="Name"
-            value={attribute.name}
-            onChange={onNameChange}
-          />
+          <input type="text" placeholder="Name" value={attribute.name} onChange={onNameChange} />
         </div>
         <div className="form-control">
           <Select
@@ -464,7 +426,7 @@ export default class CreateBaseBooking extends React.Component {
   }
 
   renderSupplierRow(supplier, index) {
-    const onSelectChange = event => {
+    const onSelectChange = (event) => {
       const newSupplier = { ...supplier };
 
       newSupplier.selected = !!event.target.checked;
@@ -472,7 +434,7 @@ export default class CreateBaseBooking extends React.Component {
       this.handleSupplierChange(newSupplier, index);
     };
 
-    const onRequiredChange = event => {
+    const onRequiredChange = (event) => {
       const newSupplier = { ...supplier };
 
       newSupplier.is_required = !!event.target.checked;
@@ -485,7 +447,7 @@ export default class CreateBaseBooking extends React.Component {
     return (
       <div
         className={classnames('supplier', {
-          'supplier--unselect': !supplier.selected
+          'supplier--unselect': !supplier.selected,
         })}
         key={index}
       >
@@ -552,9 +514,7 @@ export default class CreateBaseBooking extends React.Component {
                   className={classnames({ error: errors.name })}
                 />
                 {errors.name ? (
-                  <p className="message message--error">
-                    {errors.name.message}
-                  </p>
+                  <p className="message message--error">{errors.name.message}</p>
                 ) : null}
               </div>
             </div>
@@ -566,11 +526,7 @@ export default class CreateBaseBooking extends React.Component {
             </div>
 
             <div className="create__form__actions">
-              <button
-                type="button"
-                className="btn btn--danger"
-                onClick={this.onAddAttributeClick}
-              >
+              <button type="button" className="btn btn--danger" onClick={this.onAddAttributeClick}>
                 Add Attribute
               </button>
             </div>
@@ -581,12 +537,12 @@ export default class CreateBaseBooking extends React.Component {
               <div className="form-control form-control--column">
                 <Select
                   className={classnames('select', {
-                    error: errors.baseSupplierTypeId
+                    error: errors.baseSupplierTypeId,
                   })}
                   placeholder="Select Base Supplier Type"
                   options={baseSupplierTypeList}
-                  getOptionValue={option => option.id}
-                  getOptionLabel={option => option.name}
+                  getOptionValue={(option) => option.id}
+                  getOptionLabel={(option) => option.name}
                   value={getBaseSupplierTypeOption(
                     baseSupplierTypeList,
                     this.state.baseSupplierTypeId
@@ -594,9 +550,7 @@ export default class CreateBaseBooking extends React.Component {
                   onChange={this.onBaseSupplierTypeChange}
                 />
                 {errors.baseSupplierTypeId ? (
-                  <p className="message message--error">
-                    {errors.baseSupplierTypeId.message}
-                  </p>
+                  <p className="message message--error">{errors.baseSupplierTypeId.message}</p>
                 ) : null}
               </div>
 
@@ -618,19 +572,13 @@ export default class CreateBaseBooking extends React.Component {
                 </div>
               ) : null}
 
-              {suppliers && suppliers.length
-                ? suppliers.map(this.renderSupplierRow)
-                : null}
+              {suppliers && suppliers.length ? suppliers.map(this.renderSupplierRow) : null}
             </div>
           </form>
         </div>
 
         <div className="create__actions">
-          <button
-            type="button"
-            className="btn btn--danger"
-            onClick={this.onSubmit}
-          >
+          <button type="button" className="btn btn--danger" onClick={this.onSubmit}>
             Submit
           </button>
         </div>
