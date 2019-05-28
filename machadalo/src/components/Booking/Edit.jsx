@@ -390,10 +390,10 @@ export default class EditBooking extends React.Component {
             moment={moment(attribute.value)}
             onChange={(e) => this.handleDateChange(e, index)}
           >
-            <input type="text" value={attribute.value} readOnly />
+            <input type="text" value={attribute.value || ''} readOnly />
           </DatetimePickerTrigger>
         );
-
+        break;
       default:
         console.log('Unsupported attribute type');
         break;
