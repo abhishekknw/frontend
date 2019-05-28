@@ -17,8 +17,8 @@ const optionStyle = {
 const AttributeTypes = [
   { value: 'FLOAT', label: 'Float' },
   { value: 'STRING', label: 'Text' },
-  { value: 'INVENTORY', label: 'Inventory' },
-  { value: 'INVENTORY_TYPE', label: 'Base Inventory' },
+  // { value: 'INVENTORY', label: 'Inventory' },
+  // { value: 'INVENTORY_TYPE', label: 'Base Inventory' },
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
   { value: 'SUPPLIER_TYPE', label: 'Supplier Type' },
@@ -52,11 +52,11 @@ export default class CreateType extends React.Component {
   constructor(props) {
     super(props);
 
-    const suplierTypeId = this.getSupplierTypeId();
+    const supplierTypeId = this.getSupplierTypeId();
 
     this.state = {
-      isEditMode: !!suplierTypeId,
-      suplierTypeId,
+      isEditMode: !!supplierTypeId,
+      supplierTypeId,
       name: '',
       supplier_attributes: [{ name: '', type: '', is_required: false }],
       baseSupplierTypeOption: [],
@@ -131,6 +131,7 @@ export default class CreateType extends React.Component {
         { optionValueKey: 'value' }
       );
       newState.supplier_attributes = newSupplierType.currentSupplierType.supplier_attributes;
+      newState.inventory_list = newSupplierType.currentSupplierType.inventory_list;
     }
 
     if (Object.keys(newState).length) {
@@ -175,7 +176,7 @@ export default class CreateType extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
-    const { isEditMode, suplierTypeId } = this.state;
+    const { isEditMode, supplierTypeId } = this.state;
     const { history } = this.props;
 
     let data = {
@@ -189,7 +190,7 @@ export default class CreateType extends React.Component {
       this.props.updateSupplierType(
         {
           data,
-          suplierTypeId,
+          supplierTypeId,
         },
         () => {
           toastr.success('', 'Supplier Type updated successfully');
@@ -551,7 +552,12 @@ export default class CreateType extends React.Component {
 
             <div className="createform__form__inline">
               <div className="createform__form__action">
-                <button type="button" className="btn btn--danger" onClick={this.onAddInventory}>
+                <button
+                  type="button"
+                  className="btn btn--danger"
+                  onClick={this.onAddInventory}
+                  disabled={!this.state.selectedInventory}
+                >
                   Add Inventory
                 </button>
               </div>
