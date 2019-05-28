@@ -4,6 +4,7 @@ import { toastr } from 'react-redux-toastr';
 
 import OptionModal from '../../Modals/OptionModal';
 import FillSupplierModal from '../../Modals/FillSupplierModal';
+import FillInventoryModal from '../../Modals/FillInventoryModal';
 
 const customeStyles = {
   input: () => ({
@@ -18,6 +19,7 @@ export default class CreateSupplier extends React.Component {
     this.state = {
       name: '',
       supplier_attributes: [{ name: '', type: '', is_required: false }],
+      inventory_list: [],
       supplierTypeOption: [],
       selectedSupplierType: {},
       attributeValue: [],
@@ -26,6 +28,8 @@ export default class CreateSupplier extends React.Component {
       attributeValueInfo: {},
       showFillSupplierModal: false,
       currentModalSupplierType: undefined,
+      isFillInventoryModalVisible: false,
+      selectedInventory: {},
     };
 
     this.renderAttributeRow = this.renderAttributeRow.bind(this);
@@ -67,7 +71,7 @@ export default class CreateSupplier extends React.Component {
     });
   }
 
-  onSubmitFillSupplierModal(currentModalSupplierType, attributeInfo, pricingDetails) {
+  onSubmitFillSupplierModal(currentModalSupplierType, attributeInfo) {
     this.setState({
       showFillSupplierModal: false,
       currentModalSupplierType: undefined,
@@ -76,10 +80,8 @@ export default class CreateSupplier extends React.Component {
 
     let newAttributes = Object.assign({}, attributeInfo.attribute, {
       value: currentModalSupplierType,
-      pricing: pricingDetails,
     });
 
-    console.log('newAttributes: ', newAttributes);
     this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
   }
 
@@ -93,6 +95,42 @@ export default class CreateSupplier extends React.Component {
       },
     });
   }
+
+  onFillInventoryModalClick = (inventory) => {
+    this.setState({
+      isFillInventoryModalVisible: true,
+      selectedInventory: inventory,
+    });
+  };
+
+  onFillInventoryModalClose = () => {
+    this.setState({
+      isFillInventoryModalVisible: false,
+      selectedInventory: {},
+    });
+  };
+
+  onInventoryChange = (inventory) => {
+    const { inventory_list } = this.state;
+
+    let isMatched = false;
+
+    for (let i = 0, l = inventory_list.length; i < l; i += 1) {
+      if (inventory._id === inventory_list[i]._id) {
+        inventory_list[i] = { ...inventory };
+        isMatched = true;
+        break;
+      }
+    }
+
+    if (!isMatched) {
+      inventory_list.push(inventory);
+    }
+
+    this.setState({
+      inventory_list,
+    });
+  };
 
   onCancelOptionModal() {
     this.setState({
@@ -126,6 +164,20 @@ export default class CreateSupplier extends React.Component {
     });
   }
 
+  onSelectSupplierType(selectedSupplierType) {
+    let { supplierTypeList } = this.props.supplierType;
+    supplierTypeList.forEach((supplierType) => {
+      if (supplierType.id === selectedSupplierType.value) {
+        this.setState({
+          selectedSupplierType,
+          supplier_attributes: supplierType.supplier_attributes,
+          inventory_list: supplierType.inventory_list,
+        });
+        return;
+      }
+    });
+  }
+
   onSubmit(event) {
     event.preventDefault();
 
@@ -134,8 +186,9 @@ export default class CreateSupplier extends React.Component {
       is_custom: false,
       supplier_type_id: this.state.selectedSupplierType.value,
       supplier_attributes: this.state.supplier_attributes,
-      price: this.state.pricingDetails,
+      inventory_list: this.state.inventory_list,
     };
+
     this.props.postSupplier({ data }, () => {
       toastr.success('', 'Supplier created successfully');
       this.props.history.push('/r/supplier/list');
@@ -289,18 +342,25 @@ export default class CreateSupplier extends React.Component {
     );
   }
 
-  onSelectSupplierType(selectedSupplierType) {
-    let { supplierTypeList } = this.props.supplierType;
-    supplierTypeList.forEach((supplierType) => {
-      if (supplierType.id === selectedSupplierType.value) {
-        this.setState({
-          selectedSupplierType,
-          supplier_attributes: supplierType.supplier_attributes,
-        });
-        return;
-      }
-    });
-  }
+  renderInventoryRow = (inventory) => {
+    return (
+      <div className="createform__form__row" key={inventory._id}>
+        <div className="createform__form__inline">
+          <div className="form-control">{inventory.name}</div>
+
+          <div className="form-control">
+            <button
+              type="button"
+              className="btn btn--danger"
+              onClick={() => this.onFillInventoryModalClick(inventory)}
+            >
+              View / Edit Inventory Attributes
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   render() {
     return (
@@ -334,8 +394,10 @@ export default class CreateSupplier extends React.Component {
             </div>
 
             <div className="createform__form__header">Attributes</div>
-
             <div>{this.state.supplier_attributes.map(this.renderAttributeRow)}</div>
+
+            <div className="createform__form__header">Inventory</div>
+            <div>{this.state.inventory_list.map(this.renderInventoryRow)}</div>
 
             <div className="createform__form__inline">
               <div className="createform__form__action">
@@ -365,6 +427,14 @@ export default class CreateSupplier extends React.Component {
         ) : (
           undefined
         )}
+
+        <FillInventoryModal
+          key={this.state.selectedInventory._id}
+          isVisible={this.state.isFillInventoryModalVisible}
+          inventory={this.state.selectedInventory}
+          onChange={this.onInventoryChange}
+          onClose={this.onFillInventoryModalClose}
+        />
       </div>
     );
   }
