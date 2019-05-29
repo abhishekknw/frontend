@@ -87,9 +87,14 @@ export default class CreateType extends React.Component {
   }
 
   componentDidMount() {
+    const { isEditMode, supplierTypeId } = this.state;
+
     this.props.getBaseSupplierTypeList();
     this.props.getInventoryList();
-    this.props.getSupplierType(this.props.match.params.supplierTypeId);
+
+    if (isEditMode) {
+      this.props.getSupplierType(supplierTypeId);
+    }
   }
 
   componentDidUpdate(prevProps) {

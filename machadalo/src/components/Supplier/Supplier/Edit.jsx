@@ -4,32 +4,55 @@ import { toastr } from 'react-redux-toastr';
 
 import OptionModal from '../../Modals/OptionModal';
 import FillSupplierModal from '../../Modals/FillSupplierModal';
+import FillInventoryModal from '../../Modals/FillInventoryModal';
 
 const customeStyles = {
   input: () => ({
-    height: '24px'
-  })
+    height: '24px',
+  }),
 };
 
-export default class EditSupplier extends React.Component {
-  constructor() {
-    super();
+const getOption = (options, value, { optionValueKey }) => {
+  if (!options || !options.length) return {};
+
+  for (let i = 0, l = options.length; i < l; i += 1) {
+    if (options[i][optionValueKey] === value) {
+      return options[i];
+    }
+  }
+
+  return {};
+};
+
+export default class CreateSupplier extends React.Component {
+  constructor(props) {
+    super(props);
+
+    const supplierId = this.getSupplierId();
 
     this.state = {
+      isEditMode: !!supplierId,
+      supplierId,
       name: '',
       supplier_attributes: [{ name: '', type: '', is_required: false }],
-      currentSupplier: undefined,
+      inventory_list: [],
+      supplierTypeOption: [],
+      selectedSupplierType: {},
       attributeValue: [],
       showOptionModal: false,
       attributeValueOptions: [''],
       attributeValueInfo: {},
-      showFillSupplierModal: false
+      showFillSupplierModal: false,
+      currentModalSupplierType: undefined,
+      isFillInventoryModalVisible: false,
+      selectedInventory: {},
     };
 
     this.renderAttributeRow = this.renderAttributeRow.bind(this);
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onSelectSupplierType = this.onSelectSupplierType.bind(this);
     this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
@@ -38,32 +61,61 @@ export default class EditSupplier extends React.Component {
     this.onOpenFillSupplierModal = this.onOpenFillSupplierModal.bind(this);
   }
 
-  componentWillMount() {
-    this.props.getSupplier(this.props.match.params.supplierId);
+  componentDidMount() {
+    const { isEditMode, supplierId } = this.state;
+
+    this.props.getSupplierTypeList();
+
+    if (isEditMode) {
+      this.props.getSupplier(supplierId);
+    }
   }
 
-  componentDidUpdate() {
-    if (
-      (this.state.currentSupplier === undefined &&
-        this.props.supplier.currentSupplier) ||
-      (this.state.currentSupplier &&
-        this.props.supplier.currentSupplier &&
-        this.state.currentSupplier.id !==
-          this.props.supplier.currentSupplier.id)
-    ) {
-      this.setState({
-        currentSupplier: this.props.supplier.currentSupplier,
-        supplier_attributes: this.props.supplier.currentSupplier
-          .supplier_attributes,
-        name: this.props.supplier.currentSupplier.name
+  componentDidUpdate(prevProps) {
+    const { supplier: prevSupplier } = prevProps;
+    const { supplier: newSupplier } = this.props;
+    const newState = {};
+
+    if (this.state.supplierTypeOption.length !== this.props.supplierType.supplierTypeList.length) {
+      let supplierTypeOption = [];
+      this.props.supplierType.supplierTypeList.forEach((supplierType) => {
+        supplierTypeOption.push({
+          value: supplierType.id,
+          label: supplierType.name,
+        });
       });
+
+      newState.supplierTypeOption = supplierTypeOption;
+
+      if (newSupplier.currentSupplier) {
+        newState.selectedSupplierType = getOption(
+          supplierTypeOption,
+          newSupplier.currentSupplier.supplier_type_id,
+          { optionValueKey: 'value' }
+        );
+      }
+    }
+
+    if (this.state.isEditMode && !prevSupplier.currentSupplier && newSupplier.currentSupplier) {
+      newState.name = newSupplier.currentSupplier.name;
+      newState.selectedSupplierType = getOption(
+        this.state.supplierTypeOption,
+        newSupplier.currentSupplier.supplier_type_id,
+        { optionValueKey: 'value' }
+      );
+      newState.supplier_attributes = newSupplier.currentSupplier.supplier_attributes;
+      newState.inventory_list = newSupplier.currentSupplier.inventory_list;
+    }
+
+    if (Object.keys(newState).length) {
+      this.setState(newState);
     }
   }
 
   onCancelFillSupplierModal() {
     this.setState({
       showFillSupplierModal: false,
-      currentModalSupplierType: undefined
+      currentModalSupplierType: undefined,
     });
   }
 
@@ -71,12 +123,13 @@ export default class EditSupplier extends React.Component {
     this.setState({
       showFillSupplierModal: false,
       currentModalSupplierType: undefined,
-      attributeValueInfo: {}
+      attributeValueInfo: {},
     });
 
     let newAttributes = Object.assign({}, attributeInfo.attribute, {
-      value: currentModalSupplierType
+      value: currentModalSupplierType,
     });
+
     this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
   }
 
@@ -86,16 +139,52 @@ export default class EditSupplier extends React.Component {
       currentModalSupplierType,
       attributeValueInfo: {
         attribute,
-        attrIndex
-      }
+        attrIndex,
+      },
     });
   }
+
+  onFillInventoryModalClick = (inventory) => {
+    this.setState({
+      isFillInventoryModalVisible: true,
+      selectedInventory: inventory,
+    });
+  };
+
+  onFillInventoryModalClose = () => {
+    this.setState({
+      isFillInventoryModalVisible: false,
+      selectedInventory: {},
+    });
+  };
+
+  onInventoryChange = (inventory) => {
+    const { inventory_list } = this.state;
+
+    let isMatched = false;
+
+    for (let i = 0, l = inventory_list.length; i < l; i += 1) {
+      if (inventory._id === inventory_list[i]._id) {
+        inventory_list[i] = { ...inventory };
+        isMatched = true;
+        break;
+      }
+    }
+
+    if (!isMatched) {
+      inventory_list.push(inventory);
+    }
+
+    this.setState({
+      inventory_list,
+    });
+  };
 
   onCancelOptionModal() {
     this.setState({
       showOptionModal: false,
       attributeValueOptions: [''],
-      attributeValueInfo: {}
+      attributeValueInfo: {},
     });
   }
 
@@ -103,11 +192,11 @@ export default class EditSupplier extends React.Component {
     this.setState({
       showOptionModal: false,
       attributeValueOptions: [''],
-      attributeValueInfo: {}
+      attributeValueInfo: {},
     });
 
     let newAttributes = Object.assign({}, attributeInfo.attribute, {
-      value: options
+      value: options,
     });
     this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
   }
@@ -118,7 +207,21 @@ export default class EditSupplier extends React.Component {
       attributeValueOptions: options,
       attributeValueInfo: {
         attribute,
-        attrIndex
+        attrIndex,
+      },
+    });
+  }
+
+  onSelectSupplierType(selectedSupplierType) {
+    let { supplierTypeList } = this.props.supplierType;
+    supplierTypeList.forEach((supplierType) => {
+      if (supplierType.id === selectedSupplierType.value) {
+        this.setState({
+          selectedSupplierType,
+          supplier_attributes: supplierType.supplier_attributes,
+          inventory_list: supplierType.inventory_list,
+        });
+        return;
       }
     });
   }
@@ -126,20 +229,34 @@ export default class EditSupplier extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
+    const { isEditMode, supplierId } = this.state;
+    const { history } = this.props;
+
     let data = {
       name: this.state.name,
       is_custom: false,
-      supplier_type_id: this.props.supplier.currentSupplier.supplier_type_id,
-      supplier_attributes: this.state.supplier_attributes
+      supplier_type_id: this.state.selectedSupplierType.value,
+      supplier_attributes: this.state.supplier_attributes,
+      inventory_list: this.state.inventory_list,
     };
-    this.props.updateSupplier(
-      { data, supplierId: this.props.match.params.supplierId },
-      () => {
+
+    if (isEditMode) {
+      this.props.updateSupplier({ data, supplierId }, () => {
         toastr.success('', 'Supplier updated successfully');
-        this.props.history.push('/r/supplier/list');
-      }
-    );
+        history.push('/r/supplier/list');
+      });
+    } else {
+      this.props.postSupplier({ data }, () => {
+        toastr.success('', 'Supplier created successfully');
+        history.push('/r/supplier/list');
+      });
+    }
   }
+
+  getSupplierId = () => {
+    const { match } = this.props;
+    return match.params.supplierId;
+  };
 
   handleAttributeChange(attribute, index) {
     const attributes = this.state.supplier_attributes.slice();
@@ -147,18 +264,18 @@ export default class EditSupplier extends React.Component {
     attributes.splice(index, 1, attribute);
 
     this.setState({
-      supplier_attributes: attributes
+      supplier_attributes: attributes,
     });
   }
 
   handleInputChange(event) {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   }
 
   renderInputField(attribute, attrIndex) {
-    const onValueChange = event => {
+    const onValueChange = (event) => {
       const newAttribute = Object.assign({}, attribute);
 
       if (event.target.type === 'number') {
@@ -170,7 +287,7 @@ export default class EditSupplier extends React.Component {
       this.handleAttributeChange(newAttribute, attrIndex);
     };
 
-    const onDropDownAttributeValueChange = newValue => {
+    const onDropDownAttributeValueChange = (newValue) => {
       const newAttribute = Object.assign({}, attribute);
 
       newAttribute.value = newValue.value;
@@ -208,7 +325,7 @@ export default class EditSupplier extends React.Component {
         );
       case 'DROPDOWN':
         let attributeValueOptions = [];
-        attribute.options.forEach(option => {
+        attribute.options.forEach((option) => {
           attributeValueOptions.push({ label: option, value: option });
         });
         return (
@@ -224,15 +341,9 @@ export default class EditSupplier extends React.Component {
           <button
             type="button"
             className="btn btn--danger"
-            onClick={() =>
-              this.onOpenFillSupplierModal(
-                attribute.value ? attribute.value : [''],
-                attribute,
-                attrIndex
-              )
-            }
+            onClick={() => this.onOpenFillSupplierModal(attribute.value, attribute, attrIndex)}
           >
-            {attribute.value && attribute.value.length
+            {attribute.value && attribute.value.attributes[0].value
               ? 'Show Base Inventory List'
               : 'Create Base Inventory List'}
           </button>
@@ -243,13 +354,7 @@ export default class EditSupplier extends React.Component {
           <button
             type="button"
             className="btn btn--danger"
-            onClick={() =>
-              this.onOpenFillSupplierModal(
-                attribute.value,
-                attribute,
-                attrIndex
-              )
-            }
+            onClick={() => this.onOpenFillSupplierModal(attribute.value, attribute, attrIndex)}
           >
             {attribute.value && attribute.value.attributes[0].value
               ? 'Show Inventory List'
@@ -262,13 +367,7 @@ export default class EditSupplier extends React.Component {
           <button
             type="button"
             className="btn btn--danger"
-            onClick={() =>
-              this.onOpenFillSupplierModal(
-                attribute.value,
-                attribute,
-                attrIndex
-              )
-            }
+            onClick={() => this.onOpenFillSupplierModal(attribute.value, attribute, attrIndex)}
           >
             {attribute.value && attribute.value.attributes[0].value
               ? 'Show Supplier Type Data'
@@ -280,13 +379,7 @@ export default class EditSupplier extends React.Component {
           <button
             type="button"
             className="btn btn--danger"
-            onClick={() =>
-              this.onOpenFillSupplierModal(
-                attribute.value,
-                attribute,
-                attrIndex
-              )
-            }
+            onClick={() => this.onOpenFillSupplierModal(attribute.value, attribute, attrIndex)}
           >
             {attribute.value && attribute.value.attributes[0].value
               ? 'Show Base Supplier Type Data'
@@ -306,19 +399,39 @@ export default class EditSupplier extends React.Component {
             <input type="text" value={attribute.name} disabled />
           </div>
 
-          <div className="form-control">
-            {this.renderInputField(attribute, attrIndex)}
-          </div>
+          <div className="form-control">{this.renderInputField(attribute, attrIndex)}</div>
         </div>
       </div>
     );
   }
 
+  renderInventoryRow = (inventory) => {
+    return (
+      <div className="createform__form__row" key={inventory._id}>
+        <div className="createform__form__inline">
+          <div className="form-control">{inventory.name}</div>
+
+          <div className="form-control">
+            <button
+              type="button"
+              className="btn btn--danger"
+              onClick={() => this.onFillInventoryModalClick(inventory)}
+            >
+              View / Edit Inventory Attributes
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   render() {
+    const { isEditMode } = this.state;
+
     return (
       <div className="createform">
         <div className="createform__title">
-          <h3>Edit Supplier </h3>
+          <h3>Supplier - {isEditMode ? 'Edit' : 'Create'}</h3>
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
@@ -334,11 +447,24 @@ export default class EditSupplier extends React.Component {
               </div>
             </div>
 
-            <div className="createform__form__header">Attributes</div>
+            {!isEditMode ? (
+              <div className="createform__form__inline">
+                <div className="form-control">
+                  <label>*Select Supplier Type</label>
+                  <Select
+                    options={this.state.supplierTypeOption}
+                    value={this.state.selectedSupplierType}
+                    onChange={this.onSelectSupplierType}
+                  />
+                </div>
+              </div>
+            ) : null}
 
-            <div>
-              {this.state.supplier_attributes.map(this.renderAttributeRow)}
-            </div>
+            <div className="createform__form__header">Attributes</div>
+            <div>{this.state.supplier_attributes.map(this.renderAttributeRow)}</div>
+
+            <div className="createform__form__header">Inventory</div>
+            <div>{this.state.inventory_list.map(this.renderInventoryRow)}</div>
 
             <div className="createform__form__inline">
               <div className="createform__form__action">
@@ -368,6 +494,14 @@ export default class EditSupplier extends React.Component {
         ) : (
           undefined
         )}
+
+        <FillInventoryModal
+          key={this.state.selectedInventory._id}
+          isVisible={this.state.isFillInventoryModalVisible}
+          inventory={this.state.selectedInventory}
+          onChange={this.onInventoryChange}
+          onClose={this.onFillInventoryModalClose}
+        />
       </div>
     );
   }

@@ -3,11 +3,10 @@ import { Route, Switch } from 'react-router-dom';
 
 import EditType from './SupplierType/Edit';
 import CreateBaseType from './BaseSupplierType/CreateBaseType';
-import CreateSupplier from './Supplier/CreateSupplier';
+import EditSupplier from './Supplier/Edit';
 import SupplierList from './Supplier/SupplierList';
 import SupplierTypeList from './SupplierType/SupplierTypeList';
 import BaseSupplierTypeList from './BaseSupplierType/BaseSupplierTypeList';
-import EditSupplier from './Supplier/EditSupplier';
 import EditBaseSupplierType from './BaseSupplierType/EditBaseSupplierType';
 
 import './index.css';
@@ -26,7 +25,7 @@ export default class Supplier extends React.Component {
           <Route
             exact
             path={`${match.path}/create`}
-            render={(componentProps) => <CreateSupplier {...this.props} {...componentProps} />}
+            render={(componentProps) => <EditSupplier {...this.props} {...componentProps} />}
           />
           <Route
             exact
