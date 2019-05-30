@@ -161,6 +161,7 @@ export default class CreateBookingTemplate extends React.Component {
     };
 
     this.onAddAttributeClick = this.onAddAttributeClick.bind(this);
+    this.onRemoveAttribute = this.onRemoveAttribute.bind(this);
     this.onBaseBookingChange = this.onBaseBookingChange.bind(this);
     this.onSupplierTypeChange = this.onSupplierTypeChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -237,6 +238,14 @@ export default class CreateBookingTemplate extends React.Component {
 
     this.setState({
       attributes,
+    });
+  }
+
+  onRemoveAttribute(index) {
+    const newAttributes = this.state.attributes.slice();
+    newAttributes.splice(index, 1);
+    this.setState({
+      attributes: newAttributes,
     });
   }
 
@@ -523,6 +532,15 @@ export default class CreateBookingTemplate extends React.Component {
             onChange={onRequiredChange}
           />
           <label htmlFor={`attr-${index}-is-required`}>Required</label>
+        </div>
+        <div className="createform__form__action">
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={() => this.onRemoveAttribute(index)}
+          >
+            Remove Attribute
+          </button>
         </div>
       </div>
     );
