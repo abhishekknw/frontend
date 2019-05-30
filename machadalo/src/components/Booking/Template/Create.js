@@ -175,6 +175,7 @@ export default class CreateBookingTemplate extends React.Component {
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
     this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
 
   componentDidMount() {
@@ -247,6 +248,11 @@ export default class CreateBookingTemplate extends React.Component {
     this.setState({
       attributes: newAttributes,
     });
+  }
+
+  onBack() {
+    const { match } = this.props;
+    this.props.history.push(`/r/booking/template/list/`);
   }
 
   onBaseBookingChange(option) {
@@ -708,7 +714,12 @@ export default class CreateBookingTemplate extends React.Component {
 
         <div className="create__form">
           <form onSubmit={this.onSubmit}>
+            <button type="button" className="btn btn--danger" onClick={this.onBack}>
+              <i className="fa fa-arrow-left" aria-hidden="true" />
+              &nbsp; Back
+            </button>
             <div className="create__form__body">
+              <br />
               <div className="form-control form-control--column">
                 <label>*Enter Name For Booking Template</label>
                 <input
