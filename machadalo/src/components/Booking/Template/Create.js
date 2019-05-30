@@ -462,6 +462,7 @@ export default class CreateBookingTemplate extends React.Component {
   }
 
   renderAttributeRow(attribute, index) {
+    const { isEditMode } = this.state;
     const onNameChange = (event) => {
       const newAttribute = { ...attribute };
 
@@ -534,13 +535,15 @@ export default class CreateBookingTemplate extends React.Component {
           <label htmlFor={`attr-${index}-is-required`}>Required</label>
         </div>
         <div className="createform__form__action">
-          <button
-            type="button"
-            className="btn btn--danger"
-            onClick={() => this.onRemoveAttribute(index)}
-          >
-            Remove Attribute
-          </button>
+          {!isEditMode ? (
+            <button
+              type="button"
+              className="btn btn--danger"
+              onClick={() => this.onRemoveAttribute(index)}
+            >
+              Remove Attribute
+            </button>
+          ) : null}
         </div>
       </div>
     );

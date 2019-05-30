@@ -144,6 +144,7 @@ export default class CreateBaseBooking extends React.Component {
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
     this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
 
   componentDidMount() {
@@ -215,6 +216,11 @@ export default class CreateBaseBooking extends React.Component {
     this.setState({
       attributes: newAttributes,
     });
+  }
+
+  onBack() {
+    const { match } = this.props;
+    this.props.history.push(`/r/booking/base/list/`);
   }
 
   onOpenOptionModal(options, attributeType, attribute, attrIndex) {
@@ -355,6 +361,7 @@ export default class CreateBaseBooking extends React.Component {
   }
 
   renderAttributeRow(attribute, index) {
+    const { isEditMode } = this.state;
     const onNameChange = (event) => {
       const newAttribute = { ...attribute };
 
@@ -432,13 +439,15 @@ export default class CreateBaseBooking extends React.Component {
           <label htmlFor={`attr-${index}-is-required`}>Required</label>
         </div>
         <div className="createform__form__action">
-          <button
-            type="button"
-            className="btn btn--danger"
-            onClick={() => this.onRemoveAttribute(index)}
-          >
-            Remove Attribute
-          </button>
+          {!isEditMode ? (
+            <button
+              type="button"
+              className="btn btn--danger"
+              onClick={() => this.onRemoveAttribute(index)}
+            >
+              Remove Attribute
+            </button>
+          ) : null}
         </div>
       </div>
     );
@@ -522,7 +531,12 @@ export default class CreateBaseBooking extends React.Component {
 
         <div className="create__form">
           <form onSubmit={this.onSubmit}>
+            <button type="button" className="btn btn--danger" onClick={this.onBack}>
+              <i className="fa fa-arrow-left" aria-hidden="true" />
+              &nbsp; Back
+            </button>
             <div className="create__form__body">
+              <br />
               <div className="form-control form-control--column">
                 <label>*Enter Name For Base Booking</label>
                 <input
