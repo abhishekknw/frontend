@@ -15,7 +15,7 @@ export default class List extends React.Component {
   renderBaseInventoryRow(baseInventory, index) {
     const onRemove = () => {
       this.props.deleteBaseInventory({
-        baseInventoryId: baseInventory._id
+        baseInventoryId: baseInventory._id,
       });
     };
     return (
@@ -65,9 +65,7 @@ export default class List extends React.Component {
                 baseInventory.baseInventoryList.map(this.renderBaseInventoryRow)
               ) : (
                 <tr>
-                  <td colSpan="5">
-                    No base inventory available. Create your first one now!
-                  </td>
+                  <td colSpan="5">No base inventory available. Create your first one now!</td>
                 </tr>
               )}
             </tbody>

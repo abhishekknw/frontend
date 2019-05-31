@@ -37,7 +37,7 @@ export function getLeadPermissionList() {
         dispatch(getPermissionListSuccess(resp.body.data));
       })
       .catch(ex => {
-        console.log('Failed to fetch entity', ex);
+        console.log('Failed to fetch Lead', ex);
 
         dispatch(getPermissionListFail());
       });
@@ -155,13 +155,13 @@ export function getLeadProfilePermission(profileId) {
             );
           })
           .catch(ex => {
-            console.log('Failed to fetch entity', ex);
+            console.log('Failed to fetch Lead', ex);
 
             dispatch(getLeadPermissionFail());
           });
       })
       .catch(ex => {
-        console.log('Failed to fetch entity', ex);
+        console.log('Failed to fetch Lead', ex);
 
         dispatch(getLeadPermissionFail());
       });
@@ -207,7 +207,7 @@ export function getAllLeadsFormData() {
         dispatch(getLeadPermissionSuccess(profilePermission, 0));
       })
       .catch(ex => {
-        console.log('Failed to fetch entity', ex);
+        console.log('Failed to fetch Lead', ex);
 
         dispatch(getLeadPermissionFail());
       });
@@ -231,7 +231,7 @@ export function updateProfilePermission(data, callback) {
         }
       })
       .catch(ex => {
-        console.log('Failed to create checklist template', ex);
+        console.log('Failed to create Lead template', ex);
 
         dispatch(getLeadPermissionFail());
       });
@@ -255,7 +255,7 @@ export function updateLeadsProfilePermission(data, callback) {
         }
       })
       .catch(ex => {
-        console.log('Failed to create checklist template', ex);
+        console.log('Failed to create Lead template', ex);
 
         dispatch(getLeadPermissionFail());
       });
@@ -279,7 +279,7 @@ export function createLeadsProfilePermission(data, callback) {
         }
       })
       .catch(ex => {
-        console.log('Failed to create checklist template', ex);
+        console.log('Failed to create Lead template', ex);
 
         dispatch(getLeadPermissionFail());
       });
@@ -303,7 +303,7 @@ export function deleteLeadsProfilePermission(permissionId, callback) {
         }
       })
       .catch(ex => {
-        console.log('Failed to create checklist template', ex);
+        console.log('Failed to create Lead template', ex);
 
         dispatch(getLeadPermissionFail());
       });
@@ -343,9 +343,117 @@ export function getCampaignsFormList({ campaignId }) {
         dispatch(getCampaignsFormListSuccess(resp.body.data));
       })
       .catch(ex => {
-        console.log('Failed to fetch entity', ex);
+        console.log('Failed to fetch Form', ex);
 
         dispatch(getCampaignsFormListFail());
+      });
+  };
+}
+
+export function postLeadFormStart() {
+  return {
+    type: types.POST_LEAD_FORM_START
+  };
+}
+
+export function postLeadFormSuccess(entity) {
+  return {
+    type: types.POST_LEAD_FORM_SUCCESS,
+    data: entity
+  };
+}
+
+export function postLeadFormFail() {
+  return {
+    type: types.POST_LEAD_FORM_FAIL
+  };
+}
+
+export function postLeadForm({ data }, callback) {
+  return (dispatch, getState) => {
+    dispatch(postLeadFormStart());
+
+    const { auth } = getState();
+
+    request
+      .post(`${config.API_URL}/v0/ui/leads/${data.campaignId}/create`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .send(data)
+      .then(resp => {
+        dispatch(postLeadFormSuccess(resp.data));
+        if (callback) {
+          callback();
+        }
+      })
+      .catch(ex => {
+        console.log('Failed to create Form', ex);
+
+        dispatch(postLeadFormFail());
+      });
+  };
+}
+
+//Get Lead Form Attributes
+export function getLeadFormStart() {
+  return {
+    type: types.GET_LEAD_FORM_START
+  };
+}
+
+export function getLeadFormSuccess(entityType) {
+  return {
+    type: types.GET_LEAD_FORM_SUCCESS,
+    data: entityType
+  };
+}
+
+export function getLeadFormFail() {
+  return {
+    type: types.GET_LEAD_FORM_FAIL
+  };
+}
+
+export function getLeadForm(leadFormId) {
+  return (dispatch, getState) => {
+    dispatch(getLeadFormStart());
+
+    const { auth } = getState();
+
+    request
+      .get(`${config.API_URL}/v0/ui/leads/${leadFormId}/form_by_id/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then(resp => {
+        console.log(resp.body);
+        dispatch(getLeadFormSuccess(resp.body.data));
+      })
+      .catch(ex => {
+        console.log('Failed to fetch Form', ex);
+
+        dispatch(getLeadFormFail());
+      });
+  };
+}
+
+export function updateLeadForm({ data, leadFormId }, callback) {
+  return (dispatch, getState) => {
+    dispatch(postLeadFormStart());
+
+    const { auth } = getState();
+
+    request
+      .put(`${config.API_URL}/v0/ui/leads/${leadFormId}/edit_form`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .send(data)
+      .then(resp => {
+        dispatch(postLeadFormSuccess(resp.data));
+        if (callback) {
+          callback();
+        }
+      })
+      .catch(ex => {
+        console.log('Failed to create Form', ex);
+
+        dispatch(postLeadFormFail());
       });
   };
 }

@@ -475,6 +475,47 @@ export function deleteBooking({ id }) {
       });
   };
 }
+
+// Upload Hashtag Image
+
+const uploadHashtagImageStart = () => {
+  return {
+    type: types.UPLOAD_HASHTAG_IMAGE_START,
+  };
+};
+
+const uploadHashtagImageSuccess = () => {
+  return {
+    type: types.UPLOAD_HASHTAG_IMAGE_SUCCESS,
+  };
+};
+
+const uploadHashtagImageFail = () => {
+  return {
+    type: types.UPLOAD_HASHTAG_IMAGE_FAIL,
+  };
+};
+
+export function uploadHashtagImage({ id, data }) {
+  return (dispatch, getState) => {
+    dispatch(uploadHashtagImageStart());
+
+    const { auth } = getState();
+
+    request
+      .post(`${config.API_URL}/v0/ui/dynamic-booking/upload-hashtag-image/${id}/`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .send(data)
+      .then((resp) => {
+        dispatch(uploadHashtagImageSuccess());
+      })
+      .catch((ex) => {
+        console.log('Failed to upload image', ex);
+
+        dispatch(uploadHashtagImageFail());
+      });
+  };
+}
 /* Booking: End */
 
 /* Campaign Inventory: Start */

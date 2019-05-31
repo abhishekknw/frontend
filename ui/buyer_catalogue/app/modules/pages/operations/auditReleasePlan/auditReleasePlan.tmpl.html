@@ -97,18 +97,26 @@
    <!--End: assign dates form  -->
 
    <div class="panel-body panel-table">
+       <div class="col-md-12 row" style="background-color:#ffffff;">
+         <div class="col-md-1">
+           <button type="button" name="button" class="btn btn-small btn-primary" ng-click="resetSupplierData()">Reset</button>
+         </div>
+         <div class="col-md-11">
+           <input  type="text" ng-model="customPopupSelected" placeholder="Search.." uib-typeahead="supplier as supplier.name for supplier in allShortlistedSuppliers | filter:{name:$viewValue} "
+           class="form-control" typeahead-on-select="getSearchedSupplierData(customPopupSelected)">
+         </div>
+       </div>
+       </br>
          <table st-table="releaseDetails.shortlisted_suppliers" st-safe-src="Data" class="table table-bordered">
+
            <thead>
-             <tr>
-               <th colspan='9' style="background-color:#ffffff;">
-                 <input st-search="" placeholder="Search ..." class="form-control"  type="search"/>
-               </th>
-             </tr>
+
              <tr>
                <th ng-repeat="header in headings" >{{header.header}}</th>
              </tr>
            </thead>
-           <tbody ng-repeat="supplier in releaseDetails.shortlisted_suppliers" ng-init="rowIndex = $index">
+           <tbody dir-paginate="supplier in releaseDetails.shortlisted_suppliers | itemsPerPage: suppliersPerPage"
+                    total-items="totalSuppliers" current-page="pagination.current" ng-init="rowIndex = $index">
              <tr ng-repeat="(key,filter) in getFilters(supplier)" ng-if="supplier.booking_status=='BK'">
                <!-- <td rowspan="{{key.length}}" ng-show="$first">{{$index + 1}}</td> -->
                <td class="col-md-1" rowspan="{{key.length}}" ng-show="$first">
@@ -153,14 +161,16 @@
              </tr>
            </tbody>
            <tfoot>
-             <tr>
-               <td colspan="10" class="text-center">
-                 <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages=""></div>
-               </td>
-             </tr>
+             <!-- <tr> -->
+               <!-- <td colspan="10" class="text-center"> -->
+
+                 <!-- <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages=""></div> -->
+               <!-- </td> -->
+             <!-- </tr> -->
            </tfoot>
          </table>
        </br>
+       <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
      </div>
      <div class="panel-body button-style">
        <button class="btn btn-danger active notify" ng-click="updateData()"  permission = "[permissions.updateData]">Update</button>
@@ -446,13 +456,13 @@
            </div><br>
            <!-- <div> -->
              <br>
-             <button class="btn btn-success" type="button" ng-click="addComment()">Add Comment</button>
+             <!-- <button class="btn btn-success" type="button" ng-click="addComment()">Add Comment</button> -->
            <!-- </div> -->
          </br></br>
 
          </div>
        </div>
-     </div> -->
+     </div>
      <!--END : add comments modal  -->
      <!--START : view comments modal  -->
      <!-- <div id="viewComments" class="modal fade">

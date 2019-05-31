@@ -30,10 +30,7 @@ export default class List extends React.Component {
           </button>
         </td>
         <td>
-          <Link
-            to={`/r/supplier/type/edit/${supplierType.id}`}
-            className="btn btn--danger"
-          >
+          <Link to={`/r/supplier/type/edit/${supplierType.id}`} className="btn btn--danger">
             Edit Supplier Type
           </Link>
         </td>
@@ -64,9 +61,7 @@ export default class List extends React.Component {
                   supplierTypeList.map(this.renderSupplierTypeRow)
                 ) : (
                   <tr>
-                    <td colSpan="5">
-                      No supplier types available. Create your first one now!
-                    </td>
+                    <td colSpan="5">No supplier types available. Create your first one now!</td>
                   </tr>
                 )}
               </tbody>

@@ -13,17 +13,17 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     width: '50%',
-    transform: 'translate(-50%, -50%)'
-  }
+    transform: 'translate(-50%, -50%)',
+  },
 };
 
 const CommentTypes = [
   { label: 'Internal', value: 'INTERNAL' },
-  { label: 'External', value: 'EXTERNAL' }
+  { label: 'External', value: 'EXTERNAL' },
 ];
 
 // Get comment type option from string
-const getCommentTypeOption = value => {
+const getCommentTypeOption = (value) => {
   for (let i = 0, l = CommentTypes.length; i < l; i += 1) {
     if (CommentTypes[i].value === value) {
       return CommentTypes[i];
@@ -39,7 +39,7 @@ export default class CommentsModal extends React.Component {
 
     this.state = {
       type: 'INTERNAL',
-      comment: ''
+      comment: '',
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -50,7 +50,7 @@ export default class CommentsModal extends React.Component {
 
   onTypeChange(option) {
     this.setState({
-      type: option.value
+      type: option.value,
     });
   }
 
@@ -64,7 +64,7 @@ export default class CommentsModal extends React.Component {
       comment,
       timestamp: moment().valueOf(),
       user_id: user.id,
-      type
+      type,
     });
 
     onChange(comments);
@@ -72,7 +72,7 @@ export default class CommentsModal extends React.Component {
 
   handleInputChange(event) {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   }
 

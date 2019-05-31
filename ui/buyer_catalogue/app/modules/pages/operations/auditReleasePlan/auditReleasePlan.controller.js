@@ -59,8 +59,19 @@ angular.module('catalogueApp')
 
 
       $scope.auditDates = [];
+      $scope.totalSuppliers = 0;
+      $scope.suppliersPerPage = 10;
+      var supplierIdForSearch;
+      // $scope.pageNo = 1;
+      $scope.pagination = {
+          current: 1
+      };
+      $scope.pageChanged = function(newPage) {
+          getResultsPage(newPage);
+      };
       function init(){
-        getCampaignReleaseDetails();
+        getResultsPage(1);
+        // getCampaignReleaseDetails();
         // getUsersList();
         $scope.getPhases();
       }
@@ -79,6 +90,9 @@ angular.module('catalogueApp')
             console.log("error occured", response.status);
             commonDataShare.showErrorMessage(response);
           });
+      }
+      var getResultsPage = function(newPage){
+        getCampaignReleaseDetails(newPage);
       }
       $scope.getPhases = function(){
         $scope.editPhase = false;
@@ -102,13 +116,19 @@ angular.module('catalogueApp')
       init();
 
       //initial call to get release Data
-      function getCampaignReleaseDetails(){
+      function getCampaignReleaseDetails(newPage){
         $scope.Data = [];
-      auditReleasePlanService.getCampaignReleaseDetails($scope.campaign_id)
+      auditReleasePlanService.getCampaignReleaseDetails($scope.campaign_id, newPage, supplierIdForSearch)
       	.then(function onSuccess(response){
           console.log("get values",response);
           if(response.data.data){
+            if(response.data.data.shortlisted_suppliers.length == 1 &&
+                response.data.data.shortlisted_suppliers[0].phase_no == undefined){
+              swal(constants.name, "Phase Not Found for this Supplier, Please Assign Phase At Booking Page", constants.warning);
+            }
             $scope.releaseDetails = response.data.data;
+
+            $scope.totalSuppliers = $scope.releaseDetails.total_count;
             $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
             console.log(  $scope.Data);
             setDataToModel($scope.releaseDetails.shortlisted_suppliers);
@@ -130,7 +150,7 @@ angular.module('catalogueApp')
       }
       var makeAssignDateData = function(data){
         $scope.phaseData = [], $scope.phases = [];
-        $scope.phaseData =  $filter('unique')(data.shortlisted_suppliers,'phase');
+        $scope.phaseData =  $filter('unique')(data.shortlisted_suppliers,'phase_no');
         $scope.inventoryTypes = Object.keys(data.shortlisted_suppliers[0].shortlisted_inventories);
         angular.forEach($scope.phaseData, function(phase){
           if(phase.phase != null)
@@ -519,6 +539,28 @@ angular.module('catalogueApp')
      }).catch(function onError(response){
        console.log(response);
      })
+   }
+
+   var searchSupplierBySelection = function(){
+     auditReleasePlanService.searchSupplierBySelection($scope.campaign_id)
+     .then(function onSuccess(response){
+       console.log(response);
+       $scope.allShortlistedSuppliers = response.data.data;
+       console.log($scope.allShortlistedSuppliers);
+     }).catch(function onError(response){
+       console.log(response);
+     })
+   }
+   searchSupplierBySelection();
+
+   $scope.getSearchedSupplierData = function(supplier){
+     supplierIdForSearch = supplier.supplier_id;
+     getResultsPage(1);
+   }
+
+   $scope.resetSupplierData = function(){
+     supplierIdForSearch = undefined;
+     getResultsPage(1);
    }
 
 

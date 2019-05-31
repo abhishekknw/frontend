@@ -7,20 +7,20 @@ import config from './../config';
 /* Phase: Start */
 export function postPhaseStart() {
   return {
-    type: types.POST_PHASE_START
+    type: types.POST_PHASE_START,
   };
 }
 
 export function postPhaseSuccess({ phases }) {
   return {
     type: types.POST_PHASE_SUCCESS,
-    phases
+    phases,
   };
 }
 
 export function postPhaseFail() {
   return {
-    type: types.POST_PHASE_FAIL
+    type: types.POST_PHASE_FAIL,
   };
 }
 
@@ -31,17 +31,13 @@ export function postPhase({ data, campaignId }) {
     const { auth } = getState();
 
     request
-      .post(
-        `${
-          config.API_URL
-        }/v0/ui/website/supplier-phase/?campaign_id=${campaignId}`
-      )
+      .post(`${config.API_URL}/v0/ui/website/supplier-phase/?campaign_id=${campaignId}`)
       .set('Authorization', `JWT ${auth.token}`)
       .send(data)
-      .then(resp => {
+      .then((resp) => {
         dispatch(postPhaseSuccess({ phases: resp.body.data }));
       })
-      .catch(ex => {
+      .catch((ex) => {
         console.log('Failed to create phase', ex);
 
         dispatch(postPhaseFail());
@@ -51,20 +47,20 @@ export function postPhase({ data, campaignId }) {
 
 const getPhaseListStart = () => {
   return {
-    type: types.GET_PHASE_LIST_START
+    type: types.GET_PHASE_LIST_START,
   };
 };
 
 const getPhaseListSuccess = ({ list }) => {
   return {
     type: types.GET_PHASE_LIST_SUCCESS,
-    list
+    list,
   };
 };
 
 const getPhaseListFail = () => {
   return {
-    type: types.GET_PHASE_LIST_FAIL
+    type: types.GET_PHASE_LIST_FAIL,
   };
 };
 
@@ -75,16 +71,12 @@ export function getPhaseList({ campaignId }) {
     const { auth } = getState();
 
     request
-      .get(
-        `${
-          config.API_URL
-        }/v0/ui/website/supplier-phase/?campaign_id=${campaignId}`
-      )
+      .get(`${config.API_URL}/v0/ui/website/supplier-phase/?campaign_id=${campaignId}`)
       .set('Authorization', `JWT ${auth.token}`)
-      .then(resp => {
+      .then((resp) => {
         dispatch(getPhaseListSuccess({ list: resp.body.data }));
       })
-      .catch(ex => {
+      .catch((ex) => {
         console.log('Failed to fetch list of phases', ex);
 
         dispatch(getPhaseListFail());
@@ -94,20 +86,20 @@ export function getPhaseList({ campaignId }) {
 
 const deletePhaseStart = () => {
   return {
-    type: types.DELETE_PHASE_START
+    type: types.DELETE_PHASE_START,
   };
 };
 
 const deletePhaseSuccess = ({ id }) => {
   return {
     type: types.DELETE_PHASE_SUCCESS,
-    id
+    id,
   };
 };
 
 const deletePhaseEnd = () => {
   return {
-    type: types.DELETE_PHASE_FAIL
+    type: types.DELETE_PHASE_FAIL,
   };
 };
 
@@ -123,7 +115,7 @@ export function deletePhase({ id }) {
       .then(() => {
         dispatch(deletePhaseSuccess({ id }));
       })
-      .catch(ex => {
+      .catch((ex) => {
         console.log('Failed to delete booking template', ex);
 
         dispatch(deletePhaseEnd());

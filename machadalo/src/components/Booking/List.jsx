@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import ViewHashtagImagesModal from '../Modals/ViewHashtagImagesModal';
 
 import CommentsModal from './../Modals/CommentsModal';
 import PhaseModal from './../Modals/PhaseModal';
@@ -13,6 +14,7 @@ export default class ListBooking extends Component {
       selectedBooking: null,
       isCommentsModalVisible: false,
       isPhaseModalVisible: false,
+      isViewHashtagImagesModalVisible: false,
     };
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
@@ -22,6 +24,8 @@ export default class ListBooking extends Component {
     this.onPhaseModalClose = this.onPhaseModalClose.bind(this);
     this.getFilteredList = this.getFilteredList.bind(this);
     this.renderBookingRow = this.renderBookingRow.bind(this);
+    this.onViewImageClick = this.onViewImageClick.bind(this);
+    this.onViewHashtagImagesModalClose = this.onViewHashtagImagesModalClose.bind(this);
   }
 
   componentDidMount() {
@@ -68,6 +72,19 @@ export default class ListBooking extends Component {
     return match.params.campaignId;
   }
 
+  onViewImageClick(item) {
+    this.setState({
+      isViewHashtagImagesModalVisible: true,
+      selectedRow: item,
+    });
+  }
+
+  onViewHashtagImagesModalClose() {
+    this.setState({
+      isViewHashtagImagesModalVisible: false,
+    });
+  }
+
   getFilteredList(list) {
     return list;
   }
@@ -81,16 +98,37 @@ export default class ListBooking extends Component {
       });
     };
 
+    const viewImageClick = () => {
+      this.onViewImageClick(booking);
+    };
+
     const onRemove = () => {
       if (window.confirm('Are you sure you want to remove this booking?')) {
         this.props.deleteBooking(booking);
       }
     };
 
+    const { isViewHashtagImagesModalVisible, selectedBooking } = this.state;
+
     return (
       <tr key={booking.id}>
         {booking.booking_attributes.map((attribute) => (
-          <td>{attribute.value}</td>
+          <td>
+            {attribute.type === 'HASHTAG' && attribute.files ? (
+              <button type="button" className="btn btn--danger" onClick={viewImageClick}>
+                View Images ({attribute.files.length})
+              </button>
+            ) : (
+              attribute.value
+            )}
+            {isViewHashtagImagesModalVisible && attribute.type === 'HASHTAG' && attribute.files ? (
+              <ViewHashtagImagesModal
+                onClose={this.onViewHashtagImagesModalClose}
+                isVisible={isViewHashtagImagesModalVisible}
+                item={attribute.files}
+              />
+            ) : null}
+          </td>
         ))}
         {booking.supplier_attributes.map((attribute) => (
           <td>
@@ -127,6 +165,7 @@ export default class ListBooking extends Component {
       selectedBooking,
       isCommentsModalVisible,
       isPhaseModalVisible,
+      isViewHashtagImagesModalVisible,
     } = this.state;
     const { booking } = this.props;
     const { bookingList } = booking;

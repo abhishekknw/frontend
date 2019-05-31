@@ -29,7 +29,7 @@ export default class Campaigns extends React.Component {
         </td>
         <td>
           <Link
-            to={`/r/leads/${campaign.campaign.proposal_id}`}
+            to={`/r/leads/${campaign.campaign.proposal_id}/form`}
             className="btn btn--danger"
           >
             Create / Edit Lead Form

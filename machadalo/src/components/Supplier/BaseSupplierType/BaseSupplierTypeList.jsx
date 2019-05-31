@@ -65,8 +65,7 @@ export default class List extends React.Component {
                 ) : (
                   <tr>
                     <td colSpan="5">
-                      No base supplier types available. Create your first one
-                      now!
+                      No base supplier types available. Create your first one now!
                     </td>
                   </tr>
                 )}

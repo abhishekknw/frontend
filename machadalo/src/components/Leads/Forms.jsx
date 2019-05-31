@@ -12,7 +12,6 @@ export default class Forms extends React.Component {
 
   componentDidMount() {
     const { match } = this.props;
-
     this.props.getCampaignsFormList({
       campaignId: match.params.campaignId
     });
@@ -27,7 +26,12 @@ export default class Forms extends React.Component {
       <tr key={campaignsFormList.leads_form_id}>
         <td>{campaignsFormList.leads_form_name}</td>
         <td>
-          <Link to={`/r/leads/`} className="btn btn--danger">
+          <Link
+            to={`/r/leads/${this.props.match.params.campaignId}/editForm/${
+              campaignsFormList.leads_form_id
+            }`}
+            className="btn btn--danger"
+          >
             Form Details
           </Link>
         </td>
@@ -78,7 +82,10 @@ export default class Forms extends React.Component {
         </div>
         <div>
           <br />
-          <Link to={`/r/leads/}`} className="btn btn--danger">
+          <Link
+            to={`/r/leads/${this.props.match.params.campaignId}/createForm`}
+            className="btn btn--danger"
+          >
             Create Lead Form
           </Link>
         </div>

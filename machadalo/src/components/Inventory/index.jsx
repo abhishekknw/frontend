@@ -25,46 +25,34 @@ export default class Inventory extends React.Component {
           <Route
             exact
             path={`${match.path}/base/create`}
-            render={componentProps => (
-              <BaseCreate {...this.props} {...componentProps} />
-            )}
+            render={(componentProps) => <BaseCreate {...this.props} {...componentProps} />}
           />
           <Route
             exact
             path={`${match.path}/base/list`}
-            render={componentProps => (
-              <BaseList {...this.props} {...componentProps} />
-            )}
+            render={(componentProps) => <BaseList {...this.props} {...componentProps} />}
           />
           <Route
             exact
             path={`${match.path}/base/edit/:baseInventoryId`}
-            render={componentProps => (
-              <BaseEdit {...this.props} {...componentProps} />
-            )}
+            render={(componentProps) => <BaseEdit {...this.props} {...componentProps} />}
           />
 
           {/* Inventory */}
           <Route
             exact
             path={`${match.path}/list`}
-            render={componentProps => (
-              <List {...this.props} {...componentProps} />
-            )}
+            render={(componentProps) => <List {...this.props} {...componentProps} />}
           />
           <Route
             exact
             path={`${match.path}/create`}
-            render={componentProps => (
-              <Create {...this.props} {...componentProps} />
-            )}
+            render={(componentProps) => <Create {...this.props} {...componentProps} />}
           />
           <Route
             exact
             path={`${match.path}/edit/:inventoryId`}
-            render={componentProps => (
-              <Create {...this.props} {...componentProps} />
-            )}
+            render={(componentProps) => <Create {...this.props} {...componentProps} />}
           />
         </Switch>
       </div>

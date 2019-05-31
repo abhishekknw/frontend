@@ -11,15 +11,15 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     width: '50%',
-    transform: 'translate(-50%, -50%)'
-  }
+    transform: 'translate(-50%, -50%)',
+  },
 };
 
 export default class OptionModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      options: ['']
+      options: [''],
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.renderOptionRow = this.renderOptionRow.bind(this);
@@ -27,13 +27,9 @@ export default class OptionModal extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      this.props.options &&
-      prevProps.options &&
-      prevProps.options[0] !== this.props.options[0]
-    ) {
+    if (this.props.options && prevProps.options && prevProps.options[0] !== this.props.options[0]) {
       this.setState({
-        options: this.props.options
+        options: this.props.options,
       });
     }
   }
@@ -44,7 +40,7 @@ export default class OptionModal extends React.Component {
     newOptions.push('');
 
     this.setState({
-      options: newOptions
+      options: newOptions,
     });
   }
 
@@ -54,7 +50,7 @@ export default class OptionModal extends React.Component {
     options.splice(index, 1, option);
 
     this.setState({
-      options: options
+      options: options,
     });
   }
 
@@ -68,12 +64,12 @@ export default class OptionModal extends React.Component {
     }
 
     this.setState({
-      options
+      options,
     });
   }
 
   renderOptionRow(option, optionIndex) {
-    const onOptionChange = event => {
+    const onOptionChange = (event) => {
       let newOption = event.target.value;
 
       this.handleInputChange(newOption, optionIndex);
@@ -103,40 +99,24 @@ export default class OptionModal extends React.Component {
 
   render() {
     return (
-      <Modal
-        isOpen={this.props.showOptionModal}
-        style={customStyles}
-        ariaHideApp={false}
-      >
+      <Modal isOpen={this.props.showOptionModal} style={customStyles} ariaHideApp={false}>
         <div className="modal modal-options">
           <div className="modal__header">
             <h3>Add Options</h3>
           </div>
-          <div className="modal__body">
-            {this.state.options.map(this.renderOptionRow)}
-          </div>
+          <div className="modal__body">{this.state.options.map(this.renderOptionRow)}</div>
           <div className="modal__footer">
-            <button
-              type="button"
-              className="btn btn--danger"
-              onClick={this.addOptionRow}
-            >
+            <button type="button" className="btn btn--danger" onClick={this.addOptionRow}>
               Add Option
             </button>
             <button
               type="button"
               className="btn btn--danger"
-              onClick={() =>
-                this.props.onSubmit(this.state.options, this.props.columnInfo)
-              }
+              onClick={() => this.props.onSubmit(this.state.options, this.props.columnInfo)}
             >
               Submit
             </button>
-            <button
-              type="button"
-              className="btn btn--danger"
-              onClick={this.props.onCancel}
-            >
+            <button type="button" className="btn btn--danger" onClick={this.props.onCancel}>
               Close
             </button>
           </div>

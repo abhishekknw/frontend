@@ -10,18 +10,18 @@ const optionStyle = {
   marginTop: '5px',
   textDecoration: 'underline',
   cursor: 'pointer',
-  paddingBottom: '10px'
+  paddingBottom: '10px',
 };
 
 const AttributeTypes = [
   { value: 'FLOAT', label: 'Float' },
   { value: 'STRING', label: 'Text' },
   { value: 'DROPDOWN', label: 'Dropdown' },
-  { value: 'EMAIL', label: 'Email' }
+  { value: 'EMAIL', label: 'Email' },
 ];
 
 // Get attribute type option from string
-const getAttributeTypeOption = value => {
+const getAttributeTypeOption = (value) => {
   for (let i = 0, l = AttributeTypes.length; i < l; i += 1) {
     if (AttributeTypes[i].value === value) {
       return AttributeTypes[i];
@@ -32,19 +32,16 @@ const getAttributeTypeOption = value => {
 };
 
 // Get base inventory options list
-const getBaseInventoryOptions = baseInventory => {
+const getBaseInventoryOptions = (baseInventory) => {
   if (baseInventory && baseInventory.length) {
-    return baseInventory.map(item => ({ label: item.name, value: item._id }));
+    return baseInventory.map((item) => ({ label: item.name, value: item._id }));
   }
 
   return [];
 };
 
 // Get base inventory option by value
-const getBaseInventoryOptionByValue = (
-  baseInventoryOptions,
-  baseInventoryId
-) => {
+const getBaseInventoryOptionByValue = (baseInventoryOptions, baseInventoryId) => {
   for (let i = 0, l = baseInventoryOptions.length; i < l; i += 1) {
     if (baseInventoryOptions[i].value === baseInventoryId) {
       return baseInventoryOptions[i];
@@ -104,7 +101,7 @@ export default class Create extends React.Component {
       attributeOptions: [''],
       attributeInfo: {},
       mode,
-      inventoryId
+      inventoryId,
     };
 
     this.onAddAttribute = this.onAddAttribute.bind(this);
@@ -134,9 +131,7 @@ export default class Create extends React.Component {
 
     if (
       this.state.baseInventoryOptions.length !== baseInventoryList.length ||
-      (oldInventoryList &&
-        inventoryList &&
-        oldInventoryList.length !== inventoryList.length)
+      (oldInventoryList && inventoryList && oldInventoryList.length !== inventoryList.length)
     ) {
       newState.baseInventoryOptions = getBaseInventoryOptions(
         this.props.baseInventory.baseInventoryList
@@ -162,7 +157,7 @@ export default class Create extends React.Component {
     this.setState({
       showOptionModal: false,
       attributeOptions: [''],
-      attributeInfo: {}
+      attributeInfo: {},
     });
   }
 
@@ -170,12 +165,12 @@ export default class Create extends React.Component {
     this.setState({
       showOptionModal: false,
       attributeOptions: [''],
-      attributeInfo: {}
+      attributeInfo: {},
     });
 
     let newAttributes = Object.assign({}, attributeInfo.attribute, {
       type: attributeInfo.attributeType,
-      options: options
+      options: options,
     });
     this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
   }
@@ -187,8 +182,8 @@ export default class Create extends React.Component {
       attributeInfo: {
         attributeType,
         attribute,
-        attrIndex
-      }
+        attrIndex,
+      },
     });
   }
 
@@ -198,7 +193,7 @@ export default class Create extends React.Component {
     let data = {
       name: this.state.name,
       base_inventory: this.state.selectedBaseInventory.value,
-      inventory_attributes: this.state.inventory_attributes
+      inventory_attributes: this.state.inventory_attributes,
     };
 
     if (this.state.mode === 'create') {
@@ -207,13 +202,10 @@ export default class Create extends React.Component {
         this.props.history.push('/r/inventory/list');
       });
     } else if (this.state.mode === 'edit') {
-      this.props.putInventory(
-        { inventoryId: this.state.inventoryId, data },
-        () => {
-          toastr.success('', 'Inventory updated successfully');
-          this.props.history.push('/r/inventory/list');
-        }
-      );
+      this.props.putInventory({ inventoryId: this.state.inventoryId, data }, () => {
+        toastr.success('', 'Inventory updated successfully');
+        this.props.history.push('/r/inventory/list');
+      });
     } else {
       console.log('Error: Unsupported mode!');
     }
@@ -225,11 +217,11 @@ export default class Create extends React.Component {
     newAttributes.push({
       name: '',
       type: '',
-      is_required: false
+      is_required: false,
     });
 
     this.setState({
-      inventory_attributes: newAttributes
+      inventory_attributes: newAttributes,
     });
   }
 
@@ -239,13 +231,13 @@ export default class Create extends React.Component {
     attributes.splice(index, 1, attribute);
 
     this.setState({
-      inventory_attributes: attributes
+      inventory_attributes: attributes,
     });
   }
 
   handleInputChange(event) {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   }
 
@@ -256,7 +248,7 @@ export default class Create extends React.Component {
       if (selectedBaseInventory.value === baseInventoryList[i]._id) {
         this.setState({
           selectedBaseInventory,
-          inventory_attributes: baseInventoryList[i].base_attributes
+          inventory_attributes: baseInventoryList[i].base_attributes,
         });
 
         break;
@@ -265,7 +257,7 @@ export default class Create extends React.Component {
   }
 
   renderAttributeRow(attribute, attrIndex) {
-    const onNameChange = event => {
+    const onNameChange = (event) => {
       const newAttribute = Object.assign({}, attribute);
 
       newAttribute.name = event.target.value;
@@ -273,7 +265,7 @@ export default class Create extends React.Component {
       this.handleAttributeChange(newAttribute, attrIndex);
     };
 
-    const onTypeChange = item => {
+    const onTypeChange = (item) => {
       if (item.value === 'DROPDOWN') {
         this.setState({
           showOptionModal: true,
@@ -281,8 +273,8 @@ export default class Create extends React.Component {
           attributeInfo: {
             attributeType: item.value,
             attribute,
-            attrIndex
-          }
+            attrIndex,
+          },
         });
         return;
       }
@@ -294,7 +286,7 @@ export default class Create extends React.Component {
       this.handleAttributeChange(newAttribute, attrIndex);
     };
 
-    const onRequiredChange = event => {
+    const onRequiredChange = (event) => {
       const newAttribute = Object.assign({}, attribute);
 
       newAttribute.is_required = !!event.target.checked;
@@ -306,12 +298,7 @@ export default class Create extends React.Component {
       <div className="createform__form__row" key={`row-${attrIndex}`}>
         <div className="createform__form__inline">
           <div className="form-control">
-            <input
-              type="text"
-              placeholder="Name"
-              value={attribute.name}
-              onChange={onNameChange}
-            />
+            <input type="text" placeholder="Name" value={attribute.name} onChange={onNameChange} />
           </div>
 
           <div className="form-control">
@@ -391,17 +378,11 @@ export default class Create extends React.Component {
 
             <div className="createform__form__header">Attributes</div>
 
-            <div>
-              {this.state.inventory_attributes.map(this.renderAttributeRow)}
-            </div>
+            <div>{this.state.inventory_attributes.map(this.renderAttributeRow)}</div>
 
             <div className="createform__form__inline">
               <div className="createform__form__action">
-                <button
-                  type="button"
-                  className="btn btn--danger"
-                  onClick={this.onAddAttribute}
-                >
+                <button type="button" className="btn btn--danger" onClick={this.onAddAttribute}>
                   Add Attribute
                 </button>
               </div>

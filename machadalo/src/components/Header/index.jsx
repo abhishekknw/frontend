@@ -5,7 +5,7 @@ import Logo from './img/logo.png';
 import './index.css';
 
 export default function Header({ sidebarToggle }) {
-  const onMenuClick = event => {
+  const onMenuClick = (event) => {
     event.preventDefault();
 
     sidebarToggle();
@@ -16,11 +16,7 @@ export default function Header({ sidebarToggle }) {
       <div className="container">
         <div className="header__content">
           <div className="header__brand">
-            <a
-              href="https://machadalo.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="https://machadalo.com" target="_blank" rel="noopener noreferrer">
               <img src={Logo} alt="Machadalo" />
             </a>
           </div>
