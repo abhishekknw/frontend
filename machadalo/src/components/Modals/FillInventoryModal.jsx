@@ -70,9 +70,7 @@ export default class FillInventoryModal extends React.Component {
 
     const newInventory = Object.assign({}, inventory, {
       inventory_attributes: attributes,
-      pricing: pricing
-        .filter((item) => item.days && item.days.value)
-        .map((item) => ({ ...item, days: item.days.value })),
+      pricing: pricing.filter((item) => item.days),
     });
 
     onChange(newInventory);
@@ -123,7 +121,7 @@ export default class FillInventoryModal extends React.Component {
     const onDaysChange = (day) => {
       pricing[index] = {
         ...pricing[index],
-        days: day,
+        days: day.value,
       };
       this.setState({
         pricing,
@@ -153,7 +151,7 @@ export default class FillInventoryModal extends React.Component {
         <div className="form-control">
           <Select
             options={DaysOptions}
-            value={row.days}
+            value={DaysOptions.filter(({ value }) => value === row.days)}
             onChange={onDaysChange}
             classNamePrefix="form-select"
           />

@@ -96,6 +96,18 @@
   }
 
   .createform {
+
+    .blank-sttaus {
+      margin: 20px 0;
+      text-align: center;
+      color: $text-grey;
+      font: {
+        size: 14px;
+        weight: $font-regular;
+      }
+      text-align: left;
+    }
+
     .inventory-row {
       display: flex;
       width: 100%;

@@ -34,7 +34,7 @@ export default class CreateSupplier extends React.Component {
       isEditMode: !!supplierId,
       supplierId,
       name: '',
-      supplier_attributes: [{ name: '', type: '', is_required: false }],
+      supplier_attributes: [],
       inventory_list: [],
       supplierTypeOption: [],
       selectedSupplierType: {},
@@ -426,7 +426,7 @@ export default class CreateSupplier extends React.Component {
   };
 
   render() {
-    const { isEditMode } = this.state;
+    const { isEditMode, inventory_list, supplier_attributes } = this.state;
 
     return (
       <div className="createform">
@@ -461,10 +461,22 @@ export default class CreateSupplier extends React.Component {
             ) : null}
 
             <div className="createform__form__header">Attributes</div>
-            <div>{this.state.supplier_attributes.map(this.renderAttributeRow)}</div>
+            <div>
+              {supplier_attributes && supplier_attributes.length ? (
+                supplier_attributes.map(this.renderAttributeRow)
+              ) : (
+                <div className="blank-sttaus">No attributes available</div>
+              )}
+            </div>
 
             <div className="createform__form__header">Inventory</div>
-            <div>{this.state.inventory_list.map(this.renderInventoryRow)}</div>
+            <div>
+              {inventory_list && inventory_list.length ? (
+                inventory_list.map(this.renderInventoryRow)
+              ) : (
+                <div className="blank-sttaus">No inventory available</div>
+              )}
+            </div>
 
             <div className="createform__form__inline">
               <div className="createform__form__action">

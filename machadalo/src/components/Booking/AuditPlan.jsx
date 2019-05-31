@@ -89,7 +89,6 @@ export default class AuditPlan extends React.Component {
   }
 
   renderAuditPlanRow(inventory) {
-    console.log('inventory: ', inventory);
     let supplierName = '';
     if (this.state.supplierById[inventory.supplier_id]) {
       supplierName = this.state.supplierById[inventory.supplier_id].name;
