@@ -57,7 +57,7 @@ export default class InventoryPricingDisplayModal extends React.Component {
 
   renderPricingRow = (row) => {
     return (
-      <tr>
+      <tr key={row.days}>
         <td>{row.days}</td>
         <td>{row.price}</td>
       </tr>
@@ -117,11 +117,13 @@ export default class InventoryPricingDisplayModal extends React.Component {
         <div className="modal__body">
           <div className="modal-pricing-display__list">
             <table>
-              <tr>
-                <th>Days</th>
-                <th>Price</th>
-              </tr>
-              {inventory.pricing && inventory.pricing.map(this.renderPricingRow)}
+              <thead>
+                <tr>
+                  <th>Days</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody>{inventory.pricing && inventory.pricing.map(this.renderPricingRow)}</tbody>
             </table>
           </div>
 

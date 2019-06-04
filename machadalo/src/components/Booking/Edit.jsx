@@ -13,14 +13,29 @@ const getFilteredSupplierList = (list, supplierId) => {
   }
 };
 
-const getInventoryAttributes = (inventoryList) => {
+const getInventoryAttributes = (inventoryList, counts) => {
+  const countById = {};
+
+  if (counts && counts.length) {
+    for (let i = 0, l = counts.length; i < l; i += 1) {
+      if (!countById[counts[i].id]) countById[counts[i].id] = {};
+
+      countById[counts[i].id] = counts[i];
+    }
+  }
+
   if (inventoryList && inventoryList.length) {
-    return inventoryList.map((item) => ({
-      id: item._id,
-      name: item.name,
-      pricing: item.pricing,
-      count: 1,
-    }));
+    return inventoryList.map((item) => {
+      if (countById[item._id]) return countById[item._id];
+      else
+        return {
+          id: item._id,
+          name: item.name,
+          pricing: item.pricing,
+          count: 1,
+          negotiated_pricing: {},
+        };
+    });
   }
 
   return [];
@@ -56,7 +71,7 @@ export default class EditBooking extends React.Component {
         id: booking.booking_template_id,
       });
       supplier = this.getSupplierById({ id: booking.supplier_id });
-      inventories = getInventoryAttributes(supplier.inventory_list);
+      inventories = getInventoryAttributes(supplier.inventory_list, booking.inventory_counts);
       phase = this.getPhaseById({ id: booking.phase_id });
     }
 
@@ -146,7 +161,7 @@ export default class EditBooking extends React.Component {
           id: booking.booking_template_id,
         });
         supplier = this.getSupplierById({ id: booking.supplier_id });
-        inventories = getInventoryAttributes(supplier.inventory_list);
+        inventories = getInventoryAttributes(supplier.inventory_list, booking.inventory_counts);
         phase = this.getPhaseById({ id: booking.phase_id });
       }
 
@@ -191,9 +206,13 @@ export default class EditBooking extends React.Component {
   }
 
   onSupplierChange(supplier) {
+    const booking = this.getBookingById({
+      id: this.state.bookingId,
+    });
+
     this.setState({
       supplier: supplier,
-      inventories: getInventoryAttributes(supplier.inventory_list),
+      inventories: getInventoryAttributes(supplier.inventory_list, booking.inventory_counts),
     });
   }
 
