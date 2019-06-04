@@ -191,12 +191,10 @@ $scope.addNewPhase =true;
             swal(constants.name, "You do not have access to Proposal", constants.warning);
             $scope.loading = !!response;
           }
-          console.log("final",$scope.initialReleaseData);
       	})
       	.catch(function onError(response){
           $scope.loading = !!response;
           commonDataShare.showErrorMessage(response);
-      		console.log("error occured", response.status);
       	});
       }
       getResultsPage(1);
@@ -212,13 +210,10 @@ $scope.addNewPhase =true;
       }
 
       $scope.setPhase = function (supplier,id) {
-                 console.log(supplier,id);
                  supplier.phase_no = id;
-                 console.log(supplier.phase_no);
              }
 
     $scope.setUserForBooking = function() {
-      console.log($scope.userSupplierData);
       $scope.societySupplierName = $scope.userSupplierData.supplierName;
       var data = {
         assigned_by: $scope.userInfo.id,
@@ -227,11 +222,9 @@ $scope.addNewPhase =true;
         supplier_id: $scope.userSupplierData.supplier_id,
         supplierName: $scope.userSupplierData.name,
       }
-      console.log(data);
       $scope.societySupplierName = data.supplierName;
       releaseCampaignService.setUserForBooking(data)
       .then(function onSuccess(response){
-        console.log(response);
 
       swal(constants.name,constants.assign_success,constants.success);
       })
@@ -254,7 +247,6 @@ $scope.addNewPhase =true;
     $scope.setContact = function(supplier){
       $scope.payment = supplier;
       $scope.editContactDetails = true;
-      console.log(supplier);
 
     }
     //End:To set contacts to show in contactModal
@@ -273,16 +265,13 @@ $scope.addNewPhase =true;
       $scope.inventoryIds = filter.detail;
     }
     $scope.updateData = function(){
-      console.log($scope.releaseDetails.shortlisted_suppliers);
       releaseCampaignService.updateAuditReleasePlanDetails($scope.campaign_id,$scope.releaseDetails.shortlisted_suppliers)
       .then(function onSuccess(response){
-        console.log(response);
         swal(constants.name,constants.updateData_success,constants.success);
       })
       .catch(function onError(response){
         commonDataShare.showErrorMessage(response);
         // swal(constants.name,constants.updateData_error,constants.error);
-        console.log("error occured", response.status);
       });
     }
     $scope.getCampaignState = function(state){
@@ -333,7 +322,6 @@ $scope.addNewPhase =true;
     $scope.searchSuppliers = function(){
      try{
       $scope.search_status = false;
-      console.log($scope.supplier_type_code.code,$scope.search.query);
       if($scope.supplier_type_code.code && $scope.search.query){
         mapViewService.searchSuppliers($scope.supplier_type_code.code,$scope.search.query,$scope.releaseDetails.campaign.principal_vendor)
           .then(function onSuccess(response, status){
@@ -349,7 +337,6 @@ $scope.addNewPhase =true;
             }
           })
           .catch(function onError(response, status){
-              console.log("Error Happened while searching");
               commonDataShare.showErrorMessage(response);
               // swal(constants.name,constants.errorMsg,constants.error);
           });
@@ -410,7 +397,6 @@ $scope.addNewPhase =true;
           filters.push(filterKeyValuData);
         }
       })
-      console.log(filters,$scope.supplier_type_code.code);
 
       var data = {
         campaign_id : $scope.releaseDetails.campaign.proposal_id,
@@ -421,15 +407,12 @@ $scope.addNewPhase =true;
        supplier_data : supplier_ids,
        filter_codes : filters,
      };
-      console.log(data);
       if(filters.length && supplier_ids.length){
         releaseCampaignService.addSuppliersToCampaign(data)
         .then(function onSuccess(response){
-          console.log(response);
               $('#addNewSocities').modal('hide');
           swal(constants.name,constants.add_data_success,constants.success);
         }).catch(function onError(response){
-          console.log(response);
         })
       }else{
         alert("Atleast One Supplier and One Filter is required to Continue");
@@ -507,24 +490,20 @@ $scope.multiSelect =
           releaseCampaignService.getRelationShipData(supplier.supplier_id,supplierCode,campaignId)
           .then(function onSuccess(response){
             $scope.relationshipData = response.data.data;
-            console.log(response);
           }).catch(function onError(response){
             console.log(response);
           })
         }
 
         $scope.savePaymentDetails = function(){
-          console.log($scope.payment);
           releaseCampaignService.savePaymentDetails($scope.payment,$scope.payment.supplier_id)
           .then(function onSuccess(response){
             $scope.editPaymentDetails = true;
-            console.log($scope.editPaymentDetails);
 
             // $scope.payment.name_for_payment = response.data.name_for_payment;
             // $scope.payment.bank_name = response.data.bank_name;
             // $scope.payment.ifsc_code = response.data.ifsc_code;
             // $scope.payment.ifsc_code = response.data.account_no;
-            console.log(response);
           }).catch(function onError(response){
             console.log(response);
           })
@@ -532,7 +511,6 @@ $scope.multiSelect =
 
       $scope.setEditPaymentDetails = function(){
           $scope.editPaymentDetails = false;
-          console.log($scope.editPaymentDetails);
         }
 
         var temp_data = [];
@@ -542,7 +520,6 @@ $scope.multiSelect =
           $scope.payment['basic_contacts'] = $scope.payment.contacts;
           releaseCampaignService.saveContactDetails($scope.payment,$scope.payment.supplier_id)
           .then(function onSuccess(response){
-            console.log(response);
             $scope.editContactDetails = true;
             swal(constants.name, constants.add_data_success, constants.success);
           }).catch(function onError(response){
@@ -552,13 +529,11 @@ $scope.multiSelect =
         }
         $scope.setEditContactDetails = function(){
             $scope.editContactDetails = false;
-            console.log($scope.editContactDetails);
           }
           $scope.addRow = ({});
           $scope.addContactDetail = function(){
             $scope.addRow = $scope.payment.contacts;
             $scope.addContactDetails = false;
-            console.log($scope.addRow);
           $scope.addRow.push({});
           }
 
@@ -572,7 +547,6 @@ $scope.multiSelect =
       }
 
    $scope.uploadImage = function(file,supplier){
-     console.log(supplier);
 
      // cfpLoadingBar.set(0.3)
 
@@ -607,7 +581,6 @@ $scope.multiSelect =
         //to send email
         $scope.loadSpinner = true;
         $scope.sendNotification = function(){
-          console.log($scope.body);
           $scope.loadSpinner = false;
           var email_Data = {
             subject:$scope.paymentStatus + " Details For " + $scope.supplierPaymentData.name,
@@ -616,7 +589,6 @@ $scope.multiSelect =
           };
           releaseCampaignService.sendMail(email_Data)
           .then(function onSuccess(response){
-            console.log(response);
             $scope.taskId = response.data.data.task_id;
             sendMailInProgress();
         	})
@@ -658,7 +630,6 @@ $scope.multiSelect =
        }
 
        $scope.getPaymentDetails = function(supplier,status){
-         console.log(supplier);
          $scope.body.message = '';
          $scope.supplierPaymentData = supplier;
           $scope.paymentStatus = status;
@@ -679,7 +650,6 @@ $scope.multiSelect =
 
        $scope.updateSupplierStatus = function(supplier){
          if(supplier.transaction_or_check_number){
-           console.log("hello");
            supplier.payment_status = 'PD';
            supplier.booking_status = 'BK';
          }
@@ -689,16 +659,13 @@ $scope.multiSelect =
          $scope.editPhase = false;
          releaseCampaignService.getPhases($scope.campaign_id)
          .then(function onSuccess(response){
-           console.log(response);
            $scope.phaseMappingList = {};
            angular.forEach(response.data.data, function(phase){
              phase.start_date = new Date(phase.start_date);
              phase.end_date = new Date(phase.end_date);
              $scope.phaseMappingList[phase.id] = phase;
            })
-           console.log($scope.phaseMappingList);
            $scope.phases = response.data.data;
-           console.log($scope.phases);
 
          }).catch(function onError(response){
            console.log(response);
@@ -710,10 +677,8 @@ $scope.multiSelect =
          $scope.editPhase = true;
        }
        $scope.savePhases = function(){
-         console.log($scope.phases);
          releaseCampaignService.savePhases($scope.phases,$scope.campaign_id)
          .then(function onSuccess(response){
-           console.log(response);
            swal(constants.name, constants.add_data_success, constants.success);
            angular.forEach($scope.phases, function(phase){
              phase.start_date = new Date(phase.start_date);
@@ -731,17 +696,14 @@ $scope.multiSelect =
         $scope.addPhases = function(){
           $scope.addPhase = $scope.phases;
           $scope.addNewPhase = false;
-          console.log($scope.addPhase);
         $scope.phases.push({});
         }
 
         $scope.removePhase = function(id){
           // $scope.phases.splice(index , 1);
           $scope.editPhase = false;
-          console.log(id);
           releaseCampaignService.removePhase(id)
           .then(function onSuccess(response){
-            console.log(response);
             swal(constants.name, constants.delete_success, constants.success);
             $scope.getPhases();
           }).catch(function onError(response){
@@ -796,7 +758,6 @@ $scope.multiSelect =
          }
 
        $scope.getSocietyDetails = function(supplier,supplierId,center,index){
-         console.log(supplier);
          // $location.path('/' + supplierId + '/SocietyDetailsPages' , '_blank');
          $scope.temp_index = index;
          $scope.center = center;
@@ -810,7 +771,6 @@ $scope.multiSelect =
          $scope.supplier_type_code = "RS";
          mapViewService.getSociety(supplier_id,$scope.supplier_type_code)
           .then(function onSuccess(response) {
-            console.log(response);
             $scope.loading = response;
             setSocietyLocationOnMap(response.data.data.supplier_data);
              $scope.loading = response.data.data.supplier_data;
@@ -858,7 +818,6 @@ $scope.multiSelect =
 
          mapViewService.get_inventory_summary(supplier_id, $scope.supplier_type_code)
          .then(function onSuccess(response){
-           console.log(response);
            $scope.societyDetails = true;
            if('inventory' in response.data){
              $scope.inventoryDetails = response.data.inventory;
@@ -908,14 +867,12 @@ $scope.multiSelect =
          releaseCampaignService.getProposalCenters($scope.campaign_id)
          .then(function onSuccess(response){
            $scope.centerData = response.data.data[0];
-           console.log(response);
          }).catch(function onError(response){
            console.log(response);
          })
        }
        $scope.importThroughSheet = function(){
 
-         console.log("hello", $scope.assign);
          var token = $rootScope.globals.currentUser.token;
          if ($scope.file) {
            Upload.upload({
@@ -934,7 +891,6 @@ $scope.multiSelect =
                },
                headers: {'Authorization': 'JWT ' + token}
            }).then(function onSuccess(response){
-                 console.log(response);
 
            })
            .catch(function onError(response) {
@@ -949,12 +905,10 @@ $scope.multiSelect =
          $scope.file = file;
        }
        $scope.addComment = function(){
-         console.log($scope.commentModal);
          // $scope.commentModal['related_to'] = constants.booking_related_comment;
          $scope.commentModal['shortlisted_spaces_id'] = $scope.supplierDataForComment.id;
          releaseCampaignService.addComment($scope.campaign_id,$scope.commentModal)
          .then(function onSuccess(response){
-           console.log(response);
            $scope.commentModal = {};
            $scope.supplierDataForComment = undefined;
            $('#addComments').modal('hide');
@@ -969,23 +923,16 @@ $scope.multiSelect =
       $scope.selectedCommentForView = {};
       $scope.viewComments = function(supplier){
         $scope.supplierDataForComment = supplier;
-        console.log(supplier);
         $scope.commentsData = {};
-        console.log($scope.commentsData);
-        // console.log(relatedTo);
-        console.log($scope.selectedCommentForView.type);
         if($scope.selectedCommentForView.type == undefined){
             $scope.selectedCommentForView.type = $scope.commentsType[0];
-            console.log($scope.commentsType);
         }
 
         var relatedTo = $scope.selectedCommentForView.type;
-        console.log(relatedTo);
         var spaceId = $scope.supplierDataForComment.id;
 
         releaseCampaignService.viewComments($scope.campaign_id,spaceId,relatedTo)
         .then(function onSuccess(response){
-          console.log(response);
           $scope.commentModal = {};
           $scope.commentsData = response.data.data;
           if(Object.keys($scope.commentsData).length != 0){
@@ -1008,10 +955,8 @@ $scope.multiSelect =
           'Door to Door'
         ];
           $scope.addFreebies = function(freebiesData,rowIndex,index){
-          console.log(freebiesData);
             $scope.customfreebies.push(freebiesData);
             $scope.selectedRow = rowIndex;
-            console.log($scope.selectedRow);
           //
           // else
           //   $scope.customfreebies.splice(index,1);
@@ -1021,10 +966,8 @@ $scope.multiSelect =
 
     var data = [];
     data.push(id);
-    console.log(data,index);
     releaseCampaignService.deleteSupplier(data)
     .then(function onSuccess(response){
-      console.log(response);
       $scope.releaseDetails.shortlisted_suppliers.splice(index,1);
       $scope.$watch();
       swal(constants.name, constants.delete_success, constants.success);
@@ -1042,7 +985,6 @@ $scope.multiSelect =
   $scope.permissionBoxData = {};
   $scope.uploadPermissionBoxImage = function(supplier){
     // cfpLoadingBar.set(0.3)
-    console.log(supplier);
         var token = $rootScope.globals.currentUser.token;
         if ($scope.permissionBoxFile) {
           cfpLoadingBar.start();
@@ -1059,7 +1001,6 @@ $scope.multiSelect =
               },
               headers: {'Authorization': 'JWT ' + token}
           }).then(function onSuccess(response){
-              console.log(response);
                 supplier.permissionComment = '';
                 // uploaded_image = {'image_path': response.data.data };
                 // inventory.images.push(uploaded_image);
@@ -1079,7 +1020,6 @@ $scope.multiSelect =
       $scope.ReceiptData = {};
       $scope.uploadReceiptImage = function(supplier){
         // cfpLoadingBar.set(0.3)
-        console.log(supplier);
             var token = $rootScope.globals.currentUser.token;
             if ($scope.ReceiptFile) {
               cfpLoadingBar.start();
@@ -1096,7 +1036,6 @@ $scope.multiSelect =
                   },
                   headers: {'Authorization': 'JWT ' + token}
               }).then(function onSuccess(response){
-                  console.log(response);
                     supplier.receiptComment = '';
                     // uploaded_image = {'image_path': response.data.data };
                     // inventory.images.push(uploaded_image);
@@ -1106,7 +1045,6 @@ $scope.multiSelect =
               })
               .catch(function onError(response) {
                 cfpLoadingBar.complete();
-                console.log(response);
               });
             }
             else {
@@ -1116,7 +1054,6 @@ $scope.multiSelect =
       $scope.getPermissionBoxImages = function(supplier){
         releaseCampaignService.getPermissionBoxImages($scope.campaign_id,supplier.supplier_id)
         .then(function onSuccess(response){
-          console.log(response);
           if(response.data.data.length){
               angular.forEach(response.data.data, function(data){
                 data['image_url'] = 'http://androidtokyo.s3.amazonaws.com/' + data.image_path;
@@ -1132,7 +1069,6 @@ $scope.multiSelect =
       $scope.getReceiptBoxImages = function(supplier){
         releaseCampaignService.getReceiptBoxImages($scope.campaign_id,supplier.supplier_id)
         .then(function onSuccess(response){
-          console.log(response);
           if(response.data.data.length){
               angular.forEach(response.data.data, function(data){
                 data['image_url'] = 'http://androidtokyo.s3.amazonaws.com/' + data.image_path;
@@ -1146,7 +1082,6 @@ $scope.multiSelect =
         })
       }
       $scope.changeInventoryInDays = function(supplier,inv,filter){
-        console.log(filter);
         angular.forEach(supplier.shortlisted_inventories[inv].detail, function(data){
           data.inventory_number_of_days = filter.days;
         })
@@ -1182,13 +1117,10 @@ $scope.multiSelect =
         ];
     $scope.changePhase = function(supplier){
       if(supplier.booking_status == 'NB'){
-        console.log("hello");
         supplier.phase_no = '';
       }
-      console.log(supplier);
     }
     $scope.setUserSupplier = function(supplier){
-      console.log(supplier);
       $scope.userSupplierData = supplier;
     }
     // var getAssignedSuppliers = function(){
@@ -1216,7 +1148,6 @@ $scope.multiSelect =
       // console.log($scope.releaseDetails);
 
       angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier,key){
-        console.log(supplier);
         $scope.mapViewLat = supplier.latitude;
         $scope.mapViewLong = supplier.longitude;
         if(!supplier.stall_locations){
@@ -1258,7 +1189,6 @@ $scope.multiSelect =
     var searchSupplierBySelection = function(){
       releaseCampaignService.searchSupplierBySelection($scope.campaign_id)
       .then(function onSuccess(response){
-        console.log(response);
         $scope.allShortlistedSuppliers = response.data.data;
       }).catch(function onError(response){
         console.log(response);

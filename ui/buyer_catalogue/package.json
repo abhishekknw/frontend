@@ -81,5 +81,13 @@
     "phantomjs": "^1.9.19",
     "phantomjs-prebuilt": "^2.1.7",
     "sass-convert": "^0.5.2"
-  }
+  },
+  "description": "This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular) version 0.14.0.",
+  "version": "1.0.0",
+  "main": "Gruntfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC"
 }
