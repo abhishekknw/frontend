@@ -3,6 +3,8 @@ import classnames from 'classnames';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
 
+import InventoryPricingDisplayModal from '../Modals/InventoryPricingDisplayModal';
+
 const getFilteredSupplierList = (list, supplierId) => {
   if (supplierId) {
     return list.filter((supplier) => supplier.supplier_type_id === supplierId);
@@ -11,11 +13,14 @@ const getFilteredSupplierList = (list, supplierId) => {
   }
 };
 
-const getInventoryAttributes = (supplier) => {
-  if (supplier && supplier.supplier_attributes && supplier.supplier_attributes.length) {
-    return supplier.supplier_attributes
-      .filter((item) => item.type === 'INVENTORY')
-      .map((item) => ({ name: item.value.label, count: 1 }));
+const getInventoryAttributes = (inventoryList) => {
+  if (inventoryList && inventoryList.length) {
+    return inventoryList.map((item) => ({
+      id: item._id,
+      name: item.name,
+      pricing: item.pricing,
+      count: 1,
+    }));
   }
 
   return [];
@@ -51,7 +56,7 @@ export default class EditBooking extends React.Component {
         id: booking.booking_template_id,
       });
       supplier = this.getSupplierById({ id: booking.supplier_id });
-      inventories = getInventoryAttributes(supplier);
+      inventories = getInventoryAttributes(supplier.inventory_list);
       phase = this.getPhaseById({ id: booking.phase_id });
     }
 
@@ -66,6 +71,8 @@ export default class EditBooking extends React.Component {
       attributes,
       inventories,
       phase,
+      isInventoryPricingModalVisible: false,
+      selectedInventory: {},
     };
 
     this.onBookingTemplateChange = this.onBookingTemplateChange.bind(this);
@@ -139,7 +146,7 @@ export default class EditBooking extends React.Component {
           id: booking.booking_template_id,
         });
         supplier = this.getSupplierById({ id: booking.supplier_id });
-        inventories = getInventoryAttributes(supplier);
+        inventories = getInventoryAttributes(supplier.inventory_list);
         phase = this.getPhaseById({ id: booking.phase_id });
       }
 
@@ -186,7 +193,7 @@ export default class EditBooking extends React.Component {
   onSupplierChange(supplier) {
     this.setState({
       supplier: supplier,
-      inventories: getInventoryAttributes(supplier),
+      inventories: getInventoryAttributes(supplier.inventory_list),
     });
   }
 
@@ -215,6 +222,34 @@ export default class EditBooking extends React.Component {
       inventories,
     });
   }
+
+  handlePricingModify = ({ inventory }) => {
+    this.setState({
+      selectedInventory: inventory,
+      isInventoryPricingModalVisible: true,
+    });
+  };
+
+  onInventoryPricingModalClose = () => {
+    this.setState({
+      isInventoryPricingModalVisible: false,
+    });
+  };
+
+  onInventoryPricingChange = (inventory, pricing) => {
+    const { inventories } = this.state;
+
+    for (let i = 0, l = inventories.length; i < l; i += 1) {
+      if (inventories[i].id === inventory.id) {
+        inventories[i].negotiated_pricing = pricing;
+        break;
+      }
+    }
+
+    this.setState({
+      inventories,
+    });
+  };
 
   onSubmit() {
     const {
@@ -402,6 +437,10 @@ export default class EditBooking extends React.Component {
       }
     };
 
+    const onPricingChange = () => {
+      this.handlePricingModify({ inventory });
+    };
+
     return (
       <div className="supplier" key={index}>
         <div className="form-control">&nbsp;</div>
@@ -416,6 +455,12 @@ export default class EditBooking extends React.Component {
             value={inventory.count}
             disabled={isEditMode}
           />
+        </div>
+
+        <div className="form-control">
+          <button type="button" className="btn btn--danger" onClick={onPricingChange}>
+            Change
+          </button>
         </div>
       </div>
     );
@@ -522,6 +567,10 @@ export default class EditBooking extends React.Component {
                   <div className="form-control">
                     <h4>Count</h4>
                   </div>
+
+                  <div className="form-control">
+                    <h4>Pricing</h4>
+                  </div>
                 </div>
               ) : null}
 
@@ -555,6 +604,14 @@ export default class EditBooking extends React.Component {
             Submit
           </button>
         </div>
+
+        <InventoryPricingDisplayModal
+          key={this.state.selectedInventory.id}
+          isVisible={this.state.isInventoryPricingModalVisible}
+          inventory={this.state.selectedInventory}
+          onChange={this.onInventoryPricingChange}
+          onClose={this.onInventoryPricingModalClose}
+        />
       </div>
     );
   }

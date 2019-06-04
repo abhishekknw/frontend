@@ -400,3 +400,23 @@
     }
   }
 }
+
+.modal-pricing-display {
+  &__list {
+    margin-bottom: 20px;
+
+    table {
+      th {
+        font: {
+          size: 15px;
+          weight: $font-medium;
+        };
+      }
+
+      th, td {
+        padding: 5px 25px;
+        text-align: center;
+      }
+    }
+  }
+}
