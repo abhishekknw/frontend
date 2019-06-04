@@ -7,20 +7,20 @@ import config from '../config';
 //Supplier List
 export function getSuppliersListStart() {
   return {
-    type: types.GET_SUPPLIERS_STATIC_LIST_START
+    type: types.GET_SUPPLIERS_STATIC_LIST_START,
   };
 }
 
 export function getSuppliersListSuccess({ suppliers }) {
   return {
     type: types.GET_SUPPLIERS_STATIC_LIST_SUCCESS,
-    suppliers
+    suppliers,
   };
 }
 
 export function getSuppliersListFail() {
   return {
-    type: types.GET_SUPPLIERS_STATIC_LIST_FAIL
+    type: types.GET_SUPPLIERS_STATIC_LIST_FAIL,
   };
 }
 
@@ -31,13 +31,9 @@ export function getSuppliersList({ campaignProposalId }) {
     const { auth } = getState();
 
     request
-      .get(
-        `${
-          config.API_URL
-        }/v0/ui/website/proposal/${campaignProposalId}/shortlisted_suppliers/`
-      )
+      .get(`${config.API_URL}/v0/ui/website/proposal/${campaignProposalId}/shortlisted_suppliers/`)
       .set('Authorization', `JWT ${auth.token}`)
-      .then(resp => {
+      .then((resp) => {
         let suppliers = [];
         const data = resp.body.data;
         const dataKeys = Object.keys(data);
@@ -52,7 +48,7 @@ export function getSuppliersList({ campaignProposalId }) {
         }
         dispatch(getSuppliersListSuccess({ suppliers }));
       })
-      .catch(ex => {
+      .catch((ex) => {
         console.log('Failed to fetch list of suppliers', ex);
 
         dispatch(getSuppliersListFail());
@@ -64,20 +60,20 @@ export function getSuppliersList({ campaignProposalId }) {
 
 export function getCurrentSupplierStart() {
   return {
-    type: types.GET_CURRENT_SUPPLIER_START
+    type: types.GET_CURRENT_SUPPLIER_START,
   };
 }
 
 export function getCurrentSupplierSuccess({ currentSupplier }) {
   return {
     type: types.GET_CURRENT_SUPPLIER_SUCCESS,
-    currentSupplier
+    currentSupplier,
   };
 }
 
 export function getCurrentSupplierFail() {
   return {
-    type: types.GET_CURRENT_SUPPLIER_FAIL
+    type: types.GET_CURRENT_SUPPLIER_FAIL,
   };
 }
 
@@ -91,12 +87,10 @@ export function getCurrentSupplier(supplierId) {
       .get(`${config.API_URL}/v0/ui/website/supplier-details/`)
       .query({ supplier_id: supplierId, supplier_type_code: 'RS' })
       .set('Authorization', `JWT ${auth.token}`)
-      .then(resp => {
-        dispatch(
-          getCurrentSupplierSuccess({ currentSupplier: resp.body.data })
-        );
+      .then((resp) => {
+        dispatch(getCurrentSupplierSuccess({ currentSupplier: resp.body.data }));
       })
-      .catch(ex => {
+      .catch((ex) => {
         console.log('Failed to fetch list of cuurent supplier', ex);
 
         dispatch(getCurrentSupplierFail());

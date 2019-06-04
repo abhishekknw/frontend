@@ -6,7 +6,7 @@ export default class ListBaseBooking extends Component {
     super();
 
     this.state = {
-      searchFilter: ''
+      searchFilter: '',
     };
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
@@ -20,19 +20,17 @@ export default class ListBaseBooking extends Component {
 
   onSearchFilterChange(event) {
     this.setState({
-      searchFilter: event.target.value
+      searchFilter: event.target.value,
     });
   }
 
   getFilteredList(list) {
     return list.filter(
-      item =>
+      (item) =>
         item.name
           .toLowerCase()
           .replace(/[^0-9a-z]/gi, '')
-          .indexOf(
-            this.state.searchFilter.toLowerCase().replace(/[^0-9a-z]/gi, '')
-          ) !== -1
+          .indexOf(this.state.searchFilter.toLowerCase().replace(/[^0-9a-z]/gi, '')) !== -1
     );
   }
 
@@ -45,10 +43,7 @@ export default class ListBaseBooking extends Component {
       <tr key={baseBooking.id}>
         <td>{baseBooking.name}</td>
         <td>
-          <Link
-            to={`/r/booking/base/edit/${baseBooking.id}`}
-            className="btn btn--danger"
-          >
+          <Link to={`/r/booking/base/edit/${baseBooking.id}`} className="btn btn--danger">
             Edit
           </Link>
         </td>
@@ -96,9 +91,7 @@ export default class ListBaseBooking extends Component {
                 list.map(this.renderBaseBookingRow)
               ) : (
                 <tr>
-                  <td colSpan="5">
-                    No base bookings available. Create your first one now!
-                  </td>
+                  <td colSpan="5">No base bookings available. Create your first one now!</td>
                 </tr>
               )}
             </tbody>

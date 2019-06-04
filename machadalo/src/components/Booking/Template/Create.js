@@ -21,6 +21,7 @@ const AttributeTypes = [
   { value: 'EMAIL', label: 'Email' },
   { value: 'MULTISELECT', label: 'Multi Select' },
   { value: 'DATETIME', label: 'Date' },
+  { value: 'HASHTAG', label: 'Hashtag Images' },
 ];
 
 // TODO: Move to constants
@@ -31,6 +32,7 @@ const BaseBookingAttributeTypes = [
   { value: 'EMAIL', label: 'Email' },
   { value: 'MULTISELECT', label: 'Multi Select' },
   { value: 'DATETIME', label: 'Date' },
+  { value: 'HASHTAG', label: 'Hashtag Images' },
 ];
 
 // TODO: Move to constants
@@ -40,6 +42,7 @@ const SupplierTypeAttributeTypes = [
   { value: 'INVENTORY', label: 'Inventory' },
   { value: 'INVENTORY_TYPE', label: 'Base Inventory' },
   { value: 'DROPDOWN', label: 'Dropdown' },
+  { value: 'Hashtag Images', label: 'Hashtag' },
   { value: 'EMAIL', label: 'Email' },
   { value: 'SUPPLIER_TYPE', label: 'Supplier Type' },
   { value: 'BASE_SUPPLIER_TYPE', label: 'Base Supplier Type' },
@@ -358,42 +361,29 @@ export default class CreateBookingTemplate extends React.Component {
       bookingTemplateId,
     } = this.state;
     const { postBookingTemplate, putBookingTemplate } = this.props;
-    let data = {};
+    const data = {
+      name,
+      base_booking_template_id: baseBookingId,
+      supplier_type_id: supplierTypeId,
+      supplier_attributes: selectedSupplierAttributes
+        .filter((item) => item.selected)
+        .map((item) => ({
+          name: item.name,
+          is_required: item.is_required,
+          options: item.options,
+        })),
+    };
     if (isEditMode) {
-      data = {
-        name,
-        base_booking_template_id: baseBookingId,
-        booking_attributes: attributes.filter((item) => !!item.name),
-        supplier_type_id: supplierTypeId,
-        supplier_attributes: selectedSupplierAttributes
-          .filter((item) => item.selected)
-          .map((item) => ({
-            name: item.name,
-            is_required: item.is_required,
-            options: item.options,
-          })),
-      };
+      data.booking_attributes = attributes.filter((item) => !!item.name);
     } else {
-      data = {
-        name,
-        base_booking_template_id: baseBookingId,
-        booking_attributes: attributes.filter((item) => !!item.name).concat(
-          baseBookingAttributes.filter((item) => item.selected).map((item) => ({
-            name: item.name,
-            is_required: item.is_required,
-            type: item.type,
-            options: item.options,
-          }))
-        ),
-        supplier_type_id: supplierTypeId,
-        supplier_attributes: selectedSupplierAttributes
-          .filter((item) => item.selected)
-          .map((item) => ({
-            name: item.name,
-            is_required: item.is_required,
-            options: item.options,
-          })),
-      };
+      data.booking_attributes = attributes.filter((item) => !!item.name).concat(
+        baseBookingAttributes.filter((item) => item.selected).map((item) => ({
+          name: item.name,
+          is_required: item.is_required,
+          type: item.type,
+          options: item.options,
+        }))
+      );
     }
 
     const errors = validate(data);
@@ -485,7 +475,9 @@ export default class CreateBookingTemplate extends React.Component {
       this.setState(
         {
           optionModalVisibility:
-            newAttribute.type === 'DROPDOWN' || newAttribute.type === 'MULTISELECT',
+            newAttribute.type === 'DROPDOWN' ||
+            newAttribute.type === 'MULTISELECT' ||
+            newAttribute.type === 'HASHTAG',
           attributeInfo: {
             attributeType: newAttribute.type,
             attribute: newAttribute,
@@ -518,7 +510,9 @@ export default class CreateBookingTemplate extends React.Component {
             value={getAttributeTypeOption(attribute.type)}
             onChange={onTypeChange}
           />
-          {attribute.type === 'DROPDOWN' || attribute.type === 'MULTISELECT' ? (
+          {attribute.type === 'DROPDOWN' ||
+          attribute.type === 'MULTISELECT' ||
+          attribute.type === 'HASHTAG' ? (
             <p
               className="show-option"
               style={optionStyle}

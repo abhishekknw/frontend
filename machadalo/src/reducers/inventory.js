@@ -9,42 +9,42 @@ export const baseInventory = createReducer(
     selectedBaseInventoryName: undefined,
     selectedBaseInventoryId: undefined,
 
-    inventoryList: []
+    inventoryList: [],
   },
   {
     [types.GET_BASE_INVENTORY_START](state) {
       return Object.assign({}, state, {
-        baseInventoryList: []
+        baseInventoryList: [],
       });
     },
     [types.GET_BASE_INVENTORY_SUCCESS](state, action) {
       return Object.assign({}, state, {
-        baseInventoryList: action.baseInventory
+        baseInventoryList: action.baseInventory,
       });
     },
     [types.GET_BASE_INVENTORY_FAIL](state) {
       return Object.assign({}, state, {
-        baseInventoryList: []
+        baseInventoryList: [],
       });
     },
     [types.POST_BASE_INVENTORY_START](state) {
       return Object.assign({}, state, {
-        baseInventory: undefined
+        baseInventory: undefined,
       });
     },
     [types.POST_BASE_INVENTORY_SUCCESS](state, action) {
       return Object.assign({}, state, {
-        baseInventory: action.data
+        baseInventory: action.data,
       });
     },
     [types.POST_BASE_INVENTORY_FAIL](state) {
       return Object.assign({}, state, {
-        baseInventory: undefined
+        baseInventory: undefined,
       });
     },
     [types.DELETE_BASE_INVENTORY_START](state) {
       return Object.assign({}, state, {
-        baseInventory: undefined
+        baseInventory: undefined,
       });
     },
     [types.DELETE_BASE_INVENTORY_SUCCESS](state, action) {
@@ -58,43 +58,41 @@ export const baseInventory = createReducer(
       }
 
       return Object.assign({}, state, {
-        list: newList
+        list: newList,
       });
     },
     [types.GET_BASE_INVENTORY_BY_ID_START](state) {
       return Object.assign({}, state, {
-        baseAttributes: []
+        baseAttributes: [],
       });
     },
     [types.GET_BASE_INVENTORY_BY_ID_SUCCESS](state, action) {
       return Object.assign({}, state, {
         selectedBaseInventoryName: action.baseInventory.name,
         selectedBaseInventoryId: action.baseInventory._id,
-        baseAttributes: action.baseInventory.base_attributes
+        baseAttributes: action.baseInventory.base_attributes,
       });
     },
     [types.GET_BASE_INVENTORY_BY_ID_FAIL](state) {
       return Object.assign({}, state, {
-        baseAttributes: []
+        baseAttributes: [],
       });
     },
     [types.GET_INVENTORY_LIST_SUCCESS](state, action) {
       return Object.assign({}, state, {
-        inventoryList: Object.keys(action.list).map(key => action.list[key])
+        inventoryList: Object.keys(action.list).map((key) => action.list[key]),
       });
     },
     [types.GET_INVENTORY_LIST_FAIL](state) {
       return Object.assign({}, state, {
-        inventoryList: []
+        inventoryList: [],
       });
     },
     [types.DELETE_INVENTORY_SUCCESS](state, action) {
       return Object.assign({}, state, {
-        inventoryList: state.inventoryList.filter(
-          item => item._id !== action.inventoryId
-        )
+        inventoryList: state.inventoryList.filter((item) => item._id !== action.inventoryId),
       });
-    }
+    },
   }
 );
 

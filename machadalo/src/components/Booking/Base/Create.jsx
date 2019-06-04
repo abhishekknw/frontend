@@ -21,6 +21,7 @@ const AttributeTypes = [
   { value: 'EMAIL', label: 'Email' },
   { value: 'MULTISELECT', label: 'Multi Select' },
   { value: 'DATETIME', label: 'Date' },
+  { value: 'HASHTAG', label: 'Hashtag Images' },
 ];
 
 const SupplierTypes = [
@@ -411,7 +412,9 @@ export default class CreateBaseBooking extends React.Component {
             value={getAttributeTypeOption(attribute.type)}
             onChange={onTypeChange}
           />
-          {attribute.type === 'DROPDOWN' || attribute.type === 'MULTISELECT' ? (
+          {attribute.type === 'DROPDOWN' ||
+          attribute.type === 'MULTISELECT' ||
+          attribute.type === 'HASHTAG' ? (
             <p
               className="show-option"
               style={optionStyle}

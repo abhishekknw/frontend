@@ -9,7 +9,7 @@ const optionStyle = {
   margin: '0',
   marginTop: '5px',
   textDecoration: 'underline',
-  cursor: 'pointer'
+  cursor: 'pointer',
 };
 
 const AttributeTypes = [
@@ -17,11 +17,11 @@ const AttributeTypes = [
   { value: 'STRING', label: 'Text' },
   { value: 'INVENTORY_TYPE', label: 'Inventory list' },
   { value: 'DROPDOWN', label: 'Dropdown' },
-  { value: 'EMAIL', label: 'Email' }
+  { value: 'EMAIL', label: 'Email' },
 ];
 
 // Get attribute type option from string
-const getAttributeTypeOption = value => {
+const getAttributeTypeOption = (value) => {
   for (let i = 0, l = AttributeTypes.length; i < l; i += 1) {
     if (AttributeTypes[i].value === value) {
       return AttributeTypes[i];
@@ -43,7 +43,7 @@ export default class Edit extends React.Component {
       showOptionModal: false,
       attributeOptions: [''],
       attributeInfo: {},
-      inventory_type: 'space_based'
+      inventory_type: 'space_based',
     };
 
     this.onAddAttribute = this.onAddAttribute.bind(this);
@@ -64,14 +64,13 @@ export default class Edit extends React.Component {
     if (
       (!prevProps.baseInventory.baseAttributes.length &&
         this.props.baseInventory.baseAttributes.length) ||
-      prevProps.baseInventory.baseInventoryId !==
-        this.props.baseInventory.baseInventoryId
+      prevProps.baseInventory.baseInventoryId !== this.props.baseInventory.baseInventoryId
     ) {
       let baseAttributes = this.props.baseInventory.baseAttributes;
       this.setState({
         baseAttributes: baseAttributes,
         selectedBaseInventoryId: this.props.baseInventory.baseInventoryId,
-        name: this.props.baseInventory.selectedBaseInventoryName
+        name: this.props.baseInventory.selectedBaseInventoryName,
       });
     }
   }
@@ -80,7 +79,7 @@ export default class Edit extends React.Component {
     this.setState({
       showOptionModal: false,
       attributeOptions: [''],
-      attributeInfo: {}
+      attributeInfo: {},
     });
   }
 
@@ -88,12 +87,12 @@ export default class Edit extends React.Component {
     this.setState({
       showOptionModal: false,
       attributeOptions: [''],
-      attributeInfo: {}
+      attributeInfo: {},
     });
 
     let newAttributes = Object.assign({}, attributeInfo.attribute, {
       type: attributeInfo.attributeType,
-      options: options
+      options: options,
     });
     this.handleAttributeChange(newAttributes, attributeInfo.attrIndex);
   }
@@ -105,20 +104,17 @@ export default class Edit extends React.Component {
       attributeInfo: {
         attributeType,
         attribute,
-        attrIndex
-      }
+        attrIndex,
+      },
     });
   }
 
   onSubmit(event) {
     event.preventDefault();
     let baseInventoryId = this.props.match.params.baseInventoryId;
-    this.props.putBaseInventory(
-      { data: this.state, baseInventoryId: baseInventoryId },
-      () => {
-        toastr.success('', 'Base Inventory created successfully');
-      }
-    );
+    this.props.putBaseInventory({ data: this.state, baseInventoryId: baseInventoryId }, () => {
+      toastr.success('', 'Base Inventory created successfully');
+    });
   }
 
   onAddAttribute() {
@@ -127,11 +123,11 @@ export default class Edit extends React.Component {
     newAttributes.push({
       name: '',
       type: '',
-      is_required: false
+      is_required: false,
     });
 
     this.setState({
-      baseAttributes: newAttributes
+      baseAttributes: newAttributes,
     });
   }
 
@@ -141,18 +137,18 @@ export default class Edit extends React.Component {
     attributes.splice(index, 1, attribute);
 
     this.setState({
-      baseAttributes: attributes
+      baseAttributes: attributes,
     });
   }
 
   handleInputChange(event) {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   }
 
   renderAttributeRow(attribute, attrIndex) {
-    const onNameChange = event => {
+    const onNameChange = (event) => {
       const newAttribute = Object.assign({}, attribute);
 
       newAttribute.name = event.target.value;
@@ -160,7 +156,7 @@ export default class Edit extends React.Component {
       this.handleAttributeChange(newAttribute, attrIndex);
     };
 
-    const onTypeChange = item => {
+    const onTypeChange = (item) => {
       if (item.value === 'DROPDOWN') {
         this.setState({
           showOptionModal: true,
@@ -168,8 +164,8 @@ export default class Edit extends React.Component {
           attributeInfo: {
             attributeType: item.value,
             attribute,
-            attrIndex
-          }
+            attrIndex,
+          },
         });
       }
       const newAttribute = Object.assign({}, attribute);
@@ -179,7 +175,7 @@ export default class Edit extends React.Component {
       this.handleAttributeChange(newAttribute, attrIndex);
     };
 
-    const onRequiredChange = event => {
+    const onRequiredChange = (event) => {
       const newAttribute = Object.assign({}, attribute);
 
       newAttribute.is_required = !!event.target.checked;
@@ -191,12 +187,7 @@ export default class Edit extends React.Component {
       <div className="createform__form__row" key={`row-${attrIndex}`}>
         <div className="createform__form__inline">
           <div className="form-control">
-            <input
-              type="text"
-              placeholder="Name"
-              value={attribute.name}
-              onChange={onNameChange}
-            />
+            <input type="text" placeholder="Name" value={attribute.name} onChange={onNameChange} />
           </div>
 
           <div className="form-control">
@@ -267,11 +258,7 @@ export default class Edit extends React.Component {
 
             <div className="createform__form__inline">
               <div className="createform__form__action">
-                <button
-                  type="button"
-                  className="btn btn--danger"
-                  onClick={this.onAddAttribute}
-                >
+                <button type="button" className="btn btn--danger" onClick={this.onAddAttribute}>
                   Add Attribute
                 </button>
               </div>

@@ -7,20 +7,20 @@ import config from '../../config';
 //Post BaseSupplier Type
 export function postBaseSupplierTypeStart() {
   return {
-    type: types.POST_BASE_SUPPLIER_TYPE_START
+    type: types.POST_BASE_SUPPLIER_TYPE_START,
   };
 }
 
 export function postBaseSupplierTypeSuccess(baseSupplier) {
   return {
     type: types.POST_BASE_SUPPLIER_TYPE_SUCCESS,
-    data: baseSupplier
+    data: baseSupplier,
   };
 }
 
 export function postBaseSupplierTypeFail() {
   return {
-    type: types.POST_BASE_SUPPLIER_TYPE_FAIL
+    type: types.POST_BASE_SUPPLIER_TYPE_FAIL,
   };
 }
 
@@ -34,13 +34,13 @@ export function postBaseSupplierType({ data }, callback) {
       .post(`${config.API_URL}/v0/ui/dynamic-suppliers/base-supplier-type/`)
       .set('Authorization', `JWT ${auth.token}`)
       .send(data)
-      .then(resp => {
+      .then((resp) => {
         dispatch(postBaseSupplierTypeSuccess(resp.data));
         if (callback) {
           callback();
         }
       })
-      .catch(ex => {
+      .catch((ex) => {
         console.log('Failed to create baseSupplier', ex);
 
         dispatch(postBaseSupplierTypeFail());
@@ -51,20 +51,20 @@ export function postBaseSupplierType({ data }, callback) {
 //Get BaseSupplier Type List
 export function getBaseSupplierTypeListStart() {
   return {
-    type: types.GET_BASE_SUPPLIER_TYPE_LIST_START
+    type: types.GET_BASE_SUPPLIER_TYPE_LIST_START,
   };
 }
 
 export function getBaseSupplierTypeListSuccess(baseSupplierTypeList) {
   return {
     type: types.GET_BASE_SUPPLIER_TYPE_LIST_SUCCESS,
-    data: baseSupplierTypeList
+    data: baseSupplierTypeList,
   };
 }
 
 export function getBaseSupplierTypeListFail() {
   return {
-    type: types.GET_BASE_SUPPLIER_TYPE_LIST_FAIL
+    type: types.GET_BASE_SUPPLIER_TYPE_LIST_FAIL,
   };
 }
 
@@ -77,10 +77,10 @@ export function getBaseSupplierTypeList() {
     request
       .get(`${config.API_URL}/v0/ui/dynamic-suppliers/base-supplier-type/`)
       .set('Authorization', `JWT ${auth.token}`)
-      .then(resp => {
+      .then((resp) => {
         dispatch(getBaseSupplierTypeListSuccess(Object.values(resp.body.data)));
       })
-      .catch(ex => {
+      .catch((ex) => {
         console.log('Failed to fetch baseSupplier', ex);
 
         dispatch(getBaseSupplierTypeListFail());
@@ -91,20 +91,20 @@ export function getBaseSupplierTypeList() {
 //Delete BaseSupplier Type
 export function deleteBaseSupplierTypeStart() {
   return {
-    type: types.DELETE_BASE_SUPPLIER_TYPE_START
+    type: types.DELETE_BASE_SUPPLIER_TYPE_START,
   };
 }
 
 export function deleteBaseSupplierTypeSuccess(baseSupplierTypeId) {
   return {
     type: types.DELETE_BASE_SUPPLIER_TYPE_SUCCESS,
-    baseSupplierTypeId
+    baseSupplierTypeId,
   };
 }
 
 export function deleteBaseSupplierTypeFail() {
   return {
-    type: types.DELETE_BASE_SUPPLIER_TYPE_FAIL
+    type: types.DELETE_BASE_SUPPLIER_TYPE_FAIL,
   };
 }
 
@@ -115,18 +115,14 @@ export function deleteBaseSupplierType(baseSupplierTypeId, callback) {
     const { auth } = getState();
 
     request
-      .delete(
-        `${
-          config.API_URL
-        }/v0/ui/dynamic-suppliers/base-supplier-type/${baseSupplierTypeId}/`
-      )
+      .delete(`${config.API_URL}/v0/ui/dynamic-suppliers/base-supplier-type/${baseSupplierTypeId}/`)
       .set('Authorization', `JWT ${auth.token}`)
-      .then(resp => {
+      .then((resp) => {
         dispatch(deleteBaseSupplierTypeSuccess(baseSupplierTypeId));
         dispatch(getBaseSupplierTypeList());
         callback();
       })
-      .catch(ex => {
+      .catch((ex) => {
         console.log('Failed to delete baseSupplier type', ex);
 
         dispatch(deleteBaseSupplierTypeFail());
@@ -137,20 +133,20 @@ export function deleteBaseSupplierType(baseSupplierTypeId, callback) {
 //Get BaseSupplier Type List
 export function getBaseSupplierTypeStart() {
   return {
-    type: types.GET_CURRENT_BASE_SUPPLIER_TYPE_START
+    type: types.GET_CURRENT_BASE_SUPPLIER_TYPE_START,
   };
 }
 
 export function getBaseSupplierTypeSuccess(baseSupplierType) {
   return {
     type: types.GET_CURRENT_BASE_SUPPLIER_TYPE_SUCCESS,
-    data: baseSupplierType
+    data: baseSupplierType,
   };
 }
 
 export function getBaseSupplierTypeFail() {
   return {
-    type: types.GET_CURRENT_BASE_SUPPLIER_TYPE_FAIL
+    type: types.GET_CURRENT_BASE_SUPPLIER_TYPE_FAIL,
   };
 }
 
@@ -161,17 +157,13 @@ export function getBaseSupplierType(baseSupplierTypeId) {
     const { auth } = getState();
 
     request
-      .get(
-        `${
-          config.API_URL
-        }/v0/ui/dynamic-suppliers/base-supplier-type/${baseSupplierTypeId}/`
-      )
+      .get(`${config.API_URL}/v0/ui/dynamic-suppliers/base-supplier-type/${baseSupplierTypeId}/`)
       .set('Authorization', `JWT ${auth.token}`)
-      .then(resp => {
+      .then((resp) => {
         console.log(resp.body);
         dispatch(getBaseSupplierTypeSuccess(resp.body.data));
       })
-      .catch(ex => {
+      .catch((ex) => {
         console.log('Failed to fetch baseSupplier', ex);
 
         dispatch(getBaseSupplierTypeFail());
@@ -186,20 +178,16 @@ export function updateBaseSupplierType({ data, baseSupplierTypeId }, callback) {
     const { auth } = getState();
 
     request
-      .put(
-        `${
-          config.API_URL
-        }/v0/ui/dynamic-suppliers/base-supplier-type/${baseSupplierTypeId}/`
-      )
+      .put(`${config.API_URL}/v0/ui/dynamic-suppliers/base-supplier-type/${baseSupplierTypeId}/`)
       .set('Authorization', `JWT ${auth.token}`)
       .send(data)
-      .then(resp => {
+      .then((resp) => {
         dispatch(postBaseSupplierTypeSuccess(resp.data));
         if (callback) {
           callback();
         }
       })
-      .catch(ex => {
+      .catch((ex) => {
         console.log('Failed to create baseSupplier', ex);
 
         dispatch(postBaseSupplierTypeFail());

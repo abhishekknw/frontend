@@ -31,9 +31,7 @@ export default class Suppliers extends React.Component {
         </td>
         <td>
           <Link
-            to={`/r/checklist/list/${this.props.match.params.campaignId}/${
-              supplier.supplier_id
-            }`}
+            to={`/r/checklist/list/${this.props.match.params.campaignId}/${supplier.supplier_id}`}
             className="btn btn--danger"
           >
             View checklists
@@ -51,9 +49,7 @@ export default class Suppliers extends React.Component {
         <div className="list__title">
           <h3>
             Suppliers of Campaign{' '}
-            {campaign.currentCampaign
-              ? campaign.currentCampaign.campaign.name
-              : ''}
+            {campaign.currentCampaign ? campaign.currentCampaign.campaign.name : ''}
           </h3>
         </div>
         <button type="button" className="btn btn--danger" onClick={this.onBack}>
@@ -74,9 +70,7 @@ export default class Suppliers extends React.Component {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
-              {supplierStatic.list.map(this.renderSupplierRow.bind(this))}
-            </tbody>
+            <tbody>{supplierStatic.list.map(this.renderSupplierRow.bind(this))}</tbody>
           </table>
         </div>
       </div>

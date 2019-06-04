@@ -24,13 +24,28 @@ const getInventoryAttributes = (supplier) => {
 };
 
 const getDropdownOption = (options, value) => {
-  for (let i = 0, l = options.length; i < l; i += 1) {
-    if (options[i].value === value) {
-      return options[i];
+  if (options) {
+    for (let i = 0, l = options.length; i < l; i += 1) {
+      if (options[i].value === value) {
+        return options[i];
+      }
     }
   }
 
   return null;
+};
+
+const getMultiselectOptions = (options, values) => {
+  if (!values) return [];
+
+  const newOptions = [];
+  for (let i = 0, l = options.length; i < l; i += 1) {
+    if (values.indexOf(options[i].value) !== -1) {
+      newOptions.push(options[i]);
+    }
+  }
+
+  return newOptions;
 };
 
 export default class EditBooking extends React.Component {
@@ -47,6 +62,7 @@ export default class EditBooking extends React.Component {
     let supplier = {};
     let phase = {};
     let inventories = [];
+    let comment = undefined;
     if (bookingId && booking && booking.id) {
       attributes = booking.booking_attributes;
       bookingTemplate = this.getBookingTemplateById({
@@ -68,6 +84,7 @@ export default class EditBooking extends React.Component {
       attributes,
       inventories,
       phase,
+      comment,
     };
 
     this.onBookingTemplateChange = this.onBookingTemplateChange.bind(this);
@@ -75,8 +92,11 @@ export default class EditBooking extends React.Component {
     this.onSupplierChange = this.onSupplierChange.bind(this);
     this.renderBookingAttributeRow = this.renderBookingAttributeRow.bind(this);
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
+    this.handleCommentInputChange = this.handleCommentInputChange.bind(this);
     this.renderInventoryRow = this.renderInventoryRow.bind(this);
     this.handleInventoryChange = this.handleInventoryChange.bind(this);
+    this.handleImageChange = this.handleImageChange.bind(this);
+    this.onUpload = this.onUpload.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
   }
@@ -199,6 +219,13 @@ export default class EditBooking extends React.Component {
     });
   }
 
+  handleCommentInputChange(event) {
+    console.log(event.target.value);
+    this.setState({
+      comment: event.target.value,
+    });
+  }
+
   handleAttributeChange(attribute, index) {
     const attributes = [...this.state.attributes];
 
@@ -225,6 +252,31 @@ export default class EditBooking extends React.Component {
     this.setState({
       attributes,
     });
+  }
+
+  handleImageChange(event) {
+    this.setState({
+      uploadedImage: event.target.files[0],
+    });
+  }
+
+  onUpload(index) {
+    console.log(index);
+    const { supplier, attributes, bookingId, isEditMode, uploadedImage, comment } = this.state;
+    console.log(attributes);
+    const { uploadHashtagImage } = this.props;
+
+    let data = new FormData();
+    data.append('file', uploadedImage);
+    data.append('supplier_id', supplier.id);
+    data.append('campaign_id', this.getCampaignId());
+    data.append('hashtag', attributes[index].value);
+    data.append('name', attributes[index].name);
+    data.append('comment', comment);
+
+    if (isEditMode) {
+      uploadHashtagImage({ id: bookingId, data });
+    }
   }
 
   onSubmit() {
@@ -322,9 +374,12 @@ export default class EditBooking extends React.Component {
   renderBookingAttributeRow(attribute, index) {
     const handleAttributeInputChange = (event) => {
       const newAttribute = { ...attribute };
+      console.log(event.value);
 
-      if (newAttribute.type === 'DROPDOWN' || newAttribute.type === 'MULTISELECT') {
+      if (newAttribute.type === 'DROPDOWN' || newAttribute.type === 'HASHTAG') {
         newAttribute.value = event.value;
+      } else if (newAttribute.type === 'MULTISELECT') {
+        newAttribute.value = event.map((item) => item.value);
       } else {
         newAttribute.value = event.target.value;
       }
@@ -347,7 +402,7 @@ export default class EditBooking extends React.Component {
         );
         break;
 
-      case 'DROPDOWN':
+      case 'DROPDOWN': {
         const options = attribute.options.map((option) => ({
           label: option,
           value: option,
@@ -363,6 +418,7 @@ export default class EditBooking extends React.Component {
           />
         );
         break;
+      }
 
       case 'EMAIL':
         typeInput = (
@@ -370,18 +426,67 @@ export default class EditBooking extends React.Component {
         );
         break;
 
-      case 'MULTISELECT':
+      case 'MULTISELECT': {
+        const options = attribute.options.map((option) => ({
+          label: option,
+          value: option,
+        }));
         typeInput = (
           <Select
             className={classnames('select')}
-            options={attribute.options}
-            getOptionValue={(option) => option}
-            getOptionLabel={(option) => option}
+            options={options}
+            getOptionValue={(option) => option.label}
+            getOptionLabel={(option) => option.value}
             onChange={handleAttributeInputChange}
-            value={getDropdownOption(attribute.options, attribute.value)}
+            value={getMultiselectOptions(options, attribute.value)}
+            isMulti
           />
         );
         break;
+      }
+
+      case 'HASHTAG': {
+        const options = attribute.options.map((option) => ({
+          label: option,
+          value: option,
+        }));
+        typeInput = (
+          <div>
+            <div className="form-control">
+              <input
+                type="file"
+                id="uploadedImage"
+                accept="image/png, image/jpeg"
+                onChange={this.handleImageChange}
+              />
+            </div>
+            <div>
+              <br />
+              <Select
+                className={classnames('select')}
+                options={options}
+                getOptionValue={(option) => option.label}
+                getOptionLabel={(option) => option.value}
+                onChange={handleAttributeInputChange}
+                value={getDropdownOption(options, attribute.value)}
+              />
+            </div>
+            <div>
+              <input type="text" onChange={this.handleCommentInputChange} />
+            </div>
+            <div>
+              <button
+                type="button"
+                className="btn btn--danger"
+                onClick={() => this.onUpload(index)}
+              >
+                Upload
+              </button>
+            </div>
+          </div>
+        );
+        break;
+      }
 
       case 'DATETIME':
         typeInput = (

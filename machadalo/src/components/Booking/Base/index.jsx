@@ -20,23 +20,17 @@ export default class BaseBooking extends Component {
           <Route
             exact
             path={`${match.path}/list`}
-            render={componentProps => (
-              <List {...this.props} {...componentProps} />
-            )}
+            render={(componentProps) => <List {...this.props} {...componentProps} />}
           />
           <Route
             exact
             path={`${match.path}/create`}
-            render={componentProps => (
-              <Create {...this.props} {...componentProps} />
-            )}
+            render={(componentProps) => <Create {...this.props} {...componentProps} />}
           />
           <Route
             exact
             path={`${match.path}/edit/:baseBookingId`}
-            render={componentProps => (
-              <Create {...this.props} {...componentProps} />
-            )}
+            render={(componentProps) => <Create {...this.props} {...componentProps} />}
           />
         </Switch>
       </div>

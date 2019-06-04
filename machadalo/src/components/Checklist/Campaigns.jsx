@@ -9,7 +9,7 @@ export default class Campaigns extends React.Component {
     super();
 
     this.state = {
-      searchFilter: ''
+      searchFilter: '',
     };
 
     this.renderCampaignRow = this.renderCampaignRow.bind(this);
@@ -23,19 +23,17 @@ export default class Campaigns extends React.Component {
 
   onSearchFilterChange(event) {
     this.setState({
-      searchFilter: event.target.value
+      searchFilter: event.target.value,
     });
   }
 
   getFilteredList(list) {
     return list.filter(
-      item =>
+      (item) =>
         item.campaign.name
           .toLowerCase()
           .replace(/[^0-9a-z]/gi, '')
-          .indexOf(
-            this.state.searchFilter.toLowerCase().replace(/[^0-9a-z]/gi, '')
-          ) !== -1
+          .indexOf(this.state.searchFilter.toLowerCase().replace(/[^0-9a-z]/gi, '')) !== -1
     );
   }
 
@@ -44,9 +42,7 @@ export default class Campaigns extends React.Component {
       <tr key={campaign.id}>
         <td className="campaign-name">{campaign.campaign.name}</td>
         <td className="hidden-xs">
-          {moment(campaign.campaign.tentative_start_date).format(
-            'Do MMM, YYYY'
-          )}
+          {moment(campaign.campaign.tentative_start_date).format('Do MMM, YYYY')}
         </td>
         <td className="hidden-xs">
           {moment(campaign.campaign.tentative_end_date).format('Do MMM, YYYY')}

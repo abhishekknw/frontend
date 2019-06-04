@@ -4,6 +4,8 @@ import { Route, Switch } from 'react-router-dom';
 import LeadSettings from './LeadSettings';
 import Campaigns from './Campaigns';
 import Forms from './Forms';
+import CreateForm from './CreateForm';
+import EditForm from './EditForm';
 
 export default class Leads extends React.Component {
   componentDidMount() {
@@ -19,23 +21,27 @@ export default class Leads extends React.Component {
           <Route
             exact
             path={`${match.path}/settings`}
-            render={componentProps => (
-              <LeadSettings {...this.props} {...componentProps} />
-            )}
+            render={(componentProps) => <LeadSettings {...this.props} {...componentProps} />}
           />
           <Route
             exact
             path={`${match.path}/campaigns`}
-            render={componentProps => (
-              <Campaigns {...this.props} {...componentProps} />
-            )}
+            render={(componentProps) => <Campaigns {...this.props} {...componentProps} />}
           />
           <Route
             exact
-            path={`${match.path}/:campaignId`}
-            render={componentProps => (
-              <Forms {...this.props} {...componentProps} />
-            )}
+            path={`${match.path}/:campaignId/form`}
+            render={(componentProps) => <Forms {...this.props} {...componentProps} />}
+          />
+          <Route
+            exact
+            path={`${match.path}/:campaignId/createForm`}
+            render={(componentProps) => <CreateForm {...this.props} {...componentProps} />}
+          />
+          <Route
+            exact
+            path={`${match.path}/:campaignId/editForm/:leadFormId`}
+            render={(componentProps) => <EditForm {...this.props} {...componentProps} />}
           />
         </Switch>
       </div>

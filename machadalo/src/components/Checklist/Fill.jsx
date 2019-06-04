@@ -17,7 +17,7 @@ export default class FillChecklist extends React.Component {
       checklistEntries: {},
       moment: moment(),
       freezeChecklist: false,
-      userOptions: []
+      userOptions: [],
     };
 
     this.handleEntryChange = this.handleEntryChange.bind(this);
@@ -35,19 +35,18 @@ export default class FillChecklist extends React.Component {
     const { match } = this.props;
 
     this.props.getSingleChecklist({
-      checklistId: match.params.checklistId
+      checklistId: match.params.checklistId,
     });
     this.props.getUsersList();
   }
 
   componentDidUpdate(prevProps) {
     const { checklist } = this.props;
-    const checklistDetails =
-      checklist.details[this.props.match.params.checklistId];
+    const checklistDetails = checklist.details[this.props.match.params.checklistId];
 
     if (checklistDetails && !this.state.checklistDetails) {
       const newState = {
-        checklistDetails
+        checklistDetails,
       };
 
       const checklistEntries = {};
@@ -59,7 +58,7 @@ export default class FillChecklist extends React.Component {
           checklistDetails.values[i].column_id
         ] = {
           column_id: checklistDetails.values[i].column_id,
-          cell_value: checklistDetails.values[i].value
+          cell_value: checklistDetails.values[i].value,
         };
       }
 
@@ -67,8 +66,8 @@ export default class FillChecklist extends React.Component {
         newState.checklistEntries = checklistEntries;
       }
       if (
-        this.props.checklist.details[this.props.match.params.checklistId]
-          .checklist_info.status === 'frozen'
+        this.props.checklist.details[this.props.match.params.checklistId].checklist_info.status ===
+        'frozen'
       ) {
         newState.freezeChecklist = true;
       }
@@ -79,19 +78,14 @@ export default class FillChecklist extends React.Component {
       !prevProps.checklist.entryStatus &&
       this.props.checklist.entryStatus === 'success'
     ) {
-      let checklistInfo = this.props.checklist.details[
-        this.props.match.params.checklistId
-      ].checklist_info;
+      let checklistInfo = this.props.checklist.details[this.props.match.params.checklistId]
+        .checklist_info;
       if (checklistInfo.checklist_type === 'supplier') {
         this.props.history.push(
-          `/r/checklist/list/${checklistInfo.campaign_id}/${
-            checklistInfo.supplier_id
-          }`
+          `/r/checklist/list/${checklistInfo.campaign_id}/${checklistInfo.supplier_id}`
         );
       } else {
-        this.props.history.push(
-          `/r/checklist/list/${checklistInfo.campaign_id}`
-        );
+        this.props.history.push(`/r/checklist/list/${checklistInfo.campaign_id}`);
       }
     }
 
@@ -103,34 +97,29 @@ export default class FillChecklist extends React.Component {
         this.state.userOptions[0].id !== this.props.user.userList[0].id)
     ) {
       let userOptions = [];
-      this.props.user.userList.forEach(userData => {
+      this.props.user.userList.forEach((userData) => {
         userOptions.push({
           display: userData.first_name + ' ' + userData.last_name,
-          id: userData.id
+          id: userData.id,
         });
       });
       this.setState({
-        userOptions
+        userOptions,
       });
     }
   }
 
   onBack() {
     if (this.props.checklist) {
-      let checklistInfo = this.props.checklist.details[
-        this.props.match.params.checklistId
-      ].checklist_info;
+      let checklistInfo = this.props.checklist.details[this.props.match.params.checklistId]
+        .checklist_info;
 
       if (checklistInfo.checklist_type === 'supplier') {
         this.props.history.push(
-          `/r/checklist/list/${checklistInfo.campaign_id}/${
-            checklistInfo.supplier_id
-          }`
+          `/r/checklist/list/${checklistInfo.campaign_id}/${checklistInfo.supplier_id}`
         );
       } else {
-        this.props.history.push(
-          `/r/checklist/list/${checklistInfo.campaign_id}`
-        );
+        this.props.history.push(`/r/checklist/list/${checklistInfo.campaign_id}`);
       }
     }
   }
@@ -155,11 +144,11 @@ export default class FillChecklist extends React.Component {
     }
     newchecklistEntries[rowId][columnId] = {
       column_id: columnId,
-      cell_value: value
+      cell_value: value,
     };
 
     this.setState({
-      checklistEntries: newchecklistEntries
+      checklistEntries: newchecklistEntries,
     });
   }
 
@@ -203,7 +192,7 @@ export default class FillChecklist extends React.Component {
         if (userIds.length) {
           let notificationObject = {
             to_id: userIds,
-            notification_msg: ColumnObject.cell_value
+            notification_msg: ColumnObject.cell_value,
           };
           notificationMessage.push(notificationObject);
         }
@@ -215,7 +204,7 @@ export default class FillChecklist extends React.Component {
     // Send request to create template
     this.props.postChecklistEntries({
       checklistId: this.props.match.params.checklistId,
-      data: checklistEntries
+      data: checklistEntries,
     });
   }
 
@@ -232,14 +221,9 @@ export default class FillChecklist extends React.Component {
   }
 
   onDateTimeChange(moment, rowId, columnId) {
-    this.handleEntryChange(
-      rowId,
-      columnId,
-      moment.format('YYYY-MM-DD HH:mm'),
-      'dateTime'
-    );
+    this.handleEntryChange(rowId, columnId, moment.format('YYYY-MM-DD HH:mm'), 'dateTime');
     this.setState({
-      moment
+      moment,
     });
   }
 
@@ -247,12 +231,7 @@ export default class FillChecklist extends React.Component {
     if (event.target.type === 'checkbox') {
       event.target.value = event.target.checked ? true : false;
     }
-    this.handleEntryChange(
-      rowId,
-      columnId,
-      event.target.value,
-      event.target.type
-    );
+    this.handleEntryChange(rowId, columnId, event.target.value, event.target.type);
   }
 
   onRatingChange(newRating, rowId, columnId) {
@@ -272,7 +251,7 @@ export default class FillChecklist extends React.Component {
                 ? checklistEntries[rowId][columnId].cell_value
                 : ''
             }
-            onChange={event => this.onCellChange(event, rowId, columnId)}
+            onChange={(event) => this.onCellChange(event, rowId, columnId)}
           >
             <Mention trigger="@" data={this.state.userOptions} />
           </MentionsInput>
@@ -288,7 +267,7 @@ export default class FillChecklist extends React.Component {
                 ? checklistEntries[rowId][columnId].cell_value
                 : false
             }
-            onChange={event => this.onCellChange(event, rowId, columnId)}
+            onChange={(event) => this.onCellChange(event, rowId, columnId)}
             disabled={this.state.freezeChecklist}
           />
         );
@@ -300,7 +279,7 @@ export default class FillChecklist extends React.Component {
         return (
           <DatetimePickerTrigger
             moment={this.state.moment}
-            onChange={moment => this.onDateTimeChange(moment, rowId, columnId)}
+            onChange={(moment) => this.onDateTimeChange(moment, rowId, columnId)}
           >
             <input
               type="text"
@@ -322,9 +301,7 @@ export default class FillChecklist extends React.Component {
             starHoverColor="black"
             starDimension="20px"
             starSpacing="1px"
-            changeRating={newRating =>
-              this.onRatingChange(newRating, rowId, columnId)
-            }
+            changeRating={(newRating) => this.onRatingChange(newRating, rowId, columnId)}
             numberOfStars={5}
             name="rating"
           />
@@ -338,7 +315,7 @@ export default class FillChecklist extends React.Component {
                 ? checklistEntries[rowId][columnId].cell_value
                 : ''
             }
-            onChange={event => this.onCellChange(event, rowId, columnId)}
+            onChange={(event) => this.onCellChange(event, rowId, columnId)}
             disabled={this.state.freezeChecklist}
           />
         );
@@ -346,16 +323,14 @@ export default class FillChecklist extends React.Component {
       case 'RADIO':
         return (
           <div>
-            {column.column_options.map(option => {
+            {column.column_options.map((option) => {
               return (
                 <div>
                   <input
                     type="radio"
                     className={inputClass}
                     value={option}
-                    onChange={event =>
-                      this.onCellChange(event, rowId, columnId)
-                    }
+                    onChange={(event) => this.onCellChange(event, rowId, columnId)}
                     checked={
                       checklistEntries[rowId] &&
                       checklistEntries[rowId][columnId] &&
@@ -374,7 +349,7 @@ export default class FillChecklist extends React.Component {
 
       case 'SELECT':
         let options = [];
-        column.column_options.forEach(option => {
+        column.column_options.forEach((option) => {
           options.push({ label: option, value: option });
         });
         return (
@@ -383,15 +358,13 @@ export default class FillChecklist extends React.Component {
               checklistEntries[rowId] && checklistEntries[rowId][columnId]
                 ? {
                     label: checklistEntries[rowId][columnId].cell_value,
-                    value: checklistEntries[rowId][columnId].cell_value
+                    value: checklistEntries[rowId][columnId].cell_value,
                   }
                 : null
             }
             options={options}
             isDisabled={this.state.freezeChecklist}
-            onChange={item =>
-              this.handleEntryChange(rowId, columnId, item.value)
-            }
+            onChange={(item) => this.handleEntryChange(rowId, columnId, item.value)}
           />
         );
       default:
@@ -416,28 +389,16 @@ export default class FillChecklist extends React.Component {
           }
 
           return (
-            <div
-              className="fillForm__form__column"
-              key={`row-${rowIndex}-column-${columnIndex}`}
-            >
+            <div className="fillForm__form__column" key={`row-${rowIndex}-column-${columnIndex}`}>
               <div className="fillForm__form__inline">
                 <div className="form-control">
                   {checklistDetails.row_headers[columnIndex + 1] &&
                   checklistDetails.row_headers[columnIndex + 1][rowIndex] ? (
                     <label>
-                      {
-                        checklistDetails.row_headers[columnIndex + 1][rowIndex]
-                          .cell_value
-                      }
+                      {checklistDetails.row_headers[columnIndex + 1][rowIndex].cell_value}
                     </label>
                   ) : (
-                    this.renderInputField(
-                      column,
-                      inputClass,
-                      checklistEntries,
-                      rowId,
-                      columnId
-                    )
+                    this.renderInputField(column, inputClass, checklistEntries, rowId, columnId)
                   )}
                 </div>
               </div>
@@ -474,24 +435,18 @@ export default class FillChecklist extends React.Component {
         <div className="fillForm__title">
           <h3>
             Fill Checklist{' '}
-            {Object.keys(checklist.details).length !== 0
-              ? checklist.checklist_name
-              : null}
+            {Object.keys(checklist.details).length !== 0 ? checklist.checklist_name : null}
           </h3>
         </div>
         <div className="fillForm__form">
           <form onSubmit={this.onSubmit}>
             <div className="fillForm__form__header">
               {checklistDetails && checklistDetails.column_headers
-                ? checklistDetails.column_headers.map(
-                    this.renderChecklistColumn
-                  )
+                ? checklistDetails.column_headers.map(this.renderChecklistColumn)
                 : undefined}
             </div>
             <div>
-              {checklistDetails &&
-              checklistDetails.row_headers &&
-              checklistDetails.row_headers['1']
+              {checklistDetails && checklistDetails.row_headers && checklistDetails.row_headers['1']
                 ? checklistDetails.row_headers['1'].map(this.renderChecklistRow)
                 : undefined}
             </div>
@@ -503,9 +458,7 @@ export default class FillChecklist extends React.Component {
                   onClick={this.handleFreezeChecklist}
                   disabled={!unfreezePermission}
                 >
-                  {this.state.freezeChecklist
-                    ? 'Unfreeze Checklist'
-                    : 'Freeze Checklist'}
+                  {this.state.freezeChecklist ? 'Unfreeze Checklist' : 'Freeze Checklist'}
                 </button>
               </div>
               {this.state.freezeChecklist ? (
@@ -518,11 +471,7 @@ export default class FillChecklist extends React.Component {
                 </div>
               )}
               <div className="fillForm__form__action">
-                <button
-                  type="button"
-                  className="btn btn--danger"
-                  onClick={this.onBack}
-                >
+                <button type="button" className="btn btn--danger" onClick={this.onBack}>
                   Back
                 </button>
               </div>

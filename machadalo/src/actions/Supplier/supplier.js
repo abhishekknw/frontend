@@ -7,20 +7,20 @@ import config from '../../config';
 //Post Supplier
 export function postSupplierStart() {
   return {
-    type: types.POST_SUPPLIER_START
+    type: types.POST_SUPPLIER_START,
   };
 }
 
 export function postSupplierSuccess(supplier) {
   return {
     type: types.POST_SUPPLIER_SUCCESS,
-    data: supplier
+    data: supplier,
   };
 }
 
 export function postSupplierFail() {
   return {
-    type: types.POST_SUPPLIER_FAIL
+    type: types.POST_SUPPLIER_FAIL,
   };
 }
 
@@ -34,13 +34,13 @@ export function postSupplier({ data }, callback) {
       .post(`${config.API_URL}/v0/ui/dynamic-suppliers/supplier/`)
       .set('Authorization', `JWT ${auth.token}`)
       .send(data)
-      .then(resp => {
+      .then((resp) => {
         dispatch(postSupplierSuccess(resp.data));
         if (callback) {
           callback();
         }
       })
-      .catch(ex => {
+      .catch((ex) => {
         console.log('Failed to create supplier', ex);
         dispatch(postSupplierFail());
       });
@@ -50,20 +50,20 @@ export function postSupplier({ data }, callback) {
 //Get Supplier List
 export function getSupplierListStart() {
   return {
-    type: types.GET_SUPPLIER_LIST_START
+    type: types.GET_SUPPLIER_LIST_START,
   };
 }
 
 export function getSupplierListSuccess(supplierList) {
   return {
     type: types.GET_SUPPLIER_LIST_SUCCESS,
-    data: supplierList
+    data: supplierList,
   };
 }
 
 export function getSupplierListFail() {
   return {
-    type: types.GET_SUPPLIER_LIST_FAIL
+    type: types.GET_SUPPLIER_LIST_FAIL,
   };
 }
 
@@ -76,10 +76,10 @@ export function getSupplierList() {
     request
       .get(`${config.API_URL}/v0/ui/dynamic-suppliers/supplier/`)
       .set('Authorization', `JWT ${auth.token}`)
-      .then(resp => {
+      .then((resp) => {
         dispatch(getSupplierListSuccess(Object.values(resp.body.data)));
       })
-      .catch(ex => {
+      .catch((ex) => {
         console.log('Failed to fetch supplier', ex);
 
         dispatch(getSupplierListFail());
@@ -90,20 +90,20 @@ export function getSupplierList() {
 //Delete Supplier
 export function deleteSupplierStart() {
   return {
-    type: types.DELETE_SUPPLIER_START
+    type: types.DELETE_SUPPLIER_START,
   };
 }
 
 export function deleteSupplierSuccess(supplierId) {
   return {
     type: types.DELETE_SUPPLIER_SUCCESS,
-    supplierId
+    supplierId,
   };
 }
 
 export function deleteSupplierFail() {
   return {
-    type: types.DELETE_SUPPLIER_FAIL
+    type: types.DELETE_SUPPLIER_FAIL,
   };
 }
 
@@ -114,16 +114,14 @@ export function deleteSupplier(supplierId, callback) {
     const { auth } = getState();
 
     request
-      .delete(
-        `${config.API_URL}/v0/ui/dynamic-suppliers/supplier/${supplierId}/`
-      )
+      .delete(`${config.API_URL}/v0/ui/dynamic-suppliers/supplier/${supplierId}/`)
       .set('Authorization', `JWT ${auth.token}`)
-      .then(resp => {
+      .then((resp) => {
         dispatch(deleteSupplierSuccess(supplierId));
         dispatch(getSupplierList());
         callback();
       })
-      .catch(ex => {
+      .catch((ex) => {
         console.log('Failed to delete supplier', ex);
 
         dispatch(deleteSupplierFail());
@@ -134,20 +132,20 @@ export function deleteSupplier(supplierId, callback) {
 //Get Current Supplier
 export function getSupplierStart() {
   return {
-    type: types.GET_CURRENT_SUPPLIER_START
+    type: types.GET_CURRENT_SUPPLIER_START,
   };
 }
 
 export function getSupplierSuccess(supplier) {
   return {
     type: types.GET_CURRENT_SUPPLIER_SUCCESS,
-    data: supplier
+    data: supplier,
   };
 }
 
 export function getSupplierFail() {
   return {
-    type: types.GET_CURRENT_SUPPLIER_FAIL
+    type: types.GET_CURRENT_SUPPLIER_FAIL,
   };
 }
 
@@ -160,10 +158,10 @@ export function getSupplier(supplierId) {
     request
       .get(`${config.API_URL}/v0/ui/dynamic-suppliers/supplier/${supplierId}/`)
       .set('Authorization', `JWT ${auth.token}`)
-      .then(resp => {
+      .then((resp) => {
         dispatch(getSupplierSuccess(resp.body.data));
       })
-      .catch(ex => {
+      .catch((ex) => {
         console.log('Failed to fetch supplier', ex);
 
         dispatch(getSupplierFail());
@@ -183,13 +181,13 @@ export function updateSupplier({ data, supplierId }, callback) {
       .put(`${config.API_URL}/v0/ui/dynamic-suppliers/supplier/${supplierId}/`)
       .set('Authorization', `JWT ${auth.token}`)
       .send(data)
-      .then(resp => {
+      .then((resp) => {
         dispatch(postSupplierSuccess(resp.data));
         if (callback) {
           callback();
         }
       })
-      .catch(ex => {
+      .catch((ex) => {
         console.log('Failed to create supplier', ex);
         dispatch(postSupplierFail());
       });
