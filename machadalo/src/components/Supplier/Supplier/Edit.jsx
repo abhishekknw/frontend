@@ -1,11 +1,13 @@
 import React from 'react';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
+import { DatetimePickerTrigger } from 'rc-datetime-picker';
 
 import OptionModal from '../../Modals/OptionModal';
 import FillSupplierModal from '../../Modals/FillSupplierModal';
 import FillInventoryModal from '../../Modals/FillInventoryModal';
 import FillAdditionalAttributeModal from '../../Modals/AdditionalAttributesModal';
+import moment from 'moment';
 
 const customeStyles = {
   input: () => ({
@@ -64,6 +66,7 @@ export default class CreateSupplier extends React.Component {
     this.onCancelFillSupplierModal = this.onCancelFillSupplierModal.bind(this);
     this.onSubmitFillSupplierModal = this.onSubmitFillSupplierModal.bind(this);
     this.onOpenFillSupplierModal = this.onOpenFillSupplierModal.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
   }
 
   componentDidMount() {
@@ -181,7 +184,6 @@ export default class CreateSupplier extends React.Component {
   };
 
   onInventoryChange = (inventory) => {
-    alert('ks');
     const { inventory_list } = this.state;
 
     let isMatched = false;
@@ -322,6 +324,14 @@ export default class CreateSupplier extends React.Component {
     });
   }
 
+  handleDateChange(date, index) {
+    const { supplier_attributes } = this.state;
+    supplier_attributes[index].value = date.format('YYYY-MM-DD');
+    this.setState({
+      supplier_attributes,
+    });
+  }
+
   renderInputField(attribute, attrIndex) {
     const onValueChange = (event) => {
       const newAttribute = Object.assign({}, attribute);
@@ -433,6 +443,15 @@ export default class CreateSupplier extends React.Component {
               ? 'Show Base Supplier Type Data'
               : 'Create Base Supplier Type Data'}
           </button>
+        );
+      case 'DATETIME':
+        return (
+          <DatetimePickerTrigger
+            moment={moment(attribute.value)}
+            onChange={(e) => this.handleDateChange(e, attrIndex)}
+          >
+            <input type="text" value={attribute.value} readOnly />
+          </DatetimePickerTrigger>
         );
       default:
         return;
