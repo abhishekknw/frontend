@@ -22,8 +22,28 @@ const additional_attributes_dict = {
     { name: 'IFSC Code', type: 'STRING', is_required: true },
     { name: 'Cheque Number', type: 'STRING', is_required: true },
   ],
-  contact_details: [],
-  location_details: [],
+  contact_details: [
+    { name: 'Name', type: 'STRING', is_required: true },
+    { name: 'Designation', type: 'STRING', is_required: true },
+    { name: 'Department', type: 'STRING', is_required: true },
+    { name: 'Mobile Number', type: 'STRING', is_required: true },
+    { name: 'Email', type: 'STRING', is_required: true },
+    { name: 'Landline Number', type: 'STRING', is_required: true },
+    { name: 'STD Code', type: 'STRING', is_required: true },
+    { name: 'Contact Authority', type: 'STRING', is_required: true },
+    { name: 'Comments', type: 'STRING', is_required: true },
+  ],
+  location_details: [
+    { name: 'Address', type: 'STRING', is_required: true },
+    { name: 'Landmark', type: 'STRING', is_required: true },
+    { name: 'Area', type: 'STRING', is_required: true },
+    { name: 'Sub Area', type: 'STRING', is_required: true },
+    { name: 'City', type: 'STRING', is_required: true },
+    { name: 'State', type: 'STRING', is_required: true },
+    { name: 'Pincode', type: 'STRING', is_required: true },
+    { name: 'Latitude', type: 'STRING', is_required: true },
+    { name: 'Longitude', type: 'STRING', is_required: true },
+  ],
 };
 
 const AttributeTypes = [
