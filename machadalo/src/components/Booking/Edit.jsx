@@ -9,7 +9,6 @@ import InventoryPricingDisplayModal from '../Modals/InventoryPricingDisplayModal
 
 const getFilteredSupplierList = (list, supplierId) => {
   if (supplierId) {
-    console.log(list, list.filter((supplier) => supplier.supplier_type_id === supplierId));
     return list.filter((supplier) => supplier.supplier_type_id === supplierId);
   } else {
     return list;
@@ -247,7 +246,6 @@ export default class EditBooking extends React.Component {
   }
 
   handleCommentInputChange(event) {
-    console.log(event.target.value);
     this.setState({
       comment: event.target.value,
     });
@@ -316,9 +314,7 @@ export default class EditBooking extends React.Component {
   }
 
   onUpload(index) {
-    console.log(index);
     const { supplier, attributes, bookingId, isEditMode, uploadedImage, comment } = this.state;
-    console.log(attributes);
     const { uploadHashtagImage } = this.props;
 
     let data = new FormData();
@@ -427,9 +423,9 @@ export default class EditBooking extends React.Component {
   }
 
   renderBookingAttributeRow(attribute, index) {
+    const { isEditMode } = this.state;
     const handleAttributeInputChange = (event) => {
       const newAttribute = { ...attribute };
-      console.log(event.value);
 
       if (newAttribute.type === 'DROPDOWN' || newAttribute.type === 'HASHTAG') {
         newAttribute.value = event.value;
@@ -568,14 +564,17 @@ export default class EditBooking extends React.Component {
     return (
       <div className="supplier" key={index}>
         <div className="form-control">&nbsp;</div>
-        <div className="form-control">
-          <p>
-            {attribute.name}
-            {attribute.is_required ? <span style={{ color: '#e2402e' }}>*</span> : null}
-          </p>
-        </div>
-
-        <div className="form-control">{typeInput}</div>
+        {!isEditMode && attribute.type == 'HASHTAG' ? null : (
+          <div className="form-control">
+            <p>
+              {attribute.name}
+              {attribute.is_required ? <span style={{ color: '#e2402e' }}>*</span> : null}
+            </p>
+          </div>
+        )}
+        {!isEditMode && attribute.type == 'HASHTAG' ? null : (
+          <div className="form-control">{typeInput}</div>
+        )}
       </div>
     );
   }
