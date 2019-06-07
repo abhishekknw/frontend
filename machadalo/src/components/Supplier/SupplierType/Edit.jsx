@@ -28,6 +28,7 @@ const additional_attributes_dict = {
     { name: 'Department', type: 'STRING', is_required: true },
     { name: 'Mobile Number', type: 'STRING', is_required: true },
     { name: 'Email', type: 'STRING', is_required: true },
+    { name: 'SPOC', type: 'STRING', is_required: true },
     { name: 'Landline Number', type: 'STRING', is_required: true },
     { name: 'STD Code', type: 'STRING', is_required: true },
     { name: 'Contact Authority', type: 'STRING', is_required: true },
