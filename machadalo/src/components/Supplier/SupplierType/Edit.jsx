@@ -50,12 +50,11 @@ const additional_attributes_dict = {
 const AttributeTypes = [
   { value: 'FLOAT', label: 'Float' },
   { value: 'STRING', label: 'Text' },
-  // { value: 'INVENTORY', label: 'Inventory' },
-  // { value: 'INVENTORY_TYPE', label: 'Base Inventory' },
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
   { value: 'SUPPLIER_TYPE', label: 'Supplier Type' },
   { value: 'BASE_SUPPLIER_TYPE', label: 'Base Supplier Type' },
+  { value: 'DATETIME', label: 'Date' },
 ];
 
 // Get attribute type option from string
