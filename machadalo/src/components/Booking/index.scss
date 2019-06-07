@@ -41,6 +41,7 @@
   }
 
   &__table {
+    overflow: auto;
     table {
       width: 100%;
 
@@ -221,11 +222,11 @@
         margin-bottom: 5px;
         width: 100%;
         outline: none;
-  
+
         &> div {
           background: transparent;
         }
-  
+
         input {
           height: auto;
           outline: none !important;
