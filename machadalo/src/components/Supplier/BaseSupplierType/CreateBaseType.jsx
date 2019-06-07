@@ -62,6 +62,7 @@ export default class CreateBaseType extends React.Component {
     this.onCancelSupplierModal = this.onCancelSupplierModal.bind(this);
     this.onSubmitSupplierModal = this.onSubmitSupplierModal.bind(this);
     this.onOpenSupplierModal = this.onOpenSupplierModal.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
 
   onCancelOptionModal() {
@@ -128,6 +129,11 @@ export default class CreateBaseType extends React.Component {
         attrIndex,
       },
     });
+  }
+
+  onBack() {
+    const { match } = this.props;
+    this.props.history.push(`/r/supplier/base-type/list`);
   }
 
   onSubmit(event) {
@@ -327,6 +333,12 @@ export default class CreateBaseType extends React.Component {
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
+            <button type="button" className="btn btn--danger" onClick={this.onBack}>
+              <i className="fa fa-arrow-left" aria-hidden="true" />
+              &nbsp; Back
+            </button>
+            <br />
+            <br />
             <div className="createform__form__inline">
               <div className="form-control">
                 <label>*Enter Name For Base Supplier Type</label>

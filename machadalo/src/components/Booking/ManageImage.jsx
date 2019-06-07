@@ -59,6 +59,7 @@ export default class ManageImage extends React.Component {
     this.onUploadImageModalClose = this.onUploadImageModalClose.bind(this);
     this.onSupplierFilterChange = this.onSupplierFilterChange.bind(this);
     this.onActivityTypeChange = this.onActivityTypeChange.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
 
   componentDidMount() {
@@ -155,6 +156,11 @@ export default class ManageImage extends React.Component {
     });
   }
 
+  onBack() {
+    const { match } = this.props;
+    this.props.history.push(`/r/booking/plan/${this.getCampaignId()}`);
+  }
+
   renderListRow(item) {
     const { supplierById, userById } = this.state;
     let supplierName = '';
@@ -222,6 +228,13 @@ export default class ManageImage extends React.Component {
         <div className="manage-image__title">
           <h3>Manage Image</h3>
         </div>
+
+        <button type="button" className="btn btn--danger" onClick={this.onBack}>
+          <i className="fa fa-arrow-left" aria-hidden="true" />
+          &nbsp; Back
+        </button>
+        <br />
+        <br />
 
         <div className="manage-image__filters">
           <div className="form-control">

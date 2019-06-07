@@ -127,6 +127,7 @@ export default class CreateType extends React.Component {
     this.onAdditionalAttributeChange = this.onAdditionalAttributeChange.bind(this);
     this.onAddInventory = this.onAddInventory.bind(this);
     this.onAddAdditionalAttributes = this.onAddAdditionalAttributes.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
 
   componentDidMount() {
@@ -220,6 +221,11 @@ export default class CreateType extends React.Component {
         attrIndex,
       },
     });
+  }
+
+  onBack() {
+    const { match } = this.props;
+    this.props.history.push(`/r/supplier/type/list`);
   }
 
   onSubmit(event) {
@@ -638,6 +644,12 @@ export default class CreateType extends React.Component {
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
+            <button type="button" className="btn btn--danger" onClick={this.onBack}>
+              <i className="fa fa-arrow-left" aria-hidden="true" />
+              &nbsp; Back
+            </button>
+            <br />
+            <br />
             <div className="createform__form__inline">
               <div className="form-control">
                 <label>*Enter Name For Supplier Type</label>

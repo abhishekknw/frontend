@@ -35,6 +35,7 @@ export default class AuditPlan extends React.Component {
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
     this.onManageActivity = this.onManageActivity.bind(this);
     this.onAssignModalClose = this.onAssignModalClose.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
 
   componentDidMount() {
@@ -88,6 +89,11 @@ export default class AuditPlan extends React.Component {
     return match.params.campaignId;
   }
 
+  onBack() {
+    const { match } = this.props;
+    this.props.history.push(`/r/booking/list/${this.getCampaignId()}`);
+  }
+
   renderAuditPlanRow(inventory) {
     let supplierName = '';
     if (this.state.supplierById[inventory.supplier_id]) {
@@ -135,6 +141,13 @@ export default class AuditPlan extends React.Component {
         <div className="audit-plan__title">
           <h3>Campaign Release and Audit Plan</h3>
         </div>
+
+        <button type="button" className="btn btn--danger" onClick={this.onBack}>
+          <i className="fa fa-arrow-left" aria-hidden="true" />
+          &nbsp; Back
+        </button>
+        <br />
+        <br />
 
         <div className="audit-plan__filter">
           <input

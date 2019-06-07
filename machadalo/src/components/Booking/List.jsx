@@ -26,6 +26,7 @@ export default class ListBooking extends Component {
     this.renderBookingRow = this.renderBookingRow.bind(this);
     this.onViewImageClick = this.onViewImageClick.bind(this);
     this.onViewHashtagImagesModalClose = this.onViewHashtagImagesModalClose.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
 
   componentDidMount() {
@@ -83,6 +84,11 @@ export default class ListBooking extends Component {
     this.setState({
       isViewHashtagImagesModalVisible: false,
     });
+  }
+
+  onBack() {
+    const { match } = this.props;
+    this.props.history.push(`/r/booking/campaigns`);
   }
 
   getFilteredList(list) {
@@ -184,6 +190,12 @@ export default class ListBooking extends Component {
         <div className="list__title">
           <h3>Booking - List</h3>
         </div>
+        <button type="button" className="btn btn--danger" onClick={this.onBack}>
+          <i className="fa fa-arrow-left" aria-hidden="true" />
+          &nbsp; Back
+        </button>
+        <br />
+        <br />
 
         <div className="list__filter">
           <input

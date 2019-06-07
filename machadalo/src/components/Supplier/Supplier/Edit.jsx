@@ -67,6 +67,7 @@ export default class CreateSupplier extends React.Component {
     this.onSubmitFillSupplierModal = this.onSubmitFillSupplierModal.bind(this);
     this.onOpenFillSupplierModal = this.onOpenFillSupplierModal.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
 
   componentDidMount() {
@@ -273,6 +274,11 @@ export default class CreateSupplier extends React.Component {
         return;
       }
     });
+  }
+
+  onBack() {
+    const { match } = this.props;
+    this.props.history.push(`/r/supplier/list`);
   }
 
   onSubmit(event) {
@@ -531,6 +537,12 @@ export default class CreateSupplier extends React.Component {
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
+            <button type="button" className="btn btn--danger" onClick={this.onBack}>
+              <i className="fa fa-arrow-left" aria-hidden="true" />
+              &nbsp; Back
+            </button>
+            <br />
+            <br />
             <div className="createform__form__inline">
               <div className="form-control">
                 <label>*Enter Name For Supplier</label>
