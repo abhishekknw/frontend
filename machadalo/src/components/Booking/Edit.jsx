@@ -9,6 +9,7 @@ import InventoryPricingDisplayModal from '../Modals/InventoryPricingDisplayModal
 
 const getFilteredSupplierList = (list, supplierId) => {
   if (supplierId) {
+    console.log(list, list.filter((supplier) => supplier.supplier_type_id === supplierId));
     return list.filter((supplier) => supplier.supplier_type_id === supplierId);
   } else {
     return list;
@@ -445,12 +446,14 @@ export default class EditBooking extends React.Component {
 
     switch (attribute.type) {
       case 'FLOAT':
+      case 'INT':
         typeInput = (
           <input type="number" onChange={handleAttributeInputChange} value={attribute.value} />
         );
         break;
 
       case 'STRING':
+      case 'BOOLEAN':
         typeInput = (
           <input type="text" onChange={handleAttributeInputChange} value={attribute.value} />
         );
@@ -526,7 +529,11 @@ export default class EditBooking extends React.Component {
               />
             </div>
             <div>
-              <input type="text" onChange={this.handleCommentInputChange} />
+              <input
+                type="text"
+                onChange={this.handleCommentInputChange}
+                placeholder="Enter comments "
+              />
             </div>
             <div>
               <button
@@ -554,7 +561,7 @@ export default class EditBooking extends React.Component {
         );
         break;
       default:
-        console.log('Unsupported attribute type');
+        console.log('Unsupported attribute type', attribute.type);
         break;
     }
 
