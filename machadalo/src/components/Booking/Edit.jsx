@@ -161,6 +161,12 @@ export default class EditBooking extends React.Component {
       newBooking.putBookingError
     ) {
       toastr.error('', 'Failed to update Booking. Please try again later.');
+    } else if (prevBooking.isUploadingImage && !newBooking.isUploadingImage) {
+      if (newBooking.uploadImageSuccess) {
+        toastr.success('', 'Image uploaded successfully');
+      } else {
+        toastr.error('', 'Failed to upload image!');
+      }
     }
 
     if (
@@ -327,6 +333,9 @@ export default class EditBooking extends React.Component {
 
     if (isEditMode) {
       uploadHashtagImage({ id: bookingId, data });
+      this.setState({
+        uploadedImage: undefined,
+      });
     }
   }
 
@@ -423,7 +432,7 @@ export default class EditBooking extends React.Component {
   }
 
   renderBookingAttributeRow(attribute, index) {
-    const { isEditMode } = this.state;
+    const { isEditMode, uploadedImage } = this.state;
     const handleAttributeInputChange = (event) => {
       const newAttribute = { ...attribute };
 
@@ -536,6 +545,7 @@ export default class EditBooking extends React.Component {
                 type="button"
                 className="btn btn--danger"
                 onClick={() => this.onUpload(index)}
+                disabled={!uploadedImage}
               >
                 Upload
               </button>
