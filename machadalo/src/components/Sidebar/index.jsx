@@ -123,13 +123,13 @@ export default class Sidebar extends React.Component {
                 </div>
                 <ul className="dropdown-list-child" hidden={this.state.hideEntitiesDropdown}>
                   <li>
-                    <NavLink to="/r/supplier/base-type/list">Base Supplier Type</NavLink>
+                    <NavLink to="/r/supplier/base-type/list">Standard Template</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/r/supplier/type/list">Supplier Type</NavLink>
+                    <NavLink to="/r/supplier/type/list">Supplier Template</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/r/supplier/list">Supplier</NavLink>
+                    <NavLink to="/r/supplier/list">Manage Supplier</NavLink>
                   </li>
                 </ul>
               </li>
@@ -147,11 +147,11 @@ export default class Sidebar extends React.Component {
                 </div>
                 <ul className="dropdown-list-child" hidden={this.state.hideInventoryDropdown}>
                   <li>
-                    <NavLink to="/r/inventory/base/list">Base Inventory</NavLink>
+                    <NavLink to="/r/inventory/base/list">Standard Template</NavLink>
                   </li>
 
                   <li>
-                    <NavLink to="/r/inventory/list">Inventory</NavLink>
+                    <NavLink to="/r/inventory/list">Inventory Template</NavLink>
                   </li>
                 </ul>
               </li>
@@ -190,7 +190,7 @@ export default class Sidebar extends React.Component {
                 </div>
                 <ul className="dropdown-list-child" hidden={this.state.hideBookingDropdown}>
                   <li>
-                    <NavLink to="/r/booking/base/list">Base Booking</NavLink>
+                    <NavLink to="/r/booking/base/list">Standard Template</NavLink>
                   </li>
                   <li>
                     <NavLink to="/r/booking/template/list">Booking Templates</NavLink>
