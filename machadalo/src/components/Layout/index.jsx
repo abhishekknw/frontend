@@ -40,31 +40,16 @@ export default class Layout extends React.Component {
         <div className="wrapper">
           <div className="container">
             <Switch>
-              <Route
-                path={`${match.path}/checklist`}
-                component={ChecklistContainer}
-              />
+              <Route path={`${match.path}/checklist`} component={ChecklistContainer} />
 
-              <Route
-                path={`${match.path}/supplier`}
-                component={SupplierContainer}
-              />
-              <Route
-                path={`${match.path}/inventory`}
-                component={InventoryContainer}
-              />
+              <Route path={`${match.path}/supplier`} component={SupplierContainer} />
+              <Route path={`${match.path}/inventory`} component={InventoryContainer} />
 
-              <Route
-                path={`${match.path}/settings`}
-                component={SettingContainer}
-              />
+              <Route path={`${match.path}/settings`} component={SettingContainer} />
 
               <Route path={`${match.path}/leads`} component={LeadsContainer} />
 
-              <Route
-                path={`${match.path}/booking`}
-                component={BookingContainer}
-              />
+              <Route path={`${match.path}/booking`} component={BookingContainer} />
             </Switch>
           </div>
         </div>

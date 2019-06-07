@@ -323,7 +323,7 @@ angular.module('catalogueApp')
       editActivityDates();
       auditReleasePlanService.saveActivityDetails($scope.requestaActivityData)
       .then(function onSuccess(response){
-        getCampaignReleaseDetails();
+        getResultsPage(1);
         $scope.resetData();
         $scope.savingDates = false;
         $('#manageDatesModal').modal('hide');
@@ -428,7 +428,7 @@ angular.module('catalogueApp')
       console.log(requestData);
       auditReleasePlanService.saveActivityDetails(requestData)
       .then(function onSuccess(response){
-        getCampaignReleaseDetails();
+        getResultsPage(1);
         $scope.dateChecked = false;
         swal(constants.name,constants.inventory_date_success,constants.success);
       })
@@ -470,7 +470,7 @@ angular.module('catalogueApp')
         console.log(response);
         $('#addInventoryModal').on('hide.bs.modal', function () {});
         $scope.adInvModel = {};
-        getCampaignReleaseDetails();
+        getResultsPage(1);
         swal(constants.name, constants.add_data_success, constants.success);
       }).catch(function onError(response){
         console.log(response);
@@ -483,7 +483,7 @@ angular.module('catalogueApp')
       auditReleasePlanService.deleteAdInventoryIds($scope.invIdList)
       .then(function onSuccess(response){
         console.log(response);
-        getCampaignReleaseDetails();
+        getResultsPage(1);
         swal(constants.name,response.data.data.msg,constants.success);
       }).catch(function onError(response){
         console.log(response);

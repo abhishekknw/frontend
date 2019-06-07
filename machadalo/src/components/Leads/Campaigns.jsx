@@ -19,19 +19,10 @@ export default class Campaigns extends React.Component {
     return (
       <tr key={campaign.id}>
         <td>{campaign.campaign.name}</td>
+        <td>{moment(campaign.campaign.tentative_start_date).format('Do MMM, YYYY')}</td>
+        <td>{moment(campaign.campaign.tentative_end_date).format('Do MMM, YYYY')}</td>
         <td>
-          {moment(campaign.campaign.tentative_start_date).format(
-            'Do MMM, YYYY'
-          )}
-        </td>
-        <td>
-          {moment(campaign.campaign.tentative_end_date).format('Do MMM, YYYY')}
-        </td>
-        <td>
-          <Link
-            to={`/r/leads/${campaign.campaign.proposal_id}`}
-            className="btn btn--danger"
-          >
+          <Link to={`/r/leads/${campaign.campaign.proposal_id}/form`} className="btn btn--danger">
             Create / Edit Lead Form
           </Link>
         </td>

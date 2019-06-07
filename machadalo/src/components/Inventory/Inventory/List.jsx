@@ -30,10 +30,7 @@ export default class List extends React.Component {
           </button>
         </td>
         <td>
-          <Link
-            to={`/r/inventory/edit/${inventoryItem._id}`}
-            className="btn btn--danger"
-          >
+          <Link to={`/r/inventory/edit/${inventoryItem._id}`} className="btn btn--danger">
             Edit Inventory
           </Link>
         </td>
@@ -65,9 +62,7 @@ export default class List extends React.Component {
                   inventoryList.map(this.renderInventoryItemRow)
                 ) : (
                   <tr>
-                    <td colSpan="5">
-                      No inventory available. Create your first one now!
-                    </td>
+                    <td colSpan="5">No inventory available. Create your first one now!</td>
                   </tr>
                 )}
               </tbody>

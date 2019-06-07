@@ -3,7 +3,7 @@ import * as types from './../actions/types';
 
 export const phase = createReducer(
   {
-    phaseList: []
+    phaseList: [],
   },
   {
     [types.POST_PHASE_START](state) {
@@ -11,7 +11,7 @@ export const phase = createReducer(
         ...state,
         isCreatingPhase: true,
         postPhaseSuccess: false,
-        postPhaseError: false
+        postPhaseError: false,
       };
     },
     [types.POST_PHASE_SUCCESS](state, action) {
@@ -19,40 +19,40 @@ export const phase = createReducer(
         ...state,
         phaseList: action.phases,
         isCreatingPhase: false,
-        postPhaseSuccess: true
+        postPhaseSuccess: true,
       };
     },
     [types.POST_PHASE_FAIL](state) {
       return {
         ...state,
         isCreatingPhase: false,
-        postPhaseError: true
+        postPhaseError: true,
       };
     },
     [types.GET_PHASE_LIST_START](state) {
       return {
         ...state,
-        isFetchingPhase: true
+        isFetchingPhase: true,
       };
     },
     [types.GET_PHASE_LIST_SUCCESS](state, action) {
       return {
         ...state,
         isFetchingPhase: false,
-        phaseList: action.list
+        phaseList: action.list,
       };
     },
     [types.GET_PHASE_LIST_FAIL](state) {
       return {
         ...state,
         isFetchingPhase: false,
-        phaseList: []
+        phaseList: [],
       };
     },
     [types.DELETE_PHASE_START](state) {
       return {
         ...state,
-        isDeletingPhase: true
+        isDeletingPhase: true,
       };
     },
     [types.DELETE_PHASE_SUCCESS](state, action) {
@@ -60,15 +60,15 @@ export const phase = createReducer(
       return {
         ...state,
         isDeletingPhase: false,
-        phaseList: phaseList.filter(item => item.id !== action.id)
+        phaseList: phaseList.filter((item) => item.id !== action.id),
       };
     },
     [types.DELETE_PHASE_FAIL](state) {
       return {
         ...state,
-        isDeletingPhase: false
+        isDeletingPhase: false,
       };
-    }
+    },
   }
 );
 

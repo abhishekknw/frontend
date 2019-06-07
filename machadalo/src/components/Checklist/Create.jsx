@@ -16,11 +16,11 @@ const ColumnTypes = [
   { value: 'NUMBER', label: 'Number' },
   { value: 'EMAIL', label: 'Email' },
   { value: 'RADIO', label: 'Radio' },
-  { value: 'SELECT', label: 'Select' }
+  { value: 'SELECT', label: 'Select' },
 ];
 
 // Get column option from string
-const getColumnOption = value => {
+const getColumnOption = (value) => {
   for (let i = 0, l = ColumnTypes.length; i < l; i += 1) {
     if (ColumnTypes[i].value === value) {
       return ColumnTypes[i];
@@ -35,13 +35,13 @@ const getDefaultColumns = () => {
     {
       column_name: '',
       column_type: getColumnOption('TEXT'),
-      order_id: 1
+      order_id: 1,
     },
     {
       column_name: '',
       column_type: getColumnOption('TEXT'),
-      order_id: 2
-    }
+      order_id: 2,
+    },
   ];
 };
 
@@ -62,20 +62,20 @@ export default class CreateChecklistTemplate extends React.Component {
           {
             row_id: 1,
             cell_value: '',
-            disabled: false
-          }
+            disabled: false,
+          },
         ],
         '2': [
           {
             row_id: 1,
             cell_value: '',
-            disabled: true
-          }
-        ]
+            disabled: true,
+          },
+        ],
       },
       existingChecklistOptions: [],
       selectedChecklist: {},
-      isMaxColumnsReached: false
+      isMaxColumnsReached: false,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -99,7 +99,7 @@ export default class CreateChecklistTemplate extends React.Component {
   componentWillMount() {
     if (!this.props.match.params.supplierId) {
       this.setState({
-        checklist_type: 'campaign'
+        checklist_type: 'campaign',
       });
     }
     this.props.getChecklistTemplate();
@@ -115,9 +115,7 @@ export default class CreateChecklistTemplate extends React.Component {
       toastr.success('', 'Checklist created successfully');
       if (this.state.checklist_type === 'supplier') {
         this.props.history.push(
-          `/r/checklist/list/${match.params.campaignId}/${
-            match.params.supplierId
-          }`
+          `/r/checklist/list/${match.params.campaignId}/${match.params.supplierId}`
         );
       } else {
         this.props.history.push(`/r/checklist/list/${match.params.campaignId}`);
@@ -129,19 +127,16 @@ export default class CreateChecklistTemplate extends React.Component {
       toastr.error('', 'Could not create checklist. Please try again later.');
     }
 
-    if (
-      this.state.existingChecklistOptions.length !==
-      this.props.checklist.templateList.length
-    ) {
+    if (this.state.existingChecklistOptions.length !== this.props.checklist.templateList.length) {
       let checklistOptions = [];
-      this.props.checklist.templateList.forEach(checklist => {
+      this.props.checklist.templateList.forEach((checklist) => {
         checklistOptions.push({
           value: checklist.checklist_info.checklist_id,
-          label: checklist.checklist_info.checklist_name
+          label: checklist.checklist_info.checklist_name,
         });
       });
       this.setState({
-        existingChecklistOptions: checklistOptions
+        existingChecklistOptions: checklistOptions,
       });
     }
   }
@@ -151,9 +146,7 @@ export default class CreateChecklistTemplate extends React.Component {
 
     if (this.state.checklist_type === 'supplier') {
       this.props.history.push(
-        `/r/checklist/list/${match.params.campaignId}/${
-          match.params.supplierId
-        }`
+        `/r/checklist/list/${match.params.campaignId}/${match.params.supplierId}`
       );
     } else {
       this.props.history.push(`/r/checklist/list/${match.params.campaignId}`);
@@ -165,7 +158,7 @@ export default class CreateChecklistTemplate extends React.Component {
       event.target.value = event.target.checked ? true : false;
     }
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   }
 
@@ -175,7 +168,7 @@ export default class CreateChecklistTemplate extends React.Component {
     checklistColumns.splice(index, 1, column);
 
     this.setState({
-      checklist_columns: checklistColumns
+      checklist_columns: checklistColumns,
     });
   }
 
@@ -185,7 +178,7 @@ export default class CreateChecklistTemplate extends React.Component {
     rows[columnIndex + 1][rowIndex].cell_value = event.target.value;
 
     this.setState({
-      static_column_values: rows
+      static_column_values: rows,
     });
   }
 
@@ -199,12 +192,12 @@ export default class CreateChecklistTemplate extends React.Component {
       rows[i + 1].push({
         row_id: rowLength + 1,
         cell_value: '',
-        disabled: i === 0 ? false : true
+        disabled: i === 0 ? false : true,
       });
     }
 
     this.setState({
-      static_column_values: rows
+      static_column_values: rows,
     });
   }
 
@@ -219,15 +212,15 @@ export default class CreateChecklistTemplate extends React.Component {
           rows[checklistColumns.length + 1].push({
             row_id: i + 1,
             cell_value: '',
-            disabled: true
+            disabled: true,
           });
         } else {
           rows[checklistColumns.length + 1] = [
             {
               row_id: i + 1,
               cell_value: '',
-              disabled: true
-            }
+              disabled: true,
+            },
           ];
         }
       }
@@ -235,16 +228,16 @@ export default class CreateChecklistTemplate extends React.Component {
       checklistColumns.push({
         column_name: '',
         column_type: 'TEXT',
-        order_id: checklistColumns.length + 1
+        order_id: checklistColumns.length + 1,
       });
 
       this.setState({
         static_column_values: rows,
-        checklist_columns: checklistColumns
+        checklist_columns: checklistColumns,
       });
     } else {
       this.setState({
-        isMaxColumnsReached: true
+        isMaxColumnsReached: true,
       });
     }
   }
@@ -260,7 +253,7 @@ export default class CreateChecklistTemplate extends React.Component {
     }
 
     this.setState({
-      static_column_values: rows
+      static_column_values: rows,
     });
   }
 
@@ -286,7 +279,7 @@ export default class CreateChecklistTemplate extends React.Component {
 
     this.setState({
       checklist_columns: checklistColumns,
-      static_column_values: rows
+      static_column_values: rows,
     });
   }
 
@@ -297,8 +290,8 @@ export default class CreateChecklistTemplate extends React.Component {
       columnInfo: {
         columnType,
         column,
-        columnIndex
-      }
+        columnIndex,
+      },
     });
   }
 
@@ -306,7 +299,7 @@ export default class CreateChecklistTemplate extends React.Component {
     this.setState({
       showOptionModal: false,
       columnOptions: [''],
-      columnInfo: {}
+      columnInfo: {},
     });
   }
 
@@ -314,12 +307,12 @@ export default class CreateChecklistTemplate extends React.Component {
     this.setState({
       showOptionModal: false,
       columnOptions: [''],
-      columnInfo: {}
+      columnInfo: {},
     });
 
     let newColumn = Object.assign({}, columnInfo.column, {
       column_type: columnInfo.columnType,
-      column_options: options
+      column_options: options,
     });
     this.handleColumnChange(newColumn, columnInfo.columnIndex);
   }
@@ -329,7 +322,7 @@ export default class CreateChecklistTemplate extends React.Component {
 
     let error = false;
     let checklist_columns = this.state.checklist_columns;
-    checklist_columns.forEach(item => {
+    checklist_columns.forEach((item) => {
       if (typeof item.column_type !== 'string') {
         item.column_type = item.column_type.value;
       }
@@ -339,8 +332,8 @@ export default class CreateChecklistTemplate extends React.Component {
       staticDataError = false;
     let staticRowKeys = Object.keys(staticRowData);
 
-    staticRowKeys.forEach(i => {
-      staticRowData[i] = staticRowData[i].filter(staticData => {
+    staticRowKeys.forEach((i) => {
+      staticRowData[i] = staticRowData[i].filter((staticData) => {
         if (staticData.disabled) {
           return false;
         } else {
@@ -369,10 +362,10 @@ export default class CreateChecklistTemplate extends React.Component {
       supplier_id: this.props.match.params.supplierId,
       is_template: this.state.is_template === 'true' ? true : false,
       checklist_columns,
-      static_column_values: staticRowData
+      static_column_values: staticRowData,
     };
 
-    data.checklist_columns.forEach(column => {
+    data.checklist_columns.forEach((column) => {
       if (!column.column_type) {
         error = true;
         toastr.error('', 'Please select column type for each column');
@@ -387,7 +380,7 @@ export default class CreateChecklistTemplate extends React.Component {
     // Send request to create template
     this.props.postChecklistTemplate({
       campaignId: this.props.match.params.campaignId,
-      data
+      data,
     });
   }
 
@@ -399,20 +392,20 @@ export default class CreateChecklistTemplate extends React.Component {
     }
 
     this.setState({
-      static_column_values: rows
+      static_column_values: rows,
     });
   }
 
   renderChecklistColumn(column, columnIndex) {
-    const onColumnNameChange = event => {
+    const onColumnNameChange = (event) => {
       const newColumn = Object.assign({}, column, {
-        column_name: event.target.value
+        column_name: event.target.value,
       });
 
       this.handleColumnChange(newColumn, columnIndex);
     };
 
-    const onColumnTypeChange = item => {
+    const onColumnTypeChange = (item) => {
       if (item.value !== 'TEXT') {
         let rows = Object.assign({}, this.state.static_column_values);
         if (rows[columnIndex + 1][0].disabled === false) {
@@ -427,14 +420,14 @@ export default class CreateChecklistTemplate extends React.Component {
           columnInfo: {
             columnType: item,
             column,
-            columnIndex
-          }
+            columnIndex,
+          },
         });
         return;
       }
 
       const newColumn = Object.assign({}, column, {
-        column_type: item
+        column_type: item,
       });
 
       this.handleColumnChange(newColumn, columnIndex);
@@ -471,35 +464,26 @@ export default class CreateChecklistTemplate extends React.Component {
                     <input
                       className="input-checkbox"
                       type="checkbox"
-                      onClick={event =>
-                        this.handleStaticColumnChange(event, columnIndex)
-                      }
+                      onClick={(event) => this.handleStaticColumnChange(event, columnIndex)}
                     />
 
                     <p className="main-text">
                       Static Data
-                      <em>
-                        (Field entered in static column cannot be changed later)
-                      </em>
+                      <em>(Field entered in static column cannot be changed later)</em>
                     </p>
                   </div>
                 ) : (
                   undefined
                 )}
                 {columnIndex > 1 ? (
-                  <button
-                    type="button"
-                    className="btn btn--danger"
-                    onClick={onRemove}
-                  >
+                  <button type="button" className="btn btn--danger" onClick={onRemove}>
                     Remove column
                   </button>
                 ) : (
                   undefined
                 )}{' '}
                 {column.column_type &&
-                (column.column_type.value === 'RADIO' ||
-                  column.column_type.value === 'SELECT') ? (
+                (column.column_type.value === 'RADIO' || column.column_type.value === 'SELECT') ? (
                   <button
                     type="button"
                     className="btn btn--danger"
@@ -527,16 +511,16 @@ export default class CreateChecklistTemplate extends React.Component {
 
   handleSelectChecklist(selectedChecklist) {
     this.setState({
-      selectedChecklist
+      selectedChecklist,
     });
 
     let { checklist } = this.props;
 
-    checklist.templateList.forEach(checklist => {
+    checklist.templateList.forEach((checklist) => {
       if (checklist.checklist_info.checklist_id === selectedChecklist.value) {
         this.setState({
           checklist_columns: checklist.column_headers,
-          static_column_values: checklist.row_headers
+          static_column_values: checklist.row_headers,
         });
         return;
       }
@@ -553,27 +537,20 @@ export default class CreateChecklistTemplate extends React.Component {
       <div className="createform__form__row" key={`row-${rowIndex}`}>
         {this.state.checklist_columns.map((column, columnIndex) => {
           return (
-            <div
-              className="createform__form__column"
-              key={`row-${rowIndex}-column-${columnIndex}`}
-            >
+            <div className="createform__form__column" key={`row-${rowIndex}-column-${columnIndex}`}>
               <div className="createform__form__inline">
                 <div className="form-control">
                   <input
                     type="text"
                     placeholder="Static Data"
                     value={
-                      static_value[columnIndex + 1] &&
-                      static_value[columnIndex + 1][rowIndex]
+                      static_value[columnIndex + 1] && static_value[columnIndex + 1][rowIndex]
                         ? static_value[columnIndex + 1][rowIndex].cell_value
                         : ''
                     }
-                    onChange={event =>
-                      this.handleRowChange(event, columnIndex, rowIndex)
-                    }
+                    onChange={(event) => this.handleRowChange(event, columnIndex, rowIndex)}
                     disabled={
-                      static_value[columnIndex + 1] &&
-                      static_value[columnIndex + 1][rowIndex]
+                      static_value[columnIndex + 1] && static_value[columnIndex + 1][rowIndex]
                         ? static_value[columnIndex + 1][rowIndex].disabled
                         : true
                     }
@@ -647,11 +624,7 @@ export default class CreateChecklistTemplate extends React.Component {
             {this.state.static_column_values['1'].map(this.renderChecklistRow)}
             <div className="createform__form__inline">
               <div className="createform__form__action">
-                <button
-                  type="button"
-                  className="btn btn--danger"
-                  onClick={this.onAddRow}
-                >
+                <button type="button" className="btn btn--danger" onClick={this.onAddRow}>
                   Add Row
                 </button>
               </div>
@@ -671,11 +644,7 @@ export default class CreateChecklistTemplate extends React.Component {
                 </button>
               </div>
               <div className="createform__form__action">
-                <button
-                  type="button"
-                  className="btn btn--danger"
-                  onClick={this.onBack}
-                >
+                <button type="button" className="btn btn--danger" onClick={this.onBack}>
                   Back
                 </button>
               </div>
@@ -702,9 +671,9 @@ export default class CreateChecklistTemplate extends React.Component {
 }
 
 CreateChecklistTemplate.defaultProps = {
-  postChecklistTemplate: () => {}
+  postChecklistTemplate: () => {},
 };
 
 CreateChecklistTemplate.propTypes = {
-  postChecklistTemplate: PropTypes.func
+  postChecklistTemplate: PropTypes.func,
 };

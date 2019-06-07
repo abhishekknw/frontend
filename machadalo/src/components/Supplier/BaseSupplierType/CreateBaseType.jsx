@@ -22,6 +22,7 @@ const AttributeTypes = [
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
   { value: 'BASE_SUPPLIER_TYPE', label: 'Base Supplier Type' },
+  { value: 'DATETIME', label: 'Date' },
 ];
 
 // Get attribute type option from string
@@ -50,6 +51,7 @@ export default class CreateBaseType extends React.Component {
     };
 
     this.onAddAttribute = this.onAddAttribute.bind(this);
+    this.onRemoveAttribute = this.onRemoveAttribute.bind(this);
     this.renderAttributeRow = this.renderAttributeRow.bind(this);
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -152,6 +154,14 @@ export default class CreateBaseType extends React.Component {
       is_editable: true,
     });
 
+    this.setState({
+      supplier_attributes: newAttributes,
+    });
+  }
+
+  onRemoveAttribute(index) {
+    const newAttributes = this.state.supplier_attributes.slice();
+    newAttributes.splice(index, 1);
     this.setState({
       supplier_attributes: newAttributes,
     });
@@ -294,6 +304,15 @@ export default class CreateBaseType extends React.Component {
               checked={attribute.is_editable}
               onChange={onEditableChange}
             />
+          </div>
+          <div className="createform__form__action">
+            <button
+              type="button"
+              className="btn btn--danger"
+              onClick={() => this.onRemoveAttribute(attrIndex)}
+            >
+              Remove Attribute
+            </button>
           </div>
         </div>
       </div>
