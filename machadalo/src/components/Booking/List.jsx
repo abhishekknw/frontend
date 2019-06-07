@@ -132,7 +132,10 @@ export default class ListBooking extends Component {
         ))}
         {booking.supplier_attributes.map((attribute) => (
           <td>
-            {attribute.type === 'STRING' || attribute.type === 'FLOAT' || attribute.type === 'EMAIL'
+            {attribute.type === 'STRING' ||
+            attribute.type === 'FLOAT' ||
+            attribute.type === 'EMAIL' ||
+            attribute.type === 'DROPDOWN'
               ? attribute.value
               : attribute.type}
           </td>
@@ -217,7 +220,7 @@ export default class ListBooking extends Component {
 
         <div className="list__actions">
           <Link to={`/r/booking/create/${this.getCampaignId()}`} className="btn btn--danger">
-            Create
+            Add
           </Link>
           <Link to={`/r/booking/plan/${this.getCampaignId()}`} className="btn btn--danger">
             Campaign Release and Audit Plan
