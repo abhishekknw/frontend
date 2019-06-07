@@ -14,6 +14,18 @@ const optionStyle = {
   paddingBottom: '10px',
 };
 
+const additional_attributes_dict = {
+  bank_details: [
+    { name: 'Name for Payment', type: 'STRING', is_required: true },
+    { name: 'Account Number', type: 'STRING', is_required: true },
+    { name: 'Bank Name', type: 'STRING', is_required: true },
+    { name: 'IFSC Code', type: 'STRING', is_required: true },
+    { name: 'Cheque Number', type: 'STRING', is_required: true },
+  ],
+  contact_details: [],
+  location_details: [],
+};
+
 const AttributeTypes = [
   { value: 'FLOAT', label: 'Float' },
   { value: 'STRING', label: 'Text' },
@@ -67,6 +79,14 @@ export default class CreateType extends React.Component {
       attributeInfo: {},
       selectedModalSupplierType: undefined,
       inventory_list: [],
+      additional_attributes: {
+        bank_details: [],
+      },
+      additionalAttributesList: [
+        { label: 'Bank Details', value: 'bank_details' },
+        { label: 'Contact Details', value: 'contact_details' },
+        { label: 'Location Details', value: 'location_details' },
+      ],
     };
 
     this.onAddAttribute = this.onAddAttribute.bind(this);
@@ -82,8 +102,11 @@ export default class CreateType extends React.Component {
     this.onOpenSupplierModal = this.onOpenSupplierModal.bind(this);
     this.onSelectBaseSupplierType = this.onSelectBaseSupplierType.bind(this);
     this.renderInventoryRow = this.renderInventoryRow.bind(this);
+    this.renderAdditionalAttributeRow = this.renderAdditionalAttributeRow.bind(this);
     this.onInventoryChange = this.onInventoryChange.bind(this);
+    this.onAdditionalAttributeChange = this.onAdditionalAttributeChange.bind(this);
     this.onAddInventory = this.onAddInventory.bind(this);
+    this.onAddAdditionalAttributes = this.onAddAdditionalAttributes.bind(this);
   }
 
   componentDidMount() {
@@ -136,6 +159,7 @@ export default class CreateType extends React.Component {
         { optionValueKey: 'value' }
       );
       newState.supplier_attributes = newSupplierType.currentSupplierType.supplier_attributes;
+      newState.additional_attributes = newSupplierType.currentSupplierType.additional_attributes;
       newState.inventory_list = newSupplierType.currentSupplierType.inventory_list;
     }
 
@@ -189,6 +213,7 @@ export default class CreateType extends React.Component {
       base_supplier_type_id: this.state.selectedBaseSupplierType.value,
       supplier_attributes: this.state.supplier_attributes,
       inventory_list: this.state.inventory_list,
+      additional_attributes: this.state.additional_attributes,
     };
 
     if (isEditMode) {
@@ -248,6 +273,12 @@ export default class CreateType extends React.Component {
     });
   }
 
+  onAdditionalAttributeChange(selectedAdditionalAttribute) {
+    this.setState({
+      selectedAdditionalAttribute,
+    });
+  }
+
   onAddInventory() {
     const { inventory_list, selectedInventory } = this.state;
 
@@ -256,6 +287,19 @@ export default class CreateType extends React.Component {
     this.setState({
       inventory_list,
       selectedInventory: null,
+    });
+  }
+
+  onAddAdditionalAttributes() {
+    const { additional_attributes, selectedAdditionalAttribute } = this.state;
+    console.log(additional_attributes, selectedAdditionalAttribute);
+
+    additional_attributes[selectedAdditionalAttribute.value] =
+      additional_attributes_dict[selectedAdditionalAttribute.value];
+    console.log(additional_attributes);
+    this.setState({
+      additional_attributes,
+      selectedAdditionalAttribute: null,
     });
   }
 
@@ -437,6 +481,7 @@ export default class CreateType extends React.Component {
   }
 
   renderInventoryRow(inventory, index) {
+    console.log('hello', inventory, index);
     const onAttributeChange = (attribute, attributeIndex, event) => {
       const newInventory = { ...inventory };
       newInventory.inventory_attributes[attributeIndex].value = !!event.target.checked;
@@ -450,6 +495,16 @@ export default class CreateType extends React.Component {
     };
 
     const onInventoryRemove = () => {
+      const newInventoryList = this.state.inventory_list.slice();
+      newInventoryList.splice(index, 1);
+
+      this.setState({
+        inventory_list: newInventoryList,
+      });
+    };
+
+    const onAdditionalAttributeRemove = () => {
+      console.log(index);
       const newInventoryList = this.state.inventory_list.slice();
       newInventoryList.splice(index, 1);
 
@@ -486,9 +541,70 @@ export default class CreateType extends React.Component {
     );
   }
 
+  renderAdditionalAttributeRow(attribute, index) {
+    const { additional_attributes, additionalAttributesList } = this.state;
+
+    console.log(additional_attributes[attribute], attribute, index);
+
+    const onAttributeChange = (attribute, attributeIndex, event) => {
+      const newInventory = { ...additional_attributes };
+      newInventory.inventory_attributes[attributeIndex].value = !!event.target.checked;
+
+      const newInventoryList = this.state.inventory_list.slice();
+      newInventoryList[index] = newInventory;
+
+      this.setState({
+        inventory_list: newInventoryList,
+      });
+    };
+
+    const onAdditionalAttributeRemove = () => {
+      console.log(index, attribute);
+      const { additional_attributes } = this.state;
+
+      delete additional_attributes[attribute];
+
+      this.setState({
+        additional_attributes: additional_attributes,
+      });
+    };
+
+    return (
+      <div className="inventory-row" key={attribute}>
+        <div key={index} className="inventory-row__heading">
+          {additionalAttributesList[index].label}
+        </div>
+        <div className="inventory-row__items">
+          {additional_attributes[attribute].map((attribute, index) => (
+            <div className="item" key={attribute.name}>
+              <input
+                type="checkbox"
+                className="input-checkbox"
+                checked={attribute.value || attribute.is_required}
+                onChange={onAttributeChange.bind(this, attribute, index)}
+                disabled={attribute.is_required}
+              />
+              {attribute.name}
+            </div>
+          ))}
+        </div>
+        <div className="inventory-row__action">
+          <button type="button" className="btn btn--link" onClick={onAdditionalAttributeRemove}>
+            Remove
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const { baseInventory } = this.props;
-    const { isEditMode, inventory_list } = this.state;
+    const {
+      isEditMode,
+      inventory_list,
+      additionalAttributesList,
+      supplier_attributes,
+    } = this.state;
 
     const usedInventoryIds = inventory_list.map((item) => item._id);
     const inventoryList = baseInventory.inventoryList.filter(
@@ -535,6 +651,41 @@ export default class CreateType extends React.Component {
                   Add Attribute
                 </button>
               </div>
+            </div>
+
+            <div className="createform__form__header">Additional Attributes</div>
+
+            <div>
+              {Object.keys(this.state.additional_attributes).length > 0
+                ? Object.keys(this.state.additional_attributes).map(
+                    this.renderAdditionalAttributeRow
+                  )
+                : null}
+            </div>
+
+            <div className="createform__form__row">
+              <div className="createform__form__inline">
+                <div className="form-control">
+                  <Select
+                    options={additionalAttributesList}
+                    getOptionLabel={(option) => option.label}
+                    getOptionValue={(option) => option.value}
+                    value={this.state.selectedAdditionalAttribute}
+                    onChange={this.onAdditionalAttributeChange}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="createform__form__action">
+              <button
+                type="button"
+                className="btn btn--danger"
+                onClick={this.onAddAdditionalAttributes}
+                disabled={!this.state.selectedAdditionalAttribute}
+              >
+                Add Additional Attribute
+              </button>
             </div>
 
             <div className="createform__form__header">Inventory</div>

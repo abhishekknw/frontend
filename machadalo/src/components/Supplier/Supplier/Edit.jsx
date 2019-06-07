@@ -5,6 +5,7 @@ import { toastr } from 'react-redux-toastr';
 import OptionModal from '../../Modals/OptionModal';
 import FillSupplierModal from '../../Modals/FillSupplierModal';
 import FillInventoryModal from '../../Modals/FillInventoryModal';
+import FillAdditionalAttributeModal from '../../Modals/AdditionalAttributesModal';
 
 const customeStyles = {
   input: () => ({
@@ -36,6 +37,7 @@ export default class CreateSupplier extends React.Component {
       name: '',
       supplier_attributes: [],
       inventory_list: [],
+      additional_attributes: {},
       supplierTypeOption: [],
       selectedSupplierType: {},
       attributeValue: [],
@@ -46,9 +48,12 @@ export default class CreateSupplier extends React.Component {
       currentModalSupplierType: undefined,
       isFillInventoryModalVisible: false,
       selectedInventory: {},
+      selectedAdditionalAttribute: {},
+      selectedFieldName: undefined,
     };
 
     this.renderAttributeRow = this.renderAttributeRow.bind(this);
+    this.renderAdditionalAttributeRow = this.renderAdditionalAttributeRow.bind(this);
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -105,6 +110,7 @@ export default class CreateSupplier extends React.Component {
       );
       newState.supplier_attributes = newSupplier.currentSupplier.supplier_attributes;
       newState.inventory_list = newSupplier.currentSupplier.inventory_list;
+      newState.additional_attributes = newSupplier.currentSupplier.additional_attributes;
     }
 
     if (Object.keys(newState).length) {
@@ -151,6 +157,15 @@ export default class CreateSupplier extends React.Component {
     });
   };
 
+  onFillAdditionalAttributeModalClick = (attributes, attribute) => {
+    console.log(attribute);
+    this.setState({
+      isAdditionalAttributeModalVisible: true,
+      selectedAdditionalAttribute: attributes[attribute],
+      selectedFieldName: attribute,
+    });
+  };
+
   onFillInventoryModalClose = () => {
     this.setState({
       isFillInventoryModalVisible: false,
@@ -158,7 +173,15 @@ export default class CreateSupplier extends React.Component {
     });
   };
 
+  onFillAdditionalAttributeModalClose = () => {
+    this.setState({
+      isAdditionalAttributeModalVisible: false,
+      selectedAdditionalAttribute: {},
+    });
+  };
+
   onInventoryChange = (inventory) => {
+    alert('ks');
     const { inventory_list } = this.state;
 
     let isMatched = false;
@@ -178,6 +201,29 @@ export default class CreateSupplier extends React.Component {
     this.setState({
       inventory_list,
     });
+  };
+
+  onAdditionalAttributeChange = (inventory) => {
+    console.log(inventory);
+    const { additional_attributes, selectedFieldName } = this.state;
+    console.log(selectedFieldName);
+    let isMatched = false;
+
+    // for (let i = 0, l = additional_attributes.length; i < l; i += 1) {
+    //   if (inventory._id === inventory_list[i]._id) {
+    //     inventory_list[i] = { ...inventory };
+    //     isMatched = true;
+    //     break;
+    //   }
+    // }
+    //
+    // if (!isMatched) {
+    //   inventory_list.push(inventory);
+    // }
+    //
+    // this.setState({
+    //   inventory_list,
+    // });
   };
 
   onCancelOptionModal() {
@@ -220,6 +266,7 @@ export default class CreateSupplier extends React.Component {
           selectedSupplierType,
           supplier_attributes: supplierType.supplier_attributes,
           inventory_list: supplierType.inventory_list,
+          additional_attributes: supplierType.additional_attributes,
         });
         return;
       }
@@ -238,6 +285,7 @@ export default class CreateSupplier extends React.Component {
       supplier_type_id: this.state.selectedSupplierType.value,
       supplier_attributes: this.state.supplier_attributes,
       inventory_list: this.state.inventory_list,
+      additional_attributes: this.state.additional_attributes,
     };
 
     if (isEditMode) {
@@ -425,8 +473,37 @@ export default class CreateSupplier extends React.Component {
     );
   };
 
+  renderAdditionalAttributeRow = (attribute) => {
+    console.log(attribute);
+    const { additional_attributes } = this.state;
+    console.log(additional_attributes);
+    return (
+      <div className="createform__form__row" key={additional_attributes[attribute]}>
+        <div className="createform__form__inline">
+          <div className="form-control">
+            {attribute.replace(/_/g, ' ').replace(/(?: |\b)(\w)/g, function(attribute) {
+              return attribute.toUpperCase();
+            })}
+          </div>
+
+          <div className="form-control">
+            <button
+              type="button"
+              className="btn btn--danger"
+              onClick={() =>
+                this.onFillAdditionalAttributeModalClick(additional_attributes, attribute)
+              }
+            >
+              View / Edit Additional Attributes
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   render() {
-    const { isEditMode, inventory_list, supplier_attributes } = this.state;
+    const { isEditMode, inventory_list, supplier_attributes, additional_attributes } = this.state;
 
     return (
       <div className="createform">
@@ -478,6 +555,15 @@ export default class CreateSupplier extends React.Component {
               )}
             </div>
 
+            <div className="createform__form__header">Additional Attributes</div>
+            <div>
+              {Object.keys(additional_attributes).length ? (
+                Object.keys(additional_attributes).map(this.renderAdditionalAttributeRow)
+              ) : (
+                <div className="blank-sttaus">No Additional Attributes available</div>
+              )}
+            </div>
+
             <div className="createform__form__inline">
               <div className="createform__form__action">
                 <button type="submit" className="btn btn--danger">
@@ -513,6 +599,14 @@ export default class CreateSupplier extends React.Component {
           inventory={this.state.selectedInventory}
           onChange={this.onInventoryChange}
           onClose={this.onFillInventoryModalClose}
+        />
+
+        <FillAdditionalAttributeModal
+          key={this.state.selectedAdditionalAttribute}
+          isVisible={this.state.isAdditionalAttributeModalVisible}
+          attributes={this.state.selectedAdditionalAttribute}
+          onChange={this.onAdditionalAttributeChange}
+          onClose={this.onFillAdditionalAttributeModalClose}
         />
       </div>
     );
