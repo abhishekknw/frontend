@@ -54,6 +54,7 @@ export default class Edit extends React.Component {
     this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
   componentWillMount() {
     let baseInventoryId = this.props.match.params.baseInventoryId;
@@ -115,6 +116,11 @@ export default class Edit extends React.Component {
     this.props.putBaseInventory({ data: this.state, baseInventoryId: baseInventoryId }, () => {
       toastr.success('', 'Base Inventory created successfully');
     });
+  }
+
+  onBack() {
+    const { match } = this.props;
+    this.props.history.push(`/r/inventory/base/list`);
   }
 
   onAddAttribute() {
@@ -240,6 +246,12 @@ export default class Edit extends React.Component {
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
+            <button type="button" className="btn btn--danger" onClick={this.onBack}>
+              <i className="fa fa-arrow-left" aria-hidden="true" />
+              &nbsp; Back
+            </button>
+            <br />
+            <br />
             <div className="createform__form__inline">
               <div className="form-control">
                 <label>*Enter Name For Base Inventory</label>

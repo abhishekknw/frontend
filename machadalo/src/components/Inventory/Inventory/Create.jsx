@@ -113,6 +113,7 @@ export default class Create extends React.Component {
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
     this.onBaseInventoryChange = this.onBaseInventoryChange.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
 
   componentDidMount() {
@@ -187,6 +188,10 @@ export default class Create extends React.Component {
     });
   }
 
+  onBack() {
+    const { match } = this.props;
+    this.props.history.push(`/r/inventory/list`);
+  }
   onSubmit(event) {
     event.preventDefault();
 
@@ -352,6 +357,12 @@ export default class Create extends React.Component {
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
+            <button type="button" className="btn btn--danger" onClick={this.onBack}>
+              <i className="fa fa-arrow-left" aria-hidden="true" />
+              &nbsp; Back
+            </button>
+            <br />
+            <br />
             <div className="createform__form__inline">
               <div className="form-control">
                 <label>*Enter Inventory Name</label>

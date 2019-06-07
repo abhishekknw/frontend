@@ -51,6 +51,7 @@ export default class CreateType extends React.Component {
     this.onCancelOptionModal = this.onCancelOptionModal.bind(this);
     this.onSubmitOptionModal = this.onSubmitOptionModal.bind(this);
     this.onOpenOptionModal = this.onOpenOptionModal.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
 
   onCancelOptionModal() {
@@ -123,6 +124,11 @@ export default class CreateType extends React.Component {
     this.setState({
       [event.target.name]: event.target.value,
     });
+  }
+
+  onBack() {
+    const { match } = this.props;
+    this.props.history.push(`/r/inventory/base/list`);
   }
 
   renderAttributeRow(attribute, attrIndex) {
@@ -218,6 +224,12 @@ export default class CreateType extends React.Component {
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
+            <button type="button" className="btn btn--danger" onClick={this.onBack}>
+              <i className="fa fa-arrow-left" aria-hidden="true" />
+              &nbsp; Back
+            </button>
+            <br />
+            <br />
             <div className="createform__form__inline">
               <div className="form-control">
                 <label>*Enter Name For Base Inventory</label>
