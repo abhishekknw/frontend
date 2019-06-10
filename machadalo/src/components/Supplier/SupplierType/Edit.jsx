@@ -20,7 +20,7 @@ const additional_attributes_dict = {
     { name: 'Account Number', type: 'STRING', is_required: true },
     { name: 'Bank Name', type: 'STRING', is_required: true },
     { name: 'IFSC Code', type: 'STRING', is_required: true },
-    { name: 'Cheque Number', type: 'STRING', is_required: true },
+    { name: 'cheque number', type: 'STRING', is_required: true },
   ],
   contact_details: [
     { name: 'Name', type: 'STRING', is_required: true },
@@ -28,10 +28,10 @@ const additional_attributes_dict = {
     { name: 'Department', type: 'STRING', is_required: true },
     { name: 'Mobile Number', type: 'STRING', is_required: true },
     { name: 'Email', type: 'STRING', is_required: true },
-    { name: 'SPOC', type: 'STRING', is_required: true },
+    { name: 'MPOC', type: 'STRING', is_required: true },
     { name: 'Landline Number', type: 'STRING', is_required: true },
     { name: 'STD Code', type: 'STRING', is_required: true },
-    { name: 'Contact Authority', type: 'STRING', is_required: true },
+    { name: 'Decision Maker', type: 'STRING', is_required: true },
     { name: 'Comments', type: 'STRING', is_required: true },
   ],
   location_details: [
