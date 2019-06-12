@@ -37,6 +37,9 @@ export function getSuppliersList({ campaignProposalId }) {
         let suppliers = [];
         const data = resp.body.data;
         const dataKeys = Object.keys(data);
+        if (dataKeys.indexOf('dynamic_suppliers') > 0) {
+          dataKeys.splice(dataKeys.indexOf('dynamic_suppliers'), 1);
+        }
 
         for (let i = 0, l = dataKeys.length; i < l; i += 1) {
           const supplierGroups = data[dataKeys[i]].suppliers;
@@ -45,6 +48,9 @@ export function getSuppliersList({ campaignProposalId }) {
           for (let j = 0, sl = supplierGroupsKeys.length; j < sl; j += 1) {
             suppliers = suppliers.concat(supplierGroups[supplierGroupsKeys[j]]);
           }
+        }
+        if (data.dynamic_suppliers.length) {
+          suppliers = suppliers.concat(data.dynamic_suppliers);
         }
         dispatch(getSuppliersListSuccess({ suppliers }));
       })

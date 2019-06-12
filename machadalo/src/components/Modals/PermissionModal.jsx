@@ -38,7 +38,7 @@ export default class PermissionModal extends React.Component {
     super(props);
     this.state = {
       data: {
-        entityName: 'All Campaign',
+        supplierName: 'All Campaign',
         type: 'campaign',
         entityId: 'all',
         data: [],
@@ -113,13 +113,13 @@ export default class PermissionModal extends React.Component {
   };
 
   renderTreeLeafLabel = (leafData, expand) => {
-    const { entityName, type } = leafData;
+    const { supplierName, type } = leafData;
     if (type === 'campaign') {
       if (!expand) {
         return (
           <Typography viriant="body1" className={classes.leaf}>
             <FolderIcon className={classes.icon} />
-            {entityName}
+            {supplierName}
           </Typography>
         );
       }
@@ -127,7 +127,7 @@ export default class PermissionModal extends React.Component {
     return (
       <Typography viriant="body1" className={classes.leaf}>
         <FolderOpenIcon className={classes.icon} />
-        {entityName}
+        {supplierName}
       </Typography>
     );
   };
@@ -228,7 +228,7 @@ export default class PermissionModal extends React.Component {
         <Tree
           className={classes.container}
           data={this.state.data}
-          labelName="entityName"
+          labelName="supplierName"
           valueName="entityId"
           childrenName="data"
           renderLabel={this.renderTreeLeafLabel}
