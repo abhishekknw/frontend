@@ -249,6 +249,9 @@ angular.module('catalogueApp')
               angular.extend($scope.suppliers,$scope.shortlisted_suppliers[centerId].suppliers[supplierType]);
             }
           }
+          if($scope.shortlisted_suppliers.dynamic_suppliers.length){
+            $scope.suppliers = $scope.suppliers.concat($scope.shortlisted_suppliers.dynamic_suppliers);            
+          }
           console.log($scope.suppliers);
         }).catch(function onError(response){
           console.log(response);
