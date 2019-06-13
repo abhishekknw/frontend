@@ -262,7 +262,7 @@
                     <label for="confirm" class="cols-sm-2 control-label">Organisation :</label>
                     <span ng-if="(userInfo.profile.organisation.name.toUpperCase() != standardOrganisation.toUpperCase())">{{userInfo.profile.organisation.name}}</span>
                     <select ng-if="(userInfo.profile.organisation.name == standardOrganisation) || userInfo.is_superuser" class="form-control" ng-model="model.organisation"
-                            ng-change="getProfiles(model.organisation); getRoles(model.organisation)">
+                            ng-change="getProfiles(model.organisation);">
                       <option ng-repeat="organisation in organisationList" value="{{organisation.organisation_id}}">{{organisation.name}}</option>
                     </select>
                 </div>
@@ -280,8 +280,8 @@
                           </div>
                       </li> -->
 
-                  <select class="form-control" name="" ng-model="model.profile">
-                    <option ng-repeat="profile in profilesList" ng-value="{{profile.id}}" >{{profile.name}}</option>
+                  <select class="form-control" ng-model="model.profile">
+                    <option ng-repeat="profile in profilesList" value="{{profile.id}}" >{{profile.name}}</option>
                   </select>
                 </div>
 
