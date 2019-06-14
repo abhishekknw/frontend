@@ -121,12 +121,12 @@ export default class ListBooking extends Component {
       }
     };
 
-    const onFillAdditionalAttributeModalClick = () => {
+    const onFillAdditionalAttributeModalClick = (attribute_type) => {
       this.setState({
         selectedBooking: booking,
         isAdditionalAttributeModalVisible: true,
-        selectedAdditionalAttribute: booking['additional_attributes']['location_details'],
-        selectedFieldName: 'location_details',
+        selectedAdditionalAttribute: booking['additional_attributes'][attribute_type],
+        selectedFieldName: attribute_type,
       });
     };
 
@@ -166,9 +166,27 @@ export default class ListBooking extends Component {
           <button
             type="button"
             className="btn btn--danger"
-            onClick={onFillAdditionalAttributeModalClick}
+            onClick={() => onFillAdditionalAttributeModalClick('location_details')}
           >
             Location
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={() => onFillAdditionalAttributeModalClick('contact_details')}
+          >
+            Contact Details
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={() => onFillAdditionalAttributeModalClick('bank_details')}
+          >
+            Bank Details
           </button>
         </td>
         <td>
@@ -239,6 +257,8 @@ export default class ListBooking extends Component {
                   <th>{attribute.name}</th>
                 ))}
                 <th>Location</th>
+                <th>Contact</th>
+                <th>Bank Details</th>
                 <th>Comment</th>
                 <th>Edit</th>
                 <th>Remove</th>
