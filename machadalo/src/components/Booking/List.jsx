@@ -166,6 +166,15 @@ export default class ListBooking extends Component {
           <button
             type="button"
             className="btn btn--danger"
+            onClick={() => onFillAdditionalAttributeModalClick('society_details')}
+          >
+            Society Details
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            className="btn btn--danger"
             onClick={() => onFillAdditionalAttributeModalClick('location_details')}
           >
             Location
@@ -256,8 +265,9 @@ export default class ListBooking extends Component {
                 {attributes.map((attribute) => (
                   <th>{attribute.name}</th>
                 ))}
+                <th>Society</th>
                 <th>Location</th>
-                <th>Contact</th>
+                <th>Contact Details</th>
                 <th>Bank Details</th>
                 <th>Comment</th>
                 <th>Edit</th>
