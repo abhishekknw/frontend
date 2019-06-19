@@ -48,7 +48,8 @@ export const baseInventory = createReducer(
       });
     },
     [types.DELETE_BASE_INVENTORY_SUCCESS](state, action) {
-      const newList = state.list.slice();
+      // const newList = state.list.slice();
+      const newList = [];
 
       for (let i = 0, l = newList.length; i < l; i += 1) {
         if (newList[i]._id === action.baseInventoryId) {

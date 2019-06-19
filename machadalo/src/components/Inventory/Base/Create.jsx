@@ -41,6 +41,7 @@ export default class CreateType extends React.Component {
       attributeOptions: [''],
       attributeInfo: {},
       inventory_type: 'space_based',
+      isDisabled: false,
     };
 
     this.onAddAttribute = this.onAddAttribute.bind(this);
@@ -90,9 +91,18 @@ export default class CreateType extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
+    const isDisabled = this.state.isDisabled;
+    let value = isDisabled;
+    this.setState({
+      isDisabled: !value,
+    });
 
     this.props.postBaseInventory({ data: this.state }, () => {
+      this.setState({
+        isDisabled: value,
+      });
       toastr.success('', 'Base Inventory created successfully');
+      this.props.history.push(`/r/inventory/base/list`);
     });
   }
 
@@ -217,6 +227,7 @@ export default class CreateType extends React.Component {
   }
 
   render() {
+    const { isDisabled } = this.state;
     return (
       <div className="createform">
         <div className="createform__title">
@@ -254,7 +265,7 @@ export default class CreateType extends React.Component {
               </div>
 
               <div className="createform__form__action">
-                <button type="submit" className="btn btn--danger">
+                <button type="submit" className="btn btn--danger" disabled={isDisabled}>
                   Submit
                 </button>
               </div>

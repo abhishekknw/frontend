@@ -17,6 +17,7 @@ export default class List extends React.Component {
       this.props.deleteBaseInventory({
         baseInventoryId: baseInventory._id,
       });
+      this.props.baseInventory.baseInventoryList.splice(index, 1);
     };
     return (
       <tr key={baseInventory._id}>

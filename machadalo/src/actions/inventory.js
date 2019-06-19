@@ -118,7 +118,7 @@ export function deleteBaseInventory({ baseInventoryId }, callback) {
       .set('Authorization', `JWT ${auth.token}`)
       .then((resp) => {
         dispatch(deleteBaseInventorySuccess(baseInventoryId));
-        callback();
+        // callback();
       })
       .catch((ex) => {
         console.log('Failed to fetch base inventories', ex);
