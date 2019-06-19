@@ -753,12 +753,11 @@ export default class CreateType extends React.Component {
                   Add Inventory
                 </button>
               </div>
-
-              <div className="createform__form__action">
-                <button type="submit" className="btn btn--danger">
-                  Submit
-                </button>
-              </div>
+            </div>
+            <div className="createform__form__action">
+              <button type="submit" className="btn btn--danger">
+                Submit
+              </button>
             </div>
           </form>
         </div>
