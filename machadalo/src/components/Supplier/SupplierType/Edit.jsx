@@ -331,11 +331,9 @@ export default class CreateType extends React.Component {
 
   onAddAdditionalAttributes() {
     const { additional_attributes, selectedAdditionalAttribute } = this.state;
-    console.log(additional_attributes, selectedAdditionalAttribute);
 
     additional_attributes[selectedAdditionalAttribute.value] =
       additional_attributes_dict[selectedAdditionalAttribute.value];
-    console.log(additional_attributes);
     this.setState({
       additional_attributes,
       selectedAdditionalAttribute: null,
@@ -520,7 +518,6 @@ export default class CreateType extends React.Component {
   }
 
   renderInventoryRow(inventory, index) {
-    console.log('hello', inventory, index);
     const onAttributeChange = (attribute, attributeIndex, event) => {
       const newInventory = { ...inventory };
       newInventory.inventory_attributes[attributeIndex].value = !!event.target.checked;
@@ -543,7 +540,6 @@ export default class CreateType extends React.Component {
     };
 
     const onAdditionalAttributeRemove = () => {
-      console.log(index);
       const newInventoryList = this.state.inventory_list.slice();
       newInventoryList.splice(index, 1);
 
@@ -583,22 +579,18 @@ export default class CreateType extends React.Component {
   renderAdditionalAttributeRow(attribute, index) {
     const { additional_attributes, additionalAttributesList } = this.state;
 
-    console.log(additional_attributes[attribute], attribute, index);
+    const onAttributeChange = (item, attributeIndex, event) => {
+      const newAttribute = { ...additional_attributes };
 
-    const onAttributeChange = (attribute, attributeIndex, event) => {
-      const newInventory = { ...additional_attributes };
-      newInventory.inventory_attributes[attributeIndex].value = !!event.target.checked;
-
-      const newInventoryList = this.state.inventory_list.slice();
-      newInventoryList[index] = newInventory;
+      newAttribute[attribute][attributeIndex].is_required = !newAttribute[attribute][attributeIndex]
+        .is_required;
 
       this.setState({
-        inventory_list: newInventoryList,
+        additional_attributes: newAttribute,
       });
     };
 
     const onAdditionalAttributeRemove = () => {
-      console.log(index, attribute);
       const { additional_attributes } = this.state;
 
       delete additional_attributes[attribute];
@@ -621,7 +613,6 @@ export default class CreateType extends React.Component {
                 className="input-checkbox"
                 checked={attribute.value || attribute.is_required}
                 onChange={onAttributeChange.bind(this, attribute, index)}
-                disabled={attribute.is_required}
               />
               {attribute.name}
             </div>
