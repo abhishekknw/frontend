@@ -172,35 +172,75 @@ export default class ListBooking extends Component {
           </button>
         </td>
         <td>
-          <button
-            type="button"
-            className="btn btn--danger"
-            onClick={() => onFillAdditionalAttributeModalClick('location_details')}
-          >
-            Location
-          </button>
+          {booking.additional_attributes.location_details &&
+          booking.additional_attributes.location_details[2].value &&
+          booking.additional_attributes.location_details[3].value ? (
+            <button
+              type="button"
+              className="btn btn--danger"
+              onClick={() => onFillAdditionalAttributeModalClick('location_details')}
+            >
+              {booking.additional_attributes.location_details[2].value},
+              {booking.additional_attributes.location_details[4].value}
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="btn btn--danger"
+              onClick={() => onFillAdditionalAttributeModalClick('location_details')}
+            >
+              Location
+            </button>
+          )}
         </td>
         <td>
-          <button
-            type="button"
-            className="btn btn--danger"
-            onClick={() => onFillAdditionalAttributeModalClick('contact_details')}
-          >
-            Contact Details
-          </button>
+          {booking.additional_attributes.contact_details &&
+          booking.additional_attributes.contact_details[3].value ? (
+            <button
+              type="button"
+              className="btn btn--danger"
+              onClick={() => onFillAdditionalAttributeModalClick('contact_details')}
+            >
+              {booking.additional_attributes.contact_details[3].value}
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="btn btn--danger"
+              onClick={() => onFillAdditionalAttributeModalClick('contact_details')}
+            >
+              Contact Details
+            </button>
+          )}
         </td>
         <td>
-          <button
-            type="button"
-            className="btn btn--danger"
-            onClick={() => onFillAdditionalAttributeModalClick('bank_details')}
-          >
-            Bank Details
+          {booking.additional_attributes.bank_details &&
+          booking.additional_attributes.bank_details[2].value ? (
+            <button
+              type="button"
+              className="btn btn--danger"
+              onClick={() => onFillAdditionalAttributeModalClick('bank_details')}
+            >
+              {booking.additional_attributes.bank_details[2].value}
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="btn btn--danger"
+              onClick={() => onFillAdditionalAttributeModalClick('bank_details')}
+            >
+              Bank Details
+            </button>
+          )}
+        </td>
+        <td>
+          <button type="button" className="btn btn--danger" onClick={onComments}>
+            Internal Comments
           </button>
         </td>
         <td>
           <button type="button" className="btn btn--danger" onClick={onComments}>
-            Comments
+            External Comments
           </button>
         </td>
         <td>
@@ -269,6 +309,7 @@ export default class ListBooking extends Component {
                 <th>Location</th>
                 <th>Contact Details</th>
                 <th>Bank Details</th>
+                <th>Comments</th>
                 <th>Comment</th>
                 <th>Edit</th>
                 <th>Remove</th>
