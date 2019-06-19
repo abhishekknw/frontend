@@ -17,6 +17,7 @@ export default class ListBooking extends Component {
       isPhaseModalVisible: false,
       isViewHashtagImagesModalVisible: false,
       selectedAdditionalAttribute: {},
+      commentType: '',
     };
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
@@ -104,10 +105,11 @@ export default class ListBooking extends Component {
   }
 
   renderBookingRow(booking) {
-    const onComments = () => {
+    const onComments = (type) => {
       this.setState({
         selectedBooking: booking,
         isCommentsModalVisible: true,
+        commentType: type,
       });
     };
 
@@ -163,13 +165,24 @@ export default class ListBooking extends Component {
           </td>
         ))}
         <td>
-          <button
-            type="button"
-            className="btn btn--danger"
-            onClick={() => onFillAdditionalAttributeModalClick('society_details')}
-          >
-            Society Details
-          </button>
+          {booking.additional_attributes.society_details &&
+          booking.additional_attributes.society_details[0].value ? (
+            <button
+              type="button"
+              className="btn btn--danger"
+              onClick={() => onFillAdditionalAttributeModalClick('society_details')}
+            >
+              {booking.additional_attributes.society_details[0].value}
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="btn btn--danger"
+              onClick={() => onFillAdditionalAttributeModalClick('society_details')}
+            >
+              Society Details
+            </button>
+          )}
         </td>
         <td>
           {booking.additional_attributes.location_details &&
@@ -234,12 +247,12 @@ export default class ListBooking extends Component {
           )}
         </td>
         <td>
-          <button type="button" className="btn btn--danger" onClick={onComments}>
+          <button type="button" className="btn btn--danger" onClick={() => onComments('INTERNAL')}>
             Internal Comments
           </button>
         </td>
         <td>
-          <button type="button" className="btn btn--danger" onClick={onComments}>
+          <button type="button" className="btn btn--danger" onClick={() => onComments('EXTERNAL')}>
             External Comments
           </button>
         </td>
@@ -267,6 +280,7 @@ export default class ListBooking extends Component {
       isCommentsModalVisible,
       isPhaseModalVisible,
       isViewHashtagImagesModalVisible,
+      commentType,
     } = this.state;
     const { booking } = this.props;
     const { bookingList } = booking;
@@ -356,6 +370,7 @@ export default class ListBooking extends Component {
             onClose={this.onCommentsModalClose}
             isVisible={isCommentsModalVisible}
             user={this.props.user.currentUser}
+            commentType={commentType}
           />
         ) : null}
 
