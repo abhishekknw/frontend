@@ -4,6 +4,7 @@ import ViewHashtagImagesModal from '../Modals/ViewHashtagImagesModal';
 
 import CommentsModal from './../Modals/CommentsModal';
 import PhaseModal from './../Modals/PhaseModal';
+import FillAdditionalAttributeModal from './../Modals/AdditionalAttributesModal';
 
 export default class ListBooking extends Component {
   constructor() {
@@ -15,6 +16,7 @@ export default class ListBooking extends Component {
       isCommentsModalVisible: false,
       isPhaseModalVisible: false,
       isViewHashtagImagesModalVisible: false,
+      selectedAdditionalAttribute: {},
     };
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
@@ -85,7 +87,13 @@ export default class ListBooking extends Component {
       isViewHashtagImagesModalVisible: false,
     });
   }
-
+  onFillAdditionalAttributeModalClose = () => {
+    this.setState({
+      isAdditionalAttributeModalVisible: false,
+      selectedAdditionalAttribute: {},
+      selectedBooking: null,
+    });
+  };
   onBack() {
     const { match } = this.props;
     this.props.history.push(`/r/booking/campaigns`);
@@ -97,7 +105,6 @@ export default class ListBooking extends Component {
 
   renderBookingRow(booking) {
     const onComments = () => {
-      // TODO: Show Modal with comments list & add comment button
       this.setState({
         selectedBooking: booking,
         isCommentsModalVisible: true,
@@ -114,10 +121,29 @@ export default class ListBooking extends Component {
       }
     };
 
+    const onFillAdditionalAttributeModalClick = (attribute_type) => {
+      this.setState({
+        selectedBooking: booking,
+        isAdditionalAttributeModalVisible: true,
+        selectedAdditionalAttribute: booking['additional_attributes'][attribute_type],
+        selectedFieldName: attribute_type,
+      });
+    };
+
     const { isViewHashtagImagesModalVisible, selectedBooking } = this.state;
 
     return (
       <tr key={booking.id}>
+        {booking.supplier_attributes.map((attribute) => (
+          <td>
+            {attribute.type === 'STRING' ||
+            attribute.type === 'FLOAT' ||
+            attribute.type === 'EMAIL' ||
+            attribute.type === 'DROPDOWN'
+              ? attribute.value
+              : attribute.type}
+          </td>
+        ))}
         {booking.booking_attributes.map((attribute) => (
           <td>
             {attribute.type === 'HASHTAG' && attribute.files ? (
@@ -136,16 +162,42 @@ export default class ListBooking extends Component {
             ) : null}
           </td>
         ))}
-        {booking.supplier_attributes.map((attribute) => (
-          <td>
-            {attribute.type === 'STRING' ||
-            attribute.type === 'FLOAT' ||
-            attribute.type === 'EMAIL' ||
-            attribute.type === 'DROPDOWN'
-              ? attribute.value
-              : attribute.type}
-          </td>
-        ))}
+        <td>
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={() => onFillAdditionalAttributeModalClick('society_details')}
+          >
+            Society Details
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={() => onFillAdditionalAttributeModalClick('location_details')}
+          >
+            Location
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={() => onFillAdditionalAttributeModalClick('contact_details')}
+          >
+            Contact Details
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            className="btn btn--danger"
+            onClick={() => onFillAdditionalAttributeModalClick('bank_details')}
+          >
+            Bank Details
+          </button>
+        </td>
         <td>
           <button type="button" className="btn btn--danger" onClick={onComments}>
             Comments
@@ -182,7 +234,7 @@ export default class ListBooking extends Component {
     let attributes = [];
 
     if (list && list.length) {
-      attributes = list[0].booking_attributes.concat(list[0].supplier_attributes);
+      attributes = list[0].supplier_attributes.concat(list[0].booking_attributes);
     }
 
     return (
@@ -213,9 +265,13 @@ export default class ListBooking extends Component {
                 {attributes.map((attribute) => (
                   <th>{attribute.name}</th>
                 ))}
-                <th>Action</th>
-                <th>Action</th>
-                <th>Action</th>
+                <th>Society</th>
+                <th>Location</th>
+                <th>Contact Details</th>
+                <th>Bank Details</th>
+                <th>Comment</th>
+                <th>Edit</th>
+                <th>Remove</th>
               </tr>
             </thead>
             <tbody>
@@ -241,6 +297,16 @@ export default class ListBooking extends Component {
             Manage Phases
           </button>
         </div>
+
+        {selectedBooking ? (
+          <FillAdditionalAttributeModal
+            key={this.state.selectedAdditionalAttribute}
+            isVisible={this.state.isAdditionalAttributeModalVisible}
+            attributes={this.state.selectedAdditionalAttribute}
+            onClose={this.onFillAdditionalAttributeModalClose}
+            isDisabled={true}
+          />
+        ) : null}
 
         {selectedBooking ? (
           <CommentsModal

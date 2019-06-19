@@ -45,6 +45,18 @@ const additional_attributes_dict = {
     { name: 'Latitude', type: 'STRING', is_required: true },
     { name: 'Longitude', type: 'STRING', is_required: true },
   ],
+  society_details: [
+    { name: 'FlatCount', type: 'FLOAT', is_required: true },
+    { name: 'TowerCount', type: 'FLOAT', is_required: true },
+    {
+      name: 'QualityType',
+      type: 'DROPDOWN',
+      is_required: true,
+      options: ['Standard', 'Medium High', 'High', 'Ultra High'],
+    },
+    { name: 'AverageHouseholdOccupant', type: 'FLOAT', is_required: true },
+    { name: 'BachelorTenantsAllowed', type: 'DROPDOWN', is_required: true, options: ['Yes', 'No'] },
+  ],
 };
 
 const AttributeTypes = [
@@ -106,6 +118,7 @@ export default class CreateType extends React.Component {
         { label: 'Bank Details', value: 'bank_details' },
         { label: 'Contact Details', value: 'contact_details' },
         { label: 'Location Details', value: 'location_details' },
+        { label: 'Society Details', value: 'society_details' },
       ],
     };
 
