@@ -394,7 +394,7 @@ export default class EditBooking extends React.Component {
 
   getBookingTemplateById({ id }) {
     const { booking } = this.props;
-    const { bookingTemplateList } = booking;
+    const { bookingTemplateList, bookingList } = booking;
 
     for (let i = 0, l = bookingTemplateList.length; i < l; i += 1) {
       if (bookingTemplateList[i].id === id) {
@@ -632,9 +632,17 @@ export default class EditBooking extends React.Component {
     const { errors, attributes, inventories, isEditMode } = this.state;
     const { booking, supplier, phase } = this.props;
     const { supplierList } = supplier;
-    const { bookingTemplateList } = booking;
+    const { bookingTemplateList, bookingList } = booking;
     const { phaseList } = phase;
     const filterSupplierList = getFilteredSupplierList(supplierList, this.state.supplierId);
+    const templateList = [];
+
+    for (let i = 0; i < bookingTemplateList.length; i++) {
+      if (bookingList.length && bookingList[0].booking_template_id === bookingTemplateList[i].id) {
+        templateList.push(bookingTemplateList[i]);
+        break;
+      }
+    }
 
     return (
       <div className="booking-base__create create">
@@ -666,16 +674,29 @@ export default class EditBooking extends React.Component {
 
             <div className="create__form__body">
               <div className="form-control form-control--column">
-                <Select
-                  className={classnames('select', {
-                    error: errors.bookingTemplateId,
-                  })}
-                  options={bookingTemplateList}
-                  getOptionValue={(option) => option.id}
-                  getOptionLabel={(option) => option.name}
-                  value={this.state.bookingTemplate}
-                  onChange={this.onBookingTemplateChange}
-                />
+                {bookingList.length ? (
+                  <Select
+                    className={classnames('select', {
+                      error: errors.bookingTemplateId,
+                    })}
+                    options={templateList}
+                    getOptionValue={(option) => option.id}
+                    getOptionLabel={(option) => option.name}
+                    value={this.state.bookingTemplate}
+                    onChange={this.onBookingTemplateChange}
+                  />
+                ) : (
+                  <Select
+                    className={classnames('select', {
+                      error: errors.bookingTemplateId,
+                    })}
+                    options={bookingTemplateList}
+                    getOptionValue={(option) => option.id}
+                    getOptionLabel={(option) => option.name}
+                    value={this.state.bookingTemplate}
+                    onChange={this.onBookingTemplateChange}
+                  />
+                )}
                 {errors.bookingTemplateId ? (
                   <p className="message message--error">{errors.bookingTemplateId.message}</p>
                 ) : null}
