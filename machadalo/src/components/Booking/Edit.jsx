@@ -121,6 +121,7 @@ export default class EditBooking extends React.Component {
     this.onUpload = this.onUpload.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
 
   componentDidMount() {
@@ -317,6 +318,11 @@ export default class EditBooking extends React.Component {
     this.setState({
       uploadedImage: event.target.files[0],
     });
+  }
+
+  onBack() {
+    const { match } = this.props;
+    this.props.history.push(`/r/booking/list/${this.getCampaignId()}`);
   }
 
   onUpload(index) {
@@ -653,6 +659,12 @@ export default class EditBooking extends React.Component {
         <div className="create__form">
           <form onSubmit={this.onSubmit}>
             <div className="create__form__body">
+              <button type="button" className="btn btn--danger" onClick={this.onBack}>
+                <i className="fa fa-arrow-left" aria-hidden="true" />
+                &nbsp; Back
+              </button>
+              <br />
+              <br />
               {/*<div className="form-control form-control--column">
                 <label>*Enter Name For Booking</label>
                 <input
