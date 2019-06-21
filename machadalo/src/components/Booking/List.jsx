@@ -18,6 +18,7 @@ export default class ListBooking extends Component {
       isViewHashtagImagesModalVisible: false,
       selectedAdditionalAttribute: {},
       commentType: '',
+      campaignName: '',
     };
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
@@ -34,6 +35,7 @@ export default class ListBooking extends Component {
 
   componentDidMount() {
     this.props.getBookingList({ campaignId: this.getCampaignId() });
+    this.props.getCampaignsList();
   }
 
   onSearchFilterChange(event) {
@@ -286,15 +288,26 @@ export default class ListBooking extends Component {
     const { bookingList } = booking;
     const list = this.getFilteredList(bookingList);
     let attributes = [];
+    let campaignName = '';
+    const { campaign } = this.props;
+    let campaignId = this.getCampaignId();
+    if (campaign && campaign.objectById && campaign.objectById[campaignId]) {
+      campaignName = campaign.objectById[campaignId].campaign.name;
+    }
 
     if (list && list.length) {
       attributes = list[0].supplier_attributes.concat(list[0].booking_attributes);
     }
+    console.log(campaignName);
 
     return (
       <div className="booking__list list">
         <div className="list__title">
-          <h3>Booking - List</h3>
+          <h3>
+            {' '}
+            Booking - Plan(
+            {campaignName})
+          </h3>
         </div>
         <button type="button" className="btn btn--danger" onClick={this.onBack}>
           <i className="fa fa-arrow-left" aria-hidden="true" />

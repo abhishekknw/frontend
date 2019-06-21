@@ -125,11 +125,18 @@ export default class EditBooking extends React.Component {
   }
 
   componentDidMount() {
-    const { getBookingTemplateList, getSupplierList, getBookingList, getPhaseList } = this.props;
+    const {
+      getBookingTemplateList,
+      getSupplierList,
+      getBookingList,
+      getPhaseList,
+      getCampaignsList,
+    } = this.props;
     getBookingTemplateList();
     getSupplierList();
     getBookingList({ campaignId: this.getCampaignId() });
     getPhaseList({ campaignId: this.getCampaignId() });
+    getCampaignsList();
   }
 
   componentDidUpdate(prevProps) {
@@ -650,10 +657,21 @@ export default class EditBooking extends React.Component {
       }
     }
 
+    let campaignName = '';
+    const { campaign } = this.props;
+    let campaignId = this.getCampaignId();
+    if (campaign && campaign.objectById && campaign.objectById[campaignId]) {
+      campaignName = campaign.objectById[campaignId].campaign.name;
+    }
+
     return (
       <div className="booking-base__create create">
         <div className="create__title">
-          <h3>Booking - Edit</h3>
+          {isEditMode ? (
+            <h3>Booking - Edit ({campaignName})</h3>
+          ) : (
+            <h3>Booking - Add ({campaignName})</h3>
+          )}
         </div>
 
         <div className="create__form">
