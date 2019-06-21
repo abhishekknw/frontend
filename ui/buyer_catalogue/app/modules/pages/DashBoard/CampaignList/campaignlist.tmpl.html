@@ -41,7 +41,7 @@
             <div class="table-responsive">
             <table class="table" st-table="campaignData" st-safe-src="Data" default-sort-reverse="true">
               <input type="text" class="form-control" ng-model="searchQuery" placeholder="search" type="search">
-
+              <br>
               <thead>
                 <tr>
                   <th style="text-align: center;">Sr No</th>
@@ -55,9 +55,16 @@
                   <th style="text-align: center;">Assign Dates</th>
                   <th style="text-align: center;">View Execution Image</th>
                 </tr>
+                <tr colspan="9">
+                  <td></td>
+                  <td><input ng-model="f.campaign.name" class="form-control" placeholder="Search"><hr></td>
+
+                </tr>
               </thead>
               <tbody>
-                <tr  st-select-row='proposal' style="text-align: center;" ng-repeat="proposal in campaignData |filter:searchQuery">
+
+                  <tr st-select-row='proposal' style="text-align: center;"  dir-paginate="proposal in campaignData|filter:f|filter:searchQuery|itemsPerPage:10">
+
                   <!-- <td class="col-md-1">{{proposal.campaign.proposal_id}}</td> -->
                   <td class="col-md-2">{{$index + 1}}</td>
                   <td class="col-md-2">{{proposal.campaign.name}}</td>
@@ -78,10 +85,15 @@
 
                 </tr>
               </tbody>
+
               <tfoot>
                 <tr>
                   <td colspan="10" class="text-center">
-                    <div st-pagination="" st-items-by-page="10" st-displayed-pages=""></div>
+                    <dir-pagination-controls
+                       max-size="5"
+                       direction-links="true"
+                       boundary-links="true" >
+                   </dir-pagination-controls>
                   </td>
                 </tr>
               </tfoot>
