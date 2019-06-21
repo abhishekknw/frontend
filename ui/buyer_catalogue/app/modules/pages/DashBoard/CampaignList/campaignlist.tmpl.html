@@ -24,25 +24,25 @@
 
   <div ng-show="isEmpty" style="text-align:center;"><h2>{{msg}}</h2></div>
   <!-- Start: Displaying table of converted campaigns -->
-  <div class="pageTitle" style="margin-top:-15px">
-  <h3 ng-show="!isEmpty">Campaign List</h3>
-  <!-- <input type="text" name="search" style="margin-top:-50px;height:40px;color:black;" ng-model="query" placeholder="Search.."> -->
-  </div>
 
-  <div class="panel-body" >
-  <div class="table-responsive">
+  <div class="pageTitle" style="margin-top:-15px">
+    <div class="panel-heading" style="height:70px;">
+      <h3>Campaign List</h3>
+    </div>
+  </div>
     <div class="" ng-show="!isEmpty">
   <!-- <input class="form-control input-size" type="text" ng-model="search" class="form-control spacing col-width"> -->
 
+      <!-- <input st-search="" placeholder="Search ..." class="form-control"  type="search"/> -->
+      <!-- <input type="text" class="form-control" placeholder="search" type="search"> -->
+
       <!-- <div class=""> -->
-          <div class="row campaignTable">
-            <table st-table="campaignData" st-safe-src="Data" class="table table-striped" default-sort-reverse="true">
+          <div class="campaignlisttable" style="margin:20px">
+            <div class="table-responsive">
+            <table class="table" st-table="campaignData" st-safe-src="Data" default-sort-reverse="true">
+              <input type="text" class="form-control" ng-model="searchQuery" placeholder="search" type="search">
+
               <thead>
-                <tr>
-                  <th colspan='9' style="background-color:#ffffff;">
-                    <input st-search="" placeholder="Search ..." class="form-control"  type="search"/>
-                  </th>
-                </tr>
                 <tr>
                   <th style="text-align: center;">Sr No</th>
                   <th style="text-align: center;">Campaign Name</th>
@@ -57,7 +57,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr  st-select-row='proposal' style="text-align: center;" ng-repeat="proposal in campaignData">
+                <tr  st-select-row='proposal' style="text-align: center;" ng-repeat="proposal in campaignData |filter:searchQuery">
                   <!-- <td class="col-md-1">{{proposal.campaign.proposal_id}}</td> -->
                   <td class="col-md-2">{{$index + 1}}</td>
                   <td class="col-md-2">{{proposal.campaign.name}}</td>
@@ -87,16 +87,15 @@
               </tfoot>
             </table>
           </div>
+          </div>
       <!-- </div> -->
     </div>
-  </div>
 
 
    <!-- <footer-bar></footer-bar>   -->
    </div>
 
 
-  </div>
   </div>
 </main>
 </body>
