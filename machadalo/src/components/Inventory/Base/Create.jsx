@@ -231,7 +231,7 @@ export default class CreateType extends React.Component {
     return (
       <div className="createform">
         <div className="createform__title">
-          <h3>Create Base Inventory</h3>
+          <h3>Create - Inventory Standard Template</h3>
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
