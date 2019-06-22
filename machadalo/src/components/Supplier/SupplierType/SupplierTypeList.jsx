@@ -43,7 +43,7 @@ export default class List extends React.Component {
     return (
       <div className="createform">
         <div className="createform__title">
-          <h3>Supplier Type List</h3>
+          <h3>Supplier Template</h3>
         </div>
         <div className="list">
           <div className="list__table">
