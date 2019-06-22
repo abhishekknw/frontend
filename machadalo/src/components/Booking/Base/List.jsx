@@ -65,7 +65,7 @@ export default class ListBaseBooking extends Component {
     return (
       <div className="booking-base__list list">
         <div className="list__title">
-          <h3>Bookings - Base</h3>
+          <h3>Bookings - Standard Template</h3>
         </div>
 
         <div className="list__filter">
