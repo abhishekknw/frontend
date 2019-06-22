@@ -340,7 +340,7 @@ export default class EditBaseSupplierType extends React.Component {
     return (
       <div className="createform">
         <div className="createform__title">
-          <h3>Edit Base Supplier Type </h3>
+          <h3>Edit Standard Template </h3>
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>

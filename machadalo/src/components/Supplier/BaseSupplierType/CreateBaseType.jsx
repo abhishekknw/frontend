@@ -329,7 +329,7 @@ export default class CreateBaseType extends React.Component {
     return (
       <div className="createform">
         <div className="createform__title">
-          <h3>Create Base Supplier Type </h3>
+          <h3>Create Standard Template </h3>
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
