@@ -13,6 +13,7 @@ import LeadsContainer from './../../containers/LeadsContainer';
 import BookingContainer from './../../containers/BookingContainer';
 
 import './index.css';
+import TappingDashboard from '../../containers/TappingDashboard';
 
 export default class Layout extends React.Component {
   componentWillMount() {
@@ -50,6 +51,8 @@ export default class Layout extends React.Component {
               <Route path={`${match.path}/leads`} component={LeadsContainer} />
 
               <Route path={`${match.path}/booking`} component={BookingContainer} />
+
+              <Route path={`${match.path}/tapping-dashboard`} component={TappingDashboard} />
             </Switch>
           </div>
         </div>

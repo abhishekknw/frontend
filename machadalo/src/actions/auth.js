@@ -9,6 +9,10 @@ export function autoLogin() {
   //   constants.MACHADALO_LOCAL_STORAGE_CREDENTIALS_KEY,
   //   '{"username":"mdadmin","user_id":107,"name":"Admin","user_code":"0","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1kYWRtaW4iLCJvcmlnX2lhdCI6MTU0MDQ1MTU5NSwibmFtZSI6IkFkbWluIiwiZXhwIjoxNTQwNDUxODk1LCJ1c2VyX2lkIjoxMDcsImVtYWlsIjoiYWRtaW5AbWFjaGFkYWxvLmNvbSJ9.oPeM1QtnbYHaKuky7fKYP2dCNI9DsM0tC4byBMCso58","email":"admin@machadalo.com"}'
   // );
+  localStorage.setItem(
+    constants.MACHADALO_LOCAL_STORAGE_CREDENTIALS_KEY,
+    '{"username":"mdadmin","user_id":107,"name":"Admin","user_code":"0","token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6InlvZ2VzaC5taGV0cmVAbWFjaGFkYWxvLmNvbSIsInVzZXJuYW1lIjoidmlkaGlkZXZlbG9wbWVudCIsIm5hbWUiOiJBZG1pbiIsImV4cCI6MTU2MDUwNTY0OCwib3JpZ19pYXQiOjE1NjA1MDUzNDh9.EHvj9XoozUaOV9rNylVP-vudkPAKM_GPOzMutiOw4ts","email":"admin@machadalo.com"}'
+  );
 
   // Fetch token from local storage
   const credentials = JSON.parse(
