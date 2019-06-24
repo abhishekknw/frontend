@@ -105,6 +105,7 @@ export default class Create extends React.Component {
     };
 
     this.onAddAttribute = this.onAddAttribute.bind(this);
+    this.onRemoveAttribute = this.onRemoveAttribute.bind(this);
     this.renderAttributeRow = this.renderAttributeRow.bind(this);
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -230,6 +231,14 @@ export default class Create extends React.Component {
     });
   }
 
+  onRemoveAttribute(index) {
+    const newAttributes = this.state.inventory_attributes.slice();
+    newAttributes.splice(index, 1);
+    this.setState({
+      inventory_attributes: newAttributes,
+    });
+  }
+
   handleAttributeChange(attribute, index) {
     const attributes = this.state.inventory_attributes.slice();
 
@@ -343,6 +352,17 @@ export default class Create extends React.Component {
               value={attribute.is_required}
               onChange={onRequiredChange}
             />
+            {this.state.mode == 'edit' ? (
+              ''
+            ) : (
+              <button
+                type="button"
+                className="btn btn--danger"
+                onClick={() => this.onRemoveAttribute(attrIndex)}
+              >
+                Remove Attribute
+              </button>
+            )}
           </div>
         </div>
       </div>

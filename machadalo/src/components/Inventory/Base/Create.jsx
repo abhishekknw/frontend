@@ -45,6 +45,7 @@ export default class CreateType extends React.Component {
     };
 
     this.onAddAttribute = this.onAddAttribute.bind(this);
+    this.onRemoveAttribute = this.onRemoveAttribute.bind(this);
     this.renderAttributeRow = this.renderAttributeRow.bind(this);
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -115,6 +116,14 @@ export default class CreateType extends React.Component {
       is_required: false,
     });
 
+    this.setState({
+      base_attributes: newAttributes,
+    });
+  }
+
+  onRemoveAttribute(index) {
+    const newAttributes = this.state.base_attributes.slice();
+    newAttributes.splice(index, 1);
     this.setState({
       base_attributes: newAttributes,
     });
@@ -220,6 +229,13 @@ export default class CreateType extends React.Component {
               value={attribute.is_required}
               onChange={onRequiredChange}
             />
+            <button
+              type="button"
+              className="btn btn--danger"
+              onClick={() => this.onRemoveAttribute(attrIndex)}
+            >
+              Remove Attribute
+            </button>
           </div>
         </div>
       </div>
