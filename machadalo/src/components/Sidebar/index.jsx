@@ -210,6 +210,18 @@ export default class Sidebar extends React.Component {
                 </ul>
               </li>
               <li>
+                <a href="/#/dashboard">
+                  <i className="fa fa-dashboard" aria-hidden="true" />
+                  DashBoard
+                </a>
+              </li>
+              <li>
+                <a href="/r/tapping-dashboard">
+                  <i className="fa fa-dashboard" aria-hidden="true" />
+                  Tapping DashBoard
+                </a>
+              </li>
+              <li>
                 <a href="/#/logout">
                   <i className="fa fa-sign-out" aria-hidden="true" />
                   Logout
