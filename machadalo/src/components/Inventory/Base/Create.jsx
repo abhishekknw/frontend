@@ -17,6 +17,7 @@ const AttributeTypes = [
   { value: 'STRING', label: 'Text' },
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
+  { value: 'MULTISELECT', label: 'Multi Select' },
 ];
 
 // Get attribute type option from string
@@ -151,7 +152,7 @@ export default class CreateType extends React.Component {
     };
 
     const onTypeChange = (item) => {
-      if (item.value === 'DROPDOWN') {
+      if (item.value === 'DROPDOWN' || item.value === 'MULTISELECT') {
         this.setState({
           showOptionModal: true,
           columnOptions: [''],
@@ -192,7 +193,7 @@ export default class CreateType extends React.Component {
               onChange={onTypeChange}
             />
 
-            {attribute.type === 'DROPDOWN' ? (
+            {attribute.type === 'DROPDOWN' || attribute.type === 'MULTISELECT' ? (
               <p
                 className="show-option"
                 style={optionStyle}
