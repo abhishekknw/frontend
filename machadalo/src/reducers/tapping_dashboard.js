@@ -1,9 +1,10 @@
-import createReducer from './../../lib/createReducer';
-import * as types from './../../actions/types';
+import createReducer from '../lib/createReducer';
+import * as types from '../actions/types';
 
 export const tapping = createReducer(
   {
     tappingList: [],
+    isFetchingTappingList: false,
   },
 
   {
@@ -15,7 +16,7 @@ export const tapping = createReducer(
     },
     [types.GET_TAPPING_DETAILS_SUCCESS](state, action) {
       return Object.assign({}, state, {
-        tappingList: [],
+        tappingList: action.tappingData,
         isFetchingTappingList: false,
       });
     },
