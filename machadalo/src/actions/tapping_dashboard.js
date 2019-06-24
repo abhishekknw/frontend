@@ -11,10 +11,10 @@ export function getTappingDashboardStart() {
   };
 }
 
-export function getTappingDashboardSuccess(list) {
+export function getTappingDashboardSuccess(tappingData) {
   return {
     type: types.GET_TAPPING_DETAILS_SUCCESS,
-    list,
+    tappingData,
   };
 }
 
@@ -35,7 +35,7 @@ export function getTappingDetails() {
       .set('Authorization', `JWT ${auth.token}`)
       .send({})
       .then((resp) => {
-        dispatch(getTappingDashboardSuccess({ list: resp.text.data }));
+        dispatch(getTappingDashboardSuccess({ tappingData: resp.body.data }));
       })
       .catch((ex) => {
         console.log('Failed to get tapping data', ex);
