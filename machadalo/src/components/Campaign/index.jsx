@@ -43,6 +43,9 @@ export default class Campaigns extends React.Component {
     return (
       <tr key={campaign.id}>
         <td>{campaign.campaign.name}</td>
+        <td>{campaign.assigned_to.username}</td>
+        <td>{campaign.assigned_by.username}</td>
+        <td>{moment(campaign.created_at).format('Do MMM, YYYY')}</td>
         <td>{moment(campaign.campaign.tentative_start_date).format('Do MMM, YYYY')}</td>
         <td>{moment(campaign.campaign.tentative_end_date).format('Do MMM, YYYY')}</td>
         <td>
@@ -54,6 +57,19 @@ export default class Campaigns extends React.Component {
                 className="btn btn--danger"
               >
                 {item.buttonLabel}
+              </Link>
+            );
+          })}
+        </td>
+        <td>
+          {actions.map((item, index) => {
+            return (
+              <Link
+                key={index}
+                to={`/r/booking/plan/${campaign.campaign.proposal_id}`}
+                className="btn btn--danger"
+              >
+                Assign Dates
               </Link>
             );
           })}
@@ -86,11 +102,15 @@ export default class Campaigns extends React.Component {
               <thead>
                 <tr>
                   <th>Campaign Name</th>
+                  <th>Assigned To</th>
+                  <th>Assigned By</th>
+                  <th>Assigned Date</th>
                   <th>Start Date</th>
                   <th>End Date</th>
                   {actions.map((item, index) => (
                     <th key={index}>{item.headerLabel}</th>
                   ))}
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>{list.map(this.renderCampaignRow)}</tbody>

@@ -290,7 +290,14 @@ export const booking = createReducer(
     },
     [types.GET_ASSIGNMENT_SUCCESS](state, action) {
       const assignmentList = {};
+      console.log(action.list);
+
       let key = '';
+      let activityIndex = {
+        RELEASE: 0,
+        CLOSURE: 0,
+        AUDIT: 0,
+      };
       for (let i = 0, l = action.list.length; i < l; i += 1) {
         key = `${action.list[i].supplier_id}-${action.list[i].inventory_name}`;
         if (!assignmentList[key]) {
@@ -300,10 +307,12 @@ export const booking = createReducer(
             AUDIT: [],
           };
         }
+        activityIndex[action.list[i].activity_type] += 1;
+        let index = activityIndex[action.list[i].activity_type];
 
         assignmentList[key][action.list[i].activity_type].push({
           ...action.list[i],
-          inventory_name: `${action.list[i].inventory_name} ${i + 1}`,
+          inventory_name: `${action.list[i].inventory_name} ${index}`,
         });
       }
       return {

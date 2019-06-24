@@ -212,7 +212,6 @@ export default class CreateBaseBooking extends React.Component {
 
   onRemoveAttribute(index) {
     const newAttributes = this.state.attributes.slice();
-    console.log(newAttributes);
     newAttributes.splice(index, 1);
     this.setState({
       attributes: newAttributes,
@@ -619,6 +618,7 @@ export default class CreateBaseBooking extends React.Component {
           </button>
         </div>
         <OptionModal
+          key={this.state.attributeInfo.attrIndex}
           showOptionModal={this.state.optionModalVisibility}
           onCancel={this.onCancelOptionModal}
           onSubmit={this.onSubmitOptionModal}
