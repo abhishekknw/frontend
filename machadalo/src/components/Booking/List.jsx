@@ -126,12 +126,18 @@ export default class ListBooking extends Component {
     };
 
     const onFillAdditionalAttributeModalClick = (attribute_type) => {
-      this.setState({
-        selectedBooking: booking,
-        isAdditionalAttributeModalVisible: true,
-        selectedAdditionalAttribute: booking['additional_attributes'][attribute_type],
-        selectedFieldName: attribute_type,
-      });
+      if (
+        booking &&
+        booking['additional_attributes'] &&
+        booking['additional_attributes'][attribute_type]
+      ) {
+        this.setState({
+          selectedBooking: booking,
+          isAdditionalAttributeModalVisible: true,
+          selectedAdditionalAttribute: booking['additional_attributes'][attribute_type],
+          selectedFieldName: attribute_type,
+        });
+      }
     };
 
     const { isViewHashtagImagesModalVisible, selectedBooking } = this.state;
@@ -166,88 +172,68 @@ export default class ListBooking extends Component {
             ) : null}
           </td>
         ))}
-        <td>
-          {booking.additional_attributes.society_details &&
-          booking.additional_attributes.society_details[0].value ? (
+        {booking &&
+        booking.additional_attributes &&
+        booking.additional_attributes.society_details ? (
+          <td>
             <button
               type="button"
               className="btn btn--danger"
               onClick={() => onFillAdditionalAttributeModalClick('society_details')}
             >
-              {booking.additional_attributes.society_details[0].value}
+              {booking.additional_attributes.society_details[0]
+                ? booking.additional_attributes.society_details[0].value
+                : 'Society Details'}
             </button>
-          ) : (
-            <button
-              type="button"
-              className="btn btn--danger"
-              onClick={() => onFillAdditionalAttributeModalClick('society_details')}
-            >
-              Society Details
-            </button>
-          )}
-        </td>
-        <td>
-          {booking.additional_attributes.location_details &&
-          booking.additional_attributes.location_details[2].value &&
-          booking.additional_attributes.location_details[3].value ? (
+          </td>
+        ) : null}
+        {booking &&
+        booking.additional_attributes &&
+        booking.additional_attributes.location_details ? (
+          <td>
             <button
               type="button"
               className="btn btn--danger"
               onClick={() => onFillAdditionalAttributeModalClick('location_details')}
             >
-              {booking.additional_attributes.location_details[2].value},
-              {booking.additional_attributes.location_details[4].value}
+              {booking.additional_attributes.location_details[2].value &&
+              booking.additional_attributes.location_details[4].value
+                ? booking.additional_attributes.location_details[2].value
+                : 'Location Details'}
             </button>
-          ) : (
-            <button
-              type="button"
-              className="btn btn--danger"
-              onClick={() => onFillAdditionalAttributeModalClick('location_details')}
-            >
-              Location
-            </button>
-          )}
-        </td>
-        <td>
-          {booking.additional_attributes.contact_details &&
-          booking.additional_attributes.contact_details[3].value ? (
+          </td>
+        ) : null}
+
+        {booking &&
+        booking.additional_attributes &&
+        booking.additional_attributes.contact_details ? (
+          <td>
             <button
               type="button"
               className="btn btn--danger"
               onClick={() => onFillAdditionalAttributeModalClick('contact_details')}
             >
-              {booking.additional_attributes.contact_details[3].value}
+              {booking.additional_attributes.contact_details[3].value
+                ? booking.additional_attributes.contact_details[3].value
+                : 'Contact Details'}
             </button>
-          ) : (
+          </td>
+        ) : null}
+
+        {booking && booking.additional_attributes && booking.additional_attributes.bank_details ? (
+          <td>
             <button
               type="button"
               className="btn btn--danger"
               onClick={() => onFillAdditionalAttributeModalClick('contact_details')}
             >
-              Contact Details
+              {booking.additional_attributes.bank_details[2].value
+                ? booking.additional_attributes.contact_details[2].value
+                : 'Bank Details'}
             </button>
-          )}
-        </td>
-        <td>
-          {booking.additional_attributes.bank_details &&
-          booking.additional_attributes.bank_details[2].value ? (
-            <button
-              type="button"
-              className="btn btn--danger"
-              onClick={() => onFillAdditionalAttributeModalClick('bank_details')}
-            >
-              {booking.additional_attributes.bank_details[2].value}
-            </button>
-          ) : (
-            <button
-              type="button"
-              className="btn btn--danger"
-              onClick={() => onFillAdditionalAttributeModalClick('bank_details')}
-            >
-              Bank Details
-            </button>
-          )}
-        </td>
+          </td>
+        ) : null}
+
         <td>
           <button type="button" className="btn btn--danger" onClick={() => onComments('INTERNAL')}>
             Internal Comments
@@ -332,12 +318,33 @@ export default class ListBooking extends Component {
                 {attributes.map((attribute) => (
                   <th>{attribute.name}</th>
                 ))}
-                <th>Society</th>
-                <th>Location</th>
-                <th>Contact Details</th>
-                <th>Bank Details</th>
+
+                {list && list[0] && list[0].additional_attributes ? (
+                  Object.keys(list[0].additional_attributes).indexOf('society_details') > -1 ? (
+                    <th>Society Details</th>
+                  ) : null
+                ) : null}
+
+                {list && list[0] && list[0].additional_attributes ? (
+                  Object.keys(list[0].additional_attributes).indexOf('location_details') > -1 ? (
+                    <th>Location</th>
+                  ) : null
+                ) : null}
+
+                {list && list[0] && list[0].additional_attributes ? (
+                  Object.keys(list[0].additional_attributes).indexOf('contact_details') > -1 ? (
+                    <th>Contact Details</th>
+                  ) : null
+                ) : null}
+
+                {list && list[0] && list[0].additional_attributes ? (
+                  Object.keys(list[0].additional_attributes).indexOf('bank_details') > -1 ? (
+                    <th>Bank Details</th>
+                  ) : null
+                ) : null}
+
                 <th>Comments</th>
-                <th>Comment</th>
+                <th>Comments</th>
                 <th>Edit</th>
                 <th>Remove</th>
               </tr>

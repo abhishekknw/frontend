@@ -111,9 +111,7 @@ export default class CreateType extends React.Component {
       attributeInfo: {},
       selectedModalSupplierType: undefined,
       inventory_list: [],
-      additional_attributes: {
-        bank_details: [],
-      },
+      additional_attributes: {},
       additionalAttributesList: [
         { label: 'Bank Details', value: 'bank_details' },
         { label: 'Contact Details', value: 'contact_details' },
