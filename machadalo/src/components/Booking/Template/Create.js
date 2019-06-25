@@ -835,6 +835,7 @@ export default class CreateBookingTemplate extends React.Component {
           </button>
         </div>
         <OptionModal
+          key={this.state.attributeInfo.attrIndex}
           showOptionModal={this.state.optionModalVisibility}
           onCancel={this.onCancelOptionModal}
           onSubmit={this.onSubmitOptionModal}

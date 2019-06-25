@@ -18,8 +18,9 @@ const customStyles = {
 export default class OptionModal extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      options: [''],
+      options: props.options,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.renderOptionRow = this.renderOptionRow.bind(this);
