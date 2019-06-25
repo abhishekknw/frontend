@@ -442,7 +442,6 @@ export default class CreateBaseBooking extends React.Component {
             options={AttributeTypes}
             value={getAttributeTypeOption(attribute.type)}
             onChange={onTypeChange}
-            // className={classnames({ error: errors['options' + index] })}
           />
           {attribute.type === 'DROPDOWN' ||
           attribute.type === 'MULTISELECT' ||
