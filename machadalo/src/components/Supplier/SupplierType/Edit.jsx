@@ -708,20 +708,18 @@ export default class CreateType extends React.Component {
                     onChange={this.onAdditionalAttributeChange}
                   />
                 </div>
+                <div className="createform__form__action">
+                  <button
+                    type="button"
+                    className="btn btn--danger"
+                    onClick={this.onAddAdditionalAttributes}
+                    disabled={!this.state.selectedAdditionalAttribute}
+                  >
+                    Add Additional Attribute
+                  </button>
+                </div>
               </div>
             </div>
-
-            <div className="createform__form__action">
-              <button
-                type="button"
-                className="btn btn--danger"
-                onClick={this.onAddAdditionalAttributes}
-                disabled={!this.state.selectedAdditionalAttribute}
-              >
-                Add Additional Attribute
-              </button>
-            </div>
-
             <div className="createform__form__header">Inventory</div>
 
             <div>{this.state.inventory_list.map(this.renderInventoryRow)}</div>
@@ -737,19 +735,16 @@ export default class CreateType extends React.Component {
                     onChange={this.onInventoryChange}
                   />
                 </div>
-              </div>
-            </div>
-
-            <div className="createform__form__inline">
-              <div className="createform__form__action">
-                <button
-                  type="button"
-                  className="btn btn--danger"
-                  onClick={this.onAddInventory}
-                  disabled={!this.state.selectedInventory}
-                >
-                  Add Inventory
-                </button>
+                <div className="createform__form__action">
+                  <button
+                    type="button"
+                    className="btn btn--danger"
+                    onClick={this.onAddInventory}
+                    disabled={!this.state.selectedInventory}
+                  >
+                    Add Inventory
+                  </button>
+                </div>
               </div>
             </div>
             <div className="createform__form__action">
