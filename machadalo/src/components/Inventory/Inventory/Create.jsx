@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
+import classnames from 'classnames';
 
 import OptionModal from '../../Modals/OptionModal';
 
@@ -63,6 +64,54 @@ const getInventoryById = (inventoryList, inventoryId) => {
   return {};
 };
 
+const validate = (data) => {
+  const errors = {};
+
+  if (!data.name.trim()) {
+    errors.name = {
+      message: 'Please enter a name for base booking',
+    };
+  }
+
+  if (!data.base_inventory) {
+    errors.base_inventory = {
+      message: 'Please select base inventory',
+    };
+  }
+
+  for (let i = 0; i < data.inventory_attributes.length; i++) {
+    let attr = 'attribute' + i;
+    let type = 'type' + i;
+    if (!data.inventory_attributes[i].name) {
+      errors[attr] = {
+        message: 'This field should not be blank',
+      };
+    }
+
+    if (!data.inventory_attributes[i].type) {
+      errors[type] = {
+        message: 'Please select the type',
+      };
+    }
+
+    if (
+      (data.inventory_attributes[i].type == 'DROPDOWN' ||
+        data.inventory_attributes[i].type == 'HASHTAG' ||
+        data.inventory_attributes[i].type == 'MULTISELECT') &&
+      (!data.inventory_attributes[i].hasOwnProperty('options') ||
+        data.inventory_attributes[i].options.length == 0 ||
+        data.inventory_attributes[i].options.indexOf('') > -1)
+    ) {
+      let opt = 'options' + i;
+      errors[opt] = {
+        message: 'Please fill the options',
+      };
+    }
+  }
+
+  return errors;
+};
+
 export default class Create extends React.Component {
   constructor(props) {
     super(props);
@@ -103,6 +152,7 @@ export default class Create extends React.Component {
       attributeInfo: {},
       mode,
       inventoryId,
+      errors: {},
     };
 
     this.onAddAttribute = this.onAddAttribute.bind(this);
@@ -203,18 +253,26 @@ export default class Create extends React.Component {
       inventory_attributes: this.state.inventory_attributes,
     };
 
-    if (this.state.mode === 'create') {
-      this.props.postInventory({ data }, () => {
-        toastr.success('', 'Inventory created successfully');
-        this.props.history.push('/r/inventory/list');
-      });
-    } else if (this.state.mode === 'edit') {
-      this.props.putInventory({ inventoryId: this.state.inventoryId, data }, () => {
-        toastr.success('', 'Inventory updated successfully');
-        this.props.history.push('/r/inventory/list');
+    const errors = validate(data);
+
+    if (Object.keys(errors).length) {
+      this.setState({
+        errors,
       });
     } else {
-      console.log('Error: Unsupported mode!');
+      if (this.state.mode === 'create') {
+        this.props.postInventory({ data }, () => {
+          toastr.success('', 'Inventory created successfully');
+          this.props.history.push('/r/inventory/list');
+        });
+      } else if (this.state.mode === 'edit') {
+        this.props.putInventory({ inventoryId: this.state.inventoryId, data }, () => {
+          toastr.success('', 'Inventory updated successfully');
+          this.props.history.push('/r/inventory/list');
+        });
+      } else {
+        console.log('Error: Unsupported mode!');
+      }
     }
   }
 
@@ -272,6 +330,7 @@ export default class Create extends React.Component {
   }
 
   renderAttributeRow(attribute, attrIndex) {
+    const { errors } = this.state;
     const onNameChange = (event) => {
       const newAttribute = Object.assign({}, attribute);
 
@@ -312,11 +371,20 @@ export default class Create extends React.Component {
     return (
       <div className="createform__form__row" key={`row-${attrIndex}`}>
         <div className="createform__form__inline">
-          <div className="form-control">
-            <input type="text" placeholder="Name" value={attribute.name} onChange={onNameChange} />
+          <div className="form-control form-control--column">
+            <input
+              type="text"
+              placeholder="Name"
+              value={attribute.name}
+              onChange={onNameChange}
+              className={classnames({ error: errors['attribute' + attrIndex] })}
+            />
+            {errors && errors['attribute' + attrIndex] ? (
+              <p className="message message--error">{errors['attribute' + attrIndex].message}</p>
+            ) : null}
           </div>
 
-          <div className="form-control">
+          <div className="form-control form-control--column">
             <Select
               options={AttributeTypes}
               classNamePrefix="form-select"
@@ -342,6 +410,12 @@ export default class Create extends React.Component {
             ) : (
               ''
             )}
+            {errors && errors['options' + attrIndex] ? (
+              <p className="message message--error">{errors['options' + attrIndex].message}</p>
+            ) : null}
+            {errors && errors['type' + attrIndex] ? (
+              <p className="message message--error">{errors['type' + attrIndex].message}</p>
+            ) : null}
           </div>
           <br />
 
@@ -371,6 +445,7 @@ export default class Create extends React.Component {
   }
 
   render() {
+    const { errors } = this.state;
     return (
       <div className="createform">
         <div className="createform__title">
@@ -392,7 +467,11 @@ export default class Create extends React.Component {
                   name="name"
                   value={this.state.name}
                   onChange={this.handleInputChange}
+                  className={classnames({ error: errors.name })}
                 />
+                {errors && errors.name ? (
+                  <p className="message message--error">{errors.name.message}</p>
+                ) : null}
               </div>
             </div>
 
@@ -405,6 +484,9 @@ export default class Create extends React.Component {
                   onChange={this.onBaseInventoryChange}
                   isDisabled={this.state.mode === 'edit'}
                 />
+                {errors.base_inventory ? (
+                  <p className="message message--error">{errors.base_inventory.message}</p>
+                ) : null}
               </div>
             </div>
 
