@@ -263,10 +263,6 @@ export default class CreateType extends React.Component {
               value={getAttributeTypeOption(attribute.type)}
               onChange={onTypeChange}
             />
-            {errors && errors['type' + attrIndex] ? (
-              <p className="message message--error">{errors['type' + attrIndex].message}</p>
-            ) : null}
-
             {attribute.type === 'DROPDOWN' || attribute.type === 'MULTISELECT' ? (
               <p
                 className="show-option"
@@ -287,6 +283,9 @@ export default class CreateType extends React.Component {
             )}
             {errors && errors['options' + attrIndex] ? (
               <p className="message message--error">{errors['options' + attrIndex].message}</p>
+            ) : null}
+            {errors && errors['type' + attrIndex] ? (
+              <p className="message message--error">{errors['type' + attrIndex].message}</p>
             ) : null}
           </div>
 
