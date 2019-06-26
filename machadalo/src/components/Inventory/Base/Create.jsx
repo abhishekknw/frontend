@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
+import classnames from 'classnames';
 
 import OptionModal from './../../Modals/OptionModal';
 
@@ -31,6 +32,48 @@ const getAttributeTypeOption = (value) => {
   return { value };
 };
 
+const validate = (data) => {
+  const errors = {};
+
+  if (!data.name.trim()) {
+    errors.name = {
+      message: 'Please enter a name for base booking',
+    };
+  }
+
+  for (let i = 0; i < data.base_attributes.length; i++) {
+    let attr = 'attribute' + i;
+    let type = 'type' + i;
+    if (!data.base_attributes[i].name) {
+      errors[attr] = {
+        message: 'This field should not be blank',
+      };
+    }
+
+    if (!data.base_attributes[i].type) {
+      errors[type] = {
+        message: 'Please select the type',
+      };
+    }
+
+    if (
+      (data.base_attributes[i].type == 'DROPDOWN' ||
+        data.base_attributes[i].type == 'HASHTAG' ||
+        data.base_attributes[i].type == 'MULTISELECT') &&
+      (!data.base_attributes[i].hasOwnProperty('options') ||
+        data.base_attributes[i].options.length == 0 ||
+        data.base_attributes[i].options.indexOf('') > -1)
+    ) {
+      let opt = 'options' + i;
+      errors[opt] = {
+        message: 'Please fill the options',
+      };
+    }
+  }
+
+  return errors;
+};
+
 export default class CreateType extends React.Component {
   constructor() {
     super();
@@ -43,6 +86,7 @@ export default class CreateType extends React.Component {
       attributeInfo: {},
       inventory_type: 'space_based',
       isDisabled: false,
+      errors: {},
     };
 
     this.onAddAttribute = this.onAddAttribute.bind(this);
@@ -99,13 +143,21 @@ export default class CreateType extends React.Component {
       isDisabled: !value,
     });
 
-    this.props.postBaseInventory({ data: this.state }, () => {
+    const errors = validate(this.state);
+
+    if (Object.keys(errors).length) {
       this.setState({
-        isDisabled: value,
+        errors,
       });
-      toastr.success('', 'Base Inventory created successfully');
-      this.props.history.push(`/r/inventory/base/list`);
-    });
+    } else {
+      this.props.postBaseInventory({ data: this.state }, () => {
+        this.setState({
+          isDisabled: value,
+        });
+        toastr.success('', 'Base Inventory created successfully');
+        this.props.history.push(`/r/inventory/base/list`);
+      });
+    }
   }
 
   onAddAttribute() {
@@ -152,6 +204,7 @@ export default class CreateType extends React.Component {
   }
 
   renderAttributeRow(attribute, attrIndex) {
+    const { errors } = this.state;
     const onNameChange = (event) => {
       const newAttribute = Object.assign({}, attribute);
 
@@ -190,17 +243,29 @@ export default class CreateType extends React.Component {
     return (
       <div className="createform__form__row" key={`row-${attrIndex}`}>
         <div className="createform__form__inline">
-          <div className="form-control">
-            <input type="text" placeholder="Name" value={attribute.name} onChange={onNameChange} />
+          <div className="form-control form-control--column">
+            <input
+              type="text"
+              placeholder="Name"
+              value={attribute.name}
+              onChange={onNameChange}
+              className={classnames({ error: errors['attribute' + attrIndex] })}
+            />
+            {errors && errors['attribute' + attrIndex] ? (
+              <p className="message message--error">{errors['attribute' + attrIndex].message}</p>
+            ) : null}
           </div>
 
-          <div className="form-control">
+          <div className="form-control form-control--column">
             <Select
               options={AttributeTypes}
               classNamePrefix="form-select"
               value={getAttributeTypeOption(attribute.type)}
               onChange={onTypeChange}
             />
+            {errors && errors['type' + attrIndex] ? (
+              <p className="message message--error">{errors['type' + attrIndex].message}</p>
+            ) : null}
 
             {attribute.type === 'DROPDOWN' || attribute.type === 'MULTISELECT' ? (
               <p
@@ -220,6 +285,9 @@ export default class CreateType extends React.Component {
             ) : (
               ''
             )}
+            {errors && errors['options' + attrIndex] ? (
+              <p className="message message--error">{errors['options' + attrIndex].message}</p>
+            ) : null}
           </div>
 
           <div className="form-control required-field">
@@ -244,7 +312,7 @@ export default class CreateType extends React.Component {
   }
 
   render() {
-    const { isDisabled } = this.state;
+    const { isDisabled, errors } = this.state;
     return (
       <div className="createform">
         <div className="createform__title">
@@ -266,7 +334,11 @@ export default class CreateType extends React.Component {
                   name="name"
                   value={this.state.name}
                   onChange={this.handleInputChange}
+                  className={classnames({ error: errors.name })}
                 />
+                {errors && errors.name ? (
+                  <p className="message message--error">{errors.name.message}</p>
+                ) : null}
               </div>
             </div>
 
@@ -282,7 +354,7 @@ export default class CreateType extends React.Component {
               </div>
 
               <div className="createform__form__action">
-                <button type="submit" className="btn btn--danger" disabled={isDisabled}>
+                <button type="submit" className="btn btn--danger">
                   Submit
                 </button>
               </div>
