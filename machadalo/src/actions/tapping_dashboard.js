@@ -35,7 +35,7 @@ export function getTappingDetails() {
       .set('Authorization', `JWT ${auth.token}`)
       .send({})
       .then((resp) => {
-        dispatch(getTappingDashboardSuccess({ tappingData: resp.body.data }));
+        dispatch(getTappingDashboardSuccess({ data: resp.body.data }));
       })
       .catch((ex) => {
         console.log('Failed to get tapping data', ex);

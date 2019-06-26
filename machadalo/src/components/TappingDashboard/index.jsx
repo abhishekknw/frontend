@@ -1,6 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { toastr } from 'react-redux-toastr';
 import './index.css';
 
 export default class List extends React.Component {
@@ -19,13 +17,17 @@ export default class List extends React.Component {
       <tr key={row.id}>
         <td>{index + 1}</td>
         <td>{row.name}</td>
+        <td>{row.location_details.done}</td>
+        <td>{row.contact_details.done}</td>
+        <td>{row.total}</td>
       </tr>
     );
   }
 
   render() {
     const { tappingList } = this.props.tapping;
-    const { tappingData } = tappingList;
+    console.log('tappingList', tappingList);
+    const tappingData = tappingList.data;
     return (
       <div className="createform">
         <div className="createform__title">
@@ -38,13 +40,19 @@ export default class List extends React.Component {
                 <tr>
                   <th>S.No</th>
                   <th>Name</th>
-                  <th>Action</th>
+                  <th>Location Details</th>
+                  <th>Contact Details</th>
+                  <th>Total</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td colSpan="5">No tapping details available.</td>
-                </tr>
+                {tappingData.length ? (
+                  tappingData.map(this.renderTappingDashboardList)
+                ) : (
+                  <tr>
+                    <td colSpan="5">No tapping details available.</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
