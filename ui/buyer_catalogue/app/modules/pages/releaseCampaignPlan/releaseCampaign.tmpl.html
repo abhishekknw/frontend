@@ -102,29 +102,28 @@
 
               <td class="" rowspan="{{key.length}}" ng-show="$first">
                 <div class="" ng-repeat="supplier in supplier.contacts | limitTo: 1">
-                    <p>{{supplier.name}}<br>({{supplier.mobile}})</p>
+                    <p ng-if="supplier.name">{{supplier.name}}</p><br>
+                    <p ng-if="supplier.mobile">({{supplier.mobile}})</p>
                 </div>
                 <a  ng-disabled="!supplier.phase_no" class="" data-target="#contactModal" data-toggle="modal" ng-click="setContact(supplier)">
-                  <b>See More Contact Details</b></a>
+                  <b>View More/Add</b></a>
               </td>
               <td rowspan="{{key.length}}" ng-show="$first">
-                <button type="button" class="btn btn-danger"name="button" data-toggle="modal" data-target="#addUserModal" ng-click="setUserSupplier(supplier)">Assign User</button>
-                  <div id="addUserModal" class="modal fade">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                          <h4 class="modal-title">Assign Users</h4>
-                          <hr/>
-
-                          <div class = "modal-body" style = "height: 300px;">
-                            <select name="users" class="form-control spacing input-width-phase"  ng-model="userData.user" min="1" >
-                              <option value="" disabled>Select User</option>
-                              <option ng-repeat="user in usersMapListWithObjects  | orderBy:'username' | unique:'id'" value="{{user.id}}">{{user.username}}</option>
-                            </select>
-                            <br />
-                            <button type="button" class="btn btn-danger" name="button" ng-click="setUserForBooking()">Assign</button>
-                          </div>
+               <button type="button" class="btn btn-danger"name="button" data-toggle="modal" data-target="#addUserModal" ng-click="setUserSupplier(supplier)">Assign User</button>  
+                <p ng-repeat="user in assignedUserList | orderBy: '-updated_at'" ng-if="supplier.supplier_id == user.supplier_id">{{user.username | uppercase}} <br>{{ user.updated_at | date:"dd/MMM/y"}}</p>  
+                  <div id="addUserModal" class="modal fade">  
+                    <div class="modal-dialog">  
+                      <div class="modal-content"> 
+                        <div class="modal-header">  
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>  
+                          <h4 class="modal-title">Assign Users</h4> 
+                        <div class = "modal-body" style = "height: 300px;">
+                          <select name="users" class="form-control spacing input-width-phase"  ng-model="userData.user" min="1" >
+                            <option value="" disabled>Select User</option>
+                            <option ng-repeat="user in usersMapListWithObjects  | orderBy:'username' | unique:'id'" value="{{user.id}}">{{user.username}}</option>
+                          </select>
+                          <br />
+                          <button type="button" class="btn btn-danger" name="button" ng-click="setUserForBooking()">Assign</button>
                         </div>
                       </div>
                     </div>
@@ -163,7 +162,6 @@
 
                 <multiselect ng-if="key=='STALL'" ng-model="supplier.stall_locations" options="StallOptions" show-select-all="true" show-unselect-all="true">
                 </multiselect>
-
                 <multiselect ng-if="key=='SUNBOARD'" ng-model="supplier.sunboard_location" options="SunboardOptions" show-select-all="true" show-unselect-all="true">
                 </multiselect>
               </td>
@@ -194,12 +192,6 @@
                 <span  ng-disabled="!supplier.phase" ng-dropdown-multiselect="" options="multiSelect"  extra-settings="selected_baseline_settings"
                 selected-model="supplier.searchSelectAllModel" translation-texts="selected_baselines_customTexts"></span>
               </td> -->
-
-
-
-
-
-
 
               <!--mode of payment  -->
               <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
@@ -249,7 +241,7 @@
               </div> -->
             </td>
             <td  class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="phaseform">
-              <input ng-disabled="supplier.booking_status != 'BK'" type="text" ng-model="phaseMappingList[supplier.phase_no].phase_no"/>
+              <input class="col-md-12" ng-disabled="supplier.booking_status != 'BK'" type="text" ng-model="phaseMappingList[supplier.phase_no].phase_no"/>
               <select  ng-disabled="supplier.booking_status != 'BK'" name="phase" class="form-control spacing input-width-phase" ng-change="setPhase(supplier,supplier.phaseNo)" ng-model="supplier.phaseNo" min="1" permission = "[permissions.addPhase, permissions.viewPhase]">
                 <option value="" disabled>Select Phase</option>
                 <!-- <option value="" >None</option> -->
