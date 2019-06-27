@@ -243,16 +243,94 @@
               <span class="error" ng-show="phaseform.phase.$error.min">{{positiveNoError}}</span>
             </td>
             <td rowspan="{{key.length}}" ng-show="$first">
-              <button class="btn btn-primary active" ngf-select="uploadImagePermission($file)" ngf-max-size="2MB">Upload Image</button>
-              <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Permission Box" ng-model="supplier.permissionComment"></textarea>
-              <button ng-click="uploadPermissionBoxImage(supplier)" >Submit</button>
-              <button ng-click="getPermissionBoxImages(supplier)" data-toggle="modal" data-target="#imageModal">View</button>
+              <div ng-repeat="image in permissionBoxImages" ng-if="image.object_id == supplier.supplier_id">
+                  <img ng-src="http://androidtokyo.s3.amazonaws.com/{{image.image_path}}" alt="Permission Box" height="50" width="50">
+              </div>
+              <!--END : view comments modal  -->
+              <!--START: permission box image modal -->
+              <div id="imageModal" class="modal fade">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Permission Box Image Details</h4>
+                        <hr/>
+                        <div class = "modal-body">
+                          <div class="carousel" id="slider" ng-if="perBoxImageData && perBoxImageData.length > 0" >
+                            <div class="carousel-inner">
+                              <div class="item" ng-class="{active:!$index}" ng-repeat="image in perBoxImageData">
+                                <div class="row">
+                                  <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
+                                </div>
+                                <div class="row" style="margin-left:10px;">
+                                  Comment : {{image.comment}} </br>
+                                </div>
+                              </div>
+                
+                            </div>
+                              <a style="height:400px;" class="left carousel-control"  data-toggle="carousel" data-target = "#slider" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                              </a>
+                            <a style="height:400px;" class="right carousel-control" data-toggle = "carousel" data-target = "#slider" role="button" data-slide="next">
+                              <span class="glyphicon glyphicon-chevron-right"></span>
+                            </a>
+                          </div>
+                          <div>
+                            <button class="btn btn-primary active" ngf-select="uploadImagePermission($file)" ngf-max-size="2MB">Upload Image</button>
+                            <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Permission Box" ng-model="supplier.permissionComment"></textarea>
+                            <button class="btn btn-primary active" ng-click="uploadPermissionBoxImage(supplier)" >Submit</button>
+                          </div>
+                        </div>  
+                      </div>
+                    </div>
+                  </div>
+                </div>  
+              <button class="btn btn-primary active" ng-click="getPermissionBoxImages(supplier)" data-toggle="modal" data-target="#imageModal">View/Add</button>
             </td>
             <td rowspan="{{key.length}}" ng-show="$first">
-              <button class="btn btn-primary active" ngf-select="uploadImageReceipt($file)" ngf-max-size="2MB">Upload Image</button>
-              <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Receipt" ng-model="supplier.receiptComment"></textarea>
-              <button ng-click="uploadReceiptImage(supplier)" >Submit</button>
-              <button ng-click="getReceiptBoxImages(supplier)" data-toggle="modal" data-target="#imageReceiptModal">View</button>
+              <div ng-repeat="image in receiptImages" ng-if="image.object_id == supplier.supplier_id">
+                  <img ng-src="http://androidtokyo.s3.amazonaws.com/{{image.image_path}}" alt="Receipt" height="50" width="50">
+              </div>
+              <button class="btn btn-primary active" ng-click="getReceiptBoxImages(supplier)" data-toggle="modal" data-target="#imageReceiptModal">View/Add</button>
+              <!-- Modal Start -->
+              <div id="imageReceiptModal" class="modal fade">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Receipt Image Details</h4>
+                        <hr/>
+                        <div class = "modal-body">
+                          <div class="carousel" id="slider" ng-if="perReceiptImageData && perReceiptImageData.length > 0">
+                             <div class="carousel-inner">
+                               <div class="item" ng-class="{active:!$index}" ng-repeat="image in perReceiptImageData">
+                                 <div class="row">
+                                  <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
+                                </div>
+                                 <div class="row" style="margin-left:10px;">
+                                   Comment : {{image.comment}} </br>
+                                 </div>
+                               </div>
+                
+                             </div>
+                              <a style="height:400px;" class="left carousel-control"  data-toggle="carousel" data-target = "#slider" role="button" data-slide="prev">
+                                 <span class="glyphicon glyphicon-chevron-left"></span>
+                              </a>
+                             <a style="height:400px;" class="right carousel-control" data-toggle = "carousel" data-target = "#slider" role="button" data-slide="next">
+                               <span class="glyphicon glyphicon-chevron-right"></span>
+                             </a>
+                          </div>
+                          <div>
+                            <button class="btn btn-primary active" ngf-select="uploadImageReceipt($file)" ngf-max-size="2MB">Upload Image</button>
+                            <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Receipt" ng-model="supplier.receiptComment"></textarea>
+                            <button ng-click="uploadReceiptImage(supplier)" >Submit</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--END:permission box image modal  -->
             </td>
             <td  style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
               <div class="completedHeaderSpacing">
@@ -848,8 +926,6 @@
 <!--END : add comments modal  -->
 <!--START : view comments modal  -->
 <div id="viewComments" class="modal fade">
-
-
         <div>
           <div class="modal-dialog">
             <div class="modal-content">
@@ -889,72 +965,4 @@
     </div>
   </div>
 </div>
-<!--END : view comments modal  -->
-<!--START: permission box image modal -->
-<div id="imageModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Permission Box Image Details</h4>
-        <hr/>
-        <div class = "modal-body">
-          <div class="carousel" id="slider">
-             <div class="carousel-inner">
-               <div class="item" ng-class="{active:!$index}" ng-repeat="image in perBoxImageData">
-                 <div class="row">
-                  <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
-                </div>
-                 <div class="row" style="margin-left:10px;">
-                   Comment : {{image.comment}} </br>
-                 </div>
-               </div>
-
-             </div>
-              <a style="height:400px;" class="left carousel-control"  data-toggle="carousel" data-target = "#slider" role="button" data-slide="prev">
-                 <span class="glyphicon glyphicon-chevron-left"></span>
-              </a>
-             <a style="height:400px;" class="right carousel-control" data-toggle = "carousel" data-target = "#slider" role="button" data-slide="next">
-               <span class="glyphicon glyphicon-chevron-right"></span>
-             </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="imageReceiptModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Receipt Image Details</h4>
-        <hr/>
-        <div class = "modal-body">
-          <div class="carousel" id="slider">
-             <div class="carousel-inner">
-               <div class="item" ng-class="{active:!$index}" ng-repeat="image in perReceiptImageData">
-                 <div class="row">
-                  <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
-                </div>
-                 <div class="row" style="margin-left:10px;">
-                   Comment : {{image.comment}} </br>
-                 </div>
-               </div>
-
-             </div>
-              <a style="height:400px;" class="left carousel-control"  data-toggle="carousel" data-target = "#slider" role="button" data-slide="prev">
-                 <span class="glyphicon glyphicon-chevron-left"></span>
-              </a>
-             <a style="height:400px;" class="right carousel-control" data-toggle = "carousel" data-target = "#slider" role="button" data-slide="next">
-               <span class="glyphicon glyphicon-chevron-right"></span>
-             </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!--END:permission box image modal  -->
 </main>
