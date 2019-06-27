@@ -131,6 +131,10 @@
       var url = url_base + campaignId + "/list_suppliers/";
       return machadaloHttp.get(url);
     }
+    releaseCampaignService.getHashTagImages = function(campaignId){
+      var url = url_base + "hashtag-images/get_hashtag_images/?campaign_id=" + campaignId;
+      return machadaloHttp.get(url);
+    }
 
 
     return releaseCampaignService;
