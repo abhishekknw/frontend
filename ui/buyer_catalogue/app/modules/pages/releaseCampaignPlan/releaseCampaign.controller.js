@@ -162,6 +162,7 @@ $scope.addNewPhase =true;
           // getAssignedSuppliers();
 
           $scope.initialReleaseData = Object.assign({}, response.data.data);
+          console.log($scope.initialReleaseData);
           $scope.totalSuppliers = $scope.initialReleaseData.total_count;
 
           for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
