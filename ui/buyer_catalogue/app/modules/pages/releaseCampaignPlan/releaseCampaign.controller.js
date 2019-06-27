@@ -1059,8 +1059,6 @@ $scope.multiSelect =
               angular.forEach(response.data.data, function(data){
                 data['image_url'] = 'http://androidtokyo.s3.amazonaws.com/' + data.image_path;
               })
-          }else {
-            swal(constants.name, constants.image_empty, constants.warning);
           }
           $scope.perBoxImageData = response.data.data;
         }).catch(function onError(response){
@@ -1074,8 +1072,6 @@ $scope.multiSelect =
               angular.forEach(response.data.data, function(data){
                 data['image_url'] = 'http://androidtokyo.s3.amazonaws.com/' + data.image_path;
               })
-          }else {
-            swal(constants.name, constants.image_empty, constants.warning);
           }
           $scope.perReceiptImageData = response.data.data;
         }).catch(function onError(response){
@@ -1202,5 +1198,24 @@ $scope.multiSelect =
       getResultsPage(1);
     }
 
+    var getHashTagImages = function(){
+      releaseCampaignService.getHashTagImages($scope.campaign_id)
+      .then(function onSuccess(response){
+        $scope.hashtagImages = response.data.data;
+        $scope.permissionBoxImages = [];
+        $scope.receiptImages = [];
+        for (var i=0; i<$scope.hashtagImages.length; i++){
+          if ($scope.hashtagImages[i].permission_box){
+            $scope.permissionBoxImages.push($scope.hashtagImages[i].permission_box)
+          } 
+          if ($scope.hashtagImages[i].receipt){
+            $scope.receiptImages.push($scope.hashtagImages[i].receipt)
+          } 
+        }
+      }).catch(function onError(response){
+        console.log(response);
+      })
+    }
+    getHashTagImages();
 
 }]);//Controller function ends here
