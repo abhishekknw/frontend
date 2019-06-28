@@ -1,7 +1,7 @@
 angular.module('catalogueApp')
 .controller('AuditReleasePlanCtrl',
-    ['$scope', '$rootScope', '$window', '$location','auditReleasePlanService','$stateParams','constants','$filter','permissions','commonDataShare',
-    function ($scope, $rootScope, $window, $location, auditReleasePlanService, $stateParams, constants, $filter, permissions, commonDataShare) {
+    ['$scope', '$rootScope', '$window', '$location','auditReleasePlanService','$stateParams','constants','$filter','permissions','commonDataShare', 'moment',
+    function ($scope, $rootScope, $window, $location, auditReleasePlanService, $stateParams, constants, $filter, permissions, commonDataShare, moment) {
       $scope.campaign_id = $stateParams.proposal_id;
       $scope.bd_manager = constants.bd_manager;
       $scope.campaign_manager = constants.campaign_manager;
@@ -13,9 +13,8 @@ angular.module('catalogueApp')
       }
       $scope.permissions = permissions.auditReleasePage;
       $scope.headings = [
-        // {header : 'Index'},
+        {header : 'Index'},
         {header : 'Phase'},
-        {header : 'Inventory Type'},
         {header : 'Supplier Name'},
         {header : 'Area (Sub Area)'},
         {header : 'Address'},
@@ -96,20 +95,22 @@ angular.module('catalogueApp')
       }
       $scope.getPhases = function(){
         $scope.editPhase = false;
+        $scope.currentDate = moment(new Date()).format("DD/MM/YYYY")
+        console.log($scope.currentDate);
         auditReleasePlanService.getPhases($scope.campaign_id)
         .then(function onSuccess(response){
           console.log(response);
           $scope.phaseMappingList = {};
           angular.forEach(response.data.data, function(phase){
+            var endDate = phase.end_date;
+            $scope.phaseEndDate = moment(endDate).format("DD/MM/YYYY")
+            console.log($scope.phaseEndDate);
             phase.start_date = new Date(phase.start_date);
             phase.end_date = new Date(phase.end_date);
             $scope.phaseMappingList[phase.id] = phase;
           })
-          console.log($scope.phaseMappingList);
           $scope.phases = response.data.data;
-          console.log($scope.phases);
-
-        }).catch(function onError(response){
+            }).catch(function onError(response){
           console.log(response);
         })
       }
@@ -130,7 +131,7 @@ angular.module('catalogueApp')
 
             $scope.totalSuppliers = $scope.releaseDetails.total_count;
             $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
-            console.log(  $scope.Data);
+            console.log($scope.Data);
             setDataToModel($scope.releaseDetails.shortlisted_suppliers);
 
             $scope.filteredAssignDatesList = angular.copy($scope.releaseDetails);

@@ -119,14 +119,14 @@
                     total-items="totalSuppliers" current-page="pagination.current" ng-init="rowIndex = $index">
              <tr ng-repeat="(key,filter) in getFilters(supplier)" ng-if="supplier.booking_status=='BK'">
                <!-- <td rowspan="{{key.length}}" ng-show="$first">{{$index + 1}}</td> -->
-               <td class="col-md-1" rowspan="{{key.length}}" ng-show="$first">
+               <td rowspan="{{key.length}}" ng-show="$first">{{rowIndex}}</td>
+               <td class="col-md-1" rowspan="{{key.length}}" ng-show="$first"
+              ng-style="phaseEndDate > currentDate && {'background-color':'green'}">
                  {{phaseMappingList[supplier.phase_no].phase_no}}
                </td>
-               <td class="col-md-1">{{key}}</td>
-
-               <td class="col-md-2"><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages" ng-click="getSocietyDetails(supplier,supplier.supplier_id,center,$index)" target="_blank" style="text-decoration: underline; cursor: pointer;color:blue;">{{supplier.name}}({{supplier.quality_rating}})</a></td>
-               <td class="col-md-2">
-               <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank" style="text-decoration: underline; cursor: pointer;color:blue;">{{supplier.area}}, ({{supplier.subarea}}) {{supplier.address2}}</a></td>
+               <td class="col-md-2"> <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank"
+               style="text-decoration: underline; cursor: pointer;color:blue;">{{supplier.name}}<br > ({{supplier.quality_rating}})</a></td>
+               <td class="col-md-2">{{supplier.area}}, ({{supplier.subarea}}) {{supplier.address2}}</td>
                <td class="col-md-2">{{supplier.address2}}</td>
                <td class="col-md-2 checkboxes-btn">
                  <div ng-repeat="inventory in filter.detail">
