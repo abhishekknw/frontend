@@ -168,7 +168,10 @@ $scope.addNewPhase =true;
           for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
             $scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price = parseInt($scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price, 10);
             $scope.mapViewLat = $scope.initialReleaseData.shortlisted_suppliers[i].latitude;
-            $scope.mapViewLong = $scope.initialReleaseData.shortlisted_suppliers[i].longitude;
+            $scope.mapViewLong = $scope.initialReleaseData.shortlisted_suppliers[i].longitude;            
+            if($scope.initialReleaseData.shortlisted_suppliers[i].next_action_date){
+              $scope.initialReleaseData.shortlisted_suppliers[i].next_action_date = new Date($scope.initialReleaseData.shortlisted_suppliers[i].next_action_date);
+            }
             $scope.shortlistedSuppliersIdList[$scope.initialReleaseData.shortlisted_suppliers[i].supplier_id] = $scope.initialReleaseData.shortlisted_suppliers[i];
             if(Object.keys($scope.initialReleaseData.shortlisted_suppliers[i].shortlisted_inventories).length == 0){
               $scope.initialReleaseData.shortlisted_suppliers[i].shortlisted_inventories['NA'] = 'NA';
@@ -265,7 +268,7 @@ $scope.addNewPhase =true;
       $scope.inventoryIds = [];
       $scope.inventoryIds = filter.detail;
     }
-    $scope.updateData = function(){
+    $scope.updateData = function(){      
       releaseCampaignService.updateAuditReleasePlanDetails($scope.campaign_id,$scope.releaseDetails.shortlisted_suppliers)
       .then(function onSuccess(response){
         swal(constants.name,constants.updateData_success,constants.success);
