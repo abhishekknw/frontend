@@ -1,10 +1,27 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ViewHashtagImagesModal from '../Modals/ViewHashtagImagesModal';
+import Select from 'react-select';
 
 import CommentsModal from './../Modals/CommentsModal';
 import PhaseModal from './../Modals/PhaseModal';
 import FillAdditionalAttributeModal from './../Modals/AdditionalAttributesModal';
+import { element } from 'prop-types';
+
+const optionTypes = [
+  { value: 'supplier_attributes', label: 'Supplier' },
+  { value: 'additional_attributes', label: 'Area' },
+];
+
+const getOption = (value) => {
+  for (let i = 0, l = optionTypes.length; i < l; i += 1) {
+    if (optionTypes[i] === value) {
+      return optionTypes[i];
+    }
+  }
+
+  return { value };
+};
 
 export default class ListBooking extends Component {
   constructor() {
@@ -19,6 +36,7 @@ export default class ListBooking extends Component {
       selectedAdditionalAttribute: {},
       commentType: '',
       campaignName: '',
+      selectedOption: optionTypes[0],
     };
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
@@ -31,6 +49,8 @@ export default class ListBooking extends Component {
     this.onViewImageClick = this.onViewImageClick.bind(this);
     this.onViewHashtagImagesModalClose = this.onViewHashtagImagesModalClose.bind(this);
     this.onBack = this.onBack.bind(this);
+    this.onOptionTypeChange = this.onOptionTypeChange.bind(this);
+    this.sort = this.sort.bind(this);
   }
 
   componentDidMount() {
@@ -103,7 +123,104 @@ export default class ListBooking extends Component {
   }
 
   getFilteredList(list) {
+    console.log(this.state.searchFilter, this.state.selectedOption);
+    if (this.state.searchFilter && this.state.selectedOption) {
+      let result = [];
+      let attribute = this.state.selectedOption.value;
+
+      switch (attribute) {
+        case 'supplier_attributes':
+          list.forEach((element) => {
+            let flag = true;
+            console.log(element[attribute], attribute);
+            if (element.hasOwnProperty(attribute)) {
+              element[attribute].forEach((item) => {
+                if (flag) {
+                  if (item.hasOwnProperty('value')) {
+                    console.log(item);
+                    if (typeof item.value == 'string') {
+                      if (
+                        item.value.toLowerCase().includes(this.state.searchFilter.toLowerCase())
+                      ) {
+                        result.push(element);
+                        flag = false;
+                      }
+                    }
+                  }
+                }
+              });
+            }
+          });
+          break;
+
+        case 'additional_attributes':
+          list.forEach((element) => {
+            let flag = true;
+            console.log(element[attribute], attribute);
+            if (element.additional_attributes.hasOwnProperty('location_details')) {
+              element.additional_attributes.location_details.forEach((item) => {
+                if (flag) {
+                  if (item.hasOwnProperty('value')) {
+                    console.log(item);
+                    if (typeof item.value == 'string') {
+                      if (
+                        item.value.toLowerCase().includes(this.state.searchFilter.toLowerCase())
+                      ) {
+                        result.push(element);
+                        flag = false;
+                      }
+                    }
+                  }
+                }
+              });
+            }
+          });
+          break;
+        default:
+          return list;
+          break;
+      }
+      return result;
+    }
     return list;
+  }
+
+  sort(attribute, attrType, list) {
+    {
+      console.log(attribute);
+      const { bookingList } = this.props.booking;
+      // const { bookingList } = this.props.booking;
+      // console.log(bookingList);
+      // console.log(bookingList[0][attrType][0].value);
+
+      this.props.booking.bookingList.sort((a, b) => {
+        console.log(
+          b.supplier_attributes[0].value.toLowerCase() <
+            a.supplier_attributes[0].value.toLowerCase()
+        );
+
+        return (
+          b.supplier_attributes[0].value.toLowerCase() <
+          a.supplier_attributes[0].value.toLowerCase()
+        );
+      });
+      // this.props.booking.bookingList = [];
+      // console.log(this.props.booking.bookingList);
+      // this.props.booking.bookingList = [];
+      // list = [];
+      console.log(list);
+
+      this.setState({});
+      // return this.props.booking.bookingList;
+    }
+  }
+
+  onOptionTypeChange(value) {
+    console.log('hello', value);
+    this.setState({
+      selectedOption: value,
+    });
+    console.log(this.state.selectedOption);
   }
 
   renderBookingRow(booking) {
@@ -273,6 +390,8 @@ export default class ListBooking extends Component {
     const { booking } = this.props;
     const { bookingList } = booking;
     const list = this.getFilteredList(bookingList);
+    console.log(list);
+
     let attributes = [];
     let campaignName = '';
     const { campaign } = this.props;
@@ -284,6 +403,8 @@ export default class ListBooking extends Component {
     if (list && list.length) {
       attributes = list[0].supplier_attributes.concat(list[0].booking_attributes);
     }
+
+    // const list = this.sort(attribute, attrType);
     console.log(campaignName);
 
     return (
@@ -302,13 +423,25 @@ export default class ListBooking extends Component {
         <br />
         <br />
 
-        <div className="list__filter">
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchFilter}
-            onChange={this.onSearchFilterChange}
-          />
+        <div className="list-search">
+          <div className="form-control">
+            <Select
+              options={optionTypes}
+              className="select"
+              value={this.selectedOption}
+              onChange={this.onOptionTypeChange}
+              defaultValue={optionTypes[0]}
+            />
+          </div>
+          <div className="form-control">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchFilter}
+              onChange={this.onSearchFilterChange}
+              className="form-control"
+            />
+          </div>
         </div>
 
         <div className="list__table">
@@ -316,7 +449,9 @@ export default class ListBooking extends Component {
             <thead>
               <tr>
                 {attributes.map((attribute) => (
-                  <th>{attribute.name}</th>
+                  <th onClick={() => this.sort(attribute, 'supplier_attributes', list)}>
+                    {attribute.name}
+                  </th>
                 ))}
 
                 {list && list[0] && list[0].additional_attributes ? (
