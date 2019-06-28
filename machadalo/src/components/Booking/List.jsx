@@ -187,31 +187,15 @@ export default class ListBooking extends Component {
 
   sort(attribute, attrType, list) {
     {
-      console.log(attribute);
-      const { bookingList } = this.props.booking;
-      // const { bookingList } = this.props.booking;
-      // console.log(bookingList);
-      // console.log(bookingList[0][attrType][0].value);
-
       this.props.booking.bookingList.sort((a, b) => {
-        console.log(
-          b.supplier_attributes[0].value.toLowerCase() <
-            a.supplier_attributes[0].value.toLowerCase()
-        );
+        a = a.supplier_attributes[0].value.toLowerCase();
+        b = b.supplier_attributes[0].value.toLowerCase();
+        console.log(a, b);
 
-        return (
-          b.supplier_attributes[0].value.toLowerCase() <
-          a.supplier_attributes[0].value.toLowerCase()
-        );
+        return a < b;
       });
-      // this.props.booking.bookingList = [];
-      // console.log(this.props.booking.bookingList);
-      // this.props.booking.bookingList = [];
-      // list = [];
-      console.log(list);
 
       this.setState({});
-      // return this.props.booking.bookingList;
     }
   }
 
