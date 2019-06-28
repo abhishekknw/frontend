@@ -9,8 +9,9 @@ import FillAdditionalAttributeModal from './../Modals/AdditionalAttributesModal'
 import { element } from 'prop-types';
 
 const optionTypes = [
-  { value: 'supplier_attributes', label: 'Supplier' },
-  { value: 'additional_attributes', label: 'Area' },
+  { value: 'supplier', label: 'Supplier' },
+  { value: 'area', label: 'Area' },
+  { value: 'subarea', label: 'SubArea' },
 ];
 
 const getOption = (value) => {
@@ -37,6 +38,10 @@ export default class ListBooking extends Component {
       commentType: '',
       campaignName: '',
       selectedOption: optionTypes[0],
+      sortType: {
+        key: '',
+        value: true,
+      },
     };
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
@@ -65,7 +70,6 @@ export default class ListBooking extends Component {
   }
 
   onCommentsChange(comments) {
-    console.log('comments: ', comments);
     const { selectedBooking } = this.state;
 
     this.props.putBooking({
@@ -123,56 +127,47 @@ export default class ListBooking extends Component {
   }
 
   getFilteredList(list) {
-    console.log(this.state.searchFilter, this.state.selectedOption);
     if (this.state.searchFilter && this.state.selectedOption) {
       let result = [];
       let attribute = this.state.selectedOption.value;
 
       switch (attribute) {
-        case 'supplier_attributes':
+        case 'supplier':
           list.forEach((element) => {
-            let flag = true;
-            console.log(element[attribute], attribute);
-            if (element.hasOwnProperty(attribute)) {
-              element[attribute].forEach((item) => {
-                if (flag) {
-                  if (item.hasOwnProperty('value')) {
-                    console.log(item);
-                    if (typeof item.value == 'string') {
-                      if (
-                        item.value.toLowerCase().includes(this.state.searchFilter.toLowerCase())
-                      ) {
-                        result.push(element);
-                        flag = false;
-                      }
-                    }
-                  }
-                }
-              });
+            if (
+              element.supplier_name.toLowerCase().includes(this.state.searchFilter.toLowerCase())
+            ) {
+              result.push(element);
             }
           });
           break;
 
-        case 'additional_attributes':
+        case 'area':
           list.forEach((element) => {
             let flag = true;
-            console.log(element[attribute], attribute);
             if (element.additional_attributes.hasOwnProperty('location_details')) {
-              element.additional_attributes.location_details.forEach((item) => {
-                if (flag) {
-                  if (item.hasOwnProperty('value')) {
-                    console.log(item);
-                    if (typeof item.value == 'string') {
-                      if (
-                        item.value.toLowerCase().includes(this.state.searchFilter.toLowerCase())
-                      ) {
-                        result.push(element);
-                        flag = false;
-                      }
-                    }
-                  }
-                }
-              });
+              if (
+                element.additional_attributes.location_details[2].value
+                  .toLowerCase()
+                  .includes(this.state.searchFilter.toLowerCase())
+              ) {
+                result.push(element);
+              }
+            }
+          });
+          break;
+
+        case 'subarea':
+          list.forEach((element) => {
+            let flag = true;
+            if (element.additional_attributes.hasOwnProperty('location_details')) {
+              if (
+                element.additional_attributes.location_details[3].value
+                  .toLowerCase()
+                  .includes(this.state.searchFilter.toLowerCase())
+              ) {
+                result.push(element);
+              }
             }
           });
           break;
@@ -185,26 +180,130 @@ export default class ListBooking extends Component {
     return list;
   }
 
-  sort(attribute, attrType, list) {
-    {
-      this.props.booking.bookingList.sort((a, b) => {
-        a = a.supplier_attributes[0].value.toLowerCase();
-        b = b.supplier_attributes[0].value.toLowerCase();
-        console.log(a, b);
-
-        return a < b;
-      });
-
-      this.setState({});
+  sort(attribute, attrType) {
+    const { sortType } = this.state;
+    if (sortType.key == attribute) {
+      sortType.order = !sortType.order;
+    } else {
+      sortType.key = attribute;
+      sortType.order = true;
     }
+    switch (attrType) {
+      case 'supplier':
+        this.props.booking.bookingList.sort((a, b) => {
+          if (a.supplier_name.toLowerCase() > b.supplier_name.toLowerCase()) {
+            return 1;
+          } else {
+            return -1;
+          }
+        });
+        break;
+      case 'supplier_attributes':
+        let index,
+          flag = true;
+        if (this.props.booking.bookingList.length) {
+          let items = this.props.booking.bookingList[0].supplier_attributes.map(
+            (item) => item.name
+          );
+
+          index = items.indexOf(attribute);
+          if (index < 0) {
+            items = this.props.booking.bookingList[0].booking_attributes.map((item) => item.name);
+            index = items.indexOf(attribute);
+            flag = false;
+          }
+        }
+        if (flag) {
+          this.props.booking.bookingList.sort((a, b) => {
+            if (a.supplier_attributes[index].value && b.supplier_attributes[index].value) {
+              if (
+                typeof a.supplier_attributes[index].value === 'string' &&
+                typeof b.supplier_attributes[index].value === 'string'
+              ) {
+                a = a.supplier_attributes[index].value.toLowerCase();
+                b = b.supplier_attributes[index].value.toLowerCase();
+              } else if (
+                typeof a.supplier_attributes[index].value === 'number' &&
+                typeof b.supplier_attributes[index].value === 'number'
+              ) {
+                a = a.supplier_attributes[index].value;
+                b = b.supplier_attributes[index].value;
+              }
+
+              if (a > b) return 1;
+              else return -1;
+            }
+          });
+        } else {
+          this.props.booking.bookingList.sort((a, b) => {
+            if (a.booking_attributes[index].value && b.booking_attributes[index].value) {
+              if (
+                typeof a.booking_attributes[index].value === 'string' &&
+                typeof b.booking_attributes[index].value === 'string'
+              ) {
+                a = a.booking_attributes[index].value.toLowerCase();
+                b = b.booking_attributes[index].value.toLowerCase();
+              } else if (
+                typeof a.booking_attributes[index].value === 'number' &&
+                typeof b.booking_attributes[index].value === 'number'
+              ) {
+                a = a.booking_attributes[index].value;
+                b = b.booking_attributes[index].value;
+              }
+
+              if (a > b) return 1;
+              else return -1;
+            }
+          });
+        }
+        break;
+      case 'flat_count':
+        this.props.booking.bookingList.sort((a, b) => {
+          if (
+            a.additional_attributes.hasOwnProperty('society_details') &&
+            b.additional_attributes.hasOwnProperty('society_details') &&
+            a.additional_attributes.society_details[0].value &&
+            b.additional_attributes.society_details[0].value
+          ) {
+            a = a.additional_attributes.society_details[0].value;
+            b = b.additional_attributes.society_details[0].value;
+            if (a > b) return 1;
+            else return -1;
+          }
+        });
+        break;
+      case 'area':
+        this.props.booking.bookingList.sort((a, b) => {
+          if (
+            a.additional_attributes.hasOwnProperty('location_details') &&
+            b.additional_attributes.hasOwnProperty('location_details') &&
+            a.additional_attributes.location_details[2].value &&
+            b.additional_attributes.location_details[2].value
+          ) {
+            a = a.additional_attributes.location_details[2].value;
+            b = b.additional_attributes.location_details[2].value;
+            if (a > b) return 1;
+            else return -1;
+          }
+        });
+        break;
+      default:
+        break;
+    }
+
+    if (!sortType.order) {
+      this.props.booking.bookingList.reverse();
+    }
+
+    this.setState({
+      sortType: sortType,
+    });
   }
 
   onOptionTypeChange(value) {
-    console.log('hello', value);
     this.setState({
       selectedOption: value,
     });
-    console.log(this.state.selectedOption);
   }
 
   renderBookingRow(booking) {
@@ -245,6 +344,7 @@ export default class ListBooking extends Component {
 
     return (
       <tr key={booking.id}>
+        <td>{booking.supplier_name}</td>
         {booking.supplier_attributes.map((attribute) => (
           <td>
             {attribute.type === 'STRING' ||
@@ -297,8 +397,11 @@ export default class ListBooking extends Component {
               className="btn btn--danger"
               onClick={() => onFillAdditionalAttributeModalClick('location_details')}
             >
-              {booking.additional_attributes.location_details[2].value &&
-              booking.additional_attributes.location_details[4].value
+              {booking.additional_attributes.location_details[3].value
+                ? booking.additional_attributes.location_details[3].value
+                : ''}
+              ,
+              {booking.additional_attributes.location_details[2].value
                 ? booking.additional_attributes.location_details[2].value
                 : 'Location Details'}
             </button>
@@ -374,7 +477,6 @@ export default class ListBooking extends Component {
     const { booking } = this.props;
     const { bookingList } = booking;
     const list = this.getFilteredList(bookingList);
-    console.log(list);
 
     let attributes = [];
     let campaignName = '';
@@ -387,9 +489,6 @@ export default class ListBooking extends Component {
     if (list && list.length) {
       attributes = list[0].supplier_attributes.concat(list[0].booking_attributes);
     }
-
-    // const list = this.sort(attribute, attrType);
-    console.log(campaignName);
 
     return (
       <div className="booking__list list">
@@ -432,21 +531,22 @@ export default class ListBooking extends Component {
           <table cellPadding="0" cellSpacing="0">
             <thead>
               <tr>
+                <th onClick={() => this.sort('supplier_name', 'supplier')}>Supplier Name</th>
                 {attributes.map((attribute) => (
-                  <th onClick={() => this.sort(attribute, 'supplier_attributes', list)}>
+                  <th onClick={() => this.sort(attribute.name, 'supplier_attributes')}>
                     {attribute.name}
                   </th>
                 ))}
 
                 {list && list[0] && list[0].additional_attributes ? (
                   Object.keys(list[0].additional_attributes).indexOf('society_details') > -1 ? (
-                    <th>Society Details</th>
+                    <th onClick={() => this.sort('flat_count', 'flat_count')}>Society Details</th>
                   ) : null
                 ) : null}
 
                 {list && list[0] && list[0].additional_attributes ? (
                   Object.keys(list[0].additional_attributes).indexOf('location_details') > -1 ? (
-                    <th>Location</th>
+                    <th onClick={() => this.sort('area', 'area')}>Location</th>
                   ) : null
                 ) : null}
 
