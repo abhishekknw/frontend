@@ -51,9 +51,10 @@
                   <th st-sort="updated_at" st-skip-natural="true" style="text-align: center;">Assigned Date</th>
                   <th st-sort="campaign.tentative_start_date" st-skip-natural="true" style="text-align: center;">Start Date</th>
                   <th st-sort="campaign.tentative_end_date" st-skip-natural="true" style="text-align: center;">End Date</th>
-                  <th style="text-align: center;">View Booking Details</th>
-                  <th style="text-align: center;">Assign Dates</th>
-                  <th style="text-align: center;">View Execution Image</th>
+                  <th style="text-align: center;">Campaigns Status</th>
+                  <th style="text-align: center;">Booking Plan</th>
+                  <th style="text-align: center;">Release Plan</th>
+                  <th style="text-align: center;">Executed Image</th>
                 </tr>
                 <tr colspan="9">
                   <td></td>
@@ -73,6 +74,7 @@
                   <td class="col-md-2">{{proposal.updated_at|limitTo:10 }}</td>
                   <td class="col-md-2">{{proposal.campaign.tentative_start_date|limitTo:10}}</td>
                   <td class="col-md-3">{{proposal.campaign.tentative_end_date|limitTo:10}}</td>
+                  <td class="col-md-3 campaignStatus" style="text-transform:lowercase">{{proposal.campaign.status}}</td>
                   <td class="col-md-2">
                     <a ng-click="getDetails(proposal.campaign.proposal_id)"> Details </a>
                   </td>

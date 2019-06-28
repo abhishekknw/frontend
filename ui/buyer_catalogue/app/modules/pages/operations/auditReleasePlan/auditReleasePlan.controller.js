@@ -15,11 +15,10 @@ angular.module('catalogueApp')
       $scope.headings = [
         {header : 'Index'},
         {header : 'Phase'},
-        {header : 'Supplier Name'},
-        {header : 'Area (Sub Area)'},
-        {header : 'Address'},
+        {header : 'Supplier Name & Address'},
         {header : 'AdInventory Id'},
         {header : 'Activity Date'},
+        {header : 'Status of Release'},
       ];
       $scope.audit_dates = [
         {header : 'Audit Date'},
