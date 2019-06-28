@@ -41,13 +41,15 @@
               <div class = "col-md-3"><label>Select Phase </label></div>
               <div class = "col-md-3">
                 <select class="form-control" ng-model="phase" ng-change="filterAssignDatesData('phase',phase)" required>
-                  <option ng-repeat="phase in phases" value="{{phase}}">{{phase}}</option>
+                  <option value="">Select Phase</option>
+                  <option ng-repeat="phase in phasesData" value="{{phase.phase_no}}">{{phase.phase_no}}</option>
                 </select>
               </div>
 
               <div class = "col-md-3"><label>Select Inventory Type </label></div>
               <div class = "col-md-3">
                 <select class="form-control" ng-model="inventoryType" ng-disabled="!phase" required>
+                <option value="">Select Inventory Type</option>  
                 <option ng-repeat="inventory in inventoryTypes" value="{{inventory}}">{{inventory}}</option>
                 </select>
               </div>
@@ -60,6 +62,7 @@
              <div class = "col-md-3"><label>Select Activity Type </label></div>
              <div class = "col-md-3">
                <select class="form-control" ng-model="activityType" ng-disabled="!inventoryType" required>
+                <option value="">Select Activity</option>
                 <option ng-repeat="activity in activity_names" value="{{activity.header}}" ng-hide="inventoryType == 'FLIER' && activity.header != 'RELEASE'">
                   {{activity.header}}
                 </option>
@@ -68,7 +71,7 @@
              <div class = "col-md-3"><label>Activity Date </label></div>
              <div class = "col-md-3">
                <p class="input-group">
-                 <input type="text" class="form-control col-md-4"  ng-model="activityDate" ng-disabled="!activityType" uib-datepicker-popup="yyyy-MM-dd" is-open="popup1"  min-date="" datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}"/ required>
+                 <input type="text" class="form-control col-md-4"  ng-model="activityDate" ng-disabled="!activityType" uib-datepicker-popup="yyyy-MM-dd" is-open="popup1"  min-date="" datepicker-options="dateOptions" close-text="Close" placeholder="Select Date" ng-model-options="{timezone:'UTC'}"/ required>
                  <span class="input-group-btn">
                    <button type="button" class="btn btn-default" ng-click="popup1=true"><i class="glyphicon glyphicon-calendar"></i></button>
                  </span>
@@ -83,6 +86,7 @@
               <div class = "col-md-3"><label>Assigned To </label></div>
               <div class = "col-md-3">
                 <select class="form-control" ng-model="user" required ng-disabled="!activityDate">
+                  <option value="">Select User</option>
                   <option ng-repeat="user in userList" value="{{user.id}}">{{user.username}}</option>
                 </select>
               </div>
