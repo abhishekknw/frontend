@@ -94,21 +94,17 @@ angular.module('catalogueApp')
       }
       $scope.getPhases = function(){
         $scope.editPhase = false;
-        $scope.currentDate = moment(new Date()).format("DD/MM/YYYY")
-        console.log($scope.currentDate);
         auditReleasePlanService.getPhases($scope.campaign_id)
         .then(function onSuccess(response){
           $scope.phaseMappingList = {};
           angular.forEach(response.data.data, function(phase){
-            var endDate = phase.end_date;
-            $scope.phaseEndDate = moment(endDate).format("DD/MM/YYYY")
-            console.log($scope.phaseEndDate);
             phase.start_date = new Date(phase.start_date);
             phase.end_date = new Date(phase.end_date);
             $scope.phaseMappingList[phase.id] = phase;
           })
-          $scope.phases = response.data.data;
-            }).catch(function onError(response){
+          $scope.phasesData = response.data.data;
+
+        }).catch(function onError(response){
           console.log(response);
         })
       }

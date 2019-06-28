@@ -111,7 +111,8 @@
          </div>
        </div>
        </br>
-         <table st-table="releaseDetails.shortlisted_suppliers" st-safe-src="Data" class="table table-bordered">
+         <table st-table="releaseDetails.shortlisted_suppliers" 
+         st-safe-src="Data" class="table table-bordered">
 
            <thead>
 
@@ -154,7 +155,7 @@
              </div><br>
 
                </td>
-               <td></td>
+               <td class="phaseMap">{{phaseMappingList[supplier.phase_no].status || 'Pending'}}</td>
                <!-- <td class="col-md-8">
 
                  <div class="">

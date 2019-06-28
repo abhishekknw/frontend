@@ -61,6 +61,7 @@
                 <th>Assign User</th>
                 <th>Booking Priority</th>
                 <th>Booking Status</th>
+                <th>Phase</th>
                 <th>Comments</th>
                 <th>Next Date Action</th>
                 <th>Inventory Type</th>
@@ -74,7 +75,6 @@
                 <th>Mode Of Payment</th>
                 <th>Transaction/Cheque Number</th>
                 <th>Payment Status</th>
-                <th>Phase</th>
                 <th>Permission Box</th>
                 <th>Receipt</th>
                 <th>Completion Status</th>
@@ -146,6 +146,15 @@
                     >{{item.name}}</option>
                   </select>
                 </td>
+                <td  class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="phaseform">
+                    <input class="col-md-12" ng-disabled="supplier.booking_status != 'BK'" type="text" ng-model="phaseMappingList[supplier.phase_no].phase_no"/>
+                    <select  ng-disabled="supplier.booking_status != 'BK'" name="phase" class="form-control spacing input-width-phase" ng-change="setPhase(supplier,supplier.phaseNo)" ng-model="supplier.phaseNo" min="1" permission = "[permissions.addPhase, permissions.viewPhase]">
+                      <option value="" disabled>Select Phase</option>
+                      <!-- <option value="" >None</option> -->
+                      <option ng-repeat="phase in phases | unique:'phase_no'" value="{{phase.id}}">{{phase.phase_no}}</option>
+                    </select>
+                    <span class="error" ng-show="phaseform.phase.$error.min">{{positiveNoError}}</span>
+                  </td>
                 <td rowspan="{{key.length}}" ng-show="$first">
                   <!-- <div class="" ng-repeat="item in commentsData[selectedInvForView] | limitTo: 1">
                       <p>{{item.comment}}</p>
@@ -240,15 +249,7 @@
                      <label><input type="radio" ng-model="supplier.payment_status" value="PNI" ng-click="updateSupplierStatus()" ng-disabled="supplier.booking_status != 'BK'">Not Paid</label>
               </div> -->
             </td>
-            <td  class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="phaseform">
-              <input class="col-md-12" ng-disabled="supplier.booking_status != 'BK'" type="text" ng-model="phaseMappingList[supplier.phase_no].phase_no"/>
-              <select  ng-disabled="supplier.booking_status != 'BK'" name="phase" class="form-control spacing input-width-phase" ng-change="setPhase(supplier,supplier.phaseNo)" ng-model="supplier.phaseNo" min="1" permission = "[permissions.addPhase, permissions.viewPhase]">
-                <option value="" disabled>Select Phase</option>
-                <!-- <option value="" >None</option> -->
-                <option ng-repeat="phase in phases | unique:'phase_no'" value="{{phase.id}}">{{phase.phase_no}}</option>
-              </select>
-              <span class="error" ng-show="phaseform.phase.$error.min">{{positiveNoError}}</span>
-            </td>
+           
             <td rowspan="{{key.length}}" ng-show="$first">
               <div ng-repeat="image in permissionBoxImages" ng-if="image.object_id == supplier.supplier_id" style="margin-bottom:10px">
                   <img ng-src="http://androidtokyo.s3.amazonaws.com/{{image.image_path}}" alt="Permission Box" height="50" width="50">
