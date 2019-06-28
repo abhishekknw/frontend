@@ -29,9 +29,7 @@ body{
   font-weight: 700;
   text-align: center;
   vertical-align: middle;
-  width: 150px;
   white-space: normal !important;
-
 }
 
 .containerTable table tbody {
@@ -55,11 +53,8 @@ body{
   /* border: 1px solid black; */
   /* border-collapse: separate; */
   /* border-spacing: 4px;   */
-  display: table;
-  width: 100%;
   table-layout: fixed;
 }
-
 
 .containerTable table thead,
 .containerTable table tfoot tr {
@@ -71,9 +66,7 @@ body{
 }
 
 .containerTable table tbody tr td {
-
   text-align: center;
-  width: 100px;
 }
 
 
@@ -83,7 +76,7 @@ body{
   font-size: 14px;
   font-weight: 700;
   text-align: center;
-  width: 100px;
+  width: 140px;
 }
 
 .containerTable table thead tr th:nth-child(2) {
@@ -103,9 +96,6 @@ th{
   	background: #808080;
     text-align: center;
   	color: #fff;
-}
-td{
-	padding: 5px;
 }
 .notify{
 	margin-top: 15px;

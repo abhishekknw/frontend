@@ -48,37 +48,39 @@
       <div class="table-responsive">
         <table class="table table-striped">
           <thead>
+            <div class="fixedHeader">
             <tr>
-              <th style="width:40px;">Sr No</th>
-              <th>Supplier Name</th>
-              <th>Area <br>(Sub Area)</th>
-              <th>Address <br>(Landmark)</th>
-              <th>RelationShip Data</th>
-              <th>Flat Count</th>
-              <th>Tower Count</th>
-              <th>Contacts Details</th>
-              <th>Assign User</th>
-              <th>Booking Priority</th>
-              <th>Booking Status</th>
-              <th>Comments</th>
-              <th>Next Date Action</th>
-              <th>Inventory Type</th>
-              <th>Inventory Count</th>
-              <th>Inventory Days</th>
-              <th>Inventory Supplier Price</th>
-              <th>Total Supplier Price   (Per Flat)  </th>
-              <th>Negotiated Price</th>
-              <th>Cost Per Flat</th>
-              <th>Freebies</th>
-              <th>Mode Of Payment</th>
-              <th>Transaction/Cheque Number</th>
-              <th>Payment Status</th>
-              <th>Phase</th>
-              <th>Permission Box</th>
-              <th>Receipt</th>
-              <th>Completion Status</th>
-              <th>Delete Action</th>
-            </tr>
+                <th style="width:40px;">Sr No</th>
+                <th>Supplier Name</th>
+                <th>Area <br>(Sub Area)</th>
+                <th>Address <br>(Landmark)</th>
+                <th>RelationShip Data</th>
+                <th>Flat Count</th>
+                <th>Tower Count</th>
+                <th>Contacts Details</th>
+                <th>Assign User</th>
+                <th>Booking Priority</th>
+                <th>Booking Status</th>
+                <th>Comments</th>
+                <th>Next Date Action</th>
+                <th>Inventory Type</th>
+                <th>Inventory Count</th>
+                <th>Inventory Days</th>
+                <th>Inventory Supplier Price</th>
+                <th>Total Supplier Price   (Per Flat)  </th>
+                <th>Negotiated Price</th>
+                <th>Cost Per Flat</th>
+                <th>Freebies</th>
+                <th>Mode Of Payment</th>
+                <th>Transaction/Cheque Number</th>
+                <th>Payment Status</th>
+                <th>Phase</th>
+                <th>Permission Box</th>
+                <th>Receipt</th>
+                <th>Completion Status</th>
+                <th>Delete Action</th>
+          </tr>
+          </div>
           </thead>
           <tbody dir-paginate="supplier in releaseDetails.shortlisted_suppliers | itemsPerPage: suppliersPerPage" total-items="totalSuppliers" current-page="pagination.current"
            track by "$index">
@@ -90,12 +92,13 @@
               supplier.booking_status && {'background-color':'brown'}">{{$parent.$index + 1}}</td>
               <td class="" rowspan="{{key.length}}" ng-show="$first">
               <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank"
-              style="text-decoration: underline; cursor: pointer;color:blue;">{{supplier.name}}({{supplier.quality_rating}})</a></td>
-              <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.area}}, ({{supplier.subarea}}) {{supplier.address2}}</td>
-              <td class="" rowspan="{{key.length}}" ng-show="$first" width="200">{{supplier.address1}} br {{supplier.landmark}}</td>
+              style="text-decoration: underline; cursor: pointer;color:#337ab7;font-weight: 600;">{{supplier.name}}<br> </a>
+              ({{supplier.quality_rating}})</td>
+              <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.area}} <br> ({{supplier.subarea}}) <br> {{supplier.address2}}</td>
+              <td class="" rowspan="{{key.length}}" ng-show="$first" width="200"> {{supplier.address1}} <br> {{supplier.landmark}}</td>
               <!-- <td class="" rowspan="{{key.length}}" ng-show="$first" width="200">Inventory Owner :<b> Machadalo</b>, Feedback:{{supplier.feedback}}</td> -->
               <td class="" rowspan="{{key.length}}" ng-show="$first" width="200">
-                <button type="button" name="button" style="background-color:#d9534f;" ng-click="getRelationShipData(supplier)" data-target="#relationshipModal" data-toggle="modal">View Data</button>
+                <button type="button" class="btn btn-danger"name="button"  ng-click="getRelationShipData(supplier)" data-target="#relationshipModal" data-toggle="modal">View Data</button>
               </td>
               <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.flat_count}}</td>
               <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.tower_count}}</td>
@@ -109,14 +112,14 @@
                   <b>View More/Add</b></a>
               </td>
               <td rowspan="{{key.length}}" ng-show="$first">
-               <button type="button" class="btn btn-danger"name="button" data-toggle="modal" data-target="#addUserModal" ng-click="setUserSupplier(supplier)">Assign User</button>  
-                <p ng-repeat="user in assignedUserList | orderBy: '-updated_at'" ng-if="supplier.supplier_id == user.supplier_id">{{user.username | uppercase}} <br>{{ user.updated_at | date:"dd/MMM/y"}}</p>  
-                  <div id="addUserModal" class="modal fade">  
-                    <div class="modal-dialog">  
-                      <div class="modal-content"> 
-                        <div class="modal-header">  
-                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>  
-                          <h4 class="modal-title">Assign Users</h4> 
+               <button type="button" class="btn btn-danger"name="button" data-toggle="modal" data-target="#addUserModal" ng-click="setUserSupplier(supplier)">Assign User</button>
+                <p ng-repeat="user in assignedUserList | orderBy: '-updated_at'" ng-if="supplier.supplier_id == user.supplier_id">{{user.username | uppercase}} <br>{{ user.updated_at | date:"dd/MMM/y"}}</p>
+                  <div id="addUserModal" class="modal fade">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title">Assign Users</h4>
                         <div class = "modal-body" style = "height: 300px;">
                           <select name="users" class="form-control spacing input-width-phase"  ng-model="userData.user" min="1" >
                             <option value="" disabled>Select User</option>
@@ -144,24 +147,21 @@
                   </select>
                 </td>
                 <td rowspan="{{key.length}}" ng-show="$first">
-                  <button type="button" class="btn btn-danger" data-target="#addComments" data-toggle="modal" ng-click="getSupplierForComments(supplier)">Add</button></br>
-                  <button type="button" class="btn btn-danger"   ng-click="viewComments(supplier)">View</button>
+                  <!-- <div class="" ng-repeat="item in commentsData[selectedInvForView] | limitTo: 1">
+                      <p>{{item.comment}}</p>
+                  </div> -->
+                  <button type="button" class="btn btn-danger" data-target="#addComments"
+                  data-toggle="modal" ng-click="getSupplierForComments(supplier)">Add</button> &nbsp;
+                  <button type="button" class="btn btn-success" ng-click="viewComments(supplier)">View</button>
                   <br>
                 </td>
                 <td rowspan="{{key.length}}" ng-show="$first">
-                  <input type="date" name="">
+                  <input class="form-control" type="date" name="">
                 </td>
-                <td class="" ng-if="key=='NA'">{{key}}</td>
-                <td class="col-md-3" ng-if="key!='NA'"><a class="" data-target="#invTypeModal" data-toggle="modal" ng-click="setInventoryIds(filter)" permission = "[permissions.viewInventoryIds]"><b>{{key}}</b></a>
-
-                <!-- <span class="" ng-if="key=='STALL'" ng-dropdown-multiselect="" options="stallLoc"  extra-settings="selected_baseline" events="customEvents"
-                selected-model="supplier.stall_locations"  translation-texts="selected_customTexts"></span>
-
-                <span class="" ng-if="key=='SUNBOARD'" ng-dropdown-multiselect="" options="sunboard"  extra-settings="selected_baseline" events="customEvents"
-                selected-model="supplier.sunboard_locations"  translation-texts="selected_customTexts"></span> -->
-
-                <multiselect ng-if="key=='STALL'" ng-model="supplier.stall_locations" options="StallOptions" show-select-all="true" show-unselect-all="true">
-                </multiselect>
+                    <td ng-if="key=='NA'">{{key}}</td>
+                    <td ng-if="key!='NA'"><a class="" data-target="#invTypeModal" data-toggle="modal" ng-click="setInventoryIds(filter)" permission = "[permissions.viewInventoryIds]"><b>{{key}}</b></a>
+                    <multiselect ng-if="key=='STALL'" ng-model="supplier.stall_locations" options="StallOptions" show-select-all="true" show-unselect-all="true">
+                    </multiselect>
                 <multiselect ng-if="key=='SUNBOARD'" ng-model="supplier.sunboard_location" options="SunboardOptions" show-select-all="true" show-unselect-all="true">
                 </multiselect>
               </td>
@@ -224,7 +224,7 @@
             </td>
             <!--for payment status  -->
             <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
-              <select   ng-disabled="!supplier.phase_no" class="form-control spacing input-width" ng-model="supplier.payment_status" permission = "[permissions.viewPaymentDetails]">
+              <select  ng-disabled="!supplier.phase_no" class="form-control spacing input-width" ng-model="supplier.payment_status" permission = "[permissions.viewPaymentDetails]">
                 <option style="width:100%;" ng-repeat="item in payment_status"
                  ng-if="supplier.payment_status == undefined ? supplier.payment_status = payment_status[0].code : 1"
                 value="{{item.code}}" ng-click="updateSupplierStatus(supplier)"
@@ -250,7 +250,7 @@
               <span class="error" ng-show="phaseform.phase.$error.min">{{positiveNoError}}</span>
             </td>
             <td rowspan="{{key.length}}" ng-show="$first">
-              <div ng-repeat="image in permissionBoxImages" ng-if="image.object_id == supplier.supplier_id">
+              <div ng-repeat="image in permissionBoxImages" ng-if="image.object_id == supplier.supplier_id" style="margin-bottom:10px">
                   <img ng-src="http://androidtokyo.s3.amazonaws.com/{{image.image_path}}" alt="Permission Box" height="50" width="50">
               </div>
               <!--END : view comments modal  -->
@@ -295,7 +295,7 @@
               <button class="btn btn-primary active" ng-click="getPermissionBoxImages(supplier)" data-toggle="modal" data-target="#imageModal">View/Add</button>
             </td>
             <td rowspan="{{key.length}}" ng-show="$first">
-              <div ng-repeat="image in receiptImages" ng-if="image.object_id == supplier.supplier_id">
+              <div ng-repeat="image in receiptImages" ng-if="image.object_id == supplier.supplier_id"  style="margin-bottom:10px">
                   <img ng-src="http://androidtokyo.s3.amazonaws.com/{{image.image_path}}" alt="Receipt" height="50" width="50">
               </div>
               <button class="btn btn-primary active" ng-click="getReceiptBoxImages(supplier)" data-toggle="modal" data-target="#imageReceiptModal">View/Add</button>
@@ -925,7 +925,7 @@
       </div><br>
       <!-- <div> -->
         <br>
-        <button class="btn btn-success" type="button" ng-click="addComment()">Add Comment</button>
+        <button class="btn btn-success" type="button" ng-click="addComment()" style="margin:3%">Add Comment</button>
       <!-- </div> -->
     </br></br>
 
@@ -939,6 +939,7 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 View Comments For {{supplierDataForComment.name}}
               </div>
               <div class="modal-body">
@@ -955,11 +956,11 @@
                 <td class="col-md-8">
                   <div>
                     <img ng-src="{{userIcon}}">
-                    <b>{{item.user_name}} :</b> <br>
+                    <b>{{item.user_name}} :</b> <span> <small> {{item.timestamp|date:'medium'}}</small></span><br>
                   </div>
                   <div style="padding-left:30px">
-                    Comment : {{item.comment}}</br>
-                    <span> <small>{{item.timestamp|date:'medium'}}</small></span>
+                    <p style="word-break:break-word">{{item.comment}}</p>
+                    </br>
                   </div>
                 </td>
               </tr>

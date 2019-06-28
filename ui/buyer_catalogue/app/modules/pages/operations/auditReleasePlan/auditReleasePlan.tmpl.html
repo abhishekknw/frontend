@@ -123,15 +123,16 @@
                     total-items="totalSuppliers" current-page="pagination.current" ng-init="rowIndex = $index">
              <tr ng-repeat="(key,filter) in getFilters(supplier)" ng-if="supplier.booking_status=='BK'">
                <!-- <td rowspan="{{key.length}}" ng-show="$first">{{$index + 1}}</td> -->
-               <td class="col-md-1" rowspan="{{key.length}}" ng-show="$first">
+               <td rowspan="{{key.length}}" ng-show="$first">{{rowIndex}}</td>
+               <td class="col-md-1" rowspan="{{key.length}}" ng-show="$first"
+              ng-style="phaseEndDate > currentDate && {'background-color':'green'}">
                  {{phaseMappingList[supplier.phase_no].phase_no}}
                </td>
-               <td class="col-md-1">{{key}}</td>
-
-               <td class="col-md-2"><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages" ng-click="getSocietyDetails(supplier,supplier.supplier_id,center,$index)" target="_blank" style="text-decoration: underline; cursor: pointer;color:blue;">{{supplier.name}}({{supplier.quality_rating}})</a></td>
-               <td class="col-md-2">
-               <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank" style="text-decoration: underline; cursor: pointer;color:blue;">{{supplier.area}}, ({{supplier.subarea}}) {{supplier.address2}}</a></td>
-               <td class="col-md-2">{{supplier.address2}}</td>
+               <td class="col-md-2"> <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank"
+               style="text-decoration: underline; cursor: pointer;color:#337ab7;font-weight: 600;">
+               {{supplier.name}}</a><br>({{supplier.quality_rating}})
+               <br><br><br>
+               {{supplier.area}} <br> ({{supplier.subarea}}) <br>{{supplier.address2}} </td>
                <td class="col-md-2 checkboxes-btn">
                  <div ng-repeat="inventory in filter.detail">
                    <input type="checkbox" class="" ng-disabled="isDisable(rowIndex)" ng-model="inventory.status" ng-click="addInventory(inventory,rowIndex,$index)"  permission = "[permissions.assignDates]" />{{key}}{{$index+1}}
@@ -140,6 +141,7 @@
                    <button  class="btn" data-target="#addInventoryModal" data-toggle="modal" ng-click="getInventoryRelatedData(supplier)" ng-disabled="savingDates">Add Inventory</button>
                  </div>
                </td>
+
                <td class="col-md-1">
                  <div>
                  <button  class="btn btn-info" ng-disabled="invIdList.length == 0 || isDisable(rowIndex)" data-target="#manageDatesModal" data-toggle="modal" data-backdrop="static" ng-click="getActivityDates(supplier)"  permission = "[permissions.assignDates]">Manage Date</button>
@@ -152,6 +154,7 @@
              </div><br>
 
                </td>
+               <td></td>
                <!-- <td class="col-md-8">
 
                  <div class="">
