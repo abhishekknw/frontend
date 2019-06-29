@@ -59,10 +59,43 @@ $scope.addNewPhase =true;
     {name:'Phone Booked' , code : 'PB'},
     {name:'Visit Booked', code : 'VB'},
     {name:'Rejected', code : 'SR'},
+    {name:'Not Visited', code : 'NVI'},
     {name:'Send Email', code : 'SE'},
-    {name:'Visit Required', code : 'VR'},
-    {name:'Call Required', code : 'CR'},
+
   ];
+
+  $scope.booking_pending = [
+    {name:'Recce Required', code : 'DPRR'},
+    {name:'Visit Required', code : 'DPVR'},
+    {name:'Call Required', code : 'DPCR'},
+    {name:'Negotiation Required', code : 'DPNR'},
+    {name:'Not Available' , code : 'DPNA'},
+    {name:'Postponed', code : 'DPP'},
+    {name:'Specific Occasion Only', code : 'DPDOO'},
+    {name:'Others(Specify)', code : 'DPOS'},
+  ];
+
+
+  $scope.booking_rejected = [
+    {name:'Less occupancy', code : 'RLO'},
+    {name:'Less Children', code : 'RLC'},
+    {name:'Under Builder', code : 'RUB'},
+    {name:'Very Expensive', code : 'RVE'},
+    {name:'Client Rejected' , code : 'RCR'},
+    {name:'Rejected by Society', code : 'RRS'},
+    {name:'Others(Specify)', code : 'ROS'},
+  ];
+
+  $scope.booking_not_visited = [
+    {name:'Wikimapia', code : 'NVW'},
+    {name:'Google', code : 'NVG'},
+    {name:'99Acres', code : 'NVA'},
+    {name:'Magic Brick', code : 'NVMB'},
+    {name:'Wrong Number' , code : 'NVWN'},
+    {name:'First Time Assigned', code : 'NVFT'},
+    {name:'Others(Specify)', code : 'NVOS'},
+  ];
+
   $scope.bookingPriority = [
     {name: 'Very High', code: 'VH'},
     {name: 'High', code: 'HH'}
@@ -168,7 +201,7 @@ $scope.addNewPhase =true;
           for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
             $scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price = parseInt($scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price, 10);
             $scope.mapViewLat = $scope.initialReleaseData.shortlisted_suppliers[i].latitude;
-            $scope.mapViewLong = $scope.initialReleaseData.shortlisted_suppliers[i].longitude;            
+            $scope.mapViewLong = $scope.initialReleaseData.shortlisted_suppliers[i].longitude;
             if($scope.initialReleaseData.shortlisted_suppliers[i].next_action_date){
               $scope.initialReleaseData.shortlisted_suppliers[i].next_action_date = new Date($scope.initialReleaseData.shortlisted_suppliers[i].next_action_date);
             }
@@ -268,7 +301,7 @@ $scope.addNewPhase =true;
       $scope.inventoryIds = [];
       $scope.inventoryIds = filter.detail;
     }
-    $scope.updateData = function(){      
+    $scope.updateData = function(){
       releaseCampaignService.updateAuditReleasePlanDetails($scope.campaign_id,$scope.releaseDetails.shortlisted_suppliers)
       .then(function onSuccess(response){
         swal(constants.name,constants.updateData_success,constants.success);
@@ -1144,10 +1177,10 @@ $scope.multiSelect =
                 supplier_id: assignedSuppliers[i].supplier_id,
                 username: username,
                 updated_at: assignedSuppliers[i].updated_at
-              }) 
+              })
             }
           }
-        }   
+        }
         console.log($scope.assignedUserList)
         for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
           if (assignedSuppliersMap[$scope.initialReleaseData.shortlisted_suppliers[i].supplier_id]) {
@@ -1226,10 +1259,10 @@ $scope.multiSelect =
         for (var i=0; i<$scope.hashtagImages.length; i++){
           if ($scope.hashtagImages[i].permission_box){
             $scope.permissionBoxImages.push($scope.hashtagImages[i].permission_box)
-          } 
+          }
           if ($scope.hashtagImages[i].receipt){
             $scope.receiptImages.push($scope.hashtagImages[i].receipt)
-          } 
+          }
         }
       }).catch(function onError(response){
         console.log(response);

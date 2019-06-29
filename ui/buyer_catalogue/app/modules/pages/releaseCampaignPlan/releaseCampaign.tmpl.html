@@ -60,7 +60,8 @@
                 <th>Contacts Details</th>
                 <th>Assign User</th>
                 <th>Booking Priority</th>
-                <th>Booking Status</th>
+                <th>Booking <br> (Status)</th>
+                <th>Booking <br> (Sub Status)</th>
                 <th>Phase</th>
                 <th>Comments</th>
                 <th>Next Date Action</th>
@@ -144,6 +145,24 @@
                     <option style="width:100%;" ng-repeat="item in booking_status" value="{{item.code}}"
                     ng-if="supplier.booking_status == undefined ? supplier.booking_status = booking_status[0].code : 1"
                     >{{item.name}}</option>
+                  </select>
+                </td>
+                <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='DP'">
+                  <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status">
+                    <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}">
+                      {{item.name}}</option>
+                  </select>
+                </td>
+                <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='SR'">
+                  <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status">
+                    <option style="width:100%;" ng-repeat="item in booking_rejected" value="{{item.code}}">
+                      {{item.name}}</option>
+                  </select>
+                </td>
+                <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='NVI'">
+                  <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status">
+                    <option style="width:100%;" ng-repeat="item in booking_not_visited" value="{{item.code}}">
+                      {{item.name}}</option>
                   </select>
                 </td>
                 <td  class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="phaseform">
@@ -249,7 +268,7 @@
                      <label><input type="radio" ng-model="supplier.payment_status" value="PNI" ng-click="updateSupplierStatus()" ng-disabled="supplier.booking_status != 'BK'">Not Paid</label>
               </div> -->
             </td>
-           
+
             <td rowspan="{{key.length}}" ng-show="$first">
               <div ng-repeat="image in permissionBoxImages" ng-if="image.object_id == supplier.supplier_id" style="margin-bottom:10px">
                   <img ng-src="http://androidtokyo.s3.amazonaws.com/{{image.image_path}}" alt="Permission Box" height="50" width="50">
