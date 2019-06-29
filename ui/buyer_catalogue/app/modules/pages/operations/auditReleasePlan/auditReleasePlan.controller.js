@@ -13,7 +13,6 @@ angular.module('catalogueApp')
       }
       $scope.permissions = permissions.auditReleasePage;
       $scope.headings = [
-        {header : 'Index'},
         {header : 'Phase'},
         {header : 'Supplier Name & Address'},
         {header : 'AdInventory Id'},
