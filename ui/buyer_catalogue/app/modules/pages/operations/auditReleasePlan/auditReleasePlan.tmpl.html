@@ -60,7 +60,7 @@
               <div class = "col-md-3"><label>Select Inventory Type </label></div>
               <div class = "col-md-3">
                 <select class="form-control" ng-model="inventoryType" ng-disabled="!phase" required>
-                <option value="">Select Inventory Type</option>  
+                <option value="">Select Inventory Type</option>
                 <option ng-repeat="inventory in inventoryTypes" value="{{inventory}}">{{inventory}}</option>
                 </select>
               </div>
@@ -113,7 +113,7 @@
 
    <div class="panel-body panel-table">
        </br>
-         <table st-table="releaseDetails.shortlisted_suppliers" 
+         <table st-table="releaseDetails.shortlisted_suppliers"
          st-safe-src="Data" class="table table-bordered">
 
            <thead>
@@ -124,7 +124,7 @@
            </thead>
            <tbody dir-paginate="supplier in releaseDetails.shortlisted_suppliers | itemsPerPage: suppliersPerPage"
                     total-items="totalSuppliers" current-page="pagination.current">
-             <tr ng-repeat="(key,filter) in getFilters(supplier)" ng-if="supplier.booking_status=='BK'">    
+             <tr ng-repeat="(key,filter) in getFilters(supplier)" ng-if="supplier.booking_status=='BK'">
                <td class="col-md-1" rowspan="{{key.length}}" ng-show="$first"
               ng-style="phaseEndDate > currentDate && {'background-color':'green'}">
                  {{phaseMappingList[supplier.phase_no].phase_no || 'Not Assigned'}}
@@ -134,13 +134,14 @@
                {{supplier.name}}</a>&nbsp;({{supplier.quality_rating}})
                <br><br>
                {{supplier.area}}&nbsp;({{supplier.subarea}}) <br>{{supplier.address2}} </td>
-               <td class="col-md-2 checkboxes-btn">
-                 <div ng-repeat="inventory in filter.detail" style="margin-bottom: 10px;text-align: center;">
-                   <input type="checkbox" class="" ng-disabled="isDisable(rowIndex)" ng-model="inventory.status" ng-click="addInventory(inventory,rowIndex,$index)"  permission = "[permissions.assignDates]" /> {{key}}{{$index+1}}<br>
-                   <button  class="btn" data-target="#addInventoryModal" style="background: #5bc0de; color: white" data-toggle="modal" ng-click="getInventoryRelatedData(supplier)" ng-disabled="savingDates">Add Inventory</button>
+               <td class="col-md-4 checkboxes-btn">
+                 <div class="pull-left" ng-repeat="inventory in filter.detail" style="margin-bottom: 10px;text-align: center;">
+                   <input type="checkbox" class="" ng-disabled="isDisable(rowIndex)" ng-model="inventory.status" ng-click="addInventory(inventory,rowIndex,$index)"  permission = "[permissions.assignDates]" /> {{key}}{{$index+1}}&nbsp;
+                 </div>
+                 <div class="col-md-6 pull-right">
+                   <button  class="btn" data-target="#addInventoryModal" style="background: #5bc0de; color: white;margin-left:20px;" data-toggle="modal" ng-click="getInventoryRelatedData(supplier)" ng-disabled="savingDates">Add Inventory</button>
                  </div>
                </td>
-
                <td class="col-md-3">
                 <div style="display: flex;">&ensp;
                   <button  class="btn btn-info" ng-disabled="invIdList.length == 0 || isDisable(rowIndex)" data-target="#manageDatesModal" data-toggle="modal" data-backdrop="static" ng-click="getActivityDates(supplier)"  permission = "[permissions.assignDates]">Manage Date</button>&ensp;
@@ -175,11 +176,7 @@
        </br>
        <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
      </div>
-     <div class="panel-body button-style">
-       <button class="btn btn-danger active notify" ng-click="updateData()"  permission = "[permissions.updateData]">Update</button>
-     </div>
-<br /><br />
-     <!--Start: Code for Audit Date Modal Window -->
+   <!--Start: Code for Audit Date Modal Window -->
      <div id="auditDateModal" class="modal fade">
        <div class="modal-dialog" style="width:400px">
          <div class="modal-content">
