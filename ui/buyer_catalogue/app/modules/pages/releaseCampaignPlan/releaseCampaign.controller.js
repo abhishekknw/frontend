@@ -1180,8 +1180,7 @@ $scope.multiSelect =
               })
             }
           }
-        }
-        console.log($scope.assignedUserList)
+        }   
         for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
           if (assignedSuppliersMap[$scope.initialReleaseData.shortlisted_suppliers[i].supplier_id]) {
             $scope.assignedSuppliers.push($scope.initialReleaseData.shortlisted_suppliers[i]);

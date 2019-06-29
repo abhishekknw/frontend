@@ -28,23 +28,23 @@
 
 <!-- <div class="container"> -->
   <div class="panel-body table-style">
-    <div class="col-md-6">
+    <div class="col-md-2">
       <select class="col-md-6 form-control" name="" ng-model="selectedUser.value" ng-change="changeSupplierData()">
         <option value="all">All</option>
         <option value="assigned">Assigned</option>
       </select>
+    </div>  
+    <div class="col-md-10">
+        <div class="col-md-11">
+          <input  type="text" ng-model="customPopupSelected" placeholder="Search.." uib-typeahead="supplier as supplier.name for supplier in allShortlistedSuppliers | filter:{name:$viewValue}"
+          class="form-control" typeahead-on-select="getSearchedSupplierData(customPopupSelected)">
+        </div>
+        <div class="col-md-1">
+            <button type="button" name="button" class="btn btn-small btn-primary" ng-click="changeSupplierData()">Reset</button>
+        </div>
     </div>
     <br><br>
-    <div class="row col-md-12">
-      <div class="col-md-1">
-        <button type="button" name="button" class="btn btn-small btn-primary" ng-click="changeSupplierData()">Reset</button>
-      </div>
-      <div class="col-md-11">
-        <input  type="text" ng-model="customPopupSelected" placeholder="Search.." uib-typeahead="supplier as supplier.name for supplier in allShortlistedSuppliers | filter:{name:$viewValue}"
-        class="form-control" typeahead-on-select="getSearchedSupplierData(customPopupSelected)">
-      </div>
-    </div><br><br>
-    <div class="containerTable">
+    <div class="containerTable" ng-if="releaseDetails.shortlisted_suppliers.length > 0">
       <div class="table-responsive">
         <table class="table table-striped">
           <thead>
@@ -290,7 +290,7 @@
                                   <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
                                 </div>
                                 <div class="row" style="margin-left:10px;">
-                                  Comment : {{image.comment}} </br>
+                                    <b>Comment : </b>{{image.comment}} </br>
                                 </div>
                               </div>
 
@@ -303,8 +303,8 @@
                             </a>
                           </div>
                           <div>
-                            <button class="btn btn-primary active" ngf-select="uploadImagePermission($file)" ngf-max-size="2MB">Upload Image</button>
-                            <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Permission Box" ng-model="supplier.permissionComment"></textarea>
+                            <button class="btn btn-primary active" ngf-select="uploadImagePermission($file)" ngf-max-size="2MB" style="margin-bottom: 10px">Upload Image</button>
+                            <textarea class="form-control" name="name" rows="4" cols="20" placeholder="Enter Comments For Permission Box" ng-model="supplier.permissionComment"></textarea><br>
                             <button class="btn btn-primary active" ng-click="uploadPermissionBoxImage(supplier)" >Submit</button>
                           </div>
                         </div>
@@ -335,7 +335,7 @@
                                   <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
                                 </div>
                                  <div class="row" style="margin-left:10px;">
-                                   Comment : {{image.comment}} </br>
+                                   <b>Comment : </b>{{image.comment}} </br>
                                  </div>
                                </div>
 
@@ -348,9 +348,9 @@
                              </a>
                           </div>
                           <div>
-                            <button class="btn btn-primary active" ngf-select="uploadImageReceipt($file)" ngf-max-size="2MB">Upload Image</button>
-                            <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Receipt" ng-model="supplier.receiptComment"></textarea>
-                            <button ng-click="uploadReceiptImage(supplier)" >Submit</button>
+                            <button class="btn btn-primary active" ngf-select="uploadImageReceipt($file)" style="margin-bottom: 10px" ngf-max-size="2MB">Upload Image</button>
+                            <textarea class="form-control" name="name" rows="4" cols="20" placeholder="Enter Comments For Receipt" ng-model="supplier.receiptComment"></textarea><br>
+                            <button class="btn btn-primary active" ng-click="uploadReceiptImage(supplier)" >Submit</button>
                           </div>
                         </div>
                       </div>
@@ -379,12 +379,15 @@
                 <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages=""></div>
               </td>
             </tr> -->
-          </tfoot>
-        </table>
+          </tfoot></table>
       </div>
     </div>
-      <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
+      <dir-pagination-controls ng-if="releaseDetails.shortlisted_suppliers.length != 0" on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
   </div>
+  <br><br>
+  <div ng-if="releaseDetails.shortlisted_suppliers.length == 0"
+  style="text-align:center;font-family: 'Courier New', Courier, monospace;font-size: 30px">Societies not assigned to you.</div>
+  
   <form name = "form" ng-if="dateChecked">
     <!-- <div class="breadcrumb" ncy-breadcrumb></div> -->
     <div style="color:#000000;" class = "panel panel-default date-panel">
@@ -544,7 +547,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title">Mode of Payment Details</h4>
         <hr/>
-        <div class = "modal-body" style = "height: 200px;" >
+        <div class = "modal-body" style = "height: 200px;overflow: auto;" >
           <table class="table table-bordered">
             <thead>
               <tr>
