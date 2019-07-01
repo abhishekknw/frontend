@@ -1201,5 +1201,32 @@ $scope.multiSelect =
       getResultsPage(1);
     }
 
+    $scope.initTable = function () {
+      var tableOffset = $(".table-suppliers").offset().top;
+      var $header = $(".table-suppliers > thead");
+  
+      $(window).bind("scroll", function() {
+        var offset = $(this).scrollTop();
+    
+        if (offset >= tableOffset - 65) {
+          $header.css({
+            position: 'fixed',
+            top: '65px',
+          });
+        }
+        else if (offset < tableOffset) {
+          $header.css('position', 'static');
+        }
+      });
+      
+      $('.table-style').scroll(function() {
+        console.log('$header.width(): ', $header.width());
+        if ($header.width() > $(this).scrollLeft()) {
+          $header.css('left', '-' + $(this).scrollLeft() + 'px');
+        }
+      });
+    };
+
+
 
 }]);//Controller function ends here

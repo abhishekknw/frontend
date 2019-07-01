@@ -44,7 +44,7 @@
         class="form-control" typeahead-on-select="getSearchedSupplierData(customPopupSelected)">
       </div>
     </div><br><br>
-      <table class="table table-striped">
+      <table class="table table-striped table-suppliers" data-ng-init="initTable()">
         <thead>
           <tr>
             <th>Sr No</th>
@@ -78,7 +78,7 @@
           </tr>
         </thead>
         <tbody dir-paginate="supplier in releaseDetails.shortlisted_suppliers | itemsPerPage: suppliersPerPage" total-items="totalSuppliers" current-page="pagination.current"
-         track by "$index">
+          track by "$index">
           <tr ng-repeat="(key,filter) in supplier.shortlisted_inventories" ng-disabled="$index != '15'">
             <td rowspan="{{key.length}}" ng-show="$first">{{$parent.$index + 1}}</td>
             <td class="" rowspan="{{key.length}}" ng-show="$first"><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages" ng-click="getSocietyDetails(supplier,supplier.supplier_id,center,$index)" target="_blank" style="text-decoration: underline; cursor: pointer;color:blue;">{{supplier.name}}({{supplier.quality_rating}})</a></td>
@@ -122,10 +122,10 @@
             <td class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="priceform">
               <span  ng-disabled="!supplier.phase_no" class="error" ng-show="priceform.price.$error.min">{{positiveNoError}}</span>
               <input  ng-disabled="!supplier.phase_no" type="number" name="price" ng-model="supplier.total_negotiated_price" class="form-control spacing input-width" min="0" permission = "[permissions.addNegotiatedPrice]">
-           <br>{{(supplier.total_negotiated_price / supplier.flat_count)|| 0 | limitTo:8}}  </td>
-           <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
-               <input  ng-disabled="!supplier.phase_no" type="number"  ng-model="supplier.cost_per_flat" class="form-control spacing input-width" min="0">
-           </td>
+            <br>{{(supplier.total_negotiated_price / supplier.flat_count)|| 0 | limitTo:8}}  </td>
+            <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
+                <input  ng-disabled="!supplier.phase_no" type="number"  ng-model="supplier.cost_per_flat" class="form-control spacing input-width" min="0">
+            </td>
           <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
 
             <div ng-repeat="freebie in customFreebies">
@@ -188,21 +188,21 @@
             <!--mode of payment  -->
             <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
               <div class="radio">
-                     <label>
-                       <input ng-disabled="!supplier.phase_no" type="radio" ng-model="supplier.payment_method" value="NEFT" ng-click="getPaymentDetails(supplier,supplier.payment_method)"
-                       permission = "[permissions.viewPaymentMode,permissions.addPaymentMode]"
-                       data-target="#selectedPaymentModal" data-toggle="modal">NEFT
-                     </label>
+                      <label>
+                        <input ng-disabled="!supplier.phase_no" type="radio" ng-model="supplier.payment_method" value="NEFT" ng-click="getPaymentDetails(supplier,supplier.payment_method)"
+                        permission = "[permissions.viewPaymentMode,permissions.addPaymentMode]"
+                        data-target="#selectedPaymentModal" data-toggle="modal">NEFT
+                      </label>
               </div>
 
               <div class="radio" ng-if="supplier.status != 'X'">
                 <label>
-                   <input  ng-disabled="!supplier.phase_no" type="radio" ng-model="supplier.payment_method" value="CHEQUE"  permission = "[permissions.addPaymentMode]"
-                   data-target="#selectedPaymentModal" data-toggle="modal" ng-click="getPaymentDetails(supplier,supplier.payment_method)">Cheque</label>
+                    <input  ng-disabled="!supplier.phase_no" type="radio" ng-model="supplier.payment_method" value="CHEQUE"  permission = "[permissions.addPaymentMode]"
+                    data-target="#selectedPaymentModal" data-toggle="modal" ng-click="getPaymentDetails(supplier,supplier.payment_method)">Cheque</label>
               </div>
               <div class="radio" ng-if="supplier.status != 'X'">
-                     <label><input  ng-disabled="!supplier.phase_no" type="radio" ng-model="supplier.payment_method" value="CASH" permission = "[permissions.addPaymentMode]"
-                       ng-click="getPaymentDetails(supplier,supplier.payment_method)">Cash</label>
+                      <label><input  ng-disabled="!supplier.phase_no" type="radio" ng-model="supplier.payment_method" value="CASH" permission = "[permissions.addPaymentMode]"
+                        ng-click="getPaymentDetails(supplier,supplier.payment_method)">Cash</label>
               </div>
 
               <div style="text-align:center">
@@ -221,18 +221,18 @@
             <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
               <select   ng-disabled="!supplier.phase_no" class="form-control spacing input-width" ng-model="supplier.payment_status" permission = "[permissions.viewPaymentDetails]">
                 <option style="width:100%;" ng-repeat="item in payment_status"
-                 ng-if="supplier.payment_status == undefined ? supplier.payment_status = payment_status[0].code : 1"
+                  ng-if="supplier.payment_status == undefined ? supplier.payment_status = payment_status[0].code : 1"
                 value="{{item.code}}" ng-click="updateSupplierStatus(supplier)"
                 >{{item.name}}</option>
               </select>
               <!-- <div class="radio" permission = "[permissions.viewPaymentDetails]">
-                     <label><input type="radio" ng-model="supplier.payment_status" value="PD" ng-click="updateSupplierStatus()" ng-disabled="supplier.booking_status != 'BK'">Paid</label>
+                      <label><input type="radio" ng-model="supplier.payment_status" value="PD" ng-click="updateSupplierStatus()" ng-disabled="supplier.booking_status != 'BK'">Paid</label>
               </div>
               <div class="radio" permission = "[permissions.viewPaymentDetails]">
                 <label><input type="radio" ng-model="supplier.payment_status" value="PP" ng-click="updateSupplierStatus()" ng-disabled="supplier.booking_status != 'BK'">Pending</label>
               </div>
               <div class="radio" ng-if="supplier.status != 'X'" permission = "[permissions.viewPaymentDetails]">
-                     <label><input type="radio" ng-model="supplier.payment_status" value="PNI" ng-click="updateSupplierStatus()" ng-disabled="supplier.booking_status != 'BK'">Not Paid</label>
+                      <label><input type="radio" ng-model="supplier.payment_status" value="PNI" ng-click="updateSupplierStatus()" ng-disabled="supplier.booking_status != 'BK'">Not Paid</label>
               </div> -->
             </td>
             <td  style="text-align:left" rowspan="{{key.length}}" ng-show="$first">

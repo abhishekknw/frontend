@@ -69,6 +69,28 @@ td{
 	 overflow-y: auto;
    /* font-size: 12px; */
  }
+
+ .table-suppliers td,
+ .table-suppliers th {
+		min-width: 170px;
+		text-align: center;
+ }
+
+  .table-suppliers th {
+		white-space: nowrap;
+	}
+
+	.panel-body {
+		margin: 0;
+	}
+
+	@media (max-width: 768px) {
+		.table-suppliers tr > th:first-child,
+		.table-suppliers tr > td:first-child {
+			display: none;
+		}
+	}
+
 .input-width{
 	min-width: 120px !important;
 }
