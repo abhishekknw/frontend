@@ -440,7 +440,7 @@
                                     <div id="completed" class="animate-show" ng-show="campaignStatus.completed.value">
                                         <div class="panel-bodyDashboard camp-menu-content">
                                             <table class="table">
-                                                <tr ng-repeat="campaign in campaignData.completed_campaigns">
+                                                <tr ng-repeat="campaign in campaignData.completed_campaigns | orderBy: 'name'">
                                                   <td ng-click="getSuppliersOfCampaignWithStatus(campaign)">
                                                     {{campaign.name}}
                                                   </td>
@@ -458,7 +458,7 @@
                                       <div id="ongoing" class="animate-show" ng-show="campaignStatus.ongoing.value">
                                           <div class="panel-bodyDashboard camp-menu-content">
                                               <table class="table">
-                                                  <tr ng-repeat="campaign in campaignData.ongoing_campaigns">
+                                                  <tr ng-repeat="campaign in campaignData.ongoing_campaigns | orderBy: 'name'">
                                                     <td ng-click="getSuppliersOfCampaignWithStatus(campaign)">
                                                       {{campaign.name}}
                                                     </td>
@@ -495,7 +495,7 @@
                                       <div id="onhold" class="animate-show" ng-show="campaignStatus.onhold.value">
                                           <div class="panel-bodyDashboard camp-menu-content">
                                               <table class="table">
-                                                  <tr ng-repeat="campaign in campaignData.onhold_campaigns">
+                                                  <tr ng-repeat="campaign in campaignData.onhold_campaigns | orderBy: 'name'">
                                                     <td ng-click="getSuppliersOfCampaignWithStatus(campaign)">
                                                       {{campaign.name}}
                                                     </td>
