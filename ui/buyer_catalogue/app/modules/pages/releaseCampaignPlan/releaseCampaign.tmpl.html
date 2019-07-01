@@ -60,8 +60,7 @@
                 <th>Contacts Details</th>
                 <th>Assign User</th>
                 <th>Booking Priority</th>
-                <th>Booking <br> (Status)</th>
-                <th>Booking <br> (Sub Status)</th>
+                <th>Booking Status <br> and Sub Status</th>
                 <th>Phase</th>
                 <th>Comments</th>
                 <th>Next Date Action</th>
@@ -146,11 +145,29 @@
                     ng-if="supplier.booking_status == undefined ? supplier.booking_status = booking_status[0].code : 1"
                     >{{item.name}}</option>
                   </select>
+                  <br>
+                    <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-if="supplier.booking_status=='DP'">
+                      <option value="">Select Sub Status</option>
+                      <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}"
+                      ng-if="supplier.booking_pending == undefined ? supplier.booking_pending = booking_pending[0].code : 1">
+                        {{item.name}}</option>
+                    </select>
+                    <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-show="$first" ng-if="supplier.booking_status=='SR'">
+                        <option value="">Select Sub Status</option>
+                      <option style="width:100%;" ng-repeat="item in booking_rejected" value="{{item.code}}"
+                      ng-if="supplier.booking_rejected == undefined ? supplier.booking_rejected = booking_rejected[0].code : 1">
+                        {{item.name}}</option>
+                    </select>
+                    <select  class="form-control spacing input-width" ng-model="supplier.booking_not_visited"  ng-if="supplier.booking_status=='NVI'">
+                        <option value="">Select Sub Status</option>
+                      <option style="width:100%;" ng-repeat="item in booking_not_visited" value="{{item.code}}"
+                      ng-if="supplier.booking_not_visited == undefined ? supplier.booking_not_visited = booking_not_visited[0].code : 1">
+                        {{item.name}}</option>
+                    </select>
                 </td>
-                <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='BK'">
+                <!-- <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='BK'">
                   <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-disabled="supplier.booking_status=='BK'">
-                    <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}">
-                      {{item.name}}</option>
+                    <option style="width:100%;"></option>
                   </select>
                 </td>
                 <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='NB'">
@@ -182,28 +199,8 @@
                     <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}">
                       {{item.name}}</option>
                   </select>
-                </td>
-                <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='DP'">
-                  <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status">
-                    <option value="">Select Sub Status</option>
-                    <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}">
-                      {{item.name}}</option>
-                  </select>
-                </td>
-                <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='SR'">
-                  <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status">
-                      <option value="">Select Sub Status</option>
-                    <option style="width:100%;" ng-repeat="item in booking_rejected" value="{{item.code}}">
-                      {{item.name}}</option>
-                  </select>
-                </td>
-                <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='NVI'">
-                  <select  class="form-control spacing input-width" ng-model="supplier.booking_not_visited">
-                      <option value="">Select Sub Status</option>
-                    <option style="width:100%;" ng-repeat="item in booking_not_visited" value="{{item.code}}">
-                      {{item.name}}</option>
-                  </select>
-                </td>
+                </td> -->
+
                 <td  class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="phaseform">
                     <input class="col-md-12 form-control" ng-disabled="supplier.booking_status != 'BK'" type="text" ng-model="phaseMappingList[supplier.phase_no].phase_no"/>
                     <select  ng-disabled="supplier.booking_status != 'BK'" name="phase" class="form-control spacing input-width-phase" ng-change="setPhase(supplier,supplier.phaseNo)" ng-model="supplier.phaseNo" min="1" permission = "[permissions.addPhase, permissions.viewPhase]">
