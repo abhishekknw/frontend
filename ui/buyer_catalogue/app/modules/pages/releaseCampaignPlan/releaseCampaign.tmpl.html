@@ -202,7 +202,7 @@
                 </td> -->
 
                 <td  class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="phaseform">
-                    <input class="col-md-12 form-control" ng-disabled="supplier.booking_status != 'BK'" type="text" ng-model="phaseMappingList[supplier.phase_no].phase_no"/>
+                    <input class="form-control spacing input-width" ng-disabled="supplier.booking_status != 'BK'" type="text" ng-model="phaseMappingList[supplier.phase_no].phase_no"/>
                     <select  ng-disabled="supplier.booking_status != 'BK'" name="phase" class="form-control spacing input-width-phase" ng-change="setPhase(supplier,supplier.phaseNo)" ng-model="supplier.phaseNo" min="1" permission = "[permissions.addPhase, permissions.viewPhase]">
                       <option value="" disabled>Select Phase</option>
                       <!-- <option value="" >None</option> -->
@@ -220,7 +220,7 @@
                   <br>
                 </td>
                 <td rowspan="{{key.length}}" ng-show="$first">
-                  <input class="form-control" type="date" name="">
+                  <input class="form-control spacing input-width" type="date" name="">
                 </td>
                     <td ng-if="key=='NA'">{{key}}</td>
                     <td ng-if="key!='NA'"><a class="" data-target="#invTypeModal" data-toggle="modal" ng-click="setInventoryIds(filter)" permission = "[permissions.viewInventoryIds]"><b>{{key}}</b></a>
@@ -283,7 +283,7 @@
             </td>
             <td class="" rowspan="{{key.length}}" ng-show="$first">
               <div class="" ng-if="supplier.payment_method == 'NEFT' || supplier.payment_method == 'CHEQUE'">
-                <input  ng-disabled="!supplier.phase_no" type="text" class="form-control" ng-model="supplier.transaction_or_check_number" ng-change="updateSupplierStatus(supplier)">
+                <input  ng-disabled="!supplier.phase_no" type="text" class="form-control spacing input-width" ng-model="supplier.transaction_or_check_number" ng-change="updateSupplierStatus(supplier)">
               </div>
             </td>
             <!--for payment status  -->
