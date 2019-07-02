@@ -19,8 +19,12 @@ export default class OptionModal extends React.Component {
   constructor(props) {
     super(props);
 
+    let options = [''];
+    if (props.options) {
+      options = props.options;
+    }
     this.state = {
-      options: props.options,
+      options: options,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.renderOptionRow = this.renderOptionRow.bind(this);

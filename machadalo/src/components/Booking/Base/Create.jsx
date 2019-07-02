@@ -91,6 +91,28 @@ const validate = (data) => {
     };
   }
 
+  for (let i = 0; i < data.booking_attributes.length; i++) {
+    let attr = 'attribute' + i;
+    if (!data.booking_attributes[i].name) {
+      errors[attr] = {
+        message: 'This field should not be blank',
+      };
+    }
+    if (
+      (data.booking_attributes[i].type == 'DROPDOWN' ||
+        data.booking_attributes[i].type == 'HASHTAG' ||
+        data.booking_attributes[i].type == 'MULTISELECT') &&
+      (!data.booking_attributes[i].hasOwnProperty('options') ||
+        data.booking_attributes[i].options.length == 0 ||
+        data.booking_attributes[i].options.indexOf('') > -1)
+    ) {
+      let opt = 'options' + i;
+      errors[opt] = {
+        message: 'Please fill the options',
+      };
+    }
+  }
+
   return errors;
 };
 
@@ -361,7 +383,8 @@ export default class CreateBaseBooking extends React.Component {
   }
 
   renderAttributeRow(attribute, index) {
-    const { isEditMode } = this.state;
+    const { isEditMode, errors } = this.state;
+
     const onNameChange = (event) => {
       const newAttribute = { ...attribute };
 
@@ -401,10 +424,19 @@ export default class CreateBaseBooking extends React.Component {
 
     return (
       <div className="attribute" key={index}>
-        <div className="form-control">
-          <input type="text" placeholder="Name" value={attribute.name} onChange={onNameChange} />
+        <div className="form-control form-control--column">
+          <input
+            type="text"
+            placeholder="Name"
+            value={attribute.name}
+            onChange={onNameChange}
+            className={classnames({ error: errors['attribute' + index] })}
+          />
+          {errors && errors['attribute' + index] ? (
+            <p className="message message--error">{errors['attribute' + index].message}</p>
+          ) : null}
         </div>
-        <div className="form-control">
+        <div className="form-control form-control--column">
           <Select
             className="select"
             options={AttributeTypes}
@@ -418,16 +450,14 @@ export default class CreateBaseBooking extends React.Component {
               className="show-option"
               style={optionStyle}
               onClick={() =>
-                this.onOpenOptionModal(
-                  attribute.options,
-                  attribute.type,
-                  attribute,
-                  attribute.attrIndex
-                )
+                this.onOpenOptionModal(attribute.options, attribute.type, attribute, index)
               }
             >
               Show Options
             </p>
+          ) : null}
+          {errors && errors['options' + index] ? (
+            <p className="message message--error">{errors['options' + index].message}</p>
           ) : null}
         </div>
         <div className="form-control form-control--row-vertical-center">
