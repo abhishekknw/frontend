@@ -1,7 +1,7 @@
 angular.module('catalogueApp')
 .controller('AuditReleasePlanCtrl',
-    ['$scope', '$rootScope', '$window', '$location','auditReleasePlanService','$stateParams','constants','$filter','permissions','commonDataShare',
-    function ($scope, $rootScope, $window, $location, auditReleasePlanService, $stateParams, constants, $filter, permissions, commonDataShare) {
+    ['$scope', '$rootScope', '$window', '$location','auditReleasePlanService','$stateParams','constants','$filter','permissions','commonDataShare', 'moment',
+    function ($scope, $rootScope, $window, $location, auditReleasePlanService, $stateParams, constants, $filter, permissions, commonDataShare, moment) {
       $scope.campaign_id = $stateParams.proposal_id;
       $scope.bd_manager = constants.bd_manager;
       $scope.campaign_manager = constants.campaign_manager;
@@ -13,14 +13,11 @@ angular.module('catalogueApp')
       }
       $scope.permissions = permissions.auditReleasePage;
       $scope.headings = [
-        // {header : 'Index'},
         {header : 'Phase'},
-        {header : 'Inventory Type'},
-        {header : 'Supplier Name'},
-        {header : 'Area (Sub Area)'},
-        {header : 'Address'},
+        {header : 'Supplier Name & Address'},
         {header : 'AdInventory Id'},
         {header : 'Activity Date'},
+        {header : 'Status of Release'},
       ];
       $scope.audit_dates = [
         {header : 'Audit Date'},
@@ -84,13 +81,13 @@ angular.module('catalogueApp')
             angular.forEach($scope.userList, function(data){
               $scope.usersMapListWithObjects[data.id] = data;
             })
-            console.log($scope.usersMapListWithObjects);
           })
           .catch(function onError(response){
             console.log("error occured", response.status);
             commonDataShare.showErrorMessage(response);
           });
       }
+      $scope.getUsersList();
       var getResultsPage = function(newPage){
         getCampaignReleaseDetails(newPage);
       }
@@ -98,16 +95,13 @@ angular.module('catalogueApp')
         $scope.editPhase = false;
         auditReleasePlanService.getPhases($scope.campaign_id)
         .then(function onSuccess(response){
-          console.log(response);
           $scope.phaseMappingList = {};
           angular.forEach(response.data.data, function(phase){
             phase.start_date = new Date(phase.start_date);
             phase.end_date = new Date(phase.end_date);
             $scope.phaseMappingList[phase.id] = phase;
           })
-          console.log($scope.phaseMappingList);
-          $scope.phases = response.data.data;
-          console.log($scope.phases);
+          $scope.phasesData = response.data.data;
 
         }).catch(function onError(response){
           console.log(response);
@@ -120,7 +114,6 @@ angular.module('catalogueApp')
         $scope.Data = [];
       auditReleasePlanService.getCampaignReleaseDetails($scope.campaign_id, newPage, supplierIdForSearch)
       	.then(function onSuccess(response){
-          console.log("get values",response);
           if(response.data.data){
             if(response.data.data.shortlisted_suppliers.length == 1 &&
                 response.data.data.shortlisted_suppliers[0].phase_no == undefined){
@@ -130,7 +123,6 @@ angular.module('catalogueApp')
 
             $scope.totalSuppliers = $scope.releaseDetails.total_count;
             $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
-            console.log(  $scope.Data);
             setDataToModel($scope.releaseDetails.shortlisted_suppliers);
 
             $scope.filteredAssignDatesList = angular.copy($scope.releaseDetails);
@@ -292,7 +284,6 @@ angular.module('catalogueApp')
       }
       else
         $scope.invIdList.splice(index,1);
-      console.log($scope.invIdList);
     }
     //To disable other checkboxes of other rows of adInventory Id
     $scope.isDisable = function(index){
@@ -307,12 +298,10 @@ angular.module('catalogueApp')
       date = commonDataShare.formatDate(date);
     }
     $scope.addAuditDate = function(inventory){
-      console.log(inventory);
       inventory.push({
         date : '',
         userCode : '',
       });
-      console.log(inventory);
     }
     $scope.removeAuditDate = function(inventory,index){
       inventory.splice(index,1);
@@ -383,7 +372,6 @@ angular.module('catalogueApp')
     }
 
     $scope.showActivityDates = function(inventory, supplier, key){
-      console.log(inventory, supplier);
       $scope.ActivityDatesData = inventory;
       $scope.supplierName = supplier.name;
       $scope.inventoryName = key;
@@ -425,7 +413,6 @@ angular.module('catalogueApp')
         assignment_detail : [],
       }
       requestData.assignment_detail.push(assignment_detail);
-      console.log(requestData);
       auditReleasePlanService.saveActivityDetails(requestData)
       .then(function onSuccess(response){
         getResultsPage(1);
@@ -440,10 +427,8 @@ angular.module('catalogueApp')
 
     $scope.deleteInvActAssignment = function(id){
       var data = {};
-      console.log(id);
       auditReleasePlanService.deleteInvActAssignment(id, data)
       .then(function onSuccess(response){
-        console.log(response);
         swal(constants.name,constants.delete_success,constants.success);
       }).catch(function onError(response){
         swal(constants.name,response.data.data.general_error,constants.error);
@@ -454,7 +439,6 @@ angular.module('catalogueApp')
       $scope.shortlistedSupplierData = supplier;
         auditReleasePlanService.getInventoryRelatedData()
         .then(function onSuccess(response){
-          console.log(response);
           $scope.adInventoryTypes = response.data.data.inventory_types;
           $scope.durationTypes = response.data.data.duration_types;
         }).catch(function onError(response){
@@ -464,10 +448,8 @@ angular.module('catalogueApp')
     $scope.adInvModel = {};
     $scope.addAdInventoryIds = function(){
       $scope.adInvModel['space_id'] =  $scope.shortlistedSupplierData.id;
-      console.log($scope.adInvModel);
       auditReleasePlanService.addAdInventoryIds($scope.adInvModel)
       .then(function onSuccess(response){
-        console.log(response);
         $('#addInventoryModal').on('hide.bs.modal', function () {});
         $scope.adInvModel = {};
         getResultsPage(1);
@@ -479,10 +461,8 @@ angular.module('catalogueApp')
 
     }
     $scope.deleteAdInventoryIds = function(){
-      console.log($scope.invIdList);
       auditReleasePlanService.deleteAdInventoryIds($scope.invIdList)
       .then(function onSuccess(response){
-        console.log(response);
         getResultsPage(1);
         swal(constants.name,response.data.data.msg,constants.success);
       }).catch(function onError(response){
@@ -492,12 +472,10 @@ angular.module('catalogueApp')
     }
 
     $scope.addComment = function(){
-      console.log($scope.commentModal);
       $scope.commentModal['related_to'] = constants.execution_related_comment;
       $scope.commentModal['shortlisted_spaces_id'] = $scope.supplierDataForComment.id;
       auditReleasePlanService.addComment($scope.campaign_id,$scope.commentModal)
       .then(function onSuccess(response){
-        console.log(response);
         $scope.commentModal = {};
         $scope.supplierDataForComment = undefined;
         $('#addComments').modal('hide');
@@ -516,7 +494,6 @@ angular.module('catalogueApp')
      var spaceId = $scope.supplierDataForComment.id;
      auditReleasePlanService.viewComments($scope.campaign_id,spaceId,relatedTo)
      .then(function onSuccess(response){
-       console.log(response);
        $scope.commentModal = {};
        $scope.commentsData = response.data.data;
        if(Object.keys($scope.commentsData).length != 0){
@@ -534,7 +511,6 @@ angular.module('catalogueApp')
    var getOrganisationsForAssignment = function(){
      auditReleasePlanService.getOrganisationsForAssignment()
      .then(function onSuccess(response){
-       console.log(response);
        $scope.organisationList = response.data.data;
      }).catch(function onError(response){
        console.log(response);
@@ -544,9 +520,7 @@ angular.module('catalogueApp')
    var searchSupplierBySelection = function(){
      auditReleasePlanService.searchSupplierBySelection($scope.campaign_id)
      .then(function onSuccess(response){
-       console.log(response);
        $scope.allShortlistedSuppliers = response.data.data;
-       console.log($scope.allShortlistedSuppliers);
      }).catch(function onError(response){
        console.log(response);
      })

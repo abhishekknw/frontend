@@ -63,6 +63,7 @@ angular
     'checklist-model',
     'btorfs.multiselect',
     'angularUtils.directives.dirPagination',
+    'angularMoment'
   ])
   .config(function ($routeProvider, $stateProvider, $urlRouterProvider, $httpProvider, $qProvider, $locationProvider,cfpLoadingBarProvider) {
       $stateProvider

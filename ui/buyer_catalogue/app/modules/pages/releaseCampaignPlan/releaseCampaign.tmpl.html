@@ -44,88 +44,201 @@
         class="form-control" typeahead-on-select="getSearchedSupplierData(customPopupSelected)">
       </div>
     </div><br><br>
-      <table class="table table-striped">
+      <table class="table table-striped table-suppliers" data-ng-init="initTable()">
         <thead>
           <tr>
-            <th>Sr No</th>
-            <th>Supplier Name</th>
-            <th>Area,(Sub Area)</th>
-            <th>Address</th>
-            <th>RelationShip Data</th>
-            <th>Flat Count</th>
-            <th>Tower Count</th>
-            <th>Inventory Type</th>
-            <th>Inventory Count</th>
-            <th>Inventory Days</th>
-            <th>Inventory Supplier Price</th>
-            <th>Total Supplier Price   (Per Flat)  </th>
-            <th>Negotiated Price</th>
-            <th>Cost Per Flat</th>
-            <th>Freebies</th>
-            <th>Booking Priority</th>
-            <th>Booking Status</th>
-            <th>Phase</th>
-            <th>Select User</th>
-            <th>Mode Of Payment</th>
-            <th>Transaction/Cheque Number</th>
-            <th>Contacts</th>
-            <th>Payment Status</th>
-            <th>Completion Status</th>
-            <th>Comments</th>
-            <th>Action</th>
-            <th>Permission Box</th>
-            <th>Receipt</th>
-          </tr>
+              <th style="width:40px;">Sr No</th>
+              <th>Supplier Name</th>
+              <th>Area <br>(Sub Area)</th>
+              <th>Address <br>(Landmark)</th>
+              <th>RelationShip Data</th>
+              <th>Flat Count</th>
+              <th>Tower Count</th>
+              <th>Contacts Details</th>
+              <th>Assign User</th>
+              <th>Booking Priority</th>
+              <th>Booking Status <br> and Sub Status</th>
+              <th>Phase</th>
+              <th>Comments</th>
+              <th>Next Date Action</th>
+              <th>Inventory Type</th>
+              <th>Inventory Count</th>
+              <th>Inventory Days</th>
+              <th>Inventory Supplier Price</th>
+              <th>Total Supplier Price   (Per Flat)  </th>
+              <th>Negotiated Price</th>
+              <th>Cost Per Flat</th>
+              <th>Freebies</th>
+              <th>Mode Of Payment</th>
+              <th>Transaction/Cheque Number</th>
+              <th>Payment Status</th>
+              <th>Permission Box</th>
+              <th>Receipt</th>
+              <th>Completion Status</th>
+              <th>Delete Action</th>
+        </tr>
         </thead>
         <tbody dir-paginate="supplier in releaseDetails.shortlisted_suppliers | itemsPerPage: suppliersPerPage" total-items="totalSuppliers" current-page="pagination.current"
-         track by "$index">
+          track by "$index">
           <tr ng-repeat="(key,filter) in supplier.shortlisted_inventories" ng-disabled="$index != '15'">
-            <td rowspan="{{key.length}}" ng-show="$first">{{$parent.$index + 1}}</td>
-            <td class="" rowspan="{{key.length}}" ng-show="$first"><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages" ng-click="getSocietyDetails(supplier,supplier.supplier_id,center,$index)" target="_blank" style="text-decoration: underline; cursor: pointer;color:blue;">{{supplier.name}}({{supplier.quality_rating}})</a></td>
+            <td rowspan="{{key.length}}" ng-show="$first" style="width:40px;"
+            ng-style="supplier.booking_status==='BK' && {'background-color':'green'} ||
+            supplier.booking_status==='SR' && {'background-color':'red'} ||
+            supplier.booking_status==='DP' && {'background-color':'yellow'} ||
+            supplier.booking_status && {'background-color':'brown'}">{{$parent.$index + 1}}</td>
             <td class="" rowspan="{{key.length}}" ng-show="$first">
-            <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank" style="text-decoration: underline; cursor: pointer;color:blue;">{{supplier.area}}, ({{supplier.subarea}}) {{supplier.address2}}</a></td>
-            <td class="" rowspan="{{key.length}}" ng-show="$first" width="200">{{supplier.address1}}</td>
+            <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank"
+            style="text-decoration: underline; cursor: pointer;color:#337ab7;font-weight: 600;">{{supplier.name}}<br> </a>
+            ({{supplier.quality_rating}})</td>
+            <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.area}} <br> ({{supplier.subarea}}) <br> {{supplier.address2}}</td>
+            <td class="" rowspan="{{key.length}}" ng-show="$first" width="200"> {{supplier.address1}} <br> {{supplier.landmark}}</td>
             <!-- <td class="" rowspan="{{key.length}}" ng-show="$first" width="200">Inventory Owner :<b> Machadalo</b>, Feedback:{{supplier.feedback}}</td> -->
             <td class="" rowspan="{{key.length}}" ng-show="$first" width="200">
-              <button type="button" name="button" style="background-color:#d9534f;" ng-click="getRelationShipData(supplier)" data-target="#relationshipModal" data-toggle="modal">View Data</button>
+              <button type="button" class="btn btn-danger"name="button"  ng-click="getRelationShipData(supplier)" data-target="#relationshipModal" data-toggle="modal">View Data</button>
             </td>
             <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.flat_count}}</td>
             <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.tower_count}}</td>
 
-            <td class="" ng-if="key=='NA'">{{key}}</td>
-            <td class="col-md-3" ng-if="key!='NA'"><a class="" data-target="#invTypeModal" data-toggle="modal" ng-click="setInventoryIds(filter)" permission = "[permissions.viewInventoryIds]"><b>{{key}}</b></a>
-
-            <!-- <span class="" ng-if="key=='STALL'" ng-dropdown-multiselect="" options="stallLoc"  extra-settings="selected_baseline" events="customEvents"
-            selected-model="supplier.stall_locations"  translation-texts="selected_customTexts"></span>
-
-            <span class="" ng-if="key=='SUNBOARD'" ng-dropdown-multiselect="" options="sunboard"  extra-settings="selected_baseline" events="customEvents"
-            selected-model="supplier.sunboard_locations"  translation-texts="selected_customTexts"></span> -->
-
-            <multiselect ng-if="key=='STALL'" ng-model="supplier.stall_locations" options="StallOptions" show-select-all="true" show-unselect-all="true">
-            </multiselect>
-
-            <multiselect ng-if="key=='SUNBOARD'" ng-model="supplier.sunboard_location" options="SunboardOptions" show-select-all="true" show-unselect-all="true">
-            </multiselect>
-
-
-
+            <td class="" rowspan="{{key.length}}" ng-show="$first">
+              <div class="" ng-repeat="supplier in supplier.contacts | limitTo: 1">
+                  <p ng-if="supplier.name">{{supplier.name}}</p><br>
+                  <p ng-if="supplier.mobile">({{supplier.mobile}})</p>
+              </div>
+              <a  ng-disabled="!supplier.phase_no" class="" data-target="#contactModal" data-toggle="modal" ng-click="setContact(supplier)">
+                <b>View More/Add</b></a>
             </td>
+            <td rowspan="{{key.length}}" ng-show="$first">
+              <button type="button" class="btn btn-danger"name="button" data-toggle="modal" data-target="#addUserModal" ng-click="setUserSupplier(supplier)">Assign User</button>
+              <p ng-repeat="user in assignedUserList | orderBy: '-updated_at'" ng-if="supplier.supplier_id == user.supplier_id">{{user.username | uppercase}} <br>{{ user.updated_at | date:"dd/MMM/y"}}</p>
+                <div id="addUserModal" class="modal fade">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Assign Users</h4>
+                      <div class = "modal-body" style = "height: 300px;">
+                        <select name="users" class="form-control spacing input-width-phase"  ng-model="userData.user" min="1" >
+                          <option value="" disabled>Select User</option>
+                          <option ng-repeat="user in usersMapListWithObjects  | orderBy:'username' | unique:'id'" value="{{user.id}}">{{user.username}}</option>
+                        </select>
+                        <br />
+                        <button type="button" class="btn btn-danger" name="button" ng-click="setUserForBooking()">Assign</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first">
+                <select  class="form-control spacing input-width" ng-model="supplier.booking_priority">
+                  <option value="" disabled>None</option>
+                  <option style="width:100%;" ng-repeat="item in bookingPriority" value="{{item.code}}">
+                    {{item.name}}</option>
+                </select>
+              </td>
+              <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" >
+                <select  class="form-control spacing input-width" ng-model="supplier.booking_status" permission = "[permissions.changeBookingStatus]" ng-change="changePhase(supplier)">
+                  <option style="width:100%;" ng-repeat="item in booking_status" value="{{item.code}}"
+                  ng-if="supplier.booking_status == undefined ? supplier.booking_status = booking_status[0].code : 1"
+                  >{{item.name}}</option>
+                </select>
+                <br>
+                  <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-if="supplier.booking_status=='DP'">
+                    <option value="">Select Sub Status</option>
+                    <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}"
+                    ng-if="supplier.booking_pending == undefined ? supplier.booking_pending = booking_pending[0].code : 1">
+                      {{item.name}}</option>
+                  </select>
+                  <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-show="$first" ng-if="supplier.booking_status=='SR'">
+                      <option value="">Select Sub Status</option>
+                    <option style="width:100%;" ng-repeat="item in booking_rejected" value="{{item.code}}"
+                    ng-if="supplier.booking_rejected == undefined ? supplier.booking_rejected = booking_rejected[0].code : 1">
+                      {{item.name}}</option>
+                  </select>
+                  <select  class="form-control spacing input-width" ng-model="supplier.booking_not_visited"  ng-if="supplier.booking_status=='NVI'">
+                      <option value="">Select Sub Status</option>
+                    <option style="width:100%;" ng-repeat="item in booking_not_visited" value="{{item.code}}"
+                    ng-if="supplier.booking_not_visited == undefined ? supplier.booking_not_visited = booking_not_visited[0].code : 1">
+                      {{item.name}}</option>
+                  </select>
+              </td>
+              <!-- <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='BK'">
+                <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-disabled="supplier.booking_status=='BK'">
+                  <option style="width:100%;"></option>
+                </select>
+              </td>
+              <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='NB'">
+                <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-disabled="supplier.booking_status=='NB'">
+                  <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}">
+                    {{item.name}}</option>
+                </select>
+              </td>
+              <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='TB'">
+                <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-disabled="supplier.booking_status=='TB'">
+                  <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}">
+                    {{item.name}}</option>
+                </select>
+              </td>
+              <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='PB'">
+                <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-disabled="supplier.booking_status=='PB'">
+                  <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}">
+                    {{item.name}}</option>
+                </select>
+              </td>
+              <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='VB'">
+                <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-disabled="supplier.booking_status=='VB'">
+                  <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}">
+                    {{item.name}}</option>
+                </select>
+              </td>
+              <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='SE'">
+                <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-disabled="supplier.booking_status=='SE'">
+                  <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}">
+                    {{item.name}}</option>
+                </select>
+              </td> -->
 
+              <td  class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="phaseform">
+                  <input class="form-control spacing input-width" ng-disabled="supplier.booking_status != 'BK'" type="text" ng-model="phaseMappingList[supplier.phase_no].phase_no"/>
+                  <select  ng-disabled="supplier.booking_status != 'BK'" name="phase" class="form-control spacing input-width-phase" ng-change="setPhase(supplier,supplier.phaseNo)" ng-model="supplier.phaseNo" min="1" permission = "[permissions.addPhase, permissions.viewPhase]">
+                    <option value="" disabled>Select Phase</option>
+                    <!-- <option value="" >None</option> -->
+                    <option ng-repeat="phase in phases | unique:'phase_no'" value="{{phase.id}}">{{phase.phase_no}}</option>
+                  </select>
+                  <span class="error" ng-show="phaseform.phase.$error.min">{{positiveNoError}}</span>
+                </td>
+              <td rowspan="{{key.length}}" ng-show="$first">
+                <!-- <div class="" ng-repeat="item in commentsData[selectedInvForView] | limitTo: 1">
+                    <p>{{item.comment}}</p>
+                </div> -->
+                <button type="button" class="btn btn-danger" data-target="#addComments"
+                data-toggle="modal" ng-click="getSupplierForComments(supplier)">Add</button> &nbsp;
+                <button type="button" class="btn btn-success" ng-click="viewComments(supplier)">View</button>
+                <br>
+              </td>
+              <td rowspan="{{key.length}}" ng-show="$first">
+                <input class="form-control spacing input-width" type="date" name="">
+              </td>
+                  <td ng-if="key=='NA'">{{key}}</td>
+                  <td ng-if="key!='NA'"><a class="" data-target="#invTypeModal" data-toggle="modal" ng-click="setInventoryIds(filter)" permission = "[permissions.viewInventoryIds]"><b>{{key}}</b></a>
+                  <multiselect ng-if="key=='STALL'" ng-model="supplier.stall_locations" options="StallOptions" show-select-all="true" show-unselect-all="true">
+                  </multiselect>
+              <multiselect ng-if="key=='SUNBOARD'" ng-model="supplier.sunboard_location" options="SunboardOptions" show-select-all="true" show-unselect-all="true">
+              </multiselect>
+            </td>
             <td class="" ng-if="key=='FLIER'">{{supplier.flat_count}}</td>
             <td class="" ng-if="key!='FLIER'">{{filter.total_count}}</td>
-            <td class="">
+            <td  class="">
               <input type="number" ng-if="key!='FLIER'" style="max-width:70px;" ng-model="filter.days" ng-change="changeInventoryInDays(supplier,key,filter)">
-
             </td>
             <td class="">{{filter.price| currency : "₹"}}</td>
             <td class="" rowspan="{{key.length}}" ng-show="$first">{{filter.totalPrice| currency : "₹"}} ({{filter.totalPrice/supplier.flat_count|limitTo:8| currency : "₹"}})</td>
             <td class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="priceform">
               <span  ng-disabled="!supplier.phase_no" class="error" ng-show="priceform.price.$error.min">{{positiveNoError}}</span>
               <input  ng-disabled="!supplier.phase_no" type="number" name="price" ng-model="supplier.total_negotiated_price" class="form-control spacing input-width" min="0" permission = "[permissions.addNegotiatedPrice]">
-           <br>{{(supplier.total_negotiated_price / supplier.flat_count)|| 0 | limitTo:8}}  </td>
-           <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
-               <input  ng-disabled="!supplier.phase_no" type="number"  ng-model="supplier.cost_per_flat" class="form-control spacing input-width" min="0">
-           </td>
+            <br>{{(supplier.total_negotiated_price / supplier.flat_count)|| 0 | limitTo:8}}  </td>
+            <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
+                <input  ng-disabled="!supplier.phase_no" type="number"  ng-model="supplier.cost_per_flat" class="form-control spacing input-width" min="0">
+            </td>
           <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
 
             <div ng-repeat="freebie in customFreebies">
@@ -139,133 +252,159 @@
               <span  ng-disabled="!supplier.phase" ng-dropdown-multiselect="" options="multiSelect"  extra-settings="selected_baseline_settings"
               selected-model="supplier.searchSelectAllModel" translation-texts="selected_baselines_customTexts"></span>
             </td> -->
-            <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first">
-              <select  class="form-control spacing input-width" ng-model="supplier.booking_priority">
-                <option value="" disabled>Select</option>
-                <option style="width:100%;" ng-repeat="item in bookingPriority" value="{{item.code}}">
-                  {{item.name}}</option>
-              </select>
-            </td>
-            <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first">
-              <select  class="form-control spacing input-width" ng-model="supplier.booking_status" permission = "[permissions.changeBookingStatus]" ng-change="changePhase(supplier)">
-                <option style="width:100%;" ng-repeat="item in booking_status" value="{{item.code}}"
-                ng-if="supplier.booking_status == undefined ? supplier.booking_status = booking_status[0].code : 1"
-                >{{item.name}}</option>
-              </select>
-            </td>
-            <td  class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="phaseform">
-              <input ng-disabled="supplier.booking_status != 'BK'" type="text" ng-model="phaseMappingList[supplier.phase_no].phase_no"/>
-              <select  ng-disabled="supplier.booking_status != 'BK'" name="phase" class="form-control spacing input-width-phase" ng-change="setPhase(supplier,supplier.phaseNo)" ng-model="supplier.phaseNo" min="1" permission = "[permissions.addPhase, permissions.viewPhase]">
-                <option value="" disabled>Select Phase</option>
-                <!-- <option value="" >None</option> -->
-                <option ng-repeat="phase in phases | unique:'phase_no'" value="{{phase.id}}">{{phase.phase_no}}</option>
-              </select>
-              <span class="error" ng-show="phaseform.phase.$error.min">{{positiveNoError}}</span>
-            </td>
-            <td rowspan="{{key.length}}" ng-show="$first">
-              <button type="button" class="btn btn-danger"name="button" data-toggle="modal" data-target="#addUserModal" ng-click="setUserSupplier(supplier)">Assign User</button>
-                <div id="addUserModal" class="modal fade">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Assign Users</h4>
-                        <hr/>
 
-                        <div class = "modal-body" style = "height: 300px;">
-                          <select name="users" class="form-control spacing input-width-phase"  ng-model="userData.user" min="1" >
-                            <option value="" disabled>Select User</option>
-                            <option ng-repeat="user in usersMapListWithObjects  | orderBy:'username' | unique:'id'" value="{{user.id}}">{{user.username}}</option>
-                          </select>
-                          <br />
-                          <button type="button" class="btn btn-danger" name="button" ng-click="setUserForBooking()">Assign</button>
+            <!--mode of payment  -->
+            <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
+              <div class="radio">
+                      <label>
+                        <input ng-disabled="!supplier.phase_no" type="radio" ng-model="supplier.payment_method" value="NEFT" ng-click="getPaymentDetails(supplier,supplier.payment_method)"
+                        permission = "[permissions.viewPaymentMode,permissions.addPaymentMode]"
+                        data-target="#selectedPaymentModal" data-toggle="modal">NEFT
+                      </label>
+              </div>
+
+              <div class="radio" ng-if="supplier.status != 'X'">
+                <label>
+                    <input  ng-disabled="!supplier.phase_no" type="radio" ng-model="supplier.payment_method" value="CHEQUE"  permission = "[permissions.addPaymentMode]"
+                    data-target="#selectedPaymentModal" data-toggle="modal" ng-click="getPaymentDetails(supplier,supplier.payment_method)">Cheque</label>
+              </div>
+              <div class="radio" ng-if="supplier.status != 'X'">
+                      <label><input  ng-disabled="!supplier.phase_no" type="radio" ng-model="supplier.payment_method" value="CASH" permission = "[permissions.addPaymentMode]"
+                        ng-click="getPaymentDetails(supplier,supplier.payment_method)">Cash</label>
+              </div>
+
+            <div style="text-align:center">
+              <a  ng-disabled="!supplier.phase_no" data-target="#paymentModal" data-toggle="modal" ng-click="setPayment(supplier)" permission = "[permissions.viewPaymentDetails]"><b>Details</b></a>
+            </div>
+          </td>
+          <td class="" rowspan="{{key.length}}" ng-show="$first">
+            <div class="" ng-if="supplier.payment_method == 'NEFT' || supplier.payment_method == 'CHEQUE'">
+              <input  ng-disabled="!supplier.phase_no" type="text" class="form-control spacing input-width" ng-model="supplier.transaction_or_check_number" ng-change="updateSupplierStatus(supplier)">
+            </div>
+          </td>
+          <!--for payment status  -->
+          <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
+            <select  ng-disabled="!supplier.phase_no" class="form-control spacing input-width" ng-model="supplier.payment_status" permission = "[permissions.viewPaymentDetails]">
+              <option style="width:100%;" ng-repeat="item in payment_status"
+                ng-if="supplier.payment_status == undefined ? supplier.payment_status = payment_status[0].code : 1"
+              value="{{item.code}}" ng-click="updateSupplierStatus(supplier)"
+              >{{item.name}}</option>
+            </select>
+            <!-- <div class="radio" permission = "[permissions.viewPaymentDetails]">
+                    <label><input type="radio" ng-model="supplier.payment_status" value="PD" ng-click="updateSupplierStatus()" ng-disabled="supplier.booking_status != 'BK'">Paid</label>
+            </div>
+            <div class="radio" permission = "[permissions.viewPaymentDetails]">
+              <label><input type="radio" ng-model="supplier.payment_status" value="PP" ng-click="updateSupplierStatus()" ng-disabled="supplier.booking_status != 'BK'">Pending</label>
+            </div>
+            <div class="radio" ng-if="supplier.status != 'X'" permission = "[permissions.viewPaymentDetails]">
+                    <label><input type="radio" ng-model="supplier.payment_status" value="PNI" ng-click="updateSupplierStatus()" ng-disabled="supplier.booking_status != 'BK'">Not Paid</label>
+            </div> -->
+          </td>
+
+          <td rowspan="{{key.length}}" ng-show="$first">
+            <div ng-repeat="image in permissionBoxImages" ng-if="image.object_id == supplier.supplier_id" style="margin-bottom:10px">
+                <img ng-src="http://androidtokyo.s3.amazonaws.com/{{image.image_path}}" alt="Permission Box" height="50" width="50">
+            </div>
+            <!--END : view comments modal  -->
+            <!--START: permission box image modal -->
+            <div id="imageModal" class="modal fade">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h4 class="modal-title">Permission Box Image Details</h4>
+                      <hr/>
+                      <div class = "modal-body">
+                        <div class="carousel" id="slider" ng-if="perBoxImageData && perBoxImageData.length > 0" >
+                          <div class="carousel-inner">
+                            <div class="item" ng-class="{active:!$index}" ng-repeat="image in perBoxImageData">
+                              <div class="row">
+                                <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
+                              </div>
+                              <div class="row" style="margin-left:10px;">
+                                Comment : {{image.comment}} </br>
+                              </div>
+                            </div>
+
+                          </div>
+                            <a style="height:400px;" class="left carousel-control"  data-toggle="carousel" data-target = "#slider" role="button" data-slide="prev">
+                              <span class="glyphicon glyphicon-chevron-left"></span>
+                            </a>
+                          <a style="height:400px;" class="right carousel-control" data-toggle = "carousel" data-target = "#slider" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                          </a>
+                        </div>
+                        <div>
+                          <button class="btn btn-primary active" ngf-select="uploadImagePermission($file)" ngf-max-size="2MB">Upload Image</button>
+                          <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Permission Box" ng-model="supplier.permissionComment"></textarea>
+                          <button class="btn btn-primary active" ng-click="uploadPermissionBoxImage(supplier)" >Submit</button>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </td>
-            <!--mode of payment  -->
-            <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
-              <div class="radio">
-                     <label>
-                       <input ng-disabled="!supplier.phase_no" type="radio" ng-model="supplier.payment_method" value="NEFT" ng-click="getPaymentDetails(supplier,supplier.payment_method)"
-                       permission = "[permissions.viewPaymentMode,permissions.addPaymentMode]"
-                       data-target="#selectedPaymentModal" data-toggle="modal">NEFT
-                     </label>
               </div>
+            <button class="btn btn-primary active" ng-click="getPermissionBoxImages(supplier)" data-toggle="modal" data-target="#imageModal">View/Add</button>
+          </td>
+          <td rowspan="{{key.length}}" ng-show="$first">
+            <div ng-repeat="image in receiptImages" ng-if="image.object_id == supplier.supplier_id"  style="margin-bottom:10px">
+                <img ng-src="http://androidtokyo.s3.amazonaws.com/{{image.image_path}}" alt="Receipt" height="50" width="50">
+            </div>
+            <button class="btn btn-primary active" ng-click="getReceiptBoxImages(supplier)" data-toggle="modal" data-target="#imageReceiptModal">View/Add</button>
+            <!-- Modal Start -->
+            <div id="imageReceiptModal" class="modal fade">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h4 class="modal-title">Receipt Image Details</h4>
+                      <hr/>
+                      <div class = "modal-body">
+                        <div class="carousel" id="slider" ng-if="perReceiptImageData && perReceiptImageData.length > 0">
+                            <div class="carousel-inner">
+                              <div class="item" ng-class="{active:!$index}" ng-repeat="image in perReceiptImageData">
+                                <div class="row">
+                                <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
+                              </div>
+                                <div class="row" style="margin-left:10px;">
+                                  Comment : {{image.comment}} </br>
+                                </div>
+                              </div>
 
-              <div class="radio" ng-if="supplier.status != 'X'">
-                <label>
-                   <input  ng-disabled="!supplier.phase_no" type="radio" ng-model="supplier.payment_method" value="CHEQUE"  permission = "[permissions.addPaymentMode]"
-                   data-target="#selectedPaymentModal" data-toggle="modal" ng-click="getPaymentDetails(supplier,supplier.payment_method)">Cheque</label>
+                            </div>
+                            <a style="height:400px;" class="left carousel-control"  data-toggle="carousel" data-target = "#slider" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </a>
+                            <a style="height:400px;" class="right carousel-control" data-toggle = "carousel" data-target = "#slider" role="button" data-slide="next">
+                              <span class="glyphicon glyphicon-chevron-right"></span>
+                            </a>
+                        </div>
+                        <div>
+                          <button class="btn btn-primary active" ngf-select="uploadImageReceipt($file)" ngf-max-size="2MB">Upload Image</button>
+                          <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Receipt" ng-model="supplier.receiptComment"></textarea>
+                          <button ng-click="uploadReceiptImage(supplier)" >Submit</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="radio" ng-if="supplier.status != 'X'">
-                     <label><input  ng-disabled="!supplier.phase_no" type="radio" ng-model="supplier.payment_method" value="CASH" permission = "[permissions.addPaymentMode]"
-                       ng-click="getPaymentDetails(supplier,supplier.payment_method)">Cash</label>
-              </div>
-
-              <div style="text-align:center">
-                <a  ng-disabled="!supplier.phase_no" data-target="#paymentModal" data-toggle="modal" ng-click="setPayment(supplier)" permission = "[permissions.viewPaymentDetails]"><b>Details</b></a>
-              </div>
-            </td>
-            <td class="" rowspan="{{key.length}}" ng-show="$first">
-              <div class="" ng-if="supplier.payment_method == 'NEFT' || supplier.payment_method == 'CHEQUE'">
-                <input  ng-disabled="!supplier.phase_no" type="text" class="form-control" ng-model="supplier.transaction_or_check_number" ng-change="updateSupplierStatus(supplier)">
-              </div>
-            </td>
-            <td class="" rowspan="{{key.length}}" ng-show="$first">
-              <a  ng-disabled="!supplier.phase_no" class="" data-target="#contactModal" data-toggle="modal" ng-click="setContact(supplier)"><b>View Contact Details</b></a>
-            </td>
-            <!--for payment status  -->
-            <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
-              <select   ng-disabled="!supplier.phase_no" class="form-control spacing input-width" ng-model="supplier.payment_status" permission = "[permissions.viewPaymentDetails]">
-                <option style="width:100%;" ng-repeat="item in payment_status"
-                 ng-if="supplier.payment_status == undefined ? supplier.payment_status = payment_status[0].code : 1"
-                value="{{item.code}}" ng-click="updateSupplierStatus(supplier)"
-                >{{item.name}}</option>
-              </select>
-              <!-- <div class="radio" permission = "[permissions.viewPaymentDetails]">
-                     <label><input type="radio" ng-model="supplier.payment_status" value="PD" ng-click="updateSupplierStatus()" ng-disabled="supplier.booking_status != 'BK'">Paid</label>
-              </div>
-              <div class="radio" permission = "[permissions.viewPaymentDetails]">
-                <label><input type="radio" ng-model="supplier.payment_status" value="PP" ng-click="updateSupplierStatus()" ng-disabled="supplier.booking_status != 'BK'">Pending</label>
-              </div>
-              <div class="radio" ng-if="supplier.status != 'X'" permission = "[permissions.viewPaymentDetails]">
-                     <label><input type="radio" ng-model="supplier.payment_status" value="PNI" ng-click="updateSupplierStatus()" ng-disabled="supplier.booking_status != 'BK'">Not Paid</label>
-              </div> -->
-            </td>
-            <td  style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
-              <div class="completedHeaderSpacing">
-                  <input type="radio" class="" ng-value="true" ng-model="supplier.is_completed"> Completed
-              </div>
-              <div class="completedHeaderSpacing">
-                <input type="radio" class="" ng-value="false" ng-model="supplier.is_completed"> Not Completed
-              </div>
-            </td>
-            <td rowspan="{{key.length}}" ng-show="$first">
-              <button type="button" class="btn btn-danger" data-target="#addComments" data-toggle="modal" ng-click="getSupplierForComments(supplier)">Add</button></br>
-              <button type="button" class="btn btn-danger"   ng-click="viewComments(supplier)">View</button>
-            </td>
-            <td rowspan="{{key.length}}" ng-show="$first">
-              <button type="button" class="btn btn-danger"   ng-click="deleteSupplier(supplier.id,$parent.$index)">Delete Supplier</button>
-            </td>
-            <td rowspan="{{key.length}}" ng-show="$first">
-              <button class="btn btn-primary active" ngf-select="uploadImagePermission($file)" ngf-max-size="2MB">Upload Image</button>
-              <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Permission Box" ng-model="supplier.permissionComment"></textarea>
-              <button ng-click="uploadPermissionBoxImage(supplier)" >Submit</button>
-              <button ng-click="getPermissionBoxImages(supplier)" data-toggle="modal" data-target="#imageModal">View</button>
-            </td>
-            <td rowspan="{{key.length}}" ng-show="$first">
-              <button class="btn btn-primary active" ngf-select="uploadImageReceipt($file)" ngf-max-size="2MB">Upload Image</button>
-              <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Receipt" ng-model="supplier.receiptComment"></textarea>
-              <button ng-click="uploadReceiptImage(supplier)" >Submit</button>
-              <button ng-click="getReceiptBoxImages(supplier)" data-toggle="modal" data-target="#imageReceiptModal">View</button>
-            </td>
-
-          </tr>
-        </tbody>
-        <tfoot>
+              <!--END:permission box image modal  -->
+          </td>
+          <td  style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
+            <div class="completedHeaderSpacing">
+                <input type="radio" class="" ng-value="true" ng-model="supplier.is_completed"> Completed
+            </div>
+            <div class="completedHeaderSpacing">
+              <input type="radio" class="" ng-value="false" ng-model="supplier.is_completed"> Not Completed
+            </div>
+          </td>
+          <td rowspan="{{key.length}}" ng-show="$first">
+            <button type="button" class="btn btn-danger"   ng-click="deleteSupplier(supplier.id,$parent.$index)">Delete Supplier</button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
 
           <!-- <tr>
             <td colspan="20" class="text-center">
@@ -836,7 +975,7 @@
       </div><br>
       <!-- <div> -->
         <br>
-        <button class="btn btn-success" type="button" ng-click="addComment()">Add Comment</button>
+        <button class="btn btn-success" type="button" ng-click="addComment()" style="margin:3%">Add Comment</button>
       <!-- </div> -->
     </br></br>
 
@@ -846,12 +985,11 @@
 <!--END : add comments modal  -->
 <!--START : view comments modal  -->
 <div id="viewComments" class="modal fade">
-
-
         <div>
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 View Comments For {{supplierDataForComment.name}}
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
               </div>
@@ -869,11 +1007,11 @@
                 <td class="col-md-8">
                   <div>
                     <img ng-src="{{userIcon}}">
-                    <b>{{item.user_name}} :</b> <br>
+                    <b>{{item.user_name}} :</b> <span> <small> {{item.timestamp|date:'medium'}}</small></span><br>
                   </div>
                   <div style="padding-left:30px">
-                    Comment : {{item.comment}}</br>
-                    <span> <small>{{item.timestamp|date:'medium'}}</small></span>
+                    <p style="word-break:break-word">{{item.comment}}</p>
+                    </br>
                   </div>
                 </td>
               </tr>
@@ -888,72 +1026,4 @@
     </div>
   </div>
 </div>
-<!--END : view comments modal  -->
-<!--START: permission box image modal -->
-<div id="imageModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Permission Box Image Details</h4>
-        <hr/>
-        <div class = "modal-body">
-          <div class="carousel" id="slider">
-             <div class="carousel-inner">
-               <div class="item" ng-class="{active:!$index}" ng-repeat="image in perBoxImageData">
-                 <div class="row">
-                  <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
-                </div>
-                 <div class="row" style="margin-left:10px;">
-                   Comment : {{image.comment}} </br>
-                 </div>
-               </div>
-
-             </div>
-              <a style="height:400px;" class="left carousel-control"  data-toggle="carousel" data-target = "#slider" role="button" data-slide="prev">
-                 <span class="glyphicon glyphicon-chevron-left"></span>
-              </a>
-             <a style="height:400px;" class="right carousel-control" data-toggle = "carousel" data-target = "#slider" role="button" data-slide="next">
-               <span class="glyphicon glyphicon-chevron-right"></span>
-             </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="imageReceiptModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Receipt Image Details</h4>
-        <hr/>
-        <div class = "modal-body">
-          <div class="carousel" id="slider">
-             <div class="carousel-inner">
-               <div class="item" ng-class="{active:!$index}" ng-repeat="image in perReceiptImageData">
-                 <div class="row">
-                  <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
-                </div>
-                 <div class="row" style="margin-left:10px;">
-                   Comment : {{image.comment}} </br>
-                 </div>
-               </div>
-
-             </div>
-              <a style="height:400px;" class="left carousel-control"  data-toggle="carousel" data-target = "#slider" role="button" data-slide="prev">
-                 <span class="glyphicon glyphicon-chevron-left"></span>
-              </a>
-             <a style="height:400px;" class="right carousel-control" data-toggle = "carousel" data-target = "#slider" role="button" data-slide="next">
-               <span class="glyphicon glyphicon-chevron-right"></span>
-             </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!--END:permission box image modal  -->
 </main>
