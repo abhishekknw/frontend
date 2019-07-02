@@ -27,11 +27,22 @@
     </div>
     </div>
   <div style="color:#000000;" class="assign-date">
-    <input type="checkbox" ng-model="dateChecked" permission = "[permissions.assignDates]">
-    <label><h4>Assign Dates<h4></label>
+      <div class="col-md-12 pull-right" style="background-color:#ffffff;">
+      <div class="col-md-4">
+          <input type="checkbox" ng-model="dateChecked" permission = "[permissions.assignDates]">
+          <label><h4>Assign Dates<h4></label>
+      </div>
+        <div class="col-md-6">
+          <input  type="text" ng-model="customPopupSelected" placeholder="Search.." uib-typeahead="supplier as supplier.name for supplier in allShortlistedSuppliers | filter:{name:$viewValue} "
+          class="form-control" typeahead-on-select="getSearchedSupplierData(customPopupSelected)">
+        </div>
+        <div class="col-md-2">
+            <button type="button" name="button" class="btn btn-small btn-primary" ng-click="resetSupplierData()">Reset</button>
+          </div>
+      </div>
   </div>
 
-  <form name = "form" ng-if="dateChecked">
+  <form name = "form" ng-if="dateChecked" style="margin-top: 4%">
     <!-- <div class="breadcrumb" ncy-breadcrumb></div> -->
     <div style="color:#000000;" class = "panel panel-default date-panel">
       <h3 class = "panel-heading">Assign Dates</h3>
@@ -41,13 +52,15 @@
               <div class = "col-md-3"><label>Select Phase </label></div>
               <div class = "col-md-3">
                 <select class="form-control" ng-model="phase" ng-change="filterAssignDatesData('phase',phase)" required>
-                  <option ng-repeat="phase in phases" value="{{phase}}">{{phase}}</option>
+                  <option value="">Select Phase</option>
+                  <option ng-repeat="phase in phasesData" value="{{phase.phase_no}}">{{phase.phase_no}}</option>
                 </select>
               </div>
 
               <div class = "col-md-3"><label>Select Inventory Type </label></div>
               <div class = "col-md-3">
                 <select class="form-control" ng-model="inventoryType" ng-disabled="!phase" required>
+                <option value="">Select Inventory Type</option>
                 <option ng-repeat="inventory in inventoryTypes" value="{{inventory}}">{{inventory}}</option>
                 </select>
               </div>
@@ -60,6 +73,7 @@
              <div class = "col-md-3"><label>Select Activity Type </label></div>
              <div class = "col-md-3">
                <select class="form-control" ng-model="activityType" ng-disabled="!inventoryType" required>
+                <option value="">Select Activity</option>
                 <option ng-repeat="activity in activity_names" value="{{activity.header}}" ng-hide="inventoryType == 'FLIER' && activity.header != 'RELEASE'">
                   {{activity.header}}
                 </option>
@@ -68,7 +82,7 @@
              <div class = "col-md-3"><label>Activity Date </label></div>
              <div class = "col-md-3">
                <p class="input-group">
-                 <input type="text" class="form-control col-md-4"  ng-model="activityDate" ng-disabled="!activityType" uib-datepicker-popup="yyyy-MM-dd" is-open="popup1"  min-date="" datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}"/ required>
+                 <input type="text" class="form-control col-md-4"  ng-model="activityDate" ng-disabled="!activityType" uib-datepicker-popup="yyyy-MM-dd" is-open="popup1"  min-date="" datepicker-options="dateOptions" close-text="Close" placeholder="Select Date" ng-model-options="{timezone:'UTC'}"/ required>
                  <span class="input-group-btn">
                    <button type="button" class="btn btn-default" ng-click="popup1=true"><i class="glyphicon glyphicon-calendar"></i></button>
                  </span>
@@ -83,6 +97,7 @@
               <div class = "col-md-3"><label>Assigned To </label></div>
               <div class = "col-md-3">
                 <select class="form-control" ng-model="user" required ng-disabled="!activityDate">
+                  <option value="">Select User</option>
                   <option ng-repeat="user in userList" value="{{user.id}}">{{user.username}}</option>
                 </select>
               </div>
@@ -97,17 +112,9 @@
    <!--End: assign dates form  -->
 
    <div class="panel-body panel-table">
-       <div class="col-md-12 row" style="background-color:#ffffff;">
-         <div class="col-md-1">
-           <button type="button" name="button" class="btn btn-small btn-primary" ng-click="resetSupplierData()">Reset</button>
-         </div>
-         <div class="col-md-11">
-           <input  type="text" ng-model="customPopupSelected" placeholder="Search.." uib-typeahead="supplier as supplier.name for supplier in allShortlistedSuppliers | filter:{name:$viewValue} "
-           class="form-control" typeahead-on-select="getSearchedSupplierData(customPopupSelected)">
-         </div>
-       </div>
        </br>
-         <table st-table="releaseDetails.shortlisted_suppliers" st-safe-src="Data" class="table table-bordered">
+         <table st-table="releaseDetails.shortlisted_suppliers"
+         st-safe-src="Data" class="table table-bordered">
 
            <thead>
 
@@ -116,38 +123,35 @@
              </tr>
            </thead>
            <tbody dir-paginate="supplier in releaseDetails.shortlisted_suppliers | itemsPerPage: suppliersPerPage"
-                    total-items="totalSuppliers" current-page="pagination.current" ng-init="rowIndex = $index">
+                    total-items="totalSuppliers" current-page="pagination.current">
              <tr ng-repeat="(key,filter) in getFilters(supplier)" ng-if="supplier.booking_status=='BK'">
-               <!-- <td rowspan="{{key.length}}" ng-show="$first">{{$index + 1}}</td> -->
-               <td class="col-md-1" rowspan="{{key.length}}" ng-show="$first">
-                 {{phaseMappingList[supplier.phase_no].phase_no}}
+               <td class="col-md-1" rowspan="{{key.length}}" ng-show="$first"
+              ng-style="phaseEndDate > currentDate && {'background-color':'green'}">
+                 {{phaseMappingList[supplier.phase_no].phase_no || 'Not Assigned'}}
                </td>
-               <td class="col-md-1">{{key}}</td>
-
-               <td class="col-md-2"><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages" ng-click="getSocietyDetails(supplier,supplier.supplier_id,center,$index)" target="_blank" style="text-decoration: underline; cursor: pointer;color:blue;">{{supplier.name}}({{supplier.quality_rating}})</a></td>
-               <td class="col-md-2">
-               <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank" style="text-decoration: underline; cursor: pointer;color:blue;">{{supplier.area}}, ({{supplier.subarea}}) {{supplier.address2}}</a></td>
-               <td class="col-md-2">{{supplier.address2}}</td>
-               <td class="col-md-2 checkboxes-btn">
-                 <div ng-repeat="inventory in filter.detail">
-                   <input type="checkbox" class="" ng-disabled="isDisable(rowIndex)" ng-model="inventory.status" ng-click="addInventory(inventory,rowIndex,$index)"  permission = "[permissions.assignDates]" />{{key}}{{$index+1}}
-                 </div></br>
-                 <div>
-                   <button  class="btn" data-target="#addInventoryModal" data-toggle="modal" ng-click="getInventoryRelatedData(supplier)" ng-disabled="savingDates">Add Inventory</button>
+               <td class="col-md-3"> <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank"
+               style="text-decoration: underline; cursor: pointer;color:#337ab7;font-weight: 600;">
+               {{supplier.name}}</a>&nbsp;({{supplier.quality_rating}})
+               <br><br>
+               {{supplier.area}}&nbsp;({{supplier.subarea}}) <br>{{supplier.address2}} </td>
+               <td class="col-md-4 checkboxes-btn">
+                 <div class="pull-left" ng-repeat="inventory in filter.detail" style="margin-bottom: 10px;text-align: center;">
+                   <input type="checkbox" class="" ng-disabled="isDisable(rowIndex)" ng-model="inventory.status" ng-click="addInventory(inventory,rowIndex,$index)"  permission = "[permissions.assignDates]" /> {{key}}{{$index+1}}&nbsp;
+                 </div>
+                 <div class="col-md-6 pull-right">
+                   <button  class="btn" data-target="#addInventoryModal" style="background: #5bc0de; color: white;margin-left:20px;" data-toggle="modal" ng-click="getInventoryRelatedData(supplier)" ng-disabled="savingDates">Add Inventory</button>
                  </div>
                </td>
-               <td class="col-md-1">
-                 <div>
-                 <button  class="btn btn-info" ng-disabled="invIdList.length == 0 || isDisable(rowIndex)" data-target="#manageDatesModal" data-toggle="modal" data-backdrop="static" ng-click="getActivityDates(supplier)"  permission = "[permissions.assignDates]">Manage Date</button>
-               </div><br>
+               <td class="col-md-3">
+                <div style="display: flex;">&ensp;
+                  <button  class="btn btn-info" ng-disabled="invIdList.length == 0 || isDisable(rowIndex)" data-target="#manageDatesModal" data-toggle="modal" data-backdrop="static" ng-click="getActivityDates(supplier)"  permission = "[permissions.assignDates]">Manage Date</button>&ensp;
+                  <button  class="btn" data-target="#showDatesModal" data-toggle="modal" ng-click="showActivityDates(filter.detail, supplier, key)" ng-disabled="savingDates"  permission = "[permissions.viewDates]">View Dates</button>&ensp;
+                  <button  class="btn btn-info" ng-disabled="invIdList.length == 0 || isDisable(rowIndex)" ng-click="deleteAdInventoryIds(supplier)" >Delete Inventory</button>
                <div>
-                 <button  class="btn" data-target="#showDatesModal" data-toggle="modal" ng-click="showActivityDates(filter.detail, supplier, key)" ng-disabled="savingDates"  permission = "[permissions.viewDates]">View Dates</button>
-               </div><br>
-               <div>
-               <button  class="btn btn-info" ng-disabled="invIdList.length == 0 || isDisable(rowIndex)" ng-click="deleteAdInventoryIds(supplier)" >Delete Inventory</button>
              </div><br>
 
                </td>
+               <td class="col-md-1 phaseMap">{{phaseMappingList[supplier.phase_no].status || 'Pending'}}</td>
                <!-- <td class="col-md-8">
 
                  <div class="">
@@ -172,11 +176,7 @@
        </br>
        <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
      </div>
-     <div class="panel-body button-style">
-       <button class="btn btn-danger active notify" ng-click="updateData()"  permission = "[permissions.updateData]">Update</button>
-     </div>
-<br /><br />
-     <!--Start: Code for Audit Date Modal Window -->
+   <!--Start: Code for Audit Date Modal Window -->
      <div id="auditDateModal" class="modal fade">
        <div class="modal-dialog" style="width:400px">
          <div class="modal-content">

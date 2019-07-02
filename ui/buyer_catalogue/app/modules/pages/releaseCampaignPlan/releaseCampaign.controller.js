@@ -59,10 +59,43 @@ $scope.addNewPhase =true;
     {name:'Phone Booked' , code : 'PB'},
     {name:'Visit Booked', code : 'VB'},
     {name:'Rejected', code : 'SR'},
+    {name:'Not Visited', code : 'NVI'},
     {name:'Send Email', code : 'SE'},
-    {name:'Visit Required', code : 'VR'},
-    {name:'Call Required', code : 'CR'},
+
   ];
+
+  $scope.booking_pending = [
+    {name:'Recce Required', code : 'DPRR'},
+    {name:'Visit Required', code : 'DPVR'},
+    {name:'Call Required', code : 'DPCR'},
+    {name:'Negotiation Required', code : 'DPNR'},
+    {name:'Not Available' , code : 'DPNA'},
+    {name:'Postponed', code : 'DPP'},
+    {name:'Specific Occasion Only', code : 'DPDOO'},
+    {name:'Others(Specify)', code : 'DPOS'},
+  ];
+
+
+  $scope.booking_rejected = [
+    {name:'Less occupancy', code : 'RLO'},
+    {name:'Less Children', code : 'RLC'},
+    {name:'Under Builder', code : 'RUB'},
+    {name:'Very Expensive', code : 'RVE'},
+    {name:'Client Rejected' , code : 'RCR'},
+    {name:'Rejected by Society', code : 'RRS'},
+    {name:'Others(Specify)', code : 'ROS'},
+  ];
+
+  $scope.booking_not_visited = [
+    {name:'Wikimapia', code : 'NVW'},
+    {name:'Google', code : 'NVG'},
+    {name:'99Acres', code : 'NVA'},
+    {name:'Magic Brick', code : 'NVMB'},
+    {name:'Wrong Number' , code : 'NVWN'},
+    {name:'First Time Assigned', code : 'NVFT'},
+    {name:'Others(Specify)', code : 'NVOS'},
+  ];
+
   $scope.bookingPriority = [
     {name: 'Very High', code: 'VH'},
     {name: 'High', code: 'HH'}
@@ -159,15 +192,19 @@ $scope.addNewPhase =true;
       releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id, newPage, assigned, supplierIdForSearch)
       	.then(function onSuccess(response){
           getUsersList();
-          // getAssignedSuppliers();
+          getAssignedSuppliers();
 
           $scope.initialReleaseData = Object.assign({}, response.data.data);
+          console.log($scope.initialReleaseData);
           $scope.totalSuppliers = $scope.initialReleaseData.total_count;
 
           for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
             $scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price = parseInt($scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price, 10);
             $scope.mapViewLat = $scope.initialReleaseData.shortlisted_suppliers[i].latitude;
             $scope.mapViewLong = $scope.initialReleaseData.shortlisted_suppliers[i].longitude;
+            if($scope.initialReleaseData.shortlisted_suppliers[i].next_action_date){
+              $scope.initialReleaseData.shortlisted_suppliers[i].next_action_date = new Date($scope.initialReleaseData.shortlisted_suppliers[i].next_action_date);
+            }
             $scope.shortlistedSuppliersIdList[$scope.initialReleaseData.shortlisted_suppliers[i].supplier_id] = $scope.initialReleaseData.shortlisted_suppliers[i];
             if(Object.keys($scope.initialReleaseData.shortlisted_suppliers[i].shortlisted_inventories).length == 0){
               $scope.initialReleaseData.shortlisted_suppliers[i].shortlisted_inventories['NA'] = 'NA';
@@ -840,7 +877,7 @@ $scope.multiSelect =
              $scope.usersMapListWithObjects = [];
              angular.forEach($scope.userList, function(data){
                $scope.usersMapListWithObjects[data.id] = data;
-             //  $scope.UserDataAssigned = data.username;
+              $scope.UserDataAssigned = response.data.data;
              })
            })
            .catch(function onError(response){
@@ -1058,8 +1095,6 @@ $scope.multiSelect =
               angular.forEach(response.data.data, function(data){
                 data['image_url'] = 'http://androidtokyo.s3.amazonaws.com/' + data.image_path;
               })
-          }else {
-            swal(constants.name, constants.image_empty, constants.warning);
           }
           $scope.perBoxImageData = response.data.data;
         }).catch(function onError(response){
@@ -1073,8 +1108,6 @@ $scope.multiSelect =
               angular.forEach(response.data.data, function(data){
                 data['image_url'] = 'http://androidtokyo.s3.amazonaws.com/' + data.image_path;
               })
-          }else {
-            swal(constants.name, constants.image_empty, constants.warning);
           }
           $scope.perReceiptImageData = response.data.data;
         }).catch(function onError(response){
@@ -1123,25 +1156,40 @@ $scope.multiSelect =
     $scope.setUserSupplier = function(supplier){
       $scope.userSupplierData = supplier;
     }
-    // var getAssignedSuppliers = function(){
-    //   releaseCampaignService.getAssignedSuppliers($scope.campaign_id, $scope.userInfo.id)
-    //   .then(function onSuccess(response){
-    //     $scope.assignedSuppliers = [];
-    //     var assignedSuppliers = response.data.data;
-    //     var assignedSuppliersMap = {};
-    //     for (var i = 0, l = assignedSuppliers.length; i < l; i += 1) {
-    //       assignedSuppliersMap[assignedSuppliers[i].supplier_id] = true;
-    //     }
-    //
-    //     for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
-    //       if (assignedSuppliersMap[$scope.initialReleaseData.shortlisted_suppliers[i].supplier_id]) {
-    //         $scope.assignedSuppliers.push($scope.initialReleaseData.shortlisted_suppliers[i]);
-    //       }
-    //     }
-    //   }).catch(function onError(response){
-    //     console.log(response);
-    //   })
-    // }
+    var getAssignedSuppliers = function(){
+      releaseCampaignService.getAssignedSuppliers($scope.campaign_id, $scope.userInfo.id)
+      .then(function onSuccess(response){
+        $scope.assignedSuppliers = [];
+        var assignedSuppliers = response.data.data;
+        var assignedSuppliersMap = {};
+        // var assignedUserMap = {};
+        $scope.assignedUserList = []
+        for (var i = 0, l = assignedSuppliers.length; i < l; i += 1) {
+          assignedSuppliersMap[assignedSuppliers[i].supplier_id] = $scope.UserDataAssigned
+          // var assignedUserMap = {};
+          for (var j=0; j < $scope.UserDataAssigned.length; j++){
+            if (assignedSuppliers[i].assigned_to == $scope.UserDataAssigned[j].id){
+              var username = $scope.UserDataAssigned[j].username
+              // assignedUserMap.supplier_id = assignedUserMap[assignedSuppliers[i].supplier_id]
+              // assignedUserMap.username = username
+              // assignedUserMap[assignedSuppliers[i].supplier_id] = username
+              $scope.assignedUserList.push({
+                supplier_id: assignedSuppliers[i].supplier_id,
+                username: username,
+                updated_at: assignedSuppliers[i].updated_at
+              })
+            }
+          }
+        }   
+        for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
+          if (assignedSuppliersMap[$scope.initialReleaseData.shortlisted_suppliers[i].supplier_id]) {
+            $scope.assignedSuppliers.push($scope.initialReleaseData.shortlisted_suppliers[i]);
+          }
+        }
+      }).catch(function onError(response){
+        console.log(response);
+      })
+    }
     var formatData = function(){
       // $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
       // console.log($scope.Data);
@@ -1228,5 +1276,24 @@ $scope.multiSelect =
     };
 
 
+    var getHashTagImages = function(){
+      releaseCampaignService.getHashTagImages($scope.campaign_id)
+      .then(function onSuccess(response){
+        $scope.hashtagImages = response.data.data;
+        $scope.permissionBoxImages = [];
+        $scope.receiptImages = [];
+        for (var i=0; i<$scope.hashtagImages.length; i++){
+          if ($scope.hashtagImages[i].permission_box){
+            $scope.permissionBoxImages.push($scope.hashtagImages[i].permission_box)
+          }
+          if ($scope.hashtagImages[i].receipt){
+            $scope.receiptImages.push($scope.hashtagImages[i].receipt)
+          }
+        }
+      }).catch(function onError(response){
+        console.log(response);
+      })
+    }
+    getHashTagImages();
 
 }]);//Controller function ends here

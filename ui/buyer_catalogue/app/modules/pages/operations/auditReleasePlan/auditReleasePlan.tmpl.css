@@ -34,6 +34,7 @@ body{
 
 td{
 	padding: 5px;
+	text-align: center;
 }
 th {
   background-color: #8e1921;
@@ -69,4 +70,7 @@ th {
 .panel-body{
 	overflow-x: visible !important;
 	padding: 15px 0px 0px 0px;
+}
+.phaseMap::first-letter{
+text-transform: capitalize;
 }
