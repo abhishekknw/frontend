@@ -8,11 +8,13 @@ import PhaseModal from './../Modals/PhaseModal';
 import FillAdditionalAttributeModal from './../Modals/AdditionalAttributesModal';
 import { element } from 'prop-types';
 
-const optionTypes = [
+let optionTypes = [
   { value: 'supplier', label: 'Supplier' },
   { value: 'area', label: 'Area' },
   { value: 'subarea', label: 'SubArea' },
 ];
+
+let dropdownOptions = {};
 
 const getOption = (value) => {
   for (let i = 0, l = optionTypes.length; i < l; i += 1) {
@@ -38,10 +40,13 @@ export default class ListBooking extends Component {
       commentType: '',
       campaignName: '',
       selectedOption: optionTypes[0],
+      selectedDropdownOption: '',
+      isSearchInputVisible: true,
       sortType: {
         key: '',
         value: true,
       },
+      filterOptionTypes: [],
     };
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
@@ -55,7 +60,10 @@ export default class ListBooking extends Component {
     this.onViewHashtagImagesModalClose = this.onViewHashtagImagesModalClose.bind(this);
     this.onBack = this.onBack.bind(this);
     this.onOptionTypeChange = this.onOptionTypeChange.bind(this);
+    this.onDropDownOptionTypeChange = this.onDropDownOptionTypeChange.bind(this);
     this.sort = this.sort.bind(this);
+    this.setOptionTypes = this.setOptionTypes.bind(this);
+    this.getFilterOptions = this.getFilterOptions.bind(this);
   }
 
   componentDidMount() {
@@ -126,10 +134,35 @@ export default class ListBooking extends Component {
     this.props.history.push(`/r/booking/campaigns`);
   }
 
+  getFilterOptions() {
+    return optionTypes;
+  }
+  setOptionTypes(attributes) {
+    attributes.forEach((element) => {
+      if (element.type === 'DROPDOWN') {
+        optionTypes.push({
+          label: element.name,
+          value: element.name,
+        });
+        dropdownOptions[element.name] = [];
+        element.options.forEach((option) => {
+          dropdownOptions[element.name].push({
+            label: option,
+            value: option,
+          });
+        });
+      }
+    });
+
+    this.setState({
+      filterOptionTypes: optionTypes,
+    });
+  }
+
   getFilteredList(list) {
     if (this.state.searchFilter && this.state.selectedOption) {
       let result = [];
-      let attribute = this.state.selectedOption.value;
+      let attribute = this.state.selectedOption;
 
       switch (attribute) {
         case 'supplier':
@@ -176,7 +209,29 @@ export default class ListBooking extends Component {
           break;
       }
       return result;
+    } else if (this.state.selectedDropdownOption) {
+      let result = [];
+      let attributes = list[0].supplier_attributes.concat(list[0].booking_attributes);
+      let items = [];
+
+      attributes.forEach((element) => {
+        items.push(element.name);
+      });
+
+      let index = items.indexOf(this.state.selectedOption);
+      list.forEach((element) => {
+        let attributes = element.supplier_attributes.concat(element.booking_attributes);
+
+        if (
+          attributes[index].hasOwnProperty('value') &&
+          attributes[index].value === this.state.selectedDropdownOption
+        ) {
+          result.push(element);
+        }
+      });
+      return result;
     }
+
     return list;
   }
 
@@ -300,9 +355,26 @@ export default class ListBooking extends Component {
     });
   }
 
-  onOptionTypeChange(value) {
+  onOptionTypeChange(option) {
+    if (dropdownOptions.hasOwnProperty(option.label)) {
+      this.setState({
+        selectedOption: option.value,
+        isSearchInputVisible: false,
+        selectedDropdownOption: undefined,
+      });
+    } else {
+      this.setState({
+        selectedOption: option.value,
+        isSearchInputVisible: true,
+        selectedDropdownOption: undefined,
+      });
+    }
+  }
+
+  onDropDownOptionTypeChange(option) {
     this.setState({
-      selectedOption: value,
+      selectedDropdownOption: option.value,
+      searchFilter: undefined,
     });
   }
 
@@ -473,6 +545,9 @@ export default class ListBooking extends Component {
       isPhaseModalVisible,
       isViewHashtagImagesModalVisible,
       commentType,
+      isSearchInputVisible,
+      selectedOption,
+      filterOptionTypes,
     } = this.state;
     const { booking } = this.props;
     const { bookingList } = booking;
@@ -488,7 +563,11 @@ export default class ListBooking extends Component {
 
     if (list && list.length) {
       attributes = list[0].supplier_attributes.concat(list[0].booking_attributes);
+      if (optionTypes.length < 4) {
+        this.setOptionTypes(attributes);
+      }
     }
+    let dropdownOptionsTypes = dropdownOptions;
 
     return (
       <div className="booking__list list">
@@ -509,7 +588,7 @@ export default class ListBooking extends Component {
         <div className="list-search">
           <div className="form-control">
             <Select
-              options={optionTypes}
+              options={filterOptionTypes}
               className="select"
               value={this.selectedOption}
               onChange={this.onOptionTypeChange}
@@ -517,13 +596,22 @@ export default class ListBooking extends Component {
             />
           </div>
           <div className="form-control">
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchFilter}
-              onChange={this.onSearchFilterChange}
-              className="form-control"
-            />
+            {isSearchInputVisible ? (
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchFilter}
+                onChange={this.onSearchFilterChange}
+                className="form-control"
+              />
+            ) : (
+              <Select
+                options={dropdownOptionsTypes[selectedOption]}
+                className="select"
+                value={this.selectedDropdownOption}
+                onChange={this.onDropDownOptionTypeChange}
+              />
+            )}
           </div>
         </div>
 
