@@ -36,9 +36,10 @@ const getCommentTypeOption = (value) => {
 export default class CommentsModal extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
 
     this.state = {
-      type: 'INTERNAL',
+      type: props.commentType,
       comment: '',
     };
 
@@ -90,27 +91,31 @@ export default class CommentsModal extends React.Component {
     };
 
     return (
-      <div className="comment" key={index}>
-        <p className="comment__text">{comment.comment}</p>
-        <div className="comment__details">
-          <p className="comment__details__type">
-            {comment.type.toLowerCase()}
-            &nbsp;&bull;&nbsp;
-          </p>
-          <p className="comment__details__date">
-            {moment(comment.timestamp).format('DD MMM, YYYY HH:mm')}
-          </p>
-          <button type="button" className="btn btn--link" onClick={onRemove}>
-            Remove
-          </button>
-        </div>
+      <div>
+        {comment.type === this.state.type ? (
+          <div className="comment" key={index}>
+            <p className="comment__text">{comment.comment}</p>
+            <div className="comment__details">
+              <p className="comment__details__type">
+                {comment.type.toLowerCase()}
+                &nbsp;&bull;&nbsp;
+              </p>
+              <p className="comment__details__date">
+                {moment(comment.timestamp).format('DD MMM, YYYY HH:mm')}
+              </p>
+              <button type="button" className="btn btn--link" onClick={onRemove}>
+                Remove
+              </button>
+            </div>
+          </div>
+        ) : null}
       </div>
     );
   }
 
   render() {
     const { isVisible, comments, onClose } = this.props;
-    const { type, comment } = this.state;
+    const { type, comment, CommentType } = this.state;
 
     return (
       <Modal isOpen={isVisible} style={customStyles} ariaHideApp={false}>

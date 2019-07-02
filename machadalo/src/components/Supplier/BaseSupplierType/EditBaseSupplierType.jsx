@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
+import classnames from 'classnames';
 
 import OptionModal from '../../Modals/OptionModal';
 import SupplierSelectionModal from '../../Modals/SupplierSelectionModal';
@@ -34,6 +35,46 @@ const getAttributeTypeOption = (value) => {
   }
 
   return { value };
+};
+
+const validate = (data) => {
+  const errors = {};
+
+  if (!data.name.trim()) {
+    errors.name = {
+      message: 'Please enter a name for standard template',
+    };
+  }
+
+  for (let i = 0; i < data.supplier_attributes.length; i++) {
+    let attr = 'attribute' + i;
+    let type = 'type' + i;
+    if (!data.supplier_attributes[i].name) {
+      errors[attr] = {
+        message: 'This field should not be blank',
+      };
+    }
+    if (!data.supplier_attributes[i].type) {
+      errors[type] = {
+        message: 'Please select the type',
+      };
+    }
+    if (
+      (data.supplier_attributes[i].type == 'DROPDOWN' ||
+        data.supplier_attributes[i].type == 'HASHTAG' ||
+        data.supplier_attributes[i].type == 'MULTISELECT') &&
+      (!data.supplier_attributes[i].hasOwnProperty('options') ||
+        data.supplier_attributes[i].options.length == 0 ||
+        data.supplier_attributes[i].options.indexOf('') > -1)
+    ) {
+      let opt = 'options' + i;
+      errors[opt] = {
+        message: 'Please fill the options',
+      };
+    }
+  }
+
+  return errors;
 };
 
 export default class EditBaseSupplierType extends React.Component {
@@ -130,16 +171,24 @@ export default class EditBaseSupplierType extends React.Component {
       supplier_attributes: this.state.supplier_attributes,
     };
 
-    this.props.updateBaseSupplierType(
-      {
-        data,
-        baseSupplierTypeId: this.props.match.params.baseSupplierTypeId,
-      },
-      () => {
-        toastr.success('', 'Base Supplier Type updated successfully');
-        this.props.history.push('/r/supplier/base-type/list');
-      }
-    );
+    const errors = validate(data);
+
+    if (Object.keys(errors).length) {
+      this.setState({
+        errors,
+      });
+    } else {
+      this.props.updateBaseSupplierType(
+        {
+          data,
+          baseSupplierTypeId: this.props.match.params.baseSupplierTypeId,
+        },
+        () => {
+          toastr.success('', 'Base Supplier Type updated successfully');
+          this.props.history.push('/r/supplier/base-type/list');
+        }
+      );
+    }
   }
 
   onCancelSupplierModal() {
@@ -211,6 +260,8 @@ export default class EditBaseSupplierType extends React.Component {
   }
 
   renderAttributeRow(attribute, attrIndex) {
+    const { errors } = this.state;
+
     const onNameChange = (event) => {
       const newAttribute = Object.assign({}, attribute);
 
@@ -272,18 +323,24 @@ export default class EditBaseSupplierType extends React.Component {
 
     return (
       <div className="createform__form__row" key={`row-${attrIndex}`}>
-        <div className="createform__form__inline">
+        <div className="createform__form__inline form-control--column">
           <div className="form-control">
             <input type="text" placeholder="Name" value={attribute.name} onChange={onNameChange} />
+            {errors && errors['attribute' + attrIndex] ? (
+              <p className="message message--error">{errors['attribute' + attrIndex].message}</p>
+            ) : null}
           </div>
 
-          <div className="form-control">
+          <div className="form-control form-control--column">
             <Select
               options={AttributeTypes}
               classNamePrefix="form-select"
               value={getAttributeTypeOption(attribute.type)}
               onChange={onTypeChange}
             />
+            {errors && errors['type' + attrIndex] ? (
+              <p className="message message--error">{errors['type' + attrIndex].message}</p>
+            ) : null}
 
             {attribute.type === 'DROPDOWN' ? (
               <p
@@ -298,6 +355,9 @@ export default class EditBaseSupplierType extends React.Component {
             ) : (
               ''
             )}
+            {errors && errors['options' + attrIndex] ? (
+              <p className="message message--error">{errors['options' + attrIndex].message}</p>
+            ) : null}
             {attribute.type === 'BASE_SUPPLIER_TYPE' ||
             attribute.type === 'INVENTORY_TYPE' ||
             attribute.type === 'INVENTORY' ? (
@@ -337,10 +397,12 @@ export default class EditBaseSupplierType extends React.Component {
   }
 
   render() {
+    const { errors } = this.state;
+
     return (
       <div className="createform">
         <div className="createform__title">
-          <h3>Edit Base Supplier Type </h3>
+          <h3>Edit Standard Template </h3>
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
@@ -359,6 +421,9 @@ export default class EditBaseSupplierType extends React.Component {
                   value={this.state.name}
                   onChange={this.handleInputChange}
                 />
+                {errors && errors.name ? (
+                  <p className="message message--error">{errors.name.message}</p>
+                ) : null}
               </div>
             </div>
 
@@ -382,6 +447,7 @@ export default class EditBaseSupplierType extends React.Component {
           </form>
         </div>
         <OptionModal
+          key={this.state.attributeInfo.attrIndex}
           showOptionModal={this.state.showOptionModal}
           onCancel={this.onCancelOptionModal}
           onSubmit={this.onSubmitOptionModal}

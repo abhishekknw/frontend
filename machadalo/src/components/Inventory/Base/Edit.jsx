@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
+import classnames from 'classnames';
 
 import OptionModal from './../../Modals/OptionModal';
 
@@ -18,6 +19,7 @@ const AttributeTypes = [
   { value: 'INVENTORY_TYPE', label: 'Inventory list' },
   { value: 'DROPDOWN', label: 'Dropdown' },
   { value: 'EMAIL', label: 'Email' },
+  { value: 'MULTISELECT', label: 'Multi Select' },
 ];
 
 // Get attribute type option from string
@@ -29,6 +31,49 @@ const getAttributeTypeOption = (value) => {
   }
 
   return { value };
+};
+
+const validate = (data) => {
+  const errors = {};
+  console.log(data);
+
+  if (!data.name.trim()) {
+    errors.name = {
+      message: 'Please enter a name for base booking',
+    };
+  }
+
+  for (let i = 0; i < data.baseAttributes.length; i++) {
+    let attr = 'attribute' + i;
+    let type = 'type' + i;
+    if (!data.baseAttributes[i].name) {
+      errors[attr] = {
+        message: 'This field should not be blank',
+      };
+    }
+
+    if (!data.baseAttributes[i].type) {
+      errors[type] = {
+        message: 'Please select the type',
+      };
+    }
+
+    if (
+      (data.baseAttributes[i].type == 'DROPDOWN' ||
+        data.baseAttributes[i].type == 'HASHTAG' ||
+        data.baseAttributes[i].type == 'MULTISELECT') &&
+      (!data.baseAttributes[i].hasOwnProperty('options') ||
+        data.baseAttributes[i].options.length == 0 ||
+        data.baseAttributes[i].options.indexOf('') > -1)
+    ) {
+      let opt = 'options' + i;
+      errors[opt] = {
+        message: 'Please fill the options',
+      };
+    }
+  }
+
+  return errors;
 };
 
 export default class Edit extends React.Component {
@@ -44,6 +89,7 @@ export default class Edit extends React.Component {
       attributeOptions: [''],
       attributeInfo: {},
       inventory_type: 'space_based',
+      errors: {},
     };
 
     this.onAddAttribute = this.onAddAttribute.bind(this);
@@ -113,9 +159,18 @@ export default class Edit extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     let baseInventoryId = this.props.match.params.baseInventoryId;
-    this.props.putBaseInventory({ data: this.state, baseInventoryId: baseInventoryId }, () => {
-      toastr.success('', 'Base Inventory created successfully');
-    });
+
+    const errors = validate(this.state);
+
+    if (Object.keys(errors).length) {
+      this.setState({
+        errors,
+      });
+    } else {
+      this.props.putBaseInventory({ data: this.state, baseInventoryId: baseInventoryId }, () => {
+        toastr.success('', 'Base Inventory created successfully');
+      });
+    }
   }
 
   onBack() {
@@ -154,6 +209,7 @@ export default class Edit extends React.Component {
   }
 
   renderAttributeRow(attribute, attrIndex) {
+    const { errors } = this.state;
     const onNameChange = (event) => {
       const newAttribute = Object.assign({}, attribute);
 
@@ -163,7 +219,7 @@ export default class Edit extends React.Component {
     };
 
     const onTypeChange = (item) => {
-      if (item.value === 'DROPDOWN') {
+      if (item.value === 'DROPDOWN' || item.value === 'MULTISELECT') {
         this.setState({
           showOptionModal: true,
           columnOptions: [''],
@@ -192,19 +248,29 @@ export default class Edit extends React.Component {
     return (
       <div className="createform__form__row" key={`row-${attrIndex}`}>
         <div className="createform__form__inline">
-          <div className="form-control">
-            <input type="text" placeholder="Name" value={attribute.name} onChange={onNameChange} />
+          <div className="form-control form-control--column">
+            <input
+              type="text"
+              placeholder="Name"
+              value={attribute.name}
+              onChange={onNameChange}
+              className={classnames({ error: errors['attribute' + attrIndex] })}
+            />
+            {errors && errors['attribute' + attrIndex] ? (
+              <p className="message message--error">{errors['attribute' + attrIndex].message}</p>
+            ) : null}
           </div>
 
-          <div className="form-control">
+          <div className="form-control form-control--column">
             <Select
               options={AttributeTypes}
               classNamePrefix="form-select"
               value={getAttributeTypeOption(attribute.type)}
               onChange={onTypeChange}
+              className={classnames({ error: errors['attribute' + attrIndex] })}
             />
 
-            {attribute.type === 'DROPDOWN' ? (
+            {attribute.type === 'DROPDOWN' || attribute.type === 'MULTISELECT' ? (
               <p
                 className="show-option"
                 style={optionStyle}
@@ -222,6 +288,12 @@ export default class Edit extends React.Component {
             ) : (
               ''
             )}
+            {errors && errors['options' + attrIndex] ? (
+              <p className="message message--error">{errors['options' + attrIndex].message}</p>
+            ) : null}
+            {errors && errors['type' + attrIndex] ? (
+              <p className="message message--error">{errors['type' + attrIndex].message}</p>
+            ) : null}
           </div>
 
           <div className="form-control required-field">
@@ -239,10 +311,11 @@ export default class Edit extends React.Component {
   }
 
   render() {
+    const { errors } = this.state;
     return (
       <div className="createform">
         <div className="createform__title">
-          <h3>Edit Base Inventory </h3>
+          <h3>Edit - Inventory Standard Template </h3>
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
@@ -260,7 +333,11 @@ export default class Edit extends React.Component {
                   name="name"
                   value={this.state.name}
                   onChange={this.handleInputChange}
+                  className={classnames({ error: errors.name })}
                 />
+                {errors && errors.name ? (
+                  <p className="message message--error">{errors.name.message}</p>
+                ) : null}
               </div>
             </div>
 
@@ -284,6 +361,7 @@ export default class Edit extends React.Component {
           </form>
         </div>
         <OptionModal
+          key={this.state.attributeInfo.attrIndex}
           showOptionModal={this.state.showOptionModal}
           onCancel={this.onCancelOptionModal}
           onSubmit={this.onSubmitOptionModal}

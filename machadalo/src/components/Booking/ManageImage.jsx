@@ -68,10 +68,12 @@ export default class ManageImage extends React.Component {
       getAssignmentList,
       getCampaignInventoryList,
       getUsersList,
+      getCampaignsList,
     } = this.props;
     getSupplierList();
     getCampaignInventoryList({ campaignId: this.getCampaignId() });
     getAssignmentList({ campaignId: this.getCampaignId() });
+    getCampaignsList();
 
     getUsersList();
   }
@@ -223,10 +225,17 @@ export default class ManageImage extends React.Component {
       supplierId: selectedSupplierId,
     });
 
+    let campaignName = '';
+    const { campaign } = this.props;
+    let campaignId = this.getCampaignId();
+    if (campaign && campaign.objectById && campaign.objectById[campaignId]) {
+      campaignName = campaign.objectById[campaignId].campaign.name;
+    }
+
     return (
       <div className="booking-base__create manage-image">
         <div className="manage-image__title">
-          <h3>Manage Image</h3>
+          <h3>Manage Image ({campaignName})</h3>
         </div>
 
         <button type="button" className="btn btn--danger" onClick={this.onBack}>

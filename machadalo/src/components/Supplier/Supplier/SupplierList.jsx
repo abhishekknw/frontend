@@ -1,18 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { toastr } from 'react-redux-toastr';
+import Select from 'react-select';
+import DatetimeRangePicker from 'react-datetime-range-picker';
 
+const DateTypes = [
+  { label: 'Created At', value: 'created_at' },
+  { label: 'Updated At', value: 'updated_at' },
+  { label: 'None', value: undefined },
+];
 export default class List extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       searchFilter: '',
+      isDateRangePickerVisisble: false,
+      startDate: '',
+      endDate: '',
+      selectedDateFilter: '',
     };
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
     this.getFilteredList = this.getFilteredList.bind(this);
     this.renderSupplierRow = this.renderSupplierRow.bind(this);
+    this.onDateFilterChange = this.onDateFilterChange.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
   }
 
   componentWillMount() {
@@ -26,13 +39,25 @@ export default class List extends React.Component {
   }
 
   getFilteredList(list) {
-    return list.filter(
+    let result = list.filter(
       (item) =>
         item.name
           .toLowerCase()
           .replace(/[^0-9a-z]/gi, '')
           .indexOf(this.state.searchFilter.toLowerCase().replace(/[^0-9a-z]/gi, '')) !== -1
     );
+
+    if (this.state.startDate && this.state.endDate) {
+      result = result.filter((item) => {
+        return (
+          new Date(item[this.state.selectedDateFilter]) >= this.state.startDate &&
+          new Date(item[this.state.selectedDateFilter]) <= this.state.endDate
+        );
+      });
+      return result;
+    } else {
+      return result;
+    }
   }
 
   renderSupplierRow(supplier, index) {
@@ -60,9 +85,33 @@ export default class List extends React.Component {
     );
   }
 
+  onDateFilterChange(option) {
+    if (option.value) {
+      this.setState({
+        isDateRangePickerVisisble: true,
+        selectedDateFilter: option.value,
+      });
+    } else {
+      this.setState({
+        isDateRangePickerVisisble: false,
+        selectedDateFilter: option.value,
+        startDate: undefined,
+        endDate: undefined,
+      });
+    }
+  }
+
+  handleDateChange(date) {
+    this.setState({
+      startDate: date.start,
+      endDate: date.end,
+    });
+  }
+
   render() {
-    const { searchFilter } = this.state;
+    const { searchFilter, isDateRangePickerVisisble } = this.state;
     const { supplierList } = this.props.supplier;
+    // const supplierListByDate = this.getFilteredListByDateRange(supplierList);
     const list = this.getFilteredList(supplierList);
 
     return (
@@ -70,6 +119,24 @@ export default class List extends React.Component {
         <div className="list">
           <div className="list__title">
             <h3>Supplier List</h3>
+          </div>
+          <div className="manage-image__filters">
+            <div className="form-control">
+              <Select
+                className="select"
+                options={DateTypes}
+                // getOptionValue={(option) => option.id}
+                // getOptionLabel={(option) => option.name}
+                // value={supplierById[selectedSupplierId]}
+                onChange={this.onDateFilterChange}
+                placeholder="Filter By Date"
+              />
+            </div>
+            <div className="form-control">
+              {isDateRangePickerVisisble ? (
+                <DatetimeRangePicker className="dateTime" onChange={this.handleDateChange} />
+              ) : null}
+            </div>
           </div>
           <div className="list__filter">
             <input

@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import { toastr } from 'react-redux-toastr';
+import classnames from 'classnames';
 
 import OptionModal from '../../Modals/OptionModal';
 import SupplierSelectionModal from '../../Modals/SupplierSelectionModal';
@@ -15,8 +16,8 @@ const optionStyle = {
 };
 
 const AttributeTypes = [
-  { value: 'FLOAT', label: 'Float' },
   { value: 'STRING', label: 'Text' },
+  { value: 'FLOAT', label: 'Float' },
   // { value: 'INVENTORY', label: 'Inventory' },
   // { value: 'INVENTORY_TYPE', label: 'Base Inventory' },
   { value: 'DROPDOWN', label: 'Dropdown' },
@@ -36,6 +37,46 @@ const getAttributeTypeOption = (value) => {
   return { value };
 };
 
+const validate = (data) => {
+  const errors = {};
+
+  if (!data.name.trim()) {
+    errors.name = {
+      message: 'Please enter a name for standard template',
+    };
+  }
+
+  for (let i = 0; i < data.supplier_attributes.length; i++) {
+    let attr = 'attribute' + i;
+    let type = 'type' + i;
+    if (!data.supplier_attributes[i].name) {
+      errors[attr] = {
+        message: 'This field should not be blank',
+      };
+    }
+    if (!data.supplier_attributes[i].type) {
+      errors[type] = {
+        message: 'Please select the type',
+      };
+    }
+    if (
+      (data.supplier_attributes[i].type == 'DROPDOWN' ||
+        data.supplier_attributes[i].type == 'HASHTAG' ||
+        data.supplier_attributes[i].type == 'MULTISELECT') &&
+      (!data.supplier_attributes[i].hasOwnProperty('options') ||
+        data.supplier_attributes[i].options.length == 0 ||
+        data.supplier_attributes[i].options.indexOf('') > -1)
+    ) {
+      let opt = 'options' + i;
+      errors[opt] = {
+        message: 'Please fill the options',
+      };
+    }
+  }
+
+  return errors;
+};
+
 export default class CreateBaseType extends React.Component {
   constructor() {
     super();
@@ -48,6 +89,7 @@ export default class CreateBaseType extends React.Component {
       attributeInfo: {},
       selectedModalSupplierType: undefined,
       showSupplierSelectionModal: false,
+      errors: {},
     };
 
     this.onAddAttribute = this.onAddAttribute.bind(this);
@@ -144,10 +186,18 @@ export default class CreateBaseType extends React.Component {
       supplier_attributes: this.state.supplier_attributes,
     };
 
-    this.props.postBaseSupplierType({ data }, () => {
-      toastr.success('', 'Base Supplier Type created successfully');
-      this.props.history.push('/r/supplier/base-type/list');
-    });
+    const errors = validate(data);
+
+    if (Object.keys(errors).length) {
+      this.setState({
+        errors,
+      });
+    } else {
+      this.props.postBaseSupplierType({ data }, () => {
+        toastr.success('', 'Base Supplier Type created successfully');
+        this.props.history.push('/r/supplier/base-type/list');
+      });
+    }
   }
 
   onAddAttribute() {
@@ -155,7 +205,7 @@ export default class CreateBaseType extends React.Component {
 
     newAttributes.push({
       name: '',
-      type: '',
+      type: 'STRING',
       is_required: false,
       is_editable: true,
     });
@@ -190,6 +240,7 @@ export default class CreateBaseType extends React.Component {
   }
 
   renderAttributeRow(attribute, attrIndex) {
+    const { errors } = this.state;
     const onNameChange = (event) => {
       const newAttribute = Object.assign({}, attribute);
 
@@ -252,17 +303,29 @@ export default class CreateBaseType extends React.Component {
     return (
       <div className="createform__form__row" key={`row-${attrIndex}`}>
         <div className="createform__form__inline">
-          <div className="form-control">
-            <input type="text" placeholder="Name" value={attribute.name} onChange={onNameChange} />
+          <div className="form-control form-control--column">
+            <input
+              type="text"
+              placeholder="Name"
+              value={attribute.name}
+              onChange={onNameChange}
+              className={classnames({ error: errors['attribute' + attrIndex] })}
+            />
+            {errors && errors['attribute' + attrIndex] ? (
+              <p className="message message--error">{errors['attribute' + attrIndex].message}</p>
+            ) : null}
           </div>
 
-          <div className="form-control">
+          <div className="form-control form-control--column">
             <Select
               options={AttributeTypes}
               classNamePrefix="form-select"
               value={getAttributeTypeOption(attribute.type)}
               onChange={onTypeChange}
             />
+            {errors && errors['type' + attrIndex] ? (
+              <p className="message message--error">{errors['type' + attrIndex].message}</p>
+            ) : null}
 
             {attribute.type === 'DROPDOWN' ? (
               <p
@@ -277,6 +340,9 @@ export default class CreateBaseType extends React.Component {
             ) : (
               ''
             )}
+            {errors && errors['options' + attrIndex] ? (
+              <p className="message message--error">{errors['options' + attrIndex].message}</p>
+            ) : null}
             {attribute.type === 'BASE_SUPPLIER_TYPE' ||
             attribute.type === 'INVENTORY_TYPE' ||
             attribute.type === 'INVENTORY' ? (
@@ -326,10 +392,11 @@ export default class CreateBaseType extends React.Component {
   }
 
   render() {
+    const { errors } = this.state;
     return (
       <div className="createform">
         <div className="createform__title">
-          <h3>Create Base Supplier Type </h3>
+          <h3>Create Standard Template </h3>
         </div>
         <div className="createform__form">
           <form onSubmit={this.onSubmit}>
@@ -348,6 +415,9 @@ export default class CreateBaseType extends React.Component {
                   value={this.state.name}
                   onChange={this.handleInputChange}
                 />
+                {errors.name ? (
+                  <p className="message message--error">{errors.name.message}</p>
+                ) : null}
               </div>
             </div>
 
@@ -371,6 +441,7 @@ export default class CreateBaseType extends React.Component {
           </form>
         </div>
         <OptionModal
+          key={this.state.attributeInfo.attrIndex}
           showOptionModal={this.state.showOptionModal}
           onCancel={this.onCancelOptionModal}
           onSubmit={this.onSubmitOptionModal}

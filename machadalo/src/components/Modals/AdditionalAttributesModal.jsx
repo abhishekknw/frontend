@@ -46,13 +46,9 @@ export default class AdditionalAttributeModal extends React.Component {
 
   onSubmit = () => {
     const { additional_attributes, pricing } = this.state;
-    const { attributes, onChange, onClose } = this.props;
-
-    // console.log(key);
-
+    const { attributes, onChange, onClose, isDisabled } = this.props;
     const newAttributes = additional_attributes;
 
-    console.log(newAttributes);
     onChange(newAttributes);
 
     // Close modal on submit
@@ -60,7 +56,6 @@ export default class AdditionalAttributeModal extends React.Component {
   };
 
   renderAttributeRow = (attribute, index) => {
-    console.log(attribute, index);
     if (attribute.isChecked === false) {
       return;
     }
@@ -78,7 +73,6 @@ export default class AdditionalAttributeModal extends React.Component {
   };
 
   renderAttributeInput = (attribute, attrIndex) => {
-    console.log(attribute);
     const onValueChange = (event) => {
       const newAttribute = Object.assign({}, attribute);
 
@@ -107,6 +101,7 @@ export default class AdditionalAttributeModal extends React.Component {
             placeholder="Attribute Value"
             value={attribute.value}
             onChange={onValueChange}
+            disabled={this.props.isDisabled}
           />
         );
       case 'STRING':
@@ -116,6 +111,7 @@ export default class AdditionalAttributeModal extends React.Component {
             placeholder="Attribute Value"
             value={attribute.value}
             onChange={onValueChange}
+            disabled={this.props.isDisabled}
           />
         );
       case 'EMAIL':
@@ -125,6 +121,7 @@ export default class AdditionalAttributeModal extends React.Component {
             placeholder="Attribute Value"
             value={attribute.value}
             onChange={onValueChange}
+            disabled={this.props.isDisabled}
           />
         );
       case 'DROPDOWN':
@@ -138,6 +135,7 @@ export default class AdditionalAttributeModal extends React.Component {
             options={attributeValueOptions}
             value={{ label: attribute.value, value: attribute.value }}
             onChange={onDropDownAttributeValueChange}
+            disabled={this.props.isDisabled}
           />
         );
       default:
@@ -147,7 +145,6 @@ export default class AdditionalAttributeModal extends React.Component {
 
   render() {
     const { isVisible, attributes, onClose } = this.props;
-    console.log(attributes);
     return (
       <Modal isOpen={isVisible} style={customStyles} ariaHideApp={false}>
         <div className="modal-title">

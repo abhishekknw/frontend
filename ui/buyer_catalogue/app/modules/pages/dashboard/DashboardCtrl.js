@@ -2220,9 +2220,9 @@ var formatThreeWeeksSummary = function(data,key){
       var proposalIdData = [];
       var proposalIdDataNames = {};
       angular.forEach($scope.searchSelectAllModel,function(data){
-        proposalIdData.push(data.id);
-        proposalIdDataNames[data.id] = {
-          name : data.id.name,
+        proposalIdData.push(data.campaign);
+        proposalIdDataNames[data.campaign] = {
+          name : data.name,
         };
       })
       DashboardService.getCompareCampaignChartData(proposalIdData)

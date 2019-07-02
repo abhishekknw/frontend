@@ -39,9 +39,15 @@ export default class AuditPlan extends React.Component {
   }
 
   componentDidMount() {
-    const { getCampaignInventoryList, getSupplierList, getUsersList } = this.props;
+    const {
+      getCampaignInventoryList,
+      getSupplierList,
+      getUsersList,
+      getCampaignsList,
+    } = this.props;
     getSupplierList();
     getCampaignInventoryList({ campaignId: this.getCampaignId() });
+    getCampaignsList();
 
     // Fetch users list for AssignModal
     getUsersList();
@@ -134,12 +140,19 @@ export default class AuditPlan extends React.Component {
     const { campaignInventoryList } = booking;
     const { searchFilter, selectedInventory, isAssignModalVisible } = this.state;
 
+    let campaignName = '';
+    const { campaign } = this.props;
+    let campaignId = this.getCampaignId();
+    if (campaign && campaign.objectById && campaign.objectById[campaignId]) {
+      campaignName = campaign.objectById[campaignId].campaign.name;
+    }
+
     const list = getConsolidatedList(campaignInventoryList);
 
     return (
       <div className="booking-base__create audit-plan">
         <div className="audit-plan__title">
-          <h3>Campaign Release and Audit Plan</h3>
+          <h3>Campaign Release and Audit Plan ({campaignName})</h3>
         </div>
 
         <button type="button" className="btn btn--danger" onClick={this.onBack}>

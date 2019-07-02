@@ -16,6 +16,8 @@
     "prettier": "^1.14.2",
     "rc-datetime-picker": "^1.6.1",
     "react": "^16.4.2",
+    "react-datetime": "^2.16.3",
+    "react-datetime-range-picker": "^2.0.5",
     "react-dom": "^16.4.2",
     "react-image-gallery": "^0.8.16",
     "react-mentions": "^2.4.1",

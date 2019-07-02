@@ -121,14 +121,22 @@ export default class EditBooking extends React.Component {
     this.onUpload = this.onUpload.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.onBack = this.onBack.bind(this);
   }
 
   componentDidMount() {
-    const { getBookingTemplateList, getSupplierList, getBookingList, getPhaseList } = this.props;
+    const {
+      getBookingTemplateList,
+      getSupplierList,
+      getBookingList,
+      getPhaseList,
+      getCampaignsList,
+    } = this.props;
     getBookingTemplateList();
     getSupplierList();
     getBookingList({ campaignId: this.getCampaignId() });
     getPhaseList({ campaignId: this.getCampaignId() });
+    getCampaignsList();
   }
 
   componentDidUpdate(prevProps) {
@@ -319,6 +327,11 @@ export default class EditBooking extends React.Component {
     });
   }
 
+  onBack() {
+    const { match } = this.props;
+    this.props.history.push(`/r/booking/list/${this.getCampaignId()}`);
+  }
+
   onUpload(index) {
     const { supplier, attributes, bookingId, isEditMode, uploadedImage, comment } = this.state;
     const { uploadHashtagImage } = this.props;
@@ -394,7 +407,7 @@ export default class EditBooking extends React.Component {
 
   getBookingTemplateById({ id }) {
     const { booking } = this.props;
-    const { bookingTemplateList } = booking;
+    const { bookingTemplateList, bookingList } = booking;
 
     for (let i = 0, l = bookingTemplateList.length; i < l; i += 1) {
       if (bookingTemplateList[i].id === id) {
@@ -632,19 +645,44 @@ export default class EditBooking extends React.Component {
     const { errors, attributes, inventories, isEditMode } = this.state;
     const { booking, supplier, phase } = this.props;
     const { supplierList } = supplier;
-    const { bookingTemplateList } = booking;
+    const { bookingTemplateList, bookingList } = booking;
     const { phaseList } = phase;
     const filterSupplierList = getFilteredSupplierList(supplierList, this.state.supplierId);
+    const templateList = [];
+
+    for (let i = 0; i < bookingTemplateList.length; i++) {
+      if (bookingList.length && bookingList[0].booking_template_id === bookingTemplateList[i].id) {
+        templateList.push(bookingTemplateList[i]);
+        break;
+      }
+    }
+
+    let campaignName = '';
+    const { campaign } = this.props;
+    let campaignId = this.getCampaignId();
+    if (campaign && campaign.objectById && campaign.objectById[campaignId]) {
+      campaignName = campaign.objectById[campaignId].campaign.name;
+    }
 
     return (
       <div className="booking-base__create create">
         <div className="create__title">
-          <h3>Booking - Edit</h3>
+          {isEditMode ? (
+            <h3>Booking - Edit ({campaignName})</h3>
+          ) : (
+            <h3>Booking - Add ({campaignName})</h3>
+          )}
         </div>
 
         <div className="create__form">
           <form onSubmit={this.onSubmit}>
             <div className="create__form__body">
+              <button type="button" className="btn btn--danger" onClick={this.onBack}>
+                <i className="fa fa-arrow-left" aria-hidden="true" />
+                &nbsp; Back
+              </button>
+              <br />
+              <br />
               {/*<div className="form-control form-control--column">
                 <label>*Enter Name For Booking</label>
                 <input
@@ -666,16 +704,29 @@ export default class EditBooking extends React.Component {
 
             <div className="create__form__body">
               <div className="form-control form-control--column">
-                <Select
-                  className={classnames('select', {
-                    error: errors.bookingTemplateId,
-                  })}
-                  options={bookingTemplateList}
-                  getOptionValue={(option) => option.id}
-                  getOptionLabel={(option) => option.name}
-                  value={this.state.bookingTemplate}
-                  onChange={this.onBookingTemplateChange}
-                />
+                {bookingList.length ? (
+                  <Select
+                    className={classnames('select', {
+                      error: errors.bookingTemplateId,
+                    })}
+                    options={templateList}
+                    getOptionValue={(option) => option.id}
+                    getOptionLabel={(option) => option.name}
+                    value={this.state.bookingTemplate}
+                    onChange={this.onBookingTemplateChange}
+                  />
+                ) : (
+                  <Select
+                    className={classnames('select', {
+                      error: errors.bookingTemplateId,
+                    })}
+                    options={bookingTemplateList}
+                    getOptionValue={(option) => option.id}
+                    getOptionLabel={(option) => option.name}
+                    value={this.state.bookingTemplate}
+                    onChange={this.onBookingTemplateChange}
+                  />
+                )}
                 {errors.bookingTemplateId ? (
                   <p className="message message--error">{errors.bookingTemplateId.message}</p>
                 ) : null}

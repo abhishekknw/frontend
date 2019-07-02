@@ -443,3 +443,32 @@
       margin-top: 20px;
     }
   }
+.list-search{
+  display: flex;
+  height: 50px;
+  margin-bottom: 20px;
+
+  .form-control {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    padding: 0 15px;
+    position: relative;
+    align-items: center;
+
+    .select {
+      margin-bottom: 5px;
+      width: 100%;
+      outline: none;
+
+      &> div {
+        background: transparent;
+      }
+
+      input {
+        height: auto;
+        outline: none !important;
+      }
+    }
+  } 
+}

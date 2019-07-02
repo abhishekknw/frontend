@@ -605,6 +605,7 @@ export default class CreateSupplier extends React.Component {
           </form>
         </div>
         <OptionModal
+          key={this.state.attributeValueInfo.attrIndex}
           showOptionModal={this.state.showOptionModal}
           onCancel={this.onCancelOptionModal}
           onSubmit={this.onSubmitOptionModal}

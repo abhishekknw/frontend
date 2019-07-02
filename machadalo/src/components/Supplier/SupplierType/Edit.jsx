@@ -45,6 +45,18 @@ const additional_attributes_dict = {
     { name: 'Latitude', type: 'STRING', is_required: true },
     { name: 'Longitude', type: 'STRING', is_required: true },
   ],
+  society_details: [
+    { name: 'FlatCount', type: 'FLOAT', is_required: true },
+    { name: 'TowerCount', type: 'FLOAT', is_required: true },
+    {
+      name: 'QualityType',
+      type: 'DROPDOWN',
+      is_required: true,
+      options: ['Standard', 'Medium High', 'High', 'Ultra High'],
+    },
+    { name: 'AverageHouseholdOccupant', type: 'FLOAT', is_required: true },
+    { name: 'BachelorTenantsAllowed', type: 'DROPDOWN', is_required: true, options: ['Yes', 'No'] },
+  ],
 };
 
 const AttributeTypes = [
@@ -99,13 +111,12 @@ export default class CreateType extends React.Component {
       attributeInfo: {},
       selectedModalSupplierType: undefined,
       inventory_list: [],
-      additional_attributes: {
-        bank_details: [],
-      },
+      additional_attributes: {},
       additionalAttributesList: [
         { label: 'Bank Details', value: 'bank_details' },
         { label: 'Contact Details', value: 'contact_details' },
         { label: 'Location Details', value: 'location_details' },
+        { label: 'Society Details', value: 'society_details' },
       ],
     };
 
@@ -318,11 +329,9 @@ export default class CreateType extends React.Component {
 
   onAddAdditionalAttributes() {
     const { additional_attributes, selectedAdditionalAttribute } = this.state;
-    console.log(additional_attributes, selectedAdditionalAttribute);
 
     additional_attributes[selectedAdditionalAttribute.value] =
       additional_attributes_dict[selectedAdditionalAttribute.value];
-    console.log(additional_attributes);
     this.setState({
       additional_attributes,
       selectedAdditionalAttribute: null,
@@ -507,7 +516,6 @@ export default class CreateType extends React.Component {
   }
 
   renderInventoryRow(inventory, index) {
-    console.log('hello', inventory, index);
     const onAttributeChange = (attribute, attributeIndex, event) => {
       const newInventory = { ...inventory };
       newInventory.inventory_attributes[attributeIndex].value = !!event.target.checked;
@@ -530,7 +538,6 @@ export default class CreateType extends React.Component {
     };
 
     const onAdditionalAttributeRemove = () => {
-      console.log(index);
       const newInventoryList = this.state.inventory_list.slice();
       newInventoryList.splice(index, 1);
 
@@ -570,22 +577,18 @@ export default class CreateType extends React.Component {
   renderAdditionalAttributeRow(attribute, index) {
     const { additional_attributes, additionalAttributesList } = this.state;
 
-    console.log(additional_attributes[attribute], attribute, index);
+    const onAttributeChange = (item, attributeIndex, event) => {
+      const newAttribute = { ...additional_attributes };
 
-    const onAttributeChange = (attribute, attributeIndex, event) => {
-      const newInventory = { ...additional_attributes };
-      newInventory.inventory_attributes[attributeIndex].value = !!event.target.checked;
-
-      const newInventoryList = this.state.inventory_list.slice();
-      newInventoryList[index] = newInventory;
+      newAttribute[attribute][attributeIndex].is_required = !newAttribute[attribute][attributeIndex]
+        .is_required;
 
       this.setState({
-        inventory_list: newInventoryList,
+        additional_attributes: newAttribute,
       });
     };
 
     const onAdditionalAttributeRemove = () => {
-      console.log(index, attribute);
       const { additional_attributes } = this.state;
 
       delete additional_attributes[attribute];
@@ -608,7 +611,6 @@ export default class CreateType extends React.Component {
                 className="input-checkbox"
                 checked={attribute.value || attribute.is_required}
                 onChange={onAttributeChange.bind(this, attribute, index)}
-                disabled={attribute.is_required}
               />
               {attribute.name}
             </div>
@@ -749,16 +751,16 @@ export default class CreateType extends React.Component {
                   Add Inventory
                 </button>
               </div>
-
-              <div className="createform__form__action">
-                <button type="submit" className="btn btn--danger">
-                  Submit
-                </button>
-              </div>
+            </div>
+            <div className="createform__form__action">
+              <button type="submit" className="btn btn--danger">
+                Submit
+              </button>
             </div>
           </form>
         </div>
         <OptionModal
+          key={this.state.attributeInfo.attrIndex}
           showOptionModal={this.state.showOptionModal}
           onCancel={this.onCancelOptionModal}
           onSubmit={this.onSubmitOptionModal}

@@ -17,6 +17,7 @@ export default class List extends React.Component {
       this.props.deleteBaseInventory({
         baseInventoryId: baseInventory._id,
       });
+      this.props.baseInventory.baseInventoryList.splice(index, 1);
     };
     return (
       <tr key={baseInventory._id}>
@@ -45,7 +46,7 @@ export default class List extends React.Component {
     return (
       <div className="list">
         <div className="list__title">
-          <h3>All Organisation Base Inventories</h3>
+          <h3>All Organisation - Inventory Standard Templates</h3>
         </div>
         <div className="list__filter">
           <input type="text" placeholder="Search..." />
