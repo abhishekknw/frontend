@@ -1260,6 +1260,7 @@ $scope.multiSelect =
           $header.css({
             position: 'fixed',
             top: '65px',
+            'z-index': 1000,
           });
         }
         else if (offset < tableOffset) {
