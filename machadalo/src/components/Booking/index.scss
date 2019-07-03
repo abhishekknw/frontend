@@ -23,9 +23,17 @@
   }
 
   &__filter {
-    display: block;
+    display: flex;
     height: 50px;
     margin-bottom: 20px;
+
+    & > div {
+      flex: 1;
+
+      &:nth-child(n+2) {
+        margin-left: 20px;
+      }
+    }
 
     input {
       border: 1px solid #ccc;

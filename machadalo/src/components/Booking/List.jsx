@@ -585,8 +585,8 @@ export default class ListBooking extends Component {
         <br />
         <br />
 
-        <div className="list-search">
-          <div className="form-control">
+        <div className="list__filter">
+          <div>
             <Select
               options={filterOptionTypes}
               className="select"
@@ -595,14 +595,13 @@ export default class ListBooking extends Component {
               defaultValue={optionTypes[0]}
             />
           </div>
-          <div className="form-control">
+          <div>
             {isSearchInputVisible ? (
               <input
                 type="text"
                 placeholder="Search..."
                 value={searchFilter}
                 onChange={this.onSearchFilterChange}
-                className="form-control"
               />
             ) : (
               <Select
