@@ -55,6 +55,7 @@
                   <th style="text-align: center;">Booking Plan</th>
                   <th style="text-align: center;">Release Plan</th>
                   <th style="text-align: center;">Executed Image</th>
+                  <th style="text-align: center;">Download Campaign</th>
                 </tr>
                 <tr colspan="9">
                   <td></td>
@@ -83,6 +84,9 @@
                   </td>
                   <td class="col-md-2">
                     <a ng-click="getExecutionDetails(proposal.campaign)"> Image Details </a>
+                  </td>
+                  <td class="col-md-2">
+                    <a ng-click="downloadSheet(proposal.campaign.proposal_id)"> Download </a>
                   </td>
 
                 </tr>

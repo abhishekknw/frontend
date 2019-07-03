@@ -5,6 +5,7 @@ angular.module('catalogueApp')
 
 function (machadaloHttp, $stateParams, $rootScope, $routeParams, $location, $http) {
 
+  var base_url = 'v0/ui/';
   var url_base = 'v0/ui/website/';
   var campaignListService = {};
 
@@ -17,5 +18,10 @@ function (machadaloHttp, $stateParams, $rootScope, $routeParams, $location, $htt
     var url = url_base + "campaign-assignment/?fetch_all=" + fetch_all;
       return machadaloHttp.get(url);
     }
+
+  campaignListService.downloadSheet = function(campaignId){
+    var url = base_url + "leads/generate-campaign-hash/" + campaignId + "/";
+      return machadaloHttp.get(url);
+  }
   return campaignListService;
 }]);

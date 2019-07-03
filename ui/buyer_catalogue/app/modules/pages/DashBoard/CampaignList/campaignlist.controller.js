@@ -103,5 +103,17 @@ angular.module('catalogueApp')
           $location.path('/' + proposal.proposal_id + '/opsExecutionPlan');
         }
 
+        $scope.downloadSheet = function(campaignId){
+          campaignListService.downloadSheet(campaignId)
+          .then(function onSuccess(response){
+            console.log(response);
+            if(response.data.data.one_time_hash){
+              $window.open(Config.APIBaseUrl + 'v0/ui/leads/download-campaign-data-sheet/' + response.data.data.one_time_hash + "/", '_blank');            
+            }            
+          }).catch(function onError(response){
+            console.log(response);            
+          })
+        }
+
 
     }]);
