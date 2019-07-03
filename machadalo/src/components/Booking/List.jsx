@@ -39,7 +39,7 @@ export default class ListBooking extends Component {
       selectedAdditionalAttribute: {},
       commentType: '',
       campaignName: '',
-      selectedOption: optionTypes[0],
+      selectedOption: optionTypes[0].value,
       selectedDropdownOption: '',
       isSearchInputVisible: true,
       sortType: {
