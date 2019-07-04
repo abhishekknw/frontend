@@ -34,6 +34,15 @@
         <option value="assigned">Assigned</option>
       </select>
     </div>
+    <div class="col-md-4">
+      <!-- <label for="">Filter By Next Action Date:</label> -->
+      <input date-range-picker class="form-control date-picker" type="text" ng-model="datePicker.date"
+      placeholder="Filter By Next Action Date:" on-click="executeDateFilter()"
+      options="datePicker.options"/>      
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary" ng-click="clearDates()">Clear</button>
+    </div>      
     <br><br>
     <div class="row col-md-12">
       <div class="col-md-1">
@@ -216,7 +225,7 @@
                 <br>
               </td>
               <td rowspan="{{key.length}}" ng-show="$first">
-                <input class="form-control spacing input-width" type="date" name="">
+                <input class="form-control spacing input-width" type="date" name="" ng-model="supplier.next_action_date">
               </td>
                   <td ng-if="key=='NA'">{{key}}</td>
                   <td ng-if="key!='NA'"><a class="" data-target="#invTypeModal" data-toggle="modal" ng-click="setInventoryIds(filter)" permission = "[permissions.viewInventoryIds]"><b>{{key}}</b></a>

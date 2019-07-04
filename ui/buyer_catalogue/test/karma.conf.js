@@ -87,7 +87,7 @@ module.exports = function(config) {
       'bower_components/amcharts3/amcharts/amcharts.js',
       'bower_components/amcharts-stock/dist/amcharts/amstock.js',
       'bower_components/eve-raphael/eve.js',
-      'bower_components/raphael/raphael.min.js',
+      'bower_components/raphael/raphael.js',
       'bower_components/mocha/mocha.js',
       'bower_components/morris.js/morris.js',
       'bower_components/angular-morris/build/module/angular-morris/angular-morris.min.js',
@@ -115,6 +115,8 @@ module.exports = function(config) {
       'bower_components/checklist-model/checklist-model.js',
       'bower_components/angular-bootstrap-multiselect/dist/angular-bootstrap-multiselect.js',
       'bower_components/angular-moment/angular-moment.js',
+      'bower_components/bootstrap-daterangepicker/daterangepicker.js',
+      'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

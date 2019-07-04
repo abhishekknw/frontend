@@ -149,6 +149,34 @@ $scope.addNewPhase =true;
       removed : constants.statusCode_removed,
       finalized: constants.statusCodeFinalized,
   }
+
+  $scope.datePicker = { 
+    date: {startDate: null, endDate: null},    
+    options: {
+      locale: {
+        clearable: true
+      },
+      eventHandlers: {
+        'apply.daterangepicker': function(event, picker) { 
+
+          
+          if($scope.datePicker.date.startDate && $scope.datePicker.date.endDate){
+            $scope.releaseDetails.shortlisted_suppliers = $scope.releaseDetails.shortlisted_suppliers.filter(
+              function (supplier) {
+              return (new Date(supplier.next_action_date) >= $scope.datePicker.date.startDate &&
+                      new Date(supplier.next_action_date) <= $scope.datePicker.date.endDate);
+          });
+          }else{
+            alert("dsa");
+            $scope.releaseDetails.shortlisted_suppliers =
+                              $scope.initialReleaseData.shortlisted_suppliers ;
+          }
+          
+        }
+    }
+    }
+   };
+
     $scope.clear = function() {
         $scope.dt = null;
       };
@@ -1296,5 +1324,11 @@ $scope.multiSelect =
       })
     }
     getHashTagImages();
+
+    $scope.clearDates = function(){
+      $scope.datePicker.date = {};
+      $scope.releaseDetails.shortlisted_suppliers = 
+              $scope.initialReleaseData.shortlisted_suppliers;
+    }
 
 }]);//Controller function ends here
