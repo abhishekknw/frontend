@@ -9,6 +9,7 @@ angular.module('catalogueApp')
   $scope.commentModal = {};
   $scope.userData = {};
   $scope.assign = {};
+  $scope.selectedUser = { value: undefined };
   $scope.body = {
     message : '',
   };
@@ -154,26 +155,9 @@ $scope.addNewPhase =true;
     date: {startDate: null, endDate: null},    
     options: {
       locale: {
-        clearable: true
-      },
-      eventHandlers: {
-        'apply.daterangepicker': function(event, picker) { 
-
-          
-          if($scope.datePicker.date.startDate && $scope.datePicker.date.endDate){
-            $scope.releaseDetails.shortlisted_suppliers = $scope.releaseDetails.shortlisted_suppliers.filter(
-              function (supplier) {
-              return (new Date(supplier.next_action_date) >= $scope.datePicker.date.startDate &&
-                      new Date(supplier.next_action_date) <= $scope.datePicker.date.endDate);
-          });
-          }else{
-            alert("dsa");
-            $scope.releaseDetails.shortlisted_suppliers =
-                              $scope.initialReleaseData.shortlisted_suppliers ;
-          }
-          
-        }
-    }
+        clearable: true,
+        format: "YYYY-MM-DD",
+      },    
     }
    };
 
@@ -202,9 +186,21 @@ $scope.addNewPhase =true;
       $scope.format = $scope.formats[1];
       $scope.altInputFormats = ['M!/d!/yyyy'];
 
-    $scope.saveDetails = function(){
-      // alert("vidhi");
-    };
+    var getFilterData = function (){
+      var data = {};
+      
+      if(supplierIdForSearch)
+        data['search'] = supplierIdForSearch;
+      if($scope.datePicker.date.startDate && $scope.datePicker.date.endDate){
+        data['start_date'] = commonDataShare.formatDate($scope.datePicker.date.startDate);
+        data['end_date'] = commonDataShare.formatDate($scope.datePicker.date.endDate);
+      }        
+      if($scope.selectedUser.value){
+        data['assigned'] = $scope.selectedUser.value;
+      }
+      return data;
+    }  
+    
     $scope.totalSuppliers = 0;
     $scope.suppliersPerPage = 10;
     // $scope.pageNo = 1;
@@ -217,7 +213,8 @@ $scope.addNewPhase =true;
     var assigned = 0;
     var supplierIdForSearch;
     var getResultsPage = function(newPage){
-      releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id, newPage, assigned, supplierIdForSearch)
+      var data = getFilterData();
+      releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id, newPage, data)
       	.then(function onSuccess(response){
           getUsersList();
           getAssignedSuppliers();
@@ -266,11 +263,7 @@ $scope.addNewPhase =true;
 
       var setDataToModel = function(suppliers){
         for(var i=0;i<suppliers.length;i++){
-          suppliers[i].total_negotiated_price = parseInt(suppliers[i].total_negotiated_price);
-          // angular.forEach($scope.phases, function(phase){
-          //   suppliers[i].phase_no = parseInt(phase.id);
-          //
-          // })
+          suppliers[i].total_negotiated_price = parseInt(suppliers[i].total_negotiated_price);    
         }
       }
 
@@ -336,7 +329,6 @@ $scope.addNewPhase =true;
       })
       .catch(function onError(response){
         commonDataShare.showErrorMessage(response);
-        // swal(constants.name,constants.updateData_error,constants.error);
       });
     }
     $scope.getCampaignState = function(state){
@@ -369,7 +361,6 @@ $scope.addNewPhase =true;
         }
         })
 
-      // return totalPrice;
     }
     //Start: code added to search & show all suppliers on add societies tab
     $scope.supplier_names = [
@@ -522,31 +513,6 @@ $scope.multiSelect =
        selectedToTop: true // Doesn't work
      };
 
-
-    //
-    // $scope.selected_baselines_customTexts = {buttonDefaultText: 'Select Freebies'};
-    //
-    // $scope.selectAllLocation=[];
-    // $scope.neighborhoods2 = [
-    //   "Near Entry Gate",
-    //   "Near Exit Gate",
-    //   "In Front of Tower",
-    //   "Near Garden",
-    //   "Near Play Area",
-    //   "Near Club House",
-    //   "Near Swimming Pool",
-    //   "Near Parking Area",
-    //   "Near Shopping Area",
-    // ];
-    // $scope.selected_baseline = {
-    //    template: '<b>{{option}}</b>',
-    //    // selectedToTop: true,
-    //    smartButtonTextConverter(skip, option) { return option; },
-    //  };
-    //      $scope.customEvents = {onItemSelect: function(item) {console.log(item,$scope.selectAllLocation);}};
-    //
-    //     $scope.selected_customTexts = {buttonDefaultText: 'Stall Location'};
-
         $scope.getRelationShipData = function(supplier){
           $scope.relationshipData = {};
           var supplierCode = 'RS';
@@ -564,11 +530,6 @@ $scope.multiSelect =
           releaseCampaignService.savePaymentDetails($scope.payment,$scope.payment.supplier_id)
           .then(function onSuccess(response){
             $scope.editPaymentDetails = true;
-
-            // $scope.payment.name_for_payment = response.data.name_for_payment;
-            // $scope.payment.bank_name = response.data.bank_name;
-            // $scope.payment.ifsc_code = response.data.ifsc_code;
-            // $scope.payment.ifsc_code = response.data.account_no;
           }).catch(function onError(response){
             console.log(response);
           })
@@ -623,19 +584,13 @@ $scope.multiSelect =
            Upload.upload({
                url: constants.base_url + constants.url_base + constants.upload_image_activity_url,
                data: {
-                 file: file,
-                 // 'inventory_activity_assignment_id' : inventory.id,
-                 // 'supplier_name' : inventory.supplier_name,
-                 // 'activity_name' : inventory.act_name,
-                 // 'inventory_name' : inventory.inv_type,
-                 // 'activity_date' : inventory.act_date,
+                 file: file,                 
                },
                headers: {'Authorization': 'JWT ' + token}
            }).then(function onSuccess(response){
                  uploaded_image = {'image_path': response.data.data };
                  supplier.images.push(uploaded_image);
                  cfpLoadingBar.complete();
-                 // $("#progressBarModal").modal('hide');
            })
            .catch(function onError(response) {
              cfpLoadingBar.complete();
@@ -660,9 +615,7 @@ $scope.multiSelect =
         	.catch(function onError(response){
             $scope.loadSpinner = true;
             $('#selectedPaymentModal').modal('hide');
-            // $('#declineModal').modal('hide');
             commonDataShare.showErrorMessage(response);
-            // swal(constants.name,constants.onhold_error,constants.error);
         		console.log("error occured", response);
         	});
           $scope.reason = "";
@@ -677,7 +630,6 @@ $scope.multiSelect =
            else if(response.data.data.status == true){
              $scope.loadSpinner = true;
              $('#selectedPaymentModal').modal('hide');
-             // $('#selectedPaymentModal').modal('hide');
 
              swal(constants.name,constants.email_success,constants.success);
            }
@@ -765,7 +717,6 @@ $scope.multiSelect =
         }
 
         $scope.removePhase = function(id){
-          // $scope.phases.splice(index , 1);
           $scope.editPhase = false;
           releaseCampaignService.removePhase(id)
           .then(function onSuccess(response){
@@ -793,13 +744,9 @@ $scope.multiSelect =
 
            var latlngbounds = new google.maps.LatLngBounds();
            latlngbounds.extend(marker.position);
-           // map.setCenter(latlngbounds.getCenter());
            map.fitBounds(latlngbounds);
-           //  map.setZoom(15);
-           // map.setCenter(marker.getPosition());
 
            google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
-             //  map.setCenter(marker.getPosition());
                if (this.getZoom()){
                    this.setZoom(16);
                }
@@ -808,10 +755,6 @@ $scope.multiSelect =
              google.maps.event.addListenerOnce(map, 'idle', function() {
                google.maps.event.trigger(map, 'resize');
              });
-             // map.panToBounds(latlngbounds);
-
-           // bounds.extend(new google.maps.LatLngBounds(19.088291, 72.442383));
-           // map.fitBounds(bounds);
 
          }
          function inventoryCount (inventoryDetails){
@@ -823,7 +766,6 @@ $scope.multiSelect =
          }
 
        $scope.getSocietyDetails = function(supplier,supplierId,center,index){
-         // $location.path('/' + supplierId + '/SocietyDetailsPages' , '_blank');
          $scope.temp_index = index;
          $scope.center = center;
          mapViewService.processParam();
@@ -843,8 +785,6 @@ $scope.multiSelect =
             $scope.society_images = response.data.data.supplier_images;
             $scope.amenities = response.data.data.amenities;
             $scope.society = supplier;
-           //  $scope.society = response.data.supplier_data;
-            //$rootScope.societyname = response.society_data.society_name;
             $scope.residentCount = estimatedResidents(response.data.data.supplier_data.flat_count);
             $scope.flatcountflier = response.data.data.supplier_data.flat_count;
             var baseUrl = constants.aws_bucket_url;
@@ -959,10 +899,7 @@ $scope.multiSelect =
 
            })
            .catch(function onError(response) {
-               console.log(response);
-               // if(response.data){
-               //   swal(constants.name,response.data.data.general_error,constants.error);
-               // }
+               console.log(response);               
              });
        }
      }
@@ -970,7 +907,6 @@ $scope.multiSelect =
          $scope.file = file;
        }
        $scope.addComment = function(){
-         // $scope.commentModal['related_to'] = constants.booking_related_comment;
          $scope.commentModal['shortlisted_spaces_id'] = $scope.supplierDataForComment.id;
          releaseCampaignService.addComment($scope.campaign_id,$scope.commentModal)
          .then(function onSuccess(response){
@@ -1022,10 +958,6 @@ $scope.multiSelect =
           $scope.addFreebies = function(freebiesData,rowIndex,index){
             $scope.customfreebies.push(freebiesData);
             $scope.selectedRow = rowIndex;
-          //
-          // else
-          //   $scope.customfreebies.splice(index,1);
-          // console.log($scope.customfreebies);
         }
   $scope.deleteSupplier = function(id,index){
 
@@ -1049,7 +981,6 @@ $scope.multiSelect =
   }
   $scope.permissionBoxData = {};
   $scope.uploadPermissionBoxImage = function(supplier){
-    // cfpLoadingBar.set(0.3)
         var token = $rootScope.globals.currentUser.token;
         if ($scope.permissionBoxFile) {
           cfpLoadingBar.start();
@@ -1067,11 +998,8 @@ $scope.multiSelect =
               headers: {'Authorization': 'JWT ' + token}
           }).then(function onSuccess(response){
                 supplier.permissionComment = '';
-                // uploaded_image = {'image_path': response.data.data };
-                // inventory.images.push(uploaded_image);
                 cfpLoadingBar.complete();
                 swal(constants.name, constants.image_success, constants.success);
-                // $("#progressBarModal").modal('hide');
           })
           .catch(function onError(response) {
             cfpLoadingBar.complete();
@@ -1084,7 +1012,6 @@ $scope.multiSelect =
       }
       $scope.ReceiptData = {};
       $scope.uploadReceiptImage = function(supplier){
-        // cfpLoadingBar.set(0.3)
             var token = $rootScope.globals.currentUser.token;
             if ($scope.ReceiptFile) {
               cfpLoadingBar.start();
@@ -1102,11 +1029,8 @@ $scope.multiSelect =
                   headers: {'Authorization': 'JWT ' + token}
               }).then(function onSuccess(response){
                     supplier.receiptComment = '';
-                    // uploaded_image = {'image_path': response.data.data };
-                    // inventory.images.push(uploaded_image);
                     cfpLoadingBar.complete();
                     swal(constants.name, constants.image_success, constants.success);
-                    // $("#progressBarModal").modal('hide');
               })
               .catch(function onError(response) {
                 cfpLoadingBar.complete();
@@ -1118,7 +1042,8 @@ $scope.multiSelect =
           }
       $scope.getPermissionBoxImages = function(supplier){
         releaseCampaignService.getPermissionBoxImages($scope.campaign_id,supplier.supplier_id)
-        .then(function onSuccess(response){
+        .then(function onSuccess(response){         
+          
           if(response.data.data.length){
               angular.forEach(response.data.data, function(data){
                 data['image_url'] = 'http://androidtokyo.s3.amazonaws.com/' + data.image_path;
@@ -1197,14 +1122,13 @@ $scope.multiSelect =
           // var assignedUserMap = {};
           for (var j=0; j < $scope.UserDataAssigned.length; j++){
             if (assignedSuppliers[i].assigned_to == $scope.UserDataAssigned[j].id){
-              var username = $scope.UserDataAssigned[j].username
-              // assignedUserMap.supplier_id = assignedUserMap[assignedSuppliers[i].supplier_id]
-              // assignedUserMap.username = username
-              // assignedUserMap[assignedSuppliers[i].supplier_id] = username
+              var username = $scope.UserDataAssigned[j].username;
+              var userId = $scope.UserDataAssigned[j].id;
               $scope.assignedUserList.push({
                 supplier_id: assignedSuppliers[i].supplier_id,
                 username: username,
-                updated_at: assignedSuppliers[i].updated_at
+                updated_at: assignedSuppliers[i].updated_at,
+                id: userId
               })
             }
           }
@@ -1214,14 +1138,14 @@ $scope.multiSelect =
             $scope.assignedSuppliers.push($scope.initialReleaseData.shortlisted_suppliers[i]);
           }
         }
+        console.log($scope.assignedUserList);
+        
       }).catch(function onError(response){
         console.log(response);
       })
     }
     var formatData = function(){
-      // $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
-      // console.log($scope.Data);
-      // console.log($scope.releaseDetails);
+
 
       angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier,key){
         $scope.mapViewLat = supplier.latitude;
@@ -1229,8 +1153,6 @@ $scope.multiSelect =
         if(!supplier.stall_locations){
           supplier.stall_locations = [];
         }
-        // console.log($scope.mapViewLat);
-        // console.log($scope.mapViewLong);
 
 
       })
@@ -1241,25 +1163,14 @@ $scope.multiSelect =
       angular.forEach($scope.releaseDetails.shortlisted_suppliers, function(supplier){
         $scope.shortlistedSuppliersIdList[supplier.supplier_id] = supplier;
       })
-    }
-    $scope.selectedUser = { value: 'all' };
+    }    
     $scope.changeSupplierData = function() {
+      $scope.selectedUser = {};
+      $scope.datePicker.date = {};
       supplierIdForSearch = undefined;
-      switch ($scope.selectedUser.value) {
-        case 'all':
-          assigned = 0;
-          getResultsPage(1);
-          // $scope.releaseDetails.shortlisted_suppliers = $scope.initialReleaseData.shortlisted_suppliers;
-          break;
-
-        case 'assigned':
-          assigned = 1;
-          getResultsPage(1);
-          // $scope.releaseDetails.shortlisted_suppliers = $scope.assignedSuppliers;
-          break;
-      }
-
-      // formatData();
+      console.log(angular.element('#searchId'));
+      var document = angular.element('#searchId');
+      document[0].value = '';      
     }
 
     var searchSupplierBySelection = function(){
@@ -1274,7 +1185,7 @@ $scope.multiSelect =
 
     $scope.getSearchedSupplierData = function(supplier){
       supplierIdForSearch = supplier.supplier_id;
-      getResultsPage(1);
+      // getResultsPage(1);
     }
 
     $scope.initTable = function () {
@@ -1324,11 +1235,9 @@ $scope.multiSelect =
       })
     }
     getHashTagImages();
-
-    $scope.clearDates = function(){
-      $scope.datePicker.date = {};
-      $scope.releaseDetails.shortlisted_suppliers = 
-              $scope.initialReleaseData.shortlisted_suppliers;
+    
+    $scope.getFilteredResult = function(){
+      getResultsPage(1);      
     }
 
 }]);//Controller function ends here

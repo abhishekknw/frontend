@@ -9,12 +9,16 @@
     var releaseCampaignService = {};
 
 
-    releaseCampaignService.getCampaignReleaseDetails = function(proposal_id, page, assigned, supplierId){
-      if(supplierId){
-        var url = url_base + proposal_id + "/campaign-inventories/?page=" + page + "&assigned=" + assigned
-                                       + "&search=" + supplierId;
+    releaseCampaignService.getCampaignReleaseDetails = function(proposal_id, page, data){
+      console.log(data);
+      
+      if(data){
+        var url = url_base + proposal_id + "/campaign-inventories/?page=" + page;
+        angular.forEach(Object.keys(data), function(element){
+          url = url + "&" + element + "=" + data[element];
+        })      
       }else{
-        var url = url_base + proposal_id + "/campaign-inventories/?page=" + page + "&assigned=" + assigned;
+        var url = url_base + proposal_id + "/campaign-inventories/?page=" + page;
       }
 
     	return machadaloHttp.get(url);
@@ -133,6 +137,17 @@
     }
     releaseCampaignService.getHashTagImages = function(campaignId){
       var url = url_base + "hashtag-images/get_hashtag_images/?campaign_id=" + campaignId;
+      return machadaloHttp.get(url);
+    }
+
+    releaseCampaignService.getFilteredResult = function(campaignId, data){
+      console.log(Object.keys(data));
+      
+      var url = url_base + campaignId + "/campaign-inventories/?page=" + 1;
+      angular.forEach(Object.keys(data), function(element){
+        url = url + "&" + element + "=" + data[element];
+      })      
+      
       return machadaloHttp.get(url);
     }
 
