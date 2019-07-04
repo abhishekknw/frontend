@@ -265,7 +265,9 @@ export default class CreateSupplier extends React.Component {
 
   onAddInventory() {
     const { inventory_list, selectedInventory } = this.state;
-
+    if (Object.keys(selectedInventory).length == 0) {
+      return;
+    }
     inventory_list.push(selectedInventory);
 
     this.setState({
@@ -305,7 +307,9 @@ export default class CreateSupplier extends React.Component {
 
   onAddAdditionalAttributes() {
     const { additional_attributes, selectedAdditionalAttribute } = this.state;
-
+    if (selectedAdditionalAttribute.value == undefined) {
+      return;
+    }
     additional_attributes[selectedAdditionalAttribute.value] =
       additional_attributes_dict[selectedAdditionalAttribute.value];
     this.setState({
@@ -670,6 +674,7 @@ export default class CreateSupplier extends React.Component {
                 <div className="blank-sttaus">No attributes available</div>
               )}
             </div>
+            <div className="createform__form__header">Inventories</div>
             {inventory_list && inventory_list.length ? (
               inventory_list.map(this.renderInventoryRow)
             ) : (
@@ -679,7 +684,7 @@ export default class CreateSupplier extends React.Component {
                 <br />
               </div>
             )}
-            <div className="createform__form__header">Inventory</div>
+            <div className="createform__form__header">Add More Inventories</div>
             <div className="createform__form__row">
               <div className="createform__form__inline">
                 <div className="form-control">
@@ -709,6 +714,7 @@ export default class CreateSupplier extends React.Component {
                   <br />
                 </div>
               )}
+              <div className="createform__form__header">Add More Additional Attributes</div>
               <div className="createform__form__row">
                 <div className="createform__form__inline">
                   <div className="form-control">

@@ -501,10 +501,10 @@ export default class ListBooking extends Component {
             <button
               type="button"
               className="btn btn--danger"
-              onClick={() => onFillAdditionalAttributeModalClick('contact_details')}
+              onClick={() => onFillAdditionalAttributeModalClick('bank_details')}
             >
               {booking.additional_attributes.bank_details[2].value
-                ? booking.additional_attributes.contact_details[2].value
+                ? booking.additional_attributes.bank_details[2].value
                 : 'Bank Details'}
             </button>
           </td>
