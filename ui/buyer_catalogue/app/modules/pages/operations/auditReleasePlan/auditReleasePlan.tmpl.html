@@ -124,7 +124,7 @@
            </thead>
            <tbody dir-paginate="supplier in releaseDetails.shortlisted_suppliers | itemsPerPage: suppliersPerPage"
                     total-items="totalSuppliers" current-page="pagination.current">
-             <tr ng-repeat="(key,filter) in getFilters(supplier)" ng-if="supplier.booking_status=='BK'">
+            <tr ng-repeat="(key,filter) in getFilters(supplier)" ng-if="supplier.booking_status=='BK'">
                <td class="col-md-1" rowspan="{{key.length}}" ng-show="$first"
               ng-style="phaseEndDate > currentDate && {'background-color':'green'}">
                  {{phaseMappingList[supplier.phase_no].phase_no || 'Not Assigned'}}

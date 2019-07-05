@@ -189,3 +189,7 @@ th {
 .completedHeaderSpacing{
   width: 150px;
 }
+
+.comment {
+  word-break: break-all;
+}

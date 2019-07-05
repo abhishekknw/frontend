@@ -108,6 +108,11 @@
       return machadaloHttp.get(url);
     }
 
+    releaseCampaignService.getAllComments = function(campaignId){
+      var url = url_base +  campaignId + "/comment/";
+      return machadaloHttp.get(url);
+    }
+
     releaseCampaignService.deleteSupplier = function(data){
       var url = url_base +  "delete-shortlisted-spaces/";
       return machadaloHttp.post(url,data);

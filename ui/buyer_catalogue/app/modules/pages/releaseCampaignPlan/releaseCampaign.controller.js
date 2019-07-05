@@ -220,7 +220,6 @@ $scope.addNewPhase =true;
           getAssignedSuppliers();
 
           $scope.initialReleaseData = Object.assign({}, response.data.data);
-          console.log($scope.initialReleaseData);
           $scope.totalSuppliers = $scope.initialReleaseData.total_count;
 
           for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
@@ -903,6 +902,7 @@ $scope.multiSelect =
              });
        }
      }
+
        $scope.uploadFiles = function(file){
          $scope.file = file;
        }
@@ -948,6 +948,35 @@ $scope.multiSelect =
           console.log(response);
         })
       }
+
+      // Internal Comments to show in row
+      var getAllComments = function() {
+        $scope.allComments = {};
+        releaseCampaignService.getAllComments($scope.campaign_id)
+          .then(function onSuccess(response) {
+            $scope.allComments = response.data.data;
+            $scope.comments = {}
+            var data = Object.keys($scope.allComments);
+            for (var i=0; i<data.length; i++){
+              var shortlisted_spaces_id = data[i];
+              var comments = $scope.allComments[shortlisted_spaces_id].general;
+              $scope.comments[shortlisted_spaces_id] = {}
+              for (var j=0; j<comments.length; j++){
+                if (comments[j].related_to == 'INTERNAL'){
+                  $scope.comments[shortlisted_spaces_id]['internal'] = comments[j].comment
+                } else {
+                  $scope.comments[shortlisted_spaces_id]['external'] = comments[j].comment
+                }
+              }
+            }
+          })
+          .catch(function onError(error) {
+            console.log('No comments to show');
+          })
+      }
+
+      // Call get all comments
+      getAllComments()
 
       $scope.customFreebies = [
           'Whatsapp Group',
@@ -1214,7 +1243,6 @@ $scope.multiSelect =
         }
       });
     };
-
 
     var getHashTagImages = function(){
       releaseCampaignService.getHashTagImages($scope.campaign_id)
