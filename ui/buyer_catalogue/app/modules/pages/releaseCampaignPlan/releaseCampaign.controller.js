@@ -1167,7 +1167,6 @@ $scope.multiSelect =
             $scope.assignedSuppliers.push($scope.initialReleaseData.shortlisted_suppliers[i]);
           }
         }
-        console.log($scope.assignedUserList);
         
       }).catch(function onError(response){
         console.log(response);
@@ -1197,7 +1196,6 @@ $scope.multiSelect =
       $scope.selectedUser = {};
       $scope.datePicker.date = {};
       supplierIdForSearch = undefined;
-      console.log(angular.element('#searchId'));
       var document = angular.element('#searchId');
       document[0].value = '';      
     }
@@ -1237,7 +1235,6 @@ $scope.multiSelect =
       });
       
       $('.table-style').scroll(function() {
-        console.log('$header.width(): ', $header.width());
         if ($header.width() > $(this).scrollLeft()) {
           $header.css('left', '-' + $(this).scrollLeft() + 'px');
         }
@@ -1267,5 +1264,14 @@ $scope.multiSelect =
     $scope.getFilteredResult = function(){
       getResultsPage(1);      
     }
+
+    // Check for internal comments
+    var userInfo = JSON.parse($window.localStorage.userInfo);
+    var userEmail = userInfo.email;
+    $scope.canViewInternalComments = false;
+    if (userEmail.includes('machadalo')){
+      $scope.canViewInternalComments = true;
+    }
+
 
 }]);//Controller function ends here

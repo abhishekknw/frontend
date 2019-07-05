@@ -71,7 +71,7 @@
               <th>Booking Priority</th>
               <th>Booking Status <br> and Sub Status</th>
               <th>Phase</th>
-              <th>Internal Comments</th>
+              <th ng-if="canViewInternalComments">Internal Comments</th>
               <th>External Comments</th>
               <th>Next Action Date</th>
               <th>Inventory Type</th>
@@ -219,7 +219,7 @@
                 </select>
                 <span class="error" ng-show="phaseform.phase.$error.min">{{positiveNoError}}</span>
               </td>
-              <td rowspan="{{key.length}}" ng-show="$first">
+              <td ng-if="canViewInternalComments" rowspan="{{key.length}}" ng-show="$first">
                 <div class="comment" ng-if="comments[supplier.id]">
                     <p>{{comments[supplier.id].internal}}</p>
                 </div>

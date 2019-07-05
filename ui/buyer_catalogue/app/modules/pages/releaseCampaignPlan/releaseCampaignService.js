@@ -10,8 +10,6 @@
 
 
     releaseCampaignService.getCampaignReleaseDetails = function(proposal_id, page, data){
-      console.log(data);
-      
       if(data){
         var url = url_base + proposal_id + "/campaign-inventories/?page=" + page;
         angular.forEach(Object.keys(data), function(element){
