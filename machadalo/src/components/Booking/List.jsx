@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import { Link } from 'react-router-dom';
-import ViewHashtagImagesModal from '../Modals/ViewHashtagImagesModal';
 import Select from 'react-select';
+import mapSort from 'mapsort';
 
 import CommentsModal from './../Modals/CommentsModal';
 import PhaseModal from './../Modals/PhaseModal';
+import ViewHashtagImagesModal from '../Modals/ViewHashtagImagesModal';
 import FillAdditionalAttributeModal from './../Modals/AdditionalAttributesModal';
-import { element } from 'prop-types';
 
 let optionTypes = [
   { value: 'supplier', label: 'Supplier' },
@@ -26,6 +27,32 @@ const getOption = (value) => {
   return { value };
 };
 
+const getSorterByOrder = (order) => {
+  if (order === 'asc') {
+    return (a, b) => {
+      if (a < b) {
+        return -1;
+      }
+      if (a > b) {
+        return 1;
+      }
+
+      return 0;
+    };
+  }
+
+  return (a, b) => {
+    if (a < b) {
+      return 1;
+    }
+    if (a > b) {
+      return -1;
+    }
+
+    return 0;
+  };
+};
+
 export default class ListBooking extends Component {
   constructor() {
     super();
@@ -42,9 +69,9 @@ export default class ListBooking extends Component {
       selectedOption: optionTypes[0].value,
       selectedDropdownOption: '',
       isSearchInputVisible: true,
-      sortType: {
-        key: '',
-        value: true,
+      sortOptions: {
+        column: 'supplier',
+        order: 'asc',
       },
       filterOptionTypes: [],
     };
@@ -61,7 +88,6 @@ export default class ListBooking extends Component {
     this.onBack = this.onBack.bind(this);
     this.onOptionTypeChange = this.onOptionTypeChange.bind(this);
     this.onDropDownOptionTypeChange = this.onDropDownOptionTypeChange.bind(this);
-    this.sort = this.sort.bind(this);
     this.setOptionTypes = this.setOptionTypes.bind(this);
     this.getFilterOptions = this.getFilterOptions.bind(this);
   }
@@ -235,125 +261,97 @@ export default class ListBooking extends Component {
     return list;
   }
 
-  sort(attribute, attrType) {
-    const { sortType } = this.state;
-    if (sortType.key == attribute) {
-      sortType.order = !sortType.order;
-    } else {
-      sortType.key = attribute;
-      sortType.order = true;
-    }
-    switch (attrType) {
+  getSortedList = (list) => {
+    const { sortOptions } = this.state;
+    console.log('sortOptions: ', sortOptions);
+    const newList = [...list];
+
+    switch (sortOptions.column) {
       case 'supplier':
-        this.props.booking.bookingList.sort((a, b) => {
-          if (a.supplier_name.toLowerCase() > b.supplier_name.toLowerCase()) {
-            return 1;
-          } else {
-            return -1;
-          }
-        });
-        break;
-      case 'supplier_attributes':
-        let index,
-          flag = true;
-        if (this.props.booking.bookingList.length) {
-          let items = this.props.booking.bookingList[0].supplier_attributes.map(
-            (item) => item.name
-          );
+        return mapSort(
+          newList,
+          (element) => element.supplier_name.toLowerCase(),
+          getSorterByOrder(sortOptions.order)
+        );
 
-          index = items.indexOf(attribute);
-          if (index < 0) {
-            items = this.props.booking.bookingList[0].booking_attributes.map((item) => item.name);
-            index = items.indexOf(attribute);
-            flag = false;
-          }
-        }
-        if (flag) {
-          this.props.booking.bookingList.sort((a, b) => {
-            if (a.supplier_attributes[index].value && b.supplier_attributes[index].value) {
-              if (
-                typeof a.supplier_attributes[index].value === 'string' &&
-                typeof b.supplier_attributes[index].value === 'string'
-              ) {
-                a = a.supplier_attributes[index].value.toLowerCase();
-                b = b.supplier_attributes[index].value.toLowerCase();
-              } else if (
-                typeof a.supplier_attributes[index].value === 'number' &&
-                typeof b.supplier_attributes[index].value === 'number'
-              ) {
-                a = a.supplier_attributes[index].value;
-                b = b.supplier_attributes[index].value;
-              }
-
-              if (a > b) return 1;
-              else return -1;
-            }
-          });
-        } else {
-          this.props.booking.bookingList.sort((a, b) => {
-            if (a.booking_attributes[index].value && b.booking_attributes[index].value) {
-              if (
-                typeof a.booking_attributes[index].value === 'string' &&
-                typeof b.booking_attributes[index].value === 'string'
-              ) {
-                a = a.booking_attributes[index].value.toLowerCase();
-                b = b.booking_attributes[index].value.toLowerCase();
-              } else if (
-                typeof a.booking_attributes[index].value === 'number' &&
-                typeof b.booking_attributes[index].value === 'number'
-              ) {
-                a = a.booking_attributes[index].value;
-                b = b.booking_attributes[index].value;
-              }
-
-              if (a > b) return 1;
-              else return -1;
-            }
-          });
-        }
-        break;
       case 'flat_count':
-        this.props.booking.bookingList.sort((a, b) => {
-          if (
-            a.additional_attributes.hasOwnProperty('society_details') &&
-            b.additional_attributes.hasOwnProperty('society_details') &&
-            a.additional_attributes.society_details[0].value &&
-            b.additional_attributes.society_details[0].value
-          ) {
-            a = a.additional_attributes.society_details[0].value;
-            b = b.additional_attributes.society_details[0].value;
-            if (a > b) return 1;
-            else return -1;
-          }
-        });
-        break;
+        return mapSort(
+          newList,
+          (element) => {
+            if (
+              element.additional_attributes &&
+              element.additional_attributes.society_details &&
+              element.additional_attributes.society_details[0]
+            ) {
+              return element.additional_attributes.society_details[0].value;
+            }
+
+            return 0;
+          },
+          getSorterByOrder(sortOptions.order)
+        );
+
       case 'area':
-        this.props.booking.bookingList.sort((a, b) => {
-          if (
-            a.additional_attributes.hasOwnProperty('location_details') &&
-            b.additional_attributes.hasOwnProperty('location_details') &&
-            a.additional_attributes.location_details[2].value &&
-            b.additional_attributes.location_details[2].value
-          ) {
-            a = a.additional_attributes.location_details[2].value;
-            b = b.additional_attributes.location_details[2].value;
-            if (a > b) return 1;
-            else return -1;
-          }
-        });
-        break;
+        return mapSort(
+          newList,
+          (element) => {
+            if (
+              element.additional_attributes &&
+              element.additional_attributes.location_details &&
+              element.additional_attributes.location_details[2]
+            ) {
+              return element.additional_attributes.location_details[2].value;
+            }
+
+            return '';
+          },
+          getSorterByOrder(sortOptions.order)
+        );
+
       default:
-        break;
-    }
+        const bookingAttributes =
+          newList && newList[0] ? newList[0].booking_attributes.map((attr) => attr.name) : [];
+        const bookingAttributesMatchIndex = bookingAttributes.indexOf(sortOptions.column);
+        if (bookingAttributesMatchIndex !== -1) {
+          return mapSort(
+            newList,
+            (element) => {
+              if (
+                element.booking_attributes &&
+                element.booking_attributes[bookingAttributesMatchIndex]
+              ) {
+                return element.booking_attributes[bookingAttributesMatchIndex].value;
+              }
 
-    if (!sortType.order) {
-      this.props.booking.bookingList.reverse();
-    }
+              return '';
+            },
+            getSorterByOrder(sortOptions.order)
+          );
+        }
 
-    this.setState({
-      sortType: sortType,
-    });
-  }
+        const supplierAttributes =
+          newList && newList[0] ? newList[0].supplier_attributes.map((attr) => attr.name) : [];
+        const supplierAttributesMatchIndex = supplierAttributes.indexOf(sortOptions.column);
+        if (supplierAttributesMatchIndex !== -1) {
+          return mapSort(
+            newList,
+            (element) => {
+              if (
+                element.supplier_attributes &&
+                element.supplier_attributes[supplierAttributesMatchIndex]
+              ) {
+                return element.supplier_attributes[supplierAttributesMatchIndex].value;
+              }
+
+              return '';
+            },
+            getSorterByOrder(sortOptions.order)
+          );
+        }
+
+        return newList;
+    }
+  };
 
   onOptionTypeChange(option) {
     if (dropdownOptions.hasOwnProperty(option.label)) {
@@ -377,6 +375,24 @@ export default class ListBooking extends Component {
       searchFilter: undefined,
     });
   }
+
+  setSortOrder = (column) => {
+    this.setState((prevState) => {
+      let order = 'asc';
+
+      // If sorting on same column as before, just swap the sort order
+      if (prevState.sortOptions.column === column) {
+        order = prevState.sortOptions.order === 'asc' ? 'desc' : 'asc';
+      }
+
+      return {
+        sortOptions: {
+          column,
+          order,
+        },
+      };
+    });
+  };
 
   renderBookingRow(booking) {
     const onComments = (type) => {
@@ -537,6 +553,20 @@ export default class ListBooking extends Component {
     );
   }
 
+  renderSortIcon = (column) => {
+    const { sortOptions } = this.state;
+    if (column !== sortOptions.column) return null;
+
+    return (
+      <i
+        className={classnames('fa', 'sort', {
+          'fa-sort-asc': sortOptions.order === 'asc',
+          'fa-sort-desc': sortOptions.order === 'desc',
+        })}
+      />
+    );
+  };
+
   render() {
     const {
       searchFilter,
@@ -551,7 +581,8 @@ export default class ListBooking extends Component {
     } = this.state;
     const { booking } = this.props;
     const { bookingList } = booking;
-    const list = this.getFilteredList(bookingList);
+    let list = this.getFilteredList(bookingList);
+    list = this.getSortedList(list);
 
     let attributes = [];
     let campaignName = '';
@@ -572,11 +603,7 @@ export default class ListBooking extends Component {
     return (
       <div className="booking__list list">
         <div className="list__title">
-          <h3>
-            {' '}
-            Booking - Plan(
-            {campaignName})
-          </h3>
+          <h3>Booking - Plan ({campaignName})</h3>
         </div>
         <button type="button" className="btn btn--danger" onClick={this.onBack}>
           <i className="fa fa-arrow-left" aria-hidden="true" />
@@ -618,22 +645,32 @@ export default class ListBooking extends Component {
           <table cellPadding="0" cellSpacing="0">
             <thead>
               <tr>
-                <th onClick={() => this.sort('supplier_name', 'supplier')}>Supplier Name</th>
+                <th onClick={() => this.setSortOrder('supplier')}>
+                  Supplier Name
+                  {this.renderSortIcon('supplier')}
+                </th>
                 {attributes.map((attribute) => (
-                  <th onClick={() => this.sort(attribute.name, 'supplier_attributes')}>
+                  <th onClick={() => this.setSortOrder(attribute.name)}>
                     {attribute.name}
+                    {this.renderSortIcon(attribute.name)}
                   </th>
                 ))}
 
                 {list && list[0] && list[0].additional_attributes ? (
                   Object.keys(list[0].additional_attributes).indexOf('society_details') > -1 ? (
-                    <th onClick={() => this.sort('flat_count', 'flat_count')}>Society Details</th>
+                    <th onClick={() => this.setSortOrder('flat_count')}>
+                      Society Details
+                      {this.renderSortIcon('flat_count')}
+                    </th>
                   ) : null
                 ) : null}
 
                 {list && list[0] && list[0].additional_attributes ? (
                   Object.keys(list[0].additional_attributes).indexOf('location_details') > -1 ? (
-                    <th onClick={() => this.sort('area', 'area')}>Location</th>
+                    <th onClick={() => this.setSortOrder('area')}>
+                      Location
+                      {this.renderSortIcon('area')}
+                    </th>
                   ) : null
                 ) : null}
 
