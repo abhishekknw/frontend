@@ -132,7 +132,7 @@ export default class List extends React.Component {
                 placeholder="Filter By Date"
               />
             </div>
-            <div className="form-control">
+            <div className="">
               {isDateRangePickerVisisble ? (
                 <DatetimeRangePicker className="dateTime" onChange={this.handleDateChange} />
               ) : null}

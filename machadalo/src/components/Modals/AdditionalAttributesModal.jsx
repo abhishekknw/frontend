@@ -4,6 +4,7 @@ import Select from 'react-select';
 
 import '../Checklist/index.css';
 import './index.css';
+import GoogleMap from '../GoogleMap';
 
 const customStyles = {
   content: {
@@ -29,11 +30,28 @@ const customSelectStyles = {
 export default class AdditionalAttributeModal extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       additional_attributes: this.props.attributes || [],
+      latitude: undefined,
+      longitude: undefined,
     };
   }
 
+  componentDidMount() {
+    this.state.additional_attributes.forEach((attribute) => {
+      if (attribute.name === 'Latitude') {
+        this.setState({
+          latitude: attribute.value,
+        });
+      }
+      if (attribute.name === 'Longitude') {
+        this.setState({
+          longitude: attribute.value,
+        });
+      }
+    });
+  }
   handleAttributeChange = (attribute, index) => {
     const { additional_attributes } = this.state;
 
@@ -59,6 +77,7 @@ export default class AdditionalAttributeModal extends React.Component {
     if (attribute.isChecked === false) {
       return;
     }
+
     return (
       <div className="createform__form__row" key={attribute.name}>
         <div className="createform__form__inline supplier-modal-input">
@@ -145,11 +164,20 @@ export default class AdditionalAttributeModal extends React.Component {
 
   render() {
     const { isVisible, attributes, onClose } = this.props;
+    const { latitude, longitude } = this.state;
+
+    console.log(latitude, longitude);
+
     return (
       <Modal isOpen={isVisible} style={customStyles} ariaHideApp={false}>
         <div className="modal-title">
           <h3>Fill Additional Attributes</h3>
         </div>
+        {latitude && longitude ? (
+          <div>
+            <GoogleMap latitude={latitude} longitude={longitude} />
+          </div>
+        ) : null}
         <div className="createform__form">
           {attributes.length ? attributes.map(this.renderAttributeRow) : null}
         </div>
