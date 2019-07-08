@@ -50,10 +50,10 @@ const additional_attributes_dict = {
   location_details: [
     { name: 'Address', type: 'STRING', is_required: true },
     { name: 'Landmark', type: 'STRING', is_required: true },
-    { name: 'Area', type: 'STRING', is_required: true },
-    { name: 'Sub Area', type: 'STRING', is_required: true },
-    { name: 'City', type: 'STRING', is_required: true },
-    { name: 'State', type: 'STRING', is_required: true },
+    { name: 'Area', type: 'DROPDOWN', is_required: true, options: [] },
+    { name: 'Sub Area', type: 'DROPDOWN', is_required: true, options: [] },
+    { name: 'City', type: 'DROPDOWN', is_required: true, options: [] },
+    { name: 'State', type: 'DROPDOWN', is_required: true, options: [] },
     { name: 'Pincode', type: 'STRING', is_required: true },
     { name: 'Latitude', type: 'STRING', is_required: true },
     { name: 'Longitude', type: 'STRING', is_required: true },
@@ -138,6 +138,10 @@ export default class CreateSupplier extends React.Component {
   componentDidUpdate(prevProps) {
     const { supplier: prevSupplier } = prevProps;
     const { supplier: newSupplier } = this.props;
+
+    const { location: prevLocation } = prevProps;
+    const { location: newLocation } = this.props;
+
     const newState = {};
 
     if (this.state.supplierTypeOption.length !== this.props.supplierType.supplierTypeList.length) {
@@ -217,6 +221,8 @@ export default class CreateSupplier extends React.Component {
   };
 
   onFillAdditionalAttributeModalClick = (attributes, attribute) => {
+    this.props.getStates();
+
     this.setState({
       isAdditionalAttributeModalVisible: true,
       selectedAdditionalAttribute: attributes[attribute],
@@ -386,11 +392,15 @@ export default class CreateSupplier extends React.Component {
     };
 
     if (isEditMode) {
+      console.log(data);
+
       this.props.updateSupplier({ data, supplierId }, () => {
         toastr.success('', 'Supplier updated successfully');
         history.push('/r/supplier/list');
       });
     } else {
+      console.log(data);
+
       this.props.postSupplier({ data }, () => {
         toastr.success('', 'Supplier created successfully');
         history.push('/r/supplier/list');
@@ -589,6 +599,8 @@ export default class CreateSupplier extends React.Component {
 
   renderAdditionalAttributeRow = (attribute) => {
     const { additional_attributes } = this.state;
+    console.log(additional_attributes);
+
     return (
       <div className="createform__form__row" key={additional_attributes[attribute]}>
         <div className="createform__form__inline">
@@ -615,7 +627,8 @@ export default class CreateSupplier extends React.Component {
   };
 
   render() {
-    const { baseInventory } = this.props;
+    const { baseInventory, locationData } = this.props;
+    console.log(locationData);
 
     const {
       isEditMode,
@@ -783,6 +796,11 @@ export default class CreateSupplier extends React.Component {
           attributes={this.state.selectedAdditionalAttribute}
           onChange={this.onAdditionalAttributeChange}
           onClose={this.onFillAdditionalAttributeModalClose}
+          locationData={this.props.locationData}
+          attribute={this.state.selectedFieldName}
+          getCities={(id) => this.props.getCities(id)}
+          getAreas={(id) => this.props.getAreas(id)}
+          getSubAreas={(id) => this.props.getSubAreas(id)}
         />
       </div>
     );

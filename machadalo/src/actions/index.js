@@ -13,6 +13,7 @@ import * as UserProfileActions from './userProfile';
 import * as LeadActions from './lead';
 import * as BookingActions from './booking';
 import * as PhaseActions from './phase';
+import * as LocationActions from './location';
 
 export default Object.assign(
   {},
@@ -30,5 +31,6 @@ export default Object.assign(
   UserProfileActions,
   LeadActions,
   BookingActions,
-  PhaseActions
+  PhaseActions,
+  LocationActions
 );
