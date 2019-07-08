@@ -28,31 +28,36 @@
 
 <!-- <div class="container"> -->
   <div class="panel-body table-style">
-    <div class="col-md-6">
-      <select class="col-md-6 form-control" name="" ng-model="selectedUser.value">
-        <option value="">All</option>
-        <option value="{{user.id}}" ng-repeat="user in assignedUserList">{{user.username}}</option>
-      </select>
+    <div style="padding: 0 15px;">
+      <div class="row">
+        <div class="col-xs-11 col-md-3">
+          <select class="col-md-6 form-control" name="" ng-model="selectedUser.value" style="margin-bottom: 20px;">
+            <option value="">All</option>
+            <option value="{{user.id}}" ng-repeat="user in assignedUserList">{{user.username}}</option>
+          </select>
+        </div>
+        <div class="col-xs-11 col-md-3">
+          <input
+            date-range-picker
+            class="form-control date-picker"
+            type="text"
+            ng-model="datePicker.date"
+            placeholder="Filter By Next Action Date:"
+            on-click="executeDateFilter()"
+            options="datePicker.options"
+            style="margin-bottom: 20px;"
+          />
+        </div>
+        <div class="col-xs-11 col-md-3">
+          <input id="searchId"  type="text" ng-model="customPopupSelected" placeholder="Search.." uib-typeahead="supplier as supplier.name for supplier in allShortlistedSuppliers | filter:{name:$viewValue}"
+          class="form-control" typeahead-on-select="getSearchedSupplierData(customPopupSelected)" style="margin-bottom: 20px;">
+        </div>
+        <div class="col-xs-11 col-md-3">
+            <button type="button" name="button" class="btn btn-small btn-primary" ng-click="changeSupplierData()" style="margin-bottom: 20px;">Reset</button>
+            <button class="btn btn-danger" ng-click="getFilteredResult()" style="margin-bottom: 20px; margin-left: 5px;">Submit</button>
+        </div>
+      </div>
     </div>
-    <div class="col-md-4">
-      <!-- <label for="">Filter By Next Action Date:</label> -->
-      <!-- <input date-range-picker class="form-control date-picker" type="text" ng-model="datePicker.date"
-      placeholder="Filter By Next Action Date:" on-click="executeDateFilter()"
-      options="datePicker.options"/>       -->
-    </div>
-    <br><br>
-    <div class="row col-md-12">
-      <div class="col-md-1">
-        <button type="button" name="button" class="btn btn-small btn-primary" ng-click="changeSupplierData()">Reset</button>
-      </div>
-      <div class="col-md-10">
-        <input id="searchId"  type="text" ng-model="customPopupSelected" placeholder="Search.." uib-typeahead="supplier as supplier.name for supplier in allShortlistedSuppliers | filter:{name:$viewValue}"
-        class="form-control" typeahead-on-select="getSearchedSupplierData(customPopupSelected)">
-      </div>
-      <div class="col-md-1">
-        <button class="btn btn-danger" ng-click="getFilteredResult()">Submit</button>
-      </div>
-    </div><br><br>
       <table class="table table-striped table-suppliers" data-ng-init="initTable()">
         <thead>
           <tr>

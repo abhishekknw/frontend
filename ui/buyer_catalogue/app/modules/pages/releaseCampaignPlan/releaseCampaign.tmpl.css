@@ -176,11 +176,15 @@ th{
 .input-width-phase{
 	min-width: 60px !important;
 }
-th {
+.table-suppliers th {
   background-color: #8e1921;
   color: white;
+}
 
-  }
+.calendar-table th {
+  background: transparent;
+  color: black;
+}
 
     .st-sort-default:before {content: '\25B1'}
     .st-sort-ascent:before {content: '\25B2'}
