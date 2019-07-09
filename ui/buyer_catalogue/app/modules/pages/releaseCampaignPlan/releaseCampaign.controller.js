@@ -1234,7 +1234,7 @@ $scope.multiSelect =
         }
       });
       
-      $('.table-style').scroll(function() {
+      $('.table-wrapper').scroll(function() {
         if ($header.width() > $(this).scrollLeft()) {
           $header.css('left', '-' + $(this).scrollLeft() + 'px');
         }
