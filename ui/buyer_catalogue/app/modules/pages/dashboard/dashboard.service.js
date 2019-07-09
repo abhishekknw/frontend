@@ -2,8 +2,8 @@
 
 
  angular.module('catalogueApp')
- .factory('DashboardService', ['machadaloHttp','$stateParams','$rootScope','$routeParams', '$location',
-  function (machadaloHttp, $stateParams, $rootScope, $routeParams, $location) {
+ .factory('DashboardService', ['machadaloHttp','$stateParams','$rootScope','$routeParams', '$location','$http',
+  function (machadaloHttp, $stateParams, $rootScope, $routeParams, $location, $http) {
 
     var url_base = 'v0/ui/website/';
     var url_base_proposal = 'v0/ui/proposal/';
@@ -210,6 +210,22 @@
     DashboardService.getDistributionGraphsStatics = function(data){
       var url =  url_root  + "analytics/get-leads-data-generic/";
       return machadaloHttp.put(url,data);
+    }
+
+    DashboardService.deleteLeads = function(data){
+      var token = $rootScope.globals.currentUser.token;
+      $http({
+        url: "http://localhost:8000/v0/ui/leads/delete-leads/",
+        method: "DELETE",
+        data: data,
+        headers: {'Authorization': 'JWT ' + token}
+      })
+      .then(function(response) {
+        console.log(response)
+      }, 
+      function(response) { // optional
+              // failed
+      });
     }
 
     DashboardService.getShortlistedSuppliers = function(campaignId, supplier_code){
