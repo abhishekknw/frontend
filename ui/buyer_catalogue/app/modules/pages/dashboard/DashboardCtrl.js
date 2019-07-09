@@ -3164,6 +3164,18 @@ $scope.getFormDetails = function(campaignId){
     })
 }
 
+$scope.deleteLeads = function(){
+  var data = {"supplier_ids": ["BENECPHRSAJI"],
+          "campaign_id":"TESYOG06F2"
+        }
+  DashboardService.deleteLeads(data)
+  // .then(function onSuccess(response){
+  //   console.log(response);
+  // }).catch(function onError(error){
+  //   console.log("error :", error);
+  // })
+}
+
 $scope.sendMeEmail = function(){
   cfpLoadingBar.start();
   $scope.emailCampaignLeadsModel['campaign_id'] = $scope.campaignIdForleads;
