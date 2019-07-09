@@ -54,8 +54,6 @@ export function getCitiesStart() {
 }
 
 export function getCitiesSuccess({ cities }) {
-  console.log(cities);
-
   return {
     type: types.GET_CITIES_SUCCESS,
     cities,

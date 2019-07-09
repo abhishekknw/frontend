@@ -198,7 +198,6 @@ export default class AdditionalAttributeModal extends React.Component {
             attributeValueOptions.push({ label: option, value: option });
           });
         }
-        console.log(attribute);
 
         return (
           <Select
@@ -218,8 +217,6 @@ export default class AdditionalAttributeModal extends React.Component {
     const { isVisible, attributes, onClose, attribute, locationData } = this.props;
     const { latitude, longitude } = this.state;
 
-    console.log(attributes);
-
     if (attributes.length && attribute === 'location_details') {
       if (locationData.states.length) {
         attributes[5].options = [];
@@ -233,7 +230,6 @@ export default class AdditionalAttributeModal extends React.Component {
           attributes[4].options.push(item);
         });
       }
-      console.log(locationData);
 
       if (locationData.areas.length) {
         attributes[2].options = [];

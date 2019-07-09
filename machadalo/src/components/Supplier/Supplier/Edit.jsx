@@ -392,15 +392,11 @@ export default class CreateSupplier extends React.Component {
     };
 
     if (isEditMode) {
-      console.log(data);
-
       this.props.updateSupplier({ data, supplierId }, () => {
         toastr.success('', 'Supplier updated successfully');
         history.push('/r/supplier/list');
       });
     } else {
-      console.log(data);
-
       this.props.postSupplier({ data }, () => {
         toastr.success('', 'Supplier created successfully');
         history.push('/r/supplier/list');
@@ -599,7 +595,6 @@ export default class CreateSupplier extends React.Component {
 
   renderAdditionalAttributeRow = (attribute) => {
     const { additional_attributes } = this.state;
-    console.log(additional_attributes);
 
     return (
       <div className="createform__form__row" key={additional_attributes[attribute]}>
@@ -628,17 +623,14 @@ export default class CreateSupplier extends React.Component {
 
   render() {
     const { baseInventory, locationData } = this.props;
-    console.log(locationData);
 
-    const {
-      isEditMode,
-      inventory_list,
-      supplier_attributes,
-      additional_attributes,
-      additionalAttributesList,
-    } = this.state;
+    const { isEditMode, inventory_list, supplier_attributes, additional_attributes } = this.state;
 
     const usedInventoryIds = inventory_list.map((item) => item._id);
+    const additionalAttributesNames = Object.keys(additional_attributes);
+    const additionalAttributesList = this.state.additionalAttributesList.filter(
+      (item) => additionalAttributesNames.indexOf(item.value) === -1
+    );
     const inventoryList = baseInventory.inventoryList.filter(
       (item) => usedInventoryIds.indexOf(item._id) === -1
     );
