@@ -237,6 +237,7 @@ angular.module('catalogueApp')
     }
     //To disable other checkboxes of other rows of adInventory Id
     $scope.isDisable = function(index){
+      console.log('Selected row :',index,$scope.invIdList )
       if($scope.invIdList.length == 0)
         $scope.selectedRow = undefined;
       if($scope.selectedRow == undefined || $scope.selectedRow == index)

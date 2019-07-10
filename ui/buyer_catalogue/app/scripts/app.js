@@ -515,7 +515,6 @@ angular
 
          var permissions = $rootScope.globals.userInfo.profile.permissions;
          var page = toState.data.permission;
-         console.log(page);
          if($rootScope.globals.currentUser && !(permissions.hasOwnProperty(page.toLowerCase()) && permissions[page.toLowerCase()]) && $location.path() != '/logout'){
            e.preventDefault();
            console.log(permissions.hasOwnProperty(page.toLowerCase()));
@@ -524,13 +523,11 @@ angular
        });
        $rootScope.$on('$locationChangeStart', function (e, toState, toParams, fromState, fromParams) {
          var whence = $location.path();
-         console.log("location change start - Whence: " + whence);
          // redirect to login page if not logged in
          $rootScope.globals.currentUser = AuthService.UserInfo();
          if(!$rootScope.globals.hasOwnProperty('userInfo') || !$rootScope.globals.userInfo.hasOwnProperty('profile')){
            $location.path("/login");
          }
-         console.log($rootScope.globals.userInfo);
          var category = $rootScope.globals.userInfo.profile.organisation.category;
          if (!$rootScope.globals.currentUser) {
            // if(toState.name != 'login')

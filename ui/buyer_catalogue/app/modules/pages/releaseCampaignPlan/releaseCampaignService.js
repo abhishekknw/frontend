@@ -10,8 +10,6 @@
 
 
     releaseCampaignService.getCampaignReleaseDetails = function(proposal_id, page, data){
-      console.log(data);
-      
       if(data){
         var url = url_base + proposal_id + "/campaign-inventories/?page=" + page;
         angular.forEach(Object.keys(data), function(element){
@@ -105,6 +103,11 @@
 
     releaseCampaignService.viewComments = function(campaignId, spaceId, relatedTo){
       var url = url_base +  campaignId + "/comment/?shortlisted_spaces_id=" + spaceId + "&related_to=" + relatedTo;
+      return machadaloHttp.get(url);
+    }
+
+    releaseCampaignService.getAllComments = function(campaignId){
+      var url = url_base +  campaignId + "/comment/";
       return machadaloHttp.get(url);
     }
 
