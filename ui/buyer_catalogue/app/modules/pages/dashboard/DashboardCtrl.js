@@ -3164,10 +3164,13 @@ $scope.getFormDetails = function(campaignId){
     })
 }
 
-$scope.deleteLeads = function(){
-  var data = {"supplier_ids": ["BENECPHRSAJI"],
-          "campaign_id":"TESYOG06F2"
-        }
+$scope.deleteLeads = function(supplier_id, campaign_id){
+  console.log(supplier_id, campaign_id)
+  var data = {
+    "supplier_ids": [],
+    "campaign_id": campaign_id
+  }
+  data.supplier_ids.push(supplier_id);
   DashboardService.deleteLeads(data)
   // .then(function onSuccess(response){
   //   console.log(response);

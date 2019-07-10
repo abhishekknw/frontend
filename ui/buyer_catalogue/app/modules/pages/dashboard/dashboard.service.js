@@ -218,13 +218,13 @@
         url: "http://localhost:8000/v0/ui/leads/delete-leads/",
         method: "DELETE",
         data: data,
-        headers: {'Authorization': 'JWT ' + token}
+        headers: {'Authorization': 'JWT ' + token, 'Content-Type': 'application/json'}
       })
       .then(function(response) {
-        console.log(response)
-      }, 
-      function(response) { // optional
-              // failed
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log('error :', error);
       });
     }
 
