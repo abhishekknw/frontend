@@ -12,8 +12,6 @@
     var url_base_user = 'v0/';
     var DashboardService = {};
 
-
-
     DashboardService.getCampaigns = function(campaignId, category, date,vendor){
         if(vendor){
           var url = url_base + "campaign-list/" + campaignId + "/?category=" + category + "&date=" +date + "&vendor=" + vendor;
@@ -215,15 +213,16 @@
     DashboardService.deleteLeads = function(data){
       var token = $rootScope.globals.currentUser.token;
       $http({
-        url: "http://localhost:8000/v0/ui/leads/delete-leads/",
+        url: Config.APIBaseUrl + "v0/ui/leads/delete-leads/",
         method: "DELETE",
         data: data,
         headers: {'Authorization': 'JWT ' + token, 'Content-Type': 'application/json'}
       })
-      .then(function(response) {
-        console.log(response);
+      .then(function() {
+        swal("Leads Deleted", "Successfully", "success");
       })
       .catch(function(error) {
+        swal("Leads Deletion", "Failed", "error");
         console.log('error :', error);
       });
     }
