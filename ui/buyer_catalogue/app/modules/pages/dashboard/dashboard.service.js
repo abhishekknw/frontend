@@ -2,8 +2,8 @@
 
 
  angular.module('catalogueApp')
- .factory('DashboardService', ['machadaloHttp','$stateParams','$rootScope','$routeParams', '$location',
-  function (machadaloHttp, $stateParams, $rootScope, $routeParams, $location) {
+ .factory('DashboardService', ['machadaloHttp','$stateParams','$rootScope','$routeParams', '$location','$http',
+  function (machadaloHttp, $stateParams, $rootScope, $routeParams, $location, $http) {
 
     var url_base = 'v0/ui/website/';
     var url_base_proposal = 'v0/ui/proposal/';
@@ -11,8 +11,6 @@
     var url_root = 'v0/ui/';
     var url_base_user = 'v0/';
     var DashboardService = {};
-
-
 
     DashboardService.getCampaigns = function(campaignId, category, date,vendor){
         if(vendor){
@@ -210,6 +208,23 @@
     DashboardService.getDistributionGraphsStatics = function(data){
       var url =  url_root  + "analytics/get-leads-data-generic/";
       return machadaloHttp.put(url,data);
+    }
+
+    DashboardService.deleteLeads = function(data){
+      var token = $rootScope.globals.currentUser.token;
+      $http({
+        url: Config.APIBaseUrl + "v0/ui/leads/delete-leads/",
+        method: "DELETE",
+        data: data,
+        headers: {'Authorization': 'JWT ' + token, 'Content-Type': 'application/json'}
+      })
+      .then(function() {
+        swal("Leads Deleted", "Successfully", "success");
+      })
+      .catch(function(error) {
+        swal("Leads Deletion", "Failed", "error");
+        console.log('error :', error);
+      });
     }
 
     DashboardService.getShortlistedSuppliers = function(campaignId, supplier_code){

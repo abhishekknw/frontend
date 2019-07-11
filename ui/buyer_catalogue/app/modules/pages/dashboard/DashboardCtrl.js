@@ -2183,7 +2183,7 @@ var formatThreeWeeksSummary = function(data,key){
  $scope.eventsForDynamicGraphCampaign = {
 
    onItemSelect : function(item){
-     console.log(item);
+     // console.log(item);
 
    }
 }
@@ -3162,6 +3162,18 @@ $scope.getFormDetails = function(campaignId){
     }).catch(function onError(response){
         console.log(response);
     })
+}
+
+var super_admin = JSON.parse(localStorage.getItem("machadalo-credentials"));
+        $scope.admin = super_admin["user_id"]
+
+$scope.deleteLeads = function(supplier_id){
+  var data = {
+    "supplier_ids": [],
+    "campaign_id": $scope.campaignId
+  }
+  data.supplier_ids.push(supplier_id);
+  DashboardService.deleteLeads(data)
 }
 
 $scope.sendMeEmail = function(){
