@@ -70,6 +70,7 @@ export default class ListBooking extends Component {
       commentType: '',
       campaignName: '',
       selectedOption: optionTypes[0].value,
+      selectedOptionLabel: optionTypes[0].label,
       selectedDropdownOption: '',
       isSearchInputVisible: false,
       sortOptions: {
@@ -77,6 +78,8 @@ export default class ListBooking extends Component {
         order: 'asc',
       },
       filterOptionTypes: [],
+      appliedFilters: [],
+      shouldShowError: false,
       value: { min: 0, max: 0 },
       rangeSliderOptions: {},
       isFloatOptionSelected: false,
@@ -96,6 +99,10 @@ export default class ListBooking extends Component {
     this.onDropDownOptionTypeChange = this.onDropDownOptionTypeChange.bind(this);
     this.setOptionTypes = this.setOptionTypes.bind(this);
     this.getFilterOptions = this.getFilterOptions.bind(this);
+    this.handleFilterAdd = this.handleFilterAdd.bind(this);
+    this.renderAppliedFilters = this.renderAppliedFilters.bind(this);
+    this.getFilterTags = this.getFilterTags.bind(this);
+    this.removeFilterTag = this.removeFilterTag.bind(this);
   }
 
   componentDidMount() {
@@ -166,6 +173,51 @@ export default class ListBooking extends Component {
     this.props.history.push(`/r/booking/campaigns`);
   }
 
+  getFilterTags() {
+    const filterTags = [...this.state.appliedFilters];
+    const {
+      value,
+      selectedOption,
+      selectedOptionLabel,
+      isSearchInputVisible,
+      selectedDropdownOption,
+    } = this.state;
+
+    // Check if selected filter has already been applied
+    const matchedFilter = filterTags.find((item) => item.fieldValue === selectedOption);
+    if (matchedFilter) {
+      alert('This filter category has already been added. Please select another category.');
+      return filterTags;
+    }
+
+    let filterInput;
+    if (isSearchInputVisible) {
+      filterInput = value || '';
+    } else {
+      filterInput = selectedDropdownOption ? selectedDropdownOption : '';
+    }
+
+    const filterTag = {
+      fieldLabel: selectedOptionLabel,
+      fieldValue: selectedOption,
+      query: filterInput,
+    };
+
+    if (filterTags.indexOf(filterTag) === -1) {
+      filterTags.push(filterTag);
+    } else {
+      this.setState({ shouldShowError: true });
+    }
+
+    return filterTags;
+  }
+
+  handleFilterAdd() {
+    const appliedFilters = this.getFilterTags();
+
+    this.setState({ appliedFilters });
+  }
+
   getFilterOptions() {
     return optionTypes;
   }
@@ -219,109 +271,101 @@ export default class ListBooking extends Component {
   }
 
   getFilteredList(list) {
-    if (this.state.selectedOption && this.state.isSearchInputVisible) {
-      let result = [];
-      let attribute = this.state.selectedOption;
+    let newList = [...list];
 
-      if (this.state.isFloatOptionSelected) {
-        const floatItem = { ...this.state.value };
+    const { appliedFilters } = this.state;
+    for (let i = 0, l = appliedFilters.length; i < l; i += 1) {
+      switch (appliedFilters[i].fieldValue) {
+        case 'supplier':
+          newList = newList.filter(
+            (item) =>
+              item.supplier_name.toLowerCase().indexOf(appliedFilters[i].query.toLowerCase()) !== -1
+          );
+          break;
+        case 'area':
+          newList = newList.filter(
+            (item) =>
+              item.additional_attributes.hasOwnProperty('location_details') &&
+              item.additional_attributes.location_details[2].value
+                .toLowerCase()
+                .indexOf(appliedFilters[i].query.toLowerCase()) !== -1
+          );
+          break;
+        case 'subarea':
+          newList = newList.filter(
+            (item) =>
+              item.additional_attributes.hasOwnProperty('location_details') &&
+              item.additional_attributes.location_details[3].value
+                .toLowerCase()
+                .indexOf(appliedFilters[i].query.toLowerCase()) !== -1
+          );
+          break;
+        case 'flat_count':
+          newList = newList.filter(
+            (item) =>
+              item.additional_attributes.hasOwnProperty('society_details') &&
+              item.additional_attributes.society_details[0].hasOwnProperty('value') &&
+              (item.additional_attributes.society_details[0].value >= appliedFilters[i].query.min &&
+                item.additional_attributes.society_details[0].value <= appliedFilters[i].query.max)
+          );
+          break;
+        case 'Booking Status':
+          newList = newList.filter(
+            (item) =>
+              item.booking_attributes[2].hasOwnProperty('value') &&
+              item.booking_attributes[2].value === appliedFilters[i].query
+          );
+          break;
+        case 'Average Age':
+          newList = newList.filter(
+            (item) =>
+              item.supplier_attributes[0].hasOwnProperty('value') &&
+              item.supplier_attributes[0].value === appliedFilters[i].query
+          );
+          break;
+        case 'NEFT Allowed':
+          newList = newList.filter(
+            (item) =>
+              item.supplier_attributes[1].hasOwnProperty('value') &&
+              item.supplier_attributes[1].value === appliedFilters[i].query
+          );
+          break;
 
-        list.forEach((element) => {
-          let attributes = element.supplier_attributes.concat(element.booking_attributes);
-          let labels = [];
-          attributes.forEach((item) => {
-            labels.push(item.name);
-          });
-          let index = labels.indexOf(this.state.selectedOption);
+        case 'Payment Status':
+          newList = newList.filter(
+            (item) =>
+              item.booking_attributes[4].hasOwnProperty('value') &&
+              item.booking_attributes[4].value === appliedFilters[i].query
+          );
+          break;
+        case 'Total Price (Yearly)':
+          newList = newList.filter(
+            (item) =>
+              item.booking_attributes[5].hasOwnProperty('value') &&
+              (item.booking_attributes[5].value >= appliedFilters[i].query.min &&
+                item.booking_attributes[5].value <= appliedFilters[i].query.max)
+          );
+          break;
+        case 'Activation Price':
+          newList = newList.filter(
+            (item) =>
+              item.booking_attributes[6].hasOwnProperty('value') &&
+              (item.booking_attributes[6].value >= appliedFilters[i].query.min &&
+                item.booking_attributes[6].value <= appliedFilters[i].query.max)
+          );
+          break;
 
-          if (
-            attributes[index].hasOwnProperty('value') &&
-            attributes[index].value >= floatItem.min &&
-            attributes[index].value <= floatItem.max
-          ) {
-            result.push(element);
-          }
-        });
-      } else {
-        switch (attribute) {
-          case 'flat_count':
-            const item = { ...this.state.value };
-
-            list.forEach((element) => {
-              if (
-                element.additional_attributes.hasOwnProperty('society_details') &&
-                element.additional_attributes.society_details[0].hasOwnProperty('value') &&
-                (element.additional_attributes.society_details[0].value >= item.min &&
-                  element.additional_attributes.society_details[0].value <= item.max)
-              ) {
-                result.push(element);
-              }
-            });
-            break;
-          default:
-            return list;
-        }
-      }
-      return result;
-    } else if (this.state.selectedDropdownOption) {
-      let result = [];
-      let attributes = list[0].supplier_attributes.concat(list[0].booking_attributes);
-      let items = [];
-
-      if (this.state.selectedOption === 'supplier') {
-        list.forEach((element) => {
-          if (element.supplier_name == this.state.selectedDropdownOption) result.push(element);
-        });
-        return result;
-      } else if (this.state.selectedOption === 'area') {
-        list.forEach((element) => {
-          if (
-            element.additional_attributes.hasOwnProperty('location_details') &&
-            element.additional_attributes.location_details[2].hasOwnProperty('value') &&
-            element.additional_attributes.location_details[2].value ===
-              this.state.selectedDropdownOption
-          ) {
-            result.push(element);
-          }
-        });
-        return result;
-      } else if (this.state.selectedOption === 'subarea') {
-        list.forEach((element) => {
-          if (
-            element.additional_attributes.hasOwnProperty('location_details') &&
-            element.additional_attributes.location_details[3].hasOwnProperty('value') &&
-            element.additional_attributes.location_details[3].value ===
-              this.state.selectedDropdownOption
-          ) {
-            result.push(element);
-          }
-        });
-        return result;
-      } else {
-        attributes.forEach((element) => {
-          items.push(element.name);
-        });
-
-        let index = items.indexOf(this.state.selectedOption);
-        list.forEach((element) => {
-          let attributes = element.supplier_attributes.concat(element.booking_attributes);
-
-          if (
-            attributes[index].hasOwnProperty('value') &&
-            attributes[index].value === this.state.selectedDropdownOption
-          ) {
-            result.push(element);
-          }
-        });
-        return result;
+        default:
+          return newList;
       }
     }
-    return list;
+
+    return newList;
   }
 
   getSortedList = (list) => {
     const { sortOptions } = this.state;
-    console.log('sortOptions: ', sortOptions);
+
     const newList = [...list];
 
     switch (sortOptions.column) {
@@ -443,6 +487,7 @@ export default class ListBooking extends Component {
 
         this.setState({
           selectedOption: option.value,
+          selectedOptionLabel: option.label,
           isSearchInputVisible: true,
           selectedDropdownOption: undefined,
           rangeSliderOptions: options,
@@ -471,6 +516,7 @@ export default class ListBooking extends Component {
 
         this.setState({
           selectedOption: option.value,
+          selectedOptionLabel: option.label,
           isSearchInputVisible: true,
           selectedDropdownOption: undefined,
           rangeSliderOptions: options,
@@ -480,6 +526,7 @@ export default class ListBooking extends Component {
     } else {
       this.setState({
         selectedOption: option.value,
+        selectedOptionLabel: option.label,
         isSearchInputVisible: false,
         selectedDropdownOption: undefined,
         isFloatOptionSelected: false,
@@ -671,6 +718,29 @@ export default class ListBooking extends Component {
     );
   }
 
+  removeFilterTag(filterTag) {
+    const updatedFilters = this.state.appliedFilters.filter((item) => {
+      return item.fieldValue !== filterTag.fieldValue;
+    });
+
+    this.setState({ appliedFilters: updatedFilters });
+  }
+
+  renderAppliedFilters(filterTag, index) {
+    console.log('filterTag: ', filterTag);
+    const queryLabel =
+      typeof filterTag.query === 'object'
+        ? `${filterTag.query.min}-${filterTag.query.max}`
+        : `${filterTag.query}`;
+    return (
+      <div className="list__filter-tag">
+        <i key={index} className="fa fa-times" onClick={() => this.removeFilterTag(filterTag)} />
+        &nbsp;
+        {`${filterTag.fieldLabel}: ${queryLabel}`}
+      </div>
+    );
+  }
+
   renderSortIcon = (column) => {
     const { sortOptions } = this.state;
     if (column !== sortOptions.column) return null;
@@ -729,11 +799,15 @@ export default class ListBooking extends Component {
           <i className="fa fa-arrow-left" aria-hidden="true" />
           &nbsp; Back
         </button>
-        <br />
-        <br />
+
+        <div className="list__filter-tags-container">
+          {this.state.appliedFilters.length
+            ? this.state.appliedFilters.map(this.renderAppliedFilters)
+            : null}
+        </div>
 
         <div className="list__filter">
-          <div>
+          <div className="list__filter__field">
             <Select
               options={filterOptionTypes}
               className="select"
@@ -742,7 +816,7 @@ export default class ListBooking extends Component {
               defaultValue={optionTypes[0]}
             />
           </div>
-          <div>
+          <div className="list__filter__query">
             {isSearchInputVisible ? (
               <InputRange
                 maxValue={rangeSliderOptions[selectedOption].max}
@@ -758,6 +832,11 @@ export default class ListBooking extends Component {
                 onChange={this.onDropDownOptionTypeChange}
               />
             )}
+          </div>
+          <div className="list__filter__action">
+            <button type="button" className="btn btn--danger" onClick={this.handleFilterAdd}>
+              Apply Filters
+            </button>
           </div>
         </div>
 
