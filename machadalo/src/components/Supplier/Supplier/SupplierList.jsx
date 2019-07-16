@@ -128,15 +128,17 @@ export default class List extends React.Component {
                 // getOptionValue={(option) => option.id}
                 // getOptionLabel={(option) => option.name}
                 // value={supplierById[selectedSupplierId]}
+                defaultValue={{ label: 'None', value: undefined }}
                 onChange={this.onDateFilterChange}
                 placeholder="Filter By Date"
               />
             </div>
-            <div className="">
-              {isDateRangePickerVisisble ? (
-                <DatetimeRangePicker className="dateTime" onChange={this.handleDateChange} />
-              ) : null}
-            </div>
+
+            {isDateRangePickerVisisble ? (
+              <div className="form-control">
+                <DatetimeRangePicker className="dateTimePicker" onChange={this.handleDateChange} />
+              </div>
+            ) : null}
           </div>
           <div className="list__filter">
             <input
