@@ -627,16 +627,16 @@ export default class CreateType extends React.Component {
 
   render() {
     const { baseInventory } = this.props;
-    const {
-      isEditMode,
-      inventory_list,
-      additionalAttributesList,
-      supplier_attributes,
-    } = this.state;
+    const { isEditMode, inventory_list, supplier_attributes, additional_attributes } = this.state;
 
     const usedInventoryIds = inventory_list.map((item) => item._id);
     const inventoryList = baseInventory.inventoryList.filter(
       (item) => usedInventoryIds.indexOf(item._id) === -1
+    );
+
+    const additionalAttributesNames = Object.keys(additional_attributes);
+    const additionalAttributesList = this.state.additionalAttributesList.filter(
+      (item) => additionalAttributesNames.indexOf(item.value) === -1
     );
 
     return (
