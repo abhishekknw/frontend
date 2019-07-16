@@ -648,7 +648,13 @@ export default class EditBooking extends React.Component {
     const { bookingTemplateList, bookingList } = booking;
     const { phaseList } = phase;
     const filterSupplierList = getFilteredSupplierList(supplierList, this.state.supplierId);
+
     const templateList = [];
+
+    const suppliers = bookingList.map((supplier) => supplier.supplier_id);
+    const filteredSuppliers = filterSupplierList.filter(
+      (supplier) => suppliers.indexOf(supplier.id) === -1
+    );
 
     for (let i = 0; i < bookingTemplateList.length; i++) {
       if (bookingList.length && bookingList[0].booking_template_id === bookingTemplateList[i].id) {
@@ -758,7 +764,7 @@ export default class EditBooking extends React.Component {
                   className={classnames('select', {
                     error: errors.supplier,
                   })}
-                  options={filterSupplierList}
+                  options={filteredSuppliers}
                   getOptionValue={(option) => option.id}
                   getOptionLabel={(option) => option.name}
                   value={this.state.supplier}
