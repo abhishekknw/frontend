@@ -84,25 +84,25 @@
    'lead/flat*100': 'Leads %',
    'hot_lead/flat*100': 'Hot Leads %',
    'hotness_level_2/flat*100': 'Meeting Fixed %',
-   'hotness_level_3/flat*100': 'Meeting Completed %',
-   'hotness_level_4/flat*100': 'Conversion %',
+   'total_booking_confirmed/flat*100': 'Booking Confirmed %',
+   'total_orders_punched/flat*100': 'Order Punched %',
    'flat*cost_flat/lead': 'Cost Per Lead (Rs)',
    'flat*cost_flat/hot_lead': 'Cost Per Hot Lead (Rs)',
    'cost_flat/hotness_level_2': 'Cost per Meeting Fixed',
-   'cost_flat/hotness_level_3': 'Cost per Meeting Completed',
-   'cost_flat/hotness_level_4': 'Cost per Conversion'
+   'cost_flat/total_booking_confirmed': 'Cost per Booking Confirmed',
+   'cost_flat/total_orders_punched': 'Cost per Order Punched'
  };
  $scope.dynamicGraphYKeysMap = {
    'leadsPerc': 'lead/flat*100',
    'hotleadsPerc': 'hot_lead/flat*100',
    'meetingFixedPerc': 'hotness_level_2/flat*100',
-   'meetingCompletedPerc': 'hotness_level_3/flat*100',
-   'conversionPerc': 'hotness_level_4/flat*100',
+   'meetingCompletedPerc': 'total_booking_confirmed/flat*100',
+   'conversionPerc': 'total_orders_punched/flat*100',
    'costPerLeads': 'cost_flat/lead',
    'costPerHotLeads': 'cost_flat/hot_lead',
    'costPerMeetingFixed': 'cost_flat/hotness_level_2',
-   'costPerMeetingCompleted': 'cost_flat/hotness_level_3',
-   'costPerConversion': 'cost_flat/hotness_level_4'
+   'costPerMeetingCompleted': 'cost_flat/total_booking_confirmed',
+   'costPerConversion': 'cost_flat/total_orders_punched'
  };
  var dynamicPricingKeys = {
    'Leads %': {
@@ -117,25 +117,25 @@
      name: 'Cost Per Meeting Fixed',
      value: 'cost_flat/hotness_level_2',
    },
-   'Meeting Completed %': {
-     name: 'Cost Per Meeting Completed',
-     value: 'cost_flat/hotness_level_3',
+   'Booking Confirmed %': {
+     name: 'Cost Per Booking Confirmed',
+     value: 'cost_flat/total_booking_confirmed',
    },
-   'Conversion %': {
-     name: 'Cost Per Conversion',
-     value: 'cost_flat/hotness_level_4',
+   'Order Punched %': {
+     name: 'Cost Per Order Punched',
+     value: 'cost_flat/total_orders_punched',
    }
  }
  var Raw_Data_Only_Cost = ["lead","hot_lead","flat","cost_flat"];
  var Raw_Metric_Only_Cost = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","1","/"],["4","2","/"]];
 
- var raw_data_global = ["lead","hot_lead","flat","cost_flat","hotness_level_2","hotness_level_3","hotness_level_4"];
+ var raw_data_global = ["lead","hot_lead","flat","cost_flat","hotness_level_2","total_booking_confirmed","total_orders_punched"];
  var metrics_global = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["5","3","/"]
  ,["m5",100,"*"],["6","3","/"],["m7",100,"*"],["7","3","/"],["m9",100,"*"],["4","1","/"],
  ["4","2","/"],["4","5","/"],["4","6","/"],["4","7","/"],
  ["3","4","*"],["m16","1","/"],["m16","2","/"]];
 
- var raw_data_basic = ["lead","hot_lead","flat","hotness_level_2","hotness_level_3","hotness_level_4"];
+ var raw_data_basic = ["lead","hot_lead","flat","hotness_level_2","total_booking_confirmed","total_orders_punched"];
  var metrics_basic = [["1","3","/"],["m1",100,"*"],["2","3","/"],["m3",100,"*"],["4","3","/"],["m5",100,"*"],
 ["5","3","/"],["m7",100,"*"],["6","3","/"],["m9",100,"*"]];
 var raw_data_basic_temp = ["lead","hot_lead","flat"];
@@ -3859,6 +3859,7 @@ $scope.xValues = {
 };
 var tooltipDynamicGraphData = [];
   var formatDynamicData = function(data){
+    
     var values1 = {};
     var labels = [];
     var finalData = [];
@@ -3866,40 +3867,41 @@ var tooltipDynamicGraphData = [];
     if(specificXValue){
       $scope.specificXValueLabel = specificXValue;
     }
-    angular.forEach(data.lower_group_data, function(data,key){
-      tooltipDynamicGraphData.push(data);
-      angular.forEach(data,function(FlatData){
-        $scope.FlatCountOVerallLowerORderGroup = data.flat;
-      })
-      if(selectedSpecificItems.indexOf(data[$scope.xValues.value]) > -1 || !selectedSpecificItems.length){
+    
+    angular.forEach(data.lower_group_data, function(data1,key){      
+      
+      tooltipDynamicGraphData.push(data1);        
+      $scope.FlatCountOVerallLowerORderGroup = data1.flat;
+      
+      if(selectedSpecificItems.indexOf(data1[$scope.xValues.value]) > -1 || !selectedSpecificItems.length){
         angular.forEach($scope.yValues, function(itemKey,index,item){
           if(!values1.hasOwnProperty(itemKey)){
               values1[itemKey] = [];
           }
           if(specificXValue){
             if(data[$scope.xValues.value] != null){
-              var temp_label = data[$scope.xValues.value] +
-               " (" + data[specificXValue] + ")" +
+              var temp_label = data1[$scope.xValues.value] +
+               " (" + data1[specificXValue] + ")" +
                " (" + $scope.FlatCountOVerallLowerORderGroup  + ")";
               if(specificXValue2){
-              var temp_label = data[$scope.xValues.value] +
-              ", " + data[specificXValue2] +
-              "( " + data[specificXValue] + " )" +  " (" +
+              var temp_label = data1[$scope.xValues.value] +
+              ", " + data1[specificXValue2] +
+              "( " + data1[specificXValue] + " )" +  " (" +
                  $scope.FlatCountOVerallLowerORderGroup + ")";
               }
 
               var temp = {
                 x: temp_label,
-                y: data[itemKey]||0
+                y: data1[itemKey]||0
               }
               values1[itemKey].push(temp);
             }
 
           }else {
-            if(data[$scope.xValues.value] != null){
+            if(data1[$scope.xValues.value] != null){
               var temp = {
-                x: data[$scope.xValues.value],
-                y: data[itemKey]||0
+                x: data1[$scope.xValues.value],
+                y: data1[itemKey]||0
               }
               values1[itemKey].push(temp);
             }
@@ -3916,6 +3918,7 @@ var tooltipDynamicGraphData = [];
       }
       finalData.push(temp_data);
     })
+    
     return finalData;
   }
   $scope.clearMetrics = function(){
@@ -3963,6 +3966,7 @@ var tooltipDynamicGraphData = [];
     if($scope.selectedSizeOfFlats.length){
       $scope.graphSelection.category = 'flattype';
 }
+
   if ($scope.graphSelection.dateRange.startDate &&
     ($scope.selectedTypeOfSocieties.length && $scope.selectedSizeOfFlats.length
                  && $scope.selectedDynamicCampaigns.length )) {
@@ -4366,6 +4370,31 @@ var reqData = {
                                            }
 
                                      }
+                                     else if (
+                                      $scope.selectedCities_temp.length
+                                      && $scope.selectedDynamicCampaigns.length
+                                            ) {
+                                              // alert("only city");
+                                              $scope.xValues.value = 'campaign_name';
+                                                var reqData = {
+               
+                                                    "data_scope":{
+                                                      "1":
+                                                          {"category":"unordered","level":"campaign","match_type":0,
+                                                              "values":{"exact":[]},
+                                                              "value_type":"campaign"
+                                                          },
+                                                        },
+                                                    "data_point":{"category":"geographical","level":["campaign"]},
+                                                    "raw_data":raw_data_global,
+                                                    "metrics": metrics_global
+                                                  }
+               
+               
+                                              angular.forEach($scope.selectedDynamicCampaigns, function(data){
+                                                reqData.data_scope['1'].values.exact.push(data.campaign_id);
+                                              });
+                                         }
                      else if (
                        $scope.selectedCities_temp.length
                              ) {
@@ -4387,7 +4416,7 @@ var reqData = {
 
 
                                angular.forEach($scope.selectedCities_temp, function(data){
-                                 reqData.data_scope['1'].values.exact.push(data.name);
+                                 reqData.data_scope['1'].values.exact.push(data);
                                });
                           }
                            else if (!$scope.graphSelection.dateRange.startDate && (
@@ -4489,7 +4518,6 @@ var reqData = {
                                                            });
                                                          }
                                                          }
-                                     // console.log($scope.applyClickedFilters.value);
                                          else if ($scope.applyClickedFilters.value)
                                           {
 
