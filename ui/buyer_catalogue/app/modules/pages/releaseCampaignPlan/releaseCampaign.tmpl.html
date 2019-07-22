@@ -76,7 +76,7 @@
                 <th>Booking Status <br> and Sub Status</th>
                 <th>Phase</th>
                 <th ng-if="canViewInternalComments">Internal Comments</th>
-                <th>External Comments</th>
+                <th>Comments</th>
                 <th>Next Action Date</th>
                 <th>Inventory Type</th>
                 <th>Inventory Count</th>
@@ -125,8 +125,8 @@
                   <b>View More/Add</b></a>
               </td>
               <td rowspan="{{key.length}}" ng-show="$first">
+                <p ng-repeat="user in assignedUserList | orderBy: '-updated_at'" ng-if="supplier.supplier_id == user.supplier_id">{{user.username | uppercase}} <br>{{ user.updated_at | date }}</p>
                 <button type="button" class="btn btn-danger"name="button" data-toggle="modal" data-target="#addUserModal" ng-click="setUserSupplier(supplier)">Assign User</button>
-                <p ng-repeat="user in assignedUserList | orderBy: '-updated_at'" ng-if="supplier.supplier_id == user.supplier_id">{{user.username | uppercase}} <br>{{ user.updated_at | date:"dd/MMM/y"}}</p>
                   <div id="addUserModal" class="modal fade">
                     <div class="modal-dialog">
                       <div class="modal-content">
@@ -225,20 +225,19 @@
                 </td>
                 <td ng-if="canViewInternalComments" rowspan="{{key.length}}" ng-show="$first">
                   <div class="comment" ng-if="comments[supplier.id]">
-                      <p>{{comments[supplier.id].internal}}</p>
+                    <b>{{comments[supplier.id].internal.username}} </b> <span> <small> {{comments[supplier.id].internal.created_on | date}}</small></span><br>
+                      <p>{{comments[supplier.id].internal.comment.slice(0,20)}}</p>
                   </div>
-                  <button type="button" class="btn btn-danger" data-target="#addComments"
-                  data-toggle="modal" ng-click="getSupplierForComments(supplier)">Add</button> &nbsp;
-                  <button type="button" class="btn btn-success" ng-click="viewComments(supplier)">View</button>
+                  <button type="button" class="btn btn-primary" ng-click="viewComments(supplier, 'INTERNAL')">View/Add</button>
                   <br>
+                </td>
                 </td>
                 <td rowspan="{{key.length}}" ng-show="$first">
                   <div class="comment" ng-if="comments[supplier.id]">
-                    <p>{{comments[supplier.id].external}}</p>
+                    <b>{{comments[supplier.id].external.username}} </b> <span> <small> {{comments[supplier.id].external.created_on | date}}</small></span><br>
+                    <p>{{comments[supplier.id].external.comment.slice(0,20)}}</p>
                   </div>
-                  <button type="button" class="btn btn-danger" data-target="#addComments"
-                          data-toggle="modal" ng-click="getSupplierForComments(supplier)">Add</button> &nbsp;
-                  <button type="button" class="btn btn-success" ng-click="viewComments(supplier)">View</button>
+                  <button type="button" class="btn btn-primary" ng-click="viewComments(supplier, 'EXTERNAL')">View/Add</button>
                   <br>
                 </td>
                 <td rowspan="{{key.length}}" ng-show="$first">
@@ -975,41 +974,7 @@
     </div>
   </div>
 </div>
-<!--START : add comments modal  -->
-<div id="addComments" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        Add Comment For {{supplierDataForComment.name}}
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="col-md-12">
-        <div class="row col-md-6" >
-        <br>
-          <label>Select Comment Type</label><br>
-          <select class="form-control" name="" ng-model="commentModal.related_to">
-            <option disabled="true" selected>Select Comment Type</option>
-            <option ng-repeat="comment in commentsType" value="{{comment}}">{{comment}}</option>
-          </select></br>
-        </div>
-        <div style="width:100%">
-        <br>
-          <!-- <label>Comments :</label> -->
-          <textarea class="form-control col-md-10"  rows="8" cols="200" ng-model="commentModal.comment" placeholder="Write here.."></textarea>
-        </div>
-        <br>
-      </div><br>
-      <!-- <div> -->
-        <br>
-        <button class="btn btn-success" type="button" ng-click="addComment()" style="margin:3%">Add Comment</button>
-      <!-- </div> -->
-    </br></br>
-
-    </div>
-  </div>
-</div>
-<!--END : add comments modal  -->
-<!--START : view comments modal  -->
+<!--START : view external comments modal  -->
 <div id="viewComments" class="modal fade">
   <div>
     <div class="modal-dialog">
@@ -1019,13 +984,6 @@
         View Comments For {{supplierDataForComment.name}}
       </div>
         <div class="modal-body">
-          <div class="">
-            Selected Comment Type :
-            <select class="form-control" ng-model="selectedCommentForView.type" ng-change="viewComments(supplierDataForComment)">
-                <option ng-repeat="comment in commentsType" value="{{comment}}">{{comment}}</option>
-            </select>
-          </div>
-          <br>
         <table class="table-bordered table-striped">
           <tbody>
             <tr ng-repeat="item in commentsData[selectedInvForView]">
@@ -1042,6 +1000,16 @@
             </tr>
           </tbody>
         </table>
+      <!--  Add comment-->
+        <div style="width:100%">
+          <br>
+          <!-- <label>Comments :</label> -->
+          <textarea class="form-control col-md-10"  rows="8" cols="200" ng-model="commentModal.comment" placeholder="Write here.."></textarea>
+        </div>
+        <br>
+      </div><br>
+      <br>
+      <button class="btn btn-success" type="button" ng-click="addComment(commentType)" style="margin:3%">Add Comment</button>
       </div>
     </div><br>
     <!-- <div> -->

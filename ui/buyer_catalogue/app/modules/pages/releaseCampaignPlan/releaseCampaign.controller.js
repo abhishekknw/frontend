@@ -284,8 +284,10 @@ $scope.addNewPhase =true;
       .then(function onSuccess(response){
 
       swal(constants.name,constants.assign_success,constants.success);
+      location.reload();
       })
-      .catch(function onError(response){
+      .catch(function onError(error){
+        console.log(error);
       });
     }
 
@@ -906,14 +908,16 @@ $scope.multiSelect =
        $scope.uploadFiles = function(file){
          $scope.file = file;
        }
-       $scope.addComment = function(){
+       $scope.addComment = function(commentType){
          $scope.commentModal['shortlisted_spaces_id'] = $scope.supplierDataForComment.id;
+         $scope.commentModal['related_to'] = commentType;
          releaseCampaignService.addComment($scope.campaign_id,$scope.commentModal)
          .then(function onSuccess(response){
            $scope.commentModal = {};
            $scope.supplierDataForComment = undefined;
            $('#addComments').modal('hide');
            swal(constants.name, constants.add_data_success, constants.success);
+           location.reload();
          }).catch(function onError(response){
            console.log(response);
          })
@@ -922,28 +926,24 @@ $scope.multiSelect =
         $scope.supplierDataForComment = supplier;
       }
       $scope.selectedCommentForView = {};
-      $scope.viewComments = function(supplier){
+      $scope.viewComments = function(supplier, commentType){
         $scope.supplierDataForComment = supplier;
         $scope.commentsData = {};
         if($scope.selectedCommentForView.type == undefined){
             $scope.selectedCommentForView.type = $scope.commentsType[0];
         }
 
-        var relatedTo = $scope.selectedCommentForView.type;
+        $scope.commentType = commentType;
+        var relatedTo = commentType;
         var spaceId = $scope.supplierDataForComment.id;
 
         releaseCampaignService.viewComments($scope.campaign_id,spaceId,relatedTo)
         .then(function onSuccess(response){
           $scope.commentModal = {};
           $scope.commentsData = response.data.data;
-          if(Object.keys($scope.commentsData).length != 0){
-            $scope.viewInvForComments = Object.keys($scope.commentsData);
-            $scope.selectedInvForView = $scope.viewInvForComments[0];
-            $('#viewComments').modal('show');
-          }else{
-            $('#viewComments').modal('hide');
-            swal(constants.name,constants.no_comments_msg,constants.warning);
-          }
+          $scope.viewInvForComments = Object.keys($scope.commentsData);
+          $scope.selectedInvForView = $scope.viewInvForComments[0];
+          $('#viewComments').modal('show');
         }).catch(function onError(response){
           console.log(response);
         })
@@ -963,9 +963,17 @@ $scope.multiSelect =
               $scope.comments[shortlisted_spaces_id] = {}
               for (var j=0; j<comments.length; j++){
                 if (comments[j].related_to == 'INTERNAL'){
-                  $scope.comments[shortlisted_spaces_id]['internal'] = comments[j].comment
+                  $scope.comments[shortlisted_spaces_id]['internal'] = {
+                    comment: comments[j].comment,
+                    username: comments[j].user_name,
+                    created_on: comments[j].timestamp
+                  }
                 } else {
-                  $scope.comments[shortlisted_spaces_id]['external'] = comments[j].comment
+                  $scope.comments[shortlisted_spaces_id]['external'] = {
+                    comment: comments[j].comment,
+                    username: comments[j].user_name,
+                    created_on: comments[j].timestamp
+                  }
                 }
               }
             }
