@@ -30,6 +30,7 @@
       $scope.selectedbookingParameters = [];
       $scope.selectedVendors_temp = [];
       $scope.selectedDynamicCampaigns = [];
+      $scope.selectedDynamicGraphParams = [];
       $scope.selectedTypeOfSocieties = [];
       $scope.selectedSizeOfFlats = [];
       var selectedSpecificItems = [];
@@ -70,6 +71,12 @@
       //  {id: 15 , name: 'Chandigarh'},
       //  {id: 16, name: 'Noida'},
       // ];
+      $scope.graphParams = [
+        { id: 1, name: 'Zero Total Leads', value: 'lead_nz', key: 'lead' },
+        { id: 2, name: 'Zero Hot Leads', value: 'hot_lead_nz', key: 'hot_lead' },
+        { id: 3, name: 'Zero Booking Confirmed', value: 'total_booking_confirmed_nz', key: 'total_booking_confirmed' },
+        { id: 4, name: 'Zero Order Punched', value: 'total_orders_punched_nz', key: 'total_orders_punched'},
+      ]
       $scope.BookingParametersLists = [
         { id: 1, name: 'Freebies Allowed', value: 'freebiestype' },
         { id: 2, name: 'Pre-Hype Allowed', value: 'preHypetype' },
@@ -2180,6 +2187,13 @@
         showCheckAll: true,
         scrollableHeight: '300px', scrollable: true
       };
+      $scope.settingsForGraphParams = {
+        enableSearch: true,
+        keyboardControls: true, idProp: "{{option.id}}",
+        template: '{{option.name}}', smartButtonTextConverter(skip, option) { return option; },
+        showCheckAll: true,
+        scrollableHeight: '300px', scrollable: true
+      };
       $scope.selected_baselines_customTexts = { buttonDefaultText: 'Select Campaigns' };
       $scope.selected_baselines_customTexts_city = { buttonDefaultText: 'Select Cities' };
       $scope.selected_baselines_customTexts_booking_parameters = { buttonDefaultText: 'Select Parameters' };
@@ -2187,6 +2201,7 @@
       $scope.selected_baselines_customTexts_qualityTypesociety = { buttonDefaultText: 'Select Type of Society' };
       $scope.selected_baselines_customTexts_sizeOfFlats = { buttonDefaultText: 'Select Size of Flats' };
       $scope.selected_baselines_customTexts_freebies = { buttonDefaultText: 'Select Freebies' };
+      $scope.selected_baselines_customTexts_graphParams = { buttonDefaultText: 'Select Graph Param' };
 
 
 
@@ -3998,7 +4013,9 @@
           leadsPerc: false,
           hotleadsPerc: false,
           costPerLeads: false,
-          costPerHotLeads: false
+          costPerHotLeads: false,
+          meetingCompletedPerc: false,
+          conversionPerc: false
         }
       };
       var specificXValue = undefined;
@@ -4055,7 +4072,7 @@
               "category": "unordered", "level": ["qualitytype", "flattype"],
               "value_ranges": { "flattype": [], "qualitytype": [] }
             },
-            "raw_data": raw_data_global,
+            "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
           }
           angular.forEach($scope.selectedDynamicCampaigns, function (data) {
@@ -4097,7 +4114,7 @@
               "category": "unordered", "level": ["qualitytype", "flattype"],
               "value_ranges": { "flattype": [], "qualitytype": [] }
             },
-            "raw_data": raw_data_global,
+            "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
           }
           angular.forEach($scope.selectedDynamicCampaigns, function (data) {
@@ -4169,7 +4186,7 @@
               "category": "unordered", "level": [],
               "custom_binary_field_labels": { "nbpostertype": { "true": "Poster", "false": "No Poster" } }
             },
-            "raw_data": raw_data_global,
+            "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
           }
           angular.forEach($scope.selectedDynamicCampaigns, function (data) {
@@ -4208,7 +4225,7 @@
               "category": "unordered", "level": ["qualitytype"],
               "value_ranges": { "qualitytype": [] }
             },
-            "raw_data": raw_data_global,
+            "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
           }
           angular.forEach($scope.selectedDynamicCampaigns, function (data) {
@@ -4247,7 +4264,7 @@
               "category": "unordered", "level": ["flattype"],
               "value_ranges": { "flattype": [] }
             },
-            "raw_data": raw_data_global,
+            "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
           }
           angular.forEach($scope.selectedDynamicCampaigns, function (data) {
@@ -4279,7 +4296,7 @@
               "category": "unordered", "level": ["qualitytype", "flattype"],
               "value_ranges": { "flattype": [], "qualitytype": [] }
             },
-            "raw_data": raw_data_global,
+            "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
           }
           angular.forEach($scope.selectedDynamicCampaigns, function (data) {
@@ -4311,7 +4328,7 @@
               "category": "unordered", "level": ["qualitytype"],
               "value_ranges": { "qualitytype": [] }
             },
-            "raw_data": raw_data_global,
+            "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
           }
           angular.forEach($scope.selectedDynamicCampaigns, function (data) {
@@ -4341,7 +4358,7 @@
               "category": "unordered", "level": ["flattype"],
               "value_ranges": { "flattype": [] }
             },
-            "raw_data": raw_data_global,
+            "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
           }
           angular.forEach($scope.selectedDynamicCampaigns, function (data) {
@@ -4370,7 +4387,7 @@
               "category": "time", "level": ["date"], "sublevel": "phase",
               "value_ranges": { "phase": [] }, "range_type": 1
             },
-            "raw_data": raw_data_global,
+            "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global
           }
           angular.forEach($scope.selectedDynamicCampaigns, function (data) {
@@ -4402,7 +4419,7 @@
               }
             },
             "data_point": { "category": "unordered", "level": ["vendor"] },
-            "raw_data": raw_data_global,
+            "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global
           }
 
@@ -4433,7 +4450,7 @@
               "category": "unordered", "level": ["campaign"],
               "value_ranges": { "campaign": [] }
             },
-            "raw_data": raw_data_global,
+            "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
           }
 
@@ -4464,7 +4481,7 @@
                 "category": "unordered", "level": ["flattype"],
                 "value_ranges": { "flattype": [] }
               },
-              "raw_data": raw_data_global,
+              "raw_data": angular.copy(raw_data_global),
               "metrics": metrics_global,
             }
 
@@ -4495,7 +4512,7 @@
               },
             },
             "data_point": { "category": "unordered", "level": ["supplier", "campaign"] },
-            "raw_data": raw_data_global,
+            "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
             "statistical_information": {
               "stats": [
@@ -4543,7 +4560,7 @@
               },
             },
             "data_point": { "category": "geographical", "level": ["city"] },
-            "raw_data": raw_data_global,
+            "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global
           }
 
@@ -4569,7 +4586,7 @@
               },
             },
             "data_point": { "category": "unordered", "level": ["vendor"] },
-            "raw_data": raw_data_global,
+            "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global
           }
 
@@ -4594,7 +4611,7 @@
                 "category": "unordered", "level": ["qualitytype"],
                 "value_ranges": { "qualitytype": [] }
               },
-              "raw_data": raw_data_global,
+              "raw_data": angular.copy(raw_data_global),
               "metrics": metrics_global
             }
 
@@ -4624,7 +4641,7 @@
               "category": "time", "level": ["date"], "sublevel": "phase",
               "value_ranges": { "phase": [] }, "range_type": 1
             },
-            "raw_data": raw_data_global,
+            "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global
           }
 
@@ -4651,7 +4668,7 @@
                 }
               },
               "data_point": { "category": "unordered", "level": [] },
-              "raw_data": raw_data_global,
+              "raw_data": angular.copy(raw_data_global),
               "metrics": metrics_global
             }
 
@@ -4677,7 +4694,7 @@
               }
             },
             "data_point": { "category": "unordered", "level": ["campaign"] },
-            "raw_data": raw_data_global,
+            "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global
           }
 
@@ -4687,6 +4704,13 @@
         }
 
         if (reqData) {
+          if($scope.selectedDynamicGraphParams.length){
+            angular.forEach($scope.selectedDynamicGraphParams, function(item){
+              var index = reqData.raw_data.indexOf(item.key);
+              reqData.raw_data.splice(index, 1, item.value);
+            })            
+          }
+          
           DashboardService.getDistributionGraphsStatics(reqData)
             .then(function onSuccess(response) {
               $scope.initialDynamicGraphData = response.data.data;
