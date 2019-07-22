@@ -2199,7 +2199,7 @@
       $scope.selected_baselines_customTexts_booking_parameters = { buttonDefaultText: 'Select Parameters' };
       $scope.selected_baselines_customTexts_vendor = { buttonDefaultText: 'Select Vendor' };
       $scope.selected_baselines_customTexts_qualityTypesociety = { buttonDefaultText: 'Select Type of Society' };
-      $scope.selected_baselines_customTexts_sizeOfFlats = { buttonDefaultText: 'Select Size of Flats' };
+      $scope.selected_baselines_customTexts_sizeOfFlats = { buttonDefaultText: 'Select Size of Society' };
       $scope.selected_baselines_customTexts_freebies = { buttonDefaultText: 'Select Freebies' };
       $scope.selected_baselines_customTexts_graphParams = { buttonDefaultText: 'Select Graph Param' };
 
@@ -3932,6 +3932,7 @@
 
           })
           angular.forEach($scope.yValues, function (itemKey) {
+            
             var temp_data = {
               key: $scope.dynamicGraphYValuesMap[itemKey],
               values: values1[itemKey]
@@ -4800,7 +4801,6 @@
           else {
             $scope.hotLeadsValues = data.interested;
             $scope.normalLeadsValues = data.total;
-
           }
           if (key != 'overall') {
             $scope.vendorKeyName = $scope.vendorSummary.vendor_details[key].name;
@@ -4812,9 +4812,6 @@
             values1.push(value1);
             values2.push(value2);
           }
-
-
-
         })
 
         var temp_data = [
