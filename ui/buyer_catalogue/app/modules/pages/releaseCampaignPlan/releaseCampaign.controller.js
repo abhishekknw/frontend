@@ -53,16 +53,18 @@ $scope.addNewPhase =true;
         {header : 'Payment Status'},
       ];
   $scope.booking_status = [
-    {name:'Undecided', code : 'NB'},
-    {name:'Decision Pending', code : 'DP'},
     {name:'Confirmed Booking', code : 'BK'},
     {name:'Tentative Booking', code : 'TB'},
-    {name:'Phone Booked' , code : 'PB'},
-    {name:'Visit Booked', code : 'VB'},
+    {name:'Decision Pending', code : 'DP'},
+    {name:'Unknown', code : 'UN'},
+    {name:'New Entity', code : 'NE'},
     {name:'Rejected', code : 'SR'},
-    {name:'Not Visited', code : 'NVI'},
-    {name:'Send Email', code : 'SE'},
+    {name:'Not Initiated', code : 'NI'}
+  ];
 
+  $scope.booking_unknown = [
+    {name:'Phone Number Issue', code : 'UPNI'},
+    {name:'Contact Person Issue', code : 'UCPI'}
   ];
 
   $scope.booking_pending = [
@@ -87,12 +89,16 @@ $scope.addNewPhase =true;
     {name:'Others(Specify)', code : 'ROS'},
   ];
 
-  $scope.booking_not_visited = [
+  $scope.booking_tentative = [
+    {name:'Phone Booking' , code : 'PB'},
+    {name:'Visit Booking', code : 'VB'}
+  ]
+
+  $scope.booking_new_entity = [
     {name:'Wikimapia', code : 'NVW'},
     {name:'Google', code : 'NVG'},
     {name:'99Acres', code : 'NVA'},
     {name:'Magic Brick', code : 'NVMB'},
-    {name:'Wrong Number' , code : 'NVWN'},
     {name:'First Time Assigned', code : 'NVFT'},
     {name:'Others(Specify)', code : 'NVOS'},
   ];

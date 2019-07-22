@@ -159,22 +159,29 @@
                     >{{item.name}}</option>
                   </select>
                   <br>
-                    <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-if="supplier.booking_status=='DP'">
-                      <option value="">Select Sub Status</option>
+                    <select  class="form-control spacing input-width" ng-model="supplier.booking_pending" ng-if="supplier.booking_status=='DP'">
                       <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}"
                       ng-if="supplier.booking_pending == undefined ? supplier.booking_pending = booking_pending[0].code : 1">
                         {{item.name}}</option>
                     </select>
-                    <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-show="$first" ng-if="supplier.booking_status=='SR'">
-                        <option value="">Select Sub Status</option>
+                    <select  class="form-control spacing input-width" ng-model="supplier.booking_rejected" ng-show="$first" ng-if="supplier.booking_status=='SR'">
                       <option style="width:100%;" ng-repeat="item in booking_rejected" value="{{item.code}}"
                       ng-if="supplier.booking_rejected == undefined ? supplier.booking_rejected = booking_rejected[0].code : 1">
                         {{item.name}}</option>
                     </select>
-                    <select  class="form-control spacing input-width" ng-model="supplier.booking_not_visited"  ng-if="supplier.booking_status=='NVI'">
-                        <option value="">Select Sub Status</option>
-                      <option style="width:100%;" ng-repeat="item in booking_not_visited" value="{{item.code}}"
-                      ng-if="supplier.booking_not_visited == undefined ? supplier.booking_not_visited = booking_not_visited[0].code : 1">
+                    <select  class="form-control spacing input-width" ng-model="supplier.booking_new_entity"  ng-if="supplier.booking_status=='NE'">
+                      <option style="width:100%;" ng-repeat="item in booking_new_entity" value="{{item.code}}"
+                      ng-if="supplier.booking_new_entity == undefined ? supplier.booking_new_entity = booking_new_entity[0].code : 1">
+                        {{item.name}}</option>
+                    </select>
+                    <select  class="form-control spacing input-width" ng-model="supplier.booking_unknown"  ng-if="supplier.booking_status=='UN'">
+                      <option style="width:100%;" ng-repeat="item in booking_unknown" value="{{item.code}}"
+                              ng-if="supplier.booking_unknown == undefined ? supplier.booking_unknown = booking_unknown[0].code : 1">
+                        {{item.name}}</option>
+                    </select>
+                    <select  class="form-control spacing input-width" ng-model="supplier.booking_tentative"  ng-if="supplier.booking_status=='TB'">
+                      <option style="width:100%;" ng-repeat="item in booking_tentative" value="{{item.code}}"
+                              ng-if="supplier.booking_tentative == undefined ? supplier.booking_tentative = booking_tentative[0].code : 1">
                         {{item.name}}</option>
                     </select>
                 </td>
@@ -225,7 +232,7 @@
                 </td>
                 <td ng-if="canViewInternalComments" rowspan="{{key.length}}" ng-show="$first">
                   <div class="comment" ng-if="comments[supplier.id]">
-                    <b>{{comments[supplier.id].internal.username}} </b> <span> <small> {{comments[supplier.id].internal.created_on | date}}</small></span><br>
+                    <b>{{comments[supplier.id].internal.username}} </b> <span> <br><small> {{comments[supplier.id].internal.created_on | date}}</small></span><br>
                       <p>{{comments[supplier.id].internal.comment.slice(0,20)}}</p>
                   </div>
                   <button type="button" class="btn btn-primary" ng-click="viewComments(supplier, 'INTERNAL')">View/Add</button>
@@ -234,7 +241,7 @@
                 </td>
                 <td rowspan="{{key.length}}" ng-show="$first">
                   <div class="comment" ng-if="comments[supplier.id]">
-                    <b>{{comments[supplier.id].external.username}} </b> <span> <small> {{comments[supplier.id].external.created_on | date}}</small></span><br>
+                    <b>{{comments[supplier.id].external.username}} </b> <span> <br><small> {{comments[supplier.id].external.created_on | date}}</small></span><br>
                     <p>{{comments[supplier.id].external.comment.slice(0,20)}}</p>
                   </div>
                   <button type="button" class="btn btn-primary" ng-click="viewComments(supplier, 'EXTERNAL')">View/Add</button>
