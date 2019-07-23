@@ -34,6 +34,8 @@
       $scope.selectedTypeOfSocieties = [];
       $scope.selectedSizeOfFlats = [];
       var selectedSpecificItems = [];
+      $scope.cumulativeOrder = false;
+      $scope.selectedOrderKey = undefined;
 
 
       $scope.typeOfSocietyLists = [
@@ -1143,7 +1145,8 @@
             "left": 140
           },
           "useInteractiveGuideline": true,
-          x: function (d, i) { return d.x; },
+          x: function (d, i) {  
+            return d.x; },
           y: function (d) { return d.y; },
           "dispatch": {
             stateChange: function (e) { console.log("stateChange"); },
@@ -1165,6 +1168,45 @@
           },
           "yAxis": {
             "axisLabel": "Mode Count In Leads and Hot Leads",
+          }
+        }
+      };
+
+      var lineChartCumulativeOrder = {
+        "chart": {
+          "type": "lineChart",
+          "height": 450,
+          "margin": {
+            "top": 100,
+            "right": 20,
+            "bottom": 130,
+            "left": 140
+          },
+          "useInteractiveGuideline": true,
+          x: function (d, i) {             
+            return d.x; },
+          y: function (d) { 
+            return d.y; },
+          "dispatch": {
+            stateChange: function (e) { console.log("stateChange"); },
+            changeState: function (e) { console.log("changeState"); },
+            tooltipShow: function (e) { console.log("tooltipShow"); },
+            tooltipHide: function (e) { console.log("tooltipHide"); }
+          },
+          "xAxis": {
+            "axisLabel": "Orders Punched Date",
+            "showMaxMin": false,
+            tickFormat: function (d) {             
+              return $scope.x_fre_leads[d];
+            },
+            
+            "rotateLabels": -30
+          },
+          "yAxis": {
+            "axisLabel": "Cumulative Orders Punched (%)",
+            tickFormat: function(d){
+              return d3.format(',.2f')(d);
+          },
           }
         }
       };
@@ -2102,7 +2144,6 @@
               ]
           }
         ];
-        // console.log(temp_data);
         return temp_data;
       }
       //END :  code for 3 weeks summary
@@ -3652,6 +3693,7 @@
         $scope.standardDeviationHotLeads = data.higher_group_data[0]['stdev_hot_lead/flat*100'];
         $scope.varianceLeads = data.higher_group_data[0]['variance_lead/flat*100'];
         $scope.varianceHotLeads = data.higher_group_data[0]['variance_hot_lead/flat*100'];
+
         angular.forEach(data.higher_group_data[0]['freq_dist_lead/flat*100'], function (modeData, key) {
 
           if (index == 0) {
@@ -4023,9 +4065,11 @@
       var specificXValue2 = undefined;
       var orderSpecificCase = false;
       $scope.getGenericGraphData = function () {
+        cfpLoadingBar.start();
         specificXValue = undefined;
         specificXValue2 = undefined;
         orderSpecificCase = false;
+        $scope.cumulativeOrder = false;
 
         if ($scope.selectedDynamicCampaigns.length) {
           $scope.graphSelection.category = 'campaign';
@@ -4502,6 +4546,7 @@
           // alert("only city");
           $scope.xValues.value = 'campaign_name';
           orderSpecificCase = true;
+          $scope.cumulativeOrder = true;
           var reqData = {
 
             "data_scope": {
@@ -4539,7 +4584,27 @@
               ]
             }
           }
+          if($scope.cumulativeOrder){
+            reqData['custom_functions'] = ['order_cumulative']
+          }
 
+          // if($scope.graphSelection.dateRange.startDate){
+          //   reqData.data_scope['2'] = {
+          //     "category": "time",
+          //     "level": "time",
+          //     "match_type": 1,
+          //     "values": {
+          //         "range": [
+                      
+          //         ]
+          //     },
+          //     "value_type": "time"
+          //   }
+            
+          //   reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
+          //   reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
+          // }
+          
 
           angular.forEach($scope.selectedDynamicCampaigns, function (data) {
             reqData.data_scope['1'].values.exact.push(data.campaign_id);
@@ -4714,7 +4779,8 @@
           
           DashboardService.getDistributionGraphsStatics(reqData)
             .then(function onSuccess(response) {
-              $scope.initialDynamicGraphData = response.data.data;
+              cfpLoadingBar.complete();              
+                $scope.initialDynamicGraphData = response.data.data;
 
               $scope.stackedBarChartForDynamic = angular.copy(stackedBarChart);
               // $scope.stackedBarChartForDynamic.chart.yAxis['tickFormat'] =
@@ -4735,15 +4801,62 @@
                   $scope.stackedBarChartForDynamic.chart['width'] = $scope.initialDynamicGraphData.lower_group_data.length * 300;
                 }
                 $scope.stackedBarChartDynamicData = formatDynamicData($scope.initialDynamicGraphData, orderSpecificCase);
+                $scope.lineChartGraphCumulativeOrder = angular.copy(lineChartCumulativeOrder);
+                $scope.cumulativeOrderCampaignKeys = Object.keys(response.data.data['custom function output']['order_cumulative']); 
+                $scope.selectedOrderKey = $scope.cumulativeOrderCampaignKeys[0];
+                $scope.lineChartForCumulativeOrder = formatLineChartForCumulativeOrderGraph(response.data.data);
               }
 
               setLabelsOnBars();
+              
             }).catch(function onError(response) {
               console.log(response);
+              cfpLoadingBar.complete();
             })
         }
       }
+      $scope.changeCumulativeOrderKey = function(key){
+        $scope.selectedOrderKey = key;
+        
+        $scope.lineChartForCumulativeOrder = formatLineChartForCumulativeOrderGraph($scope.initialDynamicGraphData);
+      }
 
+      var formatLineChartForCumulativeOrderGraph = function(data){        
+        $scope.x_fre_leads = [];
+        var temp_data = [];
+        var values1 = [];        
+        var index = 0;
+        
+        data['custom function output']['order_cumulative'][$scope.selectedOrderKey] = 
+              data['custom function output']['order_cumulative'][$scope.selectedOrderKey].sort(function(a,b){
+          return a.date < b.date;
+        })
+        angular.forEach(data['custom function output']['order_cumulative'][$scope.selectedOrderKey], function (item) {
+          
+            if (index == 0) {
+              var value1 =
+                { x: index, y: 0 };
+              values1.push(value1);
+              $scope.x_fre_leads.push('0');
+              index++;
+            }
+            
+            
+            $scope.x_fre_leads.push(item['date']);
+              var value1 = { x: index, y: item['total orders punched pct'] };
+              values1.push(value1);
+              index++;
+          
+          
+        })
+        temp_data.push({
+          key: 'Total Orders Punched (%)',
+          color: constants.colorKey1,
+          values: values1
+        });                    
+        
+        return temp_data;
+      }
       $scope.clearDatesFromDynamicGraph = function () {
         $scope.graphSelection.dateRange = {};
         $scope.selectedDynamicCampaigns = [];
@@ -4833,7 +4946,12 @@
       $scope.dynamicSortedGraphOptions = angular.copy(dynamicDiscreteBarChart);
 
       $scope.sortDynamicData = function (order) {
-        $scope.dynamicOrderData = angular.copy($scope.initialDynamicGraphData.lower_group_data);
+        if(!orderSpecificCase){
+          $scope.dynamicOrderData = angular.copy($scope.initialDynamicGraphData.lower_group_data);
+        }else{
+          $scope.dynamicOrderData = angular.copy($scope.initialDynamicGraphData.higher_group_data);
+        }
+        
         $scope.dynamicOrderData.sort(function (a, b) {
           return a[$scope.dynamicGraphSelectedOrder.value] - b[$scope.dynamicGraphSelectedOrder.value];
         });
