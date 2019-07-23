@@ -320,7 +320,7 @@
                   <!-- <div class="" > -->
                           <!-- <div class=""> -->
                           <div class="panel-heading" style="height:120px;">
-                            <h4>Supplier Details of {{selectedProposalname}} Campaign</h4><br/>
+                            <h4><a ng-click="getCampaign(proposalId)" style="color: white;cursor: pointer;">Supplier Details of {{selectedProposalname}} Campaign</a></h4><br/>
                             <h5>Activity : {{actType}} , Date : {{date|date : "dd-MM-yyyy"}}</h5>
                             <div class="row">
                               <span class="pull-left"><label for="heading"><small>Campaign Owner :  </small><span><small>{{campaignOwner}}</small> </span></label></span>
@@ -1377,7 +1377,7 @@
                                   <thead>
                                   <tr>
                                       <th>INDEX</th>
-                                      <th ng-click="SortColumn('name')">Campaign Name &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                      <th ng-click="SortColumn('name')">Campaign Name &nbsp;<a><i class="icon-sort" style="color:white;cursor: pointer;"></i></a></th>
                                       <th ng-click="SortColumn('start_date')">Start Date &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                       <th>Campaign Status</th>
                                       <th>Society Count</th>
