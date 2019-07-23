@@ -4818,8 +4818,10 @@ var reqData = {
       getCampaignsWiseForVendor();
       $scope.selectedCities_temp = [];
     }
+    $scope.getCampaign = function (proposalId) {
+      DashboardService.getCampaign(proposalId)
+    }
   // END
-
 
 })
 })();
