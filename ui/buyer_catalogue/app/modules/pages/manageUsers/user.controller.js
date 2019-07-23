@@ -179,7 +179,6 @@ angular.module('machadaloPages')
       }
      $scope.register = function(wizardFinish){
       //  $scope.model['groups'] = $scope.selectedGroupList;
-      console.log(wizardFinish);
       if ( !wizardFinish || ( wizardFinish && $scope.model.first_name && $scope.model.last_name && $scope.model.username && $scope.model.email && $scope.model.password) ) {
         if(wizardFinish)
           $scope.model['profile'] = $scope.clonedProfileId;
@@ -195,7 +194,6 @@ angular.module('machadaloPages')
            // alert("Successfully Created");
            })
            .catch(function onError(response){
-               console.log("error occured");
                commonDataShare.showErrorMessage(response);
                // swal(constants.name,constants.errorMsg,constants.error);
                // alert("Error Occured");

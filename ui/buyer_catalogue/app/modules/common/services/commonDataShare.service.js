@@ -40,43 +40,33 @@ angular.module('catalogueApp')
      return machadaloHttp.get(url);
    }
 
-   commonDataShare.showErrorMessage = function(response){
+   commonDataShare.showErrorMessage = function(response) {
 
-     console.log(response.data);
+     if (constants.show_system && constants.show_general) {
+       if (response.data.data) {
+         swal(constants.name, response.data.data.system_error + " " + JSON.stringify(response.data.data.general_error), constants.error);
+       } else {
+         swal(constants.name, defaultError + JSON.stringify(response.data, null, 4), constants.error);
 
-     if(constants.show_system && constants.show_general) {
-          if ( response.data.data ) {
-            swal(constants.name, response.data.data.system_error+ " " + response.data.data.general_error, constants.error);
-          }
-          else {
-            swal(constants.name, defaultError + JSON.stringify(response.data, null, 4) , constants.error);
+       }
 
-          }
+     } else if (constants.show_general) {
+       if (response.data.data) {
+         swal(constants.name, response.data.data.general_error, constants.error);
+       } else {
+         swal(constants.name, defaultError + JSON.stringify(response.data, null, 4), constants.error);
+       }
 
-        }
-     else if(constants.show_general) {
+     } else if (constants.show_system) {
+       if (response.data.data) {
+         swal(constants.name, response.data.data.system_error, constants.error);
+       } else {
+         swal(constants.name, defaultError + JSON.stringify(response.data, null, 4), constants.error);
+       }
 
-          if ( response.data.data  ) {
-            swal(constants.name,response.data.data.general_error, constants.error);
-          }
-          else  {
-            swal(constants.name, defaultError + JSON.stringify(response.data, null, 4), constants.error);
-          }
-
-        }
-     else if(constants.show_system) {
-
-          if (response.data.data  ) {
-            swal(constants.name, response.data.data.system_error, constants.error);
-          }
-          else {
-             swal(constants.name, defaultError + JSON.stringify(response.data, null, 4), constants.error);
-          }
-
-        }
-
-     else
-        swal(constants.name, constants.errorMsg, constants.error);
+     } else {
+       swal(constants.name, constants.errorMsg, constants.error);
+     }
    }
 
    commonDataShare.closeModal = function(modalId){
