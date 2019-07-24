@@ -6,7 +6,7 @@
   'use strict';
 
   angular.module('catalogueApp')
-    .controller('DashboardCtrl', function ($scope, NgMap, $rootScope, baConfig, colorHelper, DashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions) {
+    .controller('DashboardCtrl', function ($scope, NgMap, $rootScope, baConfig, colorHelper, DashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
       $scope.itemsByPage = 15;
       $scope.permissions = permissions.dashboard;
       $scope.campaign_id = $stateParams.proposal_id;
@@ -3222,7 +3222,12 @@
           $scope.isValid = false;
       }
 
-      $scope.getFormDetails = function (campaignId) {
+      $scope.getFormDetails = function (campaignId, type) {
+        if(type === 'email'){
+          $scope.submitLeadType = true;
+        }else{
+          $scope.submitLeadType = false;
+        }
         cfpLoadingBar.start();
         $scope.campaignIdForleads = campaignId;
         $scope.emailCampaignLeadsModel = {};
@@ -5143,6 +5148,26 @@
         getCampaignsWiseForVendor();
         $scope.selectedCities_temp = [];
       }
+
+      $scope.downloadSheet = function(){
+        $scope.emailCampaignLeadsModel.start_date = commonDataShare.formatDate($scope.emailCampaignLeadsModel.start_date);
+        $scope.emailCampaignLeadsModel.end_date = commonDataShare.formatDate($scope.emailCampaignLeadsModel.end_date);
+        DashboardService.downloadSheet($scope.emailCampaignLeadsModel.leads_form_id)
+        .then(function onSuccess(response){
+          console.log(response);
+          if(response.data.data.one_time_hash && $scope.emailCampaignLeadsModel.start_date &&
+                  $scope.emailCampaignLeadsModel.end_date ){
+            $window.open(Config.APIBaseUrl + 'v0/ui/leads/download_lead_data_excel/' + response.data.data.one_time_hash + 
+            "/?start_date=" + $scope.emailCampaignLeadsModel.start_date + 
+            "&end_date=" + $scope.emailCampaignLeadsModel.end_date , '_blank');            
+          }else if(response.data.data.one_time_hash){
+            $window.open(Config.APIBaseUrl + 'v0/ui/leads/download_lead_data_excel/' + response.data.data.one_time_hash + "/", '_blank');            
+          }            
+        }).catch(function onError(response){
+          console.log(response);            
+        })
+      }
+
       // END
 
 

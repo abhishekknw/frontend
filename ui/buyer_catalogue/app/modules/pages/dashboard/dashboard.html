@@ -1607,6 +1607,7 @@
                             <th style="width:100px;" class="col-md-2" ng-click="Sort('hot_leads')">Hot Leads <a><i class="icon-sort" style="color:white;"></i></a></th>
                             <th>View Leads</th>
                             <th>Email Leads</th>
+                            <th>Download Leads</th>
 
                           </tr>
                           <tr colspan="9">
@@ -1636,7 +1637,10 @@
                               <button class="btn btn-danger" ng-click="viewLeadsForSelectedCampaign(campaign,campaign.campaign_id)">View Leads</button>
                             </td>
                             <td>
-                              <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id)" data-target="#sendEmailModal" data-toggle="modal">Email Leads</button>
+                              <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id, 'email')" data-target="#sendEmailModal" data-toggle="modal">Email Leads</button>
+                            </td>
+                            <td>
+                              <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id)" data-target="#sendEmailModal" data-toggle="modal">Download Leads</button>
                             </td>
                           </tr>
 
@@ -4735,7 +4739,8 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">{{campaignNameOnImageModal}} Send Email Details</h4>
+            <h4 class="modal-title" ng-if="submitLeadType">{{campaignNameOnImageModal}} Send Leads To Email</h4>
+            <h4 class="modal-title" ng-if="!submitLeadType">{{campaignNameOnImageModal}} Download Leads</h4>
             <hr/>
             <div class = "modal-body">
 
@@ -4759,8 +4764,8 @@
                         Select End Date(Optional) : <input type="date" class="form-control"  ng-model="emailCampaignLeadsModel.end_date" required>
                       </p>
                     </td>
-                    <td> <p><button type="button" name="button" class="btn btn-danger" ng-click="sendMeEmail()" ng-disabled="!emailCampaignLeadsModel.leads_form_id">Submit</button>
-</td>
+                    <td> <p><button type="button" name="button" class="btn btn-danger" ng-click="sendMeEmail()" ng-disabled="!emailCampaignLeadsModel.leads_form_id" ng-if="submitLeadType">Email</button>
+                      <button type="button" name="button" class="btn btn-danger" ng-click="downloadSheet()" ng-disabled="!emailCampaignLeadsModel.leads_form_id" ng-if="!submitLeadType">Download</button></td>
                   </tr>
                 </tbody>
               </table>
