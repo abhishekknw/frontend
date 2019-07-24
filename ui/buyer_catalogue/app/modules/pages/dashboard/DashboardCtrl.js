@@ -3946,7 +3946,7 @@
                   values1[itemKey] = [];
                 }
                 if (specificXValue) {
-                  if (data[$scope.xValues.value] != null) {
+                  if (data1[$scope.xValues.value] != null) {
                     var temp_label = data1[$scope.xValues.value] +
                       " (" + data1[specificXValue] + ")" +
                       " (" + $scope.FlatCountOVerallLowerORderGroup + ")";
@@ -4041,6 +4041,7 @@
 
         }
 
+        
         return finalData;
       }
       $scope.clearMetrics = function () {
@@ -4785,6 +4786,7 @@
           DashboardService.getDistributionGraphsStatics(reqData)
             .then(function onSuccess(response) {
               cfpLoadingBar.complete();              
+              
                 $scope.initialDynamicGraphData = response.data.data;
 
               $scope.stackedBarChartForDynamic = angular.copy(stackedBarChart);
