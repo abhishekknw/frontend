@@ -3319,35 +3319,35 @@
         <tbody style="text-align:center;">
           <tr>
           <td><small style="font-weight:bold">Flat Count</small></td>
-          <td>{{initalDynamicTableData.flat || 'NA'}}</td>
+          <td>{{getOverallSummaryData('flat') || 'NA'}}</td>
           <td>{{WeeklyVendorMISLastWeekSummary.flat_count || 'NA'}}</td>
           <td>{{WeeklyVendorMISLast2WeekSummary.flat_count || 'NA'}}</td>
           <td>{{WeeklyVendorMISLast3WeekSummary.flat_count || 'NA'}}</td>
           </tr>
           <tr>
           <td><small style="font-weight:bold">Total Leads</small></td>
-          <td>{{initalDynamicTableData.lead || 'NA'}}</td>
+          <td>{{getOverallSummaryData('lead') || 'NA'}}</td>
           <td>{{WeeklyVendorMISLastWeekSummary.total || 'NA'}}</td>
           <td>{{WeeklyVendorMISLast2WeekSummary.total || 'NA'}}</td>
           <td>{{WeeklyVendorMISLast3WeekSummary.total || 'NA'}}</td>
           </tr>
           <tr>
           <td><small style="font-weight:bold">Hot Leads</small></td>
-          <td>{{initalDynamicTableData.hot_lead || 'NA'}}</td>
+          <td>{{getOverallSummaryData('hot_lead') || 'NA'}}</td>
           <td>{{WeeklyVendorMISLastWeekSummary.interested || 'NA'}}</td>
           <td>{{WeeklyVendorMISLast2WeekSummary.interested || 'NA'}}</td>
           <td>{{WeeklyVendorMISLast3WeekSummary.interested || 'NA'}}</td>
           </tr>
           <tr>
           <td><small style="font-weight:bold">Cost Per Leads <br> (Leads %)</small></td>
-          <td>{{initalDynamicTableData['flat*cost_flat/lead']}} <br> ({{initalDynamicTableData['lead/flat*100'] | limitTo:5}}) %</td>
+          <td>{{getOverallSummaryData('flat*cost_flat/lead')}} <br> ({{initalDynamicTableData['lead/flat*100'] | limitTo:5}}) %</td>
           <td>({{(WeeklyVendorMISLastWeekSummary.total / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}}) %</td>
           <td>({{(WeeklyVendorMISLast2WeekSummary.total / WeeklyVendorMISLast2WeekSummary.flat_count)  * 100 | limitTo:5}}) %</td>
           <td>({{(WeeklyVendorMISLast3WeekSummary.total / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}}) %</td>
           </tr>
           <tr>
           <td><small style="font-weight:bold">Cost Per Hot Leads <br> (Hot Leads %)</small></td>
-          <td>{{initalDynamicTableData['flat*cost_flat/hot_lead']}} <br> ({{initalDynamicTableData['hot_lead/flat*100'] | limitTo:5}}) %</td>
+          <td>{{getOverallSummaryData('flat*cost_flat/hot_lead')}} <br> ({{initalDynamicTableData['hot_lead/flat*100'] | limitTo:5}}) %</td>
           <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
           <td>{{(WeeklyVendorMISLast2WeekSummary.interested / WeeklyVendorMISLast2WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
           <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
@@ -3363,21 +3363,21 @@
           </tr> -->
           <tr>
           <td><small style="font-weight:bold">Cost Per Booking Confirmed <br> (Booking Confirmed %)</small></td>
-          <td>{{initalDynamicTableData['flat*cost_flat/total_booking_confirmed']}} <br> ({{initalDynamicTableData['hot_lead/flat*100'] | limitTo:5}}) %</td>
+          <td>{{getOverallSummaryData('flat*cost_flat/total_booking_confirmed')}} <br> ({{initalDynamicTableData['hot_lead/flat*100'] | limitTo:5}}) %</td>
           <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
           <td>{{(WeeklyVendorMISLast2WeekSummary.interested / WeeklyVendorMISLast2WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
           <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
           </tr>
           <tr>
           <td><small style="font-weight:bold">Cost Per Orders Punched <br> (Orders Punched %)</small></td>
-          <td>{{initalDynamicTableData['flat*cost_flat/total_orders_punched']}} <br> ({{initalDynamicTableData['hot_lead/flat*100'] | limitTo:5}}) %</td>
+          <td>{{getOverallSummaryData('flat*cost_flat/total_orders_punched')}} <br> ({{initalDynamicTableData['hot_lead/flat*100'] | limitTo:5}}) %</td>
           <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
           <td>{{(WeeklyVendorMISLast2WeekSummary.interested / WeeklyVendorMISLast2WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
           <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
           </tr>
           <tr>
           <td><small style="font-weight:bold">Hot Leads Ratio (%)</small></td>
-          <td>{{(initalDynamicTableData.hot_lead / initalDynamicTableData.lead)  * 100 | limitTo:5}} %</td>
+          <td>{{ getOverallSummaryData('hot_lead') / getOverallSummaryData('lead')  * 100 }} %</td>
           <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.total)  * 100 | limitTo:5}} %</td>
           <td>{{(WeeklyVendorMISLast2WeekSummary.interested / WeeklyVendorMISLast2WeekSummary.total)  * 100 | limitTo:5}} %</td>
           <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.total)  * 100 | limitTo:5}} %</td>

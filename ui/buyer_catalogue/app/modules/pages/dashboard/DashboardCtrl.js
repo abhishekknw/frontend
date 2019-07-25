@@ -5225,6 +5225,13 @@
           console.log(response);            
         })
       }
+      $scope.getOverallSummaryData = function(item){
+        var total = 0
+        angular.forEach($scope.campaignFilteredSummaryData, function(data){
+          total+= data[item];
+        })      
+        return (total/Object.keys($scope.campaignFilteredSummaryData).length).toFixed(2);  
+      }
 
       // END
 
