@@ -4793,8 +4793,8 @@
                   if(reqData.hasOwnProperty('statistical_information')){
                     delete reqData['statistical_information'];
                   }
-                  if(reqData.data_point.level.indexOf('date') < 0){
-                    reqData.data_point.level.splice(0,0,'date');
+                  if(orderSpecificCase){
+                    reqData.data_point.level = ['date','campaign'];
                   }
                   $scope.cumulativeOrder = true;
                   reqData['custom_functions'] = ["order_cumulative"];
@@ -4835,7 +4835,10 @@
                   })
                 }
               $scope.stackedBarChartForDynamic = angular.copy(stackedBarChart);
+
               if (!orderSpecificCase) {
+                $scope.campaignFilteredSummaryData = $scope.initialDynamicGraphData.lower_group_data;
+                $scope.showTableForSpecificCase = false;
                 angular.forEach($scope.initialDynamicGraphData.lower_group_data, function (data) {
                   $scope.initalDynamicTableData = data;
                 })
@@ -4844,6 +4847,7 @@
                 }
                 $scope.stackedBarChartDynamicData = formatDynamicData($scope.initialDynamicGraphData, orderSpecificCase);
               } else {
+                $scope.campaignFilteredSummaryData = $scope.initialDynamicGraphData.higher_group_data
                 angular.forEach($scope.initialDynamicGraphData.higher_group_data, function (data) {
                   $scope.initalDynamicTableData = data;
                 })
