@@ -5,6 +5,7 @@ import Select from 'react-select';
 import mapSort from 'mapsort';
 
 import CommentsModal from './../Modals/CommentsModal';
+import Pagination from '../Pagination';
 import PhaseModal from './../Modals/PhaseModal';
 import ViewHashtagImagesModal from '../Modals/ViewHashtagImagesModal';
 import FillAdditionalAttributeModal from './../Modals/AdditionalAttributesModal';
@@ -83,6 +84,8 @@ export default class ListBooking extends Component {
       value: { min: 0, max: 0 },
       rangeSliderOptions: {},
       isFloatOptionSelected: false,
+      pageSize: 10,
+      currentPage: 1,
     };
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
@@ -103,6 +106,8 @@ export default class ListBooking extends Component {
     this.renderAppliedFilters = this.renderAppliedFilters.bind(this);
     this.getFilterTags = this.getFilterTags.bind(this);
     this.removeFilterTag = this.removeFilterTag.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
+    this.paginate = this.paginate.bind(this);
   }
 
   componentDidMount() {
@@ -173,6 +178,12 @@ export default class ListBooking extends Component {
     this.props.history.push(`/r/booking/campaigns`);
   }
 
+  handlePageChange(page) {
+    this.setState({
+      currentPage: page.selected + 1,
+    });
+  }
+
   getFilterTags() {
     const filterTags = [...this.state.appliedFilters];
     const {
@@ -215,7 +226,7 @@ export default class ListBooking extends Component {
   handleFilterAdd() {
     const appliedFilters = this.getFilterTags();
 
-    this.setState({ appliedFilters });
+    this.setState({ appliedFilters, currentPage: 1 });
   }
 
   getFilterOptions() {
@@ -559,6 +570,12 @@ export default class ListBooking extends Component {
     });
   };
 
+  paginate(list, currentPage, pageSize) {
+    const indexOfLastItem = currentPage * pageSize;
+    const indexOfFirstItem = indexOfLastItem - pageSize;
+    return list.slice(indexOfFirstItem, indexOfLastItem);
+  }
+
   renderBookingRow(booking) {
     const onComments = (type) => {
       this.setState({
@@ -767,11 +784,14 @@ export default class ListBooking extends Component {
       selectedOption,
       filterOptionTypes,
       rangeSliderOptions,
+      pageSize,
+      currentPage,
     } = this.state;
     const { booking } = this.props;
     const { bookingList } = booking;
     let list = this.getFilteredList(bookingList);
     list = this.getSortedList(list);
+    const finalList = this.paginate(list, currentPage, pageSize);
 
     let attributes = [];
     let campaignName = '';
@@ -893,7 +913,7 @@ export default class ListBooking extends Component {
             </thead>
             <tbody>
               {list && list.length ? (
-                list.map(this.renderBookingRow)
+                finalList.map(this.renderBookingRow)
               ) : (
                 <tr>
                   <td colSpan="5">No booking templates available. Create your first one now!</td>
@@ -901,6 +921,14 @@ export default class ListBooking extends Component {
               )}
             </tbody>
           </table>
+        </div>
+
+        <div className="list__footer">
+          <Pagination
+            pageSize={pageSize}
+            totalItems={list.length}
+            handlePageClick={this.handlePageChange}
+          />
         </div>
 
         <div className="list__actions">
