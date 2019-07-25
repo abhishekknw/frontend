@@ -4793,6 +4793,9 @@
                   if(reqData.hasOwnProperty('statistical_information')){
                     delete reqData['statistical_information'];
                   }
+                  if(reqData.data_point.level.indexOf('date') < 0){
+                    reqData.data_point.level.splice(0,0,'date');
+                  }
                   $scope.cumulativeOrder = true;
                   reqData['custom_functions'] = ["order_cumulative"];
                   reqData['raw_data'] = ['total_orders_punched'];
@@ -4801,23 +4804,37 @@
                     console.log(response);
                     $scope.initialCumulativeOrderData = response.data.data;
                     $scope.lineChartGraphCumulativeOrder = angular.copy(lineChartCumulativeOrder);
-                    $scope.cumulativeOrderCampaignKeys = Object.keys(response.data.data['custom function output']['order_cumulative']); 
                     $scope.cumulativeOrderCampaignsNamesById = {};
-                    angular.forEach(response.data.data['custom function output']['order_cumulative'], function(data, key){
-                      $scope.cumulativeOrderCampaignsNamesById[key] = data['0'].campaign_name;  
-                    })
-                    console.log($scope.cumulativeOrderCampaignsNamesById);
                     
+                    angular.forEach(response.data.data['lower_group_data'], function(data){
+                      
+                      var key = data[$scope.xValues.value];
+                      if(specificXValue){
+                        key = key + ", " + data[specificXValue]
+                      }
+                      if(specificXValue2){
+                        key = key + ", " + data[specificXValue2]
+                      }
+                      
+                      if(!$scope.cumulativeOrderCampaignsNamesById.hasOwnProperty(key)){
+                        $scope.cumulativeOrderCampaignsNamesById[key] = {
+                          dates: ['0'],
+                          values: []
+                        }
+                      }
+                      
+                      $scope.cumulativeOrderCampaignsNamesById[key]['dates'].push(data.date);
+                      $scope.cumulativeOrderCampaignsNamesById[key]['values'].push(data.total_orders_punched_cum_pct);
+
+                    })
+                    $scope.cumulativeOrderCampaignKeys = Object.keys($scope.cumulativeOrderCampaignsNamesById);
                     $scope.selectedOrderKey = $scope.cumulativeOrderCampaignKeys[0];
-                    $scope.lineChartForCumulativeOrder = formatLineChartForCumulativeOrderGraph(response.data.data);
+                    $scope.lineChartForCumulativeOrder = formatLineChartForCumulativeOrderGraph($scope.cumulativeOrderCampaignsNamesById);
                   }).catch(function onError(response) {
                     console.log(response);
-                    // cfpLoadingBar.complete();
                   })
                 }
               $scope.stackedBarChartForDynamic = angular.copy(stackedBarChart);
-              // $scope.stackedBarChartForDynamic.chart.yAxis['tickFormat'] =
-              //   function(d) {console.log(d); return d3.format(",")(d)};
               if (!orderSpecificCase) {
                 angular.forEach($scope.initialDynamicGraphData.lower_group_data, function (data) {
                   $scope.initalDynamicTableData = data;
@@ -4849,7 +4866,7 @@
       $scope.changeCumulativeOrderKey = function(key){
         $scope.selectedOrderKey = key;
         
-        $scope.lineChartForCumulativeOrder = formatLineChartForCumulativeOrderGraph($scope.initialCumulativeOrderData);
+        $scope.lineChartForCumulativeOrder = formatLineChartForCumulativeOrderGraph($scope.cumulativeOrderCampaignsNamesById);
       }
 
       var formatLineChartForCumulativeOrderGraph = function(data){        
@@ -4857,34 +4874,45 @@
         var temp_data = [];
         var values1 = [];        
         var index = 0;
-        
-        data['custom function output']['order_cumulative'][$scope.selectedOrderKey] = 
-              data['custom function output']['order_cumulative'][$scope.selectedOrderKey].sort(function(a,b){
-          return a.date < b.date;
+        values1.push({
+          x: 0, y: 0 
         })
-        angular.forEach(data['custom function output']['order_cumulative'][$scope.selectedOrderKey], function (item) {
+        index++;
+        angular.forEach(data[$scope.selectedOrderKey].values, function(item){
+          values1.push({
+            x: index, y: item 
+          })
+          index++;
+        })
+        $scope.x_fre_leads = data[$scope.selectedOrderKey].dates;
+        // data[$scope.selectedOrderKey] = 
+        //       data['custom function output']['order_cumulative'][$scope.selectedOrderKey].sort(function(a,b){
+        //   return a.date < b.date;
+        // })
+        // angular.forEach(data['custom function output']['order_cumulative'][$scope.selectedOrderKey], function (item) {
           
-            if (index == 0) {
-              var value1 =
-                { x: index, y: 0 };
-              values1.push(value1);
-              $scope.x_fre_leads.push('0');
-              index++;
-            }
+        //     if (index == 0) {
+        //       var value1 =
+        //         { x: index, y: 0 };
+        //       values1.push(value1);
+        //       $scope.x_fre_leads.push('0');
+        //       index++;
+        //     }
             
             
-            $scope.x_fre_leads.push(item['date']);
-              var value1 = { x: index, y: item['total orders punched pct'] };
-              values1.push(value1);
-              index++;
+        //     $scope.x_fre_leads.push(item['date']);
+        //       var value1 = { x: index, y: item['total orders punched pct'] };
+        //       values1.push(value1);
+        //       index++;
           
           
-        })
+        // })
         temp_data.push({
           key: 'Total Orders Punched (%)',
           color: constants.colorKey1,
           values: values1
         });                    
+        console.log(temp_data);
         
         return temp_data;
       }

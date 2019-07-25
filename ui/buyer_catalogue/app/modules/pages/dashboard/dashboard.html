@@ -3276,7 +3276,7 @@
                           </div>
                           <div class="dynamicInnerGraphs" style="height:500px;" ng-if="cumulativeOrder">
                             <select class="form-control" ng-model="selectedOrderKey" ng-click="changeCumulativeOrderKey(selectedOrderKey)">
-                              <option ng-repeat="key in cumulativeOrderCampaignKeys" value="{{key}}" >{{cumulativeOrderCampaignsNamesById[key]}}</option>
+                              <option ng-repeat="key in cumulativeOrderCampaignKeys" value="{{key}}" >{{key}}</option>
                             </select>
                             <nvd3 options="lineChartGraphCumulativeOrder" data="lineChartForCumulativeOrder"></nvd3>
                           </div>
