@@ -4590,9 +4590,6 @@
               ]
             }
           }
-          if($scope.cumulativeOrder){
-            reqData['custom_functions'] = ['order_cumulative']
-          }
 
           // if($scope.graphSelection.dateRange.startDate){
           //   reqData.data_scope['2'] = {
@@ -4786,9 +4783,38 @@
           DashboardService.getDistributionGraphsStatics(reqData)
             .then(function onSuccess(response) {
               cfpLoadingBar.complete();              
-              
-                $scope.initialDynamicGraphData = response.data.data;
 
+                $scope.initialDynamicGraphData = response.data.data;
+                if(response.data.data){
+                  delete reqData['metrics'];
+                  if(reqData.hasOwnProperty('higher_level_statistical_information')){
+                    delete reqData['higher_level_statistical_information'];
+                  }
+                  if(reqData.hasOwnProperty('statistical_information')){
+                    delete reqData['statistical_information'];
+                  }
+                  $scope.cumulativeOrder = true;
+                  reqData['custom_functions'] = ["order_cumulative"];
+                  reqData['raw_data'] = ['total_orders_punched'];
+                  DashboardService.getDistributionGraphsStatics(reqData)
+                  .then(function onSuccess(response) {
+                    console.log(response);
+                    $scope.initialCumulativeOrderData = response.data.data;
+                    $scope.lineChartGraphCumulativeOrder = angular.copy(lineChartCumulativeOrder);
+                    $scope.cumulativeOrderCampaignKeys = Object.keys(response.data.data['custom function output']['order_cumulative']); 
+                    $scope.cumulativeOrderCampaignsNamesById = {};
+                    angular.forEach(response.data.data['custom function output']['order_cumulative'], function(data, key){
+                      $scope.cumulativeOrderCampaignsNamesById[key] = data['0'].campaign_name;  
+                    })
+                    console.log($scope.cumulativeOrderCampaignsNamesById);
+                    
+                    $scope.selectedOrderKey = $scope.cumulativeOrderCampaignKeys[0];
+                    $scope.lineChartForCumulativeOrder = formatLineChartForCumulativeOrderGraph(response.data.data);
+                  }).catch(function onError(response) {
+                    console.log(response);
+                    // cfpLoadingBar.complete();
+                  })
+                }
               $scope.stackedBarChartForDynamic = angular.copy(stackedBarChart);
               // $scope.stackedBarChartForDynamic.chart.yAxis['tickFormat'] =
               //   function(d) {console.log(d); return d3.format(",")(d)};
@@ -4808,10 +4834,7 @@
                   $scope.stackedBarChartForDynamic.chart['width'] = $scope.initialDynamicGraphData.lower_group_data.length * 300;
                 }
                 $scope.stackedBarChartDynamicData = formatDynamicData($scope.initialDynamicGraphData, orderSpecificCase);
-                $scope.lineChartGraphCumulativeOrder = angular.copy(lineChartCumulativeOrder);
-                $scope.cumulativeOrderCampaignKeys = Object.keys(response.data.data['custom function output']['order_cumulative']); 
-                $scope.selectedOrderKey = $scope.cumulativeOrderCampaignKeys[0];
-                $scope.lineChartForCumulativeOrder = formatLineChartForCumulativeOrderGraph(response.data.data);
+                
               }
 
               setLabelsOnBars();
@@ -4820,12 +4843,13 @@
               console.log(response);
               cfpLoadingBar.complete();
             })
+            
         }
       }
       $scope.changeCumulativeOrderKey = function(key){
         $scope.selectedOrderKey = key;
         
-        $scope.lineChartForCumulativeOrder = formatLineChartForCumulativeOrderGraph($scope.initialDynamicGraphData);
+        $scope.lineChartForCumulativeOrder = formatLineChartForCumulativeOrderGraph($scope.initialCumulativeOrderData);
       }
 
       var formatLineChartForCumulativeOrderGraph = function(data){        
