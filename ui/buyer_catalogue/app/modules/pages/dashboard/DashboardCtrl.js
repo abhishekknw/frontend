@@ -114,26 +114,37 @@
         'costPerConversion': 'cost_flat/total_orders_punched'
       };
       var dynamicPricingKeys = {
-        'Leads %': {
+        'Leads %': [
+          {
+            name: 'Total Leads',
+            value: 'lead',
+          },
+          {
           name: 'Cost Per Lead',
           value: 'flat*cost_flat/lead',
         },
-        'Hot Leads %': {
+        ],
+        'Hot Leads %': [{
+          name: 'Hot Leads',
+          value: 'hot_lead',
+        },{
           name: 'Cost Per Hot Lead',
           value: 'flat*cost_flat/hot_lead',
-        },
-        'Meeting Fixed %': {
+        }],
+        'Booking Confirmed %': [{
+          name: 'Total Bookings Confirmed',
+          value: 'total_booking_confirmed',
+        },{
           name: 'Cost Per Meeting Fixed',
-          value: 'cost_flat/hotness_level_2',
-        },
-        'Booking Confirmed %': {
-          name: 'Cost Per Booking Confirmed',
           value: 'flat*cost_flat/total_booking_confirmed',
-        },
-        'Order Punched %': {
-          name: 'Cost Per Order Punched',
+        }],
+        'Order Punched %': [{
+          name: 'Total Orders Punched',
+          value: 'total_orders_punched',
+        },{
+          name: 'Cost Per Orders Punched',
           value: 'flat*cost_flat/total_orders_punched',
-        }
+        }]
       }
       var Raw_Data_Only_Cost = ["lead", "hot_lead", "flat", "cost_flat"];
       var Raw_Metric_Only_Cost = [["1", "3", "/"], ["m1", 100, "*"], ["2", "3", "/"], ["m3", 100, "*"], ["4", "1", "/"], ["4", "2", "/"]];
@@ -861,6 +872,8 @@
           tooltip: {
             contentGenerator: function (e) {
               var series = e.series[0];
+              console.log(series, e);
+              
               if (series.value === null) return;
               var rows =
                 "<tr>" +
@@ -872,8 +885,12 @@
                 "<td class='x-value'><strong>" + (series.value ? series.value.toFixed(2) : 0) + "</strong></td>" +
                 "</tr>" +
                 "<tr>" +
-                "<td class='key'>" + dynamicPricingKeys[e.data.key]['name'] + ' (RS)' + ' :' + "</td>" +
-                "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[e.data.key]['value']] + "</strong></td>" +
+                "<td class='key'>" + dynamicPricingKeys[e.data.key][0]['name'] + ' :' + "</td>" +
+                "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[e.data.key][0]['value']] + "</strong></td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td class='key'>" + dynamicPricingKeys[e.data.key][1]['name'] + ' (RS)' + ' :' + "</td>" +
+                "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[e.data.key][1]['value']] + "</strong></td>" +
                 "</tr>";
 
               var header =
