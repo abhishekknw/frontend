@@ -1183,11 +1183,13 @@
             "left": 140
           },
           "useInteractiveGuideline": true,
-          x: function (d, i) {             
-            return d.x; },
-          y: function (d) { 
-            return d.y; },
-          "dispatch": {
+            x: function (d, i) {  
+              console.log(d);
+                         
+              return d.x; },
+            y: function (d) { 
+              return d.y; },
+            "dispatch": {
             stateChange: function (e) { console.log("stateChange"); },
             changeState: function (e) { console.log("changeState"); },
             tooltipShow: function (e) { console.log("tooltipShow"); },
@@ -1196,9 +1198,8 @@
           "xAxis": {
             "axisLabel": "Orders Punched Date",
             "showMaxMin": false,
-            tickFormat: function (d) {             
-              return $scope.x_fre_leads[d];
-            },
+            tickFormat: function(d) { 
+              return d },
             
             "rotateLabels": -30
           },
@@ -4793,6 +4794,9 @@
                   if(reqData.hasOwnProperty('statistical_information')){
                     delete reqData['statistical_information'];
                   }
+                  if(!reqData.data_point.level.hasOwnProperty('date')){
+                    reqData.data_point.level.splice(0,0,'date');
+                  }
                   if(orderSpecificCase){
                     reqData.data_point.level = ['date','campaign'];
                   }
@@ -4803,7 +4807,7 @@
                   .then(function onSuccess(response) {
                     console.log(response);
                     $scope.initialCumulativeOrderData = response.data.data;
-                    $scope.lineChartGraphCumulativeOrder = angular.copy(lineChartCumulativeOrder);
+                    $scope.lineChartGraphCumulativeOrder = [];
                     $scope.cumulativeOrderCampaignsNamesById = {};
                     
                     angular.forEach(response.data.data['lower_group_data'], function(data){
@@ -4818,7 +4822,7 @@
                       
                       if(!$scope.cumulativeOrderCampaignsNamesById.hasOwnProperty(key)){
                         $scope.cumulativeOrderCampaignsNamesById[key] = {
-                          dates: ['0'],
+                          dates: [0],
                           values: []
                         }
                       }
@@ -4828,7 +4832,9 @@
 
                     })
                     $scope.cumulativeOrderCampaignKeys = Object.keys($scope.cumulativeOrderCampaignsNamesById);
+                    $scope.cumulativeOrderCampaignKeys.push('ALL');
                     $scope.selectedOrderKey = $scope.cumulativeOrderCampaignKeys[0];
+                    $scope.lineChartForCumulativeOrder = [];
                     $scope.lineChartForCumulativeOrder = formatLineChartForCumulativeOrderGraph($scope.cumulativeOrderCampaignsNamesById);
                   }).catch(function onError(response) {
                     console.log(response);
@@ -4846,7 +4852,7 @@
                   $scope.stackedBarChartForDynamic.chart['width'] = $scope.initialDynamicGraphData.lower_group_data.length * 300;
                 }
                 $scope.stackedBarChartDynamicData = formatDynamicData($scope.initialDynamicGraphData, orderSpecificCase);
-              } else {
+                } else {
                 $scope.campaignFilteredSummaryData = $scope.initialDynamicGraphData.higher_group_data
                 angular.forEach($scope.initialDynamicGraphData.higher_group_data, function (data) {
                   $scope.initalDynamicTableData = data;
@@ -4869,56 +4875,72 @@
       }
       $scope.changeCumulativeOrderKey = function(key){
         $scope.selectedOrderKey = key;
-        
         $scope.lineChartForCumulativeOrder = formatLineChartForCumulativeOrderGraph($scope.cumulativeOrderCampaignsNamesById);
       }
-
+      
       var formatLineChartForCumulativeOrderGraph = function(data){        
         $scope.x_fre_leads = [];
         var temp_data = [];
+        var final_data = [];
         var values1 = [];        
+        $scope.lineChartGraphCumulativeOrder = [];
+        if($scope.selectedOrderKey == 'ALL'){
+          var allKeys = angular.copy($scope.cumulativeOrderCampaignKeys);
+          allKeys.splice(allKeys.indexOf('ALL'),1);
+          angular.forEach(allKeys, function(key){
+            var temp_data = [];
+            var values1 = [];   
+            $scope.lineChartGraphCumulativeOrder.push(lineChartCumulativeOrder);
+            var index = 0;
+            values1.push({
+              x: 0, y: 0 
+            })
+            index++;
+            angular.forEach(data[key].values, function(item){
+              values1.push({
+                x: index, y: item 
+              })
+              index++;
+            })
+            $scope.x_fre_leads = angular.copy(data[key].dates);
+            
+            temp_data.push({
+              key: 'Total Orders Punched (%)',
+              color: constants.colorKey1,
+              values: values1
+            });                    
+            final_data.push(temp_data);    
+          })
+        }else{
+        $scope.lineChartGraphCumulativeOrder.push(lineChartCumulativeOrder);
         var index = 0;
         values1.push({
           x: 0, y: 0 
         })
         index++;
         angular.forEach(data[$scope.selectedOrderKey].values, function(item){
+          console.log(data[$scope.selectedOrderKey].dates[index-1]);
+          
           values1.push({
-            x: index, y: item 
+            x: data[$scope.selectedOrderKey].dates[index-1], y: item 
           })
           index++;
         })
-        $scope.x_fre_leads = data[$scope.selectedOrderKey].dates;
-        // data[$scope.selectedOrderKey] = 
-        //       data['custom function output']['order_cumulative'][$scope.selectedOrderKey].sort(function(a,b){
-        //   return a.date < b.date;
-        // })
-        // angular.forEach(data['custom function output']['order_cumulative'][$scope.selectedOrderKey], function (item) {
-          
-        //     if (index == 0) {
-        //       var value1 =
-        //         { x: index, y: 0 };
-        //       values1.push(value1);
-        //       $scope.x_fre_leads.push('0');
-        //       index++;
-        //     }
-            
-            
-        //     $scope.x_fre_leads.push(item['date']);
-        //       var value1 = { x: index, y: item['total orders punched pct'] };
-        //       values1.push(value1);
-        //       index++;
-          
-          
-        // })
+        console.log(data[$scope.selectedOrderKey]);
+        
+        $scope.x_fre_leads = angular.copy(data[$scope.selectedOrderKey].dates);
+        
         temp_data.push({
           key: 'Total Orders Punched (%)',
           color: constants.colorKey1,
           values: values1
         });                    
-        console.log(temp_data);
+        final_data.push(temp_data);
+        }
         
-        return temp_data;
+        console.log(final_data,$scope.x_fre_leads);
+        
+        return final_data;
       }
       $scope.clearDatesFromDynamicGraph = function () {
         $scope.graphSelection.dateRange = {};
@@ -5234,7 +5256,6 @@
       }
 
       // END
-
 
     })
 })();

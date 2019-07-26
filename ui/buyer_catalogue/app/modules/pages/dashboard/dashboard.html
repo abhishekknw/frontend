@@ -3278,7 +3278,11 @@
                             <select class="form-control" ng-model="selectedOrderKey" ng-change="changeCumulativeOrderKey(selectedOrderKey)">
                               <option ng-repeat="key in cumulativeOrderCampaignKeys" value="{{key}}" >{{key}}</option>
                             </select>
-                            <nvd3 options="lineChartGraphCumulativeOrder" data="lineChartForCumulativeOrder"></nvd3>
+                            <div ng-repeat=" graphData in lineChartForCumulativeOrder track by $index">
+                                <nvd3 options="lineChartGraphCumulativeOrder[$index]" data="graphData"></nvd3>
+                            </div>
+                            
+                            
                           </div>
                         </div>
                        </div>
