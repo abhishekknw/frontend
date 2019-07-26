@@ -3968,7 +3968,8 @@
                 } else {
                   if (data1[$scope.xValues.value] != null) {
                     var temp = {
-                      x: data1[$scope.xValues.value],
+                      x: data1[$scope.xValues.value] + "(" + $scope.FlatCountOVerallLowerORderGroup
+                      + ")",
                       y: data1[itemKey] || 0
                     }
                     values1[itemKey].push(temp);
@@ -4021,7 +4022,8 @@
                 } else {
                   if (data1[$scope.xValues.value] != null) {
                     var temp = {
-                      x: data1[$scope.xValues.value],
+                      x: data1[$scope.xValues.value] + " (" +
+                      $scope.FlatCountOVerallLowerORderGroup + ")",
                       y: data1[itemKey] || 0
                     }
                     values1[itemKey].push(temp);
