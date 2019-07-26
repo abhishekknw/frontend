@@ -836,8 +836,9 @@
 
       var stackedBarChart = {
         "chart": {
-          "type": "multiBarChart",
+          "type": "multiBarChart",          
           "height": 450,
+          "forceY": [0,maxYValue+2],
           // "labelType" : "11",
           "margin": {
             "top": 100,
@@ -852,7 +853,7 @@
           "xAxis": {
             "axisLabel": "",
             "showMaxMin": false,
-            "rotateLabels": -30
+            "rotateLabels": -20,
           },
           "yAxis": {
             "axisLabel": "",
@@ -872,7 +873,6 @@
           tooltip: {
             contentGenerator: function (e) {
               var series = e.series[0];
-              console.log(series, e);
               
               if (series.value === null) return;
               var rows =
@@ -3938,6 +3938,7 @@
       //   }
       // }
       $scope.yValues = [];
+      var maxYValue = 0;
       $scope.xValues = {
         value: ''
       };
@@ -3975,6 +3976,7 @@
                         $scope.FlatCountOVerallLowerORderGroup + ")";
                     }
 
+                    setMaxYValue(data1[itemKey]);
                     var temp = {
                       x: temp_label,
                       y: data1[itemKey] || 0
@@ -3984,6 +3986,7 @@
 
                 } else {
                   if (data1[$scope.xValues.value] != null) {
+                    setMaxYValue(data1[itemKey]);
                     var temp = {
                       x: data1[$scope.xValues.value] + "(" + $scope.FlatCountOVerallLowerORderGroup
                       + ")",
@@ -4028,7 +4031,7 @@
                         "( " + data1[specificXValue] + " )" + " (" +
                         $scope.FlatCountOVerallLowerORderGroup + ")";
                     }
-
+                    setMaxYValue(data1[itemKey]);
                     var temp = {
                       x: temp_label,
                       y: data1[itemKey] || 0
@@ -4038,6 +4041,7 @@
 
                 } else {
                   if (data1[$scope.xValues.value] != null) {
+                    setMaxYValue(data1[itemKey]);
                     var temp = {
                       x: data1[$scope.xValues.value] + " (" +
                       $scope.FlatCountOVerallLowerORderGroup + ")",
@@ -4061,8 +4065,14 @@
 
         }
 
+        $scope.stackedBarChartForDynamic.chart.forceY[1] = maxYValue+2;
         
         return finalData;
+      }
+      var setMaxYValue = function(value){
+        if(value > maxYValue){
+          maxYValue = value;
+        }
       }
       $scope.clearMetrics = function () {
         $scope.dynamicData.metrics = [];
