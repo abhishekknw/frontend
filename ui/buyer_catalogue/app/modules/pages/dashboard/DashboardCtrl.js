@@ -4657,22 +4657,22 @@
             }
           }
 
-          // if($scope.graphSelection.dateRange.startDate){
-          //   reqData.data_scope['2'] = {
-          //     "category": "time",
-          //     "level": "time",
-          //     "match_type": 1,
-          //     "values": {
-          //         "range": [
+          if($scope.graphSelection.dateRange.startDate){
+            reqData.data_scope['2'] = {
+              "category": "time",
+              "level": "time",
+              "match_type": 1,
+              "values": {
+                  "range": [
                       
-          //         ]
-          //     },
-          //     "value_type": "time"
-          //   }
+                  ]
+              },
+              "value_type": "time"
+            }
             
-          //   reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
-          //   reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
-          // }
+            reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
+            reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
+          }
           
 
           angular.forEach($scope.selectedDynamicCampaigns, function (data) {
