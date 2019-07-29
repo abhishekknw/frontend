@@ -4088,14 +4088,15 @@
           booking: {},
         },
         Yvalues: {
-          leadsPerc: false,
-          hotleadsPerc: false,
-          costPerLeads: false,
-          costPerHotLeads: false,
-          meetingCompletedPerc: false,
-          conversionPerc: false
+          leadsPerc: true,
+          hotleadsPerc: true,
+          // costPerLeads: false,
+          // costPerHotLeads: false,
+          meetingCompletedPerc: true,
+          conversionPerc: true
         }
       };
+      $scope.yValues = ["lead/flat*100", "hot_lead/flat*100", "total_booking_confirmed/flat*100", "total_orders_punched/flat*100"];
       var specificXValue = undefined;
       var specificXValue2 = undefined;
       var orderSpecificCase = false;
