@@ -4480,7 +4480,7 @@
         else if ($scope.graphSelection.dateRange.startDate && (
           $scope.graphSelection.category == 'vendor' &&
           $scope.selectedVendors.length)) {
-          // alert("only Date Range Type and Vendor Selected");
+          alert("only Date Range Type and Vendor Selected");
           $scope.xValues.value = 'vendor_name';
           var reqData = {
             "data_scope": {
@@ -4514,31 +4514,67 @@
           $scope.selectedVendors.length
         ) {
           // alert("Vendor + Campaign Selected");
-          $scope.xValues.value = 'vendor_name';
-          specificXValue = 'campaign_name';
+          $scope.xValues.value = 'campaign_name';
+          orderSpecificCase = true;
+          $scope.cumulativeOrder = true;
           var reqData = {
+
             "data_scope": {
               "1":
               {
-                "category": "unordered", "level": "vendor", "match_type": 0,
+                "category": "unordered", "level": "campaign", "match_type": 0,
                 "values": { "exact": [] },
-                "value_type": "vendor"
-
+                "value_type": "campaign"
               },
             },
-            "data_point": {
-              "category": "unordered", "level": ["campaign"],
-              "value_ranges": { "campaign": [] }
-            },
+            "data_point": { "category": "unordered", "level": ["supplier", "campaign"] },
             "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
+            "statistical_information": {
+              "stats": [
+                "z_score"
+              ],
+              "metrics": [
+                "m1",
+                "m3"
+              ]
+            },
+            "higher_level_statistical_information": {
+              "level": [
+                "campaign"
+              ],
+              "stats": [
+                "frequency_distribution",
+                "weighted_mean",
+                "variance_stdev"
+              ],
+              "metrics": [
+                "m2",
+                "m4"
+              ]
+            }
           }
 
-          angular.forEach($scope.selectedVendors, function (data) {
-            reqData.data_scope['1'].values.exact.push($scope.vendorsData[data].vendor_id);
-          });
+          // if($scope.graphSelection.dateRange.startDate){
+          //   reqData.data_scope['2'] = {
+          //     "category": "time",
+          //     "level": "time",
+          //     "match_type": 1,
+          //     "values": {
+          //         "range": [
+                      
+          //         ]
+          //     },
+          //     "value_type": "time"
+          //   }
+            
+          //   reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
+          //   reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
+          // }
+          
+
           angular.forEach($scope.selectedDynamicCampaigns, function (data) {
-            reqData.data_point.value_ranges.campaign.push(data.campaign_id);
+            reqData.data_scope['1'].values.exact.push(data.campaign_id);
           });
 
         }
