@@ -5282,6 +5282,9 @@
         angular.forEach($scope.campaignFilteredSummaryData, function(data){
           total+= data[item];
         })      
+        if(['flat','lead','hot_lead'].indexOf(item) > -1){
+          return total;
+        }
         return (total/Object.keys($scope.campaignFilteredSummaryData).length).toFixed(2);  
       }
 
