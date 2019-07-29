@@ -13,6 +13,7 @@ angular.module('catalogueApp')
   $scope.body = {
     message : '',
   };
+  var allSuppliersById = {};
   $scope.editContactDetails = true;
   $scope.addContactDetails = true;
   $scope.userIcon = "icons/usericon.png";
@@ -253,6 +254,7 @@ $scope.addNewPhase =true;
             $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
 
             // setDataToModel($scope.releaseDetails.shortlisted_suppliers);
+            mapLeadsWithSuppliers();
             $scope.loading = !!response;
           } else {
             swal(constants.name, "You do not have access to Proposal", constants.warning);
@@ -1285,6 +1287,92 @@ $scope.multiSelect =
     $scope.canViewInternalComments = false;
     if (userEmail.includes('machadalo')){
       $scope.canViewInternalComments = true;
+    }
+
+    var getSuppliersOfCampaignWithStatus = function () {
+      var reqData = {
+        "data_scope": {
+          "1": {
+            "category": "unordered",
+            "level": "campaign",
+            "match_type": 0,
+            "values": {
+              "exact": [
+                $scope.campaign_id
+              ]
+            },
+            "value_type": "campaign"
+          }
+        },
+        "data_point": {
+          "category": "unordered",
+          "level": [
+            "supplier",
+            "campaign"
+          ]
+        },
+        "raw_data": [
+          "lead_nz",
+          "hot_lead_nz",
+          "flat",
+          "cost_flat",
+          "hotness_level_2",
+          "total_booking_confirmed_nz",
+          "total_orders_punched_nz"
+        ],
+        "metrics": [["1", "3", "/"], ["m1", 100, "*"], ["2", "3", "/"], ["m3", 100, "*"], ["5", "3", "/"],
+                    ["m5", 100, "*"], ["6", "3", "/"], ["m7", 100, "*"], ["7", "3", "/"], ["m9", 100, "*"], ["4", "1", "/"],
+                    ["4", "2", "/"], ["4", "5", "/"], ["4", "6", "/"], ["4", "7", "/"],
+                    ["3", "4", "*"], ["m16", "1", "/"], ["m16", "2", "/"], ["m16", "6", "/"], ["m16", "7", "/"]],
+
+        "statistical_information": {
+          "stats": [
+            "z_score"
+          ],
+          "metrics": [
+            "m1",
+            "m3"
+          ]
+        },
+        "higher_level_statistical_information": {
+          "level": [
+            "campaign"
+          ],
+          "stats": [
+            "frequency_distribution",
+            "weighted_mean",
+            "variance_stdev"
+          ],
+          "metrics": [
+            "m2",
+            "m4"
+          ]
+        }
+      }
+      releaseCampaignService.getSuppliersOfCampaignWithStatus(reqData)
+            .then(function onSuccess(response) {
+              allSuppliersById = {};
+              angular.forEach(response.data.data.lower_group_data, function (supplier) {
+                allSuppliersById[supplier.supplier] = supplier;
+              })
+              console.log(allSuppliersById);
+              
+              mapLeadsWithSuppliers();
+            }).catch(function onError(response) {
+              console.log(response);
+
+            })
+    }
+    getSuppliersOfCampaignWithStatus();
+    var mapLeadsWithSuppliers = function () {
+      if (Object.keys(allSuppliersById).length && $scope.releaseDetails &&
+            $scope.releaseDetails.shortlisted_suppliers.length) {
+        angular.forEach($scope.releaseDetails.shortlisted_suppliers, function (supplier) {
+          supplier['leads_data'] = allSuppliersById[supplier.supplier_id];
+        })
+      }
+      console.log($scope.releaseDetails.shortlisted_suppliers);
+      
     }
 
 

@@ -93,6 +93,7 @@
                 <th>Payment Status</th>
                 <th>Permission Box</th>
                 <th>Receipt</th>
+                <th>Lead Performance Summary</th>
                 <th>Completion Status</th>
                 <th>Delete Action</th>
           </tr>
@@ -437,6 +438,34 @@
                   </div>
                 </div>
                 <!--END:permission box image modal  -->
+            </td>
+            <td rowspan="{{key.length}}" ng-show="$first">
+              <div ng-if="supplier.leads_data">
+                <table class="table table-responsive table-bordered">
+                  <tbody>
+                    <tr>
+                      <td>Total Leads </td>
+                      <td>{{supplier.leads_data.lead}}&nbsp;({{supplier.leads_data['lead/flat*100']|limitTo:4}}%)</br /></td>
+                    </tr>
+                    <tr>
+                      <td>Hot Leads</td>
+                      <td>{{supplier.leads_data.hot_lead}}
+                        ({{supplier.leads_data['hot_lead/flat*100']|limitTo:4}}%)</br></td>
+                    </tr>
+                    <tr>
+                      <td>Total Booking Confirmed</td>
+                      <td>{{supplier.leads_data.total_booking_confirmed}}
+                          &nbsp;({{supplier.leads_data['total_booking_confirmed/flat*100']}}%)</td>
+                    </tr>
+                    <tr>
+                      <td>Total Orders Punched</td>
+                      <td>{{supplier.leads_data.total_orders_punched}}
+                          &nbsp;({{supplier.leads_data['total_orders_punched/flat*100']}}%)</td>
+                    </tr>
+                  </tbody>
+  
+                </table>
+              </div>
             </td>
             <td  style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
               <div class="completedHeaderSpacing">
