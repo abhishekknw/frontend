@@ -74,10 +74,10 @@
       //  {id: 16, name: 'Noida'},
       // ];
       $scope.graphParams = [
-        { id: 1, name: 'Zero Total Leads', value: 'lead_nz', key: 'lead' },
-        { id: 2, name: 'Zero Hot Leads', value: 'hot_lead_nz', key: 'hot_lead' },
-        { id: 3, name: 'Zero Booking Confirmed', value: 'total_booking_confirmed_nz', key: 'total_booking_confirmed' },
-        { id: 4, name: 'Zero Order Punched', value: 'total_orders_punched_nz', key: 'total_orders_punched'},
+        { id: 1, name: 'Non Zero Total Leads', value: 'lead_nz', key: 'lead' },
+        { id: 2, name: 'Non Zero Hot Leads', value: 'hot_lead_nz', key: 'hot_lead' },
+        { id: 3, name: 'Non Zero Booking Confirmed', value: 'total_booking_confirmed_nz', key: 'total_booking_confirmed' },
+        { id: 4, name: 'Non Zero Order Punched', value: 'total_orders_punched_nz', key: 'total_orders_punched'},
       ]
       $scope.BookingParametersLists = [
         { id: 1, name: 'Freebies Allowed', value: 'freebiestype' },
@@ -1201,7 +1201,6 @@
           },
           "useInteractiveGuideline": true,
             x: function (d, i) {  
-              console.log(d);
                          
               return d.x; },
             y: function (d) { 
@@ -4851,7 +4850,7 @@
                       
                       if(!$scope.cumulativeOrderCampaignsNamesById.hasOwnProperty(key)){
                         $scope.cumulativeOrderCampaignsNamesById[key] = {
-                          dates: [0],
+                          dates: [],
                           values: []
                         }
                       }
@@ -4908,6 +4907,8 @@
       }
       
       var formatLineChartForCumulativeOrderGraph = function(data){        
+        console.log(data);
+        
         $scope.x_fre_leads = [];
         var temp_data = [];
         var final_data = [];
@@ -4921,17 +4922,17 @@
             var values1 = [];   
             $scope.lineChartGraphCumulativeOrder.push(lineChartCumulativeOrder);
             var index = 0;
-            values1.push({
-              x: 0, y: 0 
-            })
-            index++;
+            // values1.push({
+            //   x: 0, y: 0 
+            // })
+            // index++;
             angular.forEach(data[key].values, function(item){
               values1.push({
-                x: index, y: item 
+                x: data[key].dates[index], y: item 
               })
               index++;
             })
-            $scope.x_fre_leads = angular.copy(data[key].dates);
+            // $scope.x_fre_leads = angular.copy(data[key].dates);
             
             temp_data.push({
               key: 'Total Orders Punched (%)',
@@ -4943,15 +4944,15 @@
         }else{
         $scope.lineChartGraphCumulativeOrder.push(lineChartCumulativeOrder);
         var index = 0;
-        values1.push({
-          x: 0, y: 0 
-        })
-        index++;
+        // values1.push({
+        //   x: 0, y: 0 
+        // })
+        // index++;
         angular.forEach(data[$scope.selectedOrderKey].values, function(item){
           console.log(data[$scope.selectedOrderKey].dates[index-1]);
           
           values1.push({
-            x: data[$scope.selectedOrderKey].dates[index-1], y: item 
+            x: data[$scope.selectedOrderKey].dates[index], y: item 
           })
           index++;
         })
