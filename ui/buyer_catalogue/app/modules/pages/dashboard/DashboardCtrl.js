@@ -5325,6 +5325,19 @@
         return (total/Object.keys($scope.campaignFilteredSummaryData).length).toFixed(2);  
       }
 
+      $scope.getCampaign = function (proposalId) {
+        DashboardService.getCampaign(proposalId)
+      }
+
+      $scope.deleteLeads = function(supplier_id){
+        var data = {
+          "supplier_ids": [],
+          "campaign_id": $scope.campaignId
+        }
+        data.supplier_ids.push(supplier_id);
+        DashboardService.deleteLeads(data)
+      }
+
       // END
 
     })
