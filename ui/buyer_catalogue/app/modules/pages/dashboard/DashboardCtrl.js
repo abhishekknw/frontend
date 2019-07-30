@@ -4957,7 +4957,10 @@
           angular.forEach(allKeys, function(key){
             var temp_data = [];
             var values1 = [];   
-            $scope.lineChartGraphCumulativeOrder.push(lineChartCumulativeOrder);
+            var chart = angular.copy(lineChartCumulativeOrder);
+            chart.chart.xAxis.axisLabel = "Orders Punched Date" + "(" +
+                      key + ")"
+            $scope.lineChartGraphCumulativeOrder.push(chart);
             var index = 0;
             // values1.push({
             //   x: 0, y: 0 
