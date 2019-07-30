@@ -1212,7 +1212,7 @@
             tooltipHide: function (e) { console.log("tooltipHide"); }
           },
           "xAxis": {
-            "axisLabel": "Orders Punched Date",
+            "axisLabel": "Orders Punched Days",
             "showMaxMin": false,
             tickFormat: function(d) { 
               return d },
@@ -1282,7 +1282,47 @@
           yAxis: {
             axisLabel: 'Leads in %',
             axisLabelDistance: -10
-          }
+          },
+          tooltip: {
+            contentGenerator: function (e) {
+              var series = e.series[0];
+              console.log(series,e);
+              var key = $scope.dynamicGraphYValuesMap[$scope.dynamicGraphSelectedOrder.value];
+              if (series.value === null) return;
+              var rows =
+                "<tr>" +
+                "<td class='key'>" + 'Name : ' + "</td>" +
+                "<td class='x-value'>" + key + "</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td class='key'>" + 'Value In (%) : ' + "</td>" +
+                "<td class='x-value'><strong>" + (series.value ? series.value.toFixed(2) : 0) + "</strong></td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td class='key'>" + dynamicPricingKeys[key][0]['name'] + ' :' + "</td>" +
+                "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[key][0]['value']] + "</strong></td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td class='key'>" + dynamicPricingKeys[key][1]['name'] + ' (RS)' + ' :' + "</td>" +
+                "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[key][1]['value']].toFixed(2) + "</strong></td>" +
+                "</tr>";
+
+              var header =
+                "<thead>" +
+                "<tr>" +
+                "<td class='legend-color-guide'><div style='background-color: " + series.color + ";'></div></td>" +
+                "<td class='key'><strong>" + series.key + "</strong></td>" +
+                "</tr>" +
+                "</thead>";
+
+              return "<table>" +
+                header +
+                "<tbody>" +
+                rows +
+                "</tbody>" +
+                "</table>";
+            }
+          },         
         }
       };
       var overallSummaryStackedBar = {
@@ -4958,7 +4998,7 @@
             var temp_data = [];
             var values1 = [];   
             var chart = angular.copy(lineChartCumulativeOrder);
-            chart.chart.xAxis.axisLabel = "Orders Punched Date" + "(" +
+            chart.chart.xAxis.axisLabel = "Orders Punched Days" + "(" +
                       key + ")"
             $scope.lineChartGraphCumulativeOrder.push(chart);
             var index = 0;
@@ -5121,8 +5161,11 @@
 
         temp_data['key'] = "Sample";
         temp_data['values'] = [];
+        tooltipDynamicGraphData = [];
         angular.forEach(data, function (item) {
-
+          tooltipDynamicGraphData.push(item);
+          console.log(tooltipDynamicGraphData);
+          
           if (selectedSpecificItems.indexOf(item[$scope.xValues.value]) > -1 || !selectedSpecificItems.length) {
             if (item[$scope.xValues.value]) {
               if (specificXValue) {
