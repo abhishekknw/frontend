@@ -4481,7 +4481,7 @@
         else if ($scope.graphSelection.dateRange.startDate && (
           $scope.graphSelection.category == 'vendor' &&
           $scope.selectedVendors.length)) {
-          alert("only Date Range Type and Vendor Selected");
+          // alert("only Date Range Type and Vendor Selected");
           $scope.xValues.value = 'vendor_name';
           var reqData = {
             "data_scope": {
@@ -4556,22 +4556,22 @@
             }
           }
 
-          // if($scope.graphSelection.dateRange.startDate){
-          //   reqData.data_scope['2'] = {
-          //     "category": "time",
-          //     "level": "time",
-          //     "match_type": 1,
-          //     "values": {
-          //         "range": [
+          if($scope.graphSelection.dateRange.startDate){
+            reqData.data_scope['2'] = {
+              "category": "time",
+              "level": "time",
+              "match_type": 1,
+              "values": {
+                  "range": [
                       
-          //         ]
-          //     },
-          //     "value_type": "time"
-          //   }
+                  ]
+              },
+              "value_type": "time"
+            }
             
-          //   reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
-          //   reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
-          // }
+            reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
+            reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
+          }
           
 
           angular.forEach($scope.selectedDynamicCampaigns, function (data) {
