@@ -4928,12 +4928,14 @@
                       if(!$scope.cumulativeOrderCampaignsNamesById.hasOwnProperty(key)){
                         $scope.cumulativeOrderCampaignsNamesById[key] = {
                           dates: [],
-                          values: []
+                          values: [],
+                          sumValues: []
                         }
                       }
                       
                       $scope.cumulativeOrderCampaignsNamesById[key]['dates'].push(data.date);
                       $scope.cumulativeOrderCampaignsNamesById[key]['values'].push(data.total_orders_punched_cum_pct);
+                      $scope.cumulativeOrderCampaignsNamesById[key]['sumValues'].push(data.total_orders_punched);
 
                     })
                     $scope.cumulativeOrderCampaignKeys = Object.keys($scope.cumulativeOrderCampaignsNamesById);
@@ -4999,7 +5001,10 @@
             var values1 = [];   
             var chart = angular.copy(lineChartCumulativeOrder);
             chart.chart.xAxis.axisLabel = "Orders Punched Days" + "(" +
-                      key + ")"
+                      key + ")";
+            chart.chart.yAxis.axisLabel = "Cumulative Orders Punched (%)" + "(100% =" +
+             Math.max(...data[key].sumValues) + " punched orders)";
+            
             $scope.lineChartGraphCumulativeOrder.push(chart);
             var index = 0;
             // values1.push({
@@ -5022,7 +5027,10 @@
             final_data.push(temp_data);    
           })
         }else{
-        $scope.lineChartGraphCumulativeOrder.push(lineChartCumulativeOrder);
+        var chart = angular.copy(lineChartCumulativeOrder);
+        chart.chart.yAxis.axisLabel = "Cumulative Orders Punched (%)" + "(100% =" +
+             Math.max(...data[$scope.selectedOrderKey].sumValues) + " punched orders)";
+        $scope.lineChartGraphCumulativeOrder.push(chart);
         var index = 0;
         // values1.push({
         //   x: 0, y: 0 
@@ -5036,7 +5044,6 @@
           })
           index++;
         })
-        console.log(data[$scope.selectedOrderKey]);
         
         $scope.x_fre_leads = angular.copy(data[$scope.selectedOrderKey].dates);
         
@@ -5047,9 +5054,7 @@
         });                    
         final_data.push(temp_data);
         }
-        
-        console.log(final_data,$scope.x_fre_leads);
-        
+                
         return final_data;
       }
       $scope.clearDatesFromDynamicGraph = function () {
