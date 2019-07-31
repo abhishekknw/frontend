@@ -5003,7 +5003,7 @@
             chart.chart.xAxis.axisLabel = "Orders Punched Days" + "(" +
                       key + ")";
             chart.chart.yAxis.axisLabel = "Cumulative Orders Punched (%)" + "(100% =" +
-             Math.max(...data[key].sumValues) + " punched orders)";
+             Math.max(...data[key].sumValues) + " Orders Punched)";
             
             $scope.lineChartGraphCumulativeOrder.push(chart);
             var index = 0;
@@ -5029,7 +5029,7 @@
         }else{
         var chart = angular.copy(lineChartCumulativeOrder);
         chart.chart.yAxis.axisLabel = "Cumulative Orders Punched (%)" + "(100% =" +
-             Math.max(...data[$scope.selectedOrderKey].sumValues) + " punched orders)";
+             Math.max(...data[$scope.selectedOrderKey].sumValues) + " Orders Punched)";
         $scope.lineChartGraphCumulativeOrder.push(chart);
         var index = 0;
         // values1.push({
