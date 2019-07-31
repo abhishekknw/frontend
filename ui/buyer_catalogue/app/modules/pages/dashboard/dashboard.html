@@ -1066,8 +1066,8 @@
                                             <th ng-if="supplierStatus != 'upcoming'">Stall</th>
                                             <th ng-if="supplierStatus != 'upcoming'">Other Images</th>
                                             <!-- <th>Permission Box</th> -->
-                                            <th style="width:200px;">Add <br> Comments</th>
-                                            <th style="width:200px;">View <br> Comments</th>
+                                            <th style="width:200px;">Comments</th>
+                                            <th style="width:200px;" ng-if="canViewInternalComments">Internal <br> Comments</th>
                                             </tr>
                                             <tr colspan="9">
                                               <td></td>
@@ -1129,69 +1129,96 @@
                                                     </table>
                                                   </td>
                                                   <td style="width:200px;">
-                                                    <button type="button" class="btn btn-danger" ng-click="enableAddComments(supplier)" data-toggle="modal" data-target="#AddMyComments">Add Comments</button>
-                                                    <div id="AddMyComments" class="modal fade">
-                                                      <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                          <div class="modal-header">
-                                                            <div class="panel-heading">
-                                                              <h5 style="background:'red';color:white;text-transform:capitalize">Add Comment For {{societyNameForComments}}</h5>
+                                                    <!--START : view external comments modal  -->
+                                                    <button ng-click="viewComments('EXTERNAL',supplier)" class="btn btn-danger" data-toggle="modal" data-target="#viewExternalComments">View/Add</button>
+                                                    <div id="viewExternalComments" class="modal fade">
+                                                      <div>
+                                                        <div class="modal-dialog">
+                                                          <div class="modal-content">
+                                                            <div class="modal-header">
+                                                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                              View Comments For {{societyViewNameForComments}}
                                                             </div>
                                                             <div class="modal-body">
-                                                              <div class="col-md-12">
-                                                                <div style="width:100%">
+                                                              <table class="table-bordered table-striped" style="border: none !important;">
+                                                                <tbody>
+                                                                <tr ng-repeat="item in commentsData.general">
+                                                                  <td class="col-md-8" style="background-color: whitesmoke;text-align: initial;">
+                                                                    <div style="color: black;">
+                                                                      <img ng-src="{{userIcon}}">
+                                                                      <b>{{item.user_name}} :</b> <span> <small> {{item.timestamp|date:'medium'}}</small></span><br>
+                                                                    </div>
+                                                                    <div style="padding-left:30px">
+                                                                      <p style="word-break:break-word;color: black;">{{item.comment}}</p>
+                                                                      </br>
+                                                                    </div>
+                                                                  </td>
+                                                                </tr>
+                                                                </tbody>
+                                                              </table>
+                                                              <!--  Add comment-->
+                                                              <div style="width:100%">
                                                                 <br>
-                                                                <textarea name="name" class="col-md-12" placeholder="Enter Here.." ng-model="commentModal.comment"></textarea>
-                                                                  <br />
-                                                                </div>
-                                                                <br>
+                                                                <!-- <label>Comments :</label> -->
+                                                                <textarea class="form-control col-md-10"  rows="8" cols="200" ng-model="commentModal.comment" placeholder="Write here.." required></textarea>
                                                               </div>
-                                                            </div>
-                                                            <br /><br />
-                                                            <button class="btn form-control" style="background:#d9534f;border-color:#d9534f;width:50%;color:#fff" ng-disabled="!commentModal.comment" ng-click="addComment()">Add Comment</button>
+                                                              <br>
+                                                            </div><br>
+                                                            <br>
+                                                            <button class="btn btn-danger" type="button" ng-click="addComment('EXTERNAL',supplier.shortlisted_space_id)" style="margin:3%">Add Comment</button>
                                                           </div>
-                                                          <br>
-                                                      </div>
+                                                        </div><br>
+                                                        <br>
+                                                        </br></br>
                                                       </div>
                                                     </div>
-                                                    <!-- <div ng-if="enableComments == $index">
-                                                      <textarea name="name" rows="4" cols="20" placeholder="Enter Here.." ng-model="commentModal.comment"></textarea>
-                                                      <button class="btn btn-success form-control" ng-disabled="!commentModal.comment" ng-click="addComment(supplier.shortlisted_space_id)">Add</button>
-                                                    </div> -->
                                                   </td>
 
-                                                  <td style="width:200px;">
-                                                    <button type="button" class="btn btn-danger" ng-click="viewComments(supplier,$index)" data-toggle="modal" data-target="#ViewMyComments">View Comments</button><br>
-                                                    <div id="ViewMyComments" class="modal fade">
-                                                      <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                          <div class="modal-header">
-                                                            <div class="panel-heading">
-                                                              <h5 style="background:'red';color:white;text-transform:capitalize">View Comment For {{societyViewNameForComments}}</h5>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                              <div class="col-md-12" style="height:350px;overflow:auto">
-                                                                <div style="width:100%" >
-                                                                <br>
-                                                                <div class="talk-bubble tri-right round left-top"  ng-repeat="item in commentsData.general" style="margin-top:-20px">
-                                                                  <div class="talktext" style="font-color:black">
-                                                                    <p style="color:#ff0000;font-size:smaller">{{item.user_name}}</p>
-                                                                    <p style="color:#000000;font-size:x-small">{{item.comment}}</p>
-                                                                    <p style="color:#0000ff;font-size:xx-small;text-align:right">{{item.timestamp|date:'medium'}}</p>
-                                                                  </div>
+                                                    <td style="width:200px;">
+                                                      <!--START : view internal comments modal  -->
+                                                      <button ng-if="canViewInternalComments" ng-click="viewComments('INTERNAL',supplier)" class="btn btn-danger" data-toggle="modal" data-target="#viewInternalComments">View/Add</button>
+                                                      <div id="viewInternalComments" class="modal fade">
+                                                        <div>
+                                                          <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                              <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                View Internal Comments For {{societyViewNameForComments}}
+                                                              </div>
+                                                              <div class="modal-body">
+                                                                <table class="table-bordered table-striped" style="border: none !important;">
+                                                                  <tbody>
+                                                                  <tr ng-repeat="item in commentsData.general">
+                                                                    <td class="col-md-8" style="background-color: whitesmoke;text-align: initial;">
+                                                                      <div style="color: black;">
+                                                                        <img ng-src="{{userIcon}}">
+                                                                        <b>{{item.user_name}} :</b> <span> <small> {{item.timestamp|date:'medium'}}</small></span><br>
+                                                                      </div>
+                                                                      <div style="padding-left:30px">
+                                                                        <p style="word-break:break-word;color: black;">{{item.comment}}</p>
+                                                                        </br>
+                                                                      </div>
+                                                                    </td>
+                                                                  </tr>
+                                                                  </tbody>
+                                                                </table>
+                                                                <!--  Add comment-->
+                                                                <div style="width:100%">
+                                                                  <br>
+                                                                  <!-- <label>Comments :</label> -->
+                                                                  <textarea class="form-control col-md-10"  rows="8" cols="200" ng-model="commentModal.comment" placeholder="Write here.." required></textarea>
                                                                 </div>
-                                                              </div>
                                                                 <br>
-                                                              </div>
+                                                              </div><br>
+                                                              <br>
+                                                              <button class="btn btn-danger" type="button" ng-click="addComment('INTERNAL',supplier.shortlisted_space_id)" style="margin:3%">Add Comment</button>
                                                             </div>
-                                                             <br />
-                                                            <br />
-                                                          </div>
+                                                          </div><br>
+                                                          <br>
+                                                          </br></br>
                                                         </div>
                                                       </div>
-                                                    </div>
-
-                                                  </td>
+                                                    </td>
 
                                                     <!-- <td ng-init="calculateTotalCount('GATEWAY ARCH',supplier.supplier.inv_data['GATEWAY ARCH'].total.total)" ng-show="invStatusKeys['GATEWAY ARCH'].status">{{supplier.supplier.inv_data['GATEWAY ARCH'].total.total}}
                                                     </td> -->
@@ -1955,7 +1982,9 @@
                   <th>Area(SubArea)</th>
                   <th>Status</th>
                   <th>Map Details</th>
-                  <th>Comments</th>
+                  <th>
+
+                  </th>
                   <th>Inventory Counts</th>
                   <th>Freebies</th>
                 </tr>

@@ -2992,25 +2992,23 @@
       //   })
       // }
 
-      $scope.viewComments = function (supplier, index) {
+      // Check for internal comments
+      var userInfo = JSON.parse($window.localStorage.userInfo);
+      var userEmail = userInfo.email;
+      $scope.canViewInternalComments = false;
+      if (userEmail.includes('machadalo')){
+        $scope.canViewInternalComments = true;
+      }
+
+      $scope.viewComments = function (comment_type, supplier) {
         $scope.societyViewNameForComments = supplier.supplier.society_name;
-        // $scope.supplierNameForComment = undefined;
-        // $scope.supplierNameForComment = supplier.supplier_data.society_name;
         $scope.commentsData = [];
-        var relatedTo = constants.execution_related_comment;
+        var relatedTo = comment_type;
         var spaceId = supplier.shortlisted_space_id;
         DashboardService.viewComments($scope.campaignId, spaceId, relatedTo)
           .then(function onSuccess(response) {
             $scope.commentModal = {};
             $scope.commentsData = response.data.data;
-            // if(Object.keys($scope.commentsData).length != 0){
-            //   $scope.viewInvForComments = Object.keys($scope.commentsData);
-            //   $scope.selectedInvForView = $scope.viewInvForComments[0];
-            //   $('#viewComments').modal('show');
-            // }else{
-            //   $('#viewComments').modal('hide');
-            //   swal(constants.name,constants.no_comments_msg,constants.warning);
-            // }
           }).catch(function onError(response) {
             console.log(response);
           })
@@ -3234,21 +3232,20 @@
         return [temp_data];
       }
       $scope.commentModal = {};
-      $scope.addComment = function () {
-        $scope.commentModal['related_to'] = constants.execution_related_comment;
-        $scope.commentModal['shortlisted_spaces_id'] = $scope.supplierShorlistedSpaceId;
-        // var spaceId = supplier.shortlisted_space_id;
-        // console.log(spaceId);
+      $scope.addComment = function (comment_type, supplier_shorlisted_spaceId) {
+        $scope.commentModal['related_to'] = comment_type;
+        $scope.commentModal['shortlisted_spaces_id'] = supplier_shorlisted_spaceId;
         DashboardService.addComment($scope.campaignId, $scope.commentModal)
           .then(function onSuccess(response) {
             $scope.commentModal = {};
             $scope.supplierDataForComment = undefined;
-            // $('#addComments').modal('hide');
             swal(constants.name, constants.add_data_success, constants.success);
-          }).catch(function onError(response) {
-            console.log(response);
+          }).catch(function onError(error) {
+            console.log(error);
+            swal(constants.name, 'Error adding comments', constants.failure);
           })
       }
+
       $scope.openChat = function () {
         $scope.showChat = true;
       }
