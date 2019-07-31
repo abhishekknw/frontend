@@ -5141,6 +5141,7 @@
       $scope.dynamicSortedGraphOptions = angular.copy(dynamicDiscreteBarChart);
 
       $scope.sortDynamicData = function (order) {
+        setLabelsOnBars();
         if(!orderSpecificCase){
           $scope.dynamicOrderData = angular.copy($scope.initialDynamicGraphData.lower_group_data);
         }else{
