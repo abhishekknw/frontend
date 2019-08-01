@@ -23,5 +23,38 @@ function (machadaloHttp, $stateParams, $rootScope, $routeParams, $location, $htt
     var url = base_url + "leads/generate-campaign-hash/" + campaignId + "/";
       return machadaloHttp.get(url);
   }
+  campaignListService.sendListOfSuppliersEmail = function(campaignId,email){
+    var url = url_base + "send-booking-details/" + campaignId + "/?email=" + email;
+    return machadaloHttp.get(url);
+  }
+
+  campaignListService.sendListOfSuppliersConfirmEmail = function(campaignId){
+    var url = url_base + "send-booking-details/" + campaignId + "/";
+    return machadaloHttp.get(url);
+  }
+
+  campaignListService.sendActivationOfSuppliersEmail = function(campaignId,email){
+    var url = url_base + "send-advanced-booking-details/" + campaignId + "/?email=" + email;
+    return machadaloHttp.get(url);
+  }
+
+  campaignListService.sendActivationOfSuppliersConfirmEmail = function(campaignId){
+    var url = url_base + "send-advanced-booking-details/" + campaignId + "/";
+    return machadaloHttp.get(url);
+  }
+
+  campaignListService.sendPipelinedSuppliersEmail = function(campaignId,email){
+    var url = url_base + "send-pipeline-details/" + campaignId + "/?email=" + email;
+    return machadaloHttp.get(url);
+  }
+
+  campaignListService.sendPipelinedSuppliersConfirmEmail = function(campaignId){
+    var url = url_base + "send-pipeline-details/" + campaignId + "/";
+    return machadaloHttp.get(url);
+  }
+  campaignListService.getCampaignWiseSummary = function(){
+    var url = url_root  + "campaign/campaign-wise-summary/";
+    return machadaloHttp.get(url);
+  }
   return campaignListService;
 }]);

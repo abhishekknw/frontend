@@ -1,8 +1,9 @@
 angular.module('catalogueApp')
 
-.controller('CampaignListCtrl', ['$scope', '$rootScope', '$window', '$location','commonDataShare','constants','campaignListService',
-    function ($scope, $rootScope, $window, $location , commonDataShare,constants,campaignListService) {
+.controller('CampaignListCtrl', ['$scope', '$rootScope', '$window', '$location','commonDataShare','constants','campaignListService', 'cfpLoadingBar',
+    function ($scope, $rootScope, $window, $location , commonDataShare,constants,campaignListService, cfpLoadingBar) {
 
+      $scope.emailModel = {};
       $scope.campaignHeadings = [
         {header : 'Sr No'},
         {header : 'Campaign Name'},
@@ -115,5 +116,95 @@ angular.module('catalogueApp')
           })
         }
 
+      $scope.sendBookingEmails = function () {
+        $scope.emailBtnDisabled = true;
+        cfpLoadingBar.start();
+        if ($scope.emailModel.selected === 'listOfSupplier') {
+          campaignListService.sendListOfSuppliersEmail($scope.proposalId, $scope.emailModel.email)
+            .then(function onSuccess(response) {
+              $scope.emailModel = {};
+              $scope.emailBtnDisabled = false;
+              cfpLoadingBar.complete();
+              swal(constants.name, constants.email_success, constants.success);
+            }).catch(function onError(response) {
+            console.log(response);
+            $scope.emailBtnDisabled = false;
+            cfpLoadingBar.complete();
+          })
+        } else if ($scope.emailModel.selected === 'activationOfSupplier') {
+          campaignListService.sendActivationOfSuppliersEmail($scope.proposalId, $scope.emailModel.email)
+            .then(function onSuccess(response) {
+              $scope.emailModel = {};
+              $scope.emailBtnDisabled = false;
+              cfpLoadingBar.complete();
+              swal(constants.name, constants.email_success, constants.success);
+            }).catch(function onError(response) {
+            console.log(response);
+            $scope.emailBtnDisabled = false;
+            cfpLoadingBar.complete();
+          })
+        } else if ($scope.emailModel.selected === 'pipelineOfSupplier') {
+          campaignListService.sendPipelinedSuppliersEmail($scope.proposalId, $scope.emailModel.email)
+            .then(function onSuccess(response) {
+              $scope.emailModel = {};
+              $scope.emailBtnDisabled = false;
+              cfpLoadingBar.complete();
+              swal(constants.name, constants.email_success, constants.success);
+            }).catch(function onError(response) {
+            console.log(response);
+            $scope.emailBtnDisabled = false;
+            cfpLoadingBar.complete();
+          })
+        }
+      }
+      $scope.sendConfirmBookingEmails = function () {
+        $scope.emailBtnDisabled = true;
+        cfpLoadingBar.start();
+        if ($scope.emailModel.selected === 'listOfSupplier') {
+          campaignListService.sendListOfSuppliersConfirmEmail($scope.proposalId)
+            .then(function onSuccess(response) {
+              $scope.emailModel = {};
+              $scope.emailBtnDisabled = false;
+              cfpLoadingBar.complete();
+              swal(constants.name, constants.email_success, constants.success);
+            }).catch(function onError(response) {
+            console.log(response);
+            $scope.emailBtnDisabled = false;
+            cfpLoadingBar.complete();
+          })
+        } else if ($scope.emailModel.selected === 'activationOfSupplier') {
+          campaignListService.sendActivationOfSuppliersConfirmEmail($scope.proposalId)
+            .then(function onSuccess(response) {
+              $scope.emailModel = {};
+              $scope.emailBtnDisabled = false;
+              cfpLoadingBar.complete();
+              swal(constants.name, constants.email_success, constants.success);
+            }).catch(function onError(response) {
+            console.log(response);
+            $scope.emailBtnDisabled = false;
+            cfpLoadingBar.complete();
+          })
+        } else if ($scope.emailModel.selected === 'pipelineOfSupplier') {
+          campaignListService.sendPipelinedSuppliersConfirmEmail($scope.proposalId)
+            .then(function onSuccess(response) {
+              $scope.emailModel = {};
+              $scope.emailBtnDisabled = false;
+              cfpLoadingBar.complete();
+              swal(constants.name, constants.email_success, constants.success);
+            }).catch(function onError(response) {
+            console.log(response);
+            $scope.emailBtnDisabled = false;
+            cfpLoadingBar.complete();
+          })
+        }
+      }
+
+      // Disable email button if user not entered
+      $scope.isEmailButton = false;
+      $scope.disableTestEmailButton = function () {
+        if (!$scope.emailModel.email){
+          $scope.isEmailButton = true;
+        }
+      }
 
     }]);
