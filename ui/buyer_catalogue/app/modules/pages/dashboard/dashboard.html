@@ -3165,7 +3165,8 @@
                      <div class="form-group">
                        <span><small>
                          <div class="col-md-12">
-                           <button type="button" name="button" class="col-md-9 btn btn-danger pull-left" ng-model="checkAllElements" ng-click="getGenericGraphData()">Submit</button>
+                           <button type="button" name="button" class="col-md-9 btn btn-danger pull-left" ng-model="checkAllElements" ng-click="getGenericGraphData()" 
+                                    ng-disabled="selectedDynamicCampaigns.length == 0">Submit</button>
                            <button class="col-md-3 btn btn-primary pull-right" ng-click="clearDatesFromDynamicGraph()">Reset All</button></small>
                          </div>
                        </span>
@@ -3357,21 +3358,21 @@
           </tr> -->
           <tr>
           <td><small style="font-weight:bold">Cost Per Booking Confirmed <br> (Booking Confirmed %)</small></td>
-          <td>{{getOverallSummaryData('flat*cost_flat/total_booking_confirmed')}} <br> ({{initalDynamicTableData['hot_lead/flat*100'] | limitTo:5}}) %</td>
+          <td>{{getOverallSummaryData('flat*cost_flat/total_booking_confirmed')}} <br> ({{initalDynamicTableData['total_booking_confirmed/flat*100'] | limitTo:5}}) %</td>
           <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
           <td>{{(WeeklyVendorMISLast2WeekSummary.interested / WeeklyVendorMISLast2WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
           <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
           </tr>
           <tr>
           <td><small style="font-weight:bold">Cost Per Orders Punched <br> (Orders Punched %)</small></td>
-          <td>{{getOverallSummaryData('flat*cost_flat/total_orders_punched')}} <br> ({{initalDynamicTableData['hot_lead/flat*100'] | limitTo:5}}) %</td>
+          <td>{{getOverallSummaryData('flat*cost_flat/total_orders_punched')}} <br> ({{initalDynamicTableData['total_orders_punched/flat*100'] | limitTo:5}}) %</td>
           <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
           <td>{{(WeeklyVendorMISLast2WeekSummary.interested / WeeklyVendorMISLast2WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
           <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
           </tr>
           <tr>
           <td><small style="font-weight:bold">Hot Leads Ratio (%)</small></td>
-          <td>{{ getOverallSummaryData('hot_lead') / getOverallSummaryData('lead')  * 100 }} %</td>
+          <td>{{ getOverallSummaryData('hot_lead') / getOverallSummaryData('lead')  * 100 | limitTo:5 }} %</td>
           <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.total)  * 100 | limitTo:5}} %</td>
           <td>{{(WeeklyVendorMISLast2WeekSummary.interested / WeeklyVendorMISLast2WeekSummary.total)  * 100 | limitTo:5}} %</td>
           <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.total)  * 100 | limitTo:5}} %</td>
