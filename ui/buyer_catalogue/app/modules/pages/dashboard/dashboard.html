@@ -3003,9 +3003,9 @@
                       <br /><br />
                       <div class="row form-group" style="color:#000000">
                         <small>
-                          <input type="checkbox" name="" value="" ng-model="checkboxCheckedSociety" ng-checked="!checkboxChecked"> Society Parameters
-                            <!-- <p style="color:#000000;">Society Parameters :</p> -->
-                          <select class="form-control" ng-click="DisabledClickedSociety()" ng-model="graphSelection.specificParam.society" ng-show="checkboxCheckedSociety" ng-hide="checkboxChecked">
+                          <input type="checkbox" name="" value="" ng-model="checkboxCheckedSociety"  ng-click="societyParamsCheck('society',checkboxCheckedSociety)"
+                              ng-checked="!checkboxChecked"> Society Parameters
+                          <select class="form-control" ng-click="DisabledClickedSociety()" ng-model="graphSelection.specificParam.society"  ng-if="checkboxCheckedSociety">
                             <option value="qualitytype" ng-click="societyTypeDrop">Type of Society</option>
                             <option value="sizeOfFlats" ng-click="flatTypeDrop">Size of Society</option>
                             <option value="flatType" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Type of Flats</option>
@@ -3016,36 +3016,26 @@
                             <option value="workingWomen" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Percentage Working Women</option>
                           </select>
                           <br />
-                          <div class="row" ng-if="graphSelection.specificParam.society == 'qualitytype'">
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'qualitytype' && checkboxCheckedSociety">
                             <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="typeOfSocietyLists" extra-settings="settingsForDynamicGraphSociety"
                             selected-model="selectedTypeOfSocieties" translation-texts="selected_baselines_customTexts_qualityTypesociety" events="events"></span>
                           </div>
-                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfFlats'">
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfFlats' && checkboxCheckedSociety">
                             <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfFlatsLists" extra-settings="settingsForDynamicGraphFlatType"
                             selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
                           </div>
                           <br />
                         <p style="text-align:center;color:#cb1925;font-weight: bold;">OR</p>
 
-                          <!-- <label for="" style="color:#808080;">Booking Parameters</label> -->
-                          <!-- <select class="form-control multiselectParentDropdown" ng-model="graphSelection.specificParam.booking">
-                            <option value="freebies" ng-click="societyTypeDrop" ng-disabled="graphSelection.specificParam.booking">Freebies Allowed</option>
-                            <option value="preHype" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Pre-Hype Allowed</option>
-                            <option value="posterAllowed" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Poster Allowed</option>
-                            <option value="StandeeAllowed" ng-click="flatTypeDrop">Standee Allowed</option>
-                            <option value="FlierAllowed" ng-click="flatTypeDrop">Flier Allowed</option>
-                            <option value="StallAllowed" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Stall Allowed</option>
-                            <option value="StallLocation" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Stall Location</option>
-                            </select> -->
                             <br />
-                            <input type="checkbox" name="" value=""  ng-model="checkboxChecked" ng-checked="!checkboxCheckedSociety"> Booking Parameters
+                            <input type="checkbox" name="" value=""  ng-model="checkboxChecked" ng-checked="!checkboxCheckedSociety" ng-click="societyParamsCheck('booking',checkboxChecked)"> Booking Parameters
                             <br />
-                              <div class="col-md-3 pull-left" ng-click="DisabledClickedBooking()" style="margin-left:-20px;" ng-show="checkboxChecked" ng-hide="checkboxCheckedSociety">
+                              <div class="col-md-3 pull-left" ng-click="DisabledClickedBooking()" style="margin-left:-20px;" ng-if="checkboxCheckedSociety">
                               <span class="multiselectParentDropdown" ng-dropdown-multiselect="" options="BookingParametersLists" extra-settings="settingsForDynamicGraphBookingParameters"
                               selected-model="selectedbookingParameters" translation-texts="selected_baselines_customTexts_booking_parameters" events="events"></span>
                             </div>
 
-                            <div class="row" ng-if="graphSelection.specificParam.booking == 'freebies'" style="margin-left:30px">
+                            <div class="row" ng-if="graphSelection.specificParam.booking == 'freebies' && checkboxChecked" style="margin-left:30px">
                               <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="freebiesLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
                               selected-model="selectedFreebies" translation-texts="selected_baselines_customTexts_freebies" events="events"></span>
                             </div>

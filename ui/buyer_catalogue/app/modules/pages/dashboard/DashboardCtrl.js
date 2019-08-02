@@ -5003,7 +5003,7 @@
             chart.chart.xAxis.axisLabel = "Orders Punched Days" + "(" +
                       key + ")";
             chart.chart.yAxis.axisLabel = "Cumulative Orders Punched (%)" + "(100% =" +
-             Math.max(...data[key].sumValues) + " Orders Punched)";
+             data[key].sumValues.reduce((a,b)=>a+b) + " Orders Punched)";
             
             $scope.lineChartGraphCumulativeOrder.push(chart);
             var index = 0;
@@ -5029,7 +5029,7 @@
         }else{
         var chart = angular.copy(lineChartCumulativeOrder);
         chart.chart.yAxis.axisLabel = "Cumulative Orders Punched (%)" + "(100% =" +
-             Math.max(...data[$scope.selectedOrderKey].sumValues) + " Orders Punched)";
+        data[key].sumValues.reduce((a,b)=>a+b) + " Orders Punched)";
         $scope.lineChartGraphCumulativeOrder.push(chart);
         var index = 0;
         // values1.push({
@@ -5389,7 +5389,38 @@
         data.supplier_ids.push(supplier_id);
         DashboardService.deleteLeads(data)
       }
-
+      
+      $scope.societyParamsCheck = function(item,status){
+        console.log(item,status);
+        if(item === 'society'){
+          if(status){
+            $scope.selectedbookingParameters = [];
+            $scope.checkboxChecked = false;
+            $scope.checkboxCheckedSociety = true;
+          }else{
+            $scope.selectedTypeOfSocieties = [];
+            $scope.selectedSizeOfFlats = [];
+            $scope.checkboxChecked = true;
+            $scope.checkboxCheckedSociety = false;
+          }
+        }
+        if(item === 'booking'){
+          if(status){
+            $scope.selectedTypeOfSocieties = [];
+            $scope.selectedSizeOfFlats = [];
+            $scope.checkboxChecked = true;
+            $scope.checkboxCheckedSociety = false;
+          }else{
+            $scope.selectedbookingParameters = [];
+            $scope.checkboxChecked = false;
+            $scope.checkboxCheckedSociety = true;
+            
+          }
+        }        
+        console.log($scope.checkboxChecked,$scope.checkboxCheckedSociety);
+        
+      }
+      
       // END
 
     })
