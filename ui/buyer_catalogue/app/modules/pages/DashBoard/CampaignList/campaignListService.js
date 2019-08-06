@@ -27,7 +27,7 @@ function (machadaloHttp, $stateParams, $rootScope, $routeParams, $location, $htt
   campaignListService.sendEmail = function(campaignId,email, emailType){
     var url = url_base + emailType + "/" + campaignId + "/";
     if (email) {
-      url = url + "/?email=" + email;
+      url = url + "?email=" + email;
     }
     return machadaloHttp.get(url);
   }
