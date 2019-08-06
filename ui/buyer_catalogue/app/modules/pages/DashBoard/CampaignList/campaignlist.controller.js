@@ -140,7 +140,7 @@ angular.module('catalogueApp')
           }).catch(function onError(error) {
             $scope.emailBtnDisabled = false;
             cfpLoadingBar.complete();
-            swal(constants.name, 'Error sending email', constants.fail);
+            swal(constants.name, 'Error sending email', constants.error);
           })
       }
 
