@@ -1212,7 +1212,7 @@
             tooltipHide: function (e) { console.log("tooltipHide"); }
           },
           "xAxis": {
-            "axisLabel": "Orders Punched Days",
+            "axisLabel": "Orders Punched Day",
             "showMaxMin": false,
             tickFormat: function(d) { 
               return d },
