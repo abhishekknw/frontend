@@ -162,27 +162,27 @@
                     >{{item.name}}</option>
                   </select>
                   <br>
-                    <select  class="form-control spacing input-width" ng-model="supplier.booking_pending" ng-if="supplier.booking_status=='DP'">
+                    <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-if="supplier.booking_status=='DP'">
                       <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}"
                       ng-if="supplier.booking_pending == undefined ? supplier.booking_pending = booking_pending[0].code : 1">
                         {{item.name}}</option>
                     </select>
-                    <select  class="form-control spacing input-width" ng-model="supplier.booking_rejected" ng-show="$first" ng-if="supplier.booking_status=='SR'">
+                    <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-show="$first" ng-if="supplier.booking_status=='SR'">
                       <option style="width:100%;" ng-repeat="item in booking_rejected" value="{{item.code}}"
                       ng-if="supplier.booking_rejected == undefined ? supplier.booking_rejected = booking_rejected[0].code : 1">
                         {{item.name}}</option>
                     </select>
-                    <select  class="form-control spacing input-width" ng-model="supplier.booking_new_entity"  ng-if="supplier.booking_status=='NE'">
+                    <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status"  ng-if="supplier.booking_status=='NE'">
                       <option style="width:100%;" ng-repeat="item in booking_new_entity" value="{{item.code}}"
                       ng-if="supplier.booking_new_entity == undefined ? supplier.booking_new_entity = booking_new_entity[0].code : 1">
                         {{item.name}}</option>
                     </select>
-                    <select  class="form-control spacing input-width" ng-model="supplier.booking_unknown"  ng-if="supplier.booking_status=='UN'">
+                    <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status"  ng-if="supplier.booking_status=='UN'">
                       <option style="width:100%;" ng-repeat="item in booking_unknown" value="{{item.code}}"
                               ng-if="supplier.booking_unknown == undefined ? supplier.booking_unknown = booking_unknown[0].code : 1">
                         {{item.name}}</option>
                     </select>
-                    <select  class="form-control spacing input-width" ng-model="supplier.booking_tentative"  ng-if="supplier.booking_status=='TB'">
+                    <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status"  ng-if="supplier.booking_status=='TB'">
                       <option style="width:100%;" ng-repeat="item in booking_tentative" value="{{item.code}}"
                               ng-if="supplier.booking_tentative == undefined ? supplier.booking_tentative = booking_tentative[0].code : 1">
                         {{item.name}}</option>
