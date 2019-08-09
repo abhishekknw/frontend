@@ -1736,7 +1736,7 @@
               <div id="ongoing" class="animate-show" ng-show="campaignStatus.ongoing.value">
                   <div class="panel-bodyDashboard camp-menu-content">
                       <table class="table">
-                          <tr ng-repeat="campaign in campaignData.ongoing_campaigns">
+                          <tr ng-repeat="campaign in campaignData.ongoing_campaigns | orderBy: 'name'">
                             <td ng-click="getBookingCampaigns(campaign)">
                               {{campaign.name}}
                             </td>
@@ -1755,7 +1755,7 @@
               <div id="upcoming" class="animate-show" ng-show="campaignStatus.upcoming.value">
                   <div class="panel-bodyDashboard camp-menu-content">
                       <table class="table">
-                          <tr ng-repeat="campaign in campaignData.upcoming_campaigns">
+                          <tr ng-repeat="campaign in campaignData.upcoming_campaigns | orderBy: 'name'">
                             <td ng-click="getBookingCampaigns(campaign)">
                               {{campaign.name}}
                             </td>
@@ -1961,7 +1961,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="supplier in bookingSuppliersData">
+                <tr ng-repeat="supplier in bookingSuppliersData | orderBy: 'society_name'">
                   <td>{{$index + 1}}</td>
                   <td>{{supplier.society_name}}</td>
                   <td>{{supplier.flat_count}}</td>
@@ -2063,7 +2063,7 @@
                                     <div id="completed" class="animate-show" ng-show="campaignStatus.completed.value">
                                         <div class="panel-bodyDashboard camp-menu-content">
                                           <table class="table">
-                                              <tr ng-repeat="campaign in campaignData.completed_campaigns">
+                                              <tr ng-repeat="campaign in campaignData.completed_campaigns | orderBy: 'name'">
                                               <td >
                                                 <!-- <md-menu> -->
                                                    <div class="" ng-click="getLeadsByCampaign(campaign.campaign ,campaign)">
@@ -2103,7 +2103,7 @@
                                       <div id="ongoing" class="animate-show" ng-show="campaignStatus.ongoing.value">
                                           <div class="panel-bodyDashboard camp-menu-content">
                                               <table class="table">
-                                                  <tr ng-repeat="campaign in campaignData.ongoing_campaigns">
+                                                  <tr ng-repeat="campaign in campaignData.ongoing_campaigns | orderBy: 'name'">
                                                   <td>
                                                     <!-- <md-menu> -->
                                                        <div class="" ng-click="getLeadsByCampaign(campaign.campaign ,campaign)">
@@ -2179,7 +2179,7 @@
                                         <div id="onhold" class="animate-show" ng-show="campaignStatus.onhold.value">
                                             <div class="panel-bodyDashboard camp-menu-content">
                                               <table class="table">
-                                                  <tr ng-repeat="campaign in campaignData.onhold_campaigns">
+                                                  <tr ng-repeat="campaign in campaignData.onhold_campaigns | orderBy: 'name'">
                                                   <td >
                                                     <!-- <md-menu> -->
                                                        <div class="" ng-click="getLeadsByCampaign(campaign.campaign ,campaign)">
