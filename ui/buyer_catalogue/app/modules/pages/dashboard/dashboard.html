@@ -3269,9 +3269,32 @@
                             <select class="form-control" ng-model="selectedOrderKey" ng-change="changeCumulativeOrderKey(selectedOrderKey)">
                               <option ng-repeat="key in cumulativeOrderCampaignKeys" value="{{key}}" >{{key}}</option>
                             </select>
-                            <div ng-repeat=" graphData in lineChartForCumulativeOrder track by $index">
-                                <nvd3 options="lineChartGraphCumulativeOrder[$index]" data="graphData"></nvd3>
+                            <div class="col-md-12" ng-repeat=" graphData in lineChartForCumulativeOrder track by $index">
+                              <div class="col-md-6 cumulativeChart">
+                                  <nvd3 options="lineChartGraphCumulativeOrder[$index]" data="graphData"></nvd3>
+                              </div>
+                                <div class="col-md-6 cumulativeChart">
+                                    <table class="table table-responsive table-bordered">
+                                      <thead>
+                                        <tr>
+                                          <th>Index</th>
+                                          <th ng-repeat="data in cumulativeTableData[$index]">{{data.key}}</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        
+                                        <tr>
+                                         <td> Count(percentage%)</td>
+                                          <td ng-repeat="data in cumulativeTableData[$index]">{{data.sum}}({{data.perct}}%)</td>
+                                        
+                                      </tr>
+                                      </tbody>
+                                    </table>
+                                    <!-- <nvd3 options="lineChartGraphCumulativeOrder[$index]" data="graphData"></nvd3> -->
+                                </div>
+                                
                             </div>
+                            
                             
                             
                           </div>

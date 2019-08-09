@@ -5048,6 +5048,7 @@
         var final_data = [];
         var values1 = [];        
         $scope.lineChartGraphCumulativeOrder = [];
+        $scope.cumulativeTableData = [];
         if($scope.selectedOrderKey == 'ALL'){
           var allKeys = angular.copy($scope.cumulativeOrderCampaignKeys);
           allKeys.splice(allKeys.indexOf('ALL'),1);
@@ -5060,15 +5061,18 @@
             chart.chart.yAxis.axisLabel = "Cumulative Orders Punched (%)" + "(100% =" +
              data[key].sumValues.reduce((a,b)=>a+b) + " Orders Punched)";
             
+            createNumberSet(data[key].dates, data[key].sumValues,
+              data[key].values, key);
             $scope.lineChartGraphCumulativeOrder.push(chart);
             var index = 0;
             // values1.push({
             //   x: 0, y: 0 
             // })
             // index++;
+            
             angular.forEach(data[key].values, function(item){
               values1.push({
-                x: data[key].dates[index], y: item 
+                x: data[key].dates[index], y: item
               })
               index++;
             })
@@ -5091,8 +5095,12 @@
         //   x: 0, y: 0 
         // })
         // index++;
+        console.log(data[$scope.selectedOrderKey].dates);
+        
+        createNumberSet(data[$scope.selectedOrderKey].dates, data[$scope.selectedOrderKey].sumValues,
+          data[$scope.selectedOrderKey].values, $scope.selectedOrderKey);
+        
         angular.forEach(data[$scope.selectedOrderKey].values, function(item){
-          console.log(data[$scope.selectedOrderKey].dates[index-1]);
           
           values1.push({
             x: data[$scope.selectedOrderKey].dates[index], y: item 
@@ -5422,7 +5430,6 @@
         })
       }
       $scope.getOverallSummaryData = function(item){
-        console.log(item);
         
         var total = 0
         angular.forEach($scope.campaignOverallSummary, function(data){
@@ -5431,7 +5438,6 @@
         if(['flatCount','totalLeads','hotLeads'].indexOf(item) > -1){
           return total;
         }
-        console.log(total);
         
         return (total/$scope.campaignOverallSummary.length).toFixed(2);  
       }
@@ -5478,6 +5484,33 @@
         }        
         console.log($scope.checkboxChecked,$scope.checkboxCheckedSociety);
         
+      }
+      var createNumberSet = function(dates, values, pValues, name){
+        var maxDateValue = Math.max(...dates);
+        var n = Math.round(maxDateValue/10);
+        if(n<=1){
+          n=2;
+        }
+        var sum = 0;
+        var perct;
+        var l = [];
+        for(var i=0; i<maxDateValue; i=i+n){
+          var data = {}
+          data['key'] = i + "-" + (i + (n - 1));          
+          data['perct'] = perct;
+          angular.forEach(dates, function(date, index){
+            console.log(index,date);            
+            if(date >= i && date <= (i + n-1)){              
+              sum += values[index];
+              data['perct'] = pValues[index];
+              perct = pValues[index];
+
+            }
+          })
+          data['sum'] = sum;
+          l.push(data);                    
+        }
+        $scope.cumulativeTableData.push(l);
       }
       
       // END

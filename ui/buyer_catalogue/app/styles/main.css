@@ -117,3 +117,7 @@ input[type="radio"]{
 .labels{
 	margin-left: 55px;
 }
+
+.cumulativeChart{
+  overflow: auto
+}
