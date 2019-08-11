@@ -2962,39 +2962,10 @@
 
                         </small>
 
-                        <!-- <br /><br /> <br />
-                      <div class="row" style="color:#808080;">
-                        <label>Start Date :  </label>
-                        <span>
-                          <input type="date" ng-model="graphSelection.dateRange.startDate">
-                        </span>
-                        </div>
-                        <br />
-                        <div class="row" style="color:#808080;">
-                        <label>  End Date :</label>
-                        <span>
-                          <input type="date" ng-model="graphSelection.dateRange.endDate">
-                        </span>
-                      </div>
-                      <br /> -->
                       </div>
                       </div>
                       <br />
-                      <!-- <div class="panel panel-danger">
-                      <div class="panel-heading"  style="background:#cb1925">Select Campaign</div>
-                      <div class="panel-body">
-                        <div class="row">
-                          <div class="col-md-6" style="color:#808080;"  ng-if="applyClickedFilters.value || selectedTypeOfSocieties.length || selectedSizeOfFlats.length || selectedCities_temp.length
-                           || selectedbookingParameters.length || graphSelection.dateRange.startDate || graphSelection.phaseRange.start || graphSelection.dateRange.endDate || selectedVendors.length">
-                            <br /><br />
-                            <div class="row">
-                               <span class="multiselectParentDropdown" style="color:red;width:100%;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
-                               selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
-                            </div>
-                          </div>
-                        </div>
-                        </div>
-                      </div> -->
+                  
                   </div>
                   <div class="col-md-4" style="color:#808080;">
                     <div class="panel panel-danger">
@@ -3130,36 +3101,9 @@
                   </div>
 
 
-                  <!-- <div class="panel panel-danger">
-                     <div class="panel-heading">Filter By Vendors</div>
-                     <div class="panel-body">
-                       <br /><br />
-                       <div class="row">
-                         <input type="radio" value="vendor" ng-model="dynamicData.data_scope['1'].level"
-                               ng-click="getLevelValues(dynamicData.data_scope['1'].level)" style="color:#000;">Vendors
-                         <h3>Select Vendor</h3>
-                       <div class="col-md-6 pull-left" ng-if="graphSelection.category == 'vendor'">
-                           <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="vendorsList" class="col-md-6"  extra-settings="settingsForDynamicGraphVendor"
-                           selected-model="selectedVendors" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
-                         </div>
-                       </div>
-                   </div>
-                   </div> -->
-                   <!-- <div class="panel panel-danger">
-                   <div class="panel-heading">Filter By Camapigns</div>
-                   <div class="panel-body">
-                   </div>
-                   </div> -->
+                  
                    <br /><br />  <br /><br /> <br />
-                   <!-- <div class="row">
-                     <div class="col-md-6" style="color:#808080;"  ng-if="applyClickedFilters.value || selectedTypeOfSocieties.length || selectedSizeOfFlats.length || selectedCities_temp.length || selectedbookingParameters.length || graphSelection.dateRange.startDate || graphSelection.phaseRange.start || graphSelection.dateRange.endDate || selectedVendors.length">
-                       <p style="color:#808080;">Select Campaign :</p>
-                       <div class="row">
-                          <span class="multiselectParentDropdown" style="color:red;width:100%;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
-                          selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
-                       </div>
-                     </div>
-                   </div> -->
+                  
                    <br /><br />
                    <div class="row">
                      <div class="form-group">
@@ -3176,28 +3120,7 @@
                  </div>
                 <div class="col-md-12" style="margin-top:20px;">
                     <div class="col-md-12">
-                      <!-- <div class="panel-heading content-title">
-                        <div class="col-md-4" ng-if="graphSelection.dateRange">
-                        <div class="col-md-8">
-                            <p style="color:#fff">From : {{graphSelection.dateRange.startDate | date : 'mediumDate'}}</p>
-                            <br />
-                            <p style="color:#fff">To : {{graphSelection.dateRange.endDate | date : 'mediumDate'}}</p>
-                          </div>
-                        </div>
-                        <div class="col-md-4" ng-if="graphSelection.phaseRange">
-                        <div class="col-md-8">
-                            <p style="color:#fff">From : {{graphSelection.dateRange.startDate | date : 'mediumDate'}}</p>
-                            <br />
-                            <p style="color:#fff">To : {{graphSelection.dateRange.endDate | date : 'mediumDate'}}</p>
-                          </div>
-                        </div>
-                        <div class="col-md-4">
-
-                        </div>
-                        <div class="col-md-4">
-
-                        </div>
-                      </div> -->
+                      
                       <div class="panel-heading content-title" style="height:70px;">
                         Graph Based On Filters
                         <div class="row">
@@ -3226,22 +3149,6 @@
                              <input type="checkbox" style="width:20px;height:20px;" value="hotleadsValues" ng-model="graphSelection.Yvalues.conversionPerc" ng-click="changeDynamicGraph()"> <small> Order Punched %</small>
                            </div>
                          </div>
-                        <!-- <div class="col-md-4">
-                         </div> -->
-                         <!-- <div class="col-md-4">
-                           <input type="checkbox" value="costleads" ng-model="graphSelection.Yvalues.costPerLeads" ng-click="changeDynamicGraph()"><small> COST PER LEADS</small>
-                           <br />
-                           <input type="checkbox" value="costhotleads" ng-model="graphSelection.Yvalues.costPerHotLeads" ng-click="changeDynamicGraph()"><small> COST PER HOT LEADS</small>
-                           <br />
-                           <input type="checkbox" value="costFixedMeeting" ng-model="graphSelection.Yvalues.costPerMeetingFixed" ng-click="changeDynamicGraph()">
-                           <small> COST PER MEETING FIXED</small>
-                           <br />
-                           <input type="checkbox" value="costCompletedMeeting" ng-model="graphSelection.Yvalues.costPerMeetingCompleted" ng-click="changeDynamicGraph()">
-                           <small> COST PER MEETING COMPLETED</small>
-                           <br />
-                           <input type="checkbox" value="costConversion" ng-model="graphSelection.Yvalues.costPerConversion" ng-click="changeDynamicGraph()">
-                           <small> COST PER CONVERSION</small>
-                         </div> -->
                        </div>
                        <br />
                        <br />
@@ -3264,35 +3171,63 @@
                            <div class="dynamicInnerGraphs">
                             <nvd3 options="stackedBarChartForDynamic" data="stackedBarChartDynamicData" ng-if="!dynamicGraphSelectedOrder.value"></nvd3>
                             <nvd3 options="dynamicSortedGraphOptions" data="dynamicSortedGraphData" ng-if="dynamicGraphSelectedOrder.value"></nvd3>
+                            <div class="panel-heading content-title" ng-if="!showCumulativeSummaryGraphs">
+                                <label for="Location">Cumulative Summary Graph</label>
+                              </div>
+                            <nvd3 options="stackedBarChartForDynamicSummary" data="stackedBarChartDynamicDataSummary" ng-if="!showCumulativeSummaryGraphs"></nvd3>
                           </div>
                           <div class="dynamicInnerGraphs" style="height:500px;" ng-if="cumulativeOrder">
                             <select class="form-control" ng-model="selectedOrderKey" ng-change="changeCumulativeOrderKey(selectedOrderKey)">
                               <option ng-repeat="key in cumulativeOrderCampaignKeys" value="{{key}}" >{{key}}</option>
                             </select>
                             <div class="col-md-12" ng-repeat=" graphData in lineChartForCumulativeOrder track by $index">
-                              <div class="col-md-6 cumulativeChart">
+                              <div class="col-md-8 cumulativeChart">
                                   <nvd3 options="lineChartGraphCumulativeOrder[$index]" data="graphData"></nvd3>
                               </div>
-                                <div class="col-md-6 cumulativeChart">
+                                <div class="col-md-4 cumulativeChart">
                                     <table class="table table-responsive table-bordered">
                                       <thead>
                                         <tr>
-                                          <th>Index</th>
-                                          <th ng-repeat="data in cumulativeTableData[$index]">{{data.key}}</th>
+                                          <th>Days</th>
+                                          <th> Count</th>
+                                          <th>Percentage %</th>
                                         </tr>
-                                      </thead>
-                                      <tbody>
-                                        
-                                        <tr>
-                                         <td> Count(percentage%)</td>
-                                          <td ng-repeat="data in cumulativeTableData[$index]">{{data.sum}}({{data.perct}}%)</td>
-                                        
-                                      </tr>
-                                      </tbody>
-                                    </table>
-                                    <!-- <nvd3 options="lineChartGraphCumulativeOrder[$index]" data="graphData"></nvd3> -->
+                                        <tr ng-repeat="data in cumulativeTableData[$index]">
+                                          <th>{{data.key}}</th>
+                                          <td>{{data.sum}}</td>
+                                          <td>{{data.perct}}</td>
+                                        </tr>
+                                      </thead>                                      
+                                    </table>                                    
                                 </div>
                                 
+                            </div>
+                            <div class="col-md-12" ng-repeat="graphData1 in cumulativeLineChartOrderSummary track by $index" 
+                                ng-if="!showCumulativeSummaryGraphs">
+                                <div class="panel-heading content-title" ng-if="$index == 0">
+                                    <label for="Location">Cumulative Summary Graph</label>
+                                  </div>
+                                
+                              {{graphData1}}
+                              <div class="col-md-8 cumulativeChart">
+                                <nvd3 options="lineChartGraphCumulativeOrderSummary[$index]" data="graphData1"></nvd3>
+                              </div>
+                              <div class="col-md-4 cumulativeChart">
+                                <table class="table table-responsive table-bordered">
+                                  <thead>
+                                    <tr>
+                                      <th>Days</th>
+                                      <th> Count</th>
+                                      <th>Percentage %</th>
+                                    </tr>
+                                    <tr ng-repeat="data in cumulativeTableDataSummary[$index]">
+                                      <th>{{data.key}}</th>
+                                      <td>{{data.sum}}</td>
+                                      <td>{{data.perct}}</td>
+                                    </tr>
+                                  </thead>
+                                </table>
+                            </div>
                             </div>
                             
                             
