@@ -121,3 +121,7 @@ input[type="radio"]{
 .cumulativeChart{
   overflow: auto
 }
+
+.cumulativeGraphTable{
+  width: fit-content;
+}
