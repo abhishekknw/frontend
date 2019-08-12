@@ -129,6 +129,8 @@ angular.module('catalogueApp')
           emailType = 'send-pipeline-details';
         } else if ($scope.emailModel.selected === 'prehype') {
           emailType = 'send-pre-hype-mails';
+        } else if ($scope.emailModel.selected === 'recce') {
+          emailType = 'send-recce-mails';
         }
         campaignListService.sendEmail(proposalId, email, emailType)
           .then(function onSuccess() {
