@@ -58,7 +58,6 @@
     }
 
     releaseCampaignService.getSociety = function (id,supplierTypeCode) {
-      console.log(id);
        var url = url_base_societyDetails + "supplier/" + id + "/image_details/?supplierTypeCode=" + supplierTypeCode;;
        return machadaloHttp.get(url);
     };
@@ -152,6 +151,11 @@
       })      
       
       return machadaloHttp.get(url);
+    }
+
+    releaseCampaignService.getSuppliersOfCampaignWithStatus = function(data){
+      var url = url_base_ui + "analytics/get-leads-data-generic/";
+      return machadaloHttp.put(url,data);
     }
 
 

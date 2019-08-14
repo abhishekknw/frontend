@@ -14,6 +14,7 @@ import * as userProfileReducer from './userProfile';
 import * as leadReducer from './lead';
 import * as bookingReducer from './booking';
 import * as phaseReducer from './phase';
+import * as locationReducer from './location';
 import { reducer as toastrReducer } from 'react-redux-toastr';
 
 const reducers = combineReducers(
@@ -35,7 +36,8 @@ const reducers = combineReducers(
     userProfileReducer,
     leadReducer,
     bookingReducer,
-    phaseReducer
+    phaseReducer,
+    locationReducer
   )
 );
 

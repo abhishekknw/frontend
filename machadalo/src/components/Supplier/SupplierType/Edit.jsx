@@ -37,10 +37,10 @@ const additional_attributes_dict = {
   location_details: [
     { name: 'Address', type: 'STRING', is_required: true },
     { name: 'Landmark', type: 'STRING', is_required: true },
-    { name: 'Area', type: 'STRING', is_required: true },
-    { name: 'Sub Area', type: 'STRING', is_required: true },
-    { name: 'City', type: 'STRING', is_required: true },
-    { name: 'State', type: 'STRING', is_required: true },
+    { name: 'Area', type: 'DROPDOWN', is_required: true, options: [] },
+    { name: 'Sub Area', type: 'DROPDOWN', is_required: true, options: [] },
+    { name: 'City', type: 'DROPDOWN', is_required: true, options: [] },
+    { name: 'State', type: 'DROPDOWN', is_required: true, options: [] },
     { name: 'Pincode', type: 'STRING', is_required: true },
     { name: 'Latitude', type: 'STRING', is_required: true },
     { name: 'Longitude', type: 'STRING', is_required: true },
@@ -627,16 +627,16 @@ export default class CreateType extends React.Component {
 
   render() {
     const { baseInventory } = this.props;
-    const {
-      isEditMode,
-      inventory_list,
-      additionalAttributesList,
-      supplier_attributes,
-    } = this.state;
+    const { isEditMode, inventory_list, supplier_attributes, additional_attributes } = this.state;
 
     const usedInventoryIds = inventory_list.map((item) => item._id);
     const inventoryList = baseInventory.inventoryList.filter(
       (item) => usedInventoryIds.indexOf(item._id) === -1
+    );
+
+    const additionalAttributesNames = Object.keys(additional_attributes);
+    const additionalAttributesList = this.state.additionalAttributesList.filter(
+      (item) => additionalAttributesNames.indexOf(item.value) === -1
     );
 
     return (

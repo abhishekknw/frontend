@@ -256,7 +256,12 @@
     }
     DashboardService.getCityUsers = function(){
         var url =  url_root + "campaign/user-cities/";
-      return machadaloHttp.get(url);
+        return machadaloHttp.get(url);
+    }
+
+    DashboardService.downloadSheet = function(formId){
+        var url =  url_root + "leads/" + formId + "/generate_lead_data_excel";
+        return machadaloHttp.get(url);
     }
     return DashboardService;
 

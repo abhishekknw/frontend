@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import './index.css';
+import Pagination from '../Pagination';
 
 export default class Campaigns extends React.Component {
   constructor() {
@@ -10,10 +11,14 @@ export default class Campaigns extends React.Component {
 
     this.state = {
       searchFilter: '',
+      pageSize: 10,
+      currentPage: 1,
     };
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
     this.getFilteredList = this.getFilteredList.bind(this);
+    this.paginate = this.paginate.bind(this);
     this.renderCampaignRow = this.renderCampaignRow.bind(this);
   }
 
@@ -24,6 +29,19 @@ export default class Campaigns extends React.Component {
   onSearchFilterChange(event) {
     this.setState({
       searchFilter: event.target.value,
+      currentPage: 1,
+    });
+  }
+
+  paginate(list, currentPage, pageSize) {
+    const indexOfLastItem = currentPage * pageSize;
+    const indexOfFirstItem = indexOfLastItem - pageSize;
+    return list.slice(indexOfFirstItem, indexOfLastItem);
+  }
+
+  handlePageChange(page) {
+    this.setState({
+      currentPage: page.selected + 1,
     });
   }
 
@@ -79,9 +97,10 @@ export default class Campaigns extends React.Component {
   }
 
   render() {
-    const { searchFilter } = this.state;
+    const { searchFilter, pageSize, currentPage } = this.state;
     const { campaign, actions } = this.props;
-    const list = this.getFilteredList(campaign.list);
+    const filteredList = this.getFilteredList(campaign.list);
+    const list = this.paginate(filteredList, currentPage, pageSize);
 
     return (
       <div className="campaign">
@@ -115,6 +134,13 @@ export default class Campaigns extends React.Component {
               </thead>
               <tbody>{list.map(this.renderCampaignRow)}</tbody>
             </table>
+          </div>
+          <div className="list__footer">
+            <Pagination
+              pageSize={pageSize}
+              totalItems={filteredList.length}
+              handlePageClick={this.handlePageChange}
+            />
           </div>
         </div>
       </div>
