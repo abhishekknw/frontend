@@ -1,8 +1,9 @@
 angular.module('catalogueApp')
 
-.controller('CampaignListCtrl', ['$scope', '$rootScope', '$window', '$location','commonDataShare','constants','campaignListService',
-    function ($scope, $rootScope, $window, $location , commonDataShare,constants,campaignListService) {
+.controller('CampaignListCtrl', ['$scope', '$rootScope', '$window', '$location','commonDataShare','constants','campaignListService', 'cfpLoadingBar',
+    function ($scope, $rootScope, $window, $location , commonDataShare,constants,campaignListService, cfpLoadingBar) {
 
+      $scope.emailModel = {};
       $scope.campaignHeadings = [
         {header : 'Sr No'},
         {header : 'Campaign Name'},
@@ -46,12 +47,9 @@ angular.module('catalogueApp')
           $scope.Data = [];
           campaignListService.getCampaignDetails(assigned_by,userId,fetch_all)
             .then(function onSuccess(response){
-              console.log(response);
               $scope.campaignData = response.data.data;
               $scope.Data = $scope.campaignData;
               $scope.loading = response.data.data;
-
-              console.log($scope.Data);
               if($scope.campaignData.length == 0){
                 $scope.isEmpty = true;
                 $scope.msg = constants.emptyCampaignList;
@@ -115,5 +113,50 @@ angular.module('catalogueApp')
           })
         }
 
+      $scope.sendBookingEmails = function (proposalId, type) {
+        $scope.emailBtnDisabled = true;
+        cfpLoadingBar.start();
+        var email = undefined;
+        var emailType = undefined;
+        if (!type){
+          email = $scope.emailModel.email
+        }
+        if ($scope.emailModel.selected === 'listOfSupplier') {
+          emailType = 'send-booking-details'
+        } else if ($scope.emailModel.selected === 'activationOfSupplier') {
+          emailType = 'send-advanced-booking-details';
+        } else if ($scope.emailModel.selected === 'pipelineOfSupplier') {
+          emailType = 'send-pipeline-details';
+        } else if ($scope.emailModel.selected === 'prehype') {
+          emailType = 'send-pre-hype-mails';
+        } else if ($scope.emailModel.selected === 'recce') {
+          emailType = 'send-recce-mails';
+        }
+        campaignListService.sendEmail(proposalId, email, emailType)
+          .then(function onSuccess() {
+            $scope.emailModel = {};
+            $scope.emailBtnDisabled = false;
+            cfpLoadingBar.complete();
+            swal(constants.name, constants.email_success, constants.success);
+            $('#sendEmailModal').modal('hide');
+          }).catch(function onError(error) {
+            $scope.emailBtnDisabled = false;
+            cfpLoadingBar.complete();
+            swal(constants.name, 'Error sending email', constants.error);
+          })
+      }
+
+      // Disable email button if user not entered
+      $scope.isEmailButton = false;
+      $scope.disableTestEmailButton = function () {
+        if (!$scope.emailModel.email){
+          $scope.isEmailButton = true;
+        }
+      }
+
+      // Set proposal detail in scope
+      $scope.getProposalDetails = function(proposal){
+        $scope.proposalDetail = proposal;
+      }
 
     }]);

@@ -1212,7 +1212,7 @@
             tooltipHide: function (e) { console.log("tooltipHide"); }
           },
           "xAxis": {
-            "axisLabel": "Orders Punched Days",
+            "axisLabel": "Orders Punched Day",
             "showMaxMin": false,
             tickFormat: function(d) { 
               return d },
@@ -4955,6 +4955,7 @@
                 angular.forEach($scope.initialDynamicGraphData.lower_group_data, function (data) {
                   $scope.initalDynamicTableData = data;
                 })
+                setCampaignOverallSummary($scope.initialDynamicGraphData.lower_group_data);
                 if ($scope.initialDynamicGraphData.lower_group_data.length > 4) {
                   $scope.stackedBarChartForDynamic.chart['width'] = $scope.initialDynamicGraphData.lower_group_data.length * 300;
                 }
@@ -4964,6 +4965,7 @@
                 angular.forEach($scope.initialDynamicGraphData.higher_group_data, function (data) {
                   $scope.initalDynamicTableData = data;
                 })
+                setCampaignOverallSummary($scope.initialDynamicGraphData.higher_group_data);
                 if ($scope.initialDynamicGraphData.higher_group_data.length > 4) {
                   $scope.stackedBarChartForDynamic.chart['width'] = $scope.initialDynamicGraphData.lower_group_data.length * 300;
                 }
@@ -4980,6 +4982,59 @@
             
         }
       }
+      var setCampaignOverallSummary = function(data){
+        $scope.campaignOverallSummary = [];
+        var campaign_data = {};
+        console.log(data);
+        // campaign_data[campaign.campaign]['Name'] = campaign.campaign_name;
+        
+        angular.forEach(data , function(campaign){
+          if (!campaign_data.hasOwnProperty(campaign.campaign)){
+            campaign_data[campaign.campaign] = {}
+            campaign_data[campaign.campaign]['flatCount'] = 0;
+            campaign_data[campaign.campaign]['totalLeads'] = 0;
+            campaign_data[campaign.campaign]['hotLeads'] = 0;
+            campaign_data[campaign.campaign]['costPerLeads'] = 0;
+            campaign_data[campaign.campaign]['costPerHotLeads'] = 0;
+            campaign_data[campaign.campaign]['leadsPerc'] = 0;
+            campaign_data[campaign.campaign]['hotLeadsPerc'] = 0;
+            campaign_data[campaign.campaign]['costPerBookingConfirmed'] = 0;
+            campaign_data[campaign.campaign]['costPerOrdersPunched'] = 0;
+            campaign_data[campaign.campaign]['bookingConfirmedPerc'] = 0;
+            campaign_data[campaign.campaign]['ordersPunchedPerc'] = 0;
+            campaign_data[campaign.campaign]['count'] = 0;
+          }
+          campaign_data[campaign.campaign]['name'] = campaign.campaign_name;
+          campaign_data[campaign.campaign]['flatCount'] += campaign.flat;
+          campaign_data[campaign.campaign]['totalLeads'] += campaign.lead;
+          campaign_data[campaign.campaign]['hotLeads'] += campaign.hot_lead;
+          campaign_data[campaign.campaign]['costPerLeads'] += campaign['flat*cost_flat/lead'];
+          campaign_data[campaign.campaign]['costPerHotLeads'] += campaign['flat*cost_flat/hot_lead'];
+          campaign_data[campaign.campaign]['leadsPerc'] += campaign['lead/flat*100'];
+          campaign_data[campaign.campaign]['hotLeadsPerc'] += campaign['hot_lead/flat*100'];
+          campaign_data[campaign.campaign]['costPerBookingConfirmed'] += campaign['flat*cost_flat/total_booking_confirmed'];
+          campaign_data[campaign.campaign]['costPerOrdersPunched'] += campaign['flat*cost_flat/total_orders_punched'];
+          campaign_data[campaign.campaign]['bookingConfirmedPerc'] += campaign['total_booking_confirmed/flat*100'];
+          campaign_data[campaign.campaign]['ordersPunchedPerc'] += campaign['total_orders_punched/flat*100'];
+          campaign_data[campaign.campaign]['count'] += campaign_data[campaign.campaign]['count'] + 1;
+
+        })
+        angular.forEach(campaign_data, function(data){
+          data['costPerLeads'] = (data['costPerLeads']/data['count']).toFixed(2);
+          data['costPerHotLeads'] = (data['costPerHotLeads']/data['count']).toFixed(2);
+          data['leadsPerc'] = (data['leadsPerc']/data['count']).toFixed(2);
+          data['hotLeadsPerc'] = (data['hotLeadsPerc']/data['count']).toFixed(2);
+          data['costPerBookingConfirmed'] = (data['costPerBookingConfirmed']/data['count']).toFixed(2);
+          data['costPerOrdersPunched'] = (data['costPerOrdersPunched']/data['count']).toFixed(2);
+          data['bookingConfirmedPerc'] = (data['bookingConfirmedPerc']/data['count']).toFixed(2);
+          data['ordersPunchedPerc'] = (data['ordersPunchedPerc']/data['count']).toFixed(2);
+          data['ratio'] = (data['hotLeads']/data['totalLeads']*100).toFixed(2);
+        })
+        
+        $scope.campaignOverallSummary = Object.values(campaign_data);
+        console.log($scope.campaignOverallSummary);
+      }      
+      
       $scope.changeCumulativeOrderKey = function(key){
         $scope.selectedOrderKey = key;
         $scope.lineChartForCumulativeOrder = formatLineChartForCumulativeOrderGraph($scope.cumulativeOrderCampaignsNamesById);
@@ -5003,7 +5058,7 @@
             chart.chart.xAxis.axisLabel = "Orders Punched Days" + "(" +
                       key + ")";
             chart.chart.yAxis.axisLabel = "Cumulative Orders Punched (%)" + "(100% =" +
-             Math.max(...data[key].sumValues) + " Orders Punched)";
+             data[key].sumValues.reduce((a,b)=>a+b) + " Orders Punched)";
             
             $scope.lineChartGraphCumulativeOrder.push(chart);
             var index = 0;
@@ -5029,7 +5084,7 @@
         }else{
         var chart = angular.copy(lineChartCumulativeOrder);
         chart.chart.yAxis.axisLabel = "Cumulative Orders Punched (%)" + "(100% =" +
-             Math.max(...data[$scope.selectedOrderKey].sumValues) + " Orders Punched)";
+        data[$scope.selectedOrderKey].sumValues.reduce((a,b)=>a+b) + " Orders Punched)";
         $scope.lineChartGraphCumulativeOrder.push(chart);
         var index = 0;
         // values1.push({
@@ -5367,14 +5422,18 @@
         })
       }
       $scope.getOverallSummaryData = function(item){
+        console.log(item);
+        
         var total = 0
-        angular.forEach($scope.campaignFilteredSummaryData, function(data){
-          total+= data[item];
+        angular.forEach($scope.campaignOverallSummary, function(data){
+          total+= parseFloat(data[item]);
         })      
-        if(['flat','lead','hot_lead'].indexOf(item) > -1){
+        if(['flatCount','totalLeads','hotLeads'].indexOf(item) > -1){
           return total;
         }
-        return (total/Object.keys($scope.campaignFilteredSummaryData).length).toFixed(2);  
+        console.log(total);
+        
+        return (total/$scope.campaignOverallSummary.length).toFixed(2);  
       }
 
       $scope.getCampaign = function (proposalId) {
@@ -5389,7 +5448,38 @@
         data.supplier_ids.push(supplier_id);
         DashboardService.deleteLeads(data)
       }
-
+      
+      $scope.societyParamsCheck = function(item,status){
+        console.log(item,status);
+        if(item === 'society'){
+          if(status){
+            $scope.selectedbookingParameters = [];
+            $scope.checkboxChecked = false;
+            $scope.checkboxCheckedSociety = true;
+          }else{
+            $scope.selectedTypeOfSocieties = [];
+            $scope.selectedSizeOfFlats = [];
+            $scope.checkboxChecked = true;
+            $scope.checkboxCheckedSociety = false;
+          }
+        }
+        if(item === 'booking'){
+          if(status){
+            $scope.selectedTypeOfSocieties = [];
+            $scope.selectedSizeOfFlats = [];
+            $scope.checkboxChecked = true;
+            $scope.checkboxCheckedSociety = false;
+          }else{
+            $scope.selectedbookingParameters = [];
+            $scope.checkboxChecked = false;
+            $scope.checkboxCheckedSociety = true;
+            
+          }
+        }        
+        console.log($scope.checkboxChecked,$scope.checkboxCheckedSociety);
+        
+      }
+      
       // END
 
     })

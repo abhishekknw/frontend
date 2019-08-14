@@ -23,5 +23,18 @@ function (machadaloHttp, $stateParams, $rootScope, $routeParams, $location, $htt
     var url = base_url + "leads/generate-campaign-hash/" + campaignId + "/";
       return machadaloHttp.get(url);
   }
+
+  campaignListService.sendEmail = function(campaignId,email, emailType){
+    var url = url_base + emailType + "/" + campaignId + "/";
+    if (email) {
+      url = url + "?email=" + email;
+    }
+    return machadaloHttp.get(url);
+  }
+
+  campaignListService.getCampaignWiseSummary = function(){
+    var url = url_root  + "campaign/campaign-wise-summary/";
+    return machadaloHttp.get(url);
+  }
   return campaignListService;
 }]);

@@ -117,7 +117,6 @@ th {
 
 
 .campaignlisttable table tfoot tr td {
-  background: #d9534f;
   color: #ffffff !important;
   font-size: 14px;
   font-weight: 700;
@@ -139,4 +138,23 @@ th {
 
 .campaignStatus::first-letter{
   text-transform: capitalize !important;
+}
+
+.email-button{
+  color: white;
+  background-color: rgb(115, 123, 171);
+  width: 100%;
+  height: 34px;
+}
+
+.email-button:hover{
+  background-color: rgb(88, 97, 148);
+  color: white;
+}
+
+.email-row {
+  background: #f1f1f1c9;
+  padding: 1em;
+  border-radius: 5px;
+  margin-bottom: 12px;
 }
