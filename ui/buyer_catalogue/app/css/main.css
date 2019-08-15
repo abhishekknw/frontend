@@ -592,7 +592,10 @@ color: #ffffff !important;
 }
 
 
-.campaigndetailtable {}
+.campaigndetailtable .table-responsive {
+  max-height: 500px;
+  overflow-y: auto;
+}
 
 .campaigndetailtable table {
   width: auto;
