@@ -2359,6 +2359,21 @@
 
                                       </tr>
 
+                                      <tr>
+                                        <td><small style="font-weight:bold">Total Booking Confirmed</small></td>
+                                        <td>{{Data.overall_data.is_hot_level_3 || 'NA'}}</td>
+                                        <td>{{Data.last_week.is_hot_level_3 || 'NA'}}</td>
+                                        <td>{{Data.last_two_weeks.is_hot_level_3 || 'NA'}}</td>
+                                        <td>{{Data.last_three_weeks.is_hot_level_3 || 'NA'}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td><small style="font-weight:bold">Total Orders Punched</small></td>
+                                        <td>{{Data.overall_data.is_hot_level_4 || 'NA'}}</td>
+                                        <td>{{Data.last_week.is_hot_level_4 || 'NA'}}</td>
+                                        <td>{{Data.last_two_weeks.is_hot_level_4 || 'NA'}}</td>
+                                        <td>{{Data.last_three_weeks.is_hot_level_4 || 'NA'}}</td>
+                                        </tr>
+
 
                                     </tbody>
                                   </table>
@@ -2626,6 +2641,21 @@
                                         <td>{{Data.flat_data['151-399'].hot_leads_percentage |limitTo:4}} %</td>
                                         <td>{{Data.flat_data['400+'].hot_leads_percentage |limitTo:4}} %</td>
                                       </tr>
+                                      <tr>
+                                        <td><small style="font-weight:bold">Total Bookings Confirmed</small></td>
+                                        <td>{{campaignLeadsData.overall_data.is_hot_level_3}}</td>
+                                        <td>{{Data.flat_data['0-150'].is_hot_level_3}} </td>
+                                        <td>{{Data.flat_data['151-399'].is_hot_level_3}} </td>
+                                        <td>{{Data.flat_data['400+'].is_hot_level_3}} </td>
+                                      </tr>
+                                      <tr>
+                                        <td><small style="font-weight:bold">Total Orders Punched</small></td>
+                                        <td>{{campaignLeadsData.overall_data.is_hot_level_4}}</td>
+                                        <td>{{Data.flat_data['0-150'].is_hot_level_4}} </td>
+                                        <td>{{Data.flat_data['151-399'].is_hot_level_4}} </td>
+                                        <td>{{Data.flat_data['400+'].is_hot_level_4}} </td>
+                                      </tr>
+
                                     </tbody>
                                   </table>
                                 </div>
@@ -2678,6 +2708,8 @@
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>(%)</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads <br> (%)</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads Ratio <br> (%)</th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">Total Bookings Confirmed</th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">Total Orders Punched</th>
                                       </tr>
                                 </thead>
                                   <tbody style="text-align:center;">
@@ -2692,6 +2724,8 @@
                                       <td ng-if="data['flat_count'] == 0">{{data.interested}} <br> <small style="font-weight:bold">({{data.interested }} %)</small></td>
 
                                       <td>{{data.hot_leads_percentage |limitTo:4}} %</td>
+                                      <td>{{data.is_hot_level_3}}</td>
+                                      <td>{{data.is_hot_level_4}}</td>
                                     </tr>
                                   </tbody>
                                 </table>
