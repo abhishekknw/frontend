@@ -1371,8 +1371,6 @@ $scope.multiSelect =
           supplier['leads_data'] = allSuppliersById[supplier.supplier_id];
         })
       }
-      console.log($scope.releaseDetails.shortlisted_suppliers);
-      
     }
 
 
