@@ -263,7 +263,7 @@
                     <span ng-if="(userInfo.profile.organisation.name.toUpperCase() != standardOrganisation.toUpperCase())">{{userInfo.profile.organisation.name}}</span>
                     <select ng-if="(userInfo.profile.organisation.name == standardOrganisation) || userInfo.is_superuser" class="form-control" ng-model="model.organisation"
                             ng-change="getProfiles(model.organisation);">
-                      <option ng-repeat="organisation in organisationList" value="{{organisation.organisation_id}}">{{organisation.name}}</option>
+                      <option ng-repeat="organisation in organisationList | orderBy: 'name'" value="{{organisation.organisation_id}}">{{organisation.name}}</option>
                     </select>
                 </div>
 
@@ -281,7 +281,7 @@
                       </li> -->
 
                   <select class="form-control" ng-model="model.profile">
-                    <option ng-repeat="profile in profilesList" value="{{profile.id}}" >{{profile.name}}</option>
+                    <option ng-repeat="profile in profilesList | orderBy: 'name'" value="{{profile.id}}" >{{profile.name}}</option>
                   </select>
                 </div>
 
@@ -368,7 +368,7 @@
                      <div class = "col-md-1"><label><b>Delete</b>  </label></div>
                      <div class = "col-md-1"><label><b>Change Password</b>  </label></div>
                    </div></br>
-                   <div class = "row" ng-repeat="user in usersList">
+                   <div class = "row" ng-repeat="user in usersList | orderBy: 'first_name'">
                      <div class = "col-md-1"> {{$index+1}} </div>
                      <div class = "col-md-1"> <label>{{user.first_name}}</label> </div>
                      <div class = "col-md-1"> <label>{{user.last_name}}</label> </div>
@@ -748,7 +748,7 @@
                      <div class = "col-md-2"><label>Edit </label></div>
                      <div class = "col-md-2"><label>Delete </label></div>
                    </div></br>
-                   <div class = "row" ng-repeat="organisation in organisationList">
+                   <div class = "row" ng-repeat="organisation in organisationList| orderBy: 'name'">
                      <div class = "col-md-1">
                        {{$index+1}}
                      </div>
@@ -794,7 +794,7 @@
                      </div>
 
                    </div></br>
-                   <div class = "row" ng-repeat="profile in profilesList">
+                   <div class = "row" ng-repeat="profile in profilesList | orderBy:'name'">
                      <div class = "col-md-1">
                        {{$index+1}}
                      </div>
@@ -870,7 +870,7 @@
               <label class="control-label col-sm-4">Organisation:</label>
               <div class="col-sm-8">
                 <select class="form-control" ng-model="rolesData.organisation" ng-change="getRoles(rolesData.organisation)">
-                  <option  ng-repeat="org in organisationList" value="{{org.organisation_id}}">{{org.name}}</option>
+                  <option  ng-repeat="org in organisationList| orderBy: 'orgName'" value="{{org.organisation_id}}">{{org.name}}</option>
                 </select>
               </div>
             </div>

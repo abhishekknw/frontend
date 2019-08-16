@@ -679,19 +679,19 @@
 
                               </div>
 
-                                    <table class="table-responsive table table-bordered AvgLeadsTable" >
-                                      <thead>
-                                        <td style="text-align:center;">Total Leads (%)</td>
-                                        <td style="text-align:center;">Hot Leads (%)</td>
-                                      </thead>
-                                    <tbody>
-                                      <tr style="text-align:center;">
-                                      <td style="color:#ffffff !important">{{addCount(allCampaignsLeadsData,'total_leads')}} ({{addCount(allCampaignsLeadsData,'total_leads')/addCount(allCampaignsLeadsData,'flat_count') * 100|limitTo:5}}%)</td>
-                                      <td style="color:#ffffff !important">{{addCount(allCampaignsLeadsData,'hot_leads')}} ({{addCount(allCampaignsLeadsData,'hot_leads')/addCount(allCampaignsLeadsData,'flat_count') * 100|limitTo:5}}%)</td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                  </div>
+                                <!-- <table class="table-responsive table table-bordered AvgLeadsTable" >
+                                  <thead>
+                                    <td style="text-align:center;">Total Leads (%)</td>
+                                    <td style="text-align:center;">Hot Leads (%)</td>
+                                  </thead>
+                                  <tbody>
+                                    <tr style="text-align:center;">
+                                    <td style="color:#ffffff !important">{{addCount(allCampaignsLeadsData,'total_leads')}} ({{addCount(allCampaignsLeadsData,'total_leads')/addCount(allCampaignsLeadsData,'flat_count') * 100|limitTo:5}}%)</td>
+                                    <td style="color:#ffffff !important">{{addCount(allCampaignsLeadsData,'hot_leads')}} ({{addCount(allCampaignsLeadsData,'hot_leads')/addCount(allCampaignsLeadsData,'flat_count') * 100|limitTo:5}}%)</td>
+                                    </tr>
+                                  </tbody>
+                                </table> -->
+                              </div>
                           </div>
                           </div>
 
@@ -1762,7 +1762,7 @@
               <div id="ongoing" class="animate-show" ng-show="campaignStatus.ongoing.value">
                   <div class="panel-bodyDashboard camp-menu-content">
                       <table class="table">
-                          <tr ng-repeat="campaign in campaignData.ongoing_campaigns">
+                          <tr ng-repeat="campaign in campaignData.ongoing_campaigns | orderBy: 'name'">
                             <td ng-click="getBookingCampaigns(campaign)">
                               {{campaign.name}}
                             </td>
@@ -1781,7 +1781,7 @@
               <div id="upcoming" class="animate-show" ng-show="campaignStatus.upcoming.value">
                   <div class="panel-bodyDashboard camp-menu-content">
                       <table class="table">
-                          <tr ng-repeat="campaign in campaignData.upcoming_campaigns">
+                          <tr ng-repeat="campaign in campaignData.upcoming_campaigns | orderBy: 'name'">
                             <td ng-click="getBookingCampaigns(campaign)">
                               {{campaign.name}}
                             </td>
@@ -1989,7 +1989,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="supplier in bookingSuppliersData">
+                <tr ng-repeat="supplier in bookingSuppliersData | orderBy: 'society_name'">
                   <td>{{$index + 1}}</td>
                   <td>{{supplier.society_name}}</td>
                   <td>{{supplier.flat_count}}</td>
@@ -2091,7 +2091,7 @@
                                     <div id="completed" class="animate-show" ng-show="campaignStatus.completed.value">
                                         <div class="panel-bodyDashboard camp-menu-content">
                                           <table class="table">
-                                              <tr ng-repeat="campaign in campaignData.completed_campaigns">
+                                              <tr ng-repeat="campaign in campaignData.completed_campaigns | orderBy: 'name'">
                                               <td >
                                                 <!-- <md-menu> -->
                                                    <div class="" ng-click="getLeadsByCampaign(campaign.campaign ,campaign)">
@@ -2131,7 +2131,7 @@
                                       <div id="ongoing" class="animate-show" ng-show="campaignStatus.ongoing.value">
                                           <div class="panel-bodyDashboard camp-menu-content">
                                               <table class="table">
-                                                  <tr ng-repeat="campaign in campaignData.ongoing_campaigns">
+                                                  <tr ng-repeat="campaign in campaignData.ongoing_campaigns | orderBy: 'name'">
                                                   <td>
                                                     <!-- <md-menu> -->
                                                        <div class="" ng-click="getLeadsByCampaign(campaign.campaign ,campaign)">
@@ -2207,7 +2207,7 @@
                                         <div id="onhold" class="animate-show" ng-show="campaignStatus.onhold.value">
                                             <div class="panel-bodyDashboard camp-menu-content">
                                               <table class="table">
-                                                  <tr ng-repeat="campaign in campaignData.onhold_campaigns">
+                                                  <tr ng-repeat="campaign in campaignData.onhold_campaigns | orderBy: 'name'">
                                                   <td >
                                                     <!-- <md-menu> -->
                                                        <div class="" ng-click="getLeadsByCampaign(campaign.campaign ,campaign)">
@@ -3031,9 +3031,9 @@
                       <br /><br />
                       <div class="row form-group" style="color:#000000">
                         <small>
-                          <input type="checkbox" name="" value="" ng-model="checkboxCheckedSociety" ng-checked="!checkboxChecked"> Society Parameters
-                            <!-- <p style="color:#000000;">Society Parameters :</p> -->
-                          <select class="form-control" ng-click="DisabledClickedSociety()" ng-model="graphSelection.specificParam.society" ng-show="checkboxCheckedSociety" ng-hide="checkboxChecked">
+                          <input type="checkbox" name="" value="" ng-model="checkboxCheckedSociety"  ng-click="societyParamsCheck('society',checkboxCheckedSociety)"
+                              ng-checked="!checkboxChecked"> Society Parameters
+                          <select class="form-control" ng-click="DisabledClickedSociety()" ng-model="graphSelection.specificParam.society"  ng-if="checkboxCheckedSociety">
                             <option value="qualitytype" ng-click="societyTypeDrop">Type of Society</option>
                             <option value="sizeOfFlats" ng-click="flatTypeDrop">Size of Society</option>
                             <option value="flatType" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Type of Flats</option>
@@ -3044,36 +3044,26 @@
                             <option value="workingWomen" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Percentage Working Women</option>
                           </select>
                           <br />
-                          <div class="row" ng-if="graphSelection.specificParam.society == 'qualitytype'">
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'qualitytype' && checkboxCheckedSociety">
                             <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="typeOfSocietyLists" extra-settings="settingsForDynamicGraphSociety"
                             selected-model="selectedTypeOfSocieties" translation-texts="selected_baselines_customTexts_qualityTypesociety" events="events"></span>
                           </div>
-                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfFlats'">
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfFlats' && checkboxCheckedSociety">
                             <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfFlatsLists" extra-settings="settingsForDynamicGraphFlatType"
                             selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
                           </div>
                           <br />
                         <p style="text-align:center;color:#cb1925;font-weight: bold;">OR</p>
 
-                          <!-- <label for="" style="color:#808080;">Booking Parameters</label> -->
-                          <!-- <select class="form-control multiselectParentDropdown" ng-model="graphSelection.specificParam.booking">
-                            <option value="freebies" ng-click="societyTypeDrop" ng-disabled="graphSelection.specificParam.booking">Freebies Allowed</option>
-                            <option value="preHype" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Pre-Hype Allowed</option>
-                            <option value="posterAllowed" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Poster Allowed</option>
-                            <option value="StandeeAllowed" ng-click="flatTypeDrop">Standee Allowed</option>
-                            <option value="FlierAllowed" ng-click="flatTypeDrop">Flier Allowed</option>
-                            <option value="StallAllowed" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Stall Allowed</option>
-                            <option value="StallLocation" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.booking">Stall Location</option>
-                            </select> -->
                             <br />
-                            <input type="checkbox" name="" value=""  ng-model="checkboxChecked" ng-checked="!checkboxCheckedSociety"> Booking Parameters
+                            <input type="checkbox" name="" value=""  ng-model="checkboxChecked" ng-checked="!checkboxCheckedSociety" ng-click="societyParamsCheck('booking',checkboxChecked)"> Booking Parameters
                             <br />
-                              <div class="col-md-3 pull-left" ng-click="DisabledClickedBooking()" style="margin-left:-20px;" ng-show="checkboxChecked" ng-hide="checkboxCheckedSociety">
+                              <div class="col-md-3 pull-left" ng-click="DisabledClickedBooking()" style="margin-left:-20px;" ng-if="checkboxCheckedSociety">
                               <span class="multiselectParentDropdown" ng-dropdown-multiselect="" options="BookingParametersLists" extra-settings="settingsForDynamicGraphBookingParameters"
                               selected-model="selectedbookingParameters" translation-texts="selected_baselines_customTexts_booking_parameters" events="events"></span>
                             </div>
 
-                            <div class="row" ng-if="graphSelection.specificParam.booking == 'freebies'" style="margin-left:30px">
+                            <div class="row" ng-if="graphSelection.specificParam.booking == 'freebies' && checkboxChecked" style="margin-left:30px">
                               <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="freebiesLists" class="col-md-6"  extra-settings="settingsForDynamicGraphCity"
                               selected-model="selectedFreebies" translation-texts="selected_baselines_customTexts_freebies" events="events"></span>
                             </div>
@@ -3203,7 +3193,8 @@
                      <div class="form-group">
                        <span><small>
                          <div class="col-md-12">
-                           <button type="button" name="button" class="col-md-9 btn btn-danger pull-left" ng-model="checkAllElements" ng-click="getGenericGraphData()">Submit</button>
+                           <button type="button" name="button" class="col-md-9 btn btn-danger pull-left" ng-model="checkAllElements" ng-click="getGenericGraphData()" 
+                                    ng-disabled="selectedDynamicCampaigns.length == 0">Submit</button>
                            <button class="col-md-3 btn btn-primary pull-right" ng-click="clearDatesFromDynamicGraph()">Reset All</button></small>
                          </div>
                        </span>
@@ -3343,46 +3334,52 @@
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Details</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Overall</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Last Week</th>
+              <th ng-repeat="data in campaignOverallSummary">{{data.name}}</th>
+              <!-- <th style="background:#8e1921 !important;color:#ffffff !important">Last Week</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Last 2 Weeks</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Last 3 Weeks</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Last 3 Weeks</th> -->
               </tr>
       </thead>
         <tbody style="text-align:center;">
           <tr>
           <td><small style="font-weight:bold">Flat Count</small></td>
-          <td>{{getOverallSummaryData('flat') || 'NA'}}</td>
-          <td>{{WeeklyVendorMISLastWeekSummary.flat_count || 'NA'}}</td>
+          <td>{{getOverallSummaryData('flatCount') || 'NA'}}</td>
+          <td ng-repeat="data in campaignOverallSummary">{{data.flatCount}}</td>
+          <!-- <td>{{WeeklyVendorMISLastWeekSummary.flat_count || 'NA'}}</td>
           <td>{{WeeklyVendorMISLast2WeekSummary.flat_count || 'NA'}}</td>
-          <td>{{WeeklyVendorMISLast3WeekSummary.flat_count || 'NA'}}</td>
+          <td>{{WeeklyVendorMISLast3WeekSummary.flat_count || 'NA'}}</td> -->
           </tr>
           <tr>
           <td><small style="font-weight:bold">Total Leads</small></td>
-          <td>{{getOverallSummaryData('lead') || 'NA'}}</td>
-          <td>{{WeeklyVendorMISLastWeekSummary.total || 'NA'}}</td>
+          <td>{{getOverallSummaryData('totalLeads') || 'NA'}}</td>
+          <td ng-repeat="data in campaignOverallSummary">{{data.totalLeads}}</td>
+          <!-- <td>{{WeeklyVendorMISLastWeekSummary.total || 'NA'}}</td>
           <td>{{WeeklyVendorMISLast2WeekSummary.total || 'NA'}}</td>
-          <td>{{WeeklyVendorMISLast3WeekSummary.total || 'NA'}}</td>
+          <td>{{WeeklyVendorMISLast3WeekSummary.total || 'NA'}}</td> -->
           </tr>
           <tr>
           <td><small style="font-weight:bold">Hot Leads</small></td>
-          <td>{{getOverallSummaryData('hot_lead') || 'NA'}}</td>
-          <td>{{WeeklyVendorMISLastWeekSummary.interested || 'NA'}}</td>
+          <td>{{getOverallSummaryData('hotLeads') || 'NA'}}</td>
+          <td ng-repeat="data in campaignOverallSummary">{{data.hotLeads}}</td>
+          <!-- <td>{{WeeklyVendorMISLastWeekSummary.interested || 'NA'}}</td>
           <td>{{WeeklyVendorMISLast2WeekSummary.interested || 'NA'}}</td>
-          <td>{{WeeklyVendorMISLast3WeekSummary.interested || 'NA'}}</td>
+          <td>{{WeeklyVendorMISLast3WeekSummary.interested || 'NA'}}</td> -->
           </tr>
           <tr>
           <td><small style="font-weight:bold">Cost Per Leads <br> (Leads %)</small></td>
-          <td>{{getOverallSummaryData('flat*cost_flat/lead')}} <br> ({{initalDynamicTableData['lead/flat*100'] | limitTo:5}}) %</td>
-          <td>({{(WeeklyVendorMISLastWeekSummary.total / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}}) %</td>
+          <td>{{getOverallSummaryData('costPerLeads')}} <br> ({{getOverallSummaryData('leadsPerc')}}) %</td>
+          <td ng-repeat="data in campaignOverallSummary">{{data.costPerLeads}}<br>({{data.leadsPerc}})</td>
+          <!-- <td>({{(WeeklyVendorMISLastWeekSummary.total / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}}) %</td>
           <td>({{(WeeklyVendorMISLast2WeekSummary.total / WeeklyVendorMISLast2WeekSummary.flat_count)  * 100 | limitTo:5}}) %</td>
-          <td>({{(WeeklyVendorMISLast3WeekSummary.total / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}}) %</td>
+          <td>({{(WeeklyVendorMISLast3WeekSummary.total / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}}) %</td> -->
           </tr>
           <tr>
           <td><small style="font-weight:bold">Cost Per Hot Leads <br> (Hot Leads %)</small></td>
-          <td>{{getOverallSummaryData('flat*cost_flat/hot_lead')}} <br> ({{initalDynamicTableData['hot_lead/flat*100'] | limitTo:5}}) %</td>
-          <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+          <td>{{getOverallSummaryData('costPerHotLeads')}} <br> ({{getOverallSummaryData('hotLeadsPerc')}}) %</td>
+          <td ng-repeat="data in campaignOverallSummary">{{data.costPerHotLeads}}<br>({{data.hotLeadsPerc}})</td>
+          <!-- <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
           <td>{{(WeeklyVendorMISLast2WeekSummary.interested / WeeklyVendorMISLast2WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
-          <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+          <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}} %</td> -->
           </tr>
 
           <!-- <tr>
@@ -3395,24 +3392,27 @@
           </tr> -->
           <tr>
           <td><small style="font-weight:bold">Cost Per Booking Confirmed <br> (Booking Confirmed %)</small></td>
-          <td>{{getOverallSummaryData('flat*cost_flat/total_booking_confirmed')}} <br> ({{initalDynamicTableData['hot_lead/flat*100'] | limitTo:5}}) %</td>
-          <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+          <td>{{getOverallSummaryData('costPerBookingConfirmed')}} <br> ({{getOverallSummaryData('bookingConfirmedPerc')}}) %</td>
+          <td ng-repeat="data in campaignOverallSummary">{{data.costPerBookingConfirmed}}<br>({{data.bookingConfirmedPerc}})</td>
+          <!-- <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
           <td>{{(WeeklyVendorMISLast2WeekSummary.interested / WeeklyVendorMISLast2WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
-          <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+          <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}} %</td> -->
           </tr>
           <tr>
           <td><small style="font-weight:bold">Cost Per Orders Punched <br> (Orders Punched %)</small></td>
-          <td>{{getOverallSummaryData('flat*cost_flat/total_orders_punched')}} <br> ({{initalDynamicTableData['hot_lead/flat*100'] | limitTo:5}}) %</td>
-          <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+          <td>{{getOverallSummaryData('costPerOrdersPunched')}} <br> ({{getOverallSummaryData('ordersPunchedPerc')}}) %</td>
+          <td ng-repeat="data in campaignOverallSummary">{{data.costPerOrdersPunched}}<br>({{data.ordersPunchedPerc}})</td>
+          <!-- <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
           <td>{{(WeeklyVendorMISLast2WeekSummary.interested / WeeklyVendorMISLast2WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
-          <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+          <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}} %</td> -->
           </tr>
           <tr>
           <td><small style="font-weight:bold">Hot Leads Ratio (%)</small></td>
-          <td>{{ getOverallSummaryData('hot_lead') / getOverallSummaryData('lead')  * 100 }} %</td>
-          <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.total)  * 100 | limitTo:5}} %</td>
+          <td>{{ getOverallSummaryData('ratio')}} %</td>
+          <td ng-repeat="data in campaignOverallSummary">{{ data.ratio }} %</td>
+          <!-- <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.total)  * 100 | limitTo:5}} %</td>
           <td>{{(WeeklyVendorMISLast2WeekSummary.interested / WeeklyVendorMISLast2WeekSummary.total)  * 100 | limitTo:5}} %</td>
-          <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.total)  * 100 | limitTo:5}} %</td>
+          <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.total)  * 100 | limitTo:5}} %</td> -->
           </tr>
         </tbody>
       </table>
@@ -3446,7 +3446,7 @@
       </thead>
         <tbody style="text-align:center;">
           <tr ng-repeat="(key,data) in campaignFilteredSummaryData">
-          <tr ng-repeat="(key,data) in campaignFilteredSummaryData" >
+          <!-- <tr ng-repeat="(key,data) in campaignFilteredSummaryData" > -->
             <td ng-if="!data.city && !data.vendor_name" style="text-transform: capitalize">{{data.campaign_name}}</td>
             <td ng-if="data.city" style="text-transform: capitalize">{{data.city}}</td>
             <td ng-if="data.vendor_name" style="text-transform: capitalize">{{data.vendor_name}}</td>
