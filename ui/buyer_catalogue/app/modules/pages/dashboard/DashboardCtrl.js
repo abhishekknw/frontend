@@ -5440,6 +5440,9 @@
         DashboardService.getCampaign(proposalId)
       }
 
+      var super_admin = JSON.parse(localStorage.getItem("machadalo-credentials"));
+      $scope.admin = super_admin["user_id"]
+
       $scope.deleteLeads = function(supplier_id){
         var data = {
           "supplier_ids": [],
