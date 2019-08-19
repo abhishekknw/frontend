@@ -265,8 +265,8 @@
                                             <td ng-if="item.inv_count == 0 && item.offLocationDistance == 0">Not Applicable</td>
                                             <td ng-if="checkNan(item.offLocationDistance) || item.offLocationDistance == 0 && item.inv_count != 0">Not Applicable</td>
                                             <td class="col-md-2" ng-if="!checkNan(item.offLocationDistance) && item.inv_count != 0 && item.offLocationDistance != 0">{{(item.offLocationDistance/item.inv_count)/1000 |limitTo:5||0}} Km</td>
-                                            <td class="col-md-2" ng-if="item.images.length > 0"><a data-target="#imageModal" data-toggle="modal" ng-click="setImageUrl(item,item.images)">View Images</a></td>
-                                            <td ng-if="item.images.length == 0"><label>No Image<label></td>
+                                            <td class="col-md-2" ng-if="item.images.length > 0"><a data-target="#imageModal" data-toggle="modal" ng-click="setImageUrl(item,item.images)">{{ item.images.length }} images</a></td>
+                                            <td ng-if="item.images.length == 0"><label>No image<label></td>
                                           </tr>
                                         </tbody>
                                       </table>
