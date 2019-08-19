@@ -2393,14 +2393,19 @@
         keyboardControls: true, idProp: "{{option.campaign_id}}",
         template: '{{option.campaign_name}}',
         showCheckAll: true,
-        scrollableHeight: '300px', scrollable: true
+        scrollableHeight: '300px', scrollable: true,        
       };
       $scope.settingsForDynamicGraphCity = {
         enableSearch: true,
         keyboardControls: true, idProp: "option",
-        template: '{{option}}', smartButtonTextConverter(skip, option) { return option; },
-        showCheckAll: true,
-        scrollableHeight: '300px', scrollable: true
+        template: '{{option}}',
+        smartButtonMaxItems: 1,
+        smartButtonTextConverter(skip, option) { 
+          return option; },
+        // showCheckAll: true,
+        scrollableHeight: '300px', scrollable: true,
+        selectionLimit: 1,
+        
       };
       $scope.settingsForDynamicGraphSociety = {
         enableSearch: true,
