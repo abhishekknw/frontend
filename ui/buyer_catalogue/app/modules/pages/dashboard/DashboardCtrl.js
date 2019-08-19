@@ -2424,9 +2424,14 @@
       $scope.settingsForDynamicGraphVendor = {
         enableSearch: true,
         keyboardControls: true, idProp: "{{option}}",
-        template: '{{option}}', smartButtonTextConverter(skip, option) { return option; },
+        template: '{{option}}', 
         showCheckAll: true,
-        scrollableHeight: '300px', scrollable: true
+        scrollableHeight: '300px', scrollable: true,
+        smartButtonMaxItems: 1,
+        smartButtonTextConverter(skip, option) { 
+          return option; },
+          selectionLimit: 1,
+
       };
       $scope.settingsForDynamicGraphBookingParameters = {
         enableSearch: true,
