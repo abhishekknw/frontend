@@ -1949,8 +1949,11 @@
         $scope.campaignIdForPerfMetrics = campaignId;
         $scope.campaignInfoForPerfMetrics = campaign;
         $scope.showPerfMetrics = $scope.perfMetrics.blank;
-        var result;
-        if ($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date')) {
+        var result;        
+
+        if ($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date') &&
+              !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
+          
           $scope.dateRangeModel.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
           $scope.dateRangeModel.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
           result = DashboardService.getLeadsByCampaign(campaignId, $scope.dateRangeModel)
