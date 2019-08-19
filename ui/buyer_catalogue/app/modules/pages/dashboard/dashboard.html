@@ -2536,7 +2536,150 @@
                                       <td ng-if="!Data.last_three_weeks.supplier_stats.interested.mode_percent_by_flat">NA</td>
 
                                       </tr>
+                                      <tr>
+                                        <td>
+                                            <small style="font-weight:bold">Mean Of Booking Confirmed</small>                                          
+                                        </td>
+                                        <td>
+                                          {{Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat | limitTo:5 }} %
+                                        </td>
+                                        <td ng-if="Data.last_week.supplier_stats.is_hot_level_3.mean_percent_by_flat">{{Data.last_week.supplier_stats.is_hot_level_3.mean_percent_by_flat | limitTo:5 }} %
+                                            <span ng-if="Data.last_week.supplier_stats.is_hot_level_3.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                            <span ng-if="Data.last_week.supplier_stats.is_hot_level_3.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                          </td>
+                                          <td ng-if="!Data.last_week.supplier_stats.is_hot_level_3.mean_percent_by_flat">NA</td>
 
+                                      <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat | limitTo:5 }} %
+                                        <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
+                                      <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat">NA</td>
+
+                                      <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat | limitTo:5}} %
+                                        <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                        <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                      </td>
+                                      <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat">NA</td>
+                                      </tr>
+                                      <tr>
+                                          <td><small style="font-weight:bold">Median of Bookings Confirmed</small></td>
+                                          <td ng-if="Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5 }} %</td>
+                                          <td ng-if="!Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
+    
+                                          <td ng-if="Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5 }} %
+                                            <span ng-if="Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
+                                            <span ng-if="Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
+                                          </td>
+                                          <td ng-if="!Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
+    
+                                          <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5}} %
+                                            <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
+                                            <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
+                                          </td>
+                                          <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
+    
+                                          <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5 }} %
+                                            <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
+                                            <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
+                                          </td>
+                                          <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
+                                          </tr>
+                                      <tr>
+                                        <td><small style="font-weight:bold">Mode of Bookings Confirmed</small></td>
+                                        <td ng-if="Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat">{{Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat | limitTo:5 }} %</td>
+                                        <td ng-if="!Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat">NA</td>
+
+                                        <td ng-if="Data.last_week.supplier_stats.is_hot_level_3.mode_percent_by_flat">{{Data.last_week.supplier_stats.interested.mode_percent_by_flat | limitTo:5 }} %
+                                          <span ng-if="Data.last_week.supplier_stats.is_hot_level_3.mode_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                          <span ng-if="Data.last_week.supplier_stats.is_hot_level_3.mode_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                        </td>
+                                        <td ng-if="!Data.last_week.supplier_stats.is_hot_level_3.mode_percent_by_flat">NA</td>
+
+                                        <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat | limitTo:5 }} %
+                                          <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                          <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                        </td>
+                                        <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat">NA</td>
+
+                                        <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat | limitTo:5}} %
+                                          <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                          <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                        </td>
+                                        <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat">NA</td>
+                                      </tr>
+
+                                      <!-- hotness level 4 -->
+                                      <tr>
+                                          <td>
+                                              <small style="font-weight:bold">Mean Of Orders Punched</small>                                          
+                                          </td>
+                                          <td>
+                                            {{Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat | limitTo:5 }} %
+                                          </td>
+                                          <td ng-if="Data.last_week.supplier_stats.is_hot_level_4.mean_percent_by_flat">{{Data.last_week.supplier_stats.is_hot_level_4.mean_percent_by_flat | limitTo:5 }} %
+                                              <span ng-if="Data.last_week.supplier_stats.is_hot_level_4.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                              <span ng-if="Data.last_week.supplier_stats.is_hot_level_4.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                            </td>
+                                            <td ng-if="!Data.last_week.supplier_stats.is_hot_level_4.mean_percent_by_flat">NA</td>
+  
+                                        <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat | limitTo:5 }} %
+                                          <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                          <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                        </td>
+                                        <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat">NA</td>
+  
+                                        <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat | limitTo:5}} %
+                                          <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                          <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                        </td>
+                                        <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat">NA</td>
+                                        </tr>
+                                        <tr>
+                                            <td><small style="font-weight:bold">Median of Orders Punched</small></td>
+                                            <td ng-if="Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat">{{Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat | limitTo:5 }} %</td>
+                                            <td ng-if="!Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat">NA</td>
+      
+                                            <td ng-if="Data.last_week.supplier_stats.is_hot_level_4.median_percent_by_flat">{{Data.last_week.supplier_stats.is_hot_level_4.median_percent_by_flat | limitTo:5 }} %
+                                              <span ng-if="Data.last_week.supplier_stats.is_hot_level_4.median_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
+                                              <span ng-if="Data.last_week.supplier_stats.is_hot_level_4.median_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
+                                            </td>
+                                            <td ng-if="!Data.last_week.supplier_stats.is_hot_level_4.median_percent_by_flat">NA</td>
+      
+                                            <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat | limitTo:5}} %
+                                              <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
+                                              <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
+                                            </td>
+                                            <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat">NA</td>
+      
+                                            <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat">{{Data.last_three_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat | limitTo:5 }} %
+                                              <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
+                                              <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
+                                            </td>
+                                            <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat">NA</td>
+                                            </tr>
+                                        <tr>
+                                          <td><small style="font-weight:bold">Mode of Orders Punched</small></td>
+                                          <td ng-if="Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat">{{Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat | limitTo:5 }} %</td>
+                                          <td ng-if="!Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat">NA</td>
+  
+                                          <td ng-if="Data.last_week.supplier_stats.is_hot_level_4.mode_percent_by_flat">{{Data.last_week.supplier_stats.is_hot_level_4.mode_percent_by_flat | limitTo:5 }} %
+                                            <span ng-if="Data.last_week.supplier_stats.is_hot_level_4.mode_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                            <span ng-if="Data.last_week.supplier_stats.is_hot_level_4.mode_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                          </td>
+                                          <td ng-if="!Data.last_week.supplier_stats.is_hot_level_4.mode_percent_by_flat">NA</td>
+  
+                                          <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat | limitTo:5 }} %
+                                            <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                            <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                          </td>
+                                          <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat">NA</td>
+  
+                                          <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat | limitTo:5}} %
+                                            <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                            <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                          </td>
+                                          <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat">NA</td>
+                                        </tr>
                                     </tbody>
                                   </table>
                                   <br />
