@@ -1031,8 +1031,8 @@
                                 <!-- </div>  -->
 
 
-
-                                <div class="col-md-12" ng-if="showDisplayDetailsTable" style="margin-top:5px;height:500px !important;">
+                              <div class="row">
+                                <div class="col-md-12" ng-if="showDisplayDetailsTable">
 
                                   <!-- <div class="row">
                                     <select name="phase" class="form-control spacing input-width-phase" ng-model="supplier.phaseNo" min="1">
@@ -1049,7 +1049,7 @@
 
                                       <br />
                                     <div class="table-responsive">
-                                      <table class="table">
+                                      <table class="table" cellSpacing="0" cellPadding="0">
                                         <thead>
                                          <tr>
                                             <th>INDEX</th>
@@ -1066,8 +1066,8 @@
                                             <th ng-if="supplierStatus != 'upcoming'">Stall</th>
                                             <th ng-if="supplierStatus != 'upcoming'">Other Images</th>
                                             <!-- <th>Permission Box</th> -->
-                                            <th style="width:200px;">Add <br> Comments</th>
-                                            <th style="width:200px;">View <br> Comments</th>
+                                            <th>Comments</th>
+                                            <th ng-if="canViewInternalComments">Internal <br> Comments</th>
                                             </tr>
                                             <tr colspan="9">
                                               <td></td>
@@ -1129,69 +1129,96 @@
                                                     </table>
                                                   </td>
                                                   <td style="width:200px;">
-                                                    <button type="button" class="btn btn-danger" ng-click="enableAddComments(supplier)" data-toggle="modal" data-target="#AddMyComments">Add Comments</button>
-                                                    <div id="AddMyComments" class="modal fade">
-                                                      <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                          <div class="modal-header">
-                                                            <div class="panel-heading">
-                                                              <h5 style="background:'red';color:white;text-transform:capitalize">Add Comment For {{societyNameForComments}}</h5>
+                                                    <!--START : view external comments modal  -->
+                                                    <button ng-click="viewComments('EXTERNAL',supplier)" class="btn btn-danger" data-toggle="modal" data-target="#viewExternalComments">View/Add</button>
+                                                    <div id="viewExternalComments" class="modal fade">
+                                                      <div>
+                                                        <div class="modal-dialog">
+                                                          <div class="modal-content">
+                                                            <div class="modal-header">
+                                                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                              View Comments For {{societyViewNameForComments}}
                                                             </div>
                                                             <div class="modal-body">
-                                                              <div class="col-md-12">
-                                                                <div style="width:100%">
+                                                              <table class="table-bordered table-striped" style="border: none !important;">
+                                                                <tbody>
+                                                                <tr ng-repeat="item in commentsData.general">
+                                                                  <td class="col-md-8" style="background-color: whitesmoke;text-align: initial;">
+                                                                    <div style="color: black;">
+                                                                      <img ng-src="{{userIcon}}">
+                                                                      <b>{{item.user_name}} :</b> <span> <small> {{item.timestamp|date:'medium'}}</small></span><br>
+                                                                    </div>
+                                                                    <div style="padding-left:30px">
+                                                                      <p style="word-break:break-word;color: black;">{{item.comment}}</p>
+                                                                      </br>
+                                                                    </div>
+                                                                  </td>
+                                                                </tr>
+                                                                </tbody>
+                                                              </table>
+                                                              <!--  Add comment-->
+                                                              <div style="width:100%">
                                                                 <br>
-                                                                <textarea name="name" class="col-md-12" placeholder="Enter Here.." ng-model="commentModal.comment"></textarea>
-                                                                  <br />
-                                                                </div>
-                                                                <br>
+                                                                <!-- <label>Comments :</label> -->
+                                                                <textarea class="form-control col-md-10"  rows="8" cols="200" ng-model="commentModal.comment" placeholder="Write here.." required></textarea>
                                                               </div>
-                                                            </div>
-                                                            <br /><br />
-                                                            <button class="btn form-control" style="background:#d9534f;border-color:#d9534f;width:50%;color:#fff" ng-disabled="!commentModal.comment" ng-click="addComment()">Add Comment</button>
+                                                              <br>
+                                                            </div><br>
+                                                            <br>
+                                                            <button class="btn btn-danger" type="button" ng-click="addComment('EXTERNAL',supplier.shortlisted_space_id)" style="margin:3%">Add Comment</button>
                                                           </div>
-                                                          <br>
-                                                      </div>
+                                                        </div><br>
+                                                        <br>
+                                                        </br></br>
                                                       </div>
                                                     </div>
-                                                    <!-- <div ng-if="enableComments == $index">
-                                                      <textarea name="name" rows="4" cols="20" placeholder="Enter Here.." ng-model="commentModal.comment"></textarea>
-                                                      <button class="btn btn-success form-control" ng-disabled="!commentModal.comment" ng-click="addComment(supplier.shortlisted_space_id)">Add</button>
-                                                    </div> -->
                                                   </td>
 
-                                                  <td style="width:200px;">
-                                                    <button type="button" class="btn btn-danger" ng-click="viewComments(supplier,$index)" data-toggle="modal" data-target="#ViewMyComments">View Comments</button><br>
-                                                    <div id="ViewMyComments" class="modal fade">
-                                                      <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                          <div class="modal-header">
-                                                            <div class="panel-heading">
-                                                              <h5 style="background:'red';color:white;text-transform:capitalize">View Comment For {{societyViewNameForComments}}</h5>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                              <div class="col-md-12" style="height:350px;overflow:auto">
-                                                                <div style="width:100%" >
-                                                                <br>
-                                                                <div class="talk-bubble tri-right round left-top"  ng-repeat="item in commentsData.general" style="margin-top:-20px">
-                                                                  <div class="talktext" style="font-color:black">
-                                                                    <p style="color:#ff0000;font-size:smaller">{{item.user_name}}</p>
-                                                                    <p style="color:#000000;font-size:x-small">{{item.comment}}</p>
-                                                                    <p style="color:#0000ff;font-size:xx-small;text-align:right">{{item.timestamp|date:'medium'}}</p>
-                                                                  </div>
+                                                    <td style="width:200px;" ng-if="canViewInternalComments">
+                                                      <!--START : view internal comments modal  -->
+                                                      <button ng-click="viewComments('INTERNAL',supplier)" class="btn btn-danger" data-toggle="modal" data-target="#viewInternalComments">View/Add</button>
+                                                      <div id="viewInternalComments" class="modal fade">
+                                                        <div>
+                                                          <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                              <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                View Internal Comments For {{societyViewNameForComments}}
+                                                              </div>
+                                                              <div class="modal-body">
+                                                                <table class="table-bordered table-striped" style="border: none !important;">
+                                                                  <tbody>
+                                                                  <tr ng-repeat="item in commentsData.general">
+                                                                    <td class="col-md-8" style="background-color: whitesmoke;text-align: initial;">
+                                                                      <div style="color: black;">
+                                                                        <img ng-src="{{userIcon}}">
+                                                                        <b>{{item.user_name}} :</b> <span> <small> {{item.timestamp|date:'medium'}}</small></span><br>
+                                                                      </div>
+                                                                      <div style="padding-left:30px">
+                                                                        <p style="word-break:break-word;color: black;">{{item.comment}}</p>
+                                                                        </br>
+                                                                      </div>
+                                                                    </td>
+                                                                  </tr>
+                                                                  </tbody>
+                                                                </table>
+                                                                <!--  Add comment-->
+                                                                <div style="width:100%">
+                                                                  <br>
+                                                                  <!-- <label>Comments :</label> -->
+                                                                  <textarea class="form-control col-md-10"  rows="8" cols="200" ng-model="commentModal.comment" placeholder="Write here.." required></textarea>
                                                                 </div>
-                                                              </div>
                                                                 <br>
-                                                              </div>
+                                                              </div><br>
+                                                              <br>
+                                                              <button class="btn btn-danger" type="button" ng-click="addComment('INTERNAL',supplier.shortlisted_space_id)" style="margin:3%">Add Comment</button>
                                                             </div>
-                                                             <br />
-                                                            <br />
-                                                          </div>
+                                                          </div><br>
+                                                          <br>
+                                                          </br></br>
                                                         </div>
                                                       </div>
-                                                    </div>
-
-                                                  </td>
+                                                    </td>
 
                                                     <!-- <td ng-init="calculateTotalCount('GATEWAY ARCH',supplier.supplier.inv_data['GATEWAY ARCH'].total.total)" ng-show="invStatusKeys['GATEWAY ARCH'].status">{{supplier.supplier.inv_data['GATEWAY ARCH'].total.total}}
                                                     </td> -->
@@ -1204,10 +1231,10 @@
                                         <tfoot>
                                           <tr>
                                               <td>TOTAL</td>
-                                              <td></td>
-                                              <td></td>
-                                              <td></td>
-                                              <td></td>
+                                              <td>&nbsp;</td>
+                                              <td>&nbsp;</td>
+                                              <td>&nbsp;</td>
+                                              <td>&nbsp;</td>
                                               <td>{{TotalSupplierFlatCount}}</td>
                                               <td>{{TotalSupplierLeadsCount || 0}}</td>
                                               <td>{{TotalSupplierHotLeadsCount || 0}}</td>
@@ -1216,8 +1243,8 @@
                                               <td ng-if="supplierStatus != 'upcoming'"></td>
                                               <td ng-if="supplierStatus != 'upcoming'"></td>
                                               <td ng-if="supplierStatus != 'upcoming'"></td>
-                                              <td></td>
-                                              <td></td>
+                                              <td>&nbsp;</td>
+                                              <td>&nbsp;</td>
                                           </tr>
                                         </tfoot>
                                       </table>
@@ -1307,33 +1334,36 @@
                                     </div>
                                   </div> -->
                                   </div>
+                                </div>
 
-                                <div class="col-md-12" ng-show="showDisplayDetailsTable" style="margin-top:230px;">
-                                  <div class="panel-heading content-title">
-                                    <h5 style="background:'red'">Map View for {{campaignTabPropsalName}}</h5></div>
-                                  <style type="text/css">
-                                        .angular-google-map-container { height: 550px;color: black;}
-                                    </style>
-                                      <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="false"
-                                                          options="options" bounds="map.bounds" control="googlemap">
-                                          <ui-gmap-window show="show" coords='windowCoords'>
-                                                <div>
-                                                  <table class="table-responsive table">
-                                                    <div class="">
-                                                      <h3>{{space.title.name}}</h3>
-                                                    </div>
-                                                    <tr><td>{{space.title.STALL.key}}</td><td><small>{{space.title.STALL.total}}</small></td></tr>
-                                                    <tr><td>{{space.title.POSTER.key}}</td><td><small>{{space.title.POSTER.total}}</small></td></tr>
-                                                    <tr><td>{{space.title.STANDEE.key}}</td><td><small>{{space.title.STANDEE.total}}</small></td></tr>
-                                                    <tr><td>{{space.title.FLIER.key}}</td><td><small>{{space.title.FLIER.total}}</small></td></tr>
-                                                    <tr><td>{{space.title['GATEWAY ARCH'].key}}</td><td><small>{{space.title['GATEWAY ARCH'].total}}</small></td></tr>
-                                                  </table>
-                                                 </div>
-                                          </ui-gmap-window>
-                                          <ui-gmap-markers models="supplierMarkers" coords="'self'" icon="'icon'"
-                                                           options="'options'" doRebuildAll="true" events="marker.events">
-                                          </ui-gmap-markers>
-                                      </ui-gmap-google-map>
+                                <div class="row">
+                                  <div class="col-md-12" ng-show="showDisplayDetailsTable">
+                                    <div class="panel-heading content-title">
+                                      <h5 style="background:'red'">Map View for {{campaignTabPropsalName}}</h5></div>
+                                    <style type="text/css">
+                                          .angular-google-map-container { height: 550px;color: black;}
+                                      </style>
+                                        <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="false"
+                                                            options="options" bounds="map.bounds" control="googlemap">
+                                            <ui-gmap-window show="show" coords='windowCoords'>
+                                                  <div>
+                                                    <table class="table-responsive table">
+                                                      <div class="">
+                                                        <h3>{{space.title.name}}</h3>
+                                                      </div>
+                                                      <tr><td>{{space.title.STALL.key}}</td><td><small>{{space.title.STALL.total}}</small></td></tr>
+                                                      <tr><td>{{space.title.POSTER.key}}</td><td><small>{{space.title.POSTER.total}}</small></td></tr>
+                                                      <tr><td>{{space.title.STANDEE.key}}</td><td><small>{{space.title.STANDEE.total}}</small></td></tr>
+                                                      <tr><td>{{space.title.FLIER.key}}</td><td><small>{{space.title.FLIER.total}}</small></td></tr>
+                                                      <tr><td>{{space.title['GATEWAY ARCH'].key}}</td><td><small>{{space.title['GATEWAY ARCH'].total}}</small></td></tr>
+                                                    </table>
+                                                   </div>
+                                            </ui-gmap-window>
+                                            <ui-gmap-markers models="supplierMarkers" coords="'self'" icon="'icon'"
+                                                             options="'options'" doRebuildAll="true" events="marker.events">
+                                            </ui-gmap-markers>
+                                        </ui-gmap-google-map>
+                                  </div>
                                 </div>
 
                                 <div class="col-md-7 LeadsTable" ng-show="showSupplierSocietywiseInvTable" >
@@ -1646,9 +1676,6 @@
 
                         </tbody>
                       </table>
-                      <!-- <div style="text-align:center">
-                      <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ></dir-pagination-controls>
-                      </div> -->
 
                     </div>
                   </div>
@@ -1955,7 +1982,9 @@
                   <th>Area(SubArea)</th>
                   <th>Status</th>
                   <th>Map Details</th>
-                  <th>Comments</th>
+                  <th>
+
+                  </th>
                   <th>Inventory Counts</th>
                   <th>Freebies</th>
                 </tr>
@@ -2962,39 +2991,10 @@
 
                         </small>
 
-                        <!-- <br /><br /> <br />
-                      <div class="row" style="color:#808080;">
-                        <label>Start Date :  </label>
-                        <span>
-                          <input type="date" ng-model="graphSelection.dateRange.startDate">
-                        </span>
-                        </div>
-                        <br />
-                        <div class="row" style="color:#808080;">
-                        <label>  End Date :</label>
-                        <span>
-                          <input type="date" ng-model="graphSelection.dateRange.endDate">
-                        </span>
-                      </div>
-                      <br /> -->
                       </div>
                       </div>
                       <br />
-                      <!-- <div class="panel panel-danger">
-                      <div class="panel-heading"  style="background:#cb1925">Select Campaign</div>
-                      <div class="panel-body">
-                        <div class="row">
-                          <div class="col-md-6" style="color:#808080;"  ng-if="applyClickedFilters.value || selectedTypeOfSocieties.length || selectedSizeOfFlats.length || selectedCities_temp.length
-                           || selectedbookingParameters.length || graphSelection.dateRange.startDate || graphSelection.phaseRange.start || graphSelection.dateRange.endDate || selectedVendors.length">
-                            <br /><br />
-                            <div class="row">
-                               <span class="multiselectParentDropdown" style="color:red;width:100%;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
-                               selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
-                            </div>
-                          </div>
-                        </div>
-                        </div>
-                      </div> -->
+                  
                   </div>
                   <div class="col-md-4" style="color:#808080;">
                     <div class="panel panel-danger">
@@ -3130,36 +3130,9 @@
                   </div>
 
 
-                  <!-- <div class="panel panel-danger">
-                     <div class="panel-heading">Filter By Vendors</div>
-                     <div class="panel-body">
-                       <br /><br />
-                       <div class="row">
-                         <input type="radio" value="vendor" ng-model="dynamicData.data_scope['1'].level"
-                               ng-click="getLevelValues(dynamicData.data_scope['1'].level)" style="color:#000;">Vendors
-                         <h3>Select Vendor</h3>
-                       <div class="col-md-6 pull-left" ng-if="graphSelection.category == 'vendor'">
-                           <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="vendorsList" class="col-md-6"  extra-settings="settingsForDynamicGraphVendor"
-                           selected-model="selectedVendors" translation-texts="selected_baselines_customTexts_vendor" events="events"></span>
-                         </div>
-                       </div>
-                   </div>
-                   </div> -->
-                   <!-- <div class="panel panel-danger">
-                   <div class="panel-heading">Filter By Camapigns</div>
-                   <div class="panel-body">
-                   </div>
-                   </div> -->
+                  
                    <br /><br />  <br /><br /> <br />
-                   <!-- <div class="row">
-                     <div class="col-md-6" style="color:#808080;"  ng-if="applyClickedFilters.value || selectedTypeOfSocieties.length || selectedSizeOfFlats.length || selectedCities_temp.length || selectedbookingParameters.length || graphSelection.dateRange.startDate || graphSelection.phaseRange.start || graphSelection.dateRange.endDate || selectedVendors.length">
-                       <p style="color:#808080;">Select Campaign :</p>
-                       <div class="row">
-                          <span class="multiselectParentDropdown" style="color:red;width:100%;" ng-dropdown-multiselect="" options="dynamicValues" class="col-md-6"  extra-settings="settingsForDynamicGraph"
-                          selected-model="selectedDynamicCampaigns" translation-texts="selected_baselines_customTexts" events="eventsForDynamicGraphCampaign"></span>
-                       </div>
-                     </div>
-                   </div> -->
+                  
                    <br /><br />
                    <div class="row">
                      <div class="form-group">
@@ -3176,28 +3149,7 @@
                  </div>
                 <div class="col-md-12" style="margin-top:20px;">
                     <div class="col-md-12">
-                      <!-- <div class="panel-heading content-title">
-                        <div class="col-md-4" ng-if="graphSelection.dateRange">
-                        <div class="col-md-8">
-                            <p style="color:#fff">From : {{graphSelection.dateRange.startDate | date : 'mediumDate'}}</p>
-                            <br />
-                            <p style="color:#fff">To : {{graphSelection.dateRange.endDate | date : 'mediumDate'}}</p>
-                          </div>
-                        </div>
-                        <div class="col-md-4" ng-if="graphSelection.phaseRange">
-                        <div class="col-md-8">
-                            <p style="color:#fff">From : {{graphSelection.dateRange.startDate | date : 'mediumDate'}}</p>
-                            <br />
-                            <p style="color:#fff">To : {{graphSelection.dateRange.endDate | date : 'mediumDate'}}</p>
-                          </div>
-                        </div>
-                        <div class="col-md-4">
-
-                        </div>
-                        <div class="col-md-4">
-
-                        </div>
-                      </div> -->
+                      
                       <div class="panel-heading content-title" style="height:70px;">
                         Graph Based On Filters
                         <div class="row">
@@ -3226,22 +3178,6 @@
                              <input type="checkbox" style="width:20px;height:20px;" value="hotleadsValues" ng-model="graphSelection.Yvalues.conversionPerc" ng-click="changeDynamicGraph()"> <small> Order Punched %</small>
                            </div>
                          </div>
-                        <!-- <div class="col-md-4">
-                         </div> -->
-                         <!-- <div class="col-md-4">
-                           <input type="checkbox" value="costleads" ng-model="graphSelection.Yvalues.costPerLeads" ng-click="changeDynamicGraph()"><small> COST PER LEADS</small>
-                           <br />
-                           <input type="checkbox" value="costhotleads" ng-model="graphSelection.Yvalues.costPerHotLeads" ng-click="changeDynamicGraph()"><small> COST PER HOT LEADS</small>
-                           <br />
-                           <input type="checkbox" value="costFixedMeeting" ng-model="graphSelection.Yvalues.costPerMeetingFixed" ng-click="changeDynamicGraph()">
-                           <small> COST PER MEETING FIXED</small>
-                           <br />
-                           <input type="checkbox" value="costCompletedMeeting" ng-model="graphSelection.Yvalues.costPerMeetingCompleted" ng-click="changeDynamicGraph()">
-                           <small> COST PER MEETING COMPLETED</small>
-                           <br />
-                           <input type="checkbox" value="costConversion" ng-model="graphSelection.Yvalues.costPerConversion" ng-click="changeDynamicGraph()">
-                           <small> COST PER CONVERSION</small>
-                         </div> -->
                        </div>
                        <br />
                        <br />
@@ -3264,14 +3200,65 @@
                            <div class="dynamicInnerGraphs">
                             <nvd3 options="stackedBarChartForDynamic" data="stackedBarChartDynamicData" ng-if="!dynamicGraphSelectedOrder.value"></nvd3>
                             <nvd3 options="dynamicSortedGraphOptions" data="dynamicSortedGraphData" ng-if="dynamicGraphSelectedOrder.value"></nvd3>
+                            <div class="panel-heading content-title" ng-if="!showCumulativeSummaryGraphs">
+                                <label for="Location">Cumulative Summary Graph</label>
+                              </div>
+                            <nvd3 options="stackedBarChartForDynamicSummary" data="stackedBarChartDynamicDataSummary" ng-if="!showCumulativeSummaryGraphs"></nvd3>
                           </div>
                           <div class="dynamicInnerGraphs" style="height:500px;" ng-if="cumulativeOrder">
                             <select class="form-control" ng-model="selectedOrderKey" ng-change="changeCumulativeOrderKey(selectedOrderKey)">
                               <option ng-repeat="key in cumulativeOrderCampaignKeys" value="{{key}}" >{{key}}</option>
                             </select>
-                            <div ng-repeat=" graphData in lineChartForCumulativeOrder track by $index">
-                                <nvd3 options="lineChartGraphCumulativeOrder[$index]" data="graphData"></nvd3>
+                            <div class="col-md-12" ng-repeat=" graphData in lineChartForCumulativeOrder track by $index">
+                              <div class="col-md-8 cumulativeChart">
+                                  <nvd3 options="lineChartGraphCumulativeOrder[$index]" data="graphData"></nvd3>
+                              </div>
+                                <div class="col-md-4 cumulativeChart">
+                                    <table class="table table-responsive table-bordered cumulativeGraphTable">
+                                      <thead>
+                                        <tr>
+                                          <th>Days</th>
+                                          <th> Count</th>
+                                          <th>Percentage %</th>
+                                        </tr>
+                                        <tr ng-repeat="data in cumulativeTableData[$index]">
+                                          <th>{{data.key}}</th>
+                                          <td>{{data.sum}}</td>
+                                          <td>{{data.perct}}</td>
+                                        </tr>
+                                      </thead>                                      
+                                    </table>                                    
+                                </div>
+                                
                             </div>
+                            <div class="col-md-12" ng-repeat="graphData1 in cumulativeLineChartOrderSummary track by $index" 
+                                ng-if="!showCumulativeSummaryGraphs">
+                                <div class="panel-heading content-title" ng-if="$index == 0">
+                                    <label for="Location">Cumulative Summary Graph</label>
+                                  </div>
+                                
+                              {{graphData1}}
+                              <div class="col-md-8 cumulativeChart">
+                                <nvd3 options="lineChartGraphCumulativeOrderSummary[$index]" data="graphData1"></nvd3>
+                              </div>
+                              <div class="col-md-4 cumulativeChart">
+                                <table class="table table-responsive table-bordered cumulativeGraphTable" >
+                                  <thead>
+                                    <tr>
+                                      <th>Days</th>
+                                      <th> Count</th>
+                                      <th>Percentage %</th>
+                                    </tr>
+                                    <tr ng-repeat="data in cumulativeTableDataSummary[$index]">
+                                      <th>{{data.key}}</th>
+                                      <td>{{data.sum}}</td>
+                                      <td>{{data.perct}}</td>
+                                    </tr>
+                                  </thead>
+                                </table>
+                            </div>
+                            </div>
+                            
                             
                             
                           </div>

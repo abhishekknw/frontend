@@ -592,7 +592,20 @@ color: #ffffff !important;
 }
 
 
-.campaigndetailtable {}
+.campaigndetailtable .table-responsive {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.campaigndetailtable table {
+  width: auto;
+  max-width: auto;
+}
+
+.campaigndetailtable table td,
+.campaigndetailtable table th {
+  min-width: 200px;
+}
 
 .campaigndetailtable table thead tr th {
   background:#8e1921;
@@ -601,24 +614,24 @@ color: #ffffff !important;
   font-weight: 700;
   text-align: center;
   vertical-align: middle;
-  width: 100px;
-  white-space: normal !important;
+  /* width: 100px; */
+  /* white-space: normal !important; */
 }
 
 .campaigndetailtable table tbody {
 
-  display: block;
+  /* display: block; */
   max-height: 300px;
   overflow-y: auto;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 
 .campaigndetailtable table tfoot {
   /* background: #d9534f;
   color: white; */
-  display: block;
+  /* display: block;
   max-height: 300px;
-  overflow-y: auto;
+  overflow-y: auto; */
 }
 
 .campaigndetailtable table thead,
@@ -626,9 +639,9 @@ color: #ffffff !important;
   /* border: 1px solid black; */
   /* border-collapse: separate; */
   /* border-spacing: 4px;   */
-  display: table;
+  /* display: table;
   width: 100%;
-  table-layout: fixed;
+  table-layout: fixed; */
 }
 
 
@@ -636,15 +649,14 @@ color: #ffffff !important;
 .campaigndetailtable table tfoot tr {
   /* background: #d9534f;
   color: white; */
-  display: table;
-  width: 100%;
-  table-layout: fixed;
+  /* display: table; */
+  /* width: 100%; */
+  /* table-layout: fixed; */
 }
 
 .campaigndetailtable table tbody tr td {
-
   text-align: center;
-  width: 100px;
+  /* width: 100px; */
 }
 
 
@@ -654,7 +666,7 @@ color: #ffffff !important;
   font-size: 14px;
   font-weight: 700;
   text-align: center;
-  width: 100px;
+  /* width: 100px; */
 }
 
 .campaigndetailtable table thead tr th:nth-child(2) {
