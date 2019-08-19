@@ -2030,11 +2030,12 @@
         var values3 = [];
         var values4 = [];
         angular.forEach(data, function (supplier) {
+          
           if (supplier['flat_count'] != 0) {
             $scope.hotLeadsValues = supplier.interested / supplier['flat_count'] * 100;
             $scope.normalLeadsValues = supplier.total / supplier['flat_count'] * 100;
-            $scope.normalBookingValues = data.is_hot_level_3 / data['flat_count'] * 100;
-            $scope.normalPunchedValues = data.is_hot_level_4 / data['flat_count'] * 100;
+            $scope.normalBookingValues = supplier.is_hot_level_3 / supplier['flat_count'] * 100;
+            $scope.normalPunchedValues = supplier.is_hot_level_4 / supplier['flat_count'] * 100;
           }
           else {
             $scope.hotLeadsValues = supplier.interested;
@@ -2063,7 +2064,7 @@
             key: "Total Leads in %",
             color: constants.colorKey1,
             values: values1,
-            "bar": true,
+            // "bar": true,
           },
           {
             key: "High Potential Leads in %",
@@ -2085,6 +2086,8 @@
           series.values = series.values.map((d) => { return { x: d[0], y: d[1] } });
           return series;
         });
+        console.log(temp_data);
+        
         return temp_data;
       }
 
