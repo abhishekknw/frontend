@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { toastr } from 'react-redux-toastr';
+import PropTypes from 'prop-types';
 import Select from 'react-select';
 import DatetimeRangePicker from 'react-datetime-range-picker';
+import ReactPaginate from 'react-paginate';
 
 const DateTypes = [
   { label: 'Created At', value: 'created_at' },
@@ -19,6 +21,8 @@ export default class List extends React.Component {
       startDate: '',
       endDate: '',
       selectedDateFilter: '',
+      offset: 0,
+      perPage: 10,
     };
 
     this.onSearchFilterChange = this.onSearchFilterChange.bind(this);
@@ -26,6 +30,7 @@ export default class List extends React.Component {
     this.renderSupplierRow = this.renderSupplierRow.bind(this);
     this.onDateFilterChange = this.onDateFilterChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.handlePageClick = this.handlePageClick.bind(this);
   }
 
   componentWillMount() {
@@ -108,11 +113,22 @@ export default class List extends React.Component {
     });
   }
 
+  handlePageClick = (data) => {
+    console.log(data);
+
+    const selectedPage = data.selected;
+    const offset = selectedPage * this.state.perPage;
+    this.setState({
+      offset,
+    });
+  };
+
   render() {
     const { searchFilter, isDateRangePickerVisisble } = this.state;
     const { supplierList } = this.props.supplier;
     // const supplierListByDate = this.getFilteredListByDateRange(supplierList);
     const list = this.getFilteredList(supplierList);
+    let elements = list.slice(this.state.offset, this.state.offset + this.state.perPage);
 
     return (
       <div className="supplier-list">
@@ -159,8 +175,8 @@ export default class List extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {list.length ? (
-                  list.map(this.renderSupplierRow)
+                {elements.length ? (
+                  elements.map(this.renderSupplierRow)
                 ) : (
                   <tr>
                     <td colSpan="5">No suppliers available. Create your first one now!</td>
@@ -174,6 +190,21 @@ export default class List extends React.Component {
           <Link to={'/r/supplier/create'} className="btn btn--danger">
             Create Supplier
           </Link>
+        </div>
+        <div className="react-paginate">
+          <ReactPaginate
+            previousLabel={'previous'}
+            nextLabel={'next'}
+            breakLabel={'...'}
+            breakClassName={'break-me'}
+            pageCount={Math.ceil(list.length / this.state.perPage)}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.handlePageClick}
+            containerClassName={'pagination'}
+            subContainerClassName={'pages pagination'}
+            activeClassName={'active'}
+          />
         </div>
       </div>
     );
