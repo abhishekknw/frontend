@@ -1949,8 +1949,11 @@
         $scope.campaignIdForPerfMetrics = campaignId;
         $scope.campaignInfoForPerfMetrics = campaign;
         $scope.showPerfMetrics = $scope.perfMetrics.blank;
-        var result;
-        if ($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date')) {
+        var result;        
+
+        if ($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date') &&
+              !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
+          
           $scope.dateRangeModel.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
           $scope.dateRangeModel.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
           result = DashboardService.getLeadsByCampaign(campaignId, $scope.dateRangeModel)
@@ -1996,6 +1999,12 @@
           $scope.stackedBarPhaseChart = formatPhaseChart(response.data.data.phase_data);
           $scope.stackedBarThreeWeeksChart = formatThreeWeeksSummary(response.data.data);
 
+          if(Object.keys(response.data.data.supplier_data).length > 4 ){
+            $scope.stackedBarChartSocietyWise.chart['width'] = Object.keys(response.data.data.supplier_data).length * 100;
+          }
+          if(Object.keys(response.data.data.date_data).length > 4 ){
+            $scope.stackedBarChartDateWise.chart['width'] = Object.keys(response.data.data.date_data).length * 100;
+          }
 
           $scope.campaignLeadsData = response.data.data;
           $scope.showPerfMetrics = $scope.perfMetrics.leads;
@@ -2027,10 +2036,15 @@
       var formatMultiBarChartDataForSuppliers = function (data) {
         var values1 = [];
         var values2 = [];
+        var values3 = [];
+        var values4 = [];
         angular.forEach(data, function (supplier) {
+          
           if (supplier['flat_count'] != 0) {
             $scope.hotLeadsValues = supplier.interested / supplier['flat_count'] * 100;
             $scope.normalLeadsValues = supplier.total / supplier['flat_count'] * 100;
+            $scope.normalBookingValues = supplier.is_hot_level_3 / supplier['flat_count'] * 100;
+            $scope.normalPunchedValues = supplier.is_hot_level_4 / supplier['flat_count'] * 100;
           }
           else {
             $scope.hotLeadsValues = supplier.interested;
@@ -2043,9 +2057,14 @@
             [keyWithFlatLabel, $scope.normalLeadsValues];
           var value2 =
             [keyWithFlatLabel, $scope.hotLeadsValues];
+          var value3 =
+            [ keyWithFlatLabel, $scope.normalBookingValues ];
+          var value4 =
+            [ keyWithFlatLabel, $scope.normalPunchedValues ];
           values1.push(value1);
           values2.push(value2);
-
+          values3.push(value3);
+          values4.push(value4);
 
         })
 
@@ -2054,18 +2073,30 @@
             key: "Total Leads in %",
             color: constants.colorKey1,
             values: values1,
-            "bar": true,
+            // "bar": true,
           },
           {
             key: "High Potential Leads in %",
             color: constants.colorKey2,
             values: values2,
 
+          },
+          {
+            key: "Booking Confirmed in % :",
+            color: constants.colorKey3,
+            values: values3
+          },
+          {
+            key: "Total Orders Punched in % :",
+            color: constants.colorKey4,
+            values: values4
           }
         ].map((series) => {
           series.values = series.values.map((d) => { return { x: d[0], y: d[1] } });
           return series;
         });
+        console.log(temp_data);
+        
         return temp_data;
       }
 
@@ -2110,10 +2141,14 @@
       var formatFlatCountChart = function (data) {
         var values1 = [];
         var values2 = [];
+        var values3 = [];
+        var values4 = [];
         angular.forEach(data, function (data, key) {
           if (data['flat_count'] != 0) {
             $scope.hotLeadsValues = data.interested / data['flat_count'] * 100;
             $scope.normalLeadsValues = data.total / data['flat_count'] * 100;
+            $scope.normalBookingValues = data.is_hot_level_3 / data['flat_count'] * 100;
+            $scope.normalPunchedValues = data.is_hot_level_4 / data['flat_count'] * 100;
           }
           else {
             $scope.hotLeadsValues = data.interested;
@@ -2125,8 +2160,14 @@
             { x: keyWithFlatLabel, y: $scope.normalLeadsValues };
           var value2 =
             { x: keyWithFlatLabel, y: $scope.hotLeadsValues };
+          var value3 =
+          { x: keyWithFlatLabel, y: $scope.normalBookingValues };
+          var value4 =
+          { x: keyWithFlatLabel, y: $scope.normalPunchedValues };
           values1.push(value1);
           values2.push(value2);
+          values3.push(value3);
+          values4.push(value4);
 
 
         })
@@ -2141,6 +2182,16 @@
             key: "High Potential Leads in % :",
             color: constants.colorKey2,
             values: values2
+          },
+          {
+            key: "Booking Confirmed in % :",
+            color: constants.colorKey3,
+            values: values3
+          },
+          {
+            key: "Total Orders Punched in % :",
+            color: constants.colorKey4,
+            values: values4
           }
         ];
         return temp_data;
@@ -2180,10 +2231,14 @@
       var formatLocationCountChart = function (data) {
         var values1 = [];
         var values2 = [];
+        var values3 = [];
+        var values4 = [];
         angular.forEach(data, function (data, key) {
           if (data['flat_count'] != 0) {
             $scope.hotLeadsValues = data.interested / data['flat_count'] * 100;
             $scope.normalLeadsValues = data.total / data['flat_count'] * 100;
+            $scope.normalBookingValues = data.is_hot_level_3 / data['flat_count'] * 100;
+            $scope.normalPunchedValues = data.is_hot_level_4 / data['flat_count'] * 100;
           }
           else {
             $scope.hotLeadsValues = data.interested;
@@ -2195,8 +2250,14 @@
             { x: keyWithFlatLabel, y: $scope.normalLeadsValues };
           var value2 =
             { x: keyWithFlatLabel, y: $scope.hotLeadsValues };
+          var value3 =
+            { x: keyWithFlatLabel, y: $scope.normalBookingValues };
+          var value4 =
+            { x: keyWithFlatLabel, y: $scope.normalPunchedValues };
           values1.push(value1);
           values2.push(value2);
+          values3.push(value3);
+          values4.push(value4);
 
 
         })
@@ -2211,6 +2272,16 @@
             key: "High Potential Leads in %",
             color: constants.colorKey2,
             values: values2
+          },
+          {
+            key: "Total Bookings Confirmed in %",
+            color: constants.colorKey3,
+            values: values3
+          },
+          {
+            key: "Total Punched Orders in %",
+            color: constants.colorKey4,
+            values: values4
           }
         ];
 
@@ -2322,14 +2393,19 @@
         keyboardControls: true, idProp: "{{option.campaign_id}}",
         template: '{{option.campaign_name}}',
         showCheckAll: true,
-        scrollableHeight: '300px', scrollable: true
+        scrollableHeight: '300px', scrollable: true,        
       };
       $scope.settingsForDynamicGraphCity = {
         enableSearch: true,
         keyboardControls: true, idProp: "option",
-        template: '{{option}}', smartButtonTextConverter(skip, option) { return option; },
-        showCheckAll: true,
-        scrollableHeight: '300px', scrollable: true
+        template: '{{option}}',
+        smartButtonMaxItems: 1,
+        smartButtonTextConverter(skip, option) { 
+          return option; },
+        // showCheckAll: true,
+        scrollableHeight: '300px', scrollable: true,
+        selectionLimit: 1,
+        
       };
       $scope.settingsForDynamicGraphSociety = {
         enableSearch: true,
@@ -2348,9 +2424,14 @@
       $scope.settingsForDynamicGraphVendor = {
         enableSearch: true,
         keyboardControls: true, idProp: "{{option}}",
-        template: '{{option}}', smartButtonTextConverter(skip, option) { return option; },
+        template: '{{option}}', 
         showCheckAll: true,
-        scrollableHeight: '300px', scrollable: true
+        scrollableHeight: '300px', scrollable: true,
+        smartButtonMaxItems: 1,
+        smartButtonTextConverter(skip, option) { 
+          return option; },
+          selectionLimit: 1,
+
       };
       $scope.settingsForDynamicGraphBookingParameters = {
         enableSearch: true,

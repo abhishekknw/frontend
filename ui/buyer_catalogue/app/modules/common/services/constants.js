@@ -193,6 +193,8 @@ angular
     audit : 'AUDIT',
     colorKey1 : '#FAEF11',
     colorKey2 : '#6BCA56',
+    colorKey3 : '#6098c7',
+    colorKey4 : '#c3d5ee',
     booking_status : {
       'BK' : 'Booked',
       'NB' : 'Not Booked',
