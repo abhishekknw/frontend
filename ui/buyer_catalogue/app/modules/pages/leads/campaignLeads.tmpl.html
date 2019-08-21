@@ -155,6 +155,8 @@
         <button data-target="#addNewLeadFormFields" data-toggle="modal" class="btn btn-danger" style="margin:10px;" ng-if="updateForm">Add New Fields</button>
         <button ng-click="updateFormFields()"  class="btn btn-danger" style="margin:10px;" ng-if="updateForm">Update Fields</button>
         <button ng-click="saveLeadForm()" style="text-align:right" class="btn btn-danger" ng-disabled="fieldForm.$invalid" ng-if="!updateForm">Submit</button>
+        <button ng-click="" data-target="#globalHotLeadsCriteria" data-toggle="modal"
+         class="btn btn-danger" style="margin:10px;" >Global Hot Leads Criteria</button>
       </div>
     </form>
   </div>
@@ -535,3 +537,60 @@
          </div>
      </div>
 <!--End : view leads by supplier  -->
+<!-- START: GLOBAL HOT LEADS CRITERIA -->
+<div id="globalHotLeadsCriteria" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Global Hot Leads Criteria</h4>
+        <hr/>
+        <div class = "modal-body">
+          <div>
+            <table class="table table-responsive table-bordered">
+              <tr ng-repeat="item in globalHotLeadCriteria">
+                <td>Hot Level Criteria {{$index + 1}}</td>
+                <!-- <div ng-repeat="(itemKey,itemVal) in values"> -->
+                  
+                <td>Operations : 
+                    <button class="btn btn-danger" ng-click="addOperationInCriteria(item.operation)">Add Operation</button>
+                  <div ng-repeat="op in item.operation">
+                    <select ng-model="op.name">
+                      <option  value="or">OR</option>
+                      <option  value="and">AND</option>
+                    </select>
+                    <br/><br/>
+                    Fields: 
+
+                    <select ng-model="fieldVal" class="form-control">
+                      <option ng-repeat="(k,v) in leadFormFields" value="{{k}}">{{v.key_name}}</option>
+                    </select>
+                    <button ng-click="addFieldInCriteria(op.items,fieldVal)" class="btn btn-danger">
+                      Add Field</button>
+                    <div ng-repeat="itm in op.items">                      
+                        {{leadFormFields[itm.id]['key_name']}}<br/>
+                        Values :                  
+                        <input type="text" ng-model="textValue">
+                        <button class="btn btn-danger" ng-click="itm.values.push(textValue)">Add</button>                           
+                      <div ng-repeat="val in itm.values track by $index">
+                        <button class="btn btn-primary">{{val}}                          
+                        </button>
+                        <span ng-click="itm.values.splice($index,1)" class="glyphicon glyphicon-remove-circle"></span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <!-- </div> -->
+                
+              </tr>
+
+            </table>
+          </div>
+          <button class="btn btn-danger" ng-click="addCriteria()">Add Criteria</button>
+          <button class="btn btn-danger" ng-click="">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END: GLOBAL HOT LEADS CRITERIA -->

@@ -270,6 +270,10 @@ angular.module('catalogueApp')
           $scope.leads_form_id = item.leads_form_id;
           $scope.formName.name = item.leads_form_name;
           $scope.leadFormFields = item.leads_form_items;
+          // $scope.globalHotLeadCriteria = item.global_hot_lead_criteria;
+          console.log(item.global_hot_lead_criteria,$scope.leadFormFields);
+          setCriteria(item.global_hot_lead_criteria);          
+          
         }
         else{
           console.log($scope.leadFormFields,leadFormField);
@@ -607,6 +611,50 @@ angular.module('catalogueApp')
       $scope.changeView('viewLeadForms',$scope.campaignInfo);
     }).catch(function onError(response){
       console.log(response);
+    })
+  }
+
+  var setCriteria = function(data){
+    $scope.globalHotLeadCriteria = [];
+    angular.forEach(data, function(values, key){
+      var tempData = {
+        name : key,
+        operation: []        
+      }
+      angular.forEach(values, function(oValues, oKey){
+        var opData = {
+          name: oKey,
+          items: []
+        } 
+        angular.forEach(oValues, function(item,itemKey){
+          var itemData = {
+            id: itemKey,
+            values: item
+          }
+          opData.items.push(itemData);
+        })
+        tempData.operation.push(opData);
+      })
+      $scope.globalHotLeadCriteria.push(tempData);
+    })
+    console.log($scope.globalHotLeadCriteria);   
+  }
+  $scope.addFieldInCriteria = function(data,field){
+    data.push({
+      id: field,
+      values: []
+    })
+  }
+  $scope.addOperationInCriteria = function(data){
+    data.push({
+      name: undefined,
+      items: []
+    })
+  }
+  $scope.addCriteria = function(){
+    $scope.globalHotLeadCriteria.push({
+      name: "is_hot_level_" + $scope.globalHotLeadCriteria.length + 1,
+      operation: []
     })
   }
     });//Controller ends here
