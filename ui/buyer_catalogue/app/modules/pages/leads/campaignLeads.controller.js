@@ -7,6 +7,7 @@ angular.module('catalogueApp')
       $scope.savedFormFields = [];
       $scope.importLeadsData = [];
       $scope.showImportTable = false;
+      $scope.hotnessMapping = {};
       $scope.uploadfile = true; // added for loading spinner active/deactive
 
       $scope.formName = {
@@ -98,7 +99,8 @@ angular.module('catalogueApp')
         var data = {
           leads_form_name : $scope.formName.name,
           leads_form_items : $scope.leadFormFields,
-          global_hot_lead_criteria: $scope.createCriteriaObject()
+          global_hot_lead_criteria: $scope.createCriteriaObject(),
+          hotness_mapping: $scope.hotnessMapping
         }
         console.log(data);
         angular.forEach(data.leads_form_items, function(item,index){
@@ -273,7 +275,8 @@ angular.module('catalogueApp')
           $scope.leadFormFields = item.leads_form_items;
           // $scope.globalHotLeadCriteria = item.global_hot_lead_criteria;
           console.log(item.global_hot_lead_criteria,$scope.leadFormFields);
-          setCriteria(item.global_hot_lead_criteria);          
+          setCriteria(item.global_hot_lead_criteria);        
+          setAliasMapping(item.hotness_mapping);  
           
         }
         else{
@@ -598,7 +601,8 @@ angular.module('catalogueApp')
     var data = {
       leads_form_name : $scope.formName.name,
       leads_form_items : $scope.leadFormFields,
-      global_hot_lead_criteria: $scope.createCriteriaObject()
+      global_hot_lead_criteria: $scope.createCriteriaObject(),
+      hotness_mapping: $scope.hotnessMapping
     }
     console.log(data);
     
@@ -682,6 +686,12 @@ angular.module('catalogueApp')
         }        
       ]
     })
+    console.log($scope.hotnessMapping);
     
+  }
+  var setAliasMapping = function(data){
+    if(data){
+      $scope.hotnessMapping = data;
+    }
   }
     });//Controller ends here

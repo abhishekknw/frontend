@@ -549,7 +549,9 @@
           <div>
             <table class="table table-responsive table-bordered">
               <tr ng-repeat="item in globalHotLeadCriteria">
-                <td>Hotness Level Criteria {{$index + 1}}</td>
+                <td>Hotness Level Criteria {{$index + 1}}
+                  <input type="text" placeholder="Enter Alias" ng-model="hotnessMapping[item.name]" class="form-control">
+                </td>
                 <!-- <div ng-repeat="(itemKey,itemVal) in values"> -->
                   
                 <td>             
