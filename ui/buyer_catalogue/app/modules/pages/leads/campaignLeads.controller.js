@@ -97,7 +97,8 @@ angular.module('catalogueApp')
       $scope.saveLeadForm = function(){
         var data = {
           leads_form_name : $scope.formName.name,
-          leads_form_items : $scope.leadFormFields
+          leads_form_items : $scope.leadFormFields,
+          global_hot_lead_criteria: $scope.createCriteriaObject()
         }
         console.log(data);
         angular.forEach(data.leads_form_items, function(item,index){
@@ -669,6 +670,9 @@ angular.module('catalogueApp')
     })
   }
   $scope.addCriteria = function(){
+    if(!$scope.globalHotLeadCriteria){
+      $scope.globalHotLeadCriteria = [];
+    }
     $scope.globalHotLeadCriteria.push({
       name: "is_hot_level_" + ($scope.globalHotLeadCriteria.length + 1),
       operation: [
