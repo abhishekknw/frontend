@@ -596,9 +596,11 @@ angular.module('catalogueApp')
     console.log($scope.newLeadFormFields);
     var data = {
       leads_form_name : $scope.formName.name,
-      leads_form_items : $scope.leadFormFields
+      leads_form_items : $scope.leadFormFields,
+      global_hot_lead_criteria: $scope.createCriteriaObject()
     }
     console.log(data);
+    
     angular.forEach(data.leads_form_items, function(item,index){
       item.order_id = parseInt(index);
     })
@@ -639,7 +641,22 @@ angular.module('catalogueApp')
     })
     console.log($scope.globalHotLeadCriteria);   
   }
+  $scope.createCriteriaObject = function(){
+    var globalHotLeadCriteriaObject = {};
+      angular.forEach($scope.globalHotLeadCriteria, function(data){
+        globalHotLeadCriteriaObject[data.name] = {};
+        angular.forEach(data.operation, function(operation){
+          globalHotLeadCriteriaObject[data.name][operation.name] = {};
+          angular.forEach(operation.items, function(item){
+            globalHotLeadCriteriaObject[data.name][operation.name][item.id] = item.values;
+          })
+        })
+      })
+      return globalHotLeadCriteriaObject;
+  }
   $scope.addFieldInCriteria = function(data,field){
+    console.log(data);
+    
     data.push({
       id: field,
       values: []
@@ -653,8 +670,14 @@ angular.module('catalogueApp')
   }
   $scope.addCriteria = function(){
     $scope.globalHotLeadCriteria.push({
-      name: "is_hot_level_" + $scope.globalHotLeadCriteria.length + 1,
-      operation: []
+      name: "is_hot_level_" + ($scope.globalHotLeadCriteria.length + 1),
+      operation: [
+        {
+          name : 'or',
+          items: []
+        }        
+      ]
     })
+    
   }
     });//Controller ends here
