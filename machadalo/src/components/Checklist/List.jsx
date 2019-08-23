@@ -61,19 +61,19 @@ export default class List extends React.Component {
 
   renderChecklistRow(checklist, index) {
     let { settings } = this.props;
-    let editPermission = false;
+    let editPermission = true;
 
-    if (settings.loggedInChecklistPermission.checklists[checklist.checklist_info.checklist_id]) {
-      if (
-        settings.loggedInChecklistPermission.checklists[
-          checklist.checklist_info.checklist_id
-        ].indexOf('EDIT') !== -1
-      ) {
-        editPermission = true;
-      }
-    } else {
-      return;
-    }
+    // if (settings.loggedInChecklistPermission.checklists[checklist.checklist_info.checklist_id]) {
+    //   if (
+    //     settings.loggedInChecklistPermission.checklists[
+    //       checklist.checklist_info.checklist_id
+    //     ].indexOf('EDIT') !== -1
+    //   ) {
+    //     editPermission = true;
+    //   }
+    // } else {
+    //   return;
+    // }
 
     // Remove checklist
     const onRemove = () => {
@@ -146,15 +146,15 @@ export default class List extends React.Component {
     const { supplier, campaign, checklist, settings } = this.props;
 
     let campaignId = this.props.match.params.campaignId;
-    let campaignPermission = false;
-    let emptyChecklistText = 'You do not have permission to create new checklist in this campaign';
-    if (
-      settings.loggedInChecklistPermission.campaigns &&
-      settings.loggedInChecklistPermission.campaigns[campaignId]
-    ) {
-      campaignPermission = true;
-      emptyChecklistText = 'No checklists available. Create your first one now!';
-    }
+    let campaignPermission = true;
+    let emptyChecklistText = 'No checklists available. Create your first one now!';
+    // if (
+    //   settings.loggedInChecklistPermission.campaigns &&
+    //   settings.loggedInChecklistPermission.campaigns[campaignId]
+    // ) {
+    //   campaignPermission = true;
+    //   emptyChecklistText = 'No checklists available. Create your first one now!';
+    // }
 
     let supplierChecklistFlag = true;
     let headingText = 'Checklists for ',
