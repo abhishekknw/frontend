@@ -7,6 +7,7 @@ angular.module('catalogueApp')
       $scope.savedFormFields = [];
       $scope.importLeadsData = [];
       $scope.showImportTable = false;
+      $scope.hotnessMapping = {};
       $scope.uploadfile = true; // added for loading spinner active/deactive
 
       $scope.formName = {
@@ -97,7 +98,9 @@ angular.module('catalogueApp')
       $scope.saveLeadForm = function(){
         var data = {
           leads_form_name : $scope.formName.name,
-          leads_form_items : $scope.leadFormFields
+          leads_form_items : $scope.leadFormFields,
+          global_hot_lead_criteria: $scope.createCriteriaObject(),
+          hotness_mapping: $scope.hotnessMapping
         }
         console.log(data);
         angular.forEach(data.leads_form_items, function(item,index){
@@ -270,6 +273,11 @@ angular.module('catalogueApp')
           $scope.leads_form_id = item.leads_form_id;
           $scope.formName.name = item.leads_form_name;
           $scope.leadFormFields = item.leads_form_items;
+          // $scope.globalHotLeadCriteria = item.global_hot_lead_criteria;
+          console.log(item.global_hot_lead_criteria,$scope.leadFormFields);
+          setCriteria(item.global_hot_lead_criteria);        
+          setAliasMapping(item.hotness_mapping);  
+          
         }
         else{
           console.log($scope.leadFormFields,leadFormField);
@@ -592,9 +600,12 @@ angular.module('catalogueApp')
     console.log($scope.newLeadFormFields);
     var data = {
       leads_form_name : $scope.formName.name,
-      leads_form_items : $scope.leadFormFields
+      leads_form_items : $scope.leadFormFields,
+      global_hot_lead_criteria: $scope.createCriteriaObject(),
+      hotness_mapping: $scope.hotnessMapping
     }
     console.log(data);
+    
     angular.forEach(data.leads_form_items, function(item,index){
       item.order_id = parseInt(index);
     })
@@ -608,5 +619,79 @@ angular.module('catalogueApp')
     }).catch(function onError(response){
       console.log(response);
     })
+  }
+
+  var setCriteria = function(data){
+    $scope.globalHotLeadCriteria = [];
+    angular.forEach(data, function(values, key){
+      var tempData = {
+        name : key,
+        operation: []        
+      }
+      angular.forEach(values, function(oValues, oKey){
+        var opData = {
+          name: oKey,
+          items: []
+        } 
+        angular.forEach(oValues, function(item,itemKey){
+          var itemData = {
+            id: itemKey,
+            values: item
+          }
+          opData.items.push(itemData);
+        })
+        tempData.operation.push(opData);
+      })
+      $scope.globalHotLeadCriteria.push(tempData);
+    })
+    console.log($scope.globalHotLeadCriteria);   
+  }
+  $scope.createCriteriaObject = function(){
+    var globalHotLeadCriteriaObject = {};
+      angular.forEach($scope.globalHotLeadCriteria, function(data){
+        globalHotLeadCriteriaObject[data.name] = {};
+        angular.forEach(data.operation, function(operation){
+          globalHotLeadCriteriaObject[data.name][operation.name] = {};
+          angular.forEach(operation.items, function(item){
+            globalHotLeadCriteriaObject[data.name][operation.name][item.id] = item.values;
+          })
+        })
+      })
+      return globalHotLeadCriteriaObject;
+  }
+  $scope.addFieldInCriteria = function(data,field){
+    console.log(data);
+    
+    data.push({
+      id: field,
+      values: []
+    })
+  }
+  $scope.addOperationInCriteria = function(data){
+    data.push({
+      name: undefined,
+      items: []
+    })
+  }
+  $scope.addCriteria = function(){
+    if(!$scope.globalHotLeadCriteria){
+      $scope.globalHotLeadCriteria = [];
+    }
+    $scope.globalHotLeadCriteria.push({
+      name: "is_hot_level_" + ($scope.globalHotLeadCriteria.length + 1),
+      operation: [
+        {
+          name : 'or',
+          items: []
+        }        
+      ]
+    })
+    console.log($scope.hotnessMapping);
+    
+  }
+  var setAliasMapping = function(data){
+    if(data){
+      $scope.hotnessMapping = data;
+    }
   }
     });//Controller ends here

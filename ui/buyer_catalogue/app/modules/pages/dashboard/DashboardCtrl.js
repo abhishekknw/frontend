@@ -3899,6 +3899,8 @@
 
         DashboardService.getDistributionGraphsStatics(data)
           .then(function onSuccess(response) {
+            console.log(response);
+            
             $scope.lineChartLeadsDistributed = angular.copy(lineChartLeads);
             $scope.lineChartLeadsDistributed2 = angular.copy(lineChartLeads);
 
