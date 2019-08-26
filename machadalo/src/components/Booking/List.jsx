@@ -798,7 +798,7 @@ export default class ListBooking extends Component {
     const { campaign } = this.props;
     let campaignId = this.getCampaignId();
     if (campaign && campaign.objectById && campaign.objectById[campaignId]) {
-      campaignName = campaign.objectById[campaignId].campaign.name;
+      campaignName = campaign.objectById[campaignId].name;
     }
 
     if (list && list.length) {
