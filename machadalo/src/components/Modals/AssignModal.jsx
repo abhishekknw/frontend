@@ -104,22 +104,33 @@ export default class AssignModal extends React.Component {
       const assignments = newBooking.assignmentList[key];
 
       if (assignments && Object.keys(assignments).length) {
-        let release, audit, closure;
+        let release = {
+          date: moment(),
+          user: '',
+        };
+        let closure = {
+          date: moment(),
+          user: '',
+        };
+        let audit = {
+          date: moment(),
+          user: '',
+        };
         if (assignments.RELEASE.length) {
           release = {
-            date: moment(assignments.RELEASE.activity_date),
+            date: moment(assignments.RELEASE[0].activity_date),
             user: getUserById(user.userList, assignments.RELEASE[0].assigned_to_id),
           };
         }
         if (assignments.CLOSURE.length) {
           closure = {
-            date: moment(assignments.CLOSURE.activity_date),
+            date: moment(assignments.CLOSURE[0].activity_date),
             user: getUserById(user.userList, assignments.CLOSURE[0].assigned_to_id),
           };
         }
         if (assignments.AUDIT.length) {
           audit = {
-            date: moment(assignments.AUDIT.activity_date),
+            date: moment(assignments.AUDIT[0].activity_date),
             user: getUserById(user.userList, assignments.AUDIT[0].assigned_to_id),
           };
         }
