@@ -4808,7 +4808,7 @@
                 "value_type": "campaign"
               },
             },
-            "data_point": { "category": "unordered", "level": ["supplier", "campaign"] },
+            "data_point": { "category": "unordered", "level": ["campaign"] },
             "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
             "statistical_information": {
@@ -4909,7 +4909,7 @@
                 "value_type": "campaign"
               },
             },
-            "data_point": { "category": "unordered", "level": ["supplier", "campaign"] },
+            "data_point": { "category": "unordered", "level": ["campaign"] },
             "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
             "statistical_information": {
@@ -5769,7 +5769,7 @@
               "value_type": "campaign"
             },
           },
-          "data_point": { "category": "unordered", "level": ["supplier", "campaign"] },
+          "data_point": { "category": "unordered", "level": ["campaign"] },
           "raw_data": angular.copy(raw_data_global),
           "metrics": metrics_global,
           "statistical_information": {
