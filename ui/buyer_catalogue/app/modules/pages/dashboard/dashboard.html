@@ -3180,8 +3180,8 @@
                       <br /><br />
                       <div class="row form-group" style="color:#000000">
                         <small>
-                          <input type="checkbox" name="" value="" ng-model="checkboxCheckedSociety"  ng-click="societyParamsCheck('society',checkboxCheckedSociety)"
-                              ng-checked="!checkboxChecked"> Society Parameters
+                          <input type="checkbox" ng-model="checkboxCheckedSociety"  ng-click="societyParamsCheck('society',checkboxCheckedSociety)"
+                              > Society Parameters
                           <select class="form-control" ng-click="DisabledClickedSociety()" ng-model="graphSelection.specificParam.society"  ng-if="checkboxCheckedSociety">
                             <option value="qualitytype" ng-click="societyTypeDrop">Type of Society</option>
                             <option value="sizeOfFlats" ng-click="flatTypeDrop">Size of Society</option>
@@ -3205,9 +3205,9 @@
                         <p style="text-align:center;color:#cb1925;font-weight: bold;">OR</p>
 
                             <br />
-                            <input type="checkbox" name="" value=""  ng-model="checkboxChecked" ng-checked="!checkboxCheckedSociety" ng-click="societyParamsCheck('booking',checkboxChecked)"> Booking Parameters
+                            <input type="checkbox" ng-value="true" ng-model="checkboxChecked"  ng-click="societyParamsCheck('booking',checkboxChecked)"> Booking Parameters
                             <br />
-                              <div class="col-md-3 pull-left" ng-click="DisabledClickedBooking()" style="margin-left:-20px;" ng-if="checkboxCheckedSociety">
+                              <div class="col-md-3 pull-left" ng-click="DisabledClickedBooking()" style="margin-left:-20px;" ng-if="checkboxChecked">
                               <span class="multiselectParentDropdown" ng-dropdown-multiselect="" options="BookingParametersLists" extra-settings="settingsForDynamicGraphBookingParameters"
                               selected-model="selectedbookingParameters" translation-texts="selected_baselines_customTexts_booking_parameters" events="events"></span>
                             </div>
