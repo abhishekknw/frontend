@@ -5218,7 +5218,7 @@
                 }
                 $scope.stackedBarChartDynamicData = formatDynamicData($scope.initialDynamicGraphData, orderSpecificCase);
               } else {
-                $scope.campaignFilteredSummaryData = $scope.initialDynamicGraphData.higher_group_data
+                $scope.campaignFilteredSummaryData = $scope.initialDynamicGraphData.lower_group_data
                 angular.forEach($scope.initialDynamicGraphData.higher_group_data, function (data) {
                   $scope.initalDynamicTableData = data;
                 })
@@ -5984,6 +5984,9 @@
         
         return finalData;
       }
+      $scope.roundOfPrecisionTwo = function(value){
+        return parseFloat(value.toFixed(2));
+      } 
       
       // END
 
