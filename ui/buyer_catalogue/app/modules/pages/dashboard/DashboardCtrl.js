@@ -3949,9 +3949,9 @@
 
             values1.push(value1);
           }
-          if (data.higher_group_data[0]['freq_dist_hot_lead/flat*100'][key].hasOwnProperty('mode')) {
+          if (data.higher_group_data[0]['freq_dist_lead/flat*100'][key].hasOwnProperty('mode')) {
             var value2 =
-              { x: index, y: data.higher_group_data[0]['freq_dist_hot_lead/flat*100'][key].mode };
+              { x: index, y: data.higher_group_data[0]['freq_dist_lead/flat*100'][key].mode };
             values2.push(value2);
           } else {
             var value2 =
@@ -3989,7 +3989,7 @@
         $scope.varianceLeads = data.higher_group_data[0]['variance_lead/flat*100'];
         $scope.varianceHotLeads = data.higher_group_data[0]['variance_hot_lead/flat*100'];
 
-        angular.forEach(data.higher_group_data[0]['freq_dist_lead/flat*100'], function (modeData, key) {
+        angular.forEach(data.higher_group_data[0]['freq_dist_hot_lead/flat*100'], function (modeData, key) {
 
           if (index == 0) {
             var value1 =
@@ -5217,6 +5217,7 @@
                 $scope.stackedBarChartDynamicData = formatDynamicData($scope.initialDynamicGraphData, orderSpecificCase);
                 
               }
+              
 
               setLabelsOnBars();
               
