@@ -11,7 +11,7 @@ export default class PermissionList extends React.Component {
       createPermission: false,
       dataInfo: [],
       profilePermissionId: undefined,
-      existingProfileIds: []
+      existingProfileIds: [],
     };
     this.renderPermissionRow = this.renderPermissionRow.bind(this);
     this.handleEditProfile = this.handleEditProfile.bind(this);
@@ -35,7 +35,7 @@ export default class PermissionList extends React.Component {
       let dataInfo = this.props.settings.profilePermission;
       this.setState({
         dataInfo,
-        profilePermissionId: this.props.settings.currentProfilePermissionId
+        profilePermissionId: this.props.settings.currentProfilePermissionId,
       });
     }
   }
@@ -45,7 +45,7 @@ export default class PermissionList extends React.Component {
     this.setState({
       showPermissionModal: true,
       modalProfileId: profileId,
-      createPermission: false
+      createPermission: false,
     });
   }
 
@@ -59,7 +59,7 @@ export default class PermissionList extends React.Component {
     this.setState({
       showPermissionModal: false,
       modalProfileId: undefined,
-      createPermission: false
+      createPermission: false,
     });
   }
 
@@ -69,7 +69,7 @@ export default class PermissionList extends React.Component {
     let { permissionList } = this.props.settings;
     let existingProfileIds = [];
     if (permissionList.length) {
-      permissionList.forEach(permission => {
+      permissionList.forEach((permission) => {
         existingProfileIds.push(permission.profile_id.id);
       });
     }
@@ -78,7 +78,7 @@ export default class PermissionList extends React.Component {
       showPermissionModal: true,
       existingProfileIds,
       createPermission: true,
-      modalProfileId: undefined
+      modalProfileId: undefined,
     });
   }
 
@@ -87,9 +87,9 @@ export default class PermissionList extends React.Component {
       id: undefined,
       checklist_permissions: {
         campaigns: {},
-        checklists: {}
+        checklists: {},
       },
-      profile_id: undefined
+      profile_id: undefined,
     };
     if (!this.state.createPermission) {
       requestData.id = this.state.profilePermissionId;
@@ -97,42 +97,45 @@ export default class PermissionList extends React.Component {
     } else {
       requestData.profile_id = state.selectedProfile.value;
     }
-    state.data.data.forEach(campaignData => {
-      if (
-        campaignData.type === 'campaign' &&
-        campaignData.permission !== 'None'
-      ) {
+    console.log(state);
+
+    state.data.data.forEach((campaignData) => {
+      if (campaignData.type === 'campaign' && campaignData.permission !== 'None') {
         if (campaignData.permission === 'Edit') {
-          requestData.checklist_permissions.campaigns[campaignData.entityId] = [
+          requestData.checklist_permissions.campaigns[campaignData.supplierId] = [
             'EDIT',
             'VIEW',
             'DELETE',
             'FILL',
             'FREEZE',
-            'UNFREEZE'
+            'UNFREEZE',
           ];
         } else {
-          requestData.checklist_permissions.campaigns[campaignData.entityId] = [
+          requestData.checklist_permissions.campaigns[campaignData.supplierId] = [
             'VIEW',
             'FILL',
-            'FREEZE'
+            'FREEZE',
           ];
         }
       }
       if (campaignData.data.length) {
-        campaignData.data.forEach(checklistData => {
-          if (
-            checklistData.type === 'checklist' &&
-            checklistData.permission !== 'None'
-          ) {
+        campaignData.data.forEach((checklistData) => {
+          if (checklistData.type === 'checklist' && checklistData.permission !== 'None') {
             if (checklistData.permission === 'Edit') {
-              requestData.checklist_permissions.checklists[
-                checklistData.entityId
-              ] = ['EDIT', 'VIEW', 'DELETE', 'FILL', 'FREEZE', 'UNFREEZE'];
+              requestData.checklist_permissions.checklists[checklistData.supplierId] = [
+                'EDIT',
+                'VIEW',
+                'DELETE',
+                'FILL',
+                'FREEZE',
+                'UNFREEZE',
+              ];
             } else {
-              requestData.checklist_permissions.checklists[
-                checklistData.entityId
-              ] = ['VIEW', 'FILL', 'FREEZE'];
+              requestData.checklist_permissions.checklists[checklistData.supplierId] = [
+                'VIEW',
+                'FILL',
+                'FREEZE',
+              ];
             }
           }
         });
@@ -142,7 +145,7 @@ export default class PermissionList extends React.Component {
     this.setState({
       showPermissionModal: false,
       modalProfileId: undefined,
-      createPermission: false
+      createPermission: false,
     });
 
     if (this.state.createPermission) {
@@ -162,11 +165,7 @@ export default class PermissionList extends React.Component {
         <td>{index + 1}</td>
         <td>{permission.profile_id.name}</td>
         <td>Custom</td>
-        <td>
-          {permission.created_by.first_name +
-            ' ' +
-            permission.created_by.last_name}
-        </td>
+        <td>{permission.created_by.first_name + ' ' + permission.created_by.last_name}</td>
         <td>
           <button
             type="button"

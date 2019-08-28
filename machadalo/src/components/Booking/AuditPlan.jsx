@@ -144,7 +144,7 @@ export default class AuditPlan extends React.Component {
     const { campaign } = this.props;
     let campaignId = this.getCampaignId();
     if (campaign && campaign.objectById && campaign.objectById[campaignId]) {
-      campaignName = campaign.objectById[campaignId].campaign.name;
+      campaignName = campaign.objectById[campaignId].name;
     }
 
     const list = getConsolidatedList(campaignInventoryList);

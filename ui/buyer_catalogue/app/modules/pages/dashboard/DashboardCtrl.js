@@ -1236,6 +1236,7 @@
         "chart": {
           "type": "lineChart",
           "height": 450,
+          "interpolate": "basis",
           "margin": {
             "top": 100,
             "right": 20,
@@ -1244,8 +1245,8 @@
           },
           "useInteractiveGuideline": true,
           x: function (d, i) {  
-            return d.x; },
-          y: function (d) { return d.y; },
+            return +d.x; },
+          y: function (d) { return +d.y; },
           "dispatch": {
             stateChange: function (e) { console.log("stateChange"); },
             changeState: function (e) { console.log("changeState"); },
@@ -1254,8 +1255,12 @@
           },
           "xAxis": {
             "axisLabel": "Leads % and Hot Leads % Range Distribution",
-            "showMaxMin": false,
+            "showMaxMin": false, 
+            "reduceXTicks": false,
+            "staggerLabels": false,           
             tickFormat: function (d) {
+              console.log($scope.x_fre_leads[d]);
+              
               return $scope.x_fre_leads[d];
             },
             // tickFormat: function(d){
@@ -3894,9 +3899,14 @@
 
         DashboardService.getDistributionGraphsStatics(data)
           .then(function onSuccess(response) {
+            console.log(response);
+            
             $scope.lineChartLeadsDistributed = angular.copy(lineChartLeads);
+            $scope.lineChartLeadsDistributed2 = angular.copy(lineChartLeads);
 
             $scope.lineChartForLeadsDistributedGraphs = formatLineChartForLeadsDistributedGraph(response.data.data);
+            $scope.lineChartForLeadsDistributedGraphs2 = formatLineChartForLeadsDistributedGraph2(response.data.data);
+            
 
             $scope.selectAllCampaignLeads = false;
           }).catch(function onError(response) {
@@ -3928,9 +3938,9 @@
             index++;
           }
           $scope.x_fre_leads.push(key);
-          if (modeData.hasOwnProperty('mean')) {
+          if (modeData.hasOwnProperty('mode')) {
             var value1 =
-              { x: index, y: modeData.mean };
+              { x: index, y: modeData.mode };
 
             values1.push(value1);
           } else {
@@ -3939,9 +3949,9 @@
 
             values1.push(value1);
           }
-          if (data.higher_group_data[0]['freq_dist_hot_lead/flat*100'][key].hasOwnProperty('mean')) {
+          if (data.higher_group_data[0]['freq_dist_hot_lead/flat*100'][key].hasOwnProperty('mode')) {
             var value2 =
-              { x: index, y: data.higher_group_data[0]['freq_dist_hot_lead/flat*100'][key].mean };
+              { x: index, y: data.higher_group_data[0]['freq_dist_hot_lead/flat*100'][key].mode };
             values2.push(value2);
           } else {
             var value2 =
@@ -3959,6 +3969,70 @@
             color: constants.colorKey1,
             values: values1
           },
+          // {
+          //   key: "Hot Leads (Mean) %",
+          //   color: constants.colorKey2,
+          //   values: values2
+          // }
+        ];
+
+        return temp_data;
+      }
+
+      var formatLineChartForLeadsDistributedGraph2 = function (data) {
+        var values1 = [];
+        var values2 = [];
+        var index = 0;
+        $scope.x_fre_leads = [];
+        $scope.standardDeviationLeads = data.higher_group_data[0]['stdev_lead/flat*100'];
+        $scope.standardDeviationHotLeads = data.higher_group_data[0]['stdev_hot_lead/flat*100'];
+        $scope.varianceLeads = data.higher_group_data[0]['variance_lead/flat*100'];
+        $scope.varianceHotLeads = data.higher_group_data[0]['variance_hot_lead/flat*100'];
+
+        angular.forEach(data.higher_group_data[0]['freq_dist_lead/flat*100'], function (modeData, key) {
+
+          if (index == 0) {
+            var value1 =
+              { x: index, y: 0 };
+            values1.push(value1);
+            var value2 =
+              { x: index, y: 0 };
+            values2.push(value2);
+            $scope.x_fre_leads.push('0');
+            index++;
+          }
+          $scope.x_fre_leads.push(key);
+          if (modeData.hasOwnProperty('mode')) {
+            var value1 =
+              { x: index, y: modeData.mode };
+
+            values1.push(value1);
+          } else {
+            var value1 =
+              { x: index, y: 0 };
+
+            values1.push(value1);
+          }
+          if (data.higher_group_data[0]['freq_dist_hot_lead/flat*100'][key].hasOwnProperty('mode')) {
+            var value2 =
+              { x: index, y: data.higher_group_data[0]['freq_dist_hot_lead/flat*100'][key].mode };
+            values2.push(value2);
+          } else {
+            var value2 =
+              { x: index, y: 0 };
+
+            values2.push(value2);
+          }
+          index++;
+
+        })
+
+        var temp_data = [
+          // {
+          //   key: "Leads (Mean) %",
+          //   color: constants.colorKey1,
+          //   values: values1
+          // },
           {
             key: "Hot Leads (Mean) %",
             color: constants.colorKey2,
@@ -4734,7 +4808,7 @@
                 "value_type": "campaign"
               },
             },
-            "data_point": { "category": "unordered", "level": ["supplier", "campaign"] },
+            "data_point": { "category": "unordered", "level": ["campaign"] },
             "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
             "statistical_information": {
@@ -4835,7 +4909,7 @@
                 "value_type": "campaign"
               },
             },
-            "data_point": { "category": "unordered", "level": ["supplier", "campaign"] },
+            "data_point": { "category": "unordered", "level": ["campaign"] },
             "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
             "statistical_information": {
@@ -5695,7 +5769,7 @@
               "value_type": "campaign"
             },
           },
-          "data_point": { "category": "unordered", "level": ["supplier", "campaign"] },
+          "data_point": { "category": "unordered", "level": ["campaign"] },
           "raw_data": angular.copy(raw_data_global),
           "metrics": metrics_global,
           "statistical_information": {

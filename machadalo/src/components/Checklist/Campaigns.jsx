@@ -30,7 +30,7 @@ export default class Campaigns extends React.Component {
   getFilteredList(list) {
     return list.filter(
       (item) =>
-        item.campaign.name
+        item.name
           .toLowerCase()
           .replace(/[^0-9a-z]/gi, '')
           .indexOf(this.state.searchFilter.toLowerCase().replace(/[^0-9a-z]/gi, '')) !== -1
@@ -40,31 +40,23 @@ export default class Campaigns extends React.Component {
   renderCampaignRow(campaign) {
     return (
       <tr key={campaign.id}>
-        <td className="campaign-name">{campaign.campaign.name}</td>
+        <td className="campaign-name">{campaign.name}</td>
         <td className="hidden-xs">
-          {moment(campaign.campaign.tentative_start_date).format('Do MMM, YYYY')}
+          {moment(campaign.tentative_start_date).format('Do MMM, YYYY')}
         </td>
-        <td className="hidden-xs">
-          {moment(campaign.campaign.tentative_end_date).format('Do MMM, YYYY')}
-        </td>
+        <td className="hidden-xs">{moment(campaign.tentative_end_date).format('Do MMM, YYYY')}</td>
         <td className="visible-xs">
-          {moment(campaign.campaign.tentative_start_date).format('DD/MM/YY')}
+          {moment(campaign.tentative_start_date).format('DD/MM/YY')}
           {' - '}
-          {moment(campaign.campaign.tentative_end_date).format('DD/MM/YY')}
+          {moment(campaign.tentative_end_date).format('DD/MM/YY')}
         </td>
         <td>
-          <Link
-            to={`/r/checklist/suppliers/${campaign.campaign.proposal_id}`}
-            className="btn btn--danger"
-          >
+          <Link to={`/r/checklist/suppliers/${campaign.proposal_id}`} className="btn btn--danger">
             Select Supplier
           </Link>
         </td>
         <td>
-          <Link
-            to={`/r/checklist/list/${campaign.campaign.proposal_id}`}
-            className="btn btn--danger"
-          >
+          <Link to={`/r/checklist/list/${campaign.proposal_id}`} className="btn btn--danger">
             View Checklists
           </Link>
         </td>
