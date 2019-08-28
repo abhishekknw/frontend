@@ -2004,11 +2004,15 @@
           $scope.stackedBarPhaseChart = formatPhaseChart(response.data.data.phase_data);
           $scope.stackedBarThreeWeeksChart = formatThreeWeeksSummary(response.data.data);
 
+          
           if(Object.keys(response.data.data.supplier_data).length > 4 ){
             $scope.stackedBarChartSocietyWise.chart['width'] = Object.keys(response.data.data.supplier_data).length * 100;
           }
           if(Object.keys(response.data.data.date_data).length > 4 ){
             $scope.stackedBarChartDateWise.chart['width'] = Object.keys(response.data.data.date_data).length * 100;
+          }
+          if(Object.keys(response.data.data.locality_data).length > 4 ){
+            $scope.stackedBarChartLocationWise.chart['width'] = Object.keys(response.data.data.locality_data).length * 100;
           }
 
           $scope.campaignLeadsData = response.data.data;
