@@ -3902,7 +3902,11 @@
             console.log(response);
             
             $scope.lineChartLeadsDistributed = angular.copy(lineChartLeads);
+            $scope.lineChartLeadsDistributed.chart.xAxis.axisLabel = "Frequency Distribution Graph(Leads)";
+            $scope.lineChartLeadsDistributed.chart.yAxis.axisLabel = "Mode(Leads)";
             $scope.lineChartLeadsDistributed2 = angular.copy(lineChartLeads);
+            $scope.lineChartLeadsDistributed2.chart.xAxis.axisLabel = "Frequency Distribution Graph(Hot Leads)";
+            $scope.lineChartLeadsDistributed2.chart.yAxis.axisLabel = "Mode(Hot Leads)";
 
             $scope.lineChartForLeadsDistributedGraphs = formatLineChartForLeadsDistributedGraph(response.data.data);
             $scope.lineChartForLeadsDistributedGraphs2 = formatLineChartForLeadsDistributedGraph2(response.data.data);
@@ -5186,7 +5190,6 @@
                     $scope.selectedOrderKey = $scope.cumulativeOrderCampaignKeys[0];
                     $scope.lineChartForCumulativeOrder = [];
                     $scope.lineChartForCumulativeOrder = formatLineChartForCumulativeOrderGraph($scope.cumulativeOrderCampaignsNamesById);
-                    console.log($scope.lineChartForCumulativeOrder);
                     
                   }).catch(function onError(response) {
                     console.log(response);
