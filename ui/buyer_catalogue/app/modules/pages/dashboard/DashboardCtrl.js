@@ -2004,11 +2004,15 @@
           $scope.stackedBarPhaseChart = formatPhaseChart(response.data.data.phase_data);
           $scope.stackedBarThreeWeeksChart = formatThreeWeeksSummary(response.data.data);
 
+          
           if(Object.keys(response.data.data.supplier_data).length > 4 ){
             $scope.stackedBarChartSocietyWise.chart['width'] = Object.keys(response.data.data.supplier_data).length * 100;
           }
           if(Object.keys(response.data.data.date_data).length > 4 ){
             $scope.stackedBarChartDateWise.chart['width'] = Object.keys(response.data.data.date_data).length * 100;
+          }
+          if(Object.keys(response.data.data.locality_data).length > 4 ){
+            $scope.stackedBarChartLocationWise.chart['width'] = Object.keys(response.data.data.locality_data).length * 100;
           }
 
           $scope.campaignLeadsData = response.data.data;
@@ -3683,6 +3687,11 @@
             $scope.last2WeekSummaryStackedBarChart = angular.copy(last2WeekSummaryStackedBar);
             $scope.last3WeekSummaryStackedBarChart = angular.copy(last3WeekSummaryStackedBar);
 
+
+            if (Object.keys($scope.overallCampaignSummary).length > 4) {
+              $scope.OverallSummaryStackedBarChart.chart['width'] = Object.keys($scope.overallCampaignSummary).length * 100;
+            }
+            
             $scope.stackedBarAllCampaignWiseChart = formatAllCampaignWiseChart($scope.overallCampaignSummary);
             $scope.stackedBarLastWeekChart = formatLastWeekWiseChart($scope.lastWeekCampaignSummary);
             $scope.stackedBarLast2WeeksChart = formatLast2WeekWiseChart($scope.last2WeeksCampaignSummary);
@@ -3902,7 +3911,11 @@
             console.log(response);
             
             $scope.lineChartLeadsDistributed = angular.copy(lineChartLeads);
+            $scope.lineChartLeadsDistributed.chart.xAxis.axisLabel = "Frequency Distribution Graph(Leads)";
+            $scope.lineChartLeadsDistributed.chart.yAxis.axisLabel = "Mode(Leads)";
             $scope.lineChartLeadsDistributed2 = angular.copy(lineChartLeads);
+            $scope.lineChartLeadsDistributed2.chart.xAxis.axisLabel = "Frequency Distribution Graph(Hot Leads)";
+            $scope.lineChartLeadsDistributed2.chart.yAxis.axisLabel = "Mode(Hot Leads)";
 
             $scope.lineChartForLeadsDistributedGraphs = formatLineChartForLeadsDistributedGraph(response.data.data);
             $scope.lineChartForLeadsDistributedGraphs2 = formatLineChartForLeadsDistributedGraph2(response.data.data);
@@ -3949,9 +3962,9 @@
 
             values1.push(value1);
           }
-          if (data.higher_group_data[0]['freq_dist_hot_lead/flat*100'][key].hasOwnProperty('mode')) {
+          if (data.higher_group_data[0]['freq_dist_lead/flat*100'][key].hasOwnProperty('mode')) {
             var value2 =
-              { x: index, y: data.higher_group_data[0]['freq_dist_hot_lead/flat*100'][key].mode };
+              { x: index, y: data.higher_group_data[0]['freq_dist_lead/flat*100'][key].mode };
             values2.push(value2);
           } else {
             var value2 =
@@ -3989,7 +4002,7 @@
         $scope.varianceLeads = data.higher_group_data[0]['variance_lead/flat*100'];
         $scope.varianceHotLeads = data.higher_group_data[0]['variance_hot_lead/flat*100'];
 
-        angular.forEach(data.higher_group_data[0]['freq_dist_lead/flat*100'], function (modeData, key) {
+        angular.forEach(data.higher_group_data[0]['freq_dist_hot_lead/flat*100'], function (modeData, key) {
 
           if (index == 0) {
             var value1 =
@@ -4808,7 +4821,7 @@
                 "value_type": "campaign"
               },
             },
-            "data_point": { "category": "unordered", "level": ["campaign"] },
+            "data_point": { "category": "unordered", "level": ["supplier","campaign"] },
             "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
             "statistical_information": {
@@ -4826,12 +4839,20 @@
               ],
               "stats": [
                 "frequency_distribution",
-                "weighted_mean",
-                "variance_stdev"
+                "mean",
+                "variance_stdev",
+                "sum"
               ],
               "metrics": [
                 "m2",
-                "m4"
+                "m4",
+                "m16",
+                "m17",
+                "m18",
+                "m19",
+                "m20",
+                "m8",
+                "m10"
               ]
             }
           }
@@ -4909,7 +4930,7 @@
                 "value_type": "campaign"
               },
             },
-            "data_point": { "category": "unordered", "level": ["campaign"] },
+            "data_point": { "category": "unordered", "level": ["supplier","campaign"] },
             "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
             "statistical_information": {
@@ -4927,12 +4948,20 @@
               ],
               "stats": [
                 "frequency_distribution",
-                "weighted_mean",
-                "variance_stdev"
+                "mean",
+                "variance_stdev",
+                "sum"
               ],
               "metrics": [
                 "m2",
-                "m4"
+                "m4",
+                "m16",
+                "m17",
+                "m18",
+                "m19",
+                "m20",
+                "m8",
+                "m10"
               ]
             }
           }
@@ -5186,7 +5215,6 @@
                     $scope.selectedOrderKey = $scope.cumulativeOrderCampaignKeys[0];
                     $scope.lineChartForCumulativeOrder = [];
                     $scope.lineChartForCumulativeOrder = formatLineChartForCumulativeOrderGraph($scope.cumulativeOrderCampaignsNamesById);
-                    console.log($scope.lineChartForCumulativeOrder);
                     
                   }).catch(function onError(response) {
                     console.log(response);
@@ -5206,7 +5234,9 @@
                 }
                 $scope.stackedBarChartDynamicData = formatDynamicData($scope.initialDynamicGraphData, orderSpecificCase);
               } else {
-                $scope.campaignFilteredSummaryData = $scope.initialDynamicGraphData.higher_group_data
+                setKeysForOrderSpecificData($scope.initialDynamicGraphData.higher_group_data);
+                
+                $scope.campaignFilteredSummaryData = $scope.initialDynamicGraphData.higher_group_data;
                 angular.forEach($scope.initialDynamicGraphData.higher_group_data, function (data) {
                   $scope.initalDynamicTableData = data;
                 })
@@ -5217,6 +5247,7 @@
                 $scope.stackedBarChartDynamicData = formatDynamicData($scope.initialDynamicGraphData, orderSpecificCase);
                 
               }
+              
 
               setLabelsOnBars();
               
@@ -5226,6 +5257,36 @@
             })
             
         }
+      }
+      var setKeysForOrderSpecificData = function(data){
+        angular.forEach(data, function(item){
+          if(item.hasOwnProperty('mean_flat*cost_flat/lead')){
+            item['flat*cost_flat/lead'] = item['mean_flat*cost_flat/lead'];
+          }
+          if(item.hasOwnProperty('mean_flat*cost_flat/hot_lead')){
+            item['flat*cost_flat/hot_lead'] = item['mean_flat*cost_flat/hot_lead'];
+          }
+          if(item.hasOwnProperty('mean_flat*cost_flat/total_booking_confirmed')){
+            item['flat*cost_flat/total_booking_confirmed'] = item['mean_flat*cost_flat/total_booking_confirmed'];
+          }
+          if(item.hasOwnProperty('mean_flat*cost_flat/lead')){
+            item['flat*cost_flat/total_orders_punched'] = item['mean_flat*cost_flat/total_orders_punched'];
+          }
+
+          if(item.hasOwnProperty('mean_lead/flat*100')){
+            item['lead/flat*100'] = item['mean_lead/flat*100'];
+          }
+          if(item.hasOwnProperty('mean_hot_lead/flat*100')){
+            item['hot_lead/flat*100'] = item['mean_hot_lead/flat*100'];
+          }
+          if(item.hasOwnProperty('mean_total_booking_confirmed/flat*100')){
+            item['total_booking_confirmed/flat*100'] = item['mean_total_booking_confirmed/flat*100'];
+          }
+          if(item.hasOwnProperty('mean_total_orders_punched/flat*100')){
+            item['total_orders_punched/flat*100'] = item['mean_total_orders_punched/flat*100'];
+          }
+          
+        })
       }
       var setCampaignOverallSummary = function(data){
         $scope.campaignOverallSummary = [];
@@ -5457,6 +5518,9 @@
         if(!orderSpecificCase){
           $scope.dynamicOrderData = angular.copy($scope.initialDynamicGraphData.lower_group_data);
         }else{
+          setKeysForOrderSpecificData($scope.initialDynamicGraphData.higher_group_data);
+          console.log($scope.initialDynamicGraphData.higher_group_data);
+          
           $scope.dynamicOrderData = angular.copy($scope.initialDynamicGraphData.higher_group_data);
         }
         
@@ -5769,7 +5833,7 @@
               "value_type": "campaign"
             },
           },
-          "data_point": { "category": "unordered", "level": ["campaign"] },
+          "data_point": { "category": "unordered", "level": ["supplier","campaign"] },
           "raw_data": angular.copy(raw_data_global),
           "metrics": metrics_global,
           "statistical_information": {
@@ -5787,12 +5851,20 @@
             ],
             "stats": [
               "frequency_distribution",
-              "weighted_mean",
-              "variance_stdev"
+              "mean",
+              "variance_stdev",
+              "sum"
             ],
             "metrics": [
               "m2",
-              "m4"
+              "m4",
+              "m16",
+              "m17",
+              "m18",
+              "m19",
+              "m20",
+            "m8",
+            "m10"
             ]
           }
         }
@@ -5802,6 +5874,7 @@
         DashboardService.getDistributionGraphsStatics(reqData)
             .then(function onSuccess(response) {
               console.log(response);
+              setKeysForOrderSpecificData(response.data.data.higher_group_data);
               setStackedBarChartSummary(response.data.data);
             }).catch(function onError(response){
               console.log(response);              
@@ -5971,6 +6044,12 @@
         
         return finalData;
       }
+      $scope.roundOfPrecisionTwo = function(value){
+        if(value)
+          return parseFloat(value.toFixed(2));
+        else  
+          return 'NA';
+      } 
       
       // END
 
