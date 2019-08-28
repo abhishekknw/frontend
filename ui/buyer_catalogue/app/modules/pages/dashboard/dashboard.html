@@ -3599,11 +3599,11 @@
             <td ng-if="!data.flattype">NA</td>
             <td>{{data.lead}}</td>
             <td>{{data.hot_lead}}</td>
-            <td>{{roundOfPrecisionTwo(data['flat*cost_flat/lead'])}} <br> ({{roundOfPrecisionTwo(data['lead/flat*100'])}} %)</td>
-            <td>{{roundOfPrecisionTwo(data['flat*cost_flat/hot_lead'])}} <br> ({{roundOfPrecisionTwo(data['hot_lead/flat*100'])}} %)</td>
+            <td>{{roundOfPrecisionTwo(data['flat*cost_flat/lead'])}} <br> ({{roundOfPrecisionTwo(data['lead/flat*100'])}})</td>
+            <td>{{roundOfPrecisionTwo(data['flat*cost_flat/hot_lead'])}} <br> ({{roundOfPrecisionTwo(data['hot_lead/flat*100'])}})</td>
             <!-- <td>{{data['flat*cost_flat/hotness_level_2']}} <br> ({{data['hotness_level_2/flat*100']}} %)</td> -->
-            <td>{{roundOfPrecisionTwo(data['flat*cost_flat/total_booking_confirmed'])}}) <br>({{roundOfPrecisionTwo(data['total_booking_confirmed/flat*100'])}} %)</td>
-            <td>{{roundOfPrecisionTwo(data['flat*cost_flat/total_orders_punched'])}} <br> ({{roundOfPrecisionTwo(data['total_orders_punched/flat*100'])}} %)</td>
+            <td>{{roundOfPrecisionTwo(data['flat*cost_flat/total_booking_confirmed'])}} <br>({{roundOfPrecisionTwo(data['total_booking_confirmed/flat*100'])}})</td>
+            <td>{{roundOfPrecisionTwo(data['flat*cost_flat/total_orders_punched'])}} <br> ({{roundOfPrecisionTwo(data['total_orders_punched/flat*100'])}})</td>
           </tr>
         </tbody>
       </table>

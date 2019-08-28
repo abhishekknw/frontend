@@ -4821,7 +4821,7 @@
                 "value_type": "campaign"
               },
             },
-            "data_point": { "category": "unordered", "level": ["campaign"] },
+            "data_point": { "category": "unordered", "level": ["supplier","campaign"] },
             "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
             "statistical_information": {
@@ -4839,12 +4839,20 @@
               ],
               "stats": [
                 "frequency_distribution",
-                "weighted_mean",
-                "variance_stdev"
+                "mean",
+                "variance_stdev",
+                "sum"
               ],
               "metrics": [
                 "m2",
-                "m4"
+                "m4",
+                "m16",
+                "m17",
+                "m18",
+                "m19",
+                "m20",
+                "m8",
+                "m10"
               ]
             }
           }
@@ -4922,7 +4930,7 @@
                 "value_type": "campaign"
               },
             },
-            "data_point": { "category": "unordered", "level": ["campaign"] },
+            "data_point": { "category": "unordered", "level": ["supplier","campaign"] },
             "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
             "statistical_information": {
@@ -4940,12 +4948,20 @@
               ],
               "stats": [
                 "frequency_distribution",
-                "weighted_mean",
-                "variance_stdev"
+                "mean",
+                "variance_stdev",
+                "sum"
               ],
               "metrics": [
                 "m2",
-                "m4"
+                "m4",
+                "m16",
+                "m17",
+                "m18",
+                "m19",
+                "m20",
+                "m8",
+                "m10"
               ]
             }
           }
@@ -5218,7 +5234,9 @@
                 }
                 $scope.stackedBarChartDynamicData = formatDynamicData($scope.initialDynamicGraphData, orderSpecificCase);
               } else {
-                $scope.campaignFilteredSummaryData = $scope.initialDynamicGraphData.lower_group_data
+                setKeysForOrderSpecificData($scope.initialDynamicGraphData.higher_group_data);
+                
+                $scope.campaignFilteredSummaryData = $scope.initialDynamicGraphData.higher_group_data;
                 angular.forEach($scope.initialDynamicGraphData.higher_group_data, function (data) {
                   $scope.initalDynamicTableData = data;
                 })
@@ -5239,6 +5257,36 @@
             })
             
         }
+      }
+      var setKeysForOrderSpecificData = function(data){
+        angular.forEach(data, function(item){
+          if(item.hasOwnProperty('mean_flat*cost_flat/lead')){
+            item['flat*cost_flat/lead'] = item['mean_flat*cost_flat/lead'];
+          }
+          if(item.hasOwnProperty('mean_flat*cost_flat/hot_lead')){
+            item['flat*cost_flat/hot_lead'] = item['mean_flat*cost_flat/hot_lead'];
+          }
+          if(item.hasOwnProperty('mean_flat*cost_flat/total_booking_confirmed')){
+            item['flat*cost_flat/total_booking_confirmed'] = item['mean_flat*cost_flat/total_booking_confirmed'];
+          }
+          if(item.hasOwnProperty('mean_flat*cost_flat/lead')){
+            item['flat*cost_flat/total_orders_punched'] = item['mean_flat*cost_flat/total_orders_punched'];
+          }
+
+          if(item.hasOwnProperty('mean_lead/flat*100')){
+            item['lead/flat*100'] = item['mean_lead/flat*100'];
+          }
+          if(item.hasOwnProperty('mean_hot_lead/flat*100')){
+            item['hot_lead/flat*100'] = item['mean_hot_lead/flat*100'];
+          }
+          if(item.hasOwnProperty('mean_total_booking_confirmed/flat*100')){
+            item['total_booking_confirmed/flat*100'] = item['mean_total_booking_confirmed/flat*100'];
+          }
+          if(item.hasOwnProperty('mean_total_orders_punched/flat*100')){
+            item['total_orders_punched/flat*100'] = item['mean_total_orders_punched/flat*100'];
+          }
+          
+        })
       }
       var setCampaignOverallSummary = function(data){
         $scope.campaignOverallSummary = [];
@@ -5470,6 +5518,9 @@
         if(!orderSpecificCase){
           $scope.dynamicOrderData = angular.copy($scope.initialDynamicGraphData.lower_group_data);
         }else{
+          setKeysForOrderSpecificData($scope.initialDynamicGraphData.higher_group_data);
+          console.log($scope.initialDynamicGraphData.higher_group_data);
+          
           $scope.dynamicOrderData = angular.copy($scope.initialDynamicGraphData.higher_group_data);
         }
         
@@ -5782,7 +5833,7 @@
               "value_type": "campaign"
             },
           },
-          "data_point": { "category": "unordered", "level": ["campaign"] },
+          "data_point": { "category": "unordered", "level": ["supplier","campaign"] },
           "raw_data": angular.copy(raw_data_global),
           "metrics": metrics_global,
           "statistical_information": {
@@ -5800,12 +5851,20 @@
             ],
             "stats": [
               "frequency_distribution",
-              "weighted_mean",
-              "variance_stdev"
+              "mean",
+              "variance_stdev",
+              "sum"
             ],
             "metrics": [
               "m2",
-              "m4"
+              "m4",
+              "m16",
+              "m17",
+              "m18",
+              "m19",
+              "m20",
+            "m8",
+            "m10"
             ]
           }
         }
@@ -5815,6 +5874,7 @@
         DashboardService.getDistributionGraphsStatics(reqData)
             .then(function onSuccess(response) {
               console.log(response);
+              setKeysForOrderSpecificData(response.data.data.higher_group_data);
               setStackedBarChartSummary(response.data.data);
             }).catch(function onError(response){
               console.log(response);              
@@ -5985,7 +6045,10 @@
         return finalData;
       }
       $scope.roundOfPrecisionTwo = function(value){
-        return parseFloat(value.toFixed(2));
+        if(value)
+          return parseFloat(value.toFixed(2));
+        else  
+          return 'NA';
       } 
       
       // END
