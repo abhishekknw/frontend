@@ -3687,6 +3687,11 @@
             $scope.last2WeekSummaryStackedBarChart = angular.copy(last2WeekSummaryStackedBar);
             $scope.last3WeekSummaryStackedBarChart = angular.copy(last3WeekSummaryStackedBar);
 
+
+            if (Object.keys($scope.overallCampaignSummary).length > 4) {
+              $scope.OverallSummaryStackedBarChart.chart['width'] = Object.keys($scope.overallCampaignSummary).length * 100;
+            }
+            
             $scope.stackedBarAllCampaignWiseChart = formatAllCampaignWiseChart($scope.overallCampaignSummary);
             $scope.stackedBarLastWeekChart = formatLastWeekWiseChart($scope.lastWeekCampaignSummary);
             $scope.stackedBarLast2WeeksChart = formatLast2WeekWiseChart($scope.last2WeeksCampaignSummary);
