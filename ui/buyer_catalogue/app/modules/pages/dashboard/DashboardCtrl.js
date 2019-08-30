@@ -886,11 +886,11 @@
                 "</tr>" +
                 "<tr>" +
                 "<td class='key'>" + dynamicPricingKeys[e.data.key][0]['name'] + ' :' + "</td>" +
-                "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[e.data.key][0]['value']] + "</strong></td>" +
+                "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[e.data.key][0]['value']].toFixed(2) + "</strong></td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td class='key'>" + dynamicPricingKeys[e.data.key][1]['name'] + ' (RS)' + ' :' + "</td>" +
-                "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[e.data.key][1]['value']] + "</strong></td>" +
+                "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[e.data.key][1]['value']].toFixed(2) + "</strong></td>" +
                 "</tr>";
 
               var header =
@@ -967,11 +967,11 @@
                 "</tr>" +
                 "<tr>" +
                 "<td class='key'>" + dynamicPricingKeys[e.data.key][0]['name'] + ' :' + "</td>" +
-                "<td class='x-value'><strong>" + tooltipDynamicGraphDataSummary[e.index][dynamicPricingKeys[e.data.key][0]['value']] + "</strong></td>" +
+                "<td class='x-value'><strong>" + tooltipDynamicGraphDataSummary[e.index][dynamicPricingKeys[e.data.key][0]['value']].toFixed(2) + "</strong></td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td class='key'>" + dynamicPricingKeys[e.data.key][1]['name'] + ' (RS)' + ' :' + "</td>" +
-                "<td class='x-value'><strong>" + tooltipDynamicGraphDataSummary[e.index][dynamicPricingKeys[e.data.key][1]['value']] + "</strong></td>" +
+                "<td class='x-value'><strong>" + tooltipDynamicGraphDataSummary[e.index][dynamicPricingKeys[e.data.key][1]['value']].toFixed(2) + "</strong></td>" +
                 "</tr>";
 
               var header =
@@ -1386,7 +1386,7 @@
                 "</tr>" +
                 "<tr>" +
                 "<td class='key'>" + dynamicPricingKeys[key][0]['name'] + ' :' + "</td>" +
-                "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[key][0]['value']] + "</strong></td>" +
+                "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[key][0]['value']].toFixed(2) + "</strong></td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td class='key'>" + dynamicPricingKeys[key][1]['name'] + ' (RS)' + ' :' + "</td>" +
