@@ -5887,6 +5887,12 @@
         angular.forEach($scope.selectedDynamicCampaigns, function (data) {
           reqData.data_scope['1'].values.exact.push(data.campaign_id);
         });
+        if($scope.selectedDynamicGraphParams.length){
+          angular.forEach($scope.selectedDynamicGraphParams, function(item){
+            var index = reqData.raw_data.indexOf(item.key);
+            reqData.raw_data.splice(index, 1, item.value);
+          })            
+        }
         DashboardService.getDistributionGraphsStatics(reqData)
             .then(function onSuccess(response) {
               console.log(response);
