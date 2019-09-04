@@ -11,7 +11,6 @@ angular.module('catalogueApp')
 
    //Start: code added for societydetails
    societyDetailsViewService.getSociety = function (id,supplierTypeCode) {
-     console.log(id);
       var url = url_base_societyDetails + "supplier/" + id + "/image_details/?supplierTypeCode=" + supplierTypeCode;;
       return machadaloHttp.get(url);
    };

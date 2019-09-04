@@ -60,8 +60,7 @@ angular.module('catalogueApp')
     $scope.getUsersList = function(orgId){
       commonDataShare.getUsersList(orgId)
         .then(function onSuccess(response){
-          console.log(response);
-      		$scope.userList = response.data.data;
+          $scope.userList = response.data.data;
       	})
       	.catch(function onError(response){
       		console.log("error occured", response);
@@ -85,7 +84,6 @@ angular.module('catalogueApp')
       };
       opsDashBoardService.sendMail(email_Data)
       .then(function onSuccess(response){
-        console.log(response);
         $scope.taskId = response.data.data.task_id;
         sendMailInProgress();
     	})
@@ -158,13 +156,11 @@ angular.module('catalogueApp')
     }
 
     $scope.convertCampaignToProposal = function(proposal){
-      console.log(proposal);
       $scope.currentProposal = proposal;
       opsDashBoardService.convertCampaignToProposal(proposal.proposal.proposal_id, proposal.proposal)
           .then(function onSuccess(response){
             $("#declineModal").modal('show');
-              console.table(response);
-    	})
+    	    })
           .catch(function onError(response){
             console.log(response);
             getProposalDetails();
@@ -207,10 +203,10 @@ angular.module('catalogueApp')
     var getOrganisationsForAssignment = function(){
       opsDashBoardService.getOrganisationsForAssignment()
       .then(function onSuccess(response){
-        console.log(response);
         $scope.organisationList = response.data.data;
       }).catch(function onError(response){
         console.log(response);
       })
     }
+  
 }]);//Controller function ends here
