@@ -145,15 +145,15 @@
         <hr/>
         <div class = "modal-body">
           <div class = "row">
-          <label>Select Organisation:</label>
+            <label>Select Organisation:</label>
             <select ng-model= "orgId" ng-change="getUsersList(orgId)">
-              <option ng-repeat = "org in organisationList" value = "{{org.organisation_id}}">{{org.name}}</option>
+              <option ng-repeat = "org in organisationList | orderBy: 'name'" value = "{{org.organisation_id}}">{{org.name}}</option>
             </select>
           </div>
         <div class = "row">
-        <label>Assign to:</label>
+          <label>Assign to:</label>
           <select ng-model= "userId">
-            <option ng-repeat = "user in userList" value = "{{user.id}}">{{user.username}}</option>
+            <option ng-repeat = "user in userList | orderBy: 'username'" value = "{{user.id}}">{{user.username}}</option>
           </select>
         </div>
           <button class="btn btn-danger active notify" ng-click="saveAssignment(userId)">Assign</button>
