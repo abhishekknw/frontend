@@ -2609,7 +2609,6 @@
         'SUNBOARD': {
           status: false, total: 0
         },
-
       }
 
       $scope.getCampaignInvData = function (data) {
@@ -2626,7 +2625,6 @@
         $scope.supplierStatus = data.status;
         $scope.supplierAndInvData = $scope.campaignSupplierAndInvData[data.status];
         $scope.invStatusKeys = angular.copy(invStatusKeys);
-        // console.log($scope.supplierAndInvData);
         $scope.TotalSupplierFlatCount = 0;
         $scope.TotalSupplierLeadsCount = 0;
         $scope.TotalLeadsPerFlat = 0;
@@ -2735,26 +2733,32 @@
               },
             });
           })
-
-
-
-
         });
         return markersOfPanIndia;
 
       };
       function assignMarkersToMap(suppliers) {
         var markers = [];
-        // var icon;
+        var icon = 'http://maps.google.com/mapfiles/ms/icons/';
         var checkInv = true;
+        if ($scope.supplierStatus == 'completed'){
+          icon = icon + 'green-dot.png'
+        }
+        if ($scope.supplierStatus == 'upcoming'){
+          icon = icon + 'orange-dot.png'
+        }
+        if ($scope.supplierStatus == 'ongoing'){
+          icon = icon + 'blue-dot.png'
+        }
         angular.forEach(suppliers, function (supplier, $index) {
           markers.push({
             latitude: supplier.supplier.society_latitude,
             longitude: supplier.supplier.society_longitude,
             id: supplier.supplier.supplier_id,
-            // icon: 'http://www.googlemapsmarkers.com/v1/009900/',
+            icon: icon,
             options: { draggable: false },
             dataofSupplierAndInvData: supplier.supplier,
+            completedLeadsSupplierData: supplier.leads_data,
             title: {
               name: supplier.supplier.society_name,
               flat_count: supplier.supplier.flat_count,
@@ -2768,7 +2772,8 @@
                     'key': key,
                     'total': supplier.supplier.inv_data[key].total.total
                   }
-                } else {
+                } 
+                else {
                   markers[$index].title[key] = {
                     'key': key,
                     'total': 0
