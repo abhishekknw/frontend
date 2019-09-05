@@ -104,27 +104,27 @@
                               <div class="col-md-8">
                                 <select class="form-control" name="" ng-model="emailModel.selected">
                                   <option value="" disabled selected hidden>Email Type</option>
-                                  <option value="listOfSupplier">List Of Society Email</option>
-                                  <option value="activationOfSupplier">Activation Of Society,Branding and Permission Email</option>
-                                  <option value="pipelineOfSupplier">Pipelined Societies Email</option>
-                                  <option value="prehype">Prehype Email</option>
                                   <option value="recce">Recce Email</option>
+                                  <option value="pipelineOfSupplier">Pipelined Societies Email</option>
+                                  <option value="listOfSupplier">Booking(Upcoming Society activation Email)</option>
+                                  <option value="activationOfSupplier">Activation Of Society,Branding and Permission Email</option>
+                                  <option value="prehype">Prehype Email</option>
                                 </select>
                               </div>
                               <br><br><br>
                               <div class="row email-row">
                                 <div class="col-md-12">
                                   <div class="col-md-6">
-                                    <input type="email" class="form-control"  placeholder="Enter Email Id to send mail" ng-model="emailModel.email" style="text-align:center;"><br>
+                                    <input type="email" class="form-control"  placeholder="Enter Email Id to test" ng-model="emailModel.email" style="text-align:center;"><br>
                                   </div>
                                   <div class="col-md-6">
-                                    <button type="button" name="button" ng-Click="sendBookingEmails(proposalDetail.proposal_id)" class="btn email-button" ng-disabled="isEmailButton || emailBtnDisabled">Send email to given user</button>
+                                    <button type="button" name="button" ng-Click="sendBookingEmails(proposalDetail.proposal_id)" class="btn email-button" ng-disabled="isEmailButton || emailBtnDisabled">Test email for given user</button>
                                   </div>
                                 </div>
                               </div>
                               <div class="col-md-12">
                                 <div class="emailModal" style="display: grid;">
-                                  <button type="button" name="button" class="btn btn-danger" style="text-align:center" ng-click="sendBookingEmails(proposalDetail.proposal_id, 'confirmed')" ng-disabled="emailBtnDisabled"> Send Email To All</button>
+                                  <button type="button" name="button" class="btn btn-danger" style="text-align:center" ng-click="sendBookingEmails(proposalDetail.proposal_id, 'confirmed')" ng-disabled="emailBtnDisabled"> Default to send email to all</button>
                                 </div>
                               </div>
 
