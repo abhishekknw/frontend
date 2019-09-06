@@ -8,7 +8,7 @@
 </br></br></br>
 
   <div class="row" style="margin-left:30px;overflow:hidden;">
-  <div class="container pagecontainer offset-0">
+  <div class="container pagecontainer offset-1">
   <!--Main Header Slider-->
 
       <div class="row">
@@ -23,10 +23,10 @@
 
          </div>
 
-         <div class="panel panel-primary" style="margin:3%;margin-top:-3px;">
+         <div class="col-md-11 pagecontainer2 offset-0" style="margin:4%;">
 
            <div class="col-md-8 cpdd01">
-             <div  id="jssor_1" style="position: relative; margin: 0 auto; top: 10px; left: 0px; width: 600px; height: 400px; overflow: hidden;">
+             <div  ng-if="SocietyImages.length > 0" id="jssor_1" style="position: relative; margin: 0 auto; top: 10px; left: 0px; width: 600px; height: 400px; overflow: hidden;">
                <div class="carousel" id="slider" >
                   <div class="carousel-inner">
                       <div class="item" ng-class="{active:!$index}" ng-repeat="image in SocietyImages">
@@ -44,28 +44,30 @@
                </div>
            <!--End: Carousel added to slide images-->
              </div>
+             <div ng-if="SocietyImages.length == 0"  style="font-size: larger; padding-top: 171px;text-align: center;color: #ababab;height: 252px;">No Society Images</div>
            </div>
            <div class="row" style="margin-top:30px;margin:4%;">
            <div class="col-md-3 well well-sm padding15">
              <span class="opensans size24 bold grey2">{{society.society_locality}}</span><br/>
-
-             <p class="grey2">Locality Rating</p>
+             <p class="grey2">Locality</p>
+           </div>
+           <div class="col-md-3  well well-sm padding15">
+              <span class="opensans size24 bold grey2">{{society.society_subarea}}</span><br/>
+              <p class="grey2">Sub Area</p>
+           </div>
+           <div class="col-md-3  well well-sm padding15" ng-if="society.landmark">
+              <span class="opensans size24 bold grey2">{{society.landmark}}</span><br/>
+              <p class="grey2">Landmark</p>
            </div>
            <div class="col-md-3 well well-sm padding15">
              <span class="opensans size24 bold grey2">{{society.society_type_quality}} </span><br/>
-
-             <p class="grey2">Society Rating</p>
+             <p class="grey2">Society Type</p>
            </div>
-           <div class="col-md-3  well well-sm padding15">
-             <span class="opensans size24 bold grey2">{{society.machadalo_index}}</span><br/>
-
-             <p class="grey2">Machadalo Index</p>
-           </div>
-           <div class="col-md-3  well well-sm padding15">
+           <!-- <div class="col-md-3  well well-sm padding15">
              <span class="opensans size24 bold grey2">{{totalInventoryCount.totalAddSpaces}}</span><br/>
 
              <p class="grey2">Total Adspaces</p>
-           </div>
+           </div> -->
          </div>
          </div>
       </div>
@@ -74,14 +76,14 @@
 <div class="row">
       <div class = "container mt25 offset-0" style="margin-top:6px;margin-left:50px;width:100%;">
         <div class = "col-md-11 pagecontainer2 offset-0">
-          <div class = "cstyle10"></div>
-          <ul style="margin:2%;margin-top:80px;" class = "nav nav-tabs" id="myTab" ng-if = "societyDetails">
+          <!-- <div class = "cstyle10"></div> -->
+          <ul style="margin:2%;" class = "nav nav-tabs" id="myTab" ng-if = "societyDetails">
             <li class="active"><a data-toggle="tab" data-target="#info"><span><img src="icons/icon.jpg" style="width:20px;height:20px"></img>&nbsp;</span><span class="hidetext">Info</span>&nbsp;</a></li>
-            <li  class="" ng-if="isAllowed(inventory_codes.poster) && show_inventory"><a data-toggle="tab" data-target="#posters"></span><span><img src="icons/poster.jpg" style="width:20px;height:20px"></img>&nbsp;</span><span class="hidetext">Poster</span>&nbsp;</a></li>
+            <!-- <li  class="" ng-if="isAllowed(inventory_codes.poster) && show_inventory"><a data-toggle="tab" data-target="#posters"></span><span><img src="icons/poster.jpg" style="width:20px;height:20px"></img>&nbsp;</span><span class="hidetext">Poster</span>&nbsp;</a></li>
             <li class="" ng-if="isAllowed(inventory_codes.standee) && show_inventory"><a data-toggle="tab" data-target="#standees"></span><span><img src="icons/standee1.png" style="width:20px;height:20px"></img>&nbsp;</span><span class="hidetext">Standee</span>&nbsp;</a></li>
             <li class="" ng-if="isAllowed(inventory_codes.stall) && show_inventory"><a data-toggle="tab" data-target="#stalls"></span><span><img src="icons/stall1.png" style="width:20px;height:20px"></img>&nbsp;</span><span class="hidetext">Stall</span>&nbsp;</a></li>
             <li  class="" ng-if="isAllowed(inventory_codes.cardisplay) && show_inventory"><a data-toggle="tab" data-target="#cardisplays"></span><span><img src="icons/mercarb.jpg" style="width:20px;height:20px"></img>&nbsp;</span><span class="hidetext">Car Display</span>&nbsp;</a></li>
-            <li class="" ng-if="isAllowed(inventory_codes.flier) && show_inventory"><a data-toggle="tab" data-target="#flier"></span><span><img src="icons/flier1.png" style="width:20px;height:20px"></img>&nbsp;</span><span class="hidetext">Fliers</span>&nbsp;</a></li>
+            <li class="" ng-if="isAllowed(inventory_codes.flier) && show_inventory"><a data-toggle="tab" data-target="#flier"></span><span><img src="icons/flier1.png" style="width:20px;height:20px"></img>&nbsp;</span><span class="hidetext">Fliers</span>&nbsp;</a></li> -->
           </ul>
           <div class="tab-content4" style="font-face:boldFont">
             <div id="info" class="tab-pane fade active in">

@@ -1337,7 +1337,7 @@
                                 </div>
 
                                 <div class="row">
-                                  <div class="col-md-12" ng-show="showDisplayDetailsTable">
+                                  <div class="col-md-12" ng-show="showDisplayDetailsTable"  ng-if="supplierStatus == 'ongoing'">
                                     <div class="panel-heading content-title">
                                       <h5 style="background:'red'">Map View for {{campaignTabPropsalName}}</h5></div>
                                     <style type="text/css">
@@ -1364,6 +1364,54 @@
                                             </ui-gmap-markers>
                                         </ui-gmap-google-map>
                                   </div>
+                                  <div class="col-md-12" ng-show="showDisplayDetailsTable"  ng-if="supplierStatus == 'completed'">
+                                      <div class="panel-heading content-title">
+                                        <h5 style="background:'red'">Map View for {{campaignTabPropsalName}}</h5></div>
+                                      <style type="text/css">
+                                            .angular-google-map-container { height: 550px;color: black;}
+                                        </style>
+                                          <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="false"
+                                                              options="options" bounds="map.bounds" control="googlemap">
+                                              <ui-gmap-window show="show" coords='windowCoords'>
+                                                    <div>
+                                                      <table class="table-responsive table">
+                                                        <div class="">
+                                                          <h3>{{space.title.name}}</h3>
+                                                        </div>
+                                                        <tr><td>Hot Leads</td><td><small>{{space.completedLeadsSupplierData.hot_leads_count || 'NA'}}</small></td></tr>
+                                                        <tr><td>Total Leads</td><td><small>{{space.completedLeadsSupplierData.total_leads_count || 'NA'}}</small></td></tr>
+                                                      </table>
+                                                     </div>
+                                              </ui-gmap-window>
+                                              <ui-gmap-markers models="supplierMarkers" coords="'self'" icon="'icon'"
+                                                               options="'options'" doRebuildAll="true" events="marker.events">
+                                              </ui-gmap-markers>
+                                          </ui-gmap-google-map>
+                                    </div>
+                                    <div class="col-md-12" ng-show="showDisplayDetailsTable"  ng-if="supplierStatus == 'upcoming'">
+                                        <div class="panel-heading content-title">
+                                          <h5 style="background:'red'">Map View for {{campaignTabPropsalName}}</h5></div>
+                                        <style type="text/css">
+                                              .angular-google-map-container { height: 550px;color: black;}
+                                          </style>
+                                            <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="false"
+                                                                options="options" bounds="map.bounds" control="googlemap">
+                                                <ui-gmap-window show="show" coords='windowCoords'>
+                                                      <div>
+                                                        <table class="table-responsive table">
+                                                          <div class="">
+                                                            <h3>{{space.title.name}}</h3>
+                                                          </div>
+                                                          <tr><td>Flat Count</td><td><small>{{space.dataofSupplierAndInvData.flat_count || 'NA'}}</small></td></tr>
+                                                          <tr><td>Tower Count</td><td><small>{{space.dataofSupplierAndInvData.tower_count || 'NA'}}</small></td></tr>
+                                                        </table>
+                                                       </div>
+                                                </ui-gmap-window>
+                                                <ui-gmap-markers models="supplierMarkers" coords="'self'" icon="'icon'"
+                                                                 options="'options'" doRebuildAll="true" events="marker.events">
+                                                </ui-gmap-markers>
+                                            </ui-gmap-google-map>
+                                      </div>  
                                 </div>
 
                                 <div class="col-md-7 LeadsTable" ng-show="showSupplierSocietywiseInvTable" >
@@ -2017,9 +2065,9 @@
             </table>
           </div>
         </div>
-        <div class="row" permission = "[permissions.brandingEmailButton]">
+        <!-- <div class="row" permission = "[permissions.brandingEmailButton]">
           <button type="button" name="button" class="col-md-12 btn btn-danger" data-toggle="modal" data-target="#sendBookingEngineEmailModal">Click here to Send Emails</button>
-        </div>
+        </div> -->
          </div>
     </div>
     </div>

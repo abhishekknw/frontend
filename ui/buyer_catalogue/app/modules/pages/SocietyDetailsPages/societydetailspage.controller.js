@@ -3,8 +3,6 @@ angular.module('catalogueApp')
     ['$scope', '$rootScope', '$window', '$location','societyDetailsViewService','$stateParams','commonDataShare','constants','$timeout','Upload','cfpLoadingBar','permissions',
     function ($scope, $rootScope, $window, $location, societyDetailsViewService, $stateParams,commonDataShare,constants,$timeout,Upload,cfpLoadingBar, permissions) {
 
-
-    console.log("Hellow World");
     var supplierId = $stateParams.supplierId;
     var supplier_type_code = 'RS';
     //start : code added for societyDetails
@@ -21,49 +19,40 @@ angular.module('catalogueApp')
     $scope.supplier_type_code = "RS";
     societyDetailsViewService.getSociety(supplier_id,supplier_type_code)
      .then(function onSuccess(response) {
-       console.log(response);
        $scope.loading = response;
        setSocietyLocationOnMap(response.data.data.supplier_data);
-        $scope.loading = response.data.data.supplier_data;
+       $scope.loading = response.data.data.supplier_data;
        $scope.myInterval=300;
        $scope.society_images = response.data.data.supplier_images;
-       // console.log($scope.society_images);
-       // $scope.amenities = response.data.data.amenities;
+       $scope.amenities = response.data.data.amenities;
        $scope.society =  response.data.data.supplier_data;
-       console.log($scope.society);
       //  $scope.society = response.data.supplier_data;
        //$rootScope.societyname = response.society_data.society_name;
        $scope.residentCount = estimatedResidents(response.data.data.supplier_data.flat_count);
        $scope.flatcountflier = response.data.data.supplier_data.flat_count;
        var baseUrl = constants.aws_bucket_url;
-console.log(baseUrl);
        // Start : Code added to seperate images by their image tag names
        var imageUrl;
        $scope.SocietyImages = [],$scope.FlierImages=[],$scope.PosterImages=[],$scope.StandeeImages=[],$scope.StallImages=[],$scope.CarImages=[];
        for(var i=0;i<$scope.society_images.length;i++){
          if($scope.society_images[i].name == 'Society'){
            imageUrl = baseUrl + $scope.society_images[i].image_url;
-           console.log(imageUrl);
            $scope.SocietyImages.push(imageUrl);
          }
          if($scope.society_images[i].name == 'Standee Space'){
            imageUrl = baseUrl + $scope.society_images[i].image_url;
-           console.log(imageUrl);
            $scope.StandeeImages.push(imageUrl);
          }
          if($scope.society_images[i].name == 'Stall Space'){
            imageUrl = baseUrl + $scope.society_images[i].image_url;
-           console.log(imageUrl);
            $scope.StallImages.push(imageUrl);
          }
          if($scope.society_images[i].name == 'Fliers'){
            imageUrl = baseUrl + $scope.society_images[i].image_url;
-           console.log(imageUrl);
            $scope.FlierImages.push(imageUrl);
          }
          if($scope.society_images[i].name == 'Car Display'){
            imageUrl = baseUrl + $scope.society_images[i].image_url;
-           console.log(imageUrl);
            $scope.CarImages.push(imageUrl);
          }
          if($scope.society_images[i].name == 'Lift' || $scope.society_images[i].name == 'Notice Board'){
@@ -71,22 +60,18 @@ console.log(baseUrl);
            $scope.PosterImages.push(imageUrl);
          }
      }
-     console.log($scope.StallImages);
 
      // End : Code added to seperate images by their image tag names
     });
 
     societyDetailsViewService.get_inventory_summary(supplier_id, supplier_type_code)
     .then(function onSuccess(response){
-      console.log(response);
       $scope.societyDetails = true;
       if('inventory' in response.data){
         $scope.inventoryDetails = response.data.inventory;
-        console.log(  $scope.inventoryDetails);
          $scope.totalInventoryCount = inventoryCount($scope.inventoryDetails);
          $scope.model = response.data.inventory;
          $scope.inventories_allowed = response.data.inventories_allowed_codes;
-         console.log($scope.inventories_allowed);
          $scope.show_inventory = true;
        }
     }).catch(function onError(response){

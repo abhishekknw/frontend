@@ -55,24 +55,7 @@
         { id: 3, name: 'Building ERP' },
         { id: 4, name: 'Door To Door' },
       ];
-      // $scope.cityLists = [
-      //   {id: 1, name: 'Mumbai'},
-      //   {id: 2, name: 'Delhi'},
-      //   {id: 3, name: 'Bangalore'},
-      //   {id: 4, name: 'Hyderabad'},
-      //   {id: 5, name: 'Chennai'},
-      //   {id: 6, name: 'Ludhiana'},
-      //   {id: 7, name: 'Kanpur'},
-      //   {id: 8, name: 'Lucknow'},
-      //   {id: 9, name: 'Jaipur'},
-      //   {id: 10, name: 'Vijaywada'},
-      //  {id: 11, name: 'Vishakhapattanam'},
-      //  {id: 12, name: 'Coimbatore'},
-      //  {id: 13, name: 'Thiruvananthpuram'},
-      //  {id: 14, name: 'Madurai'},
-      //  {id: 15 , name: 'Chandigarh'},
-      //  {id: 16, name: 'Noida'},
-      // ];
+
       $scope.graphParams = [
         { id: 1, name: 'Non Zero Total Leads', value: 'lead_nz', key: 'lead' },
         { id: 2, name: 'Non Zero Hot Leads', value: 'hot_lead_nz', key: 'hot_lead' },
@@ -582,9 +565,7 @@
             })
 
             $scope.vendorsList = Object.keys($scope.vendorsData);
-            // $scope.distributedGraphsVendorsData.push($scope.vendorsData);
-            // console.log($scope.distributedGraphsVendorsData);
-            // console.log($scope.distributedGraphsVendorsData.organisation);
+            
             $scope.campaigns = [$scope.campaignData.ongoing_campaigns.length, $scope.campaignData.completed_campaigns.length, $scope.campaignData.upcoming_campaigns.length, $scope.campaignData.onhold_campaigns.length];
             $scope.campaignChartdata = [
               { label: $scope.allCampaignStatusType.ongoing.campaignLabel, value: $scope.campaignData.ongoing_campaigns.length, status: $scope.allCampaignStatusType.ongoing.status },
@@ -886,11 +867,11 @@
                 "</tr>" +
                 "<tr>" +
                 "<td class='key'>" + dynamicPricingKeys[e.data.key][0]['name'] + ' :' + "</td>" +
-                "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[e.data.key][0]['value']] + "</strong></td>" +
+                "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[e.data.key][0]['value']].toFixed(2) + "</strong></td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td class='key'>" + dynamicPricingKeys[e.data.key][1]['name'] + ' (RS)' + ' :' + "</td>" +
-                "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[e.data.key][1]['value']] + "</strong></td>" +
+                "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[e.data.key][1]['value']].toFixed(2) + "</strong></td>" +
                 "</tr>";
 
               var header =
@@ -967,11 +948,11 @@
                 "</tr>" +
                 "<tr>" +
                 "<td class='key'>" + dynamicPricingKeys[e.data.key][0]['name'] + ' :' + "</td>" +
-                "<td class='x-value'><strong>" + tooltipDynamicGraphDataSummary[e.index][dynamicPricingKeys[e.data.key][0]['value']] + "</strong></td>" +
+                "<td class='x-value'><strong>" + tooltipDynamicGraphDataSummary[e.index][dynamicPricingKeys[e.data.key][0]['value']].toFixed(2) + "</strong></td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td class='key'>" + dynamicPricingKeys[e.data.key][1]['name'] + ' (RS)' + ' :' + "</td>" +
-                "<td class='x-value'><strong>" + tooltipDynamicGraphDataSummary[e.index][dynamicPricingKeys[e.data.key][1]['value']] + "</strong></td>" +
+                "<td class='x-value'><strong>" + tooltipDynamicGraphDataSummary[e.index][dynamicPricingKeys[e.data.key][1]['value']].toFixed(2) + "</strong></td>" +
                 "</tr>";
 
               var header =
@@ -1386,7 +1367,7 @@
                 "</tr>" +
                 "<tr>" +
                 "<td class='key'>" + dynamicPricingKeys[key][0]['name'] + ' :' + "</td>" +
-                "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[key][0]['value']] + "</strong></td>" +
+                "<td class='x-value'><strong>" + tooltipDynamicGraphData[e.index][dynamicPricingKeys[key][0]['value']].toFixed(2) + "</strong></td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td class='key'>" + dynamicPricingKeys[key][1]['name'] + ' (RS)' + ' :' + "</td>" +
@@ -1704,27 +1685,6 @@
           })
       }
 
-      // $scope.getPhases = function(campaignId){
-      //   DashboardService.getPhases(campaignId)
-      //   .then(function onSuccess(response){
-      //     console.log(response);
-      //     $scope.phaseMappingList = {};
-      //     angular.forEach(response.data.data, function(phase){
-      //       phase.start_date = new Date(phase.start_date);
-      //       phase.end_date = new Date(phase.end_date);
-      //       $scope.phaseMappingList[phase.no] = phase;
-      //
-      //     })
-      //     $scope.phaseNo = response.data.data.phase_no;
-      //     console.log($scope.phaseMappingList);
-      //     $scope.phasesDataOfSociety = response.data.data;
-      //     console.log($scope.phasesDataOfSociety.phase_no);
-      //     }).catch(function onError(response){
-      //     console.log(response);
-      //   })
-      // }
-      // END : service call to get suppliers as campaign status
-
 
       // START : get campaign filters
       $scope.getCampaignFilters = function (campaignId) {
@@ -2026,21 +1986,6 @@
           console.log(response);
         })
       }
-
-      //  $scope.formatMultiBarChartDataForSuppliers = [
-      //      {
-      //          "key" : "Quantity" ,
-      //          "bar": true,
-      //          "values" : [ [ 1136005200000, 1271000.0] , [ 1138683600000, 1271000.0], [ 1138683600000, 1271000.0], [ 1138683600000, 1271000.0] ]
-      //      },
-      //      {
-      //          "key" : "Price",
-      //          "values" : [ [ 1136005200000 , 71.89] , [ 1138683600000 , 75.51], [ 1138683600000 , 75.51] , [ 1138683600000 , 75.51] ]
-      //      }
-      //  ].map((series) => {
-      //          series.values = series.values.map((d) => { return {x: d[0], y: d[1] } });
-      //          return series;
-      // });
 
       var formatMultiBarChartDataForSuppliers = function (data) {
         var values1 = [];
@@ -2664,7 +2609,6 @@
         'SUNBOARD': {
           status: false, total: 0
         },
-
       }
 
       $scope.getCampaignInvData = function (data) {
@@ -2681,7 +2625,6 @@
         $scope.supplierStatus = data.status;
         $scope.supplierAndInvData = $scope.campaignSupplierAndInvData[data.status];
         $scope.invStatusKeys = angular.copy(invStatusKeys);
-        // console.log($scope.supplierAndInvData);
         $scope.TotalSupplierFlatCount = 0;
         $scope.TotalSupplierLeadsCount = 0;
         $scope.TotalLeadsPerFlat = 0;
@@ -2790,26 +2733,32 @@
               },
             });
           })
-
-
-
-
         });
         return markersOfPanIndia;
 
       };
       function assignMarkersToMap(suppliers) {
         var markers = [];
-        // var icon;
+        var icon = 'http://maps.google.com/mapfiles/ms/icons/';
         var checkInv = true;
+        if ($scope.supplierStatus == 'completed'){
+          icon = icon + 'green-dot.png'
+        }
+        if ($scope.supplierStatus == 'upcoming'){
+          icon = icon + 'orange-dot.png'
+        }
+        if ($scope.supplierStatus == 'ongoing'){
+          icon = icon + 'blue-dot.png'
+        }
         angular.forEach(suppliers, function (supplier, $index) {
           markers.push({
             latitude: supplier.supplier.society_latitude,
             longitude: supplier.supplier.society_longitude,
             id: supplier.supplier.supplier_id,
-            // icon: 'http://www.googlemapsmarkers.com/v1/009900/',
+            icon: icon,
             options: { draggable: false },
             dataofSupplierAndInvData: supplier.supplier,
+            completedLeadsSupplierData: supplier.leads_data,
             title: {
               name: supplier.supplier.society_name,
               flat_count: supplier.supplier.flat_count,
@@ -2823,7 +2772,8 @@
                     'key': key,
                     'total': supplier.supplier.inv_data[key].total.total
                   }
-                } else {
+                } 
+                else {
                   markers[$index].title[key] = {
                     'key': key,
                     'total': 0
@@ -2981,13 +2931,7 @@
       }
       //
       $scope.options = { width: 500, height: 300, 'bar': 'aaa' };
-      // $scope.data = [1, 2, 3, 4];
-      //            $scope.hovered = function(d){
-      //                $scope.barValue = d;
-      //                $scope.$apply();
-      //            };
-      //            $scope.barValue = 'None';
-
+      
 
       var formatD3StackedBarChartData = function (data) {
         var d3Data = [];
@@ -3147,21 +3091,7 @@
       $scope.backToCampaign = function () {
         $scope.showCampaigns = true;
       }
-      //
-      //
-      // $scope.getSortedLeadsByCampaign = function(campaignId,query_type){
-      //   console.log(query_type);
-      //   $scope.showTimeLocBtn = false;
-      //   $scope.showinv = false;
-      //   $scope.showSelection = true;
-      //   $scope.showPerfMetrics = $scope.perfMetrics.blank;
-      //   DashboardService.getSortedLeadsByCampaign(campaignId)
-      //   .then(function onSuccess(response){
-      //     console.log(response);
-      //   }).catch(function onError(response){
-      //     console.log(response);
-      //   })
-      // }
+      
 
       // Check for internal comments
       var userInfo = JSON.parse($window.localStorage.userInfo);
@@ -3377,10 +3307,7 @@
           $scope.sortedLocationData[keyName] = formatByLocation(sortable.reverse(), keyName, sortMenuMap[id].type);
         }
 
-        // if(sortMenuMap[id].order == 'DISTRIBUTION'){
-        //   console.log(mean,median);
-        //   $scope.sortedLocationData[keyName] = drawDistributionGraph(mean,median,mode);
-        // }
+      
         $scope.showLocationData = true;
       }
 
@@ -3646,18 +3573,7 @@
         });
 
       };
-      // var drawDistributionGraph = function(mean,median,mode){
-      //     var data = {
-      //       'key' : 'Distribution Graph',
-      //       'values' : [
-      //         {label : 'Mean', value : mean},
-      //         {label : 'Median', value : median},
-      //         {label : 'Mode', value : mode},
-      //       ]
-      //     };
-      //     console.log(data);
-      //     return [data];
-      // }
+      
 
       $scope.getCampaignWiseSummary = function () {
         $scope.getVendorWiseSummary();
@@ -4209,19 +4125,7 @@
         }
       }
 
-      // $scope.getSubLevelDataValue = function(value, type){
-      //   if(!$scope.dynamicData.data_point.hasOwnProperty('sublevel')){
-      //     $scope.dynamicData.data_point['sublevel'] = [];
-      //   }
-      //   if(value){
-      //     $scope.dynamicData.data_point['sublevel'].push(type);
-      //   }else {
-      //     var index = $scope.dynamicDat = function(value,type)a.data_point['sublevel'].indexOf(type);
-      //     if (index > -1) {
-      //       $scope.dynamicData.data_point['sublevel'].splice(index, 1);
-      //     }
-      //   }
-      // }
+      
       $scope.yValues = [];
       var maxYValue = 0;
       var maxYValueSummary = 0;
@@ -5868,9 +5772,31 @@
             ]
           }
         }
+        if($scope.graphSelection.dateRange.startDate){
+          reqData.data_scope['2'] = {
+            "category": "time",
+            "level": "time",
+            "match_type": 1,
+            "values": {
+                "range": [
+                    
+                ]
+            },
+            "value_type": "time"
+          }
+          
+          reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
+          reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
+        }
         angular.forEach($scope.selectedDynamicCampaigns, function (data) {
           reqData.data_scope['1'].values.exact.push(data.campaign_id);
         });
+        if($scope.selectedDynamicGraphParams.length){
+          angular.forEach($scope.selectedDynamicGraphParams, function(item){
+            var index = reqData.raw_data.indexOf(item.key);
+            reqData.raw_data.splice(index, 1, item.value);
+          })            
+        }
         DashboardService.getDistributionGraphsStatics(reqData)
             .then(function onSuccess(response) {
               console.log(response);

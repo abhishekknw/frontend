@@ -457,47 +457,49 @@ $scope.gridViewSummary = {};
     //start: gridview summary
     var getComprehinsiveSummary = function(supplier_code){
       $scope.gridViewSummary[supplier_code] = angular.copy(summarySupplierStatus);
-      console.log($scope.gridViewSummary,$scope.center_data);
-      for(var i=0;i<$scope.center_data.length; i++){
-        $scope.center_data[i].summary_meta[supplier_code].count = $scope.center_data[i].suppliers[supplier_code].length;
-        if(Object.keys($scope.center_data[i].summary_meta).length > 0){
-          $scope.gridViewSummary[supplier_code].finalized.count += $scope.center_data[i].summary_meta[supplier_code].finalized.count;
-          $scope.gridViewSummary[supplier_code].shortlisted.count += $scope.center_data[i].summary_meta[supplier_code].shortlisted.count;
-          $scope.gridViewSummary[supplier_code].buffered.count += $scope.center_data[i].summary_meta[supplier_code].buffered.count;
-          $scope.gridViewSummary[supplier_code].removed.count += $scope.center_data[i].summary_meta[supplier_code].removed.count;
-          if(supplier_code == $scope.supplierCode.society){
-            $scope.gridViewSummary[supplier_code].flat_count += $scope.center_data[i].summary_meta[supplier_code].flat_count;
-            $scope.gridViewSummary[supplier_code].tower_count += $scope.center_data[i].summary_meta[supplier_code].tower_count;
-            $scope.gridViewSummary[supplier_code].finalized.flat_count += $scope.center_data[i].summary_meta[supplier_code].finalized.flat_count;
-            if($scope.center_data[i].inventory_meta[supplier_code].has(inventoryTypes.poster)){
-              $scope.gridViewSummary[supplier_code].finalized.poster_count += $scope.center_data[i].summary_meta[supplier_code].finalized.poster_count;
-            }
-            if($scope.center_data[i].inventory_meta[supplier_code].has(inventoryTypes.flier)){
-              $scope.gridViewSummary[supplier_code].finalized.flier_count += $scope.center_data[i].summary_meta[supplier_code].finalized.flier_count;
-            }
-            if($scope.center_data[i].inventory_meta[supplier_code].has(inventoryTypes.standee)){
-              $scope.gridViewSummary[supplier_code].finalized.standee_count += $scope.center_data[i].summary_meta[supplier_code].finalized.standee_count;
-            }
-            if($scope.center_data[i].inventory_meta[supplier_code].has(inventoryTypes.stall))
-              $scope.gridViewSummary[supplier_code].finalized.stall_count += $scope.center_data[i].summary_meta[supplier_code].finalized.stall_count;
-
-              $scope.gridViewSummary[supplier_code].shortlisted.flat_count += $scope.center_data[i].summary_meta[supplier_code].shortlisted.flat_count;
-              $scope.gridViewSummary[supplier_code].shortlisted.tower_count += $scope.center_data[i].summary_meta[supplier_code].shortlisted.tower_count;
+      if ($scope.center_data.length > 0){
+        for(var i=0;i<$scope.center_data.length; i++){
+          if ($scope.center_data[i].suppliers[supplier_code]){
+            $scope.center_data[i].summary_meta[supplier_code].count = $scope.center_data[i].suppliers[supplier_code].length;
+          }
+          if(Object.keys($scope.center_data[i].summary_meta).length > 0 && $scope.center_data[i].summary_meta[supplier_code]){
+            $scope.gridViewSummary[supplier_code].finalized.count += $scope.center_data[i].summary_meta[supplier_code].finalized.count;
+            $scope.gridViewSummary[supplier_code].shortlisted.count += $scope.center_data[i].summary_meta[supplier_code].shortlisted.count;
+            $scope.gridViewSummary[supplier_code].buffered.count += $scope.center_data[i].summary_meta[supplier_code].buffered.count;
+            $scope.gridViewSummary[supplier_code].removed.count += $scope.center_data[i].summary_meta[supplier_code].removed.count;
+            if(supplier_code == $scope.supplierCode.society){
+              $scope.gridViewSummary[supplier_code].flat_count += $scope.center_data[i].summary_meta[supplier_code].flat_count;
+              $scope.gridViewSummary[supplier_code].tower_count += $scope.center_data[i].summary_meta[supplier_code].tower_count;
+              $scope.gridViewSummary[supplier_code].finalized.flat_count += $scope.center_data[i].summary_meta[supplier_code].finalized.flat_count;
               if($scope.center_data[i].inventory_meta[supplier_code].has(inventoryTypes.poster)){
-                $scope.gridViewSummary[supplier_code].shortlisted.poster_count += $scope.center_data[i].summary_meta[supplier_code].shortlisted.poster_count;
+                $scope.gridViewSummary[supplier_code].finalized.poster_count += $scope.center_data[i].summary_meta[supplier_code].finalized.poster_count;
               }
               if($scope.center_data[i].inventory_meta[supplier_code].has(inventoryTypes.flier)){
-                $scope.gridViewSummary[supplier_code].shortlisted.flier_count += $scope.center_data[i].summary_meta[supplier_code].shortlisted.flier_count;
+                $scope.gridViewSummary[supplier_code].finalized.flier_count += $scope.center_data[i].summary_meta[supplier_code].finalized.flier_count;
               }
-              if($scope.center_data[i].inventory_meta[supplier_code].has(inventoryTypes.standee))
-                $scope.gridViewSummary[supplier_code].shortlisted.standee_count += $scope.center_data[i].summary_meta[supplier_code].shortlisted.standee_count;
+              if($scope.center_data[i].inventory_meta[supplier_code].has(inventoryTypes.standee)){
+                $scope.gridViewSummary[supplier_code].finalized.standee_count += $scope.center_data[i].summary_meta[supplier_code].finalized.standee_count;
+              }
               if($scope.center_data[i].inventory_meta[supplier_code].has(inventoryTypes.stall))
-                $scope.gridViewSummary[supplier_code].shortlisted.stall_count += $scope.center_data[i].summary_meta[supplier_code].shortlisted.stall_count;
+                $scope.gridViewSummary[supplier_code].finalized.stall_count += $scope.center_data[i].summary_meta[supplier_code].finalized.stall_count;
+  
+                $scope.gridViewSummary[supplier_code].shortlisted.flat_count += $scope.center_data[i].summary_meta[supplier_code].shortlisted.flat_count;
+                $scope.gridViewSummary[supplier_code].shortlisted.tower_count += $scope.center_data[i].summary_meta[supplier_code].shortlisted.tower_count;
+                if($scope.center_data[i].inventory_meta[supplier_code].has(inventoryTypes.poster)){
+                  $scope.gridViewSummary[supplier_code].shortlisted.poster_count += $scope.center_data[i].summary_meta[supplier_code].shortlisted.poster_count;
+                }
+                if($scope.center_data[i].inventory_meta[supplier_code].has(inventoryTypes.flier)){
+                  $scope.gridViewSummary[supplier_code].shortlisted.flier_count += $scope.center_data[i].summary_meta[supplier_code].shortlisted.flier_count;
+                }
+                if($scope.center_data[i].inventory_meta[supplier_code].has(inventoryTypes.standee))
+                  $scope.gridViewSummary[supplier_code].shortlisted.standee_count += $scope.center_data[i].summary_meta[supplier_code].shortlisted.standee_count;
+                if($scope.center_data[i].inventory_meta[supplier_code].has(inventoryTypes.stall))
+                  $scope.gridViewSummary[supplier_code].shortlisted.stall_count += $scope.center_data[i].summary_meta[supplier_code].shortlisted.stall_count;
+            }
           }
         }
       }
       getComprehinsiveImpressions(supplier_code);
-      console.log($scope.gridViewSummary,$scope.center_data);
     }
     //End: gridview summary
     var getImpressions = function(supplier_code,center){
