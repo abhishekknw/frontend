@@ -1355,7 +1355,6 @@ $scope.multiSelect =
               angular.forEach(response.data.data.lower_group_data, function (supplier) {
                 allSuppliersById[supplier.supplier] = supplier;
               })
-              console.log(allSuppliersById);
               
               mapLeadsWithSuppliers();
             }).catch(function onError(response) {
