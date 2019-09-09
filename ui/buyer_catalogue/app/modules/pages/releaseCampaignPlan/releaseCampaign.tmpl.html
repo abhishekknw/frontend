@@ -251,15 +251,15 @@
                   <br>
                 </td>
                 <td rowspan="{{key.length}}" ng-show="$first">
-                  <input class="form-control spacing input-width" type="date" name="">
+                  <input class="form-control spacing input-width" ng-model="supplier.next_action_date" type="date" name="">
                 </td>
-                    <td ng-if="key=='NA'">{{key}}</td>
-                    <td ng-if="key!='NA'"><a class="" data-target="#invTypeModal" data-toggle="modal" ng-click="setInventoryIds(filter)" permission = "[permissions.viewInventoryIds]"><b>{{key}}</b></a>
-                    <multiselect ng-if="key=='STALL'" ng-model="supplier.stall_locations" options="StallOptions" show-select-all="true" show-unselect-all="true">
-                    </multiselect>
-                <multiselect ng-if="key=='SUNBOARD'" ng-model="supplier.sunboard_location" options="SunboardOptions" show-select-all="true" show-unselect-all="true">
-                </multiselect>
-              </td>
+                <td ng-if="key=='NA'">{{key}}</td>
+                <td ng-if="key!='NA'"><a class="" data-target="#invTypeModal" data-toggle="modal" ng-click="setInventoryIds(filter)" permission = "[permissions.viewInventoryIds]"><b>{{key}}</b></a>
+                  <multiselect ng-if="key=='STALL'" ng-model="supplier.stall_locations" options="StallOptions" show-select-all="true" show-unselect-all="true">
+                  </multiselect>
+                  <multiselect ng-if="key=='SUNBOARD'" ng-model="supplier.sunboard_location" options="SunboardOptions" show-select-all="true" show-unselect-all="true">
+                  </multiselect>
+                </td>
               <td class="" ng-if="key=='FLIER'">{{supplier.flat_count}}</td>
               <td class="" ng-if="key!='FLIER'">{{filter.total_count}}</td>
               <td  class="">
