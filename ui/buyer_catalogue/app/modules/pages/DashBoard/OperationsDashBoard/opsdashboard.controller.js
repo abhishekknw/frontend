@@ -174,10 +174,27 @@ angular.module('catalogueApp')
       $location.path('/' + proposal_id + '/showcurrentproposal');
     }
 
-    $scope.saveAssignment = function(id){
+    $scope.assignedUsers = [];
+    $scope.selected_baselines_customTexts = { buttonDefaultText: 'Select Users' };
+    $scope.events = {
+
+      onItemSelect: function (item) {
+      }
+    }
+
+    $scope.assignementSettings = {
+      enableSearch: true,
+      keyboardControls: true, idProp: "id",
+      template: '{{option.username}}', smartButtonTextConverter(skip, option) { return option; },
+      selectionLimit: 4,
+      showCheckAll: true,
+      scrollableHeight: '300px', scrollable: true
+    };
+
+    $scope.saveAssignment = function(){
       // var userId = $scope.userId;
       var data = {
-        to:id,
+        to:$scope.assignedUsers,
         campaign_id:$scope.currentProposal.proposal.proposal_id
       };
       opsDashBoardService.saveAssignment(data)
