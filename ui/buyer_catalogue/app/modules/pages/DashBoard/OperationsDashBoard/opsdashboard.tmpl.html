@@ -152,11 +152,16 @@
           </div>
         <div class = "row">
           <label>Assign to:</label>
-          <select ng-model= "userId">
+
+            <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="userList" class="col-md-6"  extra-settings="assignementSettings"
+            selected-model="assignedUsers" translation-texts="selected_baselines_customTexts" events="events"></span>
+
+
+<!--           <select ng-model= "userId">
             <option ng-repeat = "user in userList | orderBy: 'username'" value = "{{user.id}}">{{user.username}}</option>
-          </select>
+          </select> -->
         </div>
-          <button class="btn btn-danger active notify" ng-click="saveAssignment(userId)">Assign</button>
+          <button class="btn btn-danger active notify" ng-click="saveAssignment()">Assign</button>
         </div>
       </div>
     </div>
