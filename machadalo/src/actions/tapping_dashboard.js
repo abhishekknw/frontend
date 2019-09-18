@@ -11,10 +11,11 @@ export function getTappingDashboardStart() {
   };
 }
 
-export function getTappingDashboardSuccess(tappingData) {
+export function getTappingDashboardSuccess(response) {
+  const data = { response };
   return {
     type: types.GET_TAPPING_DETAILS_SUCCESS,
-    tappingData,
+    tappingData: data,
   };
 }
 
@@ -31,9 +32,8 @@ export function getTappingDetails() {
     const { auth } = getState();
 
     request
-      .post(`${config.API_URL}/v0/ui/tapping-dashboard/tapping/`)
+      .get(`${config.API_URL}/v0/ui/ops/society-analytics/`)
       .set('Authorization', `JWT ${auth.token}`)
-      .send({})
       .then((resp) => {
         dispatch(getTappingDashboardSuccess({ data: resp.body.data }));
       })
