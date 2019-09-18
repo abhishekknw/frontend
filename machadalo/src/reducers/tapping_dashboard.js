@@ -1,32 +1,32 @@
 import createReducer from '../lib/createReducer';
 import * as types from '../actions/types';
 
-export const tapping = createReducer(
+export const tappingDetails = createReducer(
   {
-    tappingList: [],
+    tappingData: [],
     isFetchingTappingList: false,
   },
 
   {
     [types.GET_TAPPING_DETAILS_START](state) {
       return Object.assign({}, state, {
-        tappingList: [],
+        tappingData: [],
         isFetchingTappingList: true,
       });
     },
     [types.GET_TAPPING_DETAILS_SUCCESS](state, action) {
       return Object.assign({}, state, {
-        tappingList: action.tappingData,
+        tappingData: action.tappingData.response,
         isFetchingTappingList: false,
       });
     },
     [types.GET_TAPPING_DETAILS_FAIL](state) {
       return Object.assign({}, state, {
-        tappingList: [],
+        tappingData: [],
         isFetchingTappingList: false,
       });
     },
   }
 );
 
-export { tapping as default };
+export { tappingDetails as default };
