@@ -2,7 +2,7 @@ import request from 'superagent';
 
 import * as types from './types';
 
-import config from './../config';
+import config from '../config';
 
 /* Tapping Dashboard: Start */
 export function getTappingDashboardStart() {

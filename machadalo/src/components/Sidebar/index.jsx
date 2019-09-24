@@ -216,9 +216,9 @@ export default class Sidebar extends React.Component {
                 </a>
               </li>
               <li>
-                <a href="/r/tapping-dashboard">
+                <a href="/r/operations-dashboard">
                   <i className="fa fa-dashboard" aria-hidden="true" />
-                  Tapping DashBoard
+                  Operations DashBoard
                 </a>
               </li>
               <li>
