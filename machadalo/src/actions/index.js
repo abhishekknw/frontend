@@ -14,7 +14,7 @@ import * as LeadActions from './lead';
 import * as BookingActions from './booking';
 import * as PhaseActions from './phase';
 import * as LocationActions from './location';
-import * as TappingDashboard from './tapping_dashboard';
+import * as OperationsDashboard from './operations_dashboard';
 
 export default Object.assign(
   {},
@@ -34,5 +34,5 @@ export default Object.assign(
   BookingActions,
   PhaseActions,
   LocationActions,
-  TappingDashboard
+  OperationsDashboard
 );

@@ -13,7 +13,7 @@ import LeadsContainer from './../../containers/LeadsContainer';
 import BookingContainer from './../../containers/BookingContainer';
 
 import './index.css';
-import TappingDashboard from '../../containers/TappingDashboard';
+import OperationsDashboardContainer from '../../containers/OperationsDashboardContainer';
 
 export default class Layout extends React.Component {
   componentWillMount() {
@@ -52,7 +52,10 @@ export default class Layout extends React.Component {
 
               <Route path={`${match.path}/booking`} component={BookingContainer} />
 
-              <Route path={`${match.path}/tapping-dashboard`} component={TappingDashboard} />
+              <Route
+                path={`${match.path}/operations-dashboard`}
+                component={OperationsDashboardContainer}
+              />
             </Switch>
           </div>
         </div>
