@@ -79,7 +79,8 @@
                 <th>Phase</th>
                 <th ng-if="canViewInternalComments">Internal Comments</th>
                 <th>Comments</th>
-                <th>Next Action Date</th>
+                <th ng-if="releaseDetails.campaign.proposal_id.indexOf('NOB') == -1">Next Action Date</th>
+                <th ng-if="releaseDetails.campaign.proposal_id.indexOf('NOB') > -1">Next Meeting</th>
                 <th>Inventory Type</th>
                 <th>Inventory Count</th>
                 <th>Inventory Days</th>
@@ -162,6 +163,18 @@
                     >{{item.name}}</option>
                   </select>
                   <br>
+                    <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-change="changePhase(supplier)" ng-if="supplier.booking_status=='MF'">
+                      <option style="width:100%;" ng-repeat="item in meeting_status" value="{{item.code}}"
+                      ng-if="supplier.meeting_status == undefined ? supplier.meeting_status = meeting_status[0].code : 1">
+                        {{item.name}}</option>
+                    </select>
+
+                    <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-if="supplier.booking_status=='RE'">
+                      <option style="width:100%;" ng-repeat="item in booking_recce" value="{{item.code}}"
+                      ng-if="supplier.booking_recce == undefined ? supplier.booking_recce = booking_recce[0].code : 1">
+                        {{item.name}}</option>
+                    </select>
+
                     <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-if="supplier.booking_status=='DP'">
                       <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}"
                       ng-if="supplier.booking_pending == undefined ? supplier.booking_pending = booking_pending[0].code : 1">
