@@ -57,7 +57,9 @@ $scope.addNewPhase =true;
     {name:'Confirmed Booking', code : 'BK'},
     {name:'Tentative Booking', code : 'TB'},
     {name:'Decision Pending', code : 'DP'},
+    {name:'Recce', code : 'RE'},
     {name:'Unknown', code : 'UN'},
+    {name:'Meeting Fixed', code : 'MF'},
     {name:'New Entity', code : 'NE'},
     {name:'Rejected', code : 'SR'},
     {name:'Not Initiated', code : 'NI'}
@@ -68,8 +70,21 @@ $scope.addNewPhase =true;
     {name:'Contact Person Issue', code : 'UCPI'}
   ];
 
-  $scope.booking_pending = [
+  $scope.meeting_status = [
+    {name:'Meeting with AGM', code : 'MWA'},
+    {name:'Meeting with Secretory', code : 'MWS'},
+    {name:'Meeting with Chairman', code : 'MWC'},
+    {name:'Meeting with Treasurer', code : 'MWT'},
+    {name:'Meeting with Other', code : 'MWO'}
+  ];
+
+
+  $scope.booking_recce = [
     {name:'Recce Required', code : 'DPRR'},
+    {name:'Recce Approved', code : 'RERA'},
+  ];
+
+  $scope.booking_pending = [
     {name:'Visit Required', code : 'DPVR'},
     {name:'Call Required', code : 'DPCR'},
     {name:'Negotiation Required', code : 'DPNR'},
