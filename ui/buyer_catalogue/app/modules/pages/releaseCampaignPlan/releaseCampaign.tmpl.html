@@ -382,7 +382,7 @@
                             </a>
                           </div>
                           <div>
-                            <button class="btn btn-primary active" ngf-select="uploadImagePermission($file)" ngf-max-size="2MB">Upload Image</button>
+                            <input ngf-select="uploadImagePermission($file)"type="file" ngf-max-size="2MB"></input>
                             <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Permission Box" ng-model="supplier.permissionComment"></textarea>
                             <button class="btn btn-primary active" ng-click="uploadPermissionBoxImage(supplier)" >Submit</button>
                           </div>
@@ -427,25 +427,11 @@
                               </a>
                           </div>
                           <div>
-                            <button class="btn btn-primary active" ngf-select="uploadImageReceipt($file)" ngf-max-size="2MB">Upload Image</button>
+                            <input ngf-select="uploadImageReceipt($file)"type="file" ngf-max-size="2MB"></input>
                             <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Receipt" ng-model="supplier.receiptComment"></textarea>
                             <button ng-click="uploadReceiptImage(supplier)" >Submit</button>
                           </div>
                         </div>
-                        <a style="height:400px;" class="left carousel-control" data-toggle="carousel" data-target="#slider"
-                          role="button" data-slide="prev">
-                          <span class="glyphicon glyphicon-chevron-left"></span>
-                        </a>
-                        <a style="height:400px;" class="right carousel-control" data-toggle="carousel" data-target="#slider"
-                          role="button" data-slide="next">
-                          <span class="glyphicon glyphicon-chevron-right"></span>
-                        </a>
-                      </div>
-                      <div>
-                        <button class="btn btn-primary active" ngf-select="uploadImageReceipt($file)" ngf-max-size="2MB">Upload
-                          Image</button>
-                        <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Receipt" ng-model="supplier.receiptComment"></textarea>
-                        <button ng-click="uploadReceiptImage(supplier)">Submit</button>
                       </div>
                     </div>
                   </div>
