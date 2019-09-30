@@ -359,7 +359,7 @@
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Permission Box Image Details</h4>
+                        <h4 class="modal-title">Permission Box Image Details for {{ permissionImageSupplier.name }}</h4>
                         <hr/>
                         <div class = "modal-body">
                           <div class="carousel" id="slider" ng-if="perBoxImageData && perBoxImageData.length > 0" >
@@ -384,7 +384,7 @@
                           <div>
                             <input ngf-select="uploadImagePermission($file)"type="file" ngf-max-size="2MB"></input>
                             <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Permission Box" ng-model="supplier.permissionComment"></textarea>
-                            <button class="btn btn-primary active" ng-click="uploadPermissionBoxImage(supplier)" >Submit</button>
+                            <button class="btn btn-primary active" ng-click="uploadPermissionBoxImage(permissionImageSupplier)" >Submit</button>
                           </div>
                         </div>
                       </div>
@@ -404,7 +404,7 @@
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Receipt Image Details</h4>
+                        <h4 class="modal-title">Receipt Image Details for {{ receiptImageSupplier.name }}</h4>
                         <hr/>
                         <div class = "modal-body">
                           <div class="carousel" id="slider" ng-if="perReceiptImageData && perReceiptImageData.length > 0">
@@ -429,7 +429,7 @@
                           <div>
                             <input ngf-select="uploadImageReceipt($file)"type="file" ngf-max-size="2MB"></input>
                             <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Receipt" ng-model="supplier.receiptComment"></textarea>
-                            <button ng-click="uploadReceiptImage(supplier)" >Submit</button>
+                            <button ng-click="uploadReceiptImage(receiptImageSupplier)" >Submit</button>
                           </div>
                         </div>
                       </div>

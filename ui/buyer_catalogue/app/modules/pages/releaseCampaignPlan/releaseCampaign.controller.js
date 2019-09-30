@@ -1101,6 +1101,7 @@ $scope.multiSelect =
             }
           }
       $scope.getPermissionBoxImages = function(supplier){
+        $scope.permissionImageSupplier = supplier;
         releaseCampaignService.getPermissionBoxImages($scope.campaign_id,supplier.supplier_id)
         .then(function onSuccess(response){         
           
@@ -1115,6 +1116,7 @@ $scope.multiSelect =
         })
       }
       $scope.getReceiptBoxImages = function(supplier){
+        $scope.receiptImageSupplier = supplier;
         releaseCampaignService.getReceiptBoxImages($scope.campaign_id,supplier.supplier_id)
         .then(function onSuccess(response){
           if(response.data.data.length){
