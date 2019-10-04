@@ -4,7 +4,7 @@ import * as types from './types';
 
 import config from '../config';
 
-/* Tapping Dashboard: Start */
+/* Operations Dashboard: Start */
 export function getTappingDashboardStart() {
   return {
     type: types.GET_TAPPING_DETAILS_START,
@@ -32,7 +32,7 @@ export function getTappingDetails() {
     const { auth } = getState();
 
     request
-      .get(`${config.API_URL}/v0/ui/ops/society-analytics/`)
+      .get(`${config.API_URL}/v0/ui/ops/campaign-analytics/`)
       .set('Authorization', `JWT ${auth.token}`)
       .then((resp) => {
         dispatch(getTappingDashboardSuccess({ data: resp.body.data }));
@@ -41,6 +41,46 @@ export function getTappingDetails() {
         console.log('Failed to get tapping data', ex);
 
         dispatch(getTappingDashboardFail());
+      });
+  };
+}
+
+export function getSupplierCampaignDetailsStart() {
+  return {
+    type: types.GET_SUPPLIER_DETAILS_START,
+  };
+}
+
+export function getSupplierCampaignDetailsSuccess(response) {
+  const data = { response };
+  return {
+    type: types.GET_SUPPLIER_DETAILS_SUCCESS,
+    supplierData: data,
+  };
+}
+
+export function getSupplierCampaignDetailsFail() {
+  return {
+    type: types.GET_SUPPLIER_DETAILS_FAIL,
+  };
+}
+
+export function getSupplierCampaignDetails(campaign_id) {
+  return (dispatch, getState) => {
+    dispatch(getSupplierCampaignDetailsStart());
+
+    const { auth } = getState();
+
+    request
+      .get(`${config.API_URL}/v0/ui/campaign/supplier-analytics/?campaign_id=${campaign_id}`)
+      .set('Authorization', `JWT ${auth.token}`)
+      .then((resp) => {
+        dispatch(getSupplierCampaignDetailsSuccess({ data: resp.body.data }));
+      })
+      .catch((ex) => {
+        console.log('Failed to get data', ex);
+
+        dispatch(getSupplierCampaignDetailsFail());
       });
   };
 }
