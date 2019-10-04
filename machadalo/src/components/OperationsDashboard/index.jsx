@@ -1,11 +1,17 @@
 import React from 'react';
+import { Modal, Header, Button } from 'semantic-ui-react';
 import './index.css';
+import DropdownFilterSearchInMenu from '../Filter';
+import Loader from '../Loader';
 
 export default class List extends React.Component {
   constructor(props) {
     super(props);
 
     this.renderTappingDashboardList = this.renderTappingDashboardList.bind(this);
+    this.state = {
+      selected: null,
+    };
   }
 
   componentWillMount() {
@@ -16,49 +22,147 @@ export default class List extends React.Component {
     return (
       <tr key={row.id}>
         <td>{index + 1}</td>
-        <td>{row.name}</td>
+        <td style={{ cursor: 'pointer' }}>
+          <Modal trigger={<Button>{row.name}</Button>}>
+            <Modal.Header>{row.name}</Modal.Header>
+            <Modal.Content>
+              <Modal.Description>
+                <Header>{this.props.supplierTappingDetails.supplierTappingData}</Header>
+                <p>Suppliers Modal</p>
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
+        </td>
+        <td>{row.campaign_status}</td>
         <td>{row.city}</td>
-        <td>{row.number_of_society}</td>
-        <td>{row.flats.filled}</td>
-        <td>{row.flats.not_filled}</td>
-        <td>{row.contact_details.name.filled}</td>
-        <td>{row.contact_details.name.not_filled}</td>
-        <td>{row.contact_details.number.filled}</td>
-        <td>{row.contact_details.number.not_filled}</td>
-        <td>{row.hashtag_images.permission_box.filled}</td>
-        <td>{row.hashtag_images.permission_box.not_filled}</td>
-        <td>{row.hashtag_images.receipt.filled}</td>
-        <td>{row.hashtag_images.receipt.not_filled}</td>
-        <td>{row.comments.filled}</td>
-        <td>{row.comments.not_filled}</td>
-        <td>{row.inventory.flier_allowed.yes}</td>
-        <td>{row.inventory.flier_allowed.no}</td>
-        <td>{row.inventory.poster_allowed.yes}</td>
-        <td>{row.inventory.poster_allowed.no}</td>
-        <td>{row.inventory.stall_allowed.yes}</td>
-        <td>{row.inventory.stall_allowed.no}</td>
-        <td>{row.inventory.standee_allowed.yes}</td>
-        <td>{row.inventory.standee_allowed.no}</td>
-        <td>{row.inventory.banner_allowed.yes}</td>
-        <td>{row.inventory.banner_allowed.no}</td>
+        <td>{row.supplier_count}</td>
+        <td>{row.flat_count_details.filled}</td>
+        <td>{row.flat_count_details.not_filled}</td>
+        <td>{((row.flat_count_details.filled / row.supplier_count) * 100).toFixed(2)}%</td>
+        <td>{row.contact_name.filled}</td>
+        <td>{row.contact_name.not_filled}</td>
+        <td>{((row.contact_name.filled / row.supplier_count) * 100).toFixed(2)}%</td>
+        <td>{row.contact_number.filled}</td>
+        <td>{row.contact_number.not_filled}</td>
+        <td>{((row.contact_number.filled / row.supplier_count) * 100).toFixed(2)}%</td>
+        <td>{row.payment_details.filled}</td>
+        <td>{row.payment_details.not_filled}</td>
+        <td>{((row.payment_details.filled / row.supplier_count) * 100).toFixed(2)}%</td>
       </tr>
     );
   }
 
+  handleClick = (e, data) => {
+    if (data && data.value) {
+      this.setState({ selected: data.value });
+    }
+  };
+
+  renderBody = (
+    listData,
+    completedCampaigns,
+    ongoingCampaings,
+    onholdCampaings,
+    rejectedCampaings
+  ) => {
+    switch (this.state.selected) {
+      case 'Completed':
+        return (
+          <tbody>
+            {completedCampaigns.length ? (
+              completedCampaigns.map(this.renderTappingDashboardList)
+            ) : (
+              <tr>
+                <td colSpan="5">No details available.</td>
+              </tr>
+            )}
+          </tbody>
+        );
+      case 'Ongoing':
+        return (
+          <tbody>
+            {ongoingCampaings.length ? (
+              ongoingCampaings.map(this.renderTappingDashboardList)
+            ) : (
+              <tr>
+                <td colSpan="5">No details available.</td>
+              </tr>
+            )}
+          </tbody>
+        );
+      case 'On Hold':
+        return (
+          <tbody>
+            {onholdCampaings.length ? (
+              onholdCampaings.map(this.renderTappingDashboardList)
+            ) : (
+              <tr>
+                <td colSpan="5">No details available.</td>
+              </tr>
+            )}
+          </tbody>
+        );
+      case 'Rejected':
+        return (
+          <tbody>
+            {rejectedCampaings.length ? (
+              rejectedCampaings.map(this.renderTappingDashboardList)
+            ) : (
+              <tr>
+                <td colSpan="5">No details available.</td>
+              </tr>
+            )}
+          </tbody>
+        );
+      default:
+        return (
+          <tbody>
+            {listData.length ? (
+              listData.map(this.renderTappingDashboardList)
+            ) : (
+              <tr>
+                <td colSpan="5">No details available.</td>
+              </tr>
+            )}
+          </tbody>
+        );
+    }
+  };
+
   render() {
     const { tappingData } = this.props.tappingDetails;
     const { data } = tappingData;
-    let listData = [];
+    const listData = [],
+      completedCampaigns = [],
+      ongoingCampaings = [],
+      onholdCampaings = [],
+      rejectedCampaings = [];
     if (data) {
       Object.keys(data).map((key) => {
         listData.push(data[key]);
       });
     }
+
+    if (listData) {
+      listData.map((campaing) => {
+        if (campaing.campaign_status == 'completed') {
+          completedCampaigns.push(campaing);
+        } else if (campaing.campaign_status == 'ongoing') {
+          ongoingCampaings.push(campaing);
+        } else if (campaing.campaign_status == 'on_hold') {
+          onholdCampaings.push(campaing);
+        } else {
+          rejectedCampaings.push(campaing);
+        }
+      });
+    }
+
     return (
       <div className="createform">
         <div className="createform__title">
           <h3>Operations Dashboard</h3>
         </div>
+        <DropdownFilterSearchInMenu onClick={this.handleClick} />
         <div className="list">
           <div className="list__table">
             <table cellPadding="0" cellSpacing="0">
@@ -66,40 +170,20 @@ export default class List extends React.Component {
                 <tr>
                   <th>S.No</th>
                   <th>Name of Campaign</th>
+                  <th>Campaign Status</th>
                   <th>City</th>
-                  <th>Number of Society</th>
-                  <th colspan="2" className="double-column">
+                  <th>Number of Suppliers</th>
+                  <th colspan="3" className="double-column">
                     Flat Count
                   </th>
-                  <th colspan="2" className="double-column">
+                  <th colspan="3" className="double-column">
                     Contact Name
                   </th>
-                  <th colspan="2" className="double-column">
+                  <th colspan="3" className="double-column">
                     Contact Number
                   </th>
-                  <th colspan="2" className="double-column">
-                    Permission Letter
-                  </th>
-                  <th colspan="2" className="double-column">
-                    Receipt
-                  </th>
-                  <th colspan="2" className="double-column">
-                    Comments
-                  </th>
-                  <th colspan="2" className="double-column">
-                    Fliers Allowed
-                  </th>
-                  <th colspan="2" className="double-column">
-                    Poster Allowed
-                  </th>
-                  <th colspan="2" className="double-column">
-                    Stall Allowed
-                  </th>
-                  <th colspan="2" className="double-column">
-                    Standee Allowed
-                  </th>
-                  <th colspan="2" className="double-column">
-                    Banner Allowed
+                  <th colspan="3" className="double-column">
+                    Payment Details
                   </th>
                 </tr>
                 <tr>
@@ -107,39 +191,28 @@ export default class List extends React.Component {
                   <th />
                   <th />
                   <th />
+                  <th />
                   <th>Filled</th>
                   <th>Not Filled</th>
+                  <th>% Filled</th>
                   <th>Filled</th>
                   <th>Not Filled</th>
+                  <th>% Filled</th>
                   <th>Filled</th>
                   <th>Not Filled</th>
+                  <th>% Filled</th>
                   <th>Filled</th>
                   <th>Not Filled</th>
-                  <th>Filled</th>
-                  <th>Not Filled</th>
-                  <th>Filled</th>
-                  <th>Not Filled</th>
-                  <th>Yes</th>
-                  <th>No</th>
-                  <th>Yes</th>
-                  <th>No</th>
-                  <th>Yes</th>
-                  <th>No</th>
-                  <th>Yes</th>
-                  <th>No</th>
-                  <th>Yes</th>
-                  <th>No</th>
+                  <th>% Filled</th>
                 </tr>
               </thead>
-              <tbody>
-                {listData.length ? (
-                  listData.map(this.renderTappingDashboardList)
-                ) : (
-                  <tr>
-                    <td colSpan="5">No tapping details available.</td>
-                  </tr>
-                )}
-              </tbody>
+              {this.renderBody(
+                listData,
+                completedCampaigns,
+                ongoingCampaings,
+                onholdCampaings,
+                rejectedCampaings
+              )}
             </table>
           </div>
         </div>

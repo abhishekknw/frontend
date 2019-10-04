@@ -1,5 +1,5 @@
-import createReducer from '../lib/createReducer';
-import * as types from '../actions/types';
+import createReducer from '../../lib/createReducer';
+import * as types from '../../actions/types';
 
 export const tappingDetails = createReducer(
   {
