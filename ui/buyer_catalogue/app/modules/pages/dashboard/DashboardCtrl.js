@@ -1240,7 +1240,6 @@
             "reduceXTicks": false,
             "staggerLabels": false,           
             tickFormat: function (d) {
-              console.log($scope.x_fre_leads[d]);
               
               return $scope.x_fre_leads[d];
             },
@@ -1353,7 +1352,6 @@
           tooltip: {
             contentGenerator: function (e) {
               var series = e.series[0];
-              console.log(series,e);
               var key = $scope.dynamicGraphYValuesMap[$scope.dynamicGraphSelectedOrder.value];
               if (series.value === null) return;
               var rows =
@@ -2049,7 +2047,6 @@
           series.values = series.values.map((d) => { return { x: d[0], y: d[1] } });
           return series;
         });
-        console.log(temp_data);
         
         return temp_data;
       }
@@ -2428,7 +2425,6 @@
       $scope.eventsForDynamicGraphCampaign = {
 
         onItemSelect: function (item) {
-          console.log(item);
 
         }
       }
@@ -3573,7 +3569,64 @@
         });
 
       };
-      
+      // start_date, end_date
+
+      $scope.getCampaignDateWiseSummary = function () {
+        // $scope.getVendorWiseSummary();
+        // $scope.getDynamicGraphsStatics();
+        cfpLoadingBar.start();
+
+
+        if ($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date') &&
+              !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
+          
+          $scope.dateRangeModel.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
+          $scope.dateRangeModel.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
+          // result = DashboardService.getCampaignDateWiseData($scope.dateRangeModel)
+        }
+        DashboardService.getCampaignDateWiseData($scope.dateRangeModel)
+          .then(function onSuccess(response) {
+            $scope.dateRangeModel.start_date = new Date($scope.dateRangeModel.start_date);
+            $scope.dateRangeModel.end_date = new Date($scope.dateRangeModel.end_date);
+            $scope.showPerfMetrics = $scope.perfMetrics.overall;
+            $scope.selectAllCampaignLeads = true;
+            $scope.dynamicGraphsUI = true;
+            $scope.showReportBtn = true;
+            $scope.lineChartForLeadsDistributedGraphs = false;
+            $scope.lineChartForHotLeadsDistributedGraphs = false;
+            $scope.campaignSummary = response.data.data;
+            $scope.WeeklyMISOverallSummary = response.data.data.overall;
+            $scope.WeeklyMISLastWeekSummary = response.data.data.last_week;
+            $scope.WeeklyMISLast2WeekSummary = response.data.data.last_two_weeks;
+            $scope.WeeklyMISLast3WeekSummary = response.data.data.last_three_weeks;
+            $scope.overallCampaignSummary = response.data.data.overall.campaign_wise;
+            $scope.lastWeekCampaignSummary = response.data.data.last_week.campaign_wise;
+            $scope.last2WeeksCampaignSummary = response.data.data.last_two_weeks.campaign_wise;
+            $scope.last3WeeksCampaignSummary = response.data.data.last_three_weeks.campaign_wise;
+
+            $scope.stackedBarChartLocationWise = angular.copy(locationSummaryBarChart);
+            $scope.OverallSummaryStackedBarChart = angular.copy(overallSummaryStackedBar);
+            $scope.thisWeekSummaryStackedBarChart = angular.copy(thisWeekSummaryStackedBar);
+            $scope.last2WeekSummaryStackedBarChart = angular.copy(last2WeekSummaryStackedBar);
+            $scope.last3WeekSummaryStackedBarChart = angular.copy(last3WeekSummaryStackedBar);
+
+
+            if (Object.keys($scope.overallCampaignSummary).length > 4) {
+              $scope.OverallSummaryStackedBarChart.chart['width'] = Object.keys($scope.overallCampaignSummary).length * 100;
+            }
+            
+            $scope.stackedBarAllCampaignWiseChart = formatAllCampaignWiseChart($scope.overallCampaignSummary);
+            $scope.stackedBarLastWeekChart = formatLastWeekWiseChart($scope.lastWeekCampaignSummary);
+            $scope.stackedBarLast2WeeksChart = formatLast2WeekWiseChart($scope.last2WeeksCampaignSummary);
+            $scope.stackedBarLast3WeeksChart = formatLast3WeekWiseChart($scope.last3WeeksCampaignSummary);
+
+            cfpLoadingBar.complete();
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+      }
+
+
 
       $scope.getCampaignWiseSummary = function () {
         $scope.getVendorWiseSummary();
@@ -3823,9 +3876,7 @@
 
 
         DashboardService.getDistributionGraphsStatics(data)
-          .then(function onSuccess(response) {
-            console.log(response);
-            
+          .then(function onSuccess(response) {            
             $scope.lineChartLeadsDistributed = angular.copy(lineChartLeads);
             $scope.lineChartLeadsDistributed.chart.xAxis.axisLabel = "Frequency Distribution Graph(Leads)";
             $scope.lineChartLeadsDistributed.chart.yAxis.axisLabel = "Mode(Leads)";
@@ -5195,7 +5246,6 @@
       var setCampaignOverallSummary = function(data){
         $scope.campaignOverallSummary = [];
         var campaign_data = {};
-        console.log(data);
         // campaign_data[campaign.campaign]['Name'] = campaign.campaign_name;
         
         angular.forEach(data , function(campaign){
@@ -5242,7 +5292,6 @@
         })
         
         $scope.campaignOverallSummary = Object.values(campaign_data);
-        console.log($scope.campaignOverallSummary);
       }      
       
       $scope.changeCumulativeOrderKey = function(key){
@@ -5304,7 +5353,6 @@
         //   x: 0, y: 0 
         // })
         // index++;
-        console.log(data[$scope.selectedOrderKey].dates);
         
         createNumberSet(data[$scope.selectedOrderKey].dates, data[$scope.selectedOrderKey].sumValues,
           data[$scope.selectedOrderKey].values, $scope.selectedOrderKey, $scope.cumulativeTableData);
@@ -5423,7 +5471,6 @@
           $scope.dynamicOrderData = angular.copy($scope.initialDynamicGraphData.lower_group_data);
         }else{
           setKeysForOrderSpecificData($scope.initialDynamicGraphData.higher_group_data);
-          console.log($scope.initialDynamicGraphData.higher_group_data);
           
           $scope.dynamicOrderData = angular.copy($scope.initialDynamicGraphData.higher_group_data);
         }
@@ -5445,7 +5492,6 @@
         tooltipDynamicGraphData = [];
         angular.forEach(data, function (item) {
           tooltipDynamicGraphData.push(item);
-          console.log(tooltipDynamicGraphData);
           
           if (selectedSpecificItems.indexOf(item[$scope.xValues.value]) > -1 || !selectedSpecificItems.length) {
             if (item[$scope.xValues.value]) {
@@ -5628,7 +5674,6 @@
         $scope.emailCampaignLeadsModel.end_date = commonDataShare.formatDate($scope.emailCampaignLeadsModel.end_date);
         DashboardService.downloadSheet($scope.emailCampaignLeadsModel.leads_form_id)
         .then(function onSuccess(response){
-          console.log(response);
           if(response.data.data.one_time_hash && $scope.emailCampaignLeadsModel.start_date &&
                   $scope.emailCampaignLeadsModel.end_date ){
             $window.open(Config.APIBaseUrl + 'v0/ui/leads/download_lead_data_excel/' + response.data.data.one_time_hash + 
@@ -5671,7 +5716,6 @@
       }
       
       $scope.societyParamsCheck = function(item,status){
-        console.log(item,status);
         if(item === 'society'){
           if(status){
             $scope.selectedbookingParameters = [];
@@ -5697,7 +5741,6 @@
             
           }
         }        
-        console.log($scope.checkboxChecked,$scope.checkboxCheckedSociety);
         
       }
       var createNumberSet = function(dates, values, pValues, name, result){
@@ -5799,13 +5842,11 @@
         }
         DashboardService.getDistributionGraphsStatics(reqData)
             .then(function onSuccess(response) {
-              console.log(response);
               setKeysForOrderSpecificData(response.data.data.higher_group_data);
               setStackedBarChartSummary(response.data.data);
             }).catch(function onError(response){
               console.log(response);              
             })
-        console.log(reqData);
         var data = angular.copy(reqData);
 
         //For line chart
@@ -5817,7 +5858,6 @@
         data.data_point.level = ['date','campaign'];
         DashboardService.getDistributionGraphsStatics(data)
         .then(function onSuccess(response) {
-          console.log(response);
           setCampaignLineChart(response.data.data);
         }).catch(function onError(response){
           console.log(response);          
@@ -5836,11 +5876,7 @@
                 if (data.higher_group_data.length > 4) {
                   $scope.stackedBarChartForDynamicSummary.chart['width'] = data.higher_group_data.length * 300;
                 }
-                $scope.stackedBarChartDynamicDataSummary = formatDynamicDataSummary(data, orderSpecificCase);
-                console.log($scope.stackedBarChartDynamicDataSummary);
-                  
-                
-              
+                $scope.stackedBarChartDynamicDataSummary = formatDynamicDataSummary(data, orderSpecificCase);                  
 
               setLabelsOnBars();
       }
@@ -5869,11 +5905,7 @@
         $scope.lineChartOrderCampaignKeys = Object.keys($scope.lineChartOrderCampaignsNamesById);
         $scope.selectedLineChartOrderKey = $scope.lineChartOrderCampaignKeys[0];
         $scope.cumulativeLineChartOrder = [];
-        $scope.cumulativeLineChartOrderSummary = setFormatLineChartForCumulativeOrderGraph($scope.lineChartOrderCampaignsNamesById);
-        console.log($scope.cumulativeLineChartOrderSummary,$scope.cumulativeTableDataSummary,
-          $scope.lineChartGraphCumulativeOrderSummary);
-        
-        
+        $scope.cumulativeLineChartOrderSummary = setFormatLineChartForCumulativeOrderGraph($scope.lineChartOrderCampaignsNamesById);        
       }
 
       var setFormatLineChartForCumulativeOrderGraph = function(data){        
@@ -5884,7 +5916,6 @@
         $scope.cumulativeTableDataSummary = [];
         
         angular.forEach(data, function(data1, key){
-          console.log(data1,key);
           var values1 = [];        
           var temp_data = [];
           
