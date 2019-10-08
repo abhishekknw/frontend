@@ -60,6 +60,7 @@ $scope.addNewPhase =true;
     {name:'Recce', code : 'RE'},
     {name:'Unknown', code : 'UN'},
     {name:'Meeting Fixed', code : 'MF'},
+    {name:'Meeting Converted', code : 'MC'},
     {name:'New Entity', code : 'NE'},
     {name:'Rejected', code : 'SR'},
     {name:'Not Initiated', code : 'NI'}

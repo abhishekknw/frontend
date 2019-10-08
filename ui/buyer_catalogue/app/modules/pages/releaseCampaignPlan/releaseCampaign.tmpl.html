@@ -163,7 +163,7 @@
                     >{{item.name}}</option>
                   </select>
                   <br>
-                    <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-change="changePhase(supplier)" ng-if="supplier.booking_status=='MF'">
+                    <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" permission = "[permissions.changeBookingStatus]" ng-change="changePhase(supplier)" ng-if="supplier.booking_status=='MF'">
                       <option style="width:100%;" ng-repeat="item in meeting_status" value="{{item.code}}"
                       ng-if="supplier.meeting_status == undefined ? supplier.meeting_status = meeting_status[0].code : 1">
                         {{item.name}}</option>

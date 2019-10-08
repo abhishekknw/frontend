@@ -77,11 +77,11 @@
     DashboardService.getLeadsByCampaign = function(campaignId,data){
       if(data && data.hasOwnProperty('start_date') && data.hasOwnProperty('end_date')){
         var url = url_base + "dashboard/get_leads_by_campaign_new/?campaign_id=" + campaignId + "&start_date=" + data.start_date + "&end_date=" + data.end_date;
+        console.log(data.start_date, data.end_date);
       }
       else {
         var url = url_base + "dashboard/get_leads_by_campaign_new/?campaign_id=" + campaignId;
-      }
-      return machadaloHttp.get(url);
+      }      return machadaloHttp.get(url);
     }
     //
     // DashboardService.getSortedLeadsByCampaign = function(campaignId, query_type){
@@ -204,6 +204,18 @@
       var url = url_root  + "campaign/campaign-wise-summary/";
       return machadaloHttp.get(url);
     }
+
+    DashboardService.getCampaignDateWiseData = function(data){
+      if(data && data.hasOwnProperty('start_date') && data.hasOwnProperty('end_date')){
+        var url = url_root  + "campaign/campaign-wise-summary/"+ "?start_date=" + data.start_date + "&end_date=" + data.end_date;
+        console.log(data.start_date, data.end_date);
+
+      }else{
+        var url = url_root  + "campaign/campaign-wise-summary/";
+      }
+      return machadaloHttp.get(url);
+    }
+
     DashboardService.getVendorWiseSummary = function(){
       var url = url_base  + "vendor-wise-summary/";
       return machadaloHttp.get(url);
