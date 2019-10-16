@@ -16,7 +16,7 @@ export const supplierTappingDetails = createReducer(
     },
     [types.GET_SUPPLIER_DETAILS_SUCCESS](state, action) {
       return Object.assign({}, state, {
-        supplierTappingData: action.tappingData.response,
+        supplierTappingData: action.supplierData.response,
         isFetchingSupplierTappingList: false,
       });
     },

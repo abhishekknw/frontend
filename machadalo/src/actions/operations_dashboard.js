@@ -72,7 +72,7 @@ export function getSupplierCampaignDetails(campaign_id) {
     const { auth } = getState();
 
     request
-      .get(`${config.API_URL}/v0/ui/campaign/supplier-analytics/?campaign_id=${campaign_id}`)
+      .get(`${config.API_URL}/v0/ui/ops/campaign/supplier-count/?campaign_id=${campaign_id}`)
       .set('Authorization', `JWT ${auth.token}`)
       .then((resp) => {
         dispatch(getSupplierCampaignDetailsSuccess({ data: resp.body.data }));
