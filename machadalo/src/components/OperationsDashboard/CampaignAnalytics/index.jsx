@@ -17,7 +17,10 @@ class CampaignAnalytics extends React.Component {
 
   expandComponent = (row) => {
     return (
-      <SupplierAnalytics campaignId={row.campaign_id} supplierData={this.state.supplierData} />
+      <SupplierAnalytics
+        campaignId={row.campaign_id}
+        supplierData={this.props.supplierTappingDetails.supplierTappingData}
+      />
     );
   };
 

@@ -30,6 +30,7 @@ class OperationsDashboard extends Component {
         renderSelectedCampaign={this.getSelectedCampaign}
         selectedCampaignId={this.state.selectedCampaign}
         getSupplierDetails={this.getSupplierDetails}
+        supplierTappingDetails={this.props.supplierTappingDetails}
       />
     );
   }

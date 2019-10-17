@@ -16,7 +16,7 @@ export const tappingDetails = createReducer(
     },
     [types.GET_TAPPING_DETAILS_SUCCESS](state, action) {
       return Object.assign({}, state, {
-        tappingData: action.tappingData.response,
+        tappingData: action.payload.response,
         isFetchingTappingList: false,
       });
     },

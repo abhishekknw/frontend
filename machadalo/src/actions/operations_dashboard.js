@@ -15,7 +15,7 @@ export function getTappingDashboardSuccess(response) {
   const data = { response };
   return {
     type: types.GET_TAPPING_DETAILS_SUCCESS,
-    tappingData: data,
+    payload: data,
   };
 }
 
@@ -55,7 +55,7 @@ export function getSupplierCampaignDetailsSuccess(response) {
   const data = { response };
   return {
     type: types.GET_SUPPLIER_DETAILS_SUCCESS,
-    supplierData: data,
+    payload: data,
   };
 }
 

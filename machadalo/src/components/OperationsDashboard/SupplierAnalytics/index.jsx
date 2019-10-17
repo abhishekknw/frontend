@@ -2,11 +2,10 @@ import React from 'react';
 import getSupplierColumn from './SupplierGridColumConfig';
 import InnerGrid from '../../InnerGrid';
 
-class SupplierAnalytics extends React.Component {
-  render() {
-    const data = [];
-    return <InnerGrid columns={getSupplierColumn()} data={data} />;
-  }
-}
+const SupplierAnalytics = (props) => {
+  const { supplierData } = props;
+  const { data } = supplierData;
+  return <div>{data && <InnerGrid columns={getSupplierColumn()} data={[data]} />}</div>;
+};
 
 export default SupplierAnalytics;

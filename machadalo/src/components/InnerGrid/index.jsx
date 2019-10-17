@@ -5,10 +5,10 @@ import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 
 class InnerGrid extends React.Component {
   render() {
-    const columns = this.props.columns;
+    const { columns, data } = this.props;
     return (
       <div style={{ backgroundColor: 'white' }}>
-        <BootstrapTable data={this.props.data}>
+        <BootstrapTable data={data}>
           {columns &&
             columns.map((column, idx) => {
               return (
