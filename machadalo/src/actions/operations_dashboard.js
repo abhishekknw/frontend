@@ -35,52 +35,12 @@ export function getTappingDetails() {
       .get(`${config.API_URL}/v0/ui/ops/campaign-analytics/`)
       .set('Authorization', `JWT ${auth.token}`)
       .then((resp) => {
-        dispatch(getTappingDashboardSuccess({ data: resp.body.data }));
+        dispatch(getTappingDashboardSuccess({ data: resp.body.data, token: auth.token }));
       })
       .catch((ex) => {
         console.log('Failed to get tapping data', ex);
 
         dispatch(getTappingDashboardFail());
-      });
-  };
-}
-
-export function getSupplierCampaignDetailsStart() {
-  return {
-    type: types.GET_SUPPLIER_DETAILS_START,
-  };
-}
-
-export function getSupplierCampaignDetailsSuccess(response) {
-  const data = { response };
-  return {
-    type: types.GET_SUPPLIER_DETAILS_SUCCESS,
-    payload: data,
-  };
-}
-
-export function getSupplierCampaignDetailsFail() {
-  return {
-    type: types.GET_SUPPLIER_DETAILS_FAIL,
-  };
-}
-
-export function getSupplierCampaignDetails(campaign_id) {
-  return (dispatch, getState) => {
-    dispatch(getSupplierCampaignDetailsStart());
-
-    const { auth } = getState();
-
-    request
-      .get(`${config.API_URL}/v0/ui/ops/campaign/supplier-count/?campaign_id=${campaign_id}`)
-      .set('Authorization', `JWT ${auth.token}`)
-      .then((resp) => {
-        dispatch(getSupplierCampaignDetailsSuccess({ data: resp.body.data }));
-      })
-      .catch((ex) => {
-        console.log('Failed to get data', ex);
-
-        dispatch(getSupplierCampaignDetailsFail());
       });
   };
 }

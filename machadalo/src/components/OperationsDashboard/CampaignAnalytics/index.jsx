@@ -1,4 +1,6 @@
 import React from 'react';
+import request from 'superagent';
+import config from '../../../config';
 import getCampaignColumn from './CampaignGridColumnConfig';
 import Grid from '../../Grid';
 import SupplierAnalytics from '../SupplierAnalytics';
@@ -7,47 +9,45 @@ class CampaignAnalytics extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      supplierData: [],
+      supplierData: {},
+      selectedCampaign: '',
     };
   }
 
   isExpandableRow = (row) => {
-    return row.campaign_id == this.props.selectedCampaignId ? true : false;
+    return row.campaign_id == this.state.selectedCampaign ? true : false;
   };
 
-  expandComponent = (row) => {
-    return (
-      <SupplierAnalytics
-        campaignId={row.campaign_id}
-        supplierData={this.props.supplierTappingDetails.supplierTappingData}
-      />
-    );
+  expandComponent = () => {
+    return <SupplierAnalytics supplierData={this.state.supplierData} />;
+  };
+
+  getSupplierCampaignDetails = (campaignId) => {
+    const { tappingData } = this.props.tappingDetails;
+    const { token } = tappingData;
+    this.setState({
+      selectedCampaign: campaignId,
+    });
+    request
+      .get(`${config.API_URL}/v0/ui/ops/campaign/supplier-count/?campaign_id=${campaignId}`)
+      .set('Authorization', `JWT ${token}`)
+      .then((resp) => {
+        this.setState({
+          supplierData: resp.body.data,
+        });
+      })
+      .catch((ex) => {
+        console.log('Failed to get data', ex);
+      });
   };
 
   render() {
     const { tappingData } = this.props.tappingDetails;
     const { data } = tappingData;
-    const listData = [],
-      completedCampaigns = [],
-      ongoingCampaings = [],
-      onholdCampaings = [],
-      rejectedCampaings = [];
+    const listData = [];
     if (data) {
       Object.keys(data).map((key) => {
         listData.push(data[key]);
-      });
-    }
-    if (listData) {
-      listData.map((campaign) => {
-        if (campaign.campaign_status == 'completed') {
-          completedCampaigns.push(campaign);
-        } else if (campaign.campaign_status == 'ongoing') {
-          ongoingCampaings.push(campaign);
-        } else if (campaign.campaign_status == 'on_hold') {
-          onholdCampaings.push(campaign);
-        } else {
-          rejectedCampaings.push(campaign);
-        }
       });
     }
 
@@ -60,8 +60,7 @@ class CampaignAnalytics extends React.Component {
         search={true}
         pagination={true}
         onRowClick={(row) => {
-          this.props.renderSelectedCampaign(row.campaign_id);
-          this.setState({ supplierData: this.props.getSupplierDetails() });
+          this.getSupplierCampaignDetails(row.campaign_id);
         }}
         isExpandableRow={this.isExpandableRow}
         expandComponent={this.expandComponent}
