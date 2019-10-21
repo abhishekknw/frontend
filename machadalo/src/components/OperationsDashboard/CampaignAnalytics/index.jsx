@@ -4,6 +4,7 @@ import config from '../../../config';
 import getCampaignColumn from './CampaignGridColumnConfig';
 import Grid from '../../Grid';
 import SupplierAnalytics from '../SupplierAnalytics';
+import LoadingWrapper from '../../Error/LoadingWrapper';
 
 class CampaignAnalytics extends React.Component {
   constructor(props) {
@@ -42,7 +43,7 @@ class CampaignAnalytics extends React.Component {
   };
 
   render() {
-    const { tappingData } = this.props.tappingDetails;
+    const { tappingData, isFetchingTappingList } = this.props.tappingDetails;
     const { data } = tappingData;
     const listData = [];
     if (data) {
@@ -52,19 +53,25 @@ class CampaignAnalytics extends React.Component {
     }
 
     return (
-      <Grid
-        columns={getCampaignColumn()}
-        data={listData}
-        headerValue="Operations Dashboard"
-        exportCsv={true}
-        search={true}
-        pagination={true}
-        onRowClick={(row) => {
-          this.getSupplierCampaignDetails(row.campaign_id);
-        }}
-        isExpandableRow={this.isExpandableRow}
-        expandComponent={this.expandComponent}
-      />
+      <div>
+        {isFetchingTappingList ? (
+          <LoadingWrapper />
+        ) : (
+          <Grid
+            columns={getCampaignColumn()}
+            data={listData}
+            headerValue="Operations Dashboard"
+            exportCsv={true}
+            search={true}
+            pagination={true}
+            onRowClick={(row) => {
+              this.getSupplierCampaignDetails(row.campaign_id);
+            }}
+            isExpandableRow={this.isExpandableRow}
+            expandComponent={this.expandComponent}
+          />
+        )}
+      </div>
     );
   }
 }
