@@ -1,4 +1,4 @@
-const getSupplierColumn = () => {
+const getCampaignSummaryColumn = () => {
   return [
     {
       dataField: 'Not Booked',
@@ -39,4 +39,4 @@ const getSupplierColumn = () => {
   ];
 };
 
-export default getSupplierColumn;
+export default getCampaignSummaryColumn;

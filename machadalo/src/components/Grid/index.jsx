@@ -14,11 +14,6 @@ class Grid extends React.Component {
     return `${row.id}: ${cell} USD`;
   };
 
-  expandColumnComponent = ({ isExpanded }) => {
-    let content = '';
-    content = isExpanded ? '(-)' : '(+)';
-    return <div> {content} </div>;
-  };
   renderPaginationShowsTotal(start, to, total) {
     return (
       <p style={{ color: '#6c757d' }}>
@@ -29,6 +24,12 @@ class Grid extends React.Component {
 
   renderRow = (row) => {
     this.props.onRowClick(row);
+  };
+
+  expandColumnComponent = ({ isExpanded }) => {
+    let content = '';
+    content = isExpanded ? '(-)' : '(+)';
+    return <div> {content} </div>;
   };
 
   render() {
@@ -43,8 +44,9 @@ class Grid extends React.Component {
     };
     return (
       <div>
-        {this.props.headerValue &&
-          this.props.headerValue.length > 0 && <GridHeader headerValue={this.props.headerValue} />}
+        {this.props.headerValue && this.props.headerValue.length > 0 && (
+          <GridHeader headerValue={this.props.headerValue} />
+        )}
         <BootstrapTable
           data={this.props.data}
           pagination={this.props.pagination}
@@ -58,7 +60,7 @@ class Grid extends React.Component {
           expandableRow={this.props.isExpandableRow}
           expandComponent={this.props.expandComponent}
           expandColumnOptions={{
-            expandColumnVisible: true,
+            expandColumnVisible: this.props.isExpandableRow,
             expandColumnComponent: this.expandColumnComponent,
             columnWidth: 50,
           }}

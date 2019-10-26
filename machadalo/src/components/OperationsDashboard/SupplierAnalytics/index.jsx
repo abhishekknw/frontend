@@ -1,5 +1,6 @@
 import React from 'react';
-import getSupplierColumn from './SupplierGridColumConfig';
+import { Link } from 'react-router-dom';
+import getCampaignSummaryColumn from './SupplierCampaignSummaryGridConfig';
 import InnerGrid from '../../InnerGrid';
 
 const addMissingDatafield = (data) => {
@@ -25,7 +26,28 @@ const addMissingDatafield = (data) => {
 const SupplierAnalytics = (props) => {
   const { supplierData } = props;
   const data = addMissingDatafield(supplierData);
-  return <div>{supplierData && <InnerGrid columns={getSupplierColumn()} data={data} />}</div>;
+  console.log(data);
+  return (
+    <div>
+      {supplierData && (
+        <InnerGrid
+          columns={getCampaignSummaryColumn()}
+          data={data}
+          exportCsv={false}
+          search={false}
+          pagination={false}
+          backgroundColor="white"
+        />
+      )}
+      <Link
+        to={`/r/operations-dashboard/${supplierData.campaign_id}`}
+        className="btn btn--danger"
+        style={{ marginTop: '8px' }}
+      >
+        View Suppliers
+      </Link>
+    </div>
+  );
 };
 
 export default SupplierAnalytics;
