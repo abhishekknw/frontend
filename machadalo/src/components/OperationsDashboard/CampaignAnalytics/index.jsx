@@ -5,7 +5,6 @@ import getCampaignColumn from './CampaignGridColumnConfig';
 import Grid from '../../Grid';
 import SupplierAnalytics from '../SupplierAnalytics';
 import LoadingWrapper from '../../Error/LoadingWrapper';
-import CampaignSupplierModal from '../../Modals/CampaignSupplierModal';
 
 class CampaignAnalytics extends React.Component {
   constructor(props) {
