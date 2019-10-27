@@ -1,5 +1,5 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import '../bootstrap-iso.css';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 import { get } from 'lodash';
@@ -43,7 +43,7 @@ class Grid extends React.Component {
       onRowClick: this.renderRow,
     };
     return (
-      <div>
+      <div className="bootstrap-iso">
         {this.props.headerValue && this.props.headerValue.length > 0 && (
           <GridHeader headerValue={this.props.headerValue} />
         )}

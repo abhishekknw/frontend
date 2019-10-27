@@ -1,5 +1,5 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import '../bootstrap-iso.css';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 import GridHeader from '../GridHeader';
@@ -21,7 +21,7 @@ class InnerGrid extends React.Component {
       nextPage: 'Next', // Next page button text
     };
     return (
-      <div style={{ backgroundColor: 'white' }}>
+      <div className="bootstrap-iso" style={{ backgroundColor: 'white' }}>
         {this.props.headerValue && this.props.headerValue.length > 0 && (
           <GridHeader headerValue={this.props.headerValue} />
         )}
@@ -34,6 +34,7 @@ class InnerGrid extends React.Component {
           pagination={this.props.pagination}
           options={options}
           hover
+          insertRow={this.props.showModal || false}
         >
           {columns &&
             columns.map((column, idx) => {
