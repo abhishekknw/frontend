@@ -1,4 +1,5 @@
 import React from 'react';
+import { get } from 'lodash';
 import '../bootstrap-iso.css';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
@@ -33,11 +34,18 @@ class InnerGrid extends React.Component {
           search={this.props.search}
           pagination={this.props.pagination}
           options={options}
-          hover
+          hover={true}
           insertRow={this.props.showModal || false}
+          version="4"
         >
           {columns &&
             columns.map((column, idx) => {
+              const isNested = column.dataField.indexOf('.') >= 0;
+              const formatter = isNested
+                ? function(cell, row) {
+                    return get(row, column.dataField);
+                  }
+                : undefined;
               return (
                 <TableHeaderColumn
                   isKey={idx == 0 ? true : false}
@@ -48,6 +56,7 @@ class InnerGrid extends React.Component {
                   className={column.className}
                   columnClassName={column.columnClassName}
                   dataAlign={column.dataAlign || 'center'}
+                  dataFormat={column.formatter || formatter}
                 >
                   {column.text}
                 </TableHeaderColumn>

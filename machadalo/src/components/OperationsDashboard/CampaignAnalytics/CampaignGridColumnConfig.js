@@ -1,3 +1,7 @@
+import React from 'react';
+import { get } from 'lodash';
+import CampaignBadge from '../../CampaignBadge';
+
 const getCampaignColumn = () => {
   return [
     {
@@ -18,6 +22,11 @@ const getCampaignColumn = () => {
       text: 'Status',
       row: 0,
       rowSpan: 2,
+      formatter: (cell, row) => {
+        let status = get(row, 'campaign_status');
+        let variant = status === 'completed' ? 'success' : status === 'ongoing' ? 'info' : 'danger';
+        return <CampaignBadge variant={variant}>{status}</CampaignBadge>;
+      },
     },
     {
       dataField: 'city',

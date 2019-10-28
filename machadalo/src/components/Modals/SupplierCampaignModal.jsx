@@ -21,7 +21,7 @@ const SupplierCampaignModal = (props) => {
           <p>Campaignwise Summary</p>
           <Link
             to={`/r/operations-dashboard/${props.campaignId}`}
-            className="btn btn--danger"
+            className="btn btn-danger"
             style={{ marginTop: '8px' }}
           >
             View Suppliers

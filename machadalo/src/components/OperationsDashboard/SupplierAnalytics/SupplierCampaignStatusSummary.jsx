@@ -57,7 +57,7 @@ class SupplierCampaignStatusSummary extends Component {
         {this.state.supplierDetails.length > 0 && <button onClick={this.onBack}>Back</button> && (
           <InnerGrid
             columns={getCampaignColumn()}
-            data={this.state.supplierDetails[1].supplier}
+            data={this.state.supplierDetails}
             exportCsv={true}
             search={true}
             pagination={true}

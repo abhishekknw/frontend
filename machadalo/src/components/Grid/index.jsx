@@ -1,9 +1,9 @@
 import React from 'react';
-import '../bootstrap-iso.css';
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 import { get } from 'lodash';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import GridHeader from '../GridHeader';
+import '../bootstrap-iso.css';
+import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 
 class Grid extends React.Component {
   constructor(props) {
@@ -50,7 +50,7 @@ class Grid extends React.Component {
         <BootstrapTable
           data={this.props.data}
           pagination={this.props.pagination}
-          hover
+          hover={true}
           headerStyle={{ backgroundColor: '#c7c7c7c9' }}
           trStyle={{ cursor: 'pointer' }}
           search={this.props.search}
@@ -64,9 +64,17 @@ class Grid extends React.Component {
             expandColumnComponent: this.expandColumnComponent,
             columnWidth: 50,
           }}
+          tableStyle={{ marginBottom: '0px' }}
+          version="4"
         >
           {columns &&
             columns.map((column, idx) => {
+              const isNested = column.dataField.indexOf('.') >= 0;
+              const formatter = isNested
+                ? function(cell, row) {
+                    return get(row, column.dataField);
+                  }
+                : undefined;
               return (
                 <TableHeaderColumn
                   isKey={idx == 0 ? true : false}
@@ -81,6 +89,7 @@ class Grid extends React.Component {
                   rowSpan={column.rowSpan}
                   colSpan={column.colSpan}
                   dataAlign={column.dataAlign || 'center'}
+                  dataFormat={column.formatter || formatter}
                 >
                   {column.text}
                 </TableHeaderColumn>

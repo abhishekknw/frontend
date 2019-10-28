@@ -1,4 +1,5 @@
 import React from 'react';
+import '../../bootstrap-iso.css';
 import request from 'superagent';
 import config from '../../../config';
 import getCampaignColumn from './CampaignGridColumnConfig';
@@ -53,7 +54,7 @@ class CampaignAnalytics extends React.Component {
     }
 
     return (
-      <div>
+      <div className="bootstrap-iso">
         {isFetchingTappingList ? (
           <LoadingWrapper />
         ) : (

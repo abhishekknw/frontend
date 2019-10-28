@@ -13,7 +13,14 @@ const colorMap = {
 
 const CampaignBadge = ({ variant = 'default', children, color, ...props }) => {
   return (
-    <Badge style={{ backgroundColor: color || colorMap[variant], whiteSpace: 'unset' }} {...props}>
+    <Badge
+      style={{
+        backgroundColor: color || colorMap[variant],
+        whiteSpace: 'unset',
+        textTransform: 'uppercase',
+      }}
+      {...props}
+    >
       {children}
     </Badge>
   );

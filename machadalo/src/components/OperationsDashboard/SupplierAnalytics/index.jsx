@@ -1,4 +1,5 @@
 import React from 'react';
+import '../../bootstrap-iso.css';
 import getCampaignSummaryColumn from './SupplierCampaignSummaryGridConfig';
 import InnerGrid from '../../InnerGrid';
 import SupplierCampaignModal from '../../Modals/SupplierCampaignModal';
@@ -41,15 +42,11 @@ class SupplierAnalytics extends React.Component {
     this.setState({ showModal: false });
   }
 
-  handleCloseModal() {
-    this.setState({ showModal: false });
-  }
-
   render() {
     const { supplierData } = this.props;
     const data = this.addMissingDatafield(supplierData);
     return (
-      <div>
+      <div className="bootstrap-iso">
         {supplierData && (
           <InnerGrid
             columns={getCampaignSummaryColumn()}
@@ -62,13 +59,14 @@ class SupplierAnalytics extends React.Component {
           />
         )}
 
-        <button onClick={() => this.setState({ showModal: true })} className="btn btn--danger">
+        <button onClick={() => this.setState({ showModal: true })} className="btn btn-danger">
           View Details
         </button>
         <SupplierCampaignModal
           showModal={this.state.showModal}
           campaignId={supplierData.campaign_id}
           handleCloseModal={this.handleCloseModal}
+          columns={getCampaignSummaryColumn()}
         />
       </div>
     );
