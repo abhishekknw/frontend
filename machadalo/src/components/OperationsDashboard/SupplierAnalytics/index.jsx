@@ -59,7 +59,11 @@ class SupplierAnalytics extends React.Component {
           />
         )}
 
-        <button onClick={() => this.setState({ showModal: true })} className="btn btn-danger">
+        <button
+          onClick={() => this.setState({ showModal: true })}
+          className="btn btn-danger"
+          style={{ marginTop: '10px' }}
+        >
           View Details
         </button>
         <SupplierCampaignModal

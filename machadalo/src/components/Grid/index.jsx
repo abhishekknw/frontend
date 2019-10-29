@@ -4,6 +4,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import GridHeader from '../GridHeader';
 import '../bootstrap-iso.css';
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
+import './index.css';
 
 class Grid extends React.Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class Grid extends React.Component {
   render() {
     const columns = this.props.columns;
     const options = {
-      expandRowBgColor: '#c2efef',
+      expandRowBgColor: '#95b5d8',
       onlyOneExpanding: true,
       paginationShowsTotal: this.renderPaginationShowsTotal,
       prePage: 'Prev', // Previous page button text
@@ -51,8 +52,6 @@ class Grid extends React.Component {
           data={this.props.data}
           pagination={this.props.pagination}
           hover={true}
-          headerStyle={{ backgroundColor: '#c7c7c7c9' }}
-          trStyle={{ cursor: 'pointer' }}
           search={this.props.search}
           multiColumnSearch={true}
           exportCSV={this.props.exportCsv}
@@ -64,6 +63,8 @@ class Grid extends React.Component {
             expandColumnComponent: this.expandColumnComponent,
             columnWidth: 50,
           }}
+          headerStyle={{ backgroundColor: '#707f8c9e' }}
+          trStyle={{ cursor: 'pointer' }}
           tableStyle={{ marginBottom: '0px' }}
           version="4"
         >
