@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
-import { Link } from 'react-router-dom';
+import SupplierCampaignStatusSummary from '../OperationsDashboard/SupplierAnalytics/SupplierCampaignStatusSummary';
+import './index.css';
 
 const SupplierCampaignModal = (props) => {
   const { showModal } = props;
@@ -10,7 +11,7 @@ const SupplierCampaignModal = (props) => {
       left: '50%',
       right: 'auto',
       bottom: 'auto',
-      marginRight: '-50%',
+      width: '70%',
       transform: 'translate(-50%, -50%)',
     },
   };
@@ -18,15 +19,12 @@ const SupplierCampaignModal = (props) => {
     <div>
       {showModal && (
         <Modal isOpen={showModal} style={customStyles}>
-          <p>Campaignwise Summary</p>
-          <Link
-            to={`/r/operations-dashboard/${props.campaignId}`}
-            className="btn btn-danger"
-            style={{ marginTop: '8px' }}
+          <SupplierCampaignStatusSummary />
+          <button
+            className="btn btn--danger"
+            onClick={props.handleCloseModal}
+            style={{ marginTop: '10px', float: 'right' }}
           >
-            View Suppliers
-          </Link>
-          <button className="btn btn-secondary" onClick={props.handleCloseModal}>
             Close
           </button>
         </Modal>

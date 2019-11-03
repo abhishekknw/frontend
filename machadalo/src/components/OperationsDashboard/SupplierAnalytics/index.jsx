@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../bootstrap-iso.css';
 import getCampaignSummaryColumn from './SupplierCampaignSummaryGridConfig';
 import InnerGrid from '../../InnerGrid';
 import SupplierCampaignModal from '../../Modals/SupplierCampaignModal';

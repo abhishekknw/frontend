@@ -58,9 +58,9 @@ class SupplierCampaignStatusSummary extends Component {
           <InnerGrid
             columns={getCampaignColumn()}
             data={this.state.supplierDetails}
-            exportCsv={true}
-            search={true}
-            pagination={true}
+            exportCsv={false}
+            search={false}
+            pagination={false}
             headerValue="Supplier Details"
             backgroundColor="#c7c7c7c9"
           />
