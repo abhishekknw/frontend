@@ -7,13 +7,13 @@ const getCampaignColumn = () => {
   return [
     {
       dataField: 'status',
-      text: 'Campaign Status',
+      text: 'Booking Status',
       row: 0,
       rowSpan: 2,
       formatter: (cell, row) => {
-        let status = get(row, 'booking_status');
+        let status = get(row, 'status');
         let variant =
-          status === 'completed' ? 'success' : status === 'confirmed_booked' ? 'info' : 'danger';
+          status === 'completed' ? 'success' : status === 'confirmed booking' ? 'info' : 'danger';
         return <CampaignBadge variant={variant}>{status}</CampaignBadge>;
       },
     },
@@ -42,26 +42,26 @@ const getCampaignColumn = () => {
       rowSpan: 2,
     },
     {
+      dataField: 'payment_method',
+      text: 'Payment Method',
+      row: 0,
+      rowSpan: 2,
+    },
+    {
+      dataField: 'comments_count',
+      text: 'Comments Count',
+      row: 0,
+      rowSpan: 2,
+    },
+    {
       dataField: 'supplier',
       text: 'Suppliers',
       row: 0,
       rowSpan: 2,
       formatter: (cell, row) => {
-        return <Link to="hello">View Suppliers</Link>;
+        return <Link to="supplier">View Suppliers</Link>;
       },
     },
-    // {
-    //   dataField: 'payment_method',
-    //   text: 'Payment Method',
-    //   row: 0,
-    //   rowSpan: 2,
-    // },
-    // {
-    //   dataField: 'comments_count',
-    //   text: 'Comments Count',
-    //   row: 0,
-    //   rowSpan: 2,
-    // },
   ];
 };
 

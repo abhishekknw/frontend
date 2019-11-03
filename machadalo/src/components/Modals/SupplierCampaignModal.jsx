@@ -4,7 +4,7 @@ import SupplierCampaignStatusSummary from '../OperationsDashboard/SupplierAnalyt
 import './index.css';
 
 const SupplierCampaignModal = (props) => {
-  const { showModal } = props;
+  const { showModal, data } = props;
   const customStyles = {
     content: {
       top: '50%',
@@ -17,9 +17,9 @@ const SupplierCampaignModal = (props) => {
   };
   return (
     <div>
-      {showModal && (
+      {showModal && data && data.length > 0 && (
         <Modal isOpen={showModal} style={customStyles}>
-          <SupplierCampaignStatusSummary />
+          <SupplierCampaignStatusSummary data={props.data} />
           <button
             className="btn btn--danger"
             onClick={props.handleCloseModal}

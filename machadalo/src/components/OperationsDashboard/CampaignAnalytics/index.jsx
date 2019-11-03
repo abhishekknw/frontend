@@ -13,6 +13,7 @@ class CampaignAnalytics extends React.Component {
     this.state = {
       supplierData: {},
       selectedCampaign: '',
+      token: '',
     };
   }
 
@@ -21,7 +22,7 @@ class CampaignAnalytics extends React.Component {
   };
 
   expandComponent = () => {
-    return <SupplierAnalytics supplierData={this.state.supplierData} />;
+    return <SupplierAnalytics supplierData={this.state.supplierData} token={this.state.token} />;
   };
 
   getSupplierCampaignDetails = (campaignId) => {
@@ -29,6 +30,7 @@ class CampaignAnalytics extends React.Component {
     const { token } = tappingData;
     this.setState({
       selectedCampaign: campaignId,
+      token,
     });
     request
       .get(`${config.API_URL}/v0/ui/ops/campaign/supplier-count/?campaign_id=${campaignId}`)
