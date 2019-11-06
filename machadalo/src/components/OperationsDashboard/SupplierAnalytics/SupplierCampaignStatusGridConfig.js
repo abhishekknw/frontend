@@ -59,7 +59,31 @@ const getCampaignColumn = () => {
       row: 0,
       rowSpan: 2,
       formatter: (cell, row) => {
-        return <Link to="supplier">View Suppliers</Link>;
+        const { campaign_id, status, supplier_count } = row;
+        let isSuppliers = false;
+        if (supplier_count > 0) {
+          isSuppliers = true;
+        }
+        return (
+          <div>
+            {isSuppliers ? (
+              <Link
+                to={{
+                  pathname: `operations-dashboard/${campaign_id}/supplier`,
+                  state: {
+                    suppliers: cell,
+                    campaign_id,
+                    status,
+                  },
+                }}
+              >
+                View Suppliers
+              </Link>
+            ) : (
+              'No Suppliers'
+            )}
+          </div>
+        );
       },
     },
   ];

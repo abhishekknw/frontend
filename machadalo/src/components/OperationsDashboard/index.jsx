@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import CampaignAnalytics from './CampaignAnalytics';
-import SupplierCampaignStatusSummary from './SupplierAnalytics/SupplierCampaignStatusSummary';
+import SupplierList from './SupplierAnalytics/SupplierList';
 
 class OperationsDashboard extends Component {
   constructor(props) {
@@ -23,10 +23,8 @@ class OperationsDashboard extends Component {
           />
           <Route
             exact
-            path={`${match.path}/:campaignId`}
-            render={(componentProps) => (
-              <SupplierCampaignStatusSummary {...this.props} {...componentProps} />
-            )}
+            path={`${match.path}/:campaignId/supplier`}
+            render={(componentProps) => <SupplierList {...this.props} {...componentProps} />}
           />
         </Switch>
       </div>

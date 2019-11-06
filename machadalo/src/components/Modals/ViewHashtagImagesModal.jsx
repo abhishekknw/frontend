@@ -19,9 +19,7 @@ const customStyles = {
 
 export default function ViewHashtagImagesModal({ isVisible, onClose, item }) {
   const url = 'https://s3.ap-northeast-1.amazonaws.com/androidtokyo/';
-  console.log(item);
   const images = item;
-  console.log(images, item);
   const imagesArray = (images || []).map((image) => ({
     original: `${url}${image.image_path}`,
     originalClass: 'originalStyle',

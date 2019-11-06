@@ -19,7 +19,7 @@ const SupplierCampaignModal = (props) => {
     <div>
       {showModal && data && data.length > 0 && (
         <Modal isOpen={showModal} style={customStyles}>
-          <SupplierCampaignStatusSummary data={props.data} />
+          <SupplierCampaignStatusSummary data={props.data} campaignId={props.campaignId} />
           <button
             className="btn btn--danger"
             onClick={props.handleCloseModal}

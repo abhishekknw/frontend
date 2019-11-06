@@ -83,6 +83,7 @@ class SupplierAnalytics extends React.Component {
             pagination={false}
             backgroundColor="white"
             showModal={false}
+            styles={{ backgroundColor: 'white' }}
           />
         )}
 

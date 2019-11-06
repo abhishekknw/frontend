@@ -22,21 +22,22 @@ class InnerGrid extends React.Component {
       nextPage: 'Next', // Next page button text
     };
     return (
-      <div className="bootstrap-iso" style={{ backgroundColor: 'white' }}>
+      <div className="bootstrap-iso" style={this.props.styles}>
         {this.props.headerValue && this.props.headerValue.length > 0 && (
           <GridHeader headerValue={this.props.headerValue} />
         )}
         <BootstrapTable
           data={data}
           headerValue={`Supplier Details`}
-          headerStyle={{ backgroundColor: '#c7c7c7c9' }}
-          exportCsv={this.props.exportCsv}
-          search={this.props.search}
+          headerStyle={{ backgroundColor: '#707f8c9e' }}
+          exportCSV={this.props.exportCsv || false}
+          search={this.props.search || false}
           pagination={this.props.pagination}
           options={options}
           hover={true}
           insertRow={this.props.showModal || false}
           version="4"
+          striped={this.props.striped || false}
         >
           {columns &&
             columns.map((column, idx) => {
@@ -57,6 +58,7 @@ class InnerGrid extends React.Component {
                   columnClassName={column.columnClassName}
                   dataAlign={column.dataAlign || 'center'}
                   dataFormat={column.formatter || formatter}
+                  dataSort={column.sort === true ? true : false}
                 >
                   {column.text}
                 </TableHeaderColumn>

@@ -7,14 +7,6 @@ class SupplierCampaignStatusSummary extends Component {
     super(props);
   }
 
-  isRowExpandable() {
-    return false;
-  }
-
-  expandColumnComponent() {
-    return '';
-  }
-
   render() {
     return (
       <div>
