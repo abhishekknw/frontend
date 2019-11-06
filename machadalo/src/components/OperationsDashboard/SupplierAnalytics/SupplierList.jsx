@@ -8,7 +8,9 @@ class SupplierList extends Component {
   }
 
   render() {
-    const { suppliers, campaign_id, status } = this.props.location.state;
+    const { suppliers, campaign_id } = this.props.location.state;
+    let { status } = this.props.location.state;
+    status = status.charAt(0).toUpperCase() + status.slice(1);
     return (
       <div>
         {suppliers.length > 0 && (
@@ -18,7 +20,7 @@ class SupplierList extends Component {
             exportCsv={true}
             search={true}
             pagination={true}
-            headerValue={`List of Suppliers of ${campaign_id}`}
+            headerValue={`List of Suppliers(${status}) - ${campaign_id}`}
             backgroundColor="#c7c7c7c9"
           />
         )}

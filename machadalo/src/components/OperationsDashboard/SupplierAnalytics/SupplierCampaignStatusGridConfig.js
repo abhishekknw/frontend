@@ -60,16 +60,13 @@ const getCampaignColumn = () => {
       rowSpan: 2,
       formatter: (cell, row) => {
         const { campaign_id, status, supplier_count } = row;
-        let isSuppliers = false;
-        if (supplier_count > 0) {
-          isSuppliers = true;
-        }
+        const isSuppliers = supplier_count > 0 ? true : false;
         return (
           <div>
             {isSuppliers ? (
               <Link
                 to={{
-                  pathname: `operations-dashboard/${campaign_id}/supplier`,
+                  pathname: `operations-dashboard/${campaign_id}/${status}/supplier`,
                   state: {
                     suppliers: cell,
                     campaign_id,
