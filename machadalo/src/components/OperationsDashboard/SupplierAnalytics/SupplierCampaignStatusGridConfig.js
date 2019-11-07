@@ -48,12 +48,6 @@ const getCampaignColumn = () => {
       rowSpan: 2,
     },
     {
-      dataField: 'comments_count',
-      text: 'Comments Count',
-      row: 0,
-      rowSpan: 2,
-    },
-    {
       dataField: 'supplier',
       text: 'Suppliers',
       row: 0,

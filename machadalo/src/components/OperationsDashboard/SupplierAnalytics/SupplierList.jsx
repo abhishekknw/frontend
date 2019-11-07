@@ -6,7 +6,6 @@ class SupplierList extends Component {
   constructor(props) {
     super(props);
   }
-
   render() {
     const { suppliers, campaign_id } = this.props.location.state;
     let { status } = this.props.location.state;

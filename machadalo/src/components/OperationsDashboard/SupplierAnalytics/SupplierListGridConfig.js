@@ -12,12 +12,24 @@ const getSupplierColumn = () => {
       rowSpan: 2,
       formatter: (cell, row) => {
         let society_quality = get(row, 'society_quality');
-        let variant =
-          society_quality === 'Standard'
-            ? 'success'
-            : society_quality === 'Medium High'
-            ? 'info'
-            : 'danger';
+        let variant = 'success';
+        switch (society_quality) {
+          case 'Standard':
+            variant = 'success';
+            break;
+          case 'Medium High':
+            variant = 'info';
+            break;
+          case 'Ultra High':
+            variant = 'warning';
+            break;
+          case 'High':
+            variant = 'primary';
+            break;
+          default:
+            variant = 'danger';
+            break;
+        }
         return <CampaignBadge variant={variant}>{society_quality}</CampaignBadge>;
       },
       sort: true,

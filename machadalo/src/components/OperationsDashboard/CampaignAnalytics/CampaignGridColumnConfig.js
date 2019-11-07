@@ -103,27 +103,27 @@ const getCampaignColumn = () => {
       width: '100px',
       sort: false,
     },
-    {
-      dataField: 'payment_details',
-      text: 'Payment Details',
-      row: 0,
-      colSpan: 2,
-      sort: false,
-    },
-    {
-      dataField: 'payment_details_filled',
-      text: 'Filled',
-      row: 1,
-      width: '100px',
-      sort: false,
-    },
-    {
-      dataField: 'payment_details_not_filled',
-      text: 'Not Filled',
-      row: 1,
-      width: '100px',
-      sort: false,
-    },
+    // {
+    //   dataField: 'payment_details',
+    //   text: 'Payment Details',
+    //   row: 0,
+    //   colSpan: 2,
+    //   sort: false,
+    // },
+    // {
+    //   dataField: 'payment_details_filled',
+    //   text: 'Filled',
+    //   row: 1,
+    //   width: '100px',
+    //   sort: false,
+    // },
+    // {
+    //   dataField: 'payment_details_not_filled',
+    //   text: 'Not Filled',
+    //   row: 1,
+    //   width: '100px',
+    //   sort: false,
+    // },
   ];
 };
 
