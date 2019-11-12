@@ -342,19 +342,19 @@ angular.module('catalogueApp')
                 var dataDict = response.data.data
                 for (var key in dataDict){
                     if (dataDict.unresolved_societies.length>0){
-                      swal("Unresolved societies");
+                      swal("Unresolved societies", dataDict.unresolved_societies);
                     } else if (dataDict.missing_societies.length>0){
                       swal("Missing societies", dataDict.missing_societies);
                     }else if (dataDict.not_present_in_shortlisted_societies.length>0){
                       swal("Not present in shortlisted societies", dataDict.not_present_in_shortlisted_societies);
                     }else if (dataDict.inv_activit_missing_societies.length>0){
-                      swal("Inventory activity missing societies");
+                      swal("Inventory activity missing societies", dataDict.inv_activit_missing_societies);
                     }else if (dataDict.more_than_ones_same_shortlisted_society.length>0){
-                      swal("More than ones same shortlisted society");
+                      swal("More than ones same shortlisted society", dataDict.more_than_ones_same_shortlisted_society);
                     }else if (dataDict.inv_activity_assignment_missing_societies.length>0){
-                      swal("Inventory activity assignment missing societies");
+                      swal("Inventory activity assignment missing societies", dataDict.inv_activity_assignment_missing_societies);
                     }else if (dataDict.inv_activity_assignment_activity_date_missing_societies.length>0){
-                      swal("Inventory activity assignment activity date missing societies");
+                      swal("Inventory activity assignment activity date missing societies", dataDict.inv_activity_assignment_activity_date_missing_societies);
                     }else{
                       swal(constants.name,constants.create_success,constants.success);
                     }
