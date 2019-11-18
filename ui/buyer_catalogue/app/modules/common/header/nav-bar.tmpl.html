@@ -39,9 +39,9 @@
                               <a href="/#/manageUser" class=" lipadding" ng-click="closeModal()">
                               <i class="fa fa-outdent fa-lg"></i> Management</a></li>
 
-                            <li ng-class="{active: isActive('/OpsDashBoard')}" permission = "[perm.menuOpsDashBoard]">
-                              <a ng-href="/#/OpsDashBoard" class=" lipadding" ng-click="closeModal()">
-                                <i class="fa fa-dashboard fa-lg"></i> OpsDashBoard</a>
+                            <li ng-class="{active: isActive('/campaignDecisionBoard')}" permission = "[perm.menuOpsDashBoard]">
+                              <a ng-href="/#/campaignDecisionBoard" class=" lipadding" ng-click="closeModal()">
+                                <i class="fa fa-dashboard fa-lg"></i> Campaign Decision Board</a>
                            </li>
                           <li ng-class="{active: isActive('/CampaignList')}" permission = "[perm.menuCampaignList]">
                               <a ng-href="/#/CampaignList" class=" lipadding" ng-click="closeModal()">
@@ -147,6 +147,11 @@
                           <li ng-class="{active: isActive('/dashboard')}" permission = "[perm.menuCampaignLeads]">
                             <a href="https://forms.machadalo.com" target="_blank" class=" lipadding" ng-click="closeModal()">
                               <i class="fa fa-sign-out fa-lg"></i> Supplier Forms
+                            </a>
+                          </li>
+                          <li>
+                            <a href="/r/operations-dashboard">
+                              <i class="fa fa-outdent"></i> Operations Dashboard
                             </a>
                           </li>
                           <li ng-class="{active: isActive('/dashboard')}" permission = "[perm.menuCampaignLeads]">

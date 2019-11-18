@@ -40,10 +40,12 @@ $scope.permissions = permissions.mapviewPage;
   //for loading icon
   $scope.requestProposal = true;
 
-  if($window.localStorage.isReadOnly == 'true'){
-    $scope.isRequested = true;
+  if($window.localStorage.isReadOnly == true){
+    $scope.isRequested = false;
   }
 $scope.proposalState = $window.localStorage.proposalState;
+if ($scope.proposalState == 'Converted')
+  $scope.isRequested = true;
 $scope.clientName = $window.localStorage.business_name;
 //code added to show or hide some details based on user permissions
 $scope.user_code = $window.localStorage.user_code;
@@ -2010,9 +2012,9 @@ $scope.gridViewSummary = {};
                   sendEmailToBDHead();
                   uploadToAmazon();
                   $scope.hideSpinner = true;
-                  $scope.isRequested = true;
-                  $window.localStorage.isReadOnly = 'true';
-                  $window.localStorage.isSavedProposal = 'true';
+                  $scope.isRequested = false;
+                  $window.localStorage.isReadOnly = false;
+                  $window.localStorage.isSavedProposal = true;
                   swal(constants.name,constants.request_proposal_success,constants.success);
                   $scope.checkFileExport = false;
                   $location.path('/' + $scope.campaign_id + '/manageCampaign/create');

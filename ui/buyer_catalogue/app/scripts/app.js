@@ -314,11 +314,11 @@ angular
            }
        })
       .state('OpsDashBoard',{
-           url : '/OpsDashBoard',
+           url : '/campaignDecisionBoard',
            controller : 'OpsDashCtrl',
            templateUrl : 'modules/pages/DashBoard/OperationsDashBoard/opsdashboard.tmpl.html',
            ncyBreadcrumb: {
-             label:'OpsDashBoard',
+             label:'campaignDecisionBoard',
              parent : 'manageCampaign.create'
            },
            data :{

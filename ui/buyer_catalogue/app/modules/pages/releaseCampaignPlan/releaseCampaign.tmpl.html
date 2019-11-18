@@ -79,7 +79,8 @@
                 <th>Phase</th>
                 <th ng-if="canViewInternalComments">Internal Comments</th>
                 <th>Comments</th>
-                <th>Next Action Date</th>
+                <th ng-if="releaseDetails.campaign.proposal_id.indexOf('NOB') == -1">Next Action Date</th>
+                <th ng-if="releaseDetails.campaign.proposal_id.indexOf('NOB') > -1">Next Meeting</th>
                 <th>Inventory Type</th>
                 <th>Inventory Count</th>
                 <th>Inventory Days</th>
@@ -162,6 +163,18 @@
                     >{{item.name}}</option>
                   </select>
                   <br>
+                    <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" permission = "[permissions.changeBookingStatus]" ng-change="changePhase(supplier)" ng-if="supplier.booking_status=='MF'">
+                      <option style="width:100%;" ng-repeat="item in meeting_status" value="{{item.code}}"
+                      ng-if="supplier.meeting_status == undefined ? supplier.meeting_status = meeting_status[0].code : 1">
+                        {{item.name}}</option>
+                    </select>
+
+                    <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-if="supplier.booking_status=='RE'">
+                      <option style="width:100%;" ng-repeat="item in booking_recce" value="{{item.code}}"
+                      ng-if="supplier.booking_recce == undefined ? supplier.booking_recce = booking_recce[0].code : 1">
+                        {{item.name}}</option>
+                    </select>
+
                     <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-if="supplier.booking_status=='DP'">
                       <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}"
                       ng-if="supplier.booking_pending == undefined ? supplier.booking_pending = booking_pending[0].code : 1">
@@ -346,7 +359,7 @@
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Permission Box Image Details</h4>
+                        <h4 class="modal-title">Permission Box Image Details for {{ permissionImageSupplier.name }}</h4>
                         <hr/>
                         <div class = "modal-body">
                           <div class="carousel" id="slider" ng-if="perBoxImageData && perBoxImageData.length > 0" >
@@ -369,9 +382,9 @@
                             </a>
                           </div>
                           <div>
-                            <button class="btn btn-primary active" ngf-select="uploadImagePermission($file)" ngf-max-size="2MB">Upload Image</button>
+                            <input ngf-select="uploadImagePermission($file)"type="file" ngf-max-size="2MB"></input>
                             <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Permission Box" ng-model="supplier.permissionComment"></textarea>
-                            <button class="btn btn-primary active" ng-click="uploadPermissionBoxImage(supplier)" >Submit</button>
+                            <button class="btn btn-primary active" ng-click="uploadPermissionBoxImage(permissionImageSupplier)" >Submit</button>
                           </div>
                         </div>
                       </div>
@@ -391,7 +404,7 @@
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Receipt Image Details</h4>
+                        <h4 class="modal-title">Receipt Image Details for {{ receiptImageSupplier.name }}</h4>
                         <hr/>
                         <div class = "modal-body">
                           <div class="carousel" id="slider" ng-if="perReceiptImageData && perReceiptImageData.length > 0">
@@ -414,25 +427,11 @@
                               </a>
                           </div>
                           <div>
-                            <button class="btn btn-primary active" ngf-select="uploadImageReceipt($file)" ngf-max-size="2MB">Upload Image</button>
+                            <input ngf-select="uploadImageReceipt($file)"type="file" ngf-max-size="2MB"></input>
                             <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Receipt" ng-model="supplier.receiptComment"></textarea>
-                            <button ng-click="uploadReceiptImage(supplier)" >Submit</button>
+                            <button ng-click="uploadReceiptImage(receiptImageSupplier)" >Submit</button>
                           </div>
                         </div>
-                        <a style="height:400px;" class="left carousel-control" data-toggle="carousel" data-target="#slider"
-                          role="button" data-slide="prev">
-                          <span class="glyphicon glyphicon-chevron-left"></span>
-                        </a>
-                        <a style="height:400px;" class="right carousel-control" data-toggle="carousel" data-target="#slider"
-                          role="button" data-slide="next">
-                          <span class="glyphicon glyphicon-chevron-right"></span>
-                        </a>
-                      </div>
-                      <div>
-                        <button class="btn btn-primary active" ngf-select="uploadImageReceipt($file)" ngf-max-size="2MB">Upload
-                          Image</button>
-                        <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Receipt" ng-model="supplier.receiptComment"></textarea>
-                        <button ng-click="uploadReceiptImage(supplier)">Submit</button>
                       </div>
                     </div>
                   </div>

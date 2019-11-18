@@ -773,7 +773,7 @@
             <!-- <button class="btn btn-danger active" ng-show="!show_societies" ng-click="showSocieties()">Grid View</button><br> -->
             <button id="spacing" style="width:100%;" data-target = "#addNewSocities" class="btn btn-danger active" data-toggle="modal" ng-show="show_societies"ng-click="clearSearchData()" ng-disabled="isRequested" permission="[permissions.addSuppliers]">Add Suppliers</button>&nbsp;<br>
             <button id="spacing" style="width:100%;" class="btn btn-danger active"  ng-show="show_societies && !isRequested" ng-click = "exportData()" ng-loading="hideSpinner" ng-disabled = "checkFileExport" permission="[permissions.requestProposal]">Request Proposal</button>
-            <button id="spacing" style="width:100%;" class="btn btn-success" name="button" ng-disabled="isRequested" ng-if="isRequested">Requested</button>&nbsp;<br>
+            <button id="spacing" style="width:100%;" class="btn btn-success" name="button" ng-disabled="isRequested" ng-if="isRequested">Converted</button>&nbsp;<br>
             <button id="spacing" style="width:100%;" class="btn btn-danger active"  ng-show="show_societies" ng-click = "saveData()" ng-disabled="isRequested" permission="[permissions.saveData]">Save</button><br /><br />
             <!-- <button id="spacing" ng-hide="hideData || isGuestUser" class="btn btn-danger active" ngf-select="upload($file)" ng-disabled="isRequested" permission="[permissions.uploadProposal]">Upload</button> -->
         </div>

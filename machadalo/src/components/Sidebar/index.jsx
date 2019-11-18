@@ -83,9 +83,9 @@ export default class Sidebar extends React.Component {
                 </a>
               </li>
               <li>
-                <a href="/#/OpsDashBoard">
+                <a href="/#/campaignDecisionBoard">
                   <i className="fa fa-dashboard" aria-hidden="true" />
-                  OpsDashBoard
+                  Campaign Decision Board
                 </a>
               </li>
               <li>
@@ -208,6 +208,12 @@ export default class Sidebar extends React.Component {
                     <NavLink to="/r/booking/campaigns">Manage Booking</NavLink>
                   </li>
                 </ul>
+              </li>
+              <li>
+                <a href="/r/operations-dashboard">
+                  <i className="fa fa-dashboard" aria-hidden="true" />
+                  Operations DashBoard
+                </a>
               </li>
               <li>
                 <a href="/#/logout">
