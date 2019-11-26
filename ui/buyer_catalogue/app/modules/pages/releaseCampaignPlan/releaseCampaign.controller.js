@@ -941,7 +941,6 @@ $scope.multiSelect =
            $scope.supplierDataForComment = undefined;
            $('#addComments').modal('hide');
            swal(constants.name, constants.add_data_success, constants.success);
-           location.reload();
          }).catch(function onError(response){
            console.log(response);
          })
