@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import CampaignAnalytics from './CampaignAnalytics';
 import SupplierList from './SupplierAnalytics/SupplierList';
+import UserAnalytics from './UserAnalytics';
 
 class OperationsDashboard extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class OperationsDashboard extends Component {
             path={`${match.path}/:campaignId/:status/supplier`}
             render={(componentProps) => <SupplierList {...this.props} {...componentProps} />}
           />
-          <Route exact path={`${match.path}/user`} render={(componentProps) => <div></div>} />
+          <Route exact path={`${match.path}/user`} render={(componentProps) => <UserAnalytics />} />
         </Switch>
       </div>
     );
