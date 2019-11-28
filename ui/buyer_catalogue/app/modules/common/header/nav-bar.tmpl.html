@@ -149,10 +149,24 @@
                               <i class="fa fa-sign-out fa-lg"></i> Supplier Forms
                             </a>
                           </li>
-                          <li>
-                            <a href="/r/operations-dashboard">
-                              <i class="fa fa-outdent"></i> Operations Dashboard
-                            </a>
+                          <li class="dropdown-list-parent" style="padding-left:10px">
+                            <div class="parent-list" ng-Click="toggleOperationsDropdown = !toggleOperationsDropdown" style="color:#fff">
+                              <i class="fa fa-cubes" aria-hidden="true" />
+                              Operations Dashboard
+                              <i
+                                class="fa caret" aria-hidden="true"
+                              />
+                            </div>
+                            <ul class="dropdown-list-child" ng-show="toggleOperationsDropdown" style="padding-left:10px">
+                              <li>
+                                <i class="fa fa-columns" aria-hidden="true" style="color:#fff"/>
+                                <a ng-href="/r/operations-dashboard">Tapping Details</a>
+                              </li>
+                              <li>
+                                <i class="fa fa-columns" aria-hidden="true" style="color:#fff"/>
+                                <a ng-href="/r/operations-dashboard/user">User Performance</a>
+                              </li>
+                            </ul>
                           </li>
                           <li ng-class="{active: isActive('/dashboard')}" permission = "[perm.menuCampaignLeads]">
                             <a href="/#/loginLogs"  ng-click="closeModal()">
