@@ -27,7 +27,11 @@ class OperationsDashboard extends Component {
             path={`${match.path}/:campaignId/:status/supplier`}
             render={(componentProps) => <SupplierList {...this.props} {...componentProps} />}
           />
-          <Route exact path={`${match.path}/user`} render={(componentProps) => <UserAnalytics />} />
+          <Route
+            exact
+            path={`${match.path}/user`}
+            render={(componentProps) => <UserAnalytics {...this.props} {...componentProps} />}
+          />
         </Switch>
       </div>
     );
