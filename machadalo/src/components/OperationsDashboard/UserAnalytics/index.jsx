@@ -39,7 +39,7 @@ class UserAnalytics extends React.Component {
   };
 
   onSelect = (userId) => {
-    const { token } = this.props.tappingDetails.tappingData;
+    const { token } = this.props.auth;
     request
       .get(`${config.API_URL}/v0/ui/ops/user-analytics-today/?user_id=${userId}`)
       .set('Authorization', `JWT ${token}`)
