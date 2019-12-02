@@ -17,18 +17,24 @@ const SupplierCampaignModal = (props) => {
   };
   return (
     <div>
-      {showModal && data && data.length > 0 && (
-        <Modal isOpen={showModal} style={customStyles}>
-          <SupplierCampaignStatusSummary data={props.data} campaignId={props.campaignId} />
-          <button
-            className="btn btn--danger"
-            onClick={props.handleCloseModal}
-            style={{ marginTop: '10px', float: 'right' }}
-          >
-            Close
-          </button>
-        </Modal>
-      )}
+      {showModal &&
+        data &&
+        data.length > 0 && (
+          <Modal isOpen={showModal} style={customStyles}>
+            <SupplierCampaignStatusSummary
+              data={props.data}
+              campaignId={props.campaignId}
+              campaignName={props.campaignName}
+            />
+            <button
+              className="btn btn--danger"
+              onClick={props.handleCloseModal}
+              style={{ marginTop: '10px', float: 'right' }}
+            >
+              Close
+            </button>
+          </Modal>
+        )}
     </div>
   );
 };

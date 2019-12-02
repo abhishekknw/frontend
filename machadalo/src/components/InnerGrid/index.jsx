@@ -23,9 +23,10 @@ class InnerGrid extends React.Component {
     };
     return (
       <div className="bootstrap-iso" style={this.props.styles}>
-        {this.props.headerValue && this.props.headerValue.length > 0 && (
-          <GridHeader headerValue={this.props.headerValue} />
-        )}
+        {this.props.headerValue &&
+          this.props.headerValue.length > 0 && (
+            <GridHeader headerValue={this.props.headerValue} headerStyle={'1em'} />
+          )}
         <BootstrapTable
           data={data}
           headerValue={`Supplier Details`}
