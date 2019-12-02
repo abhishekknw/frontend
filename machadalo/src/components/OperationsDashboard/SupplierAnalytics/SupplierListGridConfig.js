@@ -1,10 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { get } from 'lodash';
 import CampaignBadge from '../../CampaignBadge';
 
 const getSupplierColumn = () => {
   return [
+    {
+      dataField: 'name',
+      text: 'Name',
+      row: 0,
+      rowSpan: 2,
+      width: '350px',
+      sort: true,
+    },
     {
       dataField: 'society_quality',
       text: 'Type',
@@ -32,14 +39,6 @@ const getSupplierColumn = () => {
         }
         return <CampaignBadge variant={variant}>{society_quality}</CampaignBadge>;
       },
-      sort: true,
-    },
-    {
-      dataField: 'name',
-      text: 'Name',
-      row: 0,
-      rowSpan: 2,
-      width: '300px',
       sort: true,
     },
     {

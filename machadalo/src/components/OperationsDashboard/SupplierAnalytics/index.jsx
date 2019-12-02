@@ -93,6 +93,7 @@ class SupplierAnalytics extends React.Component {
         <SupplierCampaignModal
           showModal={this.state.showModal}
           campaignId={supplierData.campaign_id}
+          campaignName={supplierData.campaign_name}
           handleCloseModal={this.handleCloseModal}
           columns={getCampaignSummaryColumn()}
           data={this.state.supplierDetails}

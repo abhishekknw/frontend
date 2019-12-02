@@ -53,7 +53,7 @@ const getCampaignColumn = () => {
       row: 0,
       rowSpan: 2,
       formatter: (cell, row) => {
-        const { campaign_id, status, supplier_count } = row;
+        const { campaign_id, status, supplier_count, campaign_name } = row;
         const isSuppliers = supplier_count > 0 ? true : false;
         return (
           <div>
@@ -65,6 +65,7 @@ const getCampaignColumn = () => {
                     suppliers: cell,
                     campaign_id,
                     status,
+                    campaign_name,
                   },
                 }}
               >
