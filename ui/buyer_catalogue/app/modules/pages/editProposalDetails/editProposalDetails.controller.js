@@ -5,6 +5,8 @@ angular.module('catalogueApp')
     function ($scope, $rootScope, $window, $location , commonDataShare,constants,editProposalDetailsService, $stateParams) {
 
       var proposalId = $stateParams.proposalId;
+      $scope.updateDisable = false;
+      $scope.options = {};
       editProposalDetailsService.getProposalDetails(proposalId)
       .then(function onSuccess(response){
         console.log(response);
@@ -12,9 +14,13 @@ angular.module('catalogueApp')
         console.log($scope.proposalData);
         $scope.proposalData.tentative_start_date = new Date($scope.proposalData.tentative_start_date);
         $scope.proposalData.tentative_end_date = new Date($scope.proposalData.tentative_end_date);
+        $scope.proposalData.startDate = new Date($scope.proposalData.tentative_start_date);
+        $scope.proposalData.endDate = new Date($scope.proposalData.tentative_end_date);
       }).catch(function onError(response){
         console.log(response);
       })
+
+      
 
         editProposalDetailsService.getOrganisations()
         .then(function onSuccess(response){
@@ -32,9 +38,38 @@ angular.module('catalogueApp')
           .then(function onSuccess(response){
             console.log(response);
             swal(constants.name, constants.proposal_update_success, constants.success);
+            // $location.path("/OpsDashBoard");
           }).catch(function onError(response){
             console.log(response);
           })
+    }
+
+    $scope.changeStartDate = function(){
+      if($scope.proposalData.startDate){
+        var startDate = new Date($scope.proposalData.startDate);
+        $scope.proposalData.tentative_start_date = startDate;
+        if($scope.proposalData.tentative_end_date && ($scope.proposalData.tentative_start_date > $scope.proposalData.tentative_end_date)){
+          $scope.updateDisable = true;
+          $scope.proposalData.tentative_end_date = "";
+        } else {
+          if(!$scope.proposalData.tentative_end_date && ($scope.proposalData.tentative_start_date < $scope.proposalData.endDate)){
+            $scope.proposalData.tentative_end_date = $scope.proposalData.endDate;
+            $scope.updateDisable = false;
+          } else {
+            $scope.updateDisable = false;
+          }
+        }
+        $scope.options.minDate = $scope.proposalData.tentative_start_date;
+      } else {
+        $scope.updateDisable = true;
+      }
+    }
+    $scope.changeEndDate = function(){
+      if($scope.proposalData.tentative_end_date){
+        var endDate = new Date($scope.proposalData.tentative_end_date);
+         $scope.proposalData.tentative_end_date = endDate;
+         $scope.updateDisable = false;
+       }
     }
   }
 ]);

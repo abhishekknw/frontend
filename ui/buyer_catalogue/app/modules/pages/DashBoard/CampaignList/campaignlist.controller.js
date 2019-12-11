@@ -19,13 +19,13 @@ angular.module('catalogueApp')
 
       $scope.is_Superuser = $window.localStorage.isSuperUser;
       // var vm = this;
-
       var getCampaignDetails = function(){
         if($scope.is_Superuser == 'true'){
           var fetch_all = '1';
           campaignListService.getAllCampaignDetails(fetch_all)
           .then(function onSuccess(response){
             $scope.campaignData = response.data.data;
+            
             $scope.loading = response.data.data;
             if($scope.campaignData.length == 0){
               $scope.isEmpty = true;
@@ -48,6 +48,7 @@ angular.module('catalogueApp')
           campaignListService.getCampaignDetails(assigned_by,userId,fetch_all)
             .then(function onSuccess(response){
               $scope.campaignData = response.data.data;
+             
               $scope.Data = $scope.campaignData;
               $scope.loading = response.data.data;
               if($scope.campaignData.length == 0){

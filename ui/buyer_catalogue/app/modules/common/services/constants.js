@@ -140,6 +140,7 @@ angular
     delete_confirm : 'Yes! Delete it!',
     delete_confirm_group : 'Do you really want to delete this Group?',
     changePassword_success : 'Password changed Successfully',
+    
 
     //guestPage
     location_error : 'Please enter accurate location',

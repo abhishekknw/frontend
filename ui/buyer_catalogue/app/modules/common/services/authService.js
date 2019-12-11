@@ -178,6 +178,32 @@ angular.module('Authentication')
        return userHasPermissionForView(view);
      };
 
+     authService.ForgotPassword = function (email, callback) {
+        
+      $http.post(apiHost + 'v0/ui/forgotPassword?email=' + email)
+         .then(function onSuccess(response) {
+            if(response.data){
+               callback(response.data);
+            }
+            
+         })
+         .catch(function onError(response) {
+            response.message = "Invalid email";
+            callback(response);
+         });
+   };
+
+   authService.ResetPassword = function (params, callback) {
+      $http.post(apiHost + 'v0/ui/setResetPassword', { email: params.email, code: params.email, password: params.password })
+      // $http.post(apiHost + 'v0/ui/forgotPassword?email=' + email)
+         .then(function onSuccess(response) {
+                callback(response.data);
+         })
+         .catch(function onError(response) {
+            callback(response);
+         });
+   };
+
      var userHasPermissionForView = function(view){
         if(!authService.isAuthenticated()){
             return false;
