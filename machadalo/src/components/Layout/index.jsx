@@ -11,12 +11,12 @@ import InventoryContainer from './../../containers/InventoryContainer';
 import SettingContainer from './../../containers/SettingContainer';
 import LeadsContainer from './../../containers/LeadsContainer';
 import BookingContainer from './../../containers/BookingContainer';
+import OperationsDashboardContainer from '../../containers/OperationsDashboardContainer';
 
 import './index.css';
 
 export default class Layout extends React.Component {
   componentWillMount() {
-    // console.log(this.props);
     // Attempt auto-login, if not already logged in
     if (!this.props.auth.isLoggedIn) {
       this.props.autoLogin();
@@ -50,6 +50,11 @@ export default class Layout extends React.Component {
               <Route path={`${match.path}/leads`} component={LeadsContainer} />
 
               <Route path={`${match.path}/booking`} component={BookingContainer} />
+
+              <Route
+                path={`${match.path}/operations-dashboard`}
+                component={OperationsDashboardContainer}
+              />
             </Switch>
           </div>
         </div>

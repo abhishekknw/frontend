@@ -14,6 +14,7 @@ export default class Sidebar extends React.Component {
       hideEntitiesDropdown: true,
       hideInventoryDropdown: true,
       hideBookingDropdown: true,
+      hideOpsDashboardDropdown: true,
     };
 
     this.toggleChecklistDropdown = this.toggleChecklistDropdown.bind(this);
@@ -21,6 +22,7 @@ export default class Sidebar extends React.Component {
     this.toggleEntitiesDropdown = this.toggleEntitiesDropdown.bind(this);
     this.toggleInventoryDropdown = this.toggleInventoryDropdown.bind(this);
     this.toggleBookingDropdown = this.toggleBookingDropdown.bind(this);
+    this.toggleOpsDashboardDropdown = this.toggleOpsDashboardDropdown.bind(this);
   }
 
   toggleChecklistDropdown() {
@@ -50,6 +52,12 @@ export default class Sidebar extends React.Component {
   toggleBookingDropdown() {
     this.setState({
       hideBookingDropdown: !this.state.hideBookingDropdown,
+    });
+  }
+
+  toggleOpsDashboardDropdown() {
+    this.setState({
+      hideOpsDashboardDropdown: !this.state.hideOpsDashboardDropdown,
     });
   }
 
@@ -83,9 +91,9 @@ export default class Sidebar extends React.Component {
                 </a>
               </li>
               <li>
-                <a href="/#/OpsDashBoard">
+                <a href="/#/campaignDecisionBoard">
                   <i className="fa fa-dashboard" aria-hidden="true" />
-                  OpsDashBoard
+                  Campaign Decision Board
                 </a>
               </li>
               <li>
@@ -206,6 +214,27 @@ export default class Sidebar extends React.Component {
                   </li>
                   <li>
                     <NavLink to="/r/booking/campaigns">Manage Booking</NavLink>
+                  </li>
+                </ul>
+              </li>
+              <li className="dropdown-list-parent">
+                <div className="parent-list" onClick={this.toggleOpsDashboardDropdown}>
+                  <i className="fa fa-check-square-o" aria-hidden="true" />
+                  Operations DashBoard
+                  <i
+                    className={classnames('fa', 'caret', {
+                      'fa-caret-right': this.state.hideOpsDashboardDropdown,
+                      'fa-caret-down': !this.state.hideOpsDashboardDropdown,
+                    })}
+                    aria-hidden="true"
+                  />
+                </div>
+                <ul className="dropdown-list-child" hidden={this.state.hideOpsDashboardDropdown}>
+                  <li>
+                    <NavLink to="/r/operations-dashboard">Tapping Details</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/r/operations-dashboard/user">User Performance</NavLink>
                   </li>
                 </ul>
               </li>
