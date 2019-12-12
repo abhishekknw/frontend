@@ -18,7 +18,6 @@ angular.module('catalogueApp')
       $scope.optionForm = {
         option : undefined
       };
-      console.log("hello");
 
       $scope.leadKeyTypes = [
         {name : 'STRING'},
@@ -102,13 +101,11 @@ angular.module('catalogueApp')
           global_hot_lead_criteria: $scope.createCriteriaObject(),
           hotness_mapping: $scope.hotnessMapping
         }
-        console.log(data);
         angular.forEach(data.leads_form_items, function(item,index){
           item.order_id = index + 1;
         })
         campaignLeadsService.createLeadForm(data,$scope.campaignId)
         .then(function onSuccess(response){
-          console.log(response);
           $scope.leadFormFields = [];
           $scope.formName.name = undefined;
           swal(constants.name,constants.create_success,constants.success);
@@ -126,7 +123,6 @@ angular.module('catalogueApp')
       var getLeads = function(campaignId){
         campaignLeadsService.getLeads(campaignId)
         .then(function onSuccess(response){
-          console.log(response);
           $scope.leadsData = response.data.data;
         }).catch(function onError(response){
           console.log(response);
@@ -135,10 +131,8 @@ angular.module('catalogueApp')
       $scope.getEntryListLeads = function(){
              campaignLeadsService.getEntryListLeads($scope.leadFormId,$scope.supplierData.supplier_id)
              .then(function onSuccess(response){
-               console.log(response);
                $scope.showLeads = true;
                $scope.entryListLeadsData = response.data.data;
-               console.log($scope.entryListLeadsData.values);
              }).catch(function onError(response){
                console.log(response);
              })
@@ -164,10 +158,8 @@ angular.module('catalogueApp')
       $scope.Data = [];
       campaignLeadsService.getCampaignDetails(assigned_by,userId,fetch_all)
         .then(function onSuccess(response){
-          console.log(response);
           $scope.campaigns = response.data.data;
           $scope.Data = $scope.campaigns;
-          console.log($scope.Data);
           $scope.loading = response.data.data;
 
         })
@@ -176,7 +168,6 @@ angular.module('catalogueApp')
         });
       $scope.addField();
       $scope.changeView = function(view,campaign,formFields){
-        console.log(formFields);
         $scope.views = {
           createForm : false,
           viewLeads : false,
@@ -194,13 +185,11 @@ angular.module('catalogueApp')
         {
           $scope.leadFormFields = formFields;
         }
-        console.log(view,campaign);
         switch(true){
           case $scope.views.viewLeadForms:
             $scope.campaignId = campaign.campaign.proposal_id;
             $scope.savedFormFields = [];
             getCampaignLeadForms($scope.campaignId);
-            console.log($scope.campaignId);
             break;
           case $scope.views.selectSuppliers:
             $scope.campaignId = campaign.campaign.proposal_id;
@@ -228,12 +217,7 @@ angular.module('catalogueApp')
       var getCampaignLeadForms = function(campaignId){
         campaignLeadsService.getCampaignLeadForms(campaignId)
         .then(function onSuccess(response){
-          console.log(response);
           $scope.leadForms = response.data.data;
-          console.log($scope.leadFormFields, $scope.formName.name);
-          // getLeads(campaignId);
-          // $scope.modelData.alias_data = response.data.data;
-          // checkSavedFields();
         }).catch(function onError(response){
           console.log(response);
         })
@@ -255,7 +239,6 @@ angular.module('catalogueApp')
           if($scope.shortlisted_suppliers.dynamic_suppliers.length){
             $scope.suppliers = $scope.suppliers.concat($scope.shortlisted_suppliers.dynamic_suppliers);            
           }
-          console.log($scope.suppliers);
         }).catch(function onError(response){
           console.log(response);
         })
@@ -266,21 +249,17 @@ angular.module('catalogueApp')
         $scope.leadFormFields = [];
         $scope.updateForm = false;
         if(item){
-          console.log($scope.updateForm);
           $scope.newLeadFormFields = [];
           $scope.addNewLeadFormField();
           $scope.updateForm = true;
           $scope.leads_form_id = item.leads_form_id;
           $scope.formName.name = item.leads_form_name;
           $scope.leadFormFields = item.leads_form_items;
-          // $scope.globalHotLeadCriteria = item.global_hot_lead_criteria;
-          console.log(item.global_hot_lead_criteria,$scope.leadFormFields);
           setCriteria(item.global_hot_lead_criteria);        
           setAliasMapping(item.hotness_mapping);  
           
         }
         else{
-          console.log($scope.leadFormFields,leadFormField);
           $scope.leadFormFields.push(angular.copy(leadFormField));
         }
         $scope.changeView('createForm',$scope.campaignInfo);
@@ -288,7 +267,6 @@ angular.module('catalogueApp')
 
       // start : to read excel sheet while importing lead sheet
       $scope.read = function(workbook){
-        console.log(workbook);
         var headerNames = XLSX.utils.sheet_to_json( workbook.Sheets[workbook.SheetNames[0]], { header: 1 })[0];
 				var data = XLSX.utils.sheet_to_json( workbook.Sheets[workbook.SheetNames[0]]);
         $scope.importLeadsData = data;
@@ -299,19 +277,8 @@ angular.module('catalogueApp')
             createBulkLeadsList($scope.importLeadsData,$scope.aliasData,headerNames);
            });
 
-          console.log("hello");
         }
-        console.log($scope.importLeadsData);
       }
-      // var getAliasData = function(campaign){
-      //   campaignLeadsService.getAliasData(campaign)
-      //   .then(function onSuccess(response){
-      //     $scope.aliasData = response.data.data;
-      //     console.log(response);
-      //   }).catch(function onError(response){
-      //     console.log(response);
-      //   })
-      // }
 
       // START : check sheet headers with aliasData headers
       var checkHeaders = function(headersList){
@@ -319,12 +286,10 @@ angular.module('catalogueApp')
         var headers = [];
         angular.forEach($scope.aliasData, function(alias,index){
           if(!(alias.alias == headersList[index])){
-            console.log(headers);
             alert("error in header field " + alias.alias + 'and' + headersList[index]);
             error = true;
           }
           headers.push(alias.alias);
-          console.log(alias,index);
         })
         if(error){
           alert("Header Sequence should be :" + headers);
@@ -342,7 +307,6 @@ angular.module('catalogueApp')
       // START : create list of leads to bulk insert
       var createBulkLeadsList = function(importLeadsData, aliasData, headers){
         formatedLeadsList = [];
-        console.log(headers);
         for(var i=0; i<importLeadsData.length; i++){
           var data = {};
           if(!(headers.indexOf('SUPPLIER_ID') > -1)){
@@ -357,7 +321,6 @@ angular.module('catalogueApp')
           }
           formatedLeadsList.push(data);
         }
-        console.log(formatedLeadsList);
       }
       // END : create list of leads to bulk insert
 
@@ -375,13 +338,38 @@ angular.module('catalogueApp')
               },
               headers: {'Authorization': 'JWT ' + token}
           }).then(function onSuccess(response){
-                console.log(response);
                 $scope.importLeadsSuccess = false;
-                swal(constants.name,constants.create_success,constants.success);
+                var dataDict = response.data.data
+                for (var key in dataDict){
+                    if (dataDict.unresolved_societies.length>0){
+                      swal("Unresolved societies", dataDict.unresolved_societies);
+                    } else if (dataDict.missing_societies.length>0){
+                      swal("Missing societies", dataDict.missing_societies);
+                    }else if (dataDict.not_present_in_shortlisted_societies.length>0){
+                      swal("Not present in shortlisted societies", dataDict.not_present_in_shortlisted_societies);
+                    }else if (dataDict.inv_activit_missing_societies.length>0){
+                      swal("Inventory activity missing societies", dataDict.inv_activit_missing_societies);
+                    }else if (dataDict.more_than_ones_same_shortlisted_society.length>0){
+                      swal("More than ones same shortlisted society", dataDict.more_than_ones_same_shortlisted_society);
+                    }else if (dataDict.inv_activity_assignment_missing_societies.length>0){
+                      swal("Inventory activity assignment missing societies", dataDict.inv_activity_assignment_missing_societies);
+                    }else if (dataDict.inv_activity_assignment_activity_date_missing_societies.length>0){
+                      swal("Inventory activity assignment activity date missing societies", dataDict.inv_activity_assignment_activity_date_missing_societies);
+                    }else{
+                      swal(constants.name,constants.create_success,constants.success);
+                    }
+                }
+                // swal(constants.name,constants.create_success,constants.success);
           })
           .catch(function onError(response) {
               console.log(response);
               $scope.importLeadsSuccess = false;
+              var errorDataDict = response.data.data
+              for (var key in errorDataDict){
+                if (errorDataDict.general_error){
+                  swal("Neither apartment nor club found in the sheet")
+                }
+              }
             });
       }
       }
@@ -397,7 +385,6 @@ angular.module('catalogueApp')
               data: {file: file, 'username': $scope.username},
               headers: {'Authorization': 'JWT ' + token},
           }).then(function (response) {
-            console.log(response);
             $scope.uploadfile = true;
             swal(constants.name,constants.uploadfile_success,constants.success);
             // uploadFileToAmazonServer(response.data.data,file);
@@ -413,11 +400,9 @@ angular.module('catalogueApp')
 
 
       $scope.addLeadFormFields = function(){
-        console.log($scope.leadFormFields);
         $scope.leadFormFields.push(angular.copy(leadFormField));
       }
       $scope.addNewLeadFormField = function(){
-        console.log($scope.newLeadFormFields);
         $scope.newLeadFormFields.push(angular.copy(leadFormField));
       }
 
@@ -427,7 +412,6 @@ angular.module('catalogueApp')
         // if($scope.updateForm){
         //     index = index + 1;
         // }
-        // console.log(option,index,$scope.leadFormFields) ;
         index = index-1
         if($scope.leadFormFields && ($scope.leadFormFields[index] && !$scope.leadFormFields[index].hasOwnProperty('key_options') || $scope.leadFormFields[index].key_options.length == 0)){
             $scope.leadFormFields[index]['key_options'] = [];
@@ -441,7 +425,6 @@ angular.module('catalogueApp')
           // if($scope.updateForm){
           //     index = index + 1;
           // }
-          // console.log(option,index,$scope.leadFormFields) ;
 
           if(!$scope.newLeadFormFields[index].hasOwnProperty('key_options' || $scope.newLeadFormFields[index].key_options.length == 0 )){
               $scope.newLeadFormFields[index]['key_options'] = [];
@@ -451,7 +434,6 @@ angular.module('catalogueApp')
           }
 
           $scope.updateKeyOption = function(option,index){
-            console.log(option);
             if(!$scope.newLeadFormFields[index].hasOwnProperty('key_options' || $scope.newLeadFormFields[index].key_options.length == 0)){
                 $scope.newLeadFormFields[index]['key_options'] = [];
             }
@@ -463,14 +445,11 @@ angular.module('catalogueApp')
         $scope.changeView('viewLeadForms',$scope.campaignInfo);
       }
       $scope.enterLeads = function(supplier){
-        console.log($scope.leadFormFields);
         $scope.leadModelData = [];
         $scope.leadModelData = angular.copy($scope.leadFormFields.leads_form_items);
         $scope.leadFormId = $scope.leadFormFields.leads_form_id;
         $scope.changeView('enterLeads',$scope.campaignInfo,$scope.leadFormFields);
         $scope.supplierData = supplier;
-
-        console.log(supplier);
       }
       $scope.saveLeads = function(){
         var data = {
@@ -484,10 +463,8 @@ angular.module('catalogueApp')
             }
             data.leads_form_entries.push(temp_data);
         });
-        console.log(data);
         campaignLeadsService.saveLeads($scope.leadFormId,data)
         .then(function onSuccess(response){
-          console.log(response);
           $scope.leadModelData = [];
           $scope.leadModelData = angular.copy($scope.leadFormFields.leads_form_items);
           swal(constants.name, constants.add_data_success, constants.success);
@@ -505,28 +482,22 @@ angular.module('catalogueApp')
         });
       }
       $scope.setCheckBoxValue = function(isSelected,index,values){
-        console.log(values);
         if(!values.hasOwnProperty('value')){
           values['value'] = [];
         }
-        console.log(isSelected);
         if(isSelected){
           values.value.push($scope.leadChBoxKeyOptions[index].name);
         }else {
-          console.log("hello");
           values.value.splice(values.value.indexOf($scope.leadChBoxKeyOptions[index].name),1);
         }
-        console.log(values,$scope.leadModelData);
       }
       $scope.getCheckBoxValues = function(values){
-        console.log(values);
         $scope.leadChBoxKeyOptions = [];
         angular.forEach(values, function(value,index){
           $scope.leadChBoxKeyOptions[index] = {
             name : value, selected : false
           };
         });
-        console.log($scope.leadChBoxKeyOptions);
       }
       $scope.uploadFiles = function(file){
         $scope.file = file;
@@ -548,17 +519,14 @@ angular.module('catalogueApp')
         .then(function onSuccess(response){
 
           $scope.exportedFile = response.data.data.filepath;
-          console.log(response);
         }).catch(function onError(response){
           console.log(response);
         })
       }
 
       $scope.updateLeadForm = function(){
-        console.log($scope.newLeadFormFields);
         campaignLeadsService.updateLeadForm($scope.leads_form_id,$scope.newLeadFormFields)
         .then(function onSuccess(response){
-          console.log(response);
           $scope.newLeadFormFields = [];
           $('#addNewLeadFormFields').modal('hide');
           swal(constants.name,constants.add_data_success, constants.success);
@@ -568,48 +536,28 @@ angular.module('catalogueApp')
         })
       }
       $scope.removeFieldFromForm = function(item){
-        console.log(item);
         var data = {};
         campaignLeadsService.removeFieldFromForm($scope.leads_form_id,item.item_id, data)
         .then(function onSuccess(response){
-          console.log(response);
           swal(constants.name,constants.delete_success, constants.success);
           $scope.changeView('viewLeadForms',$scope.campaignInfo);
         }).catch(function onError(response){
-          console.log(response);
         })
       }
 
-      // $scope.updateForm = function(){
-      //   console.log($scope.newLeadFormFields);
-      //   campaignLeadsService.updateLeadForm($scope.leads_form_id,$scope.newLeadFormFields)
-      //   .then(function onSuccess(response){
-      //     console.log(response);
-      //     $scope.newLeadFormFields = [];
-      //     $('#addNewLeadFormFields').modal('hide');
-      //     swal(constants.name,constants.add_data_success, constants.success);
-      //     $scope.changeView('viewLeadForms',$scope.campaignInfo);
-      //   }).catch(function onError(response){
-      //     console.log(response);
-      //   })
-      // }
-
   $scope.updateFormFields  = function(){
-    console.log($scope.newLeadFormFields);
     var data = {
       leads_form_name : $scope.formName.name,
       leads_form_items : $scope.leadFormFields,
       global_hot_lead_criteria: $scope.createCriteriaObject(),
       hotness_mapping: $scope.hotnessMapping
     }
-    console.log(data);
     
     angular.forEach(data.leads_form_items, function(item,index){
       item.order_id = parseInt(index);
     })
     campaignLeadsService.updateFormFields($scope.leads_form_id,data,$scope.campaignId)
     .then(function onSuccess(response){
-      console.log(response);
       $scope.leadFormFields = [];
       $scope.formName.name = undefined;
       swal(constants.name,constants.update_success,constants.success);
@@ -642,7 +590,6 @@ angular.module('catalogueApp')
       })
       $scope.globalHotLeadCriteria.push(tempData);
     })
-    console.log($scope.globalHotLeadCriteria);   
   }
   $scope.createCriteriaObject = function(){
     var globalHotLeadCriteriaObject = {};
@@ -657,9 +604,7 @@ angular.module('catalogueApp')
       })
       return globalHotLeadCriteriaObject;
   }
-  $scope.addFieldInCriteria = function(data,field){
-    console.log(data);
-    
+  $scope.addFieldInCriteria = function(data,field){    
     data.push({
       id: field,
       values: []
@@ -683,9 +628,7 @@ angular.module('catalogueApp')
           items: []
         }        
       ]
-    })
-    console.log($scope.hotnessMapping);
-    
+    })    
   }
   var setAliasMapping = function(data){
     if(data){

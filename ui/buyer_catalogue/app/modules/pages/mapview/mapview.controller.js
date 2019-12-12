@@ -1822,13 +1822,18 @@ $scope.gridViewSummary = {};
   $scope.search_status = false;
   $scope.supplier_type_code;
   $scope.center_index = null;
+   $scope.supplier_center = "";
   $scope.searchSuppliers = function(){
+    
    try{
     $scope.search_status = false;
-    if($scope.supplier_type_code && $scope.search){
-      mapViewService.searchSuppliers($scope.supplier_type_code,$scope.search)
+    // synergytop start
+    if($scope.supplier_type_code){
+    // synergytop end
+    // if($scope.supplier_type_code && $scope.search){
+      mapViewService.searchSuppliers($scope.supplier_type_code,$scope.search,'',$scope.supplier_center)
         .then(function onSuccess(response, status){
-            $scope.center_index = null;
+            //$scope.center_index = null;
           $scope.supplierData = response.data.data;
           if($scope.supplierData.length > 0){
             $scope.search_status = true;
@@ -1909,8 +1914,10 @@ $scope.gridViewSummary = {};
       $scope.center_index = center_index;
       if(center_index != null){
         for(var i=0;i<$scope.center_data.length; i++){
+          // console.log('111111111111111111111111111111111111111',$scope.center_data[i].center.center_name);
           if($scope.center_data[i].center.id == center_index){
               $scope.current_center_index = i;
+               $scope.supplier_center = $scope.center_data[i].center.center_name
           }
         }
       }
@@ -2271,6 +2278,7 @@ $scope.gridViewSummary = {};
     // $location.path('/' + supplierId + '/SocietyDetailsPages');
     $scope.temp_index = index;
     $scope.center = center;
+    
     mapViewService.processParam();
     var supplier_id = supplier.supplier_id;
     $scope.society = {};

@@ -37,14 +37,22 @@
     }
 
     //added to search suppliers based on supplier code and search text
-    mapViewService.searchSuppliers = function(code,searchtext,vendorId){
+    mapViewService.searchSuppliers = function(code,searchtext,vendorId,supplier_center){
       if (code,searchtext,vendorId) {
         var url = url_base + 'supplier-search/?' + "search=" + searchtext + "&supplier_type_code=" + code
                                   + "&vendor=" + vendorId;
         return machadaloHttp.get(url);
       }
-      else if(code,searchtext) {
-        var url = url_base + 'supplier-search/?' + "search=" + searchtext + "&supplier_type_code=" + code;
+      // else if(code,searchtext) {
+      //   var url = url_base + 'supplier-search/?' + "search=" + searchtext + "&supplier_type_code=" + code;
+      //   return machadaloHttp.get(url);
+      // } 
+       else if(code,searchtext,supplier_center) {
+        var url = url_base + 'supplier-search/?' + "supplier_type_code=" + code + "&supplier_center=" + supplier_center;
+         if(searchtext){
+          url =  url_base + 'supplier-search/?' + "search=" + searchtext + "&supplier_type_code=" + code + "&supplier_center=" + supplier_center;
+         }
+       
         return machadaloHttp.get(url);
       }
 

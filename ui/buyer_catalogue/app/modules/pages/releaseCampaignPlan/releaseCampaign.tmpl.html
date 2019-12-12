@@ -95,7 +95,8 @@
                 <th>Permission Box</th>
                 <th>Receipt</th>
                 <th>Lead Performance Summary</th>
-                <th>Completion Status</th>
+                <th ng-if="releaseDetails.campaign.proposal_id.indexOf('NOB') == -1">Completion Status</th>
+                <th ng-if="releaseDetails.campaign.proposal_id.indexOf('NOB') > -1">Conversion Status</th>
                 <th>Delete Action</th>
           </tr>
           </thead>
@@ -201,42 +202,6 @@
                         {{item.name}}</option>
                     </select>
                 </td>
-                <!-- <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='BK'">
-                  <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-disabled="supplier.booking_status=='BK'">
-                    <option style="width:100%;"></option>
-                  </select>
-                </td>
-                <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='NB'">
-                  <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-disabled="supplier.booking_status=='NB'">
-                    <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}">
-                      {{item.name}}</option>
-                  </select>
-                </td>
-                <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='TB'">
-                  <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-disabled="supplier.booking_status=='TB'">
-                    <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}">
-                      {{item.name}}</option>
-                  </select>
-                </td>
-                <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='PB'">
-                  <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-disabled="supplier.booking_status=='PB'">
-                    <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}">
-                      {{item.name}}</option>
-                  </select>
-                </td>
-                <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='VB'">
-                  <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-disabled="supplier.booking_status=='VB'">
-                    <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}">
-                      {{item.name}}</option>
-                  </select>
-                </td>
-                <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" ng-if="supplier.booking_status=='SE'">
-                  <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-disabled="supplier.booking_status=='SE'">
-                    <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}">
-                      {{item.name}}</option>
-                  </select>
-                </td> -->
-  
                 <td  class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="phaseform">
                   <input class="form-control spacing input-width" ng-disabled="supplier.booking_status != 'BK'" type="text" ng-model="phaseMappingList[supplier.phase_no].phase_no"/>
                   <select  ng-disabled="supplier.booking_status != 'BK'" name="phase" class="form-control spacing input-width-phase" ng-change="setPhase(supplier,supplier.phaseNo)" ng-model="supplier.phaseNo" min="1" permission = "[permissions.addPhase, permissions.viewPhase]">
@@ -292,16 +257,7 @@
               <div ng-repeat="freebie in customFreebies">
                 <input type="checkbox" checklist-model="supplier.freebies" checklist-value="freebie"> {{freebie}}
               </div>
-              <!-- <multiselect ng-model="supplier.freebie" options="FreebiesOptions" show-select-all="true" show-unselect-all="true">
-              </multiselect> -->
-  
             </td>
-              <!-- <td style="text-align:left;" rowspan="{{key.length}}" ng-show="$first">
-                <span  ng-disabled="!supplier.phase" ng-dropdown-multiselect="" options="multiSelect"  extra-settings="selected_baseline_settings"
-                selected-model="supplier.searchSelectAllModel" translation-texts="selected_baselines_customTexts"></span>
-              </td> -->
-  
-              <!--mode of payment  -->
               <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
                 <div class="radio">
                         <label>
@@ -338,15 +294,6 @@
                 value="{{item.code}}" ng-click="updateSupplierStatus(supplier)"
                 >{{item.name}}</option>
               </select>
-              <!-- <div class="radio" permission = "[permissions.viewPaymentDetails]">
-                      <label><input type="radio" ng-model="supplier.payment_status" value="PD" ng-click="updateSupplierStatus()" ng-disabled="supplier.booking_status != 'BK'">Paid</label>
-              </div>
-              <div class="radio" permission = "[permissions.viewPaymentDetails]">
-                <label><input type="radio" ng-model="supplier.payment_status" value="PP" ng-click="updateSupplierStatus()" ng-disabled="supplier.booking_status != 'BK'">Pending</label>
-              </div>
-              <div class="radio" ng-if="supplier.status != 'X'" permission = "[permissions.viewPaymentDetails]">
-                      <label><input type="radio" ng-model="supplier.payment_status" value="PNI" ng-click="updateSupplierStatus()" ng-disabled="supplier.booking_status != 'BK'">Not Paid</label>
-              </div> -->
             </td>
   
             <td rowspan="{{key.length}}" ng-show="$first">
@@ -466,7 +413,7 @@
                 </table>
               </div>
             </td>
-            <td  style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
+            <td  style="text-align:left" ng-if="releaseDetails.campaign.proposal_id.indexOf('NOB') == -1" rowspan="{{key.length}}" ng-show="$first">
               <div class="completedHeaderSpacing">
                   <input type="radio" class="" ng-value="true" ng-model="supplier.is_completed"> Completed
               </div>
@@ -474,6 +421,16 @@
                 <input type="radio" class="" ng-value="false" ng-model="supplier.is_completed"> Not Completed
               </div>
             </td>
+
+            <td ng-if="releaseDetails.campaign.proposal_id.indexOf('NOB') >-1" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
+              <div class="completedHeaderSpacing">
+                  <input type="radio" class="" ng-value="true" ng-model="supplier.is_completed"> Converted
+              </div>
+              <div class="completedHeaderSpacing">
+                <input type="radio" class="" ng-value="false" ng-model="supplier.is_completed"> Not Converted
+              </div>
+            </td>
+
             <td rowspan="{{key.length}}" ng-show="$first">
               <button type="button" class="btn btn-danger"   ng-click="deleteSupplier(supplier.id,$parent.$index)">Delete Supplier</button>
             </td>
