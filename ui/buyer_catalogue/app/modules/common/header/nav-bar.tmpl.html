@@ -39,9 +39,9 @@
                               <a href="/#/manageUser" class=" lipadding" ng-click="closeModal()">
                               <i class="fa fa-outdent fa-lg"></i> Management</a></li>
 
-                            <li ng-class="{active: isActive('/OpsDashBoard')}" permission = "[perm.menuOpsDashBoard]">
-                              <a ng-href="/#/OpsDashBoard" class=" lipadding" ng-click="closeModal()">
-                                <i class="fa fa-dashboard fa-lg"></i> OpsDashBoard</a>
+                            <li ng-class="{active: isActive('/campaignDecisionBoard')}" permission = "[perm.menuOpsDashBoard]">
+                              <a ng-href="/#/campaignDecisionBoard" class=" lipadding" ng-click="closeModal()">
+                                <i class="fa fa-dashboard fa-lg"></i> Campaign Decision Board</a>
                            </li>
                           <li ng-class="{active: isActive('/CampaignList')}" permission = "[perm.menuCampaignList]">
                               <a ng-href="/#/CampaignList" class=" lipadding" ng-click="closeModal()">
@@ -148,6 +148,25 @@
                             <a href="https://forms.machadalo.com" target="_blank" class=" lipadding" ng-click="closeModal()">
                               <i class="fa fa-sign-out fa-lg"></i> Supplier Forms
                             </a>
+                          </li>
+                          <li class="dropdown-list-parent" style="padding-left:10px">
+                            <div class="parent-list" ng-Click="toggleOperationsDropdown = !toggleOperationsDropdown" style="color:#fff">
+                              <i class="fa fa-cubes" aria-hidden="true" />
+                              Operations Dashboard
+                              <i
+                                class="fa caret" aria-hidden="true"
+                              />
+                            </div>
+                            <ul class="dropdown-list-child" ng-show="toggleOperationsDropdown" style="padding-left:10px">
+                              <li>
+                                <i class="fa fa-columns" aria-hidden="true" style="color:#fff"/>
+                                <a ng-href="/r/operations-dashboard">Tapping Details</a>
+                              </li>
+                              <li>
+                                <i class="fa fa-columns" aria-hidden="true" style="color:#fff"/>
+                                <a ng-href="/r/operations-dashboard/user">User Performance</a>
+                              </li>
+                            </ul>
                           </li>
                           <li ng-class="{active: isActive('/dashboard')}" permission = "[perm.menuCampaignLeads]">
                             <a href="/#/loginLogs"  ng-click="closeModal()">

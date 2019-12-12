@@ -318,42 +318,43 @@ angular
         }
       })
 
-      .state('releasePlan', {
-        url: '/:proposal_id/releasePlan',
-        controller: 'ReleaseCampaignCtrl',
-        templateUrl: 'modules/pages/releaseCampaignPlan/releaseCampaign.tmpl.html',
-        ncyBreadcrumb: {
-          label: 'BookingPlan',
-          parent: 'CampaignList'
-        },
-        data: {
-          permission: 'release_plan_page_access'
-        }
-      })
-      .state('OpsDashBoard', {
-        url: '/OpsDashBoard',
-        controller: 'OpsDashCtrl',
-        templateUrl: 'modules/pages/DashBoard/OperationsDashBoard/opsdashboard.tmpl.html',
-        ncyBreadcrumb: {
-          label: 'OpsDashBoard',
-          parent: 'manageCampaign.create'
-        },
-        data: {
-          permission: 'ops_dashboard_page_access'
-        }
-      })
-      .state('CampaignList', {
-        url: '/CampaignList',
-        controller: 'CampaignListCtrl',
-        templateUrl: 'modules/pages/DashBoard/CampaignList/campaignlist.tmpl.html',
-        ncyBreadcrumb: {
-          label: 'CampaignList',
-          parent: 'OpsDashBoard'
-        },
-        data: {
-          permission: 'campaign_list_page_access'
-        }
-      })
+
+      .state('releasePlan',{
+           url : '/:proposal_id/releasePlan',
+           controller : 'ReleaseCampaignCtrl',
+           templateUrl : 'modules/pages/releaseCampaignPlan/releaseCampaign.tmpl.html',
+           ncyBreadcrumb: {
+             label:'BookingPlan',
+             parent : 'CampaignList'
+           },
+           data :{
+             permission : 'release_plan_page_access'
+           }
+       })
+      .state('OpsDashBoard',{
+           url : '/campaignDecisionBoard',
+           controller : 'OpsDashCtrl',
+           templateUrl : 'modules/pages/DashBoard/OperationsDashBoard/opsdashboard.tmpl.html',
+           ncyBreadcrumb: {
+             label:'campaignDecisionBoard',
+             parent : 'manageCampaign.create'
+           },
+           data :{
+             permission : 'ops_dashboard_page_access'
+           }
+       })
+       .state('CampaignList',{
+            url : '/CampaignList',
+            controller : 'CampaignListCtrl',
+            templateUrl : 'modules/pages/DashBoard/CampaignList/campaignlist.tmpl.html',
+            ncyBreadcrumb: {
+              label:'CampaignList',
+              parent : 'OpsDashBoard'
+            },
+            data :{
+              permission : 'campaign_list_page_access'
+            }
+        })
 
       .state('manageUsers', {
         url: '/manageUser',
