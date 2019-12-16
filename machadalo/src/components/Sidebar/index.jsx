@@ -231,7 +231,7 @@ export default class Sidebar extends React.Component {
                 </div>
                 <ul className="dropdown-list-child" hidden={this.state.hideOpsDashboardDropdown}>
                   <li>
-                    <NavLink to="/r/operations-dashboard">Tapping Details</NavLink>
+                    <NavLink to="/r/operations-dashboard">Campaign Report</NavLink>
                   </li>
                   <li>
                     <NavLink to="/r/operations-dashboard/user">User Performance</NavLink>

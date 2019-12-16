@@ -1,10 +1,6 @@
 const getCampaignSummaryColumn = () => {
   return [
     {
-      dataField: 'Not Booked',
-      text: 'Not Booked',
-    },
-    {
       dataField: 'Not Initiated',
       text: 'Not Initiated',
     },
@@ -17,24 +13,28 @@ const getCampaignSummaryColumn = () => {
       text: 'Decision Pending',
     },
     {
-      dataField: 'completed',
-      text: 'Completed',
-    },
-    {
-      dataField: 'Confirmed Booking',
-      text: 'Confirmed Booked',
+      dataField: 'Not Booked',
+      text: 'Not Booked',
     },
     {
       dataField: 'Phone Booked',
       text: 'Phone Booked',
     },
     {
+      dataField: 'Tentative Booking',
+      text: 'Tentative Booked',
+    },
+    {
+      dataField: 'Confirmed Booking',
+      text: 'Confirmed Booked',
+    },
+    {
       dataField: 'Visit Booked',
       text: 'Visit Booked',
     },
     {
-      dataField: 'Tentative Booking',
-      text: 'Tentative Booked',
+      dataField: 'completed',
+      text: 'Completed',
     },
   ];
 };
