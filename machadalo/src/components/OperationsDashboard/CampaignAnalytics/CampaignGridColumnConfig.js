@@ -65,7 +65,7 @@ const getCampaignColumn = () => {
       dataField: 'contact_name',
       text: 'Contact Name',
       row: 0,
-      colSpan: 2,
+      colSpan: 3,
       sort: false,
     },
     {
@@ -83,10 +83,17 @@ const getCampaignColumn = () => {
       sort: false,
     },
     {
+      dataField: 'contact_name_filled_total',
+      text: 'Total Filled',
+      row: 1,
+      width: '100px',
+      sort: false,
+    },
+    {
       dataField: 'contact_number',
       text: 'Contact Number',
       row: 0,
-      colSpan: 2,
+      colSpan: 3,
       sort: false,
     },
     {
@@ -99,6 +106,13 @@ const getCampaignColumn = () => {
     {
       dataField: 'contact_number_not_filled',
       text: 'Not Filled',
+      row: 1,
+      width: '100px',
+      sort: false,
+    },
+    {
+      dataField: 'contact_number_filled_total',
+      text: 'Total Filled',
       row: 1,
       width: '100px',
       sort: false,
