@@ -4,6 +4,7 @@ import config from '../../../config';
 import getCampaignSummaryColumn from './SupplierCampaignSummaryGridConfig';
 import InnerGrid from '../../InnerGrid';
 import SupplierCampaignModal from '../../Modals/SupplierCampaignModal';
+import BookingSubStatusSummary from '../BookingSubStatusSummary';
 
 class SupplierAnalytics extends React.Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class SupplierAnalytics extends React.Component {
     this.state = {
       showModal: false,
       supplierDetails: [],
+      bookingSubStatusDetails: {},
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -33,6 +35,9 @@ class SupplierAnalytics extends React.Component {
         data[dataField] = 0;
       }
     });
+    if (data.booking_sub_status) {
+      this.state.bookingSubStatusDetails = data.booking_sub_status;
+    }
     return [data];
   };
 
@@ -75,29 +80,37 @@ class SupplierAnalytics extends React.Component {
     return (
       <div className="bootstrap-iso">
         {supplierData && (
-          <InnerGrid
-            columns={getCampaignSummaryColumn()}
-            data={data}
-            exportCsv={false}
-            search={false}
-            pagination={false}
-            backgroundColor="white"
-            showModal={false}
-            styles={{ backgroundColor: 'white' }}
-          />
-        )}
+          <div>
+            <h5 style={{ color: 'white' }}>Booking Status Summary</h5>
+            <InnerGrid
+              columns={getCampaignSummaryColumn()}
+              data={data}
+              exportCsv={false}
+              search={false}
+              pagination={false}
+              backgroundColor="white"
+              showModal={false}
+              styles={{ backgroundColor: 'white' }}
+            />
+            <BookingSubStatusSummary bookingSubStatusDetails={this.state.bookingSubStatusDetails} />
 
-        <button onClick={this.handleClick} className="btn btn-danger" style={{ marginTop: '10px' }}>
-          View Details
-        </button>
-        <SupplierCampaignModal
-          showModal={this.state.showModal}
-          campaignId={supplierData.campaign_id}
-          campaignName={supplierData.campaign_name}
-          handleCloseModal={this.handleCloseModal}
-          columns={getCampaignSummaryColumn()}
-          data={this.state.supplierDetails}
-        />
+            <button
+              onClick={this.handleClick}
+              className="btn btn-danger"
+              style={{ marginTop: '10px' }}
+            >
+              View Details
+            </button>
+            <SupplierCampaignModal
+              showModal={this.state.showModal}
+              campaignId={supplierData.campaign_id}
+              campaignName={supplierData.campaign_name}
+              handleCloseModal={this.handleCloseModal}
+              columns={getCampaignSummaryColumn()}
+              data={this.state.supplierDetails}
+            />
+          </div>
+        )}
       </div>
     );
   }
