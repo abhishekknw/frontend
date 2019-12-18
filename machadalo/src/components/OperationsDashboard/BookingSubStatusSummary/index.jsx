@@ -1,4 +1,5 @@
 import React from 'react';
+import { isEmpty } from 'lodash';
 import '../../bootstrap-iso.css';
 import getBookingSubStatusColumn from './BookingSubStatusGridColumnConfig';
 import InnerGrid from '../../InnerGrid';
@@ -9,9 +10,13 @@ class BookingSubStatusSummary extends React.Component {
   }
 
   render() {
+    let isBookingSubStatus = false;
+    if (!isEmpty(this.props.bookingSubStatusDetails)) {
+      isBookingSubStatus = true;
+    }
     return (
       <div className="bootstrap-iso">
-        {this.props.bookingSubStatusDetails && (
+        {isBookingSubStatus && (
           <div style={{ marginTop: '10px' }}>
             <h5 style={{ color: 'white' }}>Booking Sub Status Summary</h5>
             <InnerGrid
