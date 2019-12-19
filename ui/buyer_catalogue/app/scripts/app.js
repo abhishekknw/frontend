@@ -176,6 +176,13 @@ angular
         //   permission : 'loginAccess'
         // }
       })
+
+      .state('leadData', {
+        url: '/lead-data',
+        controller: 'leadDataCtrl',
+        templateUrl: 'modules/pages/leadData/lead-data.tmpl.html',
+      })
+
       .state('manageCampaign', {
         url: '/manageCampaign',
         controller: 'CreateCampaignCtrl',

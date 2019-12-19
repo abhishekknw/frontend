@@ -6,9 +6,13 @@ angular.module('machadaloPages')
 
         $scope.error = false;
         $scope.success = false;
+       
         $scope.resetPassword = function(){
           $scope.loadingSpinner = true;
-           AuthService.ForgotPassword($scope.userEmail, function(response) {
+          var url = $location.host();
+          $scope.host = url;
+            
+           AuthService.ForgotPassword($scope.userEmail,$scope.host,$location.protocol(), function(response) {
             $scope.loadingSpinner = false;
              if(response.code && response.url){
               swal("Success!",response.msg,constants.success);

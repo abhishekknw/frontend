@@ -16,6 +16,7 @@ angular.module('catalogueApp')
         $scope.proposalData.tentative_end_date = new Date($scope.proposalData.tentative_end_date);
         $scope.proposalData.startDate = new Date($scope.proposalData.tentative_start_date);
         $scope.proposalData.endDate = new Date($scope.proposalData.tentative_end_date);
+        $scope.options.minDate = $scope.proposalData.tentative_start_date;
       }).catch(function onError(response){
         console.log(response);
       })

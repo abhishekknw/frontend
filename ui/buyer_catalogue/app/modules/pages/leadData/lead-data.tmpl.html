@@ -1,0 +1,134 @@
+<link rel="stylesheet" href="modules/pages/DashBoard/CampaignList/campaignlist.tmpl.css"/>
+<link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
+
+<body>
+  
+
+  <main >
+
+<!-- <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" /> -->
+<div><nav-bar></nav-bar></div>
+<br><br><br>
+<div class="panel1">
+  <!-- <div class="col2"> -->
+    <div class="" permission = "[]">
+      <div  ncy-breadcrumb></div>
+    <!-- </div> -->
+  </div>
+</div>
+
+
+  <div class="row">
+    <div class="panel">
+    <!-- <div class=""> -->
+
+  <div  style="text-align:center;"><h2>{{msg}}</h2></div>
+  <!-- Start: Displaying table of converted campaigns -->
+
+  <div class="pageTitle" style="margin-top:-15px">
+      <div class="panel-heading" style="height:47px;">
+        <h3 style="margin:0;">Create Campaign From Historical Lead Data</h3>
+      </div>
+    </div>
+    <div style="width:400px; margin: 0 auto;">
+        <form name="passwordForm" id="form">
+            <div class="panel-body form-horizontal">
+              <div class="form-group>
+                <label for="file" class="cols-sm-2 control-label">Select Lead Shet</label>
+                <div class="">
+                  <div class="input-group" style="margin-bottom: 20px;">
+                    <input type="file" class="form-control" name="file"  />
+        
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="form-group cols-sm-6">
+                  <label for="password" class="cols-sm-2 control-label">Sample</label>
+                  <div class="cols-sm-6">
+                    <div class="input-group">
+                      <button>Export</button>
+          
+                    </div>
+                  </div>
+                </div> -->
+            
+            </div>
+          </form>
+
+          
+                  <div class="col-sm-12">
+                    <div class="input-group" style="padding-left: 33px;">
+                        <label for="password" class="cols-sm-2 control-label">Sample &nbsp;&nbsp;</label>
+                      <button class="btn btn-primary">Export</button>
+          
+                    </div>
+                  </div>
+                </div>
+          <div class="footer">
+              <button  class="btn btn-primary"  id="password_modal_save" ng-click="changePassword()" >Submit</button>
+          </div>
+    </div>
+
+  <div class="pageTitle" style="margin-top:-15px">
+    <div class="panel-heading" style="height:47px;">
+      <h3 style="margin:0;">List Of Campaings From Historical Data</h3>
+    </div>
+  </div>
+    <div class="">
+  <!-- <input class="form-control input-size" type="text" ng-model="search" class="form-control spacing col-width"> -->
+
+      <!-- <input st-search="" placeholder="Search ..." class="form-control"  type="search"/> -->
+      <!-- <input type="text" class="form-control" placeholder="search" type="search"> -->
+
+      <!-- <div class=""> -->
+          <div class="campaignlisttable" style="margin:20px">
+            <div class="table-responsive">
+            <table class="table" st-table="campaignData" st-safe-src="Data" default-sort-reverse="true">
+      
+              <br>
+              <thead>
+                <tr>
+                  <th style="text-align: center;">Sr No</th>
+                  <th style="text-align: center;">Campaign Id</th>
+                  <th style="text-align: center;">Booking Plan</th>
+                  <th style="text-align: center;">Created By</th>
+                  <th style="text-align: center;">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+               <tr>
+                 <td>1</td>
+                 <td>1</td>
+                 <td>1</td>
+                 <td>1</td>
+                 <td>1</td>
+                 </tr>
+
+              </tbody>
+
+              <tfoot>
+                <tr>
+                  <td colspan="10" class="text-center">
+                    <dir-pagination-controls
+                       max-size="5"
+                       direction-links="true"
+                       boundary-links="true" >
+                   </dir-pagination-controls>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          </div>
+      <!-- </div> -->
+    </div>
+
+
+   <!-- <footer-bar></footer-bar>   -->
+   </div>
+  </div>
+
+
+</main>
+</body>

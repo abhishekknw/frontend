@@ -908,6 +908,8 @@ $scope.gridViewSummary = {};
        center_id++;
      });
      //Start : code added to display filter panel for all centers on gridview
+    
+
      if($scope.unique_suppliers.has('RS')){
         $scope.gridView_RS_filters = angular.copy($scope.RS_filters);
         $scope.society_show = true;
@@ -938,12 +940,35 @@ $scope.gridViewSummary = {};
          $scope.unique_suppliersCode.push(constants.supplierCode_all);
          $scope.unique_suppliersCode = convertSupplierCodeToName($scope.unique_suppliersCode);
          $scope.supplierListCode = constants.All;
-
+         $scope.unique_supplier_names_code = [];
+         if($scope.unique_suppliersCode.length > 0){
+           for (let i in $scope.unique_suppliersCode){
+            let supplierName = {};
+             if($scope.unique_suppliersCode[i] == "Society"){
+              $scope.unique_supplier_names_code.push({name:$scope.unique_suppliersCode[i],code:"RS"});
+             } 
+             else if($scope.unique_suppliersCode[i] == "Corporate"){
+              $scope.unique_supplier_names_code.push({name:$scope.unique_suppliersCode[i],code:"CP"});
+             } else if($scope.unique_suppliersCode[i] == "Bus Shelter"){
+              $scope.unique_supplier_names_code.push({name:$scope.unique_suppliersCode[i],code:"BS"});
+             } else if($scope.unique_suppliersCode[i] == "Gym"){
+              $scope.unique_supplier_names_code.push({name:$scope.unique_suppliersCode[i],code:"GY"});
+             } else if($scope.unique_suppliersCode[i] == "Saloon"){
+              $scope.unique_supplier_names_code.push({name:$scope.unique_suppliersCode[i],code:"SA"});
+             } else if($scope.unique_suppliersCode[i] == "Retail Store"){
+              $scope.unique_supplier_names_code.push({name:$scope.unique_suppliersCode[i],code:"RE"});
+             }
+           }
+         }
+        
       //End : code added to display filter panel for all centers on gridview
     }catch(error){
       console.log(error.message);
     }
   }
+
+
+
   //start:convert supplier code to supplier name
   var convertSupplierCodeToName = function(supplierCodeList){
     var supplierNamesList = [];
@@ -1876,12 +1901,16 @@ $scope.gridViewSummary = {};
       }
     }
     //Start: To add searched societies in given center
-      $scope.addMoreSuppliers = function(supplier,id){
+      $scope.addMoreSuppliers = function(supplier,id,status){
+        console.log('111111111111111111111111111111111111111',$scope.center_data[$scope.current_center_index].suppliers[$scope.supplier_type_code])
+        console.log('2222222222222222222222222222222222222',$scope.center_index)
+        // $scope.supplierData[id].status = status;
        try{
         if($scope.center_data[$scope.current_center_index].suppliers[$scope.supplier_type_code] != undefined && $scope.center_index != null && checkDuplicateSupplier(supplier)){
           // supplier.status = 'S';
           // $scope.extraSuppliersData[$scope.current_center_index][$scope.supplier_type_code].push(supplier);
           $scope.center_data[$scope.current_center_index].suppliers[$scope.supplier_type_code].push(supplier);
+          console.log('1111111111111111111111111111111')
           $scope.supplierData.splice(id,1);
           // $scope.changeCurrentCenter($scope.center_index);
           var center = $scope.center_data[$scope.current_center_index];
@@ -2250,6 +2279,7 @@ $scope.gridViewSummary = {};
   }
     //Start: check duplicate suppliers if adding more suppliers
     var checkDuplicateSupplier = function(supplier){
+    
       try{
         if($scope.supplier_id_list[$scope.current_center_index][$scope.supplier_type_code][supplier.supplier_id] !=null){
           // var index = $scope.supplier_id_list[$scope.current_center_index][$scope.supplier_type_code][supplier.supplier_id]

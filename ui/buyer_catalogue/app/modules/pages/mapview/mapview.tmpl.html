@@ -368,11 +368,13 @@
           </div>
         </div>
 
+
+
         <table class="table table-bordered"
           ng-if="society_allowed_gridview && ((supplierListCode == supplierName.society) || (supplierListCode == supplierName.all))">
           <h2
             ng-if="society_allowed_gridview && ((supplierListCode == supplierName.society) || (supplierListCode == supplierName.all))">
-            Society</h2>
+            Residential Society</h2>
           <thead>
             <tr>
               <th class="col-md-1">#</th>
@@ -395,60 +397,58 @@
               </th>
             </tr>
           </thead>
-          <div ng-if="center_data[0].suppliers.RS.length > 0">
 
-            <!--Changes for displaying all center's societies in gridView  -->
-            <tbody ng-repeat="center in center_data | filter : query">
-              <tr ng-repeat="supplier in center.suppliers['RS'] | filter : query">
-                <td>{{$index+1}}</td>
-                <td>{{center.center.center_name}}</td>
-                <td><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages"
-                    ng-click="getSocietyDetails(supplier,supplier.supplier_id,center,$index)"
-                    target="_blank">{{supplier.name}}</a></td>
-                <td>{{supplier.subarea}}</td>
-                <td>{{supplier.flat_count}}</td>
-                <!-- <td>{{supplier.average_rent}}</td> -->
-                <!-- <td>{{society.society_type_quality}}</td> -->
-                <!-- <td>{{society.society_location_type}}</td> -->
-                <!-- <td>{{supplier.machadalo_index}}</td> -->
-                <td>{{supplier.priority_index}}</td>
-                <td ng-if="center.filters_meta['RS'].inv_poster">{{supplier.tower_count}}</td>
-                <td ng-if="!center.filters_meta['RS'].inv_poster && inventoryHeaders.poster">NA</td>
-                <!-- <td ng-if="inv_poster">{{society.poster_price}}</td>-->
-                <td ng-if="center.filters_meta['RS'].inv_standee">{{supplier.total_standee_count}}</td>
-                <td ng-if="!center.filters_meta['RS'].inv_standee && inventoryHeaders.standee">NA</td>
-                <!-- <td ng-if="inv_standee">{{society.standee_price}}</td> -->
-                <td ng-if="center.filters_meta['RS'].inv_stall">{{supplier.total_stall_count}}</td>
-                <td ng-if="!center.filters_meta['RS'].inv_stall && inventoryHeaders.stall">NA</td>
-                <!-- <td ng-if="inv_stall">{{society.stall_price}}</td> -->
-                <td ng-if="center.filters_meta['RS'].inv_flier">{{supplier.flat_count}}</td>
-                <td ng-if="!center.filters_meta['RS'].inv_flier && inventoryHeaders.flier">NA</td>
+          <!--Changes for displaying all center's societies in gridView  -->
+          <tbody ng-repeat="center in center_data | filter : query">
+            <tr ng-repeat="supplier in center.suppliers['RS'] | filter : query">
+              <td>{{$index+1}}</td>
+              <td>{{center.center.center_name}}</td>
+              <td><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages"
+                  ng-click="getSocietyDetails(supplier,supplier.supplier_id,center,$index)"
+                  target="_blank">{{supplier.name}}</a></td>
+              <td>{{supplier.subarea}}</td>
+              <td>{{supplier.flat_count}}</td>
+              <!-- <td>{{supplier.average_rent}}</td> -->
+              <!-- <td>{{society.society_type_quality}}</td> -->
+              <!-- <td>{{society.society_location_type}}</td> -->
+              <!-- <td>{{supplier.machadalo_index}}</td> -->
+              <td>{{supplier.priority_index}}</td>
+              <td ng-if="center.filters_meta['RS'].inv_poster">{{supplier.tower_count}}</td>
+              <td ng-if="!center.filters_meta['RS'].inv_poster && inventoryHeaders.poster">NA</td>
+              <!-- <td ng-if="inv_poster">{{society.poster_price}}</td>-->
+              <td ng-if="center.filters_meta['RS'].inv_standee">{{supplier.total_standee_count}}</td>
+              <td ng-if="!center.filters_meta['RS'].inv_standee && inventoryHeaders.standee">NA</td>
+              <!-- <td ng-if="inv_standee">{{society.standee_price}}</td> -->
+              <td ng-if="center.filters_meta['RS'].inv_stall">{{supplier.total_stall_count}}</td>
+              <td ng-if="!center.filters_meta['RS'].inv_stall && inventoryHeaders.stall">NA</td>
+              <!-- <td ng-if="inv_stall">{{society.stall_price}}</td> -->
+              <td ng-if="center.filters_meta['RS'].inv_flier">{{supplier.flat_count}}</td>
+              <td ng-if="!center.filters_meta['RS'].inv_flier && inventoryHeaders.flier">NA</td>
 
-                <!--End: code added to change status   -->
-                <td class="col-md-2">
-                  <div class="radio">
-                    <label><input type="radio" ng-model="supplier.status" value="F"
-                        ng-click="updateSupplierStatus(supplier,center,'RS')" ng-disabled="isRequested"
-                        permission="[permissions.finalizeStatus]">Finalize</label>
-                  </div>
-                  <div class="radio">
-                    <label><input type="radio" ng-model="supplier.status" value="B"
-                        ng-click="updateSupplierStatus(supplier,center,'RS')" ng-disabled="isRequested"
-                        permission="[permissions.bufferStatus]">Buffer</label>
-                  </div>
-                  <div class="radio" ng-if="supplier.status != 'X'">
-                    <label><input type="radio" ng-model="supplier.status" value="R"
-                        ng-click="updateSupplierStatus(supplier,center,'RS')" ng-disabled="isRequested"
-                        permission="[permissions.removeStatus]">Remove</label>
-                  </div>
-                </td>
-                <!--End: code added to change status   -->
-              </tr>
-            </tbody>
-          </div>
-          <div ng-if="center_data[0].suppliers.RS.length == 0">
-            <span>Data Not found</span>
-          </div>
+              <!--End: code added to change status   -->
+              <td class="col-md-2">
+                <div class="radio">
+                  <label><input type="radio" ng-model="supplier.status" value="F"
+                      ng-click="updateSupplierStatus(supplier,center,'RS')" ng-disabled="isRequested"
+                      permission="[permissions.finalizeStatus]">Finalize</label>
+                </div>
+                <div class="radio">
+                  <label><input type="radio" ng-model="supplier.status" value="B"
+                      ng-click="updateSupplierStatus(supplier,center,'RS')" ng-disabled="isRequested"
+                      permission="[permissions.bufferStatus]">Buffer</label>
+                </div>
+                <div class="radio" ng-if="supplier.status != 'X'">
+                  <label><input type="radio" ng-model="supplier.status" value="R"
+                      ng-click="updateSupplierStatus(supplier,center,'RS')" ng-disabled="isRequested"
+                      permission="[permissions.removeStatus]">Remove</label>
+                </div>
+              </td>
+              <!--End: code added to change status   -->
+            </tr>
+            <!-- <span ng-if="(!supplier && (society_allowed_gridview && ((supplierListCode == supplierName.society) || (supplierListCode == supplierName.all))))">Data Not Found</span> -->
+          </tbody>
+
+
         </table>
         <!--Start : adding table for corporates  -->
         <table class="table table-bordered"
@@ -478,47 +478,45 @@
               </th>
             </tr>
           </thead>
-          <div ng-if="center_data[0].suppliers.CP.length > 0">
-            <!--Changes for displaying all center's societies in gridView  -->
-            <tbody ng-repeat="center in center_data | filter : query">
-              <tr ng-repeat="supplier in center.suppliers['CP'] | filter : query">
-                <td>{{$index+1}}</td>
-                <td>{{center.center.center_name}}</td>
-                <td>{{supplier.name}}</td>
-                <td>{{supplier.subarea}}</td>
-                <td>{{supplier.totalcompanies_count}}</td>
-                <td>{{supplier.totalemployees_count}}</td>
-                <!-- <td>{{society.society_type_quality}}</td> -->
-                <!-- <td>{{society.society_location_type}}</td> -->
-                <td>{{supplier.machadalo_index}}</td>
-                <td ng-if="inv_poster">{{supplier.tower_count}}</td>
-                <!-- <td ng-if="inv_poster">{{society.poster_price}}</td>-->
-                <td ng-if="inv_standee">{{supplier.total_standee_count}}</td>
-                <!-- <td ng-if="inv_standee">{{society.standee_price}}</td> -->
-                <td ng-if="inv_stall">{{supplier.total_stall_count}}</td>
-                <!-- <td ng-if="inv_stall">{{society.stall_price}}</td> -->
-                <td ng-if="inv_flier">{{supplier.flat_count}}</td>
-                <!-- <td ng-if="inv_flier">{{society.flier_price}}</td> -->
-                <td class="col-md-2">
-                  <div class="radio">
-                    <label><input type="radio" ng-model="supplier.status" value="F"
-                        ng-click="updateSupplierStatus(supplier,center,'CP')" ng-disabled="isRequested">Finalize</label>
-                  </div>
-                  <div class="radio">
-                    <label><input type="radio" ng-model="supplier.status" value="B"
-                        ng-click="updateSupplierStatus(supplier,center,'CP')" ng-disabled="isRequested">Buffer</label>
-                  </div>
-                  <div class="radio" ng-if="supplier.status != 'X'">
-                    <label><input type="radio" ng-model="supplier.status" value="R"
-                        ng-click="updateSupplierStatus(supplier,center,'CP')" ng-disabled="isRequested">Remove</label>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </div>
-          <div ng-if="center_data[0].suppliers.CP.length == 0">
-            <span>Data Not Found</span>
-          </div>
+
+          <!--Changes for displaying all center's societies in gridView  -->
+          <tbody ng-repeat="center in center_data | filter : query">
+            <tr ng-repeat="supplier in center.suppliers['CP'] | filter : query">
+              <td>{{$index+1}}</td>
+              <td>{{center.center.center_name}}</td>
+              <td>{{supplier.name}}</td>
+              <td>{{supplier.subarea}}</td>
+              <td>{{supplier.totalcompanies_count}}</td>
+              <td>{{supplier.totalemployees_count}}</td>
+              <!-- <td>{{society.society_type_quality}}</td> -->
+              <!-- <td>{{society.society_location_type}}</td> -->
+              <td>{{supplier.machadalo_index}}</td>
+              <td ng-if="inv_poster">{{supplier.tower_count}}</td>
+              <!-- <td ng-if="inv_poster">{{society.poster_price}}</td>-->
+              <td ng-if="inv_standee">{{supplier.total_standee_count}}</td>
+              <!-- <td ng-if="inv_standee">{{society.standee_price}}</td> -->
+              <td ng-if="inv_stall">{{supplier.total_stall_count}}</td>
+              <!-- <td ng-if="inv_stall">{{society.stall_price}}</td> -->
+              <td ng-if="inv_flier">{{supplier.flat_count}}</td>
+              <!-- <td ng-if="inv_flier">{{society.flier_price}}</td> -->
+              <td class="col-md-2">
+                <div class="radio">
+                  <label><input type="radio" ng-model="supplier.status" value="F"
+                      ng-click="updateSupplierStatus(supplier,center,'CP')" ng-disabled="isRequested">Finalize</label>
+                </div>
+                <div class="radio">
+                  <label><input type="radio" ng-model="supplier.status" value="B"
+                      ng-click="updateSupplierStatus(supplier,center,'CP')" ng-disabled="isRequested">Buffer</label>
+                </div>
+                <div class="radio" ng-if="supplier.status != 'X'">
+                  <label><input type="radio" ng-model="supplier.status" value="R"
+                      ng-click="updateSupplierStatus(supplier,center,'CP')" ng-disabled="isRequested">Remove</label>
+                </div>
+              </td>
+            </tr>
+            <!-- <span ng-if="(!supplier && (corporate_allowed_gridview && ((supplierListCode == supplierName.corporate) || (supplierListCode == supplierName.all))))">Data Not Found</span> -->
+          </tbody>
+
         </table>
 
         <!--End : adding table for corporates  -->
@@ -544,40 +542,40 @@
               </th>
             </tr>
           </thead>
-          <div ng-if="center_data[0].suppliers.BS.length > 0">
-            <!--Changes for displaying all center's societies in gridView  -->
-            <tbody ng-repeat="center in center_data | filter : query">
-              <tr ng-repeat="supplier in center.suppliers[supplierCode.busShelter] | filter : query">
-                <td>{{$index+1}}</td>
-                <td>{{center.center.center_name}}</td>
-                <td>{{supplier.name}}</td>
-                <td>{{supplier.subarea}}</td>
-                <!-- <td>{{society.society_type_quality}}</td> -->
-                <!-- <td>{{society.society_location_type}}</td> -->
-                <td>{{supplier.machadalo_index}}</td>
-                <td class="col-md-2">
-                  <div class="radio">
-                    <label><input type="radio" ng-model="supplier.status" value="F"
-                        ng-click="updateSupplierStatus(supplier,center,supplierCode.busShelter)"
-                        ng-disabled="isRequested">Finalize</label>
-                  </div>
-                  <div class="radio">
-                    <label><input type="radio" ng-model="supplier.status" value="B"
-                        ng-click="updateSupplierStatus(supplier,center,supplierCode.busShelter)"
-                        ng-disabled="isRequested">Buffer</label>
-                  </div>
-                  <div class="radio" ng-if="supplier.status != 'X'">
-                    <label><input type="radio" ng-model="supplier.status" value="R"
-                        ng-click="updateSupplierStatus(supplier,center,supplierCode.busShelter)"
-                        ng-disabled="isRequested">Remove</label>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </div>
-          <div ng-if="center_data[0].suppliers.BS.length == 0">
-            <span>Data Not Found</span>
-          </div>
+
+          <!--Changes for displaying all center's societies in gridView  -->
+          <tbody ng-repeat="center in center_data | filter : query">
+
+            <tr ng-repeat="supplier in center.suppliers[supplierCode.busShelter] | filter : query">
+              {{center.suppliers[supplierCode.busShelter]}}
+              <td>{{$index+1}}</td>
+              <td>{{center.center.center_name}}</td>
+              <td>{{supplier.name}}</td>
+              <td>{{supplier.subarea}}</td>
+              <!-- <td>{{society.society_type_quality}}</td> -->
+              <!-- <td>{{society.society_location_type}}</td> -->
+              <td>{{supplier.machadalo_index}}</td>
+              <td class="col-md-2">
+                <div class="radio">
+                  <label><input type="radio" ng-model="supplier.status" value="F"
+                      ng-click="updateSupplierStatus(supplier,center,supplierCode.busShelter)"
+                      ng-disabled="isRequested">Finalize</label>
+                </div>
+                <div class="radio">
+                  <label><input type="radio" ng-model="supplier.status" value="B"
+                      ng-click="updateSupplierStatus(supplier,center,supplierCode.busShelter)"
+                      ng-disabled="isRequested">Buffer</label>
+                </div>
+                <div class="radio" ng-if="supplier.status != 'X'">
+                  <label><input type="radio" ng-model="supplier.status" value="R"
+                      ng-click="updateSupplierStatus(supplier,center,supplierCode.busShelter)"
+                      ng-disabled="isRequested">Remove</label>
+                </div>
+              </td>
+            </tr>
+            <!-- <span ng-if="(!supplier && (busShelter_allowed_gridview && ((supplierListCode == supplierName.busShelter) || (supplierListCode == supplierName.all))))">Data Not Found</span> -->
+          </tbody>
+
         </table>
         <!--End: busShelter table  -->
         <!--start: gym table  -->
@@ -600,38 +598,36 @@
               </th>
             </tr>
           </thead>
-          <div ng-if="center_data[0].suppliers.GY.length > 0">
-            <!--Changes for displaying all center's societies in gridView  -->
-            <tbody ng-repeat="center in center_data | filter : query">
-              <tr ng-repeat="supplier in center.suppliers[supplierCode.gym] | filter : query">
-                <td>{{$index+1}}</td>
-                <td>{{center.center.center_name}}</td>
-                <td>{{supplier.name}}</td>
-                <td>{{supplier.subarea}}</td>
-                <td>{{supplier.machadalo_index}}</td>
-                <td class="col-md-2">
-                  <div class="radio">
-                    <label><input type="radio" ng-model="supplier.status" value="F"
-                        ng-click="updateSupplierStatus(supplier,center,supplierCode.gym)"
-                        ng-disabled="isRequested">Finalize</label>
-                  </div>
-                  <div class="radio">
-                    <label><input type="radio" ng-model="supplier.status" value="B"
-                        ng-click="updateSupplierStatus(supplier,center,supplierCode.gym')"
-                        ng-disabled="isRequested">Buffer</label>
-                  </div>
-                  <div class="radio" ng-if="supplier.status != 'X'">
-                    <label><input type="radio" ng-model="supplier.status" value="R"
-                        ng-click="updateSupplierStatus(supplier,center,supplierCode.gym)"
-                        ng-disabled="isRequested">Remove</label>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </div>
-          <div ng-if="center_data[0].suppliers.GY.length == 0">
-            <span>Data Not Found</span>
-          </div>
+
+          <!--Changes for displaying all center's societies in gridView  -->
+          <tbody ng-repeat="center in center_data | filter : query">
+            <tr ng-repeat="supplier in center.suppliers[supplierCode.gym] | filter : query">
+              <td>{{$index+1}}</td>
+              <td>{{center.center.center_name}}</td>
+              <td>{{supplier.name}}</td>
+              <td>{{supplier.subarea}}</td>
+              <td>{{supplier.machadalo_index}}</td>
+              <td class="col-md-2">
+                <div class="radio">
+                  <label><input type="radio" ng-model="supplier.status" value="F"
+                      ng-click="updateSupplierStatus(supplier,center,supplierCode.gym)"
+                      ng-disabled="isRequested">Finalize</label>
+                </div>
+                <div class="radio">
+                  <label><input type="radio" ng-model="supplier.status" value="B"
+                      ng-click="updateSupplierStatus(supplier,center,supplierCode.gym')"
+                      ng-disabled="isRequested">Buffer</label>
+                </div>
+                <div class="radio" ng-if="supplier.status != 'X'">
+                  <label><input type="radio" ng-model="supplier.status" value="R"
+                      ng-click="updateSupplierStatus(supplier,center,supplierCode.gym)"
+                      ng-disabled="isRequested">Remove</label>
+                </div>
+              </td>
+            </tr>
+            <!-- <span ng-if="(!supplier && (gym_allowed_gridview && ((supplierListCode == supplierName.gym) || (supplierListCode == supplierName.all))))">Data Not Found</span> -->
+          </tbody>
+
         </table>
         <!--End: gym table  -->
         <!--start: saloon table  -->
@@ -654,40 +650,39 @@
               </th>
             </tr>
           </thead>
-          <div ng-if="center_data[0].suppliers.SA.length > 0">
-            <!--Changes for displaying all center's societies in gridView  -->
-            <tbody ng-repeat="center in center_data | filter : query">
-              <tr ng-repeat="supplier in center.suppliers[supplierCode.saloon] | filter : query">
-                <td>{{$index+1}}</td>
-                <td>{{center.center.center_name}}</td>
-                <td>{{supplier.name}}</td>
-                <td>{{supplier.subarea}}</td>
-                <!-- <td>{{society.society_type_quality}}</td> -->
-                <!-- <td>{{society.society_location_type}}</td> -->
-                <td>{{supplier.machadalo_index}}</td>
-                <td class="col-md-2">
-                  <div class="radio">
-                    <label><input type="radio" ng-model="supplier.status" value="F"
-                        ng-click="updateSupplierStatus(supplier,center,supplierCode.saloon)"
-                        ng-disabled="isRequested">Finalize</label>
-                  </div>
-                  <div class="radio">
-                    <label><input type="radio" ng-model="supplier.status" value="B"
-                        ng-click="updateSupplierStatus(supplier,center,supplierCode.saloon)"
-                        ng-disabled="isRequested">Buffer</label>
-                  </div>
-                  <div class="radio" ng-if="supplier.status != 'X'">
-                    <label><input type="radio" ng-model="supplier.status" value="R"
-                        ng-click="updateSupplierStatus(supplier,center,supplierCode.saloon)"
-                        ng-disabled="isRequested">Remove</label>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </div>
-          <div ng-if="center_data[0].suppliers.SA.length > 0">
-            <span>Data Not Found</span>
-          </div>
+
+          <!--Changes for displaying all center's societies in gridView  -->
+          <tbody ng-repeat="center in center_data | filter : query">
+            <tr ng-if="supplier" ng-repeat="supplier in center.suppliers[supplierCode.saloon] | filter : query">
+              <td>{{$index+1}}</td>
+              <td>{{center.center.center_name}}</td>
+              <td>{{supplier.name}}</td>
+              <td>{{supplier.subarea}}</td>
+              <!-- <td>{{society.society_type_quality}}</td> -->
+              <!-- <td>{{society.society_location_type}}</td> -->
+              <td>{{supplier.machadalo_index}}</td>
+              <td class="col-md-2">
+                <div class="radio">
+                  <label><input type="radio" ng-model="supplier.status" value="F"
+                      ng-click="updateSupplierStatus(supplier,center,supplierCode.saloon)"
+                      ng-disabled="isRequested">Finalize</label>
+                </div>
+                <div class="radio">
+                  <label><input type="radio" ng-model="supplier.status" value="B"
+                      ng-click="updateSupplierStatus(supplier,center,supplierCode.saloon)"
+                      ng-disabled="isRequested">Buffer</label>
+                </div>
+                <div class="radio" ng-if="supplier.status != 'X'">
+                  <label><input type="radio" ng-model="supplier.status" value="R"
+                      ng-click="updateSupplierStatus(supplier,center,supplierCode.saloon)"
+                      ng-disabled="isRequested">Remove</label>
+                </div>
+              </td>
+
+            </tr>
+            <!-- <span ng-if="(!supplier && (saloon_allowed_gridview && ((supplierListCode == supplierName.saloon) || (supplierListCode == supplierName.all))))">Data Not Found</span> -->
+          </tbody>
+
         </table>
         <!--End: saloon table  -->
         <!--start: retailStore table  -->
@@ -710,41 +705,39 @@
               </th>
             </tr>
           </thead>
-          <div ng-if="center_data[0].suppliers.RE.length > 0">
 
-            <!--Changes for displaying all center's societies in gridView  -->
-            <tbody ng-repeat="center in center_data | filter : query">
-              <tr ng-repeat="supplier in center.suppliers[supplierCode.retailStore] | filter : query">
-                <td>{{$index+1}}</td>
-                <td>{{center.center.center_name}}</td>
-                <td>{{supplier.name}}</td>
-                <td>{{supplier.subarea}}</td>
-                <!-- <td>{{society.society_type_quality}}</td> -->
-                <!-- <td>{{society.society_location_type}}</td> -->
-                <td>{{supplier.machadalo_index}}</td>
-                <td class="col-md-2">
-                  <div class="radio">
-                    <label><input type="radio" ng-model="supplier.status" value="F"
-                        ng-click="updateSupplierStatus(supplier,center,supplierCode.retailStore)"
-                        ng-disabled="isRequested">Finalize</label>
-                  </div>
-                  <div class="radio">
-                    <label><input type="radio" ng-model="supplier.status" value="B"
-                        ng-click="updateSupplierStatus(supplier,center,supplierCode.retailStore)"
-                        ng-disabled="isRequested">Buffer</label>
-                  </div>
-                  <div class="radio" ng-if="supplier.status != 'X'">
-                    <label><input type="radio" ng-model="supplier.status" value="R"
-                        ng-click="updateSupplierStatus(supplier,center,supplierCode.retailStore)"
-                        ng-disabled="isRequested">Remove</label>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </div>
-          <div ng-if="center_data[0].suppliers.RE.length > 0">
-            <span>Data Not Found</span>
-          </div>
+
+          <!--Changes for displaying all center's societies in gridView  -->
+          <tbody ng-repeat="center in center_data | filter : query">
+            <tr ng-repeat="supplier in center.suppliers[supplierCode.retailStore] | filter : query">
+              <td>{{$index+1}}</td>
+              <td>{{center.center.center_name}}</td>
+              <td>{{supplier.name}}</td>
+              <td>{{supplier.subarea}}</td>
+              <!-- <td>{{society.society_type_quality}}</td> -->
+              <!-- <td>{{society.society_location_type}}</td> -->
+              <td>{{supplier.machadalo_index}}</td>
+              <td class="col-md-2">
+                <div class="radio">
+                  <label><input type="radio" ng-model="supplier.status" value="F"
+                      ng-click="updateSupplierStatus(supplier,center,supplierCode.retailStore)"
+                      ng-disabled="isRequested">Finalize</label>
+                </div>
+                <div class="radio">
+                  <label><input type="radio" ng-model="supplier.status" value="B"
+                      ng-click="updateSupplierStatus(supplier,center,supplierCode.retailStore)"
+                      ng-disabled="isRequested">Buffer</label>
+                </div>
+                <div class="radio" ng-if="supplier.status != 'X'">
+                  <label><input type="radio" ng-model="supplier.status" value="R"
+                      ng-click="updateSupplierStatus(supplier,center,supplierCode.retailStore)"
+                      ng-disabled="isRequested">Remove</label>
+                </div>
+              </td>
+            </tr>
+            <!-- <span ng-if="(!supplier && (retailStore_allowed_gridview && ((supplierListCode == supplierName.retailStore) || (supplierListCode == supplierName.all))))">Data Not Found</span> -->
+          </tbody>
+
         </table>
         <!--End: saloon table  -->
         <!-- <div  ng-repeat="society in current_center.societies"></div> -->
@@ -1041,13 +1034,14 @@
               <!-- <span style="float:left"> -->
               <select class="form-control input-size" ng-model="supplier_type_code">
                 <option value="">Select Supplier</option>
-                <option ng-repeat="supplier in supplier_names" value="{{supplier.code}}" required>{{supplier.name}}
+                <option ng-repeat="supplier in unique_supplier_names_code" value="{{supplier.code}}" required>
+                  {{supplier.name}}
                 </option>
               </select>
               <!-- <input class="form-control input-size" placeholder="Search" type="text" ng-model="search"
                 class="form-control spacing col-width" style="margin-left:10px"> -->
 
-                <select class="form-control input-size" style="width:140px; margin-left:20px;" ng-model="center_index"
+              <select class="form-control input-size" style="width:140px; margin-left:20px;" ng-model="center_index"
                 ng-change="selectCenter(center_index)">
                 <option value="">Select Center</option>
                 <option ng-repeat="center_var in center_data" value="{{center_var.center.id}}">
@@ -1061,9 +1055,9 @@
             <!-- <div class="row form-inline" ng-if="search_status"> -->
             <div class="row form-inline">
               <!-- synergytop end -->
-              <input class="form-control input-size "  placeholder="Search" type="text" ng-model="search"
+              <input class="form-control input-size " placeholder="Search" type="text" ng-model="search"
                 class="form-control spacing col-width" ng-change="searchSuppliers()" style="margin-left:10px;">
-             
+
             </div></br>
             <div class="col-md-4 table-responsive" style="width: 550px; height: 550px">
               <table class="table table-bordered" ng-if="search_status">
@@ -1084,16 +1078,21 @@
                     <td>{{supplier.city}}</td>
                     <td>{{supplier.area}}</td>
                     <td>{{supplier.subarea}}</td>
-                    <td>
+                    <!-- <td>
                       <div class="radio">
-                        <label><input type="radio" ng-model="supplier.status" value="S"
-                            ng-click="addMoreSuppliers(supplier,$index)"
+                        <label><input type="radio" value="S"
+                            ng-click="addMoreSuppliers(supplier,$index,'S')" 
                             permission="[permissions.finalizeStatus]">Finalize</label>
                       </div>
                       <div class="radio">
-                        <label><input type="radio" ng-model="supplier.status" value="B"
-                            ng-click="addMoreSuppliers(supplier,$index)"
+                        <label><input type="radio"  value="B"
+                            ng-click="addMoreSuppliers(supplier,$index,'B')" 
                             permission="[permissions.bufferStatus]">Buffer</label>
+                      </div>
+                    </td> -->
+                    <td>
+                      <div class="radio">
+                        <label><input type="radio" value="B" ng-click="addMoreSuppliers(supplier,$index)">Add to Main list</label>
                       </div>
                     </td>
                   </tr>

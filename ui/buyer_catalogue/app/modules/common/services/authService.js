@@ -178,9 +178,12 @@ angular.module('Authentication')
        return userHasPermissionForView(view);
      };
 
-     authService.ForgotPassword = function (email, callback) {
-        
-      $http.post(apiHost + 'v0/ui/forgotPassword?email=' + email)
+     authService.ForgotPassword = function (email,host,protocol, callback) {
+        if(host == 'localhost'){
+           host = host +':' + $location.port();
+        }
+        var link = protocol + '://' + host;
+      $http.post(apiHost + 'v0/ui/forgotPassword?email=' + email + '&link=' + link)
          .then(function onSuccess(response) {
             if(response.data){
                callback(response.data);
