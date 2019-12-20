@@ -76,7 +76,7 @@ const getCampaignColumn = () => {
       width: '100px',
       sort: false,
       formatter: (cell, row) => {
-        const { campaign_id, contact_name_filled, contact_name_filled_suppliers } = row;
+        const { campaign_id, contact_name_filled, contact_name_filled_suppliers, name } = row;
         // Get supplier details from supplier ids
         return (
           <div>
@@ -87,6 +87,7 @@ const getCampaignColumn = () => {
                   state: {
                     suppliers: contact_name_filled_suppliers,
                     campaign_id,
+                    campaign_name: name,
                   },
                 }}
               >

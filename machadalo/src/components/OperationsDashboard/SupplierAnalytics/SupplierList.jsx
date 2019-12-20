@@ -51,9 +51,9 @@ class SupplierList extends Component {
   render() {
     let { status } = this.props.location.state;
     status = status ? status.charAt(0).toUpperCase() + status.slice(1) : '';
-    const headerValue = status
-      ? `${this.state.campaignName} (${status} Campaigns) - List of Suppliers`
-      : 'List of Suppliers';
+    const heading = status
+      ? `${this.state.campaignName} - ${status} Campaigns`
+      : `${this.state.campaignName}`;
     return (
       <div>
         <button
@@ -65,6 +65,16 @@ class SupplierList extends Component {
           <i className="fa fa-arrow-left" aria-hidden="true" />
           &nbsp; Back
         </button>
+        {this.state.campaignName && (
+          <h2
+            style={{
+              color: 'rgba(0, 119, 4, 0.66)',
+              fontStyle: 'oblique',
+            }}
+          >
+            {heading}
+          </h2>
+        )}
         {this.state.supplierDetails.length > 0 && (
           <InnerGrid
             columns={this.state.columns}
@@ -72,7 +82,7 @@ class SupplierList extends Component {
             exportCsv={true}
             search={true}
             pagination={true}
-            headerValue={headerValue}
+            headerValue="List of Suppliers"
             backgroundColor="#c7c7c7c9"
           />
         )}
