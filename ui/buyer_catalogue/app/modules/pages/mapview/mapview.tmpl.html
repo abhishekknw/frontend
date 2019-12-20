@@ -1047,6 +1047,16 @@
                 <option ng-repeat="center_var in center_data" value="{{center_var.center.id}}">
                   {{center_var.center.center_name}}</option>
               </select>
+
+              <select  name="areas" class="form-control input-size" ng-change="get_sub_areas(center.area)" ng-model="center.area" required>
+                <option value="">Select Area</option>
+                <option  ng-repeat="area in areas" value="{{$index}}" required>{{area.label}}</option>
+              </select>
+
+              <select  name="subareas" class="form-control input-size" ng-change="selectSubArea(center.sub_area_id)" ng-model="center.sub_area_id" required>
+                <option value="">Select SubArea </option>
+                <option  ng-repeat="subarea in sub_areas" value="{{$index}}" required>{{subarea.subarea_name}}</option>
+              </select>
               <button data-target="" class="btn btn-danger active" data-toggle="modal"
                 ng-click="searchSuppliers()">Search</button>
             </div>
@@ -1092,7 +1102,7 @@
                     </td> -->
                     <td>
                       <div class="radio">
-                        <label><input type="radio" value="B" ng-click="addMoreSuppliers(supplier,$index)">Add to Main list</label>
+                        <label><input type="radio" ng-click="addMoreSuppliers(supplier,$index)">Add To Main List</label>
                       </div>
                     </td>
                   </tr>

@@ -37,7 +37,7 @@
     }
 
     //added to search suppliers based on supplier code and search text
-    mapViewService.searchSuppliers = function(code,searchtext,vendorId,supplier_center){
+    mapViewService.searchSuppliers = function(code,searchtext,vendorId,supplier_center,center_areas){
       if (code,searchtext,vendorId) {
         var url = url_base + 'supplier-search/?' + "search=" + searchtext + "&supplier_type_code=" + code
                                   + "&vendor=" + vendorId;
@@ -52,11 +52,29 @@
          if(searchtext){
           url =  url_base + 'supplier-search/?' + "search=" + searchtext + "&supplier_type_code=" + code + "&supplier_center=" + supplier_center;
          }
+
+         if(center_areas && center_areas.areas){
+          url +=   "&supplier_area=" + center_areas.areas ;
+          if(center_areas.sub_areas){
+            url +=  "&supplier_area_subarea=" + center_areas.sub_areas;
+           }
+        }
+
+
+        
        
         return machadaloHttp.get(url);
       }
 
     }
+    
+    mapViewService.getLocations = function (name) {
+      var url = url_base_societyDetails + "getCityArea?search="+name ;
+      return machadaloHttp.get(url);
+  }
+
+
+
 
     mapViewService.saveData = function(proposal_id, centers_data){
         var url = url_base + proposal_id + '/create-final-proposal/';

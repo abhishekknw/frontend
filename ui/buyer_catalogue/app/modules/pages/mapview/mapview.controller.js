@@ -74,7 +74,7 @@ $scope.supplierCode = {
   retailStore  : 'RE',
 }
 $scope.supplierName = {
-  society : 'Society',
+  society : 'Residential Society',
   corporate : 'Corporate',
   busShelter : 'Bus Shelter',
   gym : 'Gym',
@@ -944,7 +944,7 @@ $scope.gridViewSummary = {};
          if($scope.unique_suppliersCode.length > 0){
            for (let i in $scope.unique_suppliersCode){
             let supplierName = {};
-             if($scope.unique_suppliersCode[i] == "Society"){
+             if($scope.unique_suppliersCode[i] == "Residential Society"){
               $scope.unique_supplier_names_code.push({name:$scope.unique_suppliersCode[i],code:"RS"});
              } 
              else if($scope.unique_suppliersCode[i] == "Corporate"){
@@ -1836,7 +1836,7 @@ $scope.gridViewSummary = {};
 
   //Start: code added to search & show all suppliers on add societies tab
   $scope.supplier_names = [
-    { name: 'Residential',      code:'RS'},
+    { name: 'Residential Society',      code:'RS'},
     { name: 'Corporate Parks',  code:'CP'},
     { name: 'Bus Shelter',  code:'BS'},
     { name: 'Gym',  code:'GY'},
@@ -1849,14 +1849,14 @@ $scope.gridViewSummary = {};
   $scope.center_index = null;
    $scope.supplier_center = "";
   $scope.searchSuppliers = function(){
-    
+  
    try{
     $scope.search_status = false;
     // synergytop start
     if($scope.supplier_type_code){
     // synergytop end
     // if($scope.supplier_type_code && $scope.search){
-      mapViewService.searchSuppliers($scope.supplier_type_code,$scope.search,'',$scope.supplier_center)
+      mapViewService.searchSuppliers($scope.supplier_type_code,$scope.search,'',$scope.supplier_center,$scope.center_areas)
         .then(function onSuccess(response, status){
             //$scope.center_index = null;
           $scope.supplierData = response.data.data;
@@ -1902,15 +1902,14 @@ $scope.gridViewSummary = {};
     }
     //Start: To add searched societies in given center
       $scope.addMoreSuppliers = function(supplier,id,status){
-        console.log('111111111111111111111111111111111111111',$scope.center_data[$scope.current_center_index].suppliers[$scope.supplier_type_code])
-        console.log('2222222222222222222222222222222222222',$scope.center_index)
+     
         // $scope.supplierData[id].status = status;
        try{
         if($scope.center_data[$scope.current_center_index].suppliers[$scope.supplier_type_code] != undefined && $scope.center_index != null && checkDuplicateSupplier(supplier)){
           // supplier.status = 'S';
           // $scope.extraSuppliersData[$scope.current_center_index][$scope.supplier_type_code].push(supplier);
           $scope.center_data[$scope.current_center_index].suppliers[$scope.supplier_type_code].push(supplier);
-          console.log('1111111111111111111111111111111')
+         
           $scope.supplierData.splice(id,1);
           // $scope.changeCurrentCenter($scope.center_index);
           var center = $scope.center_data[$scope.current_center_index];
@@ -1943,17 +1942,42 @@ $scope.gridViewSummary = {};
       $scope.center_index = center_index;
       if(center_index != null){
         for(var i=0;i<$scope.center_data.length; i++){
-          // console.log('111111111111111111111111111111111111111',$scope.center_data[i].center.center_name);
           if($scope.center_data[i].center.id == center_index){
               $scope.current_center_index = i;
-               $scope.supplier_center = $scope.center_data[i].center.center_name
+               $scope.supplier_center = $scope.center_data[i].center.center_name  
           }
         }
+      
+        mapViewService.getLocations($scope.supplier_center )
+        .then(function onSuccess(response){
+            $scope.areas = response.data.data;
+ 
+          }).
+          catch(function onError(response){
+            commonDataShare.showErrorMessage(response);
+          });
+          
       }
     }catch(error){
       console.log(error.message);
     }
   }
+
+  $scope.get_sub_areas = function(index) {
+   $scope.center_areas = {
+     areas:$scope.areas[index].label
+   };
+
+   createProposalService.getLocations('sub_areas', $scope.areas[index].id,)
+      .then(function onSuccess(response){
+          $scope.sub_areas = response.data;
+          console.log('subareaaa',$scope.sub_areas)
+        });
+    }
+
+    $scope.selectSubArea = function(index){
+      $scope.center_areas.sub_areas = $scope.sub_areas[index].subarea_name;
+    }
     //End: function to select center at add more suplliers
 //Start: upload and import functionality
 //Start: For sending only shortlisted societies & selected inventory types

@@ -72,7 +72,7 @@ angular
     buffer : 'B',
     remove : 'R',
     supplierCode_all : 'All',
-    RS:'Society',
+    RS:'Residential Society',
     CP:'Corporate',
     BS:'Bus Shelter',
     GY:'Gym',
