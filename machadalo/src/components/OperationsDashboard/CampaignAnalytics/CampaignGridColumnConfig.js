@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { get } from 'lodash';
 import CampaignBadge from '../../CampaignBadge';
 
@@ -74,6 +75,30 @@ const getCampaignColumn = () => {
       row: 1,
       width: '100px',
       sort: false,
+      formatter: (cell, row) => {
+        const { campaign_id, contact_name_filled, contact_name_filled_suppliers } = row;
+        // Get supplier details from supplier ids
+        return (
+          <div>
+            {contact_name_filled_suppliers.length > 0 ? (
+              <Link
+                to={{
+                  pathname: `operations-dashboard/${campaign_id}/suppliers`,
+                  state: {
+                    suppliers: contact_name_filled_suppliers,
+                    campaign_id,
+                  },
+                }}
+              >
+                {' '}
+                {contact_name_filled}
+              </Link>
+            ) : (
+              contact_name_filled
+            )}
+          </div>
+        );
+      },
     },
     {
       dataField: 'contact_name_not_filled',
