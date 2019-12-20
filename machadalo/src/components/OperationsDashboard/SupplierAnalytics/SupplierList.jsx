@@ -32,7 +32,7 @@ class SupplierList extends Component {
       });
   };
 
-  componentWillMount() {
+  componentDidMount() {
     let { suppliers, campaign_name } = this.props.location.state;
     this.setState({ campaignName: campaign_name });
     if (suppliers && typeof suppliers[0] == 'string') {

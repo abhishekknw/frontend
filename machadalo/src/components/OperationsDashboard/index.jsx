@@ -8,7 +8,7 @@ class OperationsDashboard extends Component {
   constructor(props) {
     super(props);
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.getTappingDetails();
   }
 
