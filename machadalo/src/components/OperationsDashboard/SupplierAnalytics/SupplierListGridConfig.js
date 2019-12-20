@@ -34,7 +34,7 @@ const getSupplierColumn = () => {
             variant = 'primary';
             break;
           default:
-            variant = 'danger';
+            variant = 'default';
             break;
         }
         return <CampaignBadge variant={variant}>{society_quality}</CampaignBadge>;
