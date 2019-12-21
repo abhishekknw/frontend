@@ -37,7 +37,7 @@
     }
 
     //added to search suppliers based on supplier code and search text
-    mapViewService.searchSuppliers = function(code,searchtext,vendorId,supplier_center,center_areas){
+    mapViewService.searchSuppliers = function(code,searchtext,vendorId,supplier_center,center_areas,proposal_id){
       if (code,searchtext,vendorId) {
         var url = url_base + 'supplier-search/?' + "search=" + searchtext + "&supplier_type_code=" + code
                                   + "&vendor=" + vendorId;
@@ -48,9 +48,10 @@
       //   return machadaloHttp.get(url);
       // } 
        else if(code,searchtext,supplier_center) {
-        var url = url_base + 'supplier-search/?' + "supplier_type_code=" + code + "&supplier_center=" + supplier_center;
+        var url = url_base + 'supplier-search/?' + "supplier_type_code=" + code + "&supplier_center=" + supplier_center + "&proposal_id=" + proposal_id;
          if(searchtext){
-          url =  url_base + 'supplier-search/?' + "search=" + searchtext + "&supplier_type_code=" + code + "&supplier_center=" + supplier_center;
+           url += "&search=" + searchtext
+         // url =  url_base + 'supplier-search/?' + "search=" + searchtext + "&supplier_type_code=" + code + "&supplier_center=" + supplier_center;
          }
 
          if(center_areas && center_areas.areas){

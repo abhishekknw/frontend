@@ -183,6 +183,12 @@ angular
         templateUrl: 'modules/pages/leadData/lead-data.tmpl.html',
       })
 
+      .state('bookingPlan', {
+        url: '/booking-plan',
+        controller: 'bookingPlanCtrl',
+        templateUrl: 'modules/pages/bookingPlan/booking-plan.tmpl.html',
+      })
+
       .state('manageCampaign', {
         url: '/manageCampaign',
         controller: 'CreateCampaignCtrl',

@@ -1849,14 +1849,14 @@ $scope.gridViewSummary = {};
   $scope.center_index = null;
    $scope.supplier_center = "";
   $scope.searchSuppliers = function(){
-  
+    var proposal_id = $scope.center_data[0].center.proposal
    try{
     $scope.search_status = false;
     // synergytop start
     if($scope.supplier_type_code){
     // synergytop end
     // if($scope.supplier_type_code && $scope.search){
-      mapViewService.searchSuppliers($scope.supplier_type_code,$scope.search,'',$scope.supplier_center,$scope.center_areas)
+      mapViewService.searchSuppliers($scope.supplier_type_code,$scope.search,'',$scope.supplier_center,$scope.center_areas,proposal_id)
         .then(function onSuccess(response, status){
             //$scope.center_index = null;
           $scope.supplierData = response.data.data;
@@ -2283,6 +2283,7 @@ $scope.gridViewSummary = {};
     // End: function to update status of supplier and save in db
     //Start:create dict of supplier_ids
     $scope.createSupplierList = function(){
+      
      try{
       $scope.supplier_id_list = [];
 
