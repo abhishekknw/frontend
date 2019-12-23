@@ -75,6 +75,7 @@
       $scope.model.business.contacts = [$scope.contact];
 
       $scope.getAccounts = function(savedState){
+
           pagesService.getAccounts($scope.bsSelect)
           .then(function onSuccess(response){
             console.log(response);

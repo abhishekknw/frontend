@@ -1,48 +1,57 @@
-angular.module('catalogueApp')
+// angular.module('catalogueApp')
+//   .controller('leadDataCtrl',
+//     ['$scope', '$rootScope', '$window', '$location', '$routeParams','AuthService','pagesService', 'resetPasswordService', '$stateParams', 'commonDataShare', 'constants', '$timeout', 'Upload', 'cfpLoadingBar', 'permissions',
+//       function ($scope, $rootScope, $window, $location, $routeParams,AuthService,pagesService, resetPasswordService, $stateParams, commonDataShare, constants, $timeout, Upload, cfpLoadingBar, permissions) {
+
+
+angular.module('machadaloPages')
   .controller('leadDataCtrl',
-    ['$scope', '$rootScope', '$window', '$location', '$routeParams','AuthService', 'resetPasswordService', '$stateParams', 'commonDataShare', 'constants', '$timeout', 'Upload', 'cfpLoadingBar', 'permissions',
-      function ($scope, $rootScope, $window, $location, $routeParams,AuthService, resetPasswordService, $stateParams, commonDataShare, constants, $timeout, Upload, cfpLoadingBar, permissions) {
+    function ($scope, $rootScope, $window, $location, pagesService, leadDateService, constants, Upload, commonDataShare, constants, $timeout, AuthService, $state, permissions) {
+      $scope.model = {};
+      $scope.isValid = false;
+      $scope.getOrganisations = function () {
+        $window.localStorage.account_proposals = null;
+        var orgId = $rootScope.globals.userInfo.profile.organisation.organisation_id;
+        pagesService.getOrganisations(orgId)
+          .then(function (response) {
+            $scope.organisations = response.data.data;
+            $scope.loading = response.data.data;
+          })
+          .catch(function onError(response) {
+            commonDataShare.showErrorMessage(response);
+            //  swal(constants.name,constants.errorMsg,constants.error);
+          });
+      };
 
+      $scope.getAccounts = function () {
+        pagesService.getAccounts($scope.model.organisation_id)
+          .then(function onSuccess(response) {
+            console.log(response);
+            $scope.accounts = response.data.data;
+            $scope.display = true;
+            $scope.loading = response.data.data;
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+      }
 
-        console.log("Hello Hereeeeeeeeeeeeeeeee");
-        $scope.model = {};
-        $scope.isValid = false;
-        $scope.passwordError = constants.password_error;
+      $scope.uploadFiles = function (file) {
+        $scope.model.file = file;
 
-        
-        
+      }
 
-        var url = $location.$$absUrl.split("/");
-        console.log('===============================1',url)
+      $scope.submitLead = function () {
+        leadDateService.createUser($scope.model)
+          .then(function onSuccess(response) {
+            console.log("Successful");
+            swal(constants.name, constants.createUser_success, constants.success);
+            // alert("Successfully Created");
+          })
+          .catch(function onError(response) {
+            commonDataShare.showErrorMessage(response);
+            // swal(constants.name,constants.errorMsg,constants.error);
+            // alert("Error Occured");
+          });
+      }
 
-        
-      
-        // $scope.resetPassword = function () {
-        //   var url = $location.url().split("/");
-        //   if (url[2]) {
-        //     $scope.model.code = url[2];
-        //   }
-        //   if (url[3]) {
-        //     $scope.model.email = url[3];
-        //   }
-        //     $scope.loadingSpinner = true;
-        //     AuthService.ResetPassword($scope.model, function(response) {
-        //       $scope.loadingSpinner = false;
-        //        if(response.status == true){
-        //         swal("Success!",response.data,constants.success);
-        //         $location.path("/login");
-        //        } else {
-        //         commonDataShare.showErrorMessage(response);
-        //        }
-        //   });
-        // }
-
-        
-
-        // $scope.validatePassword = function () {
-        //   if ($scope.model.password == $scope.model.confirm_password)
-        //     $scope.isValid = true;
-        //   else
-        //     $scope.isValid = false;
-        // }
-      }]);
+    });

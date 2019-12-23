@@ -30,15 +30,34 @@
         <h3 style="margin:0;">Create Campaign From Historical Lead Data</h3>
       </div>
     </div>
-    <div style="width:400px; margin: 0 auto;">
+    <div style="width:400px; margin: 0 auto;" ng-init="getOrganisations()">
         <form name="passwordForm" id="form">
             <div class="panel-body form-horizontal">
-              <div class="form-group>
+                <div class="form-group">
+                    <div ><label >Select Organisation</label></div>
+                    <select name="createPrincipalVendor" class="form-control input-size" ng-click="getAccounts()" ng-model="model.organisation_id" required>
+                      <option value="">Select Organisation</option>
+                      <option  ng-repeat="organisation in organisations" value="{{organisation.second_organisation.organisation_id}}" required>{{organisation.second_organisation.name}}</option>
+                    </select>
+                   
+                  </div>
+                  <div class="form-group">
+                      <div ><label >Select Account</label></div>
+                      <select name="createPrincipalVendor" class="form-control input-size" ng-click="test()" ng-model="model.account_id" required>
+                        <option value="">Select Account</option>
+                        <option  ng-repeat="account in accounts" value="{{account.account_id}}" required>{{account.name}}</option>
+                      </select>
+                     
+                    </div>
+                    <div class="form-group">
+                        <div ><label >Campaign Name</label></div>
+                        <input type="text" ng-model="model.name" placeholder="Campaign Name" class="form-control spacing" required>
+                      </div>
+              <div class="form-group">
                 <label for="file" class="cols-sm-2 control-label">Select Lead Shet</label>
                 <div class="">
                   <div class="input-group" style="margin-bottom: 20px;">
-                    <input type="file" class="form-control" name="file"  />
-        
+                      <input type="file" class="buttonfile" accept=".xlsx" ngf-select = "uploadFiles($file)"/>
                   </div>
                 </div>
               </div>
@@ -66,7 +85,7 @@
                   </div>
                 </div>
           <div class="footer">
-              <button  class="btn btn-primary"  id="password_modal_save" ng-click="changePassword()" >Submit</button>
+              <button  class="btn btn-primary"  id="lead_data" ng-click="submitLead()" >Submit</button>
           </div>
     </div>
 
