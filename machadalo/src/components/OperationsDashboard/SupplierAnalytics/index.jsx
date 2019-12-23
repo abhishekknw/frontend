@@ -23,11 +23,12 @@ class SupplierAnalytics extends React.Component {
       'Not Booked',
       'Not Initiated',
       'Recce',
+      'New Entity',
       'Decision Pending',
       'completed',
       'Confirmed Booking',
-      'Phone Booked',
-      'Visit Booked',
+      'Rejected',
+      'unknown',
       'Tentative Booking',
     ];
     dataFields.map((dataField) => {
