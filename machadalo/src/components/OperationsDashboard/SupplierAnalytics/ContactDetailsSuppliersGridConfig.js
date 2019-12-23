@@ -1,3 +1,5 @@
+import React from 'react';
+
 const getSupplierColumnContactDetails = () => {
   return [
     {
@@ -8,20 +10,9 @@ const getSupplierColumnContactDetails = () => {
       width: '350px',
       sort: true,
       formatter: (cell, row) => {
-        const { society_name } = row;
-        return society_name || '-';
-      },
-    },
-    {
-      dataField: 'society_address1',
-      text: 'Address',
-      row: 0,
-      rowSpan: 2,
-      width: '400px',
-      sort: false,
-      formatter: (cell, row) => {
-        const { society_address1 } = row;
-        return society_address1 || '-';
+        const { society_longitude, society_latitude, society_name } = row;
+        const googleMapUrl = `https://www.google.com/maps/?q=+${society_latitude}+=+${society_longitude}`;
+        return <a href={googleMapUrl}>{society_name}</a>;
       },
     },
     {
@@ -44,28 +35,6 @@ const getSupplierColumnContactDetails = () => {
       formatter: (cell, row) => {
         const { society_state } = row;
         return society_state || '-';
-      },
-    },
-    {
-      dataField: 'society_latitude',
-      text: 'Latitude',
-      row: 0,
-      rowSpan: 2,
-      sort: false,
-      formatter: (cell, row) => {
-        const { society_latitude } = row;
-        return society_latitude || '-';
-      },
-    },
-    {
-      dataField: 'society_longitude',
-      text: 'Longitude',
-      row: 0,
-      rowSpan: 2,
-      sort: false,
-      formatter: (cell, row) => {
-        const { society_longitude } = row;
-        return society_longitude || '-';
       },
     },
   ];

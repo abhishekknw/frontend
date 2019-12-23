@@ -52,7 +52,7 @@ class SupplierList extends Component {
     let { status } = this.props.location.state;
     status = status ? status.charAt(0).toUpperCase() + status.slice(1) : '';
     const heading = status
-      ? `${this.state.campaignName} - ${status} Campaigns`
+      ? `${this.state.campaignName} (${status.toUpperCase()})`
       : `${this.state.campaignName}`;
     return (
       <div>
@@ -66,14 +66,24 @@ class SupplierList extends Component {
           &nbsp; Back
         </button>
         {this.state.campaignName && (
-          <h2
-            style={{
-              color: 'rgba(0, 119, 4, 0.66)',
-              fontStyle: 'oblique',
-            }}
-          >
-            {heading}
-          </h2>
+          <div style={{ fontStyle: 'oblique' }}>
+            <h2
+              style={{
+                float: 'left',
+                color: '#6d6d6d',
+                marginRight: '10px',
+              }}
+            >
+              Campaign Name :
+            </h2>
+            <h2
+              style={{
+                color: 'rgb(0, 114, 196)',
+              }}
+            >
+              {heading}
+            </h2>
+          </div>
         )}
         {this.state.supplierDetails.length > 0 && (
           <InnerGrid
