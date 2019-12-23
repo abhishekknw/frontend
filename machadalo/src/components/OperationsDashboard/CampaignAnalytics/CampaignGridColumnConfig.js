@@ -102,6 +102,13 @@ const getCampaignColumn = () => {
       },
     },
     {
+      dataField: 'contact_name_filled_total',
+      text: 'Total Filled',
+      row: 1,
+      width: '100px',
+      sort: false,
+    },
+    {
       dataField: 'contact_name_not_filled',
       text: 'Not Filled',
       row: 1,
@@ -137,13 +144,6 @@ const getCampaignColumn = () => {
           </div>
         );
       },
-    },
-    {
-      dataField: 'contact_name_filled_total',
-      text: 'Total Filled',
-      row: 1,
-      width: '100px',
-      sort: false,
     },
     {
       dataField: 'contact_number',
@@ -185,6 +185,13 @@ const getCampaignColumn = () => {
       },
     },
     {
+      dataField: 'contact_number_filled_total',
+      text: 'Total Filled',
+      row: 1,
+      width: '100px',
+      sort: false,
+    },
+    {
       dataField: 'contact_number_not_filled',
       text: 'Not Filled',
       row: 1,
@@ -220,13 +227,6 @@ const getCampaignColumn = () => {
           </div>
         );
       },
-    },
-    {
-      dataField: 'contact_number_filled_total',
-      text: 'Total Filled',
-      row: 1,
-      width: '100px',
-      sort: false,
     },
     // {
     //   dataField: 'payment_details',
