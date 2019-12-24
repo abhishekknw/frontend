@@ -20,17 +20,17 @@ const getCampaignColumn = () => {
           case 'confirmed booking':
             variant = 'info';
             break;
-          case 'phone booked':
+          case 'new entity':
             variant = 'warning';
             break;
           case 'tentative booking':
             variant = 'primary';
             break;
-          case 'not booked':
-            variant = 'danger';
+          case 'decision pending':
+            variant = 'default';
             break;
           default:
-            variant = 'default';
+            variant = 'danger';
             break;
         }
         return <CampaignBadge variant={variant}>{status}</CampaignBadge>;

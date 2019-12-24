@@ -82,7 +82,7 @@ class SupplierAnalytics extends React.Component {
       <div className="bootstrap-iso">
         {supplierData && (
           <div>
-            <h5 style={{ color: 'white' }}>Booking Status Summary</h5>
+            {/* <h5 style={{ color: 'white' }}>Booking Status Summary</h5> */}
             <InnerGrid
               columns={getCampaignSummaryColumn()}
               data={data}
@@ -93,7 +93,7 @@ class SupplierAnalytics extends React.Component {
               showModal={false}
               styles={{ backgroundColor: 'white' }}
             />
-            <BookingSubStatusSummary bookingSubStatusDetails={this.state.bookingSubStatusDetails} />
+            {/* <BookingSubStatusSummary bookingSubStatusDetails={this.state.bookingSubStatusDetails} /> */}
 
             <button
               onClick={this.handleClick}
