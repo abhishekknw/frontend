@@ -49,11 +49,11 @@ class SupplierList extends Component {
   }
 
   render() {
-    let { status } = this.props.location.state;
+    let { status, type } = this.props.location.state;
     status = status ? status.charAt(0).toUpperCase() + status.slice(1) : '';
     const heading = status
       ? `${this.state.campaignName} (${status.toUpperCase()})`
-      : `${this.state.campaignName}`;
+      : `${this.state.campaignName} (${type})`;
     return (
       <div>
         <button
@@ -92,7 +92,7 @@ class SupplierList extends Component {
             exportCsv={true}
             search={true}
             pagination={true}
-            headerValue="List of Suppliers"
+            headerValue="List of Entities"
             backgroundColor="#c7c7c7c9"
           />
         )}
