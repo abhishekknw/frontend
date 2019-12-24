@@ -41,17 +41,44 @@ angular.module('machadaloPages')
       }
 
       $scope.submitLead = function () {
-        leadDateService.createUser($scope.model)
-          .then(function onSuccess(response) {
-            console.log("Successful");
-            swal(constants.name, constants.createUser_success, constants.success);
-            // alert("Successfully Created");
-          })
-          .catch(function onError(response) {
-            commonDataShare.showErrorMessage(response);
-            // swal(constants.name,constants.errorMsg,constants.error);
-            // alert("Error Occured");
-          });
+
+        if($scope.model.file){
+         
+          try{
+           var uploadUrl = constants.base_url + constants.url_base;
+           $scope.hideSpinner = false;
+           var token = $rootScope.globals.currentUser.token ;
+           Upload.upload({
+               url: uploadUrl  + 'create-dummy-proposal/',
+               data:{file:$scope.model.file,organisation_id:$scope.model.organisation_id,account_id:$scope.model.account_id,name:$scope.model.name},
+               headers: {'Authorization': 'JWT ' + token},
+           }).then(function onSuccess(response) {
+             $scope.hideSpinner = true;
+             swal(constants.name,constants.uploadfile_success,constants.success);
+             // uploadFileToAmazonServer(response.data.data,file);
+   
+           }).catch(function onError(response) {
+             $scope.hideSpinner = true;
+             commonDataShare.showErrorMessage(response);
+               // swal(constants.name,constants.importfile_error,constants.error);
+           });
+         }catch(error){
+           $scope.hideSpinner = true;
+           console.log(error.message);
+         }
+       }
+
+        // leadDateService.createUser($scope.model)
+        //   .then(function onSuccess(response) {
+        //     console.log("Successful");
+        //     swal(constants.name, constants.createUser_success, constants.success);
+        //     // alert("Successfully Created");
+        //   })
+        //   .catch(function onError(response) {
+        //     commonDataShare.showErrorMessage(response);
+        //     // swal(constants.name,constants.errorMsg,constants.error);
+        //     // alert("Error Occured");
+        //   });
       }
 
     });
