@@ -37,6 +37,12 @@ const getCampaignColumn = () => {
       },
     },
     {
+      dataField: 'supplier_count',
+      text: 'Entity Count',
+      row: 0,
+      rowSpan: 2,
+    },
+    {
       dataField: 'permission_box_count',
       text: 'Permission Box Count',
       row: 0,
@@ -55,12 +61,6 @@ const getCampaignColumn = () => {
       rowSpan: 2,
     },
     {
-      dataField: 'supplier_count',
-      text: 'Supplier Count',
-      row: 0,
-      rowSpan: 2,
-    },
-    {
       dataField: 'payment_method',
       text: 'Payment Method',
       row: 0,
@@ -68,7 +68,7 @@ const getCampaignColumn = () => {
     },
     {
       dataField: 'supplier',
-      text: 'Suppliers',
+      text: 'Entity',
       row: 0,
       rowSpan: 2,
       formatter: (cell, row) => {
@@ -88,10 +88,10 @@ const getCampaignColumn = () => {
                   },
                 }}
               >
-                View Suppliers
+                View Entities
               </Link>
             ) : (
-              'No Suppliers'
+              'No Entity'
             )}
           </div>
         );

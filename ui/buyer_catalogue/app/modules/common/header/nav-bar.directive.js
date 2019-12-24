@@ -1,3 +1,4 @@
+
 angular.module('machadaloCommon')
 .directive('navBar', function($window,$rootScope,constants,$timeout, permissions) {
   return {
@@ -10,6 +11,11 @@ angular.module('machadaloCommon')
                  $('body').removeClass('modal-open');
                  $('.modal-backdrop').remove();
               }
+                $('.forScroll').slimScroll({
+                    height: '100%'
+               });
         }
   };
 });
+
+

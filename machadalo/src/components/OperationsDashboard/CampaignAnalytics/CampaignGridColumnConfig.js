@@ -30,14 +30,14 @@ const getCampaignColumn = () => {
       },
     },
     {
-      dataField: 'city',
-      text: 'City',
+      dataField: 'supplier_count',
+      text: 'Entity Count',
       row: 0,
       rowSpan: 2,
     },
     {
-      dataField: 'supplier_count',
-      text: 'Number of Suppliers',
+      dataField: 'city',
+      text: 'City',
       row: 0,
       rowSpan: 2,
     },
@@ -88,6 +88,7 @@ const getCampaignColumn = () => {
                     suppliers: contact_name_filled_suppliers,
                     campaign_id,
                     campaign_name: name,
+                    type: 'Contact Name Filled',
                   },
                 }}
               >
@@ -132,6 +133,7 @@ const getCampaignColumn = () => {
                     suppliers: contact_name_not_filled_suppliers,
                     campaign_id,
                     campaign_name: name,
+                    type: 'Contact Name Not Filled',
                   },
                 }}
               >
@@ -171,6 +173,7 @@ const getCampaignColumn = () => {
                     suppliers: contact_number_filled_suppliers,
                     campaign_id,
                     campaign_name: name,
+                    type: 'Contact Number Filled',
                   },
                 }}
               >
@@ -215,6 +218,7 @@ const getCampaignColumn = () => {
                     suppliers: contact_number_not_filled_suppliers,
                     campaign_id,
                     campaign_name: name,
+                    type: 'Contact Number Not Filled',
                   },
                 }}
               >
