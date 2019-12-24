@@ -1,16 +1,59 @@
 import React, { Component } from 'react';
+import request from 'superagent';
+import config from '../../../config';
 import InnerGrid from '../../InnerGrid';
 import getSupplierColumn from './SupplierListGridConfig';
+import getSupplierColumnContactDetails from './ContactDetailsSuppliersGridConfig';
 
 class SupplierList extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      campaignName: '',
+      supplierDetails: [],
+      suppliers: [],
+      columns: [],
+    };
+  }
+
+  getSupplierDetails = (data) => {
+    const { token } = this.props.auth;
+    request
+      .post(`${config.API_URL}/v0/ui/website/multi-supplier-details/`)
+      .set('Authorization', `JWT ${token}`)
+      .send(data)
+      .then((resp) => {
+        this.setState({
+          supplierDetails: resp.body.data,
+        });
+      })
+      .catch((ex) => {
+        console.log('Failed to get data', ex);
+      });
+  };
+
+  componentDidMount() {
+    let { suppliers, campaign_name } = this.props.location.state;
+    this.setState({ campaignName: campaign_name });
+    if (suppliers && typeof suppliers[0] == 'string') {
+      const data = {
+        supplier_ids: suppliers,
+        supplier_type_code: 'RS',
+      };
+      this.getSupplierDetails(data);
+      this.setState({ columns: getSupplierColumnContactDetails() });
+    } else {
+      this.setState({ supplierDetails: suppliers });
+      this.setState({ columns: getSupplierColumn() });
+    }
   }
 
   render() {
-    const { suppliers, campaign_name } = this.props.location.state;
     let { status } = this.props.location.state;
-    status = status.charAt(0).toUpperCase() + status.slice(1);
+    status = status ? status.charAt(0).toUpperCase() + status.slice(1) : '';
+    const heading = status
+      ? `${this.state.campaignName} (${status.toUpperCase()})`
+      : `${this.state.campaignName}`;
     return (
       <div>
         <button
@@ -22,14 +65,34 @@ class SupplierList extends Component {
           <i className="fa fa-arrow-left" aria-hidden="true" />
           &nbsp; Back
         </button>
-        {suppliers.length > 0 && (
+        {this.state.campaignName && (
+          <div style={{ fontStyle: 'oblique' }}>
+            <h2
+              style={{
+                float: 'left',
+                color: '#6d6d6d',
+                marginRight: '10px',
+              }}
+            >
+              Campaign Name :
+            </h2>
+            <h2
+              style={{
+                color: 'rgb(0, 114, 196)',
+              }}
+            >
+              {heading}
+            </h2>
+          </div>
+        )}
+        {this.state.supplierDetails.length > 0 && (
           <InnerGrid
-            columns={getSupplierColumn()}
-            data={suppliers}
+            columns={this.state.columns}
+            data={this.state.supplierDetails}
             exportCsv={true}
             search={true}
             pagination={true}
-            headerValue={`${campaign_name} (${status} Campaigns) - List of Suppliers`}
+            headerValue="List of Suppliers"
             backgroundColor="#c7c7c7c9"
           />
         )}

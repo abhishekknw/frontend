@@ -1,5 +1,4 @@
 import React from 'react';
-import { get } from 'lodash';
 import CampaignBadge from '../../CampaignBadge';
 
 const getSupplierColumn = () => {
@@ -11,6 +10,11 @@ const getSupplierColumn = () => {
       rowSpan: 2,
       width: '350px',
       sort: true,
+      formatter: (cell, row) => {
+        const { society_longitude, society_latitude, name } = row;
+        const googleMapUrl = `https://www.google.com/maps/place/${society_latitude},${society_longitude}`;
+        return <a href={googleMapUrl}>{name}</a>;
+      },
     },
     {
       dataField: 'society_quality',
@@ -18,7 +22,7 @@ const getSupplierColumn = () => {
       row: 0,
       rowSpan: 2,
       formatter: (cell, row) => {
-        let society_quality = get(row, 'society_quality');
+        const { society_quality } = row;
         let variant = 'success';
         switch (society_quality) {
           case 'Standard':
@@ -34,18 +38,11 @@ const getSupplierColumn = () => {
             variant = 'primary';
             break;
           default:
-            variant = 'danger';
+            variant = 'default';
             break;
         }
         return <CampaignBadge variant={variant}>{society_quality}</CampaignBadge>;
       },
-      sort: true,
-    },
-    {
-      dataField: 'locality',
-      text: 'Locality',
-      row: 0,
-      rowSpan: 2,
       sort: true,
     },
     {
@@ -54,6 +51,10 @@ const getSupplierColumn = () => {
       row: 0,
       rowSpan: 2,
       sort: true,
+      formatter: (cell, row) => {
+        const { subarea } = row;
+        return subarea || '-';
+      },
     },
     {
       dataField: 'city',
@@ -61,26 +62,20 @@ const getSupplierColumn = () => {
       row: 0,
       rowSpan: 2,
       sort: true,
-    },
-    {
-      dataField: 'is_completed',
-      text: 'Completed',
-      row: 0,
-      rowSpan: 2,
-      sort: true,
-    },
-    {
-      dataField: 'society_quantity',
-      text: 'Society Quantity',
-      row: 0,
-      rowSpan: 2,
-      sort: true,
+      formatter: (cell, row) => {
+        const { city } = row;
+        return city || '-';
+      },
     },
     {
       dataField: 'payment_method',
       text: 'Payment Method',
       row: 0,
       rowSpan: 2,
+      formatter: (cell, row) => {
+        const { payment_method } = row;
+        return payment_method || '-';
+      },
     },
   ];
 };
