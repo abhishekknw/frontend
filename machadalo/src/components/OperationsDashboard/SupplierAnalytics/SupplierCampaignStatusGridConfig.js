@@ -12,8 +12,27 @@ const getCampaignColumn = () => {
       rowSpan: 2,
       formatter: (cell, row) => {
         let status = get(row, 'status');
-        let variant =
-          status === 'completed' ? 'success' : status === 'confirmed booking' ? 'info' : 'danger';
+        let variant = 'success';
+        switch (status) {
+          case 'completed':
+            variant = 'success';
+            break;
+          case 'confirmed booking':
+            variant = 'info';
+            break;
+          case 'new entity':
+            variant = 'warning';
+            break;
+          case 'tentative booking':
+            variant = 'primary';
+            break;
+          case 'decision pending':
+            variant = 'default';
+            break;
+          default:
+            variant = 'danger';
+            break;
+        }
         return <CampaignBadge variant={variant}>{status}</CampaignBadge>;
       },
     },

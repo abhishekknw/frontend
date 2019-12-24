@@ -1,6 +1,14 @@
 const getCampaignSummaryColumn = () => {
   return [
     {
+      dataField: 'unknown',
+      text: 'Unknown(Others)',
+    },
+    {
+      dataField: 'New Entity',
+      text: 'New Entity',
+    },
+    {
       dataField: 'Not Initiated',
       text: 'Not Initiated',
     },
@@ -13,12 +21,8 @@ const getCampaignSummaryColumn = () => {
       text: 'Decision Pending',
     },
     {
-      dataField: 'Not Booked',
-      text: 'Not Booked',
-    },
-    {
-      dataField: 'Phone Booked',
-      text: 'Phone Booked',
+      dataField: 'Rejected',
+      text: 'Rejected',
     },
     {
       dataField: 'Tentative Booking',
@@ -27,10 +31,6 @@ const getCampaignSummaryColumn = () => {
     {
       dataField: 'Confirmed Booking',
       text: 'Confirmed Booked',
-    },
-    {
-      dataField: 'Visit Booked',
-      text: 'Visit Booked',
     },
     {
       dataField: 'completed',
