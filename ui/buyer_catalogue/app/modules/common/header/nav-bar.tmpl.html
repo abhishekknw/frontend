@@ -2,6 +2,8 @@
 <link rel="stylesheet" href="modules/common/header/menu-bar-common.css"/>
 <link href="css/smallscreen.css" rel="stylesheet" media="screen">
 
+
+
 <header>
   <a href="/manageCampaign/create" class="logo">
     <img src="images/machadalo-logo.png" alt="Machadalo">
@@ -23,7 +25,7 @@
 </button>
 
 <aside ng-class="{'is-visible':visible}">
-  <div class="sidemenu">
+  <div class="sidemenu forScroll">
     <ul id="menu-content">
       <li ng-class="{active: isActive('/manageCampaign/create')}" permission="[perm.menuHome]">
         <a ng-href="/#/manageCampaign/create" class="lipadding" ng-click="closeModal()"><i class="fas fa-home"></i>Home</a>
@@ -150,3 +152,4 @@
   </div>
   </div>
   </div>
+

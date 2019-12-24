@@ -94,3 +94,6 @@
 .table-data tr:nth-child(odd) {
 	background: #ffffff;
 }
+.organisationsDetails th {
+	width: 20%;
+}
