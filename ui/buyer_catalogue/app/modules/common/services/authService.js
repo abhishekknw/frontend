@@ -197,9 +197,7 @@ angular.module('Authentication')
    };
 
    authService.ResetPassword = function (params, callback) {
-      console.log('++++++++++++++++++++++++++++++++++++,',params)
       $http.post(apiHost + 'v0/ui/setResetPassword', { email: params.email, code: params.code, password: params.password })
-      // $http.post(apiHost + 'v0/ui/forgotPassword?email=' + email)
          .then(function onSuccess(response) {
                 callback(response.data);
          })
