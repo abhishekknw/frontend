@@ -36,5 +36,19 @@ function (machadaloHttp, $stateParams, $rootScope, $routeParams, $location, $htt
     var url = url_root  + "campaign/campaign-wise-summary/";
     return machadaloHttp.get(url);
   }
+
+
+  
+  campaignListService.addComment = function(campaignId, data){
+    var url = url_base +  campaignId + "/comment/";
+    return machadaloHttp.post(url,data);
+  }
+
+  campaignListService.viewComments = function(campaignId, spaceId, relatedTo){
+    var url = url_base +  campaignId + "/comment/?shortlisted_spaces_id=" + spaceId + "&related_to=" + relatedTo;
+    return machadaloHttp.get(url);
+  }
+
+
   return campaignListService;
 }]);
