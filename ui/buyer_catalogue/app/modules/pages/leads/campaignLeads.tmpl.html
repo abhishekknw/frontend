@@ -1,15 +1,50 @@
 <link rel="stylesheet" href="/modules/pages/leads/campaignLeads.tmpl.css">
 <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
+
 <div ng-loading="loading"></div> <!--For displaying loading icon-->
-<div ng-show="isEmpty" style="text-align:center;"><h2>{{msg}}</h2></div>
-
 <main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading">
+<div class="wrapperBox">
+  <div ng-show="isEmpty" style="text-align:center;"><h2>{{msg}}</h2></div>
+  <nav-bar></nav-bar>
+  <div class="middle-section">
+    <div class="breadcrumb" ncy-breadcrumb></div>
+    <h2 class="heading">List of All Campaign Details</h2>
+    <div class="campaignLeadSection" ng-if="views.campaigns">
+      <div class="campaignBox" st-table="campaigns" st-safe-src="Data">
+        <div class="searchBox">
+          <input st-search="" placeholder="Search ..." class="field"  type="search">
+          <button><i class="fas fa-search"></i></button>
+        </div>
+        <table class="table-data">
+          <tr>
+            <th ng-repeat="header in campaignHeaders">{{header.header}}</th>
+          </tr>
+          <tr ng-repeat="campaign in campaigns">
+            <td width="60%">{{campaign.campaign.name}}</td>
+            <td>{{campaign.campaign.tentative_start_date|limitTo:10}}</td>
+            <td>{{campaign.campaign.tentative_end_date|limitTo:10}}</td>
+            <td>
+              <a href="javascript:void(0);" ng-click="changeView('viewLeadForms',campaign)" class="linkBtn">Create/Edit Lead Form</a>
+            </td>
+          </tr>
+        </table>
+        <div class="paginationBox" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages=""></div>
+      </div>
+    </div><!-- campaignLeadSection -->
+  </div><!-- middle-section -->
+  <div class="fixfooter"></div>
+</div><!-- wrapperBox -->
+<footer-bar></footer-bar>
+</main>
 
-<div><nav-bar></nav-bar></div>
-<br/><br/><br/>
-<br/><br/>
 
-<div class="" ng-show="!views.campaigns && !(views.createForm || views.selectSuppliers || views.enterLeads || views.viewLeadsBySupplier)">
+
+
+
+
+
+
+<!-- <div class="" ng-show="!views.campaigns && !(views.createForm || views.selectSuppliers || views.enterLeads || views.viewLeadsBySupplier)">
   <button type="button" class="btn btn-primary" style="margin-left:23px;" ng-click="changeView('campaigns',campaign)">Back To Campaign Details Page</button>
 </div>
 <div class="" ng-show="views.createForm || views.selectSuppliers || views.importLeads">
@@ -20,12 +55,12 @@
 </div>
 <div class="" ng-show="views.viewLeadsBySupplier">
   <button type="button" class="btn btn-primary" style="margin-left:23px;" ng-click="changeView('enterLeads',campaignInfo)">Back To Enter Leads Page</button>
-</div>
+</div> -->
 
-<br/><br/>
-<div class="panel" ng-if="views.campaigns">
+
+<!-- <div class="panel" ng-if="views.campaigns">
   <div class="pageTitle">
-    <h3>List Of All Campaign Details</h3>
+    <h3>List of All Campaign Details</h3>
   </div>
   <br/>
   <div class="panel-body" style="margin-top:10px;">
@@ -62,7 +97,8 @@
       </table>
     </div>
   </div>
-</div>
+</div> -->
+
 <!--start: leads  -->
 <div class="panel" ng-if="views.viewLeads">
   <div class="pageTitle">
