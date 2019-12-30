@@ -46,5 +46,21 @@
       return machadaloHttp.get(url);
     }
 
+    opsDashBoard.addComment = function(campaignId,spaceId, relatedTo, data){
+     // var url =  url_base +  campaignId + "/comment/?shortlisted_spaces_id=" + spaceId + "&related_to=" + relatedTo;
+      var url = url_base +  campaignId + "/comment/";
+      return machadaloHttp.post(url,data);
+    }
+
+    opsDashBoard.viewComments = function(campaignId, spaceId, relatedTo){
+      var url = url_base +  campaignId + "/comment/?shortlisted_spaces_id=" + spaceId + "&related_to=" + relatedTo;
+      return machadaloHttp.get(url);
+    }
+
+    opsDashBoard.getAllComments = function(campaignId){
+      var url = url_base +  campaignId + "/comment/";
+      return machadaloHttp.get(url);
+    }
+
     return opsDashBoard;
 }]);
