@@ -1,0 +1,24 @@
+.backBtn {
+	float: right;
+	margin-top: 30px;
+	position: relative;
+	z-index: 1;
+}
+.campaignFormBox .fieldBoxFull {
+	width: 100%;
+	display: block;
+}
+.campaignFormBox label {
+	display: block;
+	font-weight: 400;
+}
+.campaignFormBox label span {
+	color: #ff2620;
+}
+.formRow {
+	display: grid;
+	grid-template-columns: 40% 40% 10% 10%;
+}
+.formRow .fieldBox {
+	padding: 10px;
+}
