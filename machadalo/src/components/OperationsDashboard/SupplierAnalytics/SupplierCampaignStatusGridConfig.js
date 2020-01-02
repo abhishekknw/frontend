@@ -7,68 +7,87 @@ const getCampaignColumn = () => {
   return [
     {
       dataField: 'status',
-      text: 'Booking Status',
+      text: 'Booking Status',
       row: 0,
       rowSpan: 2,
       formatter: (cell, row) => {
         let status = get(row, 'status');
+        status = status.toLowerCase();
         let variant = 'success';
         switch (status) {
           case 'completed':
             variant = 'success';
             break;
-          case 'confirmed booking':
-            variant = 'info';
-            break;
-          case 'new entity':
-            variant = 'warning';
-            break;
-          case 'tentative booking':
+          case 'confirmed booking':
             variant = 'primary';
             break;
-          case 'decision pending':
-            variant = 'default';
+          case 'decision pending':
+            variant = 'warning';
+            break;
+          case 'tentative booking':
+            variant = 'info';
+            break;
+          case 'not booked':
+            variant = 'danger';
             break;
           default:
-            variant = 'danger';
+            variant = 'default';
             break;
         }
         return <CampaignBadge variant={variant}>{status}</CampaignBadge>;
       },
     },
     {
-      dataField: 'permission_box_count',
-      text: 'Permission Box Count',
+      dataField: 'supplier_count',
+      text: 'Entity Count',
       row: 0,
       rowSpan: 2,
     },
     {
       dataField: 'comments_count',
-      text: 'Comments Count',
+      text: 'Comments Count',
       row: 0,
       rowSpan: 2,
+      formatter: (cell, row) => {
+        const { comments_count } = row;
+        return comments_count || 0;
+      },
+    },
+    {
+      dataField: 'permission_box_count',
+      text: 'Permission Box Count',
+      row: 0,
+      rowSpan: 2,
+      formatter: (cell, row) => {
+        const { permission_box_count, status } = row;
+        if (status === 'completed') return permission_box_count;
+        else return '-';
+      },
     },
     {
       dataField: 'receipt_count',
-      text: 'Receipt Count',
+      text: 'Receipt Count',
       row: 0,
       rowSpan: 2,
-    },
-    {
-      dataField: 'supplier_count',
-      text: 'Supplier Count',
-      row: 0,
-      rowSpan: 2,
+      formatter: (cell, row) => {
+        const { receipt_count, status } = row;
+        if (status === 'completed') return receipt_count;
+        else return '-';
+      },
     },
     {
       dataField: 'payment_method',
-      text: 'Payment Method',
+      text: 'Payment Method',
       row: 0,
       rowSpan: 2,
+      formatter: (cell, row) => {
+        const { payment_method } = row;
+        return payment_method || '-';
+      },
     },
     {
       dataField: 'supplier',
-      text: 'Suppliers',
+      text: 'Entity',
       row: 0,
       rowSpan: 2,
       formatter: (cell, row) => {
@@ -76,6 +95,7 @@ const getCampaignColumn = () => {
         const isSuppliers = supplier_count > 0 ? true : false;
         return (
           <div>
+
             {isSuppliers ? (
               <Link
                 to={{
@@ -88,11 +108,12 @@ const getCampaignColumn = () => {
                   },
                 }}
               >
-                View Suppliers
+                View Entities
               </Link>
             ) : (
-              'No Suppliers'
+              'No Entity'
             )}
+
           </div>
         );
       },
