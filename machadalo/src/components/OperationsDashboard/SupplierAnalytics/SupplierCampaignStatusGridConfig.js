@@ -47,24 +47,42 @@ const getCampaignColumn = () => {
       text: 'Permission Box Count',
       row: 0,
       rowSpan: 2,
+      formatter: (cell, row) => {
+        const { permission_box_count, status } = row;
+        if (status === 'completed') return permission_box_count;
+        else return '-';
+      },
     },
     {
       dataField: 'comments_count',
       text: 'Comments Count',
       row: 0,
       rowSpan: 2,
+      formatter: (cell, row) => {
+        const { comments_count } = row;
+        return comments_count || 0;
+      },
     },
     {
       dataField: 'receipt_count',
       text: 'Receipt Count',
       row: 0,
       rowSpan: 2,
+      formatter: (cell, row) => {
+        const { receipt_count, status } = row;
+        if (status === 'completed') return receipt_count;
+        else return '-';
+      },
     },
     {
       dataField: 'payment_method',
       text: 'Payment Method',
       row: 0,
       rowSpan: 2,
+      formatter: (cell, row) => {
+        const { payment_method } = row;
+        return payment_method || '-';
+      },
     },
     {
       dataField: 'supplier',

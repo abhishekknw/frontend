@@ -42,7 +42,10 @@ class SupplierCampaignStatusSummary extends Component {
   };
 
   render() {
-    const datafields = this.addMissingDatafield(this.props.data);
+    const datafields = this.props.data;
+    const headerValue = datafields[0].campaign_name
+      ? `Campaign Details (${datafields[0].campaign_name})`
+      : 'Campaign Details';
     return (
       <div>
         {this.props.data.length > 0 && (
@@ -52,7 +55,7 @@ class SupplierCampaignStatusSummary extends Component {
             exportCsv={false}
             search={false}
             pagination={false}
-            headerValue="Campaign Details"
+            headerValue={headerValue}
             backgroundColor="#c7c7c7c9"
           />
         )}
