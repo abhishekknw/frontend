@@ -1032,7 +1032,7 @@
             </br>
             <div class="row form-inline">
               <!-- <span style="float:left"> -->
-              <select class="form-control input-size" ng-model="supplier_type_code">
+              <select class="form-control input-size" ng-change = "selectSupplier()" ng-model="supplier_type_code">
                 <option value="">Select Supplier</option>
                 <option ng-repeat="supplier in unique_supplier_names_code" value="{{supplier.code}}" required>
                   {{supplier.name}}
@@ -1042,7 +1042,7 @@
                 class="form-control spacing col-width" style="margin-left:10px"> -->
 
               <select class="form-control input-size" style="width:140px; margin-left:20px;" ng-model="center_index"
-                ng-change="selectCenter(center_index)">
+                ng-change="selectCenter(center_index)" required>
                 <option value="">Select Center</option>
                 <option ng-repeat="center_var in center_data" value="{{center_var.center.id}}">
                   {{center_var.center.center_name}}</option>
@@ -1057,7 +1057,7 @@
                 <option value="">Select SubArea </option>
                 <option  ng-repeat="subarea in sub_areas" value="{{$index}}" required>{{subarea.subarea_name}}</option>
               </select>
-              <button data-target="" class="btn btn-danger active" data-toggle="modal"
+              <button data-target="" ng-disabled="searchDisable" class="btn btn-danger active" data-toggle="modal"
                 ng-click="searchSuppliers()">Search</button>
             </div>
             </br>

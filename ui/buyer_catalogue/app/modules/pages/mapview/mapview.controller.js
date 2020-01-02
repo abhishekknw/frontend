@@ -1845,21 +1845,25 @@ $scope.gridViewSummary = {};
     ];
   $scope.search;
   $scope.search_status = false;
+  $scope.searchDisable = false;
   $scope.supplier_type_code;
   $scope.center_index = null;
    $scope.supplier_center = "";
+    
   $scope.searchSuppliers = function(){
     var proposal_id = $scope.center_data[0].center.proposal
+    $scope.searchDisable = true;
    try{
     $scope.search_status = false;
     // synergytop start
-    if($scope.supplier_type_code){
+    if($scope.supplier_type_code && $scope.supplier_center){
     // synergytop end
     // if($scope.supplier_type_code && $scope.search){
       mapViewService.searchSuppliers($scope.supplier_type_code,$scope.search,'',$scope.supplier_center,$scope.center_areas,proposal_id)
         .then(function onSuccess(response, status){
             //$scope.center_index = null;
           $scope.supplierData = response.data.data;
+          $scope.searchDisable = false;
           if($scope.supplierData.length > 0){
             $scope.search_status = true;
             $scope.errorMsg = undefined;
@@ -1876,9 +1880,11 @@ $scope.gridViewSummary = {};
         });
       }
       else {
-        $scope.errorMsg = "Please Fill all the details";
+       // $scope.errorMsg = "Please Fill all the details";
+        $scope.errorMsg = "Please select supplier & center";
         $scope.supplierData = [];
         $scope.search_status = false;
+        $scope.searchDisable = false;
       }
     }catch(error){
       console.log(error.message);
@@ -1935,7 +1941,20 @@ $scope.gridViewSummary = {};
         console.log(error.message);
       }
     }
+
+
     //End: To add searched societies in given center
+    $scope.selectSupplier = function(){
+      $scope.center_areas = {};
+      $scope.selectCenter();
+      $scope.sub_areas = {};
+      $scope.areas = {};
+      $scope.center_areas = {};
+      $scope.supplier_center = "";
+      $scope.center_areas.areas = "";
+      $scope.center_areas.sub_areas = "";
+
+    }
     //Start: function to select center at add more suplliers
     $scope.selectCenter = function(center_index){
      try{
@@ -1947,17 +1966,21 @@ $scope.gridViewSummary = {};
                $scope.supplier_center = $scope.center_data[i].center.center_name  
           }
         }
-      
-        mapViewService.getLocations($scope.supplier_center )
-        .then(function onSuccess(response){
-            $scope.areas = response.data.data;
- 
-          }).
-          catch(function onError(response){
-            commonDataShare.showErrorMessage(response);
-          });
+        if($scope.supplier_center){
+          mapViewService.getLocations($scope.supplier_center)
+          .then(function onSuccess(response){
+              $scope.areas = response.data.data;
+            }).
+            catch(function onError(response){
+              commonDataShare.showErrorMessage(response);
+            });
+        } else {
+          $scope.areas = [];
+        }
+       
           
       }
+     
     }catch(error){
       console.log(error.message);
     }
@@ -1971,6 +1994,7 @@ $scope.gridViewSummary = {};
    createProposalService.getLocations('sub_areas', $scope.areas[index].id,)
       .then(function onSuccess(response){
           $scope.sub_areas = response.data;
+         
           console.log('subareaaa',$scope.sub_areas)
         });
     }
