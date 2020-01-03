@@ -43,10 +43,26 @@ const getCampaignColumn = () => {
       rowSpan: 2,
     },
     {
-      dataField: 'comments_count',
-      text: 'Comments Count',
+      dataField: 'internal_comments_count',
+      text: 'Internal Comments Count',
       row: 0,
       rowSpan: 2,
+      width: '300px',
+      formatter: (cell, row) => {
+        const { internal_comments_count } = row;
+        return internal_comments_count || 0;
+      },
+    },
+    {
+      dataField: 'external_comments_count',
+      text: 'External Comments Count',
+      row: 0,
+      rowSpan: 2,
+      width: '300px',
+      formatter: (cell, row) => {
+        const { external_comments_count } = row;
+        return external_comments_count || 0;
+      },
     },
     {
       dataField: 'receipt_count',
