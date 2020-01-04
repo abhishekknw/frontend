@@ -8,7 +8,6 @@ angular.module('catalogueApp')
         $scope.model = {};
         $scope.isValid = false;
         $scope.passwordError = constants.password_error;
-      
         $scope.resetPassword = function () {
           var url = $location.url().split("/");
           if (url[2]) {
@@ -29,10 +28,8 @@ angular.module('catalogueApp')
           });
         }
 
-        
-
         $scope.validatePassword = function () {
-          if ($scope.model.password == $scope.model.confirm_password)
+          if ($scope.model.password === $scope.model.confirm_password)
             $scope.isValid = true;
           else
             $scope.isValid = false;
