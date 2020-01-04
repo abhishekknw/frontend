@@ -1848,11 +1848,19 @@ $scope.gridViewSummary = {};
   $scope.searchDisable = false;
   $scope.supplier_type_code;
   $scope.center_index = null;
-   $scope.supplier_center = "";
+  $scope.supplier_center = "";
+  
+  
     
   $scope.searchSuppliers = function(){
     var proposal_id = $scope.center_data[0].center.proposal
     $scope.searchDisable = true;
+    if(!$scope.supplier_type_code){
+        $scope.supplier_err = true;
+    } 
+    if(!$scope.supplier_center){
+      $scope.center_err = true;
+    }
    try{
     $scope.search_status = false;
     // synergytop start
@@ -1869,7 +1877,7 @@ $scope.gridViewSummary = {};
             $scope.errorMsg = undefined;
           }
           else {
-            $scope.errorMsg = "No Results Found, Please enter valid Search Text";
+            $scope.errorMsg = "No Results Found.";
             $scope.search_status = false;
           }
         })
@@ -1881,7 +1889,7 @@ $scope.gridViewSummary = {};
       }
       else {
        // $scope.errorMsg = "Please Fill all the details";
-        $scope.errorMsg = "Please select supplier & center";
+        //$scope.errorMsg = "Please select supplier & center";
         $scope.supplierData = [];
         $scope.search_status = false;
         $scope.searchDisable = false;
@@ -1953,6 +1961,7 @@ $scope.gridViewSummary = {};
       $scope.supplier_center = "";
       $scope.center_areas.areas = "";
       $scope.center_areas.sub_areas = "";
+      $scope.supplier_err = false;
 
     }
     //Start: function to select center at add more suplliers
@@ -1967,6 +1976,7 @@ $scope.gridViewSummary = {};
           }
         }
         if($scope.supplier_center){
+        $scope.center_err = false;
           mapViewService.getLocations($scope.supplier_center)
           .then(function onSuccess(response){
               $scope.areas = response.data.data;

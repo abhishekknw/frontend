@@ -1026,10 +1026,7 @@
           <h4 class="modal-title">Add New Suppliers</h4>
           <hr />
           <div class="modal-body" style="height: 100px;">
-            <div ng-if="errorMsg">
-              <font color="red">{{errorMsg}}</font>
-            </div>
-            </br>
+           
             <div class="row form-inline">
               <!-- <span style="float:left"> -->
               <select class="form-control input-size" ng-change = "selectSupplier()" ng-model="supplier_type_code">
@@ -1038,6 +1035,7 @@
                   {{supplier.name}}
                 </option>
               </select>
+              <div ng-if="supplier_err" ><font color="red">Please select supplier</font></div>
               <!-- <input class="form-control input-size" placeholder="Search" type="text" ng-model="search"
                 class="form-control spacing col-width" style="margin-left:10px"> -->
 
@@ -1047,6 +1045,7 @@
                 <option ng-repeat="center_var in center_data" value="{{center_var.center.id}}">
                   {{center_var.center.center_name}}</option>
               </select>
+              <div ng-if="center_err" > <font color="red">Please select center</font></div>
 
               <select  name="areas" class="form-control input-size" ng-change="get_sub_areas(center.area)" ng-model="center.area" required>
                 <option value="">Select Area</option>
@@ -1060,6 +1059,10 @@
               <button data-target="" ng-disabled="searchDisable" class="btn btn-danger active" data-toggle="modal"
                 ng-click="searchSuppliers()">Search</button>
             </div>
+            <div ng-if="errorMsg">
+              <font color="red">{{errorMsg}}</font>
+            </div>
+            
             </br>
             <!-- synergytop start -->
             <!-- <div class="row form-inline" ng-if="search_status"> -->
