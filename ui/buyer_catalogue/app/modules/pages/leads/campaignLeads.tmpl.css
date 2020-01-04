@@ -1,8 +1,26 @@
+.campaignLeadSection .formBoxRepeat .closeBtn {
+	font-size: 20px;
+	color: #e84478;
+	border: 0;
+	background: none;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	z-index: 1;
+}
+.campaignLeadSection table .smallfield {
+	margin-bottom: 0;
+}
 .backBtn {
 	float: right;
 	margin-top: 30px;
+	margin-left: 20px;
 	position: relative;
 	z-index: 1;
+}
+.smallBtn.top {
+	float: right;
+	margin-bottom: 20px;
 }
 .campaignFormBox .fieldBoxFull {
 	width: 100%;
@@ -15,10 +33,80 @@
 .campaignFormBox label span {
 	color: #ff2620;
 }
-.formRow {
+.campaignFormBox .formBox {
 	display: grid;
-	grid-template-columns: 40% 40% 10% 10%;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
 }
-.formRow .fieldBox {
-	padding: 10px;
+.campaignFormBox .formBoxRepeat {
+	padding: 20px;
+	border: 1px solid #ccc;
+	position: relative;
+}
+.campaignFormBox .formBoxBottom {
+	display: block;
+	clear: both;
+}
+.campaignFormBox .formBoxBottom .fieldBox .field {
+	width: calc(100% - 60px);
+	display: inline-block;
+	vertical-align: top;
+}
+.campaignFormBox .formBoxBottom .fbbBox .smallBtn {
+	margin: 0;
+	width: 48px;
+	height: 48px;
+	float: right;
+}
+.campaignFormBox .formBoxRepeat .formBoxBottom .option {
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+.campaignFormBox .formBoxRepeat .formBoxBottom .option span {
+	position: absolute;
+	top: -10px;
+	right: -10px;
+	z-index: 1;
+}
+.campaignFormBox .formBoxRepeat .formBoxBottom .option .smallBtn {
+	width: auto;
+	height: auto;
+	margin: 0;
+	float: none;
+}
+.campaignFormBox .bottomButtonSection {
+	display: block;
+	padding: 20px 0;
+}
+.campaignFormBox .bottomButtonSection .smallBtn {
+	float: left;
+	margin: 0 20px 0 0;
+}
+
+.campaignFormBox .action .field {
+	margin-top: 20px;
+	margin-bottom: 0;
+}
+.campaignBox table.leadTable {
+	margin-bottom: 20px;
+}
+.campaignBox .leadForm {
+	display: grid;
+	grid-template-columns: 3fr 3fr 3fr 3fr;
+	grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    border: 1px solid #ccc;
+    padding: 40px;
+}
+.campaignBox .leadForm .item:last-child {
+	grid-column-start: 1; 
+  	grid-column-end: 5;
+}
+
+@media (max-width: 991px) {
+	.campaignBox .leadForm {
+		display: block;
+	}
 }

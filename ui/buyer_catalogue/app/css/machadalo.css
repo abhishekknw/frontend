@@ -2,7 +2,19 @@
 /*------------ Global ------------*/
 * { margin: 0; padding: 0; }
 body { font-family: 'Source Sans Pro', sans-serif; }
+.clearfix:before, 
+.clearfix:after {
+    content: "";
+    display: table;
+}
 
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
 input:focus,
 button:focus,
 select:focus,
@@ -17,7 +29,16 @@ textarea:focus {
   margin-bottom: 20px;
   box-sizing: border-box !important;
 }
-.field:focus {
+.smallfield {
+  width: 100%;
+  padding: 6px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  box-sizing: border-box !important;
+}
+.field:focus,
+.smallfield:focus {
 	outline: 0;
 }
 .submit-btn {
@@ -454,4 +475,8 @@ aside ul li ul li:before {
   background: linear-gradient(-85deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
+}
+.searchBox .field,
+.fieldBoxFull .field {
+	border: 2px solid rgba(0,0,0,0.10);
 }
