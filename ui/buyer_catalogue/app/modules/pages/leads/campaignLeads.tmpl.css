@@ -168,6 +168,14 @@
     grid-gap: 15px;
 	justify-content: space-between;
 }
+.modal .modalBodyBox .formBoxRepeat {
+	margin-bottom: 30px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 60px;
+}
+.modal .modalBodyBox .formBoxRepeat .action + .smallBtn {
+	float: right;
+}
 
 @media (max-width: 991px) {
 	.campaignBox .leadForm {
