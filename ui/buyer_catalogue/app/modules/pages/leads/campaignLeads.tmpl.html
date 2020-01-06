@@ -289,11 +289,19 @@
     <div class="campaignLeadSection" ng-show="views.importLeads">
       <h2 class="heading">Import Leads for {{campaignName}} Campaign</h2>
       <div class="campaignBox">
-        <label>Select Lead Sheet</label>
-        <input type="file" class="buttonfile" accept=".xlsx" ngf-select = "uploadFiles($file)"/>
-        <button  ng-click="getExportedSheet()" class="btn btn-success pull-right">Export Sample Sheet To Enter Leads</button>
-        <a href="{{exportedFile}}" class="pull-right" ng-if="exportedFile" target="_blank" download>Download</a>
-        <button ng-click="importLeadsThroughSheet()" class="btn btn-danger" ng-disabled="importLeadsSuccess">Submit</button>
+        <div class="importLeadOuterBox">
+          <label>Select Lead Sheet</label>
+          <div class="upload">
+            <span>Upload File</span>
+            <input type="file" class="buttonfile"  accept=".xlsx" ngf-select="uploadFiles($file)"/>
+          </div>
+          <span class="attachedFileName">{{file.name}}</span>
+          <button ng-click="importLeadsThroughSheet()" class="submit-btn" ng-disabled="importLeadsSuccess">Submit</button>
+          <div class="importBottom">
+            <button  ng-click="getExportedSheet()" class="smallBtn">Export Sample Sheet To Enter Leads</button>
+            <a href="{{exportedFile}}" class="smallBtn" ng-if="exportedFile" target="_blank" download>Download</a>
+          </div>
+        </div><!-- importLeadOuterBox -->
       </div>
     </div><!-- campaignLeadSection -->
 <!--end : import leads  -->
