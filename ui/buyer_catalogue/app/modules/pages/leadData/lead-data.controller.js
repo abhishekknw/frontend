@@ -6,34 +6,21 @@
 
 angular.module('machadaloPages')
   .controller('leadDataCtrl',
-    function ($scope, $rootScope, $window, $location, pagesService, leadDateService, constants, Upload, commonDataShare, constants, $timeout, AuthService, $state, permissions) {
+    function ($scope, $rootScope, $window, $location, pagesService, leadDateService,campaignListService, constants, Upload, commonDataShare, constants, $timeout, AuthService, $state, permissions) {
       $scope.model = {};
       $scope.isValid = false;
-      $scope.getOrganisations = function () {
-        $window.localStorage.account_proposals = null;
-        var orgId = $rootScope.globals.userInfo.profile.organisation.organisation_id;
-        pagesService.getOrganisations(orgId)
-          .then(function (response) {
-            $scope.organisations = response.data.data;
-            $scope.loading = response.data.data;
-          })
-          .catch(function onError(response) {
-            commonDataShare.showErrorMessage(response);
-            //  swal(constants.name,constants.errorMsg,constants.error);
-          });
-      };
-
-      $scope.getAccounts = function () {
-        pagesService.getAccounts($scope.model.organisation_id)
-          .then(function onSuccess(response) {
-            console.log(response);
-            $scope.accounts = response.data.data;
-            $scope.display = true;
-            $scope.loading = response.data.data;
-          }).catch(function onError(response) {
-            console.log(response);
-          })
+     
+      $scope.getCampaignDetails = function () {
+        var fetch_all = '1';
+          campaignListService.getAllCampaignDetails(fetch_all)
+            .then(function onSuccess(response) {
+              $scope.campaignData = response.data.data;
+            }).catch(function onError(response) {
+              console.log("error occured", response);
+              commonDataShare.showErrorMessage(response);
+            });
       }
+
 
       $scope.uploadFiles = function (file) {
         $scope.model.file = file;
@@ -41,20 +28,23 @@ angular.module('machadaloPages')
       }
 
       $scope.submitLead = function () {
-
         if($scope.model.file){
-         
           try{
            var uploadUrl = constants.base_url + constants.url_base;
            $scope.hideSpinner = false;
            var token = $rootScope.globals.currentUser.token ;
+
            Upload.upload({
-               url: uploadUrl  + 'create-dummy-proposal/',
-               data:{file:$scope.model.file,organisation_id:$scope.model.organisation_id,account_id:$scope.model.account_id,name:$scope.model.name},
+               url: uploadUrl + 'create-dummy-proposal/',
+               data:{file:$scope.model.file,campaign_id:$scope.model.campaign_id},
                headers: {'Authorization': 'JWT ' + token},
            }).then(function onSuccess(response) {
+            $scope.uploadResponse = response.data.data;
+            $scope.matched_societies = $scope.uploadResponse.matched_societies;
+            $scope.unmatched_societies = $scope.uploadResponse.unmatched_societies;
              $scope.hideSpinner = true;
              swal(constants.name,constants.uploadfile_success,constants.success);
+             
              // uploadFileToAmazonServer(response.data.data,file);
    
            }).catch(function onError(response) {
