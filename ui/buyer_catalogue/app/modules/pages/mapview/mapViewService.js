@@ -47,7 +47,7 @@
       //   var url = url_base + 'supplier-search/?' + "search=" + searchtext + "&supplier_type_code=" + code;
       //   return machadaloHttp.get(url);
       // } 
-       else if(code,searchtext,supplier_center) {
+       else if(code,supplier_center) {
         var url = url_base + 'supplier-search/?' + "supplier_type_code=" + code + "&supplier_center=" + supplier_center + "&proposal_id=" + proposal_id;
          if(searchtext){
            url += "&search=" + searchtext
