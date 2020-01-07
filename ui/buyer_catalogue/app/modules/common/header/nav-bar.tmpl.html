@@ -35,7 +35,7 @@
         <a href="/#/manageUser" class=" lipadding" ng-click="closeModal()">Management</a>
       </li>
       <li ng-class="{active: isActive('/OpsDashBoard')}" permission="[perm.menuOpsDashBoard]">
-        <a ng-href="/#/OpsDashBoard" class="lipadding" ng-click="closeModal()">OpsDashBoard</a>
+        <a ng-href="/#/campaignDecisionBoard" class="lipadding" ng-click="closeModal()">Campaign Decision Board</a>
       </li>
       <li ng-class="{active: isActive('/CampaignList')}" permission="[perm.menuCampaignList]">
         <a ng-href="/#/CampaignList" class="lipadding" ng-click="closeModal()">List Campaigns</a>
@@ -44,8 +44,7 @@
         <a ng-href="/#/campaignLeads" class="lipadding" ng-click="closeModal()">Campaign Leads</a>
       </li>
       <li>
-         <a ng-href="/#/lead-data" class=" lipadding" ng-click="closeModal()">
-          <i class="fa fa-columns fa-lg"></i> Lead Data</a>
+        <a ng-href="/#/lead-data" class=" lipadding" ng-click="closeModal()">Lead Data</a>
       </li>
       <li class="dropdown-list-parent" ng-Click="toggleLeadsDropdown=!toggleLeadsDropdown">Leads<i class="fa caret" aria-hidden="true"></i>
         <ul class="dropdown-list-child" ng-show="toggleLeadsDropdown">
