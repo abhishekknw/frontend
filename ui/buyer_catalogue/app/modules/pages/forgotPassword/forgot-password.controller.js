@@ -14,12 +14,14 @@ angular.module('machadaloPages')
             
            AuthService.ForgotPassword($scope.userEmail,$scope.host,$location.protocol(), function(response) {
             $scope.loadingSpinner = false;
-             if(response.code && response.url){
+             if(response.status == 200){
               swal("Success!",response.msg,constants.success);
               $scope.success = response.msg;
               $scope.error = false
              } else {
-              swal(constants.name,constants.errorMsg,constants.error);
+                 if(response.data.data.general_error){
+                    swal("Error!",response.data.data.general_error,constants.error);
+                 }
               $scope.error = response.message;
               $scope.success = false;
              }
