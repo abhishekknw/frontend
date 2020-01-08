@@ -12,7 +12,7 @@ const getCampaignColumn = () => {
       rowSpan: 2,
       formatter: (cell, row) => {
         let status = get(row, 'status');
-        status = status.toLowerCase();
+        status = status ? status.toLowerCase() : status;
         let variant = 'success';
         switch (status) {
           case 'completed':
