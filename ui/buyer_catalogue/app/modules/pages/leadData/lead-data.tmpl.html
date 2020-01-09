@@ -1,0 +1,126 @@
+<link rel="stylesheet" href="modules/pages/DashBoard/CampaignList/campaignlist.tmpl.css" />
+<link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css" />
+
+<body>
+
+
+  <main>
+
+    <!-- <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" /> -->
+    <div>
+      <nav-bar></nav-bar>
+    </div>
+    <br><br><br>
+    <div class="panel1">
+      <!-- <div class="col2"> -->
+      <div class="" permission="[]">
+        <div ncy-breadcrumb></div>
+        <!-- </div> -->
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="panel">
+        <!-- <div class=""> -->
+
+        <div style="text-align:center;">
+          <h2>{{msg}}</h2>
+        </div>
+        <!-- Start: Displaying table of converted campaigns -->
+
+        <div class="pageTitle" style="margin-top:-15px">
+          <div class="panel-heading" style="height:47px;">
+            <h3 style="margin:0;">Create Campaign From Historical Lead Data</h3>
+          </div>
+        </div>
+        <div style="width:400px; margin: 0 auto;" ng-init="getCampaignDetails()">
+          <form name="passwordForm" id="form">
+            <div class="panel-body form-horizontal">
+              <div class="form-group">
+                <div><label>Select Campaign</label></div>
+                <select name="campaign" class="form-control input-size" ng-model="model.campaign_id" required>
+                  <option value="">Select Campaign</option>
+                  <option ng-repeat="campaigndata in campaignData" value="{{campaigndata.campaign.proposal_id}}"
+                    required>{{campaigndata.campaign.name}}</option>
+                </select>
+
+              </div>
+              <div class="form-group">
+                <label for="file" class="cols-sm-2 control-label">Select Lead Shet</label>
+                <div class="">
+                  <div class="input-group" style="margin-bottom: 20px;">
+                    <input type="file" class="buttonfile" accept=".xlsx" ngf-select="uploadFiles($file)" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <!-- <div class="col-sm-12">
+                    <div class="input-group" style="padding-left: 33px;">
+                        <label for="password" class="cols-sm-2 control-label">Sample &nbsp;&nbsp;</label>
+                      <button class="btn btn-primary">Export</button>
+          
+                    </div>
+                  </div> -->
+        </div>
+        <div class="footer">
+          <button class="btn btn-primary" id="lead_data" ng-click="submitLead()">Submit</button>
+        </div>
+      </div>
+
+      <div class="pageTitle" style="margin-top:-15px">
+        <div class="panel-heading" style="height:47px;">
+          <h3 style="margin:0;">List Of Campaings From Historical Data</h3>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="campaignlisttable col-lg-4" style="margin:20px">
+          <div class="table-responsive">
+            <table class="table" st-table="campaignData" st-safe-src="Data" default-sort-reverse="true">
+              <br>
+              <thead>
+                <tr>
+                  <th style="text-align: center;">Sr No</th>
+                  <th style="text-align: center;">Matched Societies</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="data in matched_societies">
+                  <td>{{$index+1}}</td>
+                  <td>{{data}}</td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+          <div ng-if="matched_societies.length == 0"> Record not found</div>
+        </div>
+
+        <div class="campaignlisttable col-lg-4" style="margin:20px">
+          <div class="table-responsive">
+            <table class="table" st-table="campaignData" st-safe-src="Data" default-sort-reverse="true">
+              <br>
+              <thead>
+                <tr>
+                  <th style="text-align: center;">Sr No</th>
+                  <th style="text-align: center;">Unmatched Societies</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="data in unmatched_societies">
+                  <td>{{$index+1}}</td>
+                  <td>{{data}}</td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+          <div ng-if="missing_societies.length == 0"> Record not found</div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </main>
+</body>

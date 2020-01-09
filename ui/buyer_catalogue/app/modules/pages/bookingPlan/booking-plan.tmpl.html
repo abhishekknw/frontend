@@ -1,0 +1,83 @@
+<link rel="stylesheet" href="modules/pages/DashBoard/CampaignList/campaignlist.tmpl.css" />
+<link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css" />
+
+<body>
+
+
+  <main>
+
+    <!-- <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" /> -->
+    <div>
+      <nav-bar></nav-bar>
+    </div>
+    <br><br><br>
+    <div class="panel1">
+      <!-- <div class="col2"> -->
+      <div class="" permission="[]">
+        <div ncy-breadcrumb></div>
+        <!-- </div> -->
+      </div>
+    </div>
+
+
+    <div class="row">
+
+      <div class="pageTitle" style="margin-top:-15px">
+        <div class="panel-heading" style="height:47px;">
+          <h3 style="margin:0;">Booking Plan</h3>
+        </div>
+      </div>
+      <div class="">
+        <!-- <input class="form-control input-size" type="text" ng-model="search" class="form-control spacing col-width"> -->
+
+        <!-- <input st-search="" placeholder="Search ..." class="form-control"  type="search"/> -->
+        <!-- <input type="text" class="form-control" placeholder="search" type="search"> -->
+
+        <!-- <div class=""> -->
+        <div class="campaignlisttable" style="margin:20px">
+          <div class="table-responsive">
+            <table class="table" st-table="campaignData" st-safe-src="Data" default-sort-reverse="true">
+
+              <br>
+              <thead>
+                <tr>
+                  <th style="text-align: center;">Sr No</th>
+                  <th style="text-align: center;">Name</th>
+                  <th style="text-align: center;">Bus Number</th>
+                  <th style="text-align: center;">Bus Image</th>
+                  <th style="text-align: center;">ML</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>test</td>
+                  <td>1234</td>
+                  <td>image</td>
+                  <td>1</td>
+                </tr>
+
+              </tbody>
+
+              <tfoot>
+                <tr>
+                  <td colspan="10" class="text-center">
+                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                    </dir-pagination-controls>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        <!-- </div> -->
+      </div>
+
+
+      <!-- <footer-bar></footer-bar>   -->
+    </div>
+    </div>
+
+
+  </main>
+</body>

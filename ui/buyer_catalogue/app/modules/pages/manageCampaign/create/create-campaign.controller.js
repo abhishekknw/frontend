@@ -75,6 +75,7 @@
       $scope.model.business.contacts = [$scope.contact];
 
       $scope.getAccounts = function(savedState){
+
           pagesService.getAccounts($scope.bsSelect)
           .then(function onSuccess(response){
             console.log(response);
@@ -201,6 +202,7 @@
       };
       console.log($rootScope);
     	$scope.getOrganisations = function() {
+        
         $window.localStorage.account_proposals = null;
 //        $window.localStorage.sel_account_index = null;
 //        $scope.bsSelect = undefined;
@@ -209,7 +211,7 @@
 	    	.then(function (response) {
 	            $scope.organisations = response.data.data;
               $scope.loading = response.data.data;
-
+              
               // console.log($scope.model.organisation);
 	            if($scope.model.organisation.hasOwnProperty('organisation_id')){
 	              $scope.bsSelect = $scope.model.organisation.organisation_id;
@@ -221,6 +223,9 @@
                 $scope.bsSelect = $scope.userInfo.profile.organisation.organisation_id;
                 $scope.model.organisation = $scope.userInfo.profile.organisation;
               }
+              //synergytop start
+              $scope.getAccounts();
+              //synergytop end
               console.log($scope.bsSelect);
               console.log(response);
 	       })
@@ -467,6 +472,9 @@
             $scope.account_proposals = [];
             $window.localStorage['organisationData'] = angular.toJson($scope.model.organisation);
             $scope.choice = "selected";
+            //synergytop start 
+            $scope.getAccounts();
+            //synergytop end
           }).catch(function onError(response){
             console.log(response);
           })
