@@ -46,6 +46,17 @@ const getSupplierColumn = () => {
       sort: true,
     },
     {
+      dataField: 'area',
+      text: 'Area',
+      row: 0,
+      rowSpan: 2,
+      sort: true,
+      formatter: (cell, row) => {
+        const { area } = row;
+        return area || '-';
+      },
+    },
+    {
       dataField: 'subarea',
       text: 'Sub Area',
       row: 0,
