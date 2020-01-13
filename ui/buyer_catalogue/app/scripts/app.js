@@ -88,7 +88,7 @@ angular
         templateUrl: 'modules/pages/mapview/mapview.tmpl.html',
         controller: 'MapCtrl',
         ncyBreadcrumb: {
-          label: 'mapview',
+          label: 'Map View',
           parent: function ($rootScope) {
             return $rootScope.getCurState();
           },
@@ -102,7 +102,7 @@ angular
         templateUrl: 'modules/pages/createProposal/createproposal.tmpl.html',
         controller: 'ProposalCtrl',
         ncyBreadcrumb: {
-          label: 'createProposal',
+          label: 'Create Proposal',
           parent: 'manageCampaign.create'
         },
         data: {
@@ -114,7 +114,7 @@ angular
         templateUrl: 'modules/pages/currentProposal/currentProposal.tmpl.html',
         controller: 'CurrentProposal',
         ncyBreadcrumb: {
-          label: 'proposalSummary',
+          label: 'Proposal Summary',
           parent: 'manageCampaign.create'
         },
         data: {
@@ -126,7 +126,7 @@ angular
         templateUrl: 'modules/pages/ProposalHistory/proposalHistory.tmpl.html',
         controller: 'ProposalHistory',
         ncyBreadcrumb: {
-          label: 'proposalHistory',
+          label: 'Proposal History',
           parent: 'manageCampaign.create'
         },
         data: {
@@ -205,7 +205,7 @@ angular
         controller: 'CreateCampaignCtrl',
         templateUrl: 'modules/pages/manageCampaign/create/create-campaign.tmpl.html',
         ncyBreadcrumb: {
-          label: 'Homepage'
+          label: 'Home'
         },
         data: {
           permission: 'homepage_access'
@@ -337,7 +337,7 @@ angular
            controller : 'ReleaseCampaignCtrl',
            templateUrl : 'modules/pages/releaseCampaignPlan/releaseCampaign.tmpl.html',
            ncyBreadcrumb: {
-             label:'BookingPlan',
+             label:'Booking Plan',
              parent : 'CampaignList'
            },
            data :{
@@ -349,7 +349,7 @@ angular
            controller : 'OpsDashCtrl',
            templateUrl : 'modules/pages/DashBoard/OperationsDashBoard/opsdashboard.tmpl.html',
            ncyBreadcrumb: {
-             label:'campaignDecisionBoard',
+             label:'Campaign Decision Board',
              parent : 'manageCampaign.create'
            },
            data :{
@@ -361,7 +361,7 @@ angular
             controller : 'CampaignListCtrl',
             templateUrl : 'modules/pages/DashBoard/CampaignList/campaignlist.tmpl.html',
             ncyBreadcrumb: {
-              label:'CampaignList',
+              label:'Campaign List',
               parent : 'OpsDashBoard'
             },
             data :{
@@ -382,7 +382,7 @@ angular
         controller: 'AuditReleasePlanCtrl',
         templateUrl: 'modules/pages/operations/auditReleasePlan/auditReleasePlan.tmpl.html',
         ncyBreadcrumb: {
-          label: 'CampaignReleaseAndAuditPlan',
+          label: 'Campaign Release And Audit Plan',
           parent: 'releasePlan'
         },
         data: {
@@ -394,7 +394,7 @@ angular
         controller: 'OpsExecutionPlanCtrl',
         templateUrl: 'modules/pages/operations/opsExecutionPlan/opsExecutionPlan.tmpl.html',
         ncyBreadcrumb: {
-          label: 'ExecutionPlan',
+          label: 'Execution Plan',
           parent: 'CampaignList'
         },
         data: {
@@ -406,7 +406,7 @@ angular
         controller: 'guestHomePageController',
         templateUrl: 'modules/pages/guestPage/homepage.tmpl.html',
         ncyBreadcrumb: {
-          label: 'Homepage',
+          label: 'Home',
         },
         data: {
           permission: 'guest_home_page_access'
@@ -461,6 +461,9 @@ angular
         url: '/campaignLeads',
         controller: 'CampaignLeadsCtrl',
         templateUrl: 'modules/pages/leads/campaignLeads.tmpl.html',
+        ncyBreadcrumb: {
+          label: 'Campaign Leads',
+        },
         data: {
           permission: 'campaign_leads_page_access'
         }
