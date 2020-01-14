@@ -21,6 +21,12 @@ select:focus,
 textarea:focus {
   outline: 0;
 }
+label {
+	display: block;
+}
+label span {
+	color: #e84478;
+}
 .field {
   width: 100%;
   padding: 13px 15px;
@@ -41,6 +47,12 @@ textarea:focus {
 .smallfield:focus {
 	outline: 0;
 }
+
+.field[disabled], 
+.field[readonly] {
+	background: #e8e8e8;
+}
+
 .submit-btn {
   width: 100%;
   padding: 17px 20px;
@@ -56,10 +68,6 @@ textarea:focus {
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
 }
-.submit-btn[disabled] {
-  background: #ccc;
-  pointer-events: none;
-}
 .smallBtn {
     font-size: 12px;
     color: #fff;
@@ -70,6 +78,11 @@ textarea:focus {
     background: linear-gradient(-140deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
+}
+.submit-btn[disabled],
+.smallBtn[disabled] {
+  background: #ccc;
+  pointer-events: none;
 }
 /*Gradient Animation*/
 @keyframes gradientBG {
@@ -439,42 +452,6 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
 }
 
 
-
-
-
-
-
-/*aside ul li.dropdown-list-parent {
-  padding: 13px 0 13px 0px;
-  display: block;
-  text-indent: 25px;
-}
-aside ul li.dropdown-list-parent i {
-  float: right;
-  margin-right: 30px;
-  margin-top: 9px;
-}
-aside ul li ul[aria-hidden="false"] {
-  border-top: 1px dashed rgba(255,255,255,0.30);
-  border-bottom: 1px dashed rgba(255,255,255,0.30);
-  margin-top: 20px;
-}
-aside ul li ul li {
-  position: relative;
-}
-aside ul li ul li:before {
-  content: '';
-  width: 4px;
-  height: 4px;
-  display: block;
-  background: #fff;
-  position: absolute;
-  left: 26px;
-  top: 19px;
-  border-radius: 100%;
-  z-index: 0;
-}*/
-
 .middle-section {
   padding-left: 20px;
   padding-right: 20px;
@@ -487,6 +464,9 @@ aside ul li ul li:before {
   margin: 0 0 20px 0;
   border-radius: 0;
   font-size: 14px;
+}
+.middle-section .breadcrumb li a {
+	color: #e84478;
 }
 
 .heading {
@@ -585,4 +565,28 @@ aside ul li ul li:before {
 .searchBox .field,
 .fieldBoxFull .field {
 	border: 2px solid rgba(0,0,0,0.10);
+}
+
+/*Change Password*/
+.changePasswordBox {
+  width: 800px;
+  margin: 0 auto 0 auto;
+  padding: 60px;
+  border-radius: 6px;
+  box-shadow: 0px 3px 10px 0 rgba(0,0,0,0.20);
+}
+.changePasswordBox h1 {
+	font-size: 30px;
+	font-weight: 300;
+	color: #e84478;
+	margin: 0 0 20px 0;
+}
+.changePasswordBox p {
+	font-size: 14px;
+	color: #333;
+	margin: 0 0 20px 0;
+}
+.changePasswordBox span {
+	display: block;
+	margin-bottom: 10px;
 }
