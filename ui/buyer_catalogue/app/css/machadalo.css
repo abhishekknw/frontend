@@ -21,6 +21,12 @@ select:focus,
 textarea:focus {
   outline: 0;
 }
+label {
+	display: block;
+}
+label span {
+	color: #e84478;
+}
 .field {
   width: 100%;
   padding: 13px 15px;
@@ -41,6 +47,12 @@ textarea:focus {
 .smallfield:focus {
 	outline: 0;
 }
+
+.field[disabled], 
+.field[readonly] {
+	background: #e8e8e8;
+}
+
 .submit-btn {
   width: 100%;
   padding: 17px 20px;
