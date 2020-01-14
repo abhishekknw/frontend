@@ -453,6 +453,9 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
   border-radius: 0;
   font-size: 14px;
 }
+.middle-section .breadcrumb li a {
+	color: #e84478;
+}
 
 .heading {
   font-size: 18px;
