@@ -43,11 +43,11 @@ export default class AuditPlan extends React.Component {
       getCampaignInventoryList,
       getSupplierList,
       getUsersList,
-      getCampaignsList,
+      // getCampaignsList,
     } = this.props;
     getSupplierList();
     getCampaignInventoryList({ campaignId: this.getCampaignId() });
-    getCampaignsList();
+    // getCampaignsList();
 
     // Fetch users list for AssignModal
     getUsersList();

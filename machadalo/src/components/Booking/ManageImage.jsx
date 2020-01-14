@@ -68,12 +68,12 @@ export default class ManageImage extends React.Component {
       getAssignmentList,
       getCampaignInventoryList,
       getUsersList,
-      getCampaignsList,
+      // getCampaignsList,
     } = this.props;
     getSupplierList();
     getCampaignInventoryList({ campaignId: this.getCampaignId() });
     getAssignmentList({ campaignId: this.getCampaignId() });
-    getCampaignsList();
+    // getCampaignsList();
 
     getUsersList();
   }

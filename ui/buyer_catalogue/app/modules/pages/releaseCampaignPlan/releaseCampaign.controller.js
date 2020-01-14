@@ -330,6 +330,7 @@ $scope.addNewPhase =true;
     $scope.setContact = function(supplier){
       $scope.payment = supplier;
       $scope.editContactDetails = true;
+      $scope.statusEditContactDetails = (!supplier.is_completed);
 
     }
     //End:To set contacts to show in contactModal
