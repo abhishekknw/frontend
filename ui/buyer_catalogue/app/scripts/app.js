@@ -369,8 +369,16 @@ angular
             }
         })
 
+      // .state('manageUsers', {
+      //   url: '/manageUser',
+      //   controller: 'userCtrl',
+      //   templateUrl: 'modules/pages/manageUsers/user.tmpl.html',
+      //   data: {
+      //     permission: 'manage_users_page_access'
+      //   }
+      // })      
       .state('manageUsers', {
-        url: '/manageUser',
+        url: '/manageMent/:templatePage',
         controller: 'userCtrl',
         templateUrl: 'modules/pages/manageUsers/user.tmpl.html',
         data: {
