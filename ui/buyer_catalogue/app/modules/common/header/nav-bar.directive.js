@@ -1,6 +1,7 @@
 
 angular.module('machadaloCommon')
 .directive('navBar', function($window,$rootScope,constants,$timeout, permissions) {
+  let userInfo = JSON.parse(localStorage.userInfo);
   return {
     templateUrl: 'modules/common/header/nav-bar.tmpl.html',
     link: function($scope, element, attrs) {
@@ -15,7 +16,9 @@ angular.module('machadaloCommon')
                     height: '100%'
                });
         }
+
   };
 });
 
 
+ 

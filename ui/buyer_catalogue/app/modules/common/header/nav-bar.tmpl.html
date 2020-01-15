@@ -21,10 +21,12 @@
       </li>
     </ul>
     <div class="user">
-      <img src="images/user-avatar.jpg" alt="User">
+      <a href="/#/manageMent/aboutYou">
+        <img src="images/user-avatar.jpg" alt="User"> 
+      </a>
     </div>
     <ul>
-      <li>Super Admin</li>
+      <li>{{userInfo.first_name}} {{userInfo.last_name}}</li>
       <li><a href="/#/logout" ng-click="closeModal()">Logout</a></li>
     </ul>
   </div>
@@ -123,42 +125,45 @@
         <a href="javascript:void(0);">Management</a>
         <ul class="child">
           <li>
-            <a href="/#/manageUser">My Profile</a>
+            <a href="/#/manageMent/aboutYou">My Profile</a>
           </li>
           <li class="arrow">
-            <a href="javascript:void(0);">Organization</a>
+            <a >Organization</a>
             <ul class="subchild">
-              <li><a href="/#/manageUser">View</a></li>
-              <li><a href="/#/manageUser">On-Boarding</a></li>
-              <li><a href="/#/manageUser">Organizations Mapping</a></li>
+              <li><a href="/#/manageMent/organisationView">View</a></li>
+              <li><a href="/#/manageMent/organisationOnBoard">On-Boarding</a></li>
+              <li><a href="/#/manageMent/mapOrganisations">Organizations Mapping</a></li>
             </ul>
           </li>
-          <li class="arrow">
+          <li>
+            <a href="/#/manageMent/profileView">Manage Profile</a>
+          </li>
+          <!-- <li class="arrow">
             <a href="javascript:void(0);">Manage Profile</a>
             <ul class="subchild">
               <li><a href="/#/manageUser">Create Profile </a></li>
               <li><a href="/#/manageUser">Update</a></li>
             </ul>
-          </li>
+          </li> -->
           <li class="arrow">
             <a href="javascript:void(0);">Roles</a>
             <ul class="subchild">
-              <li><a href="/#/manageUser">Create</a></li>
-              <li><a href="/#/manageUser">Assign</a></li>
-              <li><a href="/#/manageUser">View</a></li>
+              <li><a href="/#/manageMent/createRoles">Create</a></li>
+              <li><a href="/#/manageMent/assignRole">Assign</a></li>
+              <li><a href="/#/manageMent/viewRole">View</a></li>
             </ul>
           </li>
           <li class="arrow">
             <a href="javascript:void(0);">Users</a>
             <ul class="subchild">
-              <li><a href="/#/manageUser">Create User</a></li>
-              <li><a href="/#/manageUser">Update</a></li>
+              <li><a href="/#/manageMent/createUser">Create User</a></li>
+              <li><a href="/#/manageMent/viewUsers">Update</a></li>
             </ul>
           </li>
         </ul>
       </li><!-- li -->
     </ul>
-  </div>
+  </div> 
 </aside>
 
 

@@ -15,12 +15,15 @@ angular.module('machadaloPages')
 .controller('userCtrl',
     ['$scope', '$rootScope', '$window', '$location', 'userService','constants','$timeout','cfpLoadingBar','commonDataShare',
     function ($scope, $rootScope, $window, $location, userService, constants, $timeout, cfpLoadingBar, commonDataShare) {
+    //  console.log("$location", $location.path());
+
+      // console.log("pathName", pathName);
+
+      // console.log("pathName", pathName);
         // reset login status
      $scope.model = {};
      $scope.cloneFromProfileId = {};
-     console.log($rootScope);
      $scope.standardOrganisation = constants.standard_organisation;
-     console.log($scope.standardOrganisation);
      $scope.permissionList = [];
      $scope.groupName = {};
      $scope.selectedGroupList = [];
@@ -38,7 +41,7 @@ angular.module('machadaloPages')
      $scope.cloneProfileNewName = '';
      $scope.mappingData = {};
      $scope.rolesData = {};
-
+ 
 
      $scope.userInfo = $rootScope.globals.userInfo;
 
@@ -235,9 +238,16 @@ angular.module('machadaloPages')
        createRoles  : 'createRoles',
        assignRole   : 'assignRole',
      }
+    //$scope.menuItem.name = "aboutYou";
+    $scope.changeLocation = function(viewTemplate){
+      $location.path('/manageUser/' + viewTemplate);
+    }
+
      $scope.getContent = function(item,data){
-       console.log(item);
+       console.log("llllll",item);
+      console.log("data", data);
        $scope.menuItem.name = item;
+      // location.hash=item;
         switch(item){
           case $scope.contentItem.createUser:
             $scope.getProfiles();
@@ -269,6 +279,7 @@ angular.module('machadaloPages')
             break;
           case $scope.contentItem.profileView:
             $scope.getProfiles();
+         // $scope.changeLocation("profile")
             // getObjectLevelPermissions();
             getOrganisations();
             // getGeneralUserLevelPermissions();
@@ -806,4 +817,37 @@ angular.module('machadaloPages')
       }
 
     }
+
+
+     let pathName= $location.path()
+      if(pathName === "/manageMent/profileView"){
+          $scope.getContent("profileView");
+      } 
+      if(pathName === "/manageMent/organisationView"){
+          $scope.getContent("organisationCommon");
+      } 
+      if(pathName === "/manageMent/organisationOnBoard"){
+          $scope.getContent("onBoard");
+      }
+      if(pathName === "/manageMent/mapOrganisations"){
+          $scope.getContent("mapOrganisations");
+      } 
+      if(pathName === "/manageMent/createRoles"){
+          $scope.getContent("createRoles");
+      } 
+      if(pathName === "/manageMent/assignRole"){
+          $scope.getContent("assignRole");
+      } 
+      if(pathName === "/manageMent/viewRole"){
+          $scope.getContent();
+      }
+      if(pathName === "/manageMent/createUser"){
+          $scope.getContent("createUser");
+      } 
+      if(pathName === "/manageMent/viewUsers"){
+          $scope.getContent("viewUsers");
+      } 
+      if(pathName === "/manageMent/aboutYou"){
+          $scope.getContent("aboutYou");
+      }
    }]);//end of controller
