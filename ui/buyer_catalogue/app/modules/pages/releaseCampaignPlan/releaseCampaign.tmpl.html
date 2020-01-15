@@ -23,6 +23,8 @@
           <Label class="labels">Campaign Name:</Label><span class="proposal-details">{{releaseDetails.campaign.name}}</span>
           <Label class="labels">BD Owner:</Label><span class="proposal-details">{{releaseDetails.campaign.created_by}}</span>
           <Label class="labels">Campaign State:&nbsp;</Label><span class="proposal-details">{{getCampaignState(releaseDetails.campaign.campaign_state)}}</span>
+    
+
         </div>
       </div>
     </div>
@@ -70,8 +72,8 @@
                 <th>Area <br>(Sub Area)</th>
                 <th>Address <br>(Landmark)</th>
                 <th>RelationShip Data</th>
-                <th>Flat Count</th>
-                <th>Tower Count</th>
+                <th>Average Weekend(Daily Footfall)</th>
+                <th>Average Weekday(Daily Footfall)</th>
                 <th>Contacts Details</th>
                 <th>Assign User</th>
                 <th>Booking Priority</th>
@@ -85,9 +87,9 @@
                 <th>Inventory Count</th>
                 <th>Inventory Days</th>
                 <th>Inventory Supplier Price</th>
-                <th>Total Supplier Price   (Per Flat)  </th>
+                <th>Total Supplier Price Per Footfall (Weekend) </th>
                 <th>Negotiated Price</th>
-                <th>Cost Per Flat</th>
+                <th>Cost Per Average Daily Footfall</th>
                 <th>Freebies</th>
                 <th>Mode Of Payment</th>
                 <th>Transaction/Cheque Number</th>
@@ -111,9 +113,9 @@
               <td class="" rowspan="{{key.length}}" ng-show="$first">
               <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank"
               style="text-decoration: underline; cursor: pointer;color:#337ab7;font-weight: 600;">{{supplier.name}}<br> </a>
-              ({{supplier.quality_rating}})</td>
+              ({{supplier.retail_shop_type}}<span ng-if="supplier.retail_shop_type && supplier.category_name">,</span>{{supplier.category_name}})</td>
               <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.area}} <br> ({{supplier.subarea}}) <br> {{supplier.address2}}</td>
-              <td class="" rowspan="{{key.length}}" ng-show="$first" width="200"> {{supplier.address1}} <br> {{supplier.landmark}}</td>
+              <td class="" rowspan="{{key.length}}" ng-show="$first" width="200"> {{supplier.address1}} <br> ({{supplier.landmark}})</td>
               <!-- <td class="" rowspan="{{key.length}}" ng-show="$first" width="200">Inventory Owner :<b> Machadalo</b>, Feedback:{{supplier.feedback}}</td> -->
               <td class="" rowspan="{{key.length}}" ng-show="$first" width="200">
                 <button type="button" class="btn btn-danger"name="button"  ng-click="getRelationShipData(supplier)" data-target="#relationshipModal" data-toggle="modal">View Data</button>
@@ -692,7 +694,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <button type="button" class="close" data-dismiss="modal" ng-click="closeModel()" aria-hidden="true">&times;</button>
           <h4 class="modal-title">Add New Suppliers</h4>
           <hr />
           <div class="" style="text-align:right">
@@ -711,24 +713,53 @@
 
           <div class="" ng-show="!showSummaryTab">
             <div class="modal-body" style="height: 100px;">
-              <div ng-if="errorMsg">
+              <!-- <div ng-if="errorMsg">
                 <font color="red">{{errorMsg}}</font>
               </div>
-              </br></br>
+              </br></br> -->
               <div class="row form-inline">
                 <!-- <span style="float:left"> -->
-                <select class="form-control input-size" ng-model="supplier_type_code.code">
+                <select class="form-control input-size" ng-change = "selectSupplier()" ng-model="supplier_type_code.code">
                   <option value="">Select Supplier</option>
                   <option ng-repeat="supplier in supplier_names" value="{{supplier.code}}" required>{{supplier.name}}</option>
                 </select>
-                <label style="margin-left: 20px;margin-right: 20px;">Enter Text</label>
-                <input class="form-control input-size" type="text" ng-model="search.query" class="form-control spacing col-width"
-                  style="margin-left:10px">
-                <button data-target="" class="btn btn-danger active" data-toggle="modal" ng-click="searchSuppliers()">Search</button>
+
+                <div ng-if="supplier_err" ><font color="red">Please select supplier</font></div>
+                <select class="form-control input-size" style="width:140px; margin-left:20px;" ng-model="indexData.center_index"
+                ng-change="selectCenter(indexData.center_index)" required>
+                <option value="">Select Center</option>
+                <option ng-repeat="center_var in releaseDetailsData" value="{{center_var.id}}">
+                  {{center_var.center_name}}</option>
+              </select>
+              <div ng-if="center_err" > <font color="red">Please select center</font></div>
+
+              <select  name="areas" class="form-control input-size" ng-change="get_sub_areas(centers.area)" ng-model="centers.area" required>
+                <option value="">Select Area</option>
+                <option  ng-repeat="area in areas" value="{{$index}}" required>{{area.label}}</option>
+              </select>
+
+              <select  name="subareas" class="form-control input-size" ng-change="selectSubArea(centers.sub_area_id)" ng-model="centers.sub_area_id" required>
+                <option value="">Select SubArea </option>
+                <option  ng-repeat="subarea in sub_areas" value="{{$index}}" required>{{subarea.subarea_name}}</option>
+              </select> 
+
+               
+                <button data-target="" class="btn btn-danger active" ng-disabled="searchDisable" data-toggle="modal" ng-click="searchSuppliers()">Search</button>
               </div>
               </br>
             </div>
             </br>
+            <div ng-if="errorMsg">
+              <font color="red">{{errorMsg}}</font>
+            </div>
+            
+            </br>
+            <div class="row form-inline">
+              <label style="margin-left: 20px;margin-right: 20px;">Enter Text</label>
+              <input class="form-control input-size" type="text" ng-change="searchSuppliers()" ng-model="search.query" class="form-control spacing col-width"
+              style="margin-left:10px">
+
+            </div></br>
             <div class="modal-body col-md-4 table-responsive" style="width: 550px; height: 450px">
               <table class="table table-bordered" ng-if="search_status">
                 <thead>
@@ -829,7 +860,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <th>Last Campaign Price Per Flat Price</th>
+                    <th>Last campaign price per unit</th>
                     <td ng-if="relationshipData.campaign_data.last_campaign_price.total_negotiated_price">
                       ₹ {{relationshipData.campaign_data.last_campaign_price.total_negotiated_price / supplierFlatCount
                       | limitTo : 8}}

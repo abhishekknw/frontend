@@ -1,7 +1,7 @@
 angular.module('catalogueApp')
 .controller('ReleaseCampaignCtrl',
-    ['$scope', '$rootScope', '$window', '$location','releaseCampaignService','$stateParams','permissions','Upload','cfpLoadingBar','constants','mapViewService','$timeout','commonDataShare',
-    function ($scope, $rootScope, $window, $location, releaseCampaignService, $stateParams, permissions, Upload, cfpLoadingBar,constants, mapViewService, $timeout, commonDataShare) {
+    ['$scope', '$rootScope', '$window', '$location','releaseCampaignService','createProposalService','$stateParams','permissions','Upload','cfpLoadingBar','constants','mapViewService','$timeout','commonDataShare',
+    function ($scope, $rootScope, $window, $location, releaseCampaignService,createProposalService, $stateParams, permissions, Upload, cfpLoadingBar,constants, mapViewService, $timeout, commonDataShare) {
   $scope.campaign_id = $stateParams.proposal_id;
   $scope.positiveNoError = constants.positive_number_error;
   $scope.campaign_manager = constants.campaign_manager;
@@ -268,7 +268,31 @@ $scope.addNewPhase =true;
 
           if ($scope.initialReleaseData) {
             $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
+            $scope.releaseDetailsData = $scope.releaseDetails.campaign.centerData;
+            var centerSuppliers = $scope.releaseDetails.campaign.centerSuppliers;
+            if(centerSuppliers){
+              $scope.supplier_names = [];
+              for (let i in centerSuppliers){
+                if(centerSuppliers[i].supplier_type_code == 'RS'){
+                  $scope.supplier_names.push({ name: 'Residential Society', code:'RS'});
+                } else if(centerSuppliers[i].supplier_type_code == 'CP'){
+                  $scope.supplier_names.push({ name: 'Corporate Parks',  code:'CP'});
+                } else if(centerSuppliers[i].supplier_type_code == 'BS'){
+                  $scope.supplier_names.push({ name: 'Bus Shelter',  code:'BS'});
+                } else if(centerSuppliers[i].supplier_type_code == 'GY'){
+                  $scope.supplier_names.push({ name: 'Gym',  code:'GY'});
+                } else if(centerSuppliers[i].supplier_type_code == 'SA'){
+                  $scope.supplier_names.push({ name: 'Saloon',  code:'SA'});
+                } else if(centerSuppliers[i].supplier_type_code == 'RE'){
+                  $scope.supplier_names.push({ name: 'Retail Store',  code:'RE'});
+                }
+              }
+            }
 
+          
+            
+            
+          
             // setDataToModel($scope.releaseDetails.shortlisted_suppliers);
             mapLeadsWithSuppliers();
             $scope.loading = !!response;
@@ -388,32 +412,46 @@ $scope.addNewPhase =true;
 
     }
     //Start: code added to search & show all suppliers on add societies tab
-    $scope.supplier_names = [
-      { name: 'Residential',      code:'RS'},
-      { name: 'Corporate Parks',  code:'CP'},
-      { name: 'Bus Shelter',  code:'BS'},
-      { name: 'Gym',  code:'GY'},
-      { name: 'Saloon',  code:'SA'},
-      { name: 'Retail Store',  code:'RE'},
-      ];
+    // $scope.supplier_names = [
+    //   { name: 'Residential Society', code:'RS'},
+    //   { name: 'Corporate Parks',  code:'CP'},
+    //   { name: 'Bus Shelter',  code:'BS'},
+    //   { name: 'Gym',  code:'GY'},
+    //   { name: 'Saloon',  code:'SA'},
+    //   { name: 'Retail Store',  code:'RE'},
+    //   ];
     $scope.search = {};
     $scope.search_status = false;
     $scope.supplier_type_code = {};
-    $scope.center_index = null;
+    $scope.center_index = {};
+    $scope.searchDisable = false;
+    $scope.supplier_err = false;
+    $scope.center_err = false;
+
     $scope.searchSuppliers = function(){
+      var proposal_id = $scope.releaseDetails.campaign.proposal_id;
+     
+      $scope.searchDisable = true;
+      if(!$scope.supplier_type_code.code){
+          $scope.supplier_err = true;
+      } 
+      if(!$scope.supplier_center){
+        $scope.center_err = true;
+      }
      try{
       $scope.search_status = false;
-      if($scope.supplier_type_code.code && $scope.search.query){
-        mapViewService.searchSuppliers($scope.supplier_type_code.code,$scope.search.query,$scope.releaseDetails.campaign.principal_vendor)
+      if($scope.supplier_type_code.code && $scope.supplier_center){
+        mapViewService.searchSuppliers($scope.supplier_type_code.code,$scope.search.query,$scope.releaseDetails.campaign.principal_vendor,$scope.supplier_center,$scope.center_areas,proposal_id)
           .then(function onSuccess(response, status){
               $scope.center_index = null;
             $scope.supplierData = response.data.data;
+            $scope.searchDisable = false;
             if($scope.supplierData.length > 0){
               $scope.search_status = true;
               $scope.errorMsg = undefined;
             }
             else {
-              $scope.errorMsg = "No Results Found, Please enter valid Search Text";
+              $scope.errorMsg = "No Results Found";
               $scope.search_status = false;
             }
           })
@@ -423,15 +461,90 @@ $scope.addNewPhase =true;
           });
         }
         else {
-          $scope.errorMsg = "Please Fill all the details";
+          // $scope.errorMsg = "Please Fill all the details";
           $scope.supplierData = [];
           $scope.search_status = false;
+          $scope.searchDisable = false;
         }
       }catch(error){
         console.log(error.message);
       }
     }
+
       //End: code added to search & show all suppliers on add societies tab
+      $scope.selectSupplier = function(){
+        
+        $scope.center_areas = {};
+         $scope.selectCenter();
+        $scope.sub_areas = {};
+        $scope.areas = {};
+        $scope.supplier_center = "";
+        $scope.center_areas.areas = "";
+        $scope.center_areas.sub_areas = "";
+        $scope.supplier_err = false;
+  $scope.center_index = null;
+  $scope.supplier_center = "";
+  $scope.indexData = {};
+  $scope.areas = {};
+  $scope.sub_areas = {};
+  $scope.center_areas = {};
+  $scope.centers = {};
+    $scope.releaseDetailsData = $scope.releaseDetails.campaign.centerData;
+      }
+      
+
+        //Start: function to select center at add more suplliers
+    $scope.selectCenter = function(center_index){
+     
+      try{
+       $scope.center_index = center_index;
+       if(center_index != null){
+         for(var i=0;i<$scope.releaseDetails.campaign.centerData.length; i++){
+           if($scope.releaseDetails.campaign.centerData[i].id == center_index){
+               $scope.current_center_index = i;
+                $scope.supplier_center = $scope.releaseDetails.campaign.centerData[i].center_name  
+           }
+         }
+        //$scope.supplier_center = $scope.releaseDetails.campaign.centerData.center_name;
+         if($scope.supplier_center){
+         $scope.center_err = false;
+           mapViewService.getLocations($scope.supplier_center)
+           .then(function onSuccess(response){
+               $scope.areas = response.data.data;
+             }).
+             catch(function onError(response){
+               commonDataShare.showErrorMessage(response);
+             });
+         }
+        
+           
+       } 
+      
+     }catch(error){
+       console.log(error.message);
+     }
+   }
+ 
+   $scope.get_sub_areas = function(index) {
+      
+    $scope.center_areas = {
+      areas:$scope.areas[index].label
+    };
+ 
+    createProposalService.getLocations('sub_areas', $scope.areas[index].id,)
+       .then(function onSuccess(response){
+           $scope.sub_areas = response.data;
+          
+           console.log('subareaaa',$scope.sub_areas)
+         });
+     }
+ 
+     $scope.selectSubArea = function(index){
+       $scope.center_areas.sub_areas = $scope.sub_areas[index].subarea_name;
+     }
+     //End: function to select center at add more suplliers
+
+
     $scope.addSuppliersToList = function(supplier){
       if(!(supplier.supplier_id in $scope.shortlistedSuppliersIdList || supplier.supplier_id in $scope.supplierSummaryData)){
         $scope.supplierSummaryData[supplier.supplier_id] = supplier;
@@ -454,6 +567,29 @@ $scope.addNewPhase =true;
         $scope.center_index = null;
 
         $scope.supplierSummaryData = {};
+        $scope.supplier_center = {};
+      
+      $scope.indexData = {};
+       $scope.areas = {};
+       $scope.sub_areas = {};
+       $scope.center_areas = {};
+       $scope.centers = {};
+       
+
+      }catch(error){
+        console.log(error.message);
+      }
+    }
+
+    $scope.closeModel = function(){
+      try{
+       
+       $scope.areas = {};
+       $scope.sub_areas = {};
+       $scope.releaseDetailsData ={};
+       $scope.center_areas = {};
+       $scope.supplier_err = false;
+    $scope.center_err = false;
 
       }catch(error){
         console.log(error.message);
@@ -1010,10 +1146,10 @@ $scope.multiSelect =
       getAllComments()
 
       $scope.customFreebies = [
-          'Whatsapp Group',
-          'Email Group',
-          'Building ERP',
-          'Door to Door'
+          'WhatsApp Group',
+          'Email',
+          'Billing',
+          'Announcements'
         ];
           $scope.addFreebies = function(freebiesData,rowIndex,index){
             $scope.customfreebies.push(freebiesData);
