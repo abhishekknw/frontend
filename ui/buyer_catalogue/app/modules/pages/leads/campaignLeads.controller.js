@@ -12,7 +12,15 @@ angular.module('catalogueApp')
       $scope.textValue = {
         value:""
       };
-
+      $scope.globalHotLeadCriteria=[{
+      name: "is_hot_level_" + 1,
+      operation: [
+        {
+          name : 'or',
+          items: []
+        }        
+      ]
+    }]
       $scope.formName = {
         name : undefined
       }
@@ -109,6 +117,9 @@ angular.module('catalogueApp')
         })
         campaignLeadsService.createLeadForm(data,$scope.campaignId)
         .then(function onSuccess(response){
+           if(document.getElementById("globalHotLeadsCriteria").style.display == 'block'){
+              angular.element('#globalHotLeadsCriteria').modal('hide');
+            }
           $scope.leadFormFields = [];
           $scope.formName.name = undefined;
           swal(constants.name,constants.create_success,constants.success);
@@ -182,12 +193,15 @@ angular.module('catalogueApp')
           viewLeadForms : false,
           viewLeadsBySupplier : false
         }
+
         $scope.views[view] = true;
         $scope.campaignInfo = campaign;
+        console.log("formFields", formFields);
         if(formFields)
         {
           $scope.leadFormFields = formFields;
         }
+
         switch(true){
           case $scope.views.viewLeadForms:
             $scope.campaignId = campaign.campaign.proposal_id;
@@ -248,9 +262,9 @@ angular.module('catalogueApp')
       }
 
       $scope.getLeadForm = function(item){
+        $scope.updateForm = false;
         $scope.formName.name = undefined;
         $scope.leadFormFields = [];
-        $scope.updateForm = false;
         if(item){
           $scope.newLeadFormFields = [];
           $scope.addNewLeadFormField();
@@ -264,8 +278,18 @@ angular.module('catalogueApp')
         }
         else{
           $scope.leadFormFields.push(angular.copy(leadFormField));
+          $scope.globalHotLeadCriteria=[{
+            name: "is_hot_level_" + 1,
+            operation: [
+              {
+                name : 'or',
+                items: []
+              }        
+            ]
+          }]
         }
         $scope.changeView('createForm',$scope.campaignInfo);
+
       }
 
       // start : to read excel sheet while importing lead sheet
@@ -563,6 +587,12 @@ angular.module('catalogueApp')
     .then(function onSuccess(response){
       $scope.leadFormFields = [];
       $scope.formName.name = undefined;
+      if(document.getElementById("globalHotLeadsCriteria").style.display == 'block'){
+        angular.element('#globalHotLeadsCriteria').modal('hide');
+         // document.getElementById("globalHotLeadsCriteria").modal('toggle');
+      }
+      //console.log("document.getElementById(\"globalHotLeadsCriteria\")none", document.getElementById("globalHotLeadsCriteria").style.display == 'none');
+      //console.log("document.getElementById(\"globalHotLeadsCriteria\")block", document.getElementById("globalHotLeadsCriteria").style.display == 'block');
       swal(constants.name,constants.update_success,constants.success);
       $scope.changeView('viewLeadForms',$scope.campaignInfo);
     }).catch(function onError(response){
@@ -634,12 +664,20 @@ angular.module('catalogueApp')
     })    
   }
   var setAliasMapping = function(data){
+
+
     if(data){
+      $scope.textValue={};
+      $scope.hotnessMapping = {};
       $scope.hotnessMapping = data;
+    }else{
+      $scope.textValue={};
+      $scope.hotnessMapping = {};
+     //$scope.hotnessMapping = {};
     }
   }
 
-
+ 
   $scope.clearTextValue = function (){
     $scope.textValue={};
     $scope.textValue.value = "";
