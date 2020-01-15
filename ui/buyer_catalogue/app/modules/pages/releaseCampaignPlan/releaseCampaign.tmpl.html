@@ -415,7 +415,7 @@
             </td>
             <td  style="text-align:left" ng-if="releaseDetails.campaign.proposal_id.indexOf('NOB') == -1" rowspan="{{key.length}}" ng-show="$first">
               <div class="completedHeaderSpacing">
-                  <input type="radio" class="" ng-value="true" ng-model="supplier.is_completed"> Completed
+                  <input type="radio" class="" ng-click="completionStatus(supplier.id)" id="supplierCompleted" ng-value="true" ng-model="supplier.is_completed" > Completed
               </div>
               <div class="completedHeaderSpacing">
                 <input type="radio" class="" ng-value="false" ng-model="supplier.is_completed"> Not Completed

@@ -1299,6 +1299,14 @@ $scope.multiSelect =
       getResultsPage(1);      
     }
 
+    $scope.completionStatus = function(idOfSupplier){
+      let indexOfSupplier = $scope.releaseDetails.shortlisted_suppliers.findIndex(x => x.id ===idOfSupplier);
+      if($scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status!=="BK" && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status!=="MF" ){
+        swal(constants.name,constants.booking_completion_status,constants.warning);
+        $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].is_completed=false;
+      }
+    }
+
     // Check for internal comments
     var userInfo = JSON.parse($window.localStorage.userInfo);
     var userEmail = userInfo.email;
