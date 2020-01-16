@@ -57,6 +57,17 @@ const getSorterByOrder = (order) => {
   };
 };
 
+const getCampaignState = (state) => {
+  const campaignStateMapping = {
+    PNC: 'Declined',
+    POH: 'On Hold',
+    PR: 'Requested',
+    PF: 'Finalized',
+    PTC: 'Converted',
+  };
+  return campaignStateMapping[state] || null;
+};
+
 export default class ListBooking extends Component {
   constructor() {
     super();
@@ -795,12 +806,16 @@ export default class ListBooking extends Component {
 
     let attributes = [];
     let campaignName = '';
+    let campaignState = '';
     const { campaign } = this.props;
     let campaignId = this.getCampaignId();
     if (campaign && campaign.objectById && campaign.objectById[campaignId]) {
       campaignName = campaign.objectById[campaignId].name;
+      campaignState = campaign.objectById[campaignId].campaign_state;
+      if (campaignState) {
+        campaignState = getCampaignState(campaignState);
+      }
     }
-
     if (list && list.length) {
       attributes = list[0].supplier_attributes.concat(list[0].booking_attributes);
       if (optionTypes.length < 5) {
@@ -814,6 +829,24 @@ export default class ListBooking extends Component {
       <div className="booking__list list">
         <div className="list__title">
           <h3>Booking - Plan ({campaignName})</h3>
+        </div>
+        <div
+          style={{
+            textAlign: 'center',
+            padding: '10px',
+            background: '#e2e2e2',
+            borderRadius: '3px',
+            marginBottom: '10px',
+            color: '#4b8486',
+          }}
+        >
+          <p>
+            <strong>Campaign Id :</strong>
+            {` ${campaignId} ${'\u00a0\u00a0'}`}
+            <strong>Campaign Name : </strong>
+            {` ${campaignName} ${'\u00a0\u00a0'}`} <strong>Campaign State : </strong>
+            {campaignState}
+          </p>
         </div>
         <button type="button" className="btn btn--danger" onClick={this.onBack}>
           <i className="fa fa-arrow-left" aria-hidden="true" />
