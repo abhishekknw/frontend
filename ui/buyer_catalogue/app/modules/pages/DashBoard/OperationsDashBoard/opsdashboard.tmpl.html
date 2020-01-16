@@ -9,9 +9,7 @@
 <!-- <back-Button></back-Button> -->
 <div class="row">
   <div class="col-md-6 pull-left">
-    <div class="" permission = "[]">
-      <div class="breadcrumb" ncy-breadcrumb></div>
-    </div>
+    <div class="breadcrumb" ncy-breadcrumb></div>
   </div>
   <div class="col-md-2 pull-right">
     <div><button class="btn btn-primary active notify" style="text-align:right;" ng-click="goToCampaignList()">List Campaigns</button>
@@ -47,6 +45,7 @@
               <th>Create Campaign</th>
               <th>Assigned To</th>
               <th>Edit Details</th>
+              <th>Comments</th>
 
             </tr>
           </thead>
@@ -60,8 +59,8 @@
               <td class="cellWidth">{{proposal.proposal.account}}</td>
               <td class="cellWidthLarge">{{proposal.proposal.created_by}}</td>
               <td class="cellWidth">{{proposal.proposal.invoice_number}}</td>
-              <td class="cellWidth">{{proposal.proposal.tentative_start_date|limitTo:10}}</td>
-              <td class="cellWidth">{{proposal.proposal.tentative_end_date|limitTo:10}}</td>
+              <td class="cellWidth">{{proposal.proposal.tentative_start_date| date: 'dd-MM-yyyy'|limitTo:10}}</td>
+              <td class="cellWidth">{{proposal.proposal.tentative_end_date|  date: 'dd-MM-yyyy' | limitTo:10}}</td>
               <td class="cellWidth" style="text-align:left">
                 <div class="radio-button">
                        <label><input type="radio" ng-model="proposal.proposal.campaign_state" value="PTC" ng-click="convertProposalToCampaign(proposal)"  data-toggle="modal" ng-loading="loadSpinner" permission = "[permissions.acceptProposal]">Accept</label>
@@ -82,6 +81,14 @@
               <td class="cellWidthLarge">
                 <!-- <a href="{{bucket_url}}{{proposal.file_name}}" Download> Download </a> -->
                 <a ng-click="goToEditProposalDetails(proposal.proposal.proposal_id)">Edit Details</a>
+              </td>
+              <td rowspan="{{key.length}}">
+                <div class="comment" ng-if="comments[supplier.id]">
+                    <b>{{comments[supplier.id].external.username}} </b> <span> <br><small> {{comments[supplier.id].external.created_on | date}}</small></span><br>
+                    <p>{{comments[supplier.id].external.comment.slice(0,20)}}</p>
+                </div>
+                <button type="button" class="btn btn-primary" ng-click="viewComments(proposal, 'CAMPAIGN')">View/Add</button>
+                  <br>
               </td>
             </tr>
           </tbody>
@@ -168,5 +175,50 @@
   </div>
 </div>
 <!-- End: Code for assgining campaign -->
+
+<!-- Start: Code for Comment  View campaign -->
+<div id="viewComments" class="modal fade">
+    <div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    View Comments For {{prposalDataForComment.proposal.name}}
+                </div>
+                <div class="modal-body">
+                    <table class="table-bordered table-striped">
+                        <tbody>
+                            <tr ng-repeat="item in commentsData[selectedInvForView]">
+                                <td class="col-md-8">
+                                    <div>
+                                        <img ng-src="{{userIcon}}">
+                                        <b>{{item.user_name}} :</b> <span> <small> {{item.timestamp|date:'medium'}}</small></span><br/>
+                                    </div>
+                                    <div style="padding-left:30px">
+                                        <p style="word-break:break-word">{{item.comment}}</p>
+                                        <br/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--  Add comment-->
+                    <div style="width:100%">
+                        <br/>
+                        <!-- <label>Comments :</label> -->
+                        <textarea class="form-control col-md-10" rows="8" cols="200" ng-model="commentModal.comment" placeholder="Write here.."></textarea>
+                    </div>
+                    <br/>
+                </div><br/>
+                <br/>
+                <button class="btn btn-success" type="button" ng-click="addComment(commentType)" style="margin:3%">Add Comment</button>
+            </div>
+        </div><br/><br/>
+
+        <br/><br/>
+      </div>
+</div>
+
+<!-- End: Code for Comment  View campaign -->
 <!-- <footer-bar></footer-bar> -->
 </main>

@@ -9,7 +9,7 @@ angular.module('machadaloPages')
         angular.element("title").text("Login");
 
         $scope.login = function () {
-          if(vcRecaptchaService.getResponse() === ""){ //if string is empty
+          if(vcRecaptchaService.getResponse() === "" && Config.server != 'dev'){ //if string is empty
                 swal(constants.name,constants.captcha_error,constants.error);
             }
             else {

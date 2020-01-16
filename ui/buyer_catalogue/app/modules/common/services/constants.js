@@ -72,7 +72,7 @@ angular
     buffer : 'B',
     remove : 'R',
     supplierCode_all : 'All',
-    RS:'Society',
+    RS:'Residential Society',
     CP:'Corporate',
     BS:'Bus Shelter',
     GY:'Gym',
@@ -100,6 +100,7 @@ angular
     already_exist : 'Supplier Already Present',
     upload_permission_box_image_url : '/upload_permission_box_image/',
     upload_receipt_url : '/upload_receipt_image/',
+    booking_completion_status:"Can not be completed until booking status is not 'Confirmed Booking' or 'Meeting Fixed' ",
     //auditReleasePlan
     inventory_date_success : 'Inventory Dates are saved successfully',
     inventory_date_error : 'Error occured while saving dates',
@@ -140,6 +141,7 @@ angular
     delete_confirm : 'Yes! Delete it!',
     delete_confirm_group : 'Do you really want to delete this Group?',
     changePassword_success : 'Password changed Successfully',
+    
 
     //guestPage
     location_error : 'Please enter accurate location',

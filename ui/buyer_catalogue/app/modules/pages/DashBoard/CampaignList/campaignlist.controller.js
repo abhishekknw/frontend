@@ -1,62 +1,63 @@
 angular.module('catalogueApp')
 
-.controller('CampaignListCtrl', ['$scope', '$rootScope', '$window', '$location','commonDataShare','constants','campaignListService', 'cfpLoadingBar',
-    function ($scope, $rootScope, $window, $location , commonDataShare,constants,campaignListService, cfpLoadingBar) {
+  .controller('CampaignListCtrl', ['$scope', '$rootScope', '$window', '$location', 'commonDataShare', 'constants', 'campaignListService', 'cfpLoadingBar',
+    function ($scope, $rootScope, $window, $location, commonDataShare, constants, campaignListService, cfpLoadingBar) {
 
       $scope.emailModel = {};
       $scope.campaignHeadings = [
-        {header : 'Sr No'},
-        {header : 'Campaign Name'},
-        {header : 'Assgined To'},
-        {header : 'Assgined By'},
-        {header : 'Assigned Date'},
-        {header : 'Start Date'},
-        {header : 'End Date'},
-        {header : 'View Booking Details'},
-        {header : 'Assign Dates'},
-        {header : 'View Execution Image'}
+        { header: 'Sr No' },
+        { header: 'Campaign Name' },
+        { header: 'Assgined To' },
+        { header: 'Assgined By' },
+        { header: 'Assigned Date' },
+        { header: 'Start Date' },
+        { header: 'End Date' },
+        { header: 'View Booking Details' },
+        { header: 'Assign Dates' },
+        { header: 'View Execution Image' }
       ];
 
       $scope.is_Superuser = $window.localStorage.isSuperUser;
       // var vm = this;
-
-      var getCampaignDetails = function(){
-        if($scope.is_Superuser == 'true'){
+      var getCampaignDetails = function () {
+        if ($scope.is_Superuser == 'true') {
           var fetch_all = '1';
           campaignListService.getAllCampaignDetails(fetch_all)
-          .then(function onSuccess(response){
-            $scope.campaignData = response.data.data;
-            $scope.loading = response.data.data;
-            if($scope.campaignData.length == 0){
-              $scope.isEmpty = true;
-              $scope.msg = constants.emptyCampaignList;
-            }
-            // $scope.loading = response.data;
-          })
-          .catch(function onError(response){
-            $scope.isEmpty = true;
-            $scope.loading = response;
-            console.log("error occured", response);
-            commonDataShare.showErrorMessage(response);
-            // swal(constants.name,constants.errorMsg,constants.error);
-          });
-        }else {
-          var assigned_by = '0';
-          var fetch_all = '0';
-          var userId = $rootScope.globals.currentUser.user_id;
-          $scope.Data = [];
-          campaignListService.getCampaignDetails(assigned_by,userId,fetch_all)
-            .then(function onSuccess(response){
+            .then(function onSuccess(response) {
               $scope.campaignData = response.data.data;
-              $scope.Data = $scope.campaignData;
+
               $scope.loading = response.data.data;
-              if($scope.campaignData.length == 0){
+              if ($scope.campaignData.length == 0) {
                 $scope.isEmpty = true;
                 $scope.msg = constants.emptyCampaignList;
               }
               // $scope.loading = response.data;
             })
-            .catch(function onError(response){
+            .catch(function onError(response) {
+              $scope.isEmpty = true;
+              $scope.loading = response;
+              console.log("error occured", response);
+              commonDataShare.showErrorMessage(response);
+              // swal(constants.name,constants.errorMsg,constants.error);
+            });
+        } else {
+          var assigned_by = '0';
+          var fetch_all = '0';
+          var userId = $rootScope.globals.currentUser.user_id;
+          $scope.Data = [];
+          campaignListService.getCampaignDetails(assigned_by, userId, fetch_all)
+            .then(function onSuccess(response) {
+              $scope.campaignData = response.data.data;
+
+              $scope.Data = $scope.campaignData;
+              $scope.loading = response.data.data;
+              if ($scope.campaignData.length == 0) {
+                $scope.isEmpty = true;
+                $scope.msg = constants.emptyCampaignList;
+              }
+              // $scope.loading = response.data;
+            })
+            .catch(function onError(response) {
               $scope.isEmpty = true;
               $scope.loading = response;
               console.log("error occured", response);
@@ -65,60 +66,60 @@ angular.module('catalogueApp')
             });
         }
 
-        }
+      }
 
-        var getUsersList = function(){
-          commonDataShare.getUsersList()
-            .then(function onSuccess(response){
-          		$scope.userList = response.data.data;
-          	})
-          	.catch(function onError(response){
-          		console.log("error occured", response);
-              commonDataShare.showErrorMessage(response);
-              // swal(constants.name,constants.errorMsg,constants.error);
-          	});
-        }
-
-        var init = function(){
-          getCampaignDetails();
-          getUsersList();
-        }
-        //Call init function TO Load reuired data initially..
-        init();
-
-        $scope.getDetails = function(proposal_id){
-          $location.path('/' + proposal_id + '/releasePlan');
-        }
-        $scope.goToAssignDatesPage = function(proposal_id){
-          $location.path('/' + proposal_id + '/auditReleasePlan');
-        }
-        $scope.getExecutionDetails = function(proposal){
-          $window.localStorage.campaignState = constants[proposal.campaign_state];
-          $window.localStorage.campaignId = proposal.proposal_id;
-          $window.localStorage.campaignOwner = proposal.created_by;
-          $window.localStorage.campaignName = proposal.name;
-
-          $location.path('/' + proposal.proposal_id + '/opsExecutionPlan');
-        }
-
-        $scope.downloadSheet = function(campaignId){
-          campaignListService.downloadSheet(campaignId)
-          .then(function onSuccess(response){
-            console.log(response);
-            if(response.data.data.one_time_hash){
-              $window.open(Config.APIBaseUrl + 'v0/ui/leads/download-campaign-data-sheet/' + response.data.data.one_time_hash + "/", '_blank');            
-            }            
-          }).catch(function onError(response){
-            console.log(response);            
+      var getUsersList = function () {
+        commonDataShare.getUsersList()
+          .then(function onSuccess(response) {
+            $scope.userList = response.data.data;
           })
-        }
+          .catch(function onError(response) {
+            console.log("error occured", response);
+            commonDataShare.showErrorMessage(response);
+            // swal(constants.name,constants.errorMsg,constants.error);
+          });
+      }
+
+      var init = function () {
+        getCampaignDetails();
+        getUsersList();
+      }
+      //Call init function TO Load reuired data initially..
+      init();
+
+      $scope.getDetails = function (proposal_id) {
+        $location.path('/' + proposal_id + '/releasePlan');
+      }
+      $scope.goToAssignDatesPage = function (proposal_id) {
+        $location.path('/' + proposal_id + '/auditReleasePlan');
+      }
+      $scope.getExecutionDetails = function (proposal) {
+        $window.localStorage.campaignState = constants[proposal.campaign_state];
+        $window.localStorage.campaignId = proposal.proposal_id;
+        $window.localStorage.campaignOwner = proposal.created_by;
+        $window.localStorage.campaignName = proposal.name;
+
+        $location.path('/' + proposal.proposal_id + '/opsExecutionPlan');
+      }
+
+      $scope.downloadSheet = function (campaignId) {
+        campaignListService.downloadSheet(campaignId)
+          .then(function onSuccess(response) {
+            console.log(response);
+            if (response.data.data.one_time_hash) {
+              $window.open(Config.APIBaseUrl + 'v0/ui/leads/download-campaign-data-sheet/' + response.data.data.one_time_hash + "/", '_blank');
+            }
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+      }
 
       $scope.sendBookingEmails = function (proposalId, type) {
         $scope.emailBtnDisabled = true;
         cfpLoadingBar.start();
         var email = undefined;
         var emailType = undefined;
-        if (!type){
+        if (!type) {
           email = $scope.emailModel.email
         }
         if ($scope.emailModel.selected === 'listOfSupplier') {
@@ -149,14 +150,102 @@ angular.module('catalogueApp')
       // Disable email button if user not entered
       $scope.isEmailButton = false;
       $scope.disableTestEmailButton = function () {
-        if (!$scope.emailModel.email){
+        if (!$scope.emailModel.email) {
           $scope.isEmailButton = true;
         }
       }
 
       // Set proposal detail in scope
-      $scope.getProposalDetails = function(proposal){
+      $scope.getProposalDetails = function (proposal) {
         $scope.proposalDetail = proposal;
       }
+      //start synergytop
+
+      // Check for internal comments
+      var userInfo = JSON.parse($window.localStorage.userInfo);
+      var userEmail = userInfo.email;
+      $scope.commentsType = constants.comments_type;
+      $scope.commentModal = {};
+
+
+      $scope.canViewInternalComments = false;
+      if (userEmail.includes('machadalo')) {
+        $scope.canViewInternalComments = true;
+      }
+
+
+      $scope.selectedCommentForView = {};
+      $scope.viewComments = function (campaign) {
+         $scope.campaignDataForComment = campaign;
+        //  $scope.campaignDataForComment.id = campaignId;
+         $scope.commentsData = {};
+        if($scope.selectedCommentForView.type == undefined){
+            $scope.selectedCommentForView.type = $scope.commentsType[0];
+        }
+         $scope.commentType = 'CAMPAIGN';
+        campaignListService.viewComments(campaign.proposal_id,1,'CAMPAIGN')
+        .then(function onSuccess(response){
+        $scope.commentModal = {};
+        $scope.commentsData = response.data.data;
+        $scope.viewInvForComments = Object.keys($scope.commentsData);
+        $scope.selectedInvForView = $scope.viewInvForComments[0];
+        $('#viewComments').modal('show');
+        }).catch(function onError(response){
+          console.log(response);
+        })
+      }
+
+      $scope.addComment = function(){
+        $scope.commentModal['shortlisted_spaces_id'] = 1;
+        $scope.commentModal['related_to'] = 'CAMPAIGN';
+        campaignListService.addComment($scope.campaignDataForComment.proposal_id,$scope.commentModal)
+        .then(function onSuccess(response){
+          $scope.commentModal = {};
+          $scope.campaignDataForComment = undefined;
+          $('#addComments').modal('hide');
+          swal(constants.name, constants.add_data_success, constants.success);
+        }).catch(function onError(response){
+          console.log(response);
+        })
+      }
+
+      // Internal Comments to show in row
+       $scope.getAllComments = function() {
+        $scope.allComments = {};
+        releaseCampaignService.getAllComments($scope.campaign_id)
+          .then(function onSuccess(response) {
+            $scope.allComments = response.data.data;
+            $scope.comments = {}
+            var data = Object.keys($scope.allComments);
+            for (var i=0; i<data.length; i++){
+              var shortlisted_spaces_id = data[i];
+              var comments = $scope.allComments[shortlisted_spaces_id].general;
+              $scope.comments[shortlisted_spaces_id] = {}
+              for (var j=0; j<comments.length; j++){
+                if (comments[j].related_to == 'INTERNAL'){
+                  $scope.comments[shortlisted_spaces_id]['internal'] = {
+                    comment: comments[j].comment,
+                    username: comments[j].user_name,
+                    created_on: comments[j].timestamp
+                  }
+                } else {
+                  $scope.comments[shortlisted_spaces_id]['external'] = {
+                    comment: comments[j].comment,
+                    username: comments[j].user_name,
+                    created_on: comments[j].timestamp
+                  }
+                }
+              }
+            }
+          })
+          .catch(function onError(error) {
+            console.log('No comments to show');
+          })
+      }
+
+      // Call get all comments
+      //getAllComments()
+
+      //end synergytop
 
     }]);
