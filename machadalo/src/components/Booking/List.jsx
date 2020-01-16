@@ -112,7 +112,7 @@ export default class ListBooking extends Component {
 
   componentDidMount() {
     this.props.getBookingList({ campaignId: this.getCampaignId() });
-    this.props.getCampaignsList();
+    // this.props.getCampaignsList();
   }
 
   onSearchFilterChange(event) {

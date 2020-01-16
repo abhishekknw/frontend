@@ -25,6 +25,11 @@
   margin: 0 0 20px 0;
   font-family: 'Source Sans Pro', sans-serif;
 }
+.machadalo-login .leftBox h2 a {
+  color: #fff;
+  display: inline-block;
+  margin-right: 10px;
+}
 .machadalo-login .leftBox .loginForm {
   width: 600px;
   padding: 60px;

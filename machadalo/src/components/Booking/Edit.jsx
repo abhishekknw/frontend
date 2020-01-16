@@ -130,13 +130,13 @@ export default class EditBooking extends React.Component {
       getSupplierList,
       getBookingList,
       getPhaseList,
-      getCampaignsList,
+      // getCampaignsList,
     } = this.props;
     getBookingTemplateList();
     getSupplierList();
     getBookingList({ campaignId: this.getCampaignId() });
     getPhaseList({ campaignId: this.getCampaignId() });
-    getCampaignsList();
+    // getCampaignsList();
   }
 
   componentDidUpdate(prevProps) {

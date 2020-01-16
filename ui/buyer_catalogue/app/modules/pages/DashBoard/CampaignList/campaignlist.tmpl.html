@@ -1,236 +1,160 @@
 <link rel="stylesheet" href="modules/pages/DashBoard/CampaignList/campaignlist.tmpl.css"/>
 <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
 
-<body>
-  <div ng-loading="loading"></div> <!--For displaying loading icon-->
 
-  <main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading">
-
-<!-- <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" /> -->
-<div><nav-bar></nav-bar></div>
-<br><br><br>
-<div class="panel1">
-  <!-- <div class="col2"> -->
-    <div class="" permission = "[]">
-      <div  ncy-breadcrumb></div>
-    <!-- </div> -->
-  </div>
-</div>
-
-
-  <div class="row">
-    <div class="panel">
-    <!-- <div class=""> -->
-
+<div ng-loading="loading"></div> <!--For displaying loading icon-->
+<main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading">
+<div class="wrapperBox">
   <div ng-show="isEmpty" style="text-align:center;"><h2>{{msg}}</h2></div>
-  <!-- Start: Displaying table of converted campaigns -->
-
-  <div class="pageTitle" style="margin-top:-15px">
-    <div class="panel-heading" style="height:70px;">
-      <h3>Campaign List</h3>
+  <nav-bar></nav-bar>
+  <div class="middle-section">
+    <div class="breadcrumb" ncy-breadcrumb></div>
+    <h2 class="heading">Campaign List</h2>
+    <div ng-show="!isEmpty">
+      <div class="searchBox">
+        <input type="text" class="field" ng-model="searchQuery" placeholder="search" type="search">
+        <button><i class="fas fa-search"></i></button>
+      </div>
     </div>
-  </div>
-    <div class="" ng-show="!isEmpty">
-  <!-- <input class="form-control input-size" type="text" ng-model="search" class="form-control spacing col-width"> -->
+    <table class="table-data" st-table="campaignData" st-safe-src="Data" default-sort-reverse="true">
+      <tr>
+        <th>Sr No</th>
+        <th>Campaign Name</th>
+        <th>Assigned To</th>
+        <th>Assigned By</th>
+        <th st-sort="updated_at" st-skip-natural="true">Assigned Date</th>
+        <th st-sort="campaign.tentative_start_date" st-skip-natural="true">Start Date</th>
+        <th st-sort="campaign.tentative_end_date" st-skip-natural="true">End Date</th>
+        <th>Campaign Status</th>
+        <th>Comments</th>
+        <th>Booking Plan</th>
+        <th>Release Plan</th>
+        <th>Executed Image</th>
+        <th>Download Campaign</th>
+        <th>Email</th>
+      </tr>
+      <tr st-select-row='proposal' dir-paginate="proposal in campaignData|filter:f|filter:searchQuery|itemsPerPage:10">
+        <td>{{$index + 1}}</td>
+        <td>{{proposal.campaign.name}}</td>
+        <td>
+          <div ng-repeat="assigned_data in proposal.assigned">{{assigned_data.assigned_to}}</div>
+        </td>
+        <td>
+          <div ng-repeat="assigned_data in proposal.assigned">{{assigned_data.assigned_by}}</div>
+        </td>
+        <td>{{proposal.updated_at|limitTo:10 }}</td>
+        <td>{{proposal.campaign.tentative_start_date|limitTo:10}}</td>
+        <td>{{proposal.campaign.tentative_end_date|limitTo:10}}</td>
+        <td class="campaignStatus" style="text-transform:lowercase">{{proposal.campaign.status}}</td>
 
-      <!-- <input st-search="" placeholder="Search ..." class="form-control"  type="search"/> -->
-      <!-- <input type="text" class="form-control" placeholder="search" type="search"> -->
+        <td rowspan="{{key.length}}" >
+          <div class="comment" ng-if="comments[supplier.id]">
+            <b>{{comments[supplier.id].external.username}} </b> 
+            <span><small> {{comments[supplier.id].external.created_on | date}}</small></span>
+            <p>{{comments[supplier.id].external.comment.slice(0,20)}}</p>
+          </div>
+          <button type="button" class="linkBtn" ng-click="viewComments(proposal.campaign)">View/Add</button>
+        </td>
+        <td>
+          <a class="linkBtn" ng-click="getDetails(proposal.campaign.proposal_id)">Details </a>
+        </td>
+        <td>
+          <a class="linkBtn" ng-click="goToAssignDatesPage(proposal.campaign.proposal_id)">Assign Dates</a>
+        </td>
+        <td>
+          <a class="linkBtn" ng-click="getExecutionDetails(proposal.campaign)">Image Details </a>
+        </td>
+        <td>
+          <a class="linkBtn" ng-click="downloadSheet(proposal.campaign.proposal_id)">Download </a>
+        </td>
 
-      <!-- <div class=""> -->
-          <div class="campaignlisttable" style="margin:20px">
-            <div class="table-responsive">
-            <table class="table" st-table="campaignData" st-safe-src="Data" default-sort-reverse="true">
-              <input type="text" class="form-control" ng-model="searchQuery" placeholder="search" type="search">
-              <br>
-              <thead>
-                <tr>
-                  <th style="text-align: center;">Sr No</th>
-                  <th style="text-align: center;">Campaign Name</th>
-                  <th style="text-align: center;">Assigned To</th>
-                  <th style="text-align: center;">Assigned By</th>
-                  <th st-sort="updated_at" st-skip-natural="true" style="text-align: center;">Assigned Date</th>
-                  <th st-sort="campaign.tentative_start_date" st-skip-natural="true" style="text-align: center;">Start Date</th>
-                  <th st-sort="campaign.tentative_end_date" st-skip-natural="true" style="text-align: center;">End Date</th>
-                  <th style="text-align: center;">Campaign Status</th>
-                  <th style="text-align: center;">Comments</th>
-                  <th style="text-align: center;">Booking Plan</th>
-                  <th style="text-align: center;">Release Plan</th>
-                  <th style="text-align: center;">Executed Image</th>
-                  <th style="text-align: center;">Download Campaign</th>
-                  <th style="text-align: center;">Email</th>
-                </tr>
-                <tr colspan="9">
-                  <td></td>
-                  <td><input ng-model="f.campaign.name" class="form-control" placeholder="Search"><hr></td>
-
-                </tr>
-              </thead>
-              <tbody>
-
-                  <tr st-select-row='proposal' style="text-align: center;"  dir-paginate="proposal in campaignData|filter:f|filter:searchQuery|itemsPerPage:10">
-                   
-                  <!-- <td class="col-md-1">{{proposal.campaign.proposal_id}}</td> -->
-                  <td class="col-md-1">{{$index + 1}}</td>
-                  <td class="col-md-2">{{proposal.campaign.name}}</td>
-                 
-                  <td class="col-md-4">
-                    <div ng-repeat="assigned_data in proposal.assigned"> {{assigned_data.assigned_to}} </br> </div></td>
-                  </td>
-                  <td class="col-md-4">
-                      <div ng-repeat="assigned_data in proposal.assigned"> {{assigned_data.assigned_by}} </br> </div></td>
-                    </td>
-      
-                  <td class="col-md-2">{{proposal.updated_at|limitTo:10 }}</td>
-                  <td class="col-md-2">{{proposal.campaign.tentative_start_date|limitTo:10}}</td>
-                  <td class="col-md-3">{{proposal.campaign.tentative_end_date|limitTo:10}}</td>
-                  <td class="col-md-3 campaignStatus" style="text-transform:lowercase">{{proposal.campaign.status}}</td>
-                 
-                  <!-- start synergytop -->
-                  <!-- <td ng-if="canViewInternalComments" rowspan="{{key.length}}" ng-show="$first">
-                    <div class="comment" ng-if="comments[supplier.id]">
-                      <b>{{comments[supplier.id].internal.username}} </b> <span> <br><small> {{comments[supplier.id].internal.created_on | date}}</small></span><br>
-                        <p>{{comments[supplier.id].internal.comment.slice(0,20)}}</p>
-                    </div>
-                    <button type="button" class="btn btn-primary" ng-click="viewComments(supplier, 'INTERNAL')">View/Add0</button>
-                    <br>
-                  </td> -->
-                  
-                  <td rowspan="{{key.length}}" >
-                    <div class="comment" ng-if="comments[supplier.id]">
-                      <b>{{comments[supplier.id].external.username}} </b> <span> <br><small> {{comments[supplier.id].external.created_on | date}}</small></span><br>
-                      <p>{{comments[supplier.id].external.comment.slice(0,20)}}</p>
-                    </div>
-                    <button type="button" class="btn btn-primary" ng-click="viewComments(proposal.campaign)">View/Add</button>
-                    <br>
-                  </td>
-                  <!-- end synergytop -->
-                  <td class="col-md-2">
-                    <a ng-click="getDetails(proposal.campaign.proposal_id)"> Details </a>
-                  </td>
-                  <td class="col-md-2">
-                    <a ng-click="goToAssignDatesPage(proposal.campaign.proposal_id)"> Assign Dates</a>
-                  </td>
-                  <td class="col-md-2">
-                    <a ng-click="getExecutionDetails(proposal.campaign)"> Image Details </a>
-                  </td>
-                  <td class="col-md-2">
-                    <a ng-click="downloadSheet(proposal.campaign.proposal_id)"> Download </a>
-                  </td>
-                  <td class="col-md-2">
-                    <p data-toggle="modal" data-target="#sendEmailModal" ng-click="getProposalDetails(proposal.campaign)" style="color: #337ab7;cursor: pointer;">Send Email</p>
-                    <!--Open email model    -->
-                    <div id="sendEmailModal" class="modal fade">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">Send Emails for {{ proposalDetail.name }}</h4>
-                            <hr/>
-                            <div class = "modal-body">
-                              <div class="col-md-4">Select Email Type :</div>
-                              <div class="col-md-8">
-                                <select class="form-control" name="" ng-model="emailModel.selected">
-                                  <option value="" disabled selected hidden>Email Type</option>
-                                  <option value="recce">Recce Email</option>
-                                  <option value="pipelineOfSupplier">Pipelined Societies Email</option>
-                                  <option value="listOfSupplier">Booking(Upcoming Society activation Email)</option>
-                                  <option value="activationOfSupplier">Activation Of Society,Branding and Permission Email</option>
-                                  <option value="prehype">Prehype Email</option>
-                                </select>
-                              </div>
-                              <br><br><br>
-                              <div class="row email-row">
-                                <div class="col-md-12">
-                                  <div class="col-md-6">
-                                    <input type="email" class="form-control"  placeholder="Enter Email Id to test" ng-model="emailModel.email" style="text-align:center;"><br>
-                                  </div>
-                                  <div class="col-md-6">
-                                    <button type="button" name="button" ng-Click="sendBookingEmails(proposalDetail.proposal_id)" class="btn email-button" ng-disabled="isEmailButton || emailBtnDisabled">Test email for given user</button>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-md-12">
-                                <div class="emailModal" style="display: grid;">
-                                  <button type="button" name="button" class="btn btn-danger" style="text-align:center" ng-click="sendBookingEmails(proposalDetail.proposal_id, 'confirmed')" ng-disabled="emailBtnDisabled"> Default to send email to all</button>
-                                </div>
-                              </div>
-
-                              </br>
-
-                            </div>
-                          </div>
+        <td>
+          <a class="linkBtn" data-toggle="modal" data-target="#sendEmailModal" ng-click="getProposalDetails(proposal.campaign)">Send Email</a>
+          <!--Open email model    -->
+          <div id="sendEmailModal" class="modal fade">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <div class="modalBodyBox">
+                    <h3>Send Emails for {{ proposalDetail.name }}</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                    <label>Select Email Type:</label>
+                    <select class="field" name="" ng-model="emailModel.selected">
+                      <option value="" disabled selected hidden>Email Type</option>
+                      <option value="recce">Recce Email</option>
+                      <option value="pipelineOfSupplier">Pipelined Societies Email</option>
+                      <option value="listOfSupplier">Booking(Upcoming Society activation Email)</option>
+                      <option value="activationOfSupplier">Activation Of Society,Branding and Permission Email</option>
+                      <option value="prehype">Prehype Email</option>
+                    </select>
+                    <div class="sendEmail1">
+                      <input type="email" class="field"  placeholder="Enter Email Id to test" ng-model="emailModel.email">
+                      <div class="buttons">
+                        <div>
+                          <button type="button" name="button" ng-Click="sendBookingEmails(proposalDetail.proposal_id)" class="smallBtn" ng-disabled="isEmailButton || emailBtnDisabled">Test email for given user</button>
+                        </div>
+                        <div>
+                          <button type="button" name="button" class="smallBtn" ng-click="sendBookingEmails(proposalDetail.proposal_id, 'confirmed')" ng-disabled="emailBtnDisabled">Send email to all (Default)</button>
                         </div>
                       </div>
                     </div>
-                  </td>
-                </tr>
-              </tbody>
-
-              <tfoot>
-                <tr>
-                  <td colspan="10" class="text-center">
-                    <dir-pagination-controls
-                       max-size="5"
-                       direction-links="true"
-                       boundary-links="true" >
-                   </dir-pagination-controls>
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          </div>
-      <!-- </div> -->
-    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- modal -->
+        </td>
+      </tr>
+    </table>
+    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+  </div><!-- middle-section -->
+  <div class="fixfooter"></div>
+</div><!-- wrapperBox -->
+<footer-bar></footer-bar>
+</main>
 
 
-   <!-- <footer-bar></footer-bar>   -->
-   </div>
-  </div>
-
-  <!--START : view external comments modal  -->
+<!--START : view external comments modal  -->
 <div id="viewComments" class="modal fade">
-  <div>
-    <div class="modal-dialog">
+  <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        View Comments For {{campaignDataForComment.name}}
-      </div>
-        <div class="modal-body">
-        <table class="table-bordered table-striped">
-          <tbody>
+      <div class="modal-body">
+        <div class="modalBodyBox">
+          <h3>View Comments For {{campaignDataForComment.name}}</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+          <table class="table-data">
             <tr ng-repeat="item in commentsData[selectedInvForView]">
-              <td class="col-md-8">
+              <td>
                 <div>
                   <img ng-src="{{userIcon}}">
-                  <b>{{item.user_name}} :</b> <span> <small> {{item.timestamp|date:'medium'}}</small></span><br>
+                  <b>{{item.user_name}}:</b> 
+                  <span><small>{{item.timestamp|date:'medium'}}</small></span>
                 </div>
                 <div style="padding-left:30px">
                   <p style="word-break:break-word">{{item.comment}}</p>
-                  </br>
                 </div>
               </td>
             </tr>
-          </tbody>
-        </table>
-      <!--  Add comment-->
-        <div style="width:100%">
-          <br>
-          <!-- <label>Comments :</label> -->
-          <textarea class="form-control col-md-10"  rows="8" cols="200" ng-model="commentModal.comment" placeholder="Write here.."></textarea>
+          </table>
+          <div>
+            <textarea class="field"  rows="8" cols="200" ng-model="commentModal.comment" placeholder="Write here.."></textarea>
+            <button class="smallBtn" type="button" ng-click="addComment()">Add Comment</button>
+          </div>
         </div>
-        <br>
-      </div><br>
-      <br>
-      <button class="btn btn-success" type="button" ng-click="addComment()" style="margin:3%">Add Comment</button>
       </div>
-    </div><br>
-    <!-- <div> -->
-    <br>
-    <!-- </div> -->
-  </br></br>
+    </div>
   </div>
-</div>
-</main>
-</body>
+</div><!-- modal -->
+
+
+
+
+
+
+
+
+
