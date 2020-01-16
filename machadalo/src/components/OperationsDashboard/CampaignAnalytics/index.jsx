@@ -63,7 +63,7 @@ class CampaignAnalytics extends React.Component {
           <Grid
             columns={getCampaignColumn()}
             data={listData}
-            headerValue="Operations Dashboard"
+            headerValue="Campaign Report"
             exportCsv={true}
             search={true}
             pagination={true}

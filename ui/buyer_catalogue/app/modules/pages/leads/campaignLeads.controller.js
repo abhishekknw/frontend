@@ -9,6 +9,9 @@ angular.module('catalogueApp')
       $scope.showImportTable = false;
       $scope.hotnessMapping = {};
       $scope.uploadfile = true; // added for loading spinner active/deactive
+      $scope.textValue = {
+        value:""
+      };
 
       $scope.formName = {
         name : undefined
@@ -635,4 +638,12 @@ angular.module('catalogueApp')
       $scope.hotnessMapping = data;
     }
   }
-    });//Controller ends here
+
+
+  $scope.clearTextValue = function (){
+    $scope.textValue={};
+    $scope.textValue.value = "";
+    //$scope.textValue.value = "";
+  }
+
+});//Controller ends here

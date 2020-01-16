@@ -209,6 +209,63 @@ header .topRight ul li {
 header .topRight ul li a {
   color: #c9302c;
 }
+header .topRight .top-menu {
+  float: left;
+  margin-right: 20px;
+  margin-top: 5px;
+}
+header .topRight .top-menu li {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  margin: 0 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+header .topRight .top-menu li i {
+  margin-right: 10px;
+}
+header .topRight .top-menu li a {
+  color: #333;
+}
+header .topRight .top-menu li ul {
+  width: 170px;
+  position: absolute;
+  top: 14px;
+  left: -30px;
+  padding: 38px 0 0 0;
+  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
+}
+header .topRight .top-menu li ul:before {
+  content: '';
+  width: 0; 
+  height: 0; 
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 15px solid #eaeaea;
+  position: absolute;
+  top: 23px;
+  left: 60px;
+}
+header .topRight .top-menu li ul li {
+  display: block;
+  margin: 0;
+}
+header .topRight .top-menu li ul li a {
+  padding: 5px 30px;
+  background: #eaeaea;
+  display: block;
+}
+header .topRight .top-menu li ul li:first-child a,
+header .topRight .top-menu li ul li:last-child a {
+  pointer-events: none;
+}
+header .topRight .top-menu li:hover ul {
+  opacity: 1;
+  visibility: visible;
+}
 .hamburger {
   width: 30px;
   height: 30px;
@@ -293,7 +350,7 @@ footer .column ul li a {
 aside {
   width: 250px;
   height: 100vh;
-  padding: 70px 0px 20px 10px;
+  padding: 70px 0px 20px 0px;
   position: fixed;
   left: -100%;
   top: 0;
@@ -317,6 +374,18 @@ aside ul li {
   font-size: 14px;
   position: relative;
   color: #fff;
+  cursor: context-menu;
+}
+aside ul li.arrow:after {
+  content: '';
+  width: 0; 
+  height: 0; 
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid #fff; 
+  position: absolute;
+  right: 10px;
+  top: 18px;
 }
 aside ul li i {
   margin-right: 6px;
@@ -329,16 +398,53 @@ aside ul li a {
 }
 aside ul li a:hover {
   color: #333;
-  background: #fff;
+  background: rgba(255,255,255,0.40);
   text-decoration: none;
-  border-radius: 50px 0 0 50px;
 }
 aside ul li:focus,
 aside ul li a:focus {
   outline: 0;
   border: 0;
 }
-aside ul li.dropdown-list-parent {
+aside ul li ul.child,
+aside ul li ul.child li ul.subchild,
+aside ul li ul.child li ul.subchild li ul.subchildsub {
+  width: 200px;
+  position: absolute;
+  right: -200px;
+  top: 0;
+  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: 0 3px 5px 0 rgba(0,0,0,0.20);
+  background: linear-gradient(-85deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  transition: all 0.5s ease-in-out;
+}
+aside ul li:hover ul.child {
+  opacity: 1;
+  visibility: visible;
+}
+aside ul li ul.child li {
+  position: relative;
+}
+aside ul li ul.child li:hover ul.subchild {
+  opacity: 1;
+  visibility: visible;
+}
+aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+
+
+
+
+
+/*aside ul li.dropdown-list-parent {
   padding: 13px 0 13px 0px;
   display: block;
   text-indent: 25px;
@@ -367,7 +473,7 @@ aside ul li ul li:before {
   top: 19px;
   border-radius: 100%;
   z-index: 0;
-}
+}*/
 
 .middle-section {
   padding-left: 20px;

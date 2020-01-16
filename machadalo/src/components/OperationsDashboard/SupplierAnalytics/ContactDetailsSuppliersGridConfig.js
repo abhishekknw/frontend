@@ -16,6 +16,28 @@ const getSupplierColumnContactDetails = () => {
       },
     },
     {
+      dataField: 'society_locality',
+      text: 'Area',
+      row: 0,
+      rowSpan: 2,
+      sort: true,
+      formatter: (cell, row) => {
+        const { society_locality } = row;
+        return society_locality || '-';
+      },
+    },
+    {
+      dataField: 'society_subarea',
+      text: 'Sub Area',
+      row: 0,
+      rowSpan: 2,
+      sort: true,
+      formatter: (cell, row) => {
+        const { society_subarea } = row;
+        return society_subarea || '-';
+      },
+    },
+    {
       dataField: 'society_city',
       text: 'City',
       row: 0,
