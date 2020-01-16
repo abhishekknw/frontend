@@ -1,49 +1,41 @@
-
-.page-container{
-	padding: 5px;
-	position: relative;
+.accountSection {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 50% auto;
+	grid-gap: 60px;
 }
-.business-panel{
-	margin-top: 0px;
-	padding: 10px;
-	/*width: 900px;*/
-	align-self: center;
+.accountSection label {
+	display: block;
 }
-.form{
-	padding: 9px;
+.accountBox .repeater {
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-gap: 20px;
+	border: 1px dashed #ccc;
+    padding: 50px;
+    margin-bottom: -1px;
+    position: relative;
 }
-.choices{
-	font-size: 15px;
-	margin-top: 40px;
+.accountBox .repeater input[type="radio"] {
+	margin: 0 10px 0 0;
 }
-.choices.form-group {
-	padding: 20px;
+.accountBox .repeater .closeBtn {
+    font-size: 20px;
+    color: #e84478;
+    border: 0;
+    background: none;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 1;
 }
-.show-error{
-	font-size: 15px;
-	color: red;
+.addNew {
+	padding: 25px 0;
 }
-.submit-button{
-	padding-top: 10px;
+.accountBottomBtn {
+	display: block;
 }
-.textbox
-{
-		padding: 5px;
-}
-.input-size{
-	width: 100% !important;
-	align-self: right !important;
-}
-.btn-space{
-	margin-bottom: 10px;
-}
-/* .modal-open {
-  overflow-y: scroll;
-} */
-.breadcrumb{
-	/*width:200%;*/
-	margin-left: auto;
-	margin-right: auto;
-	background-color: transparent;
-	font-size : x-large;
+.accountBottomBtn .smallBtn {
+	display: inline-block;
+	margin-right: 20px;
 }

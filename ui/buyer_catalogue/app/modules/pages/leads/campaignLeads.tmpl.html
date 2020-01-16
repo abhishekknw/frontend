@@ -12,7 +12,7 @@
     </div>
     <div class="backBtn" ng-show="views.createForm || views.selectSuppliers || views.importLeads">
       <button type="button" class="smallBtn" ng-click="changeView('viewLeadForms',campaignInfo)">Back To Form Details Page</button>
-    </div>
+    </div> 
     <div class="backBtn" ng-show="views.enterLeads">
       <button type="button" class="smallBtn" ng-click="changeView('selectSuppliers',campaignInfo)">Back To Suppliers Details Page</button>
     </div>
@@ -131,7 +131,7 @@
       <h2 class="heading">Create/Edit Form</h2>
       <div class="campaignBox">
         <div class="campaignFormBox">
-          <form name="fieldForm">
+          <form name="$root.fieldForm">
             <div class="fieldBoxFull">
               <label>Enter Name For Lead Form<span>*</span>:</label>
               <input type="text" class="field" placeholder="Enter Name For Lead Form" ng-model="formName.name" required>
@@ -175,9 +175,9 @@
             <div class="clearfix bottomButtonSection">
               <button class="smallBtn" ng-click="addLeadFormFields()" ng-if="!updateForm">Add New Fields</button>
               <button class="smallBtn" data-target="#addNewLeadFormFields" data-toggle="modal" ng-if="updateForm">Add New Fields</button>
-              <button class="smallBtn" ng-click="updateFormFields()" ng-if="updateForm">Update Fields</button>
-              <button class="smallBtn"  ng-disabled="fieldForm.$invalid"  ng-click="saveLeadForm()" ng-if="!updateForm">Submit </button>
-              <button class="smallBtn" ng-click="" data-target="#globalHotLeadsCriteria" data-toggle="modal">Global Hot Leads Criteria</button>
+              <button class="smallBtn" ng-click="updateFormFields()" ng-disabled="$root.fieldForm.$invalid" ng-if="updateForm">Update Fields</button>
+              <button class="smallBtn"  ng-disabled="$root.fieldForm.$invalid"  ng-click="saveLeadForm()" ng-if="!updateForm">Submit </button>
+              <button class="smallBtn"  data-target="#globalHotLeadsCriteria" data-toggle="modal">Global Hot Leads Criteria</button>
             </div>
           </form>
         </div>
@@ -487,7 +487,8 @@
           <div>
             <table class="table table-responsive table-bordered">
               <tr ng-repeat="item in globalHotLeadCriteria">
-                <td>Hotness Level Criteria {{$index + 1}}
+                <td>Hotness Level Criteria {{$index + 1}} 
+
                   <input type="text" placeholder="Enter Alias" ng-model="hotnessMapping[item.name]" class="form-control">
                 </td>
                 <!-- <div ng-repeat="(itemKey,itemVal) in values"> -->
@@ -517,8 +518,8 @@
                       </div>
                       <div class="col-md-6">
                         <select ng-model="fieldVal" class="form-control">
-                          <option  disabled="true" value="">Select Filed </option>
-                            <option  ng-repeat="(k,v) in leadFormFields" value="{{k}}">{{v.key_name}}</option>
+                          <option  disabled="true" value="">Select Field </option>
+                            <option  ng-repeat="(k,v) in leadFormFields" ng-if="v.key_name" value="{{k}}">{{v.key_name}}</option>
                         </select><br>
                         
                       </div>
@@ -533,10 +534,10 @@
                           {{$index + 1}}. {{leadFormFields[itm.id]['key_name']}}
                         </div> 
                         <div class="col-md-2">
-                            <input type="text" class="form-control" id="{{$index}}" name="textValueField{{$index}}" placeholder="Enter Values" ng-model="textValue['value'+$index]">  
+                            <input type="text" class="form-control" id="value{{$index}}{{item.name}}" name="textValueField{{$index}}" placeholder="Enter Values" ng-model="textValue['value'+item.name+$index]">  
                         </div>
                         <div class="col-md-2">
-                            <button class="btn btn-danger" ng-disabled="!textValue['value'+$index]" ng-click="itm.values.push(textValue['value'+$index]) && clearTextValue()">Add</button> 
+                            <button class="btn btn-danger" ng-disabled="!textValue['value'+item.name+$index]" ng-click="itm.values.push(textValue['value'+item.name+$index]) && clearTextValue()">Add</button> 
                         </div>
                         <div class="col-md-2">
                             <button class="btn btn-danger" ng-click="op.items.splice($index,1)">
@@ -560,11 +561,10 @@
                       <br>                      
                     </div>
                     <br><br>
-                      <button ng-click="addFieldInCriteria(op.items,fieldVal)" ng-disabled="!fieldVal" class="btn btn-danger">
-                        Add Field</button>
-                        <button class="btn btn-danger" ng-click="globalHotLeadCriteria.splice($index,1)">
-                            <span  class="glyphicon glyphicon-trash"></span>
-                        </button>
+                      <button ng-click="addFieldInCriteria(op.items,fieldVal)" ng-disabled="!fieldVal" class="btn btn-danger">Add Field</button>
+                      <button class="btn btn-danger" ng-click="globalHotLeadCriteria.splice($index,1)">
+                          <span  class="glyphicon glyphicon-trash"></span>
+                      </button>
                   </div>                  
                   <br>
                 </td>
@@ -574,7 +574,9 @@
 
             </table>
           </div>
-          <button class="btn btn-danger" ng-click="addCriteria()">Add Criteria</button>
+          <button class="btn btn-danger" ng-click="addCriteria()">Add More Criteria</button>
+          <button class="btn btn-danger" ng-click="updateFormFields()" ng-if="updateForm" ng-disabled="$root.fieldForm.$invalid">Update Fields</button>
+          <button class="btn btn-danger"  ng-disabled="$root.fieldForm.$invalid"  ng-click="saveLeadForm()" ng-if="!updateForm">Submit </button>
           <button class="btn btn-danger" data-dismiss="modal">Close</button>
         </div>
       </div>
