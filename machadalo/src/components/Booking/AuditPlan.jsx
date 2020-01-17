@@ -179,8 +179,8 @@ export default class AuditPlan extends React.Component {
                 <th>Inventory</th>
                 <th>Supplier Name</th>
                 <th>Assigned Date</th>
-                <th>Action</th>
-                <th>Action</th>
+                <th>Manage Date</th>
+                <th>Manage Image</th>
               </tr>
             </thead>
             <tbody>

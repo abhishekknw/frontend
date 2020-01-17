@@ -938,8 +938,8 @@ export default class ListBooking extends Component {
                   ) : null
                 ) : null}
 
-                <th>Comments</th>
-                <th>Comments</th>
+                <th>Internal Comments</th>
+                <th>External Comments</th>
                 <th>Edit</th>
                 <th>Remove</th>
               </tr>
