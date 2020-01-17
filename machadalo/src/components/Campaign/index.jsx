@@ -127,9 +127,9 @@ export default class Campaigns extends React.Component {
                   <th>Start Date</th>
                   <th>End Date</th>
                   {actions.map((item, index) => (
-                    <th key={index}>{item.headerLabel}</th>
+                    <th key={index}>Booking Plan</th>
                   ))}
-                  <th>Action</th>
+                  <th>Release Plan</th>
                 </tr>
               </thead>
               <tbody>{list.map(this.renderCampaignRow)}</tbody>
