@@ -71,9 +71,9 @@ const getCampaignColumn = () => {
     },
     {
       dataField: 'contact_name_filled',
-      text: 'Filled',
+      text: 'Filled(Unique)',
       row: 1,
-      width: '100px',
+      width: '150px',
       sort: false,
       formatter: (cell, row) => {
         const { campaign_id, contact_name_filled, contact_name_filled_suppliers, name } = row;
@@ -156,9 +156,9 @@ const getCampaignColumn = () => {
     },
     {
       dataField: 'contact_number_filled',
-      text: 'Filled',
+      text: 'Filled(Unique)',
       row: 1,
-      width: '100px',
+      width: '150px',
       sort: false,
       formatter: (cell, row) => {
         const { campaign_id, contact_number_filled, contact_number_filled_suppliers, name } = row;

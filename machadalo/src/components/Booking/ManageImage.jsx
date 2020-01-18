@@ -278,8 +278,8 @@ export default class ManageImage extends React.Component {
                 <th>Activity date</th>
                 <th>Assigned User</th>
                 <th>Images</th>
-                <th>Action</th>
-                <th>Action</th>
+                <th>View Image</th>
+                <th>Upload Image</th>
               </tr>
             </thead>
             <tbody>
