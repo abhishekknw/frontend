@@ -67,6 +67,7 @@
             <tr>
                 <th style="width:40px;">Sr No</th>
                 <th>Supplier Name</th>
+                <th>Supplier Id</th>
                 <th>Area <br>(Sub Area)</th>
                 <th>Address <br>(Landmark)</th> 
                 <th>RelationShip Data</th>
@@ -112,6 +113,7 @@
               <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank"
               style="text-decoration: underline; cursor: pointer;color:#337ab7;font-weight: 600;">{{supplier.name}}<br> </a>
               ({{supplier.quality_rating}})</td>
+              <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.object_id}}</td>
               <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.area}} <br> ({{supplier.subarea}}) <br> {{supplier.address2}}</td>
               <td class="" rowspan="{{key.length}}" ng-show="$first" width="200"> {{supplier.address1}} <br> {{supplier.landmark}}</td>
               <!-- <td class="" rowspan="{{key.length}}" ng-show="$first" width="200">Inventory Owner :<b> Machadalo</b>, Feedback:{{supplier.feedback}}</td> -->
@@ -814,7 +816,7 @@
                     <td>{{relationshipData.supplier_data[0].representative__name}}</td>
                   </tr>
                   <tr>
-                    <th><b>Feedback About Society</b></th>
+                    <th><b>Feedback About Supplier</b></th>
                     <td ng-if="relationshipData.supplier_data[0].feedback">{{relationshipData.supplier_data[0].feedback}}</td>
                     <td ng-if="!relationshipData.supplier_data[0].feedback">Not Given</td>
                   </tr>
@@ -829,7 +831,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <th>Last Campaign Price Per Flat Price</th>
+                    <th>Last Campaign Price Per Unit</th>
                     <td ng-if="relationshipData.campaign_data.last_campaign_price.total_negotiated_price">
                       ₹ {{relationshipData.campaign_data.last_campaign_price.total_negotiated_price / supplierFlatCount
                       | limitTo : 8}}

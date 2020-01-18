@@ -268,7 +268,7 @@ $scope.addNewPhase =true;
 
           if ($scope.initialReleaseData) {
             $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
-
+            console.log('22222222222222222222222222222222',$scope.releaseDetails);
             // setDataToModel($scope.releaseDetails.shortlisted_suppliers);
             mapLeadsWithSuppliers();
             $scope.loading = !!response;
@@ -1011,10 +1011,10 @@ $scope.multiSelect =
       getAllComments()
 
       $scope.customFreebies = [
-          'Whatsapp Group',
-          'Email Group',
-          'Building ERP',
-          'Door to Door'
+          'Whatsapp Group', 
+          'Email',
+          'Billing',
+          'Announcements'
         ];
           $scope.addFreebies = function(freebiesData,rowIndex,index){
             $scope.customfreebies.push(freebiesData);
