@@ -38,34 +38,53 @@
 
     //added to search suppliers based on supplier code and search text
     mapViewService.searchSuppliers = function(code,searchtext,vendorId,supplier_center,center_areas,proposal_id){
-      if (code,searchtext,vendorId) {
-        var url = url_base + 'supplier-search/?' + "search=" + searchtext + "&supplier_type_code=" + code
-                                  + "&vendor=" + vendorId;
-        return machadaloHttp.get(url);
+      var url = url_base + 'supplier-search/?' + "supplier_type_code=" + code;
+      if(vendorId){
+        url += "&vendor=" + vendorId;
       }
-      // else if(code,searchtext) {
-      //   var url = url_base + 'supplier-search/?' + "search=" + searchtext + "&supplier_type_code=" + code;
-      //   return machadaloHttp.get(url);
-      // } 
-       else if(code,supplier_center) {
-        var url = url_base + 'supplier-search/?' + "supplier_type_code=" + code + "&supplier_center=" + supplier_center + "&proposal_id=" + proposal_id;
-         if(searchtext){
-           url += "&search=" + searchtext
-         // url =  url_base + 'supplier-search/?' + "search=" + searchtext + "&supplier_type_code=" + code + "&supplier_center=" + supplier_center;
+
+      if(supplier_center){
+        url += "&supplier_center=" + supplier_center;
+      }
+
+      if(proposal_id){
+        url += "&proposal_id=" + proposal_id;
+      }
+
+      if(searchtext){
+        url += "&search=" + searchtext
+      }
+
+      if(center_areas && center_areas.areas){
+        url +=   "&supplier_area=" + center_areas.areas ;
+        if(center_areas.sub_areas){
+          url +=  "&supplier_area_subarea=" + center_areas.sub_areas;
          }
-
-         if(center_areas && center_areas.areas){
-          url +=   "&supplier_area=" + center_areas.areas ;
-          if(center_areas.sub_areas){
-            url +=  "&supplier_area_subarea=" + center_areas.sub_areas;
-           }
-        }
-
-
-        
-       
-        return machadaloHttp.get(url);
       }
+
+
+      
+      // if (code,searchtext,vendorId) {
+      //   var url = url_base + 'supplier-search/?' + "search=" + searchtext + "&supplier_type_code=" + code
+      //                             + "&vendor=" + vendorId;
+      //   return machadaloHttp.get(url);
+      // }
+      //  else if(code,supplier_center) {
+      //   var url = url_base + 'supplier-search/?' + "supplier_type_code=" + code + "&supplier_center=" + supplier_center + "&proposal_id=" + proposal_id;
+      //    if(searchtext){
+      //      url += "&search=" + searchtext
+      //    // url =  url_base + 'supplier-search/?' + "search=" + searchtext + "&supplier_type_code=" + code + "&supplier_center=" + supplier_center;
+      //    }
+
+      //    if(center_areas && center_areas.areas){
+      //     url +=   "&supplier_area=" + center_areas.areas ;
+      //     if(center_areas.sub_areas){
+      //       url +=  "&supplier_area_subarea=" + center_areas.sub_areas;
+      //      }
+      //   }
+
+        return machadaloHttp.get(url);
+      //}
 
     }
     

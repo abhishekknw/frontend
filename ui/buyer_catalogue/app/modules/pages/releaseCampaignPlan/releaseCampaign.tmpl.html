@@ -23,6 +23,8 @@
           <Label class="labels">Campaign Name:</Label><span class="proposal-details">{{releaseDetails.campaign.name}}</span>
           <Label class="labels">BD Owner:</Label><span class="proposal-details">{{releaseDetails.campaign.created_by}}</span>
           <Label class="labels">Campaign State:&nbsp;</Label><span class="proposal-details">{{getCampaignState(releaseDetails.campaign.campaign_state)}}</span>
+    
+
         </div>
       </div>
     </div>
@@ -32,13 +34,39 @@
   <div class="panel-body table-style">
     <div style="padding: 0 15px;">
         <div class="row">
-          <div class="col-xs-11 col-md-3">
-            <select class="col-md-6 form-control" name="" ng-model="selectedUser.value" style="margin-bottom: 20px;">
+            <div class="col-xs-11 col-md-2">
+                <label>Supplier Type</label>
+            <select class="form-control input-size"  ng-model="selectedUser.supplier_type_filter">
+                <option value="">All</option>
+                <option ng-repeat="supplier in supplier_names" value="{{supplier.code}}" required>{{supplier.name}}</option>
+              </select>
+            </div>
+
+            <div class="col-xs-11 col-md-2">
+                <label>Booking Status</label>
+                <select  class="form-control spacing input-width" ng-model="selectedUser.booking_status_code" >
+                    <option value="">All</option>
+                  <option  ng-repeat="item in booking_status" value="{{item.code}}">{{item.name}}</option> 
+                  </select>
+            </div>
+
+            <div class="col-xs-11 col-md-2">
+                <label>Phases</label>
+            <select  name="phase" class="form-control spacing input-width-phase" " ng-model="selectedUser.phase_id" >
+                <option value="">All</option>
+                <option ng-repeat="phase in phases | unique:'phase_no'" value="{{phase.id}}">{{phase.phase_no}}</option>
+              </select>
+        </div>
+
+          <div class="col-xs-11 col-md-2">
+              <label>User</label>
+            <select class="col-md-6 form-control" name="" ng-model="selectedUser.value" style="margin-bottom: 20px;" ng-options="user.id as user.username for user in assignedUserList | unique:'id'">
               <option value="">All</option>
-              <option value="{{user.id}}" ng-repeat="user in assignedUserList">{{user.username}}</option>
+              <!-- <option value="{{user.id}}" ng-repeat="user in assignedUserList">{{user.username}}</option> -->
             </select>
           </div>
-          <div class="col-xs-11 col-md-3">
+          <div class="col-xs-11 col-md-2">
+              <label>Next Action Date</label>
             <input
               date-range-picker
               class="form-control date-picker"
@@ -50,11 +78,12 @@
               style="margin-bottom: 20px;"
             />
           </div>
-          <div class="col-xs-11 col-md-3">
+          <div class="col-xs-11 col-md-2">
+              <label>Search<lable>
             <input id="searchId"  type="text" ng-model="customPopupSelected" placeholder="Search.." uib-typeahead="supplier as supplier.name for supplier in allShortlistedSuppliers | filter:{name:$viewValue}"
             class="form-control" typeahead-on-select="getSearchedSupplierData(customPopupSelected)" style="margin-bottom: 20px;">
           </div>
-          <div class="col-xs-11 col-md-3">
+          <div class="col-xs-11 col-md-2">
               <button type="button" name="button" class="btn btn-small btn-primary" ng-click="changeSupplierData()" style="margin-bottom: 20px;">Reset</button>
               <button class="btn btn-danger" ng-click="getFilteredResult()" style="margin-bottom: 20px; margin-left: 5px;">Submit</button>
           </div>
@@ -68,11 +97,12 @@
                 <th style="width:40px;">Sr No</th>
                 <th>Supplier Name</th>
                 <th>Supplier Id</th>
+                <th>Supplier Type</th>
                 <th>Area <br>(Sub Area)</th>
                 <th>Address <br>(Landmark)</th> 
                 <th>RelationShip Data</th>
-                <th>Flat Count</th>
-                <th>Tower Count</th>
+                <th>Average Weekend(Daily Footfall)</th>
+                <th>Average Weekday(Daily Footfall)</th>
                 <th>Contacts Details</th>
                 <th>Assign User</th>
                 <th>Booking Priority</th>
@@ -86,9 +116,9 @@
                 <th>Inventory Count</th>
                 <th>Inventory Days</th>
                 <th>Inventory Supplier Price</th>
-                <th>Total Supplier Price   (Per Flat)  </th>
+                <th>Total Supplier Price Per Footfall (Weekend) </th>
                 <th>Negotiated Price</th>
-                <th>Cost Per Flat</th>
+                <th>Cost Per Average Daily Footfall</th>
                 <th>Freebies</th>
                 <th>Mode Of Payment</th>
                 <th>Transaction/Cheque Number</th>
@@ -114,8 +144,16 @@
               style="text-decoration: underline; cursor: pointer;color:#337ab7;font-weight: 600;">{{supplier.name}}<br> </a>
               ({{supplier.quality_rating}})</td>
               <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.object_id}}</td>
+              <td class="" rowspan="{{key.length}}" ng-show="$first">
+                <span ng-if="supplier.supplierCode == 'RS'">Residential Society</span>
+                <span ng-if="supplier.supplierCode == 'CP'">Corporate Parks</span>
+                <span ng-if="supplier.supplierCode == 'BS'">Bus Shelter</span>
+                <span ng-if="supplier.supplierCode == 'GY'">Gym</span>
+                <span ng-if="supplier.supplierCode == 'SA'">Saloon</span>
+                <span ng-if="supplier.supplierCode == 'RE'">Retail Store</span>
+              </td>
               <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.area}} <br> ({{supplier.subarea}}) <br> {{supplier.address2}}</td>
-              <td class="" rowspan="{{key.length}}" ng-show="$first" width="200"> {{supplier.address1}} <br> {{supplier.landmark}}</td>
+              <td class="" rowspan="{{key.length}}" ng-show="$first" width="200"> {{supplier.address1}} <br> ({{supplier.landmark}})</td>
               <!-- <td class="" rowspan="{{key.length}}" ng-show="$first" width="200">Inventory Owner :<b> Machadalo</b>, Feedback:{{supplier.feedback}}</td> -->
               <td class="" rowspan="{{key.length}}" ng-show="$first" width="200">
                 <button type="button" class="btn btn-danger"name="button"  ng-click="getRelationShipData(supplier)" data-target="#relationshipModal" data-toggle="modal">View Data</button>
@@ -163,8 +201,9 @@
                   <select  class="form-control spacing input-width" ng-model="supplier.booking_status" permission = "[permissions.changeBookingStatus]" ng-change="changePhase(supplier)" ng-disabled="supplier.is_completed">
                     <option style="width:100%;" ng-repeat="item in booking_status" value="{{item.code}}"
                     ng-if="supplier.booking_status == undefined ? supplier.booking_status = booking_status[0].code : 1"
-                    >{{item.name}}</option>
+                    >{{item.name}}</option> 
                   </select>
+                  
                   <br>
                     <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" permission = "[permissions.changeBookingStatus]" ng-change="changePhase(supplier)" ng-if="supplier.booking_status=='MF'" ng-disabled="supplier.is_completed">
                       <option style="width:100%;" ng-repeat="item in meeting_status" value="{{item.code}}"
@@ -205,7 +244,7 @@
                     </select>
                 </td> 
                 <td  class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="phaseform">
-                  <input class="form-control spacing input-width" ng-disabled="supplier.booking_status != 'BK' || supplier.is_completed" type="text" ng-model="phaseMappingList[supplier.phase_no].phase_no"  />
+                  <!-- <input class="form-control spacing input-width" ng-disabled="supplier.booking_status != 'BK' || supplier.is_completed" type="text" ng-model="phaseMappingList[supplier.phase_no].phase_no"  /> -->
                   <select  ng-disabled="supplier.booking_status != 'BK' || supplier.is_completed" name="phase" class="form-control spacing input-width-phase" ng-change="setPhase(supplier,supplier.phaseNo)" ng-model="supplier.phaseNo" min="1" permission = "[permissions.addPhase, permissions.viewPhase]">
                     <option value="" disabled>Select Phase</option>
                     <!-- <option value="" >None</option> -->
@@ -694,7 +733,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <button type="button" class="close" data-dismiss="modal" ng-click="closeModel()" aria-hidden="true">&times;</button>
           <h4 class="modal-title">Add New Suppliers</h4>
           <hr />
           <div class="" style="text-align:right">
@@ -713,24 +752,53 @@
 
           <div class="" ng-show="!showSummaryTab">
             <div class="modal-body" style="height: 100px;">
-              <div ng-if="errorMsg">
+              <!-- <div ng-if="errorMsg">
                 <font color="red">{{errorMsg}}</font>
               </div>
-              </br></br>
+              </br></br> -->
               <div class="row form-inline">
                 <!-- <span style="float:left"> -->
-                <select class="form-control input-size" ng-model="supplier_type_code.code">
+                <select class="form-control input-size" ng-change = "selectSupplier()" ng-model="supplier_type_code.code">
                   <option value="">Select Supplier</option>
                   <option ng-repeat="supplier in supplier_names" value="{{supplier.code}}" required>{{supplier.name}}</option>
                 </select>
-                <label style="margin-left: 20px;margin-right: 20px;">Enter Text</label>
-                <input class="form-control input-size" type="text" ng-model="search.query" class="form-control spacing col-width"
-                  style="margin-left:10px">
-                <button data-target="" class="btn btn-danger active" data-toggle="modal" ng-click="searchSuppliers()">Search</button>
+
+                <div ng-if="supplier_err" ><font color="red">Please select supplier</font></div>
+                <select class="form-control input-size" style="width:140px; margin-left:20px;" ng-model="indexData.center_index"
+                ng-change="selectCenter(indexData.center_index)" required>
+                <option value="">Select Center</option>
+                <option ng-repeat="center_var in releaseDetailsData" value="{{center_var.id}}">
+                  {{center_var.center_name}}</option>
+              </select>
+              <div ng-if="center_err" > <font color="red">Please select center</font></div>
+
+              <select  name="areas" class="form-control input-size" ng-change="get_sub_areas(centers.area)" ng-model="centers.area" required>
+                <option value="">Select Area</option>
+                <option  ng-repeat="area in areas" value="{{$index}}" required>{{area.label}}</option>
+              </select>
+
+              <select  name="subareas" class="form-control input-size" ng-change="selectSubArea(centers.sub_area_id)" ng-model="centers.sub_area_id" required>
+                <option value="">Select SubArea </option>
+                <option  ng-repeat="subarea in sub_areas" value="{{$index}}" required>{{subarea.subarea_name}}</option>
+              </select> 
+
+               
+                <button data-target="" class="btn btn-danger active" ng-disabled="searchDisable" data-toggle="modal" ng-click="searchSuppliers()">Search</button>
               </div>
               </br>
             </div>
             </br>
+            <div ng-if="errorMsg">
+              <font color="red">{{errorMsg}}</font>
+            </div>
+            
+            </br>
+            <div class="row form-inline">
+              <label style="margin-left: 20px;margin-right: 20px;">Enter Text</label>
+              <input class="form-control input-size" type="text" ng-change="searchSuppliers()" ng-model="search.query" class="form-control spacing col-width"
+              style="margin-left:10px">
+
+            </div></br>
             <div class="modal-body col-md-4 table-responsive" style="width: 550px; height: 450px">
               <table class="table table-bordered" ng-if="search_status">
                 <thead>
@@ -831,7 +899,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <th>Last Campaign Price Per Unit</th>
+                    <th>Last campaign price per unit</th>
                     <td ng-if="relationshipData.campaign_data.last_campaign_price.total_negotiated_price">
                       ₹ {{relationshipData.campaign_data.last_campaign_price.total_negotiated_price / supplierFlatCount
                       | limitTo : 8}}
