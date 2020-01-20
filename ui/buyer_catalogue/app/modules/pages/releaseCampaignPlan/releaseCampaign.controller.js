@@ -303,10 +303,6 @@ $scope.addNewPhase =true;
               }
             }
 
-          
-            
-            
-          
             // setDataToModel($scope.releaseDetails.shortlisted_suppliers);
             mapLeadsWithSuppliers();
             $scope.loading = !!response;
