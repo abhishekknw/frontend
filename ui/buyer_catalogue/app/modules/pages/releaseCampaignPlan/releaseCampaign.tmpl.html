@@ -184,7 +184,7 @@
               </td>
               
               <td rowspan="{{key.length}}" ng-show="$first">
-                <p ng-repeat="user in assignedUserList | orderBy: '-updated_at'" ng-if="supplier.supplier_id == user.supplier_id">{{user.username | uppercase}} <br>{{ user.updated_at | date }}</p>
+                <p ng-repeat="user in assignedUserList | orderBy: '-updated_at'" ng-if="supplier.supplier_id == user.supplier_id">{{user.username | uppercase}}<br>{{ user.updated_at | date }}</p>
                 <button type="button" ng-disabled="supplier.is_completed" class="btn btn-danger"name="button" data-toggle="modal" data-target="#addUserModal" ng-click="setUserSupplier(supplier)">Assign User</button>
                   <div id="addUserModal" class="modal fade">
                     <div class="modal-dialog">
@@ -261,7 +261,7 @@
                 </td> 
                
                 <td  class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="phaseform">
-                  <!-- <input class="form-control spacing input-width" ng-disabled="supplier.booking_status != 'BK' || supplier.is_completed" type="text" ng-model="phaseMappingList[supplier.phase_no].phase_no"  /> -->
+                  <input class="form-control spacing input-width" type="text" ng-disabled="true" ng-model="phaseMappingList[supplier.phase_no].phase_no"  />
                   <select  ng-disabled="supplier.booking_status != 'BK' || supplier.is_completed" name="phase" class="form-control spacing input-width-phase" ng-change="setPhase(supplier,supplier.phaseNo)" ng-model="supplier.phaseNo" min="1" permission = "[permissions.addPhase, permissions.viewPhase]">
                     <option value="" disabled>Select Phase</option>
                     <!-- <option value="" >None</option> -->
@@ -917,7 +917,7 @@
                 <tbody>
                   <tr>
                     <th>Supply Owner / Representative</th>
-                    <td>{{relationshipData.supplier_data[0].representative__name}}</td>
+                    <td>{{relationshipData.supplier_data[0].contact_name}} <span ng-if="relationshipData.supplier_data[0].contact_name && relationshipData.supplier_data[0].representative__name"> / </span>{{relationshipData.supplier_data[0].representative__name}}</td>
                   </tr>
                   <tr>
                     <th><b>Feedback About Supplier</b></th>

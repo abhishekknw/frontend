@@ -257,7 +257,7 @@ angular.module('catalogueApp')
               releaseCampaignService.getCampaignReleaseDetailsHeader()
                 .then(function onSuccess(headerResponse) {
                   $scope.detailsHeader = headerResponse.data.data;
-                  if(!$scope.selectedUser.supplier_type_filter){
+                  if (!$scope.selectedUser.supplier_type_filter) {
                     $scope.detailsHeader = $scope.detailsHeader['RS'];
                   } else {
                     $scope.detailsHeader = $scope.detailsHeader[$scope.selectedUser.supplier_type_filter];
@@ -291,6 +291,7 @@ angular.module('catalogueApp')
 
               if ($scope.initialReleaseData) {
                 $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
+
                 $scope.releaseDetailsData = $scope.releaseDetails.campaign.centerData;
                 var centerSuppliers = $scope.releaseDetails.campaign.centerSuppliers;
                 if (centerSuppliers) {
@@ -310,9 +311,9 @@ angular.module('catalogueApp')
                       $scope.supplier_names.push({ name: 'Retail Store', code: 'RE' });
                     }
                   }
-                  
-                  if($scope.supplier_names.length == 1){
-                    $scope.selectedUser.supplier_type_filter_selected =  $scope.supplier_names[0].name;
+
+                  if ($scope.supplier_names.length == 1) {
+                    $scope.selectedUser.supplier_type_filter_selected = $scope.supplier_names[0].name;
                     $scope.selectedUser.supplier_type_filter = $scope.supplier_names[0].code;
                   }
                 }
@@ -354,9 +355,21 @@ angular.module('catalogueApp')
           $scope.societySupplierName = data.supplierName;
           releaseCampaignService.setUserForBooking(data)
             .then(function onSuccess(response) {
+              // swal(constants.name, constants.assign_success, constants.success)
+             // location.reload();
 
-              swal(constants.name, constants.assign_success, constants.success);
-              location.reload();
+              swal({
+                title: "",
+                text: constants.assign_success,
+                type: "success",
+                confirmButtonText: "ok",
+              },
+                function (isConfirm) {
+                  if (isConfirm) {
+                    location.reload();
+                  }
+                }
+              );
             })
             .catch(function onError(error) {
               console.log(error);
@@ -700,8 +713,10 @@ angular.module('catalogueApp')
         };
 
         $scope.getRelationShipData = function (supplier) {
+
           $scope.relationshipData = {};
-          var supplierCode = 'RS';
+         // var supplierCode = 'RS';
+          var supplierCode = supplier.supplierCode;
           var campaignId = $scope.releaseDetails.campaign.proposal_id;
           $scope.supplierFlatCount = supplier.flat_count;
           releaseCampaignService.getRelationShipData(supplier.supplier_id, supplierCode, campaignId)
