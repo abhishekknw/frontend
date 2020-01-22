@@ -15,7 +15,7 @@
     <div class="breadcrumb" ncy-breadcrumb></div>
     <div class="campaignLeadSection">
       <h2 class="heading">Leads</h2>
-      <div class="campaignBox">
+      <div class="campaignBox"> 
         <table class="table-data leadTable">
           <tr>
             <th>Name of Society</th>
@@ -75,6 +75,7 @@
           <div class="item">
             <button ng-if="!editLeads" class="smallBtn" ng-disabled="leadForm.$invalid" ng-click="saveLeads()">Submit</button>
             <button ng-if="editLeads" class="smallBtn" ng-disabled="leadForm.$invalid" ng-click="updateLeadDetails()">Update</button>
+            Lead Count : {{leadsListCount}}
           </div>
         </form>
       </div>

@@ -18,7 +18,7 @@ angular.module('catalogueApp')
         {name : 'BOOLEAN'},
         {name : 'FLOAT'},
         {name : 'DATE'}
-      ];
+      ]; 
       $scope.keyTypesMap = {
         'STRING' : 'text',
         'INT' : 'number',
@@ -56,9 +56,21 @@ angular.module('catalogueApp')
         }).catch(function onError(response){
           console.log(response);
         })
+      }      
+
+      var getLeadsCount = function(){
+        enterLeadsService.getEntryListLeadsCount($scope.formId,$scope.supplierId)
+        .then(function onSuccess(response){
+          console.log(response);
+          $scope.leadsListCount = response.data.data;
+        }).catch(function onError(response){
+          console.log(response);
+        })
       }
+
       getLeadFormDetails();
       getSupplierDetails();
+      getLeadsCount();
       $scope.saveLeads = function(){
         var data = {
           supplier_id : $scope.supplierId,

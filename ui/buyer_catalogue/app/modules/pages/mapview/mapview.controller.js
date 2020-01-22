@@ -149,6 +149,7 @@ $scope.gridViewSummary = {};
       // TO show different colors for suppliers based on status
       $scope.status_color;
       function getIcon(supplier,key){
+   
         if(supplier.status == 'S')
           $scope.status_color = "FFFF00";// yellow
         if(supplier.status == 'F')
@@ -164,6 +165,10 @@ $scope.gridViewSummary = {};
           return icon
         }
         icon = icons[key] + $scope.status_color +'/000000/000000/';
+         // console.log("supplier.status == 'C'", supplier.status == 'C');
+        if(key == 'CP'){
+            icon = icons[key] + "ff80ff";
+        }
         return icon;
       }
       var icons = {
