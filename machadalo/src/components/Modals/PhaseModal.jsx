@@ -145,6 +145,7 @@ export default class PhaseModal extends React.Component {
                     name="phaseNumber"
                     value={phaseNumber}
                     onChange={this.handleInputChange}
+                    required
                   />
                 </div>
                 <div className="form-control">
