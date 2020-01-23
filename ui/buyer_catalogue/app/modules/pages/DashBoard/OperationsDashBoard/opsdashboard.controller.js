@@ -274,7 +274,7 @@ angular.module('catalogueApp')
 
     $scope.checkDisabled = function (endDate){
       
-      return (new Date(endDate) < new Date() ? true : false) ;
+      return (new Date(endDate) < new Date()) ;
     }
 
   
