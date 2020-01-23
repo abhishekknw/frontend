@@ -146,12 +146,10 @@ angular.module('catalogueApp')
         $scope.entryListLeadsData =[];
              campaignLeadsService.getEntryListLeads($scope.leadFormId,$scope.supplierData.supplier_id)
              .then(function onSuccess(response){
-              console.log("response", response);
                $scope.showLeads = true;
                $scope.entryListLeadsData = response.data.data;
-               console.log("$scope.entryListLeadsData", $scope.entryListLeadsData);
              }).catch(function onError(response){
-               console.log(response);
+               
              })
       }
 
@@ -161,7 +159,7 @@ angular.module('catalogueApp')
           .then(function onSuccess(response){
              $scope.supplierLeadsCount = response.data.data;
           }).catch(function onError(response){
-             console.log(response);
+            
           })
       }
 
