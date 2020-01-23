@@ -272,6 +272,10 @@ angular.module('catalogueApp')
         })
     }
 
+    $scope.checkDisabled = function (endDate){
+      
+      return (new Date(endDate) < new Date() ? true : false) ;
+    }
 
   
 }]);//Controller function ends here
