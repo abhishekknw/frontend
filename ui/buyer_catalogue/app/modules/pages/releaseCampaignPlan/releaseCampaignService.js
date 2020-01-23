@@ -22,6 +22,11 @@
     	return machadaloHttp.get(url);
     }
 
+    releaseCampaignService.getCampaignReleaseDetailsHeader = function(){
+        var url = url_base_ui + "getHeaderData";
+    	return machadaloHttp.get(url);
+    }
+
     releaseCampaignService.updateAuditReleasePlanDetails = function(proposal_id,data){
          var url = url_base + proposal_id + "/campaign-inventories/";
       return machadaloHttp.put(url,data);
