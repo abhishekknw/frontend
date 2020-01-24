@@ -5,14 +5,14 @@
  .factory('campaignLeadsService', ['machadaloHttp','$stateParams','$rootScope','$routeParams', '$location',
   function (machadaloHttp, $stateParams, $rootScope, $routeParams, $location) {
 
-    var url_base = 'v0/ui/website/';
+    var url_base = 'v0/ui/website/'; 
     var url_base_leads = 'v0/ui/leads/';
 
     var campaignLeadsService = {};
 
         campaignLeadsService.createLeadForm = function(data, campaignId){
           var url = url_base_leads + campaignId + "/create";
-          return machadaloHttp.post(url, data);
+          return machadaloHttp.post(url, data); 
         }
 
         campaignLeadsService.getLeads = function(campaignId){
@@ -20,7 +20,21 @@
           return machadaloHttp.get(url);
         }
         campaignLeadsService.getEntryListLeads = function(formId, supplierId){
-          var url = url_base_leads + formId + "/entry_list/"  + supplierId;
+          let url =""
+          if(supplierId){
+            url = url_base_leads + formId + "/entry_list/"  + supplierId;
+          }else{
+            url = url_base_leads + formId + "/entry_list/" ;
+          }
+          return machadaloHttp.get(url);
+        }        
+        campaignLeadsService.getEntryListLeadsCount = function(formId, supplierId){
+          let url =""
+          if(supplierId){
+            url = url_base_leads + formId + "/entry_list_count/"  + supplierId;
+          }else{
+            url = url_base_leads + formId + "/entry_list_count/";
+          }
           return machadaloHttp.get(url);
         }
         campaignLeadsService.getCampaignDetails = function(assigned_by,userId,fetch_all){

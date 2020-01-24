@@ -45,7 +45,7 @@
         <td>{{proposal.updated_at|limitTo:10 }}</td>
         <td>{{proposal.campaign.tentative_start_date|limitTo:10}}</td>
         <td>{{proposal.campaign.tentative_end_date|limitTo:10}}</td>
-        <td class="campaignStatus" style="text-transform:lowercase">{{proposal.campaign.status}}</td>
+        <td class="campaignStatus" style="text-transform:lowercase;">{{proposal.campaign.campaign_state==="POH"?"On Hold":proposal.campaign.status}}</td>
 
         <td rowspan="{{key.length}}" >
           <div class="comment" ng-if="comments[supplier.id]">

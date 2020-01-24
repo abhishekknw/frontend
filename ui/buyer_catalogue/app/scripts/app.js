@@ -326,6 +326,9 @@ angular
         url: '/changePassword',
         controller: 'changePswdCtrl',
         templateUrl: 'modules/pages/changePassword/changePassword.tmpl.html',
+        ncyBreadcrumb: {
+             label:'Change Password',
+           },
         data: {
           permission: 'change_password_page_access'
         }
@@ -489,6 +492,9 @@ angular
         url: '/enterLeadsFromApplication/:formId/:supplierId',
         controller: 'enterLeadFormCtrl',
         templateUrl: 'modules/pages/enterLeadsFromApplication/enterLeads.tmpl.html',
+        ncyBreadcrumb: {
+          label: 'Enter Leads From Application',
+        },
         data: {
           permission: 'enter_leads_from_application_access'
         }
@@ -512,6 +518,9 @@ angular
         url: '/loginLogs',
         controller: 'loginLogsCtrl',
         templateUrl: 'modules/pages/loginLogs/loginLogs.tmpl.html',
+        ncyBreadcrumb: {
+          label: 'Login Logs',
+        },
         data: {
           permission: 'login_logs_page_access'
         }
