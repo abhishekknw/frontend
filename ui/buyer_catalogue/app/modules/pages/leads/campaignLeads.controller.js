@@ -625,8 +625,6 @@ angular.module('catalogueApp')
         angular.element('#globalHotLeadsCriteria').modal('hide');
          // document.getElementById("globalHotLeadsCriteria").modal('toggle');
       }
-      //console.log("document.getElementById(\"globalHotLeadsCriteria\")none", document.getElementById("globalHotLeadsCriteria").style.display == 'none');
-      //console.log("document.getElementById(\"globalHotLeadsCriteria\")block", document.getElementById("globalHotLeadsCriteria").style.display == 'block');
       swal(constants.name,constants.update_success,constants.success);
       $scope.changeView('viewLeadForms',$scope.campaignInfo);
     }).catch(function onError(response){
@@ -717,5 +715,17 @@ angular.module('catalogueApp')
     $scope.textValue.value = "";
     //$scope.textValue.value = "";
   }
+
+    $scope.getEditLeads = function(entryId){
+      console.log("entryId", entryId);
+      $scope.entryId = entryId;
+        campaignLeadsService.getEditLeads($scope.leads_form_id,$scope.supplierId,entryId)
+        .then(function onSuccess(response){
+          $scope.viewLeads = false;
+          $scope.editLeads = true;
+          $scope.leadModelData = response.data.data.leads_form_items;
+        }).catch(function onError(response){
+        })
+    }
 
 });//Controller ends here

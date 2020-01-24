@@ -19,6 +19,12 @@
           var url = url_base + "leads/?campaign_id=" + campaignId;
           return machadaloHttp.get(url);
         }
+
+        campaignLeadsService.getEditLeads = function(formId,supplierId,entryId){
+          var url = url_base_leads + formId + "/get-leads-entry/" + supplierId + "/" + entryId + "/";
+          return machadaloHttp.get(url);
+        }
+
         campaignLeadsService.getEntryListLeads = function(formId, supplierId){
           let url =""
           if(supplierId){

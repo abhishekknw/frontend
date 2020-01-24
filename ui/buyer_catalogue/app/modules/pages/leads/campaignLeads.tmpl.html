@@ -279,6 +279,7 @@
            <tr ng-repeat="lead in entryListLeadsData.values | filter : query">
              <td>{{$index + 1}}</td>
              <td  ng-repeat="alias in lead">{{alias.value}}</td>
+             <td ><button class="linkBtn" ng-click="getEditLeads(lead)">Edit</button></td>
            </tr>
         </table>
         <div ng-if="!entryListLeadsData.values.length">

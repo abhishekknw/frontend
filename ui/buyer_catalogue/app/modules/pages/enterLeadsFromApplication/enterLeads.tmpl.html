@@ -9,8 +9,8 @@
   <nav-bar></nav-bar>
   <div class="middle-section">
     <div class="backBtn">
-      <button class="smallBtn" ng-click="changeView()" ng-if="viewLeads">Back</button>
-      <button class="smallBtn" ng-click="getLeadsBySupplier()" ng-if="!viewLeads">View Leads</button>
+      <span ng-show="viewLeads"><button class="smallBtn" ng-click="changeView()">Back</button></span>
+      <span ng-show="!viewLeads"><button class="smallBtn" ng-click="getLeadsBySupplier()" >View Leads</button></span>
     </div>
     <div class="breadcrumb" ncy-breadcrumb></div>
     <div class="campaignLeadSection">

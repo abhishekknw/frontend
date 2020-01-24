@@ -102,6 +102,8 @@ angular.module('catalogueApp')
       }
 
       $scope.getEditLeads = function(entryId){
+        console.log("entryId", entryId);
+        console.log("leadsData.values", $scope.leadsData.values);
         $scope.entryId = entryId;
           enterLeadsService.getEditLeads($scope.formId,$scope.supplierId,entryId)
           .then(function onSuccess(response){
