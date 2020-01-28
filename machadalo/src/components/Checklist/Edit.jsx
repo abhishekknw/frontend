@@ -195,22 +195,22 @@ export default class CreateChecklistTemplate extends React.Component {
     const rows = Object.assign({}, this.state.static_column_values);
 
     let columnLength = Object.values(rows).length;
-    let rowLength = rows['1'].length;
-
-    for (let i = 0; i < columnLength; i++) {
-      if (rows[i + 1]) {
-        rows[i + 1].push({
-          row_id: rowLength + 1,
-          cell_value: '',
-          disabled: i === 0 ? false : true,
-          status: 'create',
-        });
+    if (rows) {
+      let rowLength = rows['1'].length;
+      for (let i = 0; i < columnLength; i++) {
+        if (rows[i + 1]) {
+          rows[i + 1].push({
+            row_id: rowLength + 1,
+            cell_value: '',
+            disabled: i === 0 ? false : true,
+            status: 'create',
+          });
+        }
       }
+      this.setState({
+        static_column_values: rows,
+      });
     }
-
-    this.setState({
-      static_column_values: rows,
-    });
   }
 
   onAddColumn() {
@@ -218,24 +218,25 @@ export default class CreateChecklistTemplate extends React.Component {
 
     if (checklistColumns.length < MAX_COLUMNS) {
       const rows = Object.assign({}, this.state.static_column_values);
-
-      for (let i = 0; i < rows['1'].length; i++) {
-        if (rows[checklistColumns.length + 1]) {
-          rows[checklistColumns.length + 1].push({
-            row_id: i + 1,
-            cell_value: '',
-            disabled: true,
-            status: 'create',
-          });
-        } else {
-          rows[checklistColumns.length + 1] = [
-            {
+      if (rows) {
+        for (let i = 0; i < rows['1'].length; i++) {
+          if (rows[checklistColumns.length + 1]) {
+            rows[checklistColumns.length + 1].push({
               row_id: i + 1,
               cell_value: '',
               disabled: true,
               status: 'create',
-            },
-          ];
+            });
+          } else {
+            rows[checklistColumns.length + 1] = [
+              {
+                row_id: i + 1,
+                cell_value: '',
+                disabled: true,
+                status: 'create',
+              },
+            ];
+          }
         }
       }
 
@@ -261,7 +262,7 @@ export default class CreateChecklistTemplate extends React.Component {
     const rows = Object.assign({}, this.state.static_column_values);
     const deleteRows = this.state.delete_rows ? this.state.delete_rows : [];
 
-    if (rows[index].status !== 'create') {
+    if (rows && rows[index] && rows[index].status && rows[index].status !== 'create') {
       deleteRows.push(index + 1);
     }
 
@@ -438,13 +439,13 @@ export default class CreateChecklistTemplate extends React.Component {
                 value={getColumnOption(column.column_type)}
                 onChange={onColumnTypeChange}
               />
-              {columnIndex > 1 ? (
+              {/* {columnIndex > 1 ? (
                 <button type="button" className="btn btn--danger" onClick={onRemove}>
                   Remove column
                 </button>
               ) : (
                 undefined
-              )}{' '}
+              )}{' '} */}
               {column.column_type &&
               (column.column_type === 'RADIO' || column.column_type === 'SELECT') ? (
                 <button
@@ -524,7 +525,7 @@ export default class CreateChecklistTemplate extends React.Component {
         <div className="createform__title">
           <h3>Edit Checklist Form</h3>
         </div>
-        <div className="createform__form">
+        <div className="createform__form" style={{ overflowX: 'scroll' }}>
           <form onSubmit={this.onSubmit}>
             <div className="createform__form__inline">
               <div className="form-control">
@@ -562,11 +563,11 @@ export default class CreateChecklistTemplate extends React.Component {
               ? this.state.static_column_values['1'].map(this.renderChecklistRow)
               : undefined}
             <div className="createform__form__inline">
-              <div className="createform__form__action">
+              {/* <div className="createform__form__action">
                 <button type="button" className="btn btn--danger" onClick={this.onAddRow}>
                   Add Row
                 </button>
-              </div>
+              </div> */}
               <div className="createform__form__action">
                 <button
                   type="button"

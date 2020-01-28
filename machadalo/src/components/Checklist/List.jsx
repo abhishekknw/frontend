@@ -36,7 +36,8 @@ export default class List extends React.Component {
   }
 
   onBack() {
-    this.props.history.goBack();
+    // this.props.history.goBack();
+    this.props.history.push(`/r/checklist/campaigns`);
   }
 
   onEdit(checklistId) {
