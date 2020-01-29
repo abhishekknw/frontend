@@ -1,7 +1,7 @@
 angular.module('catalogueApp')
   .controller('ReleaseCampaignCtrl',
-    ['$scope', '$rootScope', '$window', '$location', 'releaseCampaignService', 'createProposalService', '$stateParams', 'permissions', 'Upload', 'cfpLoadingBar', 'constants', 'mapViewService', '$timeout', 'commonDataShare',
-      function ($scope, $rootScope, $window, $location, releaseCampaignService, createProposalService, $stateParams, permissions, Upload, cfpLoadingBar, constants, mapViewService, $timeout, commonDataShare) {
+    ['$scope', '$rootScope', '$window', '$location', 'releaseCampaignService', 'createProposalService', 'auditReleasePlanService', '$stateParams', 'permissions', 'Upload', 'cfpLoadingBar', 'constants', 'mapViewService', '$timeout', 'commonDataShare',
+      function ($scope, $rootScope, $window, $location, releaseCampaignService, createProposalService, auditReleasePlanService, $stateParams, permissions, Upload, cfpLoadingBar, constants, mapViewService, $timeout, commonDataShare) {
         $scope.campaign_id = $stateParams.proposal_id;
         $scope.positiveNoError = constants.positive_number_error;
         $scope.campaign_manager = constants.campaign_manager;
@@ -256,11 +256,12 @@ angular.module('catalogueApp')
 
               releaseCampaignService.getCampaignReleaseDetailsHeader()
                 .then(function onSuccess(headerResponse) {
-                  $scope.detailsHeader = headerResponse.data.data;
+                  $scope.detailsHeaders = headerResponse.data.data;
+                  var detailsHeader = headerResponse.data.data;
                   if (!$scope.selectedUser.supplier_type_filter) {
-                    $scope.detailsHeader = $scope.detailsHeader['RS'];
+                    $scope.detailsHeader = detailsHeader['RS'];
                   } else {
-                    $scope.detailsHeader = $scope.detailsHeader[$scope.selectedUser.supplier_type_filter];
+                    $scope.detailsHeader = detailsHeader[$scope.selectedUser.supplier_type_filter];
                   }
                 })
 
@@ -291,7 +292,6 @@ angular.module('catalogueApp')
 
               if ($scope.initialReleaseData) {
                 $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
-
                 $scope.releaseDetailsData = $scope.releaseDetails.campaign.centerData;
                 var centerSuppliers = $scope.releaseDetails.campaign.centerSuppliers;
                 if (centerSuppliers) {
@@ -309,13 +309,14 @@ angular.module('catalogueApp')
                       $scope.supplier_names.push({ name: 'Saloon', code: 'SA' });
                     } else if (centerSuppliers[i].supplier_type_code == 'RE') {
                       $scope.supplier_names.push({ name: 'Retail Store', code: 'RE' });
-                    }
+                    } 
                   }
 
-                  if ($scope.supplier_names.length == 1) {
+                  if ($scope.supplier_names.length == 1 ) {
                     $scope.selectedUser.supplier_type_filter_selected = $scope.supplier_names[0].name;
                     $scope.selectedUser.supplier_type_filter = $scope.supplier_names[0].code;
-                  }
+                  } 
+
                 }
 
                 // setDataToModel($scope.releaseDetails.shortlisted_suppliers);
@@ -339,6 +340,10 @@ angular.module('catalogueApp')
           }
         }
 
+        $scope.changeType = function(){
+            $scope.detailsHeader = $scope.detailsHeaders[$scope.selectedUser.supplier_type_filter];
+        }
+
         $scope.setPhase = function (supplier, id) {
           supplier.phase_no = id;
         }
@@ -356,7 +361,7 @@ angular.module('catalogueApp')
           releaseCampaignService.setUserForBooking(data)
             .then(function onSuccess(response) {
               // swal(constants.name, constants.assign_success, constants.success)
-             // location.reload();
+              // location.reload();
 
               swal({
                 title: "",
@@ -389,6 +394,7 @@ angular.module('catalogueApp')
         }
         //Start:To set contacts to show in contactModal
         $scope.setContact = function (supplier) {
+
           $scope.payment = supplier;
           $scope.editContactDetails = true;
           $scope.statusEditContactDetails = (!supplier.is_completed);
@@ -554,8 +560,6 @@ angular.module('catalogueApp')
                     commonDataShare.showErrorMessage(response);
                   });
               }
-
-
             }
 
           } catch (error) {
@@ -581,6 +585,7 @@ angular.module('catalogueApp')
           $scope.center_areas.sub_areas = $scope.sub_areas[index].subarea_name;
         }
         //End: function to select center at add more suplliers
+
 
 
         $scope.addSuppliersToList = function (supplier) {
@@ -715,7 +720,7 @@ angular.module('catalogueApp')
         $scope.getRelationShipData = function (supplier) {
 
           $scope.relationshipData = {};
-         // var supplierCode = 'RS';
+          // var supplierCode = 'RS';
           var supplierCode = supplier.supplierCode;
           var campaignId = $scope.releaseDetails.campaign.proposal_id;
           $scope.supplierFlatCount = supplier.flat_count;
@@ -1315,6 +1320,71 @@ angular.module('catalogueApp')
           })
         }
 
+        $scope.changeInventory = function (key, filter, index) {
+          $scope.releaseDetails.shortlisted_suppliers[index].shortlisted_inventories[key].total_count = filter.inventoryCount;
+        }
+
+
+        //Start: Inventory count update
+        // $scope.getInventoryRelatedData = function (supplier, key,index) {
+        //   $scope.adInvModel.index = index;
+        //   $scope.adInvModel.campaign_id = supplier.proposal;
+        //   $scope.adInvModel.supplier_id = supplier.supplier_id;
+        //   $scope.shortlistedSupplierData = supplier;
+        //   auditReleasePlanService.getInventoryRelatedData()
+        //     .then(function onSuccess(response) {
+        //       $scope.adInventoryTypes = [];
+        //       var adInventoryTypesData = response.data.data.inventory_types;
+        //       // console.log('+++++++++++----------------', $scope.adInventoryTypes);
+        //       if (adInventoryTypesData.length > 0) {
+        //         for (let i in adInventoryTypesData) {
+        //           if (adInventoryTypesData[i].adinventory_name == key) {
+        //             $scope.adInventoryTypes.push(adInventoryTypesData[i]);
+        //           }
+
+        //         }
+        //       }
+        //       $scope.durationTypes = response.data.data.duration_types;
+        //     }).catch(function onError(response) {
+        //       console.log(response);
+        //     })
+        // }
+
+
+        // $scope.adInvModel = {};
+        // $scope.addAdInventoryIds = function () {
+        //   $scope.adInvModel['space_id'] = $scope.shortlistedSupplierData.id;
+          
+        //   auditReleasePlanService.addAdInventoryIds($scope.adInvModel)
+        //     .then(function onSuccess(response) {
+            
+        //       $scope.releaseDetails.shortlisted_suppliers[$scope.adInvModel.index].shortlisted_inventories = response.data.data;
+              
+        //       $('#addInventoryModal').on('hide.bs.modal', function () { });
+               
+        //          swal({
+        //         title: "",
+        //         text: constants.add_data_success,
+        //         type: "success",
+        //         confirmButtonText: "ok",
+        //       },
+        //         function (isConfirm) {
+        //           if (isConfirm) {
+        //             $scope.adInvModel = {};
+        //           }
+        //         }
+        //       );
+        //     }).catch(function onError(response) {
+        //       console.log(response);
+        //       swal(constants.name, constants.save_error, constants.error);
+        //     })
+        // }
+
+        //End: Inventory count update
+
+
+
+
         $scope.StallOptions = [
           "Near Entry Gate",
           "Near Exit Gate",
@@ -1476,6 +1546,7 @@ angular.module('catalogueApp')
         getHashTagImages();
 
         $scope.getFilteredResult = function () {
+          console.log('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq',$scope.selectedUser)
           getResultsPage(1);
         }
 
@@ -1486,6 +1557,9 @@ angular.module('catalogueApp')
             $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].is_completed = false;
           }
         }
+
+
+
 
         // Check for internal comments
         var userInfo = JSON.parse($window.localStorage.userInfo);
@@ -1577,6 +1651,7 @@ angular.module('catalogueApp')
             })
           }
         }
+
 
 
       }]);//Controller function ends here
