@@ -602,7 +602,7 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
 .section-display table {
   margin-bottom: 30px;
 }
-.section-display .orgCE {
+.section-display .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 30px;
