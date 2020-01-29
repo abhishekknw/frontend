@@ -459,22 +459,6 @@ export default class CreateChecklistTemplate extends React.Component {
                 onChange={onColumnTypeChange}
               />
               <div>
-                {columnIndex !== 0 ? (
-                  <div className="checkbox-data">
-                    <input
-                      className="input-checkbox"
-                      type="checkbox"
-                      onClick={(event) => this.handleStaticColumnChange(event, columnIndex)}
-                    />
-
-                    <p className="main-text">
-                      Static Data
-                      <em>(Field entered in static column cannot be changed later)</em>
-                    </p>
-                  </div>
-                ) : (
-                  undefined
-                )}
                 {columnIndex > 1 ? (
                   <button type="button" className="btn btn--danger" onClick={onRemove}>
                     Remove column
@@ -555,6 +539,22 @@ export default class CreateChecklistTemplate extends React.Component {
                         : true
                     }
                   />
+                  {columnIndex !== 0 ? (
+                    <div className="checkbox-data">
+                      <input
+                        className="input-checkbox"
+                        type="checkbox"
+                        onClick={(event) => this.handleStaticColumnChange(event, columnIndex)}
+                      />
+
+                      <p className="main-text">
+                        Static Data
+                        <em>(Field entered in static column cannot be changed later)</em>
+                      </p>
+                    </div>
+                  ) : (
+                    undefined
+                  )}
                 </div>
               </div>
             </div>
@@ -579,7 +579,7 @@ export default class CreateChecklistTemplate extends React.Component {
         <div className="createform__title">
           <h3>Create Checklist Form</h3>
         </div>
-        <div className="createform__form">
+        <div className="createform__form" style={{ overflowX: 'scroll' }}>
           <form onSubmit={this.onSubmit}>
             <div className="createform__form__inline">
               <div className="form-control">
