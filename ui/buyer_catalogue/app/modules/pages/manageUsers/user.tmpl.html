@@ -1,6 +1,93 @@
 <!--Dashboard start  -->
-<link rel="stylesheet" href="modules/pages/manageUsers/user.tmpl.css"/>
-<link rel="stylesheet" href="modules/common/header/menu-bar-tmpl.css"/>
+<link rel="stylesheet" href="modules/pages/manageUsers/user.tmpl.css">
+<link rel="stylesheet" href="modules/common/header/menu-bar-tmpl.css">
+
+<div ng-loading="loading"></div> <!--For displaying loading icon-->
+<main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading" >
+  <div class="wrapperBox">
+    <div ng-show="isEmpty" style="text-align:center;"><h2>{{msg}}</h2></div>
+    <nav-bar></nav-bar>
+    <div class="middle-section">
+      <div class="managementTab" ng-switch on="menuItem.name">
+        <div ng-switch-when="aboutYou" id="aboutYou">
+          <h2 class="heading">About Us</h2>
+          <table class="table-data">
+            <tr>
+              <th>First Name:</th>
+              <td>{{userInfo.first_name}}</td>
+              <th>Last Name:</th>
+              <td>{{userInfo.last_name}}</td>
+            </tr>
+            <tr>
+              <th>Mobile No:</th>
+              <td>{{userInfo.phone}}</td>
+              <th>Email Id:</th>
+              <td>{{userInfo.email}}</td>
+            </tr>
+            <tr>
+              <th>Username:</th>
+              <td>{{userInfo.username}}</td>
+              <th>Your Profile Name:</th>
+              <td>{{userInfo.profile.name}}</td>
+            </tr>
+            <tr>
+              <th>Your Organisation:</th>
+              <td>{{userInfo.profile.organisation.name}}</td>
+              <th>Organisation Category:</th>
+              <td>{{userInfo.profile.organisation.category}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!--Start: organisation view tab -->
+      <div ng-switch-when="organisationCommon" id="organisationCommon">
+        <div class="managementPageTitle">
+          <h3>Organisation</h3>
+        </div>
+        <div class="row table">
+
+            <div class="panel-bodyUser organisation-view-tab-content">
+              <div class = "managementTable">
+                <div class="managementPageform-group">
+                   <div class = "row organisation-view-tab">
+                     <div class = "col-md-1"><label>Index </label></div>
+                     <div class = "col-md-3"><label>Organisation Name </label></div>
+                     <div class = "col-md-2"><label>Category</label></div>
+                     <div class = "col-md-2"><label>View </label></div>
+                     <div class = "col-md-2"><label>Edit </label></div>
+                     <div class = "col-md-2"><label>Delete </label></div>
+                   </div></br>
+                   <div class = "row" ng-repeat="organisation in organisationList| orderBy: 'name'">
+                     <div class = "col-md-1">
+                       {{$index+1}}
+                     </div>
+                     <div class = "col-md-3">
+                       <label>{{organisation.name}}</label>
+                     </div>
+                     <div class="col-md-2">
+                       {{organisation.category}}
+                     </div>
+                     <div class = "col-md-2"><a ng-click="goToOrganisation(contentItem.organisation,'view',organisation)">View </a></div>
+                     <div class = "col-md-2"><a ng-click="goToOrganisation(contentItem.organisation,'edit',organisation)">Edit </a></div>
+                     <div class = "col-md-2"><a ng-click="goToOrganisation(contentItem.organisation,'delete')">Delete </a></div>
+                   </div></br>
+                 </div>
+               </div>
+            </div>
+        </div>
+        <div class="create-org-btn">
+          <button type="button" class="btn btn-primary" name="button" ng-click="goToOrganisation(contentItem.organisation,'create')">Create New Organisation</button>
+        </div>
+      </div>
+      <!--End: organisation view tab -->
+      
+    </div><!-- middle-section -->
+    <div class="fixfooter"></div>
+  </div><!-- wrapperBox -->
+  <footer-bar></footer-bar>
+</main>
+
 
 <!-- Google Fonts -->
 <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
@@ -43,7 +130,7 @@
 <div class="maincontainer">
 
   <!-- <div class="row"> -->
-      <div class="col-sm-4">
+      <!-- <div class="col-sm-4">
           <div class="nav-left-side-menu" style="width:20%;margin-left:-30px;margin-top:50px;">
               <div class="brand">Menu</div>
               <i class="fa fa-bars fa-2x toggle-btn"></i>
@@ -123,7 +210,7 @@
                   </ul>
               </div>
           </div>
-      </div>
+      </div> -->
 
 
 
@@ -131,63 +218,7 @@
   <div class="managementRow">
     <div class="col-sm-8"  ng-switch on="menuItem.name">
       <div class="">
-        <!--Start: about you tab -->
-        <div ng-switch-when="aboutYou" id="aboutYou">
-          <div class="managementPageTitle">
-            <h3>About You</h3>
-          </div>
-          <div class="row table">
 
-              <div class="panel-bodyUser">
-                <div class = "displayTable">
-                  <div class="form-group">
-                     <div class = "row">
-                       <div class = "col-md-3"><label>First Name :</label></div>
-                       <div class = "col-md-3">
-                         <span>{{userInfo.first_name}}</span>
-                       </div>
-                       <div class = "col-md-3"><label>Last Name :</label></div>
-                       <div class = "col-md-3">
-                         <span>{{userInfo.last_name}}</span>
-                       </div>
-                     </div></br>
-                     <div class = "row">
-                       <div class = "col-md-3"><label>Mobile No :</label></div>
-                       <div class = "col-md-3">
-                         <span>{{userInfo.phone}}</span>
-                       </div>
-                       <div class = "col-md-3"><label>Email Id :</label></div>
-                       <div class = "col-md-3">
-                        <span>{{userInfo.email}}</span>
-                       </div>
-                     </div></br>
-                     <div class = "row">
-                       <div class = "col-md-3"><label>Username :</label></div>
-                       <div class = "col-md-3">
-                         <span>{{userInfo.username}}</span>
-                       </div>
-                       <div class = "col-md-3"><label>Your Profile Name :</label></div>
-                       <div class = "col-md-3">
-                         <span>{{userInfo.profile.name}}</span>
-                       </div>
-                     </div></br>
-                     <div class = "row">
-                       <div class = "col-md-3"><label>Your Organisation</label></div>
-                       <div class = "col-md-3">
-                         <span>{{userInfo.profile.organisation.name}}</span>
-                       </div>
-                       <div class = "col-md-3"><label>Organisation Category</label></div>
-                       <div class = "col-md-3">
-                        <span>{{userInfo.profile.organisation.category}}</span>
-                       </div>
-                     </div></br>
-                   </div>
-
-                 </div>
-              </div>
-          </div>
-        </div>
-        <!--End: about you tab -->
       <div ng-switch-when='createUser' id="createUser" style="margin-left:-260px;margin-top:-30px;">
 
         <div>
@@ -730,47 +761,7 @@
         </div>
       </div>
       <!--End: organisation create tab -->
-      <!--Start: organisation view tab -->
-      <div ng-switch-when="organisationCommon" id="organisationCommon">
-        <div class="managementPageTitle">
-          <h3>Organisation</h3>
-        </div>
-        <div class="row table">
-
-            <div class="panel-bodyUser organisation-view-tab-content">
-              <div class = "managementTable">
-                <div class="managementPageform-group">
-                   <div class = "row organisation-view-tab">
-                     <div class = "col-md-1"><label>Index </label></div>
-                     <div class = "col-md-3"><label>Organisation Name </label></div>
-                     <div class = "col-md-2"><label>Category</label></div>
-                     <div class = "col-md-2"><label>View </label></div>
-                     <div class = "col-md-2"><label>Edit </label></div>
-                     <div class = "col-md-2"><label>Delete </label></div>
-                   </div></br>
-                   <div class = "row" ng-repeat="organisation in organisationList| orderBy: 'name'">
-                     <div class = "col-md-1">
-                       {{$index+1}}
-                     </div>
-                     <div class = "col-md-3">
-                       <label>{{organisation.name}}</label>
-                     </div>
-                     <div class="col-md-2">
-                       {{organisation.category}}
-                     </div>
-                     <div class = "col-md-2"><a ng-click="goToOrganisation(contentItem.organisation,'view',organisation)">View </a></div>
-                     <div class = "col-md-2"><a ng-click="goToOrganisation(contentItem.organisation,'edit',organisation)">Edit </a></div>
-                     <div class = "col-md-2"><a ng-click="goToOrganisation(contentItem.organisation,'delete')">Delete </a></div>
-                   </div></br>
-                 </div>
-               </div>
-            </div>
-        </div>
-        <div class="create-org-btn">
-          <button type="button" class="btn btn-primary" name="button" ng-click="goToOrganisation(contentItem.organisation,'create')">Create New Organisation</button>
-        </div>
-      </div>
-      <!--End: organisation view tab -->
+      
       <!--Start: profile view tab -->
       <div ng-switch-when="profileView">
         <div class="managementPageTitle">
