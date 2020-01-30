@@ -20,7 +20,7 @@ angular.module('catalogueApp')
         {header : 'Area'},
         {header : 'SubArea'},
         {header : 'Pincode'},
-        {header : 'Radius'},
+        {header : 'Radius (Km)'},
         {header : 'Space Type'},
         {header : 'Action'}
       ];

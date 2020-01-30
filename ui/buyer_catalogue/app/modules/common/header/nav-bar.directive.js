@@ -1,5 +1,7 @@
+
 angular.module('machadaloCommon')
 .directive('navBar', function($window,$rootScope,constants,$timeout, permissions) {
+  let userInfo = JSON.parse(localStorage.userInfo);
   return {
     templateUrl: 'modules/common/header/nav-bar.tmpl.html',
     link: function($scope, element, attrs) {
@@ -10,6 +12,13 @@ angular.module('machadaloCommon')
                  $('body').removeClass('modal-open');
                  $('.modal-backdrop').remove();
               }
+                $('.forScroll').slimScroll({
+                    height: '100%'
+               });
         }
+
   };
 });
+
+
+ 

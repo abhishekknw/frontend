@@ -9,6 +9,7 @@ angular.module('catalogueApp')
       //for loading spinner
       $scope.loadSpinner = true;
       $scope.permissions = permissions.opsDashBoard;
+      $scope.userIcon = "icons/usericon.png";
 
       //Start: code added to show or hide details based on user permissions
       $scope.user_code = $window.localStorage.user_code;
@@ -35,7 +36,7 @@ angular.module('catalogueApp')
     opsDashBoardService.getProposalDetails()
     	.then(function onSuccess(response){
         console.log(response);
-    		$scope.proposals = response.data.data;
+        $scope.proposals = response.data.data;
         $scope.Data = $scope.proposals;
         console.log($scope.Data);
         if($scope.proposals.length == 0){
@@ -225,5 +226,56 @@ angular.module('catalogueApp')
         console.log(response);
       })
     }
+
+
+    $scope.commentsType = constants.comments_type;
+    $scope.selectedCommentForView = {};
+    $scope.commentModal = {};
+    $scope.campaign_id = ""
+
+    $scope.addComment = function(commentType) {
+      $scope.commentModal['shortlisted_spaces_id'] = 1;
+      $scope.commentModal['related_to'] = commentType;
+
+      opsDashBoardService.addComment($scope.campaign_id, 1, $scope.commentType, $scope.commentModal)
+        .then(function onSuccess(response) {
+          $scope.viewComments($scope.prposalDataForComment, "CAMPAIGN");
+          $scope.commentModal = {};
+          $scope.prposalDataForComment = undefined;
+          swal(constants.name, constants.add_data_success, constants.success);
+        }).catch(function onError(response) {
+          console.log(response);
+        })
+    }
+
+    $scope.viewComments = function(prposals, commentType) {
+
+      $scope.campaign_id = prposals.proposal.proposal_id;
+      $scope.commentsData = {};
+      if ($scope.selectedCommentForView.type == undefined) {
+        $scope.selectedCommentForView.type = $scope.commentsType[0];
+      }
+      $scope.prposalDataForComment = prposals;
+      $scope.commentType = commentType;
+      var relatedTo = commentType;
+      var spaceId = 1;
+
+      opsDashBoardService.viewComments($scope.campaign_id, spaceId, relatedTo)
+        .then(function onSuccess(response) {
+          $scope.commentModal = {};
+          $scope.commentsData = response.data.data;
+          $scope.viewInvForComments = Object.keys($scope.commentsData);
+          $scope.selectedInvForView = $scope.viewInvForComments[0];
+          $('#viewComments').modal('show');
+        }).catch(function onError(response) {
+          console.log(response);
+        })
+    }
+
+    $scope.checkDisabled = function (endDate){
+      
+      return (new Date(endDate) < new Date()) ;
+    }
+
   
 }]);//Controller function ends here

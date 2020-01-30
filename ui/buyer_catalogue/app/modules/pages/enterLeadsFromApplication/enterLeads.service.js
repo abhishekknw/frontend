@@ -17,7 +17,7 @@
         }
 
         enterLeadsService.saveLeads = function(formId, data){
-          var url = url_base_leads + formId + "/insert_lead";
+          var url = url_base_leads + formId + "/insert_lead"; 
           return machadaloHttp.post(url, data);
         }
 
@@ -39,6 +39,16 @@
         enterLeadsService.updateLeadDetails = function(formId,supplierId,entryId, data){
           var url = url_base_leads + formId + "/update-leads-entry/" + supplierId + "/" + entryId + "/";
           return machadaloHttp.put(url, data);
+        }
+        
+        enterLeadsService.getEntryListLeadsCount = function(formId, supplierId){
+          let url =""
+          if(supplierId){
+            url = url_base_leads + formId + "/entry_list_count/"  + supplierId;
+          }else{
+            url = url_base_leads + formId + "/entry_list_count/";
+          }
+          return machadaloHttp.get(url);
         }
 
         return enterLeadsService;
