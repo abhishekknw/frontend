@@ -518,6 +518,9 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
 .table-data tr:nth-child(odd) {
   background: #ffffff;
 }
+.table-top {
+	margin-bottom: 30px;
+}
 .layoutfixed {
   table-layout: fixed;
   border-collapse: collapse;
