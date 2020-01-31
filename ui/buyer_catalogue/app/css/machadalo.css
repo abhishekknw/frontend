@@ -422,9 +422,9 @@ aside ul li a:focus {
 aside ul li ul.child,
 aside ul li ul.child li ul.subchild,
 aside ul li ul.child li ul.subchild li ul.subchildsub {
-  width: 200px;
+  width: 210px;
   position: absolute;
-  right: -200px;
+  right: -210px;
   top: 0;
   z-index: 1;
   opacity: 0;
@@ -566,6 +566,13 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
 .fieldBoxFull .field {
 	border: 2px solid rgba(0,0,0,0.10);
 }
+.backBtn {
+  float: right;
+  margin-top: 30px;
+  margin-left: 20px;
+  position: relative;
+  z-index: 1;
+}
 
 /*Change Password*/
 .changePasswordBox {
@@ -589,4 +596,17 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
 .changePasswordBox span {
 	display: block;
 	margin-bottom: 10px;
+}
+
+/*Management Section*/
+.section-display table {
+  margin-bottom: 30px;
+}
+.section-display .grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 30px;
+}
+.section-display#profile .heading {
+	margin-top: 20px;
 }
