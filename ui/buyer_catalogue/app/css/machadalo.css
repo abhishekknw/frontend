@@ -633,3 +633,36 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
 	width: 48px;
 	height: 48px;
 }
+.gridTwoColumnSection .has-error .error {
+	border: 1px solid #e84478;
+}
+.gridTwoColumnSection .form-group {
+	margin-bottom: 0;
+}
+.gridTwoColumnSection .field {
+	margin-bottom: 0;
+}
+.section-display .tab-content {
+	box-shadow: none;
+	padding: 0;
+	margin-bottom: 30px;
+}
+.section-display .moving-tab {
+	display: none;
+}
+.onboardTab {
+	margin-bottom: 30px;
+}
+.onboardTab li {
+	text-align: center;
+	width: 150px !important;
+}
+.onboardTab li a {
+	color: #333;
+}
+.onboardTab li.active a {
+	background: linear-gradient(-85deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradientBG 15s ease infinite;
+	transition: all 0.5s ease-in-out;
+}
