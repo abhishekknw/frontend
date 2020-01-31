@@ -8,7 +8,7 @@ angular.module('catalogueApp')
       $scope.leadKeyTypes = [
         {name : 'STRING'},
         {name : 'INT'},
-        {name : 'EMAIL'},
+        {name : 'EMAIL'}, 
         {name : 'PASSWORD'},
         {name : 'PHONE'},
         {name : 'RADIO'},
@@ -76,11 +76,12 @@ angular.module('catalogueApp')
         angular.forEach($scope.leadModelData, function(item){
             var temp_data = {
               item_id : item.item_id,
-              value : item.value
+              value : new Date (item.value)
             }
+            console.log("temp_data", temp_data);
             data.leads_form_entries.push(temp_data);
         });
-       
+            console.log("data", data);
         enterLeadsService.saveLeads($scope.formId,data)
         .then(function onSuccess(response){
           $scope.leadModelData = [];
@@ -94,6 +95,10 @@ angular.module('catalogueApp')
         enterLeadsService.getLeadsBySupplier($scope.formId,$scope.supplierId)
         .then(function onSuccess(response){
           $scope.leadsData = response.data.data;
+          console.log("$scope.leadsData", $scope.leadsData);
+          // for (var x in $scope.leadsData){
+          //   new Date()
+          // }
         }).catch(function onError(response){
         })
       }
@@ -102,8 +107,6 @@ angular.module('catalogueApp')
       }
 
       $scope.getEditLeads = function(entryId){
-        console.log("entryId", entryId);
-        console.log("leadsData.values", $scope.leadsData.values);
         $scope.entryId = entryId;
           enterLeadsService.getEditLeads($scope.formId,$scope.supplierId,entryId)
           .then(function onSuccess(response){
