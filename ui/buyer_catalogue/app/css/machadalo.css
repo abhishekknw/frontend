@@ -285,7 +285,7 @@ header .topRight .top-menu li:hover ul {
   position: fixed;
   top: 18px;
   left: 20px;
-  z-index: 5;
+  z-index: 6;
   border: 0;
   background: none;
   display: block;
@@ -368,7 +368,7 @@ aside {
   left: -100%;
   top: 0;
   bottom: 0;
-  z-index: 4;
+  z-index: 5;
   background: linear-gradient(-85deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
