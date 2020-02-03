@@ -73,7 +73,12 @@
                 </div>
               </td>
               <td class="cellWidth" ng-if="proposal.proposal.campaign_state == 'PTC'">
+                <span ng-if="proposal.assignment_detail.assigned_to !='Nobody'">
                 {{proposal.assignment_detail.assigned_to}}
+                </span>
+                <span ng-if="proposal.assignment_detail.assigned_to =='Nobody'">
+                    NA
+                    </span>
               </td>
               <td class="cellWidth" ng-if="proposal.proposal.campaign_state != 'PTC'">
                 NA

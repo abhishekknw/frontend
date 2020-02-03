@@ -24,7 +24,6 @@ angular.module('machadaloPages')
 
       $scope.uploadFiles = function (file) {
         $scope.model.file = file;
-
       }
 
       $scope.submitLead = function () {

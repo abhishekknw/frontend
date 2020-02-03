@@ -725,11 +725,12 @@
                 </select>
 
                 <div ng-if="supplier_err" ><font color="red">Please select supplier</font></div>
+               
                 <select class="form-control input-size" style="width:140px; margin-left:20px;" ng-model="indexData.center_index"
                 ng-change="selectCenter(indexData.center_index)" required>
                 <option value="">Select Center</option>
                 <option ng-repeat="center_var in releaseDetailsData" value="{{center_var.id}}">
-                  {{center_var.center_name}}</option>
+                  {{center_var.city}}</option>
               </select>
               <div ng-if="center_err" > <font color="red">Please select center</font></div>
 

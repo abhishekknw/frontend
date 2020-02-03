@@ -268,6 +268,7 @@ $scope.addNewPhase =true;
 
           if ($scope.initialReleaseData) {
             $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
+            console.log('===========================================',$scope.releaseDetails.campaign)
             $scope.releaseDetailsData = $scope.releaseDetails.campaign.centerData;
             var centerSuppliers = $scope.releaseDetails.campaign.centerSuppliers;
             if(centerSuppliers){
@@ -496,14 +497,13 @@ $scope.addNewPhase =true;
 
         //Start: function to select center at add more suplliers
     $scope.selectCenter = function(center_index){
-     
       try{
        $scope.center_index = center_index;
        if(center_index != null){
          for(var i=0;i<$scope.releaseDetails.campaign.centerData.length; i++){
            if($scope.releaseDetails.campaign.centerData[i].id == center_index){
                $scope.current_center_index = i;
-                $scope.supplier_center = $scope.releaseDetails.campaign.centerData[i].center_name  
+                $scope.supplier_center = $scope.releaseDetails.campaign.centerData[i].city  
            }
          }
         //$scope.supplier_center = $scope.releaseDetails.campaign.centerData.center_name;

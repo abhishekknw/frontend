@@ -11,7 +11,7 @@ angular.module('catalogueApp')
       .then(function onSuccess(response){
         console.log(response);
         $scope.proposalData = response.data.data;
-        console.log($scope.proposalData);
+        console.log('++++++++++++++-------------------',$scope.proposalData);
         $scope.proposalData.tentative_start_date = new Date($scope.proposalData.tentative_start_date);
         $scope.proposalData.tentative_end_date = new Date($scope.proposalData.tentative_end_date);
         $scope.proposalData.startDate = new Date($scope.proposalData.tentative_start_date);

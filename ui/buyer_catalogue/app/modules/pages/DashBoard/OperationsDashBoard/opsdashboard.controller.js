@@ -37,6 +37,7 @@ angular.module('catalogueApp')
     	.then(function onSuccess(response){
         console.log(response);
         $scope.proposals = response.data.data;
+        console.log('11111111111111111111111111111111111111',$scope.proposals)
         $scope.Data = $scope.proposals;
         console.log($scope.Data);
         if($scope.proposals.length == 0){
