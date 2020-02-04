@@ -1971,13 +1971,14 @@ $scope.gridViewSummary = {};
     }
     //Start: function to select center at add more suplliers
     $scope.selectCenter = function(center_index){
+      
      try{
       $scope.center_index = center_index;
       if(center_index != null){
         for(var i=0;i<$scope.center_data.length; i++){
           if($scope.center_data[i].center.id == center_index){
               $scope.current_center_index = i;
-               $scope.supplier_center = $scope.center_data[i].center.center_name  
+               $scope.supplier_center = $scope.center_data[i].center.city  
           }
         }
         if($scope.supplier_center){
@@ -1991,11 +1992,8 @@ $scope.gridViewSummary = {};
             });
         } else {
           $scope.areas = [];
-        }
-       
-          
+        }  
       }
-     
     }catch(error){
       console.log(error.message);
     }
