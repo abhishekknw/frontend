@@ -576,8 +576,6 @@ angular.module('catalogueApp')
           createProposalService.getLocations('sub_areas', $scope.areas[index].id)
             .then(function onSuccess(response) {
               $scope.sub_areas = response.data;
-
-              console.log('subareaaa', $scope.sub_areas)
             });
         }
 
