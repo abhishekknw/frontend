@@ -25,6 +25,7 @@ angular.module('machadaloPages')
       $scope.uploadFiles = function (file) {
         $scope.model.file = file;
       }
+      
 
       $scope.submitLead = function () {
         if($scope.model.file){
@@ -41,7 +42,15 @@ angular.module('machadaloPages')
             $scope.uploadResponse = response.data.data;
             $scope.matched_societies = $scope.uploadResponse.matched_societies;
             $scope.unmatched_societies = $scope.uploadResponse.unmatched_societies;
-             $scope.hideSpinner = true;
+
+            $scope.lead_count_matched = $scope.uploadResponse.lead_count_matched;
+            $scope.lead_count_unmatched = $scope.uploadResponse.lead_count_unmatched;
+
+            
+
+            
+
+            $scope.hideSpinner = true;
              swal(constants.name,constants.uploadfile_success,constants.success);
              
              // uploadFileToAmazonServer(response.data.data,file);

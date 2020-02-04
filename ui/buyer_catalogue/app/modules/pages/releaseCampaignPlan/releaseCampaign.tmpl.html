@@ -18,11 +18,11 @@
   <div class="panel-body" style="text-align:center;margin-top:-20px">
     <div class="row">
       <div class="panel panel-default">
-        <div class="panel-heading">
-          <Label>Campaign Id:</Label><span class="proposal-details">{{releaseDetails.campaign.proposal_id}}</span>
-          <Label class="labels">Campaign Name:</Label><span class="proposal-details">{{releaseDetails.campaign.name}}</span>
-          <Label class="labels">BD Owner:</Label><span class="proposal-details">{{releaseDetails.campaign.created_by}}</span>
-          <Label class="labels">Campaign State:&nbsp;</Label><span class="proposal-details">{{getCampaignState(releaseDetails.campaign.campaign_state)}}</span>
+        <div class="panel-heading col-md-12">
+          <span > Campaign Id:</span><span class="proposal-details">{{releaseDetails.campaign.proposal_id}}</span>
+          <span > Campaign Name:</span><span class="proposal-details">{{releaseDetails.campaign.name}}</span>
+          <span >BD Owner:</span><span class="proposal-details">{{releaseDetails.campaign.created_by}}</span>
+          <span >Campaign State:&nbsp;</span><span class="proposal-details">{{getCampaignState(releaseDetails.campaign.campaign_state)}}</span>
     
 
         </div>
@@ -34,13 +34,39 @@
   <div class="panel-body table-style">
     <div style="padding: 0 15px;">
         <div class="row">
-          <div class="col-xs-11 col-md-3">
-            <select class="col-md-6 form-control" name="" ng-model="selectedUser.value" style="margin-bottom: 20px;">
+            <div class="col-xs-11 col-md-2">
+                <label>Supplier Type</label>
+            <select class="form-control input-size" value="selectedUser.supplier_type_filter" ng-change="changeType()"   ng-model="selectedUser.supplier_type_filter">
+                <option ng-if="supplier_names.length > 1"  value="">All</option>
+                <option  ng-repeat="supplier in supplier_names" ng-selected="selectedUser.supplier_type_filter_selected == supplier.name" value="{{supplier.code}}" required>{{supplier.name}}</option>
+              </select>
+            </div>
+
+            <div class="col-xs-11 col-md-2">
+                <label>Booking Status</label>
+                <select  class="form-control spacing input-width" ng-model="selectedUser.booking_status_code" >
+                    <option value="">All</option>
+                  <option  ng-repeat="item in booking_status" value="{{item.code}}">{{item.name}}</option> 
+                  </select>
+            </div>
+
+            <div class="col-xs-11 col-md-2">
+                <label>Phases</label>
+            <select  name="phase" class="form-control spacing input-width-phase" ng-model="selectedUser.phase_id" >
+                <option value="">All</option>
+                <option ng-repeat="phase in phases | unique:'phase_no'" value="{{phase.id}}">{{phase.phase_no}}</option>
+              </select>
+        </div>
+
+          <div class="col-xs-11 col-md-2">
+              <label>User</label>
+            <select class="col-md-6 form-control" name="" ng-model="selectedUser.value" style="margin-bottom: 20px;" ng-options="user.id as user.username for user in assignedUserList | unique:'id'">
               <option value="">All</option>
-              <option value="{{user.id}}" ng-repeat="user in assignedUserList">{{user.username}}</option>
+              <!-- <option value="{{user.id}}" ng-repeat="user in assignedUserList">{{user.username}}</option> -->
             </select>
           </div>
-          <div class="col-xs-11 col-md-3">
+          <div class="col-xs-11 col-md-2">
+              <label>Next Action Date</label>
             <input
               date-range-picker
               class="form-control date-picker"
@@ -52,11 +78,12 @@
               style="margin-bottom: 20px;"
             />
           </div>
-          <div class="col-xs-11 col-md-3">
+          <div class="col-xs-11 col-md-2">
+              <label>Search<lable>
             <input id="searchId"  type="text" ng-model="customPopupSelected" placeholder="Search.." uib-typeahead="supplier as supplier.name for supplier in allShortlistedSuppliers | filter:{name:$viewValue}"
             class="form-control" typeahead-on-select="getSearchedSupplierData(customPopupSelected)" style="margin-bottom: 20px;">
           </div>
-          <div class="col-xs-11 col-md-3">
+          <div class="col-xs-11 col-md-2">
               <button type="button" name="button" class="btn btn-small btn-primary" ng-click="changeSupplierData()" style="margin-bottom: 20px;">Reset</button>
               <button class="btn btn-danger" ng-click="getFilteredResult()" style="margin-bottom: 20px; margin-left: 5px;">Submit</button>
           </div>
@@ -66,61 +93,165 @@
       <div class="table-wrapper" style="overflow-x: auto;">
         <table class="table table-striped table-suppliers" data-ng-init="initTable()">
           <thead>
-            <tr>
-                <th style="width:40px;">Sr No</th>
-                <th>Supplier Name</th>
-                <th>Area <br>(Sub Area)</th>
-                <th>Address <br>(Landmark)</th> 
-                <th>RelationShip Data</th>
-                <th>Average Weekend(Daily Footfall)</th>
-                <th>Average Weekday(Daily Footfall)</th>
-                <th>Contacts Details</th>
-                <th>Assign User</th>
-                <th>Booking Priority</th>
-                <th>Booking Status <br> and Sub Status</th>
-                <th>Phase</th>
-                <th ng-if="canViewInternalComments">Internal Comments</th>
-                <th>Comments</th>
-                <th ng-if="releaseDetails.campaign.proposal_id.indexOf('NOB') == -1">Next Action Date</th>
-                <th ng-if="releaseDetails.campaign.proposal_id.indexOf('NOB') > -1">Next Meeting</th>
-                <th>Inventory Type</th>
-                <th>Inventory Count</th>
-                <th>Inventory Days</th>
-                <th>Inventory Supplier Price</th>
-                <th>Total Supplier Price Per Footfall (Weekend) </th>
-                <th>Negotiated Price</th>
-                <th>Cost Per Average Daily Footfall</th>
-                <th>Freebies</th>
-                <th>Mode Of Payment</th>
-                <th>Transaction/Cheque Number</th>
-                <th>Payment Status</th>
-                <th>Permission Box</th>
-                <th>Receipt</th>
-                <th>Lead Performance Summary</th>
-                <th ng-if="releaseDetails.campaign.proposal_id.indexOf('NOB') == -1">Completion Status</th>
-                <th ng-if="releaseDetails.campaign.proposal_id.indexOf('NOB') > -1">Conversion Status</th>
-                <th>Delete Action</th>
+          
+        <!-- <tr>
+              <th>{{detailsHeader.srNo}}</th> 
+              <th>{{detailsHeader.name}}</th>
+              <th>{{detailsHeader.supplier_id}}</th>
+              <th>{{detailsHeader.supplier_type}}</th>
+              <th>{{detailsHeader.area_subArea}}</th>
+              <th>{{detailsHeader.address_landmark}}</th>
+              <th>{{detailsHeader.relation_ship_data}}</th>
+
+              <th ng-if="!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter == 'RS' ">{{detailsHeader.flat_count}}</th>
+              <th ng-if="!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter == 'RS' ">{{detailsHeader.tower_count}}</th>
+
+              <th ng-if="selectedUser.supplier_type_filter != 'RS' ">{{detailsHeader.average_weekend_daily_footfall}}</th>
+              <th ng-if="selectedUser.supplier_type_filter != 'RS' ">{{detailsHeader.average_weekday_daily_footfall}}</th>
+   
+              <th>{{detailsHeader.contacts_details}}</th>
+              <th>{{detailsHeader.assign_user}}</th>
+              <th>{{detailsHeader.booking_priority}}</th>
+              <th>{{detailsHeader.booking_status_and_sub_status}}</th>
+              <th>{{detailsHeader.phase}}</th>
+              <th>{{detailsHeader.internal_comments}}</th>
+              <th>{{detailsHeader.comments}}</th>
+              <th>{{detailsHeader.next_action_date}}</th>
+              <th>{{detailsHeader.inventory_type}}</th>
+              <th>{{detailsHeader.inventory_count}}</th>
+              <th>{{detailsHeader.inventory_days}}</th>
+              <th>{{detailsHeader.inventory_supplier_price}}</th>
+
+              <th ng-if="!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter == 'RS' ">{{detailsHeader.total_supplier_price}}</th>
+              <th ng-if="selectedUser.supplier_type_filter != 'RS' ">{{detailsHeader.total_supplier_price_per_footfall_weekend}}</th>
+
+              <th>{{detailsHeader.negotiated_price}}</th>
+
+              <th ng-if="!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter == 'RS' ">{{detailsHeader.cost_per_flat}}</th>
+              <th ng-if="selectedUser.supplier_type_filter != 'RS' ">{{detailsHeader.cost_per_average_daily_footfall}}</th>
+             
+              <th>{{detailsHeader.freebies}}</th>
+              <th>{{detailsHeader.mode_of_payment}}</th>
+              <th>{{detailsHeader.transaction_cheque_number}}</th>
+              <th>{{detailsHeader.payment_status}}</th>
+              <th>{{detailsHeader.permission_box}}</th>
+              <th>{{detailsHeader.receipt}}</th>
+              <th>{{detailsHeader.lead_performance_summary}}</th>
+              <th>{{detailsHeader.completion_status}}</th>
+              <th>{{detailsHeader.delete_action}}</th>
+          </tr> -->
+
+          <tr ng-if="!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter == 'RS'">
+              <th>{{detailsHeader.srNo}}</th> 
+              <th>{{detailsHeader.name}}</th>
+              <th>{{detailsHeader.supplier_id}}</th>
+              <th>{{detailsHeader.supplier_type}}</th>
+              <th>{{detailsHeader.area_subArea}}</th>
+              <th>{{detailsHeader.address_landmark}}</th>
+              <th>{{detailsHeader.relation_ship_data}}</th>
+              <th >{{detailsHeader.flat_count}}</th>
+              <th >{{detailsHeader.tower_count}}</th>
+              <th>{{detailsHeader.contacts_details}}</th>
+              <th>{{detailsHeader.assign_user}}</th>
+              <th>{{detailsHeader.booking_priority}}</th>
+              <th>{{detailsHeader.booking_status_and_sub_status}}</th>
+              <th>{{detailsHeader.phase}}</th>
+              <th>{{detailsHeader.internal_comments}}</th>
+              <th>{{detailsHeader.comments}}</th>
+              <th>{{detailsHeader.next_action_date}}</th>
+              <th>{{detailsHeader.inventory_type}}</th>
+              <th>{{detailsHeader.inventory_count}}</th>
+              <th>{{detailsHeader.inventory_days}}</th>
+              <th>{{detailsHeader.inventory_supplier_price}}</th>
+              <th>{{detailsHeader.total_supplier_price}}</th>
+              <th>{{detailsHeader.negotiated_price}}</th>
+              <th>{{detailsHeader.cost_per_flat}}</th>
+              <th>{{detailsHeader.freebies}}</th>
+              <th>{{detailsHeader.mode_of_payment}}</th>
+              <th>{{detailsHeader.transaction_cheque_number}}</th>
+              <th>{{detailsHeader.payment_status}}</th>
+              <th>{{detailsHeader.permission_box}}</th>
+              <th>{{detailsHeader.receipt}}</th>
+              <th>{{detailsHeader.lead_performance_summary}}</th>
+              <th>{{detailsHeader.completion_status}}</th>
+              <th>{{detailsHeader.delete_action}}</th>
           </tr>
+
+          <tr ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter != 'RS'">
+              <th>{{detailsHeader.srNo}}</th> 
+              <th>{{detailsHeader.name}}</th>
+              <th>{{detailsHeader.supplier_id}}</th>
+              <th>{{detailsHeader.supplier_type}}</th>
+              <th>{{detailsHeader.area_subArea}}</th>
+              <th>{{detailsHeader.address_landmark}}</th>
+              <th>{{detailsHeader.relation_ship_data}}</th>
+              <th >{{detailsHeader.average_weekend_daily_footfall}}</th>
+              <th >{{detailsHeader.average_weekday_daily_footfall}}</th>
+              <th>{{detailsHeader.contacts_details}}</th>
+              <th>{{detailsHeader.assign_user}}</th>
+              <th>{{detailsHeader.booking_priority}}</th>
+              <th>{{detailsHeader.booking_status_and_sub_status}}</th>
+              <th>{{detailsHeader.phase}}</th>
+              <th>{{detailsHeader.internal_comments}}</th>
+              <th>{{detailsHeader.comments}}</th>
+              <th>{{detailsHeader.next_action_date}}</th>
+              <th>{{detailsHeader.inventory_type}}</th>
+              <th>{{detailsHeader.inventory_count}}</th>
+              <th>{{detailsHeader.inventory_days}}</th>
+              <th>{{detailsHeader.inventory_supplier_price}}</th>       
+              <th>{{detailsHeader.total_supplier_price_per_footfall_weekend}}</th>
+              <th>{{detailsHeader.negotiated_price}}</th>     
+              <th>{{detailsHeader.cost_per_average_daily_footfall}}</th>
+              <th>{{detailsHeader.freebies}}</th>
+              <th>{{detailsHeader.mode_of_payment}}</th>
+              <th>{{detailsHeader.transaction_cheque_number}}</th>
+              <th>{{detailsHeader.payment_status}}</th>
+              <th>{{detailsHeader.permission_box}}</th>
+              <th>{{detailsHeader.receipt}}</th>
+              <th>{{detailsHeader.lead_performance_summary}}</th>
+              <th>{{detailsHeader.completion_status}}</th>
+              <th>{{detailsHeader.delete_action}}</th>
+          </tr>
+
           </thead>
           <tbody dir-paginate="supplier in releaseDetails.shortlisted_suppliers | itemsPerPage: suppliersPerPage" total-items="totalSuppliers" current-page="pagination.current"
             track by "$index">
-            <tr ng-repeat="(key,filter) in supplier.shortlisted_inventories" ng-disabled="$index != '15'">
+            <div ng-if="releaseDetails.shortlisted_suppliers.length > 0">
+            <tr ng-if="releaseDetails.shortlisted_suppliers.length > 0" ng-repeat="(key,filter) in supplier.shortlisted_inventories" ng-disabled="$index != '15'">
+             
               <td rowspan="{{key.length}}" ng-show="$first" style="width:40px;"
               ng-style="((supplier.booking_status==='BK' || supplier.booking_status==='MC') && {'background-color':'green'}) ||((supplier.booking_status==='UN' || supplier.booking_status==='NI' || supplier.booking_status==='NE') && {'background-color':'white'} )||(
               (supplier.booking_status==='SR') && {'background-color':'red'}) ||(
               (supplier.booking_status==='DP' ||supplier.booking_status==='TB'||supplier.booking_status==='MF'||supplier.booking_status==='RE' ) && {'background-color':'yellow'}) ||(
               supplier.booking_status && {'background-color':'brown'})">{{$parent.$index + 1}}</td>
+
               <td class="" rowspan="{{key.length}}" ng-show="$first">
               <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank"
               style="text-decoration: underline; cursor: pointer;color:#337ab7;font-weight: 600;">{{supplier.name}}<br> </a>
-              ({{supplier.retail_shop_type}}<span ng-if="supplier.retail_shop_type && supplier.category_name">,</span>{{supplier.category_name}})</td>
-              <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.area}} <br> ({{supplier.subarea}}) <br> {{supplier.address2}}</td>
-              <td class="" rowspan="{{key.length}}" ng-show="$first" width="200"> {{supplier.address1}} <br> ({{supplier.landmark}})</td>
+              <span ng-if="supplier.quality_rating">(</span>{{supplier.quality_rating}}<span ng-if="supplier.quality_rating">)</span></td>
+
+              <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.object_id}}</td>
+
+              <td class="" rowspan="{{key.length}}" ng-show="$first">
+                <span ng-if="supplier.supplierCode == 'RS'">Residential Society</span>
+                <span ng-if="supplier.supplierCode == 'CP'">Corporate Parks</span>
+                <span ng-if="supplier.supplierCode == 'BS'">Bus Shelter</span>
+                <span ng-if="supplier.supplierCode == 'GY'">Gym</span>
+                <span ng-if="supplier.supplierCode == 'SA'">Saloon</span>
+                <span ng-if="supplier.supplierCode == 'RE'">Retail Store</span>
+              </td>
+
+              <td  class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.area}} <br> <span ng-if="supplier.subarea">(</span>{{supplier.subarea}}<span ng-if="supplier.subarea">)</span> <br> {{supplier.address2}}</td>
+              
+              <td class="" rowspan="{{key.length}}" ng-show="$first" width="200"> {{supplier.address1}} <br> <span ng-if="supplier.landmark">(</span>{{supplier.landmark}}<span ng-if="supplier.landmark">)</span></td>
               <!-- <td class="" rowspan="{{key.length}}" ng-show="$first" width="200">Inventory Owner :<b> Machadalo</b>, Feedback:{{supplier.feedback}}</td> -->
+             
               <td class="" rowspan="{{key.length}}" ng-show="$first" width="200">
                 <button type="button" class="btn btn-danger"name="button"  ng-click="getRelationShipData(supplier)" data-target="#relationshipModal" data-toggle="modal">View Data</button>
               </td>
+             
               <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.flat_count}}</td>
+              
               <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.tower_count}}</td>
   
               <td class="" rowspan="{{key.length}}" ng-show="$first">
@@ -131,8 +262,9 @@
                 <a  ng-disabled="!supplier.phase_no" class="" data-target="#contactModal" data-toggle="modal" ng-click="setContact(supplier)">
                   <b>View More/Add</b></a>
               </td>
+              
               <td rowspan="{{key.length}}" ng-show="$first">
-                <p ng-repeat="user in assignedUserList | orderBy: '-updated_at'" ng-if="supplier.supplier_id == user.supplier_id">{{user.username | uppercase}} <br>{{ user.updated_at | date }}</p>
+                <p ng-repeat="user in assignedUserList | orderBy: '-updated_at'" ng-if="supplier.supplier_id == user.supplier_id">{{user.username | uppercase}}<br>{{ user.updated_at | date }}</p>
                 <button type="button" ng-disabled="supplier.is_completed" class="btn btn-danger"name="button" data-toggle="modal" data-target="#addUserModal" ng-click="setUserSupplier(supplier)">Assign User</button>
                   <div id="addUserModal" class="modal fade">
                     <div class="modal-dialog">
@@ -152,6 +284,7 @@
                     </div>
                   </div>
                 </td>
+                
                 <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first">
                   <select  class="form-control spacing input-width" ng-model="supplier.booking_priority" ng-disabled="supplier.is_completed">
                     <option value="" disabled=""  >None</option>
@@ -159,12 +292,14 @@
                       {{item.name}}</option>
                   </select>
                 </td>
+                
                 <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first" >
                   <select  class="form-control spacing input-width" ng-model="supplier.booking_status" permission = "[permissions.changeBookingStatus]" ng-change="changePhase(supplier)" ng-disabled="supplier.is_completed">
                     <option style="width:100%;" ng-repeat="item in booking_status" value="{{item.code}}"
                     ng-if="supplier.booking_status == undefined ? supplier.booking_status = booking_status[0].code : 1"
-                    >{{item.name}}</option>
+                    >{{item.name}}</option> 
                   </select>
+                  
                   <br>
                     <select  class="form-control spacing input-width" ng-model="supplier.booking_sub_status" permission = "[permissions.changeBookingStatus]" ng-change="changePhase(supplier)" ng-if="supplier.booking_status=='MF'" ng-disabled="supplier.is_completed">
                       <option style="width:100%;" ng-repeat="item in meeting_status" value="{{item.code}}"
@@ -204,8 +339,9 @@
                         {{item.name}}</option>
                     </select>
                 </td> 
+               
                 <td  class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="phaseform">
-                  <input class="form-control spacing input-width" ng-disabled="supplier.booking_status != 'BK' || supplier.is_completed" type="text" ng-model="phaseMappingList[supplier.phase_no].phase_no"  />
+                  <input class="form-control spacing input-width" type="text" ng-disabled="true" ng-model="phaseMappingList[supplier.phase_no].phase_no"  />
                   <select  ng-disabled="supplier.booking_status != 'BK' || supplier.is_completed" name="phase" class="form-control spacing input-width-phase" ng-change="setPhase(supplier,supplier.phaseNo)" ng-model="supplier.phaseNo" min="1" permission = "[permissions.addPhase, permissions.viewPhase]">
                     <option value="" disabled>Select Phase</option>
                     <!-- <option value="" >None</option> -->
@@ -213,6 +349,7 @@
                   </select>
                   <span class="error" ng-show="phaseform.phase.$error.min">{{positiveNoError}}</span>
                 </td>
+               
                 <td ng-if="canViewInternalComments" rowspan="{{key.length}}" ng-show="$first">
                   <div class="comment" ng-if="comments[supplier.id]">
                     <b>{{comments[supplier.id].internal.username}} </b> <span> <br><small> {{comments[supplier.id].internal.created_on | date}}</small></span><br>
@@ -221,7 +358,8 @@
                   <button type="button" class="btn btn-primary" ng-click="viewComments(supplier, 'INTERNAL')">View/Add</button>
                   <br>
                 </td>
-                </td>
+                
+              <!-- </td> -->
                 <td rowspan="{{key.length}}" ng-show="$first">
                   <div class="comment" ng-if="comments[supplier.id]">
                     <b>{{comments[supplier.id].external.username}} </b> <span> <br><small> {{comments[supplier.id].external.created_on | date}}</small></span><br>
@@ -230,36 +368,48 @@
                   <button type="button" class="btn btn-primary" ng-click="viewComments(supplier, 'EXTERNAL')">View/Add</button>
                   <br>
                 </td>
+
                 <td rowspan="{{key.length}}" ng-show="$first">
                   <input class="form-control spacing input-width" ng-model="supplier.next_action_date" type="date" name="" ng-disabled="supplier.is_completed">
                 </td>
-                <td ng-if="key=='NA'">{{key}}</td>
-                <td ng-if="key!='NA'"><a class="" data-target="#invTypeModal" data-toggle="modal" ng-click="setInventoryIds(filter)" permission = "[permissions.viewInventoryIds]" ng-disabled="supplier.is_completed" ><b>{{key}}</b></a>
+
+                <td ng-if="key=='NA'">{{key}} </td>
+
+                <td ng-if="key!='NA'"><a class="" data-target="#invTypeModal" data-toggle="modal" ng-click="setInventoryIds(filter)" permission = "[permissions.viewInventoryIds]" ng-disabled="supplier.is_completed" ><b>{{key}} </b></a>
                   <multiselect ng-if="key=='STALL'" ng-model="supplier.stall_locations" options="StallOptions" show-select-all="true" show-unselect-all="true" ng-disabled="supplier.is_completed">
                   </multiselect>
                   <multiselect ng-if="key=='SUNBOARD'" ng-model="supplier.sunboard_location" options="SunboardOptions" show-select-all="true" show-unselect-all="true" ng-disabled="supplier.is_completed">
                   </multiselect>
                 </td>
+
               <td class="" ng-if="key=='FLIER'">{{supplier.flat_count}}</td>
-              <td class="" ng-if="key!='FLIER'">{{filter.total_count}}</td> 
+
+              <td class="" ng-if="key!='FLIER'">{{filter.total_count}}</td>
+              <!-- <td class="" ng-if="key!='FLIER'"> <button  class="btn" data-target="#addInventoryModal" ng-disabled="!filter.total_count" style="background: #5bc0de; color: white;margin-left:20px;" data-toggle="modal" ng-click="getInventoryRelatedData(supplier,key,$parent.$parent.$parent.$index)"><span ng-if="filter.total_count">{{filter.total_count}}</span> <span ng-if="!filter.total_count">N/A</span></button></td> -->
               <td  class="">
                 <input class="form-control" type="number" ng-if="key!='FLIER'" style="max-width:70px;" ng-model="filter.days" ng-change="changeInventoryInDays(supplier,key,filter)" ng-disabled="supplier.is_completed">
+              
               </td>
+
               <td class="">{{filter.price| currency : "₹"}}</td>
-              <td class="" rowspan="{{key.length}}" ng-show="$first">{{filter.totalPrice| currency : "₹"}} ({{filter.totalPrice/supplier.flat_count|limitTo:8| currency : "₹"}})</td>
+
+              <td class="" rowspan="{{key.length}}" ng-show="$first">{{filter.totalPrice| currency : "₹"}} <span ng-if="filter.totalPrice/supplier.flat_count ==0 || filter.totalPrice/supplier.flat_count">(</span>{{filter.totalPrice/supplier.flat_count|limitTo:8| currency : "₹"}}<span ng-if="filter.totalPrice/supplier.flat_count == 0 || filter.totalPrice/supplier.flat_count">)</span></td>
+              
               <td class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="priceform">
                 <span  ng-disabled="!supplier.phase_no" class="error" ng-show="priceform.price.$error.min">{{positiveNoError}}</span>
                 <input  ng-disabled="!supplier.phase_no || supplier.is_completed " type="number" name="price" ng-model="supplier.total_negotiated_price" class="form-control spacing input-width" min="0" permission = "[permissions.addNegotiatedPrice]">
               <br>{{(supplier.total_negotiated_price / supplier.flat_count)|| 0 | limitTo:8}}  </td>
+              
               <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
                   <input  ng-disabled="!supplier.phase_no || supplier.is_completed" type="number"  ng-model="supplier.cost_per_flat" class="form-control spacing input-width" min="0">
               </td>
-            <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
-  
+           
+              <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
               <div ng-repeat="freebie in customFreebies">
                 <input type="checkbox" checklist-model="supplier.freebies" checklist-value="freebie" ng-disabled="supplier.is_completed"> {{freebie}}
               </div>
             </td>
+
               <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
                 <div class="radio">
                         <label>
@@ -268,7 +418,6 @@
                           data-target="#selectedPaymentModal" data-toggle="modal">NEFT
                         </label>
                 </div>
-  
                 <div class="radio" ng-if="supplier.status != 'X'">
                   <label>
                       <input  ng-disabled="!supplier.phase_no || supplier.is_completed" type="radio" ng-model="supplier.payment_method" value="CHEQUE"  permission = "[permissions.addPaymentMode]"
@@ -278,16 +427,17 @@
                         <label><input  ng-disabled="!supplier.phase_no || supplier.is_completed" type="radio" ng-model="supplier.payment_method" value="CASH" permission = "[permissions.addPaymentMode]"
                           ng-click="getPaymentDetails(supplier,supplier.payment_method)">Cash</label>
                 </div>
-  
               <div style="text-align:center">
                 <a  ng-disabled="!supplier.phase_no || supplier.is_completed" data-target="#paymentModal" data-toggle="modal" ng-click="setPayment(supplier)" permission = "[permissions.viewPaymentDetails]"><b>Details</b></a>
               </div>
             </td>
+
             <td class="" rowspan="{{key.length}}" ng-show="$first">
               <div class="" ng-if="supplier.payment_method == 'NEFT' || supplier.payment_method == 'CHEQUE'">
                 <input  ng-disabled="!supplier.phase_no" type="text" class="form-control spacing input-width" ng-model="supplier.transaction_or_check_number" ng-change="updateSupplierStatus(supplier)">
               </div>
             </td>
+
             <!--for payment status  -->
             <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
               <select  ng-disabled="!supplier.phase_no || supplier.is_completed" class="form-control spacing input-width" ng-model="supplier.payment_status" permission = "[permissions.viewPaymentDetails]">
@@ -342,6 +492,7 @@
                 </div>
               <button class="btn btn-primary active" ng-click="getPermissionBoxImages(supplier)" data-toggle="modal" data-target="#imageModal">View/Add</button>
             </td>
+
             <td rowspan="{{key.length}}" ng-show="$first">
               <div ng-repeat="image in receiptImages" ng-if="image.object_id == supplier.supplier_id"  style="margin-bottom:10px">
                   <img ng-src="http://androidtokyo.s3.amazonaws.com/{{image.image_path}}" alt="Receipt" height="50" width="50">
@@ -362,9 +513,9 @@
                                   <div class="row">
                                   <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
                                 </div>
-                                  <div class="row" style="margin-left:10px;">
-                                    Comment : {{image.comment}} </br>
-                                  </div>
+                                  <div cchangeLocation
+                                    CommchangeLocation
+                                  </div>changeLocation
                                 </div>
   
                               </div>
@@ -387,6 +538,7 @@
                 </div>
                 <!--END:permission box image modal  -->
             </td>
+
             <td rowspan="{{key.length}}" ng-show="$first">
               <div ng-if="supplier.leads_data">
                 <table class="table table-responsive table-bordered">
@@ -415,6 +567,7 @@
                 </table>
               </div>
             </td>
+
             <td  style="text-align:left" ng-if="releaseDetails.campaign.proposal_id.indexOf('NOB') == -1" rowspan="{{key.length}}" ng-show="$first">
               <div class="completedHeaderSpacing">
                   <input type="radio" class="" ng-click="completionStatus(supplier.id)" id="supplierCompleted" ng-value="true" ng-model="supplier.is_completed" > Completed
@@ -436,10 +589,13 @@
             <td rowspan="{{key.length}}" ng-show="$first">
               <button type="button" class="btn btn-danger"   ng-click="deleteSupplier(supplier.id,$parent.$index)">Delete Supplier</button>
             </td>
+
           </tr>
+            </div>
+            <div ng-if="releaseDetails.shortlisted_suppliers.length == 0">Record Not Found.</div>
         </tbody>
         <tfoot>
-  
+         
             <!-- <tr>
               <td colspan="20" class="text-center">
                 <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages=""></div>
@@ -517,15 +673,15 @@
     </div>
   </form>
   <div class="panel-body">
-    <span class="col-md-3 pull-left">
+    <span class="col-md-2 pull-left">
       <button type="button" name="button" class="btn btn-danger active notify" data-target="#viewAddPhase" data-toggle="modal">View
         / Add Phase</button>
     </span>
-    <span class="col-md-3">
+    <span class="col-md-2">
       <button data-target="#addNewSocities" class="btn btn-danger active notify" data-toggle="modal" ng-click="clearSearchData()">Add
         Suppliers</button>
     </span>
-    <span class="col-md-3">
+    <span class="col-md-2">
       <button class="btn btn-danger active notify" style="text-align:left; margin-left:10px" ng-click="updateData()"
         permission="[permissions.updateData]">Update</button>
     </span>
@@ -609,6 +765,41 @@
     </div>
   </div>
   <!--End: Code for contacts Modal Window -->
+
+     <!--Start: Code for  inventory Count mode Modal Window -->
+
+ <!-- <div id="addInventoryModal" class="modal fade">
+       <div class="modal-dialog" style="width:400px">
+         <div class="modal-content">
+           <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+             <h4 class="modal-title">Add Inventory for {{shortlistedSupplierData.name}} Supplier</h4>
+             <hr/>
+             <div class = "modal-body">
+               </br>
+                  <div class="">
+                    Select Inventory :
+                    <select class="form-control" name="" value="adInvModel.ad_inv_id"  ng-model="adInvModel.ad_inv_id ">
+                      <option value="{{inv.id}}" ng-repeat="inv in adInventoryTypes|unique:'adinventory_name'">{{inv.adinventory_name}}</option>
+                    </select>
+                  </div></br>
+                  <div class="">
+                    Select Duration Type :
+                    <select class="form-control" name="" ng-model="adInvModel.duration_id">
+                      <option value="{{inv.id}}" ng-repeat="inv in durationTypes">{{inv.duration_name}}</option>
+                    </select>
+                  </div></br>
+                  Inventory Count :
+                  <input type="number"  min="1" ng-model="adInvModel.inv_count" class="form-control"/></br>
+                 <div class = "col-md-12" style="text-align:left">
+                   <button data-dismiss="modal" class="btn btn-danger active notify" ng-click="addAdInventoryIds()">Add</button>
+                 </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div> -->
+     <!--End: Code for inventory Count Modal Window -->
 
   <!--Start: Code for payment mode Modal Window -->
   <div id="paymentModal" class="modal fade">
@@ -843,10 +1034,10 @@
                 <tbody>
                   <tr>
                     <th>Supply Owner / Representative</th>
-                    <td>{{relationshipData.supplier_data[0].representative__name}}</td>
+                    <td>{{relationshipData.contacts.name}} <span ng-if="relationshipData.contacts.name && relationshipData.supplier_data[0].representative__name"> / </span>{{relationshipData.supplier_data[0].representative__name}}</td>
                   </tr>
                   <tr>
-                    <th><b>Feedback About Society</b></th>
+                    <th><b>Feedback About Supplier</b></th>
                     <td ng-if="relationshipData.supplier_data[0].feedback">{{relationshipData.supplier_data[0].feedback}}</td>
                     <td ng-if="!relationshipData.supplier_data[0].feedback">Not Given</td>
                   </tr>
@@ -969,6 +1160,7 @@
                       </p>
                     </div>
                   </td>
+
                   <td>
                     <div>
                       <p class="input-group">
@@ -981,11 +1173,13 @@
                       </p>
                     </div>
                   </td>
+
                   <td class="col-md-3">
                     <div class="radio">
                       <button type="button" name="button" class="btn btn-danger" ng-click="removePhase(phase.id)">Remove</button>
                     </div>
                   </td>
+
                 </tr>
               </tbody>
             </table>

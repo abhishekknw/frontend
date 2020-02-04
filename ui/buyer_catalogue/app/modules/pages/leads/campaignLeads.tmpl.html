@@ -12,7 +12,7 @@
     </div>
     <div class="backBtn" ng-show="views.createForm || views.selectSuppliers || views.importLeads">
       <button type="button" class="smallBtn" ng-click="changeView('viewLeadForms',campaignInfo)">Back To Form Details Page</button>
-    </div> 
+    </div>  
     <div class="backBtn" ng-show="views.enterLeads">
       <button type="button" class="smallBtn" ng-click="changeView('selectSuppliers',campaignInfo)">Back To Suppliers Details Page</button>
     </div>
@@ -85,8 +85,8 @@
             <td>{{$index+1}}</td>
             <td>{{item.leads_form_name}}</td>
             <td><a href="javascript:void(0);" class="linkBtn" ng-click="getLeadForm(item)">Form Details</a></td>
-            <td><a href="javascript:void(0);" class="linkBtn" ng-click="changeView('viewLeadForms', campaignInfo)">View Leads</a></td>
-            <td><a href="javascript:void(0);" class="linkBtn" ng-click="changeView('selectSuppliers',campaignInfo,item)">Enter Leads</a></td>
+            <td><a href="javascript:void(0);" class="linkBtn" ng-click="changeView('viewLeadsByFormCampaign',item)" >View Leads</a></td>
+            <td><a href="javascript:void(0);" class="linkBtn" ng-click=" changeView('selectSuppliers',campaignInfo,item)">Enter Leads</a></td>
             <td><a href="javascript:void(0);" class="linkBtn" ng-click="changeView('importLeads',campaignInfo,item)">Import Leads</a></td>
           </tr>
         </table>
@@ -137,10 +137,10 @@
               <input type="text" class="field" placeholder="Enter Name For Lead Form" ng-model="formName.name" required>
             </div>
             <div class="formBox">
-              <div class="formBoxRepeat" ng-repeat="model in leadFormFields">
+              <div class="formBoxRepeat" ng-repeat="(indexKey,model) in leadFormFields">
                 <label for="email">Field Name:</label>
                 <input type="text" class="field" placeholder="Field Name" ng-model="model.key_name" required>
-                <label for="pwd">Field Type:</label>
+                <label for="pwd">Field Type:</label> 
                 <select class="field" ng-model="model.key_type" required>
                   <option  disabled="true" value="">Select Filed Type</option>
                   <option ng-repeat="type in leadKeyTypes"  value="{{type.name}}">{{type.name}}</option>
@@ -150,9 +150,9 @@
                     <div class="fieldBox">
                       <label>Add Options:</label>
                       <input type="text" class="field" ng-model="model.optionForm.option">
-                      <button class="smallBtn" ng-click="addKeyOption(model.optionForm.option,$index+1)">+</button>
+                      <button class="smallBtn" ng-disabled="!model.optionForm.option" ng-click="addKeyOption(model.optionForm.option,indexKey)">+</button> 
                     </div>
-                    <div class="option" ng-repeat="option in model.key_options" style="display:inline-block;">
+                    <div class="option" ng-repeat="option in model.key_options track by $index" style="display:inline-block;">
                       <button class="smallBtn">{{option}}</button>
                       <span ng-click="model.key_options.splice($index,1)" class="glyphicon glyphicon-remove-circle"></span>
                     </div>
@@ -253,16 +253,18 @@
             </div>
           </div>
           <div class="item">
-            <button class="smallBtn" ng-disabled="leadForm.$invalid" ng-click="saveLeads()">Submit</button>
+            <button class="smallBtn" ng-disabled="leadForm.$invalid" ng-click="saveLeads()">Submit </button>
             <button class="smallBtn" ng-click="changeView('viewLeadsBySupplier',campaignInfo)">View Leads</button>
+            <h6>Lead Count: {{supplierLeadsCount}}</h6>
           </div>
         </form>
       </div>
-    </div><!-- campaignLeadSection -->
+    </div>
+    <!-- campaignLeadSection -->
 <!--end: enter leads  -->
 
 <!--Start : view leads by supplier  -->
-    <div class="campaignLeadSection" ng-if="views.viewLeadsBySupplier">
+    <div class="campaignLeadSection" ng-if="views.viewLeadsBySupplier || views.viewLeadsByFormCampaign">
       <h2 class="heading">Lead Details for {{supplierData.name}} Supplier</h2>
       <div class="campaignBox">
         <div class="searchBox">
@@ -334,9 +336,9 @@
                   <div class="fieldBox">
                     <label>Add Options:</label>
                     <input type="text" class="field" ng-model="model.optionForm.option">
-                    <button class="smallBtn" ng-click="addKeyOption(model.optionForm.option,$index+1)">+</button>
+                    <button class="smallBtn" ng-disabled="!model.optionForm.option" ng-click="addNewKeyOption(model.optionForm.option,$index)">+</button>
                   </div>
-                  <div class="option" ng-repeat="option in model.key_options" style="display:inline-block;">
+                  <div class="option" ng-repeat="option in model.key_options track by $index" style="display:inline-block;">
                     <button class="smallBtn">{{option}}</button>
                     <span ng-click="model.key_options.splice($index,1)" class="glyphicon glyphicon-remove-circle"></span>
                   </div>
@@ -385,7 +387,7 @@
                   <div class="fieldBox">
                     <label>Add Options:</label>
                     <input type="text" class="field" ng-model="model.optionForm.option">
-                    <button class="smallBtn" ng-click="addKeyOption(model.optionForm.option,$index+1)">+</button>
+                    <button class="smallBtn" ng-click="addKeyOption(model.optionForm.option,$index)">+</button>
                   </div>
                   <div class="option" ng-repeat="option in model.key_options" style="display:inline-block;">
                     <button class="smallBtn">{{option}}</button>
@@ -455,7 +457,7 @@
                   <input type="text" class="form-control" ng-model="model.optionForm.option">
                 </div>
                 <div class="col-md-4">
-                  <button class="btn btn-danger" ng-click="addKeyOption(model.optionForm.option,$index+1)">+</button>
+                  <button class="btn btn-danger" ng-click="addKeyOption(model.optionForm.option,$index)">+</button>
                 </div>
               </div>
               <br /> <br />

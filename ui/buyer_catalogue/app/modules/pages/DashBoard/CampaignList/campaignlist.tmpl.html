@@ -45,7 +45,7 @@
         <td>{{proposal.updated_at|limitTo:10 }}</td>
         <td>{{proposal.campaign.tentative_start_date|limitTo:10}}</td>
         <td>{{proposal.campaign.tentative_end_date|limitTo:10}}</td>
-        <td class="campaignStatus" style="text-transform:lowercase">{{proposal.campaign.status}}</td>
+        <td class="campaignStatus" style="text-transform:lowercase;">{{proposal.campaign.campaign_state==="POH"?"On Hold":proposal.campaign.status}}</td>
 
         <td rowspan="{{key.length}}" >
           <div class="comment" ng-if="comments[supplier.id]">
@@ -96,6 +96,7 @@
                           <button type="button" name="button" ng-Click="sendBookingEmails(proposalDetail.proposal_id)" class="smallBtn" ng-disabled="isEmailButton || emailBtnDisabled">Test email for given user</button>
                         </div>
                         <div>
+                          <span>OR</span>
                           <button type="button" name="button" class="smallBtn" ng-click="sendBookingEmails(proposalDetail.proposal_id, 'confirmed')" ng-disabled="emailBtnDisabled">Send email to all (Default)</button>
                         </div>
                       </div>

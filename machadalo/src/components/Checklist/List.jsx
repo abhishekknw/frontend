@@ -36,7 +36,8 @@ export default class List extends React.Component {
   }
 
   onBack() {
-    this.props.history.goBack();
+    // this.props.history.goBack();
+    this.props.history.push(`/r/checklist/campaigns`);
   }
 
   onEdit(checklistId) {
@@ -168,9 +169,7 @@ export default class List extends React.Component {
     if (supplierChecklistFlag) {
       headingText += 'Supplier ' + (supplier.currentSupplier ? supplier.currentSupplier.name : '');
 
-      checklistCreateUrl = `/r/checklist/create/${this.props.match.params.campaignId}/${
-        this.props.match.params.supplierId
-      }`;
+      checklistCreateUrl = `/r/checklist/create/${this.props.match.params.campaignId}/${this.props.match.params.supplierId}`;
       if (campaign.currentCampaign && supplier.currentSupplier) {
         showCreateButton = true;
       }

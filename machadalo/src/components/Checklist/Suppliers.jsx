@@ -16,7 +16,8 @@ export default class Suppliers extends React.Component {
   }
 
   onBack() {
-    this.props.history.goBack();
+    // this.props.history.goBack();
+    this.props.history.push(`/r/checklist/campaigns`);
   }
 
   renderSupplierRow(supplier, index) {
