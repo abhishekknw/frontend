@@ -285,7 +285,7 @@ header .topRight .top-menu li:hover ul {
   position: fixed;
   top: 18px;
   left: 20px;
-  z-index: 5;
+  z-index: 6;
   border: 0;
   background: none;
   display: block;
@@ -368,7 +368,7 @@ aside {
   left: -100%;
   top: 0;
   bottom: 0;
-  z-index: 4;
+  z-index: 5;
   background: linear-gradient(-85deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
@@ -518,6 +518,9 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
 .table-data tr:nth-child(odd) {
   background: #ffffff;
 }
+.table-top {
+	margin-bottom: 30px;
+}
 .layoutfixed {
   table-layout: fixed;
   border-collapse: collapse;
@@ -609,4 +612,57 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
 }
 .section-display#profile .heading {
 	margin-top: 20px;
+}
+
+
+.gridTwoColumnSection {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 30px;
+}
+.gridTwoColumnSection .item .position,
+.relative {
+	position: relative;
+}
+.gridTwoColumnSection .item .position .calendar,
+.relative .calendar {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 1;
+	width: 48px;
+	height: 48px;
+}
+.gridTwoColumnSection .has-error .error {
+	border: 1px solid #e84478;
+}
+.gridTwoColumnSection .form-group {
+	margin-bottom: 0;
+}
+.gridTwoColumnSection .field {
+	margin-bottom: 0;
+}
+.section-display .tab-content {
+	box-shadow: none;
+	padding: 0;
+	margin-bottom: 30px;
+}
+.section-display .moving-tab {
+	display: none;
+}
+.onboardTab {
+	margin-bottom: 30px;
+}
+.onboardTab li {
+	text-align: center;
+	width: 150px !important;
+}
+.onboardTab li a {
+	color: #333;
+}
+.onboardTab li.active a {
+	background: linear-gradient(-85deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradientBG 15s ease infinite;
+	transition: all 0.5s ease-in-out;
 }

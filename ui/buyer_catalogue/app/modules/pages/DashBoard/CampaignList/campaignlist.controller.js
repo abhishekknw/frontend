@@ -202,7 +202,7 @@ angular.module('catalogueApp')
         .then(function onSuccess(response){
           $scope.commentModal = {};
           $scope.campaignDataForComment = undefined;
-          $('#addComments').modal('hide');
+          $('#viewComments').modal('hide');
           swal(constants.name, constants.add_data_success, constants.success);
         }).catch(function onError(response){
           console.log(response);
@@ -241,6 +241,10 @@ angular.module('catalogueApp')
           .catch(function onError(error) {
             console.log('No comments to show');
           })
+      }
+
+      $scope.closeModel = function(){
+        $scope.emailModel = {};
       }
 
       // Call get all comments

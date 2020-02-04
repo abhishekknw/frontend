@@ -35,10 +35,8 @@ angular.module('catalogueApp')
     $scope.Data = [];
     opsDashBoardService.getProposalDetails()
     	.then(function onSuccess(response){
-        console.log(response);
         $scope.proposals = response.data.data;
         $scope.Data = $scope.proposals;
-        console.log($scope.Data);
         if($scope.proposals.length == 0){
           $scope.isEmpty = true;
           $scope.msg = constants.emptyProposalMsg;
@@ -140,7 +138,7 @@ angular.module('catalogueApp')
       getOrganisationsForAssignment();
       opsDashBoardService.convertProposalToCampaign(proposal.proposal.proposal_id, proposal.proposal)
           .then(function onSuccess(response){
-            console.log(response);
+          
             $scope.loadSpinner = true;
               if(response.status == 200){
                 $("#assignModal").modal('show');
@@ -201,7 +199,6 @@ angular.module('catalogueApp')
       opsDashBoardService.saveAssignment(data)
           .then(function onSuccess(response){
             getProposalDetails();
-              console.table(response);
               $('#assignModal').modal('hide');
               swal(constants.name,constants.assign_user_success,constants.success);
     	})
