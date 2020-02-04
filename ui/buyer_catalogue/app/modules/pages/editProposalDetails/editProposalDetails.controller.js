@@ -11,7 +11,14 @@ angular.module('catalogueApp')
       .then(function onSuccess(response){
         console.log(response);
         $scope.proposalData = response.data.data;
-        console.log('++++++++++++++-------------------',$scope.proposalData);
+        if(!$scope.proposalData.tentative_start_date){
+          $scope.proposalData.tentative_start_date = new Date();
+        }
+
+        if(!$scope.proposalData.tentative_end_date){
+          $scope.proposalData.tentative_end_date = new Date();
+        }
+
         $scope.proposalData.tentative_start_date = new Date($scope.proposalData.tentative_start_date);
         $scope.proposalData.tentative_end_date = new Date($scope.proposalData.tentative_end_date);
         $scope.proposalData.startDate = new Date($scope.proposalData.tentative_start_date);
@@ -39,7 +46,19 @@ angular.module('catalogueApp')
           .then(function onSuccess(response){
             console.log(response);
             swal(constants.name, constants.proposal_update_success, constants.success);
-            // $location.path("/OpsDashBoard");
+             
+            swal({
+                      title: "",
+                      text: constants.proposal_update_success,
+                      type: "success",
+                      confirmButtonText: "ok",
+                    },
+                      function (isConfirm) {
+                        if (isConfirm) {
+                          $location.path("/campaignDecisionBoard");
+                        }
+                      }
+                    );
           }).catch(function onError(response){
             console.log(response);
           })

@@ -371,7 +371,8 @@
         })
         };
         //Start: To upload file when upload button is clicked
-        $scope.upload = function (file,proposal_id) {
+        $scope.upload = function (file,proposal_id,index) {
+        
           $scope.uploadfile = false;
           var uploadUrl = constants.base_url + constants.url_base;
           var token = $rootScope.globals.currentUser.token;
@@ -384,6 +385,10 @@
               console.log(response);
               $scope.uploadfile = true;
               swal(constants.name,constants.uploadfile_success,constants.success);
+              if($scope.account_proposals[index].campaign_state == 'PR'){
+                $scope.account_proposals[index].campaign_state = 'PF';
+              }
+              
               // uploadFileToAmazonServer(response.data.data,file);
             }).catch(function onError(response) {
               console.log(response);

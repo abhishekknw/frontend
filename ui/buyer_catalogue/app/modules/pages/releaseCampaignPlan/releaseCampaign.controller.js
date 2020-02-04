@@ -670,6 +670,11 @@ angular.module('catalogueApp')
           if (filters.length && supplier_ids.length) {
             releaseCampaignService.addSuppliersToCampaign(data)
               .then(function onSuccess(response) {
+                //synergy
+                if(response){
+                  $scope.releaseDetails.shortlisted_suppliers = response.data.data;
+                }
+              
                 $('#addNewSocities').modal('hide');
                 swal(constants.name, constants.add_data_success, constants.success);
               }).catch(function onError(response) {
@@ -1546,7 +1551,6 @@ angular.module('catalogueApp')
         getHashTagImages();
 
         $scope.getFilteredResult = function () {
-          console.log('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq',$scope.selectedUser)
           getResultsPage(1);
         }
 
