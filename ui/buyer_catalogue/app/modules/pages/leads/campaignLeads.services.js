@@ -97,6 +97,11 @@
           var url = url_base_leads + formId + "/edit_form";
           return machadaloHttp.put(url,data);
         }
+
+        campaignLeadsService.updateLeadDetails = function(formId,supplierId,entryId, data){
+          var url = url_base_leads + formId + "/update-leads-entry/" + supplierId + "/" + entryId + "/";
+          return machadaloHttp.put(url, data);
+        }
         return campaignLeadsService;
 
  }]);

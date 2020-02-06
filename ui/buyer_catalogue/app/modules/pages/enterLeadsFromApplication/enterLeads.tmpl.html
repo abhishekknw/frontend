@@ -1,9 +1,10 @@
 <link rel="stylesheet" href="/modules/pages/enterLeads/enterLeads.tmpl.css">
 <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
 <link rel="stylesheet" href="/modules/pages/leads/campaignLeads.tmpl.css">
+<link rel="stylesheet" href="/modules/pages/enterLeadsFromApplication/enterLeads.tmpl.css">
 
 <div ng-loading="loading"></div> <!--For displaying loading icon-->
-<main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading">
+<main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading"> 
 <div class="wrapperBox">
   <div ng-show="isEmpty" style="text-align:center;"><h2>{{msg}}</h2></div>
   <nav-bar></nav-bar>
@@ -13,7 +14,7 @@
       <span ng-show="!viewLeads"><button class="smallBtn" ng-click="getLeadsBySupplier()" >View Leads</button></span>
     </div>
     <div class="breadcrumb" ncy-breadcrumb></div>
-    <div class="campaignLeadSection">
+    <div class="campaignLeadSection"> 
       <h2 class="heading">Leads</h2>
       <div class="campaignBox"> 
         <table class="table-data leadTable">
@@ -34,52 +35,59 @@
         </div>
         <form class="leadForm" name="leadForm" ng-if="!viewLeads">
           <div class="item" ng-repeat="item in leadModelData">
-            <div ng-if="(item.key_type != 'RADIO' && item.key_type != 'CHECKBOX' && item.key_type != 'DROPDOWN' && item.key_type != 'EMAIL' && item.key_type != 'PHONE' && item.key_type != 'DATE' && item.key_type != 'TEXTAREA' && !item.hot_lead_criteria) ||
+            <div ng-if="(item.key_type != 'RADIO'&& item.key_type != 'BOOLEAN' && item.key_type != 'CHECKBOX' && item.key_type != 'DROPDOWN' && item.key_type != 'EMAIL' && item.key_type != 'PHONE' && item.key_type != 'DATE' && item.key_type != 'TEXTAREA' && !item.hot_lead_criteria) ||
                                 (item.key_type != 'RADIO' && item.key_type != 'CHECKBOX' && item.key_type != 'DROPDOWN' && item.key_type != 'EMAIL' && item.key_type != 'PHONE' && item.key_type != 'TEXTAREA' && item.hot_lead_criteria)">
-              <label>{{item.key_name}}</label>
-              <input autocomplete type="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value" />
+              <label class="capitalize">{{item.key_name}}</label>
+              <input autocomplete type="{{keyTypesMap[item.key_type]}}" name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value" />
+
  
             </div>
+            <div ng-if="item.key_type == 'BOOLEAN'">
+              <label class="capitalize">{{item.key_name}}</label>
+              <input autocomplete type="radio" name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value" value="true"/>TRUE
+              <input autocomplete type="radio" name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value" value="false"/>FALSE
+            </div> 
+
             <div ng-if="item.key_type == 'DATE'">
-              <label>{{item.key_name}} {{item.value}} {{keyTypesMap[item.key_type]}}</label>
-             <input autocomplete type="date" class="field" ng-model="item.value" value="{{item.value | date}}" />
+              <label class="capitalize">{{item.key_name}}</label>
+              <input autocomplete type="date"  name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value" />
             </div>            
             <div ng-if="item.key_type == 'PHONE'">
-              <label>{{item.key_name}}</label>
+              <label class="capitalize">{{item.key_name}}</label>
               <input type="text" name="contact_phone"  class="field" ng-pattern="/^(\d{10})$/" ng-model="item.value"/>
               <span class="show-error" ng-show="leadForm.contact_phone.$error.pattern">Please Enter Valid 10 Digit Mobile Number</span>
             </div>
             <div ng-if="item.key_type == 'EMAIL'">
-              <label>{{item.key_name}}</label>
+              <label class="capitalize">{{item.key_name}}</label>
               <input type="email" name="contact_email" id="contact_email" class="field" ng-model="item.value"  />
               <span class="show-error" ng-show="leadForm.contact_email.$error.email">Please Enter Valid Email</span>
             </div>
             <div ng-if="item.key_type == 'TEXTAREA'">
-              <label>{{item.key_name}}</label>
+              <label class="capitalize">{{item.key_name}}</label>
                 <textarea class="field" rows="5" id="comment" ng-model="item.value"></textarea>
             </div>
             <div ng-if="(item.key_type == 'RADIO' && !item.hot_lead_criteria) || (item.key_type == 'RADIO' && item.hot_lead_criteria)">
-              <label>{{item.key_name}}</label>
+              <label class="capitalize">{{item.key_name}}</label>
               <div class="radioBox" ng-repeat="option in item.key_options">
                 <input type="{{keyTypesMap[item.key_type]}}" class="form-check-input" value="{{option}}" name="radio" ng-model="item.value"/>{{option}}
               </div>
             </div>
             <div class="cols-sm-10" ng-if="(item.key_type == 'CHECKBOX' && !item.hot_lead_criteria) || (item.key_type == 'CHECKBOX' && item.hot_lead_criteria)" ng-init="getCheckBoxValues(item.key_options)">
-              <label>{{item.key_name}}</label>
+              <label class="capitalize">{{item.key_name}}</label>
               <div ng-repeat="option in leadChBoxKeyOptions">
                 <input type="checkbox" class="form-check-input"  value="{{option}}"  name="chbox" ng-model="option.selected"  ng-click="setCheckBoxValue(option.selected,$index,item)"/>{{option.name}}
               </div>
             </div>
             <div ng-if="(item.key_type == 'DROPDOWN' && !item.hot_lead_criteria) || (item.key_type == 'DROPDOWN' && item.hot_lead_criteria)">
-              <label ng-if="item.key_type == 'DROPDOWN'">{{item.key_name}}</label>
+              <label ng-if="item.key_type == 'DROPDOWN'" class="capitalize">{{item.key_name}}</label>
               <select ng-if="item.key_type == 'DROPDOWN'" class="field" ng-model="item.value">
                 <option ng-repeat="option in item.key_options" value="{{option}}">{{option}}</option>
               </select>
             </div>
           </div>
           <div class="item">
-            <button ng-if="!editLeads" class="smallBtn" ng-disabled="leadForm.$invalid" ng-click="saveLeads()">Submit</button>
-            <button ng-if="editLeads" class="smallBtn" ng-disabled="leadForm.$invalid" ng-click="updateLeadDetails()">Update</button>
+           <button ng-if="!editLeads" class="smallBtn" ng-disabled="leadForm.$invalid"  ng-click="saveLeads()">Submit</button>
+            <button ng-if="editLeads" class="smallBtn" ng-disabled="leadForm.$invalid || leadForm.$pristine"  ng-click="updateLeadDetails()">Update</button>
             Lead Count : {{leadsListCount}}
           </div>
         </form>
@@ -94,7 +102,7 @@
             <th>&nbsp;</th>
           </tr>
            <tr ng-repeat="alias in leadsData.values | filter : searchSupplier">
-            <td ng-repeat="lead in alias">{{lead.value | date}} </td>
+            <td ng-repeat="lead in alias">{{getBType(lead)}}</td>
             <td><button class="linkBtn" ng-click="getEditLeads(alias[0].value)">Edit</button></td>
           </tr>
         </table>

@@ -41,8 +41,9 @@ angular.module('catalogueApp')
         enterLeadsService.getLeadFormDetails($scope.formId)
         .then(function onSuccess(response){
           $scope.loading = response;
+          console.log("response/////", response);
           $scope.leadModelData = response.data.data.leads_form_items;
-          console.log($scope.leadModelData);
+          console.log("=====",$scope.leadModelData);
         }).catch(function onError(response){
          
         })
@@ -76,12 +77,10 @@ angular.module('catalogueApp')
         angular.forEach($scope.leadModelData, function(item){
             var temp_data = {
               item_id : item.item_id,
-              value : new Date (item.value)
+              value :  item.value
             }
-            console.log("temp_data", temp_data);
             data.leads_form_entries.push(temp_data);
         });
-            console.log("data", data);
         enterLeadsService.saveLeads($scope.formId,data)
         .then(function onSuccess(response){
           $scope.leadModelData = [];
@@ -94,11 +93,17 @@ angular.module('catalogueApp')
         $scope.viewLeads = true;
         enterLeadsService.getLeadsBySupplier($scope.formId,$scope.supplierId)
         .then(function onSuccess(response){
+          if(response.data && response.data.data && response.data.data.values)
+          for (let x in response.data.data.values){
+              if(response.data.data.values[x]){
+                for(let y in response.data.data.values[x]){
+                    if(response.data.data.values[x][y].key_type == "DATE"){
+                        response.data.data.values[x][y].value = new Date(response.data.data.values[x][y].value)
+                    }
+                }
+              }
+          }
           $scope.leadsData = response.data.data;
-          console.log("$scope.leadsData", $scope.leadsData);
-          // for (var x in $scope.leadsData){
-          //   new Date()
-          // }
         }).catch(function onError(response){
         })
       }
@@ -112,6 +117,9 @@ angular.module('catalogueApp')
           .then(function onSuccess(response){
             $scope.viewLeads = false;
             $scope.editLeads = true;
+            if(response.data && response.data.data && response.data.data.leads_form_items && response.data.data.leads_form_items[1] && response.data.data.leads_form_items[1].key_type==="DATE"){
+              response.data.data.leads_form_items[1].value = new Date (response.data.data.leads_form_items[1].value); 
+            }
             $scope.leadModelData = response.data.data.leads_form_items;
           }).catch(function onError(response){
           })
@@ -155,5 +163,22 @@ angular.module('catalogueApp')
           item.value = null;
         }
       }
+
+      $scope.getBType = function(test){
+        console.log("test", test);
+        if(test && test.key_type == "DATE"){
+            return new Date(test.value)
+        }else{
+          return(test.value);
+        }
+        //console.log("typeof test", typeof (test));
+      }
+
+      $scope.fixDate = function(date){
+        //console.log("date", date);
+        //alert(date);
+        return new Date(date);
+      };
+
 
     });
