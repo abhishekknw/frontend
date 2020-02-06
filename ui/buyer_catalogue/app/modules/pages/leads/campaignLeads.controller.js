@@ -13,7 +13,7 @@ angular.module('catalogueApp')
       $scope.uploadfile = true; // added for loading spinner active/deactive
       $scope.textValue = {
         value:""
-      };
+      }; 
       $scope.globalHotLeadCriteria=[{
       name: "is_hot_level_" + 1,
       operation: [

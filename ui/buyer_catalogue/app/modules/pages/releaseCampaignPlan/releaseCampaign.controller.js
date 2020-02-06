@@ -546,7 +546,7 @@ angular.module('catalogueApp')
               for (var i = 0; i < $scope.releaseDetails.campaign.centerData.length; i++) {
                 if ($scope.releaseDetails.campaign.centerData[i].id == center_index) {
                   $scope.current_center_index = i;
-                  $scope.supplier_center = $scope.releaseDetails.campaign.centerData[i].center_name
+                  $scope.supplier_center = $scope.releaseDetails.campaign.centerData[i].city
                 }
               }
               //$scope.supplier_center = $scope.releaseDetails.campaign.centerData.center_name;
@@ -576,8 +576,6 @@ angular.module('catalogueApp')
           createProposalService.getLocations('sub_areas', $scope.areas[index].id)
             .then(function onSuccess(response) {
               $scope.sub_areas = response.data;
-
-              console.log('subareaaa', $scope.sub_areas)
             });
         }
 
@@ -670,6 +668,11 @@ angular.module('catalogueApp')
           if (filters.length && supplier_ids.length) {
             releaseCampaignService.addSuppliersToCampaign(data)
               .then(function onSuccess(response) {
+                //synergy
+                if(response){
+                  $scope.releaseDetails.shortlisted_suppliers = response.data.data;
+                }
+              
                 $('#addNewSocities').modal('hide');
                 swal(constants.name, constants.add_data_success, constants.success);
               }).catch(function onError(response) {
@@ -1546,7 +1549,6 @@ angular.module('catalogueApp')
         getHashTagImages();
 
         $scope.getFilteredResult = function () {
-          console.log('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq',$scope.selectedUser)
           getResultsPage(1);
         }
 
