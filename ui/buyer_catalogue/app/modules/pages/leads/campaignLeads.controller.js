@@ -148,12 +148,13 @@ angular.module('catalogueApp')
          campaignLeadsService.getEntryListLeads($scope.leadFormId,$scope.supplierData.supplier_id)
           .then(function onSuccess(response){
             $scope.showLeads = true;
-            if(response.data && response.data.data && response.data.data.values)
-            for (let x in response.data.data.values){
-              if(response.data.data.values[x]){
-                for(let y in response.data.data.values[x]){
-                  if(response.data.data.values[x][y].key_type == "DATE"){
-                    response.data.data.values[x][y].value =$filter('date')(new Date(response.data.data.values[x][y].value),'yyyy-MM-dd');
+            if(response.data && response.data.data && response.data.data.values){
+              for (let x in response.data.data.values){
+                if(response.data.data.values[x]){
+                  for(let y in response.data.data.values[x]){
+                    if(response.data.data.values[x][y].key_type == "DATE"){
+                      response.data.data.values[x][y].value =$filter('date')(new Date(response.data.data.values[x][y].value),'yyyy-MM-dd');
+                    }
                   }
                 }
               }

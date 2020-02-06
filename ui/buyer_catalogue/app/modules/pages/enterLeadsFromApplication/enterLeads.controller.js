@@ -91,13 +91,14 @@ angular.module('catalogueApp')
       $scope.getLeadsBySupplier = function(){
         $scope.viewLeads = true;
         enterLeadsService.getLeadsBySupplier($scope.formId,$scope.supplierId)
-        .then(function onSuccess(response){
-          if(response.data && response.data.data && response.data.data.values)
-            for (let x in response.data.data.values){
-              if(response.data.data.values[x]){
-                for(let y in response.data.data.values[x]){
-                  if(response.data.data.values[x][y].key_type == "DATE"){
-                     response.data.data.values[x][y].value =$filter('date')(new Date(response.data.data.values[x][y].value),'yyyy-MM-dd');
+          .then(function onSuccess(response){
+            if(response.data && response.data.data && response.data.data.values){
+              for (let x in response.data.data.values){
+                if(response.data.data.values[x]){
+                  for(let y in response.data.data.values[x]){
+                    if(response.data.data.values[x][y].key_type == "DATE"){
+                       response.data.data.values[x][y].value =$filter('date')(new Date(response.data.data.values[x][y].value),'yyyy-MM-dd');
+                    }
                   }
                 }
               }
