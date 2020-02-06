@@ -755,7 +755,6 @@ export default class ListBooking extends Component {
   }
 
   renderAppliedFilters(filterTag, index) {
-    console.log('filterTag: ', filterTag);
     const queryLabel =
       typeof filterTag.query === 'object'
         ? `${filterTag.query.min}-${filterTag.query.max}`

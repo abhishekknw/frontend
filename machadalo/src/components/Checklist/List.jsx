@@ -100,7 +100,6 @@ export default class List extends React.Component {
     if (checklist.checklist_info.status === 'frozen') {
       disableEditButton = true;
     }
-
     return (
       <tr key={checklist.checklist_info.checklist_id}>
         <td className="hidden-xs">{index + 1}</td>

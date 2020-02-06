@@ -228,8 +228,13 @@ export default class ManageImage extends React.Component {
     let campaignName = '';
     const { campaign } = this.props;
     let campaignId = this.getCampaignId();
-    if (campaign && campaign.objectById && campaign.objectById[campaignId]) {
-      campaignName = campaign.objectById[campaignId].name;
+    if (
+      campaign &&
+      campaign.objectById &&
+      campaign.objectById[campaignId] &&
+      campaign.objectById[campaignId].campaign
+    ) {
+      campaignName = campaign.objectById[campaignId].campaign.name;
     }
 
     return (

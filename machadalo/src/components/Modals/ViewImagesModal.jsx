@@ -21,7 +21,7 @@ export default function ViewImageModal({ isVisible, onClose, item }) {
   const url = 'https://s3.ap-northeast-1.amazonaws.com/androidtokyo/';
   const { inventory_images } = item;
   const imagesArray = (inventory_images || []).map((image) => ({
-    original: `${url}${image.image_path}`,
+    original: `${url}${image.file_name}`,
     originalClass: 'originalStyle',
   }));
   return (
