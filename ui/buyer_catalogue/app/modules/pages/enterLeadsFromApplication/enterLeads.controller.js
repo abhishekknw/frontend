@@ -85,6 +85,7 @@ angular.module('catalogueApp')
         .then(function onSuccess(response){
           $scope.leadModelData = [];
           getLeadFormDetails();
+          getLeadsCount();
           swal(constants.name, constants.add_data_success, constants.success);
         }).catch(function onError(response){
         })
@@ -94,15 +95,15 @@ angular.module('catalogueApp')
         enterLeadsService.getLeadsBySupplier($scope.formId,$scope.supplierId)
         .then(function onSuccess(response){
           if(response.data && response.data.data && response.data.data.values)
-          for (let x in response.data.data.values){
+            for (let x in response.data.data.values){
               if(response.data.data.values[x]){
                 for(let y in response.data.data.values[x]){
-                    if(response.data.data.values[x][y].key_type == "DATE"){
-                        response.data.data.values[x][y].value = new Date(response.data.data.values[x][y].value)
-                    }
+                  if(response.data.data.values[x][y].key_type == "DATE"){
+                      response.data.data.values[x][y].value =$filter('date')(new Date(response.data.data.values[x][y].value),'yyyy-MM-dd');
+                  }
                 }
               }
-          }
+            }
           $scope.leadsData = response.data.data;
         }).catch(function onError(response){
         })
@@ -163,22 +164,5 @@ angular.module('catalogueApp')
           item.value = null;
         }
       }
-
-      $scope.getBType = function(test){
-        console.log("test", test);
-        if(test && test.key_type == "DATE"){
-            return new Date(test.value)
-        }else{
-          return(test.value);
-        }
-        //console.log("typeof test", typeof (test));
-      }
-
-      $scope.fixDate = function(date){
-        //console.log("date", date);
-        //alert(date);
-        return new Date(date);
-      };
-
 
     });

@@ -201,21 +201,21 @@
             <td>{{supplierData.subarea}}</td>
           </tr>
         </table>
-        <form class="leadForm" name="leadForm">
+        <form  name="leadForm">
           <div class="item" ng-repeat="item in leadModelData">
             <div ng-if="item.key_type != 'RADIO' && item.key_type != 'CHECKBOX' && item.key_type != 'DROPDOWN' && item.key_type != 'EMAIL' && item.key_type != 'PHONE' && item.key_type != 'TEXTAREA' && item.key_type != 'DATE' && item.key_type != 'BOOLEAN' && !item.hot_lead_criteria">
               <label class="capitalize">{{item.key_name}}</label>
-              <input type="{{keyTypesMap[item.key_type]}}"  class="field" ng-model="item.value" />
+              <input type="{{keyTypesMap[item.key_type]}}"  class="form-control field" ng-model="item.value" required/>
             </div>
             <div ng-if="item.key_type == 'BOOLEAN'">
               <label class="capitalize">{{item.key_name}}</label>
-              <input autocomplete type="radio" name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value" value="true"/>TRUE
-              <input autocomplete type="radio" name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value" value="false"/>FALSE
+              <input autocomplete type="radio" name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value" value="true" required/>TRUE
+              <input autocomplete type="radio" name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value" value="false" required />FALSE
             </div> 
 
             <div ng-if="item.key_type == 'DATE'">
               <label class="capitalize">{{item.key_name}}</label>
-              <input autocomplete type="date"  name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value" />
+              <input autocomplete type="date"  name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value" required />
             </div>     
             <div ng-if="item.key_type == 'PHONE'">
               <label class="capitalize">{{item.key_name}}</label>
@@ -225,24 +225,24 @@
             <div ng-class="{ 'has-error' : leadForm.email.$invalid && !leadForm.email.$pristine }">
               <div ng-if="item.key_type == 'EMAIL'">
                 <label class="capitalize">{{item.key_name}}</label>
-                <input type="email" name="contact_email" id="contact_email" class="field" ng-model="item.value"  />
+                <input type="email" name="contact_email" id="contact_email" class="field" ng-model="item.value"  required />
                 <span class="show-error" ng-show="leadForm.contact_email.$error.email">Please Enter Valid Email</span>
               </div>
             </div>
             <div ng-if="item.key_type == 'TEXTAREA'">
               <label class="capitalize">{{item.key_name}}</label>
-              <textarea class="field" rows="5" id="comment" ng-model="item.value"></textarea>
+              <textarea class="form-control field" rows="5" id="comment" ng-model="item.value" required></textarea>
             </div>
             <div ng-if="item.key_type == 'RADIO' && !item.hot_lead_criteria">
               <label class="capitalize">{{item.key_name}}</label>
               <div ng-repeat="option in item.key_options">
-                <input type="{{keyTypesMap[item.key_type]}}" class="form-check-input" value="{{option}}" name="radio" ng-model="item.value"/>{{option}}
+                <input type="{{keyTypesMap[item.key_type]}}" class="form-check-input" value="{{option}}" name="radio" ng-model="item.value" required/>{{option}}
               </div>
             </div>
             <div ng-if="item.key_type == 'CHECKBOX' && !item.hot_lead_criteria" ng-init="getCheckBoxValues(item.key_options)">
               <label class="capitalize">{{item.key_name}}</label>
               <div ng-repeat="option in leadChBoxKeyOptions">
-                <input type="checkbox" class="form-check-input"  value="{{option}}"  name="chbox" ng-model="option.selected"  ng-click="setCheckBoxValue(option.selected,$index,item)"/>{{option.name}}
+                <input type="checkbox" class="form-check-input"  value="{{option}}"  name="chbox" ng-model="option.selected"  ng-click="setCheckBoxValue(option.selected,$index,item)" required/>{{option.name}}
               </div>
             </div>
             <div ng-if="item.hot_lead_criteria">
@@ -250,21 +250,22 @@
               <div>
                 <label class="checkbox">
                   {{item.hot_lead_criteria}}
-                  <input type="checkbox" class="form-check-input"  value="{{item.hot_lead_criteria}}"  ng-model="hotLeadValue" ng-click="setHotLeadValue(item,hotLeadValue)" name="hot_lead"/>
+                  <input type="checkbox" class="form-check-input"  value="{{item.hot_lead_criteria}}"  ng-model="hotLeadValue" ng-click="setHotLeadValue(item,hotLeadValue)" name="hot_lead" required/>
                   <span class="checkmark"></span>
                 </label>
               </div>
             </div>
             <div ng-if="!item.hot_lead_criteria">
               <label ng-if="item.key_type == 'DROPDOWN'" class="capitalize">{{item.key_name}}</label>
-              <select ng-if="item.key_type == 'DROPDOWN'" class="field" ng-model="item.value">
+              <select ng-if="item.key_type == 'DROPDOWN'" class="field" ng-model="item.value" required>
+                <option value="" ng-disabled="true">Select Option</option>
                 <option ng-repeat="option in item.key_options" value="{{option}}">{{option}}</option>
               </select>
             </div>
           </div>
           <div class="item">
-            <button class="smallBtn" ng-disabled="leadForm.$invalid" ng-click="saveLeads()" ng-if="!editLeads">Submit </button>
-            <button ng-if="editLeads" class="smallBtn" ng-disabled="leadForm.$invalid || leadForm.$pristine"  ng-click="updateLeadDetails()">Update</button>
+            <button ng-if="! views.viewleadForEdit" class="smallBtn" ng-disabled="leadForm.$invalid" ng-click="saveLeads()" >Submit </button>
+            <button ng-if="views.viewleadForEdit" class="smallBtn" ng-disabled="leadForm.$invalid || leadForm.$pristine"  ng-click="updateLeadDetails()">Update</button>
             <button class="smallBtn" ng-click="changeView('viewLeadsBySupplier',campaignInfo,'viewleadForEdit')">View Leads</button>
             <h6>Lead Count: {{supplierLeadsCount}}</h6>
           </div>

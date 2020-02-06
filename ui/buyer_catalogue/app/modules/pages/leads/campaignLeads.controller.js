@@ -11,7 +11,6 @@ angular.module('catalogueApp')
       $scope.showImportTable = false;
       $scope.hotnessMapping = {};
       $scope.uploadfile = true; // added for loading spinner active/deactive
-      $scope.editLeads = false;
       $scope.textValue = {
         value:""
       };
@@ -145,25 +144,26 @@ angular.module('catalogueApp')
           console.log(response);
         })
       }
+      
       $scope.getEntryListLeads = function(){
         $scope.entryListLeadsData =[];
-             campaignLeadsService.getEntryListLeads($scope.leadFormId,$scope.supplierData.supplier_id)
-             .then(function onSuccess(response){
-               $scope.showLeads = true;
-              if(response.data && response.data.data && response.data.data.values)
-                for (let x in response.data.data.values){
-                  if(response.data.data.values[x]){
-                    for(let y in response.data.data.values[x]){
-                      if(response.data.data.values[x][y].key_type == "DATE"){
-                          response.data.data.values[x][y].value =$filter('date')(new Date(response.data.data.values[x][y].value),'yyyy-MM-dd');
-                      }
-                    }
+         campaignLeadsService.getEntryListLeads($scope.leadFormId,$scope.supplierData.supplier_id)
+          .then(function onSuccess(response){
+            $scope.showLeads = true;
+            if(response.data && response.data.data && response.data.data.values)
+            for (let x in response.data.data.values){
+              if(response.data.data.values[x]){
+                for(let y in response.data.data.values[x]){
+                  if(response.data.data.values[x][y].key_type == "DATE"){
+                    response.data.data.values[x][y].value =$filter('date')(new Date(response.data.data.values[x][y].value),'yyyy-MM-dd');
                   }
                 }
-              $scope.entryListLeadsData = response.data.data;
-             }).catch(function onError(response){
+              }
+            }
+            $scope.entryListLeadsData = response.data.data;
+         }).catch(function onError(response){
                
-             })
+         })
       }
 
       $scope.getEntryListLeadsCount = function(){
@@ -233,12 +233,11 @@ angular.module('catalogueApp')
           viewLeadsBySupplier : false
         }
 
-        $scope.editLeads = false;
         $scope.views[view] = true;
         $scope.campaignInfo = campaign;
         if(formFields){
           if(formFields == "viewleadForEdit"){
-            $scope.views.viewleadForEdit =true;
+            $scope.views.viewleadForEdit = true;
           }else{
             $scope.leadFormFields = formFields;
           } 
@@ -547,6 +546,7 @@ angular.module('catalogueApp')
         .then(function onSuccess(response){
           $scope.leadModelData = [];
           $scope.leadModelData = angular.copy($scope.leadFormFields.leads_form_items);
+          $scope.getEntryListLeadsCount();
           swal(constants.name, constants.add_data_success, constants.success);
         }).catch(function onError(response){
           console.log(response);
@@ -741,11 +741,14 @@ angular.module('catalogueApp')
         .then(function onSuccess(response){
          if(response.data && response.data.data && response.data.data.leads_form_items && response.data.data.leads_form_items[1] && response.data.data.leads_form_items[1].key_type==="DATE"){
             response.data.data.leads_form_items[1].value = new Date (response.data.data.leads_form_items[1].value); 
-            console.log("response.data.data.leads_form_items[1].value", response.data.data.leads_form_items[1].value);
           }
           $scope.leadModelData = response.data.data.leads_form_items;
+          $scope.views.viewLeadsBySupplier  =false;
+          $scope.views.viewLeadsByFormCampaign =false;
           $scope.views.showLeads = false;
-          $scope.editLeads = true;
+          $scope.views.showLeads = false;
+          $scope.views.enterLeads = true;
+       
         }).catch(function onError(response){
         })
     }
@@ -754,7 +757,7 @@ angular.module('catalogueApp')
       campaignLeadsService.updateLeadDetails($scope.leadFormId,$scope.supplierData.supplier_id,$scope.entryId,$scope.leadModelData)
       .then(function onSuccess(response){
            $scope.viewLeads = false; 
-          $scope.editLeads = true;
+          $scope.views.enterLeads = true;
           swal(constants.name, constants.update_leads_data_success, constants.success);
       }).catch(function onError(response){
             
