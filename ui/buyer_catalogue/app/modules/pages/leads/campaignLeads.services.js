@@ -26,14 +26,15 @@
         }
 
         campaignLeadsService.getEntryListLeads = function(formId, supplierId){
-          let url =""
-          if(supplierId){
-            url = url_base_leads + formId + "/entry_list/"  + supplierId;
-          }else{
-            url = url_base_leads + formId + "/entry_list/" ;
+          let url = ""
+          if (supplierId) {
+            url = url_base_leads + formId + "/entry_list/" + supplierId;
+          } else {
+            url = url_base_leads + formId + "/entry_list/";
           }
           return machadaloHttp.get(url);
-        }        
+        }
+
         campaignLeadsService.getEntryListLeadsCount = function(formId, supplierId){
           let url =""
           if(supplierId){
@@ -43,6 +44,7 @@
           }
           return machadaloHttp.get(url);
         }
+        
         campaignLeadsService.getCampaignDetails = function(assigned_by,userId,fetch_all){
           var url = url_base + "campaign-assignment/?include_assigned_by="+ assigned_by +  "&to="+userId + "&fetch_all=" + fetch_all;
           return machadaloHttp.get(url);

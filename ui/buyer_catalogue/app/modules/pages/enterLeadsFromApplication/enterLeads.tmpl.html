@@ -31,7 +31,6 @@
         </table>
         <div class="searchBox">
           <input type="text" class="field" ng-model="searchSupplier" placeholder="search" ng-if="viewLeads">
-          <!-- <button><i class="fas fa-search"></i></button> -->
         </div>
         <form class="leadForm" name="leadForm" ng-if="!viewLeads">
           <div class="item" ng-repeat="item in leadModelData">
@@ -39,15 +38,12 @@
                                 (item.key_type != 'RADIO' && item.key_type != 'CHECKBOX' && item.key_type != 'DROPDOWN' && item.key_type != 'EMAIL' && item.key_type != 'PHONE' && item.key_type != 'TEXTAREA' && item.hot_lead_criteria)">
               <label class="capitalize">{{item.key_name}}</label>
               <input autocomplete type="{{keyTypesMap[item.key_type]}}" name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value" required/>
-
- 
             </div>
             <div ng-if="item.key_type == 'BOOLEAN'">
               <label class="capitalize">{{item.key_name}}</label>
               <input autocomplete type="radio" name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value" value="true" required/>TRUE
               <input autocomplete type="radio" name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value" value="false" required/>FALSE
             </div> 
-
             <div ng-if="item.key_type == 'DATE'">
               <label class="capitalize">{{item.key_name}}</label>
               <input autocomplete type="date"  name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value" required/>
