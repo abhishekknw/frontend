@@ -511,13 +511,9 @@
                               <div class="carousel-inner">
                                 <div class="item" ng-class="{active:!$index}" ng-repeat="image in perReceiptImageData">
                                   <div class="row">
-                                  <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/></br>
+                                  <img ng-src="{{image.image_url}}" style="width:600px; height:400px;" class="img-responsive" alt="No Image Found"/><br/>
                                 </div>
-                                  <div cchangeLocation
-                                    CommchangeLocation
-                                  </div>changeLocation
                                 </div>
-  
                               </div>
                               <a style="height:400px;" class="left carousel-control"  data-toggle="carousel" data-target = "#slider" role="button" data-slide="prev">
                                   <span class="glyphicon glyphicon-chevron-left"></span>
@@ -726,7 +722,7 @@
                     <td class="alignment">{{contact.landline}}</td>
                     <td class="alignment">{{contact.mobile}}</td>
                     <td class="alignment">
-                      <button type="button" name="button" ng-click="removeContact($index)">Remove</button>
+                      <button type="button" name="button" ng-hide="payment.is_completed" ng-click="removeContact($index)">Remove</button>
                     </td>
 
                   </tr>
@@ -836,7 +832,7 @@
               </tbody>
             </table>
             <div class="" ng-show="editPaymentDetails">
-              <button class="btn btn-danger" ng-click="setEditPaymentDetails()">Edit
+              <button class="btn btn-danger" ng-hide="payment.is_completed" ng-click="setEditPaymentDetails()">Edit
               </button>
             </div>
             <div class="" ng-show="!editPaymentDetails">
