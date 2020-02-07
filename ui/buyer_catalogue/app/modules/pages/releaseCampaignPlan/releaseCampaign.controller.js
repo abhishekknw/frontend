@@ -296,8 +296,6 @@ angular.module('catalogueApp')
 
               if ($scope.initialReleaseData) {
                 $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
-                console.log('11111111111111111111111111111111', $scope.releaseDetails);
-                console.log($scope.releaseDetails.shortlisted_suppliers.length)
                 if ($scope.releaseDetails.shortlisted_suppliers.length) {
                   for (let i in $scope.releaseDetails.shortlisted_suppliers.length) {
 
@@ -479,7 +477,6 @@ angular.module('catalogueApp')
             }
             totalPrice = totalPrice + (value.actual_supplier_price / duration);
           })
-
           $scope.initialReleaseData.shortlisted_suppliers[index].shortlisted_inventories_totalPrice = totalPrice;
            
         }
