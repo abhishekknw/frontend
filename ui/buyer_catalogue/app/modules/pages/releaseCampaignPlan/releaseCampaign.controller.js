@@ -1,3 +1,4 @@
+
 angular.module('catalogueApp')
   .controller('ReleaseCampaignCtrl',
     ['$scope', '$rootScope', '$window', '$location', 'releaseCampaignService', 'createProposalService', 'auditReleasePlanService', '$stateParams', 'permissions', 'Upload', 'cfpLoadingBar', 'constants', 'mapViewService', '$timeout', 'commonDataShare',
@@ -286,12 +287,22 @@ angular.module('catalogueApp')
                 if (!$scope.initialReleaseData.shortlisted_suppliers[i].stall_locations) {
                   $scope.initialReleaseData.shortlisted_suppliers[i].stall_locations = [];
                 }
+
+                $scope.getTotalSupplierPriceNew($scope.initialReleaseData.shortlisted_suppliers[i],i);
+
               }
 
               $scope.releaseDetails = {};
 
               if ($scope.initialReleaseData) {
                 $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
+            
+                if ($scope.releaseDetails.shortlisted_suppliers.length) {
+                  for (let i in $scope.releaseDetails.shortlisted_suppliers.length) {
+
+                  }
+                }
+
                 $scope.releaseDetailsData = $scope.releaseDetails.campaign.centerData;
                 var centerSuppliers = $scope.releaseDetails.campaign.centerSuppliers;
                 if (centerSuppliers) {
@@ -309,13 +320,13 @@ angular.module('catalogueApp')
                       $scope.supplier_names.push({ name: 'Saloon', code: 'SA' });
                     } else if (centerSuppliers[i].supplier_type_code == 'RE') {
                       $scope.supplier_names.push({ name: 'Retail Store', code: 'RE' });
-                    } 
+                    }
                   }
 
-                  if ($scope.supplier_names.length == 1 ) {
+                  if ($scope.supplier_names.length == 1) {
                     $scope.selectedUser.supplier_type_filter_selected = $scope.supplier_names[0].name;
                     $scope.selectedUser.supplier_type_filter = $scope.supplier_names[0].code;
-                  } 
+                  }
 
                 }
 
@@ -340,8 +351,8 @@ angular.module('catalogueApp')
           }
         }
 
-        $scope.changeType = function(){
-            $scope.detailsHeader = $scope.detailsHeaders[$scope.selectedUser.supplier_type_filter];
+        $scope.changeType = function () {
+          $scope.detailsHeader = $scope.detailsHeaders[$scope.selectedUser.supplier_type_filter];
         }
 
         $scope.setPhase = function (supplier, id) {
@@ -454,6 +465,22 @@ angular.module('catalogueApp')
             }
           })
 
+        }
+
+        $scope.getTotalSupplierPriceNew = function (supplier,index) {
+          var totalPrice = 0;
+          angular.forEach(supplier.shortlisted_inventories, function (value, key) {
+            var duration = 1;
+            if (value.inventory_duration_name == 'Campaign Weekly') {
+              duration = 7;
+            } else if (value.inventory_duration_name == 'Campaign Monthly') {
+              duration = 30;
+            }
+            totalPrice = totalPrice + (value.actual_supplier_price / duration);
+          })
+
+          $scope.initialReleaseData.shortlisted_suppliers[index].shortlisted_inventories_totalPrice = totalPrice;
+           
         }
         //Start: code added to search & show all suppliers on add societies tab
         // $scope.supplier_names = [
@@ -669,10 +696,10 @@ angular.module('catalogueApp')
             releaseCampaignService.addSuppliersToCampaign(data)
               .then(function onSuccess(response) {
                 //synergy
-                if(response){
+                if (response) {
                   $scope.releaseDetails.shortlisted_suppliers = response.data.data;
                 }
-              
+
                 $('#addNewSocities').modal('hide');
                 swal(constants.name, constants.add_data_success, constants.success);
               }).catch(function onError(response) {
@@ -1357,14 +1384,14 @@ angular.module('catalogueApp')
         // $scope.adInvModel = {};
         // $scope.addAdInventoryIds = function () {
         //   $scope.adInvModel['space_id'] = $scope.shortlistedSupplierData.id;
-          
+
         //   auditReleasePlanService.addAdInventoryIds($scope.adInvModel)
         //     .then(function onSuccess(response) {
-            
+
         //       $scope.releaseDetails.shortlisted_suppliers[$scope.adInvModel.index].shortlisted_inventories = response.data.data;
-              
+
         //       $('#addInventoryModal').on('hide.bs.modal', function () { });
-               
+
         //          swal({
         //         title: "",
         //         text: constants.add_data_success,
