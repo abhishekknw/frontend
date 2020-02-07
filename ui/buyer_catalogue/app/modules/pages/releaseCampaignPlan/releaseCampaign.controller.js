@@ -865,7 +865,7 @@ angular.module('catalogueApp')
             supplier.payment_status = 'PCR';
           }
 
-          supplier.booking_status = 'NB';
+          //supplier.booking_status = 'NB';
 
           $scope.body.message = "Beneficiary Name : " + $scope.supplierPaymentData.name_for_payment + ",     " +
             "Bank Account Number : " + $scope.supplierPaymentData.account_no + ",     " +
@@ -1554,7 +1554,7 @@ angular.module('catalogueApp')
 
         $scope.completionStatus = function (idOfSupplier) {
           let indexOfSupplier = $scope.releaseDetails.shortlisted_suppliers.findIndex(x => x.id === idOfSupplier);
-          if ($scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "BK" && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "MF") {
+          if ($scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "BK" && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "MC") {
             swal(constants.name, constants.booking_completion_status, constants.warning);
             $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].is_completed = false;
           }
