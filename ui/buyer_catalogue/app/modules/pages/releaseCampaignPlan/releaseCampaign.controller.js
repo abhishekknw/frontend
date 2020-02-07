@@ -865,7 +865,7 @@ angular.module('catalogueApp')
             supplier.payment_status = 'PCR';
           }
 
-          supplier.booking_status = 'NB';
+          //supplier.booking_status = 'NB';
 
           $scope.body.message = "Beneficiary Name : " + $scope.supplierPaymentData.name_for_payment + ",     " +
             "Bank Account Number : " + $scope.supplierPaymentData.account_no + ",     " +
