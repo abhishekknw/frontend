@@ -19,15 +19,22 @@
           var url = url_base + "leads/?campaign_id=" + campaignId;
           return machadaloHttp.get(url);
         }
+
+        campaignLeadsService.getEditLeads = function(formId,supplierId,entryId){
+          var url = url_base_leads + formId + "/get-leads-entry/" + supplierId + "/" + entryId + "/";
+          return machadaloHttp.get(url);
+        }
+
         campaignLeadsService.getEntryListLeads = function(formId, supplierId){
-          let url =""
-          if(supplierId){
-            url = url_base_leads + formId + "/entry_list/"  + supplierId;
-          }else{
-            url = url_base_leads + formId + "/entry_list/" ;
+          let url = ""
+          if (supplierId) {
+            url = url_base_leads + formId + "/entry_list/" + supplierId;
+          } else {
+            url = url_base_leads + formId + "/entry_list/";
           }
           return machadaloHttp.get(url);
-        }        
+        }
+
         campaignLeadsService.getEntryListLeadsCount = function(formId, supplierId){
           let url =""
           if(supplierId){
@@ -37,6 +44,7 @@
           }
           return machadaloHttp.get(url);
         }
+        
         campaignLeadsService.getCampaignDetails = function(assigned_by,userId,fetch_all){
           var url = url_base + "campaign-assignment/?include_assigned_by="+ assigned_by +  "&to="+userId + "&fetch_all=" + fetch_all;
           return machadaloHttp.get(url);
@@ -90,6 +98,11 @@
         campaignLeadsService.updateFormFields = function(formId, data){
           var url = url_base_leads + formId + "/edit_form";
           return machadaloHttp.put(url,data);
+        }
+
+        campaignLeadsService.updateLeadDetails = function(formId,supplierId,entryId, data){
+          var url = url_base_leads + formId + "/update-leads-entry/" + supplierId + "/" + entryId + "/";
+          return machadaloHttp.put(url, data);
         }
         return campaignLeadsService;
 
