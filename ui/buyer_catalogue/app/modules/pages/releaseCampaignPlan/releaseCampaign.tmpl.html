@@ -246,9 +246,9 @@
 
               <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.area}} <br> <span
                   ng-if="supplier.subarea">(</span>{{supplier.subarea}}<span ng-if="supplier.subarea">)</span> <br>
-                {{supplier.address2}}</td>
+                </td>
 
-              <td class="" rowspan="{{key.length}}" ng-show="$first" width="200"> {{supplier.address1}} <br> <span
+              <td class="" rowspan="{{key.length}}" ng-show="$first" width="200"> {{supplier.address1}} <span ng-if="supplier.address2">, {{supplier.address2}}</span> <br> <span
                   ng-if="supplier.landmark">(</span>{{supplier.landmark}}<span ng-if="supplier.landmark">)</span></td>
               <!-- <td class="" rowspan="{{key.length}}" ng-show="$first" width="200">Inventory Owner :<b> Machadalo</b>, Feedback:{{supplier.feedback}}</td> -->
 
