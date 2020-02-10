@@ -1,3 +1,4 @@
+
 angular.module('catalogueApp')
   .controller('ReleaseCampaignCtrl',
     ['$scope', '$rootScope', '$window', '$location', 'releaseCampaignService', 'createProposalService', 'auditReleasePlanService', '$stateParams', 'permissions', 'Upload', 'cfpLoadingBar', 'constants', 'mapViewService', '$timeout', 'commonDataShare',
@@ -286,12 +287,22 @@ angular.module('catalogueApp')
                 if (!$scope.initialReleaseData.shortlisted_suppliers[i].stall_locations) {
                   $scope.initialReleaseData.shortlisted_suppliers[i].stall_locations = [];
                 }
+
+                $scope.getTotalSupplierPriceNew($scope.initialReleaseData.shortlisted_suppliers[i],i);
+
               }
 
               $scope.releaseDetails = {};
 
               if ($scope.initialReleaseData) {
                 $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
+            
+                if ($scope.releaseDetails.shortlisted_suppliers.length) {
+                  for (let i in $scope.releaseDetails.shortlisted_suppliers.length) {
+
+                  }
+                }
+
                 $scope.releaseDetailsData = $scope.releaseDetails.campaign.centerData;
                 var centerSuppliers = $scope.releaseDetails.campaign.centerSuppliers;
                 if (centerSuppliers) {
@@ -309,13 +320,13 @@ angular.module('catalogueApp')
                       $scope.supplier_names.push({ name: 'Saloon', code: 'SA' });
                     } else if (centerSuppliers[i].supplier_type_code == 'RE') {
                       $scope.supplier_names.push({ name: 'Retail Store', code: 'RE' });
-                    } 
+                    }
                   }
 
-                  if ($scope.supplier_names.length == 1 ) {
+                  if ($scope.supplier_names.length == 1) {
                     $scope.selectedUser.supplier_type_filter_selected = $scope.supplier_names[0].name;
                     $scope.selectedUser.supplier_type_filter = $scope.supplier_names[0].code;
-                  } 
+                  }
 
                 }
 
@@ -340,8 +351,8 @@ angular.module('catalogueApp')
           }
         }
 
-        $scope.changeType = function(){
-            $scope.detailsHeader = $scope.detailsHeaders[$scope.selectedUser.supplier_type_filter];
+        $scope.changeType = function () {
+          $scope.detailsHeader = $scope.detailsHeaders[$scope.selectedUser.supplier_type_filter];
         }
 
         $scope.setPhase = function (supplier, id) {
@@ -455,6 +466,22 @@ angular.module('catalogueApp')
           })
 
         }
+
+        $scope.getTotalSupplierPriceNew = function (supplier,index) {
+          var totalPrice = 0;
+          angular.forEach(supplier.shortlisted_inventories, function (value, key) {
+            var duration = 1;
+            if (value.inventory_duration_name == 'Campaign Weekly') {
+              duration = 7;
+            } else if (value.inventory_duration_name == 'Campaign Monthly') {
+              duration = 30;
+            }
+            totalPrice = totalPrice + (value.actual_supplier_price / duration);
+          })
+
+          $scope.initialReleaseData.shortlisted_suppliers[index].shortlisted_inventories_totalPrice = totalPrice;
+           
+        }
         //Start: code added to search & show all suppliers on add societies tab
         // $scope.supplier_names = [
         //   { name: 'Residential Society', code:'RS'},
@@ -546,7 +573,7 @@ angular.module('catalogueApp')
               for (var i = 0; i < $scope.releaseDetails.campaign.centerData.length; i++) {
                 if ($scope.releaseDetails.campaign.centerData[i].id == center_index) {
                   $scope.current_center_index = i;
-                  $scope.supplier_center = $scope.releaseDetails.campaign.centerData[i].center_name
+                  $scope.supplier_center = $scope.releaseDetails.campaign.centerData[i].city
                 }
               }
               //$scope.supplier_center = $scope.releaseDetails.campaign.centerData.center_name;
@@ -576,8 +603,6 @@ angular.module('catalogueApp')
           createProposalService.getLocations('sub_areas', $scope.areas[index].id)
             .then(function onSuccess(response) {
               $scope.sub_areas = response.data;
-
-              console.log('subareaaa', $scope.sub_areas)
             });
         }
 
@@ -670,6 +695,11 @@ angular.module('catalogueApp')
           if (filters.length && supplier_ids.length) {
             releaseCampaignService.addSuppliersToCampaign(data)
               .then(function onSuccess(response) {
+                //synergy
+                if (response) {
+                  $scope.releaseDetails.shortlisted_suppliers = response.data.data;
+                }
+
                 $('#addNewSocities').modal('hide');
                 swal(constants.name, constants.add_data_success, constants.success);
               }).catch(function onError(response) {
@@ -862,7 +892,7 @@ angular.module('catalogueApp')
             supplier.payment_status = 'PCR';
           }
 
-          supplier.booking_status = 'NB';
+          //supplier.booking_status = 'NB';
 
           $scope.body.message = "Beneficiary Name : " + $scope.supplierPaymentData.name_for_payment + ",     " +
             "Bank Account Number : " + $scope.supplierPaymentData.account_no + ",     " +
@@ -1354,14 +1384,14 @@ angular.module('catalogueApp')
         // $scope.adInvModel = {};
         // $scope.addAdInventoryIds = function () {
         //   $scope.adInvModel['space_id'] = $scope.shortlistedSupplierData.id;
-          
+
         //   auditReleasePlanService.addAdInventoryIds($scope.adInvModel)
         //     .then(function onSuccess(response) {
-            
+
         //       $scope.releaseDetails.shortlisted_suppliers[$scope.adInvModel.index].shortlisted_inventories = response.data.data;
-              
+
         //       $('#addInventoryModal').on('hide.bs.modal', function () { });
-               
+
         //          swal({
         //         title: "",
         //         text: constants.add_data_success,
@@ -1546,13 +1576,12 @@ angular.module('catalogueApp')
         getHashTagImages();
 
         $scope.getFilteredResult = function () {
-          console.log('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq',$scope.selectedUser)
           getResultsPage(1);
         }
 
         $scope.completionStatus = function (idOfSupplier) {
           let indexOfSupplier = $scope.releaseDetails.shortlisted_suppliers.findIndex(x => x.id === idOfSupplier);
-          if ($scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "BK" && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "MF") {
+          if ($scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "BK" && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "MC") {
             swal(constants.name, constants.booking_completion_status, constants.warning);
             $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].is_completed = false;
           }

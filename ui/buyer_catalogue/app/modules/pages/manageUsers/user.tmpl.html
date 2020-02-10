@@ -369,6 +369,296 @@
           </div><!-- section-display -->
           <!--End: edit user  -->
 
+          <!--start: Create Roles  -->
+          <div class="section-display" ng-switch-when="createRoles" id="createRoles">
+            <h2 class="heading">Create New Role</h2>
+            <div class="grid">
+              <div class="item is-focused">
+                <label>Role Name<span>*</span>:</label>
+                <input type="text" class="field" ng-model="rolesData.name" placeholder="Enter Role Name">
+              </div>
+              <div class="item is-focused" ng-if="userInfo.is_superuser">
+                <label>Organisation:</label>
+                <select class="field" ng-model="rolesData.organisation">
+                  <option ng-repeat="org in organisationList" value="{{org.organisation_id}}">{{org.name}}</option>
+                </select>
+              </div>
+              <div class="item is-focused" ng-if="!userInfo.is_superuser">
+                <label>Organisation:</label>
+                <div>{{orgName}}</div>
+              </div>
+            </div>
+            <button ng-click="createNewRole()" class="smallBtn" ng-disabled="!rolesData.name">Create Role</button>
+          </div><!-- section-display -->
+          <!--End: Create Roles  -->
+
+          <!--start: assign role  -->
+          <div class="section-display" ng-switch-when="assignRole" id="assignRole">
+            <h2 class="heading">Role Assignment</h2>
+            <div class="grid">
+              <div class="item is-focused" ng-if="userInfo.is_superuser">
+                <label>Organisation:</label>
+                <select class="field" ng-model="rolesData.organisation" ng-change="getRoles(rolesData.organisation)">
+                  <option  ng-repeat="org in organisationList| orderBy: 'orgName'" value="{{org.organisation_id}}">{{org.name}}</option>
+                </select>
+              </div>
+              <div class="item is-focused" ng-if="!userInfo.is_superuser">
+                <label>Organisation:</label>
+                <div>{{orgName}}</div>
+              </div>
+              <div class="item is-focused">
+                <label>Select Parent Role:</label>
+                <select class="field" ng-model="rolesData.parent">
+                  <option  ng-repeat="role in rolesList" value="{{role.id}}">{{role.name}}</option>
+                </select>
+              </div>
+              <div class="item is-focused">
+                <label>Select Child Role:</label>
+                <select class="field" ng-model="rolesData.child">
+                  <option  ng-repeat="role in rolesList" value="{{role.id}}">{{role.name}}</option>
+                </select>
+              </div>
+            </div>
+            <button ng-click="assignRole()" class="smallBtn" ng-disabled="!rolesData.parent || !rolesData.child">Assign Role</button>
+          </div><!-- section-display -->
+          <!--End: assign role  -->
+
+          <!--start: Profile -->
+          <div class="section-display" ng-switch-when="profile" id="profile">
+            <h2 class="heading" ng-if="operationProfile.create">Create Profile</h2>
+            <h2 class="heading" ng-if="operationProfile.edit">Edit Profile Details</h2>
+            <h2 class="heading" ng-if="operationProfile.view">View Profile Details</h2>
+            <form>
+              <table class="table-data" ng-if="operationProfile.view">
+                <tr>
+                  <th>Profile Name</th>
+                  <td>{{profileData.name}}</td>
+                </tr>
+                <tr>
+                  <th>Is Standard Profile</th>
+                  <td>{{profileData.is_standard}}</td>
+                </tr>
+                <tr>
+                  <th>Organisation</th>
+                  <td>{{profileData.organisation.name}}</td>
+                </tr>
+              </table>
+              <div class="grid" ng-if="operationProfile.create || operationProfile.edit">
+                <div class="item">
+                  <label>Profile Name:</label>
+                  <input type="text" class="field" ng-model="profileData.name">
+                </div>
+                <div class="item">
+                  <label>Is Standard Profile:</label>
+                  <input type="radio" ng-model="profileData.is_standard" ng-value="true">
+                  <span>Yes</span>
+                  <input type="radio" ng-model="profileData.is_standard" ng-value="false">
+                  <span>No</span>  
+                </div>
+                <div class="item">
+                  <label>Organisation:</label>
+                  <select ng-if="operationProfile.create || operationProfile.edit" class="field" ng-model="profileData.organisation" ng-options="organisation.organisation_id as organisation.name for organisation in organisationList">
+                  </select>
+                </div>
+              </div>
+              <div class="">
+                <button ng-if="operationProfile.create" class="smallBtn" ng-click="createProfile()">Create</button>
+                <button ng-if="operationProfile.edit" class="smallBtn" ng-click="updateProfile()">UpdateProfile</button>
+              </div>
+            </form>
+            <!-- object level permissions Start -->
+            <h2 class="heading">Object Level Permissions</h2>
+            <span ng-if="!profileData.object_level_permission.length">No Permissions Assigned</span>
+            <table class="table-data" ng-if="profileData.object_level_permission.length">
+              <tr>
+                <th>Index</th>
+                <th>Name</th>
+                <th>View</th>
+                <th>Update</th>
+                <th>Create</th>
+                <th>Delete</th>
+                <th>View all</th>
+                <th>Update all</th>
+              </tr>
+              <tr ng-repeat="permission in profileData.object_level_permission">
+                <td>{{$index+1}}</td>
+                <td>{{permission.name}}</td>
+                <td>
+                  <input type="checkbox" ng-model="permission.view" ng-value="{{permission.view}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateObjectLevelPermission(permission,$index)">
+                </td>
+                <td>
+                  <input type="checkbox" ng-model="permission.update" ng-value="{{permission.update}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateObjectLevelPermission(permission,$index)">
+                </td>
+                <td>
+                  <input type="checkbox" ng-model="permission.create" ng-value="{{permission.create}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateObjectLevelPermission(permission,$index)">
+                </td>
+                <td>
+                  <input type="checkbox" ng-model="permission.delete" ng-value="{{permission.delete}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateObjectLevelPermission(permission,$index)">
+                </td>
+                <td>
+                  <input type="checkbox" ng-model="permission.view_all" ng-value="{{permission.view_all}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateObjectLevelPermission(permission,$index)">
+                </td>
+                <td>
+                  <input type="checkbox" ng-model="permission.update_all" ng-value="{{permission.update_all}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateObjectLevelPermission(permission,$index)">
+                </td>
+              </tr>
+            </table>
+            <button class="smallBtn active" data-toggle="modal" data-target="#createObjectLevelPermissionModal" data-backdrop="static" data-keyboard="false" ng-click="setModalData(profileData)">Create Object Level Permission</button>
+            <!-- object level permissions End -->
+            <!--start: general user level  permissions  -->
+            <h2 class="heading">General User Level Permissions</h2>
+            <span ng-if="!profileData.general_user_permission.length">No Permissions Assigned</span>
+            <table class="table-data" ng-if="profileData.general_user_permission.length">
+              <tr>
+                <th>Index</th>
+                <th>Name</th>
+                <th>Is allowed</th>
+              </tr>
+              <tr ng-repeat="permission in profileData.general_user_permission">
+                <td>{{$index+1}}</td>
+                <td>
+                  <label ng-if="operationProfile.view || operationProfile.create">{{permission.name.split("_").join(" ");}}</label>
+                  <input type="text" class="field" ng-model="permission.name" ng-if="operationProfile.edit" ng-disabled="isDataUpdating" ng-enter="updateGeneralUserPermission(permission,$index)">
+                </td>
+                <td>
+                  <input type="checkbox" ng-model="permission.is_allowed" ng-value="{{permission.is_allowed}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateGeneralUserPermission(permission,$index)">
+                </td>
+              </tr>
+            </table>
+            <button class="smallBtn active" data-toggle="modal" data-target="#createGeneralUserPermissionModal" data-backdrop="static" data-keyboard="false" ng-click="setModalData(profileData)">Create General User Level Permission</button>
+            <!--End: general user level  permissions  -->
+          </div><!-- section-display -->
+          <!--End: Profile -->
+
+
+          <!--start: Organisation OnBoarding Wizard  -->
+          <div class="section-display" ng-switch-when="onBoard" id="onBoard">
+            <h2 class="heading">Organisation OnBoarding Wizard</h2>
+            <p>Step By Step Guide To OnBoard Any Organisation within 5 minutes</p>
+            <div class="wizard-container">
+              <div class="wizard-card" data-color="red" id="wizard">
+                <form action="" method="">
+                <ul class="onboardTab">
+                    <li><a class="disableClick" data-target="#details"  data-toggle="tab">Organisation</a></li>
+                    <li><a class="disableClick" data-target="#captain"  data-toggle="tab">Profile</a></li>
+                    <li><a class="disableClick" data-target="#description"  data-toggle="tab">User</a></li>
+                </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane" id="details">
+                      <h2 class="heading">Organisation - Let's start with the basic details</h2>
+                      <div class="gridTwoColumnSection">
+                        <div class="item">
+                          <div class="form-group label-floating">
+                            <label>Organisation Name</label>
+                            <input name="organisationName" type="text" class="field" ng-model="organisationData.name" required>
+                          </div>
+                        </div>
+                        <div class="item">  
+                          <div class="form-group label-floating">
+                            <label>Mobile Number</label>
+                            <input name="mobile" type="number" class="field" ng-model="organisationData.phone" required>
+                          </div>
+                        </div>
+                        <div class="item">
+                          <div class="form-group label-floating">
+                            <label>Email</label>
+                            <input name="email" type="email" class="field" ng-model="organisationData.email" required>
+                          </div>
+                        </div>
+                        <div class="item">
+                          <div class="form-group label-floating">
+                            <label>Category</label>
+                            <select class="field" ng-model="organisationData.category" required>
+                              <option disabled="" selected=""></option>
+                              <option ng-repeat="category in organisationCategories"value="{{category}}"> {{category}} </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="item">
+                          <div class="form-group label-floating">
+                            <label>Comments</label>
+                            <input name="name2" type="text" class="field" ng-model="organisationData.comments">
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- #details -->
+                    <div class="tab-pane" id="captain">
+                      <h2 class="heading">Profile - Let's start with the basic details</h2>
+                      <div class="gridTwoColumnSection">
+                        <div class="item">
+                          <div class="form-group label-floating">
+                            <label>Profile Name</label>
+                            <input name="profileName" type="text" class="field" ng-model="profileData.name">
+                          </div>
+                        </div>
+                        <div class="item">
+                          <div class="form-group label-floating">
+                            <label>Clone Profile</label>
+                            <select name="profileClone" class="field" ng-model="cloneFromProfileId.id">
+                              <option disabled="" selected=""></option>
+                              <option ng-repeat="profile in standardProfileList"value="{{profile.id}}"> {{profile.name}} </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- #captain -->
+                    <div class="tab-pane" id="description">
+                      <h2 class="heading">User - Let's start with the basic details</h2>
+                      <div class="gridTwoColumnSection">
+                        <div class="item">
+                          <div class="form-group label-floating">
+                            <label>First Name</label>
+                            <input name="firstName" type="text" class="field" ng-model="model.first_name" required>
+                          </div>
+                        </div>
+                        <div class="item">
+                          <div class="form-group label-floating">
+                            <label>Last Name</label>
+                            <input name="lastname" type="text" class="field" ng-model="model.last_name" required>
+                          </div>
+                        </div>
+                        <div class="item">
+                          <div class="form-group label-floating">
+                            <label>UserName</label>
+                            <input name="username" type="text" class="field" ng-model="model.username" required>
+                          </div>
+                        </div>
+                        <div class="item">
+                          <div class="form-group label-floating">
+                            <label>Email Id</label>
+                            <input name="email" type="email" class="field" ng-model="model.email" required>
+                          </div>
+                        </div>
+                        <div class="item">
+                          <div class="form-group label-floating">
+                            <label>Password</label>
+                            <input name="password" type="password" class="field" ng-model="model.password" required>
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- #description -->
+                  </div><!-- tab-content -->
+                  <div class="wizard-footer">
+                    <div class="pull-right">
+                      <input type='button' class='smallBtn btn-next btn-fill btn-wd' name='next' value='Next' ng-click="createOnBoardActivity(activityNumber)"/>
+                      <input type='button' class='smallBtn btn-finish btn-fill btn-wd' name='finish' value='Finish' ng-click="register(true)"/>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!--   Core JS Files   -->
+              <script src="assets/js/jquery-2.2.4.min.js" type="text/javascript"></script>
+              <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+              <script src="assets/js/jquery.bootstrap.js" type="text/javascript"></script>
+              <!--  Plugin for the Wizard -->
+              <script src="assets/js/material-bootstrap-wizard.js"></script>
+              <!--  More information about jquery.validate here: http://jqueryvalidation.org/  -->
+              <script src="assets/js/jquery.validate.min.js"></script>
+            </div>
+          </div><!-- section-display -->
+          <!--End: Organisation OnBoarding Wizard  -->
+
+
           
 
         </div><!-- section-block -->
@@ -455,496 +745,6 @@
 
         </div>
       <!--end: users list  -->
-      <!--Start: profile tab -->
-      <div class="" ng-switch-when="profile" id="profile">
-        <div class="row table">
-            <div class="managementPageTitle">
-              <h3 ng-if="operationProfile.create">Create Profile</h3>
-              <h3 ng-if="operationProfile.edit">Edit Profile Details</h3>
-              <h3 ng-if="operationProfile.view">View Profile Details</h3>
-            </div>
-            <div class="panel-bodyUser">
-              <form>
-                <div class="form-group">
-                  <label class="col-md-3">Profile Name:</label>
-                  <input ng-if="operationProfile.create || operationProfile.edit" type="text" class="form-control" ng-model="profileData.name">
-                  <span class="col-md-3" ng-if="operationProfile.view">{{profileData.name}}</span>
-                </div>
-                <div class="form-group">
-                  <label class="col-md-3">Is Standard Profile:</label>&nbsp;&nbsp;
-                  <input ng-if="operationProfile.create || operationProfile.edit" type="radio" ng-model="profileData.is_standard" ng-value="true">
-                  <span ng-if="operationProfile.create || operationProfile.edit">Yes</span> &nbsp;
-                  <input ng-if="operationProfile.create || operationProfile.edit" type="radio" ng-model="profileData.is_standard" ng-value="false">
-                  <span ng-if="operationProfile.create || operationProfile.edit">No</span>
-                  <span ng-if="operationProfile.view">{{profileData.is_standard}}</span>
-                </div>
-                <div class="form-group">
-                  <label class="col-md-3">Organisation :</label>
-                  <select ng-if="operationProfile.create || operationProfile.edit" class="form-control" ng-model="profileData.organisation"
-                      ng-options="organisation.organisation_id as organisation.name for organisation in organisationList">
-                    <!-- <option ng-selected="{{profileData.organisation.name == organisation.name}}" ng-repeat="organisation in organisationList" value="{{organisation.organisation_id}}">{{organisation.name}}</option> -->
-                  </select>
-                  <span ng-if="operationProfile.view">{{profileData.organisation.name}}</span>
-                </div>
-                <div class="align-right-btn">
-                  <button ng-if="operationProfile.create" class="btn btn-danger" ng-click="createProfile()">Create</button>
-                  <button ng-if="operationProfile.edit" class="btn btn-danger" ng-click="updateProfile()">UpdateProfile</button>
-                </div>
-              </form>
-            </div>
-
-            <!--start: object level permissions  -->
-            <div class="managementPageTitle">
-              <h3>Object Level Permissions</h3>
-            </div>
-            <div class="panel-bodyUser">
-               <!--list of object-level-permissions  -->
-               <div class="panel-bodyUser organisation-view-tab-content">
-                 <span ng-if="!profileData.object_level_permission.length">No Permissions Assigned</span>
-                 <div class = "managementTable" ng-if="profileData.object_level_permission.length">
-                   <div class="managementPageform-group">
-                      <div class = "row organisation-view-tab">
-                        <div class = "col-md-2"><label>Index </label></div>
-                        <div class = "col-md-3"><label>Name </label></div>
-                        <div class = "col-md-1"><label>View </label></div>
-                        <div class = "col-md-1"><label>Update </label></div>
-                        <div class = "col-md-1"><label>Create </label></div>
-                        <div class = "col-md-1"><label>Delete </label></div>
-                        <div class = "col-md-1"><label>View All </label></div>
-                        <div class = "col-md-2"><label>Update All </label></div>
-                      </div></br>
-                      <div class = "row" ng-repeat="permission in profileData.object_level_permission">
-                        <div class = "col-md-2">
-                          {{$index+1}}
-                        </div>
-                        <div class = "col-md-3">
-                          <label>{{permission.name}}</label>
-                        </div>
-
-                        <div class = "col-md-1">
-                          <input type="checkbox" ng-model="permission.view" ng-value="{{permission.view}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateObjectLevelPermission(permission,$index)">
-                        </div>
-                        <div class = "col-md-1">
-                          <input type="checkbox" ng-model="permission.update" ng-value="{{permission.update}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateObjectLevelPermission(permission,$index)">
-                        </div>
-                        <div class = "col-md-1">
-                          <input type="checkbox" ng-model="permission.create" ng-value="{{permission.create}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateObjectLevelPermission(permission,$index)">
-                        </div>
-                        <div class = "col-md-1">
-                          <input type="checkbox" ng-model="permission.delete" ng-value="{{permission.delete}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateObjectLevelPermission(permission,$index)">
-                        </div>
-                        <div class = "col-md-1">
-                          <input type="checkbox" ng-model="permission.view_all" ng-value="{{permission.view_all}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateObjectLevelPermission(permission,$index)">
-                        </div>
-                        <div class = "col-md-2">
-                          <input type="checkbox" ng-model="permission.update_all" ng-value="{{permission.update_all}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateObjectLevelPermission(permission,$index)">
-                        </div>
-                      </div></br>
-                    </div>
-                  </div>
-               </div>
-               <div class = "managementTable">
-                 <div class="managementPageform-group">
-                    <div class = "row">
-
-                      <!--<div class = "col-md-6">-->
-                        <!--<button type="button" class="btn btn-danger active" name="button">Clone Profile</button>-->
-                      <!--</div>-->
-
-                      <div class = "col-md-12 align-right-btn">
-                        <button class="btn btn-danger active" data-toggle="modal" data-target="#createObjectLevelPermissionModal" data-backdrop="static" data-keyboard="false" ng-click="setModalData(profileData)">
-                          Create Object Level Permission
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            <!--end : object level permissions  -->
-
-            <!--start: general user level  permissions  -->
-            <div class="managementPageTitle">
-              <h3>General User Level Permissions</h3>
-            </div>
-            <div class="panel-bodyUser">
-               <!--list of general user level permissions  -->
-               <div class="panel-bodyUser organisation-view-tab-content">
-                 <span ng-if="!profileData.general_user_permission.length">No Permissions Assigned</span>
-                 <div class = "managementTable table-striped table-hover" ng-if="profileData.general_user_permission.length">
-                   <div class="managementPageform-group">
-                      <div class = "row organisation-view-tab">
-                        <div class = "col-md-3"><label>Index </label></div>
-                        <div class = "col-md-6"><label>Name </label></div>
-                        <div class = "col-md-3"><label>Is Allowed </label></div>
-                      </div></br>
-                      <div class = "row" ng-repeat="permission in profileData.general_user_permission">
-                        <div class = "col-md-3">
-                          {{$index+1}}
-                        </div>
-                        <div class = "col-md-6">
-                          <label ng-if="operationProfile.view || operationProfile.create">{{permission.name.split("_").join(" ");}}</label>
-                          <input type="text" class="form-control" ng-model="permission.name" ng-if="operationProfile.edit" ng-disabled="isDataUpdating" ng-enter="updateGeneralUserPermission(permission,$index)">
-                        </div>
-                        <div class = "col-md-3">
-                          <input type="checkbox" ng-model="permission.is_allowed" ng-value="{{permission.is_allowed}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateGeneralUserPermission(permission,$index)">
-                        </div>
-                      </div></br>
-                    </div>
-                  </div>
-               </div>
-               <div class = "managementTable">
-                 <div class="managementPageform-group">
-                    <div class = "row">
-                      <div class = "col-md-12 align-right-btn">
-                        <button class="btn btn-danger active" data-toggle="modal" data-target="#createGeneralUserPermissionModal" data-backdrop="static" data-keyboard="false" ng-click="setModalData(profileData)">
-                          Create General User Level Permission
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            <!--end : general user level permissions  -->
-        </div>
-      </div>
-      <!--End: profile tab -->
-
-      
-
-      
-
-     
-      <div ng-switch-when="createRoles" id="createRoles">
-        <div class="managementPageTitle">
-          <h3 style="text-align:center">Create New Role</h3>
-        </div>
-        <div class="row">
-
-          <div class="panel-bodyUser">
-            <div class="roleTable">
-              <div class="form-group is-focused">
-                <label class="control-label col-sm-4">Role Name*:</label>
-                <div class="col-sm-8">
-                  <input type="text" class="form-control" ng-model="rolesData.name" placeholder="Enter Role Name">
-                </div>
-              </div>
-              <div class="form-group is-focused" ng-if="userInfo.is_superuser">
-                <label class="control-label col-sm-4">Organisation:</label>
-                <div class="col-sm-8">
-                  <select class="form-control" ng-model="rolesData.organisation">
-                    <option  ng-repeat="org in organisationList" value="{{org.organisation_id}}">{{org.name}}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group is-focused" ng-if="!userInfo.is_superuser">
-                <label class="control-label col-sm-2">Organisation:</label>
-                <div class="col-sm-10">
-                  {{orgName}}
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                  <button ng-click="createNewRole()" class="btn btn-danger" ng-disabled="!rolesData.name">Create Role</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--start: assign role  -->
-      <div ng-switch-when="assignRole" id="assignRole">
-        <div class="managementPageTitle">
-          <h3 style="text-align:center">Role Assignment</h3>
-        </div>
-        <div class="row">
-
-          <div class="panel-bodyUser">
-            <div class="roleTable">
-            <div class="form-group is-focused" ng-if="userInfo.is_superuser">
-              <label class="control-label col-sm-4">Organisation:</label>
-              <div class="col-sm-8">
-                <select class="form-control" ng-model="rolesData.organisation" ng-change="getRoles(rolesData.organisation)">
-                  <option  ng-repeat="org in organisationList| orderBy: 'orgName'" value="{{org.organisation_id}}">{{org.name}}</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group is-focused" ng-if="!userInfo.is_superuser">
-              <label class="control-label col-sm-4">Organisation:</label>
-              <div class="col-sm-8">
-                {{orgName}}
-              </div>
-            </div>
-            <div class="form-group is-focused">
-              <label class="control-label col-sm-4">Select Parent Role:</label>
-              <div class="col-sm-8">
-                <select class="form-control" ng-model="rolesData.parent">
-                  <option  ng-repeat="role in rolesList" value="{{role.id}}">{{role.name}}</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group is-focused">
-              <label class="control-label col-sm-4">Select Child Role:</label>
-              <div class="col-sm-8">
-                <select class="form-control" ng-model="rolesData.child">
-                  <option  ng-repeat="role in rolesList" value="{{role.id}}">{{role.name}}</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <button ng-click="assignRole()" class="btn btn-danger" ng-disabled="!rolesData.parent || !rolesData.child">Assign Role</button>
-              </div>
-            </div>
-          </div>
-          </div>
-        </div>
-      </div>
-      <!--start: wizard tab  -->
-      <div ng-switch-when="onBoard" id="onBoard">
-
-      <!-- <div class="image-container set-full-height" style="background-image: url('assets/img/wizard-book.jpg')"> -->
-          <!--   Creative Tim Branding   -->
-
-
-        <!--  Made With Material Kit  -->
-          <!--   Big container   -->
-          <!-- <div class="row table"> -->
-              <!-- <div class="row"> -->
-                <!-- <div class="col-sm-8 col-sm-offset-2"> -->
-                    <!--      Wizard container        -->
-                    <div class="wizard-container onboardTable">
-                        <div class="card wizard-card" data-color="red" id="wizard">
-                            <form action="" method="">
-                        <!--        You can switch " data-color="blue" "  with one of the next bright colors: "green", "orange", "red", "purple"             -->
-
-                              <div class="wizard-header">
-                                  <h3 class="wizard-title">
-                                    Organisation OnBoarding Wizard
-                                  </h3>
-                      <h5>Step By Step Guide To OnBoard Any Organisation within 5 minutes</h5>
-                              </div>
-                    <div class="wizard-navigation">
-                      <ul>
-                          <li><a class="disableClick" data-target="#details"  data-toggle="tab">Organisation</a></li>
-                          <li><a class="disableClick" data-target="#captain"  data-toggle="tab">Profile</a></li>
-                          <li><a class="disableClick" data-target="#description"  data-toggle="tab">User</a></li>
-                      </ul>
-                    </div>
-
-                    <div class="tab-content">
-                        <div class="tab-pane" id="details">
-                          <div class="row">
-                            <div class="col-sm-12">
-                                <h4 class="info-text"> Let's start with the basic details.</h4>
-                            </div>
-                            <div class="col-sm-6">
-                              <div class="input-group">
-                                <span class="input-group-addon">
-                                  <i class="material-icons"></i>
-                                </span>
-                                <div class="form-group label-floating">
-                                   <label class="control-label">Organisation Name</label>
-                                   <input name="organisationName" type="text" class="form-control" ng-model="organisationData.name" required>
-                                </div>
-                              </div>
-
-                              <div class="input-group">
-                                <span class="input-group-addon">
-                                  <i class="material-icons">phone</i>
-                                </span>
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Mobile Number</label>
-                                    <input name="mobile" type="number" class="form-control" ng-model="organisationData.phone" required>
-                                </div>
-                              </div>
-                            </div>
-                          <div class="col-sm-6">
-                            <div class="input-group">
-                              <span class="input-group-addon">
-                                <i class="material-icons">email</i>
-                              </span>
-                              <div class="form-group label-floating">
-                                 <label class="control-label">Email</label>
-                                 <input name="email" type="email" class="form-control" ng-model="organisationData.email" required>
-                              </div>
-                            </div>
-
-                            <div class="input-group">
-                              <span class="input-group-addon">
-                                <i class="material-icons">lock_outline</i>
-                              </span>
-                              <div class="form-group label-floating">
-                                <label class="control-label">Category</label>
-                                <select class="form-control" ng-model="organisationData.category" required>
-                                  <option disabled="" selected=""></option>
-                                  <option ng-repeat="category in organisationCategories"value="{{category}}"> {{category}} </option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                        <div class="col-sm-6">
-                          <div class="input-group">
-                            <span class="input-group-addon">
-                              <i class="material-icons">comment</i>
-                            </span>
-                            <div class="form-group label-floating">
-                                <label class="control-label">Comments</label>
-                                <input name="name2" type="text" class="form-control" ng-model="organisationData.comments">
-                            </div>
-                          </div>
-                        </div>
-                       </div>
-                     </div>
-                                    <div class="tab-pane" id="captain">
-                                      <div class="row">
-                                       <div class="col-sm-12">
-                                           <h4 class="info-text"> Let's start with the basic details.</h4>
-                                       </div>
-                                        <div class="col-sm-6">
-                                         <div class="input-group">
-                                           <span class="input-group-addon">
-                                             <i class="material-icons"></i>
-                                           </span>
-                                           <div class="form-group label-floating">
-                                                <label class="control-label">Profile Name</label>
-                                              <input name="profileName" type="text" class="form-control" ng-model="profileData.name">
-                                            </div>
-                                         </div>
-
-                                         <!-- <div class="input-group">
-                                           <span class="input-group-addon">
-                                             <i class="material-icons"></i>
-                                           </span>
-                                           <div class="managementPageform-group label-floating">
-                                               <label class="">Is Standard Profile</label></br>
-                                               <input type="radio" class="" value="true"ng-model="is_standard">&nbsp;<span>Yes</span>
-                                               <input type="radio" class=""value="false"ng-model="is_standard">&nbsp;<span>No</span>
-                                            </div>
-                                         </div> -->
-                                        </div>
-                                      <div class="col-sm-6">
-                                       <!-- <div class="input-group">
-                                         <span class="input-group-addon">
-                                           <i class="material-icons">lock_outline</i>
-                                         </span>
-                                          <div class="managementPageform-group label-floating">
-                                            <label class="control-label">Organisation</label>
-                                            <select class="form-control">
-                                              <option disabled="" selected=""></option>
-                                              <option ng-repeat="organisation in organisationList"value="{{organisation.organisation_id}}">{{organisation.name}} </option>
-                                            </select>
-                                          </div>
-                                       </div> -->
-                                       <div class="input-group">
-                                         <span class="input-group-addon">
-                                           <i class="material-icons">lock_outline</i>
-                                         </span>
-                                          <div class="form-group label-floating">
-                                            <label class="control-label">Clone Profile</label>
-                                            <select name="profileClone" class="form-control" ng-model="cloneFromProfileId.id">
-                                              <option disabled="" selected=""></option>
-                                              <option ng-repeat="profile in standardProfileList"value="{{profile.id}}"> {{profile.name}} </option>
-                                            </select>
-                                          </div>
-                                       </div>
-                                      </div>
-                                  </div>
-                                    </div>
-                                    <div class="tab-pane" id="description">
-                                      <div class="row">
-                                       <div class="col-sm-12">
-                                           <h4 class="info-text"> Let's start with the basic details.</h4>
-                                       </div>
-                                        <div class="col-sm-6">
-
-                                          <div class="input-group">
-                                            <span class="input-group-addon">
-                                              <i class="material-icons"></i>
-                                            </span>
-                                            <div class="form-group label-floating">
-                                                 <label class="control-label">First Name</label>
-                                               <input name="firstName" type="text" class="form-control" ng-model="model.first_name" required>
-                                             </div>
-                                          </div>
-
-                                          <div class="input-group">
-                                            <span class="input-group-addon">
-                                              <i class="material-icons"></i>
-                                            </span>
-                                            <div class="form-group label-floating">
-                                                 <label class="control-label">Last Name</label>
-                                               <input name="lastname" type="text" class="form-control" ng-model="model.last_name" required>
-                                             </div>
-                                          </div>
-                                        </div>
-                                      <div class="col-sm-6">
-                                        <div class="input-group">
-                                          <span class="input-group-addon">
-                                            <i class="material-icons"></i>
-                                          </span>
-                                          <div class="form-group label-floating">
-                                               <label class="control-label">UserName</label>
-                                             <input name="username" type="text" class="form-control" ng-model="model.username" required>
-                                           </div>
-                                        </div>
-                                        <div class="input-group">
-                                          <span class="input-group-addon">
-                                            <i class="material-icons">email</i>
-                                          </span>
-                                          <div class="form-group label-floating">
-                                             <label class="control-label">Email Id</label>
-                                             <input name="email" type="email" class="form-control" ng-model="model.email" required>
-                                          </div>
-                                        </div>
-                                      </div>
-
-                                      <div class="col-sm-6">
-                                        <div class="input-group">
-                                          <span class="input-group-addon">
-                                            <i class="material-icons">lock_outline</i>
-                                          </span>
-                                          <div class="form-group label-floating">
-                                               <label class="control-label">Password</label>
-                                             <input name="password" type="password" class="form-control" ng-model="model.password" required>
-                                           </div>
-                                        </div>
-                                      </div>
-                                  </div>
-                                 </div>
-                                </div>
-                                <div class="wizard-footer">
-                                    <div class="pull-right">
-                                      <input type='button' class='btn btn-next btn-fill btn-danger btn-wd' name='next' value='Next' ng-click="createOnBoardActivity(activityNumber)"/>
-                                      <input type='button' class='btn btn-finish btn-fill btn-danger btn-wd' name='finish' value='Finish' ng-click="register(true)"/>
-                                     </div>
-                                      <!-- <div class="pull-left">
-                                        <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous' value='Previous' />
-                                      </div> -->
-                                      <div class="clearfix"></div>
-                                </div>
-                            </form>
-                        </div>
-                    </div> <!-- wizard container -->
-                <!-- </div> -->
-            <!-- </div> <! row -->
-        <!-- </div> <!  big container -->
-      <!-- </div> -->
-
-    <!-- </div> -->
-
-    <!--   Core JS Files   -->
-      <script src="assets/js/jquery-2.2.4.min.js" type="text/javascript"></script>
-      <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
-      <script src="assets/js/jquery.bootstrap.js" type="text/javascript"></script>
-
-      <!--  Plugin for the Wizard -->
-      <script src="assets/js/material-bootstrap-wizard.js"></script>
-
-      <!--  More information about jquery.validate here: http://jqueryvalidation.org/  -->
-      <script src="assets/js/jquery.validate.min.js"></script>
-      </div>
-      <!--end:   wizard / onBoard  Organisation tab  -->
-
       
     </div>
     <!--End of container  -->
@@ -953,6 +753,11 @@
   </div>
 
 </div>
+
+
+
+
+
 <!--start : change password  -->
 <div class="modal change_password" id="passwordModal" >
   <div class="modal-dialog">

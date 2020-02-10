@@ -4,7 +4,6 @@
 
       //start:code added to show or hide details based on user's group permissions
       $scope.permList = permissions.homePage;
-      console.log(permissions.homePage);
       $scope.bd_manager = constants.bd_manager;
       $scope.campaign_manager = constants.campaign_manager;
       $scope.userInfo = $rootScope.globals.userInfo;
@@ -77,10 +76,8 @@
       $scope.getAccounts = function(savedState){
 
           pagesService.getAccounts($scope.bsSelect)
-          .then(function onSuccess(response){
-            console.log(response);
+          .then(function onSuccess(response){ 
             $scope.model.accounts = response.data.data;
-            console.log($scope.model.accounts);
             $scope.display = true;
             $scope.loading = response.data.data;
             if(savedState){
@@ -200,7 +197,7 @@
       $scope.remove = function(index) {
         $scope.model.business.contacts.splice(index, 1);
       };
-      console.log($rootScope);
+     
     	$scope.getOrganisations = function() {
         
         $window.localStorage.account_proposals = null;
@@ -226,8 +223,7 @@
               //synergytop start
               $scope.getAccounts();
               //synergytop end
-              console.log($scope.bsSelect);
-              console.log(response);
+             
 	       })
          .catch(function onError(response){
            commonDataShare.showErrorMessage(response);
@@ -288,14 +284,10 @@
 
           pagesService.getAccountProposal(sel_account_id)
           .then(function(response){
-            console.log($scope.account_proposals);
-            console.log("proposal",response);
               $scope.account_proposals = response.data.data;
-                console.log($scope.account_proposals);
               // $scope.loading = response.data.data;
 
               $window.localStorage.account_proposals = JSON.stringify($scope.account_proposals);
-              console.log($scope.account_proposals);
           })
           .catch(function onError(response){
             commonDataShare.showErrorMessage(response);
@@ -318,7 +310,6 @@
           $window.localStorage.isSavedProposal = false;
           $window.localStorage.isReadOnly = 'false';
           $window.localStorage.proposalState = '';
-          console.log("hello",$scope.bsSelect);
           $window.localStorage.organisationId = $scope.bsSelect;
           $location.path('/'+sel_account_id + '/createproposal');
         }
@@ -337,7 +328,6 @@
         $location.path('/' + proposalId + '/showproposalhistory');
       }
     	$scope.create = function() {
-        console.log($scope.model);
         $scope.model['category'] = 'Business';
         pagesService.createBusinessCampaign($scope.model)
           .then(function (response) {
@@ -371,7 +361,8 @@
         })
         };
         //Start: To upload file when upload button is clicked
-        $scope.upload = function (file,proposal_id) {
+        $scope.upload = function (file,proposal_id,index) {
+        
           $scope.uploadfile = false;
           var uploadUrl = constants.base_url + constants.url_base;
           var token = $rootScope.globals.currentUser.token;
@@ -381,9 +372,12 @@
                 data: {file: file, 'username': $scope.username},
                 headers: {'Authorization': 'JWT ' + token},
             }).then(function (response) {
-              console.log(response);
               $scope.uploadfile = true;
               swal(constants.name,constants.uploadfile_success,constants.success);
+              if($scope.account_proposals[index].campaign_state == 'PR'){
+                $scope.account_proposals[index].campaign_state = 'PF';
+              }
+              
               // uploadFileToAmazonServer(response.data.data,file);
             }).catch(function onError(response) {
               console.log(response);
@@ -443,14 +437,12 @@
         // }
         $scope.goToMapView = function(proposal){
           if(proposal.campaign_state){
-            console.log("hello");
             $window.localStorage.isReadOnly = 'true';
             $window.localStorage.isSavedProposal = 'true';
             $window.localStorage.proposalState = constants[proposal.campaign_state];
             $location.path('/' + proposal.proposal_id + '/mapview');
           }
           else {
-            console.log("fdsfds");
             $window.localStorage.isSavedProposal = 'true';
             $window.localStorage.isReadOnly = 'false';
             $window.localStorage.proposalState = '';
@@ -460,12 +452,11 @@
 
         $scope.getStoredData();
         $scope.getOrganisation = function(bsSelect){
-          console.log($scope.bsSelect);
           if(bsSelect)
             $scope.bsSelect = bsSelect;
           pagesService.getOrganisation($scope.bsSelect)
           .then(function onSuccess(response){
-            console.log(response);
+          
             $scope.model.organisation = response.data.data;
             // $scope.loading = response.data.data;
             $scope.model.accounts = [];
@@ -483,7 +474,7 @@
         $scope.getAccount = function(){
           pagesService.getAccount($scope.bsSelect)
           .then(function onSuccess(response){
-            console.log(response);
+
           }).catch(function onError(response){
             console.log(response);
           })

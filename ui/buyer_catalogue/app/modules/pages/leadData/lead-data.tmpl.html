@@ -41,13 +41,13 @@
                 <div><label>Select Campaign</label></div>
                 <select name="campaign" class="form-control input-size" ng-model="model.campaign_id" required>
                   <option value="">Select Campaign</option>
-                  <option ng-repeat="campaigndata in campaignData" value="{{campaigndata.campaign.proposal_id}}"
+                  <option ng-repeat="campaigndata in campaignData | orderBy:'campaign.name'" value="{{campaigndata.campaign.proposal_id}}"
                     required>{{campaigndata.campaign.name}}</option>
                 </select>
 
               </div>
               <div class="form-group">
-                <label for="file" class="cols-sm-2 control-label">Select Lead Shet</label>
+                <label for="file" class="cols-sm-2 control-label">Select Lead Sheet</label>
                 <div class="">
                   <div class="input-group" style="margin-bottom: 20px;">
                     <input type="file" class="buttonfile" accept=".xlsx" ngf-select="uploadFiles($file)" />
@@ -84,12 +84,13 @@
                 <tr>
                   <th style="text-align: center;">Sr No</th>
                   <th style="text-align: center;">Matched Societies</th>
+                  
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="data in matched_societies">
+                <tr ng-repeat="(key,value) in lead_count_matched">
                   <td>{{$index+1}}</td>
-                  <td>{{data}}</td>
+                  <td ><a href="#/{{model.campaign_id}}/releasePlan">{{key}}  (lead count: {{value}})</a></td>
                 </tr>
 
               </tbody>
@@ -109,11 +110,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="data in unmatched_societies">
+                <tr ng-repeat="(key,value) in lead_count_unmatched">
                   <td>{{$index+1}}</td>
-                  <td>{{data}}</td>
+                  <td>{{key}} (lead count: {{value}}) </td>
                 </tr>
-
               </tbody>
             </table>
           </div>

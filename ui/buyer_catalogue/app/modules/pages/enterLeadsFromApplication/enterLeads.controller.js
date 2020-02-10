@@ -8,7 +8,7 @@ angular.module('catalogueApp')
       $scope.leadKeyTypes = [
         {name : 'STRING'},
         {name : 'INT'},
-        {name : 'EMAIL'},
+        {name : 'EMAIL'}, 
         {name : 'PASSWORD'},
         {name : 'PHONE'},
         {name : 'RADIO'},
@@ -42,7 +42,6 @@ angular.module('catalogueApp')
         .then(function onSuccess(response){
           $scope.loading = response;
           $scope.leadModelData = response.data.data.leads_form_items;
-          console.log($scope.leadModelData);
         }).catch(function onError(response){
          
         })
@@ -80,11 +79,11 @@ angular.module('catalogueApp')
             }
             data.leads_form_entries.push(temp_data);
         });
-       
         enterLeadsService.saveLeads($scope.formId,data)
         .then(function onSuccess(response){
           $scope.leadModelData = [];
           getLeadFormDetails();
+          getLeadsCount();
           swal(constants.name, constants.add_data_success, constants.success);
         }).catch(function onError(response){
         })
@@ -92,11 +91,23 @@ angular.module('catalogueApp')
       $scope.getLeadsBySupplier = function(){
         $scope.viewLeads = true;
         enterLeadsService.getLeadsBySupplier($scope.formId,$scope.supplierId)
-        .then(function onSuccess(response){
+          .then(function onSuccess(response){
+            if(response.data && response.data.data && response.data.data.values){
+              for (let x in response.data.data.values){
+                if(response.data.data.values[x]){
+                  for(let y in response.data.data.values[x]){
+                    if(response.data.data.values[x][y].key_type == "DATE"){
+                       response.data.data.values[x][y].value =$filter('date')(new Date(response.data.data.values[x][y].value),'yyyy-MM-dd');
+                    }
+                  }
+                }
+              }
+            }
           $scope.leadsData = response.data.data;
         }).catch(function onError(response){
         })
       }
+      
       $scope.changeView = function(){
         $scope.viewLeads = false;
       }
@@ -107,6 +118,9 @@ angular.module('catalogueApp')
           .then(function onSuccess(response){
             $scope.viewLeads = false;
             $scope.editLeads = true;
+            if(response.data && response.data.data && response.data.data.leads_form_items && response.data.data.leads_form_items[1] && response.data.data.leads_form_items[1].key_type==="DATE"){
+              response.data.data.leads_form_items[1].value = new Date (response.data.data.leads_form_items[1].value); 
+            }
             $scope.leadModelData = response.data.data.leads_form_items;
           }).catch(function onError(response){
           })

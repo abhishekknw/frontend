@@ -57,7 +57,12 @@
                 </div>
               </td>
               <td ng-if="proposal.proposal.campaign_state == 'PTC'">
+                  <span ng-if="proposal.assignment_detail.assigned_to !='Nobody'">
                 {{proposal.assignment_detail.assigned_to}}
+                </span>
+                <span ng-if="proposal.assignment_detail.assigned_to =='Nobody'">
+                    NA
+                    </span>
               </td>
               <td ng-if="proposal.proposal.campaign_state != 'PTC'">
                 NA
@@ -79,122 +84,104 @@
       </div>
 
     </div><!-- middle-section -->
+    <div class="fixfooter"></div>
   </div><!-- wrapperBox -->
+  <footer-bar></footer-bar>
 </main>
 
 
 <!-- Start: Code for reason specifying modal-->
-<div id="declineModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Specify Reason</h4>
-        <hr/>
-        <div class = "modal-body" style = "height: 300px;">
-        <label>Please enter the reason in below box why this proposal can't be converted to campaign</label>
-          <textarea name="reason" id="onDeclineReason" class="form-control" ng-model="reason"></textarea>
-          <button class="btn btn-danger active notify" ng-click="sendNotification()" ng-disabled="!reason.length > 0" ng-loading="loadSpinner">Notify</button>
+  <div id="declineModal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modalBodyBox">
+            <h3>Specify Reason</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <label>Please enter the reason in below box why this proposal can't be converted to campaign</label>
+            <textarea name="reason" id="onDeclineReason" class="field" ng-model="reason"></textarea>
+            <button class="smallBtn active notify" ng-click="sendNotification()" ng-disabled="!reason.length > 0" ng-loading="loadSpinner">Notify</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<div id="onHoldModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Specify Reason</h4>
-        <hr/>
-        <div class = "modal-body" style = "height: 300px;">
-        <label>Please enter the reason in below box why this proposal is on hold</label>
-          <textarea name="reason" id="onHoldReason" class="form-control" ng-model="reason"></textarea>
-          <button class="btn btn-danger active notify" ng-click="sendNotification()" ng-disabled="!reason.length > 0" ng-loading="loadSpinner">Notify</button>
+  <div id="onHoldModal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modalBodyBox">
+            <h3>Specify Reason</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <label>Please enter the reason in below box why this proposal is on hold</label>
+            <textarea name="reason" id="onHoldReason" class="field" ng-model="reason"></textarea>
+            <button class="smallBtn active notify" ng-click="sendNotification()" ng-disabled="!reason.length > 0" ng-loading="loadSpinner">Notify</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-
-
 <!-- End: Code for reason specifying modal-->
+
 <!-- Start: Code for assgining campaign -->
-<div id="assignModal"  class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Assign Campaign to Operations Manager</h4>
-        <hr/>
-        <div class = "modal-body">
-          <div class = "row">
+  <div id="assignModal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modalBodyBox">
+            <h3>Assign Campaign to Operations Manager</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
             <label>Select Organisation:</label>
-            <select ng-model= "orgId" ng-change="getUsersList(orgId)">
+            <select class="field" ng-model= "orgId" ng-change="getUsersList(orgId)">
               <option ng-repeat = "org in organisationList | orderBy: 'name'" value = "{{org.organisation_id}}">{{org.name}}</option>
             </select>
+            <label>Assign to:</label>
+            <div ng-dropdown-multiselect="" options="userList" extra-settings="assignementSettings"
+            selected-model="assignedUsers" translation-texts="selected_baselines_customTexts" events="events"></div>
+            <button class="smallBtn active notify" ng-click="saveAssignment()">Assign</button>
           </div>
-        <div class = "row">
-          <label>Assign to:</label>
-
-            <span style="color:red;width:100%;margin-left:-20px;" ng-dropdown-multiselect="" options="userList" class="col-md-6"  extra-settings="assignementSettings"
-            selected-model="assignedUsers" translation-texts="selected_baselines_customTexts" events="events"></span>
-
-
-<!--           <select ng-model= "userId">
-            <option ng-repeat = "user in userList | orderBy: 'username'" value = "{{user.id}}">{{user.username}}</option>
-          </select> -->
-        </div>
-          <button class="btn btn-danger active notify" ng-click="saveAssignment()">Assign</button>
         </div>
       </div>
     </div>
   </div>
-</div>
 <!-- End: Code for assgining campaign -->
 
 <!-- Start: Code for Comment  View campaign -->
-<div id="viewComments" class="modal fade">
-    <div>
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    View Comments For {{prposalDataForComment.proposal.name}}
-                </div>
-                <div class="modal-body">
-                    <table class="table-bordered table-striped">
-                        <tbody>
-                            <tr ng-repeat="item in commentsData[selectedInvForView]">
-                                <td class="col-md-8">
-                                    <div>
-                                        <img ng-src="{{userIcon}}">
-                                        <b>{{item.user_name}} :</b> <span> <small> {{item.timestamp|date:'medium'}}</small></span><br/>
-                                    </div>
-                                    <div style="padding-left:30px">
-                                        <p style="word-break:break-word">{{item.comment}}</p>
-                                        <br/>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <!--  Add comment-->
-                    <div style="width:100%">
-                        <br/>
-                        <!-- <label>Comments :</label> -->
-                        <textarea class="form-control col-md-10" rows="8" cols="200" ng-model="commentModal.comment" placeholder="Write here.."></textarea>
-                    </div>
-                    <br/>
-                </div><br/>
-                <br/>
-                <button class="btn btn-success" type="button" ng-click="addComment(commentType)" style="margin:3%">Add Comment</button>
-            </div>
-        </div><br/><br/>
-
-        <br/><br/>
+  <div id="viewComments" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modalBodyBox">
+            <h3>View Comments For {{prposalDataForComment.proposal.name}}</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <table class="table-data">
+              <tr ng-repeat="item in commentsData[selectedInvForView]">
+                <td class="col-md-8">
+                  <div>
+                    <img ng-src="{{userIcon}}">
+                    <b>{{item.user_name}} :</b> <span> <small> {{item.timestamp|date:'medium'}}</small></span><br/>
+                  </div>
+                  <div>
+                    <p>{{item.comment}}</p>
+                  </div>
+                </td>
+              </tr>
+            </table>
+            <textarea class="field" rows="8" cols="200" ng-model="commentModal.comment" placeholder="Write here.."></textarea>
+            <button class="smallBtn" type="button" ng-click="addComment(commentType)">Add Comment</button>
+          </div>
+        </div>
       </div>
-</div>
+    </div>
+  </div>
 
 
