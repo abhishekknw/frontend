@@ -61,10 +61,10 @@ export default class Campaigns extends React.Component {
     return (
       <tr key={campaign.id}>
         <td>{campaign.name}</td>
-        <td>{campaign.assigned_to.username}</td>
-        <td>{campaign.assigned_by.username}</td>
-        <td>{moment(campaign.created_at).format('Do MMM, YYYY')}</td>
-        <td>{campaign.campaign_state}</td>
+        <td>{campaign.assigned_to}</td>
+        <td>{campaign.assigned_by}</td>
+        <td>{moment(campaign.assigned_date).format('Do MMM, YYYY')}</td>
+        <td>{campaign.campaign_state.toUpperCase()}</td>
         <td>{moment(campaign.tentative_start_date).format('Do MMM, YYYY')}</td>
         <td>{moment(campaign.tentative_end_date).format('Do MMM, YYYY')}</td>
         <td>

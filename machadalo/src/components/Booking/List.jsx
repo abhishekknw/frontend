@@ -800,22 +800,19 @@ export default class ListBooking extends Component {
     const { booking } = this.props;
     const { bookingList } = booking;
     let list = this.getFilteredList(bookingList);
-    list = this.getSortedList(list);
+    let campaignName = '';
+    let campaignState = '';
+    campaignName = list && list.length > 0 ? list[0].campaign_name.toUpperCase() : '';
+    campaignState = list && list.length > 0 ? list[0].campaign_state.toUpperCase() : '';
+    list = list && list.length > 0 && list[0].supplier_id ? list : [];
+    list = list && list.length > 0 ? this.getSortedList(list) : [];
     const finalList = this.paginate(list, currentPage, pageSize);
 
     let attributes = [];
-    let campaignName = '';
-    let campaignState = '';
     const { campaign } = this.props;
     let campaignId = this.getCampaignId();
-    if (campaign && campaign.objectById && campaign.objectById[campaignId]) {
-      campaignName = campaign.objectById[campaignId].name;
-      campaignState = campaign.objectById[campaignId].campaign_state;
-      if (campaignState) {
-        campaignState = getCampaignState(campaignState);
-      }
-    }
-    if (list && list.length) {
+
+    if (list && list.length > 0) {
       attributes = list[0].supplier_attributes.concat(list[0].booking_attributes);
       if (optionTypes.length < 5) {
         this.setOptionTypes(attributes, list);
@@ -823,7 +820,6 @@ export default class ListBooking extends Component {
     }
     let dropdownOptionsTypes = dropdownOptions;
     const volume = 4;
-
     return (
       <div className="booking__list list">
         <div className="list__title">

@@ -209,6 +209,7 @@ export default class ManageImage extends React.Component {
     const { booking, supplier, match } = this.props;
     const supplierId = match.params.supplierId;
     const { assignmentList } = booking;
+
     const {
       supplierById,
       isViewImageModalVisible,
@@ -224,18 +225,7 @@ export default class ManageImage extends React.Component {
       activityType: filterActivityType.value !== 'ALL' ? filterActivityType.value : '',
       supplierId: selectedSupplierId,
     });
-
-    let campaignName = '';
-    const { campaign } = this.props;
-    let campaignId = this.getCampaignId();
-    if (
-      campaign &&
-      campaign.objectById &&
-      campaign.objectById[campaignId] &&
-      campaign.objectById[campaignId].campaign
-    ) {
-      campaignName = campaign.objectById[campaignId].campaign.name;
-    }
+    const campaignName = list && list.length > 0 ? list[0].campaign_name : '';
 
     return (
       <div className="booking-base__create manage-image">
