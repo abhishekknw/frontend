@@ -116,7 +116,7 @@ export default class UploadImageModal extends React.Component {
 
   handleActualActivityDateChange(date) {
     this.setState({
-      actualActivityDate: { date },
+      actualActivityDate: date,
     });
   }
 
@@ -240,6 +240,7 @@ export default class UploadImageModal extends React.Component {
                   <DatetimePickerTrigger
                     moment={actualActivityDate}
                     onChange={this.handleActualActivityDateChange}
+                    className="date-time-picker"
                   >
                     <input
                       type="text"

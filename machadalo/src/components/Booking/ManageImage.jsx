@@ -16,7 +16,6 @@ const getFilteredList = (list, assignmentList, filters = {}) => {
       if (filters.supplierId && filters.supplierId !== item.supplier_id) {
         return false;
       }
-
       // If activity type match fails
       if (filters.activityType && filters.activityType !== item.activity_type) {
         return false;
