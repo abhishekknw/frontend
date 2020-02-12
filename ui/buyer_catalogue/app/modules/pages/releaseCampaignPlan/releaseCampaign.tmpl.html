@@ -24,8 +24,6 @@
           <span>BD Owner:</span><span class="proposal-details">{{releaseDetails.campaign.created_by}}</span>
           <span>Campaign State:&nbsp;</span><span
             class="proposal-details">{{getCampaignState(releaseDetails.campaign.campaign_state)}}</span>
-
-
         </div>
       </div>
     </div>
@@ -228,11 +226,22 @@
               supplier.booking_status && {'background-color':'brown'})">{{$parent.$index + 1}}</td>
 
               <td class="" rowspan="{{key.length}}" ng-show="$first">
-                <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank"
-                  style="text-decoration: underline; cursor: pointer;color:#337ab7;font-weight: 600;">{{supplier.name}}<br>
-                </a>
-                <span ng-if="supplier.quality_rating">(</span>{{supplier.quality_rating}}<span
-                  ng-if="supplier.quality_rating">)</span></td>
+                <div ng-if="!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter == 'RS'">
+                  <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank"
+                    style="text-decoration: underline; cursor: pointer;color:#337ab7;font-weight: 600;">{{supplier.name}}<br>
+                  </a>
+                  <span ng-if="supplier.quality_rating">(</span>{{supplier.quality_rating}}<span
+                    ng-if="supplier.quality_rating">)</span>
+                </div>
+
+                <div ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter != 'RS'">
+                  <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank"
+                    style="text-decoration: underline; cursor: pointer;color:#337ab7;font-weight: 600;">{{supplier.name}}<br>
+                  </a>
+                  <span ng-if="supplier.retail_shop_type">({{supplier.retail_shop_type}}<span ng-if="supplier.category_name">,{{supplier.category_name}}</span>)</span>
+                </div>
+
+              </td>
 
               <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.object_id}}</td>
               <td class="" rowspan="{{key.length}}" ng-show="$first">
@@ -246,9 +255,10 @@
 
               <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.area}} <br> <span
                   ng-if="supplier.subarea">(</span>{{supplier.subarea}}<span ng-if="supplier.subarea">)</span> <br>
-                </td>
+              </td>
 
-              <td class="" rowspan="{{key.length}}" ng-show="$first" width="200"> {{supplier.address1}} <span ng-if="supplier.address2">, {{supplier.address2}}</span> <br> <span
+              <td class="" rowspan="{{key.length}}" ng-show="$first" width="200"> {{supplier.address1}} <span
+                  ng-if="supplier.address2">, {{supplier.address2}}</span> <br> <span
                   ng-if="supplier.landmark">(</span>{{supplier.landmark}}<span ng-if="supplier.landmark">)</span></td>
               <!-- <td class="" rowspan="{{key.length}}" ng-show="$first" width="200">Inventory Owner :<b> Machadalo</b>, Feedback:{{supplier.feedback}}</td> -->
 
@@ -433,28 +443,28 @@
               </td>
 
               <!-- <td class="">{{filter.price| currency : "₹"}}</td> -->
-             
+
               <td>
                 <div ng-if="filter.inventory_duration_name === 'Campaign Weekly'">
-                    {{filter.actual_supplier_price/7 | currency : "₹"}}
+                  {{filter.actual_supplier_price/7 | currency : "₹"}}
                 </div>
 
                 <div ng-if="filter.inventory_duration_name === 'Campaign Monthly'">
-                    {{filter.actual_supplier_price/30 | currency : "₹"}}
+                  {{filter.actual_supplier_price/30 | currency : "₹"}}
                 </div>
 
                 <div ng-if="filter.inventory_duration_name === 'Campaign Daily'">
-                    {{filter.actual_supplier_price | currency : "₹"}}
+                  {{filter.actual_supplier_price | currency : "₹"}}
                 </div>
               </td>
 
               <td rowspan="{{key.length}}" ng-show="$first">
                 <div ng-if="supplier.shortlisted_inventories_totalPrice && supplier.flat_count !=0">
-                    {{supplier.shortlisted_inventories_totalPrice/ supplier.flat_count | currency : "₹"}} 
+                  {{supplier.shortlisted_inventories_totalPrice/ supplier.flat_count | currency : "₹"}}
                 </div>
 
                 <div ng-if="supplier.shortlisted_inventories_totalPrice && supplier.flat_count ==0">
-                    {{supplier.shortlisted_inventories_totalPrice | currency : "₹"}} 
+                  {{supplier.shortlisted_inventories_totalPrice | currency : "₹"}}
                 </div>
               </td>
 
@@ -474,7 +484,7 @@
               <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
                 <input ng-disabled="!supplier.phase_no || supplier.is_completed" type="number"
                   ng-model="supplier.cost_per_flat" class="form-control spacing input-width" min="0">
-                  <br>{{(supplier.cost_per_flat * supplier.flat_count)|| 0 | limitTo:8}}
+                <br>{{(supplier.cost_per_flat * supplier.flat_count)|| 0 | limitTo:8}}
               </td>
 
               <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
@@ -609,28 +619,28 @@
                                   <img ng-src="{{image.image_url}}" style="width:600px; height:400px;"
                                     class="img-responsive" alt="No Image Found" /></br>
                                 </div>
-                                 </div> </div> <a
-                                  style="height:400px;" class="left carousel-control" data-toggle="carousel"
-                                  data-target="#slider" role="button" data-slide="prev">
-                                  <span class="glyphicon glyphicon-chevron-left"></span>
-                                  </a>
-                                  <a style="height:400px;" class="right carousel-control" data-toggle="carousel"
-                                    data-target="#slider" role="button" data-slide="next">
-                                    <span class="glyphicon glyphicon-chevron-right"></span>
-                                  </a>
-                                </div>
-                                <div>
-                                  <input ngf-select="uploadImageReceipt($file)" type="file" ngf-max-size="2MB"></input>
-                                  <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Receipt"
-                                    ng-model="supplier.receiptComment"></textarea>
-                                  <button ng-click="uploadReceiptImage(receiptImageSupplier)">Submit</button>
-                                </div>
                               </div>
-                            </div>
+                            </div> <a style="height:400px;" class="left carousel-control" data-toggle="carousel"
+                              data-target="#slider" role="button" data-slide="prev">
+                              <span class="glyphicon glyphicon-chevron-left"></span>
+                            </a>
+                            <a style="height:400px;" class="right carousel-control" data-toggle="carousel"
+                              data-target="#slider" role="button" data-slide="next">
+                              <span class="glyphicon glyphicon-chevron-right"></span>
+                            </a>
+                          </div>
+                          <div>
+                            <input ngf-select="uploadImageReceipt($file)" type="file" ngf-max-size="2MB"></input>
+                            <textarea name="name" rows="4" cols="20" placeholder="Enter Comments For Receipt"
+                              ng-model="supplier.receiptComment"></textarea>
+                            <button ng-click="uploadReceiptImage(receiptImageSupplier)">Submit</button>
                           </div>
                         </div>
                       </div>
-                      <!--END:permission box image modal  -->
+                    </div>
+                  </div>
+                </div>
+                <!--END:permission box image modal  -->
               </td>
 
               <td rowspan="{{key.length}}" ng-show="$first">
@@ -832,7 +842,8 @@
                     <td class="alignment">{{contact.landline}}</td>
                     <td class="alignment">{{contact.mobile}}</td>
                     <td class="alignment">
-                      <button type="button" name="button" ng-hide="payment.is_completed" ng-click="removeContact($index)">Remove</button>
+                      <button type="button" name="button" ng-hide="payment.is_completed"
+                        ng-click="removeContact($index)">Remove</button>
                     </td>
 
                   </tr>
