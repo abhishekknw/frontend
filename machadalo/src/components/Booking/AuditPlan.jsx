@@ -137,18 +137,23 @@ export default class AuditPlan extends React.Component {
 
   render() {
     const { booking } = this.props;
-    const { campaignInventoryList } = booking;
+    let { campaignInventoryList } = booking;
+    const campaignName =
+      campaignInventoryList && campaignInventoryList.length > 0
+        ? campaignInventoryList[0].campaign_name
+        : '';
+    campaignInventoryList =
+      campaignInventoryList &&
+      campaignInventoryList.length > 0 &&
+      campaignInventoryList[0].supplier_id
+        ? campaignInventoryList
+        : [];
     const { searchFilter, selectedInventory, isAssignModalVisible } = this.state;
 
-    let campaignName = '';
-    const { campaign } = this.props;
-    let campaignId = this.getCampaignId();
-    if (campaign && campaign.objectById && campaign.objectById[campaignId]) {
-      campaignName = campaign.objectById[campaignId].name;
-    }
-
-    const list = getConsolidatedList(campaignInventoryList);
-
+    const list =
+      campaignInventoryList && campaignInventoryList.length > 0
+        ? getConsolidatedList(campaignInventoryList)
+        : [];
     return (
       <div className="booking-base__create audit-plan">
         <div className="audit-plan__title">
