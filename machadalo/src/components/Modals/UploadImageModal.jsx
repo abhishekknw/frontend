@@ -87,9 +87,9 @@ export default class UploadImageModal extends React.Component {
   }
 
   getSupplierInventories(supplierId, activityType) {
-    const { inventoriesList } = this.props;
+    let { filteredList } = this.props.inventoriesList;
 
-    return inventoriesList.filter(
+    return filteredList.filter(
       (item) =>
         supplierId === item.supplier_id &&
         (activityType === 'ALL' || activityType === item.activity_type)
