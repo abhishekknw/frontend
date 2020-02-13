@@ -5,7 +5,7 @@ import UploadImageModal from '../Modals/UploadImageModal';
 
 const getFilteredList = (list, assignmentList, filters = {}) => {
   const listArray = Object.values(assignmentList);
-  let campaignName =
+  const campaignName =
     listArray && listArray.length > 0 ? listArray[0]['AUDIT'][0].campaign_name : '';
   const filteredList = list
     .map((item) => [
