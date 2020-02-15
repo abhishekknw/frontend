@@ -1962,16 +1962,9 @@ $scope.gridViewSummary = {};
       $scope.areas = [];
       $scope.sub_areas = [];
       $scope.selectCenter();
-      $scope.sub_areas = {};
-      $scope.areas = {};
       $scope.center_areas = {};
       $scope.supplier_center = "";
-      $scope.center_areas.areas = "";
-      $scope.center_areas.sub_areas = "";
       $scope.supplier_err = false;
-      $scope.center.area = "";
-      $scope.center.sub_area_id = "";
-
     }
     //Start: function to select center at add more suplliers
     $scope.selectCenter = function(center_index){
