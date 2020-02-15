@@ -49,7 +49,7 @@ export function getSuppliersList({ campaignProposalId }) {
             suppliers = suppliers.concat(supplierGroups[supplierGroupsKeys[j]]);
           }
         }
-        if (data.dynamic_suppliers.length) {
+        if (data && data.dynamic_suppliers && data.dynamic_suppliers.length) {
           suppliers = suppliers.concat(data.dynamic_suppliers);
         }
         dispatch(getSuppliersListSuccess({ suppliers }));

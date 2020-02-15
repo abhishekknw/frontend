@@ -4,6 +4,9 @@ import ViewImageModal from '../Modals/ViewImagesModal';
 import UploadImageModal from '../Modals/UploadImageModal';
 
 const getFilteredList = (list, assignmentList, filters = {}) => {
+  const listArray = Object.values(assignmentList);
+  const campaignName =
+    listArray && listArray.length > 0 ? listArray[0]['AUDIT'][0].campaign_name : '';
   const filteredList = list
     .map((item) => [
       ...assignmentList[item].RELEASE,
@@ -16,7 +19,6 @@ const getFilteredList = (list, assignmentList, filters = {}) => {
       if (filters.supplierId && filters.supplierId !== item.supplier_id) {
         return false;
       }
-
       // If activity type match fails
       if (filters.activityType && filters.activityType !== item.activity_type) {
         return false;
@@ -24,8 +26,7 @@ const getFilteredList = (list, assignmentList, filters = {}) => {
 
       return true;
     });
-
-  return filteredList;
+  return { filteredList, campaignName };
 };
 
 const ActivityTypes = [
@@ -209,6 +210,7 @@ export default class ManageImage extends React.Component {
     const { booking, supplier, match } = this.props;
     const supplierId = match.params.supplierId;
     const { assignmentList } = booking;
+
     const {
       supplierById,
       isViewImageModalVisible,
@@ -220,18 +222,11 @@ export default class ManageImage extends React.Component {
 
     const assignmentListKeys = Object.keys(assignmentList);
     const selectedSupplierId = filterSupplier.id || supplierId;
-    const list = getFilteredList(assignmentListKeys, assignmentList, {
+    let { filteredList, campaignName } = getFilteredList(assignmentListKeys, assignmentList, {
       activityType: filterActivityType.value !== 'ALL' ? filterActivityType.value : '',
       supplierId: selectedSupplierId,
     });
-
-    let campaignName = '';
-    const { campaign } = this.props;
-    let campaignId = this.getCampaignId();
-    if (campaign && campaign.objectById && campaign.objectById[campaignId]) {
-      campaignName = campaign.objectById[campaignId].name;
-    }
-
+    const list = filteredList;
     return (
       <div className="booking-base__create manage-image">
         <div className="manage-image__title">
