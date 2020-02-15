@@ -1959,19 +1959,16 @@ $scope.gridViewSummary = {};
     //End: To add searched societies in given center
     $scope.selectSupplier = function(){
       $scope.center_areas = {};
+      $scope.areas = [];
+      $scope.sub_areas = [];
       $scope.selectCenter();
-      $scope.sub_areas = {};
-      $scope.areas = {};
       $scope.center_areas = {};
       $scope.supplier_center = "";
-      $scope.center_areas.areas = "";
-      $scope.center_areas.sub_areas = "";
       $scope.supplier_err = false;
-
     }
     //Start: function to select center at add more suplliers
     $scope.selectCenter = function(center_index){
-      
+      $scope.center = [];
      try{
       $scope.center_index = center_index;
       if(center_index != null){
@@ -1985,7 +1982,7 @@ $scope.gridViewSummary = {};
         $scope.center_err = false;
           mapViewService.getLocations($scope.supplier_center)
           .then(function onSuccess(response){
-              $scope.areas = response.data.data;
+               $scope.areas = response.data.data;
             }).
             catch(function onError(response){
               commonDataShare.showErrorMessage(response);
@@ -2007,8 +2004,6 @@ $scope.gridViewSummary = {};
    createProposalService.getLocations('sub_areas', $scope.areas[index].id,)
       .then(function onSuccess(response){
           $scope.sub_areas = response.data;
-         
-          console.log('subareaaa',$scope.sub_areas)
         });
     }
 
