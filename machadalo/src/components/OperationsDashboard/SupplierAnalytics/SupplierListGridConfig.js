@@ -79,6 +79,26 @@ const getSupplierColumn = () => {
       },
     },
     {
+      dataField: 'contact_name',
+      text: 'Contact Name',
+      row: 0,
+      rowSpan: 2,
+      formatter: (cell, row) => {
+        const { contact_name } = row;
+        return contact_name || '-';
+      },
+    },
+    {
+      dataField: 'contact_number',
+      text: 'Contact Number',
+      row: 0,
+      rowSpan: 2,
+      formatter: (cell, row) => {
+        const { contact_number } = row;
+        return contact_number || '-';
+      },
+    },
+    {
       dataField: 'payment_method',
       text: 'Payment Method',
       row: 0,
