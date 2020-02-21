@@ -93,6 +93,9 @@
                       <input type="email" class="field"  placeholder="Enter Email Id to test" ng-model="emailModel.email">
                       <div class="buttons">
                         <div>
+                          <label>Note :- Use comma separation between emails to send multiple emails to users at the same time</label>
+                        </div>
+                        <div>
                           <button type="button" name="button" ng-Click="sendBookingEmails(proposalDetail.proposal_id)" class="smallBtn" ng-disabled="isEmailButton || emailBtnDisabled">Test email for given user</button>
                         </div>
                         <div>
