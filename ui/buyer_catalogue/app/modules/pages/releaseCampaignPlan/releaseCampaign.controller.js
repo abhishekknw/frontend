@@ -595,19 +595,27 @@ angular.module('catalogueApp')
         }
 
         $scope.get_sub_areas = function (index) {
-
-          $scope.center_areas = {
-            areas: $scope.areas[index].label
-          };
-
-          createProposalService.getLocations('sub_areas', $scope.areas[index].id)
-            .then(function onSuccess(response) {
-              $scope.sub_areas = response.data;
-            });
+          if (index) {
+              $scope.center_areas = {
+              areas: $scope.areas[index].label
+            };
+            createProposalService.getLocations('sub_areas', $scope.areas[index].id)
+              .then(function onSuccess(response) {
+                $scope.sub_areas = response.data;
+              });
+          } else {
+            $scope.center_areas = {};
+            $scope.centers = [];
+            $scope.sub_areas = [];
+          }
         }
 
         $scope.selectSubArea = function (index) {
-          $scope.center_areas.sub_areas = $scope.sub_areas[index].subarea_name;
+          if(index){
+            $scope.center_areas.sub_areas = $scope.sub_areas[index].subarea_name;
+          } else {
+            $scope.center_areas.sub_areas = "";
+          }
         }
         //End: function to select center at add more suplliers
 
