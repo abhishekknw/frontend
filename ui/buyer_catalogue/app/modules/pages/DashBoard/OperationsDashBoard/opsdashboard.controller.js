@@ -269,11 +269,4 @@ angular.module('catalogueApp')
         })
     }
 
-    $scope.checkDisabled = function (endDate){
-      endDate = new Date(endDate);
-      endDate.setHours(23,59,59,59);
-      return ( endDate < new Date());
-    }
-
-  
 }]);//Controller function ends here
