@@ -47,13 +47,13 @@
               <td>{{proposal.proposal.tentative_end_date|  date: 'dd-MM-yyyy' | limitTo:10}}</td>
               <td>
                 <div class="radio-button">
-                  <label><input type="radio" ng-model="proposal.proposal.campaign_state" value="PTC" ng-click="convertProposalToCampaign(proposal)" ng-disabled="checkDisabled(proposal.proposal.tentative_end_date)"  data-toggle="modal" ng-loading="loadSpinner" permission = "[permissions.acceptProposal]">Accept</label>
+                  <label><input type="radio" ng-model="proposal.proposal.campaign_state" value="PTC" ng-click="convertProposalToCampaign(proposal)" data-toggle="modal" ng-loading="loadSpinner" permission = "[permissions.acceptProposal]">Accept</label>
                 </div>
                 <div class="radio-button">
-                  <label><input type="radio" ng-model="proposal.proposal.campaign_state" value="PNC" ng-click="convertCampaignToProposal(proposal)" ng-disabled="checkDisabled(proposal.proposal.tentative_end_date)" data-toggle="modal" permission = "[permissions.declineProposal]">Decline</label>
+                  <label><input type="radio" ng-model="proposal.proposal.campaign_state" value="PNC" ng-click="convertCampaignToProposal(proposal)" data-toggle="modal" permission = "[permissions.declineProposal]">Decline</label>
                 </div>
                 <div class="radio-button">
-                  <label><input type="radio" ng-model="proposal.proposal.campaign_state" value="POH" ng-click="updateCampaign(proposal)" ng-disabled="checkDisabled(proposal.proposal.tentative_end_date)" data-target="#onHoldModal" data-toggle="modal" permission = "[permissions.onHoldPrposal]">OnHold</label>
+                  <label><input type="radio" ng-model="proposal.proposal.campaign_state" value="POH" ng-click="updateCampaign(proposal)" data-target="#onHoldModal" data-toggle="modal" permission = "[permissions.onHoldPrposal]">OnHold</label>
                 </div>
               </td>
               <td ng-if="proposal.proposal.campaign_state == 'PTC'">
