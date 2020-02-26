@@ -124,9 +124,8 @@
           $scope.busTypes = response.data;
         })
         .catch(function onError(response){
-          $location.path("/login/");
-          localStorage.clear();
-          swal(constants.name,"Session has expired, please login again",constants.error);
+          // swal(constants.name,contacts. ,constants.error);
+          console.log(response)
         });
 
 //      $scope.getBusiness = function() {
