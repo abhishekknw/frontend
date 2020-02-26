@@ -124,9 +124,10 @@
           $scope.busTypes = response.data;
         })
         .catch(function onError(response){
-          commonDataShare.showErrorMessage(response);
-          // swal(constants.name,constants.errorMsg,constants.error);
+          // swal(constants.name,contacts. ,constants.error);
+          console.log(response)
         });
+
 //      $scope.getBusiness = function() {
 //        pagesService.getBusiness($scope.bsSelect)
 //        .then(function (response) {
@@ -226,7 +227,7 @@
              
 	       })
          .catch(function onError(response){
-           commonDataShare.showErrorMessage(response);
+           // commonDataShare.showErrorMessage(response);
           //  swal(constants.name,constants.errorMsg,constants.error);
          });
 	    };
