@@ -24,7 +24,7 @@ angular.module('machadaloCommon')
            }
          }
         });
-         return $http[name](machadaloHttp.baseURL + url, config);
+         return promise;
       };
    });
 
@@ -44,7 +44,7 @@ angular.module('machadaloCommon')
              }
            }
           });
-          return $http[name](machadaloHttp.baseURL + url, data, config);
+          return promise;
       };
    });
 
