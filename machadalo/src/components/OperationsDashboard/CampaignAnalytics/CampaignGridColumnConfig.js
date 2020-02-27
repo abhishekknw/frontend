@@ -54,6 +54,37 @@ const getCampaignColumn = () => {
       row: 1,
       width: '100px',
       sort: false,
+      formatter: (cell, row) => {
+        const {
+          campaign_id,
+          name,
+          flat_count_details_filled_suppliers,
+          flat_count_details_filled,
+        } = row;
+        // Get supplier details from supplier ids
+        return (
+          <div>
+            {flat_count_details_filled_suppliers.length > 0 ? (
+              <Link
+                to={{
+                  pathname: `operations-dashboard/${campaign_id}/suppliers`,
+                  state: {
+                    suppliers: flat_count_details_filled_suppliers,
+                    campaign_id,
+                    campaign_name: name,
+                    type: 'Flat Count Filled',
+                  },
+                }}
+              >
+                {' '}
+                {flat_count_details_filled}
+              </Link>
+            ) : (
+              flat_count_details_filled
+            )}
+          </div>
+        );
+      },
     },
     {
       dataField: 'flat_count_details_not_filled',
@@ -61,6 +92,37 @@ const getCampaignColumn = () => {
       row: 1,
       width: '100px',
       sort: false,
+      formatter: (cell, row) => {
+        const {
+          campaign_id,
+          name,
+          flat_count_details_not_filled_suppliers,
+          flat_count_details_not_filled,
+        } = row;
+        // Get supplier details from supplier ids
+        return (
+          <div>
+            {flat_count_details_not_filled_suppliers.length > 0 ? (
+              <Link
+                to={{
+                  pathname: `operations-dashboard/${campaign_id}/suppliers`,
+                  state: {
+                    suppliers: flat_count_details_not_filled_suppliers,
+                    campaign_id,
+                    campaign_name: name,
+                    type: 'Flat Count Not Filled',
+                  },
+                }}
+              >
+                {' '}
+                {flat_count_details_not_filled}
+              </Link>
+            ) : (
+              flat_count_details_not_filled
+            )}
+          </div>
+        );
+      },
     },
     {
       dataField: 'contact_name',
