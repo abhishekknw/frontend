@@ -869,35 +869,23 @@ angular.module('machadaloPages')
             }
           }
         });
-       // $scope.$apply();
-console.log("$scope.selectChkBoxAll", $scope.selectChkBoxAll);
       }
 
       $scope.selectChkBoxAll = false;
       $scope.selectTextAll = "Select";
-      // $scope.selecttextAll = {
-      //   option:false,
-      //   text:"Select"
-      // };
       
       $scope.checkAll = function() {
-          console.log("$scope.selectChkBoxAll.option", $scope.selectChkBoxAll.option);
         if ($scope.selectChkBoxAll) {
             $scope.selectChkBoxAll = false;
             $scope.selectTextAll = "Select";
         } else {
             $scope.selectChkBoxAll = true;
             $scope.selectTextAll = "Unselect";
-            // $scope.selectChkBoxAll = {
-            //   option:true,
-            //   text:"Unselect"
-            // }
         }
         angular.forEach($scope.profileData.general_user_permission, function(permission) {
           permission.is_allowed = $scope.selectChkBoxAll;
         });
       };
-
       $scope.checkClick();
 
    }]);//end of controller

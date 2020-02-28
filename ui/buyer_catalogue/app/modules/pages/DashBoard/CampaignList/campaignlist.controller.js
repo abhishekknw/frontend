@@ -265,19 +265,6 @@ angular.module('catalogueApp')
           }
         };
       };
-
-      // Call get all comments
-      //getAllComments()
-
+      
       //end synergytop
-
     }]);
-
-
-
-
-
-
-
-
-
