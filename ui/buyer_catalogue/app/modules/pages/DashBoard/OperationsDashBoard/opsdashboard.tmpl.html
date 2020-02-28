@@ -47,7 +47,7 @@
               <td>{{proposal.proposal.tentative_end_date|  date: 'dd-MM-yyyy' | limitTo:10}}</td>
               <td>
                 <div class="radio-button">
-                  <label><input type="radio" ng-model="proposal.proposal.campaign_state" value="PTC" ng-click="convertProposalToCampaign(proposal)" data-toggle="modal" ng-loading="loadSpinner" permission = "[permissions.acceptProposal]">Accept</label>
+                  <label><input type="radio" ng-model="proposal.proposal.campaign_state" value="PTC" ng-click="convertProposalToCampaign(proposal,proposal.assignment_detail)" data-toggle="modal" ng-loading="loadSpinner" permission = "[permissions.acceptProposal]">Accept</label>
                 </div>
                 <div class="radio-button">
                   <label><input type="radio" ng-model="proposal.proposal.campaign_state" value="PNC" ng-click="convertCampaignToProposal(proposal)" data-toggle="modal" permission = "[permissions.declineProposal]">Decline</label>
@@ -145,6 +145,15 @@
             <label>Assign to:</label>
             <div ng-dropdown-multiselect="" options="userList" extra-settings="assignementSettings"
             selected-model="assignedUsers" translation-texts="selected_baselines_customTexts" events="events"></div>
+            <br/><br/>Display checked items instead of count<br/>
+            <div ng-dropdown-multiselect="" 
+              options="userList" 
+              selected-model="model" 
+              extra-settings="settings"></div>
+            <label>Assigned User</label>
+            <div ng-repeat="userDetail in assignment_detail">
+                <span>{{userDetail.assigned_to.assigned_to_name}}&nbsp;({{userDetail.assigned_to.organisation_name}})</span>,
+            </div>
             <button class="smallBtn active notify" ng-click="saveAssignment()">Assign</button>
           </div>
         </div>

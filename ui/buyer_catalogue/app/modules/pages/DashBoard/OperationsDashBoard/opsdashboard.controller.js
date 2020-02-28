@@ -60,6 +60,10 @@ angular.module('catalogueApp')
       commonDataShare.getUsersList(orgId)
         .then(function onSuccess(response){
           $scope.userList = response.data.data;
+          for (let x in $scope.userList){
+            $scope.userList[x].label = $scope.userList[x].username
+          }
+          console.log("$scope.userList", $scope.userList);
       	})
       	.catch(function onError(response){
       		console.log("error occured", response);
@@ -132,9 +136,10 @@ angular.module('catalogueApp')
     	});
     }
 
-    $scope.convertProposalToCampaign = function(proposal){
+    $scope.convertProposalToCampaign = function(proposal,assignment_detail){
       $scope.loadSpinner = false;
       $scope.currentProposal = proposal;
+      $scope.assignment_detail = assignment_detail;
       getOrganisationsForAssignment();
       opsDashBoardService.convertProposalToCampaign(proposal.proposal.proposal_id, proposal.proposal)
           .then(function onSuccess(response){
@@ -268,5 +273,12 @@ angular.module('catalogueApp')
           console.log(response);
         })
     }
+
+      
+  $scope.model = []; 
+  $scope.data = [{id: 1, label: "David"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"},{id: 4, label: "df"},{id: 5, label: "opp"},{id:6, label: "opkkkkp"},{id:7, label: "otttttttpkkkkp"}]; 
+  $scope.settings = {
+    smartButtonMaxItems: 10
+  };
 
 }]);//Controller function ends here
