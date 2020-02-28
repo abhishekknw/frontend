@@ -143,13 +143,10 @@
               <option ng-repeat = "org in organisationList | orderBy: 'name'" value = "{{org.organisation_id}}">{{org.name}}</option>
             </select>
             <label>Assign to:</label>
-            <div ng-dropdown-multiselect="" options="userList" extra-settings="assignementSettings"
-            selected-model="assignedUsers" translation-texts="selected_baselines_customTexts" events="events"></div>
-            <br/><br/>Display checked items instead of count<br/>
-            <div ng-dropdown-multiselect="" 
-              options="userList" 
-              selected-model="model" 
-              extra-settings="settings"></div>
+            <!-- <div ng-dropdown-multiselect="" options="userList" extra-settings="assignementSettings"
+            selected-model="assignedUsers" translation-texts="selected_baselines_customTexts" events="events"></div> -->
+            
+            <div ng-dropdown-multiselect="" options="userList" selected-model="assignedUsers" extra-settings="settings" ></div>
             <label>Assigned User</label>
             <div ng-repeat="userDetail in assignment_detail">
                 <span>{{userDetail.assigned_to.assigned_to_name}}&nbsp;({{userDetail.assigned_to.organisation_name}})</span>,
