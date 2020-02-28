@@ -850,42 +850,4 @@ angular.module('machadaloPages')
       if(pathName === "/manageMent/aboutYou"){
           $scope.getContent("aboutYou");
       }
-
-      var keepGoing = true;
-      $scope.checkClick = function() {
-        keepGoing = true;
-        angular.forEach($scope.profileData.general_user_permission, function(permission) {
-          if (keepGoing == true) {
-              console.log("permission.is_allowed", permission.is_allowed);
-            if (permission.is_allowed) {
-                $("#allCheck").prop("checked", true);
-                $scope.selectChkBoxAll = true;
-                $scope.selectTextAll = "Unselect";
-            } else {
-              $("#allCheck").prop("checked", false);
-              $scope.selectChkBoxAll = false;
-              $scope.selectTextAll = "Select";
-              keepGoing = false;
-            }
-          }
-        });
-      }
-
-      $scope.selectChkBoxAll = false;
-      $scope.selectTextAll = "Select";
-      
-      $scope.checkAll = function() {
-        if ($scope.selectChkBoxAll) {
-            $scope.selectChkBoxAll = false;
-            $scope.selectTextAll = "Select";
-        } else {
-            $scope.selectChkBoxAll = true;
-            $scope.selectTextAll = "Unselect";
-        }
-        angular.forEach($scope.profileData.general_user_permission, function(permission) {
-          permission.is_allowed = $scope.selectChkBoxAll;
-        });
-      };
-      $scope.checkClick();
-
    }]);//end of controller
