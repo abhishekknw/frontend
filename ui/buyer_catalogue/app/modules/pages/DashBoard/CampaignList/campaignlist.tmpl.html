@@ -90,17 +90,31 @@
                       <option value="prehype">Prehype Email</option>
                     </select>
                     <div class="sendEmail1">
-                      <input type="email" class="field"  placeholder="Enter Email Id to test" ng-model="emailModel.email">
+                      <!-- <input type="email" class="field"  placeholder="Enter Email Id to test" ng-model="emailModel.email"> -->
+                     
+                  <div layout="column" ng-cloak>
+                    <md-content class="md-padding" layout="column">
+                        <md-chips
+                        md-type="email"
+                        md-on-add="validateEmail($chip)"
+                        ng-model="emailModel.email" input-aria-label="Emails"
+                        md-separator-keys="customKeys" placeholder="Enter Multiple User's Email To Send Mail "
+                        secondary-placeholder="Enter Email Id"
+                        input-aria-describedby="customSeparatorKeyDescription">
+                        </md-chips>
+                    </md-content>
+                  </div>
+
                       <div class="buttons">
-                        <div>
+                        <!-- <div>
                           <label>Note :- Use comma separation between emails to send multiple emails to users at the same time</label>
-                        </div>
+                        </div> -->
                         <div>
-                          <button type="button" name="button" ng-Click="sendBookingEmails(proposalDetail.proposal_id)" class="smallBtn" ng-disabled="isEmailButton || emailBtnDisabled">Test email for given user</button>
+                          <button type="button" name="button" ng-Click="sendBookingEmails(proposalDetail.proposal_id)" class="smallBtn" ng-disabled="isEmailButton || emailBtnDisabled || !emailModel.selected">Send email for user</button>
                         </div>
                         <div>
                           <span>OR</span>
-                          <button type="button" name="button" class="smallBtn" ng-click="sendBookingEmails(proposalDetail.proposal_id, 'confirmed')" ng-disabled="emailBtnDisabled">Send email to all (Default)</button>
+                          <button type="button" name="button" class="smallBtn" ng-click="sendBookingEmails(proposalDetail.proposal_id, 'confirmed')" ng-disabled="emailBtnDisabled || !emailModel.selected">Send email to all (Default)</button>
                         </div>
                       </div>
                     </div>
