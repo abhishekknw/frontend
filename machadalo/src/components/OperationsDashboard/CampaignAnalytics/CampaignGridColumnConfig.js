@@ -64,7 +64,8 @@ const getCampaignColumn = () => {
         // Get supplier details from supplier ids
         return (
           <div>
-            {flat_count_details_filled_suppliers.length > 0 ? (
+            {flat_count_details_filled_suppliers &&
+            flat_count_details_filled_suppliers.length > 0 ? (
               <Link
                 to={{
                   pathname: `operations-dashboard/${campaign_id}/suppliers`,
@@ -102,7 +103,7 @@ const getCampaignColumn = () => {
         // Get supplier details from supplier ids
         return (
           <div>
-            {flat_count_details_not_filled_suppliers.length > 0 ? (
+            {flat_count_details_not_filled && flat_count_details_not_filled_suppliers.length > 0 ? (
               <Link
                 to={{
                   pathname: `operations-dashboard/${campaign_id}/suppliers`,
