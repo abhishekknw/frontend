@@ -133,7 +133,7 @@ angular.module('catalogueApp')
         } else if ($scope.emailModel.selected === 'recce') {
           emailType = 'send-recce-mails';
         }
-        campaignListService.sendEmail(proposalId, email, emailType)
+        campaignListService.sendEmail(proposalId, $scope.emailModel.email, emailType)
           .then(function onSuccess() {
             $scope.emailModel = {};
             $scope.emailBtnDisabled = false;
@@ -247,8 +247,23 @@ angular.module('catalogueApp')
         $scope.emailModel = {};
       }
 
-      // Call get all comments
-      //getAllComments()
+     // Use common key codes found in $mdConstant.KEY_CODE...
+      $scope.keys = [];
+      $scope.tags = [];
+      // Any key code can be used to create a custom separator
+      var semicolon = 186;
+      $scope.customKeys = [];
+      $scope.emailModel.email = [];
+      $scope.validateEmail = function(x) {
+        if (event.which === 13) {
+          var emailValue = x;
+          var reg = /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+          if (!reg.test(emailValue)) {
+            toastr.error("Please Enter Correct Email");
+            $scope.emailModel.email.pop();
+          }
+        };
+      };
 
       //end synergytop
 
