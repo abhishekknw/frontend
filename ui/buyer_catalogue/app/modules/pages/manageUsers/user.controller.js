@@ -380,6 +380,9 @@ angular.module('machadaloPages')
     var editUserInfo = function(user){
       console.log(user);
       $scope.userDetails = user;
+      if(user.profile.id){
+        $scope.userDetails.profile=JSON.stringify(user.profile.id)
+      }
       angular.forEach($scope.userDetails.groups, function(group){
         for(var i=0;i<$scope.permissionGroups.length;i++){
           console.log(group);
@@ -399,6 +402,8 @@ angular.module('machadaloPages')
       // console.log($scope.selectedGroupList);
     }
     $scope.updateUserDetails = function(userDetails){
+      console.log("userDetails", $scope.userDetails);
+      console.log("userDetails", userDetails);
       var groups = [];
       angular.forEach(userDetails.groups, function(group){
         groups.push(group.id);
