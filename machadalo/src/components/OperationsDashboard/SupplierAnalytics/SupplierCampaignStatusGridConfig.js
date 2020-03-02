@@ -42,6 +42,31 @@ const getCampaignColumn = () => {
       text: 'Entity Count',
       row: 0,
       rowSpan: 2,
+      formatter: (cell, row) => {
+        const { campaign_id, status, supplier_count, campaign_name, supplier } = row;
+        const isSuppliers = supplier_count > 0 ? true : false;
+        return (
+          <div>
+            {isSuppliers ? (
+              <Link
+                to={{
+                  pathname: `operations-dashboard/${campaign_id}/${status}/supplier`,
+                  state: {
+                    suppliers: supplier,
+                    campaign_id,
+                    status,
+                    campaign_name,
+                  },
+                }}
+              >
+                {supplier_count}
+              </Link>
+            ) : (
+              0
+            )}
+          </div>
+        );
+      },
     },
     {
       dataField: 'internal_comments_count',
@@ -95,37 +120,6 @@ const getCampaignColumn = () => {
       formatter: (cell, row) => {
         const { payment_method } = row;
         return payment_method || '-';
-      },
-    },
-    {
-      dataField: 'supplier',
-      text: 'Entity',
-      row: 0,
-      rowSpan: 2,
-      formatter: (cell, row) => {
-        const { campaign_id, status, supplier_count, campaign_name } = row;
-        const isSuppliers = supplier_count > 0 ? true : false;
-        return (
-          <div>
-            {isSuppliers ? (
-              <Link
-                to={{
-                  pathname: `operations-dashboard/${campaign_id}/${status}/supplier`,
-                  state: {
-                    suppliers: cell,
-                    campaign_id,
-                    status,
-                    campaign_name,
-                  },
-                }}
-              >
-                View Entities
-              </Link>
-            ) : (
-              'No Entity'
-            )}
-          </div>
-        );
       },
     },
   ];
