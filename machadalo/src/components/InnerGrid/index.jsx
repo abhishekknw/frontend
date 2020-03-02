@@ -60,6 +60,9 @@ class InnerGrid extends React.Component {
                   dataAlign={column.dataAlign || 'center'}
                   dataFormat={column.formatter || formatter}
                   dataSort={column.sort === true ? true : false}
+                  row={column.row}
+                  rowSpan={column.rowSpan}
+                  colSpan={column.colSpan}
                 >
                   {column.text}
                 </TableHeaderColumn>
