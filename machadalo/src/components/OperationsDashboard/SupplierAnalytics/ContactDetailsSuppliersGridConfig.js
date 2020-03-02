@@ -5,8 +5,6 @@ const getSupplierColumnContactDetails = () => {
     {
       dataField: 'society_name',
       text: 'Name',
-      row: 0,
-      rowSpan: 2,
       width: '350px',
       sort: true,
       formatter: (cell, row) => {
@@ -18,8 +16,6 @@ const getSupplierColumnContactDetails = () => {
     {
       dataField: 'society_locality',
       text: 'Area',
-      row: 0,
-      rowSpan: 2,
       sort: true,
       formatter: (cell, row) => {
         const { society_locality } = row;
@@ -29,8 +25,6 @@ const getSupplierColumnContactDetails = () => {
     {
       dataField: 'society_subarea',
       text: 'Sub Area',
-      row: 0,
-      rowSpan: 2,
       sort: true,
       formatter: (cell, row) => {
         const { society_subarea } = row;
@@ -40,8 +34,6 @@ const getSupplierColumnContactDetails = () => {
     {
       dataField: 'society_city',
       text: 'City',
-      row: 0,
-      rowSpan: 2,
       sort: true,
       formatter: (cell, row) => {
         const { society_city } = row;
@@ -51,8 +43,6 @@ const getSupplierColumnContactDetails = () => {
     {
       dataField: 'society_state',
       text: 'State',
-      row: 0,
-      rowSpan: 2,
       sort: true,
       formatter: (cell, row) => {
         const { society_state } = row;
@@ -62,8 +52,6 @@ const getSupplierColumnContactDetails = () => {
     {
       dataField: 'contact_name',
       text: 'Contact Name',
-      row: 0,
-      rowSpan: 2,
       formatter: (cell, row) => {
         const { contact_name } = row;
         return contact_name || '-';
@@ -72,8 +60,6 @@ const getSupplierColumnContactDetails = () => {
     {
       dataField: 'contact_number',
       text: 'Contact Number',
-      row: 0,
-      rowSpan: 2,
       formatter: (cell, row) => {
         const { contact_number } = row;
         return contact_number || '-';

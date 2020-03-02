@@ -6,8 +6,6 @@ const getSupplierColumn = () => {
     {
       dataField: 'name',
       text: 'Name',
-      row: 0,
-      rowSpan: 2,
       width: '350px',
       sort: true,
       formatter: (cell, row) => {
@@ -19,8 +17,6 @@ const getSupplierColumn = () => {
     {
       dataField: 'society_quality',
       text: 'Type',
-      row: 0,
-      rowSpan: 2,
       formatter: (cell, row) => {
         const { society_quality } = row;
         let variant = 'success';
@@ -48,8 +44,6 @@ const getSupplierColumn = () => {
     {
       dataField: 'area',
       text: 'Area',
-      row: 0,
-      rowSpan: 2,
       sort: true,
       formatter: (cell, row) => {
         const { area } = row;
@@ -59,8 +53,6 @@ const getSupplierColumn = () => {
     {
       dataField: 'subarea',
       text: 'Sub Area',
-      row: 0,
-      rowSpan: 2,
       sort: true,
       formatter: (cell, row) => {
         const { subarea } = row;
@@ -70,8 +62,6 @@ const getSupplierColumn = () => {
     {
       dataField: 'city',
       text: 'City',
-      row: 0,
-      rowSpan: 2,
       sort: true,
       formatter: (cell, row) => {
         const { city } = row;
@@ -81,8 +71,6 @@ const getSupplierColumn = () => {
     {
       dataField: 'contact_name',
       text: 'Contact Name',
-      row: 0,
-      rowSpan: 2,
       formatter: (cell, row) => {
         const { contact_name } = row;
         return contact_name || '-';
@@ -91,8 +79,6 @@ const getSupplierColumn = () => {
     {
       dataField: 'contact_number',
       text: 'Contact Number',
-      row: 0,
-      rowSpan: 2,
       formatter: (cell, row) => {
         const { contact_number } = row;
         return contact_number || '-';
@@ -101,8 +87,6 @@ const getSupplierColumn = () => {
     {
       dataField: 'payment_method',
       text: 'Payment Method',
-      row: 0,
-      rowSpan: 2,
       formatter: (cell, row) => {
         const { payment_method } = row;
         return payment_method || '-';

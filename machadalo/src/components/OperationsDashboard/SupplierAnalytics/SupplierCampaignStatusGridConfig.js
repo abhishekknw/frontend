@@ -11,23 +11,23 @@ const getCampaignColumn = () => {
       row: 0,
       rowSpan: 2,
       formatter: (cell, row) => {
-        let status = get(row, 'status');
-        status = status ? status.toLowerCase() : status;
+        const status = get(row, 'status');
+        const colorStatus = status ? status.toLowerCase().replace(/ /g, '_') : status;
         let variant = 'success';
-        switch (status) {
+        switch (colorStatus) {
           case 'completed':
             variant = 'success';
             break;
-          case 'confirmed booking':
+          case 'confirmed_booking':
             variant = 'primary';
             break;
-          case 'decision pending':
+          case 'decision_pending':
             variant = 'warning';
             break;
-          case 'tentative booking':
+          case 'tentative_booking':
             variant = 'info';
             break;
-          case 'not booked':
+          case 'not_booked':
             variant = 'danger';
             break;
           default:
@@ -42,6 +42,7 @@ const getCampaignColumn = () => {
       text: 'Entity Count',
       row: 0,
       rowSpan: 2,
+      width: '150px',
       formatter: (cell, row) => {
         const { campaign_id, status, supplier_count, campaign_name, supplier } = row;
         const isSuppliers = supplier_count > 0 ? true : false;
@@ -70,24 +71,60 @@ const getCampaignColumn = () => {
     },
     {
       dataField: 'internal_comments_count',
-      text: 'Internal Comments Count',
+      text: 'Internal Comments',
       row: 0,
-      rowSpan: 2,
-      width: '300px',
+      colSpan: 2,
+      width: '200px',
+    },
+    {
+      dataField: 'internal_comments_filled_count',
+      text: 'Filled',
+      row: 1,
+      width: '100px',
+      sort: false,
       formatter: (cell, row) => {
-        const { internal_comments_count } = row;
-        return internal_comments_count || 0;
+        const { internal_comments_filled_count } = row;
+        return internal_comments_filled_count || 0;
+      },
+    },
+    {
+      dataField: 'internal_comments_not_filled_count',
+      text: 'Not Filled',
+      row: 1,
+      width: '120px',
+      sort: false,
+      formatter: (cell, row) => {
+        const { internal_comments_not_filled_count } = row;
+        return internal_comments_not_filled_count || 0;
       },
     },
     {
       dataField: 'external_comments_count',
-      text: 'External Comments Count',
+      text: 'External Comments',
       row: 0,
-      rowSpan: 2,
-      width: '300px',
+      colSpan: 2,
+      width: '200px',
+    },
+    {
+      dataField: 'external_comments_filled_count',
+      text: 'Filled',
+      row: 1,
+      width: '100px',
+      sort: false,
       formatter: (cell, row) => {
-        const { external_comments_count } = row;
-        return external_comments_count || 0;
+        const { external_comments_filled_count } = row;
+        return external_comments_filled_count || 0;
+      },
+    },
+    {
+      dataField: 'external_comments_not_filled_count',
+      text: 'Not Filled',
+      row: 1,
+      width: '120px',
+      sort: false,
+      formatter: (cell, row) => {
+        const { external_comments_not_filled_count } = row;
+        return external_comments_not_filled_count || 0;
       },
     },
     {
@@ -95,6 +132,7 @@ const getCampaignColumn = () => {
       text: 'Permission Box Count',
       row: 0,
       rowSpan: 2,
+      sort: false,
       formatter: (cell, row) => {
         const { permission_box_count, status } = row;
         if (status === 'completed') return permission_box_count;
@@ -106,6 +144,7 @@ const getCampaignColumn = () => {
       text: 'Receipt Count',
       row: 0,
       rowSpan: 2,
+      sort: false,
       formatter: (cell, row) => {
         const { receipt_count, status } = row;
         if (status === 'completed') return receipt_count;
@@ -117,6 +156,7 @@ const getCampaignColumn = () => {
       text: 'Payment Method',
       row: 0,
       rowSpan: 2,
+      sort: false,
       formatter: (cell, row) => {
         const { payment_method } = row;
         return payment_method || '-';

@@ -7,8 +7,8 @@ const colorMap = {
   danger: '#dc3545',
   primary: '#007bff',
   info: '#17a2b8',
-  warning: '#ffc107',
-  default: '#6c757d',
+  warning: 'rgb(255, 139, 20)',
+  default: 'rgb(166, 79, 232)',
 };
 
 const CampaignBadge = ({ variant = 'default', children, color, ...props }) => {
