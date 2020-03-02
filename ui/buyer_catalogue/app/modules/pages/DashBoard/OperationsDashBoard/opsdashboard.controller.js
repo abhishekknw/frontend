@@ -59,7 +59,16 @@ angular.module('catalogueApp')
     $scope.getUsersList = function(orgId){
       commonDataShare.getUsersList(orgId)
         .then(function onSuccess(response){
-          $scope.userList = response.data.data;
+           $scope.userList = [];
+          var x = null;
+          $scope.userList = (response.data.data).filter(function(objFromA) {
+              return !$scope.assignment_detail.find(function(objFromB) {
+              return objFromA.id === objFromB.assigned_to.assigned_to_id
+            })
+          })
+          for (let x in $scope.userList){
+            $scope.userList[x].label = $scope.userList[x].username
+          }
       	})
       	.catch(function onError(response){
       		console.log("error occured", response);
@@ -132,9 +141,10 @@ angular.module('catalogueApp')
     	});
     }
 
-    $scope.convertProposalToCampaign = function(proposal){
+    $scope.convertProposalToCampaign = function(proposal,assignment_detail){
       $scope.loadSpinner = false;
       $scope.currentProposal = proposal;
+      $scope.assignment_detail = assignment_detail;
       getOrganisationsForAssignment();
       opsDashBoardService.convertProposalToCampaign(proposal.proposal.proposal_id, proposal.proposal)
           .then(function onSuccess(response){
@@ -181,14 +191,14 @@ angular.module('catalogueApp')
       }
     }
 
-    $scope.assignementSettings = {
-      enableSearch: true,
-      keyboardControls: true, idProp: "id",
-      template: '{{option.username}}', smartButtonTextConverter(skip, option) { return option; },
-      selectionLimit: 4,
-      showCheckAll: true,
-      scrollableHeight: '300px', scrollable: true
-    };
+    // $scope.assignementSettings = {
+    //   enableSearch: true,
+    //   keyboardControls: true, idProp: "id",
+    //   template: '{{option.username}}', smartButtonTextConverter(skip, option) { return option; },
+    //   selectionLimit: 4,
+    //   showCheckAll: true,
+    //   scrollableHeight: '300px', scrollable: true
+    // };
 
     $scope.saveAssignment = function(){
       // var userId = $scope.userId;
@@ -267,6 +277,15 @@ angular.module('catalogueApp')
         }).catch(function onError(response) {
           console.log(response);
         })
-    }
+    };
+
+    $scope.model = []; 
+    $scope.data = [{id: 1, label: "David"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"},{id: 4, label: "df"},{id: 5, label: "opp"},{id:6, label: "opkkkkp"},{id:7, label: "otttttttpkkkkp"}]; 
+    $scope.settings = {
+       smartButtonMaxItems: 4,
+      selectionLimit: 4,
+      showCheckAll: true,
+      scrollableHeight: '300px', scrollable: true
+    };
 
 }]);//Controller function ends here
