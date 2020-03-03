@@ -128,27 +128,160 @@ const getCampaignColumn = () => {
       },
     },
     {
-      dataField: 'permission_box_count',
-      text: 'Permission Box Count',
+      dataField: 'permission_box',
+      text: 'Permission Box',
       row: 0,
-      rowSpan: 2,
+      colSpan: 2,
+      width: '200px',
+    },
+    {
+      dataField: 'permission_box_filled_count',
+      text: 'Filled',
+      row: 1,
+      width: '100px',
       sort: false,
       formatter: (cell, row) => {
-        const { permission_box_count, status } = row;
-        if (status === 'completed') return permission_box_count;
-        else return '-';
+        const {
+          campaign_id,
+          permission_box_filled_count,
+          campaign_name,
+          permission_box_filled_suppliers,
+        } = row;
+        const isSuppliers = permission_box_filled_count > 0 ? true : false;
+        return (
+          <div>
+            {isSuppliers ? (
+              <Link
+                to={{
+                  pathname: `operations-dashboard/${campaign_id}/suppliers`,
+                  state: {
+                    suppliers: permission_box_filled_suppliers,
+                    campaign_id,
+                    campaign_name,
+                    type: 'Permission Box Filled',
+                  },
+                }}
+              >
+                {permission_box_filled_count}
+              </Link>
+            ) : (
+              '-'
+            )}
+          </div>
+        );
       },
     },
     {
-      dataField: 'receipt_count',
-      text: 'Receipt Count',
-      row: 0,
-      rowSpan: 2,
+      dataField: 'permission_box_not_filled_count',
+      text: 'Not Filled',
+      row: 1,
+      width: '120px',
       sort: false,
       formatter: (cell, row) => {
-        const { receipt_count, status } = row;
-        if (status === 'completed') return receipt_count;
-        else return '-';
+        const {
+          campaign_id,
+          permission_box_not_filled_count,
+          campaign_name,
+          permission_box_not_filled_suppliers,
+        } = row;
+        const isSuppliers = permission_box_not_filled_count > 0 ? true : false;
+        return (
+          <div>
+            {isSuppliers ? (
+              <Link
+                to={{
+                  pathname: `operations-dashboard/${campaign_id}/suppliers`,
+                  state: {
+                    suppliers: permission_box_not_filled_suppliers,
+                    campaign_id,
+                    campaign_name,
+                    type: 'Permission Box Not Filled',
+                  },
+                }}
+              >
+                {permission_box_not_filled_count}
+              </Link>
+            ) : (
+              '-'
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      dataField: 'receipt',
+      text: 'Receipt',
+      row: 0,
+      colSpan: 2,
+      width: '200px',
+    },
+    {
+      dataField: 'receipt_filled_count',
+      text: 'Filled',
+      row: 1,
+      width: '100px',
+      sort: false,
+      formatter: (cell, row) => {
+        const { campaign_id, receipt_filled_count, campaign_name, receipt_filled_suppliers } = row;
+        const isSuppliers = receipt_filled_count > 0 ? true : false;
+        return (
+          <div>
+            {isSuppliers ? (
+              <Link
+                to={{
+                  pathname: `operations-dashboard/${campaign_id}/suppliers`,
+                  state: {
+                    suppliers: receipt_filled_suppliers,
+                    campaign_id,
+                    campaign_name,
+                    type: 'Receipt Filled',
+                  },
+                }}
+              >
+                {receipt_filled_count}
+              </Link>
+            ) : (
+              '-'
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      dataField: 'receipt_not_filled_count',
+      text: 'Not Filled',
+      row: 1,
+      width: '120px',
+      sort: false,
+      formatter: (cell, row) => {
+        const {
+          campaign_id,
+          receipt_not_filled_count,
+          campaign_name,
+          receipt_not_filled_suppliers,
+        } = row;
+        const isSuppliers = receipt_not_filled_count > 0 ? true : false;
+        return (
+          <div>
+            {isSuppliers ? (
+              <Link
+                to={{
+                  pathname: `operations-dashboard/${campaign_id}/suppliers`,
+                  state: {
+                    suppliers: receipt_not_filled_suppliers,
+                    campaign_id,
+                    campaign_name,
+                    type: 'Receipt Not Filled',
+                  },
+                }}
+              >
+                {receipt_not_filled_count}
+              </Link>
+            ) : (
+              '-'
+            )}
+          </div>
+        );
       },
     },
     {
