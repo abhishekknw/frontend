@@ -41,12 +41,13 @@ const getSupplierColumnContactDetails = () => {
       },
     },
     {
-      dataField: 'society_state',
-      text: 'State',
+      dataField: 'society_address1',
+      text: 'Address',
       sort: true,
+      width: '400px',
       formatter: (cell, row) => {
-        const { society_state } = row;
-        return society_state || '';
+        const { society_address1 } = row;
+        return society_address1 || '-';
       },
     },
     {
