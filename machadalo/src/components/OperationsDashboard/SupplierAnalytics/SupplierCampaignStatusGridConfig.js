@@ -44,18 +44,18 @@ const getCampaignColumn = () => {
       rowSpan: 2,
       width: '150px',
       formatter: (cell, row) => {
-        const { campaign_id, status, supplier_count, campaign_name, supplier } = row;
+        const { campaign_id, status, supplier_count, campaign_name, supplier_ids } = row;
         const isSuppliers = supplier_count > 0 ? true : false;
         return (
           <div>
             {isSuppliers ? (
               <Link
                 to={{
-                  pathname: `operations-dashboard/${campaign_id}/${status}/supplier`,
+                  pathname: `operations-dashboard/${campaign_id}/suppliers`,
                   state: {
-                    suppliers: supplier,
+                    suppliers: supplier_ids,
                     campaign_id,
-                    status,
+                    type: status,
                     campaign_name,
                   },
                 }}
@@ -83,8 +83,10 @@ const getCampaignColumn = () => {
       width: '100px',
       sort: false,
       formatter: (cell, row) => {
-        const { internal_comments_filled_count } = row;
-        return internal_comments_filled_count || 0;
+        const { internal_comments_filled_count, internal_comments_filled_percentage } = row;
+        return internal_comments_filled_percentage
+          ? `${internal_comments_filled_count} (${internal_comments_filled_percentage} %)`
+          : internal_comments_filled_count || 0;
       },
     },
     {
@@ -94,8 +96,10 @@ const getCampaignColumn = () => {
       width: '120px',
       sort: false,
       formatter: (cell, row) => {
-        const { internal_comments_not_filled_count } = row;
-        return internal_comments_not_filled_count || 0;
+        const { internal_comments_not_filled_count, internal_comments_not_filled_percentage } = row;
+        return internal_comments_not_filled_percentage
+          ? `${internal_comments_not_filled_count} (${internal_comments_not_filled_percentage} %)`
+          : internal_comments_not_filled_count || 0;
       },
     },
     {
@@ -112,8 +116,10 @@ const getCampaignColumn = () => {
       width: '100px',
       sort: false,
       formatter: (cell, row) => {
-        const { external_comments_filled_count } = row;
-        return external_comments_filled_count || 0;
+        const { external_comments_filled_count, external_comments_filled_count_percentage } = row;
+        return external_comments_filled_count_percentage
+          ? `${external_comments_filled_count} (${external_comments_filled_count_percentage} %)`
+          : external_comments_filled_count || 0;
       },
     },
     {
@@ -123,8 +129,10 @@ const getCampaignColumn = () => {
       width: '120px',
       sort: false,
       formatter: (cell, row) => {
-        const { external_comments_not_filled_count } = row;
-        return external_comments_not_filled_count || 0;
+        const { external_comments_not_filled_count, external_comments_not_filled_percentage } = row;
+        return external_comments_not_filled_percentage
+          ? `${external_comments_not_filled_count} (${external_comments_not_filled_percentage} %)`
+          : external_comments_not_filled_count || 0;
       },
     },
     {
@@ -146,6 +154,7 @@ const getCampaignColumn = () => {
           permission_box_filled_count,
           campaign_name,
           permission_box_filled_suppliers,
+          permission_box_filled_percentage,
         } = row;
         const isSuppliers = permission_box_filled_count > 0 ? true : false;
         return (
@@ -162,7 +171,7 @@ const getCampaignColumn = () => {
                   },
                 }}
               >
-                {permission_box_filled_count}
+                {permission_box_filled_count} ({permission_box_filled_percentage} %)
               </Link>
             ) : (
               '-'
@@ -183,6 +192,7 @@ const getCampaignColumn = () => {
           permission_box_not_filled_count,
           campaign_name,
           permission_box_not_filled_suppliers,
+          permission_box_not_filled_percentage,
         } = row;
         const isSuppliers = permission_box_not_filled_count > 0 ? true : false;
         return (
@@ -199,7 +209,7 @@ const getCampaignColumn = () => {
                   },
                 }}
               >
-                {permission_box_not_filled_count}
+                {permission_box_not_filled_count} ({permission_box_not_filled_percentage} %)
               </Link>
             ) : (
               '-'
@@ -222,7 +232,13 @@ const getCampaignColumn = () => {
       width: '100px',
       sort: false,
       formatter: (cell, row) => {
-        const { campaign_id, receipt_filled_count, campaign_name, receipt_filled_suppliers } = row;
+        const {
+          campaign_id,
+          receipt_filled_count,
+          campaign_name,
+          receipt_filled_suppliers,
+          receipt_filled_percentage,
+        } = row;
         const isSuppliers = receipt_filled_count > 0 ? true : false;
         return (
           <div>
@@ -238,7 +254,7 @@ const getCampaignColumn = () => {
                   },
                 }}
               >
-                {receipt_filled_count}
+                {receipt_filled_count} ({receipt_filled_percentage} %)
               </Link>
             ) : (
               '-'
@@ -259,6 +275,7 @@ const getCampaignColumn = () => {
           receipt_not_filled_count,
           campaign_name,
           receipt_not_filled_suppliers,
+          receipt_not_filled_percentage,
         } = row;
         const isSuppliers = receipt_not_filled_count > 0 ? true : false;
         return (
@@ -275,7 +292,7 @@ const getCampaignColumn = () => {
                   },
                 }}
               >
-                {receipt_not_filled_count}
+                {receipt_not_filled_count} ({receipt_not_filled_percentage} %)
               </Link>
             ) : (
               '-'

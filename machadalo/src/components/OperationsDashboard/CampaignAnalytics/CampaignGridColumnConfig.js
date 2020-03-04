@@ -60,6 +60,7 @@ const getCampaignColumn = () => {
           name,
           flat_count_details_filled_suppliers,
           flat_count_details_filled,
+          flat_count_details_filled_percentage,
         } = row;
         // Get supplier details from supplier ids
         return (
@@ -78,7 +79,8 @@ const getCampaignColumn = () => {
                 }}
               >
                 {' '}
-                {flat_count_details_filled}
+                {flat_count_details_filled}({flat_count_details_filled_percentage}
+                %)
               </Link>
             ) : (
               flat_count_details_filled
@@ -99,6 +101,7 @@ const getCampaignColumn = () => {
           name,
           flat_count_details_not_filled_suppliers,
           flat_count_details_not_filled,
+          flat_count_details_not_filled_percentage,
         } = row;
         // Get supplier details from supplier ids
         return (
@@ -116,7 +119,8 @@ const getCampaignColumn = () => {
                 }}
               >
                 {' '}
-                {flat_count_details_not_filled}
+                {flat_count_details_not_filled}({flat_count_details_not_filled_percentage}
+                %)
               </Link>
             ) : (
               flat_count_details_not_filled
@@ -139,7 +143,13 @@ const getCampaignColumn = () => {
       width: '150px',
       sort: false,
       formatter: (cell, row) => {
-        const { campaign_id, contact_name_filled, contact_name_filled_suppliers, name } = row;
+        const {
+          campaign_id,
+          contact_name_filled,
+          contact_name_filled_suppliers,
+          name,
+          contact_name_filled_percentage,
+        } = row;
         // Get supplier details from supplier ids
         return (
           <div>
@@ -156,7 +166,8 @@ const getCampaignColumn = () => {
                 }}
               >
                 {' '}
-                {contact_name_filled}
+                {contact_name_filled}({contact_name_filled_percentage}
+                %)
               </Link>
             ) : (
               contact_name_filled
@@ -183,6 +194,7 @@ const getCampaignColumn = () => {
           campaign_id,
           contact_name_not_filled,
           contact_name_not_filled_suppliers,
+          contact_name_not_filled_percentage,
           name,
         } = row;
         // Get supplier details from supplier ids
@@ -201,7 +213,8 @@ const getCampaignColumn = () => {
                 }}
               >
                 {' '}
-                {contact_name_not_filled}
+                {contact_name_not_filled}({contact_name_not_filled_percentage}
+                %)
               </Link>
             ) : (
               contact_name_not_filled
@@ -224,7 +237,13 @@ const getCampaignColumn = () => {
       width: '150px',
       sort: false,
       formatter: (cell, row) => {
-        const { campaign_id, contact_number_filled, contact_number_filled_suppliers, name } = row;
+        const {
+          campaign_id,
+          contact_number_filled,
+          contact_number_filled_suppliers,
+          name,
+          contact_number_filled_percentage,
+        } = row;
         // Get supplier details from supplier ids
         return (
           <div>
@@ -241,7 +260,8 @@ const getCampaignColumn = () => {
                 }}
               >
                 {' '}
-                {contact_number_filled}
+                {contact_number_filled}({contact_number_filled_percentage}
+                %)
               </Link>
             ) : (
               contact_number_filled
@@ -268,6 +288,7 @@ const getCampaignColumn = () => {
           campaign_id,
           contact_number_not_filled,
           contact_number_not_filled_suppliers,
+          contact_number_not_filled_percentage,
           name,
         } = row;
         // Get supplier details from supplier ids
@@ -286,7 +307,8 @@ const getCampaignColumn = () => {
                 }}
               >
                 {' '}
-                {contact_number_not_filled}
+                {contact_number_not_filled}({contact_number_not_filled_percentage}
+                %)
               </Link>
             ) : (
               contact_number_not_filled

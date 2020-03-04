@@ -69,6 +69,15 @@ const getSupplierColumn = () => {
       },
     },
     {
+      dataField: 'address',
+      text: 'Address',
+      sort: true,
+      formatter: (cell, row) => {
+        const { address } = row;
+        return address || '';
+      },
+    },
+    {
       dataField: 'contact_name',
       text: 'Contact Name',
       formatter: (cell, row) => {

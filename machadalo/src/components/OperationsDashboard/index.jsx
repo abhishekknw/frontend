@@ -24,11 +24,6 @@ class OperationsDashboard extends Component {
           />
           <Route
             exact
-            path={`${match.path}/:campaignId/:status/supplier`}
-            render={(componentProps) => <SupplierList {...this.props} {...componentProps} />}
-          />
-          <Route
-            exact
             path={`${match.path}/:campaignId/suppliers`}
             render={(componentProps) => <SupplierList {...this.props} {...componentProps} />}
           />
