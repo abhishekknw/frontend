@@ -109,7 +109,7 @@ const getCampaignColumn = () => {
                 <p style={{ color: 'green' }}>({internal_comments_filled_percentage} %)</p>
               </Link>
             ) : (
-              '-'
+              0
             )}
           </div>
         );
@@ -148,7 +148,7 @@ const getCampaignColumn = () => {
                 <p style={{ color: 'green' }}>({internal_comments_not_filled_percentage} %)</p>
               </Link>
             ) : (
-              '-'
+              0
             )}
           </div>
         );
@@ -194,7 +194,7 @@ const getCampaignColumn = () => {
                 <p style={{ color: 'green' }}>({external_comments_filled_percentage} %)</p>
               </Link>
             ) : (
-              '-'
+              0
             )}
           </div>
         );
@@ -233,7 +233,7 @@ const getCampaignColumn = () => {
                 <p style={{ color: 'green' }}>({external_comments_not_filled_percentage} %)</p>
               </Link>
             ) : (
-              '-'
+              0
             )}
           </div>
         );
