@@ -7,7 +7,7 @@ const SupplierCampaignModal = (props) => {
   const { showModal, data } = props;
   const customStyles = {
     content: {
-      top: '50%',
+      top: '60%',
       left: '50%',
       right: 'auto',
       bottom: 'auto',
