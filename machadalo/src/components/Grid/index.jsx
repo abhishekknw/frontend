@@ -45,9 +45,8 @@ class Grid extends React.Component {
     };
     return (
       <div className="bootstrap-iso">
-        {this.props.headerValue && this.props.headerValue.length > 0 && (
-          <GridHeader headerValue={this.props.headerValue} />
-        )}
+        {this.props.headerValue &&
+          this.props.headerValue.length > 0 && <GridHeader headerValue={this.props.headerValue} />}
         <BootstrapTable
           data={this.props.data}
           pagination={this.props.pagination}
@@ -91,6 +90,7 @@ class Grid extends React.Component {
                   colSpan={column.colSpan}
                   dataAlign={column.dataAlign || 'center'}
                   dataFormat={column.formatter || formatter}
+                  export={column.export || true}
                 >
                   {column.text}
                 </TableHeaderColumn>
