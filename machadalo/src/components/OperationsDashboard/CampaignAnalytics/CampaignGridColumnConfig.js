@@ -79,8 +79,11 @@ const getCampaignColumn = () => {
                 }}
               >
                 {' '}
-                {flat_count_details_filled}({flat_count_details_filled_percentage}
-                %)
+                {flat_count_details_filled}
+                <p style={{ color: 'green' }}>
+                  ({flat_count_details_filled_percentage}
+                  %)
+                </p>
               </Link>
             ) : (
               flat_count_details_filled
@@ -119,8 +122,11 @@ const getCampaignColumn = () => {
                 }}
               >
                 {' '}
-                {flat_count_details_not_filled}({flat_count_details_not_filled_percentage}
-                %)
+                {flat_count_details_not_filled}
+                <p style={{ color: 'green' }}>
+                  ({flat_count_details_not_filled_percentage}
+                  %)
+                </p>
               </Link>
             ) : (
               flat_count_details_not_filled
@@ -166,8 +172,11 @@ const getCampaignColumn = () => {
                 }}
               >
                 {' '}
-                {contact_name_filled}({contact_name_filled_percentage}
-                %)
+                {contact_name_filled}
+                <p style={{ color: 'green' }}>
+                  ({contact_name_filled_percentage}
+                  %)
+                </p>
               </Link>
             ) : (
               contact_name_filled
@@ -213,8 +222,11 @@ const getCampaignColumn = () => {
                 }}
               >
                 {' '}
-                {contact_name_not_filled}({contact_name_not_filled_percentage}
-                %)
+                {contact_name_not_filled}
+                <p style={{ color: 'green' }}>
+                  ({contact_name_not_filled_percentage}
+                  %)
+                </p>
               </Link>
             ) : (
               contact_name_not_filled
@@ -260,8 +272,11 @@ const getCampaignColumn = () => {
                 }}
               >
                 {' '}
-                {contact_number_filled}({contact_number_filled_percentage}
-                %)
+                {contact_number_filled}
+                <p style={{ color: 'green' }}>
+                  ({contact_number_filled_percentage}
+                  %)
+                </p>
               </Link>
             ) : (
               contact_number_filled
@@ -307,8 +322,11 @@ const getCampaignColumn = () => {
                 }}
               >
                 {' '}
-                {contact_number_not_filled}({contact_number_not_filled_percentage}
-                %)
+                {contact_number_not_filled}
+                <p style={{ color: 'green' }}>
+                  ({contact_number_not_filled_percentage}
+                  %)
+                </p>
               </Link>
             ) : (
               contact_number_not_filled

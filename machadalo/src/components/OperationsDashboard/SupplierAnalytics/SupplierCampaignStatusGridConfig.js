@@ -85,7 +85,7 @@ const getCampaignColumn = () => {
       formatter: (cell, row) => {
         const { internal_comments_filled_count, internal_comments_filled_percentage } = row;
         return internal_comments_filled_percentage
-          ? `${internal_comments_filled_count} (${internal_comments_filled_percentage} %)`
+          ? `${internal_comments_filled_count}<br/>(${internal_comments_filled_percentage} %)`
           : internal_comments_filled_count || 0;
       },
     },
@@ -98,7 +98,7 @@ const getCampaignColumn = () => {
       formatter: (cell, row) => {
         const { internal_comments_not_filled_count, internal_comments_not_filled_percentage } = row;
         return internal_comments_not_filled_percentage
-          ? `${internal_comments_not_filled_count} (${internal_comments_not_filled_percentage} %)`
+          ? `${internal_comments_not_filled_count}<br/>(${internal_comments_not_filled_percentage} %)`
           : internal_comments_not_filled_count || 0;
       },
     },
@@ -118,7 +118,7 @@ const getCampaignColumn = () => {
       formatter: (cell, row) => {
         const { external_comments_filled_count, external_comments_filled_count_percentage } = row;
         return external_comments_filled_count_percentage
-          ? `${external_comments_filled_count} (${external_comments_filled_count_percentage} %)`
+          ? `${external_comments_filled_count}<br/>(${external_comments_filled_count_percentage} %)`
           : external_comments_filled_count || 0;
       },
     },
@@ -131,7 +131,7 @@ const getCampaignColumn = () => {
       formatter: (cell, row) => {
         const { external_comments_not_filled_count, external_comments_not_filled_percentage } = row;
         return external_comments_not_filled_percentage
-          ? `${external_comments_not_filled_count} (${external_comments_not_filled_percentage} %)`
+          ? `${external_comments_not_filled_count}<br/>(${external_comments_not_filled_percentage} %)`
           : external_comments_not_filled_count || 0;
       },
     },
@@ -171,7 +171,8 @@ const getCampaignColumn = () => {
                   },
                 }}
               >
-                {permission_box_filled_count} ({permission_box_filled_percentage} %)
+                {permission_box_filled_count}{' '}
+                <p style={{ color: 'green' }}>({permission_box_filled_percentage} %)</p>
               </Link>
             ) : (
               '-'
@@ -209,7 +210,8 @@ const getCampaignColumn = () => {
                   },
                 }}
               >
-                {permission_box_not_filled_count} ({permission_box_not_filled_percentage} %)
+                {permission_box_not_filled_count}{' '}
+                <p style={{ color: 'green' }}>({permission_box_not_filled_percentage} %)</p>
               </Link>
             ) : (
               '-'
@@ -254,7 +256,8 @@ const getCampaignColumn = () => {
                   },
                 }}
               >
-                {receipt_filled_count} ({receipt_filled_percentage} %)
+                {receipt_filled_count}{' '}
+                <p style={{ color: 'green' }}>({receipt_filled_percentage} %)</p>
               </Link>
             ) : (
               '-'
@@ -292,7 +295,8 @@ const getCampaignColumn = () => {
                   },
                 }}
               >
-                {receipt_not_filled_count} ({receipt_not_filled_percentage} %)
+                {receipt_not_filled_count}{' '}
+                <p style={{ color: 'green' }}>({receipt_not_filled_percentage} %)</p>
               </Link>
             ) : (
               '-'
