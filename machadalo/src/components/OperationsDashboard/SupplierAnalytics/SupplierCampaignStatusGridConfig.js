@@ -83,10 +83,36 @@ const getCampaignColumn = () => {
       width: '100px',
       sort: false,
       formatter: (cell, row) => {
-        const { internal_comments_filled_count, internal_comments_filled_percentage } = row;
-        return internal_comments_filled_percentage
-          ? `${internal_comments_filled_count}<br/>(${internal_comments_filled_percentage} %)`
-          : internal_comments_filled_count || 0;
+        const {
+          campaign_id,
+          internal_comments_filled_count,
+          campaign_name,
+          internal_comments_filled_suppliers,
+          internal_comments_filled_percentage,
+        } = row;
+        const isSuppliers = internal_comments_filled_count > 0 ? true : false;
+        return (
+          <div>
+            {isSuppliers ? (
+              <Link
+                to={{
+                  pathname: `operations-dashboard/${campaign_id}/suppliers`,
+                  state: {
+                    suppliers: internal_comments_filled_suppliers,
+                    campaign_id,
+                    campaign_name,
+                    type: 'Internal Comments Filled',
+                  },
+                }}
+              >
+                {internal_comments_filled_count}{' '}
+                <p style={{ color: 'green' }}>({internal_comments_filled_percentage} %)</p>
+              </Link>
+            ) : (
+              0
+            )}
+          </div>
+        );
       },
     },
     {
@@ -96,10 +122,36 @@ const getCampaignColumn = () => {
       width: '120px',
       sort: false,
       formatter: (cell, row) => {
-        const { internal_comments_not_filled_count, internal_comments_not_filled_percentage } = row;
-        return internal_comments_not_filled_percentage
-          ? `${internal_comments_not_filled_count}<br/>(${internal_comments_not_filled_percentage} %)`
-          : internal_comments_not_filled_count || 0;
+        const {
+          campaign_id,
+          internal_comments_not_filled_count,
+          campaign_name,
+          internal_comments_not_filled_suppliers,
+          internal_comments_not_filled_percentage,
+        } = row;
+        const isSuppliers = internal_comments_not_filled_count > 0 ? true : false;
+        return (
+          <div>
+            {isSuppliers ? (
+              <Link
+                to={{
+                  pathname: `operations-dashboard/${campaign_id}/suppliers`,
+                  state: {
+                    suppliers: internal_comments_not_filled_suppliers,
+                    campaign_id,
+                    campaign_name,
+                    type: 'Internal Comments Not Filled',
+                  },
+                }}
+              >
+                {internal_comments_not_filled_count}{' '}
+                <p style={{ color: 'green' }}>({internal_comments_not_filled_percentage} %)</p>
+              </Link>
+            ) : (
+              0
+            )}
+          </div>
+        );
       },
     },
     {
@@ -116,10 +168,36 @@ const getCampaignColumn = () => {
       width: '100px',
       sort: false,
       formatter: (cell, row) => {
-        const { external_comments_filled_count, external_comments_filled_count_percentage } = row;
-        return external_comments_filled_count_percentage
-          ? `${external_comments_filled_count}<br/>(${external_comments_filled_count_percentage} %)`
-          : external_comments_filled_count || 0;
+        const {
+          campaign_id,
+          external_comments_filled_count,
+          campaign_name,
+          external_comments_filled_suppliers,
+          external_comments_filled_percentage,
+        } = row;
+        const isSuppliers = external_comments_filled_count > 0 ? true : false;
+        return (
+          <div>
+            {isSuppliers ? (
+              <Link
+                to={{
+                  pathname: `operations-dashboard/${campaign_id}/suppliers`,
+                  state: {
+                    suppliers: external_comments_filled_suppliers,
+                    campaign_id,
+                    campaign_name,
+                    type: 'External Comments Filled',
+                  },
+                }}
+              >
+                {external_comments_filled_count}{' '}
+                <p style={{ color: 'green' }}>({external_comments_filled_percentage} %)</p>
+              </Link>
+            ) : (
+              0
+            )}
+          </div>
+        );
       },
     },
     {
@@ -129,10 +207,36 @@ const getCampaignColumn = () => {
       width: '120px',
       sort: false,
       formatter: (cell, row) => {
-        const { external_comments_not_filled_count, external_comments_not_filled_percentage } = row;
-        return external_comments_not_filled_percentage
-          ? `${external_comments_not_filled_count}<br/>(${external_comments_not_filled_percentage} %)`
-          : external_comments_not_filled_count || 0;
+        const {
+          campaign_id,
+          external_comments_not_filled_count,
+          campaign_name,
+          external_comments_not_filled_suppliers,
+          external_comments_not_filled_percentage,
+        } = row;
+        const isSuppliers = external_comments_not_filled_count > 0 ? true : false;
+        return (
+          <div>
+            {isSuppliers ? (
+              <Link
+                to={{
+                  pathname: `operations-dashboard/${campaign_id}/suppliers`,
+                  state: {
+                    suppliers: external_comments_not_filled_suppliers,
+                    campaign_id,
+                    campaign_name,
+                    type: 'External Comments Not Filled',
+                  },
+                }}
+              >
+                {external_comments_not_filled_count}{' '}
+                <p style={{ color: 'green' }}>({external_comments_not_filled_percentage} %)</p>
+              </Link>
+            ) : (
+              0
+            )}
+          </div>
+        );
       },
     },
     {
