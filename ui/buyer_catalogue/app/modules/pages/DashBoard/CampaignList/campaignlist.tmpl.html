@@ -19,6 +19,8 @@
     <table class="table-data" st-table="campaignData" st-safe-src="Data" default-sort-reverse="true">
       <tr>
         <th>Sr No</th>
+        <th>Organisation Name / Account</th>
+        <th>Brand Type</th>
         <th>Campaign Name</th>
         <th>Assigned To</th>
         <th>Assigned By</th>
@@ -35,6 +37,8 @@
       </tr>
       <tr st-select-row='proposal' dir-paginate="proposal in campaignData|filter:f|filter:searchQuery|itemsPerPage:10">
         <td>{{$index + 1}}</td>
+        <td> {{proposal.campaign.organisationName}} <br>  ({{proposal.campaign.accountName}}) </td>
+        <td> <span ng-if="proposal.campaign.brand == 'single_brand'"> Single Brand </span> <span ng-if="proposal.campaign.brand == 'multi_brand'"> Multi Brand </span></td>
         <td>{{proposal.campaign.name}}</td>
         <td>
           <div ng-repeat="assigned_data in proposal.assigned">{{assigned_data.assigned_to}}</div>

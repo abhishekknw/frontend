@@ -52,6 +52,7 @@ angular.module('catalogueApp')
 	// $scope.addCenter();
 	$scope.areas = [];
 	$scope.sub_areas = [];
+	$scope.model.brand = "single_brand";
 
 	if($window.localStorage.proposal_id != '0'){
 		createProposalService.getProposal($window.localStorage.proposal_id)
