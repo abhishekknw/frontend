@@ -657,7 +657,6 @@ angular.module('catalogueApp')
             $scope.search = {};
             $scope.errorMsg = undefined;
             $scope.center_index = null;
-
             $scope.supplierSummaryData = [];
             $scope.supplier_center = {};
 
@@ -718,7 +717,6 @@ angular.module('catalogueApp')
             supplier_data: supplier_ids,
             filter_codes: filters,
           };
-          console.log('tttttttttttttttttttttttttttttttttttt1111111111111111111t',data)
           if (filters.length && supplier_ids.length) {
             releaseCampaignService.addSuppliersToCampaign(data)
               .then(function onSuccess(response) {
