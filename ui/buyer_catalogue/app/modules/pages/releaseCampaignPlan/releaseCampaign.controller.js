@@ -543,7 +543,7 @@ angular.module('catalogueApp')
 
         //End: code added to search & show all suppliers on add societies tab
         $scope.selectSupplier = function () {
-
+          $scope.supplierData = [];
           $scope.center_areas = {};
           $scope.selectCenter();
           $scope.sub_areas = {};
@@ -565,7 +565,7 @@ angular.module('catalogueApp')
 
         //Start: function to select center at add more suplliers
         $scope.selectCenter = function (center_index) {
-
+          $scope.supplierData = [];
           try {
             $scope.center_index = center_index;
             if (center_index != null) {
@@ -594,6 +594,7 @@ angular.module('catalogueApp')
         }
 
         $scope.get_sub_areas = function (index) {
+          $scope.supplierData = [];
           if (index) {
             $scope.center_areas = {
               areas: $scope.areas[index].label
@@ -610,6 +611,7 @@ angular.module('catalogueApp')
         }
 
         $scope.selectSubArea = function (index) {
+          $scope.supplierData = [];
           if (index) {
             $scope.center_areas.sub_areas = $scope.sub_areas[index].subarea_name;
           } else {
@@ -685,7 +687,8 @@ angular.module('catalogueApp')
             console.log(error.message);
           }
         }
-        $scope.addSuppliersToCampaign = function () {
+
+        $scope.addSuppliersToCampaign1 = function () {
           var supplier_ids = [];
           var filters = [];
           angular.forEach($scope.supplierSummaryData, function (supplier) {
@@ -710,11 +713,64 @@ angular.module('catalogueApp')
             center_data: {
             },
           }
+
           data.center_data[$scope.supplier_type_code.code] = {
             supplier_data: supplier_ids,
             filter_codes: filters,
           };
+          console.log('tttttttttttttttttttttttttttttttttttt1111111111111111111t',data)
           if (filters.length && supplier_ids.length) {
+            releaseCampaignService.addSuppliersToCampaign(data)
+              .then(function onSuccess(response) {
+                //synergy
+                if (response) {
+                  $scope.releaseDetails.shortlisted_suppliers = response.data.data;
+                }
+
+                $('#addNewSocities').modal('hide');
+                swal(constants.name, constants.add_data_success, constants.success);
+              }).catch(function onError(response) {
+              })
+          } else {
+            alert("Atleast One Supplier and One Filter is required to Continue");
+          }
+
+        }
+
+
+        $scope.addSuppliersToCampaign = function () {
+          var supplier_ids = [];
+          var filters = [];
+          var center_data = {};
+          angular.forEach($scope.filters, function (filter) {
+            if (filter.selected) {
+              var filterKeyValuData = {
+                id: filter.code
+              }
+              filters.push(filterKeyValuData);
+            }
+          })
+          angular.forEach($scope.supplierSummaryData, function (supplier) {
+              let code = supplier.supplier_code;
+            var supplierKeyValueData = {
+              id: supplier.supplier_id,
+              status: 'F',
+            }
+            if(!center_data[code]){
+              center_data[code] = {};
+              center_data[code]['supplier_data'] = [];
+              center_data[code]['filter_codes'] = filters;
+            }
+            if(code != null)
+            center_data[code]['supplier_data'].push(supplierKeyValueData);
+          })
+          
+          var data = {
+            campaign_id: $scope.releaseDetails.campaign.proposal_id,
+            center_data: center_data
+          }
+
+          if (filters.length) {
             releaseCampaignService.addSuppliersToCampaign(data)
               .then(function onSuccess(response) {
                 //synergy
