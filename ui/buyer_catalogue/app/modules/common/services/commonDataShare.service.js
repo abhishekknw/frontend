@@ -24,6 +24,17 @@ angular.module('catalogueApp')
      return machadaloHttp.get(url);
    }
 
+   commonDataShare.getOrganisationList = function(orgId){
+    // if(orgId){
+    //   var url = url_base  + "get-users-minimal-list/?org_id=" + orgId;
+    // }else {
+    //    var url = url_base  + "organisation/";
+    // }
+    var url = url_base  + "organisation/";
+
+    return machadaloHttp.get(url);
+  }
+
    commonDataShare.formatDate = function(date){
      var d = new Date(date),
          month = '' + (d.getMonth() + 1),
@@ -39,6 +50,8 @@ angular.module('catalogueApp')
      var url = url_base_user + "user/" + userId + "/";
      return machadaloHttp.get(url);
    }
+
+ 
 
    commonDataShare.showErrorMessage = function(response) {
 
