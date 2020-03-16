@@ -993,7 +993,7 @@
               </td>
 
               <!-- <td class="">{{filter.price| currency : "₹"}}</td> -->
-
+              <!-- Inventory Supplier Price Formula -->
               <td>
                 <div ng-if="filter.inventory_duration_name === 'Campaign Weekly'">
                   {{filter.actual_supplier_price/7 | currency : "₹"}}
@@ -1007,13 +1007,13 @@
                   {{filter.actual_supplier_price | currency : "₹"}}
                 </div>
               </td>
-
+              <!-- Total Supplier Price Formula -->
               <td rowspan="{{key.length}}" ng-show="$first">
-                <div ng-if="supplier.shortlisted_inventories_totalPrice && supplier.flat_count !=0">
-                  {{supplier.shortlisted_inventories_totalPrice/ supplier.flat_count | currency : "₹"}}
+                <div ng-if="supplier.shortlisted_inventories_totalPrice && ((((supplier.average_weekend)+(supplier.average_weekday))/2) > 0)">
+                  {{(supplier.shortlisted_inventories_totalPrice / (((supplier.average_weekend)+(supplier.average_weekday))/2)) | currency : "₹"}} 
                 </div>
 
-                <div ng-if="supplier.shortlisted_inventories_totalPrice && supplier.flat_count ==0">
+                <div ng-if="supplier.shortlisted_inventories_totalPrice && ((((supplier.average_weekend)+(supplier.average_weekday))/2) == 0)">
                   {{supplier.shortlisted_inventories_totalPrice | currency : "₹"}}
                 </div>
               </td>
@@ -1022,19 +1022,21 @@
               ng-if="filter.totalPrice/supplier.flat_count ==0 || filter.totalPrice/supplier.flat_count">(</span>{{filter.totalPrice/supplier.flat_count|limitTo:8| currency : "₹"}}<span
               ng-if="filter.totalPrice/supplier.flat_count == 0 || filter.totalPrice/supplier.flat_count">)</span>
           </td> -->
-
+          <!-- Negotiated Price Formula -->
               <td class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="priceform">
                 <span ng-disabled="!supplier.phase_no" class="error"
                   ng-show="priceform.price.$error.min">{{positiveNoError}}</span>
                 <input ng-disabled="!supplier.phase_no || supplier.is_completed " type="number" name="price"
                   ng-model="supplier.total_negotiated_price" class="form-control spacing input-width" min="0"
                   permission="[permissions.addNegotiatedPrice]">
-                <br>{{(supplier.total_negotiated_price / supplier.flat_count)|| 0 | limitTo:8}} </td>
-
+                <br>{{(supplier.total_negotiated_price / (((supplier.average_weekend)+(supplier.average_weekday))/2))|| 0 | limitTo:8}} 
+              </td>
+                 
+              <!-- Cost Per Flat Formula -->
               <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
                 <input ng-disabled="!supplier.phase_no || supplier.is_completed" type="number"
                   ng-model="supplier.cost_per_flat" class="form-control spacing input-width" min="0">
-                <br>{{(supplier.cost_per_flat * supplier.flat_count)|| 0 | limitTo:8}}
+                <br>{{(supplier.cost_per_flat * (((supplier.average_weekend)+(supplier.average_weekday))/2))|| 0 | limitTo:8}}
               </td>
 
               <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">

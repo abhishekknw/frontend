@@ -276,6 +276,8 @@ angular.module('catalogueApp')
               $scope.totalSuppliers = $scope.initialReleaseData.total_count;
 
               for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
+                $scope.initialReleaseData.shortlisted_suppliers[i].average_weekday = parseInt($scope.initialReleaseData.shortlisted_suppliers[i].average_weekday, 10);
+                $scope.initialReleaseData.shortlisted_suppliers[i].average_weekend = parseInt($scope.initialReleaseData.shortlisted_suppliers[i].average_weekend, 10);
                 $scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price = parseInt($scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price, 10);
                 $scope.mapViewLat = $scope.initialReleaseData.shortlisted_suppliers[i].latitude;
                 $scope.mapViewLong = $scope.initialReleaseData.shortlisted_suppliers[i].longitude;
@@ -686,55 +688,6 @@ angular.module('catalogueApp')
             console.log(error.message);
           }
         }
-
-        $scope.addSuppliersToCampaign1 = function () {
-          var supplier_ids = [];
-          var filters = [];
-          angular.forEach($scope.supplierSummaryData, function (supplier) {
-            var supplierKeyValueData = {
-              id: supplier.supplier_id,
-              status: 'F',
-            }
-            supplier_ids.push(supplierKeyValueData);
-
-          })
-          angular.forEach($scope.filters, function (filter) {
-            if (filter.selected) {
-              var filterKeyValuData = {
-                id: filter.code
-              }
-              filters.push(filterKeyValuData);
-            }
-          })
-
-          var data = {
-            campaign_id: $scope.releaseDetails.campaign.proposal_id,
-            center_data: {
-            },
-          }
-
-          data.center_data[$scope.supplier_type_code.code] = {
-            supplier_data: supplier_ids,
-            filter_codes: filters,
-          };
-          if (filters.length && supplier_ids.length) {
-            releaseCampaignService.addSuppliersToCampaign(data)
-              .then(function onSuccess(response) {
-                //synergy
-                if (response) {
-                  $scope.releaseDetails.shortlisted_suppliers = response.data.data;
-                }
-
-                $('#addNewSocities').modal('hide');
-                swal(constants.name, constants.add_data_success, constants.success);
-              }).catch(function onError(response) {
-              })
-          } else {
-            alert("Atleast One Supplier and One Filter is required to Continue");
-          }
-
-        }
-
 
         $scope.addSuppliersToCampaign = function () {
           var supplier_ids = [];
