@@ -1,4 +1,6 @@
 import React from 'react';
+import { get } from 'lodash';
+import CampaignBadge from '../../CampaignBadge';
 
 const getSupplierColumnContactDetails = () => {
   return [
@@ -64,6 +66,37 @@ const getSupplierColumnContactDetails = () => {
       formatter: (cell, row) => {
         const { contact_number } = row;
         return contact_number || '-';
+      },
+    },
+    {
+      dataField: 'contact_type',
+      text: 'Contact Type',
+      sort: true,
+      formatter: (cell, row) => {
+        const contact_type = get(row, 'contact_type');
+        const type = contact_type ? contact_type.toLowerCase().replace(/ /g, '_') : contact_type;
+        let variant = 'success';
+        switch (type) {
+          case 'chairman':
+            variant = 'success';
+            break;
+          case 'secretary':
+            variant = 'primary';
+            break;
+          case 'manager':
+            variant = 'warning';
+            break;
+          case 'treasurer':
+            variant = 'info';
+            break;
+          case 'committe member':
+            variant = 'danger';
+            break;
+          default:
+            variant = 'default';
+            break;
+        }
+        return <CampaignBadge variant={variant}>{type}</CampaignBadge>;
       },
     },
   ];
