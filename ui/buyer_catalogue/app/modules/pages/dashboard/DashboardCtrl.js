@@ -7,6 +7,7 @@
 
   angular.module('catalogueApp')
     .controller('DashboardCtrl', function ($scope, NgMap, $rootScope, baConfig, colorHelper, DashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
+      $scope.aws_campaign_images_url = constants.aws_campaign_images_url;
       $scope.itemsByPage = 15;
       $scope.permissions = permissions.dashboard;
       $scope.campaign_id = $stateParams.proposal_id;
@@ -511,7 +512,7 @@
         angular.forEach(images, function (imageObjects) {
           for (var i = 0; i < imageObjects.length; i++) {
             var imageData = {
-              image_url: 'http://androidtokyo.s3.amazonaws.com/' + imageObjects[i].image_path,
+              image_url: $scope.aws_campaign_images_url + imageObjects[i].image_path,
               comment: imageObjects[i].comment,
             };
             $scope.imageUrlList.push(imageData);
@@ -2648,7 +2649,7 @@
             $scope.ImageURLListOfAll = [];
             angular.forEach(images, function (data) {
               var imagesData = {
-                image_url: 'http://androidtokyo.s3.amazonaws.com/' + data.image_path,
+                image_url: $scope.aws_campaign_images_url + data.image_path,
                 comment: data.comment,
                 // distance : data.distance,
               };
@@ -2837,7 +2838,7 @@
         angular.forEach(images, function (data) {
           for (var i = 0; i < data.length; i++) {
             var imageData = {
-              image_url: 'http://androidtokyo.s3.amazonaws.com/' + data[i].image_path,
+              image_url: $scope.aws_campaign_images_url + data[i].image_path,
               comment: data[i].comment,
               distance: data[i].distance,
               timestamp: data[i].created_at,
@@ -2873,7 +2874,7 @@
           .then(function onSuccess(response) {
             angular.forEach(response.data.data, function (data) {
               var imageData = {
-                image_url: 'http://androidtokyo.s3.amazonaws.com/' + data.image_path,
+                image_url: $scope.aws_campaign_images_url + data.image_path,
                 comment: data.comment,
                 distance: data.distance,
                 timestamp: data.created_at
@@ -2893,7 +2894,7 @@
         angular.forEach(images, function (data) {
           for (var i = 0; i < data.length; i++) {
             var imageData = {
-              image_url: 'http://androidtokyo.s3.amazonaws.com/' + data[i].image_path,
+              image_url: $scope.aws_campaign_images_url + data[i].image_path,
               comment: data[i].comment,
               distance: data[i].distance,
             };
@@ -3447,7 +3448,7 @@
           .then(function onSuccess(response) {
             if (response.data.data.length) {
               angular.forEach(response.data.data, function (data) {
-                data['image_url'] = 'http://androidtokyo.s3.amazonaws.com/' + data.image_path;
+                data['image_url'] = $scope.aws_campaign_images_url + data.image_path;
               })
               $('#imageModalForPermBox').modal('show');
             } else {

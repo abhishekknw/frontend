@@ -580,7 +580,7 @@
               <td rowspan="{{key.length}}" ng-show="$first">
                 <div ng-repeat="image in permissionBoxImages" ng-if="image.object_id == supplier.supplier_id"
                   style="margin-bottom:10px">
-                  <img ng-src="http://androidtokyo.s3.amazonaws.com/{{image.image_path}}" alt="Permission Box"
+                  <img ng-src="{{aws_campaign_images_url}}{{image.image_path}}" alt="Permission Box"
                     height="50" width="50">
                 </div>
                 <!--START: permission box image modal -->
@@ -633,7 +633,7 @@
               <td rowspan="{{key.length}}" ng-show="$first">
                 <div ng-repeat="image in receiptImages" ng-if="image.object_id == supplier.supplier_id"
                   style="margin-bottom:10px">
-                  <img ng-src="http://androidtokyo.s3.amazonaws.com/{{image.image_path}}" alt="Receipt" height="50"
+                  <img ng-src="{{aws_campaign_images_url}}{{image.image_path}}" alt="Receipt" height="50"
                     width="50">
                 </div>
                 <button class="btn btn-primary active" ng-click="getReceiptBoxImages(supplier)" data-toggle="modal"
@@ -1096,7 +1096,7 @@
               <td rowspan="{{key.length}}" ng-show="$first">
                 <div ng-repeat="image in permissionBoxImages" ng-if="image.object_id == supplier.supplier_id"
                   style="margin-bottom:10px">
-                  <img ng-src="http://androidtokyo.s3.amazonaws.com/{{image.image_path}}" alt="Permission Box"
+                  <img ng-src="{{aws_campaign_images_url}}{{image.image_path}}" alt="Permission Box"
                     height="50" width="50">
                 </div>
                 <!--START: permission box image modal -->
@@ -1149,7 +1149,7 @@
               <td rowspan="{{key.length}}" ng-show="$first">
                 <div ng-repeat="image in receiptImages" ng-if="image.object_id == supplier.supplier_id"
                   style="margin-bottom:10px">
-                  <img ng-src="http://androidtokyo.s3.amazonaws.com/{{image.image_path}}" alt="Receipt" height="50"
+                  <img ng-src="{{aws_campaign_images_url}}{{image.image_path}}" alt="Receipt" height="50"
                     width="50">
                 </div>
                 <button class="btn btn-primary active" ng-click="getReceiptBoxImages(supplier)" data-toggle="modal"

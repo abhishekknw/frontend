@@ -6,6 +6,7 @@ angular.module('catalogueApp')
         $scope.campaign_id = $stateParams.proposal_id;
         $scope.positiveNoError = constants.positive_number_error;
         $scope.campaign_manager = constants.campaign_manager;
+        $scope.aws_campaign_images_url = constants.aws_campaign_images_url;
         $scope.editPaymentDetails = true;
         $scope.commentModal = {};
         $scope.userData = {};
@@ -1368,7 +1369,7 @@ angular.module('catalogueApp')
 
               if (response.data.data.length) {
                 angular.forEach(response.data.data, function (data) {
-                  data['image_url'] = 'http://androidtokyo.s3.amazonaws.com/' + data.image_path;
+                  data['image_url'] = $scope.aws_campaign_images_url + data.image_path;
                 })
               }
               $scope.perBoxImageData = response.data.data;
@@ -1382,7 +1383,7 @@ angular.module('catalogueApp')
             .then(function onSuccess(response) {
               if (response.data.data.length) {
                 angular.forEach(response.data.data, function (data) {
-                  data['image_url'] = 'http://androidtokyo.s3.amazonaws.com/' + data.image_path;
+                  data['image_url'] = $scope.aws_campaign_images_url + data.image_path;
                 })
               }
               $scope.perReceiptImageData = response.data.data;
