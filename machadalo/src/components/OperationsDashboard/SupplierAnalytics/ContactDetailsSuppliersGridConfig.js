@@ -89,7 +89,7 @@ const getSupplierColumnContactDetails = () => {
           case 'treasurer':
             variant = 'info';
             break;
-          case 'committe member':
+          case 'president':
             variant = 'danger';
             break;
           default:

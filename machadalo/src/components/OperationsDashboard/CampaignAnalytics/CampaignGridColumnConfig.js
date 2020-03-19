@@ -168,6 +168,7 @@ const getCampaignColumn = () => {
                     campaign_id,
                     campaign_name: name,
                     type: 'Contact Name Filled',
+                    is_contact_name: true,
                   },
                 }}
               >
@@ -191,6 +192,33 @@ const getCampaignColumn = () => {
       row: 1,
       width: '100px',
       sort: false,
+      formatter: (cell, row) => {
+        const { campaign_id, contact_name_filled_suppliers, contact_name_filled_total, name } = row;
+        // Get supplier details from supplier ids
+        return (
+          <div>
+            {contact_name_filled_suppliers.length > 0 ? (
+              <Link
+                to={{
+                  pathname: `operations-dashboard/${campaign_id}/suppliers`,
+                  state: {
+                    suppliers: contact_name_filled_suppliers,
+                    campaign_id,
+                    campaign_name: name,
+                    type: 'Contact Name Total Filled',
+                    is_multiple_contact_name: true,
+                  },
+                }}
+              >
+                {' '}
+                {contact_name_filled_total}
+              </Link>
+            ) : (
+              contact_name_filled_total
+            )}
+          </div>
+        );
+      },
     },
     {
       dataField: 'contact_name_not_filled',
@@ -268,6 +296,7 @@ const getCampaignColumn = () => {
                     campaign_id,
                     campaign_name: name,
                     type: 'Contact Number Filled',
+                    is_contact_number: true,
                   },
                 }}
               >
@@ -291,6 +320,38 @@ const getCampaignColumn = () => {
       row: 1,
       width: '100px',
       sort: false,
+      formatter: (cell, row) => {
+        const {
+          campaign_id,
+          contact_number_filled_suppliers,
+          contact_number_filled_total,
+          name,
+        } = row;
+        // Get supplier details from supplier ids
+        return (
+          <div>
+            {contact_number_filled_suppliers.length > 0 ? (
+              <Link
+                to={{
+                  pathname: `operations-dashboard/${campaign_id}/suppliers`,
+                  state: {
+                    suppliers: contact_number_filled_suppliers,
+                    campaign_id,
+                    campaign_name: name,
+                    type: 'Contact Number Total Filled',
+                    is_multiple_contact_number: true,
+                  },
+                }}
+              >
+                {' '}
+                {contact_number_filled_total}
+              </Link>
+            ) : (
+              contact_number_filled_total
+            )}
+          </div>
+        );
+      },
     },
     {
       dataField: 'contact_number_not_filled',
