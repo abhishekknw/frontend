@@ -33,12 +33,19 @@ class SupplierList extends Component {
   };
 
   componentDidMount() {
-    let { suppliers, campaign_name } = this.props.location.state;
+    let {
+      suppliers,
+      campaign_name,
+      is_multiple_contact_name,
+      is_multiple_contact_number,
+    } = this.props.location.state;
     this.setState({ campaignName: campaign_name });
     if (suppliers && typeof suppliers[0] == 'string') {
       const data = {
         supplier_ids: suppliers,
         supplier_type_code: 'RS',
+        is_multiple_contact_name: is_multiple_contact_name || false,
+        is_multiple_contact_number: is_multiple_contact_number || false,
       };
       this.getSupplierDetails(data);
       this.setState({ columns: getSupplierColumnContactDetails() });
