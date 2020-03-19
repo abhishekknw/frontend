@@ -1,7 +1,7 @@
 angular.module('catalogueApp')
 .controller('NewSocietyCtrl',
-    ['$scope', '$rootScope', '$window', '$location','newsocietyDetailService',
-    function ($scope, $rootScope, $window, $location, newsocietyDetailService) {
+    ['$scope', '$rootScope', '$window', '$location','newsocietyDetailService', 'constants',
+    function ($scope, $rootScope, $window, $location, newsocietyDetailService, constants) {
      newsocietyDetailService.processParam();
      $scope.society = {};
      $scope.disable = false;
@@ -17,7 +17,7 @@ angular.module('catalogueApp')
         //$rootScope.societyname = response.society_data.society_name;
         $scope.residentCount = estimatedResidents(response.data.supplier_data.flat_count);
         $scope.flatcountflier = response.data.supplier_data.flat_count;
-        var baseUrl = 'http://mdimages.s3.amazonaws.com/';
+        var baseUrl = constants.aws_bucket_url;
         // Start : Code added to seperate images by their image tag names
         var imageUrl;
         $scope.SocietyImages = [],$scope.FlierImages=[],$scope.PosterImages=[],$scope.StandeeImages=[],$scope.StallImages=[],$scope.CarImages=[];

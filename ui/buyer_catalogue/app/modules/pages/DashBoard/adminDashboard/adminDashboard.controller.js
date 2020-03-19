@@ -1,7 +1,7 @@
 "use strict";
 angular.module('catalogueApp')
     .controller('adminDashboardController', function($scope, $rootScope, $stateParams, $window, $location, currentProposalService ,$http, constants, permissions, commonDataShare, $mdSidenav, adminDashboardService) {
-
+      $scope.aws_campaign_images_url = constants.aws_campaign_images_url;
       $scope.viewContent = 'todayStatus';
       $scope.myPercentModel = 40;
       $scope.selectedItem = {};
@@ -260,7 +260,7 @@ angular.module('catalogueApp')
       $scope.imageUrlList = [];
       for(var i=0; i<images.length; i++){
         var imageData = {
-          image_url : 'http://androidtokyo.s3.amazonaws.com/' + images[i].image_path,
+          image_url : $scope.aws_campaign_images_url + images[i].image_path,
           comment : images[i].comment,
         };
         $scope.imageUrlList.push(imageData);
