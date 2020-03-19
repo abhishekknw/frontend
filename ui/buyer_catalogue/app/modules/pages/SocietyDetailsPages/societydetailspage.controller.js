@@ -34,13 +34,10 @@ angular.module('catalogueApp')
        // Start : Code added to seperate images by their image tag names
        var imageUrl;
        $scope.SocietyImages = [],$scope.FlierImages=[],$scope.PosterImages=[],$scope.StandeeImages=[],$scope.StallImages=[],$scope.CarImages=[];
-        console.log("society_images", $scope.society_images);
        for(var i=0;i<$scope.society_images.length;i++){
-          console.log("$scope.society_images[i].name", $scope.society_images[i].name);
          if($scope.society_images[i].name == 'Society'){
            imageUrl = baseUrl + $scope.society_images[i].image_url;
            $scope.SocietyImages.push(imageUrl);
-           console.log("$scope.SocietyImages", $scope.SocietyImages);
          }
          if($scope.society_images[i].name == 'Standee Space'){
            imageUrl = baseUrl + $scope.society_images[i].image_url;
