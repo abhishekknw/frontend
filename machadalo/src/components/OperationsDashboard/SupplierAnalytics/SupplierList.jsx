@@ -38,6 +38,8 @@ class SupplierList extends Component {
       campaign_name,
       is_multiple_contact_name,
       is_multiple_contact_number,
+      is_contact_name,
+      is_contact_number,
     } = this.props.location.state;
     this.setState({ campaignName: campaign_name });
     if (suppliers && typeof suppliers[0] == 'string') {
@@ -46,6 +48,8 @@ class SupplierList extends Component {
         supplier_type_code: 'RS',
         is_multiple_contact_name: is_multiple_contact_name || false,
         is_multiple_contact_number: is_multiple_contact_number || false,
+        is_contact_name: is_contact_name || false,
+        is_contact_number: is_contact_number || false,
       };
       this.getSupplierDetails(data);
       this.setState({ columns: getSupplierColumnContactDetails() });

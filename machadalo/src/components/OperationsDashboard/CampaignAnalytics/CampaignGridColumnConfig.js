@@ -168,6 +168,7 @@ const getCampaignColumn = () => {
                     campaign_id,
                     campaign_name: name,
                     type: 'Contact Name Filled',
+                    is_contact_name: true,
                   },
                 }}
               >
@@ -295,6 +296,7 @@ const getCampaignColumn = () => {
                     campaign_id,
                     campaign_name: name,
                     type: 'Contact Number Filled',
+                    is_contact_number: true,
                   },
                 }}
               >
