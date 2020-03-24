@@ -49,7 +49,6 @@
                           </td>
                   
                        </tr>
-
                      </tbody>
                      </table>
                </div>
@@ -435,7 +434,9 @@
                                     <tr style="font-size:12px;">
                                       <td>Campaign Status</td>
                                       <td>Supplier Count</td>
-                                      <td>Flat Count</td>
+                                      <!-- <td>Flat Count</td> -->
+                                      <td>{{flatCountHeader}}</td>
+                                      
                                       <td>Hot Leads %</td>
                                       <td>Total Leads %</td>
                                       <td>Hot Leads Count</td>
@@ -523,7 +524,8 @@
                                     <tr style="font-size:12px;">
                                       <td>Campaign Status</td>
                                       <td>Supplier Count</td>
-                                      <td>Flat Count</td>
+                                      <!-- <td>Flat Count</td> -->
+                                      <td>Unit Count</td>
                                       <td>Hot Leads Count</td>
                                       <td>Total Leads Count</td>
                                       <td>Hot Leads (%)</td>
@@ -578,8 +580,8 @@
                               </div>
                           </div>
                           </div>
-
-                          <div class="">
+                        <!-- start graph click table single -->
+                          <div class="">  
                         
                               <div class="row">
                                 <div class="col-md-12" ng-if="showDisplayDetailsTable">
@@ -601,9 +603,9 @@
                                             <th style="width:200px;" ng-click="Sort('supplier.society_name')">Supplier Name &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                             <th>Supplier Area <br> (SubArea)</th>
                                             <th>Supplier Type</th>
-                                            <th ng-click="Sort('supplier.flat_count')" >Flat Count &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
-                                            <th ng-click="Sort('leads_data.total_leads_count')">Leads <br> (% by Flat Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
-                                            <th ng-click="Sort('leads_data.hot_leads_count')" >Hot Leads <br>(% by Flat Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th ng-click="Sort('supplier.flat_count')" >{{flatCountHeader}} &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th ng-click="Sort('leads_data.total_leads_count')">Leads <br> (% by {{flatCountHeader}}) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th ng-click="Sort('leads_data.hot_leads_count')" >Hot Leads <br>(% by {{flatCountHeader}}) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                             <th ng-if="supplierStatus != 'upcoming'">Poster</th>
                                             <th ng-if="supplierStatus != 'upcoming'">Flier</th>
                                             <th ng-if="supplierStatus != 'upcoming'">Standee</th>
@@ -898,8 +900,8 @@
                                     </table>
                                   </div>
                           </div>
-
-
+                          <!-- end graph click table single -->
+                          <!-- start graph click table all -->
                           <div class="col-md-12" ng-if="showTableForAllCampaignDisplay" style="margin-top:20px;height:700px !important;">
                             <div class="campaigndetailtable">
                               <div class="panel-heading" style="height:70px;">
@@ -918,9 +920,9 @@
                                       <th ng-click="SortColumn('start_date')">Start Date &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                       <th>Campaign Status</th>
                                       <th>Society Count</th>
-                                      <th ng-click="SortColumn('flat_count')">Flat Count &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
-                                      <th ng-click="SortColumn('total_leads')">Leads (% by Flat Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
-                                      <th ng-click="SortColumn('hot_leads')" >Hot Leads (% by Flat Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                      <th ng-click="SortColumn('flat_count')">Unit Count &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                      <th ng-click="SortColumn('total_leads')">Leads (% by Unit Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                      <th ng-click="SortColumn('hot_leads')" >Hot Leads (% by Unit Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                       </tr>
                                       <tr colspan="9">
                                         <td></td>
@@ -963,6 +965,7 @@
                               </div>
                             </div>
                             </div>
+                            <!-- end graph click table all -->
                             
                     </div>
                   </div>
@@ -1008,7 +1011,7 @@
                             <!-- <th>Phase</br>Completed</th> -->
                             <th>Campaign Status</th>
                             <th style="width:100px;" class="col-md-2" ng-click="Sort('supplier_count')">Supplier</br> Count <a><i class="icon-sort" style="color:white;"></i></a></th>
-                            <th style="width:100px;" class="col-md-2" ng-click="Sort('flat_count')">Flat Count <a><i class="icon-sort" style="color:white;"></i></a></th>
+                            <th style="width:100px;" class="col-md-2" ng-click="Sort('flat_count')">Unit Count<a><i class="icon-sort" style="color:white;"></i></a></th>
                             <th style="width:120px;" class="col-md-2" ng-click="Sort('total_leads')">Total Leads <a><i class="icon-sort" style="color:white;"></i></a></th>
                             <th style="width:100px;" class="col-md-2" ng-click="Sort('hot_leads')">Hot Leads <a><i class="icon-sort" style="color:white;"></i></a></th>
                             <th>View Leads</th>
@@ -1142,7 +1145,7 @@
                           <tr ng-repeat="campaign in campaignData.ongoing_campaigns | orderBy: 'name'">
                             <td ng-click="getBookingCampaigns(campaign)">
                               {{campaign.name}}
-                            </td>
+                            </td> 
                           </tr>
                       </table>
                   </div>
@@ -1188,10 +1191,10 @@
             <thead>
               <tr>
                 <th><small>Phase Details</small></th>
-                <th><small>Confirmed Booked <br>(Total Flat Count)</small></th>
-                <th><small>Verbally Booked <br>(Total Flat Count)</small></th>
-                <th><small>Followup Required <br>(Total Flat Count)</small></th>
-                <th><small>Total <br>(Total Flat Count)</small></th>
+                <th><small>Confirmed Booked <br>(Total {{flatCountHeader}})</small></th>
+                <th><small>Verbally Booked <br>(Total {{flatCountHeader}})</small></th>
+                <th><small>Followup Required <br>(Total {{flatCountHeader}})</small></th>
+                <th><small>Total <br>(Total {{flatCountHeader}})</small></th>
               </tr>
             </thead>
             <tbody>
@@ -1204,7 +1207,7 @@
                   </div>
                 </td>
                 <td ng-if="bookingPhases.last_completed_phase.confirmed_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.confirmed_booked.supplier_data,'Last Completed Phase')">
-                      {{bookingPhases.last_completed_phase.confirmed_booked.supplier_count}} ({{bookingPhases.last_completed_phase.confirmed_booked.flat_count}})
+                      {{bookingPhases.last_completed_phase.confirmed_booked.supplier_count}} ({{bookingPhases.last_completed_phase.confirmed_booked.flat_count}}) 
                     </a></small>
                 </td>
                 <td ng-if="bookingPhases.last_completed_phase.confirmed_booked.supplier_data.length == 0"><small>0</small></td>
@@ -1292,12 +1295,12 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th><small>Confirmed Booked <br>(Total Flat Count)</small></th>
-                <th><small>Not Initiated <br>(Total Flat Count)</small></th>
-                <th><small>Followup Required <br>(Total Flat Count)</small></th>
-                <th><small>Verbally Booked <br>(Total Flat Count)</small></th>
-                <th><small>Rejected <br>(Total Flat Count)</small></th>
-                <th><small>Total <br>(Total Flat Count)</small></th>
+                <th><small>Confirmed Booked <br>(Total {{flatCountHeader}})</small></th>
+                <th><small>Not Initiated <br>(Total {{flatCountHeader}})</small></th>
+                <th><small>Followup Required <br>(Total {{flatCountHeader}})</small></th>
+                <th><small>Verbally Booked <br>(Total {{flatCountHeader}})</small></th>
+                <th><small>Rejected <br>(Total {{flatCountHeader}})</small></th>
+                <th><small>Total <br>(Total {{flatCountHeader}})</small></th>
               </tr>
             </thead>
             <tbody>
@@ -1352,8 +1355,8 @@
                 <tr>
                   <th>Index</th>
                   <th>Supplier Name</th>
-                  <th>Flat</br>Count</th>
-                  <th>Tower</br>Count</th>
+                  <th>{{flatCountHeader}}</th>
+                  <th>{{towerCountHeader}}</th>
                   <th>Type Of</br>Society</th>
                   <th>Area(SubArea)</th>
                   <th>Status</th>
@@ -1612,7 +1615,7 @@
                                   </thead>
                                     <tbody style="text-align:center;">
                                       <tr>
-                                      <td><small style="font-weight:bold">FLat Count</small></td>
+                                      <td><small style="font-weight:bold">{{flatCountHeader}}</small></td>
                                       <td>{{Data.overall_data.flat_count || 'NA'}}</td>
                                       <td>{{Data.last_week.flat_count || 'NA'}}</td>
                                       <td>{{Data.last_two_weeks.flat_count || 'NA'}}</td>
@@ -2035,9 +2038,9 @@
                                       <tr>
                                         <th style="background:#8e1921 !important;color:#ffffff !important;">Details</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Overall Campaign <br>Total</th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count <br> <small style="color:#ffffff !important"> < 150</small></th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count <br><small style="color:#ffffff !important">Between 150 to 400</small></th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count <br> <small style="color:#ffffff !important"> > 400</small></th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flatCountHeader}} <br> <small style="color:#ffffff !important"> < 150</small></th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flatCountHeader}} <br><small style="color:#ffffff !important">Between 150 to 400</small></th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flatCountHeader}} <br> <small style="color:#ffffff !important"> > 400</small></th>
                                       </tr>
                                   </thead>
                                     <tbody style="text-align:center;">
@@ -2049,7 +2052,7 @@
                                       <td>{{Data.flat_data['400+'].suppliers}}</td>
                                       </tr>
                                       <tr>
-                                        <td><small style="font-weight:bold">Flat Count</small></td>
+                                        <td><small style="font-weight:bold">{{flatCountHeader}}</small></td>
                                         <td>{{Data.overall_data.flat_count}}</td>
                                         <td>{{Data.flat_data['0-150']['flat_count']}}</td>
                                         <td>{{Data.flat_data['151-399']['flat_count']}}</td>
@@ -2155,7 +2158,7 @@
                                       <tr>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Society Area</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">FLat Count</th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flatCountHeader}}</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>(%)</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads <br> (%)</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads Ratio <br> (%)</th>
@@ -2844,7 +2847,7 @@
                       </thead>
                         <tbody style="text-align:center;">
                           <tr>
-                          <td><small style="font-weight:bold">Flat Count</small></td>
+                          <td><small style="font-weight:bold">Unit Count</small></td>
                           <td>{{WeeklyVendorMISOverallSummary.flat_count || 'NA'}}</td>
                           <td>{{WeeklyVendorMISLastWeekSummary.flat_count || 'NA'}}</td>
                           <td>{{WeeklyVendorMISLast2WeekSummary.flat_count || 'NA'}}</td>
@@ -2948,7 +2951,7 @@
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Vendor Name</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Unit Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
@@ -2989,6 +2992,7 @@
            <option value="" disabled>Select For Sorting</option>
             <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
           </select> -->
+          
           <div class="outerVendor"  ng-if="!dateRangeModel.start_date">
             <div class="innerVendor"  ng-if="!dateRangeModel.start_date">
               <nvd3 options="locationChartOptions" data="sortedLocationData['overall']" ng-if="togglesortedGraphs['overall']"></nvd3>
@@ -3027,7 +3031,7 @@
       </thead>
         <tbody style="text-align:center;">
           <tr>
-          <td><small style="font-weight:bold">Flat Count</small></td>
+          <td><small style="font-weight:bold">Unit Count</small></td>
           <td>{{WeeklyMISOverallSummary.all_campaigns.flat_count || 'NA'}}</td>
           <td>{{WeeklyMISLastWeekSummary.all_campaigns.flat_count || 'NA'}}</td>
           <td>{{WeeklyMISLast2WeekSummary.all_campaigns.flat_count || 'NA'}}</td>
@@ -3129,7 +3133,7 @@
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Unit Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
@@ -3272,7 +3276,7 @@
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Unit Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
@@ -3370,7 +3374,7 @@
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Unit Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
@@ -3467,7 +3471,7 @@
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Unit Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>

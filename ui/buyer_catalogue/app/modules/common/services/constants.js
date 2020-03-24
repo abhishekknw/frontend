@@ -219,4 +219,6 @@ angular
     booking_related_comment : 'INTERNAL',
     execution_related_comment : 'EXTERNAL',
     no_comments_msg : 'No Comments Available',
-    });
+    flatCountHeader:{'RS':'Flat Count','RE':'Footfall Count ','CP':'Employees Count','GY':'Footfall Count','BS':'Footfall Count','EI':'Students Count'},
+    towerCountHeader:{'RS':'Flat Count','RE':'Weekday Footfall Count','CP':'Companies Count','GY':'Weekday Footfall Count','BS':'Weekday Footfall Count','EI':'Teachers Count'}
+  });

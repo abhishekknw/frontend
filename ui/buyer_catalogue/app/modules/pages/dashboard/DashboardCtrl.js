@@ -36,6 +36,7 @@
       var selectedSpecificItems = [];
       $scope.cumulativeOrder = false;
       $scope.selectedOrderKey = undefined;
+      $scope.flatCountHeader = "Unit Count"
 
 
       $scope.typeOfSocietyLists = [
@@ -60,7 +61,7 @@
         { id: 1, name: 'Non Zero Total Leads', value: 'lead_nz', key: 'lead' },
         { id: 2, name: 'Non Zero Hot Leads', value: 'hot_lead_nz', key: 'hot_lead' },
         { id: 3, name: 'Non Zero Booking Confirmed', value: 'total_booking_confirmed_nz', key: 'total_booking_confirmed' },
-        { id: 4, name: 'Non Zero Order Punched', value: 'total_orders_punched_nz', key: 'total_orders_punched'},
+        { id: 4, name: 'Non Zero Order Punched', value: 'total_orders_punched_nz', key: 'total_orders_punched' },
       ]
       $scope.BookingParametersLists = [
         { id: 1, name: 'Freebies Allowed', value: 'freebiestype' },
@@ -103,28 +104,28 @@
             value: 'lead',
           },
           {
-          name: 'Cost Per Lead',
-          value: 'flat*cost_flat/lead',
-        },
+            name: 'Cost Per Lead',
+            value: 'flat*cost_flat/lead',
+          },
         ],
         'Hot Leads %': [{
           name: 'Hot Leads',
           value: 'hot_lead',
-        },{
+        }, {
           name: 'Cost Per Hot Lead',
           value: 'flat*cost_flat/hot_lead',
         }],
         'Booking Confirmed %': [{
           name: 'Total Bookings Confirmed',
           value: 'total_booking_confirmed',
-        },{
+        }, {
           name: 'Cost Per Meeting Fixed',
           value: 'flat*cost_flat/total_booking_confirmed',
         }],
         'Order Punched %': [{
           name: 'Total Orders Punched',
           value: 'total_orders_punched',
-        },{
+        }, {
           name: 'Cost Per Orders Punched',
           value: 'flat*cost_flat/total_orders_punched',
         }]
@@ -565,7 +566,7 @@
             })
 
             $scope.vendorsList = Object.keys($scope.vendorsData);
-            
+
             $scope.campaigns = [$scope.campaignData.ongoing_campaigns.length, $scope.campaignData.completed_campaigns.length, $scope.campaignData.upcoming_campaigns.length, $scope.campaignData.onhold_campaigns.length];
             $scope.campaignChartdata = [
               { label: $scope.allCampaignStatusType.ongoing.campaignLabel, value: $scope.campaignData.ongoing_campaigns.length, status: $scope.allCampaignStatusType.ongoing.status },
@@ -793,7 +794,7 @@
           "grouped": true,
           "sortDescending": false,
           "xAxis": {
-            "axisLabel": "Society (Flat Count) in Percentage",
+            "axisLabel": "Society (" + $scope.flatCountHeader + ") in Percentage",
             "showMaxMin": false,
             "rotateLabels": -30
           },
@@ -817,9 +818,9 @@
 
       var stackedBarChart = {
         "chart": {
-          "type": "multiBarChart",          
+          "type": "multiBarChart",
           "height": 450,
-          "forceY": [0,maxYValue+2],
+          "forceY": [0, maxYValue + 2],
           // "labelType" : "11",
           "margin": {
             "top": 100,
@@ -854,7 +855,7 @@
           tooltip: {
             contentGenerator: function (e) {
               var series = e.series[0];
-              
+
               if (series.value === null) return;
               var rows =
                 "<tr>" +
@@ -898,9 +899,9 @@
 
       var stackedBarChartSummary = {
         "chart": {
-          "type": "multiBarChart",          
+          "type": "multiBarChart",
           "height": 450,
-          "forceY": [0,maxYValueSummary+2],
+          "forceY": [0, maxYValueSummary + 2],
           // "labelType" : "11",
           "margin": {
             "top": 100,
@@ -935,7 +936,7 @@
           tooltip: {
             contentGenerator: function (e) {
               var series = e.series[0];
-              
+
               if (series.value === null) return;
               var rows =
                 "<tr>" +
@@ -993,7 +994,7 @@
           "grouped": true,
           "sortDescending": false,
           "xAxis": {
-            "axisLabel": "Date (Flat Count) in Percentage",
+            "axisLabel": "Date (" + $scope.flatCountHeader + ") in Percentage",
             "showMaxMin": false,
             "rotateLabels": -30
           },
@@ -1032,7 +1033,7 @@
           "grouped": true,
           "sortDescending": false,
           "xAxis": {
-            "axisLabel": "Flat Range (Flat Count) in Percentage",
+            "axisLabel": "Flat Range (" + $scope.flatCountHeader + ") in Percentage",
             "axisLabelDistance": -50,
             "showMaxMin": false,
             "rotateLabels": -30
@@ -1072,7 +1073,7 @@
           "grouped": true,
           "sortDescending": false,
           "xAxis": {
-            "axisLabel": "Summary Wise (Flat Count) in Percentage",
+            "axisLabel": "Summary Wise (" + $scope.flatCountHeader + ") in Percentage",
             "axisLabelDistance": -50,
             "showMaxMin": false,
             "rotateLabels": -30
@@ -1112,7 +1113,7 @@
           "grouped": true,
           "sortDescending": false,
           "xAxis": {
-            "axisLabel": "Society Area (Flat Count) in Percentage",
+            "axisLabel": "Society Area (" + $scope.flatCountHeader + ") in Percentage",
             "showMaxMin": false,
             "rotateLabels": -30
           },
@@ -1151,7 +1152,7 @@
           "grouped": true,
           "sortDescending": false,
           "xAxis": {
-            "axisLabel": "Phases (Flat Count) in Percentage",
+            "axisLabel": "Phases (" + $scope.flatCountHeader + ") in Percentage",
             "showMaxMin": false,
             "rotateLabels": -30
           },
@@ -1190,7 +1191,7 @@
           "grouped": true,
           "sortDescending": false,
           "xAxis": {
-            "axisLabel": "City (Flat Count) in Percentage",
+            "axisLabel": "City (" + $scope.flatCountHeader + ") in Percentage",
             "showMaxMin": false,
             "rotateLabels": -30
           },
@@ -1225,8 +1226,9 @@
             "left": 140
           },
           "useInteractiveGuideline": true,
-          x: function (d, i) {  
-            return +d.x; },
+          x: function (d, i) {
+            return +d.x;
+          },
           y: function (d) { return +d.y; },
           "dispatch": {
             stateChange: function (e) { console.log("stateChange"); },
@@ -1236,11 +1238,11 @@
           },
           "xAxis": {
             "axisLabel": "Leads % and Hot Leads % Range Distribution",
-            "showMaxMin": false, 
+            "showMaxMin": false,
             "reduceXTicks": false,
-            "staggerLabels": false,           
+            "staggerLabels": false,
             tickFormat: function (d) {
-              
+
               return $scope.x_fre_leads[d];
             },
             // tickFormat: function(d){
@@ -1266,12 +1268,14 @@
             "left": 140
           },
           "useInteractiveGuideline": true,
-            x: function (d, i) {  
-                         
-              return d.x; },
-            y: function (d) { 
-              return d.y; },
-            "dispatch": {
+          x: function (d, i) {
+
+            return d.x;
+          },
+          y: function (d) {
+            return d.y;
+          },
+          "dispatch": {
             stateChange: function (e) { console.log("stateChange"); },
             changeState: function (e) { console.log("changeState"); },
             tooltipShow: function (e) { console.log("tooltipShow"); },
@@ -1280,16 +1284,17 @@
           "xAxis": {
             "axisLabel": "Orders Punched Day",
             "showMaxMin": false,
-            tickFormat: function(d) { 
-              return d },
-            
+            tickFormat: function (d) {
+              return d
+            },
+
             "rotateLabels": -30
           },
           "yAxis": {
             "axisLabel": "Cumulative Orders Punched (%)",
-            tickFormat: function(d){
+            tickFormat: function (d) {
               return d3.format(',.2f')(d);
-          },
+            },
           }
         }
       };
@@ -1387,7 +1392,7 @@
                 "</tbody>" +
                 "</table>";
             }
-          },         
+          },
         }
       };
       var overallSummaryStackedBar = {
@@ -1406,7 +1411,7 @@
           "grouped": true,
           "sortDescending": false,
           "xAxis": {
-            "axisLabel": "Campaign Wise (Flat Count) in Percentage",
+            "axisLabel": "Campaign Wise (" + $scope.flatCountHeader + ") in Percentage",
             "axisLabelDistance": -50,
             "showMaxMin": false,
             "rotateLabels": -30
@@ -1447,7 +1452,7 @@
           "grouped": true,
           "sortDescending": false,
           "xAxis": {
-            "axisLabel": "Vendor Wise (Flat Count) in Percentage",
+            "axisLabel": "Vendor Wise (" + $scope.flatCountHeader + ") in Percentage",
             "axisLabelDistance": -50,
             "showMaxMin": false,
             "rotateLabels": -30
@@ -1488,7 +1493,7 @@
           "grouped": true,
           "sortDescending": false,
           "xAxis": {
-            "axisLabel": "Last Week (Flat Count) in Percentage",
+            "axisLabel": "Last Week (" + $scope.flatCountHeader + ") in Percentage",
             "axisLabelDistance": -50,
             "showMaxMin": false,
             "rotateLabels": -30
@@ -1527,7 +1532,7 @@
           "grouped": true,
           "sortDescending": false,
           "xAxis": {
-            "axisLabel": "Last 2 Week (Flat Count) in Percentage",
+            "axisLabel": "Last 2 Week (" + $scope.flatCountHeader + ") in Percentage",
             "axisLabelDistance": -50,
             "showMaxMin": false,
             "rotateLabels": -30
@@ -1566,7 +1571,7 @@
           "grouped": true,
           "sortDescending": false,
           "xAxis": {
-            "axisLabel": "Last 3 Weeks (Flat Count) in Percentage",
+            "axisLabel": "Last 3 Weeks (" + $scope.flatCountHeader + ") in Percentage",
             "axisLabelDistance": -50,
             "showMaxMin": false,
             "rotateLabels": -30
@@ -1626,6 +1631,8 @@
             $scope.showTableForAllCampaignDisplay = false;
             $scope.campaignStatusData = response.data.data;
             $scope.campaignSupplierAndInvData = response.data.data;
+            $scope.campaignSupplierAndInvData = response.data.data;
+            $scope.supplierType = response.data.supplier_type_code;
             $scope.showSupplierSocietywiseInvTable = false;
             $scope.showSupplierInvdDataTable = function (invData) {
               $scope.SocietyInvTable = $scope.campaignStatusData;
@@ -1633,9 +1640,44 @@
             };
             $scope.countallsupplier = $scope.campaignStatusData.completed.length + $scope.campaignStatusData.ongoing.length + $scope.campaignStatusData.upcoming.length;
             var totalFlats = 0, totalLeads = 0, totalSuppliers = 0, hotLeads = 0;
-
-            // $scope.totalLeadsCount = response.data.data.supplier_data.length;
             $scope.campaignStatusData['totalSuppliers'] = 0;
+            //synergytop start
+            if ($scope.supplierType) {
+              if ($scope.supplierType.length == 1) {
+                $scope.flatCountHeader = constants.flatCountHeader[$scope.supplierType[0].supplier_type_code];
+                if ($scope.supplierType[0].supplier_type_code == 'RS') {
+                  $scope.campaignStatus.ongoing.supplierLabel = 'Ongoing Residential Society';
+                  $scope.campaignStatus.completed.supplierLabel = 'Completed Residential Society';
+                  $scope.campaignStatus.upcoming.supplierLabel = 'Upcoming Residential Society';
+                } else if ($scope.supplierType[0].supplier_type_code == 'CP') {
+                  $scope.campaignStatus.ongoing.supplierLabel = 'Ongoing Corporate Parks';
+                  $scope.campaignStatus.completed.supplierLabel = 'Completed Corporate Parks';
+                  $scope.campaignStatus.upcoming.supplierLabel = 'Upcoming Corporate Parks';
+                } else if ($scope.supplierType[0].supplier_type_code == 'BS') {
+                  $scope.campaignStatus.ongoing.supplierLabel = 'Ongoing Bus Shelter';
+                  $scope.campaignStatus.completed.supplierLabel = 'Completed Bus Shelter';
+                  $scope.campaignStatus.upcoming.supplierLabel = 'Upcoming Bus Shelter';
+                } else if ($scope.supplierType[0].supplier_type_code == 'GY') {
+                  $scope.campaignStatus.ongoing.supplierLabel = 'Ongoing Gym';
+                  $scope.campaignStatus.completed.supplierLabel = 'Completed Gym';
+                  $scope.campaignStatus.upcoming.supplierLabel = 'Upcoming Gym';
+                } else if ($scope.supplierType[0].supplier_type_code == 'SA') {
+                  $scope.campaignStatus.ongoing.supplierLabel = 'Ongoing Saloon';
+                  $scope.campaignStatus.completed.supplierLabel = 'Completed Saloon';
+                  $scope.campaignStatus.upcoming.supplierLabel = 'Upcoming Saloon';
+                } else if ($scope.supplierType[0].supplier_type_code == 'RE') {
+                  $scope.campaignStatus.ongoing.supplierLabel = 'Ongoing Retail Store';
+                  $scope.campaignStatus.completed.supplierLabel = 'Completed Retail Store';
+                  $scope.campaignStatus.upcoming.supplierLabel = 'Upcoming Retail Store';
+                }
+              } else if ($scope.supplierType.length > 1) {
+                $scope.campaignStatus.ongoing.supplierLabel = "Ongoing Supplier";
+                $scope.campaignStatus.completed.supplierLabel = "Completed Supplier";
+                $scope.campaignStatus.upcoming.supplierLabel = "Upcoming Supplier";
+                $scope.flatCountHeader = "Unit Count";
+              }
+            }
+            //synergytop end
             angular.forEach($scope.campaignStatusData, function (data, key) {
               if ($scope.campaignStatusData[key].length && key != 'upcoming') {
                 $scope.campaignStatusData['totalSuppliers'] += $scope.campaignStatusData[key].length;
@@ -1912,17 +1954,20 @@
         $scope.campaignIdForPerfMetrics = campaignId;
         $scope.campaignInfoForPerfMetrics = campaign;
         $scope.showPerfMetrics = $scope.perfMetrics.blank;
-        var result;        
+        var result;
 
         if ($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date') &&
-              !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
-          
+          !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
+
           $scope.dateRangeModel.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
           $scope.dateRangeModel.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
           result = DashboardService.getLeadsByCampaign(campaignId, $scope.dateRangeModel)
         } else {
           result = DashboardService.getLeadsByCampaign(campaignId)
         }
+
+
+
         $scope.getDistributionGraphsStatics();
 
         // DashboardService.getLeadsByCampaign(campaignId)
@@ -1945,6 +1990,20 @@
             $scope.locationHeader.push($scope.value1);
           })
 
+
+          //synergytop start
+          $scope.supplierType = response.data.supplier_type_code;
+          if ($scope.supplierType) {
+            if ($scope.supplierType.length == 1) {
+              $scope.flatCountHeader = constants.flatCountHeader[$scope.supplierType[0].supplier_type_code];
+              $scope.towerCountHeader = constants.towerCountHeader[$scope.supplierType[0].supplier_type_code];
+            }
+            else if ($scope.supplierType.length > 1) {
+              $scope.flatCountHeader = "Unit Count";
+            }
+          }
+          //synergytop end
+
           $scope.d3StackedBarChartData = formatD3StackedBarChartData($scope.LeadsByCampaign.supplier_data);
           $scope.stackedBarChartOptions = angular.copy(stackedBarChart);
           $scope.stackedBarChartSocietyWise = angular.copy(societySummaryBarChart);
@@ -1954,6 +2013,28 @@
           $scope.stackedBarChartPhaseWise = angular.copy(phaseSummaryBarChart);
           $scope.stackedBarChartCityWise = angular.copy(citySummaryBarChart);
           $scope.weeklyStackedBarData = angular.copy(weekSummaryStackedBar);
+          if($scope.weeklyStackedBarData){
+            $scope.weeklyStackedBarData.chart.xAxis.axisLabel = "Summary Wise (" + $scope.flatCountHeader + ") in Percentage";
+          }
+          if($scope.stackedBarChartFlatWise){
+            $scope.stackedBarChartFlatWise.chart.xAxis.axisLabel = "Flat Range (" + $scope.flatCountHeader + ") in Percentage";
+          }
+          if($scope.stackedBarChartLocationWise){
+            $scope.stackedBarChartLocationWise.chart.xAxis.axisLabel = "Society Area (" + $scope.flatCountHeader + ") in Percentage";
+          }
+          if($scope.stackedBarChartPhaseWise){
+            $scope.stackedBarChartPhaseWise.chart.xAxis.axisLabel = "Phases (" + $scope.flatCountHeader + ") in Percentage";
+          }
+          if($scope.stackedBarChartCityWise){
+            $scope.stackedBarChartCityWise.chart.xAxis.axisLabel = "City (" + $scope.flatCountHeader + ") in Percentage";
+          }
+          if($scope.stackedBarChartDateWise){
+            $scope.stackedBarChartDateWise.chart.xAxis.axisLabel = "Date (" + $scope.flatCountHeader + ") in Percentage";
+          }
+
+          
+
+         
           $scope.stackedBarChartSupplierData = formatMultiBarChartDataForSuppliers(response.data.data.supplier_data);
           $scope.stackedBarChartDateData = formatMultiBarChartDataByDate(response.data.data.date_data);
           $scope.stackedBarWeekSummaryData = formatWeekStackedChart(response.data.data);
@@ -1962,14 +2043,14 @@
           $scope.stackedBarPhaseChart = formatPhaseChart(response.data.data.phase_data);
           $scope.stackedBarThreeWeeksChart = formatThreeWeeksSummary(response.data.data);
 
-          
-          if(Object.keys(response.data.data.supplier_data).length > 4 ){
+
+          if (Object.keys(response.data.data.supplier_data).length > 4) {
             $scope.stackedBarChartSocietyWise.chart['width'] = Object.keys(response.data.data.supplier_data).length * 100;
           }
-          if(Object.keys(response.data.data.date_data).length > 4 ){
+          if (Object.keys(response.data.data.date_data).length > 4) {
             $scope.stackedBarChartDateWise.chart['width'] = Object.keys(response.data.data.date_data).length * 100;
           }
-          if(Object.keys(response.data.data.locality_data).length > 4 ){
+          if (Object.keys(response.data.data.locality_data).length > 4) {
             $scope.stackedBarChartLocationWise.chart['width'] = Object.keys(response.data.data.locality_data).length * 100;
           }
 
@@ -1980,6 +2061,8 @@
 
 
           $scope.showReportBtn = true;
+
+          
         }).catch(function onError(response) {
           console.log(response);
         })
@@ -1991,7 +2074,7 @@
         var values3 = [];
         var values4 = [];
         angular.forEach(data, function (supplier) {
-          
+
           if (supplier['flat_count'] != 0) {
             $scope.hotLeadsValues = supplier.interested / supplier['flat_count'] * 100;
             $scope.normalLeadsValues = supplier.total / supplier['flat_count'] * 100;
@@ -2010,9 +2093,9 @@
           var value2 =
             [keyWithFlatLabel, $scope.hotLeadsValues];
           var value3 =
-            [ keyWithFlatLabel, $scope.normalBookingValues ];
+            [keyWithFlatLabel, $scope.normalBookingValues];
           var value4 =
-            [ keyWithFlatLabel, $scope.normalPunchedValues ];
+            [keyWithFlatLabel, $scope.normalPunchedValues];
           values1.push(value1);
           values2.push(value2);
           values3.push(value3);
@@ -2047,7 +2130,7 @@
           series.values = series.values.map((d) => { return { x: d[0], y: d[1] } });
           return series;
         });
-        
+
         return temp_data;
       }
 
@@ -2112,9 +2195,9 @@
           var value2 =
             { x: keyWithFlatLabel, y: $scope.hotLeadsValues };
           var value3 =
-          { x: keyWithFlatLabel, y: $scope.normalBookingValues };
+            { x: keyWithFlatLabel, y: $scope.normalBookingValues };
           var value4 =
-          { x: keyWithFlatLabel, y: $scope.normalPunchedValues };
+            { x: keyWithFlatLabel, y: $scope.normalPunchedValues };
           values1.push(value1);
           values2.push(value2);
           values3.push(value3);
@@ -2344,19 +2427,20 @@
         keyboardControls: true, idProp: "{{option.campaign_id}}",
         template: '{{option.campaign_name}}',
         showCheckAll: true,
-        scrollableHeight: '300px', scrollable: true,        
+        scrollableHeight: '300px', scrollable: true,
       };
       $scope.settingsForDynamicGraphCity = {
         enableSearch: true,
         keyboardControls: true, idProp: "option",
         template: '{{option}}',
         smartButtonMaxItems: 1,
-        smartButtonTextConverter(skip, option) { 
-          return option; },
+        smartButtonTextConverter(skip, option) {
+          return option;
+        },
         // showCheckAll: true,
         scrollableHeight: '300px', scrollable: true,
         selectionLimit: 1,
-        
+
       };
       $scope.settingsForDynamicGraphSociety = {
         enableSearch: true,
@@ -2375,13 +2459,14 @@
       $scope.settingsForDynamicGraphVendor = {
         enableSearch: true,
         keyboardControls: true, idProp: "{{option}}",
-        template: '{{option}}', 
+        template: '{{option}}',
         showCheckAll: true,
         scrollableHeight: '300px', scrollable: true,
         smartButtonMaxItems: 1,
-        smartButtonTextConverter(skip, option) { 
-          return option; },
-          selectionLimit: 1,
+        smartButtonTextConverter(skip, option) {
+          return option;
+        },
+        selectionLimit: 1,
 
       };
       $scope.settingsForDynamicGraphBookingParameters = {
@@ -2737,13 +2822,13 @@
         var markers = [];
         var icon = 'http://maps.google.com/mapfiles/ms/icons/';
         var checkInv = true;
-        if ($scope.supplierStatus == 'completed'){
+        if ($scope.supplierStatus == 'completed') {
           icon = icon + 'green-dot.png'
         }
-        if ($scope.supplierStatus == 'upcoming'){
+        if ($scope.supplierStatus == 'upcoming') {
           icon = icon + 'orange-dot.png'
         }
-        if ($scope.supplierStatus == 'ongoing'){
+        if ($scope.supplierStatus == 'ongoing') {
           icon = icon + 'blue-dot.png'
         }
         angular.forEach(suppliers, function (supplier, $index) {
@@ -2768,7 +2853,7 @@
                     'key': key,
                     'total': supplier.supplier.inv_data[key].total.total
                   }
-                } 
+                }
                 else {
                   markers[$index].title[key] = {
                     'key': key,
@@ -2927,7 +3012,7 @@
       }
       //
       $scope.options = { width: 500, height: 300, 'bar': 'aaa' };
-      
+
 
       var formatD3StackedBarChartData = function (data) {
         var d3Data = [];
@@ -2977,8 +3062,19 @@
           .then(function onSuccess(response) {
             cfpLoadingBar.complete();
             $scope.bookingPhases = response.data.data;
-
-            // if(!$scope.bookingPhases.length){
+            $scope.supplierType = response.data.supplier_type_code;
+            //synergytop start
+            if ($scope.supplierType) {
+              if ($scope.supplierType.length == 1) {
+                $scope.flatCountHeader = constants.flatCountHeader[$scope.supplierType[0].supplier_type_code];
+                $scope.towerCountHeader = constants.towerCountHeader[$scope.supplierType[0].supplier_type_code];
+              }
+              else if ($scope.supplierType.length > 1) {
+                $scope.flatCountHeader = "Unit Count";
+              }
+            }
+            //synergytop end
+            //  if(!$scope.bookingPhases.length){
             // swal(constants.name, "Suppliers Booking is going on.Currently, No supplier is Booked", constants.warning)
             // }
           }).catch(function onError(response) {
@@ -3087,13 +3183,13 @@
       $scope.backToCampaign = function () {
         $scope.showCampaigns = true;
       }
-      
+
 
       // Check for internal comments
       var userInfo = JSON.parse($window.localStorage.userInfo);
       var userEmail = userInfo.email;
       $scope.canViewInternalComments = false;
-      if (userEmail.includes('machadalo')){
+      if (userEmail.includes('machadalo')) {
         $scope.canViewInternalComments = true;
       }
 
@@ -3303,7 +3399,7 @@
           $scope.sortedLocationData[keyName] = formatByLocation(sortable.reverse(), keyName, sortMenuMap[id].type);
         }
 
-      
+
         $scope.showLocationData = true;
       }
 
@@ -3371,9 +3467,9 @@
       }
 
       $scope.getFormDetails = function (campaignId, type) {
-        if(type === 'email'){
+        if (type === 'email') {
           $scope.submitLeadType = true;
-        }else{
+        } else {
           $scope.submitLeadType = false;
         }
         cfpLoadingBar.start();
@@ -3578,8 +3674,8 @@
 
 
         if ($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date') &&
-              !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
-          
+          !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
+
           $scope.dateRangeModel.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
           $scope.dateRangeModel.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
           // result = DashboardService.getCampaignDateWiseData($scope.dateRangeModel)
@@ -3614,7 +3710,7 @@
             if (Object.keys($scope.overallCampaignSummary).length > 4) {
               $scope.OverallSummaryStackedBarChart.chart['width'] = Object.keys($scope.overallCampaignSummary).length * 100;
             }
-            
+
             $scope.stackedBarAllCampaignWiseChart = formatAllCampaignWiseChart($scope.overallCampaignSummary);
             $scope.stackedBarLastWeekChart = formatLastWeekWiseChart($scope.lastWeekCampaignSummary);
             $scope.stackedBarLast2WeeksChart = formatLast2WeekWiseChart($scope.last2WeeksCampaignSummary);
@@ -3660,7 +3756,7 @@
             if (Object.keys($scope.overallCampaignSummary).length > 4) {
               $scope.OverallSummaryStackedBarChart.chart['width'] = Object.keys($scope.overallCampaignSummary).length * 100;
             }
-            
+
             $scope.stackedBarAllCampaignWiseChart = formatAllCampaignWiseChart($scope.overallCampaignSummary);
             $scope.stackedBarLastWeekChart = formatLastWeekWiseChart($scope.lastWeekCampaignSummary);
             $scope.stackedBarLast2WeeksChart = formatLast2WeekWiseChart($scope.last2WeeksCampaignSummary);
@@ -3876,7 +3972,7 @@
 
 
         DashboardService.getDistributionGraphsStatics(data)
-          .then(function onSuccess(response) {            
+          .then(function onSuccess(response) {
             $scope.lineChartLeadsDistributed = angular.copy(lineChartLeads);
             $scope.lineChartLeadsDistributed.chart.xAxis.axisLabel = "Frequency Distribution Graph(Leads)";
             $scope.lineChartLeadsDistributed.chart.yAxis.axisLabel = "Mode(Leads)";
@@ -3886,7 +3982,7 @@
 
             $scope.lineChartForLeadsDistributedGraphs = formatLineChartForLeadsDistributedGraph(response.data.data);
             $scope.lineChartForLeadsDistributedGraphs2 = formatLineChartForLeadsDistributedGraph2(response.data.data);
-            
+
 
             $scope.selectAllCampaignLeads = false;
           }).catch(function onError(response) {
@@ -4176,7 +4272,7 @@
         }
       }
 
-      
+
       $scope.yValues = [];
       var maxYValue = 0;
       var maxYValueSummary = 0;
@@ -4231,7 +4327,7 @@
                     setMaxYValue(data1[itemKey]);
                     var temp = {
                       x: data1[$scope.xValues.value] + "(" + $scope.FlatCountOVerallLowerORderGroup
-                      + ")",
+                        + ")",
                       y: data1[itemKey] || 0
                     }
                     values1[itemKey].push(temp);
@@ -4243,7 +4339,7 @@
 
           })
           angular.forEach($scope.yValues, function (itemKey) {
-            
+
             var temp_data = {
               key: $scope.dynamicGraphYValuesMap[itemKey],
               values: values1[itemKey]
@@ -4286,7 +4382,7 @@
                     setMaxYValue(data1[itemKey]);
                     var temp = {
                       x: data1[$scope.xValues.value] + " (" +
-                      $scope.FlatCountOVerallLowerORderGroup + ")",
+                        $scope.FlatCountOVerallLowerORderGroup + ")",
                       y: data1[itemKey] || 0
                     }
                     values1[itemKey].push(temp);
@@ -4307,17 +4403,17 @@
 
         }
 
-        $scope.stackedBarChartForDynamic.chart.forceY[1] = maxYValue+2;
-        
+        $scope.stackedBarChartForDynamic.chart.forceY[1] = maxYValue + 2;
+
         return finalData;
       }
-      var setMaxYValue = function(value){
-        if(value > maxYValue){
+      var setMaxYValue = function (value) {
+        if (value > maxYValue) {
           maxYValue = value;
         }
       }
-      var setMaxYValueSummary = function(value){
-        if(value > maxYValueSummary){
+      var setMaxYValueSummary = function (value) {
+        if (value > maxYValueSummary) {
           maxYValueSummary = value;
         }
       }
@@ -4355,7 +4451,7 @@
         specificXValue2 = undefined;
         orderSpecificCase = false;
         $scope.cumulativeOrder = false;
-        
+
         if ($scope.selectedDynamicCampaigns.length) {
           $scope.graphSelection.category = 'campaign';
         }
@@ -4762,7 +4858,7 @@
           $scope.selectedDynamicCampaigns.length &&
           $scope.graphSelection.category == 'vendor' &&
           $scope.selectedVendors.length
-        ) {          
+        ) {
           $scope.xValues.value = 'campaign_name';
           orderSpecificCase = true;
           $scope.cumulativeOrder = true;
@@ -4776,7 +4872,7 @@
                 "value_type": "campaign"
               },
             },
-            "data_point": { "category": "unordered", "level": ["supplier","campaign"] },
+            "data_point": { "category": "unordered", "level": ["supplier", "campaign"] },
             "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
             "statistical_information": {
@@ -4812,23 +4908,23 @@
             }
           }
 
-          if($scope.graphSelection.dateRange.startDate){
+          if ($scope.graphSelection.dateRange.startDate) {
             reqData.data_scope['2'] = {
               "category": "time",
               "level": "time",
               "match_type": 1,
               "values": {
-                  "range": [
-                      
-                  ]
+                "range": [
+
+                ]
               },
               "value_type": "time"
             }
-            
+
             reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
             reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
           }
-          
+
 
           angular.forEach($scope.selectedDynamicCampaigns, function (data) {
             reqData.data_scope['1'].values.exact.push(data.campaign_id);
@@ -4885,7 +4981,7 @@
                 "value_type": "campaign"
               },
             },
-            "data_point": { "category": "unordered", "level": ["supplier","campaign"] },
+            "data_point": { "category": "unordered", "level": ["supplier", "campaign"] },
             "raw_data": angular.copy(raw_data_global),
             "metrics": metrics_global,
             "statistical_information": {
@@ -4921,23 +5017,23 @@
             }
           }
 
-          if($scope.graphSelection.dateRange.startDate){
+          if ($scope.graphSelection.dateRange.startDate) {
             reqData.data_scope['2'] = {
               "category": "time",
               "level": "time",
               "match_type": 1,
               "values": {
-                  "range": [
-                      
-                  ]
+                "range": [
+
+                ]
               },
               "value_type": "time"
             }
-            
+
             reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
             reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
           }
-          
+
 
           angular.forEach($scope.selectedDynamicCampaigns, function (data) {
             reqData.data_scope['1'].values.exact.push(data.campaign_id);
@@ -5103,63 +5199,63 @@
         }
 
         if (reqData) {
-          if($scope.selectedDynamicGraphParams.length){
-            angular.forEach($scope.selectedDynamicGraphParams, function(item){
+          if ($scope.selectedDynamicGraphParams.length) {
+            angular.forEach($scope.selectedDynamicGraphParams, function (item) {
               var index = reqData.raw_data.indexOf(item.key);
               reqData.raw_data.splice(index, 1, item.value);
-            })            
+            })
           }
           $scope.showCumulativeSummaryGraphs = orderSpecificCase;
-          
+
           getCampaignCumulativeGraph();
-          
+
           DashboardService.getDistributionGraphsStatics(reqData)
             .then(function onSuccess(response) {
-              cfpLoadingBar.complete();              
+              cfpLoadingBar.complete();
 
-                $scope.initialDynamicGraphData = response.data.data;
-                if(response.data.data){
-                  delete reqData['metrics'];
-                  if(reqData.hasOwnProperty('higher_level_statistical_information')){
-                    delete reqData['higher_level_statistical_information'];
-                  }
-                  if(reqData.hasOwnProperty('statistical_information')){
-                    delete reqData['statistical_information'];
-                  }
-                  if(!reqData.data_point.level.hasOwnProperty('date')){
-                    reqData.data_point.level.splice(0,0,'date');
-                  }
-                  if(orderSpecificCase){
-                    reqData.data_point.level = ['date','campaign'];
-                  }
-                  $scope.cumulativeOrder = true;
-                  reqData['custom_functions'] = ["order_cumulative"];
-                  reqData['raw_data'] = ['total_orders_punched'];
-                  DashboardService.getDistributionGraphsStatics(reqData)
+              $scope.initialDynamicGraphData = response.data.data;
+              if (response.data.data) {
+                delete reqData['metrics'];
+                if (reqData.hasOwnProperty('higher_level_statistical_information')) {
+                  delete reqData['higher_level_statistical_information'];
+                }
+                if (reqData.hasOwnProperty('statistical_information')) {
+                  delete reqData['statistical_information'];
+                }
+                if (!reqData.data_point.level.hasOwnProperty('date')) {
+                  reqData.data_point.level.splice(0, 0, 'date');
+                }
+                if (orderSpecificCase) {
+                  reqData.data_point.level = ['date', 'campaign'];
+                }
+                $scope.cumulativeOrder = true;
+                reqData['custom_functions'] = ["order_cumulative"];
+                reqData['raw_data'] = ['total_orders_punched'];
+                DashboardService.getDistributionGraphsStatics(reqData)
                   .then(function onSuccess(response) {
                     console.log(response);
                     $scope.initialCumulativeOrderData = response.data.data;
                     $scope.lineChartGraphCumulativeOrder = [];
                     $scope.cumulativeOrderCampaignsNamesById = {};
-                    
-                    angular.forEach(response.data.data['lower_group_data'], function(data){
-                      
+
+                    angular.forEach(response.data.data['lower_group_data'], function (data) {
+
                       var key = data[$scope.xValues.value];
-                      if(specificXValue){
+                      if (specificXValue) {
                         key = key + ", " + data[specificXValue]
                       }
-                      if(specificXValue2){
+                      if (specificXValue2) {
                         key = key + ", " + data[specificXValue2]
                       }
-                      
-                      if(!$scope.cumulativeOrderCampaignsNamesById.hasOwnProperty(key)){
+
+                      if (!$scope.cumulativeOrderCampaignsNamesById.hasOwnProperty(key)) {
                         $scope.cumulativeOrderCampaignsNamesById[key] = {
                           dates: [],
                           values: [],
                           sumValues: []
                         }
                       }
-                      
+
                       $scope.cumulativeOrderCampaignsNamesById[key]['dates'].push(data.date);
                       $scope.cumulativeOrderCampaignsNamesById[key]['values'].push(data.total_orders_punched_cum_pct);
                       $scope.cumulativeOrderCampaignsNamesById[key]['sumValues'].push(data.total_orders_punched);
@@ -5170,11 +5266,11 @@
                     $scope.selectedOrderKey = $scope.cumulativeOrderCampaignKeys[0];
                     $scope.lineChartForCumulativeOrder = [];
                     $scope.lineChartForCumulativeOrder = formatLineChartForCumulativeOrderGraph($scope.cumulativeOrderCampaignsNamesById);
-                    
+
                   }).catch(function onError(response) {
                     console.log(response);
                   })
-                }
+              }
               $scope.stackedBarChartForDynamic = angular.copy(stackedBarChart);
 
               if (!orderSpecificCase) {
@@ -5190,7 +5286,7 @@
                 $scope.stackedBarChartDynamicData = formatDynamicData($scope.initialDynamicGraphData, orderSpecificCase);
               } else {
                 setKeysForOrderSpecificData($scope.initialDynamicGraphData.higher_group_data);
-                
+
                 $scope.campaignFilteredSummaryData = $scope.initialDynamicGraphData.higher_group_data;
                 angular.forEach($scope.initialDynamicGraphData.higher_group_data, function (data) {
                   $scope.initalDynamicTableData = data;
@@ -5200,56 +5296,56 @@
                   $scope.stackedBarChartForDynamic.chart['width'] = $scope.initialDynamicGraphData.lower_group_data.length * 300;
                 }
                 $scope.stackedBarChartDynamicData = formatDynamicData($scope.initialDynamicGraphData, orderSpecificCase);
-                
+
               }
-              
+
 
               setLabelsOnBars();
-              
+
             }).catch(function onError(response) {
               console.log(response);
               cfpLoadingBar.complete();
             })
-            
+
         }
       }
-      var setKeysForOrderSpecificData = function(data){
-        angular.forEach(data, function(item){
-          if(item.hasOwnProperty('mean_flat*cost_flat/lead')){
+      var setKeysForOrderSpecificData = function (data) {
+        angular.forEach(data, function (item) {
+          if (item.hasOwnProperty('mean_flat*cost_flat/lead')) {
             item['flat*cost_flat/lead'] = item['mean_flat*cost_flat/lead'];
           }
-          if(item.hasOwnProperty('mean_flat*cost_flat/hot_lead')){
+          if (item.hasOwnProperty('mean_flat*cost_flat/hot_lead')) {
             item['flat*cost_flat/hot_lead'] = item['mean_flat*cost_flat/hot_lead'];
           }
-          if(item.hasOwnProperty('mean_flat*cost_flat/total_booking_confirmed')){
+          if (item.hasOwnProperty('mean_flat*cost_flat/total_booking_confirmed')) {
             item['flat*cost_flat/total_booking_confirmed'] = item['mean_flat*cost_flat/total_booking_confirmed'];
           }
-          if(item.hasOwnProperty('mean_flat*cost_flat/lead')){
+          if (item.hasOwnProperty('mean_flat*cost_flat/lead')) {
             item['flat*cost_flat/total_orders_punched'] = item['mean_flat*cost_flat/total_orders_punched'];
           }
 
-          if(item.hasOwnProperty('mean_lead/flat*100')){
+          if (item.hasOwnProperty('mean_lead/flat*100')) {
             item['lead/flat*100'] = item['mean_lead/flat*100'];
           }
-          if(item.hasOwnProperty('mean_hot_lead/flat*100')){
+          if (item.hasOwnProperty('mean_hot_lead/flat*100')) {
             item['hot_lead/flat*100'] = item['mean_hot_lead/flat*100'];
           }
-          if(item.hasOwnProperty('mean_total_booking_confirmed/flat*100')){
+          if (item.hasOwnProperty('mean_total_booking_confirmed/flat*100')) {
             item['total_booking_confirmed/flat*100'] = item['mean_total_booking_confirmed/flat*100'];
           }
-          if(item.hasOwnProperty('mean_total_orders_punched/flat*100')){
+          if (item.hasOwnProperty('mean_total_orders_punched/flat*100')) {
             item['total_orders_punched/flat*100'] = item['mean_total_orders_punched/flat*100'];
           }
-          
+
         })
       }
-      var setCampaignOverallSummary = function(data){
+      var setCampaignOverallSummary = function (data) {
         $scope.campaignOverallSummary = [];
         var campaign_data = {};
         // campaign_data[campaign.campaign]['Name'] = campaign.campaign_name;
-        
-        angular.forEach(data , function(campaign){
-          if (!campaign_data.hasOwnProperty(campaign.campaign)){
+
+        angular.forEach(data, function (campaign) {
+          if (!campaign_data.hasOwnProperty(campaign.campaign)) {
             campaign_data[campaign.campaign] = {}
             campaign_data[campaign.campaign]['flatCount'] = 0;
             campaign_data[campaign.campaign]['totalLeads'] = 0;
@@ -5279,46 +5375,46 @@
           campaign_data[campaign.campaign]['count'] += campaign_data[campaign.campaign]['count'] + 1;
 
         })
-        angular.forEach(campaign_data, function(data){
-          data['costPerLeads'] = (data['costPerLeads']/data['count']).toFixed(2);
-          data['costPerHotLeads'] = (data['costPerHotLeads']/data['count']).toFixed(2);
-          data['leadsPerc'] = (data['leadsPerc']/data['count']).toFixed(2);
-          data['hotLeadsPerc'] = (data['hotLeadsPerc']/data['count']).toFixed(2);
-          data['costPerBookingConfirmed'] = (data['costPerBookingConfirmed']/data['count']).toFixed(2);
-          data['costPerOrdersPunched'] = (data['costPerOrdersPunched']/data['count']).toFixed(2);
-          data['bookingConfirmedPerc'] = (data['bookingConfirmedPerc']/data['count']).toFixed(2);
-          data['ordersPunchedPerc'] = (data['ordersPunchedPerc']/data['count']).toFixed(2);
-          data['ratio'] = (data['hotLeads']/data['totalLeads']*100).toFixed(2);
+        angular.forEach(campaign_data, function (data) {
+          data['costPerLeads'] = (data['costPerLeads'] / data['count']).toFixed(2);
+          data['costPerHotLeads'] = (data['costPerHotLeads'] / data['count']).toFixed(2);
+          data['leadsPerc'] = (data['leadsPerc'] / data['count']).toFixed(2);
+          data['hotLeadsPerc'] = (data['hotLeadsPerc'] / data['count']).toFixed(2);
+          data['costPerBookingConfirmed'] = (data['costPerBookingConfirmed'] / data['count']).toFixed(2);
+          data['costPerOrdersPunched'] = (data['costPerOrdersPunched'] / data['count']).toFixed(2);
+          data['bookingConfirmedPerc'] = (data['bookingConfirmedPerc'] / data['count']).toFixed(2);
+          data['ordersPunchedPerc'] = (data['ordersPunchedPerc'] / data['count']).toFixed(2);
+          data['ratio'] = (data['hotLeads'] / data['totalLeads'] * 100).toFixed(2);
         })
-        
+
         $scope.campaignOverallSummary = Object.values(campaign_data);
-      }      
-      
-      $scope.changeCumulativeOrderKey = function(key){
+      }
+
+      $scope.changeCumulativeOrderKey = function (key) {
         $scope.selectedOrderKey = key;
         $scope.lineChartForCumulativeOrder = formatLineChartForCumulativeOrderGraph($scope.cumulativeOrderCampaignsNamesById);
       }
-      
-      var formatLineChartForCumulativeOrderGraph = function(data){        
-        
+
+      var formatLineChartForCumulativeOrderGraph = function (data) {
+
         $scope.x_fre_leads = [];
         var temp_data = [];
         var final_data = [];
-        var values1 = [];        
+        var values1 = [];
         $scope.lineChartGraphCumulativeOrder = [];
         $scope.cumulativeTableData = [];
-        if($scope.selectedOrderKey == 'ALL'){
+        if ($scope.selectedOrderKey == 'ALL') {
           var allKeys = angular.copy($scope.cumulativeOrderCampaignKeys);
-          allKeys.splice(allKeys.indexOf('ALL'),1);
-          angular.forEach(allKeys, function(key){
+          allKeys.splice(allKeys.indexOf('ALL'), 1);
+          angular.forEach(allKeys, function (key) {
             var temp_data = [];
-            var values1 = [];   
+            var values1 = [];
             var chart = angular.copy(lineChartCumulativeOrder);
             chart.chart.xAxis.axisLabel = "Orders Punched Days" + "(" +
-                      key + ")";
+              key + ")";
             chart.chart.yAxis.axisLabel = "Cumulative Orders Punched (%)" + "(100% =" +
-             data[key].sumValues.reduce((a,b)=>a+b) + " Orders Punched)";
-            
+              data[key].sumValues.reduce((a, b) => a + b) + " Orders Punched)";
+
             createNumberSet(data[key].dates, data[key].sumValues,
               data[key].values, key, $scope.cumulativeTableData);
             $scope.lineChartGraphCumulativeOrder.push(chart);
@@ -5327,54 +5423,54 @@
             //   x: 0, y: 0 
             // })
             // index++;
-            
-            angular.forEach(data[key].values, function(item){
+
+            angular.forEach(data[key].values, function (item) {
               values1.push({
                 x: data[key].dates[index], y: item
               })
               index++;
             })
             // $scope.x_fre_leads = angular.copy(data[key].dates);
-            
+
             temp_data.push({
               key: 'Total Orders Punched (%)',
               color: constants.colorKey1,
               values: values1
-            });                    
-            final_data.push(temp_data);    
+            });
+            final_data.push(temp_data);
           })
-        }else{
-        var chart = angular.copy(lineChartCumulativeOrder);
-        chart.chart.yAxis.axisLabel = "Cumulative Orders Punched (%)" + "(100% =" +
-        data[$scope.selectedOrderKey].sumValues.reduce((a,b)=>a+b) + " Orders Punched)";
-        $scope.lineChartGraphCumulativeOrder.push(chart);
-        var index = 0;
-        // values1.push({
-        //   x: 0, y: 0 
-        // })
-        // index++;
-        
-        createNumberSet(data[$scope.selectedOrderKey].dates, data[$scope.selectedOrderKey].sumValues,
-          data[$scope.selectedOrderKey].values, $scope.selectedOrderKey, $scope.cumulativeTableData);
-        
-        angular.forEach(data[$scope.selectedOrderKey].values, function(item){
-          
-          values1.push({
-            x: data[$scope.selectedOrderKey].dates[index], y: item 
+        } else {
+          var chart = angular.copy(lineChartCumulativeOrder);
+          chart.chart.yAxis.axisLabel = "Cumulative Orders Punched (%)" + "(100% =" +
+            data[$scope.selectedOrderKey].sumValues.reduce((a, b) => a + b) + " Orders Punched)";
+          $scope.lineChartGraphCumulativeOrder.push(chart);
+          var index = 0;
+          // values1.push({
+          //   x: 0, y: 0 
+          // })
+          // index++;
+
+          createNumberSet(data[$scope.selectedOrderKey].dates, data[$scope.selectedOrderKey].sumValues,
+            data[$scope.selectedOrderKey].values, $scope.selectedOrderKey, $scope.cumulativeTableData);
+
+          angular.forEach(data[$scope.selectedOrderKey].values, function (item) {
+
+            values1.push({
+              x: data[$scope.selectedOrderKey].dates[index], y: item
+            })
+            index++;
           })
-          index++;
-        })
-        
-        $scope.x_fre_leads = angular.copy(data[$scope.selectedOrderKey].dates);
-        
-        temp_data.push({
-          key: 'Total Orders Punched (%)',
-          color: constants.colorKey1,
-          values: values1
-        });                    
-        final_data.push(temp_data);
+
+          $scope.x_fre_leads = angular.copy(data[$scope.selectedOrderKey].dates);
+
+          temp_data.push({
+            key: 'Total Orders Punched (%)',
+            color: constants.colorKey1,
+            values: values1
+          });
+          final_data.push(temp_data);
         }
-                
+
         return final_data;
       }
       $scope.clearDatesFromDynamicGraph = function () {
@@ -5467,14 +5563,14 @@
 
       $scope.sortDynamicData = function (order) {
         setLabelsOnBars();
-        if(!orderSpecificCase){
+        if (!orderSpecificCase) {
           $scope.dynamicOrderData = angular.copy($scope.initialDynamicGraphData.lower_group_data);
-        }else{
+        } else {
           setKeysForOrderSpecificData($scope.initialDynamicGraphData.higher_group_data);
-          
+
           $scope.dynamicOrderData = angular.copy($scope.initialDynamicGraphData.higher_group_data);
         }
-        
+
         $scope.dynamicOrderData.sort(function (a, b) {
           return a[$scope.dynamicGraphSelectedOrder.value] - b[$scope.dynamicGraphSelectedOrder.value];
         });
@@ -5492,7 +5588,7 @@
         tooltipDynamicGraphData = [];
         angular.forEach(data, function (item) {
           tooltipDynamicGraphData.push(item);
-          
+
           if (selectedSpecificItems.indexOf(item[$scope.xValues.value]) > -1 || !selectedSpecificItems.length) {
             if (item[$scope.xValues.value]) {
               if (specificXValue) {
@@ -5669,34 +5765,34 @@
         $scope.selectedCities_temp = [];
       }
 
-      $scope.downloadSheet = function(){
+      $scope.downloadSheet = function () {
         $scope.emailCampaignLeadsModel.start_date = commonDataShare.formatDate($scope.emailCampaignLeadsModel.start_date);
         $scope.emailCampaignLeadsModel.end_date = commonDataShare.formatDate($scope.emailCampaignLeadsModel.end_date);
         DashboardService.downloadSheet($scope.emailCampaignLeadsModel.leads_form_id)
-        .then(function onSuccess(response){
-          if(response.data.data.one_time_hash && $scope.emailCampaignLeadsModel.start_date &&
-                  $scope.emailCampaignLeadsModel.end_date ){
-            $window.open(Config.APIBaseUrl + 'v0/ui/leads/download_lead_data_excel/' + response.data.data.one_time_hash + 
-            "/?start_date=" + $scope.emailCampaignLeadsModel.start_date + 
-            "&end_date=" + $scope.emailCampaignLeadsModel.end_date , '_blank');            
-          }else if(response.data.data.one_time_hash){
-            $window.open(Config.APIBaseUrl + 'v0/ui/leads/download_lead_data_excel/' + response.data.data.one_time_hash + "/", '_blank');            
-          }            
-        }).catch(function onError(response){
-          console.log(response);            
-        })
+          .then(function onSuccess(response) {
+            if (response.data.data.one_time_hash && $scope.emailCampaignLeadsModel.start_date &&
+              $scope.emailCampaignLeadsModel.end_date) {
+              $window.open(Config.APIBaseUrl + 'v0/ui/leads/download_lead_data_excel/' + response.data.data.one_time_hash +
+                "/?start_date=" + $scope.emailCampaignLeadsModel.start_date +
+                "&end_date=" + $scope.emailCampaignLeadsModel.end_date, '_blank');
+            } else if (response.data.data.one_time_hash) {
+              $window.open(Config.APIBaseUrl + 'v0/ui/leads/download_lead_data_excel/' + response.data.data.one_time_hash + "/", '_blank');
+            }
+          }).catch(function onError(response) {
+            console.log(response);
+          })
       }
-      $scope.getOverallSummaryData = function(item){
-        
+      $scope.getOverallSummaryData = function (item) {
+
         var total = 0
-        angular.forEach($scope.campaignOverallSummary, function(data){
-          total+= parseFloat(data[item]);
-        })      
-        if(['flatCount','totalLeads','hotLeads'].indexOf(item) > -1){
+        angular.forEach($scope.campaignOverallSummary, function (data) {
+          total += parseFloat(data[item]);
+        })
+        if (['flatCount', 'totalLeads', 'hotLeads'].indexOf(item) > -1) {
           return total;
         }
-        
-        return (total/$scope.campaignOverallSummary.length).toFixed(2);  
+
+        return (total / $scope.campaignOverallSummary.length).toFixed(2);
       }
 
       $scope.getCampaign = function (proposalId) {
@@ -5706,7 +5802,7 @@
       var super_admin = JSON.parse(localStorage.getItem("machadalo-credentials"));
       $scope.admin = super_admin["user_id"]
 
-      $scope.deleteLeads = function(supplier_id){
+      $scope.deleteLeads = function (supplier_id) {
         var data = {
           "supplier_ids": [],
           "campaign_id": $scope.campaignId
@@ -5714,52 +5810,52 @@
         data.supplier_ids.push(supplier_id);
         DashboardService.deleteLeads(data)
       }
-      
-      $scope.societyParamsCheck = function(item,status){
-        if(item === 'society'){
-          if(status){
+
+      $scope.societyParamsCheck = function (item, status) {
+        if (item === 'society') {
+          if (status) {
             $scope.selectedbookingParameters = [];
             $scope.checkboxChecked = false;
             $scope.checkboxCheckedSociety = true;
-          }else{
+          } else {
             $scope.selectedTypeOfSocieties = [];
             $scope.selectedSizeOfFlats = [];
             $scope.checkboxChecked = true;
             $scope.checkboxCheckedSociety = false;
           }
         }
-        if(item === 'booking'){
-          if(status){
+        if (item === 'booking') {
+          if (status) {
             $scope.selectedTypeOfSocieties = [];
             $scope.selectedSizeOfFlats = [];
             $scope.checkboxChecked = true;
             $scope.checkboxCheckedSociety = false;
-          }else{
+          } else {
             $scope.selectedbookingParameters = [];
             $scope.checkboxChecked = false;
             $scope.checkboxCheckedSociety = true;
-            
+
           }
-        }        
-        
+        }
+
       }
 
-     
-      var createNumberSet = function(dates, values, pValues, name, result){
+
+      var createNumberSet = function (dates, values, pValues, name, result) {
         var maxDateValue = Math.max(...dates);
-        var n = Math.round(maxDateValue/10);
-        if(n<=1){
-          n=2;
+        var n = Math.round(maxDateValue / 10);
+        if (n <= 1) {
+          n = 2;
         }
         var sum = 0;
         var perct;
         var l = [];
-        for(var i=0; i<maxDateValue; i=i+n){
+        for (var i = 0; i < maxDateValue; i = i + n) {
           var data = {}
-          data['key'] = i + "-" + (i + (n - 1));          
+          data['key'] = i + "-" + (i + (n - 1));
           data['perct'] = perct;
-          angular.forEach(dates, function(date, index){                       
-            if(date >= i && date <= (i + n-1)){              
+          angular.forEach(dates, function (date, index) {
+            if (date >= i && date <= (i + n - 1)) {
               sum += values[index];
               data['perct'] = pValues[index];
               perct = pValues[index];
@@ -5767,11 +5863,11 @@
             }
           })
           data['sum'] = sum;
-          l.push(data);                    
+          l.push(data);
         }
         result.push(l);
       }
-      var getCampaignCumulativeGraph = function(){
+      var getCampaignCumulativeGraph = function () {
         var reqData = {
 
           "data_scope": {
@@ -5782,7 +5878,7 @@
               "value_type": "campaign"
             },
           },
-          "data_point": { "category": "unordered", "level": ["supplier","campaign"] },
+          "data_point": { "category": "unordered", "level": ["supplier", "campaign"] },
           "raw_data": angular.copy(raw_data_global),
           "metrics": metrics_global,
           "statistical_information": {
@@ -5812,43 +5908,43 @@
               "m18",
               "m19",
               "m20",
-            "m8",
-            "m10"
+              "m8",
+              "m10"
             ]
           }
         }
-        if($scope.graphSelection.dateRange.startDate){
+        if ($scope.graphSelection.dateRange.startDate) {
           reqData.data_scope['2'] = {
             "category": "time",
             "level": "time",
             "match_type": 1,
             "values": {
-                "range": [
-                    
-                ]
+              "range": [
+
+              ]
             },
             "value_type": "time"
           }
-          
+
           reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.startDate));
           reqData.data_scope['2'].values.range.push(commonDataShare.formatDate($scope.graphSelection.dateRange.endDate));
         }
         angular.forEach($scope.selectedDynamicCampaigns, function (data) {
           reqData.data_scope['1'].values.exact.push(data.campaign_id);
         });
-        if($scope.selectedDynamicGraphParams.length){
-          angular.forEach($scope.selectedDynamicGraphParams, function(item){
+        if ($scope.selectedDynamicGraphParams.length) {
+          angular.forEach($scope.selectedDynamicGraphParams, function (item) {
             var index = reqData.raw_data.indexOf(item.key);
             reqData.raw_data.splice(index, 1, item.value);
-          })            
+          })
         }
         DashboardService.getDistributionGraphsStatics(reqData)
-            .then(function onSuccess(response) {
-              setKeysForOrderSpecificData(response.data.data.higher_group_data);
-              setStackedBarChartSummary(response.data.data);
-            }).catch(function onError(response){
-              console.log(response);              
-            })
+          .then(function onSuccess(response) {
+            setKeysForOrderSpecificData(response.data.data.higher_group_data);
+            setStackedBarChartSummary(response.data.data);
+          }).catch(function onError(response) {
+            console.log(response);
+          })
         var data = angular.copy(reqData);
 
         //For line chart
@@ -5857,103 +5953,103 @@
         delete data['metrics'];
         delete data['higher_level_statistical_information'];
         delete data['statistical_information'];
-        data.data_point.level = ['date','campaign'];
+        data.data_point.level = ['date', 'campaign'];
         DashboardService.getDistributionGraphsStatics(data)
-        .then(function onSuccess(response) {
-          setCampaignLineChart(response.data.data);
-        }).catch(function onError(response){
-          console.log(response);          
-        })
+          .then(function onSuccess(response) {
+            setCampaignLineChart(response.data.data);
+          }).catch(function onError(response) {
+            console.log(response);
+          })
       }
 
-      var setStackedBarChartSummary = function(data){
+      var setStackedBarChartSummary = function (data) {
         $scope.stackedBarChartForDynamicSummary = angular.copy(stackedBarChartSummary);
 
-              
-                $scope.campaignFilteredSummaryDataSummary = data.higher_group_data
-                angular.forEach(data.higher_group_data, function (data) {
-                  $scope.initalDynamicTableDataSummary = data;
-                })
-                setCampaignOverallSummary(data.higher_group_data);
-                if (data.higher_group_data.length > 4) {
-                  $scope.stackedBarChartForDynamicSummary.chart['width'] = data.higher_group_data.length * 300;
-                }
-                $scope.stackedBarChartDynamicDataSummary = formatDynamicDataSummary(data, orderSpecificCase);                  
 
-              setLabelsOnBars();
+        $scope.campaignFilteredSummaryDataSummary = data.higher_group_data
+        angular.forEach(data.higher_group_data, function (data) {
+          $scope.initalDynamicTableDataSummary = data;
+        })
+        setCampaignOverallSummary(data.higher_group_data);
+        if (data.higher_group_data.length > 4) {
+          $scope.stackedBarChartForDynamicSummary.chart['width'] = data.higher_group_data.length * 300;
+        }
+        $scope.stackedBarChartDynamicDataSummary = formatDynamicDataSummary(data, orderSpecificCase);
+
+        setLabelsOnBars();
       }
 
-      var setCampaignLineChart = function(data){
+      var setCampaignLineChart = function (data) {
         $scope.initialCampaignChartData = data;
         $scope.lineChartOrder = [];
-        $scope.lineChartOrderCampaignsNamesById = {};        
-        
-        angular.forEach(data['lower_group_data'], function(summaryData){
-                    
+        $scope.lineChartOrderCampaignsNamesById = {};
+
+        angular.forEach(data['lower_group_data'], function (summaryData) {
+
           var key = summaryData['campaign_name'];
 
-          if(!$scope.lineChartOrderCampaignsNamesById.hasOwnProperty(key)){
+          if (!$scope.lineChartOrderCampaignsNamesById.hasOwnProperty(key)) {
             $scope.lineChartOrderCampaignsNamesById[key] = {
               dates: [],
               values: [],
               sumValues: []
             }
-          }          
+          }
           $scope.lineChartOrderCampaignsNamesById[key]['dates'].push(summaryData.date);
           $scope.lineChartOrderCampaignsNamesById[key]['values'].push(summaryData.total_orders_punched_cum_pct);
           $scope.lineChartOrderCampaignsNamesById[key]['sumValues'].push(summaryData.total_orders_punched);
         })
-        
+
         $scope.lineChartOrderCampaignKeys = Object.keys($scope.lineChartOrderCampaignsNamesById);
         $scope.selectedLineChartOrderKey = $scope.lineChartOrderCampaignKeys[0];
         $scope.cumulativeLineChartOrder = [];
-        $scope.cumulativeLineChartOrderSummary = setFormatLineChartForCumulativeOrderGraph($scope.lineChartOrderCampaignsNamesById);        
+        $scope.cumulativeLineChartOrderSummary = setFormatLineChartForCumulativeOrderGraph($scope.lineChartOrderCampaignsNamesById);
       }
 
-      var setFormatLineChartForCumulativeOrderGraph = function(data){        
-                
+      var setFormatLineChartForCumulativeOrderGraph = function (data) {
+
         var final_data = [];
-        
-        $scope.lineChartGraphCumulativeOrderSummary = [];        
+
+        $scope.lineChartGraphCumulativeOrderSummary = [];
         $scope.cumulativeTableDataSummary = [];
-        
-        angular.forEach(data, function(data1, key){
-          var values1 = [];        
+
+        angular.forEach(data, function (data1, key) {
+          var values1 = [];
           var temp_data = [];
-          
+
           var chart = angular.copy(lineChartCumulativeOrder);
           chart.chart.yAxis.axisLabel = "Cumulative Orders Punched (%)" + "(100% =" +
-          data1.sumValues.reduce((a,b)=>a+b) + " Orders Punched)";
-          chart.chart.xAxis.axisLabel = "Orders Punched Day (" +  
+            data1.sumValues.reduce((a, b) => a + b) + " Orders Punched)";
+          chart.chart.xAxis.axisLabel = "Orders Punched Day (" +
             key
-          +")";
+            + ")";
           $scope.lineChartGraphCumulativeOrderSummary.push(chart);
-          var index = 0;          
-          
+          var index = 0;
+
           createNumberSet(data1.dates, data1.sumValues,
             data1.values, key, $scope.cumulativeTableDataSummary);
-          
-          angular.forEach(data1.values, function(item){
-            
+
+          angular.forEach(data1.values, function (item) {
+
             values1.push({
-              x: data1.dates[index], y: item 
+              x: data1.dates[index], y: item
             })
             index++;
           })
-          
+
           // $scope.x_fre_leads = angular.copy(data[$scope.selectedLineChartOrderKey].dates);        
-          
+
           temp_data.push({
             key: 'Total Orders Punched (%)',
             color: constants.colorKey1,
             values: values1
-          });                    
+          });
           final_data.push(temp_data);
         })
-        
+
         // console.log($scope.x_fre_leads);        
-        
-                
+
+
         return final_data;
       }
 
@@ -5963,53 +6059,53 @@
         var labels = [];
         var finalData = [];
         tooltipDynamicGraphDataSummary = [];
-        
-          angular.forEach(data.higher_group_data, function (data1, key) {
 
-            tooltipDynamicGraphDataSummary.push(data1);
-            $scope.FlatCountOVerallLowerORderGroup = data1.flat;
+        angular.forEach(data.higher_group_data, function (data1, key) {
 
-            if (selectedSpecificItems.indexOf(data1['campaign_name']) > -1 || !selectedSpecificItems.length) {
-              angular.forEach($scope.yValues, function (itemKey, index, item) {
-                if (!values1.hasOwnProperty(itemKey)) {
-                  values1[itemKey] = [];
-                }                
-                  
-                    var temp_label = data1['campaign_name'] +                      
-                      " (" + $scope.FlatCountOVerallLowerORderGroup + ")";                                          
-                    setMaxYValueSummary(data1[itemKey]);
-                    var temp = {
-                      x: temp_label,
-                      y: data1[itemKey] || 0
-                    }
-                    values1[itemKey].push(temp);
-                  
-                
-              })
-            }
+          tooltipDynamicGraphDataSummary.push(data1);
+          $scope.FlatCountOVerallLowerORderGroup = data1.flat;
+
+          if (selectedSpecificItems.indexOf(data1['campaign_name']) > -1 || !selectedSpecificItems.length) {
+            angular.forEach($scope.yValues, function (itemKey, index, item) {
+              if (!values1.hasOwnProperty(itemKey)) {
+                values1[itemKey] = [];
+              }
+
+              var temp_label = data1['campaign_name'] +
+                " (" + $scope.FlatCountOVerallLowerORderGroup + ")";
+              setMaxYValueSummary(data1[itemKey]);
+              var temp = {
+                x: temp_label,
+                y: data1[itemKey] || 0
+              }
+              values1[itemKey].push(temp);
 
 
-          })
-          angular.forEach($scope.yValues, function (itemKey) {
-            var temp_data = {
-              key: $scope.dynamicGraphYValuesMap[itemKey],
-              values: values1[itemKey]
-            }
-            finalData.push(temp_data);
-          })
-                
-        
-        $scope.stackedBarChartForDynamicSummary.chart.forceY[1] = maxYValueSummary+2;
-        
+            })
+          }
+
+
+        })
+        angular.forEach($scope.yValues, function (itemKey) {
+          var temp_data = {
+            key: $scope.dynamicGraphYValuesMap[itemKey],
+            values: values1[itemKey]
+          }
+          finalData.push(temp_data);
+        })
+
+
+        $scope.stackedBarChartForDynamicSummary.chart.forceY[1] = maxYValueSummary + 2;
+
         return finalData;
       }
-      $scope.roundOfPrecisionTwo = function(value){
-        if(value)
+      $scope.roundOfPrecisionTwo = function (value) {
+        if (value)
           return parseFloat(value.toFixed(2));
-        else  
+        else
           return 'NA';
-      } 
-      
+      }
+
       // END
 
     })
