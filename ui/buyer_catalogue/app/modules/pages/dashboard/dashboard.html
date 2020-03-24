@@ -1633,7 +1633,7 @@
                                       <td>{{Data.last_three_weeks.total_leads || 'NA'}}</td>
                                       </tr>
                                       <tr>
-                                      <td><small style="font-weight:bold">Total Leads <br> %</small></td>
+                                      <td><small style="font-weight:bold">Total Leads %</small></td>
                                       <td ng-if="Data.overall_data.flat_count">{{(Data.overall_data.total_leads/Data.overall_data.flat_count) *100 | limitTo:5 }} %</td>
                                       <td ng-if="!Data.overall_data.flat_count">NA</td>
 
@@ -1655,7 +1655,7 @@
                                       <td>{{Data.last_three_weeks.total_hot_leads || 'NA'}}</td>
                                       </tr>
                                       <tr>
-                                      <td><small style="font-weight:bold">Hot Leads <br>% </small></td>
+                                      <td><small style="font-weight:bold">Hot Leads % </small></td>
                                       <td ng-if="Data.overall_data.flat_count">{{(Data.overall_data.total_hot_leads/Data.overall_data.flat_count) *100 | limitTo:5}} %</td>
                                       <td ng-if="!Data.overall_data.flat_count">NA</td>
 
@@ -1671,14 +1671,14 @@
                                       </tr>
 
                                       <tr>
-                                        <td><small style="font-weight:bold">Total Booking Confirmed</small></td>
+                                        <td><small style="font-weight:bold">{{Data.overall_data.key_hot_level_3 || 'Total Bookings Confirmed'}}</small></td>
                                         <td>{{Data.overall_data.is_hot_level_3 || 'NA'}}</td>
                                         <td>{{Data.last_week.is_hot_level_3 || 'NA'}}</td>
                                         <td>{{Data.last_two_weeks.is_hot_level_3 || 'NA'}}</td>
                                         <td>{{Data.last_three_weeks.is_hot_level_3 || 'NA'}}</td>
                                       </tr>
                                       <tr>
-                                        <td><small style="font-weight:bold">Total Orders Punched</small></td>
+                                        <td><small style="font-weight:bold">{{Data.overall_data.key_hot_level_4 || 'Total Orders Punched'}}</small></td>
                                         <td>{{Data.overall_data.is_hot_level_4 || 'NA'}}</td>
                                         <td>{{Data.last_week.is_hot_level_4 || 'NA'}}</td>
                                         <td>{{Data.last_two_weeks.is_hot_level_4 || 'NA'}}</td>
@@ -1873,7 +1873,7 @@
                                       <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat">NA</td>
                                       </tr>
                                       <tr>
-                                          <td><small style="font-weight:bold">Median of Bookings Confirmed</small></td>
+                                          <td><small style="font-weight:bold">Median of {{Data.overall_data.key_hot_level_3 || 'Bookings Confirmed'}}</small></td>
                                           <td ng-if="Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5 }} %</td>
                                           <td ng-if="!Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
     
@@ -1896,7 +1896,7 @@
                                           <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
                                           </tr>
                                       <tr>
-                                        <td><small style="font-weight:bold">Mode of Bookings Confirmed</small></td>
+                                        <td><small style="font-weight:bold">Mode of {{Data.overall_data.key_hot_level_3 || 'Bookings Confirmed'}}</small></td>
                                         <td ng-if="Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat">{{Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat | limitTo:5 }} %</td>
                                         <td ng-if="!Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat">NA</td>
 
@@ -1922,7 +1922,7 @@
                                       <!-- hotness level 4 -->
                                       <tr>
                                           <td>
-                                              <small style="font-weight:bold">Mean Of Orders Punched</small>                                          
+                                              <small style="font-weight:bold">Mean Of {{Data.overall_data.key_hot_level_4 || 'Orders Punched'}}</small>                                          
                                           </td>
                                           <td>
                                             {{Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat | limitTo:5 }} %
@@ -1946,7 +1946,7 @@
                                         <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat">NA</td>
                                         </tr>
                                         <tr>
-                                            <td><small style="font-weight:bold">Median of Orders Punched</small></td>
+                                            <td><small style="font-weight:bold">Median of {{Data.overall_data.key_hot_level_4 || 'Orders Punched'}}</small></td>
                                             <td ng-if="Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat">{{Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat | limitTo:5 }} %</td>
                                             <td ng-if="!Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat">NA</td>
       
@@ -1969,7 +1969,7 @@
                                             <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat">NA</td>
                                             </tr>
                                         <tr>
-                                          <td><small style="font-weight:bold">Mode of Orders Punched</small></td>
+                                          <td><small style="font-weight:bold">Mode of {{Data.overall_data.key_hot_level_4 || 'Orders Punched'}}</small></td>
                                           <td ng-if="Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat">{{Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat | limitTo:5 }} %</td>
                                           <td ng-if="!Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat">NA</td>
   
@@ -2093,14 +2093,14 @@
                                         <td>{{Data.flat_data['400+'].hot_leads_percentage |limitTo:4}} %</td>
                                       </tr>
                                       <tr>
-                                        <td><small style="font-weight:bold">Total Bookings Confirmed</small></td>
+                                        <td><small style="font-weight:bold">Total {{Data.overall_data.key_hot_level_3 || 'Bookings Confirmed'}}</small></td>
                                         <td>{{campaignLeadsData.overall_data.is_hot_level_3}}</td>
                                         <td>{{Data.flat_data['0-150'].is_hot_level_3}} </td>
                                         <td>{{Data.flat_data['151-399'].is_hot_level_3}} </td>
                                         <td>{{Data.flat_data['400+'].is_hot_level_3}} </td>
                                       </tr>
                                       <tr>
-                                        <td><small style="font-weight:bold">Total Orders Punched</small></td>
+                                        <td><small style="font-weight:bold">Total {{Data.overall_data.key_hot_level_4 || 'Orders Punched'}}</small></td>
                                         <td>{{campaignLeadsData.overall_data.is_hot_level_4}}</td>
                                         <td>{{Data.flat_data['0-150'].is_hot_level_4}} </td>
                                         <td>{{Data.flat_data['151-399'].is_hot_level_4}} </td>
