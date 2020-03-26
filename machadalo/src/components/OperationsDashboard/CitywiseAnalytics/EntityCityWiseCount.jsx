@@ -15,6 +15,7 @@ class EntityCitywiseCount extends React.Component {
 
   componentDidMount() {
     const { token } = this.props.auth;
+    console.log(this.props.location);
     const { name, supplier_type } = this.props.location.state;
     const headerValue = `Citywise Report - ${name}`;
     this.setState({ headerValue });

@@ -5,6 +5,7 @@ import SupplierList from './SupplierAnalytics/SupplierList';
 import UserAnalytics from './UserAnalytics';
 import CitywiseAnalytics from './CitywiseAnalytics';
 import EntityCityWiseCount from './CitywiseAnalytics/EntityCityWiseCount';
+import EntityList from './CitywiseAnalytics/EntityList';
 
 class OperationsDashboard extends Component {
   constructor(props) {
@@ -38,6 +39,11 @@ class OperationsDashboard extends Component {
             exact
             path={`${match.path}/city/:type`}
             render={(componentProps) => <EntityCityWiseCount {...this.props} {...componentProps} />}
+          />
+          <Route
+            exact
+            path={`${match.path}/city/:type/?city=:city`}
+            render={(componentProps) => <EntityList {...this.props} {...componentProps} />}
           />
           <Route
             exact
