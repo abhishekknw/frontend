@@ -234,6 +234,9 @@ export default class Sidebar extends React.Component {
                     <NavLink to="/r/operations-dashboard">Campaign Report</NavLink>
                   </li>
                   <li>
+                    <NavLink to="/r/operations-dashboard/entity">Entity Report</NavLink>
+                  </li>
+                  <li>
                     <NavLink to="/r/operations-dashboard/user">User Performance</NavLink>
                   </li>
                 </ul>
