@@ -29,7 +29,12 @@ const SupplierCampaignModal = (props) => {
             <button
               className="btn btn--danger"
               onClick={props.handleCloseModal}
-              style={{ marginTop: '10px', float: 'right' }}
+              style={{
+                marginTop: '10px',
+                float: 'right',
+                backgroundColor: 'rgb(232, 68, 120)',
+                fontWeight: '400',
+              }}
             >
               Close
             </button>

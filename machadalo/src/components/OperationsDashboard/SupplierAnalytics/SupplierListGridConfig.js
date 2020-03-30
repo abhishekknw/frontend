@@ -5,6 +5,16 @@ import CampaignBadge from '../../CampaignBadge';
 const getSupplierColumn = () => {
   return [
     {
+      dataField: 'supplier_id',
+      text: 'Supplier Id',
+      sort: true,
+      formatter: (cell, row) => {
+        console.log(row);
+        let { supplier_id } = row;
+        return supplier_id || '-';
+      },
+    },
+    {
       dataField: 'name',
       text: 'Name',
       width: '350px',
@@ -96,7 +106,7 @@ const getSupplierColumn = () => {
     },
     {
       dataField: 'contact_type',
-      text: 'Contact Type',
+      text: 'Designation',
       sort: true,
       formatter: (cell, row) => {
         const contact_type = get(row, 'contact_type');

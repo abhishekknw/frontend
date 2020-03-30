@@ -5,6 +5,15 @@ import CampaignBadge from '../../CampaignBadge';
 const getSupplierColumnContactDetails = () => {
   return [
     {
+      dataField: 'supplier_id',
+      text: 'Supplier Id',
+      sort: true,
+      formatter: (cell, row) => {
+        let { supplier_id } = row;
+        return supplier_id || '-';
+      },
+    },
+    {
       dataField: 'society_name',
       text: 'Name',
       width: '350px',

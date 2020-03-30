@@ -1,18 +1,27 @@
 import React from 'react';
-import { get } from 'lodash';
 import CampaignBadge from '../../CampaignBadge';
 
 const getEntityList = () => {
   return [
     {
-      dataField: 'name',
-      text: 'Name',
-      width: '350px',
+      dataField: 'supplier_id',
+      text: 'Supplier Id',
       sort: true,
       formatter: (cell, row) => {
-        let { name, society_name } = row;
+        let { supplier_id } = row;
+        return supplier_id || '-';
+      },
+    },
+    {
+      dataField: 'name',
+      text: 'Name',
+      width: '250px',
+      sort: true,
+      formatter: (cell, row) => {
+        let { longitude, latitude, name, society_name } = row;
         if (society_name) name = society_name;
-        return name;
+        const googleMapUrl = `https://www.google.com/maps/place/${latitude},${longitude}`;
+        return <a href={googleMapUrl}>{name}</a>;
       },
     },
     {
@@ -49,11 +58,61 @@ const getEntityList = () => {
       dataField: 'address',
       text: 'Address',
       sort: true,
+      width: '350px',
       formatter: (cell, row) => {
         let { address1, society_address1 } = row;
         let address = address1;
         if (society_address1) address = society_address1;
-        return address || '';
+        return address || '-';
+      },
+    },
+    {
+      dataField: 'contact_name',
+      text: 'Contact Name',
+      sort: true,
+      formatter: (cell, row) => {
+        const { contact_name } = row;
+        return contact_name || '-';
+      },
+    },
+    {
+      dataField: 'contact_number',
+      text: 'Contact Number',
+      sort: true,
+      formatter: (cell, row) => {
+        const { contact_number } = row;
+        return contact_number || '-';
+      },
+    },
+    {
+      dataField: 'contact_type',
+      text: 'Designation',
+      sort: true,
+      formatter: (cell, row) => {
+        const { contact_type } = row;
+        const type = contact_type ? contact_type.toLowerCase().replace(/ /g, '_') : contact_type;
+        let variant = 'success';
+        switch (type) {
+          case 'chairman':
+            variant = 'success';
+            break;
+          case 'secretary':
+            variant = 'primary';
+            break;
+          case 'manager':
+            variant = 'warning';
+            break;
+          case 'treasurer':
+            variant = 'info';
+            break;
+          case 'committe_member':
+            variant = 'danger';
+            break;
+          default:
+            variant = 'default';
+            break;
+        }
+        return <CampaignBadge variant={variant}>{type}</CampaignBadge>;
       },
     },
   ];
