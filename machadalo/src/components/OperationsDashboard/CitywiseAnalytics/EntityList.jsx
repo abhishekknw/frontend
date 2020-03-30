@@ -3,12 +3,14 @@ import request from 'superagent';
 import config from '../../../config';
 import InnerGrid from '../../InnerGrid';
 import getEntityList from './EntityListGridConfig';
+import LoadingWrapper from '../../Error/LoadingWrapper';
 
 class EntityList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       entityDetails: [],
+      isDataFetched: false,
     };
   }
 
@@ -21,6 +23,7 @@ class EntityList extends Component {
       .then((resp) => {
         this.setState({
           entityDetails: resp.body.data,
+          isDataFetched: true,
         });
       })
       .catch((ex) => {
@@ -29,21 +32,11 @@ class EntityList extends Component {
   }
 
   render() {
-    console.log(this.props.location.state);
-    const { city, name, supplier_type } = this.props.location.state;
+    const { city, name } = this.props.location.state;
     const heading = `List of ${name} Entities of ${city}`;
     return (
-      <div>
-        {/* <button
-          type="button"
-          className="btn btn--danger"
-          onClick={() => this.props.history.push(`/r/operations-dashboard/city/${supplier_type}/`)}
-          style={{ marginTop: '10px' }}
-        >
-        <i className="fa fa-arrow-left" aria-hidden="true" />
-        &nbsp; Back
-        </button> */}
-        {this.state.entityDetails.length > 0 && (
+      <div className="bootstrap-iso">
+        {this.state.isDataFetched ? (
           <InnerGrid
             columns={getEntityList()}
             data={this.state.entityDetails}
@@ -53,6 +46,8 @@ class EntityList extends Component {
             headerValue={heading}
             backgroundColor="#c7c7c7c9"
           />
+        ) : (
+          <LoadingWrapper />
         )}
       </div>
     );
