@@ -14,6 +14,7 @@ const getEntityCount = () => {
           <div>
             {count > 0 ? (
               <Link
+                style={{ color: '#e8578d' }}
                 to={{
                   pathname: `city/${type}/`,
                   state: {

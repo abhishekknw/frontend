@@ -22,7 +22,11 @@ const getSupplierColumn = () => {
       formatter: (cell, row) => {
         const { society_longitude, society_latitude, name } = row;
         const googleMapUrl = `https://www.google.com/maps/place/${society_latitude},${society_longitude}`;
-        return <a href={googleMapUrl}>{name}</a>;
+        return (
+          <a href={googleMapUrl} style={{ color: '#e8578d' }}>
+            {name}
+          </a>
+        );
       },
     },
     {

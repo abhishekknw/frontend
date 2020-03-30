@@ -15,6 +15,7 @@ const getEntityCitywiseCount = () => {
           <div>
             {city && city.length > 0 ? (
               <Link
+                style={{ color: '#e8578d' }}
                 to={{
                   pathname: `?city=${city}`,
                   state: {

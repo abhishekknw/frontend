@@ -21,7 +21,11 @@ const getEntityList = () => {
         let { longitude, latitude, name, society_name } = row;
         if (society_name) name = society_name;
         const googleMapUrl = `https://www.google.com/maps/place/${latitude},${longitude}`;
-        return <a href={googleMapUrl}>{name}</a>;
+        return (
+          <a href={googleMapUrl} style={{ color: '#e8578d' }}>
+            {name}
+          </a>
+        );
       },
     },
     {
