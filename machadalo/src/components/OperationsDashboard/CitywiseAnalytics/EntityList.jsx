@@ -37,15 +37,26 @@ class EntityList extends Component {
     return (
       <div className="bootstrap-iso">
         {this.state.isDataFetched ? (
-          <InnerGrid
-            columns={getEntityList()}
-            data={this.state.entityDetails}
-            exportCsv={true}
-            search={true}
-            pagination={true}
-            headerValue={heading}
-            backgroundColor="#c7c7c7c9"
-          />
+          <div>
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={() => this.props.history.push(`/r/operations-dashboard/entity`)}
+              style={{ marginTop: '10px', float: 'right', backgroundColor: 'rgb(232, 68, 120)' }}
+            >
+              <i className="fa fa-arrow-left" aria-hidden="true" />
+              &nbsp; Back
+            </button>
+            <InnerGrid
+              columns={getEntityList()}
+              data={this.state.entityDetails}
+              exportCsv={true}
+              search={true}
+              pagination={true}
+              headerValue={heading}
+              backgroundColor="#c7c7c7c9"
+            />
+          </div>
         ) : (
           <LoadingWrapper />
         )}
