@@ -2,8 +2,21 @@ import React from 'react';
 import { get } from 'lodash';
 import CampaignBadge from '../../CampaignBadge';
 
+const linkStyle = {
+  'a:link': { color: '#000' },
+};
+
 const getSupplierColumnContactDetails = () => {
   return [
+    {
+      dataField: 'supplier_id',
+      text: 'Supplier Id',
+      sort: true,
+      formatter: (cell, row) => {
+        let { supplier_id } = row;
+        return supplier_id || '-';
+      },
+    },
     {
       dataField: 'society_name',
       text: 'Name',
@@ -12,7 +25,11 @@ const getSupplierColumnContactDetails = () => {
       formatter: (cell, row) => {
         const { society_longitude, society_latitude, society_name } = row;
         const googleMapUrl = `https://www.google.com/maps/?q=+${society_latitude}+=+${society_longitude}`;
-        return <a href={googleMapUrl}>{society_name}</a>;
+        return (
+          <a href={googleMapUrl} style={{ color: '#e8578d' }}>
+            {society_name}
+          </a>
+        );
       },
     },
     {

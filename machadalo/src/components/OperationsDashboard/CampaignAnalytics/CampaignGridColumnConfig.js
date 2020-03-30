@@ -68,6 +68,7 @@ const getCampaignColumn = () => {
             {flat_count_details_filled_suppliers &&
             flat_count_details_filled_suppliers.length > 0 ? (
               <Link
+                style={{ color: '#e8578d' }}
                 to={{
                   pathname: `operations-dashboard/${campaign_id}/suppliers`,
                   state: {
@@ -111,6 +112,7 @@ const getCampaignColumn = () => {
           <div>
             {flat_count_details_not_filled && flat_count_details_not_filled_suppliers.length > 0 ? (
               <Link
+                style={{ color: '#e8578d' }}
                 to={{
                   pathname: `operations-dashboard/${campaign_id}/suppliers`,
                   state: {
@@ -161,6 +163,7 @@ const getCampaignColumn = () => {
           <div>
             {contact_name_filled_suppliers.length > 0 ? (
               <Link
+                style={{ color: '#e8578d' }}
                 to={{
                   pathname: `operations-dashboard/${campaign_id}/suppliers`,
                   state: {
@@ -199,6 +202,7 @@ const getCampaignColumn = () => {
           <div>
             {contact_name_filled_suppliers.length > 0 ? (
               <Link
+                style={{ color: '#e8578d' }}
                 to={{
                   pathname: `operations-dashboard/${campaign_id}/suppliers`,
                   state: {
@@ -239,6 +243,7 @@ const getCampaignColumn = () => {
           <div>
             {contact_name_not_filled_suppliers.length > 0 ? (
               <Link
+                style={{ color: '#e8578d' }}
                 to={{
                   pathname: `operations-dashboard/${campaign_id}/suppliers`,
                   state: {
@@ -289,6 +294,7 @@ const getCampaignColumn = () => {
           <div>
             {contact_number_filled_suppliers.length > 0 ? (
               <Link
+                style={{ color: '#e8578d' }}
                 to={{
                   pathname: `operations-dashboard/${campaign_id}/suppliers`,
                   state: {
@@ -332,6 +338,7 @@ const getCampaignColumn = () => {
           <div>
             {contact_number_filled_suppliers.length > 0 ? (
               <Link
+                style={{ color: '#e8578d' }}
                 to={{
                   pathname: `operations-dashboard/${campaign_id}/suppliers`,
                   state: {
@@ -372,6 +379,7 @@ const getCampaignColumn = () => {
           <div>
             {contact_number_not_filled_suppliers.length > 0 ? (
               <Link
+                style={{ color: '#e8578d' }}
                 to={{
                   pathname: `operations-dashboard/${campaign_id}/suppliers`,
                   state: {

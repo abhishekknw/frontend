@@ -66,34 +66,32 @@ class SupplierList extends Component {
       ? `${this.state.campaignName} (${status.toUpperCase()})`
       : `${this.state.campaignName} (${type})`;
     return (
-      <div>
+      <div className="bootstrap-iso">
         <button
           type="button"
-          className="btn btn--danger"
+          className="btn btn-danger"
           onClick={() => this.props.history.push(`/r/operations-dashboard`)}
-          style={{ marginTop: '10px' }}
+          style={{ marginTop: '10px', backgroundColor: '#e84478', borderColor: '#e84478' }}
         >
           <i className="fa fa-arrow-left" aria-hidden="true" />
           &nbsp; Back
         </button>
         {this.state.campaignName && (
-          <div style={{ fontStyle: 'oblique' }}>
-            <h2
+          <div style={{ fontStyle: 'oblique', textAlign: 'center' }}>
+            <h5
               style={{
-                float: 'left',
                 color: '#6d6d6d',
-                marginRight: '10px',
               }}
             >
               Campaign Name :
-            </h2>
-            <h2
+            </h5>
+            <h5
               style={{
                 color: 'rgb(0, 114, 196)',
               }}
             >
               {heading}
-            </h2>
+            </h5>
           </div>
         )}
         {this.state.supplierDetails.length > 0 && (

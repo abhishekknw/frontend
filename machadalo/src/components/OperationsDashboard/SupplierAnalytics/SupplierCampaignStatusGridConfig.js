@@ -50,6 +50,7 @@ const getCampaignColumn = () => {
           <div>
             {isSuppliers ? (
               <Link
+                style={{ color: '#e8578d' }}
                 to={{
                   pathname: `operations-dashboard/${campaign_id}/suppliers`,
                   state: {
@@ -95,6 +96,7 @@ const getCampaignColumn = () => {
           <div>
             {isSuppliers ? (
               <Link
+                style={{ color: '#e8578d' }}
                 to={{
                   pathname: `operations-dashboard/${campaign_id}/suppliers`,
                   state: {
@@ -134,6 +136,7 @@ const getCampaignColumn = () => {
           <div>
             {isSuppliers ? (
               <Link
+                style={{ color: '#e8578d' }}
                 to={{
                   pathname: `operations-dashboard/${campaign_id}/suppliers`,
                   state: {
@@ -180,6 +183,7 @@ const getCampaignColumn = () => {
           <div>
             {isSuppliers ? (
               <Link
+                style={{ color: '#e8578d' }}
                 to={{
                   pathname: `operations-dashboard/${campaign_id}/suppliers`,
                   state: {
@@ -219,6 +223,7 @@ const getCampaignColumn = () => {
           <div>
             {isSuppliers ? (
               <Link
+                style={{ color: '#e8578d' }}
                 to={{
                   pathname: `operations-dashboard/${campaign_id}/suppliers`,
                   state: {
@@ -265,6 +270,7 @@ const getCampaignColumn = () => {
           <div>
             {isSuppliers ? (
               <Link
+                style={{ color: '#e8578d' }}
                 to={{
                   pathname: `operations-dashboard/${campaign_id}/suppliers`,
                   state: {

@@ -38,12 +38,12 @@ class EntityCitywiseCount extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="bootstrap-iso">
         <button
           type="button"
-          className="btn btn--danger"
+          className="btn btn-danger"
           onClick={() => this.props.history.push(`/r/operations-dashboard/entity`)}
-          style={{ marginTop: '10px' }}
+          style={{ marginTop: '10px', float: 'right', backgroundColor: 'rgb(232, 68, 120)' }}
         >
           <i className="fa fa-arrow-left" aria-hidden="true" />
           &nbsp; Back
