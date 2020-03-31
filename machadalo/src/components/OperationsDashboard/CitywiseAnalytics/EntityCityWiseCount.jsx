@@ -26,7 +26,11 @@ class EntityCitywiseCount extends React.Component {
       .then((resp) => {
         const { status, data } = resp.body;
         if (status) {
-          const entityData = data;
+          const entityData = Object.keys(data).map((key, index) => ({
+            ...data[key],
+            city: key,
+            key: index,
+          }));
           this.setState({
             entityData,
             isDataFetched: true,
@@ -55,7 +59,7 @@ class EntityCitywiseCount extends React.Component {
             <InnerGrid
               columns={getEntityCitywiseCount()}
               data={this.state.entityData}
-              exportCsv={true}
+              exportCsv={false}
               search={true}
               pagination={true}
               headerValue={this.state.headerValue}
