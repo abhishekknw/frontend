@@ -64,7 +64,7 @@ class CampaignAnalytics extends React.Component {
             columns={getCampaignColumn()}
             data={listData}
             headerValue="Campaign Report"
-            exportCsv={true}
+            exportCsv={false}
             search={true}
             pagination={true}
             onRowClick={(row) => {
