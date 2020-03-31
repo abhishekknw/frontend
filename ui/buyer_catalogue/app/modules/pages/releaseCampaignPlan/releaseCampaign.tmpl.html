@@ -15,8 +15,8 @@
   <div class="pageTitle">
     <h3>Booking Plan</h3>
   </div>
-  
-  
+
+
   <div class="panel-body" style="text-align:center;margin-top:-20px">
     <div class="row">
       <div class="panel panel-default">
@@ -91,7 +91,7 @@
       </div>
     </div>
 
-    
+
 
     <div class="table-wrapper" style="overflow-x: auto;">
       <table class="table table-striped table-suppliers" data-ng-init="initTable()">
@@ -146,12 +146,14 @@
 
           <tr ng-if="!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter == 'RS'">
             <th>{{detailsHeader.srNo}}</th>
+            <th>{{detailsHeader.brand}}</th>
             <th>{{detailsHeader.name}}</th>
             <th>{{detailsHeader.supplier_id}}</th>
             <th>{{detailsHeader.supplier_type}}</th>
             <th>{{detailsHeader.area_subArea}}</th>
             <th>{{detailsHeader.address_landmark}}</th>
             <th>{{detailsHeader.relation_ship_data}}</th>
+              
             <th>{{detailsHeader.flat_count}}</th>
             <th>{{detailsHeader.tower_count}}</th>
             <th>{{detailsHeader.contacts_details}}</th>
@@ -159,7 +161,7 @@
             <th>{{detailsHeader.booking_priority}}</th>
             <th>{{detailsHeader.booking_status_and_sub_status}}</th>
             <th>{{detailsHeader.phase}}</th>
-            <th>{{detailsHeader.internal_comments}}</th>
+            <th ng-if="canViewInternalComments">{{detailsHeader.internal_comments}}</th>
             <th>{{detailsHeader.comments}}</th>
             <th>{{detailsHeader.next_action_date}}</th>
             <th>{{detailsHeader.inventory_type}}</th>
@@ -182,29 +184,36 @@
 
           <tr ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter != 'RS'">
             <th>{{detailsHeader.srNo}}</th>
+            <th>{{detailsHeader.brand}}</th>
             <th>{{detailsHeader.name}}</th>
             <th>{{detailsHeader.supplier_id}}</th>
             <th>{{detailsHeader.supplier_type}}</th>
             <th>{{detailsHeader.area_subArea}}</th>
             <th>{{detailsHeader.address_landmark}}</th>
             <th>{{detailsHeader.relation_ship_data}}</th>
+
             <th>{{detailsHeader.average_weekend_daily_footfall}}</th>
             <th>{{detailsHeader.average_weekday_daily_footfall}}</th>
+
             <th>{{detailsHeader.contacts_details}}</th>
             <th>{{detailsHeader.assign_user}}</th>
             <th>{{detailsHeader.booking_priority}}</th>
             <th>{{detailsHeader.booking_status_and_sub_status}}</th>
             <th>{{detailsHeader.phase}}</th>
-            <th>{{detailsHeader.internal_comments}}</th>
+            <th ng-if="canViewInternalComments">{{detailsHeader.internal_comments}}</th>
             <th>{{detailsHeader.comments}}</th>
             <th>{{detailsHeader.next_action_date}}</th>
             <th>{{detailsHeader.inventory_type}}</th>
             <th>{{detailsHeader.inventory_count}}</th>
             <th>{{detailsHeader.inventory_days}}</th>
             <th>{{detailsHeader.inventory_supplier_price}}</th>
+
             <th>{{detailsHeader.total_supplier_price_per_footfall_weekend}}</th>
+
             <th>{{detailsHeader.negotiated_price}}</th>
+
             <th>{{detailsHeader.cost_per_average_daily_footfall}}</th>
+
             <th>{{detailsHeader.freebies}}</th>
             <th>{{detailsHeader.mode_of_payment}}</th>
             <th>{{detailsHeader.transaction_cheque_number}}</th>
@@ -217,26 +226,53 @@
           </tr>
 
         </thead>
-
-          <!--Start Residential Society supplier type -->
-        <tbody ng-if="!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter == 'RS'"
-          dir-paginate="supplier in releaseDetails.shortlisted_suppliers | itemsPerPage: suppliersPerPage"
+        <!--Start Residential Society supplier type -->
+        <tbody ng-show="(!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter == 'RS') && releaseDetails.shortlisted_suppliers.length > 0"
+          dir-paginate="supplier in releaseDetails.shortlisted_suppliers  | itemsPerPage: suppliersPerPage"
           total-items="totalSuppliers" current-page="pagination.current" track by "$index">
           <div ng-if="releaseDetails.shortlisted_suppliers.length > 0">
             <tr ng-if="releaseDetails.shortlisted_suppliers.length > 0"
-              ng-repeat="(key,filter) in supplier.shortlisted_inventories" ng-disabled="$index != '15'">
+              ng-repeat="(key,filter) in supplier.shortlisted_inventories track by $index" ng-disabled="$index != '15'">
 
               <td rowspan="{{key.length}}" ng-show="$first" style="width:40px;" ng-style="((supplier.booking_status==='BK' || supplier.booking_status==='MC') && {'background-color':'green'}) ||((supplier.booking_status==='UN' || supplier.booking_status==='NI' || supplier.booking_status==='NE') && {'background-color':'white'} )||(
               (supplier.booking_status==='SR') && {'background-color':'red'}) ||(
               (supplier.booking_status==='DP' ||supplier.booking_status==='TB'||supplier.booking_status==='MF'||supplier.booking_status==='RE' ) && {'background-color':'yellow'}) ||(
-              supplier.booking_status && {'background-color':'brown'})">{{$parent.$index + 1}}</td>
+              supplier.booking_status && {'background-color':'brown'})">{{$parent.$parent.$index + 1}}</td>
+
+              <td rowspan="{{key.length}}" ng-show="$first">
+                    <span ng-if="supplier.brand_organisation_data.name">{{supplier.brand_organisation_data.name}}<br></span>
+                <button type="button" class="btn btn-danger" name="button" data-toggle="modal"
+                  data-target="#addBrandModal" ng-click="setUserSupplier(supplier)">Add Brands</button>
+                <div id="addBrandModal" class="modal fade">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Add Brand</h4>
+                        <div class="modal-body" style="height: 300px;">
+                          <select name="users" class="form-control spacing input-width-phase"  ng-model="orgData.index"
+                            min="1">
+                            <option value="" disabled>Select User</option>
+                            <option   ng-repeat="org in organisationMapListWithObjects track by $index"
+                              value={{$index}}>{{org.name}}</option>
+                          </select>
+                          <br/>
+                          <button type="button" class="btn btn-danger" name="button"
+                            ng-click="setBrandForBooking()" data-dismiss="modal">Add</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </td>
 
               <td class="" rowspan="{{key.length}}" ng-show="$first">
-                  <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank"
-                    style="text-decoration: underline; cursor: pointer;color:#337ab7;font-weight: 600;">{{supplier.name}}<br>
-                  </a>
-                  <span ng-if="supplier.quality_rating">(</span>{{supplier.quality_rating}}<span
-                    ng-if="supplier.quality_rating">)</span>
+                <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank"
+                  style="text-decoration: underline; cursor: pointer;color:#337ab7;font-weight: 600;">{{supplier.name}}<br>
+                </a>
+                <span ng-if="supplier.quality_rating">(</span>{{supplier.quality_rating}}<span
+                  ng-if="supplier.quality_rating">)</span>
               </td>
 
               <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.object_id}}</td>
@@ -264,7 +300,6 @@
               </td>
 
               <td class="" rowspan="{{key.length}}" ng-show="$first">
-
                 {{supplier.flat_count}}
               </td>
               <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.tower_count}}</td>
@@ -389,6 +424,7 @@
               </td>
 
               <td ng-if="canViewInternalComments" rowspan="{{key.length}}" ng-show="$first">
+               
                 <div class="comment" ng-if="comments[supplier.id]">
                   <b>{{comments[supplier.id].internal.username}} </b> <span> <br><small>
                       {{comments[supplier.id].internal.created_on | date}}</small></span><br>
@@ -401,6 +437,7 @@
 
               <!-- </td> -->
               <td rowspan="{{key.length}}" ng-show="$first">
+                <span rowspan="{{key.length}}" ng-show="$first">
                 <div class="comment" ng-if="comments[supplier.id]">
                   <b>{{comments[supplier.id].external.username}} </b> <span> <br><small>
                       {{comments[supplier.id].external.created_on | date}}</small></span><br>
@@ -409,6 +446,7 @@
                 <button type="button" class="btn btn-primary"
                   ng-click="viewComments(supplier, 'EXTERNAL')">View/Add</button>
                 <br>
+              </span>
               </td>
 
               <td rowspan="{{key.length}}" ng-show="$first">
@@ -542,7 +580,7 @@
               <td rowspan="{{key.length}}" ng-show="$first">
                 <div ng-repeat="image in permissionBoxImages" ng-if="image.object_id == supplier.supplier_id"
                   style="margin-bottom:10px">
-                  <img ng-src="http://androidtokyo.s3.amazonaws.com/{{image.image_path}}" alt="Permission Box"
+                  <img ng-src="{{aws_campaign_images_url}}{{image.image_path}}" alt="Permission Box"
                     height="50" width="50">
                 </div>
                 <!--START: permission box image modal -->
@@ -595,7 +633,7 @@
               <td rowspan="{{key.length}}" ng-show="$first">
                 <div ng-repeat="image in receiptImages" ng-if="image.object_id == supplier.supplier_id"
                   style="margin-bottom:10px">
-                  <img ng-src="http://androidtokyo.s3.amazonaws.com/{{image.image_path}}" alt="Receipt" height="50"
+                  <img ng-src="{{aws_campaign_images_url}}{{image.image_path}}" alt="Receipt" height="50"
                     width="50">
                 </div>
                 <button class="btn btn-primary active" ng-click="getReceiptBoxImages(supplier)" data-toggle="modal"
@@ -700,12 +738,14 @@
 
             </tr>
           </div>
-          <div ng-if="releaseDetails.shortlisted_suppliers.length == 0">Record Not Found.</div>
+         
         </tbody>
         <!--End Residential Society supplier type -->
-
+          
+         <!--Start Retail Store supplier type -->
+         <!--End Retail Store supplier type -->
         <!--Start other supplier type -->
-        <tbody ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter != 'RS'"
+        <tbody ng-show="(selectedUser.supplier_type_filter && selectedUser.supplier_type_filter != 'RS') && releaseDetails.shortlisted_suppliers.length > 0"
           dir-paginate="supplier in releaseDetails.shortlisted_suppliers | itemsPerPage: suppliersPerPage"
           total-items="totalSuppliers" current-page="pagination.current" track by "$index">
           <div ng-if="releaseDetails.shortlisted_suppliers.length > 0">
@@ -715,14 +755,40 @@
               <td rowspan="{{key.length}}" ng-show="$first" style="width:40px;" ng-style="((supplier.booking_status==='BK' || supplier.booking_status==='MC') && {'background-color':'green'}) ||((supplier.booking_status==='UN' || supplier.booking_status==='NI' || supplier.booking_status==='NE') && {'background-color':'white'} )||(
           (supplier.booking_status==='SR') && {'background-color':'red'}) ||(
           (supplier.booking_status==='DP' ||supplier.booking_status==='TB'||supplier.booking_status==='MF'||supplier.booking_status==='RE' ) && {'background-color':'yellow'}) ||(
-          supplier.booking_status && {'background-color':'brown'})">{{$parent.$index + 1}}</td>
+          supplier.booking_status && {'background-color':'brown'})">{{$parent.$parent.$index + 1}}</td>
+          <td rowspan="{{key.length}}" ng-show="$first">
+            <span ng-if="supplier.brand_organisation_data.name">{{supplier.brand_organisation_data.name}}<br></span>
+        <button type="button" class="btn btn-danger" name="button" data-toggle="modal"
+          data-target="#addBrandModal" ng-click="setUserSupplier(supplier)">Add Brands</button>
+        <div id="addBrandModal" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add Brand</h4>
+                <div class="modal-body" style="height: 300px;">
+                  <select name="users" class="form-control spacing input-width-phase"  ng-model="orgData.index"
+                    min="1">
+                    <option value="" disabled>Select User</option>
+                    <option   ng-repeat="org in organisationMapListWithObjects track by $index "
+                      value={{$index}}>{{org.name}}</option>
+                  </select>
+                  <br/>
+                  <button type="button" class="btn btn-danger" name="button"
+                    ng-click="setBrandForBooking()" data-dismiss="modal">Add</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
+      </td>
               <td class="" rowspan="{{key.length}}" ng-show="$first">
-                  <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank"
-                    style="text-decoration: underline; cursor: pointer;color:#337ab7;font-weight: 600;">{{supplier.name}}<br>
-                  </a>
-                  <span ng-if="supplier.retail_shop_type">({{supplier.retail_shop_type}}<span
-                      ng-if="supplier.category_name">,{{supplier.category_name}}</span>)</span>
+                <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank"
+                  style="text-decoration: underline; cursor: pointer;color:#337ab7;font-weight: 600;">{{supplier.name}}<br>
+                </a>
+                <span ng-if="supplier.retail_shop_type">({{supplier.retail_shop_type}}<span
+                    ng-if="supplier.category_name">,{{supplier.category_name}}</span>)</span>
               </td>
 
               <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.object_id}}</td>
@@ -927,7 +993,7 @@
               </td>
 
               <!-- <td class="">{{filter.price| currency : "₹"}}</td> -->
-
+              <!-- Inventory Supplier Price Formula -->
               <td>
                 <div ng-if="filter.inventory_duration_name === 'Campaign Weekly'">
                   {{filter.actual_supplier_price/7 | currency : "₹"}}
@@ -941,13 +1007,13 @@
                   {{filter.actual_supplier_price | currency : "₹"}}
                 </div>
               </td>
-
+              <!-- Total Supplier Price Formula -->
               <td rowspan="{{key.length}}" ng-show="$first">
-                <div ng-if="supplier.shortlisted_inventories_totalPrice && supplier.flat_count !=0">
-                  {{supplier.shortlisted_inventories_totalPrice/ supplier.flat_count | currency : "₹"}}
+                <div ng-if="supplier.shortlisted_inventories_totalPrice && ((((supplier.average_weekend)+(supplier.average_weekday))/2) > 0)">
+                  {{(supplier.shortlisted_inventories_totalPrice / (((supplier.average_weekend)+(supplier.average_weekday))/2)) | currency : "₹"}} 
                 </div>
 
-                <div ng-if="supplier.shortlisted_inventories_totalPrice && supplier.flat_count ==0">
+                <div ng-if="supplier.shortlisted_inventories_totalPrice && ((((supplier.average_weekend)+(supplier.average_weekday))/2) == 0)">
                   {{supplier.shortlisted_inventories_totalPrice | currency : "₹"}}
                 </div>
               </td>
@@ -956,19 +1022,21 @@
               ng-if="filter.totalPrice/supplier.flat_count ==0 || filter.totalPrice/supplier.flat_count">(</span>{{filter.totalPrice/supplier.flat_count|limitTo:8| currency : "₹"}}<span
               ng-if="filter.totalPrice/supplier.flat_count == 0 || filter.totalPrice/supplier.flat_count">)</span>
           </td> -->
-
+          <!-- Negotiated Price Formula -->
               <td class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="priceform">
                 <span ng-disabled="!supplier.phase_no" class="error"
                   ng-show="priceform.price.$error.min">{{positiveNoError}}</span>
                 <input ng-disabled="!supplier.phase_no || supplier.is_completed " type="number" name="price"
                   ng-model="supplier.total_negotiated_price" class="form-control spacing input-width" min="0"
                   permission="[permissions.addNegotiatedPrice]">
-                <br>{{(supplier.total_negotiated_price / supplier.flat_count)|| 0 | limitTo:8}} </td>
-
+                <br>{{(supplier.total_negotiated_price / (((supplier.average_weekend)+(supplier.average_weekday))/2))|| 0 | limitTo:8}} 
+              </td>
+                 
+              <!-- Cost Per Flat Formula -->
               <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
                 <input ng-disabled="!supplier.phase_no || supplier.is_completed" type="number"
                   ng-model="supplier.cost_per_flat" class="form-control spacing input-width" min="0">
-                <br>{{(supplier.cost_per_flat * supplier.flat_count)|| 0 | limitTo:8}}
+                <br>{{(supplier.cost_per_flat * (((supplier.average_weekend)+(supplier.average_weekday))/2))|| 0 | limitTo:8}}
               </td>
 
               <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
@@ -1028,7 +1096,7 @@
               <td rowspan="{{key.length}}" ng-show="$first">
                 <div ng-repeat="image in permissionBoxImages" ng-if="image.object_id == supplier.supplier_id"
                   style="margin-bottom:10px">
-                  <img ng-src="http://androidtokyo.s3.amazonaws.com/{{image.image_path}}" alt="Permission Box"
+                  <img ng-src="{{aws_campaign_images_url}}{{image.image_path}}" alt="Permission Box"
                     height="50" width="50">
                 </div>
                 <!--START: permission box image modal -->
@@ -1081,7 +1149,7 @@
               <td rowspan="{{key.length}}" ng-show="$first">
                 <div ng-repeat="image in receiptImages" ng-if="image.object_id == supplier.supplier_id"
                   style="margin-bottom:10px">
-                  <img ng-src="http://androidtokyo.s3.amazonaws.com/{{image.image_path}}" alt="Receipt" height="50"
+                  <img ng-src="{{aws_campaign_images_url}}{{image.image_path}}" alt="Receipt" height="50"
                     width="50">
                 </div>
                 <button class="btn btn-primary active" ng-click="getReceiptBoxImages(supplier)" data-toggle="modal"
@@ -1186,10 +1254,10 @@
 
             </tr>
           </div>
-          <div ng-if="releaseDetails.shortlisted_suppliers.length == 0">Record Not Found.</div>
+         
         </tbody>
         <!--End other supplier type -->
-
+        <div ng-if="releaseDetails.shortlisted_suppliers.length == 0">Record Not Found.</div>
         <tfoot>
 
           <!-- <tr>
@@ -1531,7 +1599,7 @@
 
                 <select class="form-control input-size" style="width:140px; margin-left:20px;"
                   ng-model="indexData.center_index" ng-change="selectCenter(indexData.center_index)" required>
-                  <option value="" >Select Center</option>
+                  <option value="">Select Center</option>
                   <option ng-repeat="center_var in releaseDetailsData" value="{{center_var.id}}">
                     {{center_var.city}}</option>
                 </select>
@@ -1612,7 +1680,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="supplier in supplierSummaryData">
+                  <tr ng-repeat="supplier in supplierSummaryData track by $index">
                     <td>{{$index+1}}</td>
                     <td>{{supplier.name}}</td>
                     <td>{{supplier.city}}</td>
@@ -1620,8 +1688,7 @@
                     <td>{{supplier.subarea}}</td>
                     <td>
                       <div class="radio">
-                        <button type="button" name="button"
-                          ng-click="removeSupplierToList(supplier.supplier_id)">Remove</button>
+                        <button type="button" name="button" ng-click="removeSupplierToList($index)">Remove</button>
                       </div>
                     </td>
                   </tr>
