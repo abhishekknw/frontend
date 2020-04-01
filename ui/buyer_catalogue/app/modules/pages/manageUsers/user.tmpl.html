@@ -355,7 +355,7 @@
               <div class="item">
                 <label for="confirm">Assign Profile:</label>
                 <select class="field" ng-model="userDetails.profile">
-                  <option ng-repeat="profile in profilesList" ng-value="{{profile.id}}" >{{profile.name}}</option>
+                  <option ng-repeat="profile in profilesList"  value="{{profile.id}}" >{{profile.name}}</option>
                 </select>
               </div>
               <div class="item">
@@ -507,6 +507,7 @@
             <!-- object level permissions End -->
             <!--start: general user level  permissions  -->
             <h2 class="heading">General User Level Permissions</h2>
+            <input type="checkbox" id="allCheck" ng-model="selectChkBoxAll" ng-click="checkAll()"/> {{selectTextAll}} All
             <span ng-if="!profileData.general_user_permission.length">No Permissions Assigned</span>
             <table class="table-data" ng-if="profileData.general_user_permission.length">
               <tr>
@@ -521,7 +522,7 @@
                   <input type="text" class="field" ng-model="permission.name" ng-if="operationProfile.edit" ng-disabled="isDataUpdating" ng-enter="updateGeneralUserPermission(permission,$index)">
                 </td>
                 <td>
-                  <input type="checkbox" ng-model="permission.is_allowed" ng-value="{{permission.is_allowed}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateGeneralUserPermission(permission,$index)">
+                  <input type="checkbox" ng-model="permission.is_allowed" ng-click="checkClick()" ng-value="{{permission.is_allowed}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateGeneralUserPermission(permission,$index)">
                 </td>
               </tr>
             </table>

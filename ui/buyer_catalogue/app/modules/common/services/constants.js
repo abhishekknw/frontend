@@ -12,8 +12,8 @@ angular
     signature : "GsF32EZ1IFvr2ZDH3ww+tGzFvmw=",
     content_type : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     //amazon server
-    aws_bucket_url : 'http://mdimages.s3.amazonaws.com/',
-    aws_campaign_images_url : 'http://androidtokyo.s3.amazonaws.com/',
+    aws_bucket_url : 'https://mdimages.s3.amazonaws.com/',
+    aws_campaign_images_url : 'https://androidtokyo.s3.amazonaws.com/',
     account_email_id : 'tejas.pawar@machaddalo.com',
     //general
     name : '',
@@ -219,4 +219,6 @@ angular
     booking_related_comment : 'INTERNAL',
     execution_related_comment : 'EXTERNAL',
     no_comments_msg : 'No Comments Available',
-    });
+    flatCountHeader:{'RS':'Flat Count','RE':'Footfall Count ','CP':'Employees Count','GY':'Footfall Count','BS':'Footfall Count','EI':'Students Count'},
+    towerCountHeader:{'RS':'Flat Count','RE':'Weekday Footfall Count','CP':'Companies Count','GY':'Weekday Footfall Count','BS':'Weekday Footfall Count','EI':'Teachers Count'}
+  });

@@ -464,6 +464,7 @@ angular.module('catalogueApp')
       auditReleasePlanService.deleteAdInventoryIds($scope.invIdList)
       .then(function onSuccess(response){
         getResultsPage(1);
+        $scope.invIdList = [];
         swal(constants.name,response.data.data.msg,constants.success);
       }).catch(function onError(response){
         console.log(response);
