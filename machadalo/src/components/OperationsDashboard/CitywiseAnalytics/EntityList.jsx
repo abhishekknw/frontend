@@ -9,6 +9,7 @@ class EntityList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      supplierTypeCode: '',
       entityDetails: [],
       isDataFetched: false,
     };
@@ -17,12 +18,16 @@ class EntityList extends Component {
   componentDidMount() {
     const { token } = this.props.auth;
     const { supplier_type, city } = this.props.location.state;
+    this.setState({ supplierTypeCode: supplier_type });
     request
       .get(`${config.API_URL}/v0/ui/ops/supplier-list/${supplier_type}/?city=${city}`)
       .set('Authorization', `JWT ${token}`)
       .then((resp) => {
+        let entityDetails = resp.body.data;
+        if (entityDetails.length > 0)
+          entityDetails.forEach((entity) => (entity.supplierTypeCode = supplier_type));
         this.setState({
-          entityDetails: resp.body.data,
+          entityDetails,
           isDataFetched: true,
         });
       })

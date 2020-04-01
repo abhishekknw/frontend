@@ -18,9 +18,22 @@ const getEntityList = () => {
       width: '250px',
       sort: true,
       formatter: (cell, row) => {
-        let { supplier_id, name, society_name } = row;
+        let { supplier_id, name, society_name, supplierTypeCode } = row;
         if (society_name) name = society_name;
-        const supplierFormUrl = `https://forms.machadalo.com/#/society/${supplier_id}`;
+        let supplier_type = 'society';
+        switch (supplierTypeCode) {
+          case 'CP':
+            supplier_type = 'corporate';
+          case 'RE':
+            supplier_type = 'retailshop';
+          case 'GY':
+            supplier_type = 'gym';
+          case 'EI':
+            supplier_type = 'educational';
+          case 'BS':
+            supplier_type = 'busshelter';
+        }
+        const supplierFormUrl = `https://forms.machadalo.com/#/${supplier_type}/${supplier_id}`;
         return (
           <a href={supplierFormUrl} style={{ color: '#e8578d' }} target="_blank">
             {name}
