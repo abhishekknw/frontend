@@ -20,11 +20,11 @@ const getSupplierColumn = () => {
       width: '350px',
       sort: true,
       formatter: (cell, row) => {
-        const { society_longitude, society_latitude, name } = row;
-        const googleMapUrl = `https://www.google.com/maps/place/${society_latitude},${society_longitude}`;
+        const { supplier_id, society_name } = row;
+        const supplierFormUrl = `https://forms.machadalo.com/#/society/${supplier_id}`;
         return (
-          <a href={googleMapUrl} style={{ color: '#e8578d' }}>
-            {name}
+          <a href={supplierFormUrl} style={{ color: '#e8578d' }} target="_blank">
+            {society_name}
           </a>
         );
       },

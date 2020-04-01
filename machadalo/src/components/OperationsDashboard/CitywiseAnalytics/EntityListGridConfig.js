@@ -18,11 +18,11 @@ const getEntityList = () => {
       width: '250px',
       sort: true,
       formatter: (cell, row) => {
-        let { longitude, latitude, name, society_name } = row;
+        let { supplier_id, name, society_name } = row;
         if (society_name) name = society_name;
-        const googleMapUrl = `https://www.google.com/maps/place/${latitude},${longitude}`;
+        const supplierFormUrl = `https://forms.machadalo.com/#/society/${supplier_id}`;
         return (
-          <a href={googleMapUrl} style={{ color: '#e8578d' }}>
+          <a href={supplierFormUrl} style={{ color: '#e8578d' }} target="_blank">
             {name}
           </a>
         );
