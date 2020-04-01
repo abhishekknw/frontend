@@ -9,7 +9,6 @@ const getSupplierColumn = () => {
       text: 'Supplier Id',
       sort: true,
       formatter: (cell, row) => {
-        console.log(row);
         let { supplier_id } = row;
         return supplier_id || '-';
       },
