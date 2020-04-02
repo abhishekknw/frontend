@@ -23,50 +23,50 @@ const getSupplierColumnContactDetails = () => {
       width: '350px',
       sort: true,
       formatter: (cell, row) => {
-        const { supplier_id, society_name } = row;
+        const { supplier_id, name } = row;
         const supplierFormUrl = `https://forms.machadalo.com/#/society/${supplier_id}`;
         return (
           <a href={supplierFormUrl} style={{ color: '#e8578d' }} target="_blank">
-            {society_name}
+            {name}
           </a>
         );
       },
     },
     {
-      dataField: 'society_locality',
+      dataField: 'area',
       text: 'Area',
       sort: true,
       formatter: (cell, row) => {
-        const { society_locality } = row;
-        return society_locality || '-';
+        const { area } = row;
+        return area || '-';
       },
     },
     {
-      dataField: 'society_subarea',
+      dataField: 'subarea',
       text: 'Sub Area',
       sort: true,
       formatter: (cell, row) => {
-        const { society_subarea } = row;
-        return society_subarea || '-';
+        const { subarea } = row;
+        return subarea || '-';
       },
     },
     {
-      dataField: 'society_city',
+      dataField: 'city',
       text: 'City',
       sort: true,
       formatter: (cell, row) => {
-        const { society_city } = row;
-        return society_city || '-';
+        const { city } = row;
+        return city || '-';
       },
     },
     {
-      dataField: 'society_address1',
+      dataField: 'address',
       text: 'Address',
       sort: true,
       width: '400px',
       formatter: (cell, row) => {
-        const { society_address1 } = row;
-        return society_address1 || '-';
+        const { address } = row;
+        return address || '-';
       },
     },
     {
