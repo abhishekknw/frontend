@@ -19,11 +19,11 @@ const getSupplierColumn = () => {
       width: '350px',
       sort: true,
       formatter: (cell, row) => {
-        const { supplier_id, society_name } = row;
+        const { supplier_id, name } = row;
         const supplierFormUrl = `https://forms.machadalo.com/#/society/${supplier_id}`;
         return (
           <a href={supplierFormUrl} style={{ color: '#e8578d' }} target="_blank">
-            {society_name}
+            {name}
           </a>
         );
       },

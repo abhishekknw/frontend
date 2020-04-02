@@ -59,7 +59,7 @@ const getEntityCitywiseCount = () => {
       row: 1,
       width: '150px',
       formatter: (cell, row) => {
-        const { name, city, contact_name_filled_suppliers, contact_name_filled_count } = row;
+        const { name, city, contact_name_filled_suppliers, contact_name_filled_count, type } = row;
         // Get supplier details from supplier ids
         return (
           <div>
@@ -73,6 +73,8 @@ const getEntityCitywiseCount = () => {
                     type: 'Contact Name Filled',
                     isCampaign: false,
                     name: `${name} Entities of ${city} City`,
+                    supplier_type: type,
+                    is_contact_number: true,
                   },
                 }}
               >
@@ -101,6 +103,7 @@ const getEntityCitywiseCount = () => {
           contact_name_total_filled_count,
           name,
           city,
+          type,
         } = row;
         // Get supplier details from supplier ids
         return (
@@ -115,6 +118,8 @@ const getEntityCitywiseCount = () => {
                     type: 'Contact Name Total Filled',
                     isCampaign: false,
                     name: `${name} Entities of ${city} City`,
+                    supplier_type: type,
+                    is_multiple_contact_name: true,
                   },
                 }}
               >
@@ -143,6 +148,7 @@ const getEntityCitywiseCount = () => {
           contact_name_not_filled_count,
           name,
           city,
+          type,
         } = row;
         // Get supplier details from supplier ids
         return (
@@ -157,6 +163,7 @@ const getEntityCitywiseCount = () => {
                     type: 'Contact Name Not Filled',
                     isCampaign: false,
                     name: `${name} Entities of ${city} City`,
+                    supplier_type: type,
                   },
                 }}
               >
@@ -187,7 +194,13 @@ const getEntityCitywiseCount = () => {
       row: 1,
       width: '150px',
       formatter: (cell, row) => {
-        const { contact_number_filled_suppliers, contact_number_filled_count, name, city } = row;
+        const {
+          contact_number_filled_suppliers,
+          contact_number_filled_count,
+          name,
+          city,
+          type,
+        } = row;
         // Get supplier details from supplier ids
         return (
           <div>
@@ -201,6 +214,8 @@ const getEntityCitywiseCount = () => {
                     type: 'Contact Number Filled',
                     isCampaign: false,
                     name: `${name} Entities of ${city} City`,
+                    supplier_type: type,
+                    is_contact_number: true,
                   },
                 }}
               >
@@ -229,6 +244,7 @@ const getEntityCitywiseCount = () => {
           contact_number_total_filled_count,
           name,
           city,
+          type,
         } = row;
         // Get supplier details from supplier ids
         return (
@@ -244,6 +260,8 @@ const getEntityCitywiseCount = () => {
                     type: 'Contact Number Total Filled',
                     isCampaign: false,
                     name: `${name} Entities of ${city} City`,
+                    supplier_type: type,
+                    is_multiple_contact_number: true,
                   },
                 }}
               >
@@ -272,6 +290,7 @@ const getEntityCitywiseCount = () => {
           contact_number_not_filled_count,
           name,
           city,
+          type,
         } = row;
         // Get supplier details from supplier ids
         return (
@@ -286,6 +305,7 @@ const getEntityCitywiseCount = () => {
                     type: 'Contact Number Not Filled',
                     isCampaign: false,
                     name: `${name} Entities of ${city} City`,
+                    supplier_type: type,
                   },
                 }}
               >
