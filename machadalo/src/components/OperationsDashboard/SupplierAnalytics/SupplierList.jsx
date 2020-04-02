@@ -9,7 +9,8 @@ class SupplierList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      campaignName: '',
+      isCampaign: true,
+      name: '',
       supplierDetails: [],
       suppliers: [],
       columns: [],
@@ -35,13 +36,15 @@ class SupplierList extends Component {
   componentDidMount() {
     let {
       suppliers,
-      campaign_name,
+      name,
       is_multiple_contact_name,
       is_multiple_contact_number,
       is_contact_name,
       is_contact_number,
+      isCampaign,
     } = this.props.location.state;
-    this.setState({ campaignName: campaign_name });
+    if (isCampaign === false) this.setState({ isCampaign });
+    this.setState({ name });
     if (suppliers && typeof suppliers[0] == 'string') {
       const data = {
         supplier_ids: suppliers,
@@ -62,28 +65,37 @@ class SupplierList extends Component {
   render() {
     let { status, type } = this.props.location.state;
     status = status ? status.charAt(0).toUpperCase() + status.slice(1) : '';
+    let path = `/r/operations-dashboard/entity`;
+    let headerValue = `List of ${this.state.name} (${type})`;
+    let title = `Entity `;
     const heading = status
-      ? `${this.state.campaignName} (${status.toUpperCase()})`
-      : `${this.state.campaignName} (${type})`;
+      ? `${this.state.name} (${status.toUpperCase()})`
+      : `${this.state.name} (${type})`;
+    if (this.state.isCampaign) {
+      path = `/r/operations-dashboard`;
+      title = 'Campaign Name';
+      headerValue = 'List of Entities';
+    }
+
     return (
       <div className="bootstrap-iso">
         <button
           type="button"
           className="btn btn-danger"
-          onClick={() => this.props.history.push(`/r/operations-dashboard`)}
+          onClick={() => this.props.history.push(path)}
           style={{ marginTop: '10px', backgroundColor: '#e84478', borderColor: '#e84478' }}
         >
           <i className="fa fa-arrow-left" aria-hidden="true" />
           &nbsp; Back
         </button>
-        {this.state.campaignName && (
+        {this.state.isCampaign && (
           <div style={{ fontStyle: 'oblique', textAlign: 'center' }}>
             <h5
               style={{
                 color: '#6d6d6d',
               }}
             >
-              Campaign Name :
+              {title} :
             </h5>
             <h5
               style={{
@@ -101,7 +113,7 @@ class SupplierList extends Component {
             exportCsv={true}
             search={true}
             pagination={true}
-            headerValue="List of Entities"
+            headerValue={headerValue}
             backgroundColor="#c7c7c7c9"
           />
         )}

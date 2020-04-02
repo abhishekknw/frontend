@@ -3,19 +3,21 @@ import request from 'superagent';
 import config from '../../../config';
 import InnerGrid from '../../InnerGrid';
 import getEntityCount from './EntityCountGridConfig';
+import LoadingWrapper from '../../Error/LoadingWrapper';
 
 class EntityCount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       entityData: [],
+      isDataFetched: false,
     };
   }
 
   componentDidMount() {
     const { token } = this.props;
     request
-      .get(`${config.API_URL}/v0/ui/suppliers-meta/`)
+      .get(`${config.API_URL}/v0/ui/ops/supplier-summary/`)
       .set('Authorization', `JWT ${token}`)
       .then((resp) => {
         const { status, data } = resp.body;
@@ -27,6 +29,7 @@ class EntityCount extends React.Component {
           }));
           this.setState({
             entityData,
+            isDataFetched: true,
           });
         }
       })
@@ -38,7 +41,7 @@ class EntityCount extends React.Component {
   render() {
     return (
       <div style={{ marginTop: '5em' }}>
-        {this.state.entityData.length > 0 && (
+        {this.state.isDataFetched ? (
           <InnerGrid
             columns={getEntityCount()}
             data={this.state.entityData}
@@ -48,6 +51,8 @@ class EntityCount extends React.Component {
             headerValue="Entity Report"
             backgroundColor="#c7c7c7c9"
           />
+        ) : (
+          <LoadingWrapper />
         )}
       </div>
     );

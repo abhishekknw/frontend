@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Default } from 'react-awesome-spinners';
 
-class LoadingWrapper extends React.Component {
-  render() {
-    return (
-      <div
-        className="ui active centered inline loader"
-        style={{ marginTop: '10%', color: 'brown' }}
-      ></div>
-    );
-  }
-}
+const LoadingWrapper = () => {
+  const [loading, setLoading] = useState(true);
+
+  return (
+    <div style={{ margin: 'auto', textAlign: 'center', marginTop: '10%' }}>
+      {loading && <Default color={'rgb(232, 68, 120)'} />}
+    </div>
+  );
+};
 
 export default LoadingWrapper;

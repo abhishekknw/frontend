@@ -74,7 +74,7 @@ const getCampaignColumn = () => {
                   state: {
                     suppliers: flat_count_details_filled_suppliers,
                     campaign_id,
-                    campaign_name: name,
+                    name,
                     type: 'Flat Count Filled',
                   },
                 }}
@@ -118,7 +118,7 @@ const getCampaignColumn = () => {
                   state: {
                     suppliers: flat_count_details_not_filled_suppliers,
                     campaign_id,
-                    campaign_name: name,
+                    name,
                     type: 'Flat Count Not Filled',
                   },
                 }}
@@ -169,7 +169,7 @@ const getCampaignColumn = () => {
                   state: {
                     suppliers: contact_name_filled_suppliers,
                     campaign_id,
-                    campaign_name: name,
+                    name,
                     type: 'Contact Name Filled',
                     is_contact_name: true,
                   },
@@ -208,7 +208,7 @@ const getCampaignColumn = () => {
                   state: {
                     suppliers: contact_name_filled_suppliers,
                     campaign_id,
-                    campaign_name: name,
+                    name,
                     type: 'Contact Name Total Filled',
                     is_multiple_contact_name: true,
                   },
@@ -249,7 +249,7 @@ const getCampaignColumn = () => {
                   state: {
                     suppliers: contact_name_not_filled_suppliers,
                     campaign_id,
-                    campaign_name: name,
+                    name,
                     type: 'Contact Name Not Filled',
                   },
                 }}
@@ -300,7 +300,7 @@ const getCampaignColumn = () => {
                   state: {
                     suppliers: contact_number_filled_suppliers,
                     campaign_id,
-                    campaign_name: name,
+                    name,
                     type: 'Contact Number Filled',
                     is_contact_number: true,
                   },
@@ -344,7 +344,7 @@ const getCampaignColumn = () => {
                   state: {
                     suppliers: contact_number_filled_suppliers,
                     campaign_id,
-                    campaign_name: name,
+                    name,
                     type: 'Contact Number Total Filled',
                     is_multiple_contact_number: true,
                   },
@@ -385,7 +385,7 @@ const getCampaignColumn = () => {
                   state: {
                     suppliers: contact_number_not_filled_suppliers,
                     campaign_id,
-                    campaign_name: name,
+                    name,
                     type: 'Contact Number Not Filled',
                   },
                 }}
@@ -404,27 +404,6 @@ const getCampaignColumn = () => {
         );
       },
     },
-    // {
-    //   dataField: 'payment_details',
-    //   text: 'Payment Details',
-    //   row: 0,
-    //   colSpan: 2,
-    //   sort: false,
-    // },
-    // {
-    //   dataField: 'payment_details_filled',
-    //   text: 'Filled',
-    //   row: 1,
-    //   width: '100px',
-    //   sort: false,
-    // },
-    // {
-    //   dataField: 'payment_details_not_filled',
-    //   text: 'Not Filled',
-    //   row: 1,
-    //   width: '100px',
-    //   sort: false,
-    // },
   ];
 };
 

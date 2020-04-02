@@ -57,7 +57,7 @@ const getCampaignColumn = () => {
                     suppliers: supplier_ids,
                     campaign_id,
                     type: status,
-                    campaign_name,
+                    name: campaign_name,
                   },
                 }}
               >
@@ -102,7 +102,7 @@ const getCampaignColumn = () => {
                   state: {
                     suppliers: internal_comments_filled_suppliers,
                     campaign_id,
-                    campaign_name,
+                    name: campaign_name,
                     type: 'Internal Comments Filled',
                   },
                 }}
@@ -142,7 +142,7 @@ const getCampaignColumn = () => {
                   state: {
                     suppliers: internal_comments_not_filled_suppliers,
                     campaign_id,
-                    campaign_name,
+                    name: campaign_name,
                     type: 'Internal Comments Not Filled',
                   },
                 }}
@@ -189,7 +189,7 @@ const getCampaignColumn = () => {
                   state: {
                     suppliers: external_comments_filled_suppliers,
                     campaign_id,
-                    campaign_name,
+                    name: campaign_name,
                     type: 'External Comments Filled',
                   },
                 }}
@@ -229,7 +229,7 @@ const getCampaignColumn = () => {
                   state: {
                     suppliers: external_comments_not_filled_suppliers,
                     campaign_id,
-                    campaign_name,
+                    name: campaign_name,
                     type: 'External Comments Not Filled',
                   },
                 }}
@@ -276,7 +276,7 @@ const getCampaignColumn = () => {
                   state: {
                     suppliers: permission_box_filled_suppliers,
                     campaign_id,
-                    campaign_name,
+                    name: campaign_name,
                     type: 'Permission Box Filled',
                   },
                 }}
@@ -315,7 +315,7 @@ const getCampaignColumn = () => {
                   state: {
                     suppliers: permission_box_not_filled_suppliers,
                     campaign_id,
-                    campaign_name,
+                    name: campaign_name,
                     type: 'Permission Box Not Filled',
                   },
                 }}
@@ -361,7 +361,7 @@ const getCampaignColumn = () => {
                   state: {
                     suppliers: receipt_filled_suppliers,
                     campaign_id,
-                    campaign_name,
+                    name: campaign_name,
                     type: 'Receipt Filled',
                   },
                 }}
@@ -400,7 +400,7 @@ const getCampaignColumn = () => {
                   state: {
                     suppliers: receipt_not_filled_suppliers,
                     campaign_id,
-                    campaign_name,
+                    name: campaign_name,
                     type: 'Receipt Not Filled',
                   },
                 }}

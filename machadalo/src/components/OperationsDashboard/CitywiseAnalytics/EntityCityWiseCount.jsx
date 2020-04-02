@@ -2,6 +2,7 @@ import React from 'react';
 import request from 'superagent';
 import config from '../../../config';
 import InnerGrid from '../../InnerGrid';
+import LoadingWrapper from '../../Error/LoadingWrapper';
 import getEntityCitywiseCount from './EntityCitywiseCountGridConfig';
 
 class EntityCitywiseCount extends React.Component {
@@ -10,12 +11,12 @@ class EntityCitywiseCount extends React.Component {
     this.state = {
       entityData: [],
       headerValue: '',
+      isDataFetched: false,
     };
   }
 
   componentDidMount() {
     const { token } = this.props.auth;
-    console.log(this.props.location);
     const { name, supplier_type } = this.props.location.state;
     const headerValue = `Citywise Report - ${name}`;
     this.setState({ headerValue });
@@ -25,9 +26,14 @@ class EntityCitywiseCount extends React.Component {
       .then((resp) => {
         const { status, data } = resp.body;
         if (status) {
-          const entityData = data;
+          const entityData = Object.keys(data).map((key, index) => ({
+            ...data[key],
+            city: key,
+            key: index,
+          }));
           this.setState({
             entityData,
+            isDataFetched: true,
           });
         }
       })
@@ -39,24 +45,30 @@ class EntityCitywiseCount extends React.Component {
   render() {
     return (
       <div className="bootstrap-iso">
-        <button
-          type="button"
-          className="btn btn-danger"
-          onClick={() => this.props.history.push(`/r/operations-dashboard/entity`)}
-          style={{ marginTop: '10px', float: 'right', backgroundColor: 'rgb(232, 68, 120)' }}
-        >
-          <i className="fa fa-arrow-left" aria-hidden="true" />
-          &nbsp; Back
-        </button>
-        <InnerGrid
-          columns={getEntityCitywiseCount()}
-          data={this.state.entityData}
-          exportCsv={true}
-          search={true}
-          pagination={true}
-          headerValue={this.state.headerValue}
-          backgroundColor="#c7c7c7c9"
-        />
+        {this.state.isDataFetched ? (
+          <div>
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={() => this.props.history.push(`/r/operations-dashboard/entity`)}
+              style={{ marginTop: '10px', float: 'right', backgroundColor: 'rgb(232, 68, 120)' }}
+            >
+              <i className="fa fa-arrow-left" aria-hidden="true" />
+              &nbsp; Back
+            </button>
+            <InnerGrid
+              columns={getEntityCitywiseCount()}
+              data={this.state.entityData}
+              exportCsv={false}
+              search={true}
+              pagination={true}
+              headerValue={this.state.headerValue}
+              backgroundColor="#c7c7c7c9"
+            />
+          </div>
+        ) : (
+          <LoadingWrapper />
+        )}
       </div>
     );
   }
