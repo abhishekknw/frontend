@@ -2,54 +2,71 @@ import React from 'react';
 import { get } from 'lodash';
 import CampaignBadge from '../../CampaignBadge';
 
+const linkStyle = {
+  'a:link': { color: '#000' },
+};
+
 const getSupplierColumnContactDetails = () => {
   return [
+    {
+      dataField: 'supplier_id',
+      text: 'Supplier Id',
+      sort: true,
+      formatter: (cell, row) => {
+        let { supplier_id } = row;
+        return supplier_id || '-';
+      },
+    },
     {
       dataField: 'society_name',
       text: 'Name',
       width: '350px',
       sort: true,
       formatter: (cell, row) => {
-        const { society_longitude, society_latitude, society_name } = row;
-        const googleMapUrl = `https://www.google.com/maps/?q=+${society_latitude}+=+${society_longitude}`;
-        return <a href={googleMapUrl}>{society_name}</a>;
+        const { supplier_id, name } = row;
+        const supplierFormUrl = `https://forms.machadalo.com/#/society/${supplier_id}`;
+        return (
+          <a href={supplierFormUrl} style={{ color: '#e8578d' }} target="_blank">
+            {name}
+          </a>
+        );
       },
     },
     {
-      dataField: 'society_locality',
+      dataField: 'area',
       text: 'Area',
       sort: true,
       formatter: (cell, row) => {
-        const { society_locality } = row;
-        return society_locality || '-';
+        const { area } = row;
+        return area || '-';
       },
     },
     {
-      dataField: 'society_subarea',
+      dataField: 'subarea',
       text: 'Sub Area',
       sort: true,
       formatter: (cell, row) => {
-        const { society_subarea } = row;
-        return society_subarea || '-';
+        const { subarea } = row;
+        return subarea || '-';
       },
     },
     {
-      dataField: 'society_city',
+      dataField: 'city',
       text: 'City',
       sort: true,
       formatter: (cell, row) => {
-        const { society_city } = row;
-        return society_city || '-';
+        const { city } = row;
+        return city || '-';
       },
     },
     {
-      dataField: 'society_address1',
+      dataField: 'address',
       text: 'Address',
       sort: true,
       width: '400px',
       formatter: (cell, row) => {
-        const { society_address1 } = row;
-        return society_address1 || '-';
+        const { address } = row;
+        return address || '-';
       },
     },
     {

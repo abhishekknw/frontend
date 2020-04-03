@@ -5,14 +5,27 @@ import CampaignBadge from '../../CampaignBadge';
 const getSupplierColumn = () => {
   return [
     {
+      dataField: 'supplier_id',
+      text: 'Supplier Id',
+      sort: true,
+      formatter: (cell, row) => {
+        let { supplier_id } = row;
+        return supplier_id || '-';
+      },
+    },
+    {
       dataField: 'name',
       text: 'Name',
       width: '350px',
       sort: true,
       formatter: (cell, row) => {
-        const { society_longitude, society_latitude, name } = row;
-        const googleMapUrl = `https://www.google.com/maps/place/${society_latitude},${society_longitude}`;
-        return <a href={googleMapUrl}>{name}</a>;
+        const { supplier_id, name } = row;
+        const supplierFormUrl = `https://forms.machadalo.com/#/society/${supplier_id}`;
+        return (
+          <a href={supplierFormUrl} style={{ color: '#e8578d' }} target="_blank">
+            {name}
+          </a>
+        );
       },
     },
     {
@@ -96,7 +109,7 @@ const getSupplierColumn = () => {
     },
     {
       dataField: 'contact_type',
-      text: 'Contact Type',
+      text: 'Designation',
       sort: true,
       formatter: (cell, row) => {
         const contact_type = get(row, 'contact_type');

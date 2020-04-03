@@ -47,6 +47,11 @@ class OperationsDashboard extends Component {
           />
           <Route
             exact
+            path={`${match.path}/city/:type/suppliers`}
+            render={(componentProps) => <SupplierList {...this.props} {...componentProps} />}
+          />
+          <Route
+            exact
             path={`${match.path}/user`}
             render={(componentProps) => <UserAnalytics {...this.props} {...componentProps} />}
           />

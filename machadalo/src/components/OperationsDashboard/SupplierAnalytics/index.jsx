@@ -98,7 +98,7 @@ class SupplierAnalytics extends React.Component {
             <button
               onClick={this.handleClick}
               className="btn btn-danger"
-              style={{ marginTop: '10px' }}
+              style={{ marginTop: '10px', backgroundColor: '#e84478', borderColor: '#e84478' }}
             >
               View Details
             </button>
