@@ -18,7 +18,7 @@ const getSupplierColumnContactDetails = () => {
       },
     },
     {
-      dataField: 'society_name',
+      dataField: 'name',
       text: 'Name',
       width: '350px',
       sort: true,
