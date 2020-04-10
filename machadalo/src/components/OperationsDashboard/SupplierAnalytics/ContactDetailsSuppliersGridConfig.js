@@ -23,8 +23,28 @@ const getSupplierColumnContactDetails = () => {
       width: '350px',
       sort: true,
       formatter: (cell, row) => {
-        const { supplier_id, name } = row;
-        const supplierFormUrl = `https://forms.machadalo.com/#/society/${supplier_id}`;
+        const { supplier_id, name, supplier_type_code } = row;
+        let supplier_type = 'society';
+        switch (supplier_type_code) {
+          case 'CP':
+            supplier_type = 'corporate';
+            break;
+          case 'RE':
+            supplier_type = 'retailshop';
+            break;
+          case 'GY':
+            supplier_type = 'gym';
+            break;
+          case 'EI':
+            supplier_type = 'educational';
+            break;
+          case 'BS':
+            supplier_type = 'busshelter';
+            break;
+          default:
+            supplier_type = 'society';
+        }
+        const supplierFormUrl = `https://forms.machadalo.com/#/${supplier_type}/${supplier_id}`;
         return (
           <a href={supplierFormUrl} style={{ color: '#e8578d' }} target="_blank">
             {name}
