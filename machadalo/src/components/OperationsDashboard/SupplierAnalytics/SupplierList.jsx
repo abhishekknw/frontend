@@ -42,15 +42,15 @@ class SupplierList extends Component {
       is_contact_name,
       is_contact_number,
       isCampaign,
-      supplier_type,
+      supplier_type_code,
     } = this.props.location.state;
     if (isCampaign === false) this.setState({ isCampaign });
+    if (!supplier_type_code) supplier_type_code = 'RS';
     this.setState({ name });
-    if (!supplier_type) supplier_type = 'RS';
     if (suppliers && typeof suppliers[0] == 'string') {
       const data = {
         supplier_ids: suppliers,
-        supplier_type_code: supplier_type,
+        supplier_type_code,
         is_multiple_contact_name: is_multiple_contact_name || false,
         is_multiple_contact_number: is_multiple_contact_number || false,
         is_contact_name: is_contact_name || false,

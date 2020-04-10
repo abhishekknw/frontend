@@ -24,14 +24,21 @@ const getEntityList = () => {
         switch (supplierTypeCode) {
           case 'CP':
             supplier_type = 'corporate';
+            break;
           case 'RE':
             supplier_type = 'retailshop';
+            break;
           case 'GY':
             supplier_type = 'gym';
+            break;
           case 'EI':
             supplier_type = 'educational';
+            break;
           case 'BS':
             supplier_type = 'busshelter';
+            break;
+          default:
+            supplier_type = 'society';
         }
         const supplierFormUrl = `https://forms.machadalo.com/#/${supplier_type}/${supplier_id}`;
         return (

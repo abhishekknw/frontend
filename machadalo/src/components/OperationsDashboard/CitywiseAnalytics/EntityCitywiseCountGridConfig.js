@@ -135,8 +135,8 @@ const getEntityCitywiseCount = () => {
                     type: 'Contact Name Filled',
                     isCampaign: false,
                     name: `${name} Entities of ${city} City`,
-                    supplier_type: type,
                     is_contact_number: true,
+                    supplier_type_code: type,
                   },
                 }}
               >
@@ -180,8 +180,8 @@ const getEntityCitywiseCount = () => {
                     type: 'Contact Name Total Filled',
                     isCampaign: false,
                     name: `${name} Entities of ${city} City`,
-                    supplier_type: type,
                     is_multiple_contact_name: true,
+                    supplier_type_code: type,
                   },
                 }}
               >
@@ -225,7 +225,7 @@ const getEntityCitywiseCount = () => {
                     type: 'Contact Name Not Filled',
                     isCampaign: false,
                     name: `${name} Entities of ${city} City`,
-                    supplier_type: type,
+                    supplier_type_code: type,
                   },
                 }}
               >
@@ -276,8 +276,8 @@ const getEntityCitywiseCount = () => {
                     type: 'Contact Number Filled',
                     isCampaign: false,
                     name: `${name} Entities of ${city} City`,
-                    supplier_type: type,
                     is_contact_number: true,
+                    supplier_type_code: type,
                   },
                 }}
               >
@@ -322,8 +322,8 @@ const getEntityCitywiseCount = () => {
                     type: 'Contact Number Total Filled',
                     isCampaign: false,
                     name: `${name} Entities of ${city} City`,
-                    supplier_type: type,
                     is_multiple_contact_number: true,
+                    supplier_type_code: type,
                   },
                 }}
               >
@@ -367,7 +367,7 @@ const getEntityCitywiseCount = () => {
                     type: 'Contact Number Not Filled',
                     isCampaign: false,
                     name: `${name} Entities of ${city} City`,
-                    supplier_type: type,
+                    supplier_type_code: type,
                   },
                 }}
               >

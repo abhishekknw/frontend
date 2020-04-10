@@ -4,7 +4,6 @@ import config from '../../../config';
 import getCampaignSummaryColumn from './SupplierCampaignSummaryGridConfig';
 import InnerGrid from '../../InnerGrid';
 import SupplierCampaignModal from '../../Modals/SupplierCampaignModal';
-import BookingSubStatusSummary from '../BookingSubStatusSummary';
 
 class SupplierAnalytics extends React.Component {
   constructor(props) {
