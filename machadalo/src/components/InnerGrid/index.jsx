@@ -30,7 +30,7 @@ class InnerGrid extends React.Component {
         <BootstrapTable
           data={data}
           headerValue={`Supplier Details`}
-          headerStyle={{ backgroundColor: '#707f8c9e' }}
+          headerStyle={{ backgroundColor: 'rgba(199, 199, 199, 0.62)', color: '#353535' }}
           exportCSV={this.props.exportCsv || false}
           search={this.props.search || false}
           pagination={this.props.pagination}
