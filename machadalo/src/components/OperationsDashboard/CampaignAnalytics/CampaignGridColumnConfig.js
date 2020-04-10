@@ -23,6 +23,7 @@ const getCampaignColumn = () => {
       text: 'Status',
       row: 0,
       rowSpan: 2,
+      width: '150px',
       formatter: (cell, row) => {
         let status = get(row, 'campaign_status');
         let variant = status === 'completed' ? 'success' : status === 'ongoing' ? 'info' : 'danger';
@@ -34,12 +35,14 @@ const getCampaignColumn = () => {
       text: 'Entity Count',
       row: 0,
       rowSpan: 2,
+      width: '150px',
     },
     {
       dataField: 'city',
       text: 'City',
       row: 0,
       rowSpan: 2,
+      width: '150px',
     },
     {
       dataField: 'flat_count_details',
@@ -97,7 +100,7 @@ const getCampaignColumn = () => {
       dataField: 'flat_count_details_not_filled',
       text: 'Not Filled',
       row: 1,
-      width: '100px',
+      width: '150px',
       sort: false,
       formatter: (cell, row) => {
         const {
@@ -193,7 +196,7 @@ const getCampaignColumn = () => {
       dataField: 'contact_name_filled_total',
       text: 'Total Filled',
       row: 1,
-      width: '100px',
+      width: '150px',
       sort: false,
       formatter: (cell, row) => {
         const { campaign_id, contact_name_filled_suppliers, contact_name_filled_total, name } = row;
@@ -228,7 +231,7 @@ const getCampaignColumn = () => {
       dataField: 'contact_name_not_filled',
       text: 'Not Filled',
       row: 1,
-      width: '100px',
+      width: '150px',
       sort: false,
       formatter: (cell, row) => {
         const {
@@ -324,7 +327,7 @@ const getCampaignColumn = () => {
       dataField: 'contact_number_filled_total',
       text: 'Total Filled',
       row: 1,
-      width: '100px',
+      width: '150px',
       sort: false,
       formatter: (cell, row) => {
         const {
@@ -364,7 +367,7 @@ const getCampaignColumn = () => {
       dataField: 'contact_number_not_filled',
       text: 'Not Filled',
       row: 1,
-      width: '100px',
+      width: '150px',
       sort: false,
       formatter: (cell, row) => {
         const {
