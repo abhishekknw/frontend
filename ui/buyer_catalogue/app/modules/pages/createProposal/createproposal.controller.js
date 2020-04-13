@@ -25,7 +25,8 @@ angular.module('catalogueApp')
         {header : 'Action'}
       ];
   var count = 0;
-  var suppliersData = new Array();
+	var suppliersData = new Array();
+	$scope.modelSuppliers = suppliersData;
 	$scope.addCenter = function(){
 		// $scope.editProposal = false;
     suppliersData[count] = angular.copy($scope.suppliers);
@@ -138,13 +139,45 @@ angular.module('catalogueApp')
     count--;
 	}
 	// code chnaged to send codes like RS,CP..etc
-	$scope.checkSpace = function(supplier,center){
-		if(supplier.selected == true)
+	$scope.checkSpace = function (supplier, center, index) {
+		$scope.allSuppliers = $scope.model.centers[index].suppliers
+		if (supplier.selected == true) {
+			if (supplier.code == "RS") {
+				center.center.codes = [];
+				var localindex_index = $scope.model.centers[index].suppliers.map(function (el) {
+					return el.code;
+				}).indexOf("RS");
+				if (localindex_index != -1) {
+					let newSuppliers = [];
+					newSuppliers.push($scope.model.centers[index].suppliers[localindex_index]);
+					$scope.model.centers[index].suppliers = newSuppliers;
+				}
+			} else {
+				var _index = $scope.model.centers[index].suppliers.map(function (el) {
+					return el.code;
+				}).indexOf("RS");
+				if (_index != -1) {
+					$scope.rsSuppliers = $scope.model.centers[index].suppliers[_index];
+					$scope.model.centers[index].suppliers.splice(_index, 1);
+				}
+			}
 			center.center.codes.push(supplier.code);
+		}
 		else {
+			if (supplier.code == "RS") {
+				$scope.model.centers[index].suppliers = $scope.modelSuppliers[0];
+			} else {
+				var index_index = $scope.model.centers[index].suppliers.map(function (el) {
+					return el.selected;
+				}).indexOf(true);
+				if (index_index == -1) {
+					$scope.model.centers[index].suppliers.unshift($scope.rsSuppliers);
+				}
+
+			}
 			var index = center.center.codes.indexOf(supplier.code);
-			if(index > -1)
-				center.center.codes.splice(index,1);
+			if (index > -1)
+				center.center.codes.splice(index, 1);
 		}
 	}
   var checkSupplierCode = function() {
