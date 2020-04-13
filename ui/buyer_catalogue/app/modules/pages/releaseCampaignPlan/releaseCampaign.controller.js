@@ -810,6 +810,7 @@ angular.module('catalogueApp')
         $scope.saveContactDetails = function () {
           $scope.payment['basic_contact_available'] = true;
           $scope.payment['basic_contacts'] = $scope.payment.contacts;
+          $scope.payment['food_tasting_allowed'] = null;
           releaseCampaignService.saveContactDetails($scope.payment, $scope.payment.supplier_id)
             .then(function onSuccess(response) {
               $scope.editContactDetails = true;
