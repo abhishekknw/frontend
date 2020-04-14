@@ -2301,6 +2301,7 @@ $scope.gridViewSummary = {};
     //End:save suppliers and filters to save the current state
     // Start: function to update status of supplier and save in db
     $scope.updateSupplierStatus = function(supplier,center,code){
+      
      try{
       var data = {
         'center_id':center.center.id,
