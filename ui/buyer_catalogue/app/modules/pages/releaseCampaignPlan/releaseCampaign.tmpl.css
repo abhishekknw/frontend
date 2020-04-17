@@ -196,4 +196,6 @@ th{
 
 .comment {
   word-break: break-all;
+ white-space: pre-line;;
+  overflow-wrap: break-word;
 }
