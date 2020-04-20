@@ -192,9 +192,24 @@
             <th>{{detailsHeader.address_landmark}}</th>
             <th>{{detailsHeader.relation_ship_data}}</th>
 
-            <th>{{detailsHeader.average_weekend_daily_footfall}}</th>
-            <th>{{detailsHeader.average_weekday_daily_footfall}}</th>
+            <th ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter == 'RE'">{{detailsHeader.weekend_daily_footfall_count}}</th>
+            <th ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter == 'RE'">{{detailsHeader.weekday_daily_footfall_count}}</th>
 
+            <th ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter == 'CP'">{{detailsHeader.employee_count}}</th>
+            <th ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter == 'CP'">{{detailsHeader.visitors_count}}</th>
+
+            <th ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter == 'GY'">{{detailsHeader.weekend_daily_footfall_count}}</th>
+            <th ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter == 'GY'">{{detailsHeader.weekday_daily_footfall_count}}</th>
+
+            <th ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter == 'SA'">{{detailsHeader.weekend_daily_footfall_count}}</th>
+            <th ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter == 'SA'">{{detailsHeader.weekday_daily_footfall_count}}</th>
+
+            <th ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter == 'BS'">{{detailsHeader.footfall_count}}</th>
+            <th ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter == 'BS'">{{detailsHeader.traffic_count}}</th>
+             
+            <th ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter == 'HO'">{{detailsHeader.eyeball_count }}</th>
+            <th ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter == 'HO'">{{detailsHeader.traffic_count}}</th>
+            
             <th>{{detailsHeader.contacts_details}}</th>
             <th>{{detailsHeader.assign_user}}</th>
             <th>{{detailsHeader.booking_priority}}</th>
@@ -817,9 +832,9 @@
 
               <td class="" rowspan="{{key.length}}" ng-show="$first">
 
-                {{supplier.average_weekend}}
+                {{supplier.unit_primary_count}}
               </td>
-              <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.average_weekday}}</td>
+              <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.unit_secondary_count}}</td>
 
               <td class="" rowspan="{{key.length}}" ng-show="$first">
                 <div class="" ng-repeat="supplier in supplier.contacts | limitTo: 1">
@@ -1009,19 +1024,17 @@
               </td>
               <!-- Total Supplier Price Formula -->
               <td rowspan="{{key.length}}" ng-show="$first">
-                <div ng-if="supplier.shortlisted_inventories_totalPrice && ((((supplier.average_weekend)+(supplier.average_weekday))/2) > 0)">
+                  <!-- new formula req -->
+                <!-- <div ng-if="supplier.shortlisted_inventories_totalPrice && ((((supplier.average_weekend)+(supplier.average_weekday))/2) > 0)">
                   {{(supplier.shortlisted_inventories_totalPrice / (((supplier.average_weekend)+(supplier.average_weekday))/2)) | currency : "₹"}} 
                 </div>
 
                 <div ng-if="supplier.shortlisted_inventories_totalPrice && ((((supplier.average_weekend)+(supplier.average_weekday))/2) == 0)">
                   {{supplier.shortlisted_inventories_totalPrice | currency : "₹"}}
-                </div>
+                </div> -->
               </td>
 
-              <!-- <td class="" rowspan="{{key.length}}" ng-show="$first">{{filter.totalPrice  | currency : "₹"}} <span
-              ng-if="filter.totalPrice/supplier.flat_count ==0 || filter.totalPrice/supplier.flat_count">(</span>{{filter.totalPrice/supplier.flat_count|limitTo:8| currency : "₹"}}<span
-              ng-if="filter.totalPrice/supplier.flat_count == 0 || filter.totalPrice/supplier.flat_count">)</span>
-          </td> -->
+            
           <!-- Negotiated Price Formula -->
               <td class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="priceform">
                 <span ng-disabled="!supplier.phase_no" class="error"
@@ -1029,14 +1042,16 @@
                 <input ng-disabled="!supplier.phase_no || supplier.is_completed " type="number" name="price"
                   ng-model="supplier.total_negotiated_price" class="form-control spacing input-width" min="0"
                   permission="[permissions.addNegotiatedPrice]">
-                <br>{{(supplier.total_negotiated_price / (((supplier.average_weekend)+(supplier.average_weekday))/2))|| 0 | limitTo:8}} 
+                  <!-- new formula req -->
+                <!-- <br>{{(supplier.total_negotiated_price / (((supplier.average_weekend)+(supplier.average_weekday))/2))|| 0 | limitTo:8}}  -->
               </td>
                  
               <!-- Cost Per Flat Formula -->
               <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
                 <input ng-disabled="!supplier.phase_no || supplier.is_completed" type="number"
                   ng-model="supplier.cost_per_flat" class="form-control spacing input-width" min="0">
-                <br>{{(supplier.cost_per_flat * (((supplier.average_weekend)+(supplier.average_weekday))/2))|| 0 | limitTo:8}}
+                    <!-- new formula req -->
+                <!-- <br>{{(supplier.cost_per_flat * (((supplier.average_weekend)+(supplier.average_weekday))/2))|| 0 | limitTo:8}} -->
               </td>
 
               <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">

@@ -1085,7 +1085,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-if="supplier_type_code == 'RS'" ng-repeat="supplier in supplierData">
+                  <tr  ng-repeat="supplier in supplierData">
                     <td>{{$index+1}}</td>
                     <td>{{supplier.name}}</td>
                     <td>{{supplier.city}}</td>
@@ -1097,19 +1097,6 @@
                       </div>
                     </td>
                   </tr>
-
-                  <tr ng-if="supplier_type_code != 'RS'" ng-repeat="supplier in supplierData">
-                      <td>{{$index+1}}</td>
-                      <td>{{supplier.supplier_name}}</td>
-                      <td>{{supplier.address_supplier.city}}</td>
-                      <td>{{supplier.address_supplier.area}}</td>
-                      <td>{{supplier.address_supplier.subarea}}</td>
-                      <td>
-                        <div class="radio">
-                          <label><input type="radio" ng-click="addMoreSuppliers(supplier,$index)">Add To Main List</label>
-                        </div>
-                      </td>
-                    </tr>
                 </tbody>
               </table>
             </div>
