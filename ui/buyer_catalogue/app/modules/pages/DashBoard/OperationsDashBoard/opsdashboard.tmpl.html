@@ -58,7 +58,9 @@
               </td>
               <td ng-if="proposal.proposal.campaign_state == 'PTC'">
                   <span ng-if="proposal.assignment_detail.assigned_to !='Nobody'">
-                {{proposal.assignment_detail.assigned_to}}
+                     <div  ng-repeat="assign in proposal.assignment_detail">
+                        <span>{{assign.assigned_to.assigned_to_name}}</span><br>
+                     </div>
                 </span>
                 <span ng-if="proposal.assignment_detail.assigned_to =='Nobody'">
                     NA
