@@ -241,7 +241,6 @@ angular.module('catalogueApp')
     $scope.campaign_id = ""
 
     $scope.addComment = function(commentType) {
-      $scope.commentModal['shortlisted_spaces_id'] = 1;
       $scope.commentModal['related_to'] = commentType;
 
       opsDashBoardService.addComment($scope.campaign_id, 1, $scope.commentType, $scope.commentModal)

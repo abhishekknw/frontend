@@ -196,7 +196,6 @@ angular.module('catalogueApp')
       }
 
       $scope.addComment = function(){
-        $scope.commentModal['shortlisted_spaces_id'] = 1;
         $scope.commentModal['related_to'] = 'CAMPAIGN';
         campaignListService.addComment($scope.campaignDataForComment.proposal_id,$scope.commentModal)
         .then(function onSuccess(response){
