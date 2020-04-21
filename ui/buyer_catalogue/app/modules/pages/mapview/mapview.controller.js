@@ -2102,6 +2102,7 @@ $scope.gridViewSummary = {};
          };
          console.log("request proposal data",proposal_data);
          console.log("sending proposal version API call");
+    
          mapViewService.proposalVersion($stateParams.proposal_id, proposal_data)
            .then(  function onSuccess(response) {
                   $scope.clientId = response.data.data.logged_in_user_async_id;
@@ -2118,7 +2119,7 @@ $scope.gridViewSummary = {};
                   $window.localStorage.isSavedProposal = true;
                   swal(constants.name,constants.request_proposal_success,constants.success);
                   $scope.checkFileExport = false;
-                  $location.path('/' + $scope.campaign_id + '/manageCampaign/create');
+                  $location.path('/manageCampaign/create');
 
            }).catch(function onError(response){
               console.log("Error occurred in fetching response");
