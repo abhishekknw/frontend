@@ -257,7 +257,6 @@ angular.module('catalogueApp')
           var data = getFilterData();
           releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id, newPage, data)
             .then(function onSuccess(response) {
-
               releaseCampaignService.getCampaignReleaseDetailsHeader()
                 .then(function onSuccess(headerResponse) {
                   $scope.detailsHeaders = headerResponse.data.data;

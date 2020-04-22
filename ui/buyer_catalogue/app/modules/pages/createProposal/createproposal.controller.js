@@ -11,7 +11,14 @@ angular.module('catalogueApp')
 		{name:"Bus Shelter", code:"BS", selected:"false"},
 		{name:"Gym", code:"GY", selected:"false"},
 		{name:"Saloon", code:"SA", selected:"false"},
-		{name:"Retail Shop", code:"RE", selected:"false"},
+		{name:"Retail Shop", code:"RE", selected:"false",disabled:false},
+		{name:"Hording", code:"HO", selected:"false",disabled:true},
+		{name:"Educational Institut", code:"EI", selected:"false",disabled:true},
+		{name:"Bus", code:"BU", selected:"false",disabled:true},
+		{name:"Gantry", code:"GA", selected:"false",disabled:true},
+		{name:"Radio Channel", code:"RC", selected:"false",disabled:true},
+		{name:"TV Channel", code:"TC", selected:"false",disabled:true},
+		
 	];
 	$scope.proposalheaders = [
 			  {header : 'Advertising Area'},
@@ -26,6 +33,7 @@ angular.module('catalogueApp')
       ];
   var count = 0;
 	var suppliersData = new Array();
+
 	$scope.modelSuppliers = suppliersData;
 	$scope.addCenter = function(){
 		// $scope.editProposal = false;
@@ -50,6 +58,9 @@ angular.module('catalogueApp')
     count++;
 	}
 
+
+	
+
 	// $scope.addCenter();
 	$scope.areas = [];
 	$scope.sub_areas = [];
@@ -71,6 +82,7 @@ angular.module('catalogueApp')
 		.then(function onSuccess(response){
 			console.log(response);
 			$scope.centers = response.data.data;
+		
 			for(var i=0; i<$scope.centers.length; i++){
 				$scope.addCenter();
 				$scope.model.centers[i].center = $scope.centers[i];

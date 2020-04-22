@@ -119,7 +119,7 @@
           class="form-control spacing input-size-radius" required></td>
       <td>
         <div class="input-size" ng-repeat="supplier in center.suppliers">
-           <input type="checkbox" ng-model="supplier.selected" ng-click="checkSpace(supplier,center,$parent.$index)">{{supplier.name}}
+           <input type="checkbox" name="space" id="space_" ng-disabled="supplier.code=='HO' || supplier.code=='EI' || supplier.code=='BU' || supplier.code=='GA' || supplier.code=='RC' || supplier.code=='TC'" ng-model="supplier.selected" ng-click="checkSpace(supplier,center,$parent.$index)">{{supplier.name}}
           
         </div>
         <!-- <input type="checkbox"  ng-click="checkSpace('CP',center)">Corporate Parks -->
