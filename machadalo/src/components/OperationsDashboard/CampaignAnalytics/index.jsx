@@ -16,6 +16,9 @@ class CampaignAnalytics extends React.Component {
       token: '',
     };
   }
+  componentDidMount() {
+    this.props.getTappingDetails();
+  }
 
   isExpandableRow = (row) => {
     return row.campaign_id == this.state.selectedCampaign ? true : false;
