@@ -223,7 +223,7 @@
             <th>{{detailsHeader.inventory_days}}</th>
             <th>{{detailsHeader.inventory_supplier_price}}</th>
 
-            <th>{{detailsHeader.total_supplier_price_per_footfall_weekend}}</th>
+            <th>{{detailsHeader.total_supplier_price}}</th>
 
             <th>{{detailsHeader.negotiated_price}}</th>
 
@@ -238,6 +238,7 @@
             <th>{{detailsHeader.lead_performance_summary}}</th>
             <th>{{detailsHeader.completion_status}}</th>
             <th>{{detailsHeader.delete_action}}</th>
+            <th>Update</th>
           </tr>
 
         </thead>
@@ -1010,7 +1011,9 @@
               <!-- <td class="">{{filter.price| currency : "₹"}}</td> -->
               <!-- Inventory Supplier Price Formula -->
               <td>
-                <div ng-if="filter.inventory_duration_name === 'Campaign Weekly'">
+                <!-- new req -->
+                {{filter.total_inventory_supplier_price}}
+                <!-- <div ng-if="filter.inventory_duration_name === 'Campaign Weekly'">
                   {{filter.actual_supplier_price/7 | currency : "₹"}}
                 </div>
 
@@ -1020,10 +1023,11 @@
 
                 <div ng-if="filter.inventory_duration_name === 'Campaign Daily'">
                   {{filter.actual_supplier_price | currency : "₹"}}
-                </div>
+                </div> -->
               </td>
               <!-- Total Supplier Price Formula -->
               <td rowspan="{{key.length}}" ng-show="$first">
+                {{filter.total_count}}
                   <!-- new formula req -->
                 <!-- <div ng-if="supplier.shortlisted_inventories_totalPrice && ((((supplier.average_weekend)+(supplier.average_weekday))/2) > 0)">
                   {{(supplier.shortlisted_inventories_totalPrice / (((supplier.average_weekend)+(supplier.average_weekday))/2)) | currency : "₹"}} 
@@ -1264,7 +1268,12 @@
 
               <td rowspan="{{key.length}}" ng-show="$first">
                 <button type="button" class="btn btn-danger"
-                  ng-click="deleteSupplier(supplier.id,$parent.$index)">Delete Supplier</button>
+                  ng-click="deleteSupplier(supplier.id,$parent.$parent.$index)">Delete Supplier</button>
+              </td>
+
+              <td rowspan="{{key.length}}" ng-show="$first">
+                <button type="button" class="btn btn-info"
+                  ng-click="updateData(supplier.id,$parent.$parent.$index)">Update Supplier</button>
               </td>
 
             </tr>
@@ -1751,7 +1760,7 @@
                       ({{relationshipData.campaign_data.last_campaign_price.proposal__name}})
                     </td>
                     <td ng-if="!relationshipData.campaign_data.last_campaign_price.total_negotiated_price">
-                      NA
+                      _
                     </td>
                   </tr>
                   <tr>

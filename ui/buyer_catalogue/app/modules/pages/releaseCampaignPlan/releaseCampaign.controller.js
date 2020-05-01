@@ -301,7 +301,7 @@ angular.module('catalogueApp')
 
               if ($scope.initialReleaseData) {
                 $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
-           
+                  console.log('11111111111111111111111111111111111111',$scope.releaseDetails);
                 // if ($scope.releaseDetails.shortlisted_suppliers.length) {
                 //   for (let i in $scope.releaseDetails.shortlisted_suppliers.length) {
 
@@ -427,8 +427,15 @@ angular.module('catalogueApp')
           $scope.inventoryIds = [];
           $scope.inventoryIds = filter.detail;
         }
-        $scope.updateData = function () {
-          releaseCampaignService.updateAuditReleasePlanDetails($scope.campaign_id, $scope.releaseDetails.shortlisted_suppliers)
+        $scope.updateData = function (id,index) {
+          let updateData = [];
+           updateData = $scope.releaseDetails.shortlisted_suppliers;
+          if(index && (id == $scope.releaseDetails.shortlisted_suppliers[index].id)){
+            updateData = [];
+            updateData.push($scope.releaseDetails.shortlisted_suppliers[index]) 
+           
+          }
+          releaseCampaignService.updateAuditReleasePlanDetails($scope.campaign_id, updateData)
             .then(function onSuccess(response) {
               swal(constants.name, constants.updateData_success, constants.success);
             })
@@ -1497,6 +1504,7 @@ angular.module('catalogueApp')
         }
         $scope.setUserSupplier = function (supplier) {
           $scope.userSupplierData = supplier;
+          console.log('22222222222222222222222222222222222222',$scope.userSupplierData)
         }
         $scope.setUserForBooking = function () {
           $scope.societySupplierName = $scope.userSupplierData.supplierName;
