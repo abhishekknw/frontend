@@ -1027,7 +1027,9 @@
               </td>
               <!-- Total Supplier Price Formula -->
               <td rowspan="{{key.length}}" ng-show="$first">
-                {{filter.total_count}}
+                <span ng-if="filter.total_count && filter.total_inventory_supplier_price"> {{(filter.total_count) * (filter.total_inventory_supplier_price)}}</span>
+                
+               
                   <!-- new formula req -->
                 <!-- <div ng-if="supplier.shortlisted_inventories_totalPrice && ((((supplier.average_weekend)+(supplier.average_weekday))/2) > 0)">
                   {{(supplier.shortlisted_inventories_totalPrice / (((supplier.average_weekend)+(supplier.average_weekday))/2)) | currency : "₹"}} 

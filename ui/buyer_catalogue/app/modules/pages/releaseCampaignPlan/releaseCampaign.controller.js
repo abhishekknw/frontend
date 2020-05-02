@@ -301,7 +301,7 @@ angular.module('catalogueApp')
 
               if ($scope.initialReleaseData) {
                 $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
-              
+
                 // if ($scope.releaseDetails.shortlisted_suppliers.length) {
                 //   for (let i in $scope.releaseDetails.shortlisted_suppliers.length) {
 
@@ -363,20 +363,20 @@ angular.module('catalogueApp')
           supplier.phase_no = id;
         }
 
-        $scope.test = function(index){
+        $scope.test = function (index) {
           alert(index);
         }
-        
+
         $scope.setBrandForBooking = function () {
           let data = {
-            id:$scope.userSupplierData.id,
-            brand_organisation_id:$scope.organisationMapListWithObjects[$scope.orgData.index].organisation_id
+            id: $scope.userSupplierData.id,
+            brand_organisation_id: $scope.organisationMapListWithObjects[$scope.orgData.index].organisation_id
           }
           var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
             return el.id;
           }).indexOf($scope.userSupplierData.id);
           if (localindex_index != -1) {
-            $scope.releaseDetails.shortlisted_suppliers[localindex_index].brand_organisation_data = {name:$scope.organisationMapListWithObjects[$scope.orgData.index].name}
+            $scope.releaseDetails.shortlisted_suppliers[localindex_index].brand_organisation_data = { name: $scope.organisationMapListWithObjects[$scope.orgData.index].name }
             $scope.orgData = {};
           }
           releaseCampaignService.setBrandForBooking(data)
@@ -386,7 +386,7 @@ angular.module('catalogueApp')
                 text: constants.assign_success,
                 type: "success",
                 confirmButtonText: "ok",
-              });   
+              });
             })
             .catch(function onError(error) {
               console.log(error);
@@ -427,13 +427,13 @@ angular.module('catalogueApp')
           $scope.inventoryIds = [];
           $scope.inventoryIds = filter.detail;
         }
-        $scope.updateData = function (id,index) {
+        $scope.updateData = function (id, index) {
           let updateData = [];
-           updateData = $scope.releaseDetails.shortlisted_suppliers;
-          if(index && (id == $scope.releaseDetails.shortlisted_suppliers[index].id)){
+          updateData = $scope.releaseDetails.shortlisted_suppliers;
+          if (index && (id == $scope.releaseDetails.shortlisted_suppliers[index].id)) {
             updateData = [];
-            updateData.push($scope.releaseDetails.shortlisted_suppliers[index]) 
-           
+            updateData.push($scope.releaseDetails.shortlisted_suppliers[index])
+
           }
           releaseCampaignService.updateAuditReleasePlanDetails($scope.campaign_id, updateData)
             .then(function onSuccess(response) {
@@ -697,6 +697,7 @@ angular.module('catalogueApp')
         }
 
         $scope.addSuppliersToCampaign = function () {
+
           var supplier_ids = [];
           var filters = [];
           var center_data = {};
@@ -708,21 +709,29 @@ angular.module('catalogueApp')
               filters.push(filterKeyValuData);
             }
           })
+         
           angular.forEach($scope.supplierSummaryData, function (supplier) {
-              let code = supplier.supplier_code;
+            let code = "";
+            if (supplier.supplier_code) {
+              code = supplier.supplier_code;
+            }
+            if (supplier.supplier_type) {
+              code = supplier.supplier_type;
+            }
+
             var supplierKeyValueData = {
               id: supplier.supplier_id,
               status: 'F',
             }
-            if(!center_data[code]){
+            if (!center_data[code]) {
               center_data[code] = {};
               center_data[code]['supplier_data'] = [];
               center_data[code]['filter_codes'] = filters;
             }
-            if(code != null)
-            center_data[code]['supplier_data'].push(supplierKeyValueData);
+            if (code != null)
+              center_data[code]['supplier_data'].push(supplierKeyValueData);
           })
-          
+
           var data = {
             campaign_id: $scope.releaseDetails.campaign.proposal_id,
             center_data: center_data
@@ -733,7 +742,8 @@ angular.module('catalogueApp')
               .then(function onSuccess(response) {
                 //synergy
                 if (response) {
-                  $scope.releaseDetails.shortlisted_suppliers = response.data.data;
+                   $scope.releaseDetails.shortlisted_suppliers =response.data.data;
+                   //window.location.reload();
                 }
 
                 $('#addNewSocities').modal('hide');
@@ -1190,6 +1200,8 @@ angular.module('catalogueApp')
               },
               headers: { 'Authorization': 'JWT ' + token }
             }).then(function onSuccess(response) {
+              swal(constants.name, "Import sheet successfully", constants.success);
+             window.location.reload();
 
             })
               .catch(function onError(response) {
