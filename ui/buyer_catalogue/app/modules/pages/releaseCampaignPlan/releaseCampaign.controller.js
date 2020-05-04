@@ -109,6 +109,7 @@ angular.module('catalogueApp')
           { name: 'Rejected by Society', code: 'RRS' },
           { name: 'Others(Specify)', code: 'ROS' },
         ];
+        $scope.sheetUrl = '../../assets/img/booking_plan_sheet_v1.xlsx'
 
         $scope.booking_tentative = [
           { name: 'Phone Booking', code: 'PB' },
@@ -330,7 +331,8 @@ angular.module('catalogueApp')
                   if ($scope.supplier_names.length == 1) {
                     $scope.selectedUser.supplier_type_filter_selected = $scope.supplier_names[0].name;
                     $scope.selectedUser.supplier_type_filter = $scope.supplier_names[0].code;
-                  }
+                  } 
+                 
 
                 }
 

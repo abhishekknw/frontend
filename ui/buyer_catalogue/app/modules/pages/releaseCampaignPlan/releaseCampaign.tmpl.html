@@ -94,6 +94,7 @@
 
 
     <div class="table-wrapper" style="overflow-x: auto;">
+   
       <table class="table table-striped table-suppliers" data-ng-init="initTable()">
         <thead>
 
@@ -154,8 +155,12 @@
             <th>{{detailsHeader.address_landmark}}</th>
             <th>{{detailsHeader.relation_ship_data}}</th>
               
-            <th>{{detailsHeader.flat_count}}</th>
-            <th>{{detailsHeader.tower_count}}</th>
+            <th ng-if="supplier_names.length == 1">{{detailsHeader.flat_count}}</th>
+            <th  ng-if="supplier_names.length == 1">{{detailsHeader.tower_count}}</th>
+
+            <th ng-if="supplier_names.length > 1">Unit Secondary Count</th>
+            <th  ng-if="supplier_names.length > 1">Unit Primary Count</th>
+
             <th>{{detailsHeader.contacts_details}}</th>
             <th>{{detailsHeader.assign_user}}</th>
             <th>{{detailsHeader.booking_priority}}</th>
@@ -180,6 +185,7 @@
             <th>{{detailsHeader.lead_performance_summary}}</th>
             <th>{{detailsHeader.completion_status}}</th>
             <th>{{detailsHeader.delete_action}}</th>
+            <th ng-if="supplier_names.length > 1">Update</th>
           </tr>
 
           <tr ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter != 'RS'">
@@ -243,7 +249,10 @@
 
         </thead>
         <!--Start Residential Society supplier type -->
-        <tbody ng-show="(!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter == 'RS') && releaseDetails.shortlisted_suppliers.length > 0"
+        <!-- <tbody ng-show="(!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter == 'RS') && releaseDetails.shortlisted_suppliers.length > 0"
+          dir-paginate="supplier in releaseDetails.shortlisted_suppliers  | itemsPerPage: suppliersPerPage"
+          total-items="totalSuppliers" current-page="pagination.current" track by "$index"> -->
+          <tbody ng-show="(selectedUser.supplier_type_filter == 'RS')"
           dir-paginate="supplier in releaseDetails.shortlisted_suppliers  | itemsPerPage: suppliersPerPage"
           total-items="totalSuppliers" current-page="pagination.current" track by "$index">
           <div ng-if="releaseDetails.shortlisted_suppliers.length > 0">
@@ -761,7 +770,7 @@
          <!--Start Retail Store supplier type -->
          <!--End Retail Store supplier type -->
         <!--Start other supplier type -->
-        <tbody ng-show="(selectedUser.supplier_type_filter && selectedUser.supplier_type_filter != 'RS') && releaseDetails.shortlisted_suppliers.length > 0"
+        <tbody ng-show="(!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter != 'RS') && releaseDetails.shortlisted_suppliers.length > 0"
           dir-paginate="supplier in releaseDetails.shortlisted_suppliers | itemsPerPage: suppliersPerPage"
           total-items="totalSuppliers" current-page="pagination.current" track by "$index">
           <div ng-if="releaseDetails.shortlisted_suppliers.length > 0">
@@ -832,10 +841,10 @@
               </td>
 
               <td class="" rowspan="{{key.length}}" ng-show="$first">
-
-                {{supplier.unit_primary_count}}
+                {{supplier.unit_secondary_count}}
+                
               </td>
-              <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.unit_secondary_count}}</td>
+              <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.unit_primary_count}}</td>
 
               <td class="" rowspan="{{key.length}}" ng-show="$first">
                 <div class="" ng-repeat="supplier in supplier.contacts | limitTo: 1">
@@ -1385,6 +1394,7 @@
         ng-click="initialiseImportSheet()">Import
         Sheet</button>
     </span>
+   
     <span class="col-md-3 pull-right">
       <button class="btn btn-danger active notify" style="text-align:right" ng-click="changeLocation()">Campaign
         Release and Audit Plan</button>
