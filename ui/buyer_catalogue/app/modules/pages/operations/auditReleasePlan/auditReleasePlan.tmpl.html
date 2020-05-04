@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="modules/pages/operations/auditReleasePlan/auditReleasePlan.tmpl.css"/>
 <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
-<div><nav-bar></nav-bar></div>
+<div style="margin-top: 10px"><nav-bar></nav-bar></div>
 <div ng-loading="loading"></div> <!--For displaying loading icon-->
 <br><br><br>
 <div class="panel-breadcrumb">
@@ -17,16 +17,16 @@
   <div class = "panel-body" style="text-align:center;margin-top:-20px">
     <div class="row">
       <div class="panel panel-default">
-        <div class="panel-heading">
-          <Label>Campaign Id:&nbsp;</Label><span class = "proposal-details">{{releaseDetails.campaign.proposal_id}}</span>
-          <Label class = "labels">Campaign Name:&nbsp;</Label><span class = "proposal-details">{{releaseDetails.campaign.name}}</span>
-          <Label class = "labels">BD Owner:&nbsp;</Label><span class = "proposal-details">{{releaseDetails.campaign.created_by}}</span>
-          <Label class = "labels">Campaign State:&nbsp;</Label><span class = "proposal-details">{{getCampaignState(releaseDetails.campaign.campaign_state)}}</span>
+        <div class="panel-heading panel-heading col-md-12">
+          <span>Campaign Ids:&nbsp;</span><span class = "proposal-details">{{releaseDetails.campaign.proposal_id}}</span>
+          <span">Campaign Name:&nbsp;</span><span class = "proposal-details">{{releaseDetails.campaign.name}}</span>
+          <span">BD Owner:&nbsp;</span><span class = "proposal-details">{{releaseDetails.campaign.created_by}}</span>
+          <span>Campaign State:&nbsp;</span><span class = "proposal-details">{{getCampaignState(releaseDetails.campaign.campaign_state)}}</span>
           </div>
       </div>
     </div>
     </div>
-  <div style="color:#000000;" class="assign-date">
+  <div style="color:#000000; margin-top: 10px" class="assign-date">
       <div class="col-md-12 pull-right" style="background-color:#ffffff;">
       <div class="col-md-4">
           <input type="checkbox" ng-model="dateChecked" permission = "[permissions.assignDates]">
