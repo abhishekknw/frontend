@@ -127,6 +127,7 @@ angular.module('catalogueApp')
 
             $scope.filteredAssignDatesList = angular.copy($scope.releaseDetails);
             $scope.loading = response.data;
+           
             makeAssignDateData($scope.releaseDetails);
           }else {
             swal(constants.name, "You do not have access to Proposal", constants.warning);
