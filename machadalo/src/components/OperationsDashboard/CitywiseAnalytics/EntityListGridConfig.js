@@ -7,8 +7,10 @@ const getEntityList = (entityDetails) => {
   let type = 'Type';
   if (entityDetails && entityDetails.length > 0) {
     isSociety = entityDetails[0].isSociety;
-    unit_count = 'Flat Count';
-    type = 'Society Type';
+    if (isSociety) {
+      unit_count = 'Flat Count';
+      type = 'Society Type';
+    }
   }
 
   return [
