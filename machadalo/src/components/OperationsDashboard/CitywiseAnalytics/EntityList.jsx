@@ -53,7 +53,7 @@ class EntityList extends Component {
               &nbsp; Back
             </button>
             <InnerGrid
-              columns={getEntityList()}
+              columns={getEntityList(this.state.entityDetails)}
               data={this.state.entityDetails}
               exportCsv={true}
               search={true}

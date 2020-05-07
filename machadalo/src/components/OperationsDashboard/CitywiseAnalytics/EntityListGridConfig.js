@@ -1,7 +1,16 @@
 import React from 'react';
 import CampaignBadge from '../../CampaignBadge';
 
-const getEntityList = () => {
+const getEntityList = (entityDetails) => {
+  let isSociety = false;
+  let unit_count = 'Unit Count';
+  let type = 'Type';
+  if (entityDetails && entityDetails.length > 0) {
+    isSociety = entityDetails[0].isSociety;
+    unit_count = 'Flat Count';
+    type = 'Society Type';
+  }
+
   return [
     {
       dataField: 'supplier_id',
@@ -46,6 +55,26 @@ const getEntityList = () => {
             {name}
           </a>
         );
+      },
+    },
+    {
+      dataField: 'flat_count',
+      text: unit_count,
+      sort: true,
+      formatter: (cell, row) => {
+        let { flat_count } = row;
+        if (flat_count) flat_count = flat_count;
+        return flat_count || '-';
+      },
+    },
+    {
+      dataField: 'society_type',
+      text: type,
+      sort: true,
+      formatter: (cell, row) => {
+        let { society_type } = row;
+        if (society_type) society_type = society_type;
+        return society_type || '-';
       },
     },
     {
