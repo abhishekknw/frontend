@@ -64,7 +64,14 @@ angular.module('catalogueApp')
           { name: 'Meeting Converted', code: 'MC' },
           { name: 'New Entity', code: 'NE' },
           { name: 'Rejected', code: 'SR' },
-          { name: 'Not Initiated', code: 'NI' }
+          { name: 'Not Initiated', code: 'NI' },
+          { name: 'Complete Lockdown', code: 'LCL' },
+          { name: 'Partial Lockdown', code: 'LPL' },
+          { name: 'Open Lockdown', code: 'LOL' },
+          { name: 'Emergency System', code: 'LES' },
+          { name: 'Essential Required', code: 'LMR' },
+          { name: 'Medicine Required', code: 'LER' },
+          { name: 'Vegetables & Fruits Required', code: 'LVR' },
         ];
 
         $scope.booking_unknown = [
