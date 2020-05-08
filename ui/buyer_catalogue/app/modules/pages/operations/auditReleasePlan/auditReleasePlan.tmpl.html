@@ -423,9 +423,10 @@
                     </select>
                   </div></br>
                   Inventory Count :
-                  <input type="number" min="1"ng-model="adInvModel.inv_count" placeholder="Select Inventory Count" class="form-control"/></br>
-                 <div class = "col-md-12" style="text-align:left">
-                   <button class="btn btn-danger active notify" ng-click="addAdInventoryIds()">Add</button>
+                  <input type="number" min="1"  ng-change="inventoryCount()" ng-model="adInvModel.inv_count" placeholder="Select Inventory Count" class="form-control"/></br>
+                  
+                  <div class = "col-md-12" style="text-align:left">
+                   <button class="btn btn-danger active notify"  ng-click="addAdInventoryIds()">Add</button>
                  </div>
              </div>
            </div>

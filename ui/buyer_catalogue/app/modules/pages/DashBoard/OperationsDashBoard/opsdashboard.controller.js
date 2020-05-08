@@ -245,10 +245,12 @@ angular.module('catalogueApp')
 
       opsDashBoardService.addComment($scope.campaign_id, 1, $scope.commentType, $scope.commentModal)
         .then(function onSuccess(response) {
-          $scope.viewComments($scope.prposalDataForComment, "CAMPAIGN");
+          // $scope.viewComments($scope.prposalDataForComment, "CAMPAIGN");
           $scope.commentModal = {};
           $scope.prposalDataForComment = undefined;
+          $('#viewComments').modal('hide');
           swal(constants.name, constants.add_data_success, constants.success);
+       
         }).catch(function onError(response) {
           console.log(response);
         })
@@ -272,6 +274,7 @@ angular.module('catalogueApp')
           $scope.commentsData = response.data.data;
           $scope.viewInvForComments = Object.keys($scope.commentsData);
           $scope.selectedInvForView = $scope.viewInvForComments[0];
+          $scope.commentsData = $scope.commentsData[$scope.viewInvForComments[0]];
           $('#viewComments').modal('show');
         }).catch(function onError(response) {
           console.log(response);
