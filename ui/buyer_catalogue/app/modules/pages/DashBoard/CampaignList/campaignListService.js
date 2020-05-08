@@ -45,7 +45,7 @@ function (machadaloHttp, $stateParams, $rootScope, $routeParams, $location, $htt
   }
 
   campaignListService.viewComments = function(campaignId, spaceId, relatedTo){
-    var url = url_base +  campaignId + "/comment/?shortlisted_spaces_id=" + spaceId + "&related_to=" + relatedTo;
+    var url = url_base +  campaignId + "/comment/?related_to=" + relatedTo;
     return machadaloHttp.get(url);
   }
 

@@ -263,7 +263,7 @@ angular.module('catalogueApp')
                   $scope.detailsHeaders = headerResponse.data.data;
                   var detailsHeader = headerResponse.data.data;
                   if (!$scope.selectedUser.supplier_type_filter) {
-                    $scope.detailsHeader = detailsHeader['RS'];
+                    $scope.detailsHeader = detailsHeader['ALL'];
                   } else {
                     $scope.detailsHeader = detailsHeader[$scope.selectedUser.supplier_type_filter];
                   }
@@ -282,6 +282,7 @@ angular.module('catalogueApp')
                 $scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price = parseInt($scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price, 10);
                 $scope.mapViewLat = $scope.initialReleaseData.shortlisted_suppliers[i].latitude;
                 $scope.mapViewLong = $scope.initialReleaseData.shortlisted_suppliers[i].longitude;
+          
                 if ($scope.initialReleaseData.shortlisted_suppliers[i].next_action_date) {
                   $scope.initialReleaseData.shortlisted_suppliers[i].next_action_date = new Date($scope.initialReleaseData.shortlisted_suppliers[i].next_action_date);
                 }
@@ -310,7 +311,9 @@ angular.module('catalogueApp')
                 // }
                 $scope.releaseDetailsData = $scope.releaseDetails.campaign.centerData;
                 var centerSuppliers = $scope.releaseDetails.campaign.centerSuppliers;
+              
                 if (centerSuppliers) {
+                
                   $scope.supplier_names = [];
                   for (let i in centerSuppliers) {
                     if (centerSuppliers[i].supplier_type_code == 'RS') {
@@ -327,6 +330,9 @@ angular.module('catalogueApp')
                       $scope.supplier_names.push({ name: 'Retail Store', code: 'RE' });
                     }
                   }
+                   if(centerSuppliers.length == 0){
+                    $scope.supplier_names.push({ name: 'ALL', code: 'ALL' });
+                   }
 
                   if ($scope.supplier_names.length == 1) {
                     $scope.selectedUser.supplier_type_filter_selected = $scope.supplier_names[0].name;
@@ -358,7 +364,15 @@ angular.module('catalogueApp')
         }
 
         $scope.changeType = function () {
-          $scope.detailsHeader = $scope.detailsHeaders[$scope.selectedUser.supplier_type_filter];
+ 
+          if($scope.selectedUser.supplier_type_filter == ""){
+            $scope.detailsHeader = $scope.detailsHeaders['ALL'];
+          } else {
+            $scope.detailsHeader = $scope.detailsHeaders[$scope.selectedUser.supplier_type_filter];
+          }
+         
+    
+
         }
 
         $scope.setPhase = function (supplier, id) {
@@ -424,6 +438,12 @@ angular.module('catalogueApp')
         $scope.changeLocation = function () {
           $location.path('/' + $scope.campaign_id + '/auditReleasePlan');
         }
+        $scope.changeDate = function (index) {
+
+            $scope.releaseDetails.shortlisted_suppliers[index].next_action_date = moment.utc($scope.releaseDetails.shortlisted_suppliers[index].next_action_date).local();
+
+       
+          }
         //To show inventory ids in modal after clicking on inventory type
         $scope.setInventoryIds = function (filter) {
           $scope.inventoryIds = [];
@@ -431,11 +451,10 @@ angular.module('catalogueApp')
         }
         $scope.updateData = function (id, index) {
           let updateData = [];
-          updateData = $scope.releaseDetails.shortlisted_suppliers;
-          if (index && (id == $scope.releaseDetails.shortlisted_suppliers[index].id)) {
-            updateData = [];
-            updateData.push($scope.releaseDetails.shortlisted_suppliers[index])
-
+          if (id && index && id == $scope.releaseDetails.shortlisted_suppliers[index].id) {
+            updateData.push($scope.releaseDetails.shortlisted_suppliers[index]);
+          } else {
+            updateData = $scope.releaseDetails.shortlisted_suppliers;
           }
           releaseCampaignService.updateAuditReleasePlanDetails($scope.campaign_id, updateData)
             .then(function onSuccess(response) {
@@ -886,10 +905,13 @@ angular.module('catalogueApp')
         //to send email
         $scope.loadSpinner = true;
         $scope.sendNotification = function () {
+       
+          let message = "Beneficiary Name :" + $scope.body.Beneficiary_Name + ", Bank Account Number :" + $scope.body.Bank_Account_Number  + ", IFSC Code :" + $scope.body.IFSC_Code + ", Negotiated Price :" + $scope.body.Negotiated_Price + ", Message :" + $scope.body.msg;
+         
           $scope.loadSpinner = false;
           var email_Data = {
             subject: $scope.paymentStatus + " Details For " + $scope.supplierPaymentData.name,
-            body: $scope.body.message,
+            body: message,
             to: constants.account_email_id,
           };
           releaseCampaignService.sendMail(email_Data)
@@ -932,7 +954,7 @@ angular.module('catalogueApp')
         }
 
         $scope.getPaymentDetails = function (supplier, status) {
-          $scope.body.message = '';
+          $scope.body = {};
           $scope.supplierPaymentData = supplier;
           $scope.paymentStatus = status;
           if (status == 'NEFT' || status == 'CASH') {
@@ -1542,7 +1564,7 @@ angular.module('catalogueApp')
               },
                 function (isConfirm) {
                   if (isConfirm) {
-                    location.reload();
+                    // location.reload();
                   }
                 }
               );

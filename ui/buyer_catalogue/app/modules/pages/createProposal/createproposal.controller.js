@@ -13,7 +13,7 @@ angular.module('catalogueApp')
 		{name:"Saloon", code:"SA", selected:"false"},
 		{name:"Retail Shop", code:"RE", selected:"false",disabled:false},
 		{name:"Hording", code:"HO", selected:"false",disabled:true},
-		{name:"Educational Institut", code:"EI", selected:"false",disabled:true},
+		{name:"Educational Institute", code:"EI", selected:"false",disabled:true},
 		{name:"Bus", code:"BU", selected:"false",disabled:true},
 		{name:"Gantry", code:"GA", selected:"false",disabled:true},
 		{name:"Radio Channel", code:"RC", selected:"false",disabled:true},
@@ -119,6 +119,8 @@ angular.module('catalogueApp')
 			});
 			//changes for searching societies on basis of area,subarea
   $scope.get_areas = function(id,index) {
+			$scope.areas = [];
+			$scope.sub_areas = [];
      	var id = id;
 			for(var i=0;i<$scope.cities.length;i++){
 				if($scope.cities[i].id == id){

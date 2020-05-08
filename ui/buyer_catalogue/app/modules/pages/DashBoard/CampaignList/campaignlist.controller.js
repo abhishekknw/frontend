@@ -188,7 +188,9 @@ angular.module('catalogueApp')
         $scope.commentModal = {};
         $scope.commentsData = response.data.data;
         $scope.viewInvForComments = Object.keys($scope.commentsData);
+        $scope.commentsData = $scope.commentsData[$scope.viewInvForComments[0]];
         $scope.selectedInvForView = $scope.viewInvForComments[0];
+       
         $('#viewComments').modal('show');
         }).catch(function onError(response){
           console.log(response);
@@ -197,6 +199,7 @@ angular.module('catalogueApp')
 
       $scope.addComment = function(){
         $scope.commentModal['related_to'] = 'CAMPAIGN';
+   
         campaignListService.addComment($scope.campaignDataForComment.proposal_id,$scope.commentModal)
         .then(function onSuccess(response){
           $scope.commentModal = {};
