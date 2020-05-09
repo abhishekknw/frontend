@@ -1234,12 +1234,29 @@ $scope.gridViewSummary = {};
               selectFilters($scope.current_center.suppliers_meta['CP'][filter_types[j]],$scope.current_center.CP_filters[filter_types[j]]);
           }
         }
-        if($scope.current_center.suppliers_meta['CP'] != null || $scope.current_center.suppliers['CP'] != null){
+        // if($scope.current_center.suppliers_meta['CP'] != null || $scope.current_center.suppliers['CP'] != null){
+        //   $scope.corporateFilters();
+        // }
+        // if($scope.current_center.suppliers[$scope.supplierCode.busShelter] != null){
+        //   $scope.busShelterFilters();
+        // }
+
+        if($scope.current_center.suppliers[$scope.supplierCode.corporate]){
           $scope.corporateFilters();
         }
-        if($scope.current_center.suppliers[$scope.supplierCode.busShelter] != null){
+        if($scope.current_center.suppliers[$scope.supplierCode.busShelter]){
           $scope.busShelterFilters();
         }
+        if($scope.current_center.suppliers[$scope.supplierCode.gym]){
+          $scope.gymFilters();
+        }
+        if($scope.current_center.suppliers[$scope.supplierCode.saloon]){
+          $scope.saloonFilters();
+        }
+        if($scope.current_center.suppliers[$scope.supplierCode.retailStore]){
+          $scope.retailStoreFilters();
+        }
+
       }catch(error){
         console.log(error.message);
       }
