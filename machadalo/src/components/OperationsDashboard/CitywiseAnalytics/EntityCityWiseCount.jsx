@@ -12,6 +12,7 @@ class EntityCitywiseCount extends React.Component {
       entityData: [],
       headerValue: '',
       isDataFetched: false,
+      isError: false,
     };
   }
 
@@ -38,7 +39,8 @@ class EntityCitywiseCount extends React.Component {
         }
       })
       .catch((ex) => {
-        console.log('Failed to get data', ex);
+        console.log('Failed to get data');
+        this.setState({ isError: true, isDataFetched: true });
       });
   }
 
