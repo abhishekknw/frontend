@@ -124,7 +124,7 @@
            </thead>
            <tbody dir-paginate="supplier in releaseDetails.shortlisted_suppliers | itemsPerPage: suppliersPerPage"
                     total-items="totalSuppliers" current-page="pagination.current">
-            <tr ng-repeat="(key,filter) in getFilters(supplier)" ng-if="supplier.booking_status=='BK'">
+            <tr  ng-repeat="(key,filter) in getFilters(supplier)" ng-if="supplier.booking_status=='BK'">
                <td class="col-md-1" rowspan="{{key.length}}" ng-show="$first"
               ng-style="phaseEndDate > currentDate && {'background-color':'green'}">
                  {{phaseMappingList[supplier.phase_no].phase_no || 'Not Assigned'}}
@@ -139,7 +139,7 @@
                    <input type="checkbox" class="" ng-disabled="isDisable(rowIndex)" ng-model="inventory.status" ng-click="addInventory(inventory,rowIndex,$index)"  permission = "[permissions.assignDates]" /> {{key}}{{$index+1}}&nbsp;
                  </div>
                  <div class="col-md-6 pull-right">
-                   <button  class="btn" data-target="#addInventoryModal" style="background: #5bc0de; color: white;margin-left:20px;" data-toggle="modal" ng-click="getInventoryRelatedData(supplier)" ng-disabled="savingDates">Add Inventory</button>
+                   <button   class="btn"  style="background: #5bc0de; color: white;margin-left:20px;" data-toggle="modal" ng-click="getInventoryRelatedData(supplier)" ng-disabled="savingDates">Add Inventory</button>
                  </div>
                </td>
                <td class="col-md-3">
