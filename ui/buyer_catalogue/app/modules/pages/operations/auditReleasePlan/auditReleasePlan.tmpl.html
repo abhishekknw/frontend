@@ -59,7 +59,7 @@
 
               <div class = "col-md-3"><label>Select Inventory Type </label></div>
               <div class = "col-md-3">
-                <select class="form-control" ng-model="inventoryType" ng-disabled="!phase" required>
+                <select class="form-control" ng-model="inventoryType" ng-change="selectInventory(inventoryType)" ng-disabled="!phase" required>
                 <option value="">Select Inventory Type</option>
                 <option ng-repeat="inventory in inventoryTypes" value="{{inventory}}">{{inventory}}</option>
                 </select>
