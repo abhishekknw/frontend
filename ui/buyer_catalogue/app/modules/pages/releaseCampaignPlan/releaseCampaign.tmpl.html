@@ -95,7 +95,7 @@
 
     <div class="table-wrapper" style="overflow-x: auto;">
 
-      <table class="table table-striped table-suppliers" data-ng-init="initTable()">
+      <table class="table table-striped table-suppliers release_plan_table" data-ng-init="initTable()">
         <thead>
 
           <!-- <tr>
@@ -870,7 +870,7 @@
               <td rowspan="{{key.length}}" ng-show="$first">
                 <span ng-if="supplier.brand_organisation_data.name">{{supplier.brand_organisation_data.name}}<br></span>
                 <button type="button" class="btn btn-danger" name="button" data-toggle="modal"
-                  data-target="#addBrandModal1"  ng-click="setUserSupplier(supplier)">Add Brands</button>
+                  data-target="#addBrandModal1" ng-disabled="releaseDetails.campaign.brand == 'single_brand'" ng-click="setUserSupplier(supplier)">Add Brands</button>
                 <div id="addBrandModal1" class="modal fade">
                   <div class="modal-dialog">
                     <div class="modal-content">

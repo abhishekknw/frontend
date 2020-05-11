@@ -764,7 +764,7 @@ angular.module('catalogueApp')
                 //synergy
                 if (response) {
                    $scope.releaseDetails.shortlisted_suppliers =response.data.data;
-                   //window.location.reload();
+                   window.location.reload();
                 }
 
                 $('#addNewSocities').modal('hide');

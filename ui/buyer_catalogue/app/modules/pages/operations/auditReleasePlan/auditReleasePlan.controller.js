@@ -102,7 +102,6 @@ angular.module('catalogueApp')
                 $scope.phaseMappingList[phase.id] = phase;
               })
               $scope.phasesData = response.data.data;
-
             }).catch(function onError(response) {
               console.log(response);
             })
@@ -146,16 +145,18 @@ angular.module('catalogueApp')
           $scope.inventoryTypes = [];
           $scope.phaseData = $filter('unique')(data.shortlisted_suppliers, 'phase_no');
           if (data && data.shortlisted_suppliers) {
+
             for (let i in data.shortlisted_suppliers) {
-              for (let j in data.shortlisted_suppliers[i].shortlisted_inventories) {   
-                let index = $scope.inventoryTypes.findIndex( record => record == j );
-                if(index ==-1){
+
+              for (let j in data.shortlisted_suppliers[i].shortlisted_inventories) {
+                let index = $scope.inventoryTypes.findIndex(record => record == j);
+                if (index == -1) {
                   $scope.inventoryTypes.push(j);
                 }
               }
             }
           }
-            // $scope.inventoryTypes = Object.keys(data.shortlisted_suppliers[0].shortlisted_inventories);
+          // $scope.inventoryTypes = Object.keys(data.shortlisted_suppliers[0].shortlisted_inventories);
 
           angular.forEach($scope.phaseData, function (phase) {
             if (phase.phase != null)
@@ -409,9 +410,30 @@ angular.module('catalogueApp')
           return constants[state];
         }
         $scope.filterAssignDatesData = function (filterKey, filterValue) {
+          $scope.inventoryTypes = [];
+          var localindex_index = $scope.phasesData.map(function (el) {
+            return el.phase_no;
+          }).indexOf(filterValue);
+          if (localindex_index != -1) {
+            let phase_id = $scope.phasesData[localindex_index].id;
+            if (phase_id) {
+              for (let i in $scope.releaseDetails.shortlisted_suppliers) {
+                if ($scope.releaseDetails.shortlisted_suppliers[i].phase_no == phase_id) {
+                  for (let j in $scope.releaseDetails.shortlisted_suppliers[i].shortlisted_inventories) {
+                    let index = $scope.inventoryTypes.findIndex(record => record == j);
+                    if (index == -1) {
+                      $scope.inventoryTypes.push(j);
+                    }
+                  }
+                }
+              }
+            }
+          }
+
           var filterExpression = {};
           filterExpression[filterKey] = filterValue;
           $scope.filteredAssignDatesList = $filter('filter')($scope.filteredAssignDatesList.shortlisted_suppliers, filterExpression);
+
         }
         $scope.assignDates = function (inventory, activity, date, user) {
           var dateUserExpression = {};
@@ -434,6 +456,7 @@ angular.module('catalogueApp')
             assignment_detail: [],
           }
           requestData.assignment_detail.push(assignment_detail);
+
           auditReleasePlanService.saveActivityDetails(requestData)
             .then(function onSuccess(response) {
               getResultsPage(1);
@@ -458,13 +481,20 @@ angular.module('catalogueApp')
         }
         $scope.getInventoryRelatedData = function (supplier) {
           $scope.shortlistedSupplierData = supplier;
-          auditReleasePlanService.getInventoryRelatedData()
-            .then(function onSuccess(response) {
-              $scope.adInventoryTypes = response.data.data.inventory_types;
-              $scope.durationTypes = response.data.data.duration_types;
-            }).catch(function onError(response) {
-              console.log(response);
-            })
+
+          if (supplier.phase_no) {
+            auditReleasePlanService.getInventoryRelatedData()
+              .then(function onSuccess(response) {
+                $scope.adInventoryTypes = response.data.data.inventory_types;
+                $scope.durationTypes = response.data.data.duration_types;
+                $('#addInventoryModal').modal('show');
+              }).catch(function onError(response) {
+                console.log(response);
+              })
+          } else {
+            swal(constants.name, "Please add phase first ", constants.error);
+          }
+
         }
         $scope.adInvModel = {};
         $scope.addAdInventoryIds = function () {
