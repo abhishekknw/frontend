@@ -20,6 +20,9 @@ angular.module('machadaloCommon')
               if(userInfo && userInfo.profile.id == 108){
                 $scope.custom_user_hide = true;
               }
+              else if(userInfo && userInfo.profile.name == "Business Admin" && userInfo.profile.organisation.category != "MACHADALO"){
+                $scope.custom_user_hide = true;
+              }
         }
 
   };
