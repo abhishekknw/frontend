@@ -160,7 +160,7 @@ angular.module('machadaloPages')
         userService.getStandardProfileToClone()
         .then(function onSuccess(response){
           $scope.standardProfileList = response.data.data;
-          console.log(response);
+        
         }).catch(function onError(response){
           console.log(response);
         })
@@ -706,16 +706,27 @@ angular.module('machadaloPages')
       })
 
     }
+
+    $scope.mobileValidation = function(){
+      $scope.showMobileError = true;
+      if($scope.organisationData.phone.toString().length ==10){
+        $scope.showMobileError = false;
+      }
+    }
     // end : update object and general user level permission
     //start:onboard functionality
     $scope.activityNumber = 1;
     $scope.createOnBoardActivity = function(number){
       if(number == 1 && $scope.organisationData.name && $scope.organisationData.phone && $scope.organisationData.email && $scope.organisationData.category){
-        console.log("org");
-        $scope.createOrganisation();
-        console.log($scope.onBoardOrgId);
-        $scope.activityNumber++;
-      }
+     
+     
+          console.log("org");
+          $scope.createOrganisation();
+          console.log($scope.onBoardOrgId);
+          $scope.activityNumber++;
+        
+      
+      } 
       if(number == 2 && $scope.profileData.name && $scope.cloneFromProfileId.id){
         $scope.cloneProfileGeneral($scope.cloneFromProfileId.id, $scope.onBoardOrgId, $scope.profileData.name);
       }

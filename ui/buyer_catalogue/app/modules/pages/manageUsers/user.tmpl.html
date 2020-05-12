@@ -185,7 +185,7 @@
                 <th>Index</th>
                 <th>Profile Name</th>
                 <th>Organisation Name</th>
-                <th>View</th>
+                <!-- <th>View</th> -->
                 <th>Edit</th>
                 <th>Delete</th>
                 <th>Clone</th>
@@ -194,7 +194,7 @@
                 <td>{{$index+1}}</td>
                 <td>{{profile.name}}</td>
                 <td>{{profile.organisation.name}}</td>
-                <td><a class="linkBtn" ng-click="goToProfiles(contentItem.profile,'view',profile)">View</a></td>
+                <!-- <td><a class="linkBtn" ng-click="goToProfiles(contentItem.profile,'view',profile)">View</a></td> -->
                 <td><a class="linkBtn" ng-click="goToProfiles(contentItem.profile,'edit',profile)">Edit</a></td>
                 <td><a class="linkBtn" ng-click="goToProfiles(contentItem.profile,'delete')">Delete</a></td>
                 <td data-toggle="modal" data-target="#cloneProfileModal">
@@ -425,7 +425,7 @@
 
           <!--start: Profile -->
           <div class="section-display" ng-switch-when="profile" id="profile">
-            <h2 class="heading" ng-if="operationProfile.create">Create Profile</h2>
+            <h2 class="heading" ng-if="operationProfile.create">Create Profile </h2>
             <h2 class="heading" ng-if="operationProfile.edit">Edit Profile Details</h2>
             <h2 class="heading" ng-if="operationProfile.view">View Profile Details</h2>
             <form>
@@ -503,7 +503,7 @@
                 </td>
               </tr>
             </table>
-            <button class="smallBtn active" data-toggle="modal" data-target="#createObjectLevelPermissionModal" data-backdrop="static" data-keyboard="false" ng-click="setModalData(profileData)">Create Object Level Permission</button>
+            <!-- <button class="smallBtn active" data-toggle="modal" data-target="#createObjectLevelPermissionModal" data-backdrop="static" data-keyboard="false" ng-click="setModalData(profileData)">Create Object Level Permission</button> -->
             <!-- object level permissions End -->
             <!--start: general user level  permissions  -->
             <h2 class="heading">General User Level Permissions</h2>
@@ -526,7 +526,7 @@
                 </td>
               </tr>
             </table>
-            <button class="smallBtn active" data-toggle="modal" data-target="#createGeneralUserPermissionModal" data-backdrop="static" data-keyboard="false" ng-click="setModalData(profileData)">Create General User Level Permission</button>
+            <!-- <button class="smallBtn active" data-toggle="modal" data-target="#createGeneralUserPermissionModal" data-backdrop="static" data-keyboard="false" ng-click="setModalData(profileData)">Create General User Level Permission</button> -->
             <!--End: general user level  permissions  -->
           </div><!-- section-display -->
           <!--End: Profile -->
@@ -538,7 +538,7 @@
             <p>Step By Step Guide To OnBoard Any Organisation within 5 minutes</p>
             <div class="wizard-container">
               <div class="wizard-card" data-color="red" id="wizard">
-                <form action="" method="">
+                <form name="myForm">
                 <ul class="onboardTab">
                     <li><a class="disableClick" data-target="#details"  data-toggle="tab">Organisation</a></li>
                     <li><a class="disableClick" data-target="#captain"  data-toggle="tab">Profile</a></li>
@@ -551,26 +551,30 @@
                         <div class="item">
                           <div class="form-group label-floating">
                             <label>Organisation Name</label>
-                            <input name="organisationName" type="text" class="field" ng-model="organisationData.name" required>
+                            <input name="organisationName" placeholder="Organisation Name" type="text" class="field" ng-model="organisationData.name" required>
                           </div>
                         </div>
                         <div class="item">  
                           <div class="form-group label-floating">
                             <label>Mobile Number</label>
-                            <input name="mobile" type="number" class="field" ng-model="organisationData.phone" required>
+                            <input name="mobile" type="number" ng-change="mobileValidation()" placeholder="Mobile Number" class="field" ng-model="organisationData.phone" required>
+                          <span ng-if="showMobileError" style="color:red">Invalid Mobile</span>
                           </div>
                         </div>
                         <div class="item">
                           <div class="form-group label-floating">
                             <label>Email</label>
-                            <input name="email" type="email" class="field" ng-model="organisationData.email" required>
+                            <input  type="email" placeholder="Email" name="email" class="field"  ng-pattern="/^[a-zA-Z0-9]+[.]?[_a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+$/"  ng-model="organisationData.email" required>
+                           
+                            <span class="error" ng-show="myForm.email.$error.pattern">
+                              Not valid email!</span>
                           </div>
                         </div>
                         <div class="item">
                           <div class="form-group label-floating">
                             <label>Category</label>
-                            <select class="field" ng-model="organisationData.category" required>
-                              <option disabled="" selected=""></option>
+                            <select class="field" placeholder="Category" ng-model="organisationData.category" required>
+                              <option disabled="" selected="">select category</option>
                               <option ng-repeat="category in organisationCategories"value="{{category}}"> {{category}} </option>
                             </select>
                           </div>
@@ -578,7 +582,7 @@
                         <div class="item">
                           <div class="form-group label-floating">
                             <label>Comments</label>
-                            <input name="name2" type="text" class="field" ng-model="organisationData.comments">
+                            <input name="name2" placeholder="Comments" type="text" class="field" ng-model="organisationData.comments">
                           </div>
                         </div>
                       </div>
