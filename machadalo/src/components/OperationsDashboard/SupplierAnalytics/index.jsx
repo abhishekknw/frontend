@@ -65,7 +65,7 @@ class SupplierAnalytics extends React.Component {
         });
       })
       .catch((ex) => {
-        console.log('Failed to get data', ex);
+        console.log('Failed to get data');
       });
   };
 
