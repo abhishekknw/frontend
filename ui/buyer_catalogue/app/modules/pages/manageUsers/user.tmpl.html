@@ -185,7 +185,7 @@
                 <th>Index</th>
                 <th>Profile Name</th>
                 <th>Organisation Name</th>
-                <th>View</th>
+                <!-- <th>View</th> -->
                 <th>Edit</th>
                 <th>Delete</th>
                 <th>Clone</th>
@@ -194,7 +194,7 @@
                 <td>{{$index+1}}</td>
                 <td>{{profile.name}}</td>
                 <td>{{profile.organisation.name}}</td>
-                <td><a class="linkBtn" ng-click="goToProfiles(contentItem.profile,'view',profile)">View</a></td>
+                <!-- <td><a class="linkBtn" ng-click="goToProfiles(contentItem.profile,'view',profile)">View</a></td> -->
                 <td><a class="linkBtn" ng-click="goToProfiles(contentItem.profile,'edit',profile)">Edit</a></td>
                 <td><a class="linkBtn" ng-click="goToProfiles(contentItem.profile,'delete')">Delete</a></td>
                 <td data-toggle="modal" data-target="#cloneProfileModal">
@@ -503,7 +503,7 @@
                 </td>
               </tr>
             </table>
-            <button class="smallBtn active" data-toggle="modal" data-target="#createObjectLevelPermissionModal" data-backdrop="static" data-keyboard="false" ng-click="setModalData(profileData)">Create Object Level Permission</button>
+            <!-- <button class="smallBtn active" data-toggle="modal" data-target="#createObjectLevelPermissionModal" data-backdrop="static" data-keyboard="false" ng-click="setModalData(profileData)">Create Object Level Permission</button> -->
             <!-- object level permissions End -->
             <!--start: general user level  permissions  -->
             <h2 class="heading">General User Level Permissions</h2>
@@ -525,7 +525,7 @@
                 </td>
               </tr>
             </table>
-            <button class="smallBtn active" data-toggle="modal" data-target="#createGeneralUserPermissionModal" data-backdrop="static" data-keyboard="false" ng-click="setModalData(profileData)">Create General User Level Permission</button>
+            <!-- <button class="smallBtn active" data-toggle="modal" data-target="#createGeneralUserPermissionModal" data-backdrop="static" data-keyboard="false" ng-click="setModalData(profileData)">Create General User Level Permission</button> -->
             <!--End: general user level  permissions  -->
           </div><!-- section-display -->
           <!--End: Profile -->
@@ -556,7 +556,8 @@
                         <div class="item">  
                           <div class="form-group label-floating">
                             <label>Mobile Number</label>
-                            <input name="mobile" type="number" class="field" ng-model="organisationData.phone" required>
+                            <input name="mobile" type="number" ng-change="mobileValidation()" placeholder="Mobile Number" class="field" ng-model="organisationData.phone" required>
+                          <span ng-if="showMobileError" style="color:red">Invalid Mobile</span>
                           </div>
                         </div>
                         <div class="item">
