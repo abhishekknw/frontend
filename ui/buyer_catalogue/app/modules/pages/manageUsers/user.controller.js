@@ -701,6 +701,13 @@ angular.module('machadaloPages')
       })
 
     }
+
+    $scope.mobileValidation = function(){
+      $scope.showMobileError = true;
+      if($scope.organisationData.phone.toString().length ==10){
+        $scope.showMobileError = false;
+      }
+    }
     // end : update object and general user level permission
     //start:onboard functionality
     $scope.activityNumber = 1;
