@@ -165,6 +165,8 @@
         { header: 'GATEWAY ARCH' },
         { header: 'BANNER' },
         { header: 'SUNBOARD' },
+        { header: 'WHATSAPP INDIVIDUAL' },
+        { header: 'WHATSAPP GROUP' },
       ];
       $scope.invCodes = {
         PO: 'PO',
