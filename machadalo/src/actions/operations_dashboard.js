@@ -38,7 +38,7 @@ export function getTappingDetails() {
         dispatch(getTappingDashboardSuccess({ data: resp.body.data, token: auth.token }));
       })
       .catch((ex) => {
-        console.log('Failed to get tapping data', ex);
+        console.log('Failed to get tapping data');
 
         dispatch(getTappingDashboardFail());
       });
