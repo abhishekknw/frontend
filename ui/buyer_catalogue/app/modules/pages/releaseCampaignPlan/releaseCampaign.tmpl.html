@@ -1972,7 +1972,7 @@
               <tbody>
                 <tr ng-repeat="phase in phases" ng-show="!editPhase">
                   <td>{{$index+1}}</td>
-                  <td>{{phase.phase_no||'NA'}}</td>
+                  <td>{{phase.phase_no}}</td>
                   <td>{{phase.start_date|date:'dd-MM-yyyy'||'NA'}}</td>
                   <td>{{phase.end_date|date:'dd-MM-yyyy'||'NA'}}</td>
                   <td>
@@ -1987,30 +1987,40 @@
                   <td><input type="text" class="form-control" ng-model="phase.phase_no" required></td>
                   <td>
                     <div>
-                      <p class="input-group">
-                        <input type="text" class="form-control" ng-model="phase.start_date"
+                      <p class="input-group col-md-12">
+                        <!-- <input type="text" class="form-control" ng-model="phase.start_date"
                           uib-datepicker-popup="yyyy-MM-dd" is-open="phaseStartDate" min-date="2017-01-01"
                           datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}"
                           required />
                         <span class="input-group-btn col-md-5">
                           <button type="button" class="btn btn-default" ng-click="phaseStartDate=true"><i
                               class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
+                        </span> -->
+
+                        <input type="text" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="dd/mm/yyyy" ng-change="changeStartDate($index)" ng-model="phase.start_date" is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats" required>
+                        <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
+                          <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
                       </p>
                     </div>
                   </td>
 
                   <td>
                     <div>
-                      <p class="input-group">
-                        <input type="text" class="form-control" ng-model="phase.end_date"
+                      <p class="input-group col-md-12">
+                        <!-- <input type="text" class="form-control" ng-model="phase.end_date"
                           uib-datepicker-popup="yyyy-MM-dd" is-open="phaseEndDate" min-date="2017-01-01"
                           datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}"/
                           required>
                         <span class="input-group-btn col-md-5">
                           <button type="button" class="btn btn-default" ng-click="phaseEndDate=true"><i
                               class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
+                        </span> -->
+
+                        <input type="text" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="dd/mm/yyyy"   ng-change="changeEndDate()"  ng-model="phase.end_date" is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats" required>
+                        <button  type="button" class="smallBtn calendar" ng-click="isEndDateOpen = !isEndDateOpen">
+                          <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
                       </p>
                     </div>
                   </td>
@@ -2025,9 +2035,9 @@
                 </tr>
               </tbody>
             </table>
-            <button class="btn btn-success" ng-click="editPhaseDetails()">Edit</button>
+            <button class="btn btn-success" ng-disabled = "phases.length == 0" ng-click="editPhaseDetails()">Edit</button>
             <button class="btn btn-success" type="button" name="button" ng-click="addPhases()">Add</button>
-            <button class="btn btn-success" type="button" name="button" ng-click="savePhases()">Save</button>
+            <button class="btn btn-success" ng-disabled = "phases.length == 0" type="button" name="button" ng-click="savePhases()">Save</button>
           </div>
         </div>
       </div>

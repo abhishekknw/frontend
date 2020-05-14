@@ -12,6 +12,7 @@ angular.module('catalogueApp')
         $scope.userData = {};
         $scope.orgData = {};
         $scope.assign = {};
+        $scope.options = {};
         $scope.selectedUser = { value: undefined, supplier_type_filter: undefined };
         $scope.body = {
           message: '',
@@ -541,7 +542,7 @@ angular.module('catalogueApp')
           try {
             $scope.search_status = false;
             if ($scope.supplier_type_code.code && $scope.supplier_center) {
-              mapViewService.searchSuppliers($scope.supplier_type_code.code, $scope.search.query, $scope.releaseDetails.campaign.principal_vendor, $scope.supplier_center, $scope.center_areas, proposal_id)
+              mapViewService.searchSuppliers($scope.supplier_type_code.code, $scope.search.query, '', $scope.supplier_center, $scope.center_areas, proposal_id)
                 .then(function onSuccess(response, status) {
                   $scope.center_index = null;
                   $scope.supplierData = response.data.data;
@@ -1232,6 +1233,10 @@ angular.module('catalogueApp')
                 console.log(response);
               });
           }
+        }
+       
+        $scope.changeStartDate = function(index){
+          $scope.options.minDate = new Date($scope.phases[index].start_date);
         }
 
         $scope.uploadFiles = function (file) {
