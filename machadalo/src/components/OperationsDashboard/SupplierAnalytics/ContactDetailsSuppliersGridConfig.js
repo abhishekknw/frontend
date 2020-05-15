@@ -75,6 +75,24 @@ const getSupplierColumnContactDetails = () => {
       },
     },
     {
+      dataField: 'latitude',
+      text: 'Latitude',
+      sort: true,
+      formatter: (cell, row) => {
+        const { latitude } = row;
+        return latitude || '-';
+      },
+    },
+    {
+      dataField: 'longitude',
+      text: 'Longitude',
+      sort: true,
+      formatter: (cell, row) => {
+        const { longitude } = row;
+        return longitude || '-';
+      },
+    },
+    {
       dataField: 'area',
       text: 'Area',
       sort: true,
