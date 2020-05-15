@@ -7,6 +7,9 @@ const linkStyle = {
 };
 
 const getSupplierColumnContactDetails = () => {
+  let isSociety = false;
+  let unit_count = 'Unit Count';
+  let type = 'Type';
   return [
     {
       dataField: 'supplier_id',
@@ -50,6 +53,26 @@ const getSupplierColumnContactDetails = () => {
             {name}
           </a>
         );
+      },
+    },
+    {
+      dataField: 'flat_count',
+      text: unit_count,
+      sort: true,
+      formatter: (cell, row) => {
+        let { flat_count } = row;
+        if (flat_count) flat_count = flat_count;
+        return flat_count || '-';
+      },
+    },
+    {
+      dataField: 'society_type',
+      text: type,
+      sort: true,
+      formatter: (cell, row) => {
+        let { society_type } = row;
+        if (society_type) society_type = society_type;
+        return society_type || '-';
       },
     },
     {
