@@ -7,9 +7,8 @@ const linkStyle = {
 };
 
 const getSupplierColumnContactDetails = () => {
-  let isSociety = false;
-  let unit_count = 'Unit Count';
-  let type = 'Type';
+  let unit_count = 'Flat Count';
+  let type = 'Society Type';
   return [
     {
       dataField: 'supplier_id',
