@@ -596,7 +596,7 @@ angular.module('catalogueApp')
 
         //Start: function to select center at add more suplliers
         $scope.selectCenter = function (center_index) {
-          console.log('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',center_index);
+        
           $scope.supplierData = [];
           try {
             $scope.center_index = center_index;
