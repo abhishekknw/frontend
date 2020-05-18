@@ -17,7 +17,7 @@ angular.module('machadaloCommon')
                });
               
               $scope.custom_user_hide = false;
-              if(userInfo && (userInfo.profile.id == 4 || userInfo.profile.id == 120)){
+              if(userInfo && userInfo.profile.id == 108){
                 $scope.custom_user_hide = true;
               }
         }
