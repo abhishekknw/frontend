@@ -2607,6 +2607,12 @@
         'SUNBOARD': {
           status: false, total: 0
         },
+        'WHATSAPP INDIVIDUAL': {
+          status: false, total: 0
+        },
+        'WHATSAPP GROUP': {
+          status: false, total: 0
+        },
       }
 
       $scope.getCampaignInvData = function (data) {
