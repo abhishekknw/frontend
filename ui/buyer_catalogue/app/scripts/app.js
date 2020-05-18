@@ -604,6 +604,9 @@ angular
         } else if ($rootScope.globals.currentUser && $location.path() == '/logout') {
           AuthService.Logout();
           $location.path("/login");
+        }else if ($rootScope.globals.currentUser && $location.path() == '/changePassword') {
+          // AuthService.Logout();
+          $location.path("/changePassword");
         }
         else if ($rootScope.globals.currentUser && typeof $cookieStore.get('returnUrl') != 'undefined' && $cookieStore.get('returnUrl') && category != 'BUSINESS') {
           $location.path($cookieStore.get('returnUrl'));
