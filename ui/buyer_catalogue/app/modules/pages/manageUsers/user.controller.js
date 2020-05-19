@@ -578,7 +578,7 @@ angular.module('machadaloPages')
       .then(function onSuccess(response){
         console.log(response);
         $scope.profileData = response.data.data;
-        console.log('111111111111111111111111111111111111111111111111111111111',$scope.profileData)
+        
         swal(constants.name,constants.create_success,constants.success);
       }).catch(function onError(response){
         console.log(response);
@@ -586,7 +586,7 @@ angular.module('machadaloPages')
     }
     //end: create profile
     $scope.goToProfiles = function(contentItem, operation, data={}){
-      console.log('222222222222222222222222222222222222222',contentItem)
+     
 
       $scope.profileData = data;
       $scope.operationProfile.view = false;
@@ -619,10 +619,8 @@ angular.module('machadaloPages')
     }
     $scope.objectLevelPermissionData = {};
     $scope.createObjectLevelPermission = function(){
-      console.log('jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj',$scope.objectLevelPermissionData)
       console.log($scope.contentTypeObject);
       $scope.objectLevelPermissionData['name'] = $scope.contentTypeListById[$scope.objectLevelPermissionData.content_type].model.toUpperCase();
-      console.log('+++++++++++++++++++++++++++++++++',$scope.objectLevelPermissionData);
       userService.createObjectLevelPermission($scope.objectLevelPermissionData)
       .then(function onSuccess(response){
         console.log(response);
