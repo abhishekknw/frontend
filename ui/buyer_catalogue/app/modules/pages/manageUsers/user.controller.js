@@ -246,6 +246,7 @@ angular.module('machadaloPages')
      $scope.getContent = function(item,data){
        console.log("llllll",item);
       console.log("data", data);
+      console.log("5555555555555555555555555555555555555555555", $scope.contentItem);
        $scope.menuItem.name = item;
       // location.hash=item;
         switch(item){
@@ -577,6 +578,7 @@ angular.module('machadaloPages')
       .then(function onSuccess(response){
         console.log(response);
         $scope.profileData = response.data.data;
+        console.log('111111111111111111111111111111111111111111111111111111111',$scope.profileData)
         swal(constants.name,constants.create_success,constants.success);
       }).catch(function onError(response){
         console.log(response);
@@ -584,6 +586,8 @@ angular.module('machadaloPages')
     }
     //end: create profile
     $scope.goToProfiles = function(contentItem, operation, data={}){
+      console.log('222222222222222222222222222222222222222',contentItem)
+
       $scope.profileData = data;
       $scope.operationProfile.view = false;
       $scope.operationProfile.create = false;
@@ -613,10 +617,12 @@ angular.module('machadaloPages')
         console.log(response);
       })
     }
+    $scope.objectLevelPermissionData = {};
     $scope.createObjectLevelPermission = function(){
+      console.log('jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj',$scope.objectLevelPermissionData)
       console.log($scope.contentTypeObject);
       $scope.objectLevelPermissionData['name'] = $scope.contentTypeListById[$scope.objectLevelPermissionData.content_type].model.toUpperCase();
-      console.log($scope.objectLevelPermissionData);
+      console.log('+++++++++++++++++++++++++++++++++',$scope.objectLevelPermissionData);
       userService.createObjectLevelPermission($scope.objectLevelPermissionData)
       .then(function onSuccess(response){
         console.log(response);
