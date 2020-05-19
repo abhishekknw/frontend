@@ -138,16 +138,42 @@
                  <div class="pull-left" ng-repeat="inventory in filter.detail" style="margin-bottom: 10px;text-align: center;">
                    <input type="checkbox" class="" ng-disabled="isDisable(rowIndex)" ng-model="inventory.status" ng-click="addInventory(inventory,rowIndex,$index)"  permission = "[permissions.assignDates]" /> {{key}}{{$index+1}}&nbsp;
                  </div>
-                 <div class="col-md-6 pull-right">
-                   <button   class="btn"  style="background: #5bc0de; color: white;margin-left:20px;" data-toggle="modal" ng-click="getInventoryRelatedData(supplier)" ng-disabled="savingDates">Add Inventory</button>
-                 </div>
+                
+               </td>
+               <td>
+                  <div>
+                      <button   class="btn"  style="background: #5bc0de; color: white;" data-toggle="modal" ng-click="getInventoryRelatedData(supplier)" ng-disabled="savingDates">Add Inventory</button>
+                      <button  class="btn btn-danger" style="margin-top: 5px" ng-disabled="invIdList.length == 0 || isDisable(rowIndex)" ng-click="deleteAdInventoryIds(supplier)" >Delete Inventory</button>
+                    </div>
                </td>
                <td class="col-md-3">
-                <div style="display: flex;">&ensp;
+                  <div class="row ">      
+                      <div ng-repeat = "inventory in filter.detail">
+                         <div ng-show="$last">
+                        <div ng-if="inventory.inventory_activities.length > 0">
+                            <div>{{inventory.inventory_activities[(inventory.inventory_activities.length-1)].activity_type}}</div>
+                              <div ng-if="inventory.inventory_activities[(inventory.inventory_activities.length-1)].inventory_activity_assignment.length > 0">
+                                    {{inventory.inventory_activities[(inventory.inventory_activities.length-1)].inventory_activity_assignment[(inventory.inventory_activities[(inventory.inventory_activities.length-1)].inventory_activity_assignment.length-1)].activity_date |limitTo:10}}
+                              </div>
+                            
+                            <div ng-if="inventory.inventory_activities[(inventory.inventory_activities.length-1)].inventory_activity_assignment.length > 0">
+                                {{usersMapListWithObjects[(inventory.inventory_activities[(inventory.inventory_activities.length-1)].inventory_activity_assignment[(inventory.inventory_activities[(inventory.inventory_activities.length-1)].inventory_activity_assignment.length-1)].assigned_to)].username}}
+                          </div>
+                            
+                          </div>
+                        </div>
+                      </div>
+                      </div>
+                      <hr>
+                <div style="display: flex;">&nbsp;
                   <button  class="btn btn-info" ng-disabled="invIdList.length == 0 || isDisable(rowIndex)" data-target="#manageDatesModal" data-toggle="modal" data-backdrop="static" ng-click="getActivityDates(supplier)"  permission = "[permissions.assignDates]">Manage Date</button>&ensp;
-                  <button  class="btn" data-target="#showDatesModal" data-toggle="modal" ng-click="showActivityDates(filter.detail, supplier, key)" ng-disabled="savingDates"  permission = "[permissions.viewDates]">View Dates</button>&ensp;
-                  <button  class="btn btn-info" ng-disabled="invIdList.length == 0 || isDisable(rowIndex)" ng-click="deleteAdInventoryIds(supplier)" >Delete Inventory</button>
-               <div>
+                  <!-- <button  class="btn" data-target="#showDatesModal" data-toggle="modal" ng-click="showActivityDates(filter.detail, supplier, key)" ng-disabled="savingDates"  permission = "[permissions.viewDates]">View Dates</button>&ensp; -->
+                  <!-- <button  class="btn btn-info" ng-disabled="invIdList.length == 0 || isDisable(rowIndex)" ng-click="deleteAdInventoryIds(supplier)" >Delete Inventory</button> -->
+                
+                      
+                
+               
+                  <div>
              </div><br>
 
                </td>
