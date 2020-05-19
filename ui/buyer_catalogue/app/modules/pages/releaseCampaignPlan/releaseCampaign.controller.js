@@ -283,7 +283,7 @@ angular.module('catalogueApp')
                 $scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price = parseInt($scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price, 10);
                 $scope.mapViewLat = $scope.initialReleaseData.shortlisted_suppliers[i].latitude;
                 $scope.mapViewLong = $scope.initialReleaseData.shortlisted_suppliers[i].longitude;
-          
+
                 if ($scope.initialReleaseData.shortlisted_suppliers[i].next_action_date) {
                   $scope.initialReleaseData.shortlisted_suppliers[i].next_action_date = new Date($scope.initialReleaseData.shortlisted_suppliers[i].next_action_date);
                 }
@@ -312,9 +312,9 @@ angular.module('catalogueApp')
                 // }
                 $scope.releaseDetailsData = $scope.releaseDetails.campaign.centerData;
                 var centerSuppliers = $scope.releaseDetails.campaign.centerSuppliers;
-              
+
                 if (centerSuppliers) {
-                
+
                   $scope.supplier_names = [];
                   for (let i in centerSuppliers) {
                     if (centerSuppliers[i].supplier_type_code == 'RS') {
@@ -331,15 +331,15 @@ angular.module('catalogueApp')
                       $scope.supplier_names.push({ name: 'Retail Store', code: 'RE' });
                     }
                   }
-                   if(centerSuppliers.length == 0){
+                  if (centerSuppliers.length == 0) {
                     $scope.supplier_names.push({ name: 'ALL', code: 'ALL' });
-                   }
+                  }
 
                   if ($scope.supplier_names.length == 1) {
                     $scope.selectedUser.supplier_type_filter_selected = $scope.supplier_names[0].name;
                     $scope.selectedUser.supplier_type_filter = $scope.supplier_names[0].code;
-                  } 
-                 
+                  }
+
 
                 }
 
@@ -365,14 +365,14 @@ angular.module('catalogueApp')
         }
 
         $scope.changeType = function () {
- 
-          if($scope.selectedUser.supplier_type_filter == ""){
+
+          if ($scope.selectedUser.supplier_type_filter == "") {
             $scope.detailsHeader = $scope.detailsHeaders['ALL'];
           } else {
             $scope.detailsHeader = $scope.detailsHeaders[$scope.selectedUser.supplier_type_filter];
           }
-         
-    
+
+
 
         }
 
@@ -441,10 +441,10 @@ angular.module('catalogueApp')
         }
         $scope.changeDate = function (index) {
 
-            $scope.releaseDetails.shortlisted_suppliers[index].next_action_date = moment.utc($scope.releaseDetails.shortlisted_suppliers[index].next_action_date).local();
+          $scope.releaseDetails.shortlisted_suppliers[index].next_action_date = moment.utc($scope.releaseDetails.shortlisted_suppliers[index].next_action_date).local();
 
-       
-          }
+
+        }
         //To show inventory ids in modal after clicking on inventory type
         $scope.setInventoryIds = function (filter) {
           $scope.inventoryIds = [];
@@ -596,6 +596,7 @@ angular.module('catalogueApp')
 
         //Start: function to select center at add more suplliers
         $scope.selectCenter = function (center_index) {
+        
           $scope.supplierData = [];
           try {
             $scope.center_index = center_index;
@@ -611,12 +612,16 @@ angular.module('catalogueApp')
                 $scope.center_err = false;
                 mapViewService.getLocations($scope.supplier_center)
                   .then(function onSuccess(response) {
+                   
                     $scope.areas = response.data.data;
                   }).
                   catch(function onError(response) {
                     commonDataShare.showErrorMessage(response);
                   });
               }
+            } else {
+              $scope.areas = {};
+              $scope.sub_areas = {};
             }
 
           } catch (error) {
@@ -731,7 +736,7 @@ angular.module('catalogueApp')
               filters.push(filterKeyValuData);
             }
           })
-         
+
           angular.forEach($scope.supplierSummaryData, function (supplier) {
             let code = "";
             if (supplier.supplier_code) {
@@ -764,8 +769,8 @@ angular.module('catalogueApp')
               .then(function onSuccess(response) {
                 //synergy
                 if (response) {
-                   $scope.releaseDetails.shortlisted_suppliers =response.data.data;
-                   window.location.reload();
+                  $scope.releaseDetails.shortlisted_suppliers = response.data.data;
+                  window.location.reload();
                 }
 
                 $('#addNewSocities').modal('hide');
@@ -906,9 +911,9 @@ angular.module('catalogueApp')
         //to send email
         $scope.loadSpinner = true;
         $scope.sendNotification = function () {
-       
-          let message = "Beneficiary Name :" + $scope.body.Beneficiary_Name + ", Bank Account Number :" + $scope.body.Bank_Account_Number  + ", IFSC Code :" + $scope.body.IFSC_Code + ", Negotiated Price :" + $scope.body.Negotiated_Price + ", Message :" + $scope.body.msg;
-         
+
+          let message = "Beneficiary Name :" + $scope.body.Beneficiary_Name + ", Bank Account Number :" + $scope.body.Bank_Account_Number + ", IFSC Code :" + $scope.body.IFSC_Code + ", Negotiated Price :" + $scope.body.Negotiated_Price + ", Message :" + $scope.body.msg;
+
           $scope.loadSpinner = false;
           var email_Data = {
             subject: $scope.paymentStatus + " Details For " + $scope.supplierPaymentData.name,
@@ -1004,18 +1009,23 @@ angular.module('catalogueApp')
           $scope.editPhase = true;
         }
         $scope.savePhases = function () {
-          releaseCampaignService.savePhases($scope.phases, $scope.campaign_id)
-            .then(function onSuccess(response) {
-              swal(constants.name, constants.add_data_success, constants.success);
-              angular.forEach($scope.phases, function (phase) {
-                phase.start_date = new Date(phase.start_date);
-                phase.end_date = new Date(phase.end_date);
+          if ($scope.phases[0] && $scope.phases[0].phase_no) {
+            releaseCampaignService.savePhases($scope.phases, $scope.campaign_id)
+              .then(function onSuccess(response) {
+                swal(constants.name, constants.add_data_success, constants.success);
+                angular.forEach($scope.phases, function (phase) {
+                  phase.start_date = new Date(phase.start_date);
+                  phase.end_date = new Date(phase.end_date);
+                })
+                $scope.getPhases();
+                $scope.editPhase = false;
+              }).catch(function onError(response) {
+                console.log(response);
               })
-              $scope.getPhases();
-              $scope.editPhase = false;
-            }).catch(function onError(response) {
-              console.log(response);
-            })
+          } else {
+            swal(constants.name, "Please add phase first", constants.warning);
+          }
+
         }
 
         $scope.getPhases();
@@ -1026,15 +1036,31 @@ angular.module('catalogueApp')
           $scope.phases.push({});
         }
 
-        $scope.removePhase = function (id) {
-          $scope.editPhase = false;
-          releaseCampaignService.removePhase(id)
-            .then(function onSuccess(response) {
-              swal(constants.name, constants.delete_success, constants.success);
-              $scope.getPhases();
-            }).catch(function onError(response) {
-              console.log(response);
-            })
+        $scope.removePhase = function (index) {
+          if ($scope.phases && $scope.phases[index].id) {
+            swal({
+              title: 'Are you sure ?',
+              text: "Remove Phase",
+              type: constants.warning,
+              showCancelButton: true,
+              confirmButtonClass: "btn-success",
+              confirmButtonText: "Yes, Remove!",
+              closeOnConfirm: true
+            },
+              function () {
+                $scope.editPhase = false;
+                releaseCampaignService.removePhase($scope.phases[index].id)
+                  .then(function onSuccess(response) {
+                    swal(constants.name, constants.delete_success, constants.success);
+                    $scope.getPhases();
+                  }).catch(function onError(response) {
+                    console.log(response);
+                  })
+              })
+          } else {
+            $scope.phases.splice(index, 1);
+          }
+
         }
 
         var setSocietyLocationOnMap = function (supplier) {
@@ -1226,7 +1252,7 @@ angular.module('catalogueApp')
               headers: { 'Authorization': 'JWT ' + token }
             }).then(function onSuccess(response) {
               swal(constants.name, "Import sheet successfully", constants.success);
-             window.location.reload();
+              window.location.reload();
 
             })
               .catch(function onError(response) {
@@ -1234,8 +1260,8 @@ angular.module('catalogueApp')
               });
           }
         }
-       
-        $scope.changeStartDate = function(index){
+
+        $scope.changeStartDate = function (index) {
           $scope.options.minDate = new Date($scope.phases[index].start_date);
         }
 

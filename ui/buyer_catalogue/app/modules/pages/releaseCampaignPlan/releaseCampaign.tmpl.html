@@ -1742,7 +1742,7 @@
 
                 <select name="areas" class="form-control input-size" ng-change="get_sub_areas(centers.area)"
                   ng-model="centers.area" required>
-                  <option value="">Select Area</option>
+                  <option value="" >Select Area</option>
                   <option ng-repeat="area in areas" value="{{$index}}" required>{{area.label}}</option>
                 </select>
 
@@ -1978,7 +1978,7 @@
                   <td>
                     <div class="radio">
                       <button type="button" class="btn btn-danger" name="button"
-                        ng-click="removePhase(phase.id)">Remove</button>
+                        ng-click="removePhase($index)">Remove</button>
                     </div>
                   </td>
                 </tr>
@@ -2028,7 +2028,7 @@
                   <td class="col-md-3">
                     <div class="radio">
                       <button type="button" name="button" class="btn btn-danger"
-                        ng-click="removePhase(phase.id)">Remove</button>
+                        ng-click="removePhase($index)">Remove</button>
                     </div>
                   </td>
 
@@ -2069,9 +2069,9 @@
             </div>
           </div>
         </div>
-        </br></br>
+        <!-- </br></br> -->
         <div class="row">
-          <button class="btn btn-success" type="button" name="button" ng-click="importThroughSheet()">Submit</button>
+          <button class="btn btn-success import" type="button" name="button" ng-click="importThroughSheet()">Submit</button>
         </div>
       </div>
     </div>
