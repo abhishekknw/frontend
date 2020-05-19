@@ -387,11 +387,52 @@ angular.module('catalogueApp')
     $scope.getCampaignState = function(state){
       return constants[state];
     }
-    $scope.filterAssignDatesData = function(filterKey,filterValue){
+
+    $scope.filterAssignDatesData = function (filterKey, filterValue) {
+      $scope.inventoryTypes = [];
+      $scope.selectedSupplier = [];
+      var localindex_index = $scope.phasesData.map(function (el) {
+        return el.phase_no;
+      }).indexOf(filterValue);
+      if (localindex_index != -1) {
+        let phase_id = $scope.phasesData[localindex_index].id;
+        if (phase_id) {
+          for (let i in $scope.releaseDetails.shortlisted_suppliers) {
+            if ($scope.releaseDetails.shortlisted_suppliers[i].phase_no == phase_id) {
+              $scope.selectedSupplier.push($scope.releaseDetails.shortlisted_suppliers[i]);
+              for (let j in $scope.releaseDetails.shortlisted_suppliers[i].shortlisted_inventories) {
+                let index = $scope.inventoryTypes.findIndex(record => record == j);
+                if (index == -1) {
+                  $scope.inventoryTypes.push(j);
+                }
+              }
+            }
+          }
+        }
+      }
       var filterExpression = {};
       filterExpression[filterKey] = filterValue;
       $scope.filteredAssignDatesList = $filter('filter')($scope.filteredAssignDatesList.shortlisted_suppliers, filterExpression);
     }
+
+    $scope.selectInventory = function (value) {
+      $scope.shortlistedInventory = [];
+      for (let i in $scope.selectedSupplier) {
+        $scope.selectedSupplier[i].shortlisted_inventories
+        for (let j in $scope.selectedSupplier[i].shortlisted_inventories) {
+          if (value == j) {
+            for (let k in $scope.selectedSupplier[i].shortlisted_inventories[j].detail) {
+              if($scope.selectedSupplier[i].shortlisted_inventories[j].detail[k] && $scope.selectedSupplier[i].shortlisted_inventories[j].detail[k].id){
+                $scope.shortlistedInventory.push($scope.selectedSupplier[i].shortlisted_inventories[j].detail[k].id)
+              }
+             
+             
+            }
+          }
+        }
+      }
+    }
+
     $scope.assignDates = function(inventory,activity,date,user){
       var dateUserExpression = {};
       var shortlistedInvIdList = [];
@@ -409,8 +450,8 @@ angular.module('catalogueApp')
         }
       })
       var requestData = {
-        shortlisted_inventory_id_detail : shortlistedInvIdList,
-        assignment_detail : [],
+        shortlisted_inventory_id_detail: $scope.shortlistedInventory,
+        assignment_detail: [],
       }
       requestData.assignment_detail.push(assignment_detail);
       auditReleasePlanService.saveActivityDetails(requestData)
