@@ -16,6 +16,7 @@ angular.module('catalogueApp')
           { header: 'Phase' },
           { header: 'Supplier Name & Address' },
           { header: 'AdInventory Id' },
+          { header: 'Action' },
           { header: 'Activity Date' },
           { header: 'Status of Release' },
         ];

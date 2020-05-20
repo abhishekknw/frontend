@@ -1156,7 +1156,7 @@
                   ng-model="supplier.total_negotiated_price" class="form-control spacing input-width" min="0"
                   permission="[permissions.addNegotiatedPrice]">
                 <!-- new formula req -->
-                <!-- <br>{{(supplier.total_negotiated_price / (((supplier.average_weekend)+(supplier.average_weekday))/2))|| 0 | limitTo:8}}  -->
+                <br>{{(supplier.total_negotiated_price / supplier.unit_primary_count)|| 0 | limitTo:8}} 
               </td>
 
               <!-- Cost Per Flat Formula -->
@@ -1164,7 +1164,7 @@
                 <input ng-disabled="!supplier.phase_no || supplier.is_completed" type="number"
                   ng-model="supplier.cost_per_flat" class="form-control spacing input-width" min="0">
                 <!-- new formula req -->
-                <!-- <br>{{(supplier.cost_per_flat * (((supplier.average_weekend)+(supplier.average_weekday))/2))|| 0 | limitTo:8}} -->
+                <br>{{(supplier.cost_per_flat * (supplier.unit_primary_count))|| 0 | limitTo:8}}
               </td>
 
               <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
