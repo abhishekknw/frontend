@@ -582,8 +582,28 @@ angular.module('machadaloPages')
       
       userService.createProfile($scope.profileData)
       .then(function onSuccess(response){
-        console.log(response);
+
         $scope.profileData = response.data.data;
+
+        for(var x in $scope.contentTypeList){
+          var contentType = $scope.contentTypeList[x]
+
+          var object_level_permission1 = {
+            "name":contentType.model.toUpperCase(),
+            "content_type":contentType.id,
+            "profile":$scope.profileData.id
+          }
+          userService.createObjectLevelPermission(object_level_permission1)
+          .then(function onSuccess(response){
+            
+            if(!$scope.profileData.object_level_permission)
+              $scope.profileData['object_level_permission'] = [];
+            $scope.profileData['object_level_permission'].push(response.data.data);
+          }).catch(function onError(response){
+            console.log(response);
+          })
+        }
+        
         
         swal(constants.name,constants.create_success,constants.success);
       }).catch(function onError(response){
