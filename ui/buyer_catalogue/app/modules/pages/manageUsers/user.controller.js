@@ -571,6 +571,15 @@ angular.module('machadaloPages')
 
     //start: create profile
     $scope.createProfile = function(){
+      $scope.profileData.general_user_permission = [];
+
+      for(let id in $scope.userInfo.profile.general_user_permission){
+        let row = $scope.userInfo.profile.general_user_permission[id];
+        delete row["id"];
+        row["is_allowed"] = "";
+        $scope.profileData.general_user_permission.push(row);
+      }
+      
       userService.createProfile($scope.profileData)
       .then(function onSuccess(response){
         console.log(response);
