@@ -244,9 +244,6 @@ angular.module('machadaloPages')
     }
 
      $scope.getContent = function(item,data){
-       console.log("llllll",item);
-      console.log("data", data);
-      console.log("5555555555555555555555555555555555555555555", $scope.contentItem);
        $scope.menuItem.name = item;
       // location.hash=item;
         switch(item){

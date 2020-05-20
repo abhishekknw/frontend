@@ -395,11 +395,6 @@ angular.module('catalogueApp')
         }
 
         $scope.showActivityDates = function (inventory, supplier, key) {
-          console.log('+++++++++++++++++++++++++++++++++++++++',inventory)
-          console.log('11111111111111111111111111111111111111111',supplier)
-          console.log('222222222222222222222222222222222222222222222',key)
-
-
           $scope.ActivityDatesData = inventory;
           $scope.supplierName = supplier.name;
           $scope.inventoryName = key;
