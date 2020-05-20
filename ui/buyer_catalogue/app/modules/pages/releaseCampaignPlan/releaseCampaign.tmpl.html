@@ -1998,7 +1998,7 @@
                         </span> -->
 
                         <input type="text" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="dd/mm/yyyy" ng-change="changeStartDate($index)" ng-model="phase.start_date" is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats" required>
-                        <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
+                        <button type="button" class="smallBtn calendar"  ng-click="isDatepickerOpen = !isDatepickerOpen">
                           <i class="glyphicon glyphicon-calendar"></i>
                         </button>
                       </p>
@@ -2017,8 +2017,8 @@
                               class="glyphicon glyphicon-calendar"></i></button>
                         </span> -->
 
-                        <input type="text" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="dd/mm/yyyy"   ng-change="changeEndDate()"  ng-model="phase.end_date" is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats" required>
-                        <button  type="button" class="smallBtn calendar" ng-click="isEndDateOpen = !isEndDateOpen">
+                        <input type="text" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="dd/mm/yyyy"   ng-change="changeEndDate($index)"  ng-model="phase.end_date" is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats" required>
+                        <button  type="button" class="smallBtn calendar" ng-disabled="!phase.start_date" ng-click="isEndDateOpen = !isEndDateOpen">
                           <i class="glyphicon glyphicon-calendar"></i>
                         </button>
                       </p>

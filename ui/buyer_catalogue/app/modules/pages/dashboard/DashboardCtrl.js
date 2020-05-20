@@ -2708,6 +2708,59 @@
         'SUNBOARD': {
           status: false, total: 0
         },
+
+        'HOARDING': {
+          status: false, total: 0
+        },
+        'GENTRY': {
+          status: false, total: 0
+        },
+        'BUS SHELTER': {
+          status: false, total: 0
+        },
+        'BUS BACK': {
+          status: false, total: 0
+        },
+        'BUS RIGHT': {
+          status: false, total: 0
+        },
+        'BUS LEFT': {
+          status: false, total: 0
+        },
+        'BUS WRAP': {
+          status: false, total: 0
+        },
+        'FLOOR': {
+          status: false, total: 0
+        },
+        'CEILING': {
+          status: false, total: 0
+        },
+        'BILLING': {
+          status: false, total: 0
+        },
+        'COUNTER DISPLAY': {
+          status: false, total: 0
+        },
+        'TENT CARD': {
+          status: false, total: 0
+        },
+        'TABLE': {
+          status: false, total: 0
+        },
+        'WALL': {
+          status: false, total: 0
+        },
+        'HORDING LIT': {
+          status: false, total: 0
+        },
+        'BUS SHELTER LIT': {
+          status: false, total: 0
+        },
+        'GANTRY LIT': {
+          status: false, total: 0
+        },
+
       }
 
       $scope.getCampaignInvData = function (data) {

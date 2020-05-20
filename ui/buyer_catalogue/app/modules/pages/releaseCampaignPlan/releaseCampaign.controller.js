@@ -596,7 +596,7 @@ angular.module('catalogueApp')
 
         //Start: function to select center at add more suplliers
         $scope.selectCenter = function (center_index) {
-        
+
           $scope.supplierData = [];
           try {
             $scope.center_index = center_index;
@@ -612,7 +612,7 @@ angular.module('catalogueApp')
                 $scope.center_err = false;
                 mapViewService.getLocations($scope.supplier_center)
                   .then(function onSuccess(response) {
-                   
+
                     $scope.areas = response.data.data;
                   }).
                   catch(function onError(response) {
@@ -1020,7 +1020,10 @@ angular.module('catalogueApp')
                 $scope.getPhases();
                 $scope.editPhase = false;
               }).catch(function onError(response) {
-                console.log(response);
+                if(response && response.data && response.data.data){
+                  swal(constants.name, response.data.data.general_error, constants.error);
+                }
+              
               })
           } else {
             swal(constants.name, "Please add phase first", constants.warning);
@@ -1040,7 +1043,7 @@ angular.module('catalogueApp')
           if ($scope.phases && $scope.phases[index].id) {
             swal({
               title: 'Are you sure ?',
-              text: "Remove Phase",
+              text: "You want to remove phase",
               type: constants.warning,
               showCancelButton: true,
               confirmButtonClass: "btn-success",
@@ -1264,6 +1267,15 @@ angular.module('catalogueApp')
         $scope.changeStartDate = function (index) {
           $scope.options.minDate = new Date($scope.phases[index].start_date);
         }
+
+
+        $scope.changeEndDate = function (index) {
+          if ($scope.phases[index].start_date > $scope.phases[index].end_date) {
+            $scope.phases[index].end_date = "";
+          }
+          $scope.options.minDate = new Date($scope.phases[index].start_date);
+        }
+
 
         $scope.uploadFiles = function (file) {
           $scope.file = file;
