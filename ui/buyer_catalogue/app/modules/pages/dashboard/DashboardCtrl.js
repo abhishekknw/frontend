@@ -2708,56 +2708,55 @@
         'SUNBOARD': {
           status: false, total: 0
         },
-
-        'HOARDING': {
+        'Hoarding': {
           status: false, total: 0
         },
-        'GENTRY': {
+        'Gentry': {
           status: false, total: 0
         },
-        'BUS SHELTER': {
+        'Bus shelter': {
           status: false, total: 0
         },
-        'BUS BACK': {
+        'Bus back': {
           status: false, total: 0
         },
-        'BUS RIGHT': {
+        'Bus right': {
           status: false, total: 0
         },
-        'BUS LEFT': {
+        'Bus left': {
           status: false, total: 0
         },
-        'BUS WRAP': {
+        'Bus wrap': {
           status: false, total: 0
         },
-        'FLOOR': {
+        'Floor': {
           status: false, total: 0
         },
-        'CEILING': {
+        'Ceiling': {
           status: false, total: 0
         },
-        'BILLING': {
+        'Billing': {
           status: false, total: 0
         },
-        'COUNTER DISPLAY': {
+        'Country display': {
           status: false, total: 0
         },
-        'TENT CARD': {
+        'Tent card': {
           status: false, total: 0
         },
-        'TABLE': {
+        'Table': {
           status: false, total: 0
         },
-        'WALL': {
+        'Wall': {
           status: false, total: 0
         },
-        'HORDING LIT': {
+        'Hording lit': {
           status: false, total: 0
         },
-        'BUS SHELTER LIT': {
+        'Bus shelter lit': {
           status: false, total: 0
         },
-        'GANTRY LIT': {
+        'Gantry lit': {
           status: false, total: 0
         },
 

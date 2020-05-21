@@ -628,6 +628,8 @@ angular.module('machadaloPages')
         console.log(response);
       })
     }
+
+   
     // $scope.updateObjectLevelPermission = function(){
     //   cfpLoadingBar.start();
     //   cfpLoadingBar.inc();
@@ -654,40 +656,40 @@ angular.module('machadaloPages')
       })
     }
 
-        //start: create profile
-        $scope.createProfile = function () {
-          $scope.profileData.general_user_permission = [];
+        // //start: create profile
+        // $scope.createProfile = function () {
+        //   $scope.profileData.general_user_permission = [];
 
-          for (let id in $scope.userInfo.profile.general_user_permission) {
-            let row = $scope.userInfo.profile.general_user_permission[id];
-            delete row["id"];
-            row["is_allowed"] = "";
-            $scope.profileData.general_user_permission.push(row);
-          }
+        //   for (let id in $scope.userInfo.profile.general_user_permission) {
+        //     let row = $scope.userInfo.profile.general_user_permission[id];
+        //     delete row["id"];
+        //     row["is_allowed"] = "";
+        //     $scope.profileData.general_user_permission.push(row);
+        //   }
 
-          userService.createProfile($scope.profileData)
-            .then(function onSuccess(response) {
-              console.log(response);
-              $scope.profileData = response.data.data;
+        //   userService.createProfile($scope.profileData)
+        //     .then(function onSuccess(response) {
+        //       console.log(response);
+        //       $scope.profileData = response.data.data;
 
-              swal(constants.name, constants.create_success, constants.success);
-            }).catch(function onError(response) {
-              console.log(response);
-            })
-        }
-        //end: create profile
-        $scope.goToProfiles = function (contentItem, operation, data = {}) {
+        //       swal(constants.name, constants.create_success, constants.success);
+        //     }).catch(function onError(response) {
+        //       console.log(response);
+        //     })
+        // }
+        // //end: create profile
+        // $scope.goToProfiles = function (contentItem, operation, data = {}) {
 
 
-          $scope.profileData = data;
-          $scope.operationProfile.view = false;
-          $scope.operationProfile.create = false;
-          $scope.operationProfile.edit = false;
-          $scope.operationProfile[operation] = true;
-          console.log($scope.profileData);
-          // $scope.profileData.organisation = $scope.profileData.organisation.organisation_id;
-          $scope.getContent(contentItem);
-        }
+        //   $scope.profileData = data;
+        //   $scope.operationProfile.view = false;
+        //   $scope.operationProfile.create = false;
+        //   $scope.operationProfile.edit = false;
+        //   $scope.operationProfile[operation] = true;
+        //   console.log($scope.profileData);
+        //   // $scope.profileData.organisation = $scope.profileData.organisation.organisation_id;
+        //   $scope.getContent(contentItem);
+        // }
 
         $scope.deleteProfile = function (profile) {
 
@@ -721,43 +723,43 @@ angular.module('machadaloPages')
                 });
             });
         }
-        $scope.updateProfile = function () {
-          console.log($scope.profileData);
-          userService.updateProfile($scope.profileData)
-            .then(function onSuccess(response) {
-              console.log(response);
-              swal(constants.name, constants.update_success, constants.success);
-            }).catch(function onError(response) {
-              console.log(response);
-            })
-        }
+        // $scope.updateProfile = function () {
+        //   console.log($scope.profileData);
+        //   userService.updateProfile($scope.profileData)
+        //     .then(function onSuccess(response) {
+        //       console.log(response);
+        //       swal(constants.name, constants.update_success, constants.success);
+        //     }).catch(function onError(response) {
+        //       console.log(response);
+        //     })
+        // }
         //for generaluser permissionsDict
-        var getObjectLevelPermissions = function () {
-          userService.getObjectLevelPermissions()
-            .then(function onSuccess(response) {
-              console.log(response);
-              $scope.objectLevelPermissions = response.data.data;
-            }).catch(function onError(response) {
-              console.log(response);
-            })
-        }
-        $scope.objectLevelPermissionData = {};
-        $scope.createObjectLevelPermission = function () {
-          console.log($scope.contentTypeObject);
-          $scope.objectLevelPermissionData['name'] = $scope.contentTypeListById[$scope.objectLevelPermissionData.content_type].model.toUpperCase();
-          userService.createObjectLevelPermission($scope.objectLevelPermissionData)
-            .then(function onSuccess(response) {
-              console.log(response);
-              if (!$scope.profileData.object_level_permission)
-                $scope.profileData['object_level_permission'] = [];
-              $scope.profileData['object_level_permission'].push(response.data.data);
-              // getObjectLevelPermissions();/
-              commonDataShare.closeModal('#createObjectLevelPermissionModal');
-              swal(constants.name, constants.create_success, constants.success);
-            }).catch(function onError(response) {
-              console.log(response);
-            })
-        }
+        // var getObjectLevelPermissions = function () {
+        //   userService.getObjectLevelPermissions()
+        //     .then(function onSuccess(response) {
+        //       console.log(response);
+        //       $scope.objectLevelPermissions = response.data.data;
+        //     }).catch(function onError(response) {
+        //       console.log(response);
+        //     })
+        // }
+        // $scope.objectLevelPermissionData = {};
+        // $scope.createObjectLevelPermission = function () {
+        //   console.log($scope.contentTypeObject);
+        //   $scope.objectLevelPermissionData['name'] = $scope.contentTypeListById[$scope.objectLevelPermissionData.content_type].model.toUpperCase();
+        //   userService.createObjectLevelPermission($scope.objectLevelPermissionData)
+        //     .then(function onSuccess(response) {
+        //       console.log(response);
+        //       if (!$scope.profileData.object_level_permission)
+        //         $scope.profileData['object_level_permission'] = [];
+        //       $scope.profileData['object_level_permission'].push(response.data.data);
+        //       // getObjectLevelPermissions();/
+        //       commonDataShare.closeModal('#createObjectLevelPermissionModal');
+        //       swal(constants.name, constants.create_success, constants.success);
+        //     }).catch(function onError(response) {
+        //       console.log(response);
+        //     })
+        // }
         // $scope.updateObjectLevelPermission = function(){
         //   cfpLoadingBar.start();
         //   cfpLoadingBar.inc();
@@ -769,19 +771,19 @@ angular.module('machadaloPages')
         //     console.log(response);
         //   })
         // }
-        $scope.assignObjectName = function (c) {
-          console.log(c);
-        }
+        // $scope.assignObjectName = function (c) {
+        //   console.log(c);
+        // }
         //genral user level permissions
-        var getGeneralUserLevelPermissions = function () {
-          userService.getGeneralUserLevelPermissions()
-            .then(function onSuccess(response) {
-              console.log(response);
-              $scope.generalUserLevelPermissionsList = response.data.data;
-            }).catch(function onError(response) {
-              console.log(response);
-            })
-        }
+        // var getGeneralUserLevelPermissions = function () {
+        //   userService.getGeneralUserLevelPermissions()
+        //     .then(function onSuccess(response) {
+        //       console.log(response);
+        //       $scope.generalUserLevelPermissionsList = response.data.data;
+        //     }).catch(function onError(response) {
+        //       console.log(response);
+        //     })
+        // }
 
         $scope.createGeneralUserLevelPermission = function () {
           console.log($scope.generalUserLevelPermissionData);
