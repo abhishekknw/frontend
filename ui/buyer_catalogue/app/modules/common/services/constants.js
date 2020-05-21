@@ -140,6 +140,7 @@ angular
     delete_confirm_user : 'Do you really want to delete this user?',
     delete_confirm : 'Yes! Delete it!',
     delete_confirm_group : 'Do you really want to delete this Group?',
+    delete_profile : 'Do you really want to delete this Profile?',
     changePassword_success : 'Password changed Successfully',
     
 

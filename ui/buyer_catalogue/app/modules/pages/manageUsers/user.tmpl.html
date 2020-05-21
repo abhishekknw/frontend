@@ -49,7 +49,7 @@
             <table class="table-data">
               <tr>
                 <th>Index</th>
-                <th>Organisation Name</th>
+                <th>Organisation Name </th>
                 <th>Category</th>
                 <th>View</th>
                 <th>Edit</th>
@@ -196,7 +196,8 @@
                 <td>{{profile.organisation.name}}</td>
                 <!-- <td><a class="linkBtn" ng-click="goToProfiles(contentItem.profile,'view',profile)">View</a></td> -->
                 <td><a class="linkBtn" ng-click="goToProfiles(contentItem.profile,'edit',profile)">Edit</a></td>
-                <td><a class="linkBtn" ng-click="goToProfiles(contentItem.profile,'delete')">Delete</a></td>
+                <!-- <td><a class="linkBtn" ng-click="goToProfiles(contentItem.profile,'delete')">Delete</a></td> -->
+                <td><a class="linkBtn" ng-click="deleteProfile(profile,$index)">Delete</a></td>
                 <td data-toggle="modal" data-target="#cloneProfileModal">
                   <button class="linkBtn" ng-click="setModalData(profile)">Clone Profile</button>
                 </td>

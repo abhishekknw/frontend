@@ -67,6 +67,11 @@ angular.module('machadaloPages')
       return machadaloHttp.post(url,data);
     }
 
+    userService.deleteProfile = function(id){
+      var url = url_base_website + "profile/" + id + "/";
+      return  machadaloHttp.delete(url);
+    }
+
     userService.createOrganisation = function(data){
       var url = url_base_website + "organisation/";
       return machadaloHttp.post(url,data);
