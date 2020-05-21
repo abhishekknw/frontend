@@ -923,6 +923,18 @@ angular.module('catalogueApp')
             body: message,
             to: constants.account_email_id,
           };
+
+
+var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function(el) { 
+  return el.id;
+}).indexOf($scope.supplierPaymentData.id);  
+   
+if (localindex_index != -1) {   
+  $scope.releaseDetails.shortlisted_suppliers[localindex_index].account_number = $scope.body.Bank_Account_Number;
+  $scope.releaseDetails.shortlisted_suppliers[localindex_index].beneficiary_name = $scope.body.Beneficiary_Name;
+  $scope.releaseDetails.shortlisted_suppliers[localindex_index].ifsc_code = $scope.body.IFSC_Code;
+  $scope.releaseDetails.shortlisted_suppliers[localindex_index].payment_message = $scope.body.msg;
+}
           releaseCampaignService.sendMail(email_Data)
             .then(function onSuccess(response) {
               $scope.taskId = response.data.data.task_id;
