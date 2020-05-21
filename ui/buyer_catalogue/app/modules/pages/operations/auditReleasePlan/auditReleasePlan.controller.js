@@ -185,6 +185,10 @@ angular.module('catalogueApp')
             return $scope.emptyList;
           }
         }
+        $scope.getFiltersCount = function (supplier) {
+          var keys = Object.keys(supplier.shortlisted_inventories);
+          return keys.length;
+        }
         //For audit dates modal
         $scope.addDate = function (date) {
           $scope.auditDates.push({
