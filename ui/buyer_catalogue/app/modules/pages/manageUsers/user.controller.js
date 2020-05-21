@@ -628,6 +628,39 @@ angular.module('machadaloPages')
         console.log(response);
       })
     }
+
+    $scope.deleteProfile = function (profile) {
+
+      swal({
+        title: constants.warn_user_msg,
+        text: constants.delete_profile,
+        type: constants.warning,
+        showCancelButton: true,
+        confirmButtonClass: constants.btn_success,
+        confirmButtonText: constants.delete_confirm,
+        closeOnConfirm: true
+      },
+        function () {
+
+          userService.deleteProfile(profile.id)
+            .then(function onSuccess(response) {
+              console.log(response);
+              if (response && response.data && response.data.status) {
+                swal(constants.name, constants.delete_success, constants.success);
+                var localindex_index = $scope.profilesList.map(function (el) {
+                  return el.id;
+                }).indexOf(profile.id);
+                if (localindex_index != -1) {
+                  $scope.profilesList.splice(localindex_index, 1);
+                }
+              }
+             
+            }).catch(function onError(response) {
+              console.log(response);
+              commonDataShare.showErrorMessage(response);
+            });
+        });
+    }
     //for generaluser permissionsDict
     var getObjectLevelPermissions = function(){
       userService.getObjectLevelPermissions()
