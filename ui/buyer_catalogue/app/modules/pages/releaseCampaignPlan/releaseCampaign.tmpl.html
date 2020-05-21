@@ -343,12 +343,12 @@
             <tr ng-if="releaseDetails.shortlisted_suppliers.length > 0"
               ng-repeat="(key,filter) in supplier.shortlisted_inventories track by $index" ng-disabled="$index != '15'">
 
-              <td rowspan="{{key.length}}" ng-show="$first" style="width:40px;" ng-style="((supplier.booking_status==='BK' || supplier.booking_status==='MC') && {'background-color':'green'}) ||((supplier.booking_status==='UN' || supplier.booking_status==='NI' || supplier.booking_status==='NE') && {'background-color':'white'} )||(
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" style="width:40px;" ng-style="((supplier.booking_status==='BK' || supplier.booking_status==='MC') && {'background-color':'green'}) ||((supplier.booking_status==='UN' || supplier.booking_status==='NI' || supplier.booking_status==='NE') && {'background-color':'white'} )||(
               (supplier.booking_status==='SR') && {'background-color':'red'}) ||(
               (supplier.booking_status==='DP' ||supplier.booking_status==='TB'||supplier.booking_status==='MF'||supplier.booking_status==='RE' ) && {'background-color':'yellow'}) ||(
               supplier.booking_status && {'background-color':'brown'})">{{$parent.$parent.$index + 1}}</td>
 
-              <td rowspan="{{key.length}}" ng-show="$first">
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <span ng-if="supplier.brand_organisation_data.name">{{supplier.brand_organisation_data.name}}<br></span>
  
                   <button type="button" class="btn btn-danger" name="button" data-toggle="modal"
@@ -378,7 +378,7 @@
 
               </td>
 
-              <td class="" rowspan="{{key.length}}" ng-show="$first">
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank"
                   style="text-decoration: underline; cursor: pointer;color:#337ab7;font-weight: 600;">{{supplier.name}}<br>
                 </a>
@@ -386,8 +386,8 @@
                   ng-if="supplier.quality_rating">)</span>
               </td>
 
-              <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.object_id}}</td>
-              <td class="" rowspan="{{key.length}}" ng-show="$first">
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">{{supplier.object_id}}</td>
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <span ng-if="supplier.supplierCode == 'RS'">Residential Society</span>
                 <span ng-if="supplier.supplierCode == 'CP'">Corporate Parks</span>
                 <span ng-if="supplier.supplierCode == 'BS'">Bus Shelter</span>
@@ -396,26 +396,26 @@
                 <span ng-if="supplier.supplierCode == 'RE'">Retail Store</span>
               </td>
 
-              <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.area}} <br> <span
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">{{supplier.area}} <br> <span
                   ng-if="supplier.subarea">(</span>{{supplier.subarea}}<span ng-if="supplier.subarea">)</span> <br>
               </td>
 
-              <td class="" rowspan="{{key.length}}" ng-show="$first" width="200"> {{supplier.address1}} <span
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" width="200"> {{supplier.address1}} <span
                   ng-if="supplier.address2">, {{supplier.address2}}</span> <br> <span
                   ng-if="supplier.landmark">(</span>{{supplier.landmark}}<span ng-if="supplier.landmark">)</span></td>
-              <!-- <td class="" rowspan="{{key.length}}" ng-show="$first" width="200">Inventory Owner :<b> Machadalo</b>, Feedback:{{supplier.feedback}}</td> -->
+              <!-- <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" width="200">Inventory Owner :<b> Machadalo</b>, Feedback:{{supplier.feedback}}</td> -->
 
-              <td class="" rowspan="{{key.length}}" ng-show="$first" width="200">
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" width="200">
                 <button type="button" class="btn btn-danger" name="button" ng-click="getRelationShipData(supplier)"
                   data-target="#relationshipModal" data-toggle="modal">View Data</button>
               </td>
 
-              <td class="" rowspan="{{key.length}}" ng-show="$first">
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 {{supplier.flat_count}}
               </td>
-              <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.tower_count}}</td>
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">{{supplier.tower_count}}</td>
 
-              <td class="" rowspan="{{key.length}}" ng-show="$first">
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div class="" ng-repeat="supplier in supplier.contacts | limitTo: 1">
                   <p ng-if="supplier.name">{{supplier.name}}</p><br>
                   <p ng-if="supplier.mobile">({{supplier.mobile}})</p>
@@ -425,7 +425,7 @@
                   <b>View More/Add</b></a>
               </td>
 
-              <td rowspan="{{key.length}}" ng-show="$first">
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <p ng-repeat="user in assignedUserList | orderBy: '-updated_at'"
                   ng-if="supplier.supplier_id == user.supplier_id">
                   {{user.username | uppercase}}<br>{{ user.updated_at | date }}</p>
@@ -454,7 +454,7 @@
                   </div>
               </td>
 
-              <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first">
+              <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <select class="form-control spacing input-width" ng-model="supplier.booking_priority"
                   ng-disabled="supplier.is_completed">
                   <option value="" disabled="">None</option>
@@ -463,7 +463,7 @@
                 </select>
               </td>
 
-              <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first">
+              <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <select class="form-control spacing input-width" ng-model="supplier.booking_status"
                   permission="[permissions.changeBookingStatus]" ng-change="changePhase(supplier)"
                   ng-disabled="supplier.is_completed">
@@ -520,7 +520,7 @@
                 </select>
               </td>
 
-              <td class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="phaseform">
+              <td class="col-md-2" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" ng-form name="phaseform">
                 <input class="form-control spacing input-width" type="text" ng-disabled="true"
                   ng-model="phaseMappingList[supplier.phase_no].phase_no" />
                 <select ng-disabled="supplier.booking_status != 'BK' || supplier.is_completed" name="phase"
@@ -534,7 +534,7 @@
                 <span class="error" ng-show="phaseform.phase.$error.min">{{positiveNoError}}</span>
               </td>
 
-              <td ng-if="canViewInternalComments" rowspan="{{key.length}}" ng-show="$first">
+              <td ng-if="canViewInternalComments" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
 
                 <div class="comment" ng-if="comments[supplier.id]">
                   <b>{{comments[supplier.id].internal.username}} </b> <span> <br><small>
@@ -547,8 +547,8 @@
               </td>
 
               <!-- </td> -->
-              <td rowspan="{{key.length}}" ng-show="$first">
-                <span rowspan="{{key.length}}" ng-show="$first">
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
+                <span rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                   <div class="comment" ng-if="comments[supplier.id]">
                     <b>{{comments[supplier.id].external.username}} </b> <span> <br><small>
                         {{comments[supplier.id].external.created_on | date}}</small></span><br>
@@ -560,7 +560,7 @@
                 </span>
               </td>
 
-              <td rowspan="{{key.length}}" ng-show="$first">
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <input class="form-control spacing input-width" ng-model="supplier.next_action_date" type="date" name=""
                   ng-disabled="supplier.is_completed">
               </td>
@@ -605,7 +605,7 @@
                 </div>
               </td>
 
-              <td rowspan="{{key.length}}" ng-show="$first">
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div ng-if="supplier.shortlisted_inventories_totalPrice && supplier.flat_count !=0">
                   {{supplier.shortlisted_inventories_totalPrice/ supplier.flat_count | currency : "₹"}}
                 </div>
@@ -615,12 +615,12 @@
                 </div>
               </td>
 
-              <!-- <td class="" rowspan="{{key.length}}" ng-show="$first">{{filter.totalPrice  | currency : "₹"}} <span
+              <!-- <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">{{filter.totalPrice  | currency : "₹"}} <span
                   ng-if="filter.totalPrice/supplier.flat_count ==0 || filter.totalPrice/supplier.flat_count">(</span>{{filter.totalPrice/supplier.flat_count|limitTo:8| currency : "₹"}}<span
                   ng-if="filter.totalPrice/supplier.flat_count == 0 || filter.totalPrice/supplier.flat_count">)</span>
               </td> -->
 
-              <td class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="priceform">
+              <td class="col-md-2" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" ng-form name="priceform">
                 <span ng-disabled="!supplier.phase_no" class="error"
                   ng-show="priceform.price.$error.min">{{positiveNoError}}</span>
                 <input ng-disabled="!supplier.phase_no || supplier.is_completed " type="number" name="price"
@@ -628,20 +628,20 @@
                   permission="[permissions.addNegotiatedPrice]">
                 <br>{{(supplier.total_negotiated_price / supplier.flat_count)|| 0 | limitTo:8}} </td>
 
-              <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
+              <td class="col-md-6" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <input ng-disabled="!supplier.phase_no || supplier.is_completed" type="number"
                   ng-model="supplier.cost_per_flat" class="form-control spacing input-width" min="0">
                 <br>{{(supplier.cost_per_flat * supplier.flat_count)|| 0 | limitTo:8}}
               </td>
 
-              <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
+              <td class="col-md-6" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div ng-repeat="freebie in customFreebies">
                   <input type="checkbox" checklist-model="supplier.freebies" checklist-value="freebie"
                     ng-disabled="supplier.is_completed"> {{freebie}}
                 </div>
               </td>
 
-              <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
+              <td class="" style="text-align:left" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div class="radio">
                   <label>
                     <input ng-disabled="!supplier.phase_no || supplier.is_completed" type="radio"
@@ -670,7 +670,7 @@
                 </div>
               </td>
 
-              <td class="" rowspan="{{key.length}}" ng-show="$first">
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div class="" ng-if="supplier.payment_method == 'NEFT' || supplier.payment_method == 'CHEQUE'">
                   <input ng-disabled="!supplier.phase_no" type="text" class="form-control spacing input-width"
                     ng-model="supplier.transaction_or_check_number" ng-change="updateSupplierStatus(supplier)">
@@ -678,7 +678,7 @@
               </td>
 
               <!--for payment status  -->
-              <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
+              <td class="" style="text-align:left" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <select ng-disabled="!supplier.phase_no || supplier.is_completed"
                   class="form-control spacing input-width" ng-model="supplier.payment_status"
                   permission="[permissions.viewPaymentDetails]">
@@ -688,7 +688,7 @@
                 </select>
               </td>
 
-              <td rowspan="{{key.length}}" ng-show="$first">
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div ng-repeat="image in permissionBoxImages" ng-if="image.object_id == supplier.supplier_id"
                   style="margin-bottom:10px">
                   <img ng-src="{{aws_campaign_images_url}}{{image.image_path}}" alt="Permission Box" height="50"
@@ -741,7 +741,7 @@
                   data-target="#imageModal">View/Add</button>
               </td>
 
-              <td rowspan="{{key.length}}" ng-show="$first">
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div ng-repeat="image in receiptImages" ng-if="image.object_id == supplier.supplier_id"
                   style="margin-bottom:10px">
                   <img ng-src="{{aws_campaign_images_url}}{{image.image_path}}" alt="Receipt" height="50" width="50">
@@ -789,7 +789,7 @@
                 <!--END:permission box image modal  -->
               </td>
 
-              <td rowspan="{{key.length}}" ng-show="$first">
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div ng-if="supplier.leads_data">
                   <table class="table table-responsive table-bordered">
                     <tbody>
@@ -821,7 +821,7 @@
               </td>
 
               <td style="text-align:left" ng-if="releaseDetails.campaign.proposal_id.indexOf('NOB') == -1"
-                rowspan="{{key.length}}" ng-show="$first">
+                rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div class="completedHeaderSpacing">
                   <input type="radio" class="" ng-click="completionStatus(supplier.id)" id="supplierCompleted"
                     ng-value="true" ng-model="supplier.is_completed"> Completed
@@ -832,7 +832,7 @@
               </td>
 
               <td ng-if="releaseDetails.campaign.proposal_id.indexOf('NOB') >-1" style="text-align:left"
-                rowspan="{{key.length}}" ng-show="$first">
+                rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div class="completedHeaderSpacing">
                   <input type="radio" class="" ng-value="true" ng-model="supplier.is_completed"> Converted
                 </div>
@@ -841,7 +841,7 @@
                 </div>
               </td>
 
-              <td rowspan="{{key.length}}" ng-show="$first">
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <button type="button" class="btn btn-danger"
                   ng-click="deleteSupplier(supplier.id,$parent.$index)">Delete Supplier</button>
               </td>
@@ -863,11 +863,11 @@
             <tr ng-if="releaseDetails.shortlisted_suppliers.length > 0"
               ng-repeat="(key,filter) in supplier.shortlisted_inventories" ng-disabled="$index != '15'">
 
-              <td rowspan="{{key.length}}" ng-show="$first" style="width:40px;" ng-style="((supplier.booking_status==='BK' || supplier.booking_status==='MC') && {'background-color':'green'}) ||((supplier.booking_status==='UN' || supplier.booking_status==='NI' || supplier.booking_status==='NE') && {'background-color':'white'} )||(
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" style="width:40px;" ng-style="((supplier.booking_status==='BK' || supplier.booking_status==='MC') && {'background-color':'green'}) ||((supplier.booking_status==='UN' || supplier.booking_status==='NI' || supplier.booking_status==='NE') && {'background-color':'white'} )||(
           (supplier.booking_status==='SR') && {'background-color':'red'}) ||(
           (supplier.booking_status==='DP' ||supplier.booking_status==='TB'||supplier.booking_status==='MF'||supplier.booking_status==='RE' ) && {'background-color':'yellow'}) ||(
           supplier.booking_status && {'background-color':'brown'})">{{$parent.$parent.$index + 1}}</td>
-              <td rowspan="{{key.length}}" ng-show="$first">
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <span ng-if="supplier.brand_organisation_data.name">{{supplier.brand_organisation_data.name}}<br></span>
                 <button type="button" class="btn btn-danger" name="button" data-toggle="modal"
                   data-target="#addBrandModal1" ng-disabled="releaseDetails.campaign.brand == 'single_brand'" ng-click="setUserSupplier(supplier)">Add Brands</button>
@@ -894,7 +894,7 @@
                 </div>
 
               </td>
-              <td class="" rowspan="{{key.length}}" ng-show="$first">
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank"
                   style="text-decoration: underline; cursor: pointer;color:#337ab7;font-weight: 600;">{{supplier.name}}<br>
                 </a>
@@ -902,8 +902,8 @@
                     ng-if="supplier.category_name">,{{supplier.category_name}}</span>)</span>
               </td>
 
-              <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.object_id}}</td>
-              <td class="" rowspan="{{key.length}}" ng-show="$first">
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">{{supplier.object_id}}</td>
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <span ng-if="supplier.supplierCode == 'RS'">Residential Society</span>
                 <span ng-if="supplier.supplierCode == 'CP'">Corporate Parks</span>
                 <span ng-if="supplier.supplierCode == 'BS'">Bus Shelter</span>
@@ -912,30 +912,30 @@
                 <span ng-if="supplier.supplierCode == 'RE'">Retail Store</span>
               </td>
 
-              <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.area}} <br> <span
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">{{supplier.area}} <br> <span
                   ng-if="supplier.subarea">(</span>{{supplier.subarea}}<span ng-if="supplier.subarea">)</span> <br>
               </td>
 
-              <td class="" rowspan="{{key.length}}" ng-show="$first" width="200"> {{supplier.address1}} <span
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" width="200"> {{supplier.address1}} <span
                   ng-if="supplier.address2">, {{supplier.address2}}</span> <br> <span
                   ng-if="supplier.landmark">(</span>{{supplier.landmark}}<span ng-if="supplier.landmark">)</span></td>
-              <!-- <td class="" rowspan="{{key.length}}" ng-show="$first" width="200">Inventory Owner :<b> Machadalo</b>, Feedback:{{supplier.feedback}}</td> -->
+              <!-- <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" width="200">Inventory Owner :<b> Machadalo</b>, Feedback:{{supplier.feedback}}</td> -->
 
-              <td class="" rowspan="{{key.length}}" ng-show="$first" width="200">
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" width="200">
                 <button type="button" class="btn btn-danger" name="button" ng-click="getRelationShipData(supplier)"
                   data-target="#relationshipModal" data-toggle="modal">View Data</button>
               </td>
 
-              <td class="" rowspan="{{key.length}}" ng-show="$first">{{supplier.unit_primary_count}}</td>
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">{{supplier.unit_primary_count}}</td>
              
-              <td class="" rowspan="{{key.length}}" ng-show="$first">
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 {{supplier.unit_secondary_count}}
 
               </td>
               
            
 
-              <td class="" rowspan="{{key.length}}" ng-show="$first">
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div class="" ng-repeat="supplier in supplier.contacts | limitTo: 1">
                   <p ng-if="supplier.name">{{supplier.name}}</p><br>
                   <p ng-if="supplier.mobile">({{supplier.mobile}})</p>
@@ -945,7 +945,7 @@
                   <b>View More/Add</b></a>
               </td>
 
-              <td rowspan="{{key.length}}" ng-show="$first">
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <p ng-repeat="user in assignedUserList | orderBy: '-updated_at'"
                   ng-if="supplier.supplier_id == user.supplier_id">
                   {{user.username | uppercase}}<br>{{ user.updated_at | date }}</p>
@@ -974,7 +974,7 @@
                   </div>
               </td>
 
-              <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first">
+              <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <select class="form-control spacing input-width" ng-model="supplier.booking_priority"
                   ng-disabled="supplier.is_completed">
                   <option value="" disabled="">None</option>
@@ -983,7 +983,7 @@
                 </select>
               </td>
 
-              <td class="col-md-4" rowspan="{{key.length}}" ng-show="$first">
+              <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <select class="form-control spacing input-width" ng-model="supplier.booking_status"
                   permission="[permissions.changeBookingStatus]" ng-change="changePhase(supplier)"
                   ng-disabled="supplier.is_completed">
@@ -1040,7 +1040,7 @@
                 </select>
               </td>
 
-              <td class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="phaseform">
+              <td class="col-md-2" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" ng-form name="phaseform">
                 <input class="form-control spacing input-width" type="text" ng-disabled="true"
                   ng-model="phaseMappingList[supplier.phase_no].phase_no" />
                 <select ng-disabled="supplier.booking_status != 'BK' || supplier.is_completed" name="phase"
@@ -1054,7 +1054,7 @@
                 <span class="error" ng-show="phaseform.phase.$error.min">{{positiveNoError}}</span>
               </td>
 
-              <td ng-if="canViewInternalComments" rowspan="{{key.length}}" ng-show="$first">
+              <td ng-if="canViewInternalComments" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div class="comment" ng-if="comments[supplier.id]">
                   <b>{{comments[supplier.id].internal.username}} </b> <span> <br><small>
                       {{comments[supplier.id].internal.created_on | date}}</small></span><br>
@@ -1066,7 +1066,7 @@
               </td>
 
               <!-- </td> -->
-              <td rowspan="{{key.length}}" ng-show="$first">
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div class="comment" ng-if="comments[supplier.id]">
                   <b>{{comments[supplier.id].external.username}} </b> <span> <br><small>
                       {{comments[supplier.id].external.created_on | date}}</small></span><br>
@@ -1077,7 +1077,7 @@
                 <br>
               </td>
 
-              <td rowspan="{{key.length}}" ng-show="$first">
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <!-- <input class="form-control spacing input-width" ng-change="changeDate($parent.$parent.$index)" ng-model="supplier.next_action_date" type="date" name=""
                   ng-disabled="supplier.is_completed"> -->
 
@@ -1132,7 +1132,7 @@
                 </div> -->
               </td>
               <!-- Total Supplier Price Formula -->
-              <td rowspan="{{key.length}}" ng-show="$first">
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <span ng-if="filter.total_count && filter.total_inventory_supplier_price">
                   {{(filter.total_count) * (filter.total_inventory_supplier_price)}}</span>
 
@@ -1149,7 +1149,7 @@
 
 
               <!-- Negotiated Price Formula -->
-              <td class="col-md-2" rowspan="{{key.length}}" ng-show="$first" ng-form name="priceform">
+              <td class="col-md-2" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" ng-form name="priceform">
                 <span ng-disabled="!supplier.phase_no" class="error"
                   ng-show="priceform.price.$error.min">{{positiveNoError}}</span>
                 <input ng-disabled="!supplier.phase_no || supplier.is_completed " type="number" name="price"
@@ -1160,21 +1160,21 @@
               </td>
 
               <!-- Cost Per Flat Formula -->
-              <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
+              <td class="col-md-6" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <input ng-disabled="!supplier.phase_no || supplier.is_completed" type="number"
                   ng-model="supplier.cost_per_flat" class="form-control spacing input-width" min="0">
                 <!-- new formula req -->
                 <br>{{(supplier.cost_per_flat * (supplier.unit_primary_count))|| 0 | limitTo:8}}
               </td>
 
-              <td class="col-md-6" rowspan="{{key.length}}" ng-show="$first">
+              <td class="col-md-6" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div ng-repeat="freebie in customFreebies">
                   <input type="checkbox" checklist-model="supplier.freebies" checklist-value="freebie"
                     ng-disabled="supplier.is_completed"> {{freebie}}
                 </div>
               </td>
 
-              <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
+              <td class="" style="text-align:left" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div class="radio">
                   <label>
                     <input ng-disabled="!supplier.phase_no || supplier.is_completed" type="radio"
@@ -1203,7 +1203,7 @@
                 </div>
               </td>
 
-              <td class="" rowspan="{{key.length}}" ng-show="$first">
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div class="" ng-if="supplier.payment_method == 'NEFT' || supplier.payment_method == 'CHEQUE'">
                   <input ng-disabled="!supplier.phase_no" type="text" class="form-control spacing input-width"
                     ng-model="supplier.transaction_or_check_number" ng-change="updateSupplierStatus(supplier)">
@@ -1211,7 +1211,7 @@
               </td>
 
               <!--for payment status  -->
-              <td class="" style="text-align:left" rowspan="{{key.length}}" ng-show="$first">
+              <td class="" style="text-align:left" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <select ng-disabled="!supplier.phase_no || supplier.is_completed"
                   class="form-control spacing input-width" ng-model="supplier.payment_status"
                   permission="[permissions.viewPaymentDetails]">
@@ -1221,7 +1221,7 @@
                 </select>
               </td>
 
-              <td rowspan="{{key.length}}" ng-show="$first">
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div ng-repeat="image in permissionBoxImages" ng-if="image.object_id == supplier.supplier_id"
                   style="margin-bottom:10px">
                   <img ng-src="{{aws_campaign_images_url}}{{image.image_path}}" alt="Permission Box" height="50"
@@ -1274,7 +1274,7 @@
                   data-target="#imageModal1">View/Add</button>
               </td>
 
-              <td rowspan="{{key.length}}" ng-show="$first">
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div ng-repeat="image in receiptImages" ng-if="image.object_id == supplier.supplier_id"
                   style="margin-bottom:10px">
                   <img ng-src="{{aws_campaign_images_url}}{{image.image_path}}" alt="Receipt" height="50" width="50">
@@ -1322,7 +1322,7 @@
                 <!--END:permission box image modal  -->
               </td>
 
-              <td rowspan="{{key.length}}" ng-show="$first">
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div ng-if="supplier.leads_data">
                   <table class="table table-responsive table-bordered">
                     <tbody>
@@ -1354,7 +1354,7 @@
               </td>
 
               <td style="text-align:left" ng-if="releaseDetails.campaign.proposal_id.indexOf('NOB') == -1"
-                rowspan="{{key.length}}" ng-show="$first">
+                rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div class="completedHeaderSpacing">
                   <input type="radio" class="" ng-click="completionStatus(supplier.id)" id="supplierCompleted"
                     ng-value="true" ng-model="supplier.is_completed"> Completed
@@ -1365,7 +1365,7 @@
               </td>
 
               <td ng-if="releaseDetails.campaign.proposal_id.indexOf('NOB') >-1" style="text-align:left"
-                rowspan="{{key.length}}" ng-show="$first">
+                rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div class="completedHeaderSpacing">
                   <input type="radio" class="" ng-value="true" ng-model="supplier.is_completed"> Converted
                 </div>
@@ -1374,12 +1374,12 @@
                 </div>
               </td>
 
-              <td rowspan="{{key.length}}" ng-show="$first">
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <button type="button" class="btn btn-danger"
                   ng-click="deleteSupplier(supplier.id,$parent.$parent.$index)">Delete Supplier</button>
               </td>
 
-              <td rowspan="{{key.length}}" ng-show="$first">
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <button type="button" class="btn btn-info"
                   ng-click="updateData(supplier.id,$parent.$parent.$index)">Update Supplier</button>
               </td>

@@ -1846,4 +1846,9 @@ angular.module('catalogueApp')
           }
         }
 
+        $scope.getFiltersCount = function (supplier) {
+          var keys = Object.keys(supplier.shortlisted_inventories);
+          return keys.length;
+        }
+
       }]);//Controller function ends here
