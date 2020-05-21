@@ -196,7 +196,7 @@
                 <td>{{profile.organisation.name}}</td>
                 <!-- <td><a class="linkBtn" ng-click="goToProfiles(contentItem.profile,'view',profile)">View</a></td> -->
                 <td><a class="linkBtn" ng-click="goToProfiles(contentItem.profile,'edit',profile)">Edit</a></td>
-                <td><a class="linkBtn" ng-click="goToProfiles(contentItem.profile,'delete')">Delete</a></td>
+                <td><a class="linkBtn" ng-click="deleteProfile(profile,$index)">Delete</a></td>
                 <td data-toggle="modal" data-target="#cloneProfileModal">
                   <button class="linkBtn" ng-click="setModalData(profile)">Clone Profile</button>
                 </td>
@@ -521,7 +521,7 @@
                   <input type="text" class="field" ng-model="permission.name" ng-if="operationProfile.edit" ng-disabled="isDataUpdating" ng-enter="updateGeneralUserPermission(permission,$index)">
                 </td>
                 <td>
-                  <input type="checkbox" ng-model="permission.is_allowed" ng-value="{{permission.is_allowed}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="updateGeneralUserPermission(permission,$index)">
+                  <input type="checkbox" ng-model="permission.is_allowed" ng-value="{{permission.is_allowed}}" ng-disabled="operationProfile.view || isDataUpdating" ng-click="[checkClick(),updateGeneralUserPermission(permission,$index)]">
                 </td>
               </tr>
             </table>
