@@ -531,6 +531,9 @@ angular.module('catalogueApp')
 
         $scope.searchSuppliers = function () {
           var proposal_id = $scope.releaseDetails.campaign.proposal_id;
+          if($scope.releaseDetails.campaign.brand == "multi_brand"){
+            proposal_id = undefined;
+          }
 
           $scope.searchDisable = true;
           if (!$scope.supplier_type_code.code) {
@@ -542,8 +545,8 @@ angular.module('catalogueApp')
           try {
             $scope.search_status = false;
             if ($scope.supplier_type_code.code && $scope.supplier_center) {
-              mapViewService.searchSuppliers($scope.supplier_type_code.code, $scope.search.query, '', $scope.supplier_center, $scope.center_areas, proposal_id)
-                .then(function onSuccess(response, status) {
+               mapViewService.searchSuppliers($scope.supplier_type_code.code, $scope.search.query, '', $scope.supplier_center, $scope.center_areas, proposal_id)
+              .then(function onSuccess(response, status) {
                   $scope.center_index = null;
                   $scope.supplierData = response.data.data;
                   $scope.searchDisable = false;
