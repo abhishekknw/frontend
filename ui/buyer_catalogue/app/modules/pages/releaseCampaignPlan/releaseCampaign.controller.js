@@ -531,6 +531,9 @@ angular.module('catalogueApp')
 
         $scope.searchSuppliers = function () {
           var proposal_id = $scope.releaseDetails.campaign.proposal_id;
+          if($scope.releaseDetails.campaign.brand == "multi_brand"){
+            proposal_id = undefined;
+          }
 
           $scope.searchDisable = true;
           if (!$scope.supplier_type_code.code) {
@@ -542,8 +545,8 @@ angular.module('catalogueApp')
           try {
             $scope.search_status = false;
             if ($scope.supplier_type_code.code && $scope.supplier_center) {
-              mapViewService.searchSuppliers($scope.supplier_type_code.code, $scope.search.query, '', $scope.supplier_center, $scope.center_areas, proposal_id)
-                .then(function onSuccess(response, status) {
+               mapViewService.searchSuppliers($scope.supplier_type_code.code, $scope.search.query, '', $scope.supplier_center, $scope.center_areas, proposal_id)
+              .then(function onSuccess(response, status) {
                   $scope.center_index = null;
                   $scope.supplierData = response.data.data;
                   $scope.searchDisable = false;
@@ -920,6 +923,18 @@ angular.module('catalogueApp')
             body: message,
             to: constants.account_email_id,
           };
+
+
+var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function(el) { 
+  return el.id;
+}).indexOf($scope.supplierPaymentData.id);  
+   
+if (localindex_index != -1) {   
+  $scope.releaseDetails.shortlisted_suppliers[localindex_index].account_number = $scope.body.Bank_Account_Number;
+  $scope.releaseDetails.shortlisted_suppliers[localindex_index].beneficiary_name = $scope.body.Beneficiary_Name;
+  $scope.releaseDetails.shortlisted_suppliers[localindex_index].ifsc_code = $scope.body.IFSC_Code;
+  $scope.releaseDetails.shortlisted_suppliers[localindex_index].payment_message = $scope.body.msg;
+}
           releaseCampaignService.sendMail(email_Data)
             .then(function onSuccess(response) {
               $scope.taskId = response.data.data.task_id;
