@@ -519,7 +519,9 @@
               <tr ng-repeat="permission in profileData.general_user_permission">
                 <td>{{$index+1}}</td>
                 <td>
-                  <label ng-if="operationProfile.view || operationProfile.create">{{permission.name.split("_").join(" ");}}</label>
+                  <!-- <label ng-if="operationProfile.view || operationProfile.create ||  operationProfile.edit">{{permission.name.split("_").join(" ");}}</label> -->
+                  <label ng-if="operationProfile.view">{{permission.name.split("_").join(" ");}}</label>
+                  <label ng-if="operationProfile.create">{{permission.name;}}</label>
                   <input type="text" class="field" ng-model="permission.name" ng-if="operationProfile.edit" ng-disabled="isDataUpdating" ng-enter="updateGeneralUserPermission(permission,$index)">
                 </td>
                 <td>

@@ -167,23 +167,23 @@
         { header: 'GATEWAY ARCH' },
         { header: 'BANNER' },
         { header: 'SUNBOARD' },
-        { header: 'Hording' },
-        { header: 'Gentry' },
-        { header: 'Bus shelter' },
-        { header: 'Bus back' },
-        { header: 'Bus right' },
-        { header: 'Bus left' },
-        { header: 'Bus wrap' },
-        { header: 'Floor' },
-        { header: 'Ceiling' },
-        { header: 'Billing' },
-        { header: 'Counter display' },
-        { header: 'Tent card' },
-        { header: 'Table' },
-        { header: 'Wall' },
-        { header: 'Hording lit' },
-        { header: 'Bus shelter lit' },
-        { header: 'Gantry lit' },
+        { header: 'HORDING' }, 
+        { header: 'GENTRY' },
+        { header: 'BUS SHELTER' },
+        { header: 'BUS BACK' },
+        { header: 'BUS RIGHT' },
+        { header: 'BUS LEFT' },
+        { header: 'BUS WRAP' },
+        { header: 'FLOOR' },
+        { header: 'CEILING' },
+        { header: 'BILLING' },
+        { header: 'COUNTER DISPLAY' },
+        { header: 'TENT CARD' },
+        { header: 'TABLE' },
+        { header: 'WALL' },
+        { header: 'HORDING LIT' },
+        { header: 'BUS SHELTER LIT' },
+        { header: 'GANTRY LIT' },
       ];
       $scope.invCodes = {
         PO: 'PO',
@@ -2708,55 +2708,55 @@
         'SUNBOARD': {
           status: false, total: 0
         },
-        'Hoarding': {
+        'HORDING': {
           status: false, total: 0
         },
-        'Gentry': {
+        'GENTRY': {
           status: false, total: 0
         },
-        'Bus shelter': {
+        'BUS SHELTER': {
           status: false, total: 0
         },
-        'Bus back': {
+        'BUS BACK': {
           status: false, total: 0
         },
-        'Bus right': {
+        'BUS BACK': {
           status: false, total: 0
         },
-        'Bus left': {
+        'BUS LEFT': {
           status: false, total: 0
         },
-        'Bus wrap': {
+        'BUS WRAP': {
           status: false, total: 0
         },
-        'Floor': {
+        'FLOOR': {
           status: false, total: 0
         },
-        'Ceiling': {
+        'CEILING': {
           status: false, total: 0
         },
-        'Billing': {
+        'BILLING': {
           status: false, total: 0
         },
-        'Country display': {
+        'COUNTRY DISPLAY': {
           status: false, total: 0
         },
-        'Tent card': {
+        'TENT CARD': {
           status: false, total: 0
         },
-        'Table': {
+        'TABLE': {
           status: false, total: 0
         },
-        'Wall': {
+        'WALL': {
           status: false, total: 0
         },
-        'Hording lit': {
+        'HORDING LIT': {
           status: false, total: 0
         },
-        'Bus shelter lit': {
+        'BUS SHELTER': {
           status: false, total: 0
         },
-        'Gantry lit': {
+        'GANTRY LIT': {
           status: false, total: 0
         },
 
