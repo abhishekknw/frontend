@@ -8,13 +8,13 @@
   </a>
   <div class="topRight">
     <ul class="top-menu">
-      <li><a ng-href="/#/manageCampaign/create"><i class="fas fa-home"></i>Home</a></li>
+      <li permission="[perm.menuHome]"><a ng-href="/#/manageCampaign/create"><i class="fas fa-home"></i>Home</a></li>
       <li>
         <a href="#"><i class="fas fa-cog"></i>Setting</a>
         <ul>
           <li><a>&nbsp;</a></li>
-          <li><a ng-href="/#/loginLogs">View Logs</a></li>
-          <li><a ng-href="/#/changePassword">Change Password</a></li>
+          <li permission="[perm.menuCampaignLeads]"><a ng-href="/#/loginLogs">View Logs</a></li>
+          <li permission="[perm.menuChangePassword]"><a ng-href="/#/changePassword">Change Password</a></li>
           <li><a href="/#/logout">Logout</a></li>
           <li><a>&nbsp;</a></li>
         </ul>
@@ -54,15 +54,15 @@
           </li>
         </ul>
       </li><!-- li -->
-      <li class="parent arrow" ng-class="{active: isActive('/CampaignList')}" permission="[perm.menuCampaignList]">
+      <li class="parent arrow" ng-class="{active: isActive('/CampaignList')}">
         <a href="javascript:void(0);">Campaign Planning </a>
         <ul class="child">
           <li class="arrow">
-            <a href="javascript:void(0);">Static</a>
+            <a href="javascript:void(0);" permission="[perm.menuCampaignList,perm.menuOpsDashBoard]">Static</a>
             <ul class="subchild">
-              <li><a href="/#/campaignDecisionBoard">Campaign Decision Board</a></li>
-              <li><a href="/#/CampaignList">List of Campaign</a></li>
-              <li><a href="/#/HDFHDF0789/releasePlan">Booking Plan</a></li>
+              <li><a href="/#/campaignDecisionBoard" permission="[perm.menuOpsDashBoard]">Campaign Decision Board</a></li>
+              <li><a href="/#/CampaignList" permission="[perm.menuCampaignList]">List of Campaign</a></li>
+              <li><a href="/#/HDFHDF0789/releasePlan" permission="[perm.menuCampaignList]">Booking Plan</a></li>
             </ul>
           </li>
           <li class="arrow">
@@ -108,19 +108,19 @@
       <li class="parent arrow">
         <a href="javascript:void(0);">Campaign Execution</a>
         <ul class="child">
-          <li>
+          <li permission="[perm.menuChecklist]">
             <a href="/r/checklist/campaigns">Campaign Checklist</a>
           </li>
           <li class="arrow">
             <a href="javascript:void(0);">Leads</a>
             <ul class="subchild">
-              <li><a href="/#/campaignLeads">Capture Leads</a></li>
+              <li permission="[perm.menuCampaignLeads]"><a href="/#/campaignLeads">Capture Leads</a></li>
               <li><a href="/r/leads/settings">Assign Permission</a></li>
             </ul>
           </li>
         </ul>
       </li><!-- li -->
-      <li class="parent arrow">
+      <li class="parent arrow" permission="[perm.menuCampaignLeads]">
         <a href="javascript:void(0);">Static Form</a>
         <ul class="child">
           <li><a href="https://forms.machadalo.com/#/dashboard">Manage Supplier</a></li>
@@ -132,7 +132,7 @@
           <li>
             <a href="/#/manageMent/aboutYou">My Profile</a>
           </li>
-          <li class="arrow">
+          <li class="arrow" permission="[perm.viewManagement]">
             <a >Organization</a>
             <ul class="subchild">
               <li><a href="/#/manageMent/organisationView">View</a></li>
@@ -140,7 +140,7 @@
               <li><a href="/#/manageMent/mapOrganisations">Organizations Mapping</a></li>
             </ul>
           </li>
-          <li>
+          <li permission="[perm.viewManagement]">
             <a href="/#/manageMent/profileView">Manage Profile</a>
           </li>
           <!-- <li class="arrow">
@@ -150,7 +150,7 @@
               <li><a href="/#/manageUser">Update</a></li>
             </ul>
           </li> -->
-          <li class="arrow">
+          <li class="arrow" permission="[perm.viewManagement]">
             <a href="javascript:void(0);">Roles</a>
             <ul class="subchild">
               <li><a href="/#/manageMent/createRoles">Create</a></li>
@@ -158,7 +158,7 @@
               <li><a href="/#/manageMent/viewRole">View</a></li>
             </ul>
           </li>
-          <li class="arrow">
+          <li class="arrow" permission="[perm.viewManagement]">
             <a href="javascript:void(0);">Users</a>
             <ul class="subchild">
               <li><a href="/#/manageMent/createUser">Create User</a></li>
