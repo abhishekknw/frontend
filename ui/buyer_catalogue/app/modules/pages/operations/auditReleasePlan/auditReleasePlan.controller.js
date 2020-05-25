@@ -119,6 +119,15 @@ angular.module('catalogueApp')
                   response.data.data.shortlisted_suppliers[0].phase_no == undefined) {
                   swal(constants.name, "Phase Not Found for this Supplier, Please Assign Phase At Booking Page", constants.warning);
                 }
+                let shortlisted_suppliers = [];
+                for(x in response.data.data.shortlisted_suppliers){
+                  let row = response.data.data.shortlisted_suppliers[x];
+                  if(row.phase_no){
+                    shortlisted_suppliers.push(row);
+                  }
+                }
+                response.data.data.shortlisted_suppliers = shortlisted_suppliers;
+                
                 $scope.releaseDetails = response.data.data;
 
                 $scope.totalSuppliers = $scope.releaseDetails.total_count;
