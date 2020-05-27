@@ -1925,22 +1925,22 @@
             <form role="form" class="form-inline" name="retailshop_form">
               <label>Check Payment Details, Edit As per requirement and send to Account</label>
               <div class="col-md-12" style="margin-top: 10px">
-                Beneficiary_Name : <input type="text" class="form-control" ng-model="body.Beneficiary_Name">
+                Beneficiary_Name : <span class="red">*</span> <input type="text" class="form-control" ng-model="body.Beneficiary_Name">
               </div>
               <div class="col-md-12" style="margin-top: 10px">
-              Bank Account Number : <input type="text" class="form-control" ng-model="body.Bank_Account_Number">
+              Bank Account Number : <span class="red">*</span> <input type="text" class="form-control" ng-model="body.Bank_Account_Number">
             </div>
               <div class="col-md-12" style="margin-top: 10px">
-              IFSC Code : <input type="text" class="form-control" ng-model="body.IFSC_Code">
+              IFSC Code : <span class="red">*</span> <input type="text" class="form-control" ng-model="body.IFSC_Code">
             </div>
               <div class="col-md-12" style="margin-top: 10px">
-              Negotiated Price : <input type="text" class="form-control" ng-model="body.Negotiated_Price">
+              Negotiated Price : <span class="red">*</span> <input type="text" class="form-control" ng-model="body.Negotiated_Price">
             </div>
             <div class="col-md-12" style="margin-top: 10px">
              Message :
             <textarea name="reason" id="onHoldReason" class="form-control" ng-model="body.msg" >
           </textarea>
-          <button class="btn btn-danger active notify" ng-click="sendNotification()" ng-disabled="!body.Beneficiary_Name"
+          <button class="btn btn-danger active notify" ng-click="sendNotification()" ng-disabled="!body.Beneficiary_Name || !body.Bank_Account_Number || !body.IFSC_Code || !body.Negotiated_Price"
           ng-loading="loadSpinner">Send</button>
             </div>
            

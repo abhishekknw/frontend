@@ -120,6 +120,7 @@ angular.module('catalogueApp')
                   swal(constants.name, "Phase Not Found for this Supplier, Please Assign Phase At Booking Page", constants.warning);
                 }
                 $scope.releaseDetails = response.data.data;
+                console.log('11111112222222222222222222222222222', $scope.releaseDetails)
 
                 $scope.totalSuppliers = $scope.releaseDetails.total_count;
                 $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
@@ -446,11 +447,11 @@ angular.module('catalogueApp')
             for (let j in $scope.selectedSupplier[i].shortlisted_inventories) {
               if (value == j) {
                 for (let k in $scope.selectedSupplier[i].shortlisted_inventories[j].detail) {
-                  if($scope.selectedSupplier[i].shortlisted_inventories[j].detail[k] && $scope.selectedSupplier[i].shortlisted_inventories[j].detail[k].id){
+                  if ($scope.selectedSupplier[i].shortlisted_inventories[j].detail[k] && $scope.selectedSupplier[i].shortlisted_inventories[j].detail[k].id) {
                     $scope.shortlistedInventory.push($scope.selectedSupplier[i].shortlisted_inventories[j].detail[k].id)
                   }
-                 
-                 
+
+
                 }
               }
             }
@@ -507,18 +508,26 @@ angular.module('catalogueApp')
               console.log(response);
             })
         }
-        $scope.getInventoryRelatedData = function (supplier) {
+        $scope.getInventoryRelatedData = function (supplier, inventoryCount) {
           $scope.shortlistedSupplierData = supplier;
+           $scope.totalInventoryCount = 0
+          for(let i in supplier.shortlisted_inventories){
+            $scope.totalInventoryCount =  $scope.totalInventoryCount + supplier.shortlisted_inventories[i].total_count;
+          }
 
           if (supplier.phase_no) {
-            auditReleasePlanService.getInventoryRelatedData()
-              .then(function onSuccess(response) {
-                $scope.adInventoryTypes = response.data.data.inventory_types;
-                $scope.durationTypes = response.data.data.duration_types;
-                $('#addInventoryModal').modal('show');
-              }).catch(function onError(response) {
-                console.log(response);
-              })
+            if (inventoryCount <= 50) {
+              auditReleasePlanService.getInventoryRelatedData()
+                .then(function onSuccess(response) {
+                  $scope.adInventoryTypes = response.data.data.inventory_types;
+                  $scope.durationTypes = response.data.data.duration_types;
+                  $('#addInventoryModal').modal('show');
+                }).catch(function onError(response) {
+                  console.log(response);
+                })
+            } else {
+              swal(constants.name, "Only 50 inventory can be added", constants.error);
+            }
           } else {
             swal(constants.name, "Please add phase first ", constants.error);
           }
@@ -526,17 +535,21 @@ angular.module('catalogueApp')
         }
         $scope.adInvModel = {};
         $scope.addAdInventoryIds = function () {
-          $scope.adInvModel['space_id'] = $scope.shortlistedSupplierData.id;
-          auditReleasePlanService.addAdInventoryIds($scope.adInvModel)
-            .then(function onSuccess(response) {
-              $('#addInventoryModal').on('hide.bs.modal', function () { });
-              $scope.adInvModel = {};
-              getResultsPage(1);
-              swal(constants.name, constants.add_data_success, constants.success);
-            }).catch(function onError(response) {
-              console.log(response);
-              swal(constants.name, constants.save_error, constants.error);
-            })
+          if (($scope.adInvModel.inv_count + $scope.totalInventoryCount) <= 50) {
+            $scope.adInvModel['space_id'] = $scope.shortlistedSupplierData.id;
+            auditReleasePlanService.addAdInventoryIds($scope.adInvModel)
+              .then(function onSuccess(response) {
+                $('#addInventoryModal').on('hide.bs.modal', function () { });
+                $scope.adInvModel = {};
+                getResultsPage(1);
+                swal(constants.name, constants.add_data_success, constants.success);
+              }).catch(function onError(response) {
+                console.log(response);
+                swal(constants.name, constants.save_error, constants.error);
+              })
+          } else {
+            swal(constants.name, "Only 50 inventory can be added", constants.error);
+          }
 
         }
         $scope.deleteAdInventoryIds = function () {
