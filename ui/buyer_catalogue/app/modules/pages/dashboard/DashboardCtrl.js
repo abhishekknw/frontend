@@ -151,7 +151,9 @@
         'FLIER': 'FL',
         'GATEWAY ARCH': 'GA',
         'SUNBOARD': 'SB',
-        'BANNER': 'BA'
+        'BANNER': 'BA',
+        'WHATSAPP INDIVIDUAL': 'WI',
+        'WHATSAPP GROUP': 'WG'
       };
       $scope.queryType = {
         'Locality': 'Locality',
