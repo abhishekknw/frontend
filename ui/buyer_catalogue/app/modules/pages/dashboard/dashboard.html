@@ -13,8 +13,6 @@
      
     <div class="al-main" >
         <div class="al-content">
-
-
           <uib-tabset class="dashboard-tab" active="selectTabIndex.value" >
               <uib-tab index="0">
                 <uib-tab-heading>
@@ -171,7 +169,7 @@
                         <!-- <div class="" > -->
                                 <!-- <div class=""> -->
                                 <div class="panel-heading" style="height:70px;">
-                                  <h5 style="background:'red';color:white;">Campaign Details ({{invName}}, {{actType}})</h5>
+                                  <h5 style="background:'red';color:white;">Campaign Details({{invName}}, {{actType}})</h5>
                                   <h5 class="pull-right">{{date|date : "dd-MM-yyyy"}}</h5>
                                 </div>
                                 <br />
@@ -237,7 +235,7 @@
                                 <table class="table" id="tablescroll">
                                   <thead>
                                     <tr>
-                                      <th>Society Name</th>
+                                      <th>Supplier Name </th>
                                       <th>Inventory Type</th>
                                       <th>Assigned</th>
                                       <th>Completed</th>
@@ -247,7 +245,7 @@
                                   </thead>
                                   <tbody ng-repeat="supplier in dateWiseSuppliers">
                                     <tr ng-repeat="(key,inv) in supplier" ng-if="key != 'supplier_data' && key != 'space_id' ">
-                                      <td><b>{{supplier.supplier_data.society_name}}</b></td>
+                                      <td><b>{{supplier.supplier_data.name}}</b></td>
                                       <td>{{key}}</td>
                                       <td>{{inv.assigned}}</td>
                                       <td>{{inv.completed}}</td>
@@ -335,6 +333,18 @@
                                       </div>
                                     </div>
                                 </div>
+
+                                <div class="panel panel-default">
+                                  <div class="row" style="width:100%;margin-left:0px;">
+                                      <h4 class="panel-title">
+                                        <select class="form-control" name="supplierType" ng-model="selectedSupplierType.code" value="supplierType.value"   ng-change="setSupplierType()">
+                                          <option value="">Select Supplier Type</option>
+                                          <option value="{{supplierType.value}}" ng-selected="selectedSupplierType == supplierType.value" ng-repeat="supplierType in supplierTypeCode">{{supplierType.name}}</option>
+                                        </select>
+                                      </h4>
+                                  </div>
+                                 
+                              </div>
                                 <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.completed.status)">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
@@ -435,8 +445,7 @@
                                       <td>Campaign Status</td>
                                       <td>Supplier Count</td>
                                       <!-- <td>Flat Count</td> -->
-                                      <td>{{flatCountHeader}}</td>
-                                      
+                                      <td>{{flat_count_header}}</td>
                                       <td>Hot Leads %</td>
                                       <td>Total Leads %</td>
                                       <td>Hot Leads Count</td>
@@ -464,7 +473,7 @@
                                                  <th ng-if="suppliers.extra_leads_data.length"> <small>Total Hot Leads</small> </th>
                                                </thead>
                                                <tbody ng-repeat="supplier in suppliers.extra_leads_data">
-                                                 <h6 style="text-align:center" ng-if="suppliers.extra_leads_data.length"> <b>{{suppliers.supplier.society_name}}</b></h6>
+                                                 <h6 style="text-align:center" ng-if="suppliers.extra_leads_data.length"> <b>{{suppliers.supplier.name}}</b></h6>
                                                  <tr style="text-align:center">
                                                    <td ng-if="suppliers.extra_leads_data.length"><small>{{supplier.created_at | date:'medium'}}</small></td>
                                                    <td ng-if="suppliers.extra_leads_data.length"><small>{{supplier.extra_leads}}</small></td>
@@ -525,7 +534,7 @@
                                       <td>Campaign Status</td>
                                       <td>Supplier Count</td>
                                       <!-- <td>Flat Count</td> -->
-                                      <td>Unit Count</td>
+                                      <td>{{flat_count_header}} </td>
                                       <td>Hot Leads Count</td>
                                       <td>Total Leads Count</td>
                                       <td>Hot Leads (%)</td>
@@ -603,9 +612,9 @@
                                             <th style="width:200px;" ng-click="Sort('supplier.society_name')">Supplier Name &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                             <th>Supplier Area <br> (SubArea)</th>
                                             <th>Supplier Type</th>
-                                            <th ng-click="Sort('supplier.flat_count')" >{{flatCountHeader}} &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
-                                            <th ng-click="Sort('leads_data.total_leads_count')">Leads <br> (% by {{flatCountHeader}}) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
-                                            <th ng-click="Sort('leads_data.hot_leads_count')" >Hot Leads <br>(% by {{flatCountHeader}}) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th ng-click="Sort('supplier.flat_count')" >{{flat_count_header}} &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th ng-click="Sort('leads_data.total_leads_count')" ng-if="supplierStatus != 'upcoming'">Leads <br> (% by {{flat_count_header}}) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th ng-click="Sort('leads_data.hot_leads_count')" ng-if="supplierStatus != 'upcoming'">Hot Leads <br>(% by {{flat_count_header}}) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                             <th ng-if="supplierStatus != 'upcoming'">Poster</th>
                                             <th ng-if="supplierStatus != 'upcoming'">Flier</th>
                                             <th ng-if="supplierStatus != 'upcoming'">Standee</th>
@@ -615,11 +624,12 @@
                                             <th>Comments</th>
                                             <th ng-if="canViewInternalComments">Internal <br> Comments</th>
                                             </tr>
-                                            <tr colspan="9">
+                                            <tr colspan="12">
                                               <td></td>
                                               <td><input ng-model="f.phase" class="form-control" placeholder="Search"><hr></td>
-                                              <td><input ng-model="f.supplier.society_name" class="form-control" placeholder="Search"><hr></td>
-
+                                              <td><input ng-model="f.supplier.name" class="form-control" placeholder="Search"><hr></td>
+                                                <td></td>
+                                                <td><input ng-model="f.supplier.society_type_quality" class="form-control" placeholder="Search"><hr></td>
                                             </tr>
                                             <hr>
                                             </thead>
@@ -629,12 +639,14 @@
                                                   <tr ng-repeat="supplier in supplierAndInvData |filter:searchQuery |filter : f | orderBy:sort:reversesort">
                                                   <td>{{$index + 1}}</td>
                                                   <td>{{supplier.phase}}</td>
-                                                  <td style="width:200px;" class="col-md-2">{{supplier.supplier.society_name}}</td>
-                                                  <td class="col-md-2">{{supplier.supplier.society_locality}} <small>({{supplier.supplier.society_subarea}})</small></td>
-                                                  <td class="col-md-2">{{supplier.supplier.society_type_quality}}</td>
+                                                  <td style="width:200px;" class="col-md-2">{{supplier.supplier.name}}</td>
+                                                  <td class="col-md-2" ><span ng-if="supplier.supplier.society_locality">{{supplier.supplier.society_locality}}</span>  <span ng-if="supplier.supplier.locality_rating">{{supplier.supplier.locality_rating}}</span>  <small>({{supplier.supplier.subarea}})</small></td>
+                                               
+                                                  <td class="col-md-2"><span ng-if="supplier.supplier.society_type_quality">{{supplier.supplier.society_type_quality}}</span> <span ng-if="supplier.supplier.quality_rating">{{supplier.supplier.quality_rating}}</span></td>
+                                                  
                                                   <td class="col-md-2">{{supplier.supplier.flat_count}}</td>
-                                                  <td class="col-md-2" style="color:#ffffff">{{supplier.leads_data.total_leads_count || 0}} <br> <small style="color:#cb1925;"> ({{supplier.leads_data.leads_flat_percentage || 0}} %)</small><span ng-if="supplier.leads_data.leads_flat_percentage && supplier.leads_data.leads_flat_percentage > 0 && admin == 1" style="margin-left: 5%;" class="glyphicon glyphicon-trash" ng-click="deleteLeads(supplier.supplier.supplier_id)"></span></td>
-                                                  <td class="col-md-2" style="color:#ffffff">{{supplier.leads_data.hot_leads_count || 0}} <br> <small style="color:#cb1925;">({{supplier.leads_data.hot_leads_percentage_by_flat_count || 0}} %)</small></td>
+                                                  <td class="col-md-2" style="color:#ffffff" ng-if="supplierStatus != 'upcoming'">{{supplier.leads_data.total_leads_count || 0}} <br> <small style="color:#cb1925;"> ({{supplier.leads_data.leads_flat_percentage || 0}} %)</small><span ng-if="supplier.leads_data.leads_flat_percentage && supplier.leads_data.leads_flat_percentage > 0 && admin == 1" style="margin-left: 5%;" class="glyphicon glyphicon-trash" ng-click="deleteLeads(supplier.supplier.supplier_id)"></span></td>
+                                                  <td class="col-md-2" style="color:#ffffff" ng-if="supplierStatus != 'upcoming'">{{supplier.leads_data.hot_leads_count || 0}} <br> <small style="color:#cb1925;">({{supplier.leads_data.hot_leads_percentage_by_flat_count || 0}} %)</small></td>
                                                   <td ng-if="supplier.images_data.POSTER && supplierStatus != 'upcoming'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.POSTER.images)">Images ({{supplier.images_data.POSTER.total_count}})</a></td>
                                                   <td ng-if="!supplier.images_data.POSTER && supplierStatus != 'upcoming'">No Images</td>
 
@@ -673,15 +685,21 @@
                                                     </table>
                                                   </td>
                                                   <td style="width:200px;">
+                    
                                                     <!--START : view external comments modal  -->
-                                                    <button ng-click="viewComments('EXTERNAL',supplier)" class="btn btn-danger" data-toggle="modal" data-target="#viewExternalComments">View/Add</button>
+                                                    <div class="comment" ng-if="comments[supplier.shortlisted_space_id]" >
+                                                      <b>{{comments[supplier.shortlisted_space_id].external.username}} </b> <span> <br><small>
+                                                          {{comments[supplier.shortlisted_space_id].external.created_on | date}}</small></span><br>
+                                                      <span>{{comments[supplier.shortlisted_space_id].external.comment}}</span>
+                                                    </div>
+                                                    <button ng-click="viewComments('EXTERNAL',supplier)" class="btn btn-danger" data-toggle="modal" data-target="#viewExternalComments"> View/Add</button>
                                                     <div id="viewExternalComments" class="modal fade">
                                                       <div>
                                                         <div class="modal-dialog">
                                                           <div class="modal-content">
                                                             <div class="modal-header">
                                                               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                              View Comments For {{societyViewNameForComments}}
+                                                              View Comments For  {{societyViewNameForComments}}
                                                             </div>
                                                             <div class="modal-body">
                                                               <table class="table-bordered table-striped" style="border: none !important;">
@@ -709,7 +727,7 @@
                                                               <br>
                                                             </div><br>
                                                             <br>
-                                                            <button class="btn btn-danger" type="button" ng-click="addComment('EXTERNAL',supplier.shortlisted_space_id)" style="margin:3%">Add Comment</button>
+                                                            <button class="btn btn-danger" type="button" ng-click="addComment('EXTERNAL',shortlistedSpaceId)" style="margin:3%">Add Comment </button>
                                                           </div>
                                                         </div><br>
                                                         <br>
@@ -778,8 +796,8 @@
                                               <td>&nbsp;</td>
                                               <td>&nbsp;</td>
                                               <td>{{TotalSupplierFlatCount}}</td>
-                                              <td>{{TotalSupplierLeadsCount || 0}}</td>
-                                              <td>{{TotalSupplierHotLeadsCount || 0}}</td>
+                                              <td ng-if="supplierStatus != 'upcoming'">{{TotalSupplierLeadsCount || 0}}</td>
+                                              <td ng-if="supplierStatus != 'upcoming'">{{TotalSupplierHotLeadsCount || 0}}</td>
                                               <td ng-if="supplierStatus != 'upcoming'"></td>
                                               <td ng-if="supplierStatus != 'upcoming'"></td>
                                               <td ng-if="supplierStatus != 'upcoming'"></td>
@@ -800,7 +818,7 @@
                                 <div class="row">
                                   <div class="col-md-12" ng-show="showDisplayDetailsTable"  ng-if="supplierStatus == 'ongoing'">
                                     <div class="panel-heading content-title">
-                                      <h5 style="background:'red'">Map View for {{campaignTabPropsalName}}</h5></div>
+                                      <h5 style="background:'red'">Map View for  {{campaignTabPropsalName}}</h5></div>
                                     <style type="text/css">
                                           .angular-google-map-container { height: 550px;color: black;}
                                       </style>
@@ -825,6 +843,33 @@
                                             </ui-gmap-markers>
                                         </ui-gmap-google-map>
                                   </div>
+
+                                  <div class="col-md-12" ng-show="!supplierStatus && showAllMapData" >
+                                    <div class="panel-heading content-title">
+                                      <h5 style="background:'red'">Map View for {{campaignTabPropsalName}}</h5></div>
+                                    <style type="text/css">
+                                          .angular-google-map-container { height: 550px;color: black;}
+                                      </style>
+                                        <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="false"
+                                                            options="options" bounds="map.bounds" control="googlemap">
+                                            <ui-gmap-window show="show" coords='windowCoords'>
+                                                  <div>
+                                                    <table class="table-responsive table">
+                                                      <div class="">
+                                                        <h3>{{space.title.name}}</h3>
+                                                      </div>
+                                                      <tr><td>Hot Leads Percentage</td><td><small>{{(space.completedLeadsSupplierData.hot_leads_count)  || 'NA'}} ({{((space.completedLeadsSupplierData.hot_leads_count/space.completedLeadsSupplierData.flat_count)|number:2) || 0}}%)</small></td></tr>
+                                                      <tr><td>Total Leads</td><td><small>{{(space.completedLeadsSupplierData.total_leads_count || 'NA')}} ({{((space.completedLeadsSupplierData.total_leads_count/space.completedLeadsSupplierData.flat_count) | number:2) || 0}}%)</small></td></tr>
+                                                    </table>
+                                                   </div>
+                                            </ui-gmap-window>
+                                            <ui-gmap-markers models="supplierMarkers" coords="'self'" icon="'icon'"
+                                                             options="'options'" doRebuildAll="true" events="marker.events">
+                                            </ui-gmap-markers>
+                                        </ui-gmap-google-map>
+                                  </div>
+
+
                                   <div class="col-md-12" ng-show="showDisplayDetailsTable"  ng-if="supplierStatus == 'completed'">
                                       <div class="panel-heading content-title">
                                         <h5 style="background:'red'">Map View for {{campaignTabPropsalName}}</h5></div>
@@ -863,8 +908,13 @@
                                                           <div class="">
                                                             <h3>{{space.title.name}}</h3>
                                                           </div>
-                                                          <tr><td>Flat Count</td><td><small>{{space.dataofSupplierAndInvData.flat_count || 'NA'}}</small></td></tr>
-                                                          <tr><td>Tower Count</td><td><small>{{space.dataofSupplierAndInvData.tower_count || 'NA'}}</small></td></tr>
+                                                          <tr><td ng-if="selectedSupplierType.code == all || selectedSupplierType.code == '' || selectedSupplierType.code == 'mix'" >Unit Primary Count</td>
+                                                            <td ng-if="selectedSupplierType.code != all || selectedSupplierType.code != '' || selectedSupplierType.code != 'mix'">{{flat_count_header}}</td>
+                                                            <td><small>{{space.dataofSupplierAndInvData.flat_count || 'NA'}}</small></td></tr>
+                                                          <tr>
+                                                              <td ng-if="selectedSupplierType.code == all || selectedSupplierType.code == '' || selectedSupplierType.code == 'mix'" >Unit Secondary Count</td>
+                                                              <td ng-if="selectedSupplierType.code != all || selectedSupplierType.code != '' || selectedSupplierType.code != 'mix'">{{tower_count_header}}</td>
+                                                            <td><small>{{space.dataofSupplierAndInvData.tower_count || 'NA'}}</small></td></tr>
                                                         </table>
                                                        </div>
                                                 </ui-gmap-window>
@@ -972,8 +1022,8 @@
               </uib-tab>
 
 
-              <uib-tab id="uib-tabs-width" ng-click="viewCampaignLeads()" index="1">
-                  <uib-tab-heading>
+              <uib-tab id="uib-tabs-width"  ng-click="viewCampaignLeads()" index="1">
+                  <uib-tab-heading >
                     <h5>View Leads</h5>
                   </uib-tab-heading>
                   <div class="container-fluid">
@@ -996,6 +1046,16 @@
                               </table>
                           </div>
                         </div>
+
+                        <div class="col-md-12">
+                          <h4 class="panel-title">
+                              <select class="form-control" name="supplierType" ng-model="selectedSupplierType.code" value="supplierType.value"   ng-change="setSupplierType('viewLeads')">
+                                  <option value="">Select Supplier Type</option>
+                                  <option value="{{supplierType.value}}" ng-selected="selectedSupplierType == supplierType.value" ng-repeat="supplierType in supplierTypeCode">{{supplierType.name}}</option>
+                                </select>
+                            </h4>
+                          </div>
+
                     </div><br /><br />
                     <div class="viewLeadstable" ng-if="showCampaigns">
                       <br /><br /><br /><br />
@@ -1011,7 +1071,7 @@
                             <!-- <th>Phase</br>Completed</th> -->
                             <th>Campaign Status</th>
                             <th style="width:100px;" class="col-md-2" ng-click="Sort('supplier_count')">Supplier</br> Count <a><i class="icon-sort" style="color:white;"></i></a></th>
-                            <th style="width:100px;" class="col-md-2" ng-click="Sort('flat_count')">Unit Count<a><i class="icon-sort" style="color:white;"></i></a></th>
+                            <th style="width:100px;" class="col-md-2" ng-click="Sort('flat_count')">{{flat_count_header}}<a><i class="icon-sort" style="color:white;"></i></a></th>
                             <th style="width:120px;" class="col-md-2" ng-click="Sort('total_leads')">Total Leads <a><i class="icon-sort" style="color:white;"></i></a></th>
                             <th style="width:100px;" class="col-md-2" ng-click="Sort('hot_leads')">Hot Leads <a><i class="icon-sort" style="color:white;"></i></a></th>
                             <th>View Leads</th>
@@ -1132,6 +1192,17 @@
                   </table>
               </div>
             </div>
+
+            <div class="panel panel-default">
+              <div class="row" style="width:100%;margin-left:0px;">
+                  <h4 class="panel-title">
+                    <select class="form-control" name="supplierType" ng-model="selectedSupplierType.code" value="supplierType.value"   ng-change="setSupplierType()">
+                      <option value="">Select Supplier Type</option>
+                      <option value="{{supplierType.value}}" ng-selected="selectedSupplierType == supplierType.value" ng-repeat="supplierType in supplierTypeCode">{{supplierType.name}}</option>
+                    </select>
+                  </h4>
+              </div>
+          </div>
         </div>
           <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.ongoing.status)">
               <div class="panel-heading">
@@ -1191,10 +1262,10 @@
             <thead>
               <tr>
                 <th><small>Phase Details</small></th>
-                <th><small>Confirmed Booked <br>(Total {{flatCountHeader}})</small></th>
-                <th><small>Verbally Booked <br>(Total {{flatCountHeader}})</small></th>
-                <th><small>Followup Required <br>(Total {{flatCountHeader}})</small></th>
-                <th><small>Total <br>(Total {{flatCountHeader}})</small></th>
+                <th><small>Confirmed Booked <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Verbally Booked <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Followup Required <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Total <br>(Total {{flat_count_header}})</small></th>
               </tr>
             </thead>
             <tbody>
@@ -1295,12 +1366,12 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th><small>Confirmed Booked <br>(Total {{flatCountHeader}})</small></th>
-                <th><small>Not Initiated <br>(Total {{flatCountHeader}})</small></th>
-                <th><small>Followup Required <br>(Total {{flatCountHeader}})</small></th>
-                <th><small>Verbally Booked <br>(Total {{flatCountHeader}})</small></th>
-                <th><small>Rejected <br>(Total {{flatCountHeader}})</small></th>
-                <th><small>Total <br>(Total {{flatCountHeader}})</small></th>
+                <th><small>Confirmed Booked <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Not Initiated <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Followup Required <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Verbally Booked <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Rejected <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Total <br>(Total {{flat_count_header}})</small></th>
               </tr>
             </thead>
             <tbody>
@@ -1355,8 +1426,8 @@
                 <tr>
                   <th>Index</th>
                   <th>Supplier Name</th>
-                  <th>{{flatCountHeader}}</th>
-                  <th>{{towerCountHeader}}</th>
+                  <th>{{flat_count_header}}</th>
+                  <th>{{tower_count_header}}</th>
                   <th>Type Of</br>Society</th>
                   <th>Area(SubArea)</th>
                   <th>Status</th>
@@ -1371,13 +1442,21 @@
               <tbody>
                 <tr ng-repeat="supplier in bookingSuppliersData | orderBy: 'society_name'">
                   <td>{{$index + 1}}</td>
-                  <td>{{supplier.society_name}}</td>
+                  <td ng-if="supplier.society_name">{{supplier.society_name}}</td>
+                  <td ng-if="supplier.name">{{supplier.name}}</td>
                   <td>{{supplier.flat_count}}</td>
                   <td>{{supplier.tower_count}}</td>
-                  <td>{{supplier.society_type_quality}}</td>
-                  <td>{{supplier.society_locality}}({{supplier.society_subarea}})</td>
+                  <td >
+                      <span ng-if="supplier.society_type_quality">{{supplier.society_type_quality}}</span>
+                      <span ng-if="supplier.quality_rating">{{supplier.quality_rating}}</span>
+                     </td>
+  
+                     <td >
+                        <span ng-if="supplier.society_locality">{{supplier.society_locality}} ({{supplier.subarea}})</span>
+                        <span ng-if="supplier.locality_rating">{{supplier.locality_rating}} ({{supplier.subarea}})</span>
+                       </td>
                   <td>{{supplierBookingStatus[supplier.booking_status||'Not Initiated']}}</td>
-                  <td><a href="https://www.google.com/maps/?q=+{{supplier.society_latitude}}+{{supplier.society_longitude}}" target="_blank">View Details</a></td>
+                  <td><a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank">View Details</a></td>
                   <td><a ng-click="viewBookingComments(supplier)">View Comments</a></td>
                   <td>Poster : {{supplier.inventory_counts.POSTER}}<br>
                   Flyer : {{supplier.inventory_counts.FLIER}}<br>
@@ -4096,7 +4175,7 @@
               <div class="modal-content">
                 <div class="modal-body">
                   <div class="modal-header">
-                    View Comments For {{supplierNameForComment}}
+                    View Comments For  {{supplierNameForComment}}
                   </div>
                 <div style="margin:20px;">
                 <table class="table-bordered table-striped" align="center">

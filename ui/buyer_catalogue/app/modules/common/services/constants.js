@@ -190,6 +190,17 @@ angular
       TB : 'Tentative Booking'
 
     },
+    
+    supplierTypeCode:[{name:'ALL', value:'all'},
+    {name:'Residential Society', value:'RS'},
+      {name:'Corporate', value:'CP'},
+      {name:'Bus Shelter', value:'BS'},
+      {name:'Gym', value:'GY'},
+      {name:'Saloon', value:'SA'},
+      {name:'Retail Store', value:'RE'},
+      {name:'Mix', value:'mix'},
+      ],
+
     distanceLimit : 500,
     release : 'RELEASE',
     closure : 'CLOSURE',
@@ -222,4 +233,5 @@ angular
     no_comments_msg : 'No Comments Available',
     flatCountHeader:{'RS':'Flat Count','RE':'Footfall Count ','CP':'Employees Count','GY':'Footfall Count','BS':'Footfall Count','EI':'Students Count'},
     towerCountHeader:{'RS':'Flat Count','RE':'Weekday Footfall Count','CP':'Companies Count','GY':'Weekday Footfall Count','BS':'Weekday Footfall Count','EI':'Teachers Count'}
+
   });
