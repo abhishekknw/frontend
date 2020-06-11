@@ -636,44 +636,7 @@
             $scope.options = angular.copy(doughnutChartOptions);
             $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.pieChartClick(e.data.label); };
             $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.getCampaignInvData(e.data); };
-            //default map all
-            // if ($scope.campaignData) {
-            //   let allCampaign = [];
-            //   allCampaign = $scope.campaignData.completed_campaigns;
-
-
-            //   if ($scope.campaignData.ongoing_campaigns.length > 0) {
-            //     if (allCampaign.length > 0) {
-            //       for (let i in $scope.campaignData.ongoing_campaigns) {
-            //         allCampaign.push($scope.campaignData.ongoing_campaigns[i]);
-            //       }
-            //     } else {
-            //       allCampaign = $scope.campaignData.ongoing_campaigns;
-            //     }
-            //   }
-            //   if ($scope.campaignData.upcoming_campaigns.length > 0) {
-            //     if (allCampaign.length > 0) {
-            //       for (let j in $scope.campaignData.upcoming_campaigns) {
-            //         allCampaign.push($scope.campaignData.upcoming_campaigns[j]);
-            //       }
-            //     } else {
-            //       allCampaign = $scope.campaignData.upcoming_campaigns;
-            //     }
-            //   }
-
-            //   if ($scope.campaignData.onhold_campaigns.length > 0) {
-            //     if (allCampaign.length > 0) {
-            //       for (let k in $scope.campaignData.onhold_campaigns) {
-            //         allCampaign.push($scope.campaignData.onhold_campaigns[k]);
-            //       }
-            //     } else {
-            //       allCampaign = $scope.campaignData.onhold_campaigns;
-            //     }
-            //   }
-
-
-            //   $scope.supplierMarkers = assignMarkersToMap(allCampaign);
-            // }
+            
             $scope.showPerfPanel = $scope.perfPanel.all;
             $scope.showAllMapData = false;
           }).catch(function onError(response) {
