@@ -38,7 +38,10 @@
       $scope.cumulativeOrder = false;
       $scope.selectedOrderKey = undefined;
       $scope.flatCountHeader = "Unit Count"
-
+      $scope.supplierTypeCode = constants.supplierTypeCode;
+      $scope.selectedSupplierType = { code: "all" };
+      $scope.flat_count_header = "Unit Primary Count";
+      $scope.tower_count_header = "Unit Secondary Count";
 
       $scope.typeOfSocietyLists = [
         { id: 1, name: 'Ultra High' },
@@ -167,7 +170,7 @@
         { header: 'GATEWAY ARCH' },
         { header: 'BANNER' },
         { header: 'SUNBOARD' },
-        { header: 'HORDING' }, 
+        { header: 'HORDING' },
         { header: 'GENTRY' },
         { header: 'BUS SHELTER' },
         { header: 'BUS BACK' },
@@ -538,10 +541,47 @@
         })
       }
 
-      $scope.getCampaignsByVendor = function () {
-        $scope.getCampaigns(undefined, $scope.selectedVendor.name)
+
+      $scope.setSupplierType = function (tab) {
+        alert($scope.selectedSupplierType.code)
+        if ($scope.selectedSupplierType.code == "RS") {
+          $scope.flat_count_header = "Flat Count";
+          $scope.tower_count_header = "Tower Count";
+        } else if ($scope.selectedSupplierType.code == "CP") {
+          $scope.flat_count_header = "Employee Count";
+          $scope.tower_count_header = "Visitors Count";
+        } else if ($scope.selectedSupplierType.code == "BS") {
+          $scope.flat_count_header = "Footfall Count";
+          $scope.tower_count_header = "Traffic Count";
+        } else if ($scope.selectedSupplierType.code == "GY") {
+          $scope.flat_count_header = "Weekend Daily Footfall Count";
+          $scope.tower_count_header = "Weekday Daily Footfall Count";
+        } else if ($scope.selectedSupplierType.code == "SA") {
+          $scope.flat_count_header = "Weekend Daily Footfall Count";
+          $scope.tower_count_header = "Weekday Daily Footfall Count";
+        } else if ($scope.selectedSupplierType.code == "RE") {
+          $scope.flat_count_header = "Weekend Daily Footfall Count";
+          $scope.tower_count_header = "Weekday Daily Footfall Count";
+        } else {
+          $scope.flat_count_header = "Unit Primary Count";
+          $scope.tower_count_header = "Unit Secondary Count";
+        }
+        if(tab == 'viewLeads'){
+          $scope.viewCampaignLeads();
+        } else {
+          if ($scope.selectedSupplierType.code != "all" || $scope.selectedSupplierType.code != "") {
+            $scope.getCampaigns(undefined, $scope.selectedVendor.name, $scope.selectedSupplierType.code);
+          } else {
+            $scope.getCampaigns(undefined, $scope.selectedVendor.name);
+          }
+        }
+       
       }
-      $scope.getCampaigns = function (date, vendor) {
+
+      $scope.getCampaignsByVendor = function () {
+        $scope.getCampaigns(undefined, $scope.selectedVendor.name, $scope.selectedSupplierType.code)
+      }
+      $scope.getCampaigns = function (date, vendor, supplierType) {
         cfpLoadingBar.start();
         $scope.showSupplierTypeCountChart = false;
         $scope.selectedBookingCampaignName = undefined;
@@ -560,8 +600,8 @@
         $scope.showDisplayDetailsTable = false;
         $scope.showAllCampaignDisplay = false;
         $scope.allCampaignsLeadsData = {};
-        $scope.viewCampaignLeads(true);
-        DashboardService.getCampaigns(orgId, category, date, $scope.selectedVendor.name)
+        $scope.viewCampaignLeads(true,$scope.selectedSupplierType.code);
+        DashboardService.getCampaigns(orgId, category, date, $scope.selectedVendor.name, supplierType)
           .then(function onSuccess(response) {
             cfpLoadingBar.complete();
             $scope.searchSelectAllModel = [];
@@ -596,8 +636,9 @@
             $scope.options = angular.copy(doughnutChartOptions);
             $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.pieChartClick(e.data.label); };
             $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.getCampaignInvData(e.data); };
-
+            
             $scope.showPerfPanel = $scope.perfPanel.all;
+            $scope.showAllMapData = false;
           }).catch(function onError(response) {
             console.log(response);
           })
@@ -1647,7 +1688,11 @@
             $scope.showSupplierInvTable = false;
             $scope.showSingleCampaignChart = true;
             $scope.showTableForAllCampaignDisplay = false;
+
+           
+
             $scope.campaignStatusData = response.data.data;
+
             $scope.campaignSupplierAndInvData = response.data.data;
             $scope.campaignSupplierAndInvData = response.data.data;
             $scope.supplierType = response.data.supplier_type_code;
@@ -1695,6 +1740,8 @@
                 $scope.flatCountHeader = "Unit Count";
               }
             }
+
+
             //synergytop end
             angular.forEach($scope.campaignStatusData, function (data, key) {
               if ($scope.campaignStatusData[key].length && key != 'upcoming') {
@@ -1703,7 +1750,13 @@
                 $scope.campaignStatusData[key]['totalLeads'] = 0;
                 $scope.campaignStatusData[key]['hotLeads'] = 0;
                 angular.forEach(data, function (supplierData) {
-                  $scope.campaignStatusData[key]['totalFlats'] += supplierData.supplier.flat_count;
+                  if(supplierData.supplier.flat_count){
+                    $scope.campaignStatusData[key]['totalFlats'] += supplierData.supplier.flat_count;
+                  }
+                  if(supplierData.supplier.unit_primary_count){
+                    $scope.campaignStatusData[key]['totalFlats'] += supplierData.supplier.unit_primary_count;
+                  }
+                  
                   $scope.campaignStatusData[key]['totalLeads'] += supplierData.leads_data.length;
                   if (supplierData.leads_data.length) {
                     $scope.showLeadsDetails = true;
@@ -1731,11 +1784,45 @@
               // { label : $scope.campaignStatus.onhold.supplierLabel, value : $scope.campaignStatusData.onhold.length, status : $scope.campaignStatus.onhold.status }
 
             ];
+
+
             $scope.options1 = angular.copy(doughnutChartOptions);
-            $scope.options1.chart.pie.dispatch['elementClick'] = function (e) { $scope.getSupplierAndInvData(e.data); };
+            $scope.options1.chart.pie.dispatch['elementClick'] = function (e) {
+              $scope.getSupplierAndInvData(e.data);
+            };
+            $scope.supplierStatus = undefined;
+            //default map
+            $scope.showAllMapData = true
+            if ($scope.campaignStatusData) {
+              let allCampaign = [];
+              if ($scope.campaignStatusData.completed.length > 0) {
+                for (let k in $scope.campaignStatusData.completed) {
+                  if ($scope.campaignStatusData.completed[k].supplier) {
+                    $scope.campaignStatusData.completed[k].supplier.campaignStatus = 'completed'
+                  }
+                }
+              }
+              if ($scope.campaignStatusData.ongoing.length > 0) {
+                for (let i in $scope.campaignStatusData.ongoing) {
+                  if ($scope.campaignStatusData.ongoing[i].supplier) {
+                    $scope.campaignStatusData.ongoing[i].supplier.campaignStatus = 'ongoing'
+                  }
+                }
+              }
+              if ($scope.campaignStatusData.upcoming.length > 0) {
+                for (let j in $scope.campaignStatusData.upcoming) {
+                  if ($scope.campaignStatusData.upcoming[j].supplier) {
+                    $scope.campaignStatusData.upcoming[j].supplier.campaignStatus = 'upcoming'
+                  }
+                }
+              }
 
-
-
+              allCampaign = allCampaign.concat($scope.campaignStatusData.completed);
+              allCampaign = allCampaign.concat($scope.campaignStatusData.upcoming);
+              allCampaign = allCampaign.concat($scope.campaignStatusData.ongoing);
+              $scope.supplierMarkers = assignMarkersToMap(allCampaign);
+            }
+            //default map
           }
           ).catch(function onError(response) {
             console.log(response);
@@ -1764,13 +1851,53 @@
               }
             })
             $scope.performanceMetricsData = [];
-
+           // Call get all comments
+           getAllComments(campaignId)
           }).catch(function onError(response) {
             console.log(response);
           })
       }
-      // END : get campaign filters
 
+
+      // END : get campaign filters
+    // Internal Comments to show in row
+    var getAllComments = function (campaignId) {
+      $scope.allComments = {};
+      DashboardService.getAllComments(campaignId)
+        .then(function onSuccess(response) {
+          $scope.allComments = response.data.data;
+          $scope.comments = {}
+          var data = Object.keys($scope.allComments);
+          for (var i = 0; i < data.length; i++) {
+            var shortlisted_spaces_id = data[i];
+            var comments = $scope.allComments[shortlisted_spaces_id].general;
+            $scope.comments[shortlisted_spaces_id] = {}
+            for (var j = 0; j < comments.length; j++) {
+              if (comments[j].related_to == 'INTERNAL') {
+                $scope.comments[shortlisted_spaces_id]['internal'] = {
+                  comment: comments[j].comment,
+                  username: comments[j].user_name,
+                  created_on: comments[j].timestamp
+                }
+              } else {
+                $scope.comments[shortlisted_spaces_id]['external'] = {
+                  comment: comments[j].comment,
+                  username: comments[j].user_name,
+                  created_on: comments[j].timestamp
+                }
+              }
+
+              
+            }
+          }
+         
+        })
+        .catch(function onError(error) {
+          console.log('No comments to show');
+        })
+    }
+
+    
       // START : get Performance metrics data
       $scope.getPerformanceMetricsData = {};
       $scope.getPerformanceMetricsData = function (inv, perf_param) {
@@ -2031,28 +2158,28 @@
           $scope.stackedBarChartPhaseWise = angular.copy(phaseSummaryBarChart);
           $scope.stackedBarChartCityWise = angular.copy(citySummaryBarChart);
           $scope.weeklyStackedBarData = angular.copy(weekSummaryStackedBar);
-          if($scope.weeklyStackedBarData){
+          if ($scope.weeklyStackedBarData) {
             $scope.weeklyStackedBarData.chart.xAxis.axisLabel = "Summary Wise (" + $scope.flatCountHeader + ") in Percentage";
           }
-          if($scope.stackedBarChartFlatWise){
+          if ($scope.stackedBarChartFlatWise) {
             $scope.stackedBarChartFlatWise.chart.xAxis.axisLabel = "Flat Range (" + $scope.flatCountHeader + ") in Percentage";
           }
-          if($scope.stackedBarChartLocationWise){
+          if ($scope.stackedBarChartLocationWise) {
             $scope.stackedBarChartLocationWise.chart.xAxis.axisLabel = "Society Area (" + $scope.flatCountHeader + ") in Percentage";
           }
-          if($scope.stackedBarChartPhaseWise){
+          if ($scope.stackedBarChartPhaseWise) {
             $scope.stackedBarChartPhaseWise.chart.xAxis.axisLabel = "Phases (" + $scope.flatCountHeader + ") in Percentage";
           }
-          if($scope.stackedBarChartCityWise){
+          if ($scope.stackedBarChartCityWise) {
             $scope.stackedBarChartCityWise.chart.xAxis.axisLabel = "City (" + $scope.flatCountHeader + ") in Percentage";
           }
-          if($scope.stackedBarChartDateWise){
+          if ($scope.stackedBarChartDateWise) {
             $scope.stackedBarChartDateWise.chart.xAxis.axisLabel = "Date (" + $scope.flatCountHeader + ") in Percentage";
           }
 
-          
 
-         
+
+
           $scope.stackedBarChartSupplierData = formatMultiBarChartDataForSuppliers(response.data.data.supplier_data);
           $scope.stackedBarChartDateData = formatMultiBarChartDataByDate(response.data.data.date_data);
           $scope.stackedBarWeekSummaryData = formatWeekStackedChart(response.data.data);
@@ -2080,7 +2207,7 @@
 
           $scope.showReportBtn = true;
 
-          
+
         }).catch(function onError(response) {
           console.log(response);
         })
@@ -2770,21 +2897,25 @@
 
       }
 
-      $scope.getSupplierAndInvData = function (data) {
+      $scope.getSupplierAndInvData = function (data, allStatus) {
+
         $scope.societyCampaignName = true;
         $scope.campaignName = false;
         $scope.supplierStatus = data.status;
         $scope.supplierAndInvData = $scope.campaignSupplierAndInvData[data.status];
+
         $scope.invStatusKeys = angular.copy(invStatusKeys);
         $scope.TotalSupplierFlatCount = 0;
         $scope.TotalSupplierLeadsCount = 0;
         $scope.TotalLeadsPerFlat = 0;
         $scope.TotalSupplierHotLeadsCount = 0;
+      
         angular.forEach($scope.supplierAndInvData, function (supplier, key) {
-          $scope.latitude = supplier.supplier.society_latitude;
-          $scope.longitude = supplier.supplier.society_longitude;
+          $scope.latitude = supplier.supplier.latitude;
+          $scope.longitude = supplier.supplier.longitude;
           $scope.societyName = supplier.supplier.society_name;
           $scope.length = $scope.supplierAndInvData.length;
+        
           $scope.TotalSupplierFlatCount += supplier.supplier.flat_count;
           if (supplier.leads_data.total_leads_count) {
             $scope.TotalSupplierLeadsCount += supplier.leads_data.total_leads_count;
@@ -2830,6 +2961,8 @@
         $scope.showDisplayDetailsTable = true;
         $scope.showAllCampaignDisplay = false;
         $scope.map = { zoom: 13, bounds: {}, center: { latitude: $scope.latitude, longitude: $scope.longitude } };
+
+
         $scope.supplierMarkers = assignMarkersToMap($scope.supplierAndInvData);
 
         uiGmapIsReady.promise()
@@ -2845,6 +2978,7 @@
       $scope.marker = {
         events: {
           mouseover: function (marker, eventName, model) {
+
             $scope.space = model;
             $scope.campaignInventory = model;
             $scope.windowCoords.latitude = model.latitude;
@@ -2889,6 +3023,7 @@
 
       };
       function assignMarkersToMap(suppliers) {
+
         var markers = [];
         var icon = 'http://maps.google.com/mapfiles/ms/icons/';
         var checkInv = true;
@@ -2901,20 +3036,39 @@
         if ($scope.supplierStatus == 'ongoing') {
           icon = icon + 'blue-dot.png'
         }
+        if (!$scope.supplierStatus) {
+          icon = icon + 'yellow-dot.png'
+        }
+
         angular.forEach(suppliers, function (supplier, $index) {
-          markers.push({
-            latitude: supplier.supplier.society_latitude,
-            longitude: supplier.supplier.society_longitude,
-            id: supplier.supplier.supplier_id,
-            icon: icon,
-            options: { draggable: false },
-            dataofSupplierAndInvData: supplier.supplier,
-            completedLeadsSupplierData: supplier.leads_data,
-            title: {
-              name: supplier.supplier.society_name,
-              flat_count: supplier.supplier.flat_count,
-            },
-          });
+          if (supplier && supplier.supplier && supplier.supplier.supplier_id) {
+           if(supplier.supplier.campaignStatus){
+            var icon = 'http://maps.google.com/mapfiles/ms/icons/';
+            
+            if(supplier.supplier.campaignStatus == 'completed'){
+              icon = icon + 'green-dot.png'
+            }
+            if(supplier.supplier.campaignStatus == 'upcoming'){
+              icon = icon + 'orange-dot.png'
+            }
+            if(supplier.supplier.campaignStatus == 'ongoing'){
+              icon = icon + 'blue-dot.png'
+            }
+           }
+            markers.push({
+              latitude: supplier.supplier.latitude,
+              longitude: supplier.supplier.longitude,
+              id: supplier.supplier.supplier_id,
+              icon: icon,
+              options: { draggable: false },
+              dataofSupplierAndInvData: supplier.supplier,
+              completedLeadsSupplierData: supplier.leads_data,
+              title: {
+                name: supplier.supplier.name,
+                flat_count: supplier.supplier.flat_count,
+              },
+            });
+          }
           if (checkInv) {
             angular.forEach($scope.invStatusKeys, function (inv, key) {
               if ($scope.invStatusKeys[key].status) {
@@ -3178,7 +3332,7 @@
       }
       $scope.viewCampaignLeads = function (value) {
         cfpLoadingBar.start();
-        DashboardService.viewCampaignLeads($scope.selectedVendor.name)
+        DashboardService.viewCampaignLeads($scope.selectedVendor.name, $scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
             $scope.AllCampaignTotalLeadsCount = 0;
             $scope.AllCampaignHotLeadsCount = 0;
@@ -3264,10 +3418,11 @@
       }
 
       $scope.viewComments = function (comment_type, supplier) {
-        $scope.societyViewNameForComments = supplier.supplier.society_name;
+        $scope.societyViewNameForComments = supplier.supplier.name;
         $scope.commentsData = [];
         var relatedTo = comment_type;
         var spaceId = supplier.shortlisted_space_id;
+        $scope.shortlistedSpaceId  = supplier.shortlisted_space_id;
         DashboardService.viewComments($scope.campaignId, spaceId, relatedTo)
           .then(function onSuccess(response) {
             $scope.commentModal = {};
@@ -3279,7 +3434,7 @@
 
       $scope.viewBookingComments = function (supplier) {
         $scope.supplierNameForComment = undefined;
-        $scope.supplierNameForComment = supplier.society_name;
+        $scope.supplierNameForComment = supplier.name;
         $scope.commentsData = {};
         var relatedTo = constants.execution_related_comment;
         var spaceId = supplier.space_id;
@@ -3495,10 +3650,13 @@
       $scope.addComment = function (comment_type, supplier_shorlisted_spaceId) {
         $scope.commentModal['related_to'] = comment_type;
         $scope.commentModal['shortlisted_spaces_id'] = supplier_shorlisted_spaceId;
+       
+        
         DashboardService.addComment($scope.campaignId, $scope.commentModal)
           .then(function onSuccess(response) {
             $scope.commentModal = {};
             $scope.supplierDataForComment = undefined;
+            getAllComments($scope.campaignId)
             swal(constants.name, constants.add_data_success, constants.success);
           }).catch(function onError(error) {
             console.log(error);
@@ -4439,6 +4597,8 @@
                         "( " + data1[specificXValue] + " )" + " (" +
                         $scope.FlatCountOVerallLowerORderGroup + ")";
                     }
+
+
                     setMaxYValue(data1[itemKey]);
                     var temp = {
                       x: temp_label,
