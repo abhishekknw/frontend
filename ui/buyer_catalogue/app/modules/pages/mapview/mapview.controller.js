@@ -172,7 +172,7 @@ angular.module('catalogueApp')
         }
 
         if (key == 'BS') {
-          icon = icons[key] + "808080";
+          icon = icons[key] + "ec0707";
         }
 
         if (key == 'GY') {
@@ -427,16 +427,28 @@ angular.module('catalogueApp')
       //start:summary for mapview
       var getSummary = function (supplier_code, center) {
         console.log($scope.center_data);
-        console.log(center);
+       
         center.summary_meta[supplier_code] = angular.copy(summarySupplierStatus);
         //supplier count calculated
         center.summary_meta[supplier_code].count = center.suppliers[supplier_code].length;
         angular.forEach(center.suppliers[supplier_code], function (supplier) {
+  
           //flat and tower count for societies
           if (supplier_code == $scope.supplierCode.society) {
             center.summary_meta[supplier_code].flat_count += supplier.flat_count;
             center.summary_meta[supplier_code].tower_count += supplier.tower_count;
+          }  else {
+            if(!center.summary_meta[supplier_code].unit_primary_count){
+              center.summary_meta[supplier_code].unit_primary_count = 0;
+            }
+            if(!center.summary_meta[supplier_code].unit_secondary_count){
+              center.summary_meta[supplier_code].unit_secondary_count = 0;
+            }
+            center.summary_meta[supplier_code].unit_primary_count += supplier.unit_primary_count;
+            center.summary_meta[supplier_code].unit_secondary_count += supplier.unit_secondary_count;
           }
+
+         
           //count of suppliers finalized
           if (supplier.status == supplierStatus.finalized) {
             center.summary_meta[supplier_code].finalized.count += 1;
@@ -614,10 +626,35 @@ angular.module('catalogueApp')
           $scope.total_gyms_count = $scope.total_gyms.length;
           $scope.total_saloons_count = $scope.total_saloons.length;
           $scope.total_retailStores_count = $scope.total_retailStores.length;
+
           for (var temp = 0; temp < $scope.total_societies_count; temp++) {
             $scope.total_flat_count += $scope.total_societies[temp].flat_count;
             $scope.total_tower_count += $scope.total_societies[temp].tower_count;
           }
+
+          // for (var i = 0; i < $scope.total_corporates_count; i++) {
+          
+           
+          //   if(!$scope.total_corporates[i].unit_primary_count){
+          //     $scope.total_corporates[i].unit_primary_count = 0;
+          //   }
+
+          //   if(!$scope.total_corporates[i].unit_secondary_count){
+          //     $scope.total_corporates[i].unit_secondary_count = 0;
+          //   }
+          //   if(!$scope.corporate_employee_count){
+          //     $scope.corporate_employee_count = 0;
+          //   }
+          //   if(!$scope.corporate_visitors_count){
+          //     $scope.corporate_visitors_count = 0;
+          //   }
+
+          //   $scope.corporate_employee_count += $scope.total_corporates[i].unit_primary_count;
+          //   $scope.corporate_visitors_count += $scope.total_corporates[i].unit_secondary_count;
+          // }
+          
+         
+          
         } catch (error) {
           console.log(error.message);
         }
