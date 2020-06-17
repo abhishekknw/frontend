@@ -3,7 +3,7 @@
 
 angular.module('catalogueApp')
   .factory('DashboardService', ['machadaloHttp', '$stateParams', '$rootScope', '$routeParams', '$location', '$http',
-    function (machadaloHttp, $stateParams, $rootScope, $routeParams, $location, $http) {
+    function (machadaloHttp, $stateParams,$scope, $rootScope, $routeParams, $location, $http) {
 
       var url_base = 'v0/ui/website/';
       var url_base_proposal = 'v0/ui/proposal/';
@@ -78,14 +78,23 @@ angular.module('catalogueApp')
       }
 
 
-      DashboardService.getLeadsByCampaign = function (campaignId, data) {
+      DashboardService.getLeadsByCampaign = function (campaignId, data,supplierType) {
+        var url = url_base + "dashboard/get_leads_by_campaign_new/?campaign_id=" + campaignId;
         if (data && data.hasOwnProperty('start_date') && data.hasOwnProperty('end_date')) {
-          var url = url_base + "dashboard/get_leads_by_campaign_new/?campaign_id=" + campaignId + "&start_date=" + data.start_date + "&end_date=" + data.end_date;
+           url += "&start_date=" + data.start_date + "&end_date=" + data.end_date;
           console.log(data.start_date, data.end_date);
         }
-        else {
-          var url = url_base + "dashboard/get_leads_by_campaign_new/?campaign_id=" + campaignId;
-        } return machadaloHttp.get(url);
+        if (supplierType) {
+          url += "&supplier_code=" + supplierType;
+        }
+        // if (data && data.hasOwnProperty('start_date') && data.hasOwnProperty('end_date')) {
+        //   var url = url_base + "dashboard/get_leads_by_campaign_new/?campaign_id=" + campaignId + "&start_date=" + data.start_date + "&end_date=" + data.end_date;
+        //   console.log(data.start_date, data.end_date);
+        // }
+        // else {
+        //   var url = url_base + "dashboard/get_leads_by_campaign_new/?campaign_id=" + campaignId;
+        // } 
+        return machadaloHttp.get(url);
       }
       //
       // DashboardService.getSortedLeadsByCampaign = function(campaignId, query_type){
@@ -211,18 +220,27 @@ angular.module('catalogueApp')
         var url = url_base + "send-pipeline-details/" + campaignId + "/";
         return machadaloHttp.get(url);
       }
-      DashboardService.getCampaignWiseSummary = function () {
-        var url = url_root + "campaign/campaign-wise-summary/";
+      DashboardService.getCampaignWiseSummary = function (supplierType) {
+        var url = url_root + "campaign/campaign-wise-summary";
+        if (supplierType) {
+            url += "?supplier_code=" + supplierType;
+        }
         return machadaloHttp.get(url);
       }
 
-      DashboardService.getCampaignDateWiseData = function (data) {
+      DashboardService.getCampaignDateWiseData = function (data,supplierType) {
         if (data && data.hasOwnProperty('start_date') && data.hasOwnProperty('end_date')) {
           var url = url_root + "campaign/campaign-wise-summary/" + "?start_date=" + data.start_date + "&end_date=" + data.end_date;
           console.log(data.start_date, data.end_date);
+          if(supplierType){
+            url += "&supplier_code=" + supplierType;
+          }
 
         } else {
-          var url = url_root + "campaign/campaign-wise-summary/";
+          var url = url_root + "campaign/campaign-wise-summary";
+          if(supplierType){
+            url += "?supplier_code=" + supplierType;
+          }
         }
         return machadaloHttp.get(url);
       }
@@ -232,8 +250,11 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
-      DashboardService.getDistributionGraphsStatics = function (data) {
-        var url = url_root + "analytics/get-leads-data-generic/";
+      DashboardService.getDistributionGraphsStatics = function (data,supplierType) {
+        var url = url_root + "analytics/get-leads-data-generic";
+         if(supplierType){
+           url += "?supplier_code=" + supplierType;
+         }
         return machadaloHttp.put(url, data);
       }
 
