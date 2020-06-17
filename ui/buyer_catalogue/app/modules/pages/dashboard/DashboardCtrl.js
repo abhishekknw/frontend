@@ -5751,7 +5751,7 @@
 
       $scope.getVendorWiseSummary = function () {
         cfpLoadingBar.start();
-        DashboardService.getVendorWiseSummary()
+        DashboardService.getVendorWiseSummary($scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
             $scope.vendorSummary = response.data.data;
             $scope.vendorName = response.data.data.vendor_details;

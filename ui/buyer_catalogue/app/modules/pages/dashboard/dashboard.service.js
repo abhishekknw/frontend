@@ -245,8 +245,11 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
-      DashboardService.getVendorWiseSummary = function () {
-        var url = url_base + "vendor-wise-summary/";
+      DashboardService.getVendorWiseSummary = function (supplierType) {
+        var url = url_base + "vendor-wise-summary";
+        if(supplierType){
+           url += "?supplier_code=" + supplierType;
+        }
         return machadaloHttp.get(url);
       }
 
