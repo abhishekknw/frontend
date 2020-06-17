@@ -235,7 +235,7 @@
                                 <table class="table" id="tablescroll">
                                   <thead>
                                     <tr>
-                                      <th>Supplier Name </th>
+                                      <th>Supplier Name</th>
                                       <th>Inventory Type</th>
                                       <th>Assigned</th>
                                       <th>Completed</th>
@@ -245,20 +245,21 @@
                                   </thead>
                                   <tbody ng-repeat="supplier in dateWiseSuppliers">
                                     <tr ng-repeat="(key,inv) in supplier" ng-if="key != 'supplier_data' && key != 'space_id' ">
+                                   
                                       <td><b>{{supplier.supplier_data.name}}</b></td>
                                       <td>{{key}}</td>
                                       <td>{{inv.assigned}}</td>
                                       <td>{{inv.completed}}</td>
-                                      <td ng-if="inv.completed != 0"><a data-target="#imageModal" data-toggle="modal" ng-click="viewSupplierImages(supplier.supplier_data.supplier_id,invNameToCode[key],actType,date)">View Images</a></td>
+                                      <td ng-if="inv.completed != 0"><a data-target="#imageModal" data-toggle="modal" ng-click="viewSupplierImages(supplier.supplier_data.supplier_id,key,actType,date,inv,key)">View Images</a></td>
                                       <td ng-if="inv.completed == 0">No Image</td>
                                       <!-- <td><a ng-click="viewComments(key,supplier)">View Comments</a></td> -->
                                     </tr>
                                     <tr>
-                                   <td><b>{{supplier.supplier_data.society_name}}</b></td>
+                                   <td><b>{{supplier.supplier_data.name}}</b></td>
                                       <td>Hash Tag Images</td>
                                       <td>-</td>
                                       <td>-</td>
-                                      <td><a data-target="" data-toggle="modal" ng-click="getHashtagImages(supplier)">View Images</a></td>
+                                      <td><a data-target="#imageModal" data-toggle="modal" ng-click="getHashtagImages(supplier)">View Images</a></td>
                                       </tr>
                                   </tbody>
                                 </table>
@@ -1028,7 +1029,7 @@
                   </uib-tab-heading>
                   <div class="container-fluid">
                     <div class="panel panel-default">
-                      <div class="col-md-12">
+                      <div class="col-md-6">
                             <h4 class="panel-title">
                               <select class="form-control" ng-model="selectedVendor.name" ng-change="getCampaignsByVendor()">
                                 <option value="">Select Vendor</option>
@@ -1047,7 +1048,7 @@
                           </div>
                         </div>
 
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                           <h4 class="panel-title">
                               <select class="form-control" name="supplierType" ng-model="selectedSupplierType.code" value="supplierType.value"   ng-change="setSupplierType('viewLeads')">
                                   <option value="">Select Supplier Type</option>
@@ -1194,7 +1195,7 @@
             </div>
 
             <div class="panel panel-default">
-              <div class="row" style="width:100%;margin-left:0px;">
+              <div class="row" style="width:100%;margin-left:0px; margin-top:8px;">
                   <h4 class="panel-title">
                     <select class="form-control" name="supplierType" ng-model="selectedSupplierType.code" value="supplierType.value"   ng-change="setSupplierType()">
                       <option value="">Select Supplier Type</option>
@@ -1509,7 +1510,7 @@
                                     All Campaigns
                               </div>
                             </div> -->
-                          <div class="col-md-8" print-remove>
+                          <div class="col-md-6" print-remove>
                             <label for="" style="color:#000000;">Select Date Range</label>
                             <!-- <label for="" style="color:#000000;">From Date :</label> -->
                             <input type="date"  style="color:#000000;" ng-model="dateRangeModel.start_date">
@@ -1519,7 +1520,7 @@
 
                           </div>
 
-                            <div class="col-md-4 right">
+                            <div class="col-md-3 right">
                               <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.overall.status)">
                                 <div class="button" type="button" ng-click="getCampaignWiseSummary()">
                                   <div class="panel-heading">
@@ -1535,6 +1536,15 @@
                                 </div>
                               </div>
                             </div>
+
+                            <div class="col-md-3 right">
+                              <h4 class="panel-title">
+                                  <select class="form-control" name="supplierType" ng-model="selectedSupplierType.code" value="supplierType.value"   ng-change="setSupplierType('performance')">
+                                      <option value="">Select Supplier Type</option>
+                                      <option value="{{supplierType.value}}" ng-selected="selectedSupplierType == supplierType.value" ng-repeat="supplierType in supplierTypeCode">{{supplierType.name}}</option>
+                                    </select>
+                                </h4>
+                              </div>
                          
                           </div>
                             <br /><br /><br />
@@ -1545,7 +1555,7 @@
                                 <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.completed.status)">
                                   <div class="button" type="button">
                                     <div class="panel-heading">
-                                          Completed Campaigns
+                                          Completed Campaigns  
                                     </div>
                                   </div>
 
@@ -1694,7 +1704,7 @@
                                   </thead>
                                     <tbody style="text-align:center;">
                                       <tr>
-                                      <td><small style="font-weight:bold">{{flatCountHeader}}</small></td>
+                                      <td><small style="font-weight:bold">{{flat_count_header}}</small></td>
                                       <td>{{Data.overall_data.flat_count || 'NA'}}</td>
                                       <td>{{Data.last_week.flat_count || 'NA'}}</td>
                                       <td>{{Data.last_two_weeks.flat_count || 'NA'}}</td>
@@ -2107,7 +2117,7 @@
                           <div class="col-lg-6">
                             <div class="panel panel-primary">
                               <div class="panel-heading content-title">
-                                <label for="Flat">Flat Summary Details</label>
+                                <label for="Flat">{{flat}} Summary Details</label>
                               </div>
                             </div>
                               <div class="campaigndetailtable">
@@ -2117,9 +2127,9 @@
                                       <tr>
                                         <th style="background:#8e1921 !important;color:#ffffff !important;">Details</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Overall Campaign <br>Total</th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flatCountHeader}} <br> <small style="color:#ffffff !important"> < 150</small></th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flatCountHeader}} <br><small style="color:#ffffff !important">Between 150 to 400</small></th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flatCountHeader}} <br> <small style="color:#ffffff !important"> > 400</small></th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}} <br> <small style="color:#ffffff !important"> < 150</small></th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}} <br><small style="color:#ffffff !important">Between 150 to 400</small></th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}} <br> <small style="color:#ffffff !important"> > 400</small></th>
                                       </tr>
                                   </thead>
                                     <tbody style="text-align:center;">
@@ -2131,7 +2141,7 @@
                                       <td>{{Data.flat_data['400+'].suppliers}}</td>
                                       </tr>
                                       <tr>
-                                        <td><small style="font-weight:bold">{{flatCountHeader}}</small></td>
+                                        <td><small style="font-weight:bold">{{flat_count_header}}</small></td>
                                         <td>{{Data.overall_data.flat_count}}</td>
                                         <td>{{Data.flat_data['0-150']['flat_count']}}</td>
                                         <td>{{Data.flat_data['151-399']['flat_count']}}</td>
@@ -2198,7 +2208,7 @@
                             <div class="col-lg-6">
                             <div class="panel panel-primary">
                               <div class="panel-heading content-title">
-                                <label for="flat graph">Flat Graph Summary</label>
+                                <label for="flat graph">{{flat}} Graph Summary</label>
                               </div>
                             </div>
                             <div class="row">
@@ -2235,9 +2245,9 @@
                                 <table class="table table-striped" st-table="LeadsByCampaign.locality_data" st-safe-src="localityData">
                                   <thead>
                                       <tr>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">Society Area</th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flatCountHeader}}</th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">Supplier Area</th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">Supplier Count</th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}}</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>(%)</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads <br> (%)</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads Ratio <br> (%)</th>

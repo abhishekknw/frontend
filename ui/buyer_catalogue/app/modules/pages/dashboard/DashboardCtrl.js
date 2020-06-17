@@ -42,6 +42,7 @@
       $scope.selectedSupplierType = { code: "all" };
       $scope.flat_count_header = "Unit Primary Count";
       $scope.tower_count_header = "Unit Secondary Count";
+      $scope.flat = "Unit Primary";
 
       $scope.typeOfSocietyLists = [
         { id: 1, name: 'Ultra High' },
@@ -187,7 +188,12 @@
         { header: 'HORDING LIT' },
         { header: 'BUS SHELTER LIT' },
         { header: 'GANTRY LIT' },
+        { header: 'POSTER LIFT' },
+        { header: 'CAR DISPLAY' },
+        { header: 'GANTRY' },
+        { header: 'HORDING LIT' },
       ];
+
       $scope.invCodes = {
         PO: 'PO',
         ST: 'ST',
@@ -289,13 +295,17 @@
       $scope.campaignStatusLabels = [$scope.campaignStatus.ongoing.name, $scope.campaignStatus.completed.name, $scope.campaignStatus.upcoming.name, $scope.campaignStatus.onhold.name, $scope.campaignStatus.overall.name];
       $scope.pieChartDefaulOptions = { legend: { display: true, position: 'right', padding: '10px' } };
       $scope.getCampaignsMenu = function (status) {
+        
         $scope.campaignStatus.overall.value = false;
         $scope.campaignStatus.ongoing.value = false;
         $scope.campaignStatus.completed.value = false;
         $scope.campaignStatus.upcoming.value = false;
         $scope.campaignStatus.onhold.value = false;
         $scope.campaignStatus.compare_campaigns.value = false;
-        $scope.campaignStatus[status].value = !$scope.campaignStatus[status].value;
+        if(status !='supplierType'){
+          $scope.campaignStatus[status].value = !$scope.campaignStatus[status].value;
+        }
+        
       }
 
       var campaignDataStruct = {
@@ -543,31 +553,39 @@
 
 
       $scope.setSupplierType = function (tab) {
-        alert($scope.selectedSupplierType.code)
         if ($scope.selectedSupplierType.code == "RS") {
           $scope.flat_count_header = "Flat Count";
           $scope.tower_count_header = "Tower Count";
+          $scope.flat = "Flat";
         } else if ($scope.selectedSupplierType.code == "CP") {
           $scope.flat_count_header = "Employee Count";
           $scope.tower_count_header = "Visitors Count";
+          $scope.flat = "Employee";
         } else if ($scope.selectedSupplierType.code == "BS") {
           $scope.flat_count_header = "Footfall Count";
           $scope.tower_count_header = "Traffic Count";
+          $scope.flat = "Footfall";
         } else if ($scope.selectedSupplierType.code == "GY") {
           $scope.flat_count_header = "Weekend Daily Footfall Count";
           $scope.tower_count_header = "Weekday Daily Footfall Count";
+          $scope.flat = "Weekend Daily";
         } else if ($scope.selectedSupplierType.code == "SA") {
           $scope.flat_count_header = "Weekend Daily Footfall Count";
           $scope.tower_count_header = "Weekday Daily Footfall Count";
+          $scope.flat = "Weekend Daily";
         } else if ($scope.selectedSupplierType.code == "RE") {
           $scope.flat_count_header = "Weekend Daily Footfall Count";
           $scope.tower_count_header = "Weekday Daily Footfall Count";
+          $scope.flat = "Weekend Daily";
         } else {
           $scope.flat_count_header = "Unit Primary Count";
           $scope.tower_count_header = "Unit Secondary Count";
+          $scope.flat = "Unit Primary";
         }
         if(tab == 'viewLeads'){
           $scope.viewCampaignLeads();
+        } else if(tab == 'performance'){
+          $scope.getCampaignWiseSummary()
         } else {
           if ($scope.selectedSupplierType.code != "all" || $scope.selectedSupplierType.code != "") {
             $scope.getCampaigns(undefined, $scope.selectedVendor.name, $scope.selectedSupplierType.code);
@@ -575,6 +593,7 @@
             $scope.getCampaigns(undefined, $scope.selectedVendor.name);
           }
         }
+        $scope.getCampaignsMenu('supplierType');
        
       }
 
@@ -2106,15 +2125,15 @@
 
           $scope.dateRangeModel.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
           $scope.dateRangeModel.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
-          result = DashboardService.getLeadsByCampaign(campaignId, $scope.dateRangeModel)
+          result = DashboardService.getLeadsByCampaign(campaignId, $scope.dateRangeModel,$scope.selectedSupplierType.code)
         } else {
-          result = DashboardService.getLeadsByCampaign(campaignId)
+          result = DashboardService.getLeadsByCampaign(campaignId,'',$scope.selectedSupplierType.code)
         }
 
 
 
         $scope.getDistributionGraphsStatics();
-
+           
         // DashboardService.getLeadsByCampaign(campaignId)
         result.then(function onSuccess(response) {
           $scope.dateRangeModel.start_date = new Date($scope.dateRangeModel.start_date);
@@ -2159,22 +2178,22 @@
           $scope.stackedBarChartCityWise = angular.copy(citySummaryBarChart);
           $scope.weeklyStackedBarData = angular.copy(weekSummaryStackedBar);
           if ($scope.weeklyStackedBarData) {
-            $scope.weeklyStackedBarData.chart.xAxis.axisLabel = "Summary Wise (" + $scope.flatCountHeader + ") in Percentage";
+            $scope.weeklyStackedBarData.chart.xAxis.axisLabel = "Summary Wise (" + $scope.flat_count_header + ") in Percentage";
           }
           if ($scope.stackedBarChartFlatWise) {
-            $scope.stackedBarChartFlatWise.chart.xAxis.axisLabel = "Flat Range (" + $scope.flatCountHeader + ") in Percentage";
+            $scope.stackedBarChartFlatWise.chart.xAxis.axisLabel = "Flat Range (" + $scope.flat_count_header + ") in Percentage";
           }
           if ($scope.stackedBarChartLocationWise) {
-            $scope.stackedBarChartLocationWise.chart.xAxis.axisLabel = "Society Area (" + $scope.flatCountHeader + ") in Percentage";
+            $scope.stackedBarChartLocationWise.chart.xAxis.axisLabel = "Supplier Area (" + $scope.flat_count_header + ") in Percentage";
           }
           if ($scope.stackedBarChartPhaseWise) {
-            $scope.stackedBarChartPhaseWise.chart.xAxis.axisLabel = "Phases (" + $scope.flatCountHeader + ") in Percentage";
+            $scope.stackedBarChartPhaseWise.chart.xAxis.axisLabel = "Phases (" + $scope.flat_count_header + ") in Percentage";
           }
           if ($scope.stackedBarChartCityWise) {
-            $scope.stackedBarChartCityWise.chart.xAxis.axisLabel = "City (" + $scope.flatCountHeader + ") in Percentage";
+            $scope.stackedBarChartCityWise.chart.xAxis.axisLabel = "City (" + $scope.flat_count_header + ") in Percentage";
           }
           if ($scope.stackedBarChartDateWise) {
-            $scope.stackedBarChartDateWise.chart.xAxis.axisLabel = "Date (" + $scope.flatCountHeader + ") in Percentage";
+            $scope.stackedBarChartDateWise.chart.xAxis.axisLabel = "Date (" + $scope.flat_count_header + ") in Percentage";
           }
 
 
@@ -2665,6 +2684,7 @@
         }
       };
       $scope.getCompareCampaigns = function (status) {
+        
         $scope.compCampaigns.value = false;
         $scope.showPerfMetrics = false;
         $scope.showReportBtn = false;
@@ -3176,7 +3196,6 @@
       };
 
       $scope.viewSupplierImages = function (supplierId, invType, activityType, date) {
-
         $scope.imageUrlList = [];
         DashboardService.getSupplierImages(supplierId, invType, activityType, date)
           .then(function onSuccess(response) {
@@ -3224,6 +3243,7 @@
               };
               $scope.hashTagImageData.push(imageData);
             })
+            
             if (!$scope.hashTagImageData.length) {
               $('#imageHashtag').modal('hide');
               swal(constants.name, "No Hashtag Images Clicked", constants.warning);
@@ -3896,6 +3916,7 @@
       // start_date, end_date
 
       $scope.getCampaignDateWiseSummary = function () {
+        
         // $scope.getVendorWiseSummary();
         // $scope.getDynamicGraphsStatics();
         cfpLoadingBar.start();
@@ -3908,7 +3929,7 @@
           $scope.dateRangeModel.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
           // result = DashboardService.getCampaignDateWiseData($scope.dateRangeModel)
         }
-        DashboardService.getCampaignDateWiseData($scope.dateRangeModel)
+        DashboardService.getCampaignDateWiseData($scope.dateRangeModel,$scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
             $scope.dateRangeModel.start_date = new Date($scope.dateRangeModel.start_date);
             $scope.dateRangeModel.end_date = new Date($scope.dateRangeModel.end_date);
@@ -3956,7 +3977,7 @@
         $scope.getVendorWiseSummary();
         $scope.getDynamicGraphsStatics();
         cfpLoadingBar.start();
-        DashboardService.getCampaignWiseSummary()
+        DashboardService.getCampaignWiseSummary($scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
             $scope.showPerfMetrics = $scope.perfMetrics.overall;
             $scope.selectAllCampaignLeads = true;
@@ -4199,7 +4220,7 @@
         }
 
 
-        DashboardService.getDistributionGraphsStatics(data)
+        DashboardService.getDistributionGraphsStatics(data,$scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
             $scope.lineChartLeadsDistributed = angular.copy(lineChartLeads);
             $scope.lineChartLeadsDistributed.chart.xAxis.axisLabel = "Frequency Distribution Graph(Leads)";
