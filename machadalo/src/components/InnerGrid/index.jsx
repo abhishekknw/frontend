@@ -23,14 +23,13 @@ class InnerGrid extends React.Component {
     };
     return (
       <div className="bootstrap-iso" style={this.props.styles}>
-        {this.props.headerValue &&
-          this.props.headerValue.length > 0 && (
-            <GridHeader headerValue={this.props.headerValue} headerStyle={'1em'} />
-          )}
+        {this.props.headerValue && this.props.headerValue.length > 0 && (
+          <GridHeader headerValue={this.props.headerValue} headerStyle={'1em'} />
+        )}
         <BootstrapTable
           data={data}
           headerValue={`Supplier Details`}
-          headerStyle={{ backgroundColor: '#707f8c9e' }}
+          headerStyle={{ backgroundColor: 'rgba(199, 199, 199, 0.62)' }}
           exportCSV={this.props.exportCsv || false}
           search={this.props.search || false}
           pagination={this.props.pagination}

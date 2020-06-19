@@ -15,6 +15,11 @@ angular.module('machadaloCommon')
                 $('.forScroll').slimScroll({
                     height: '100%'
                });
+              
+              $scope.custom_user_hide = false;
+              if(userInfo && (userInfo.profile.id == 108 || userInfo.profile.name == "ClientBD")){
+                $scope.custom_user_hide = true;
+              }
         }
 
   };

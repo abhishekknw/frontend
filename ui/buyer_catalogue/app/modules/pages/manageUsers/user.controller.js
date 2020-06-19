@@ -601,6 +601,39 @@ angular.module('machadaloPages')
         console.log(response);
       })
     }
+
+    $scope.deleteProfile = function (profile) {
+
+      swal({
+        title: constants.warn_user_msg,
+        text: constants.delete_profile,
+        type: constants.warning,
+        showCancelButton: true,
+        confirmButtonClass: constants.btn_success,
+        confirmButtonText: constants.delete_confirm,
+        closeOnConfirm: true
+      },
+        function () {
+
+          userService.deleteProfile(profile.id)
+            .then(function onSuccess(response) {
+              console.log(response);
+              if (response && response.data && response.data.status) {
+                swal(constants.name, constants.delete_success, constants.success);
+                var localindex_index = $scope.profilesList.map(function (el) {
+                  return el.id;
+                }).indexOf(profile.id);
+                if (localindex_index != -1) {
+                  $scope.profilesList.splice(localindex_index, 1);
+                }
+              }
+             
+            }).catch(function onError(response) {
+              console.log(response);
+              commonDataShare.showErrorMessage(response);
+            });
+        });
+    }
     //for generaluser permissionsDict
     var getObjectLevelPermissions = function(){
       userService.getObjectLevelPermissions()
@@ -660,12 +693,30 @@ angular.module('machadaloPages')
         // $scope.createProfile = function () {
         //   $scope.profileData.general_user_permission = [];
 
-        //   for (let id in $scope.userInfo.profile.general_user_permission) {
-        //     let row = $scope.userInfo.profile.general_user_permission[id];
-        //     delete row["id"];
-        //     row["is_allowed"] = "";
-        //     $scope.profileData.general_user_permission.push(row);
-        //   }
+    
+
+    $scope.mobileValidation = function(){
+      $scope.showMobileError = true;
+      if($scope.organisationData.phone.toString().length ==10){
+        $scope.showMobileError = false;
+      }
+    }
+    // end : update object and general user level permission
+    //start:onboard functionality
+    $scope.activityNumber = 1;
+    $scope.createOnBoardActivity = function(number){
+      if(number == 1 && $scope.organisationData.name && $scope.organisationData.phone && $scope.organisationData.email && $scope.organisationData.category){
+        console.log("org");
+        $scope.createOrganisation();
+        console.log($scope.onBoardOrgId);
+        $scope.activityNumber++;
+      }
+      if(number == 2 && $scope.profileData.name && $scope.cloneFromProfileId.id){
+        $scope.cloneProfileGeneral($scope.cloneFromProfileId.id, $scope.onBoardOrgId, $scope.profileData.name);
+      }
+    }
+    // use this function to clone a profile within an organisation
+    $scope.cloneProfileGeneral = function(cloneFromProfileId, onBoardOrgId, profileNewName){
 
         //   userService.createProfile($scope.profileData)
         //     .then(function onSuccess(response) {

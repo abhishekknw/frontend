@@ -11,9 +11,6 @@ class OperationsDashboard extends Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
-    this.props.getTappingDetails();
-  }
 
   render() {
     const { match } = this.props;

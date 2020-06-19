@@ -196,6 +196,8 @@ th{
 
 .comment {
   word-break: break-all;
+  white-space: pre-line;
+  overflow-wrap: break-word;
 }
 
 .release_plan_table .uib-datepicker-popup.dropdown-menu {

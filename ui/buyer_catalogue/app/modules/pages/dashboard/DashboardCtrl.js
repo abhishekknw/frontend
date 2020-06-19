@@ -157,7 +157,9 @@
         'FLIER': 'FL',
         'GATEWAY ARCH': 'GA',
         'SUNBOARD': 'SB',
-        'BANNER': 'BA'
+        'BANNER': 'BA',
+        'WHATSAPP INDIVIDUAL': 'WI',
+        'WHATSAPP GROUP': 'WG'
       };
       $scope.queryType = {
         'Locality': 'Locality',
@@ -192,6 +194,8 @@
         { header: 'CAR DISPLAY' },
         { header: 'GANTRY' },
         { header: 'HORDING LIT' },
+        { header: 'WHATSAPP INDIVIDUAL' },
+        { header: 'WHATSAPP GROUP' },
       ];
 
       $scope.invCodes = {
@@ -2907,6 +2911,12 @@
           status: false, total: 0
         },
 
+        'WHATSAPP INDIVIDUAL': {
+          status: false, total: 0
+        },
+        'WHATSAPP GROUP': {
+          status: false, total: 0
+        },
       }
 
       $scope.getCampaignInvData = function (data) {

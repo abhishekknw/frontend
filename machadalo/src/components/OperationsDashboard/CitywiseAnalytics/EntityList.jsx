@@ -12,6 +12,7 @@ class EntityList extends Component {
       supplierType: '',
       entityDetails: [],
       isDataFetched: false,
+      isError: false,
     };
   }
 
@@ -32,7 +33,8 @@ class EntityList extends Component {
         });
       })
       .catch((ex) => {
-        console.log('Failed to get data', ex);
+        console.log('Failed to get data');
+        this.setState({ isError: true, isDataFetched: true });
       });
   }
 
@@ -53,7 +55,7 @@ class EntityList extends Component {
               &nbsp; Back
             </button>
             <InnerGrid
-              columns={getEntityList()}
+              columns={getEntityList(this.state.entityDetails)}
               data={this.state.entityDetails}
               exportCsv={true}
               search={true}

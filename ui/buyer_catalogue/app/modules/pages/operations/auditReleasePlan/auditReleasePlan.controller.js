@@ -642,7 +642,4 @@ angular.module('catalogueApp')
           supplierIdForSearch = undefined;
           getResultsPage(1);
         }
-
-
-
       }]);

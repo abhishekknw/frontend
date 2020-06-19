@@ -16,6 +16,9 @@ class CampaignAnalytics extends React.Component {
       token: '',
     };
   }
+  componentDidMount() {
+    this.props.getTappingDetails();
+  }
 
   isExpandableRow = (row) => {
     return row.campaign_id == this.state.selectedCampaign ? true : false;
@@ -41,7 +44,7 @@ class CampaignAnalytics extends React.Component {
         });
       })
       .catch((ex) => {
-        console.log('Failed to get data', ex);
+        console.log('Failed to get data');
       });
   };
 

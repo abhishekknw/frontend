@@ -100,6 +100,11 @@ angular.module('machadaloPages')
       return machadaloHttp.put(url,data);
     }
 
+    userService.deleteProfile = function(id){
+      var url = url_base_website + "profile/" + id + "/";
+      return  machadaloHttp.delete(url);
+    }
+
     userService.getObjectLevelPermissions = function(){
       var url = url_base_website + "object-level-permission/";
       return machadaloHttp.get(url);

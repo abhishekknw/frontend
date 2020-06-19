@@ -11,6 +11,7 @@ class EntityCount extends React.Component {
     this.state = {
       entityData: [],
       isDataFetched: false,
+      isError: false,
     };
   }
 
@@ -34,7 +35,8 @@ class EntityCount extends React.Component {
         }
       })
       .catch((ex) => {
-        console.log('Failed to get data', ex);
+        console.log('Failed to get data');
+        this.setState({ isError: true, isDataFetched: true });
       });
   }
 

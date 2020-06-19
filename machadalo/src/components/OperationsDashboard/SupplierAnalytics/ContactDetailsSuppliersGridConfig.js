@@ -7,6 +7,8 @@ const linkStyle = {
 };
 
 const getSupplierColumnContactDetails = () => {
+  let unit_count = 'Flat Count';
+  let type = 'Society Type';
   return [
     {
       dataField: 'supplier_id',
@@ -18,18 +20,76 @@ const getSupplierColumnContactDetails = () => {
       },
     },
     {
-      dataField: 'society_name',
+      dataField: 'name',
       text: 'Name',
       width: '350px',
       sort: true,
       formatter: (cell, row) => {
-        const { supplier_id, name } = row;
-        const supplierFormUrl = `https://forms.machadalo.com/#/society/${supplier_id}`;
+        const { supplier_id, name, supplier_type_code } = row;
+        let supplier_type = 'society';
+        switch (supplier_type_code) {
+          case 'CP':
+            supplier_type = 'corporate';
+            break;
+          case 'RE':
+            supplier_type = 'retailshop';
+            break;
+          case 'GY':
+            supplier_type = 'gym';
+            break;
+          case 'EI':
+            supplier_type = 'educational';
+            break;
+          case 'BS':
+            supplier_type = 'busshelter';
+            break;
+          default:
+            supplier_type = 'society';
+        }
+        const supplierFormUrl = `https://forms.machadalo.com/#/${supplier_type}/${supplier_id}`;
         return (
           <a href={supplierFormUrl} style={{ color: '#e8578d' }} target="_blank">
             {name}
           </a>
         );
+      },
+    },
+    {
+      dataField: 'flat_count',
+      text: unit_count,
+      sort: true,
+      formatter: (cell, row) => {
+        let { flat_count } = row;
+        if (flat_count) flat_count = flat_count;
+        return flat_count || '-';
+      },
+    },
+    {
+      dataField: 'society_type',
+      text: type,
+      sort: true,
+      formatter: (cell, row) => {
+        let { society_type } = row;
+        if (society_type) society_type = society_type;
+        return society_type || '-';
+      },
+    },
+    {
+      dataField: 'latitude',
+      text: 'Latitude',
+      sort: true,
+      formatter: (cell, row) => {
+        const { latitude } = row;
+        return latitude || '-';
+      },
+    },
+    {
+      dataField: 'longitude',
+      text: 'Longitude',
+      sort: true,
+      formatter: (cell, row) => {
+        const { longitude } = row;
+        return longitude || '-';
       },
     },
     {
