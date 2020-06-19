@@ -223,7 +223,7 @@
                   <!-- <div class="" > -->
                           <!-- <div class=""> -->
                           <div class="panel-heading" style="height:120px;">
-                            <h4><a ng-click="getCampaign(proposalId)" style="color: white;cursor: pointer;">Supplier Details of {{selectedProposalname}} Campaign</a></h4><br/>
+                            <h4><a ng-click="getCampaign(proposalId)" style="color: white;cursor: pointer;">Supplier Details of  {{selectedProposalname}} Campaign</a></h4><br/>
                             <h5>Activity : {{actType}} , Date : {{date|date : "dd-MM-yyyy"}}</h5>
                             <div class="row">
                               <span class="pull-left"><label for="heading"><small>Campaign Owner :  </small><span><small>{{campaignOwner}}</small> </span></label></span>
@@ -259,7 +259,7 @@
                                       <td>Hash Tag Images</td>
                                       <td>-</td>
                                       <td>-</td>
-                                      <td><a data-target="#imageModal" data-toggle="modal" ng-click="getHashtagImages(supplier)">View Images</a></td>
+                                      <td><a data-toggle="modal" ng-click="getHashtagImages(supplier)">View Images</a></td>
                                       </tr>
                                   </tbody>
                                 </table>
@@ -2496,16 +2496,26 @@
                       <div class="row form-group" style="color:#000000">
                         <small>
                           <input type="checkbox" ng-model="checkboxCheckedSociety"  ng-click="societyParamsCheck('society',checkboxCheckedSociety)"
-                              > Society Parameters
+                              > Supplier Parameters
                           <select class="form-control" ng-click="DisabledClickedSociety()" ng-model="graphSelection.specificParam.society"  ng-if="checkboxCheckedSociety">
-                            <option value="qualitytype" ng-click="societyTypeDrop">Type of Society</option>
-                            <option value="sizeOfFlats" ng-click="flatTypeDrop">Size of Society</option>
-                            <option value="flatType" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Type of Flats</option>
-                            <option value="flatPrice" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Price of Flats</option>
-                            <option value="flatRent" ng-click="flatTypeDrop"  ng-disabled="graphSelection.specificParam.society">Rent of Flats</option>
-                            <option value="noOfCitizen" ng-click="flatTypeDrop"  ng-disabled="graphSelection.specificParam.society">No of Senior Citizen</option>
-                            <option value="noOfChildren" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">No of Children</option>
-                            <option value="workingWomen" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Percentage Working Women</option>
+                          
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="qualitytype" ng-click="societyTypeDrop">Type of Society</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="sizeOfFlats" ng-click="flatTypeDrop">Size of Society</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="flatType" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Type of Flats</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="flatPrice" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Price of Flats</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="flatRent" ng-click="flatTypeDrop"  ng-disabled="graphSelection.specificParam.society">Rent of Flats</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="noOfCitizen" ng-click="flatTypeDrop"  ng-disabled="graphSelection.specificParam.society">No of Senior Citizen</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="noOfChildren" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">No of Children</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="workingWomen" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Percentage Working Women</option>
+                            
+                            
+                            <option ng-if="selectedSupplierType.code == 'RE'" value="sizeOfRetailStore" ng-click="flatTypeDrop">Size of Retail Store</option>
+                            <option ng-if="selectedSupplierType.code == 'CP'" value="sizeOfCorporate" ng-click="flatTypeDrop">Size of Corporate</option>
+                            <option ng-if="selectedSupplierType.code == 'BS'" value="sizeOfBusShelter" ng-click="flatTypeDrop">Size of Bus Shelter</option>
+                            <option ng-if="selectedSupplierType.code == 'GY'" value="sizeOfGym" ng-click="flatTypeDrop">Size of Gym</option>
+                            <option ng-if="selectedSupplierType.code == 'SA'" value="sizeOfSaloon" ng-click="flatTypeDrop">Size of Saloon</option>
+                          
+                        
                           </select>
                           <br />
                           <div class="row" ng-if="graphSelection.specificParam.society == 'qualitytype' && checkboxCheckedSociety">
@@ -2516,6 +2526,28 @@
                             <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfFlatsLists" extra-settings="settingsForDynamicGraphFlatType"
                             selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
                           </div>
+
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfRetailStore' && checkboxCheckedSociety">
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfRetailStoreLists" extra-settings="settingsForDynamicGraphFlatType"
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                          </div>
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfCorporate' && checkboxCheckedSociety">
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfCorporateLists" extra-settings="settingsForDynamicGraphFlatType"
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                          </div>
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfBusShelter' && checkboxCheckedSociety">
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfBusShelterLists" extra-settings="settingsForDynamicGraphFlatType"
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                          </div>
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfGym' && checkboxCheckedSociety">
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfGymLists" extra-settings="settingsForDynamicGraphFlatType"
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                          </div>
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfSaloon' && checkboxCheckedSociety">
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfSaloonLists" extra-settings="settingsForDynamicGraphFlatType"
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                          </div>
+
                           <br />
                         <p style="text-align:center;color:#cb1925;font-weight: bold;">OR</p>
 

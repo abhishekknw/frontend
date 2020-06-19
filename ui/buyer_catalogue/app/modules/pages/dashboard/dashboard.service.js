@@ -112,8 +112,8 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
-      DashboardService.getHashtagImages = function (campaignId, date) {
-        var url = url_base + "hashtag-images/?campaign_id=" + campaignId + "&date=" + date;
+      DashboardService.getHashtagImages = function (campaignId, supplier_id) {
+        var url = url_base + "hashtag-images/?campaign_id=" + campaignId + "&supplier_id=" + supplier_id;
         return machadaloHttp.get(url);
       }
 

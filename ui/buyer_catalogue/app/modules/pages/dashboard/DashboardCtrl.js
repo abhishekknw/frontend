@@ -55,6 +55,37 @@
         { id: 2, name: '151-400' },
         { id: 3, name: '401+' },
       ];
+
+      $scope.sizeOfCorporateLists = [
+        { id: 1, name: '1-1000' },
+        { id: 2, name: '1001-10000' },
+        { id: 3, name: '10001+' },
+      ];
+
+      $scope.sizeOfRetailStoreLists = [
+        { id: 1, name: '1-100' },
+        { id: 2, name: '101-1000' },
+        { id: 3, name: '1001+' },
+      ];
+
+      $scope.sizeOfSaloonLists = [
+        { id: 1, name: '1-20' },
+        { id: 2, name: '21-50' },
+        { id: 3, name: '51+' },
+      ];
+
+      $scope.sizeOfGymLists = [
+        { id: 1, name: '1-50' },
+        { id: 2, name: '51-200' },
+        { id: 3, name: '201+' },
+      ];
+
+      $scope.sizeOfBusShelterLists = [
+        { id: 1, name: '1-100' },
+        { id: 2, name: '101-300' },
+        { id: 3, name: '301+' },
+      ];
+ 
       $scope.freebiesLists = [
         { id: 1, name: 'Whatsapp Group' },
         { id: 2, name: 'Email Group' },
@@ -3231,21 +3262,24 @@
       }
       $scope.getHashtagImages = function (item) {
         $scope.hashTagImageUrl = [];
-        DashboardService.getHashtagImages($scope.proposalId, $scope.date)
+        DashboardService.getHashtagImages($scope.proposalId, item.supplier_data.supplier_id)
           .then(function onSuccess(response) {
             $scope.hashTagImageData = [];
+            if(response.data.data.length > 0){
             angular.forEach(response.data.data, function (data) {
               var imageData = {
                 image_url: constants.aws_campaign_images_url + data.image_path,
                 comment: data.hashtag,
-                supplier_name: data.supplier_data.society_name,
+                supplier_name:item.supplier_data.supplier_name,
                 timestamp: data.created_at
               };
               $scope.hashTagImageData.push(imageData);
             })
-            
+          }
+        
             if (!$scope.hashTagImageData.length) {
-              $('#imageHashtag').modal('hide');
+               $('#imageHashtag').modal('hide');
+             
               swal(constants.name, "No Hashtag Images Clicked", constants.warning);
             } else {
               $('#imageHashtag').modal('show');
