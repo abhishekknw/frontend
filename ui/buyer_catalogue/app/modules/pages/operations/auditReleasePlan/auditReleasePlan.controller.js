@@ -522,6 +522,7 @@ angular.module('catalogueApp')
             })
         }
         $scope.getInventoryRelatedData = function (supplier, inventoryCount) {
+   
           $scope.shortlistedSupplierData = supplier;
            $scope.totalInventoryCount = 0
           for(let i in supplier.shortlisted_inventories){
@@ -529,7 +530,7 @@ angular.module('catalogueApp')
           }
 
           if (supplier.phase_no) {
-            if (inventoryCount <= 50) {
+            if (inventoryCount <= 50 || !inventoryCount) {
               auditReleasePlanService.getInventoryRelatedData()
                 .then(function onSuccess(response) {
                   $scope.adInventoryTypes = response.data.data.inventory_types;
