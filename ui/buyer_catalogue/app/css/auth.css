@@ -148,8 +148,8 @@ a {
   color: #444444; }
 
 .al-main {
-  /* margin-left: 180px;
-  padding: 66px 0 34px 0; */
+  margin-left: 180px;
+  padding: 66px 0 34px 0;
   min-height: 500px; }
 
 .al-footer {
