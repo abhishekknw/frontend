@@ -6,7 +6,7 @@ background-color: #ffffff;
 }
 
 .dashboard-tab .uib-tab{
-min-width: 320px;
+min-width: 100%;
 }
 
 .dashboard-side-label {
@@ -34,6 +34,12 @@ right: -20px;
 }
 }
 /* end (min-width :300px) and (max-width :600px) */
+
+@media screen and (min-width: 320px) and (max-width: 990px){
+  body.mobile .body-bg {
+    position: relative;
+  }
+}
 
 /* start (min-width :768px) and (max-width :1024px) */
 @media only screen and (min-width :768px) and (max-width :1024px) {
