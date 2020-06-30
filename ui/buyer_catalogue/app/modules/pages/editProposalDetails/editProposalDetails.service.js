@@ -17,6 +17,12 @@ function (machadaloHttp, $stateParams, $rootScope, $routeParams, $location, $htt
       var url = url_base + "website/organisation/";
       return machadaloHttp.get(url);
     }
+
+    editProposalDetails.endCustomer = function(){
+      var url = url_base + "website/type-of-end-customer/";
+      return machadaloHttp.get(url);
+    }
+
     editProposalDetails.updateProposalDetails = function(data){
       var url = url_base + "website/proposal/" + data.proposal_id + "/";
       return machadaloHttp.put(url,data);
