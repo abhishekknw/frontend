@@ -223,7 +223,7 @@
                   <!-- <div class="" > -->
                           <!-- <div class=""> -->
                           <div class="panel-heading" style="height:120px;">
-                            <h4><a ng-click="getCampaign(proposalId)" style="color: white;cursor: pointer;">Supplier Details of {{selectedProposalname}} Campaign</a></h4><br/>
+                            <h4><a ng-click="getCampaign(proposalId)" style="color: white;cursor: pointer;">Supplier Details of  {{selectedProposalname}} Campaign</a></h4><br/>
                             <h5>Activity : {{actType}} , Date : {{date|date : "dd-MM-yyyy"}}</h5>
                             <div class="row">
                               <span class="pull-left"><label for="heading"><small>Campaign Owner :  </small><span><small>{{campaignOwner}}</small> </span></label></span>
@@ -259,7 +259,7 @@
                                       <td>Hash Tag Images</td>
                                       <td>-</td>
                                       <td>-</td>
-                                      <td><a data-target="#imageModal" data-toggle="modal" ng-click="getHashtagImages(supplier)">View Images</a></td>
+                                      <td><a data-toggle="modal" ng-click="getHashtagImages(supplier)">View Images</a></td>
                                       </tr>
                                   </tbody>
                                 </table>
@@ -1429,12 +1429,12 @@
                   <th>Supplier Name</th>
                   <th>{{flat_count_header}}</th>
                   <th>{{tower_count_header}}</th>
-                  <th>Type Of</br>Society</th>
+                  <th>Type Of</br>Supplier</th>
                   <th>Area(SubArea)</th>
                   <th>Status</th>
                   <th>Map Details</th>
                   <th>
-
+                    Comments
                   </th>
                   <th>Inventory Counts</th>
                   <th>Freebies</th>
@@ -1510,17 +1510,27 @@
                                     All Campaigns
                               </div>
                             </div> -->
-                          <div class="col-md-6" print-remove>
+                          <div class="col-md-8" print-remove>
                             <label for="" style="color:#000000;">Select Date Range</label>
-                            <!-- <label for="" style="color:#000000;">From Date :</label> -->
-                            <input type="date"  style="color:#000000;" ng-model="dateRangeModel.start_date">
-                            <!-- <label for="" style="color:#000000;">To Date :</label> -->
-                            <input type="date" style="color:#000000;" ng-model="dateRangeModel.end_date">
-                            <button class="btn btn-danger" ng-click="getCampaignDateWiseSummary()">Submit</button>
+                            <!-- <input type="date"  style="color:#000000;" ng-model="dateRangeModel.start_date">
+                            <input type="date" style="color:#000000;" ng-model="dateRangeModel.end_date"> -->
+                            <div class="col-md-4">
+                            <input type="text"  style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates" is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats">
+                            <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
+                              <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                          </div>
+                          <div class="col-md-4">
+                              <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"  ng-change="changeEndDate()"  ng-model="dateRangeModel.end_dates" is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats">
+                              <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates" ng-click="isEndDateOpen = !isEndDateOpen">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                              </button>
+                            </div>
+                            <button class="btn btn-danger" ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates" ng-click="getCampaignDateWiseSummary()">Submit</button>
 
                           </div>
 
-                            <div class="col-md-3 right">
+                            <!-- <div class="col-md-3 right">
                               <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.overall.status)">
                                 <div class="button" type="button" ng-click="getCampaignWiseSummary()">
                                   <div class="panel-heading">
@@ -1535,14 +1545,13 @@
                                     </div>
                                 </div>
                               </div>
-                            </div>
+                            </div> -->
 
                             <div class="col-md-3 right">
                               <h4 class="panel-title">
-                                  <select class="form-control" name="supplierType" ng-model="selectedSupplierType.code" value="supplierType.value"   ng-change="setSupplierType('performance')">
-                                      <option value="">Select Supplier Type</option>
-                                      <option value="{{supplierType.value}}" ng-selected="selectedSupplierType == supplierType.value" ng-repeat="supplierType in supplierTypeCode">{{supplierType.name}}</option>
-                                    </select>
+                                    <select class="form-control" name="supplierType" ng-model="selectedSupplierType.code" value="supplierType.value"   ng-change="setSupplierType('performance')">
+                                        <option value="{{supplierType.value}}" ng-selected="selectedSupplierType == supplierType.value" ng-repeat="supplierType in supplierTypeCodePerformanceDetail">{{supplierType.name}}</option>
+                                      </select>
                                 </h4>
                               </div>
                          
@@ -2441,21 +2450,29 @@
                             <input type="checkbox" name="" value="" style="margin-left:10px;" ng-click="DisabledClicked()" ng-checked="!selectAnyPhase"> Date Range
                             <!-- <label for="" style="margin-left:10px;"> Date Range</label> -->
                             <br />
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                               <div class="form-group" ng-show="selectAnyDate" ng-hide="selectAnyPhase" ng-model="selectAnyDate">
                                 <label><small> Start Date :  </small></label>
-                                <span><small><input type="date" ng-click="DisabledClicked()" style="width:110px !important" ng-model="graphSelection.dateRange.startDate">
-                                </small>
-                                </span>
+                                <!-- <span><small><input type="date" ng-click="DisabledClicked()" style="width:110px !important" ng-model="graphSelection.dateRange.startDate"></small></span> -->
+                                <span>
+                                  <input type="text"  style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="changeFilterStartDate()" ng-model="graphSelection.dateRange.startDate" is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats">
+                                  <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                  </button>
+                               
+                              </span>
                               </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                               <div class="form-group" ng-show="selectAnyDate" ng-hide="selectAnyPhase" ng-model="selectAnyDate">
                               <label><small>  End Date :</small></label>
-                                <span><small><input type="date" ng-click="DisabledClicked()" style="width:110px !important" ng-model="graphSelection.dateRange.endDate">
-                                </small>
-                                </span>
-                                </div>
+                                <!-- <span><small><input type="date" ng-click="DisabledClicked()" style="width:110px !important" ng-model="graphSelection.dateRange.endDate"></small></span> -->
+                                <label><input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"  ng-change="changeFilterEndDate()"  ng-model="graphSelection.dateRange.endDate" is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats">
+                              <button type="button" class="smallBtn calendar" ng-disabled="!graphSelection.dateRange.startDate" ng-click="isEndDateOpen = !isEndDateOpen">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                              </button>
+                            </label>
+                              </div>
                             </div>
                             <p style="text-align:center;color:#cb1925;font-weight: bold;">OR</p>
                             <input type="checkbox" name="" value="" style="margin-left:10px;" ng-click="DisabledClickedPhase()" ng-checked="!selectAnyDate"> Phase
@@ -2496,16 +2513,26 @@
                       <div class="row form-group" style="color:#000000">
                         <small>
                           <input type="checkbox" ng-model="checkboxCheckedSociety"  ng-click="societyParamsCheck('society',checkboxCheckedSociety)"
-                              > Society Parameters
+                              > Supplier Parameters
                           <select class="form-control" ng-click="DisabledClickedSociety()" ng-model="graphSelection.specificParam.society"  ng-if="checkboxCheckedSociety">
-                            <option value="qualitytype" ng-click="societyTypeDrop">Type of Society</option>
-                            <option value="sizeOfFlats" ng-click="flatTypeDrop">Size of Society</option>
-                            <option value="flatType" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Type of Flats</option>
-                            <option value="flatPrice" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Price of Flats</option>
-                            <option value="flatRent" ng-click="flatTypeDrop"  ng-disabled="graphSelection.specificParam.society">Rent of Flats</option>
-                            <option value="noOfCitizen" ng-click="flatTypeDrop"  ng-disabled="graphSelection.specificParam.society">No of Senior Citizen</option>
-                            <option value="noOfChildren" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">No of Children</option>
-                            <option value="workingWomen" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Percentage Working Women</option>
+                            <option value = ""  ng-disabled=true>Select</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="qualitytype" ng-click="societyTypeDrop">Type of Society</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="sizeOfFlats" ng-click="flatTypeDrop">Size of Society</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="flatType" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Type of Flats</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="flatPrice" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Price of Flats</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="flatRent" ng-click="flatTypeDrop"  ng-disabled="graphSelection.specificParam.society">Rent of Flats</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="noOfCitizen" ng-click="flatTypeDrop"  ng-disabled="graphSelection.specificParam.society">No of Senior Citizen</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="noOfChildren" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">No of Children</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="workingWomen" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Percentage Working Women</option>
+                            
+                            
+                            <option ng-if="selectedSupplierType.code == 'RE'" value="sizeOfRetailStore" ng-click="flatTypeDrop">Size of Retail Store</option>
+                            <option ng-if="selectedSupplierType.code == 'CP'" value="sizeOfCorporate" ng-click="flatTypeDrop">Size of Corporate</option>
+                            <option ng-if="selectedSupplierType.code == 'BS'" value="sizeOfBusShelter" ng-click="flatTypeDrop">Size of Bus Shelter</option>
+                            <option ng-if="selectedSupplierType.code == 'GY'" value="sizeOfGym" ng-click="flatTypeDrop">Size of Gym</option>
+                            <option ng-if="selectedSupplierType.code == 'SA'" value="sizeOfSaloon" ng-click="flatTypeDrop">Size of Saloon</option>
+                          
+                        
                           </select>
                           <br />
                           <div class="row" ng-if="graphSelection.specificParam.society == 'qualitytype' && checkboxCheckedSociety">
@@ -2516,6 +2543,28 @@
                             <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfFlatsLists" extra-settings="settingsForDynamicGraphFlatType"
                             selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
                           </div>
+
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfRetailStore' && checkboxCheckedSociety">
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfRetailStoreLists" extra-settings="settingsForDynamicGraphFlatType"
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                          </div>
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfCorporate' && checkboxCheckedSociety">
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfCorporateLists" extra-settings="settingsForDynamicGraphFlatType"
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                          </div>
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfBusShelter' && checkboxCheckedSociety">
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfBusShelterLists" extra-settings="settingsForDynamicGraphFlatType"
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                          </div>
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfGym' && checkboxCheckedSociety">
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfGymLists" extra-settings="settingsForDynamicGraphFlatType"
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                          </div>
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfSaloon' && checkboxCheckedSociety">
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfSaloonLists" extra-settings="settingsForDynamicGraphFlatType"
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                          </div>
+
                           <br />
                         <p style="text-align:center;color:#cb1925;font-weight: bold;">OR</p>
 
@@ -2785,7 +2834,7 @@
       </thead>
         <tbody style="text-align:center;">
           <tr>
-          <td><small style="font-weight:bold">Flat Count</small></td>
+          <td><small style="font-weight:bold">{{flat_count_header}}</small></td>
           <td>{{getOverallSummaryData('flatCount') || 'NA'}}</td>
           <td ng-repeat="data in campaignOverallSummary">{{data.flatCount}}</td>
           <!-- <td>{{WeeklyVendorMISLastWeekSummary.flat_count || 'NA'}}</td>
@@ -2877,7 +2926,7 @@
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Name</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Quality Type</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Flat Type</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}} Type</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Cost Per Leads <br> (%)</th>
@@ -2936,7 +2985,7 @@
                       </thead>
                         <tbody style="text-align:center;">
                           <tr>
-                          <td><small style="font-weight:bold">Unit Count</small></td>
+                          <td><small style="font-weight:bold">{{flat_count_header}}</small></td>
                           <td>{{WeeklyVendorMISOverallSummary.flat_count || 'NA'}}</td>
                           <td>{{WeeklyVendorMISLastWeekSummary.flat_count || 'NA'}}</td>
                           <td>{{WeeklyVendorMISLast2WeekSummary.flat_count || 'NA'}}</td>
@@ -3040,8 +3089,8 @@
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Vendor Name</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Unit Count</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}}</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Supplier Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads </th>
@@ -3120,7 +3169,7 @@
       </thead>
         <tbody style="text-align:center;">
           <tr>
-          <td><small style="font-weight:bold">Unit Count</small></td>
+          <td><small style="font-weight:bold">{{flat_count_header}}</small></td>
           <td>{{WeeklyMISOverallSummary.all_campaigns.flat_count || 'NA'}}</td>
           <td>{{WeeklyMISLastWeekSummary.all_campaigns.flat_count || 'NA'}}</td>
           <td>{{WeeklyMISLast2WeekSummary.all_campaigns.flat_count || 'NA'}}</td>
@@ -3222,8 +3271,8 @@
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Unit Count</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}}</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Supplier Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads </th>
@@ -3365,8 +3414,8 @@
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Unit Count</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}}</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Supplier Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads </th>
@@ -3560,8 +3609,8 @@
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Unit Count</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}}</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Supplier Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads </th>

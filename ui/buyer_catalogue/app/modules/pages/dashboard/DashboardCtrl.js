@@ -39,7 +39,8 @@
       $scope.selectedOrderKey = undefined;
       $scope.flatCountHeader = "Unit Count"
       $scope.supplierTypeCode = constants.supplierTypeCode;
-      $scope.selectedSupplierType = { code: "all" };
+      $scope.supplierTypeCodePerformanceDetail = constants.supplierTypeCodePerformanceDetail;
+      $scope.selectedSupplierType = { code: "all",codes: "all" };
       $scope.flat_count_header = "Unit Primary Count";
       $scope.tower_count_header = "Unit Secondary Count";
       $scope.flat = "Unit Primary";
@@ -55,6 +56,37 @@
         { id: 2, name: '151-400' },
         { id: 3, name: '401+' },
       ];
+
+      $scope.sizeOfCorporateLists = [
+        { id: 1, name: '1-1000' },
+        { id: 2, name: '1001-10000' },
+        { id: 3, name: '10001+' },
+      ];
+
+      $scope.sizeOfRetailStoreLists = [
+        { id: 1, name: '1-100' },
+        { id: 2, name: '101-1000' },
+        { id: 3, name: '1001+' },
+      ];
+
+      $scope.sizeOfSaloonLists = [
+        { id: 1, name: '1-20' },
+        { id: 2, name: '21-50' },
+        { id: 3, name: '51+' },
+      ];
+
+      $scope.sizeOfGymLists = [
+        { id: 1, name: '1-50' },
+        { id: 2, name: '51-200' },
+        { id: 3, name: '201+' },
+      ];
+
+      $scope.sizeOfBusShelterLists = [
+        { id: 1, name: '1-100' },
+        { id: 2, name: '101-300' },
+        { id: 3, name: '301+' },
+      ];
+ 
       $scope.freebiesLists = [
         { id: 1, name: 'Whatsapp Group' },
         { id: 2, name: 'Email Group' },
@@ -589,7 +621,13 @@
         if(tab == 'viewLeads'){
           $scope.viewCampaignLeads();
         } else if(tab == 'performance'){
-          $scope.getCampaignWiseSummary()
+          
+          if($scope.selectedSupplierType.code && $scope.selectedSupplierType.code != 'all'){
+            $scope.getCampaignWiseSummary();
+            $scope.clearDatesFromDynamicGraph();
+            $scope.applyClickedFilters.value = false;
+          }
+       
         } else {
           if ($scope.selectedSupplierType.code != "all" || $scope.selectedSupplierType.code != "") {
             $scope.getCampaigns(undefined, $scope.selectedVendor.name, $scope.selectedSupplierType.code);
@@ -1493,7 +1531,7 @@
           "grouped": true,
           "sortDescending": false,
           "xAxis": {
-            "axisLabel": "Campaign Wise (" + $scope.flatCountHeader + ") in Percentage",
+            "axisLabel": "Campaign Wise (" + $scope.flat_count_header + ") in Percentage",
             "axisLabelDistance": -50,
             "showMaxMin": false,
             "rotateLabels": -30
@@ -1534,7 +1572,7 @@
           "grouped": true,
           "sortDescending": false,
           "xAxis": {
-            "axisLabel": "Vendor Wise (" + $scope.flatCountHeader + ") in Percentage",
+            "axisLabel": "Vendor Wise (" + $scope.flat_count_header + ") in Percentage",
             "axisLabelDistance": -50,
             "showMaxMin": false,
             "rotateLabels": -30
@@ -1575,7 +1613,7 @@
           "grouped": true,
           "sortDescending": false,
           "xAxis": {
-            "axisLabel": "Last Week (" + $scope.flatCountHeader + ") in Percentage",
+            "axisLabel": "Last Week (" + $scope.flat_count_header + ") in Percentage",
             "axisLabelDistance": -50,
             "showMaxMin": false,
             "rotateLabels": -30
@@ -1614,7 +1652,7 @@
           "grouped": true,
           "sortDescending": false,
           "xAxis": {
-            "axisLabel": "Last 2 Week (" + $scope.flatCountHeader + ") in Percentage",
+            "axisLabel": "Last 2 Week (" + $scope.flat_count_header + ") in Percentage",
             "axisLabelDistance": -50,
             "showMaxMin": false,
             "rotateLabels": -30
@@ -1653,7 +1691,7 @@
           "grouped": true,
           "sortDescending": false,
           "xAxis": {
-            "axisLabel": "Last 3 Weeks (" + $scope.flatCountHeader + ") in Percentage",
+            "axisLabel": "Last 3 Weeks (" + $scope.flat_count_header + ") in Percentage",
             "axisLabelDistance": -50,
             "showMaxMin": false,
             "rotateLabels": -30
@@ -2688,6 +2726,7 @@
         }
       };
       $scope.getCompareCampaigns = function (status) {
+       
         
         $scope.compCampaigns.value = false;
         $scope.showPerfMetrics = false;
@@ -3241,21 +3280,24 @@
       }
       $scope.getHashtagImages = function (item) {
         $scope.hashTagImageUrl = [];
-        DashboardService.getHashtagImages($scope.proposalId, $scope.date)
+        DashboardService.getHashtagImages($scope.proposalId, item.supplier_data.supplier_id)
           .then(function onSuccess(response) {
             $scope.hashTagImageData = [];
+            if(response.data.data.length > 0){
             angular.forEach(response.data.data, function (data) {
               var imageData = {
                 image_url: constants.aws_campaign_images_url + data.image_path,
                 comment: data.hashtag,
-                supplier_name: data.supplier_data.society_name,
+                supplier_name:item.supplier_data.supplier_name,
                 timestamp: data.created_at
               };
               $scope.hashTagImageData.push(imageData);
             })
-            
+          }
+        
             if (!$scope.hashTagImageData.length) {
-              $('#imageHashtag').modal('hide');
+               $('#imageHashtag').modal('hide');
+             
               swal(constants.name, "No Hashtag Images Clicked", constants.warning);
             } else {
               $('#imageHashtag').modal('show');
@@ -3924,6 +3966,22 @@
 
       };
       // start_date, end_date
+      $scope.changeStartDate = function () {
+        $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
+        $scope.options.minDate = $scope.dateRangeModel.start_date;
+      }
+
+      $scope.changeEndDate = function () {
+        $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
+       
+      }
+
+      $scope.changeFilterStartDate = function () {
+        $scope.options.minDate = $scope.graphSelection.dateRange.startDate;
+      }
+
+
+     
 
       $scope.getCampaignDateWiseSummary = function () {
         
@@ -3937,12 +3995,12 @@
 
           $scope.dateRangeModel.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
           $scope.dateRangeModel.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
-          // result = DashboardService.getCampaignDateWiseData($scope.dateRangeModel)
+          $scope.selectedSupplierType.code = "RS";
         }
         DashboardService.getCampaignDateWiseData($scope.dateRangeModel,$scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
-            $scope.dateRangeModel.start_date = new Date($scope.dateRangeModel.start_date);
-            $scope.dateRangeModel.end_date = new Date($scope.dateRangeModel.end_date);
+            // $scope.dateRangeModel.start_date = new Date($scope.dateRangeModel.start_date);
+            // $scope.dateRangeModel.end_date = new Date($scope.dateRangeModel.end_date);
             $scope.showPerfMetrics = $scope.perfMetrics.overall;
             $scope.selectAllCampaignLeads = true;
             $scope.dynamicGraphsUI = true;
@@ -3984,10 +4042,22 @@
 
 
       $scope.getCampaignWiseSummary = function () {
-        $scope.getVendorWiseSummary();
-        $scope.getDynamicGraphsStatics();
+        if($scope.dateRangeModel.start_dates && $scope.dateRangeModel.end_dates){
+          console.log('11222222333333333333',$scope.dateRangeModel)
+        //   if ($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date') &&
+        //   !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
+
+           $scope.dateRangeModel.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_dates);
+           $scope.dateRangeModel.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_dates);
+          
+        // }
+        } else {
+          $scope.getVendorWiseSummary();
+          $scope.getDynamicGraphsStatics();
+        }
+      
         cfpLoadingBar.start();
-        DashboardService.getCampaignWiseSummary($scope.selectedSupplierType.code)
+        DashboardService.getCampaignWiseSummary($scope.dateRangeModel,$scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
             $scope.showPerfMetrics = $scope.perfMetrics.overall;
             $scope.selectAllCampaignLeads = true;
@@ -4500,7 +4570,7 @@
         }
         // $scope.dynamicData.data_scope['1'].values['exact'] = $scope.myModel;
         if ($scope.dynamicData.data_scope['1'].values['exact'].length) {
-          DashboardService.getDistributionGraphsStatics($scope.dynamicData)
+          DashboardService.getDistributionGraphsStatics($scope.dynamicData,$scope.selectedSupplierType.code)
             .then(function onSuccess(response) {
               $scope.stackedBarChartForDynamic = angular.copy(stackedBarChart);
               $scope.stackedBarChartDynamicData = formatDynamicData(response.data.data, orderSpecificCase);
@@ -5470,7 +5540,7 @@
 
           getCampaignCumulativeGraph();
 
-          DashboardService.getDistributionGraphsStatics(reqData)
+          DashboardService.getDistributionGraphsStatics(reqData,$scope.selectedSupplierType.code)
             .then(function onSuccess(response) {
               cfpLoadingBar.complete();
 
@@ -5492,7 +5562,7 @@
                 $scope.cumulativeOrder = true;
                 reqData['custom_functions'] = ["order_cumulative"];
                 reqData['raw_data'] = ['total_orders_punched'];
-                DashboardService.getDistributionGraphsStatics(reqData)
+                DashboardService.getDistributionGraphsStatics(reqData,$scope.selectedSupplierType.code)
                   .then(function onSuccess(response) {
                     console.log(response);
                     $scope.initialCumulativeOrderData = response.data.data;
@@ -5925,6 +5995,7 @@
       }
 
       var getCampaignsWiseForCity = function () {
+       
         var dataCity =
         {
           "cities": [],
@@ -5933,7 +6004,7 @@
         angular.forEach($scope.selectedCities_temp, function (data) {
           dataCity.cities.push(data);
         });
-        DashboardService.getCampaignsWiseForCity(dataCity)
+        DashboardService.getCampaignsWiseForCity(dataCity,$scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
             $scope.selectedCampaignsCityWise = response.data.data;
             $scope.dynamicValuesCampaigns = $scope.selectedCampaignsCityWise;
@@ -5951,7 +6022,7 @@
         angular.forEach($scope.selectedVendors, function (data) {
           dataVendor.vendors.push($scope.vendorsData[data].vendor_id);
         });
-        DashboardService.getCampaignsWiseForVendor(dataVendor)
+        DashboardService.getCampaignsWiseForVendor(dataVendor,$scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
             $scope.selectedCampaignsCityWise = response.data.data;
             $scope.dynamicValuesCampaigns = $scope.selectedCampaignsCityWise;
@@ -6199,7 +6270,7 @@
             reqData.raw_data.splice(index, 1, item.value);
           })
         }
-        DashboardService.getDistributionGraphsStatics(reqData)
+        DashboardService.getDistributionGraphsStatics(reqData,$scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
             setKeysForOrderSpecificData(response.data.data.higher_group_data);
             setStackedBarChartSummary(response.data.data);
@@ -6215,7 +6286,7 @@
         delete data['higher_level_statistical_information'];
         delete data['statistical_information'];
         data.data_point.level = ['date', 'campaign'];
-        DashboardService.getDistributionGraphsStatics(data)
+        DashboardService.getDistributionGraphsStatics(data,$scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
             setCampaignLineChart(response.data.data);
           }).catch(function onError(response) {
