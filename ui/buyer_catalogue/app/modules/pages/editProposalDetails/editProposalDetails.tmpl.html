@@ -39,6 +39,14 @@
               <option value="{{org.organisation_id}}" ng-repeat="org in organisationList">{{org.name}}</option>
             </select>
           </div>
+
+          <div class="item">
+            <label>Type of End Customer</label>
+            <select class="field" name="end_customer" placeholder="Select End Customer" ng-model="proposalData.end_customer" ng-required="true">
+              <option value="" disabled>Select End Customer</option>
+              <option value="{{org.organisation_id}}" ng-repeat="customer in endCustomerList">{{org.name}}</option>
+            </select>
+          </div>
         </div>
         <button class="smallBtn" ng-disabled="updateDisable" ng-click="updateProposalDetails()">Update</button>
       </form>

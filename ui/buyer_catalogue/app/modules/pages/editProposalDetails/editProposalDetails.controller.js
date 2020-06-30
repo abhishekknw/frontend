@@ -36,6 +36,14 @@ angular.module('catalogueApp')
           console.log(response);
         })
 
+        editProposalDetailsService.endCustomer()
+        .then(function onSuccess(response) {
+          console.log('111111111111111111111111111111111111',response);
+         // $scope.endCustomerList = response.data.data;
+        }).catch(function onError(response) {
+          console.log(response);
+        })
+
 
       $scope.updateProposalDetails = function () {
         editProposalDetailsService.updateProposalDetails($scope.proposalData)
