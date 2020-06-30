@@ -270,6 +270,14 @@ angular.module('catalogueApp')
                   }
                 })
 
+                releaseCampaignService.bookingStatusData($scope.campaign_id)
+                .then(function onSuccess(ResponseData) {
+                  $scope.bookingStatus = ResponseData.data.data
+                     
+                });
+
+
+
               getUsersList();
               getAssignedSuppliers();
               getOrganisationList();
@@ -1591,10 +1599,18 @@ if (localindex_index != -1) {
           "Building ERP",
           "Door To Door",
         ];
-        $scope.changePhase = function (supplier) {
+        $scope.changePhase = function (supplier,index) {
           if (supplier.booking_status == 'NB') {
             supplier.phase_no = '';
           }
+          
+            var localindex_index = $scope.bookingStatus.map(function(el) { 
+              return el.code;
+            }).indexOf(supplier.booking_status);      
+             if (localindex_index != -1) {  
+              $scope.releaseDetails.shortlisted_suppliers[index].meeting_status = $scope.bookingStatus[localindex_index].booking_substatus;
+             }
+          
         }
         $scope.setUserSupplier = function (supplier) {
           $scope.userSupplierData = supplier;
