@@ -129,8 +129,6 @@ angular.module('catalogueApp')
                 response.data.data.shortlisted_suppliers = shortlisted_suppliers;
                 
                 $scope.releaseDetails = response.data.data;
-                console.log('11111112222222222222222222222222222', $scope.releaseDetails)
-
                 $scope.totalSuppliers = $scope.releaseDetails.total_count;
                 $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
                 setDataToModel($scope.releaseDetails.shortlisted_suppliers);
@@ -522,6 +520,7 @@ angular.module('catalogueApp')
             })
         }
         $scope.getInventoryRelatedData = function (supplier, inventoryCount) {
+   
           $scope.shortlistedSupplierData = supplier;
            $scope.totalInventoryCount = 0
           for(let i in supplier.shortlisted_inventories){
@@ -529,7 +528,7 @@ angular.module('catalogueApp')
           }
 
           if (supplier.phase_no) {
-            if (inventoryCount <= 50) {
+            if (inventoryCount <= 50 || !inventoryCount) {
               auditReleasePlanService.getInventoryRelatedData()
                 .then(function onSuccess(response) {
                   $scope.adInventoryTypes = response.data.data.inventory_types;
@@ -642,7 +641,4 @@ angular.module('catalogueApp')
           supplierIdForSearch = undefined;
           getResultsPage(1);
         }
-
-
-
       }]);

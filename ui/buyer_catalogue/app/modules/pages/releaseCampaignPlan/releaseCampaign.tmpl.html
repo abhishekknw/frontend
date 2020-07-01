@@ -471,6 +471,7 @@
                 <select class="form-control spacing input-width" ng-model="supplier.booking_status"
                   permission="[permissions.changeBookingStatus]" ng-change="changePhase(supplier,$parent.$parent.$index)"
                   ng-disabled="supplier.is_completed">
+                  <option value="" disabled="">Select Booking Status</option>
                   <option style="width:100%;" ng-repeat="item in bookingStatus" value="{{item.code}}">
                     {{item.name}}</option>
                 </select>
@@ -1008,6 +1009,7 @@
                       <select class="form-control spacing input-width" ng-model="supplier.booking_status"
                         permission="[permissions.changeBookingStatus]" ng-change="changePhase(supplier,$parent.$parent.$index)"
                         ng-disabled="supplier.is_completed">
+                        <option value="" disabled="">Select Booking Status</option>
                         <option style="width:100%;" ng-repeat="item in bookingStatus" value="{{item.code}}">
                           {{item.name}}</option>
                       </select>

@@ -257,6 +257,13 @@ angular.module('catalogueApp')
         var supplierIdForSearch;
         var getResultsPage = function (newPage) {
           var data = getFilterData();
+          
+          releaseCampaignService.bookingStatusData($scope.campaign_id)
+          .then(function onSuccess(ResponseData) {
+            $scope.bookingStatus = ResponseData.data.data
+               
+          });
+          
           releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id, newPage, data)
             .then(function onSuccess(response) {
               releaseCampaignService.getCampaignReleaseDetailsHeader()
@@ -270,11 +277,11 @@ angular.module('catalogueApp')
                   }
                 })
 
-                releaseCampaignService.bookingStatusData($scope.campaign_id)
-                .then(function onSuccess(ResponseData) {
-                  $scope.bookingStatus = ResponseData.data.data
+                // releaseCampaignService.bookingStatusData($scope.campaign_id)
+                // .then(function onSuccess(ResponseData) {
+                //   $scope.bookingStatus = ResponseData.data.data
                      
-                });
+                // });
 
 
 
@@ -305,6 +312,13 @@ angular.module('catalogueApp')
                 }
 
                 $scope.getTotalSupplierPriceNew($scope.initialReleaseData.shortlisted_suppliers[i], i);
+
+                var localindex_index = $scope.bookingStatus.map(function(el) { 
+                  return el.code;
+                }).indexOf($scope.initialReleaseData.shortlisted_suppliers[i].booking_status);  
+                 if (localindex_index != -1) {  
+                  $scope.initialReleaseData.shortlisted_suppliers[i].meeting_status = $scope.bookingStatus[localindex_index].booking_substatus;
+                 }
 
               }
 
