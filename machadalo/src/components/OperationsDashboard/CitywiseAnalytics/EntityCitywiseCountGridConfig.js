@@ -20,7 +20,7 @@ const getEntityCitywiseCount = () => {
       dataField: 'count',
       text: 'Entity Count',
       row: 0,
-      colSpan: 4,
+      colSpan: 5,
     },
     {
       dataField: 'count',
@@ -53,6 +53,31 @@ const getEntityCitywiseCount = () => {
       },
     },
     {
+      dataField: 'today_count',
+      text: "Today's Count(% inc from yesterday)",
+      row: 1,
+      width: '300px',
+      formatter: (cell, row) => {
+        const { last_day_count, today_count } = row;
+        let diff = today_count - last_day_count;
+        let percentageChange = 0;
+        if (last_day_count > 0) {
+          percentageChange = (diff / last_day_count) * 100;
+          percentageChange = percentageChange.toFixed(2);
+        }
+        return (
+          <div>
+            {today_count}(
+            <p style={{ color: 'green', fontSize: '15px', display: 'inline-flex' }}>
+              {percentageChange}% {percentageChange > 0 && <span>&#8593;</span>}{' '}
+              {percentageChange < 0 && <span style={{ color: 'red' }}>&#8595;</span>}{' '}
+            </p>
+            )
+          </div>
+        );
+      },
+    },
+    {
       dataField: 'last_week_count',
       text: 'This Week Count(% inc from last week)',
       row: 1,
@@ -61,7 +86,10 @@ const getEntityCitywiseCount = () => {
         const { last_week_count, this_week_count } = row;
         let diff = this_week_count - last_week_count;
         let percentageChange = 0;
-        if (last_week_count > 0) percentageChange = (diff / last_week_count) * 100;
+        if (last_week_count > 0) {
+          percentageChange = (diff / last_week_count) * 100;
+          percentageChange = percentageChange.toFixed(2);
+        }
         return (
           <div>
             {this_week_count}(
@@ -83,7 +111,10 @@ const getEntityCitywiseCount = () => {
         const { last_month_count, this_month_count } = row;
         let diff = this_month_count - last_month_count;
         let percentageChange = 0;
-        if (last_month_count > 0) percentageChange = (diff / last_month_count) * 100;
+        if (last_month_count > 0) {
+          percentageChange = (diff / last_month_count) * 100;
+          percentageChange = percentageChange.toFixed(2);
+        }
         return (
           <div>
             {this_month_count}(
@@ -104,8 +135,10 @@ const getEntityCitywiseCount = () => {
         const { last_3_month_count, this_month_count } = row;
         let diff = last_3_month_count - this_month_count;
         let percentageChange = 0;
-        if (diff > 0 && last_3_month_count > 0)
+        if (diff > 0 && last_3_month_count > 0) {
           percentageChange = (diff / last_3_month_count) * 100;
+          percentageChange = percentageChange.toFixed(2);
+        }
         return <div>{last_3_month_count}</div>;
       },
     },
