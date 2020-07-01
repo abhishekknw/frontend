@@ -42,9 +42,9 @@
 
           <div class="item">
             <label>Type of End Customer</label>
-            <select class="field" name="end_customer" placeholder="Select End Customer" ng-model="proposalData.end_customer" ng-required="true">
+            <select class="field" name="type_of_end_customer" placeholder="Select End Customer" ng-model="proposalData.type_of_end_customer" ng-required="true">
               <option value="" disabled>Select End Customer</option>
-              <option value="{{customer.name}}" ng-repeat="customer in endCustomerList">{{customer.name}}</option>
+              <option value="{{customer.id}}" ng-repeat="customer in endCustomerList">{{customer.name}}</option>
             </select>
           </div>
         </div>

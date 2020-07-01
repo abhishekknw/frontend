@@ -47,7 +47,7 @@ angular.module('catalogueApp')
       $scope.updateProposalDetails = function () {
         editProposalDetailsService.updateProposalDetails($scope.proposalData)
           .then(function onSuccess(response) {
-            swal(constants.name, constants.proposal_update_success, constants.success);
+           // swal(constants.name, constants.proposal_update_success, constants.success);
             swal({
               title: "",
               text: constants.proposal_update_success,
@@ -55,7 +55,7 @@ angular.module('catalogueApp')
               confirmButtonText: "ok",
             },
               function (isConfirm) {
-                if (isConfirm) {
+                 if (isConfirm) {
                   $location.path("/campaignDecisionBoard");
                 }
               }
