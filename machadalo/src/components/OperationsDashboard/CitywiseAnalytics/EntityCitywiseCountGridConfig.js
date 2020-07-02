@@ -60,7 +60,7 @@ const getEntityCitywiseCount = () => {
       formatter: (cell, row) => {
         const { last_day_count, today_count } = row;
         let diff = today_count - last_day_count;
-        let percentageChange = 0;
+        let percentageChange = diff * 100;
         if (last_day_count > 0) {
           percentageChange = (diff / last_day_count) * 100;
           percentageChange = percentageChange.toFixed(2);
@@ -85,7 +85,7 @@ const getEntityCitywiseCount = () => {
       formatter: (cell, row) => {
         const { last_week_count, this_week_count } = row;
         let diff = this_week_count - last_week_count;
-        let percentageChange = 0;
+        let percentageChange = diff * 100;
         if (last_week_count > 0) {
           percentageChange = (diff / last_week_count) * 100;
           percentageChange = percentageChange.toFixed(2);
@@ -110,7 +110,7 @@ const getEntityCitywiseCount = () => {
       formatter: (cell, row) => {
         const { last_month_count, this_month_count } = row;
         let diff = this_month_count - last_month_count;
-        let percentageChange = 0;
+        let percentageChange = diff * 100;
         if (last_month_count > 0) {
           percentageChange = (diff / last_month_count) * 100;
           percentageChange = percentageChange.toFixed(2);
@@ -134,7 +134,7 @@ const getEntityCitywiseCount = () => {
       formatter: (cell, row) => {
         const { last_3_month_count, this_month_count } = row;
         let diff = last_3_month_count - this_month_count;
-        let percentageChange = 0;
+        let percentageChange = diff * 100;
         if (diff > 0 && last_3_month_count > 0) {
           percentageChange = (diff / last_3_month_count) * 100;
           percentageChange = percentageChange.toFixed(2);
