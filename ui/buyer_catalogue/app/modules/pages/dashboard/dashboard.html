@@ -1747,7 +1747,7 @@
                                       <td  ng-if="Data.last_three_weeks.flat_count">{{(Data.last_three_weeks.total_leads/Data.last_three_weeks.flat_count) *100 | limitTo:5 }} %</td>
                                       <td  ng-if="!Data.last_three_weeks.flat_count">NA</td>
 
-                                      </tr>
+                                      <!-- </tr>
                                       <tr>
                                       <td><small style="font-weight:bold">Total Hot Leads</small></td>
                                       <td>{{Data.overall_data.total_hot_leads || 'NA'}}</td>
@@ -1784,9 +1784,15 @@
                                         <td>{{Data.last_week.is_hot_level_4 || 'NA'}}</td>
                                         <td>{{Data.last_two_weeks.is_hot_level_4 || 'NA'}}</td>
                                         <td>{{Data.last_three_weeks.is_hot_level_4 || 'NA'}}</td>
+                                        </tr> -->
+
+                                        <tr ng-repeat="(key, item) in Data.overall_data.hot_level_keys">
+                                          <td><small style="font-weight:bold">{{item}}</small></td>
+                                          <td>{{Data.overall_data.is_hot_level_1 || 'NA'}}</td>
+                                          <td>{{Data.last_week.is_hot_level_1 || 'NA'}}</td>
+                                          <td>{{Data.last_two_weeks.is_hot_level_1 || 'NA'}}</td>
+                                          <td>{{Data.last_three_weeks.is_hot_level_1 || 'NA'}}</td>
                                         </tr>
-
-
                                     </tbody>
                                   </table>
                                   <br><br />
@@ -1831,30 +1837,6 @@
 
                                       </tr>
                                       <tr>
-                                      <td><small style="font-weight:bold">Mean of Hot Leads</small></td>
-                                      <td ng-if="Data.overall_data.supplier_stats.interested.percentage_by_flat">{{Data.overall_data.supplier_stats.interested.percentage_by_flat | limitTo:5 }} %</td>
-                                      <td ng-if="!Data.overall_data.supplier_stats.interested.percentage_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_week.supplier_stats.interested.percentage_by_flat">{{Data.last_week.supplier_stats.interested.percentage_by_flat | limitTo:5 }} %
-                                        <span ng-if="Data.last_week.supplier_stats.interested.percentage_by_flat >= Data.overall_data.supplier_stats.interested.percentage_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                        <span ng-if="Data.last_week.supplier_stats.interested.percentage_by_flat < Data.overall_data.supplier_stats.interested.percentage_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_week.supplier_stats.interested.percentage_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_two_weeks.supplier_stats.interested.percentage_by_flat">{{Data.last_two_weeks.supplier_stats.interested.percentage_by_flat | limitTo:5 }} %
-                                        <span ng-if="Data.last_two_weeks.supplier_stats.interested.percentage_by_flat >= Data.overall_data.supplier_stats.interested.percentage_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                        <span ng-if="Data.last_two_weeks.supplier_stats.interested.percentage_by_flat < Data.overall_data.supplier_stats.interested.percentage_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_two_weeks.supplier_stats.interested.percentage_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_three_weeks.supplier_stats.interested.percentage_by_flat">{{Data.last_three_weeks.supplier_stats.interested.percentage_by_flat | limitTo:5 }} %
-                                        <span ng-if="Data.last_three_weeks.supplier_stats.interested.percentage_by_flat >= Data.overall_data.supplier_stats.interested.percentage_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                        <span ng-if="Data.last_three_weeks.supplier_stats.interested.percentage_by_flat < Data.overall_data.supplier_stats.interested.percentage_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_three_weeks.supplier_stats.interested.percentage_by_flat">NA</td>
-
-                                      </tr>
-                                      <tr>
                                       <td><small style="font-weight:bold">Median of Leads</small></td>
                                       <td ng-if="Data.overall_data.supplier_stats.total.median_percent_by_flat">{{Data.overall_data.supplier_stats.total.median_percent_by_flat | limitTo:5}} %</td>
                                       <td ng-if="!Data.overall_data.supplier_stats.total.median_percent_by_flat">NA</td>
@@ -1876,29 +1858,6 @@
                                         <span ng-if="Data.last_three_weeks.supplier_stats.total.median_percent_by_flat < Data.overall_data.supplier_stats.total.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
                                       </td>
                                       <td ng-if="!Data.last_three_weeks.supplier_stats.total.median_percent_by_flat">NA</td>
-                                      </tr>
-                                      <tr>
-                                      <td><small style="font-weight:bold">Median of Hot Leads</small></td>
-                                      <td ng-if="Data.overall_data.supplier_stats.interested.median_percent_by_flat">{{Data.overall_data.supplier_stats.interested.median_percent_by_flat | limitTo:5 }} %</td>
-                                      <td ng-if="!Data.overall_data.supplier_stats.interested.median_percent_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_week.supplier_stats.interested.median_percent_by_flat">{{Data.last_week.supplier_stats.interested.median_percent_by_flat | limitTo:5 }} %
-                                        <span ng-if="Data.last_week.supplier_stats.interested.median_percent_by_flat >= Data.overall_data.supplier_stats.interested.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                        <span ng-if="Data.last_week.supplier_stats.interested.median_percent_by_flat < Data.overall_data.supplier_stats.interested.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_week.supplier_stats.interested.median_percent_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat">{{Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat | limitTo:5}} %
-                                        <span ng-if="Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat >= Data.overall_data.supplier_stats.interested.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                        <span ng-if="Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat < Data.overall_data.supplier_stats.interested.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat">{{Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat | limitTo:5 }} %
-                                        <span ng-if="Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat >= Data.overall_data.supplier_stats.interested.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                        <span ng-if="Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat < Data.overall_data.supplier_stats.interested.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat">NA</td>
                                       </tr>
                                       <tr>
                                       <td><small style="font-weight:bold">Mode of Leads</small></td>
@@ -1924,33 +1883,11 @@
                                       <td ng-if="!Data.last_three_weeks.supplier_stats.total.mode_percent_by_flat">NA </td>
 
                                       </tr>
-                                      <tr>
-                                      <td><small style="font-weight:bold">Mode of Hot Leads</small></td>
-                                      <td ng-if="Data.overall_data.supplier_stats.interested.mode_percent_by_flat">{{Data.overall_data.supplier_stats.interested.mode_percent_by_flat | limitTo:5 }} %</td>
-                                      <td ng-if="!Data.overall_data.supplier_stats.interested.mode_percent_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_week.supplier_stats.interested.mode_percent_by_flat">{{Data.last_week.supplier_stats.interested.mode_percent_by_flat | limitTo:5 }} %
-                                        <span ng-if="Data.last_week.supplier_stats.interested.mode_percent_by_flat >= Data.overall_data.supplier_stats.interested.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                        <span ng-if="Data.last_week.supplier_stats.interested.mode_percent_by_flat < Data.overall_data.supplier_stats.interested.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_week.supplier_stats.interested.mode_percent_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_two_weeks.supplier_stats.interested.mode_percent_by_flat">{{Data.last_two_weeks.supplier_stats.interested.mode_percent_by_flat | limitTo:5 }} %
-                                        <span ng-if="Data.last_two_weeks.supplier_stats.interested.mode_percent_by_flat >= Data.overall_data.supplier_stats.interested.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                        <span ng-if="Data.last_two_weeks.supplier_stats.interested.mode_percent_by_flat < Data.overall_data.supplier_stats.interested.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_two_weeks.supplier_stats.interested.mode_percent_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_three_weeks.supplier_stats.interested.mode_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.interested.mode_percent_by_flat | limitTo:5}} %
-                                        <span ng-if="Data.last_three_weeks.supplier_stats.interested.mode_percent_by_flat >= Data.overall_data.supplier_stats.interested.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                        <span ng-if="Data.last_three_weeks.supplier_stats.interested.mode_percent_by_flat < Data.overall_data.supplier_stats.interested.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_three_weeks.supplier_stats.interested.mode_percent_by_flat">NA</td>
-
-                                      </tr>
+                                    </tbody>
+                                    <tbody ng-repeat="(key, item) in Data.overall_data.hot_level_keys">
                                       <tr>
                                         <td>
-                                            <small style="font-weight:bold">Mean Of Booking Confirmed</small>                                          
+                                            <small style="font-weight:bold">Mean Of {{item}}</small>                                          
                                         </td>
                                         <td>
                                           {{Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat | limitTo:5 }} %
@@ -1958,140 +1895,49 @@
                                         <td ng-if="Data.last_week.supplier_stats.is_hot_level_3.mean_percent_by_flat">{{Data.last_week.supplier_stats.is_hot_level_3.mean_percent_by_flat | limitTo:5 }} %
                                             <span ng-if="Data.last_week.supplier_stats.is_hot_level_3.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
                                             <span ng-if="Data.last_week.supplier_stats.is_hot_level_3.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                          </td>
-                                          <td ng-if="!Data.last_week.supplier_stats.is_hot_level_3.mean_percent_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat | limitTo:5 }} %
-                                        <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                        <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat | limitTo:5}} %
-                                        <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                        <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat">NA</td>
+                                        </td>
+                                        <td ng-if="!Data.last_week.supplier_stats.is_hot_level_3.mean_percent_by_flat">NA</td>
+                                    
+                                        <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat | limitTo:5 }} %
+                                          <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                          <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                        </td>
+                                        <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat">NA</td>
+                                    
+                                        <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat | limitTo:5}} %
+                                          <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                          <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                        </td>
+                                        <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat">NA</td>
                                       </tr>
                                       <tr>
-                                          <td><small style="font-weight:bold">Median of {{Data.overall_data.key_hot_level_3 || 'Bookings Confirmed'}}</small></td>
-                                          <td ng-if="Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5 }} %</td>
-                                          <td ng-if="!Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
-    
-                                          <td ng-if="Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5 }} %
-                                            <span ng-if="Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                            <span ng-if="Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                          </td>
-                                          <td ng-if="!Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
-    
-                                          <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5}} %
-                                            <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                            <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                          </td>
-                                          <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
-    
-                                          <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5 }} %
-                                            <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                            <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                          </td>
-                                          <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
-                                          </tr>
+                                        <td><small style="font-weight:bold">Median of {{item}}</small></td>
+                                        <td ng-if="Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5 }} %</td>
+                                        <td ng-if="!Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
+                                    
+                                        <td ng-if="Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5 }} %</td>
+                                        <td ng-if="!Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
+                                    
+                                        <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5}} %</td>
+                                        <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
+                                    
+                                        <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5 }} %</td>
+                                        <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
+                                      </tr>
                                       <tr>
-                                        <td><small style="font-weight:bold">Mode of {{Data.overall_data.key_hot_level_3 || 'Bookings Confirmed'}}</small></td>
+                                        <td><small style="font-weight:bold">Mode of {{item}}</small></td>
                                         <td ng-if="Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat">{{Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat | limitTo:5 }} %</td>
                                         <td ng-if="!Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat">NA</td>
-
-                                        <td ng-if="Data.last_week.supplier_stats.is_hot_level_3.mode_percent_by_flat">{{Data.last_week.supplier_stats.interested.mode_percent_by_flat | limitTo:5 }} %
-                                          <span ng-if="Data.last_week.supplier_stats.is_hot_level_3.mode_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                          <span ng-if="Data.last_week.supplier_stats.is_hot_level_3.mode_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                        </td>
+                                    
+                                        <td ng-if="Data.last_week.supplier_stats.is_hot_level_3.mode_percent_by_flat">{{Data.last_week.supplier_stats.is_hot_level_3.mode_percent_by_flat | limitTo:5 }} %</td>
                                         <td ng-if="!Data.last_week.supplier_stats.is_hot_level_3.mode_percent_by_flat">NA</td>
-
-                                        <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat | limitTo:5 }} %
-                                          <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                          <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                        </td>
+                                    
+                                        <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat | limitTo:5 }} %</td>
                                         <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat">NA</td>
-
-                                        <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat | limitTo:5}} %
-                                          <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                          <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                        </td>
+                                    
+                                        <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat | limitTo:5}} %</td>
                                         <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat">NA</td>
                                       </tr>
-
-                                      <!-- hotness level 4 -->
-                                      <tr>
-                                          <td>
-                                              <small style="font-weight:bold">Mean Of {{Data.overall_data.key_hot_level_4 || 'Orders Punched'}}</small>                                          
-                                          </td>
-                                          <td>
-                                            {{Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat | limitTo:5 }} %
-                                          </td>
-                                          <td ng-if="Data.last_week.supplier_stats.is_hot_level_4.mean_percent_by_flat">{{Data.last_week.supplier_stats.is_hot_level_4.mean_percent_by_flat | limitTo:5 }} %
-                                              <span ng-if="Data.last_week.supplier_stats.is_hot_level_4.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                              <span ng-if="Data.last_week.supplier_stats.is_hot_level_4.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                            </td>
-                                            <td ng-if="!Data.last_week.supplier_stats.is_hot_level_4.mean_percent_by_flat">NA</td>
-  
-                                        <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat | limitTo:5 }} %
-                                          <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                          <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                        </td>
-                                        <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat">NA</td>
-  
-                                        <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat | limitTo:5}} %
-                                          <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                          <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                        </td>
-                                        <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat">NA</td>
-                                        </tr>
-                                        <tr>
-                                            <td><small style="font-weight:bold">Median of {{Data.overall_data.key_hot_level_4 || 'Orders Punched'}}</small></td>
-                                            <td ng-if="Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat">{{Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat | limitTo:5 }} %</td>
-                                            <td ng-if="!Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat">NA</td>
-      
-                                            <td ng-if="Data.last_week.supplier_stats.is_hot_level_4.median_percent_by_flat">{{Data.last_week.supplier_stats.is_hot_level_4.median_percent_by_flat | limitTo:5 }} %
-                                              <span ng-if="Data.last_week.supplier_stats.is_hot_level_4.median_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                              <span ng-if="Data.last_week.supplier_stats.is_hot_level_4.median_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                            </td>
-                                            <td ng-if="!Data.last_week.supplier_stats.is_hot_level_4.median_percent_by_flat">NA</td>
-      
-                                            <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat | limitTo:5}} %
-                                              <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                              <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                            </td>
-                                            <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat">NA</td>
-      
-                                            <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat">{{Data.last_three_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat | limitTo:5 }} %
-                                              <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                              <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                            </td>
-                                            <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat">NA</td>
-                                            </tr>
-                                        <tr>
-                                          <td><small style="font-weight:bold">Mode of {{Data.overall_data.key_hot_level_4 || 'Orders Punched'}}</small></td>
-                                          <td ng-if="Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat">{{Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat | limitTo:5 }} %</td>
-                                          <td ng-if="!Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat">NA</td>
-  
-                                          <td ng-if="Data.last_week.supplier_stats.is_hot_level_4.mode_percent_by_flat">{{Data.last_week.supplier_stats.is_hot_level_4.mode_percent_by_flat | limitTo:5 }} %
-                                            <span ng-if="Data.last_week.supplier_stats.is_hot_level_4.mode_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                            <span ng-if="Data.last_week.supplier_stats.is_hot_level_4.mode_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                          </td>
-                                          <td ng-if="!Data.last_week.supplier_stats.is_hot_level_4.mode_percent_by_flat">NA</td>
-  
-                                          <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat | limitTo:5 }} %
-                                            <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                            <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                          </td>
-                                          <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat">NA</td>
-  
-                                          <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat | limitTo:5}} %
-                                            <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                            <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                          </td>
-                                          <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat">NA</td>
-                                        </tr>
                                     </tbody>
                                   </table>
                                   <br />
@@ -2136,76 +1982,57 @@
                                       <tr>
                                         <th style="background:#8e1921 !important;color:#ffffff !important;">Details</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Overall Campaign <br>Total</th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}} <br> <small style="color:#ffffff !important"> < 150</small></th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}} <br><small style="color:#ffffff !important">Between 150 to 400</small></th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}} <br> <small style="color:#ffffff !important"> > 400</small></th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}} <br> <small style="color:#ffffff !important"> {{Data.overall_data.supplier_size_categories.min.text}} </small></th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}} <br><small style="color:#ffffff !important">{{Data.overall_data.supplier_size_categories.medium.text}}</small></th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}} <br> <small style="color:#ffffff !important"> {{Data.overall_data.supplier_size_categories.max.text}}</small></th>
                                       </tr>
                                   </thead>
                                     <tbody style="text-align:center;">
                                       <tr>
                                       <td><small style="font-weight:bold">Society Count</small></td>
                                       <td>{{Data.overall_data.supplier_count}}</td>
-                                      <td>{{Data.flat_data['0-150'].suppliers}}</td>
-                                      <td>{{Data.flat_data['151-399'].suppliers}}</td>
-                                      <td>{{Data.flat_data['400+'].suppliers}}</td>
+                                      <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.min.type].suppliers}}</td>
+                                      <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.medium.type].suppliers}}</td>
+                                      <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.max.typ].suppliers}}</td>
                                       </tr>
                                       <tr>
                                         <td><small style="font-weight:bold">{{flat_count_header}}</small></td>
                                         <td>{{Data.overall_data.flat_count}}</td>
-                                        <td>{{Data.flat_data['0-150']['flat_count']}}</td>
-                                        <td>{{Data.flat_data['151-399']['flat_count']}}</td>
-                                        <td>{{Data.flat_data['400+']['flat_count']}}</td>
+                                        <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.min.type]['flat_count']}}</td>
+                                        <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.medium.type]['flat_count']}}</td>
+                                        <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.max.type]['flat_count']}}</td>
                                       </tr>
                                       <tr>
                                         <td><small style="font-weight:bold">Total Leads (%)</small></td>
                                         <td ng-if="Data.overall_data.total_leads">{{Data.overall_data.total_leads}} <br> <small style="font-weight:bold">({{(Data.overall_data.total_leads / Data.overall_data.flat_count) * 100 |limitTo:5}} %)</small> </td>
                                         <td ng-if="!Data.overall_data.total_leads">NA</td>
 
-                                        <td ng-if="Data.flat_data['0-150']['flat_count'] != 0">{{Data.flat_data['0-150'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].total / Data.flat_data['0-150']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
-                                        <td ng-if="Data.flat_data['0-150']['flat_count'] == 0">{{Data.flat_data['0-150'].total}} <br> <small style="font-weight:bold">({{Data.flat_data['0-150'].total}} %)</small> </td>
+                                        <td ng-if="Data.flat_data[Data.overall_data.supplier_size_categories.min.type]['flat_count'] != 0">{{Data.flat_data[Data.overall_data.supplier_size_categories.min.type].total}} <br> <small style="font-weight:bold">({{(Data.flat_data[Data.overall_data.supplier_size_categories.min.type].total / Data.flat_data[Data.overall_data.supplier_size_categories.min.type]['flat_count']) * 100 |limitTo:5}} %)</small> </td>
+                                        <td ng-if="Data.flat_data[Data.overall_data.supplier_size_categories.min.type]['flat_count'] == 0">{{Data.flat_data[Data.overall_data.supplier_size_categories.min.type].total}} <br> <small style="font-weight:bold">({{Data.flat_data[Data.overall_data.supplier_size_categories.min.type].total}} %)</small> </td>
 
-                                        <td ng-if="Data.flat_data['151-399']['flat_count'] != 0">{{Data.flat_data['151-399'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['151-399'].total / Data.flat_data['151-399']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
-                                        <td ng-if="Data.flat_data['151-399']['flat_count'] == 0">{{Data.flat_data['151-399'].total}} <br> <small style="font-weight:bold">({{Data.flat_data['151-399'].total }} %)</small> </td>
+                                        <td ng-if="Data.flat_data[Data.overall_data.supplier_size_categories.medium.type]['flat_count'] != 0">{{Data.flat_data[Data.overall_data.supplier_size_categories.medium.type].total}} <br> <small style="font-weight:bold">({{(Data.flat_data[Data.overall_data.supplier_size_categories.medium.type].total / Data.flat_data[Data.overall_data.supplier_size_categories.medium.type]['flat_count']) * 100 |limitTo:5}} %)</small> </td>
+                                        <td ng-if="Data.flat_data[Data.overall_data.supplier_size_categories.medium.type]['flat_count'] == 0">{{Data.flat_data[Data.overall_data.supplier_size_categories.medium.type].total}} <br> <small style="font-weight:bold">({{Data.flat_data[Data.overall_data.supplier_size_categories.medium.type].total }} %)</small> </td>
 
-                                        <td  ng-if="Data.flat_data['400+']['flat_count'] != 0">{{Data.flat_data['400+'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['400+'].total / Data.flat_data['400+']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
-                                        <td ng-if="Data.flat_data['400+']['flat_count'] == 0">{{Data.flat_data['400+'].total}} <br> <small style="font-weight:bold">({{Data.flat_data['400+'].total}} %)</small> </td>
-
-                                      </tr>
-                                      <tr>
-                                        <td><small style="color:#ffffff">Hot Leads (%)</small></td>
-                                        <td ng-if="Data.overall_data.total_hot_leads">{{Data.overall_data.total_hot_leads}} <br> <small style="font-weight:bold">({{(Data.overall_data.total_hot_leads / Data.overall_data.flat_count) * 100 |limitTo:5}} %)</small> </td>
-                                        <td ng-if="!Data.overall_data.total_hot_leads">NA</td>
-
-                                        <td  ng-if="Data.flat_data['0-150']['flat_count'] != 0">{{Data.flat_data['0-150'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].interested / Data.flat_data['0-150']['flat_count']) * 100 |limitTo:5}} %)</small></td>
-                                        <td ng-if="Data.flat_data['0-150']['flat_count'] == 0">{{Data.flat_data['0-150'].interested}} <br> <small style="font-weight:bold">({{Data.flat_data['0-150'].interested}} %)</small></td>
-
-                                        <td  ng-if="Data.flat_data['151-399']['flat_count'] != 0">{{Data.flat_data['151-399'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['151-399'].interested / Data.flat_data['151-399']['flat_count']) * 100 |limitTo:5}} %)</small></td>
-                                        <td ng-if="Data.flat_data['151-399']['flat_count'] == 0">{{Data.flat_data['151-399'].interested}} <br> <small style="font-weight:bold">({{Data.flat_data['151-399'].interested }} %)</small></td>
-
-                                        <td  ng-if="Data.flat_data['400+']['flat_count'] != 0">{{Data.flat_data['400+'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['400+'].interested / Data.flat_data['400+']['flat_count']) * 100 |limitTo:5}} %)</small></td>
-                                        <td ng-if="Data.flat_data['400+']['flat_count'] == 0">{{Data.flat_data['400+'].interested}} <br> <small style="font-weight:bold">({{Data.flat_data['400+'].interested }} %)</small></td>
+                                        <td  ng-if="Data.flat_data[Data.overall_data.supplier_size_categories.max.type]['flat_count'] != 0">{{Data.flat_data[Data.overall_data.supplier_size_categories.max.type].total}} <br> <small style="font-weight:bold">({{(Data.flat_data[Data.overall_data.supplier_size_categories.max.type].total / Data.flat_data[Data.overall_data.supplier_size_categories.max.type]['flat_count']) * 100 |limitTo:5}} %)</small> </td>
+                                        <td ng-if="Data.flat_data[Data.overall_data.supplier_size_categories.max.type]['flat_count'] == 0">{{Data.flat_data[Data.overall_data.supplier_size_categories.max.type].total}} <br> <small style="font-weight:bold">({{Data.flat_data[Data.overall_data.supplier_size_categories.max.type].total}} %)</small> </td>
 
                                       </tr>
+                                    </tbody>
+                                    <tbody ng-repeat="(key, item) in Data.overall_data.hot_level_keys">
                                       <tr>
-                                        <td><small style="font-weight:bold">Hot Leads Ratio (%)</small></td>
-                                        <td>({{campaignLeadsData.overall_data.total_hot_leads/campaignLeadsData.overall_data.total_leads * 100|limitTo:5}} %)</td>
-                                        <td>{{Data.flat_data['0-150'].hot_leads_percentage |limitTo:4}} %</td>
-                                        <td>{{Data.flat_data['151-399'].hot_leads_percentage |limitTo:4}} %</td>
-                                        <td>{{Data.flat_data['400+'].hot_leads_percentage |limitTo:4}} %</td>
+                                        <td><small style="font-weight:bold">Total {{item}} (%)</small></td>
+                                        <td>{{Data.overall_data.is_hot_level_1}}</td>
+                                        <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.min.type].is_hot_level_1}} </td>
+                                        <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.medium.type].is_hot_level_1}} </td>
+                                        <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.max.type].is_hot_level_1}} </td>
                                       </tr>
+
                                       <tr>
-                                        <td><small style="font-weight:bold">Total {{Data.overall_data.key_hot_level_3 || 'Bookings Confirmed'}}</small></td>
-                                        <td>{{campaignLeadsData.overall_data.is_hot_level_3}}</td>
-                                        <td>{{Data.flat_data['0-150'].is_hot_level_3}} </td>
-                                        <td>{{Data.flat_data['151-399'].is_hot_level_3}} </td>
-                                        <td>{{Data.flat_data['400+'].is_hot_level_3}} </td>
-                                      </tr>
-                                      <tr>
-                                        <td><small style="font-weight:bold">Total {{Data.overall_data.key_hot_level_4 || 'Orders Punched'}}</small></td>
-                                        <td>{{campaignLeadsData.overall_data.is_hot_level_4}}</td>
-                                        <td>{{Data.flat_data['0-150'].is_hot_level_4}} </td>
-                                        <td>{{Data.flat_data['151-399'].is_hot_level_4}} </td>
-                                        <td>{{Data.flat_data['400+'].is_hot_level_4}} </td>
+                                        <td><small style="font-weight:bold">Total {{item}} Ratio (%)</small></td>
+                                        <td>({{Data.overall_data.is_hot_level_1/Data.overall_data.total_leads * 100|limitTo:5}} %)</td>
+                                        <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.min.type].is_hot_level_1}} </td>
+                                        <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.medium.type].is_hot_level_1}} </td>
+                                        <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.max.type].is_hot_level_1}} </td>
                                       </tr>
 
                                     </tbody>
@@ -2258,10 +2085,13 @@
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Supplier Count</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}}</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>(%)</th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads <br> (%)</th>
+                                        <!-- <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads <br> (%)</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads Ratio <br> (%)</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Total Bookings Confirmed</th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">Total Orders Punched</th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">Total Orders Punched</th> -->
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{Data.overall_data.hot_level_keys['is_hot_level_1']}} <br> (%)</th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{Data.overall_data.hot_level_keys['is_hot_level_1']}} Ratio <br> (%)</th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key, item) in Data.overall_data.hot_level_keys" ng-if="key!='is_hot_level_1'">{{item}} <br> (%)</th>
                                       </tr>
                                 </thead>
                                   <tbody style="text-align:center;">
@@ -2269,15 +2099,13 @@
                                       <td style="font-weight:bold">{{key}}</td>
                                       <td>{{data.suppliers}}</td>
                                       <td>{{data['flat_count']}}</td>
-                                      <td ng-if="data['flat_count'] != 0">{{data.total}} <br> <small style="font-weight:bold">({{(data.total / data['flat_count']) * 100 |limitTo:5}} %)</small> </td>
-                                      <td ng-if="data['flat_count'] == 0">{{data.total}} <br> <small style="font-weight:bold">({{data.total}} %)</small> </td>
+                                      <td>{{data.total}} <br> <small style="font-weight:bold">({{ getPercent(data.total, data['flat_count'])|limitTo:5}} %)</small> </td>
 
-                                      <td ng-if="data['flat_count'] != 0">{{data.interested}} <br> <small style="font-weight:bold">({{(data.interested / data['flat_count']) * 100 |limitTo:5}} %)</small></td>
-                                      <td ng-if="data['flat_count'] == 0">{{data.interested}} <br> <small style="font-weight:bold">({{data.interested }} %)</small></td>
+                                      <td>{{data.interested}} <br> <small style="font-weight:bold">({{getPercent(data.interested, data['flat_count'])|limitTo:5}} %)</small></td>
 
                                       <td>{{data.hot_leads_percentage |limitTo:4}} %</td>
-                                      <td>{{data.is_hot_level_3}}</td>
-                                      <td>{{data.is_hot_level_4}}</td>
+
+                                      <td ng-repeat="(key, item) in Data.overall_data.hot_level_keys" ng-if="key!='is_hot_level_1'">{{data.is_hot_level_1}} <br> <small style="font-weight:bold">({{getPercent(data.is_hot_level_1, data['flat_count'])|limitTo:5}} %)</small></td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -2349,7 +2177,7 @@
                           <div class="col-md-12" ng-scrollable>
                             <select class="form-control" ng-change="sortData('datewise',sortModel)" ng-model="sortModel" print-remove>
                               <option value="" disabled>Select For Sorting</option>
-                              <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
+                              <option ng-repeat="item in leadsByDateMenu" value="{{item.id}}">{{item.name}}</option>
                             </select>
                             <div class="outerSociety" ng-if="!dateRangeModel.start_date">
                               <div class="innerSociety" ng-if="!dateRangeModel.start_date">
@@ -2415,7 +2243,7 @@
                                 <td>{{varianceLeads | limitTo:5}} %</td>
                               </tr>
                               <tr>
-                                <td style="font-weight:bold">Hot Leads</td>
+                                <td style="font-weight:bold">{{Data.overall_data.hot_level_keys["is_hot_level_1"]}}</td>
                                 <td>{{Data.overall_data.supplier_stats.interested.percentage_by_flat | limitTo:5}} %</td>
                                 <td>{{Data.overall_data.supplier_stats.interested.median_percent_by_flat | limitTo:5}} %</td>
                                 <td>{{Data.overall_data.supplier_stats.interested.mode_percent_by_flat | limitTo:5}} %</td>
