@@ -4024,7 +4024,6 @@
 
       $scope.getCampaignWiseSummary = function () {
         if($scope.dateRangeModel.start_dates && $scope.dateRangeModel.end_dates){
-          console.log('11222222333333333333',$scope.dateRangeModel)
         //   if ($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date') &&
         //   !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
 
