@@ -476,7 +476,7 @@
                     {{item.name}}</option>
                 </select>
                 <br>
-                <select ng-if="supplier.booking_status" class="form-control spacing input-width"  ng-model="supplier.booking_sub_status">
+                <select ng-if="supplier.booking_status" class="form-control spacing input-width" ng-change="changeSubStatus(supplier,$parent.$parent.$index)"  ng-model="supplier.booking_sub_status">
                   <option value="" disabled="">Select Sub Status</option>
                   <option style="width:100%;" ng-repeat="item in supplier.meeting_status" value="{{item.code}}">
                     {{item.name}}</option>
