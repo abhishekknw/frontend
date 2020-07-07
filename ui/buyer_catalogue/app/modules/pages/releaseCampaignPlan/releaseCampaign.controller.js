@@ -1617,15 +1617,31 @@ if (localindex_index != -1) {
           if (supplier.booking_status == 'NB') {
             supplier.phase_no = '';
           }
+
+          $scope.releaseDetails.shortlisted_suppliers[index].booking_sub_status = null;
+          $scope.releaseDetails.shortlisted_suppliers[index].bk_status_id = null;
+          $scope.releaseDetails.shortlisted_suppliers[index].bk_substatus_id = null;
           
             var localindex_index = $scope.bookingStatus.map(function(el) { 
               return el.code;
             }).indexOf(supplier.booking_status);      
              if (localindex_index != -1) {  
               $scope.releaseDetails.shortlisted_suppliers[index].meeting_status = $scope.bookingStatus[localindex_index].booking_substatus;
+              $scope.releaseDetails.shortlisted_suppliers[index].bk_status_id = $scope.bookingStatus[localindex_index].id;
              }
           
         }
+
+        $scope.changeSubStatus = function (supplier,index) {
+          var localindex_index = supplier.meeting_status.map(function(el) { 
+            return el.code;
+          }).indexOf(supplier.booking_sub_status);      
+           if (localindex_index != -1) {  
+            $scope.releaseDetails.shortlisted_suppliers[index].bk_substatus_id = supplier.meeting_status[localindex_index].id;
+           }
+        }
+
+
         $scope.setUserSupplier = function (supplier) {
           $scope.userSupplierData = supplier;
         }
