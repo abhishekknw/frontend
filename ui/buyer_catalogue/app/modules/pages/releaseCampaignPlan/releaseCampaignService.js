@@ -22,6 +22,11 @@
     	return machadaloHttp.get(url);
     }
 
+    releaseCampaignService.bookingStatusData = function(proposal_id){
+      var url = url_base + "booking-status/" + proposal_id ;
+    return machadaloHttp.get(url);
+  }
+
     releaseCampaignService.getCampaignReleaseDetailsHeader = function(){
         var url = url_base_ui + "getHeaderData";
     	return machadaloHttp.get(url);
@@ -131,6 +136,11 @@
 
     releaseCampaignService.setUserForBooking = function(data){
       var url = url_base + 'supplier-assignment/';
+      return machadaloHttp.post(url,data);
+    }
+
+    releaseCampaignService.setBrandForBooking = function(data){
+      var url = url_base + 'brand-assignment/';
       return machadaloHttp.post(url,data);
     }
 

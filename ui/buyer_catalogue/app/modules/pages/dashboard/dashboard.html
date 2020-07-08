@@ -13,8 +13,6 @@
      
     <div class="al-main" >
         <div class="al-content">
-
-
           <uib-tabset class="dashboard-tab" active="selectTabIndex.value" >
               <uib-tab index="0">
                 <uib-tab-heading>
@@ -49,7 +47,6 @@
                           </td>
                   
                        </tr>
-
                      </tbody>
                      </table>
                </div>
@@ -172,7 +169,7 @@
                         <!-- <div class="" > -->
                                 <!-- <div class=""> -->
                                 <div class="panel-heading" style="height:70px;">
-                                  <h5 style="background:'red';color:white;">Campaign Details ({{invName}}, {{actType}})</h5>
+                                  <h5 style="background:'red';color:white;">Campaign Details({{invName}}, {{actType}})</h5>
                                   <h5 class="pull-right">{{date|date : "dd-MM-yyyy"}}</h5>
                                 </div>
                                 <br />
@@ -226,7 +223,7 @@
                   <!-- <div class="" > -->
                           <!-- <div class=""> -->
                           <div class="panel-heading" style="height:120px;">
-                            <h4><a ng-click="getCampaign(proposalId)" style="color: white;cursor: pointer;">Supplier Details of {{selectedProposalname}} Campaign</a></h4><br/>
+                            <h4><a ng-click="getCampaign(proposalId)" style="color: white;cursor: pointer;">Supplier Details of  {{selectedProposalname}} Campaign</a></h4><br/>
                             <h5>Activity : {{actType}} , Date : {{date|date : "dd-MM-yyyy"}}</h5>
                             <div class="row">
                               <span class="pull-left"><label for="heading"><small>Campaign Owner :  </small><span><small>{{campaignOwner}}</small> </span></label></span>
@@ -238,7 +235,7 @@
                                 <table class="table" id="tablescroll">
                                   <thead>
                                     <tr>
-                                      <th>Society Name</th>
+                                      <th>Supplier Name</th>
                                       <th>Inventory Type</th>
                                       <th>Assigned</th>
                                       <th>Completed</th>
@@ -248,20 +245,21 @@
                                   </thead>
                                   <tbody ng-repeat="supplier in dateWiseSuppliers">
                                     <tr ng-repeat="(key,inv) in supplier" ng-if="key != 'supplier_data' && key != 'space_id' ">
-                                      <td><b>{{supplier.supplier_data.society_name}}</b></td>
+                                   
+                                      <td><b>{{supplier.supplier_data.name}}</b></td>
                                       <td>{{key}}</td>
                                       <td>{{inv.assigned}}</td>
                                       <td>{{inv.completed}}</td>
-                                      <td ng-if="inv.completed != 0"><a data-target="#imageModal" data-toggle="modal" ng-click="viewSupplierImages(supplier.supplier_data.supplier_id,invNameToCode[key],actType,date)">View Images</a></td>
+                                      <td ng-if="inv.completed != 0"><a data-target="#imageModal" data-toggle="modal" ng-click="viewSupplierImages(supplier.supplier_data.supplier_id,key,actType,date,inv,key)">View Images</a></td>
                                       <td ng-if="inv.completed == 0">No Image</td>
                                       <!-- <td><a ng-click="viewComments(key,supplier)">View Comments</a></td> -->
                                     </tr>
                                     <tr>
-                                   <td><b>{{supplier.supplier_data.society_name}}</b></td>
+                                   <td><b>{{supplier.supplier_data.name}}</b></td>
                                       <td>Hash Tag Images</td>
                                       <td>-</td>
                                       <td>-</td>
-                                      <td><a data-target="" data-toggle="modal" ng-click="getHashtagImages(supplier)">View Images</a></td>
+                                      <td><a data-toggle="modal" ng-click="getHashtagImages(supplier)">View Images</a></td>
                                       </tr>
                                   </tbody>
                                 </table>
@@ -336,6 +334,18 @@
                                       </div>
                                     </div>
                                 </div>
+
+                                <div class="panel panel-default">
+                                  <div class="row" style="width:100%;margin-left:0px;">
+                                      <h4 class="panel-title">
+                                        <select class="form-control" name="supplierType" ng-model="selectedSupplierType.code" value="supplierType.value"   ng-change="setSupplierType()">
+                                          <option value="">Select Supplier Type</option>
+                                          <option value="{{supplierType.value}}" ng-selected="selectedSupplierType == supplierType.value" ng-repeat="supplierType in supplierTypeCode">{{supplierType.name}}</option>
+                                        </select>
+                                      </h4>
+                                  </div>
+                                 
+                              </div>
                                 <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.completed.status)">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
@@ -435,7 +445,8 @@
                                     <tr style="font-size:12px;">
                                       <td>Campaign Status</td>
                                       <td>Supplier Count</td>
-                                      <td>Flat Count</td>
+                                      <!-- <td>Flat Count</td> -->
+                                      <td>{{flat_count_header}}</td>
                                       <td>Hot Leads %</td>
                                       <td>Total Leads %</td>
                                       <td>Hot Leads Count</td>
@@ -463,7 +474,7 @@
                                                  <th ng-if="suppliers.extra_leads_data.length"> <small>Total Hot Leads</small> </th>
                                                </thead>
                                                <tbody ng-repeat="supplier in suppliers.extra_leads_data">
-                                                 <h6 style="text-align:center" ng-if="suppliers.extra_leads_data.length"> <b>{{suppliers.supplier.society_name}}</b></h6>
+                                                 <h6 style="text-align:center" ng-if="suppliers.extra_leads_data.length"> <b>{{suppliers.supplier.name}}</b></h6>
                                                  <tr style="text-align:center">
                                                    <td ng-if="suppliers.extra_leads_data.length"><small>{{supplier.created_at | date:'medium'}}</small></td>
                                                    <td ng-if="suppliers.extra_leads_data.length"><small>{{supplier.extra_leads}}</small></td>
@@ -523,7 +534,8 @@
                                     <tr style="font-size:12px;">
                                       <td>Campaign Status</td>
                                       <td>Supplier Count</td>
-                                      <td>Flat Count</td>
+                                      <!-- <td>Flat Count</td> -->
+                                      <td>{{flat_count_header}} </td>
                                       <td>Hot Leads Count</td>
                                       <td>Total Leads Count</td>
                                       <td>Hot Leads (%)</td>
@@ -578,8 +590,8 @@
                               </div>
                           </div>
                           </div>
-
-                          <div class="">
+                        <!-- start graph click table single -->
+                          <div class="">  
                         
                               <div class="row">
                                 <div class="col-md-12" ng-if="showDisplayDetailsTable">
@@ -601,9 +613,9 @@
                                             <th style="width:200px;" ng-click="Sort('supplier.society_name')">Supplier Name &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                             <th>Supplier Area <br> (SubArea)</th>
                                             <th>Supplier Type</th>
-                                            <th ng-click="Sort('supplier.flat_count')" >Flat Count &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
-                                            <th ng-click="Sort('leads_data.total_leads_count')">Leads <br> (% by Flat Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
-                                            <th ng-click="Sort('leads_data.hot_leads_count')" >Hot Leads <br>(% by Flat Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th ng-click="Sort('supplier.flat_count')" >{{flat_count_header}} &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th ng-click="Sort('leads_data.total_leads_count')" ng-if="supplierStatus != 'upcoming'">Leads <br> (% by {{flat_count_header}}) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                            <th ng-click="Sort('leads_data.hot_leads_count')" ng-if="supplierStatus != 'upcoming'">Hot Leads <br>(% by {{flat_count_header}}) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                             <th ng-if="supplierStatus != 'upcoming'">Poster</th>
                                             <th ng-if="supplierStatus != 'upcoming'">Flier</th>
                                             <th ng-if="supplierStatus != 'upcoming'">Standee</th>
@@ -613,11 +625,12 @@
                                             <th>Comments</th>
                                             <th ng-if="canViewInternalComments">Internal <br> Comments</th>
                                             </tr>
-                                            <tr colspan="9">
+                                            <tr colspan="12">
                                               <td></td>
                                               <td><input ng-model="f.phase" class="form-control" placeholder="Search"><hr></td>
-                                              <td><input ng-model="f.supplier.society_name" class="form-control" placeholder="Search"><hr></td>
-
+                                              <td><input ng-model="f.supplier.name" class="form-control" placeholder="Search"><hr></td>
+                                                <td></td>
+                                                <td><input ng-model="f.supplier.society_type_quality" class="form-control" placeholder="Search"><hr></td>
                                             </tr>
                                             <hr>
                                             </thead>
@@ -627,12 +640,14 @@
                                                   <tr ng-repeat="supplier in supplierAndInvData |filter:searchQuery |filter : f | orderBy:sort:reversesort">
                                                   <td>{{$index + 1}}</td>
                                                   <td>{{supplier.phase}}</td>
-                                                  <td style="width:200px;" class="col-md-2">{{supplier.supplier.society_name}}</td>
-                                                  <td class="col-md-2">{{supplier.supplier.society_locality}} <small>({{supplier.supplier.society_subarea}})</small></td>
-                                                  <td class="col-md-2">{{supplier.supplier.society_type_quality}}</td>
+                                                  <td style="width:200px;" class="col-md-2">{{supplier.supplier.name}}</td>
+                                                  <td class="col-md-2" ><span ng-if="supplier.supplier.society_locality">{{supplier.supplier.society_locality}}</span>  <span ng-if="supplier.supplier.locality_rating">{{supplier.supplier.locality_rating}}</span>  <small>({{supplier.supplier.subarea}})</small></td>
+                                               
+                                                  <td class="col-md-2"><span ng-if="supplier.supplier.society_type_quality">{{supplier.supplier.society_type_quality}}</span> <span ng-if="supplier.supplier.quality_rating">{{supplier.supplier.quality_rating}}</span></td>
+                                                  
                                                   <td class="col-md-2">{{supplier.supplier.flat_count}}</td>
-                                                  <td class="col-md-2" style="color:#ffffff">{{supplier.leads_data.total_leads_count || 0}} <br> <small style="color:#cb1925;"> ({{supplier.leads_data.leads_flat_percentage || 0}} %)</small><span ng-if="supplier.leads_data.leads_flat_percentage && supplier.leads_data.leads_flat_percentage > 0 && admin == 1" style="margin-left: 5%;" class="glyphicon glyphicon-trash" ng-click="deleteLeads(supplier.supplier.supplier_id)"></span></td>
-                                                  <td class="col-md-2" style="color:#ffffff">{{supplier.leads_data.hot_leads_count || 0}} <br> <small style="color:#cb1925;">({{supplier.leads_data.hot_leads_percentage_by_flat_count || 0}} %)</small></td>
+                                                  <td class="col-md-2" style="color:#ffffff" ng-if="supplierStatus != 'upcoming'">{{supplier.leads_data.total_leads_count || 0}} <br> <small style="color:#cb1925;"> ({{supplier.leads_data.leads_flat_percentage || 0}} %)</small><span ng-if="supplier.leads_data.leads_flat_percentage && supplier.leads_data.leads_flat_percentage > 0 && admin == 1" style="margin-left: 5%;" class="glyphicon glyphicon-trash" ng-click="deleteLeads(supplier.supplier.supplier_id)"></span></td>
+                                                  <td class="col-md-2" style="color:#ffffff" ng-if="supplierStatus != 'upcoming'">{{supplier.leads_data.hot_leads_count || 0}} <br> <small style="color:#cb1925;">({{supplier.leads_data.hot_leads_percentage_by_flat_count || 0}} %)</small></td>
                                                   <td ng-if="supplier.images_data.POSTER && supplierStatus != 'upcoming'"><a data-target="#posterImageModal" data-toggle="modal" ng-click="ImageURL(supplier,supplier.images_data.POSTER.images)">Images ({{supplier.images_data.POSTER.total_count}})</a></td>
                                                   <td ng-if="!supplier.images_data.POSTER && supplierStatus != 'upcoming'">No Images</td>
 
@@ -671,15 +686,21 @@
                                                     </table>
                                                   </td>
                                                   <td style="width:200px;">
+                    
                                                     <!--START : view external comments modal  -->
-                                                    <button ng-click="viewComments('EXTERNAL',supplier)" class="btn btn-danger" data-toggle="modal" data-target="#viewExternalComments">View/Add</button>
+                                                    <div class="comment" ng-if="comments[supplier.shortlisted_space_id]" >
+                                                      <b>{{comments[supplier.shortlisted_space_id].external.username}} </b> <span> <br><small>
+                                                          {{comments[supplier.shortlisted_space_id].external.created_on | date}}</small></span><br>
+                                                      <span>{{comments[supplier.shortlisted_space_id].external.comment}}</span>
+                                                    </div>
+                                                    <button ng-click="viewComments('EXTERNAL',supplier)" class="btn btn-danger" data-toggle="modal" data-target="#viewExternalComments"> View/Add</button>
                                                     <div id="viewExternalComments" class="modal fade">
                                                       <div>
                                                         <div class="modal-dialog">
                                                           <div class="modal-content">
                                                             <div class="modal-header">
                                                               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                              View Comments For {{societyViewNameForComments}}
+                                                              View Comments For  {{societyViewNameForComments}}
                                                             </div>
                                                             <div class="modal-body">
                                                               <table class="table-bordered table-striped" style="border: none !important;">
@@ -707,7 +728,7 @@
                                                               <br>
                                                             </div><br>
                                                             <br>
-                                                            <button class="btn btn-danger" type="button" ng-click="addComment('EXTERNAL',supplier.shortlisted_space_id)" style="margin:3%">Add Comment</button>
+                                                            <button class="btn btn-danger" type="button" ng-click="addComment('EXTERNAL',shortlistedSpaceId)" style="margin:3%">Add Comment </button>
                                                           </div>
                                                         </div><br>
                                                         <br>
@@ -776,8 +797,8 @@
                                               <td>&nbsp;</td>
                                               <td>&nbsp;</td>
                                               <td>{{TotalSupplierFlatCount}}</td>
-                                              <td>{{TotalSupplierLeadsCount || 0}}</td>
-                                              <td>{{TotalSupplierHotLeadsCount || 0}}</td>
+                                              <td ng-if="supplierStatus != 'upcoming'">{{TotalSupplierLeadsCount || 0}}</td>
+                                              <td ng-if="supplierStatus != 'upcoming'">{{TotalSupplierHotLeadsCount || 0}}</td>
                                               <td ng-if="supplierStatus != 'upcoming'"></td>
                                               <td ng-if="supplierStatus != 'upcoming'"></td>
                                               <td ng-if="supplierStatus != 'upcoming'"></td>
@@ -798,7 +819,7 @@
                                 <div class="row">
                                   <div class="col-md-12" ng-show="showDisplayDetailsTable"  ng-if="supplierStatus == 'ongoing'">
                                     <div class="panel-heading content-title">
-                                      <h5 style="background:'red'">Map View for {{campaignTabPropsalName}}</h5></div>
+                                      <h5 style="background:'red'">Map View for  {{campaignTabPropsalName}}</h5></div>
                                     <style type="text/css">
                                           .angular-google-map-container { height: 550px;color: black;}
                                       </style>
@@ -823,6 +844,33 @@
                                             </ui-gmap-markers>
                                         </ui-gmap-google-map>
                                   </div>
+
+                                  <div class="col-md-12" ng-show="!supplierStatus && showAllMapData" >
+                                    <div class="panel-heading content-title">
+                                      <h5 style="background:'red'">Map View for {{campaignTabPropsalName}}</h5></div>
+                                    <style type="text/css">
+                                          .angular-google-map-container { height: 550px;color: black;}
+                                      </style>
+                                        <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="false"
+                                                            options="options" bounds="map.bounds" control="googlemap">
+                                            <ui-gmap-window show="show" coords='windowCoords'>
+                                                  <div>
+                                                    <table class="table-responsive table">
+                                                      <div class="">
+                                                        <h3>{{space.title.name}}</h3>
+                                                      </div>
+                                                      <tr><td>Hot Leads Percentage</td><td><small>{{(space.completedLeadsSupplierData.hot_leads_count)  || 'NA'}} ({{((space.completedLeadsSupplierData.hot_leads_count/space.completedLeadsSupplierData.flat_count)|number:2) || 0}}%)</small></td></tr>
+                                                      <tr><td>Total Leads</td><td><small>{{(space.completedLeadsSupplierData.total_leads_count || 'NA')}} ({{((space.completedLeadsSupplierData.total_leads_count/space.completedLeadsSupplierData.flat_count) | number:2) || 0}}%)</small></td></tr>
+                                                    </table>
+                                                   </div>
+                                            </ui-gmap-window>
+                                            <ui-gmap-markers models="supplierMarkers" coords="'self'" icon="'icon'"
+                                                             options="'options'" doRebuildAll="true" events="marker.events">
+                                            </ui-gmap-markers>
+                                        </ui-gmap-google-map>
+                                  </div>
+
+
                                   <div class="col-md-12" ng-show="showDisplayDetailsTable"  ng-if="supplierStatus == 'completed'">
                                       <div class="panel-heading content-title">
                                         <h5 style="background:'red'">Map View for {{campaignTabPropsalName}}</h5></div>
@@ -861,8 +909,13 @@
                                                           <div class="">
                                                             <h3>{{space.title.name}}</h3>
                                                           </div>
-                                                          <tr><td>Flat Count</td><td><small>{{space.dataofSupplierAndInvData.flat_count || 'NA'}}</small></td></tr>
-                                                          <tr><td>Tower Count</td><td><small>{{space.dataofSupplierAndInvData.tower_count || 'NA'}}</small></td></tr>
+                                                          <tr><td ng-if="selectedSupplierType.code == all || selectedSupplierType.code == '' || selectedSupplierType.code == 'mix'" >Unit Primary Count</td>
+                                                            <td ng-if="selectedSupplierType.code != all || selectedSupplierType.code != '' || selectedSupplierType.code != 'mix'">{{flat_count_header}}</td>
+                                                            <td><small>{{space.dataofSupplierAndInvData.flat_count || 'NA'}}</small></td></tr>
+                                                          <tr>
+                                                              <td ng-if="selectedSupplierType.code == all || selectedSupplierType.code == '' || selectedSupplierType.code == 'mix'" >Unit Secondary Count</td>
+                                                              <td ng-if="selectedSupplierType.code != all || selectedSupplierType.code != '' || selectedSupplierType.code != 'mix'">{{tower_count_header}}</td>
+                                                            <td><small>{{space.dataofSupplierAndInvData.tower_count || 'NA'}}</small></td></tr>
                                                         </table>
                                                        </div>
                                                 </ui-gmap-window>
@@ -898,8 +951,8 @@
                                     </table>
                                   </div>
                           </div>
-
-
+                          <!-- end graph click table single -->
+                          <!-- start graph click table all -->
                           <div class="col-md-12" ng-if="showTableForAllCampaignDisplay" style="margin-top:20px;height:700px !important;">
                             <div class="campaigndetailtable">
                               <div class="panel-heading" style="height:70px;">
@@ -918,9 +971,9 @@
                                       <th ng-click="SortColumn('start_date')">Start Date &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                       <th>Campaign Status</th>
                                       <th>Society Count</th>
-                                      <th ng-click="SortColumn('flat_count')">Flat Count &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
-                                      <th ng-click="SortColumn('total_leads')">Leads (% by Flat Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
-                                      <th ng-click="SortColumn('hot_leads')" >Hot Leads (% by Flat Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                      <th ng-click="SortColumn('flat_count')">Unit Count &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                      <th ng-click="SortColumn('total_leads')">Leads (% by Unit Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
+                                      <th ng-click="SortColumn('hot_leads')" >Hot Leads (% by Unit Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                       </tr>
                                       <tr colspan="9">
                                         <td></td>
@@ -963,19 +1016,20 @@
                               </div>
                             </div>
                             </div>
+                            <!-- end graph click table all -->
                             
                     </div>
                   </div>
               </uib-tab>
 
 
-              <uib-tab id="uib-tabs-width" ng-click="viewCampaignLeads()" index="1">
-                  <uib-tab-heading>
+              <uib-tab id="uib-tabs-width"  ng-click="viewCampaignLeads()" index="1">
+                  <uib-tab-heading >
                     <h5>View Leads</h5>
                   </uib-tab-heading>
                   <div class="container-fluid">
                     <div class="panel panel-default">
-                      <div class="col-md-12">
+                      <div class="col-md-6">
                             <h4 class="panel-title">
                               <select class="form-control" ng-model="selectedVendor.name" ng-change="getCampaignsByVendor()">
                                 <option value="">Select Vendor</option>
@@ -993,6 +1047,16 @@
                               </table>
                           </div>
                         </div>
+
+                        <div class="col-md-6">
+                          <h4 class="panel-title">
+                              <select class="form-control" name="supplierType" ng-model="selectedSupplierType.code" value="supplierType.value"   ng-change="setSupplierType('viewLeads')">
+                                  <option value="">Select Supplier Type</option>
+                                  <option value="{{supplierType.value}}" ng-selected="selectedSupplierType == supplierType.value" ng-repeat="supplierType in supplierTypeCode">{{supplierType.name}}</option>
+                                </select>
+                            </h4>
+                          </div>
+
                     </div><br /><br />
                     <div class="viewLeadstable" ng-if="showCampaigns">
                       <br /><br /><br /><br />
@@ -1008,7 +1072,7 @@
                             <!-- <th>Phase</br>Completed</th> -->
                             <th>Campaign Status</th>
                             <th style="width:100px;" class="col-md-2" ng-click="Sort('supplier_count')">Supplier</br> Count <a><i class="icon-sort" style="color:white;"></i></a></th>
-                            <th style="width:100px;" class="col-md-2" ng-click="Sort('flat_count')">Flat Count <a><i class="icon-sort" style="color:white;"></i></a></th>
+                            <th style="width:100px;" class="col-md-2" ng-click="Sort('flat_count')">{{flat_count_header}}<a><i class="icon-sort" style="color:white;"></i></a></th>
                             <th style="width:120px;" class="col-md-2" ng-click="Sort('total_leads')">Total Leads <a><i class="icon-sort" style="color:white;"></i></a></th>
                             <th style="width:100px;" class="col-md-2" ng-click="Sort('hot_leads')">Hot Leads <a><i class="icon-sort" style="color:white;"></i></a></th>
                             <th>View Leads</th>
@@ -1129,6 +1193,17 @@
                   </table>
               </div>
             </div>
+
+            <div class="panel panel-default">
+              <div class="row" style="width:100%;margin-left:0px; margin-top:8px;">
+                  <h4 class="panel-title">
+                    <select class="form-control" name="supplierType" ng-model="selectedSupplierType.code" value="supplierType.value"   ng-change="setSupplierType()">
+                      <option value="">Select Supplier Type</option>
+                      <option value="{{supplierType.value}}" ng-selected="selectedSupplierType == supplierType.value" ng-repeat="supplierType in supplierTypeCode">{{supplierType.name}}</option>
+                    </select>
+                  </h4>
+              </div>
+          </div>
         </div>
           <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.ongoing.status)">
               <div class="panel-heading">
@@ -1142,7 +1217,7 @@
                           <tr ng-repeat="campaign in campaignData.ongoing_campaigns | orderBy: 'name'">
                             <td ng-click="getBookingCampaigns(campaign)">
                               {{campaign.name}}
-                            </td>
+                            </td> 
                           </tr>
                       </table>
                   </div>
@@ -1184,14 +1259,19 @@
 
       <div class="campaigndetailtable" ng-if="bookingPhases">
         <div class="table-responsive">
-          <table class="table table-bordered">
+          <table class="table table-bordered" ng-if="bookingPhases.type_of_end_customer == 'B to C'">
             <thead>
               <tr>
-                <th><small>Phase Details</small></th>
-                <th><small>Confirmed Booked <br>(Total Flat Count)</small></th>
-                <th><small>Verbally Booked <br>(Total Flat Count)</small></th>
-                <th><small>Followup Required <br>(Total Flat Count)</small></th>
-                <th><small>Total <br>(Total Flat Count)</small></th>
+                <!-- <th><small>Phase Details</small></th>
+                <th><small>Confirmed Booked <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Verbally Booked <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Followup Required <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Total <br>(Total {{flat_count_header}})</small></th> -->
+                <th><small>{{bookingPhases.summary_header[bookingPhases.type_of_end_customer].phase_details}}</small></th>
+                <th><small>{{bookingPhases.summary_header[bookingPhases.type_of_end_customer].confirmed_booked}} <br>(Total {{flat_count_header}})</small></th>
+                <th><small>{{bookingPhases.summary_header[bookingPhases.type_of_end_customer].verbally_booked}} <br>(Total {{flat_count_header}})</small></th>
+                <th><small>{{bookingPhases.summary_header[bookingPhases.type_of_end_customer].followup_required}} <br>(Total {{flat_count_header}})</small></th>
+                <th><small>{{bookingPhases.summary_header[bookingPhases.type_of_end_customer].total}} <br>(Total {{flat_count_header}})</small></th>
               </tr>
             </thead>
             <tbody>
@@ -1204,7 +1284,7 @@
                   </div>
                 </td>
                 <td ng-if="bookingPhases.last_completed_phase.confirmed_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.confirmed_booked.supplier_data,'Last Completed Phase')">
-                      {{bookingPhases.last_completed_phase.confirmed_booked.supplier_count}} ({{bookingPhases.last_completed_phase.confirmed_booked.flat_count}})
+                      {{bookingPhases.last_completed_phase.confirmed_booked.supplier_count}} ({{bookingPhases.last_completed_phase.confirmed_booked.flat_count}}) 
                     </a></small>
                 </td>
                 <td ng-if="bookingPhases.last_completed_phase.confirmed_booked.supplier_data.length == 0"><small>0</small></td>
@@ -1283,21 +1363,306 @@
               </tr>
             </tbody>
           </table>
+
+          <table class="table table-bordered" ng-if="bookingPhases.type_of_end_customer == 'B to B'">
+              <thead>
+                <tr>
+                  <!-- <th><small>Phase Details</small></th>
+                  <th><small>Confirmed Booked <br>(Total {{flat_count_header}})</small></th>
+                  <th><small>Verbally Booked <br>(Total {{flat_count_header}})</small></th>
+                  <th><small>Followup Required <br>(Total {{flat_count_header}})</small></th>
+                  <th><small>Total <br>(Total {{flat_count_header}})</small></th> -->
+                  <th><small>{{bookingPhases.summary_header[bookingPhases.type_of_end_customer].phase_details}}</small></th>
+                  <th><small>{{bookingPhases.summary_header[bookingPhases.type_of_end_customer].decision_pending}} <br>(Total {{flat_count_header}})</small></th>
+                  <th><small>{{bookingPhases.summary_header[bookingPhases.type_of_end_customer].meeting_fixed}} <br>(Total {{flat_count_header}})</small></th>
+                  <th><small>{{bookingPhases.summary_header[bookingPhases.type_of_end_customer].meeting_converted}} <br>(Total {{flat_count_header}})</small></th>
+                  <th><small>{{bookingPhases.summary_header[bookingPhases.type_of_end_customer].total}} <br>(Total {{flat_count_header}})</small></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-if="bookingPhases.last_completed_phase">
+                  <td>
+                    <div class="">
+                      <small>Last Completed Phase No : {{bookingPhases.last_completed_phase.phase_no}}</small>  </br>
+                        <small>Start Date : {{bookingPhases.last_completed_phase.start_date|limitTo:14|date:mediumDate}}</small></br>
+                        <small>End Date : {{bookingPhases.last_completed_phase.end_date|limitTo:14|date:mediumDate}}</small>
+                    </div>
+                  </td>
+                  <td ng-if="bookingPhases.last_completed_phase.decision_pending.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.decision_pending.supplier_data,'Last Completed Phase')">
+                        {{bookingPhases.last_completed_phase.decision_pending.supplier_count}} ({{bookingPhases.last_completed_phase.decision_pending.flat_count}}) 
+                      </a></small>
+                  </td>
+                  <td ng-if="bookingPhases.last_completed_phase.decision_pending.supplier_data.length == 0"><small>0</small></td>
+  
+                  <td ng-if="bookingPhases.last_completed_phase.meeting_fixed.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.meeting_fixed.supplier_data,'Last Completed Phase')">
+                    {{bookingPhases.last_completed_phase.meeting_fixed.supplier_count}} ({{bookingPhases.last_completed_phase.meeting_fixed.flat_count}})
+                  </a>
+                  </small>
+                  </td>
+                  <td ng-if="bookingPhases.last_completed_phase.meeting_fixed.supplier_data.length == 0"><small>0</small></td>
+  
+                  <td ng-if="bookingPhases.last_completed_phase.meeting_converted.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.meeting_converted.supplier_data,'Last Completed Phase')">
+                    {{bookingPhases.last_completed_phase.meeting_converted.supplier_count}} ({{bookingPhases.last_completed_phase.meeting_converted.flat_count}})
+                    </a></small>
+                  </td>
+                  <td ng-if="bookingPhases.last_completed_phase.meeting_converted.supplier_data.length == 0"><small>0</small></td>
+  
+                  <td ng-if="bookingPhases.last_completed_phase.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.total_booked.supplier_data,'Last Completed Phase')">
+                    {{bookingPhases.last_completed_phase.total_booked.supplier_count}} ({{bookingPhases.last_completed_phase.total_booked.flat_count}})
+                    </a>
+                </small></td>
+                <td ng-if="bookingPhases.last_completed_phase.total_booked.supplier_data.length == 0"><small>0</small></td>
+  
+                </tr>
+                <tr ng-if="bookingPhases.ongoing_phase">
+                  <td>
+                    <div class="">
+                      <small>Ongoing Phase No : {{bookingPhases.ongoing_phase.phase_no}}</small>  </br>
+                        <small>Start Date : {{bookingPhases.ongoing_phase.start_date|limitTo:10|date:fullDate}}</small></br>
+                        <small>End Date : {{bookingPhases.ongoing_phase.end_date|limitTo:10|date:fullDate}}</small>
+                    </div>
+                  </td>
+                  <td ng-if="bookingPhases.ongoing_phase.decision_pending.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.decision_pending.supplier_data,'Ongoing Phase')">
+                    {{bookingPhases.ongoing_phase.decision_pending.supplier_count}} ({{bookingPhases.ongoing_phase.decision_pending.flat_count}})
+                    </a></small>
+                  </td>
+                  <td ng-if="bookingPhases.ongoing_phase.decision_pending.supplier_data.length == 0"><small>0</small></td>
+                  <td ng-if="bookingPhases.ongoing_phase.meeting_fixed.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.meeting_fixed.supplier_data,'Ongoing Phase')">
+                    {{bookingPhases.ongoing_phase.meeting_fixed.supplier_count}} ({{bookingPhases.ongoing_phase.meeting_fixed.flat_count}})</small>
+                  </a>
+                  </td>
+                  <td ng-if="bookingPhases.ongoing_phase.meeting_fixed.supplier_data.length == 0"><small>0</small></td>
+                  <td ng-if="bookingPhases.ongoing_phase.meeting_converted.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.meeting_converted.supplier_data,'Ongoing Phase')">
+                    {{bookingPhases.ongoing_phase.meeting_converted.supplier_count}} ({{bookingPhases.ongoing_phase.meeting_converted.flat_count}})</small></td>
+                    <td ng-if="bookingPhases.ongoing_phase.meeting_converted.supplier_data.length == 0"><small>0</small></td>
+  
+                  <td ng-if="bookingPhases.ongoing_phase.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.total_booked.supplier_data,'Last Completed Phase')">
+                    {{bookingPhases.ongoing_phase.total_booked.supplier_count}} ({{bookingPhases.ongoing_phase.total_booked.flat_count}})
+                    </a>
+                </small></td>
+                <td ng-if="bookingPhases.ongoing_phase.total_booked.supplier_data.length == 0"><small>0</small></td>
+  
+                </tr>
+                <tr ng-repeat="item in bookingPhases.upcoming_phases" ng-if="bookingPhases.upcoming_phases.length">
+                  <td>
+                    <div class="">
+                      <small>Upcoming Phase No : {{item.phase_no}}</small>  </br>
+                      <small>Start Date : {{item.start_date|limitTo:10|date:fullDate}}</small></br>
+                      <small>End Date : {{item.end_date|limitTo:10|date:fullDate}}</small>
+                    </div>
+                  </td>
+                  <td ng-if="item.decision_pending.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.decision_pending.supplier_data,'Upcoming Phase')">
+                    {{item.decision_pending.supplier_count}} ({{item.decision_pending.flat_count}})</a>
+                  </small> </td>
+                  <td ng-if="item.decision_pending.supplier_data.length == 0"><small>0</small></td>
+                  <td  ng-if="item.meeting_fixed.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.meeting_fixed.supplier_data,'Upcoming Phase')">
+                    {{item.meeting_fixed.supplier_count}} ({{item.meeting_fixed.flat_count}})</a></small></td>
+                  <td ng-if="item.meeting_fixed.supplier_data.length == 0"><small>0</small></td>
+                  <td ng-if="item.meeting_converted.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.meeting_converted.supplier_data,'Upcoming Phase')">
+                    {{item.meeting_converted.supplier_count}} ({{item.meeting_converted.flat_count}})</small></td>
+                  <td ng-if="item.meeting_converted.supplier_data.length == 0"><small>0</small></td>
+                  <td  ng-if="item.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.total_booked.supplier_data,'Upcoming Phase')">
+                    {{item.total_booked.supplier_count}} ({{item.total_booked.flat_count}})
+                    </a></small></td>
+                  <td ng-if="item.total_booked.supplier_data.length == 0"><small>0</small></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table class="table table-bordered" ng-if="bookingPhases.type_of_end_customer == 'Others'">
+              <thead>
+                <tr>
+               
+                  <th><small>{{bookingPhases.summary_header[bookingPhases.type_of_end_customer].phase_details}}</small></th>
+                  <th><small>{{bookingPhases.summary_header[bookingPhases.type_of_end_customer].complete_lockdown}} <br>(Total {{flat_count_header}})</small></th>
+                  <th><small>{{bookingPhases.summary_header[bookingPhases.type_of_end_customer].emergency_situation}} <br>(Total {{flat_count_header}})</small></th>
+                  <th><small>{{bookingPhases.summary_header[bookingPhases.type_of_end_customer].open}} <br>(Total {{flat_count_header}})</small></th>
+                  <th><small>{{bookingPhases.summary_header[bookingPhases.type_of_end_customer].partial_building_lockdown}} <br>(Total {{flat_count_header}})</small></th>
+                  <th><small>{{bookingPhases.summary_header[bookingPhases.type_of_end_customer].partial_floor_lockdown}} <br>(Total {{flat_count_header}})</small></th>
+                  <th><small>{{bookingPhases.summary_header[bookingPhases.type_of_end_customer].partial_house_lockdown}} <br>(Total {{flat_count_header}})</small></th>
+                  <th><small>{{bookingPhases.summary_header[bookingPhases.type_of_end_customer].total}} <br>(Total {{flat_count_header}})</small></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-if="bookingPhases.last_completed_phase">
+                  <td>
+                    <div class="">
+                      <small>Last Completed Phase No : {{bookingPhases.last_completed_phase.phase_no}}</small>  </br>
+                        <small>Start Date : {{bookingPhases.last_completed_phase.start_date|limitTo:14|date:mediumDate}}</small></br>
+                        <small>End Date : {{bookingPhases.last_completed_phase.end_date|limitTo:14|date:mediumDate}}</small>
+                    </div>
+                  </td>
+                  <td ng-if="bookingPhases.last_completed_phase.complete_lockdown.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.complete_lockdown.supplier_data,'Last Completed Phase')">
+                        {{bookingPhases.last_completed_phase.complete_lockdown.supplier_count}} ({{bookingPhases.last_completed_phase.complete_lockdown.flat_count}}) 
+                      </a></small>
+                  </td>
+                  <td ng-if="bookingPhases.last_completed_phase.complete_lockdown.supplier_data.length == 0"><small>0</small></td>
+  
+                  <td ng-if="bookingPhases.last_completed_phase.emergency_situation.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.emergency_situation.supplier_data,'Last Completed Phase')">
+                    {{bookingPhases.last_completed_phase.emergency_situation.supplier_count}} ({{bookingPhases.last_completed_phase.emergency_situation.flat_count}})
+                  </a>
+                  </small>
+                  </td>
+                  <td ng-if="bookingPhases.last_completed_phase.emergency_situation.supplier_data.length == 0"><small>0</small></td>
+  
+                  <td ng-if="bookingPhases.last_completed_phase.open.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.open.supplier_data,'Last Completed Phase')">
+                    {{bookingPhases.last_completed_phase.open.supplier_count}} ({{bookingPhases.last_completed_phase.open.flat_count}})
+                    </a></small>
+                  </td>
+                  <td ng-if="bookingPhases.last_completed_phase.open.supplier_data.length == 0"><small>0</small></td>
+
+                  <td ng-if="bookingPhases.last_completed_phase.partial_building_lockdown.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.partial_building_lockdown.supplier_data,'Last Completed Phase')">
+                    {{bookingPhases.last_completed_phase.partial_building_lockdown.supplier_count}} ({{bookingPhases.last_completed_phase.partial_building_lockdown.flat_count}})
+                    </a></small>
+                  </td>
+                  <td ng-if="bookingPhases.last_completed_phase.partial_building_lockdown.supplier_data.length == 0"><small>0</small></td>
+
+                  <td ng-if="bookingPhases.last_completed_phase.partial_floor_lockdown.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.partial_floor_lockdown.supplier_data,'Last Completed Phase')">
+                    {{bookingPhases.last_completed_phase.partial_floor_lockdown.supplier_count}} ({{bookingPhases.last_completed_phase.partial_floor_lockdown.flat_count}})
+                    </a></small>
+                  </td>
+                  <td ng-if="bookingPhases.last_completed_phase.partial_floor_lockdown.supplier_data.length == 0"><small>0</small></td>
+
+                  <td ng-if="bookingPhases.last_completed_phase.partial_house_lockdown.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.partial_house_lockdown.supplier_data,'Last Completed Phase')">
+                    {{bookingPhases.last_completed_phase.partial_house_lockdown.supplier_count}} ({{bookingPhases.last_completed_phase.partial_house_lockdown.flat_count}})
+                    </a></small>
+                  </td>
+                  <td ng-if="bookingPhases.last_completed_phase.partial_house_lockdown.supplier_data.length == 0"><small>0</small></td>
+  
+                  <td ng-if="bookingPhases.last_completed_phase.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.total_booked.supplier_data,'Last Completed Phase')">
+                    {{bookingPhases.last_completed_phase.total_booked.supplier_count}} ({{bookingPhases.last_completed_phase.total_booked.flat_count}})
+                    </a>
+                </small></td>
+                <td ng-if="bookingPhases.last_completed_phase.total_booked.supplier_data.length == 0"><small>0</small></td>
+  
+                </tr>
+                <tr ng-if="bookingPhases.ongoing_phase">
+                  <td>
+                    <div class="">
+                      <small>Ongoing Phase No : {{bookingPhases.ongoing_phase.phase_no}}</small>  </br>
+                        <small>Start Date : {{bookingPhases.ongoing_phase.start_date|limitTo:10|date:fullDate}}</small></br>
+                        <small>End Date : {{bookingPhases.ongoing_phase.end_date|limitTo:10|date:fullDate}}</small>
+                    </div>
+                  </td>
+                  <td ng-if="bookingPhases.ongoing_phase.complete_lockdown.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.complete_lockdown.supplier_data,'Ongoing Phase')">
+                    {{bookingPhases.ongoing_phase.complete_lockdown.supplier_count}} ({{bookingPhases.ongoing_phase.complete_lockdown.flat_count}})
+                    </a></small>
+                  </td>
+                  <td ng-if="bookingPhases.ongoing_phase.complete_lockdown.supplier_data.length == 0"><small>0</small></td>
+                 
+                  <td ng-if="bookingPhases.ongoing_phase.emergency_situation.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.emergency_situation.supplier_data,'Ongoing Phase')">
+                    {{bookingPhases.ongoing_phase.emergency_situation.supplier_count}} ({{bookingPhases.ongoing_phase.emergency_situation.flat_count}})</small>
+                  </a>
+                  </td>
+                  <td ng-if="bookingPhases.ongoing_phase.emergency_situation.supplier_data.length == 0"><small>0</small></td>
+                  <td ng-if="bookingPhases.ongoing_phase.open.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.open.supplier_data,'Ongoing Phase')">
+                    {{bookingPhases.ongoing_phase.open.supplier_count}} ({{bookingPhases.ongoing_phase.open.flat_count}})</small></td>
+                    <td ng-if="bookingPhases.ongoing_phase.open.supplier_data.length == 0"><small>0</small></td>
+
+                   
+                    <td ng-if="bookingPhases.ongoing_phase.partial_building_lockdown.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.partial_building_lockdown.supplier_data,'Ongoing Phase')">
+                      {{bookingPhases.ongoing_phase.partial_building_lockdown.supplier_count}} ({{bookingPhases.ongoing_phase.partial_building_lockdown.flat_count}})</small></td>
+                      <td ng-if="bookingPhases.ongoing_phase.partial_building_lockdown.supplier_data.length == 0"><small>0</small></td>
+
+                     
+                      <td ng-if="bookingPhases.ongoing_phase.partial_floor_lockdown.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.partial_floor_lockdown.supplier_data,'Ongoing Phase')">
+                        {{bookingPhases.ongoing_phase.partial_floor_lockdown.supplier_count}} ({{bookingPhases.ongoing_phase.partial_floor_lockdown.flat_count}})</small></td>
+                        <td ng-if="bookingPhases.ongoing_phase.partial_floor_lockdown.supplier_data.length == 0"><small>0</small></td>
+
+                       
+                        <td ng-if="bookingPhases.ongoing_phase.partial_house_lockdown.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.partial_house_lockdown.supplier_data,'Ongoing Phase')">
+                          {{bookingPhases.ongoing_phase.partial_house_lockdown.supplier_count}} ({{bookingPhases.ongoing_phase.partial_house_lockdown.flat_count}})</small></td>
+                          <td ng-if="bookingPhases.ongoing_phase.partial_house_lockdown.supplier_data.length == 0"><small>0</small></td>
+
+
+  
+                  <td ng-if="bookingPhases.ongoing_phase.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.total_booked.supplier_data,'Last Completed Phase')">
+                    {{bookingPhases.ongoing_phase.total_booked.supplier_count}} ({{bookingPhases.ongoing_phase.total_booked.flat_count}})
+                    </a>
+                </small></td>
+                <td ng-if="bookingPhases.ongoing_phase.total_booked.supplier_data.length == 0"><small>0</small></td>
+  
+                </tr>
+                <tr ng-repeat="item in bookingPhases.upcoming_phases" ng-if="bookingPhases.upcoming_phases.length">
+                  <td>
+                    <div class="">
+                      <small>Upcoming Phase No : {{item.phase_no}}</small>  </br>
+                      <small>Start Date : {{item.start_date|limitTo:10|date:fullDate}}</small></br>
+                      <small>End Date : {{item.end_date|limitTo:10|date:fullDate}}</small>
+                    </div>
+                  </td>
+                  <td ng-if="item.complete_lockdown.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.complete_lockdown.supplier_data,'Upcoming Phase')">
+                    {{item.complete_lockdown.supplier_count}} ({{item.complete_lockdown.flat_count}})</a>
+                  </small> </td>
+                  <td ng-if="item.complete_lockdown.supplier_data.length == 0"><small>0</small></td>
+                  
+
+                  <td ng-if="item.emergency_situation.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.emergency_situation.supplier_data,'Upcoming Phase')">
+                    {{item.emergency_situation.supplier_count}} ({{item.emergency_situation.flat_count}})</a>
+                  </small> </td>
+                  <td ng-if="item.emergency_situation.supplier_data.length == 0"><small>0</small></td>
+
+                  <td ng-if="item.open.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.open.supplier_data,'Upcoming Phase')">
+                    {{item.open.supplier_count}} ({{item.open.flat_count}})</a>
+                  </small> </td>
+                  <td ng-if="item.open.supplier_data.length == 0"><small>0</small></td>
+
+                  <td ng-if="item.partial_building_lockdown.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.partial_building_lockdown.supplier_data,'Upcoming Phase')">
+                    {{item.partial_building_lockdown.supplier_count}} ({{item.partial_building_lockdown.flat_count}})</a>
+                  </small> </td>
+                  <td ng-if="item.partial_building_lockdown.supplier_data.length == 0"><small>0</small></td>
+
+
+                  <td ng-if="item.partial_floor_lockdown.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.partial_floor_lockdown.supplier_data,'Upcoming Phase')">
+                    {{item.partial_floor_lockdown.supplier_count}} ({{item.partial_floor_lockdown.flat_count}})</a>
+                  </small> </td>
+                  <td ng-if="item.partial_floor_lockdown.supplier_data.length == 0"><small>0</small></td>
+
+                  <td ng-if="item.partial_house_lockdown.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.partial_house_lockdown.supplier_data,'Upcoming Phase')">
+                    {{item.partial_house_lockdown.supplier_count}} ({{item.partial_house_lockdown.flat_count}})</a>
+                  </small> </td>
+                  <td ng-if="item.partial_house_lockdown.supplier_data.length == 0"><small>0</small></td>
+                 
+
+                  <td  ng-if="item.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.total_booked.supplier_data,'Upcoming Phase')">
+                    {{item.total_booked.supplier_count}} ({{item.total_booked.flat_count}})
+                    </a></small></td>
+                  <td ng-if="item.total_booked.supplier_data.length == 0"><small>0</small></td>
+                </tr>
+              </tbody>
+            </table>
         </div>
 
         <div class="panel-heading campaigndetailtable" style="background:#cb1925 !important">
           <h4>Pipelined Suppliers</h4>
         </div>
         <div class="table-responsive">
-          <table class="table table-bordered">
+          <table class="table table-bordered" ng-if="bookingPhases.type_of_end_customer == 'B to C'">
             <thead>
               <tr>
-                <th><small>Confirmed Booked <br>(Total Flat Count)</small></th>
-                <!-- <th><small>Not Initiated <br>(Total Flat Count)</small></th> -->
-                <th><small>Followup Required <br>(Total Flat Count)</small></th>
-                <th><small>Verbally Booked <br>(Total Flat Count)</small></th>
-                <th><small>Rejected <br>(Total Flat Count)</small></th>
-                <th><small>Total <br>(Total Flat Count)</small></th>
+
+                <!-- <th><small>Confirmed Booked <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Not Initiated <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Followup Required <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Verbally Booked <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Rejected <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Total <br>(Total {{flat_count_header}})</small></th> -->
+                <th>
+                  <small>{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].confirmed_booked}} <br>(Total {{flat_count_header}})</small>
+                </th>
+                
+                <th><small>{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].not_initiated}} <br>(Total {{flat_count_header}})</small></th>
+                
+                <th>
+                    <small>{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].followup_required}} <br>(Total {{flat_count_header}})</small>
+                   
+                </th>
+                <th>
+                    <small>{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].verbally_booked}} <br>(Total {{flat_count_header}})</small>
+                </th>
+                <th><small>{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].rejected}} <br>(Total {{flat_count_header}})</small></th>
+                <th><small>{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].total}} <br>(Total {{flat_count_header}})</small></th>
+
               </tr>
             </thead>
             <tbody>
@@ -1308,7 +1673,10 @@
                 </td>
                 <td ng-if="bookingPhases.pipeline_suppliers.confirmed_booked.supplier_data.length == 0"><small>0</small></td>
 
-                <!-- <td ng-if="bookingPhases.pipeline_suppliers.not_initiated.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.not_initiated.supplier_data,'Pipelined')">
+
+              
+
+                <td ng-if="bookingPhases.pipeline_suppliers.not_initiated.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.not_initiated.supplier_data,'Pipelined')">
                   {{bookingPhases.pipeline_suppliers.not_initiated.supplier_count}} ({{bookingPhases.pipeline_suppliers.not_initiated.flat_count}})</small></td>
                   <td ng-if="bookingPhases.pipeline_suppliers.not_initiated.supplier_data.length == 0"><small>0</small></td> -->
 
@@ -1317,17 +1685,164 @@
                   <td ng-if="bookingPhases.pipeline_suppliers.followup_required.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.followup_required.supplier_data,'Pipelined')">
                     {{bookingPhases.pipeline_suppliers.followup_required.supplier_count}} ({{bookingPhases.pipeline_suppliers.followup_required.flat_count}})</small></td>
                     <td ng-if="bookingPhases.pipeline_suppliers.followup_required.supplier_data.length == 0"><small>0</small></td>
+                  
 
-                <td ng-if="bookingPhases.pipeline_suppliers.verbally_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.verbally_booked.supplier_data,'Pipelined')">
+                   
+    
+               
+                    <td ng-if="bookingPhases.pipeline_suppliers.verbally_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.verbally_booked.supplier_data,'Pipelined')">
                   {{bookingPhases.pipeline_suppliers.verbally_booked.supplier_count}} ({{bookingPhases.pipeline_suppliers.verbally_booked.flat_count}})</small>
                 </a>
                 </td>
                 <td ng-if="bookingPhases.pipeline_suppliers.verbally_booked.supplier_data.length == 0"><small>0</small></td>
 
+              
+
 
                   <td ng-if="bookingPhases.pipeline_suppliers.rejected.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.rejected.supplier_data,'Pipelined')">
                     {{bookingPhases.pipeline_suppliers.rejected.supplier_count}} ({{bookingPhases.pipeline_suppliers.rejected.flat_count}})</small></td>
                     <td ng-if="bookingPhases.pipeline_suppliers.rejected.supplier_data.length == 0"><small>0</small></td>
+
+
+                <td ng-if="bookingPhases.pipeline_suppliers.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.total_booked.supplier_data,'Pipelined')">
+                  {{bookingPhases.pipeline_suppliers.total_booked.supplier_count}} ({{bookingPhases.pipeline_suppliers.total_booked.flat_count}})
+                  </a>
+              </small></td>
+              <td ng-if="bookingPhases.pipeline_suppliers.total_booked.supplier_data.length == 0"><small>0</small></td>
+
+              </tr>
+            </tbody>
+          </table>
+
+          <table class="table table-bordered" ng-if="bookingPhases.type_of_end_customer == 'B to B'">
+            <thead>
+              <tr>
+                <!-- <th><small>Confirmed Booked <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Not Initiated <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Followup Required <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Verbally Booked <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Rejected <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Total <br>(Total {{flat_count_header}})</small></th> -->
+                <th>
+                  
+                  <small>{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].decision_pending}} <br>(Total {{flat_count_header}})</small>
+                </th>
+                
+                <th><small>{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].not_initiated}} <br>(Total {{flat_count_header}})</small></th>
+                
+                <th>
+                  
+                    <small>{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].meeting_converted}} <br>(Total {{flat_count_header}})</small>
+                </th>
+                <th>
+                    
+                    <small >{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].meeting_fixed}} <br>(Total {{flat_count_header}})</small>
+                </th>
+                <th><small>{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].rejected}} <br>(Total {{flat_count_header}})</small></th>
+                <th><small>{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].total}} <br>(Total {{flat_count_header}})</small></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+              
+                <td ng-if="bookingPhases.pipeline_suppliers.decision_pending.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.decision_pending.supplier_data,'Pipelined')">
+                    {{bookingPhases.pipeline_suppliers.decision_pending.supplier_count}} ({{bookingPhases.ongoing_phase.decision_pending.flat_count}})
+                    </a></small>
+                  </td>
+                  <td ng-if="bookingPhases.pipeline_suppliers.decision_pending.supplier_data.length == 0"><small>0</small></td>
+
+                <td ng-if="bookingPhases.pipeline_suppliers.not_initiated.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.not_initiated.supplier_data,'Pipelined')">
+                  {{bookingPhases.pipeline_suppliers.not_initiated.supplier_count}} ({{bookingPhases.pipeline_suppliers.not_initiated.flat_count}})</small></td>
+                  <td ng-if="bookingPhases.pipeline_suppliers.not_initiated.supplier_data.length == 0"><small>0</small></td>
+
+
+                    <td ng-if="bookingPhases.pipeline_suppliers.meeting_converted.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.meeting_converted.supplier_data,'Pipelined')">
+                        {{bookingPhases.pipeline_suppliers.meeting_converted.supplier_count}} ({{bookingPhases.pipeline_suppliers.meeting_converted.flat_count}})</small></td>
+                        <td ng-if="bookingPhases.pipeline_suppliers.meeting_converted.supplier_data.length == 0"><small>0</small></td>
+    
+               
+                <td ng-if="bookingPhases.pipeline_suppliers.meeting_fixed.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.meeting_fixed.supplier_data,'Pipelined')">
+                    {{bookingPhases.pipeline_suppliers.meeting_fixed.supplier_count}} ({{bookingPhases.pipeline_suppliers.meeting_fixed.flat_count}})</small>
+                  </a>
+                  </td>
+                  <td ng-if="bookingPhases.pipeline_suppliers.meeting_fixed.supplier_data.length == 0"><small>0</small></td>
+
+
+                  <td ng-if="bookingPhases.pipeline_suppliers.rejected.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.rejected.supplier_data,'Pipelined')">
+                    {{bookingPhases.pipeline_suppliers.rejected.supplier_count}} ({{bookingPhases.pipeline_suppliers.rejected.flat_count}})</small></td>
+                    <td ng-if="bookingPhases.pipeline_suppliers.rejected.supplier_data.length == 0"><small>0</small></td>
+
+
+                <td ng-if="bookingPhases.pipeline_suppliers.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.total_booked.supplier_data,'Pipelined')">
+                  {{bookingPhases.pipeline_suppliers.total_booked.supplier_count}} ({{bookingPhases.pipeline_suppliers.total_booked.flat_count}})
+                  </a>
+              </small></td>
+              <td ng-if="bookingPhases.pipeline_suppliers.total_booked.supplier_data.length == 0"><small>0</small></td>
+
+              </tr>
+            </tbody>
+          </table>
+
+          <table class="table table-bordered" ng-if="bookingPhases.type_of_end_customer == 'Others'">
+            <thead>
+              <tr>
+                <!-- <th><small>Confirmed Booked <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Not Initiated <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Followup Required <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Verbally Booked <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Rejected <br>(Total {{flat_count_header}})</small></th>
+                <th><small>Total <br>(Total {{flat_count_header}})</small></th> -->
+                <th>
+                  
+                  <small>{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].complete_lockdown}} <br>(Total {{flat_count_header}})</small>
+                </th>
+                
+                <th><small>{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].emergency_situation}} <br>(Total {{flat_count_header}})</small></th>
+                
+                <th>
+                  
+                    <small>{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].open}} <br>(Total {{flat_count_header}})</small>
+                </th>
+                <th>
+                    
+                    <small >{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].partial_building_lockdown}} <br>(Total {{flat_count_header}})</small>
+                </th>
+                <th><small>{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].partial_floor_lockdown}} <br>(Total {{flat_count_header}})</small></th>
+                <th><small>{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].partial_house_lockdown}} <br>(Total {{flat_count_header}})</small></th>
+                <th><small>{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].total}} <br>(Total {{flat_count_header}})</small></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+              
+                <td ng-if="bookingPhases.pipeline_suppliers.complete_lockdown.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.complete_lockdown.supplier_data,'Pipelined')">
+                    {{bookingPhases.pipeline_suppliers.complete_lockdown.supplier_count}} ({{bookingPhases.ongoing_phase.complete_lockdown.flat_count}})
+                    </a></small>
+                  </td>
+                  <td ng-if="bookingPhases.pipeline_suppliers.complete_lockdown.supplier_data.length == 0"><small>0</small></td>
+
+                <td ng-if="bookingPhases.pipeline_suppliers.emergency_situation.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.emergency_situation.supplier_data,'Pipelined')">
+                  {{bookingPhases.pipeline_suppliers.emergency_situation.supplier_count}} ({{bookingPhases.pipeline_suppliers.emergency_situation.flat_count}})</small></td>
+                  <td ng-if="bookingPhases.pipeline_suppliers.emergency_situation.supplier_data.length == 0"><small>0</small></td>
+
+                  <td ng-if="bookingPhases.pipeline_suppliers.open.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.open.supplier_data,'Pipelined')">
+                    {{bookingPhases.pipeline_suppliers.open.supplier_count}} ({{bookingPhases.pipeline_suppliers.open.flat_count}})</small></td>
+                    <td ng-if="bookingPhases.pipeline_suppliers.open.supplier_data.length == 0"><small>0</small></td>
+
+                    <td ng-if="bookingPhases.pipeline_suppliers.partial_building_lockdown.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.partial_building_lockdown.supplier_data,'Pipelined')">
+                      {{bookingPhases.pipeline_suppliers.partial_building_lockdown.supplier_count}} ({{bookingPhases.pipeline_suppliers.partial_building_lockdown.flat_count}})</small></td>
+                      <td ng-if="bookingPhases.pipeline_suppliers.partial_building_lockdown.supplier_data.length == 0"><small>0</small></td>
+
+
+                      <td ng-if="bookingPhases.pipeline_suppliers.partial_floor_lockdown.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.partial_floor_lockdown.supplier_data,'Pipelined')">
+                        {{bookingPhases.pipeline_suppliers.partial_floor_lockdown.supplier_count}} ({{bookingPhases.pipeline_suppliers.partial_floor_lockdown.flat_count}})</small></td>
+                        <td ng-if="bookingPhases.pipeline_suppliers.partial_floor_lockdown.supplier_data.length == 0"><small>0</small></td>
+
+                        <td ng-if="bookingPhases.pipeline_suppliers.partial_house_lockdown.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.partial_house_lockdown.supplier_data,'Pipelined')">
+                          {{bookingPhases.pipeline_suppliers.partial_house_lockdown.supplier_count}} ({{bookingPhases.pipeline_suppliers.partial_house_lockdown.flat_count}})</small></td>
+                          <td ng-if="bookingPhases.pipeline_suppliers.partial_house_lockdown.supplier_data.length == 0"><small>0</small></td>
+
+                   
 
 
                 <td ng-if="bookingPhases.pipeline_suppliers.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.total_booked.supplier_data,'Pipelined')">
@@ -1352,14 +1867,14 @@
                 <tr>
                   <th>Index</th>
                   <th>Supplier Name</th>
-                  <th>Flat</br>Count</th>
-                  <th>Tower</br>Count</th>
-                  <th>Type Of</br>Society</th>
+                  <th>{{flat_count_header}}</th>
+                  <th>{{tower_count_header}}</th>
+                  <th>Type Of</br>Supplier</th>
                   <th>Area(SubArea)</th>
                   <th>Status</th>
                   <th>Map Details</th>
                   <th>
-
+                    Comments
                   </th>
                   <th>Inventory Counts</th>
                   <th>Freebies</th>
@@ -1368,13 +1883,21 @@
               <tbody>
                 <tr ng-repeat="supplier in bookingSuppliersData | orderBy: 'society_name'">
                   <td>{{$index + 1}}</td>
-                  <td>{{supplier.society_name}}</td>
+                  <td ng-if="supplier.society_name">{{supplier.society_name}}</td>
+                  <td ng-if="supplier.name">{{supplier.name}}</td>
                   <td>{{supplier.flat_count}}</td>
                   <td>{{supplier.tower_count}}</td>
-                  <td>{{supplier.society_type_quality}}</td>
-                  <td>{{supplier.society_locality}}({{supplier.society_subarea}})</td>
+                  <td >
+                      <span ng-if="supplier.society_type_quality">{{supplier.society_type_quality}}</span>
+                      <span ng-if="supplier.quality_rating">{{supplier.quality_rating}}</span>
+                     </td>
+  
+                     <td >
+                        <span ng-if="supplier.society_locality">{{supplier.society_locality}} ({{supplier.subarea}})</span>
+                        <span ng-if="supplier.locality_rating">{{supplier.locality_rating}} ({{supplier.subarea}})</span>
+                       </td>
                   <td>{{supplierBookingStatus[supplier.booking_status||'Not Initiated']}}</td>
-                  <td><a href="https://www.google.com/maps/?q=+{{supplier.society_latitude}}+{{supplier.society_longitude}}" target="_blank">View Details</a></td>
+                  <td><a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank">View Details</a></td>
                   <td><a ng-click="viewBookingComments(supplier)">View Comments</a></td>
                   <td>Poster : {{supplier.inventory_counts.POSTER}}<br>
                   Flyer : {{supplier.inventory_counts.FLIER}}<br>
@@ -1429,15 +1952,25 @@
                             </div> -->
                           <div class="col-md-8" print-remove>
                             <label for="" style="color:#000000;">Select Date Range</label>
-                            <!-- <label for="" style="color:#000000;">From Date :</label> -->
-                            <input type="date"  style="color:#000000;" ng-model="dateRangeModel.start_date">
-                            <!-- <label for="" style="color:#000000;">To Date :</label> -->
-                            <input type="date" style="color:#000000;" ng-model="dateRangeModel.end_date">
-                            <button class="btn btn-danger" ng-click="getCampaignDateWiseSummary()">Submit</button>
+                            <!-- <input type="date"  style="color:#000000;" ng-model="dateRangeModel.start_date">
+                            <input type="date" style="color:#000000;" ng-model="dateRangeModel.end_date"> -->
+                            <div class="col-md-4">
+                            <input type="text"  style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates" is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats">
+                            <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
+                              <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                          </div>
+                          <div class="col-md-4">
+                              <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"  ng-change="changeEndDate()"  ng-model="dateRangeModel.end_dates" is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats">
+                              <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates" ng-click="isEndDateOpen = !isEndDateOpen">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                              </button>
+                            </div>
+                            <button class="btn btn-danger" ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates" ng-click="getCampaignDateWiseSummary()">Submit</button>
 
                           </div>
 
-                            <div class="col-md-4 right">
+                            <!-- <div class="col-md-3 right">
                               <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.overall.status)">
                                 <div class="button" type="button" ng-click="getCampaignWiseSummary()">
                                   <div class="panel-heading">
@@ -1452,7 +1985,15 @@
                                     </div>
                                 </div>
                               </div>
-                            </div>
+                            </div> -->
+
+                            <div class="col-md-3 right">
+                              <h4 class="panel-title">
+                                    <select class="form-control" name="supplierType" ng-model="selectedSupplierType.code" value="supplierType.value"   ng-change="setSupplierType('performance')">
+                                        <option value="{{supplierType.value}}" ng-selected="selectedSupplierType == supplierType.value" ng-repeat="supplierType in supplierTypeCodePerformanceDetail">{{supplierType.name}}</option>
+                                      </select>
+                                </h4>
+                              </div>
                          
                           </div>
                             <br /><br /><br />
@@ -1463,7 +2004,7 @@
                                 <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.completed.status)">
                                   <div class="button" type="button">
                                     <div class="panel-heading">
-                                          Completed Campaigns
+                                          Completed Campaigns  
                                     </div>
                                   </div>
 
@@ -1612,7 +2153,7 @@
                                   </thead>
                                     <tbody style="text-align:center;">
                                       <tr>
-                                      <td><small style="font-weight:bold">FLat Count</small></td>
+                                      <td><small style="font-weight:bold">{{flat_count_header}}</small></td>
                                       <td>{{Data.overall_data.flat_count || 'NA'}}</td>
                                       <td>{{Data.last_week.flat_count || 'NA'}}</td>
                                       <td>{{Data.last_two_weeks.flat_count || 'NA'}}</td>
@@ -1646,7 +2187,7 @@
                                       <td  ng-if="Data.last_three_weeks.flat_count">{{(Data.last_three_weeks.total_leads/Data.last_three_weeks.flat_count) *100 | limitTo:5 }} %</td>
                                       <td  ng-if="!Data.last_three_weeks.flat_count">NA</td>
 
-                                      </tr>
+                                      <!-- </tr>
                                       <tr>
                                       <td><small style="font-weight:bold">Total Hot Leads</small></td>
                                       <td>{{Data.overall_data.total_hot_leads || 'NA'}}</td>
@@ -1683,9 +2224,15 @@
                                         <td>{{Data.last_week.is_hot_level_4 || 'NA'}}</td>
                                         <td>{{Data.last_two_weeks.is_hot_level_4 || 'NA'}}</td>
                                         <td>{{Data.last_three_weeks.is_hot_level_4 || 'NA'}}</td>
+                                        </tr> -->
+
+                                        <tr ng-repeat="(key, item) in Data.overall_data.hot_level_keys">
+                                          <td><small style="font-weight:bold">{{item}}</small></td>
+                                          <td>{{Data.overall_data.is_hot_level_1 || 'NA'}}</td>
+                                          <td>{{Data.last_week.is_hot_level_1 || 'NA'}}</td>
+                                          <td>{{Data.last_two_weeks.is_hot_level_1 || 'NA'}}</td>
+                                          <td>{{Data.last_three_weeks.is_hot_level_1 || 'NA'}}</td>
                                         </tr>
-
-
                                     </tbody>
                                   </table>
                                   <br><br />
@@ -1730,30 +2277,6 @@
 
                                       </tr>
                                       <tr>
-                                      <td><small style="font-weight:bold">Mean of Hot Leads</small></td>
-                                      <td ng-if="Data.overall_data.supplier_stats.interested.percentage_by_flat">{{Data.overall_data.supplier_stats.interested.percentage_by_flat | limitTo:5 }} %</td>
-                                      <td ng-if="!Data.overall_data.supplier_stats.interested.percentage_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_week.supplier_stats.interested.percentage_by_flat">{{Data.last_week.supplier_stats.interested.percentage_by_flat | limitTo:5 }} %
-                                        <span ng-if="Data.last_week.supplier_stats.interested.percentage_by_flat >= Data.overall_data.supplier_stats.interested.percentage_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                        <span ng-if="Data.last_week.supplier_stats.interested.percentage_by_flat < Data.overall_data.supplier_stats.interested.percentage_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_week.supplier_stats.interested.percentage_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_two_weeks.supplier_stats.interested.percentage_by_flat">{{Data.last_two_weeks.supplier_stats.interested.percentage_by_flat | limitTo:5 }} %
-                                        <span ng-if="Data.last_two_weeks.supplier_stats.interested.percentage_by_flat >= Data.overall_data.supplier_stats.interested.percentage_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                        <span ng-if="Data.last_two_weeks.supplier_stats.interested.percentage_by_flat < Data.overall_data.supplier_stats.interested.percentage_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_two_weeks.supplier_stats.interested.percentage_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_three_weeks.supplier_stats.interested.percentage_by_flat">{{Data.last_three_weeks.supplier_stats.interested.percentage_by_flat | limitTo:5 }} %
-                                        <span ng-if="Data.last_three_weeks.supplier_stats.interested.percentage_by_flat >= Data.overall_data.supplier_stats.interested.percentage_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                        <span ng-if="Data.last_three_weeks.supplier_stats.interested.percentage_by_flat < Data.overall_data.supplier_stats.interested.percentage_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_three_weeks.supplier_stats.interested.percentage_by_flat">NA</td>
-
-                                      </tr>
-                                      <tr>
                                       <td><small style="font-weight:bold">Median of Leads</small></td>
                                       <td ng-if="Data.overall_data.supplier_stats.total.median_percent_by_flat">{{Data.overall_data.supplier_stats.total.median_percent_by_flat | limitTo:5}} %</td>
                                       <td ng-if="!Data.overall_data.supplier_stats.total.median_percent_by_flat">NA</td>
@@ -1775,29 +2298,6 @@
                                         <span ng-if="Data.last_three_weeks.supplier_stats.total.median_percent_by_flat < Data.overall_data.supplier_stats.total.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
                                       </td>
                                       <td ng-if="!Data.last_three_weeks.supplier_stats.total.median_percent_by_flat">NA</td>
-                                      </tr>
-                                      <tr>
-                                      <td><small style="font-weight:bold">Median of Hot Leads</small></td>
-                                      <td ng-if="Data.overall_data.supplier_stats.interested.median_percent_by_flat">{{Data.overall_data.supplier_stats.interested.median_percent_by_flat | limitTo:5 }} %</td>
-                                      <td ng-if="!Data.overall_data.supplier_stats.interested.median_percent_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_week.supplier_stats.interested.median_percent_by_flat">{{Data.last_week.supplier_stats.interested.median_percent_by_flat | limitTo:5 }} %
-                                        <span ng-if="Data.last_week.supplier_stats.interested.median_percent_by_flat >= Data.overall_data.supplier_stats.interested.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                        <span ng-if="Data.last_week.supplier_stats.interested.median_percent_by_flat < Data.overall_data.supplier_stats.interested.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_week.supplier_stats.interested.median_percent_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat">{{Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat | limitTo:5}} %
-                                        <span ng-if="Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat >= Data.overall_data.supplier_stats.interested.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                        <span ng-if="Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat < Data.overall_data.supplier_stats.interested.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_two_weeks.supplier_stats.interested.median_percent_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat">{{Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat | limitTo:5 }} %
-                                        <span ng-if="Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat >= Data.overall_data.supplier_stats.interested.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                        <span ng-if="Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat < Data.overall_data.supplier_stats.interested.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_three_weeks.supplier_stats.interested.median_percent_by_flat">NA</td>
                                       </tr>
                                       <tr>
                                       <td><small style="font-weight:bold">Mode of Leads</small></td>
@@ -1823,33 +2323,11 @@
                                       <td ng-if="!Data.last_three_weeks.supplier_stats.total.mode_percent_by_flat">NA </td>
 
                                       </tr>
-                                      <tr>
-                                      <td><small style="font-weight:bold">Mode of Hot Leads</small></td>
-                                      <td ng-if="Data.overall_data.supplier_stats.interested.mode_percent_by_flat">{{Data.overall_data.supplier_stats.interested.mode_percent_by_flat | limitTo:5 }} %</td>
-                                      <td ng-if="!Data.overall_data.supplier_stats.interested.mode_percent_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_week.supplier_stats.interested.mode_percent_by_flat">{{Data.last_week.supplier_stats.interested.mode_percent_by_flat | limitTo:5 }} %
-                                        <span ng-if="Data.last_week.supplier_stats.interested.mode_percent_by_flat >= Data.overall_data.supplier_stats.interested.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                        <span ng-if="Data.last_week.supplier_stats.interested.mode_percent_by_flat < Data.overall_data.supplier_stats.interested.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_week.supplier_stats.interested.mode_percent_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_two_weeks.supplier_stats.interested.mode_percent_by_flat">{{Data.last_two_weeks.supplier_stats.interested.mode_percent_by_flat | limitTo:5 }} %
-                                        <span ng-if="Data.last_two_weeks.supplier_stats.interested.mode_percent_by_flat >= Data.overall_data.supplier_stats.interested.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                        <span ng-if="Data.last_two_weeks.supplier_stats.interested.mode_percent_by_flat < Data.overall_data.supplier_stats.interested.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_two_weeks.supplier_stats.interested.mode_percent_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_three_weeks.supplier_stats.interested.mode_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.interested.mode_percent_by_flat | limitTo:5}} %
-                                        <span ng-if="Data.last_three_weeks.supplier_stats.interested.mode_percent_by_flat >= Data.overall_data.supplier_stats.interested.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                        <span ng-if="Data.last_three_weeks.supplier_stats.interested.mode_percent_by_flat < Data.overall_data.supplier_stats.interested.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_three_weeks.supplier_stats.interested.mode_percent_by_flat">NA</td>
-
-                                      </tr>
+                                    </tbody>
+                                    <tbody ng-repeat="(key, item) in Data.overall_data.hot_level_keys">
                                       <tr>
                                         <td>
-                                            <small style="font-weight:bold">Mean Of Booking Confirmed</small>                                          
+                                            <small style="font-weight:bold">Mean Of {{item}}</small>                                          
                                         </td>
                                         <td>
                                           {{Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat | limitTo:5 }} %
@@ -1857,140 +2335,49 @@
                                         <td ng-if="Data.last_week.supplier_stats.is_hot_level_3.mean_percent_by_flat">{{Data.last_week.supplier_stats.is_hot_level_3.mean_percent_by_flat | limitTo:5 }} %
                                             <span ng-if="Data.last_week.supplier_stats.is_hot_level_3.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
                                             <span ng-if="Data.last_week.supplier_stats.is_hot_level_3.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                          </td>
-                                          <td ng-if="!Data.last_week.supplier_stats.is_hot_level_3.mean_percent_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat | limitTo:5 }} %
-                                        <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                        <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat">NA</td>
-
-                                      <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat | limitTo:5}} %
-                                        <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                        <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                      </td>
-                                      <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat">NA</td>
+                                        </td>
+                                        <td ng-if="!Data.last_week.supplier_stats.is_hot_level_3.mean_percent_by_flat">NA</td>
+                                    
+                                        <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat | limitTo:5 }} %
+                                          <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                          <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                        </td>
+                                        <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat">NA</td>
+                                    
+                                        <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat | limitTo:5}} %
+                                          <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                          <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                                        </td>
+                                        <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_3.mean_percent_by_flat">NA</td>
                                       </tr>
                                       <tr>
-                                          <td><small style="font-weight:bold">Median of {{Data.overall_data.key_hot_level_3 || 'Bookings Confirmed'}}</small></td>
-                                          <td ng-if="Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5 }} %</td>
-                                          <td ng-if="!Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
-    
-                                          <td ng-if="Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5 }} %
-                                            <span ng-if="Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                            <span ng-if="Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                          </td>
-                                          <td ng-if="!Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
-    
-                                          <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5}} %
-                                            <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                            <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                          </td>
-                                          <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
-    
-                                          <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5 }} %
-                                            <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                            <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                          </td>
-                                          <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
-                                          </tr>
+                                        <td><small style="font-weight:bold">Median of {{item}}</small></td>
+                                        <td ng-if="Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5 }} %</td>
+                                        <td ng-if="!Data.overall_data.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
+                                    
+                                        <td ng-if="Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5 }} %</td>
+                                        <td ng-if="!Data.last_week.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
+                                    
+                                        <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5}} %</td>
+                                        <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
+                                    
+                                        <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">{{Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat | limitTo:5 }} %</td>
+                                        <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_3.median_percent_by_flat">NA</td>
+                                      </tr>
                                       <tr>
-                                        <td><small style="font-weight:bold">Mode of {{Data.overall_data.key_hot_level_3 || 'Bookings Confirmed'}}</small></td>
+                                        <td><small style="font-weight:bold">Mode of {{item}}</small></td>
                                         <td ng-if="Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat">{{Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat | limitTo:5 }} %</td>
                                         <td ng-if="!Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat">NA</td>
-
-                                        <td ng-if="Data.last_week.supplier_stats.is_hot_level_3.mode_percent_by_flat">{{Data.last_week.supplier_stats.interested.mode_percent_by_flat | limitTo:5 }} %
-                                          <span ng-if="Data.last_week.supplier_stats.is_hot_level_3.mode_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                          <span ng-if="Data.last_week.supplier_stats.is_hot_level_3.mode_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                        </td>
+                                    
+                                        <td ng-if="Data.last_week.supplier_stats.is_hot_level_3.mode_percent_by_flat">{{Data.last_week.supplier_stats.is_hot_level_3.mode_percent_by_flat | limitTo:5 }} %</td>
                                         <td ng-if="!Data.last_week.supplier_stats.is_hot_level_3.mode_percent_by_flat">NA</td>
-
-                                        <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat | limitTo:5 }} %
-                                          <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                          <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                        </td>
+                                    
+                                        <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat | limitTo:5 }} %</td>
                                         <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat">NA</td>
-
-                                        <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat | limitTo:5}} %
-                                          <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                          <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_3.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                        </td>
+                                    
+                                        <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat | limitTo:5}} %</td>
                                         <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_3.mode_percent_by_flat">NA</td>
                                       </tr>
-
-                                      <!-- hotness level 4 -->
-                                      <tr>
-                                          <td>
-                                              <small style="font-weight:bold">Mean Of {{Data.overall_data.key_hot_level_4 || 'Orders Punched'}}</small>                                          
-                                          </td>
-                                          <td>
-                                            {{Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat | limitTo:5 }} %
-                                          </td>
-                                          <td ng-if="Data.last_week.supplier_stats.is_hot_level_4.mean_percent_by_flat">{{Data.last_week.supplier_stats.is_hot_level_4.mean_percent_by_flat | limitTo:5 }} %
-                                              <span ng-if="Data.last_week.supplier_stats.is_hot_level_4.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                              <span ng-if="Data.last_week.supplier_stats.is_hot_level_4.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                            </td>
-                                            <td ng-if="!Data.last_week.supplier_stats.is_hot_level_4.mean_percent_by_flat">NA</td>
-  
-                                        <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat | limitTo:5 }} %
-                                          <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                          <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                        </td>
-                                        <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat">NA</td>
-  
-                                        <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat | limitTo:5}} %
-                                          <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                          <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.mean_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                        </td>
-                                        <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_4.mean_percent_by_flat">NA</td>
-                                        </tr>
-                                        <tr>
-                                            <td><small style="font-weight:bold">Median of {{Data.overall_data.key_hot_level_4 || 'Orders Punched'}}</small></td>
-                                            <td ng-if="Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat">{{Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat | limitTo:5 }} %</td>
-                                            <td ng-if="!Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat">NA</td>
-      
-                                            <td ng-if="Data.last_week.supplier_stats.is_hot_level_4.median_percent_by_flat">{{Data.last_week.supplier_stats.is_hot_level_4.median_percent_by_flat | limitTo:5 }} %
-                                              <span ng-if="Data.last_week.supplier_stats.is_hot_level_4.median_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                              <span ng-if="Data.last_week.supplier_stats.is_hot_level_4.median_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                            </td>
-                                            <td ng-if="!Data.last_week.supplier_stats.is_hot_level_4.median_percent_by_flat">NA</td>
-      
-                                            <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat | limitTo:5}} %
-                                              <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                              <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                            </td>
-                                            <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat">NA</td>
-      
-                                            <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat">{{Data.last_three_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat | limitTo:5 }} %
-                                              <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat" class="glyphicon glyphicon-arrow-up green" style="color: #15ff15 !important;"></span>
-                                              <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.median_percent_by_flat" class="glyphicon glyphicon-arrow-down red" style="color: #B20000 !important;"></span>
-                                            </td>
-                                            <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_4.median_percent_by_flat">NA</td>
-                                            </tr>
-                                        <tr>
-                                          <td><small style="font-weight:bold">Mode of {{Data.overall_data.key_hot_level_4 || 'Orders Punched'}}</small></td>
-                                          <td ng-if="Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat">{{Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat | limitTo:5 }} %</td>
-                                          <td ng-if="!Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat">NA</td>
-  
-                                          <td ng-if="Data.last_week.supplier_stats.is_hot_level_4.mode_percent_by_flat">{{Data.last_week.supplier_stats.is_hot_level_4.mode_percent_by_flat | limitTo:5 }} %
-                                            <span ng-if="Data.last_week.supplier_stats.is_hot_level_4.mode_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                            <span ng-if="Data.last_week.supplier_stats.is_hot_level_4.mode_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                          </td>
-                                          <td ng-if="!Data.last_week.supplier_stats.is_hot_level_4.mode_percent_by_flat">NA</td>
-  
-                                          <td ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat">{{Data.last_two_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat | limitTo:5 }} %
-                                            <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                            <span ng-if="Data.last_two_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                          </td>
-                                          <td ng-if="!Data.last_two_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat">NA</td>
-  
-                                          <td ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat ">{{Data.last_three_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat | limitTo:5}} %
-                                            <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat >= Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                                            <span ng-if="Data.last_three_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat < Data.overall_data.supplier_stats.is_hot_level_4.mode_percent_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                                          </td>
-                                          <td ng-if="!Data.last_three_weeks.supplier_stats.is_hot_level_4.mode_percent_by_flat">NA</td>
-                                        </tr>
                                     </tbody>
                                   </table>
                                   <br />
@@ -2025,7 +2412,7 @@
                           <div class="col-lg-6">
                             <div class="panel panel-primary">
                               <div class="panel-heading content-title">
-                                <label for="Flat">Flat Summary Details</label>
+                                <label for="Flat">{{flat}} Summary Details</label>
                               </div>
                             </div>
                               <div class="campaigndetailtable">
@@ -2035,76 +2422,57 @@
                                       <tr>
                                         <th style="background:#8e1921 !important;color:#ffffff !important;">Details</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Overall Campaign <br>Total</th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count <br> <small style="color:#ffffff !important"> < 150</small></th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count <br><small style="color:#ffffff !important">Between 150 to 400</small></th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count <br> <small style="color:#ffffff !important"> > 400</small></th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}} <br> <small style="color:#ffffff !important"> {{Data.overall_data.supplier_size_categories.min.text}} </small></th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}} <br><small style="color:#ffffff !important">{{Data.overall_data.supplier_size_categories.medium.text}}</small></th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}} <br> <small style="color:#ffffff !important"> {{Data.overall_data.supplier_size_categories.max.text}}</small></th>
                                       </tr>
                                   </thead>
                                     <tbody style="text-align:center;">
                                       <tr>
                                       <td><small style="font-weight:bold">Society Count</small></td>
                                       <td>{{Data.overall_data.supplier_count}}</td>
-                                      <td>{{Data.flat_data['0-150'].suppliers}}</td>
-                                      <td>{{Data.flat_data['151-399'].suppliers}}</td>
-                                      <td>{{Data.flat_data['400+'].suppliers}}</td>
+                                      <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.min.type].suppliers}}</td>
+                                      <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.medium.type].suppliers}}</td>
+                                      <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.max.typ].suppliers}}</td>
                                       </tr>
                                       <tr>
-                                        <td><small style="font-weight:bold">Flat Count</small></td>
+                                        <td><small style="font-weight:bold">{{flat_count_header}}</small></td>
                                         <td>{{Data.overall_data.flat_count}}</td>
-                                        <td>{{Data.flat_data['0-150']['flat_count']}}</td>
-                                        <td>{{Data.flat_data['151-399']['flat_count']}}</td>
-                                        <td>{{Data.flat_data['400+']['flat_count']}}</td>
+                                        <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.min.type]['flat_count']}}</td>
+                                        <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.medium.type]['flat_count']}}</td>
+                                        <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.max.type]['flat_count']}}</td>
                                       </tr>
                                       <tr>
                                         <td><small style="font-weight:bold">Total Leads (%)</small></td>
                                         <td ng-if="Data.overall_data.total_leads">{{Data.overall_data.total_leads}} <br> <small style="font-weight:bold">({{(Data.overall_data.total_leads / Data.overall_data.flat_count) * 100 |limitTo:5}} %)</small> </td>
                                         <td ng-if="!Data.overall_data.total_leads">NA</td>
 
-                                        <td ng-if="Data.flat_data['0-150']['flat_count'] != 0">{{Data.flat_data['0-150'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].total / Data.flat_data['0-150']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
-                                        <td ng-if="Data.flat_data['0-150']['flat_count'] == 0">{{Data.flat_data['0-150'].total}} <br> <small style="font-weight:bold">({{Data.flat_data['0-150'].total}} %)</small> </td>
+                                        <td ng-if="Data.flat_data[Data.overall_data.supplier_size_categories.min.type]['flat_count'] != 0">{{Data.flat_data[Data.overall_data.supplier_size_categories.min.type].total}} <br> <small style="font-weight:bold">({{(Data.flat_data[Data.overall_data.supplier_size_categories.min.type].total / Data.flat_data[Data.overall_data.supplier_size_categories.min.type]['flat_count']) * 100 |limitTo:5}} %)</small> </td>
+                                        <td ng-if="Data.flat_data[Data.overall_data.supplier_size_categories.min.type]['flat_count'] == 0">{{Data.flat_data[Data.overall_data.supplier_size_categories.min.type].total}} <br> <small style="font-weight:bold">({{Data.flat_data[Data.overall_data.supplier_size_categories.min.type].total}} %)</small> </td>
 
-                                        <td ng-if="Data.flat_data['151-399']['flat_count'] != 0">{{Data.flat_data['151-399'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['151-399'].total / Data.flat_data['151-399']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
-                                        <td ng-if="Data.flat_data['151-399']['flat_count'] == 0">{{Data.flat_data['151-399'].total}} <br> <small style="font-weight:bold">({{Data.flat_data['151-399'].total }} %)</small> </td>
+                                        <td ng-if="Data.flat_data[Data.overall_data.supplier_size_categories.medium.type]['flat_count'] != 0">{{Data.flat_data[Data.overall_data.supplier_size_categories.medium.type].total}} <br> <small style="font-weight:bold">({{(Data.flat_data[Data.overall_data.supplier_size_categories.medium.type].total / Data.flat_data[Data.overall_data.supplier_size_categories.medium.type]['flat_count']) * 100 |limitTo:5}} %)</small> </td>
+                                        <td ng-if="Data.flat_data[Data.overall_data.supplier_size_categories.medium.type]['flat_count'] == 0">{{Data.flat_data[Data.overall_data.supplier_size_categories.medium.type].total}} <br> <small style="font-weight:bold">({{Data.flat_data[Data.overall_data.supplier_size_categories.medium.type].total }} %)</small> </td>
 
-                                        <td  ng-if="Data.flat_data['400+']['flat_count'] != 0">{{Data.flat_data['400+'].total}} <br> <small style="font-weight:bold">({{(Data.flat_data['400+'].total / Data.flat_data['400+']['flat_count']) * 100 |limitTo:5}} %)</small> </td>
-                                        <td ng-if="Data.flat_data['400+']['flat_count'] == 0">{{Data.flat_data['400+'].total}} <br> <small style="font-weight:bold">({{Data.flat_data['400+'].total}} %)</small> </td>
-
-                                      </tr>
-                                      <tr>
-                                        <td><small style="color:#ffffff">Hot Leads (%)</small></td>
-                                        <td ng-if="Data.overall_data.total_hot_leads">{{Data.overall_data.total_hot_leads}} <br> <small style="font-weight:bold">({{(Data.overall_data.total_hot_leads / Data.overall_data.flat_count) * 100 |limitTo:5}} %)</small> </td>
-                                        <td ng-if="!Data.overall_data.total_hot_leads">NA</td>
-
-                                        <td  ng-if="Data.flat_data['0-150']['flat_count'] != 0">{{Data.flat_data['0-150'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['0-150'].interested / Data.flat_data['0-150']['flat_count']) * 100 |limitTo:5}} %)</small></td>
-                                        <td ng-if="Data.flat_data['0-150']['flat_count'] == 0">{{Data.flat_data['0-150'].interested}} <br> <small style="font-weight:bold">({{Data.flat_data['0-150'].interested}} %)</small></td>
-
-                                        <td  ng-if="Data.flat_data['151-399']['flat_count'] != 0">{{Data.flat_data['151-399'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['151-399'].interested / Data.flat_data['151-399']['flat_count']) * 100 |limitTo:5}} %)</small></td>
-                                        <td ng-if="Data.flat_data['151-399']['flat_count'] == 0">{{Data.flat_data['151-399'].interested}} <br> <small style="font-weight:bold">({{Data.flat_data['151-399'].interested }} %)</small></td>
-
-                                        <td  ng-if="Data.flat_data['400+']['flat_count'] != 0">{{Data.flat_data['400+'].interested}} <br> <small style="font-weight:bold">({{(Data.flat_data['400+'].interested / Data.flat_data['400+']['flat_count']) * 100 |limitTo:5}} %)</small></td>
-                                        <td ng-if="Data.flat_data['400+']['flat_count'] == 0">{{Data.flat_data['400+'].interested}} <br> <small style="font-weight:bold">({{Data.flat_data['400+'].interested }} %)</small></td>
+                                        <td  ng-if="Data.flat_data[Data.overall_data.supplier_size_categories.max.type]['flat_count'] != 0">{{Data.flat_data[Data.overall_data.supplier_size_categories.max.type].total}} <br> <small style="font-weight:bold">({{(Data.flat_data[Data.overall_data.supplier_size_categories.max.type].total / Data.flat_data[Data.overall_data.supplier_size_categories.max.type]['flat_count']) * 100 |limitTo:5}} %)</small> </td>
+                                        <td ng-if="Data.flat_data[Data.overall_data.supplier_size_categories.max.type]['flat_count'] == 0">{{Data.flat_data[Data.overall_data.supplier_size_categories.max.type].total}} <br> <small style="font-weight:bold">({{Data.flat_data[Data.overall_data.supplier_size_categories.max.type].total}} %)</small> </td>
 
                                       </tr>
+                                    </tbody>
+                                    <tbody ng-repeat="(key, item) in Data.overall_data.hot_level_keys">
                                       <tr>
-                                        <td><small style="font-weight:bold">Hot Leads Ratio (%)</small></td>
-                                        <td>({{campaignLeadsData.overall_data.total_hot_leads/campaignLeadsData.overall_data.total_leads * 100|limitTo:5}} %)</td>
-                                        <td>{{Data.flat_data['0-150'].hot_leads_percentage |limitTo:4}} %</td>
-                                        <td>{{Data.flat_data['151-399'].hot_leads_percentage |limitTo:4}} %</td>
-                                        <td>{{Data.flat_data['400+'].hot_leads_percentage |limitTo:4}} %</td>
+                                        <td><small style="font-weight:bold">Total {{item}} (%)</small></td>
+                                        <td>{{Data.overall_data.is_hot_level_1}}</td>
+                                        <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.min.type].is_hot_level_1}} </td>
+                                        <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.medium.type].is_hot_level_1}} </td>
+                                        <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.max.type].is_hot_level_1}} </td>
                                       </tr>
+
                                       <tr>
-                                        <td><small style="font-weight:bold">Total {{Data.overall_data.key_hot_level_3 || 'Bookings Confirmed'}}</small></td>
-                                        <td>{{campaignLeadsData.overall_data.is_hot_level_3}}</td>
-                                        <td>{{Data.flat_data['0-150'].is_hot_level_3}} </td>
-                                        <td>{{Data.flat_data['151-399'].is_hot_level_3}} </td>
-                                        <td>{{Data.flat_data['400+'].is_hot_level_3}} </td>
-                                      </tr>
-                                      <tr>
-                                        <td><small style="font-weight:bold">Total {{Data.overall_data.key_hot_level_4 || 'Orders Punched'}}</small></td>
-                                        <td>{{campaignLeadsData.overall_data.is_hot_level_4}}</td>
-                                        <td>{{Data.flat_data['0-150'].is_hot_level_4}} </td>
-                                        <td>{{Data.flat_data['151-399'].is_hot_level_4}} </td>
-                                        <td>{{Data.flat_data['400+'].is_hot_level_4}} </td>
+                                        <td><small style="font-weight:bold">Total {{item}} Ratio (%)</small></td>
+                                        <td>({{Data.overall_data.is_hot_level_1/Data.overall_data.total_leads * 100|limitTo:5}} %)</td>
+                                        <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.min.type].is_hot_level_1}} </td>
+                                        <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.medium.type].is_hot_level_1}} </td>
+                                        <td>{{Data.flat_data[Data.overall_data.supplier_size_categories.max.type].is_hot_level_1}} </td>
                                       </tr>
 
                                     </tbody>
@@ -2116,7 +2484,7 @@
                             <div class="col-lg-6">
                             <div class="panel panel-primary">
                               <div class="panel-heading content-title">
-                                <label for="flat graph">Flat Graph Summary</label>
+                                <label for="flat graph">{{flat}} Graph Summary</label>
                               </div>
                             </div>
                             <div class="row">
@@ -2153,14 +2521,17 @@
                                 <table class="table table-striped" st-table="LeadsByCampaign.locality_data" st-safe-src="localityData">
                                   <thead>
                                       <tr>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">Society Area</th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">FLat Count</th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">Supplier Area</th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">Supplier Count</th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}}</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>(%)</th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads <br> (%)</th>
+                                        <!-- <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads <br> (%)</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads Ratio <br> (%)</th>
                                         <th style="background:#8e1921 !important;color:#ffffff !important">Total Bookings Confirmed</th>
-                                        <th style="background:#8e1921 !important;color:#ffffff !important">Total Orders Punched</th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">Total Orders Punched</th> -->
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{Data.overall_data.hot_level_keys['is_hot_level_1']}} <br> (%)</th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important">{{Data.overall_data.hot_level_keys['is_hot_level_1']}} Ratio <br> (%)</th>
+                                        <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key, item) in Data.overall_data.hot_level_keys" ng-if="key!='is_hot_level_1'">{{item}} <br> (%)</th>
                                       </tr>
                                 </thead>
                                   <tbody style="text-align:center;">
@@ -2168,15 +2539,13 @@
                                       <td style="font-weight:bold">{{key}}</td>
                                       <td>{{data.suppliers}}</td>
                                       <td>{{data['flat_count']}}</td>
-                                      <td ng-if="data['flat_count'] != 0">{{data.total}} <br> <small style="font-weight:bold">({{(data.total / data['flat_count']) * 100 |limitTo:5}} %)</small> </td>
-                                      <td ng-if="data['flat_count'] == 0">{{data.total}} <br> <small style="font-weight:bold">({{data.total}} %)</small> </td>
+                                      <td>{{data.total}} <br> <small style="font-weight:bold">({{ getPercent(data.total, data['flat_count'])|limitTo:5}} %)</small> </td>
 
-                                      <td ng-if="data['flat_count'] != 0">{{data.interested}} <br> <small style="font-weight:bold">({{(data.interested / data['flat_count']) * 100 |limitTo:5}} %)</small></td>
-                                      <td ng-if="data['flat_count'] == 0">{{data.interested}} <br> <small style="font-weight:bold">({{data.interested }} %)</small></td>
+                                      <td>{{data.interested}} <br> <small style="font-weight:bold">({{getPercent(data.interested, data['flat_count'])|limitTo:5}} %)</small></td>
 
                                       <td>{{data.hot_leads_percentage |limitTo:4}} %</td>
-                                      <td>{{data.is_hot_level_3}}</td>
-                                      <td>{{data.is_hot_level_4}}</td>
+
+                                      <td ng-repeat="(key, item) in Data.overall_data.hot_level_keys" ng-if="key!='is_hot_level_1'">{{data.is_hot_level_1}} <br> <small style="font-weight:bold">({{getPercent(data.is_hot_level_1, data['flat_count'])|limitTo:5}} %)</small></td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -2248,7 +2617,7 @@
                           <div class="col-md-12" ng-scrollable>
                             <select class="form-control" ng-change="sortData('datewise',sortModel)" ng-model="sortModel" print-remove>
                               <option value="" disabled>Select For Sorting</option>
-                              <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
+                              <option ng-repeat="item in leadsByDateMenu" value="{{item.id}}">{{item.name}}</option>
                             </select>
                             <div class="outerSociety" ng-if="!dateRangeModel.start_date">
                               <div class="innerSociety" ng-if="!dateRangeModel.start_date">
@@ -2314,7 +2683,7 @@
                                 <td>{{varianceLeads | limitTo:5}} %</td>
                               </tr>
                               <tr>
-                                <td style="font-weight:bold">Hot Leads</td>
+                                <td style="font-weight:bold">{{Data.overall_data.hot_level_keys["is_hot_level_1"]}}</td>
                                 <td>{{Data.overall_data.supplier_stats.interested.percentage_by_flat | limitTo:5}} %</td>
                                 <td>{{Data.overall_data.supplier_stats.interested.median_percent_by_flat | limitTo:5}} %</td>
                                 <td>{{Data.overall_data.supplier_stats.interested.mode_percent_by_flat | limitTo:5}} %</td>
@@ -2349,21 +2718,29 @@
                             <input type="checkbox" name="" value="" style="margin-left:10px;" ng-click="DisabledClicked()" ng-checked="!selectAnyPhase"> Date Range
                             <!-- <label for="" style="margin-left:10px;"> Date Range</label> -->
                             <br />
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                               <div class="form-group" ng-show="selectAnyDate" ng-hide="selectAnyPhase" ng-model="selectAnyDate">
                                 <label><small> Start Date :  </small></label>
-                                <span><small><input type="date" ng-click="DisabledClicked()" style="width:110px !important" ng-model="graphSelection.dateRange.startDate">
-                                </small>
-                                </span>
+                                <!-- <span><small><input type="date" ng-click="DisabledClicked()" style="width:110px !important" ng-model="graphSelection.dateRange.startDate"></small></span> -->
+                                <span>
+                                  <input type="text"  style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="changeFilterStartDate()" ng-model="graphSelection.dateRange.startDate" is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats">
+                                  <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                  </button>
+                               
+                              </span>
                               </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                               <div class="form-group" ng-show="selectAnyDate" ng-hide="selectAnyPhase" ng-model="selectAnyDate">
                               <label><small>  End Date :</small></label>
-                                <span><small><input type="date" ng-click="DisabledClicked()" style="width:110px !important" ng-model="graphSelection.dateRange.endDate">
-                                </small>
-                                </span>
-                                </div>
+                                <!-- <span><small><input type="date" ng-click="DisabledClicked()" style="width:110px !important" ng-model="graphSelection.dateRange.endDate"></small></span> -->
+                                <label><input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"  ng-change="changeFilterEndDate()"  ng-model="graphSelection.dateRange.endDate" is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats">
+                              <button type="button" class="smallBtn calendar" ng-disabled="!graphSelection.dateRange.startDate" ng-click="isEndDateOpen = !isEndDateOpen">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                              </button>
+                            </label>
+                              </div>
                             </div>
                             <p style="text-align:center;color:#cb1925;font-weight: bold;">OR</p>
                             <input type="checkbox" name="" value="" style="margin-left:10px;" ng-click="DisabledClickedPhase()" ng-checked="!selectAnyDate"> Phase
@@ -2404,16 +2781,26 @@
                       <div class="row form-group" style="color:#000000">
                         <small>
                           <input type="checkbox" ng-model="checkboxCheckedSociety"  ng-click="societyParamsCheck('society',checkboxCheckedSociety)"
-                              > Society Parameters
+                              > Supplier Parameters
                           <select class="form-control" ng-click="DisabledClickedSociety()" ng-model="graphSelection.specificParam.society"  ng-if="checkboxCheckedSociety">
-                            <option value="qualitytype" ng-click="societyTypeDrop">Type of Society</option>
-                            <option value="sizeOfFlats" ng-click="flatTypeDrop">Size of Society</option>
-                            <option value="flatType" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Type of Flats</option>
-                            <option value="flatPrice" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Price of Flats</option>
-                            <option value="flatRent" ng-click="flatTypeDrop"  ng-disabled="graphSelection.specificParam.society">Rent of Flats</option>
-                            <option value="noOfCitizen" ng-click="flatTypeDrop"  ng-disabled="graphSelection.specificParam.society">No of Senior Citizen</option>
-                            <option value="noOfChildren" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">No of Children</option>
-                            <option value="workingWomen" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Percentage Working Women</option>
+                            <option value = ""  ng-disabled=true>Select</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="qualitytype" ng-click="societyTypeDrop">Type of Society</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="sizeOfFlats" ng-click="flatTypeDrop">Size of Society</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="flatType" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Type of Flats</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="flatPrice" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Price of Flats</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="flatRent" ng-click="flatTypeDrop"  ng-disabled="graphSelection.specificParam.society">Rent of Flats</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="noOfCitizen" ng-click="flatTypeDrop"  ng-disabled="graphSelection.specificParam.society">No of Senior Citizen</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="noOfChildren" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">No of Children</option>
+                            <option ng-if="selectedSupplierType.code == 'RS'" value="workingWomen" ng-click="flatTypeDrop" ng-disabled="graphSelection.specificParam.society">Percentage Working Women</option>
+                            
+                            
+                            <option ng-if="selectedSupplierType.code == 'RE'" value="sizeOfRetailStore" ng-click="flatTypeDrop">Size of Retail Store</option>
+                            <option ng-if="selectedSupplierType.code == 'CP'" value="sizeOfCorporate" ng-click="flatTypeDrop">Size of Corporate</option>
+                            <option ng-if="selectedSupplierType.code == 'BS'" value="sizeOfBusShelter" ng-click="flatTypeDrop">Size of Bus Shelter</option>
+                            <option ng-if="selectedSupplierType.code == 'GY'" value="sizeOfGym" ng-click="flatTypeDrop">Size of Gym</option>
+                            <option ng-if="selectedSupplierType.code == 'SA'" value="sizeOfSaloon" ng-click="flatTypeDrop">Size of Saloon</option>
+                          
+                        
                           </select>
                           <br />
                           <div class="row" ng-if="graphSelection.specificParam.society == 'qualitytype' && checkboxCheckedSociety">
@@ -2424,6 +2811,28 @@
                             <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfFlatsLists" extra-settings="settingsForDynamicGraphFlatType"
                             selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
                           </div>
+
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfRetailStore' && checkboxCheckedSociety">
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfRetailStoreLists" extra-settings="settingsForDynamicGraphFlatType"
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                          </div>
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfCorporate' && checkboxCheckedSociety">
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfCorporateLists" extra-settings="settingsForDynamicGraphFlatType"
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                          </div>
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfBusShelter' && checkboxCheckedSociety">
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfBusShelterLists" extra-settings="settingsForDynamicGraphFlatType"
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                          </div>
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfGym' && checkboxCheckedSociety">
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfGymLists" extra-settings="settingsForDynamicGraphFlatType"
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                          </div>
+                          <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfSaloon' && checkboxCheckedSociety">
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfSaloonLists" extra-settings="settingsForDynamicGraphFlatType"
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                          </div>
+
                           <br />
                         <p style="text-align:center;color:#cb1925;font-weight: bold;">OR</p>
 
@@ -2693,7 +3102,7 @@
       </thead>
         <tbody style="text-align:center;">
           <tr>
-          <td><small style="font-weight:bold">Flat Count</small></td>
+          <td><small style="font-weight:bold">{{flat_count_header}}</small></td>
           <td>{{getOverallSummaryData('flatCount') || 'NA'}}</td>
           <td ng-repeat="data in campaignOverallSummary">{{data.flatCount}}</td>
           <!-- <td>{{WeeklyVendorMISLastWeekSummary.flat_count || 'NA'}}</td>
@@ -2785,7 +3194,7 @@
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Name</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Quality Type</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Flat Type</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}} Type</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Cost Per Leads <br> (%)</th>
@@ -2844,7 +3253,7 @@
                       </thead>
                         <tbody style="text-align:center;">
                           <tr>
-                          <td><small style="font-weight:bold">Flat Count</small></td>
+                          <td><small style="font-weight:bold">{{flat_count_header}}</small></td>
                           <td>{{WeeklyVendorMISOverallSummary.flat_count || 'NA'}}</td>
                           <td>{{WeeklyVendorMISLastWeekSummary.flat_count || 'NA'}}</td>
                           <td>{{WeeklyVendorMISLast2WeekSummary.flat_count || 'NA'}}</td>
@@ -2948,8 +3357,8 @@
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Vendor Name</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}}</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Supplier Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads </th>
@@ -2989,6 +3398,7 @@
            <option value="" disabled>Select For Sorting</option>
             <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
           </select> -->
+          
           <div class="outerVendor"  ng-if="!dateRangeModel.start_date">
             <div class="innerVendor"  ng-if="!dateRangeModel.start_date">
               <nvd3 options="locationChartOptions" data="sortedLocationData['overall']" ng-if="togglesortedGraphs['overall']"></nvd3>
@@ -3027,7 +3437,7 @@
       </thead>
         <tbody style="text-align:center;">
           <tr>
-          <td><small style="font-weight:bold">Flat Count</small></td>
+          <td><small style="font-weight:bold">{{flat_count_header}}</small></td>
           <td>{{WeeklyMISOverallSummary.all_campaigns.flat_count || 'NA'}}</td>
           <td>{{WeeklyMISLastWeekSummary.all_campaigns.flat_count || 'NA'}}</td>
           <td>{{WeeklyMISLast2WeekSummary.all_campaigns.flat_count || 'NA'}}</td>
@@ -3129,8 +3539,8 @@
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}}</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Supplier Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads </th>
@@ -3272,8 +3682,8 @@
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}}</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Supplier Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads </th>
@@ -3370,7 +3780,7 @@
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Unit Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
@@ -3467,8 +3877,8 @@
         <thead>
             <tr>
               <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">{{flat_count_header}}</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important">Supplier Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads </th>
@@ -4092,7 +4502,7 @@
               <div class="modal-content">
                 <div class="modal-body">
                   <div class="modal-header">
-                    View Comments For {{supplierNameForComment}}
+                    View Comments For  {{supplierNameForComment}}
                   </div>
                 <div style="margin:20px;">
                 <table class="table-bordered table-striped" align="center">

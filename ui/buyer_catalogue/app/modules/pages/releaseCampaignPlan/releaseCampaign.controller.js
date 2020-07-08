@@ -6,10 +6,13 @@ angular.module('catalogueApp')
         $scope.campaign_id = $stateParams.proposal_id;
         $scope.positiveNoError = constants.positive_number_error;
         $scope.campaign_manager = constants.campaign_manager;
+        $scope.aws_campaign_images_url = constants.aws_campaign_images_url;
         $scope.editPaymentDetails = true;
         $scope.commentModal = {};
         $scope.userData = {};
+        $scope.orgData = {};
         $scope.assign = {};
+        $scope.options = {};
         $scope.selectedUser = { value: undefined, supplier_type_filter: undefined };
         $scope.body = {
           message: '',
@@ -23,7 +26,8 @@ angular.module('catalogueApp')
         if ($rootScope.globals.userInfo.is_superuser == true) {
           $scope.backButton = true;
         }
-        $scope.supplierSummaryData = {};
+        $scope.selected1 = "";
+        $scope.supplierSummaryData = [];
         $scope.shortlistedSuppliersIdList = {}
         $scope.permissions = permissions.supplierBookingPage;
         $scope.showSummaryTab = false;
@@ -113,6 +117,7 @@ angular.module('catalogueApp')
           { name: 'Rejected by Society', code: 'RRS' },
           { name: 'Others(Specify)', code: 'ROS' },
         ];
+        $scope.sheetUrl = '../../assets/img/booking_plan_sheet_v1.xlsx'
 
         $scope.booking_tentative = [
           { name: 'Phone Booking', code: 'PB' },
@@ -259,30 +264,48 @@ angular.module('catalogueApp')
         var supplierIdForSearch;
         var getResultsPage = function (newPage) {
           var data = getFilterData();
+          
+          releaseCampaignService.bookingStatusData($scope.campaign_id)
+          .then(function onSuccess(ResponseData) {
+            $scope.bookingStatus = ResponseData.data.data
+               
+          });
+          
           releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id, newPage, data)
             .then(function onSuccess(response) {
-
               releaseCampaignService.getCampaignReleaseDetailsHeader()
                 .then(function onSuccess(headerResponse) {
                   $scope.detailsHeaders = headerResponse.data.data;
                   var detailsHeader = headerResponse.data.data;
                   if (!$scope.selectedUser.supplier_type_filter) {
-                    $scope.detailsHeader = detailsHeader['RS'];
+                    $scope.detailsHeader = detailsHeader['ALL'];
                   } else {
                     $scope.detailsHeader = detailsHeader[$scope.selectedUser.supplier_type_filter];
                   }
                 })
 
+                // releaseCampaignService.bookingStatusData($scope.campaign_id)
+                // .then(function onSuccess(ResponseData) {
+                //   $scope.bookingStatus = ResponseData.data.data
+                     
+                // });
+
+
+
               getUsersList();
               getAssignedSuppliers();
+              getOrganisationList();
 
               $scope.initialReleaseData = Object.assign({}, response.data.data);
               $scope.totalSuppliers = $scope.initialReleaseData.total_count;
 
               for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
+                $scope.initialReleaseData.shortlisted_suppliers[i].average_weekday = parseInt($scope.initialReleaseData.shortlisted_suppliers[i].average_weekday, 10);
+                $scope.initialReleaseData.shortlisted_suppliers[i].average_weekend = parseInt($scope.initialReleaseData.shortlisted_suppliers[i].average_weekend, 10);
                 $scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price = parseInt($scope.initialReleaseData.shortlisted_suppliers[i].total_negotiated_price, 10);
                 $scope.mapViewLat = $scope.initialReleaseData.shortlisted_suppliers[i].latitude;
                 $scope.mapViewLong = $scope.initialReleaseData.shortlisted_suppliers[i].longitude;
+
                 if ($scope.initialReleaseData.shortlisted_suppliers[i].next_action_date) {
                   $scope.initialReleaseData.shortlisted_suppliers[i].next_action_date = new Date($scope.initialReleaseData.shortlisted_suppliers[i].next_action_date);
                 }
@@ -295,7 +318,14 @@ angular.module('catalogueApp')
                   $scope.initialReleaseData.shortlisted_suppliers[i].stall_locations = [];
                 }
 
-                $scope.getTotalSupplierPriceNew($scope.initialReleaseData.shortlisted_suppliers[i],i);
+                $scope.getTotalSupplierPriceNew($scope.initialReleaseData.shortlisted_suppliers[i], i);
+
+                var localindex_index = $scope.bookingStatus.map(function(el) { 
+                  return el.code;
+                }).indexOf($scope.initialReleaseData.shortlisted_suppliers[i].booking_status);  
+                 if (localindex_index != -1) {  
+                  $scope.initialReleaseData.shortlisted_suppliers[i].meeting_status = $scope.bookingStatus[localindex_index].booking_substatus;
+                 }
 
               }
 
@@ -303,16 +333,17 @@ angular.module('catalogueApp')
 
               if ($scope.initialReleaseData) {
                 $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
-            
-                if ($scope.releaseDetails.shortlisted_suppliers.length) {
-                  for (let i in $scope.releaseDetails.shortlisted_suppliers.length) {
 
-                  }
-                }
+                // if ($scope.releaseDetails.shortlisted_suppliers.length) {
+                //   for (let i in $scope.releaseDetails.shortlisted_suppliers.length) {
 
+                //   }
+                // }
                 $scope.releaseDetailsData = $scope.releaseDetails.campaign.centerData;
                 var centerSuppliers = $scope.releaseDetails.campaign.centerSuppliers;
+
                 if (centerSuppliers) {
+
                   $scope.supplier_names = [];
                   for (let i in centerSuppliers) {
                     if (centerSuppliers[i].supplier_type_code == 'RS') {
@@ -329,11 +360,15 @@ angular.module('catalogueApp')
                       $scope.supplier_names.push({ name: 'Retail Store', code: 'RE' });
                     }
                   }
+                  if (centerSuppliers.length == 0) {
+                    $scope.supplier_names.push({ name: 'ALL', code: 'ALL' });
+                  }
 
                   if ($scope.supplier_names.length == 1) {
                     $scope.selectedUser.supplier_type_filter_selected = $scope.supplier_names[0].name;
                     $scope.selectedUser.supplier_type_filter = $scope.supplier_names[0].code;
                   }
+
 
                 }
 
@@ -359,40 +394,45 @@ angular.module('catalogueApp')
         }
 
         $scope.changeType = function () {
-          $scope.detailsHeader = $scope.detailsHeaders[$scope.selectedUser.supplier_type_filter];
+
+          if ($scope.selectedUser.supplier_type_filter == "") {
+            $scope.detailsHeader = $scope.detailsHeaders['ALL'];
+          } else {
+            $scope.detailsHeader = $scope.detailsHeaders[$scope.selectedUser.supplier_type_filter];
+          }
+
+
+
         }
 
         $scope.setPhase = function (supplier, id) {
           supplier.phase_no = id;
         }
 
-        $scope.setUserForBooking = function () {
-          $scope.societySupplierName = $scope.userSupplierData.supplierName;
-          var data = {
-            assigned_by: $scope.userInfo.id,
-            assigned_to_ids: [parseInt($scope.userData.user)],
-            campaign_id: $scope.campaign_id,
-            supplier_id: $scope.userSupplierData.supplier_id,
-            supplierName: $scope.userSupplierData.name,
-          }
-          $scope.societySupplierName = data.supplierName;
-          releaseCampaignService.setUserForBooking(data)
-            .then(function onSuccess(response) {
-              // swal(constants.name, constants.assign_success, constants.success)
-              // location.reload();
+        $scope.test = function (index) {
+          alert(index);
+        }
 
+        $scope.setBrandForBooking = function () {
+          let data = {
+            id: $scope.userSupplierData.id,
+            brand_organisation_id: $scope.organisationMapListWithObjects[$scope.orgData.index].organisation_id
+          }
+          var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+            return el.id;
+          }).indexOf($scope.userSupplierData.id);
+          if (localindex_index != -1) {
+            $scope.releaseDetails.shortlisted_suppliers[localindex_index].brand_organisation_data = { name: $scope.organisationMapListWithObjects[$scope.orgData.index].name }
+            $scope.orgData = {};
+          }
+          releaseCampaignService.setBrandForBooking(data)
+            .then(function onSuccess(response) {
               swal({
                 title: "",
                 text: constants.assign_success,
                 type: "success",
                 confirmButtonText: "ok",
-              },
-                function (isConfirm) {
-                  if (isConfirm) {
-                    location.reload();
-                  }
-                }
-              );
+              });
             })
             .catch(function onError(error) {
               console.log(error);
@@ -428,13 +468,25 @@ angular.module('catalogueApp')
         $scope.changeLocation = function () {
           $location.path('/' + $scope.campaign_id + '/auditReleasePlan');
         }
+        $scope.changeDate = function (index) {
+
+          $scope.releaseDetails.shortlisted_suppliers[index].next_action_date = moment.utc($scope.releaseDetails.shortlisted_suppliers[index].next_action_date).local();
+
+
+        }
         //To show inventory ids in modal after clicking on inventory type
         $scope.setInventoryIds = function (filter) {
           $scope.inventoryIds = [];
           $scope.inventoryIds = filter.detail;
         }
-        $scope.updateData = function () {
-          releaseCampaignService.updateAuditReleasePlanDetails($scope.campaign_id, $scope.releaseDetails.shortlisted_suppliers)
+        $scope.updateData = function (id, index) {
+          let updateData = [];
+          if (id && index && id == $scope.releaseDetails.shortlisted_suppliers[index].id) {
+            updateData.push($scope.releaseDetails.shortlisted_suppliers[index]);
+          } else {
+            updateData = $scope.releaseDetails.shortlisted_suppliers;
+          }
+          releaseCampaignService.updateAuditReleasePlanDetails($scope.campaign_id, updateData)
             .then(function onSuccess(response) {
               swal(constants.name, constants.updateData_success, constants.success);
             })
@@ -474,7 +526,7 @@ angular.module('catalogueApp')
 
         }
 
-        $scope.getTotalSupplierPriceNew = function (supplier,index) {
+        $scope.getTotalSupplierPriceNew = function (supplier, index) {
           var totalPrice = 0;
           angular.forEach(supplier.shortlisted_inventories, function (value, key) {
             var duration = 1;
@@ -487,7 +539,7 @@ angular.module('catalogueApp')
           })
 
           $scope.initialReleaseData.shortlisted_suppliers[index].shortlisted_inventories_totalPrice = totalPrice;
-           
+
         }
         //Start: code added to search & show all suppliers on add societies tab
         // $scope.supplier_names = [
@@ -508,6 +560,9 @@ angular.module('catalogueApp')
 
         $scope.searchSuppliers = function () {
           var proposal_id = $scope.releaseDetails.campaign.proposal_id;
+          if($scope.releaseDetails.campaign.brand == "multi_brand"){
+            proposal_id = undefined;
+          }
 
           $scope.searchDisable = true;
           if (!$scope.supplier_type_code.code) {
@@ -519,8 +574,8 @@ angular.module('catalogueApp')
           try {
             $scope.search_status = false;
             if ($scope.supplier_type_code.code && $scope.supplier_center) {
-              mapViewService.searchSuppliers($scope.supplier_type_code.code, $scope.search.query, $scope.releaseDetails.campaign.principal_vendor, $scope.supplier_center, $scope.center_areas, proposal_id)
-                .then(function onSuccess(response, status) {
+               mapViewService.searchSuppliers($scope.supplier_type_code.code, $scope.search.query, '', $scope.supplier_center, $scope.center_areas, proposal_id)
+              .then(function onSuccess(response, status) {
                   $scope.center_index = null;
                   $scope.supplierData = response.data.data;
                   $scope.searchDisable = false;
@@ -551,7 +606,7 @@ angular.module('catalogueApp')
 
         //End: code added to search & show all suppliers on add societies tab
         $scope.selectSupplier = function () {
-
+          $scope.supplierData = [];
           $scope.center_areas = {};
           $scope.selectCenter();
           $scope.sub_areas = {};
@@ -574,6 +629,7 @@ angular.module('catalogueApp')
         //Start: function to select center at add more suplliers
         $scope.selectCenter = function (center_index) {
 
+          $scope.supplierData = [];
           try {
             $scope.center_index = center_index;
             if (center_index != null) {
@@ -588,12 +644,16 @@ angular.module('catalogueApp')
                 $scope.center_err = false;
                 mapViewService.getLocations($scope.supplier_center)
                   .then(function onSuccess(response) {
+
                     $scope.areas = response.data.data;
                   }).
                   catch(function onError(response) {
                     commonDataShare.showErrorMessage(response);
                   });
               }
+            } else {
+              $scope.areas = {};
+              $scope.sub_areas = {};
             }
 
           } catch (error) {
@@ -602,8 +662,9 @@ angular.module('catalogueApp')
         }
 
         $scope.get_sub_areas = function (index) {
+          $scope.supplierData = [];
           if (index) {
-              $scope.center_areas = {
+            $scope.center_areas = {
               areas: $scope.areas[index].label
             };
             createProposalService.getLocations('sub_areas', $scope.areas[index].id)
@@ -618,7 +679,8 @@ angular.module('catalogueApp')
         }
 
         $scope.selectSubArea = function (index) {
-          if(index){
+          $scope.supplierData = [];
+          if (index) {
             $scope.center_areas.sub_areas = $scope.sub_areas[index].subarea_name;
           } else {
             $scope.center_areas.sub_areas = "";
@@ -629,15 +691,30 @@ angular.module('catalogueApp')
 
 
         $scope.addSuppliersToList = function (supplier) {
-          if (!(supplier.supplier_id in $scope.shortlistedSuppliersIdList || supplier.supplier_id in $scope.supplierSummaryData)) {
-            $scope.supplierSummaryData[supplier.supplier_id] = supplier;
+          if ($scope.releaseDetails.campaign.brand == 'multi_brand') {
+            $scope.supplierSummaryData.push(supplier)
             swal(constants.name, constants.updateData_success, constants.success);
+          } else {
+            var localindex_index = $scope.supplierSummaryData.map(function (el) {
+              return el.supplier_id;
+            }).indexOf(supplier.supplier_id);
+            if (localindex_index != -1) {
+              swal(constants.name, constants.already_exist, constants.error);
+            } else {
+              $scope.supplierSummaryData.push(supplier)
+              swal(constants.name, constants.updateData_success, constants.success);
+            }
+
           }
-          else
-            swal(constants.name, constants.already_exist, constants.error);
+          // if (!(supplier.supplier_id in $scope.shortlistedSuppliersIdList || supplier.supplier_id in $scope.supplierSummaryData)) {
+          //   $scope.supplierSummaryData[supplier.supplier_id] = supplier;
+          //   swal(constants.name, constants.updateData_success, constants.success);
+          // }
+          // else
+          //   swal(constants.name, constants.already_exist, constants.error);
         }
-        $scope.removeSupplierToList = function (supplier_id) {
-          delete $scope.supplierSummaryData[supplier_id];
+        $scope.removeSupplierToList = function (index) {
+          $scope.supplierSummaryData.splice(index, 1);
         }
         //Start: function to clear searched supplier data whenever add suppliers button clicked
         $scope.clearSearchData = function () {
@@ -648,8 +725,7 @@ angular.module('catalogueApp')
             $scope.search = {};
             $scope.errorMsg = undefined;
             $scope.center_index = null;
-
-            $scope.supplierSummaryData = {};
+            $scope.supplierSummaryData = [];
             $scope.supplier_center = {};
 
             $scope.indexData = {};
@@ -678,17 +754,12 @@ angular.module('catalogueApp')
             console.log(error.message);
           }
         }
+
         $scope.addSuppliersToCampaign = function () {
+
           var supplier_ids = [];
           var filters = [];
-          angular.forEach($scope.supplierSummaryData, function (supplier) {
-            var supplierKeyValueData = {
-              id: supplier.supplier_id,
-              status: 'F',
-            }
-            supplier_ids.push(supplierKeyValueData);
-
-          })
+          var center_data = {};
           angular.forEach($scope.filters, function (filter) {
             if (filter.selected) {
               var filterKeyValuData = {
@@ -698,21 +769,40 @@ angular.module('catalogueApp')
             }
           })
 
+          angular.forEach($scope.supplierSummaryData, function (supplier) {
+            let code = "";
+            if (supplier.supplier_code) {
+              code = supplier.supplier_code;
+            }
+            if (supplier.supplier_type) {
+              code = supplier.supplier_type;
+            }
+
+            var supplierKeyValueData = {
+              id: supplier.supplier_id,
+              status: 'F',
+            }
+            if (!center_data[code]) {
+              center_data[code] = {};
+              center_data[code]['supplier_data'] = [];
+              center_data[code]['filter_codes'] = filters;
+            }
+            if (code != null)
+              center_data[code]['supplier_data'].push(supplierKeyValueData);
+          })
+
           var data = {
             campaign_id: $scope.releaseDetails.campaign.proposal_id,
-            center_data: {
-            },
+            center_data: center_data
           }
-          data.center_data[$scope.supplier_type_code.code] = {
-            supplier_data: supplier_ids,
-            filter_codes: filters,
-          };
-          if (filters.length && supplier_ids.length) {
+
+          if (filters.length) {
             releaseCampaignService.addSuppliersToCampaign(data)
               .then(function onSuccess(response) {
                 //synergy
                 if (response) {
                   $scope.releaseDetails.shortlisted_suppliers = response.data.data;
+                  window.location.reload();
                 }
 
                 $('#addNewSocities').modal('hide');
@@ -795,6 +885,7 @@ angular.module('catalogueApp')
         $scope.saveContactDetails = function () {
           $scope.payment['basic_contact_available'] = true;
           $scope.payment['basic_contacts'] = $scope.payment.contacts;
+          $scope.payment['food_tasting_allowed'] = null;
           releaseCampaignService.saveContactDetails($scope.payment, $scope.payment.supplier_id)
             .then(function onSuccess(response) {
               $scope.editContactDetails = true;
@@ -852,12 +943,27 @@ angular.module('catalogueApp')
         //to send email
         $scope.loadSpinner = true;
         $scope.sendNotification = function () {
+
+          let message = "Beneficiary Name :" + $scope.body.Beneficiary_Name + ", Bank Account Number :" + $scope.body.Bank_Account_Number + ", IFSC Code :" + $scope.body.IFSC_Code + ", Negotiated Price :" + $scope.body.Negotiated_Price + ", Message :" + $scope.body.msg;
+
           $scope.loadSpinner = false;
           var email_Data = {
             subject: $scope.paymentStatus + " Details For " + $scope.supplierPaymentData.name,
-            body: $scope.body.message,
+            body: message,
             to: constants.account_email_id,
           };
+
+
+var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function(el) { 
+  return el.id;
+}).indexOf($scope.supplierPaymentData.id);  
+   
+if (localindex_index != -1) {   
+  $scope.releaseDetails.shortlisted_suppliers[localindex_index].account_number = $scope.body.Bank_Account_Number;
+  $scope.releaseDetails.shortlisted_suppliers[localindex_index].beneficiary_name = $scope.body.Beneficiary_Name;
+  $scope.releaseDetails.shortlisted_suppliers[localindex_index].ifsc_code = $scope.body.IFSC_Code;
+  $scope.releaseDetails.shortlisted_suppliers[localindex_index].payment_message = $scope.body.msg;
+}
           releaseCampaignService.sendMail(email_Data)
             .then(function onSuccess(response) {
               $scope.taskId = response.data.data.task_id;
@@ -898,7 +1004,7 @@ angular.module('catalogueApp')
         }
 
         $scope.getPaymentDetails = function (supplier, status) {
-          $scope.body.message = '';
+          $scope.body = {};
           $scope.supplierPaymentData = supplier;
           $scope.paymentStatus = status;
           if (status == 'NEFT' || status == 'CASH') {
@@ -947,18 +1053,26 @@ angular.module('catalogueApp')
           $scope.editPhase = true;
         }
         $scope.savePhases = function () {
-          releaseCampaignService.savePhases($scope.phases, $scope.campaign_id)
-            .then(function onSuccess(response) {
-              swal(constants.name, constants.add_data_success, constants.success);
-              angular.forEach($scope.phases, function (phase) {
-                phase.start_date = new Date(phase.start_date);
-                phase.end_date = new Date(phase.end_date);
+          if ($scope.phases[0] && $scope.phases[0].phase_no) {
+            releaseCampaignService.savePhases($scope.phases, $scope.campaign_id)
+              .then(function onSuccess(response) {
+                swal(constants.name, constants.add_data_success, constants.success);
+                angular.forEach($scope.phases, function (phase) {
+                  phase.start_date = new Date(phase.start_date);
+                  phase.end_date = new Date(phase.end_date);
+                })
+                $scope.getPhases();
+                $scope.editPhase = false;
+              }).catch(function onError(response) {
+                if(response && response.data && response.data.data){
+                  swal(constants.name, response.data.data.general_error, constants.error);
+                }
+              
               })
-              $scope.getPhases();
-              $scope.editPhase = false;
-            }).catch(function onError(response) {
-              console.log(response);
-            })
+          } else {
+            swal(constants.name, "Please add phase first", constants.warning);
+          }
+
         }
 
         $scope.getPhases();
@@ -969,15 +1083,31 @@ angular.module('catalogueApp')
           $scope.phases.push({});
         }
 
-        $scope.removePhase = function (id) {
-          $scope.editPhase = false;
-          releaseCampaignService.removePhase(id)
-            .then(function onSuccess(response) {
-              swal(constants.name, constants.delete_success, constants.success);
-              $scope.getPhases();
-            }).catch(function onError(response) {
-              console.log(response);
-            })
+        $scope.removePhase = function (index) {
+          if ($scope.phases && $scope.phases[index].id) {
+            swal({
+              title: 'Are you sure ?',
+              text: "You want to remove phase",
+              type: constants.warning,
+              showCancelButton: true,
+              confirmButtonClass: "btn-success",
+              confirmButtonText: "Yes, Remove!",
+              closeOnConfirm: true
+            },
+              function () {
+                $scope.editPhase = false;
+                releaseCampaignService.removePhase($scope.phases[index].id)
+                  .then(function onSuccess(response) {
+                    swal(constants.name, constants.delete_success, constants.success);
+                    $scope.getPhases();
+                  }).catch(function onError(response) {
+                    console.log(response);
+                  })
+              })
+          } else {
+            $scope.phases.splice(index, 1);
+          }
+
         }
 
         var setSocietyLocationOnMap = function (supplier) {
@@ -1107,6 +1237,23 @@ angular.module('catalogueApp')
             });
         }
 
+        var getOrganisationList = function () {
+          commonDataShare.getOrganisationList()
+            .then(function onSuccess(response) {
+              $scope.OrganisationList = response.data.data;
+              $scope.selectedOrganisation = [];
+              $scope.organisationMapListWithObjects = [];
+              angular.forEach($scope.OrganisationList, function (data) {
+                $scope.organisationMapListWithObjects.push(data);
+                //$scope.UserDataAssigned = response.data.data;
+              })
+            })
+            .catch(function onError(response) {
+              console.log("error occured", response.status);
+              commonDataShare.showErrorMessage(response);
+            });
+        }
+
         $scope.settingsForUsers = {
           enableSearch: true,
           keyboardControls: true, idProp: "id",
@@ -1151,6 +1298,8 @@ angular.module('catalogueApp')
               },
               headers: { 'Authorization': 'JWT ' + token }
             }).then(function onSuccess(response) {
+              swal(constants.name, "Import sheet successfully", constants.success);
+              window.location.reload();
 
             })
               .catch(function onError(response) {
@@ -1158,6 +1307,19 @@ angular.module('catalogueApp')
               });
           }
         }
+
+        $scope.changeStartDate = function (index) {
+          $scope.options.minDate = new Date($scope.phases[index].start_date);
+        }
+
+
+        $scope.changeEndDate = function (index) {
+          if ($scope.phases[index].start_date > $scope.phases[index].end_date) {
+            $scope.phases[index].end_date = "";
+          }
+          $scope.options.minDate = new Date($scope.phases[index].start_date);
+        }
+
 
         $scope.uploadFiles = function (file) {
           $scope.file = file;
@@ -1337,7 +1499,7 @@ angular.module('catalogueApp')
 
               if (response.data.data.length) {
                 angular.forEach(response.data.data, function (data) {
-                  data['image_url'] = 'http://androidtokyo.s3.amazonaws.com/' + data.image_path;
+                  data['image_url'] = $scope.aws_campaign_images_url + data.image_path;
                 })
               }
               $scope.perBoxImageData = response.data.data;
@@ -1351,7 +1513,7 @@ angular.module('catalogueApp')
             .then(function onSuccess(response) {
               if (response.data.data.length) {
                 angular.forEach(response.data.data, function (data) {
-                  data['image_url'] = 'http://androidtokyo.s3.amazonaws.com/' + data.image_path;
+                  data['image_url'] = $scope.aws_campaign_images_url + data.image_path;
                 })
               }
               $scope.perReceiptImageData = response.data.data;
@@ -1458,13 +1620,69 @@ angular.module('catalogueApp')
           "Building ERP",
           "Door To Door",
         ];
-        $scope.changePhase = function (supplier) {
+        $scope.changePhase = function (supplier,index) {
           if (supplier.booking_status == 'NB') {
             supplier.phase_no = '';
           }
+
+          $scope.releaseDetails.shortlisted_suppliers[index].booking_sub_status = null;
+          $scope.releaseDetails.shortlisted_suppliers[index].bk_status_id = null;
+          $scope.releaseDetails.shortlisted_suppliers[index].bk_substatus_id = null;
+          
+            var localindex_index = $scope.bookingStatus.map(function(el) { 
+              return el.code;
+            }).indexOf(supplier.booking_status);      
+             if (localindex_index != -1) {  
+              $scope.releaseDetails.shortlisted_suppliers[index].meeting_status = $scope.bookingStatus[localindex_index].booking_substatus;
+              $scope.releaseDetails.shortlisted_suppliers[index].bk_status_id = $scope.bookingStatus[localindex_index].id;
+             }
+          
         }
+
+        $scope.changeSubStatus = function (supplier,index) {
+          var localindex_index = supplier.meeting_status.map(function(el) { 
+            return el.code;
+          }).indexOf(supplier.booking_sub_status);      
+           if (localindex_index != -1) {  
+            $scope.releaseDetails.shortlisted_suppliers[index].bk_substatus_id = supplier.meeting_status[localindex_index].id;
+           }
+        }
+
+
         $scope.setUserSupplier = function (supplier) {
           $scope.userSupplierData = supplier;
+        }
+        $scope.setUserForBooking = function () {
+          $scope.societySupplierName = $scope.userSupplierData.supplierName;
+          var data = {
+            assigned_by: $scope.userInfo.id,
+            assigned_to_ids: [parseInt($scope.userData.user)],
+            campaign_id: $scope.campaign_id,
+            supplier_id: $scope.userSupplierData.supplier_id,
+            supplierName: $scope.userSupplierData.name,
+          }
+          $scope.societySupplierName = data.supplierName;
+          releaseCampaignService.setUserForBooking(data)
+            .then(function onSuccess(response) {
+              // swal(constants.name, constants.assign_success, constants.success)
+              // location.reload();
+
+              swal({
+                title: "",
+                text: constants.assign_success,
+                type: "success",
+                confirmButtonText: "ok",
+              },
+                function (isConfirm) {
+                  if (isConfirm) {
+                    // location.reload();
+                  }
+                }
+              );
+            })
+            .catch(function onError(error) {
+              console.log(error);
+            });
         }
         var getAssignedSuppliers = function () {
           releaseCampaignService.getAssignedSuppliers($scope.campaign_id, $scope.userInfo.id)
@@ -1696,6 +1914,9 @@ angular.module('catalogueApp')
           }
         }
 
-
+        $scope.getFiltersCount = function (supplier) {
+          var keys = Object.keys(supplier.shortlisted_inventories);
+          return keys.length;
+        }
 
       }]);//Controller function ends here

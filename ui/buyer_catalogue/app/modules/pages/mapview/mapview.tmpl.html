@@ -43,11 +43,22 @@
         </button>
 
         <div class="color-codes">
-          <a data-toggle="tooltip" title="Finalized"><img src="http://www.googlemapsmarkers.com/v1/00FF00/" alt=""></a>
+          <!-- <a data-toggle="tooltip" title="Finalized"><img src="http://www.googlemapsmarkers.com/v1/00FF00/" alt=""></a>
           <a data-toggle="tooltip" title="Shortlisted"><img src="http://www.googlemapsmarkers.com/v1/FFFF00/"
               alt=""></a>
           <a data-toggle="tooltip" title="Buffered"><img src="http://www.googlemapsmarkers.com/v1/654321/" alt=""></a>
-          <a data-toggle="tooltip" title="Removed"><img src="http://www.googlemapsmarkers.com/v1/FF0000/" alt=""></a>
+          <a data-toggle="tooltip" title="Removed"><img src="http://www.googlemapsmarkers.com/v1/FF0000/" alt=""></a> -->
+          <a data-toggle="tooltip" title="Corporate"><img src="http://www.googlemapsmarkers.com/v1/e60fe6/" alt=""></a>
+          <a data-toggle="tooltip" title="Bus Shelter"><img src="http://www.googlemapsmarkers.com/v1/ec0707/"
+              alt=""></a>
+                <a data-toggle="tooltip" title="Gym"><img src="http://www.googlemapsmarkers.com/v1/800080/"
+                  alt=""></a>
+                  <a data-toggle="tooltip" title="Saloon"><img src="http://www.googlemapsmarkers.com/v1/A52A2A/"
+                    alt=""></a>
+                    <a data-toggle="tooltip" title="Retail Store"><img src="http://www.googlemapsmarkers.com/v1/0000FF/"
+                      alt=""></a>
+                      <a data-toggle="tooltip" title="Residential Society"><img src="http://www.googlemapsmarkers.com/v1/FFFF00/"
+                        alt=""></a>
           &nbsp;&nbsp;
           <button class="btn btn-danger active" ng-disabled="!show_societies" ng-click="showSocieties()">Map
             View</button>
@@ -342,8 +353,8 @@
               <ui-gmap-markers models="society_markers" coords="'self'" icon="'icon'" events="'events'"
                 options="'options'" doRebuildAll="true" click="onClick">
               </ui-gmap-markers>
-              <ui-gmap-markers models="center_marker" coords="'self'" icon="'icon'" options="'options'"
-                doRebuildAll="true" click="onClick" events="'events'">
+              <!-- <ui-gmap-markers models="center_marker" coords="'self'" icon="'icon'" options="'options'"
+                doRebuildAll="true" click="onClick" events="'events'"> -->
               </ui-gmap-markers>
             </ui-gmap-google-map>
           </div>
@@ -462,8 +473,8 @@
               <th class="col-md-4">Center Name</th>
               <th class="col-md-4">Supplier Name</th>
               <th class="col-md-4">SubArea-Area</th>
-              <th class="col-md-4">Company Count</th>
               <th class="col-md-4">Employee Count</th>
+              <th class="col-md-4">Visitors Count</th>
               <!-- <th class = "col-md-4">Society Type</th> -->
               <!-- <th class = "col-md-4">Locality Rating</th> -->
               <th class="col-md-4">Machadalo Index</th>
@@ -486,8 +497,8 @@
               <td>{{center.center.center_name}}</td>
               <td>{{supplier.name}}</td>
               <td>{{supplier.subarea}}</td>
-              <td>{{supplier.totalcompanies_count}}</td>
-              <td>{{supplier.totalemployees_count}}</td>
+              <td>{{supplier.unit_primary_count}}</td>
+              <td>{{supplier.unit_secondary_count}}</td>
               <!-- <td>{{society.society_type_quality}}</td> -->
               <!-- <td>{{society.society_location_type}}</td> -->
               <td>{{supplier.machadalo_index}}</td>
@@ -532,6 +543,8 @@
               <th class="col-md-4">Center Name</th>
               <th class="col-md-4">Supplier Name</th>
               <th class="col-md-4">SubArea-Area</th>
+              <th class="col-md-4">Footfall Count</th>
+              <th class="col-md-4">Traffic Count</th>
               <!-- <th class = "col-md-4">Society Type</th> -->
               <!-- <th class = "col-md-4">Locality Rating</th> -->
               <th class="col-md-4">Machadalo Index</th>
@@ -552,6 +565,8 @@
               <td>{{center.center.center_name}}</td>
               <td>{{supplier.name}}</td>
               <td>{{supplier.subarea}}</td>
+              <td>{{supplier.unit_primary_count}}</td>
+              <td>{{supplier.unit_secondary_count}}</td>
               <!-- <td>{{society.society_type_quality}}</td> -->
               <!-- <td>{{society.society_location_type}}</td> -->
               <td>{{supplier.machadalo_index}}</td>
@@ -590,6 +605,8 @@
               <th class="col-md-4">Center Name</th>
               <th class="col-md-4">Supplier Name</th>
               <th class="col-md-4">SubArea-Area</th>
+              <th class="col-md-4">Weekend Daily Footfall Count</th>
+              <th class="col-md-4">Weekday Daily Footfall Count</th>
               <th class="col-md-4">Machadalo Index</th>
               <th class="col-md-4">
                 <a ng-click="getOrderBy(center_data,supplierCode.gym,finalize)"> Finalize </a>/
@@ -606,6 +623,8 @@
               <td>{{center.center.center_name}}</td>
               <td>{{supplier.name}}</td>
               <td>{{supplier.subarea}}</td>
+              <td>{{supplier.unit_primary_count}}</td>
+              <td>{{supplier.unit_secondary_count}}</td>
               <td>{{supplier.machadalo_index}}</td>
               <td class="col-md-2">
                 <div class="radio">
@@ -642,6 +661,8 @@
               <th class="col-md-4">Center Name</th>
               <th class="col-md-4">Supplier Name</th>
               <th class="col-md-4">SubArea-Area</th>
+              <th class="col-md-4">Weekend Daily Footfall Count</th>
+              <th class="col-md-4">Weekday Daily Footfall Count</th>
               <th class="col-md-4">Machadalo Index</th>
               <th class="col-md-4">
                 <a ng-click="getOrderBy(center_data,supplierCode.saloon,finalize)"> Finalize </a>/
@@ -658,6 +679,8 @@
               <td>{{center.center.center_name}}</td>
               <td>{{supplier.name}}</td>
               <td>{{supplier.subarea}}</td>
+              <td>{{supplier.unit_primary_count}}</td>
+              <td>{{supplier.unit_secondary_count}}</td>
               <!-- <td>{{society.society_type_quality}}</td> -->
               <!-- <td>{{society.society_location_type}}</td> -->
               <td>{{supplier.machadalo_index}}</td>
@@ -697,6 +720,8 @@
               <th class="col-md-4">Center Name</th>
               <th class="col-md-4">Supplier Name</th>
               <th class="col-md-4">SubArea-Area</th>
+              <th class="col-md-4">Weekend Daily Footfall Count</th>
+              <th class="col-md-4">Weekday Daily Footfall Count</th>
               <th class="col-md-4">Machadalo Index</th>
               <th class="col-md-4">
                 <a ng-click="getOrderBy(center_data,supplierCode.retailStore,finalize)"> Finalize </a>/
@@ -714,6 +739,8 @@
               <td>{{center.center.center_name}}</td>
               <td>{{supplier.name}}</td>
               <td>{{supplier.subarea}}</td>
+              <td>{{supplier.unit_primary_count}}</td>
+              <td>{{supplier.unit_secondary_count}}</td>
               <!-- <td>{{society.society_type_quality}}</td> -->
               <!-- <td>{{society.society_location_type}}</td> -->
               <td>{{supplier.machadalo_index}}</td>
@@ -755,20 +782,46 @@
             <span class="space filterPanelHeader ">Space Count</span>
             <div ng-if="current_center.suppliers_allowed.society_allowed " class="nbCheckbox two-col">Societies:
               {{current_center.summary_meta[supplierCode.society].count}}</div>
+              <div ng-if="current_center.suppliers_allowed.society_allowed" class="nbCheckbox two-col">Flat Count:
+                {{current_center.summary_meta[supplierCode.society].flat_count}}</div>
+              <div ng-if="current_center.suppliers_allowed.society_allowed" class="nbCheckbox two-col">Tower Count:
+                {{current_center.summary_meta[supplierCode.society].tower_count}}</div>
+
             <div ng-if="current_center.suppliers_allowed.corporate_allowed" class="nbCheckbox two-col">Corporates:
               {{current_center.summary_meta[supplierCode.corporate].count}}</div>
+              <div ng-if="current_center.suppliers_allowed.corporate_allowed" class="nbCheckbox two-col">Employee Count:
+                {{current_center.summary_meta[supplierCode.corporate].unit_primary_count}}</div>
+              <div ng-if="current_center.suppliers_allowed.corporate_allowed" class="nbCheckbox two-col">Visitors Count:
+                {{current_center.summary_meta[supplierCode.corporate].unit_secondary_count}}</div>
+
             <div ng-if="current_center.suppliers_allowed.busShelter_allowed" class="nbCheckbox two-col">Bus Shelters:
               {{current_center.summary_meta[supplierCode.busShelter].count}}</div>
+              <div ng-if="current_center.suppliers_allowed.busShelter_allowed" class="nbCheckbox two-col">Footfall Count:
+                {{current_center.summary_meta[supplierCode.busShelter].unit_primary_count}}</div>
+              <div ng-if="current_center.suppliers_allowed.busShelter_allowed" class="nbCheckbox two-col">Traffic Count:
+                {{current_center.summary_meta[supplierCode.busShelter].unit_secondary_count}}</div>
+
             <div ng-if="current_center.suppliers_allowed.gym_allowed" class="nbCheckbox two-col">Gyms:
               {{current_center.summary_meta[supplierCode.gym].count}}</div>
+              <div ng-if="current_center.suppliers_allowed.gym_allowed" class="nbCheckbox two-col">Weekend Daily Footfall Count:
+                {{current_center.summary_meta[supplierCode.gym].unit_primary_count}}</div>
+              <div ng-if="current_center.suppliers_allowed.gym_allowed" class="nbCheckbox two-col">Weekday Daily Footfall Count:
+                {{current_center.summary_meta[supplierCode.gym].unit_secondary_count}}</div>
+
             <div ng-if="current_center.suppliers_allowed.saloon_allowed" class="nbCheckbox two-col">Saloons:
               {{current_center.summary_meta[supplierCode.saloon].count}}</div>
+              <div ng-if="current_center.suppliers_allowed.saloon_allowed" class="nbCheckbox two-col">Weekend Daily Footfall Count:
+                {{current_center.summary_meta[supplierCode.saloon].unit_primary_count}}</div>
+              <div ng-if="current_center.suppliers_allowed.saloon_allowed" class="nbCheckbox two-col">Weekday Daily Footfall Count:
+                {{current_center.summary_meta[supplierCode.saloon].unit_secondary_count}}</div>
+
             <div ng-if="current_center.suppliers_allowed.retailStore_allowed" class="nbCheckbox two-col">Retail Stores:
               {{current_center.summary_meta[supplierCode.retailStore].count}}</div>
-            <div ng-if="current_center.suppliers_allowed.society_allowed" class="nbCheckbox two-col">Flat Count:
-              {{current_center.summary_meta[supplierCode.society].flat_count}}</div>
-            <div ng-if="current_center.suppliers_allowed.society_allowed" class="nbCheckbox two-col">Tower Count:
-              {{current_center.summary_meta[supplierCode.society].tower_count}}</div>
+              <div ng-if="current_center.suppliers_allowed.retailStore_allowed" class="nbCheckbox two-col">Weekend Daily Footfall Count:
+                {{current_center.summary_meta[supplierCode.retailStore].unit_primary_count}}</div>
+              <div ng-if="current_center.suppliers_allowed.retailStore_allowed" class="nbCheckbox two-col">Weekday Daily Footfall Count:
+                {{current_center.summary_meta[supplierCode.retailStore].unit_secondary_count}}</div>
+           
             <!--added if condition below to display those inventories selected by user in sumarry section-->
             <hr>
             <span class="space filterPanelHeader">Total Number of Impressions</span>
@@ -894,16 +947,22 @@
             <hr>
             <span class="space filterPanelHeader ">Space Count</span>
             <div ng-if="society_allowed_gridview" class="nbCheckbox two-col">Societies: {{total_societies_count}}</div>
+            <div ng-if="society_allowed_gridview" class="nbCheckbox two-col">Flat Count: {{total_flat_count}}</div>
+            <div ng-if="society_allowed_gridview" class="nbCheckbox two-col">Tower Count: {{total_tower_count}}</div>
+
+
             <div ng-if="corporate_allowed_gridview" class="nbCheckbox two-col">Corporates: {{total_corporates_count}}
             </div>
+            <div ng-if="corporate_allowed_gridview" class="nbCheckbox two-col">Employee Count: {{corporate_employee_count}}</div>
+            <div ng-if="corporate_allowed_gridview" class="nbCheckbox two-col">Visitors Count: {{corporate_visitors_count}}</div>
+
             <div ng-if="busShelter_allowed_gridview" class="nbCheckbox two-col">Bus Shelters:
               {{total_busShleters_count}}</div>
             <div ng-if="gym_allowed_gridview" class="nbCheckbox two-col">Gyms: {{total_gyms_count}}</div>
             <div ng-if="saloon_allowed_gridview" class="nbCheckbox two-col">Saloons: {{total_saloons_count}}</div>
             <div ng-if="retailStore_allowed_gridview" class="nbCheckbox two-col">Retail Stores:
               {{total_retailStores_count}}</div>
-            <div ng-if="society_allowed_gridview" class="nbCheckbox two-col">Flat Count: {{total_flat_count}}</div>
-            <div ng-if="society_allowed_gridview" class="nbCheckbox two-col">Tower Count: {{total_tower_count}}</div>
+           
             <!--added if condition below to display those inventories selected by user in sumarry section-->
             <hr>
             <span class="space filterPanelHeader">Total Number of Impressions</span>
@@ -1085,24 +1144,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="supplier in supplierData">
+                  <tr  ng-repeat="supplier in supplierData">
                     <td>{{$index+1}}</td>
                     <td>{{supplier.name}}</td>
                     <td>{{supplier.city}}</td>
                     <td>{{supplier.area}}</td>
                     <td>{{supplier.subarea}}</td>
-                    <!-- <td>
-                      <div class="radio">
-                        <label><input type="radio" value="S"
-                            ng-click="addMoreSuppliers(supplier,$index,'S')" 
-                            permission="[permissions.finalizeStatus]">Finalize</label>
-                      </div>
-                      <div class="radio">
-                        <label><input type="radio"  value="B"
-                            ng-click="addMoreSuppliers(supplier,$index,'B')" 
-                            permission="[permissions.bufferStatus]">Buffer</label>
-                      </div>
-                    </td> -->
                     <td>
                       <div class="radio">
                         <label><input type="radio" ng-click="addMoreSuppliers(supplier,$index)">Add To Main List</label>

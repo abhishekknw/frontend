@@ -39,8 +39,17 @@
               <option value="{{org.organisation_id}}" ng-repeat="org in organisationList">{{org.name}}</option>
             </select>
           </div>
+
+          <div class="item">
+            <label>Type of End Customer</label>
+            <select class="field" name="" placeholder="Select End Customer" ng-model="proposalData.type_of_end_customer" ng-required="true">
+              <option value="" ng-disabled="true">Select End Customer</option>
+              <option value="{{customer.id}}" ng-repeat="customer in endCustomerList">{{customer.name}}</option>
+            </select>
+            <p class="red" ng-if="proposalData.type_of_end_customer=='null'">End Customer Required</p>
+          </div>
         </div>
-        <button class="smallBtn" ng-disabled="updateDisable" ng-click="updateProposalDetails()">Update</button>
+        <button class="smallBtn" ng-disabled="updateDisable || proposalData.type_of_end_customer=='null'" ng-click="updateProposalDetails()">Update</button>
       </form>
     </div><!-- middle-section -->
     <div class="fixfooter"></div>
