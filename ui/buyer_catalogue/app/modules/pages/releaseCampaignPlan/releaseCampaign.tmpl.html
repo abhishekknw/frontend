@@ -471,78 +471,22 @@
                 <select class="form-control spacing input-width" ng-model="supplier.booking_status"
                   permission="[permissions.changeBookingStatus]" ng-change="changePhase(supplier,$parent.$parent.$index)"
                   ng-disabled="supplier.is_completed">
+                  <option value="" disabled="">Select Booking Status</option>
                   <option style="width:100%;" ng-repeat="item in bookingStatus" value="{{item.code}}">
                     {{item.name}}</option>
                 </select>
                 <br>
-                <select ng-if="supplier.booking_status" class="form-control spacing input-width" ng-model="supplier.booking_sub_status">
+                <select ng-if="supplier.booking_status" class="form-control spacing input-width" ng-change="changeSubStatus(supplier,$parent.$parent.$index)"  ng-model="supplier.booking_sub_status">
                   <option value="" disabled="">Select Sub Status</option>
                   <option style="width:100%;" ng-repeat="item in supplier.meeting_status" value="{{item.code}}">
                     {{item.name}}</option>
                 </select>
               </td>
 
-              <!-- <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
-                <select class="form-control spacing input-width" ng-model="supplier.booking_status"
-                  permission="[permissions.changeBookingStatus]" ng-change="changePhase(supplier)"
-                  ng-disabled="supplier.is_completed">
-                  <option style="width:100%;" ng-repeat="item in booking_status" value="{{item.code}}"
-                    ng-if="supplier.booking_status == undefined ? supplier.booking_status = booking_status[0].code : 1">
-                    {{item.name}}</option>
-                </select>
-
-                <br>
-                <select class="form-control spacing input-width" ng-model="supplier.booking_sub_status"
-                  permission="[permissions.changeBookingStatus]" ng-change="changePhase(supplier)"
-                  ng-if="supplier.booking_status=='MF'" ng-disabled="supplier.is_completed">
-                  <option style="width:100%;" ng-repeat="item in meeting_status" value="{{item.code}}"
-                    ng-if="supplier.meeting_status == undefined ? supplier.meeting_status = meeting_status[0].code : 1">
-                    {{item.name}}</option>
-                </select>
-
-                <select class="form-control spacing input-width" ng-model="supplier.booking_sub_status"
-                  ng-if="supplier.booking_status=='RE'" ng-disabled="supplier.is_completed">
-                  <option style="width:100%;" ng-repeat="item in booking_recce" value="{{item.code}}"
-                    ng-if="supplier.booking_recce == undefined ? supplier.booking_recce = booking_recce[0].code : 1">
-                    {{item.name}}</option>
-                </select>
-
-                <select class="form-control spacing input-width" ng-model="supplier.booking_sub_status"
-                  ng-if="supplier.booking_status=='DP'" ng-disabled="supplier.is_completed">
-                  <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}"
-                    ng-if="supplier.booking_pending == undefined ? supplier.booking_pending = booking_pending[0].code : 1">
-                    {{item.name}}</option>
-                </select>
-                <select class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-show="$first"
-                  ng-if="supplier.booking_status=='SR'" ng-disabled="supplier.is_completed">
-                  <option style="width:100%;" ng-repeat="item in booking_rejected" value="{{item.code}}"
-                    ng-if="supplier.booking_rejected == undefined ? supplier.booking_rejected = booking_rejected[0].code : 1">
-                    {{item.name}}</option>
-                </select>
-                <select class="form-control spacing input-width" ng-model="supplier.booking_sub_status"
-                  ng-disabled="supplier.is_completed" ng-if="supplier.booking_status=='NE'">
-                  <option style="width:100%;" ng-repeat="item in booking_new_entity" value="{{item.code}}"
-                    ng-if="supplier.booking_new_entity == undefined ? supplier.booking_new_entity = booking_new_entity[0].code : 1">
-                    {{item.name}}</option>
-                </select>
-                <select class="form-control spacing input-width" ng-model="supplier.booking_sub_status"
-                  ng-disabled="supplier.is_completed" ng-if="supplier.booking_status=='UN'">
-                  <option style="width:100%;" ng-repeat="item in booking_unknown" value="{{item.code}}"
-                    ng-if="supplier.booking_unknown == undefined ? supplier.booking_unknown = booking_unknown[0].code : 1">
-                    {{item.name}}</option>
-                </select>
-                <select class="form-control spacing input-width" ng-model="supplier.booking_sub_status"
-                  ng-disabled="supplier.is_completed" ng-if="supplier.booking_status=='TB'">
-                  <option style="width:100%;" ng-repeat="item in booking_tentative" value="{{item.code}}"
-                    ng-if="supplier.booking_tentative == undefined ? supplier.booking_tentative = booking_tentative[0].code : 1">
-                    {{item.name}}</option>
-                </select>
-              </td> -->
-
               <td class="col-md-2" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" ng-form name="phaseform">
                 <input class="form-control spacing input-width" type="text" ng-disabled="true"
                   ng-model="phaseMappingList[supplier.phase_no].phase_no" />
-                <select ng-disabled="supplier.booking_status != 'BK' || supplier.is_completed" name="phase"
+                <select ng-disabled="supplier.is_completed" name="phase"
                   class="form-control spacing input-width-phase" ng-change="setPhase(supplier,supplier.phaseNo)"
                   ng-model="supplier.phaseNo" min="1" permission="[permissions.addPhase, permissions.viewPhase]">
                   <option value="" disabled>Select Phase</option>
@@ -1008,76 +952,23 @@
                       <select class="form-control spacing input-width" ng-model="supplier.booking_status"
                         permission="[permissions.changeBookingStatus]" ng-change="changePhase(supplier,$parent.$parent.$index)"
                         ng-disabled="supplier.is_completed">
+                        <option value="" disabled="">Select Booking Status</option>
                         <option style="width:100%;" ng-repeat="item in bookingStatus" value="{{item.code}}">
                           {{item.name}}</option>
                       </select>
-                      <br>
-                      <select ng-if="supplier.booking_status" class="form-control spacing input-width" ng-model="supplier.booking_sub_status">
+                      
+                      <select ng-if="supplier.booking_status" class="form-control spacing input-width" ng-change="changeSubStatus(supplier,$parent.$parent.$index)" ng-model="supplier.booking_sub_status">
                         <option value="" disabled="">Select Sub Status</option>
                         <option style="width:100%;" ng-repeat="item in supplier.meeting_status" value="{{item.code}}">
                           {{item.name}}</option>
                       </select>
-                    </td>
-                <!-- <select class="form-control spacing input-width" ng-model="supplier.booking_status"
-                  permission="[permissions.changeBookingStatus]" ng-change="changePhase(supplier)"
-                  ng-disabled="supplier.is_completed">
-                  <option style="width:100%;" ng-repeat="item in booking_status" value="{{item.code}}"
-                    ng-if="supplier.booking_status == undefined ? supplier.booking_status = booking_status[0].code : 1">
-                    {{item.name}}</option>
-                </select>
-
-                <br>
-                <select class="form-control spacing input-width" ng-model="supplier.booking_sub_status"
-                  permission="[permissions.changeBookingStatus]" ng-change="changePhase(supplier)"
-                  ng-if="supplier.booking_status=='MF'" ng-disabled="supplier.is_completed">
-                  <option style="width:100%;" ng-repeat="item in meeting_status" value="{{item.code}}"
-                    ng-if="supplier.meeting_status == undefined ? supplier.meeting_status = meeting_status[0].code : 1">
-                    {{item.name}}</option>
-                </select>
-
-                <select class="form-control spacing input-width" ng-model="supplier.booking_sub_status"
-                  ng-if="supplier.booking_status=='RE'" ng-disabled="supplier.is_completed">
-                  <option style="width:100%;" ng-repeat="item in booking_recce" value="{{item.code}}"
-                    ng-if="supplier.booking_recce == undefined ? supplier.booking_recce = booking_recce[0].code : 1">
-                    {{item.name}}</option>
-                </select>
-
-                <select class="form-control spacing input-width" ng-model="supplier.booking_sub_status"
-                  ng-if="supplier.booking_status=='DP'" ng-disabled="supplier.is_completed">
-                  <option style="width:100%;" ng-repeat="item in booking_pending" value="{{item.code}}"
-                    ng-if="supplier.booking_pending == undefined ? supplier.booking_pending = booking_pending[0].code : 1">
-                    {{item.name}}</option>
-                </select>
-                <select class="form-control spacing input-width" ng-model="supplier.booking_sub_status" ng-show="$first"
-                  ng-if="supplier.booking_status=='SR'" ng-disabled="supplier.is_completed">
-                  <option style="width:100%;" ng-repeat="item in booking_rejected" value="{{item.code}}"
-                    ng-if="supplier.booking_rejected == undefined ? supplier.booking_rejected = booking_rejected[0].code : 1">
-                    {{item.name}}</option>
-                </select>
-                <select class="form-control spacing input-width" ng-model="supplier.booking_sub_status"
-                  ng-disabled="supplier.is_completed" ng-if="supplier.booking_status=='NE'">
-                  <option style="width:100%;" ng-repeat="item in booking_new_entity" value="{{item.code}}"
-                    ng-if="supplier.booking_new_entity == undefined ? supplier.booking_new_entity = booking_new_entity[0].code : 1">
-                    {{item.name}}</option>
-                </select>
-                <select class="form-control spacing input-width" ng-model="supplier.booking_sub_status"
-                  ng-disabled="supplier.is_completed" ng-if="supplier.booking_status=='UN'">
-                  <option style="width:100%;" ng-repeat="item in booking_unknown" value="{{item.code}}"
-                    ng-if="supplier.booking_unknown == undefined ? supplier.booking_unknown = booking_unknown[0].code : 1">
-                    {{item.name}}</option>
-                </select>
-                <select class="form-control spacing input-width" ng-model="supplier.booking_sub_status"
-                  ng-disabled="supplier.is_completed" ng-if="supplier.booking_status=='TB'">
-                  <option style="width:100%;" ng-repeat="item in booking_tentative" value="{{item.code}}"
-                    ng-if="supplier.booking_tentative == undefined ? supplier.booking_tentative = booking_tentative[0].code : 1">
-                    {{item.name}}</option>
-                </select> -->
-              <!-- </td> -->
+                  </td>
+               
 
               <td class="col-md-2" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" ng-form name="phaseform">
                 <input class="form-control spacing input-width" type="text" ng-disabled="true"
                   ng-model="phaseMappingList[supplier.phase_no].phase_no" />
-                <select ng-disabled="supplier.booking_status != 'BK' || supplier.is_completed" name="phase"
+                <select ng-disabled="supplier.is_completed" name="phase"
                   class="form-control spacing input-width-phase" ng-change="setPhase(supplier,supplier.phaseNo)"
                   ng-model="supplier.phaseNo" min="1" permission="[permissions.addPhase, permissions.viewPhase]">
                   <option value="" disabled>Select Phase</option>
@@ -1112,10 +1003,6 @@
               </td>
 
               <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
-                <!-- <input class="form-control spacing input-width" ng-change="changeDate($parent.$parent.$index)" ng-model="supplier.next_action_date" type="date" name=""
-                  ng-disabled="supplier.is_completed"> -->
-
-
                 <p class="input-group">
                   <input type="text" class="form-control col-md-4" ng-model="supplier.next_action_date"
                     ng-disabled="supplier.is_completed" uib-datepicker-popup="dd/MM/yyyy" is-open="popup1" min-date=""
@@ -1126,10 +1013,11 @@
                   </span>
                 </p>
               </td>
-
+                
               <td ng-if="key=='NA'">{{key}} </td>
 
-              <td ng-if="key!='NA'"><a class="" data-target="#invTypeModal" data-toggle="modal"
+              <td ng-if="key!='NA'">
+                <a class="" data-target="#invTypeModal" data-toggle="modal"
                   ng-click="setInventoryIds(filter)" permission="[permissions.viewInventoryIds]"
                   ng-disabled="supplier.is_completed"><b>{{key}} </b></a>
                 <multiselect ng-if="key=='STALL'" ng-model="supplier.stall_locations" options="StallOptions"
@@ -1148,7 +1036,6 @@
                 <input class="form-control" type="number" ng-if="key!='FLIER'" style="max-width:70px;"
                   ng-model="filter.days" ng-change="changeInventoryInDays(supplier,key,filter)"
                   ng-disabled="supplier.is_completed">
-
               </td>
 
               <!-- <td class="">{{filter.price| currency : "₹"}}</td> -->

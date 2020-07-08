@@ -269,6 +269,7 @@ angular.module('catalogueApp')
       }
 
       DashboardService.getDistributionGraphsStatics = function (data, supplierType) {
+        console.log("data data data",data);
         var url = url_root + "analytics/get-leads-data-generic";
         if (supplierType) {
           url += "?supplier_code=" + supplierType;
