@@ -129,8 +129,6 @@ angular.module('catalogueApp')
                 response.data.data.shortlisted_suppliers = shortlisted_suppliers;
                 
                 $scope.releaseDetails = response.data.data;
-                console.log('11111112222222222222222222222222222', $scope.releaseDetails)
-
                 $scope.totalSuppliers = $scope.releaseDetails.total_count;
                 $scope.Data = $scope.releaseDetails.shortlisted_suppliers;
                 setDataToModel($scope.releaseDetails.shortlisted_suppliers);

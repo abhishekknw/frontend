@@ -264,6 +264,13 @@ angular.module('catalogueApp')
         var supplierIdForSearch;
         var getResultsPage = function (newPage) {
           var data = getFilterData();
+          
+          releaseCampaignService.bookingStatusData($scope.campaign_id)
+          .then(function onSuccess(ResponseData) {
+            $scope.bookingStatus = ResponseData.data.data
+               
+          });
+          
           releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id, newPage, data)
             .then(function onSuccess(response) {
               releaseCampaignService.getCampaignReleaseDetailsHeader()
@@ -276,6 +283,14 @@ angular.module('catalogueApp')
                     $scope.detailsHeader = detailsHeader[$scope.selectedUser.supplier_type_filter];
                   }
                 })
+
+                // releaseCampaignService.bookingStatusData($scope.campaign_id)
+                // .then(function onSuccess(ResponseData) {
+                //   $scope.bookingStatus = ResponseData.data.data
+                     
+                // });
+
+
 
               getUsersList();
               getAssignedSuppliers();
@@ -304,6 +319,13 @@ angular.module('catalogueApp')
                 }
 
                 $scope.getTotalSupplierPriceNew($scope.initialReleaseData.shortlisted_suppliers[i], i);
+
+                var localindex_index = $scope.bookingStatus.map(function(el) { 
+                  return el.code;
+                }).indexOf($scope.initialReleaseData.shortlisted_suppliers[i].booking_status);  
+                 if (localindex_index != -1) {  
+                  $scope.initialReleaseData.shortlisted_suppliers[i].meeting_status = $scope.bookingStatus[localindex_index].booking_substatus;
+                 }
 
               }
 
@@ -1598,11 +1620,35 @@ if (localindex_index != -1) {
           "Building ERP",
           "Door To Door",
         ];
-        $scope.changePhase = function (supplier) {
+        $scope.changePhase = function (supplier,index) {
           if (supplier.booking_status == 'NB') {
             supplier.phase_no = '';
           }
+
+          $scope.releaseDetails.shortlisted_suppliers[index].booking_sub_status = null;
+          $scope.releaseDetails.shortlisted_suppliers[index].bk_status_id = null;
+          $scope.releaseDetails.shortlisted_suppliers[index].bk_substatus_id = null;
+          
+            var localindex_index = $scope.bookingStatus.map(function(el) { 
+              return el.code;
+            }).indexOf(supplier.booking_status);      
+             if (localindex_index != -1) {  
+              $scope.releaseDetails.shortlisted_suppliers[index].meeting_status = $scope.bookingStatus[localindex_index].booking_substatus;
+              $scope.releaseDetails.shortlisted_suppliers[index].bk_status_id = $scope.bookingStatus[localindex_index].id;
+             }
+          
         }
+
+        $scope.changeSubStatus = function (supplier,index) {
+          var localindex_index = supplier.meeting_status.map(function(el) { 
+            return el.code;
+          }).indexOf(supplier.booking_sub_status);      
+           if (localindex_index != -1) {  
+            $scope.releaseDetails.shortlisted_suppliers[index].bk_substatus_id = supplier.meeting_status[localindex_index].id;
+           }
+        }
+
+
         $scope.setUserSupplier = function (supplier) {
           $scope.userSupplierData = supplier;
         }

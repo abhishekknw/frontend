@@ -7,6 +7,14 @@ angular.module('catalogueApp')
       var proposalId = $stateParams.proposalId;
       $scope.updateDisable = false;
       $scope.options = {};
+
+      editProposalDetailsService.endCustomer()
+        .then(function onSuccess(response) {
+          $scope.endCustomerList = response.data.data;
+        }).catch(function onError(response) {
+          console.log(response);
+        })
+
       editProposalDetailsService.getProposalDetails(proposalId)
         .then(function onSuccess(response) {
           $scope.proposalData = response.data.data;
@@ -23,6 +31,7 @@ angular.module('catalogueApp')
           $scope.proposalData.startDate = new Date($scope.proposalData.tentative_start_date);
           $scope.proposalData.endDate = new Date($scope.proposalData.tentative_end_date);
           $scope.options.minDate = $scope.proposalData.tentative_start_date;
+          $scope.proposalData.type_of_end_customer = JSON.stringify($scope.proposalData.type_of_end_customer);
         }).catch(function onError(response) {
           console.log(response);
         })
@@ -36,19 +45,13 @@ angular.module('catalogueApp')
           console.log(response);
         })
 
-        editProposalDetailsService.endCustomer()
-        .then(function onSuccess(response) {
-          console.log('111111111111111111111111111111111111',response);
-         // $scope.endCustomerList = response.data.data;
-        }).catch(function onError(response) {
-          console.log(response);
-        })
+        
 
 
       $scope.updateProposalDetails = function () {
         editProposalDetailsService.updateProposalDetails($scope.proposalData)
           .then(function onSuccess(response) {
-            swal(constants.name, constants.proposal_update_success, constants.success);
+           // swal(constants.name, constants.proposal_update_success, constants.success);
             swal({
               title: "",
               text: constants.proposal_update_success,
@@ -56,7 +59,7 @@ angular.module('catalogueApp')
               confirmButtonText: "ok",
             },
               function (isConfirm) {
-                if (isConfirm) {
+                 if (isConfirm) {
                   $location.path("/campaignDecisionBoard");
                 }
               }
