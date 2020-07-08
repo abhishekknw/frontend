@@ -232,7 +232,7 @@
                           </div>
 
                               <div class="table-responsive">
-                                <table class="table" id="tablescroll" style="width: 100%">
+                                <table class="table" id="tablescroll">
                                   <thead>
                                     <tr>
                                       <th>Supplier Name</th>
@@ -1640,6 +1640,7 @@
           <table class="table table-bordered" ng-if="bookingPhases.type_of_end_customer == 'B to C'">
             <thead>
               <tr>
+
                 <!-- <th><small>Confirmed Booked <br>(Total {{flat_count_header}})</small></th>
                 <th><small>Not Initiated <br>(Total {{flat_count_header}})</small></th>
                 <th><small>Followup Required <br>(Total {{flat_count_header}})</small></th>
@@ -1661,6 +1662,7 @@
                 </th>
                 <th><small>{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].rejected}} <br>(Total {{flat_count_header}})</small></th>
                 <th><small>{{bookingPhases.breakup_header[bookingPhases.type_of_end_customer].total}} <br>(Total {{flat_count_header}})</small></th>
+
               </tr>
             </thead>
             <tbody>
@@ -1676,7 +1678,7 @@
 
                 <td ng-if="bookingPhases.pipeline_suppliers.not_initiated.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.pipeline_suppliers.not_initiated.supplier_data,'Pipelined')">
                   {{bookingPhases.pipeline_suppliers.not_initiated.supplier_count}} ({{bookingPhases.pipeline_suppliers.not_initiated.flat_count}})</small></td>
-                  <td ng-if="bookingPhases.pipeline_suppliers.not_initiated.supplier_data.length == 0"><small>0</small></td>
+                  <td ng-if="bookingPhases.pipeline_suppliers.not_initiated.supplier_data.length == 0"><small>0</small></td> -->
 
 
 
