@@ -3281,59 +3281,64 @@
                           <td>{{(WeeklyVendorMISLast3WeekSummary.total / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
                           </tr>
                           <tr>
-                          <td><small style="font-weight:bold">Hot Leads</small></td>
-                          <td>{{WeeklyVendorMISOverallSummary.interested || 'NA'}}</td>
-                          <td>{{WeeklyVendorMISLastWeekSummary.interested || 'NA'}}</td>
-                          <td>{{WeeklyVendorMISLast2WeekSummary.interested || 'NA'}}</td>
-                          <td>{{WeeklyVendorMISLast3WeekSummary.interested || 'NA'}}</td>
+                            <td><small style="font-weight:bold">Mean of Leads</small></td>
+                            <td>{{WeeklyVendorMISOverallSummary.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %</td>
+                            <td>{{WeeklyVendorMISLastWeekSummary.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
+                              <span ng-if="WeeklyVendorMISLastWeekSummary.total_leads_analytics.percentage_by_flat > WeeklyVendorMISOverallSummary.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                              <span ng-if="WeeklyVendorMISLastWeekSummary.total_leads_analytics.percentage_by_flat < WeeklyVendorMISOverallSummary.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+  
+                            </td>
+                            <td>{{WeeklyVendorMISLast2WeekSummary.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
+                              <span ng-if="WeeklyVendorMISLast2WeekSummary.total_leads_analytics.percentage_by_flat > WeeklyVendorMISOverallSummary.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                              <span ng-if="WeeklyVendorMISLast2WeekSummary.total_leads_analytics.percentage_by_flat < WeeklyVendorMISOverallSummary.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                            </td>
+                            <td>{{WeeklyVendorMISLast3WeekSummary.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
+                              <span ng-if="WeeklyVendorMISLast3WeekSummary.total_leads_analytics.percentage_by_flat > WeeklyVendorMISOverallSummary.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                              <span ng-if="WeeklyVendorMISLast3WeekSummary.total_leads_analytics.percentage_by_flat < WeeklyVendorMISOverallSummary.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                            </td>
                           </tr>
+                        </tbody>
+                        <tbody ng-repeat="(key, value) in WeeklyVendorMISOverallSummary.lead_keys">
                           <tr>
-                          <td><small style="font-weight:bold">Hot Leads in %</small></td>
-                          <td>{{(WeeklyVendorMISOverallSummary.interested / WeeklyVendorMISOverallSummary.flat_count)  * 100 | limitTo:5}} %</td>
-                          <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
-                          <td>{{(WeeklyVendorMISLast2WeekSummary.interested / WeeklyVendorMISLast2WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
-                          <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
-                          </tr>
-                          <tr>
-                          <td><small style="font-weight:bold">Hot Leads Ratio (%)</small></td>
-                          <td>{{(WeeklyVendorMISOverallSummary.interested / WeeklyVendorMISOverallSummary.total)  * 100 | limitTo:5}} %</td>
-                          <td>{{(WeeklyVendorMISLastWeekSummary.interested / WeeklyVendorMISLastWeekSummary.total)  * 100 | limitTo:5}} %</td>
-                          <td>{{(WeeklyVendorMISLast2WeekSummary.interested / WeeklyVendorMISLast2WeekSummary.total)  * 100 | limitTo:5}} %</td>
-                          <td>{{(WeeklyVendorMISLast3WeekSummary.interested / WeeklyVendorMISLast3WeekSummary.total)  * 100 | limitTo:5}} %</td>
-                          </tr>
-                          <tr>
-                          <td><small style="font-weight:bold">Mean of Leads</small></td>
-                          <td>{{WeeklyVendorMISOverallSummary.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %</td>
-                          <td>{{WeeklyVendorMISLastWeekSummary.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
-                            <span ng-if="WeeklyVendorMISLastWeekSummary.total_leads_analytics.percentage_by_flat > WeeklyVendorMISOverallSummary.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                            <span ng-if="WeeklyVendorMISLastWeekSummary.total_leads_analytics.percentage_by_flat < WeeklyVendorMISOverallSummary.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                            <td><small style="font-weight:bold">Hotness {{$index+1}}</small></td>
+                            <td>{{WeeklyVendorMISOverallSummary[key] || 'NA'}}</td>
+                            <td>{{WeeklyVendorMISLastWeekSummary[key] || 'NA'}}</td>
+                            <td>{{WeeklyVendorMISLast2WeekSummary[key] || 'NA'}}</td>
+                            <td>{{WeeklyVendorMISLast3WeekSummary[key] || 'NA'}}</td>
+                            </tr>
 
-                          </td>
-                          <td>{{WeeklyVendorMISLast2WeekSummary.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
-                            <span ng-if="WeeklyVendorMISLast2WeekSummary.total_leads_analytics.percentage_by_flat > WeeklyVendorMISOverallSummary.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                            <span ng-if="WeeklyVendorMISLast2WeekSummary.total_leads_analytics.percentage_by_flat < WeeklyVendorMISOverallSummary.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                          </td>
-                          <td>{{WeeklyVendorMISLast3WeekSummary.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
-                            <span ng-if="WeeklyVendorMISLast3WeekSummary.total_leads_analytics.percentage_by_flat > WeeklyVendorMISOverallSummary.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                            <span ng-if="WeeklyVendorMISLast3WeekSummary.total_leads_analytics.percentage_by_flat < WeeklyVendorMISOverallSummary.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                          </td>
-                          </tr>
-                          <tr>
-                          <td><small style="font-weight:bold">Mean of Hot Leads</small></td>
-                          <td>{{WeeklyVendorMISOverallSummary.hot_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %</td>
-                          <td>{{WeeklyVendorMISLastWeekSummary.hot_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
-                            <span ng-if="WeeklyVendorMISLastWeekSummary.hot_leads_analytics.percentage_by_flat > WeeklyVendorMISOverallSummary.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                            <span ng-if="WeeklyVendorMISLastWeekSummary.hot_leads_analytics.percentage_by_flat < WeeklyVendorMISOverallSummary.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                          </td>
-                          <td>{{WeeklyVendorMISLast2WeekSummary.hot_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
-                            <span ng-if="WeeklyVendorMISLast2WeekSummary.hot_leads_analytics.percentage_by_flat > WeeklyVendorMISOverallSummary.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                            <span ng-if="WeeklyVendorMISLast2WeekSummary.hot_leads_analytics.percentage_by_flat < WeeklyVendorMISOverallSummary.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                          </td>
-                          <td>{{WeeklyVendorMISLast3WeekSummary.hot_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
-                            <span ng-if="WeeklyVendorMISLast3WeekSummary.hot_leads_analytics.percentage_by_flat > WeeklyVendorMISOverallSummary.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-                            <span ng-if="WeeklyVendorMISLast3WeekSummary.hot_leads_analytics.percentage_by_flat < WeeklyVendorMISOverallSummary.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-                          </td>
-                          </tr>
+                            <tr>
+                              <td><small style="font-weight:bold">Hotness {{$index+1}} in %</small></td>
+                              <td>{{(WeeklyVendorMISOverallSummary[key] / WeeklyVendorMISOverallSummary.flat_count)  * 100 | limitTo:5}} %</td>
+                              <td>{{(WeeklyVendorMISLastWeekSummary[key] / WeeklyVendorMISLastWeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+                              <td>{{(WeeklyVendorMISLast2WeekSummary[key] / WeeklyVendorMISLast2WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+                              <td>{{(WeeklyVendorMISLast3WeekSummary[key] / WeeklyVendorMISLast3WeekSummary.flat_count)  * 100 | limitTo:5}} %</td>
+                            </tr>
+
+                            <tr>
+                              <td><small style="font-weight:bold">Hotness {{$index+1}} Ratio (%)</small></td>
+                              <td>{{(WeeklyVendorMISOverallSummary[key] / WeeklyVendorMISOverallSummary.total)  * 100 | limitTo:5}} %</td>
+                              <td>{{(WeeklyVendorMISLastWeekSummary[key] / WeeklyVendorMISLastWeekSummary.total)  * 100 | limitTo:5}} %</td>
+                              <td>{{(WeeklyVendorMISLast2WeekSummary[key] / WeeklyVendorMISLast2WeekSummary.total)  * 100 | limitTo:5}} %</td>
+                              <td>{{(WeeklyVendorMISLast3WeekSummary[key] / WeeklyVendorMISLast3WeekSummary.total)  * 100 | limitTo:5}} %</td>
+                            </tr>
+
+                            <tr>
+                              <td><small style="font-weight:bold">Mean of Hotness {{$index+1}}</small></td>
+                              <td>{{WeeklyVendorMISOverallSummary.analytics[key].percentage_by_flat || 'NA'  | limitTo:5}} %</td>
+                              <td>{{WeeklyVendorMISLastWeekSummary.analytics[key].percentage_by_flat || 'NA'  | limitTo:5}} %
+                                <span ng-if="WeeklyVendorMISLastWeekSummary.analytics[key].percentage_by_flat > WeeklyVendorMISOverallSummary.analytics[key].percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                <span ng-if="WeeklyVendorMISLastWeekSummary.analytics[key].percentage_by_flat < WeeklyVendorMISOverallSummary.analytics[key].percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                              </td>
+                              <td>{{WeeklyVendorMISLast2WeekSummary.analytics[key].percentage_by_flat || 'NA'  | limitTo:5}} %
+                                <span ng-if="WeeklyVendorMISLast2WeekSummary.analytics[key].percentage_by_flat > WeeklyVendorMISOverallSummary.analytics[key].percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                <span ng-if="WeeklyVendorMISLast2WeekSummary.analytics[key].percentage_by_flat < WeeklyVendorMISOverallSummary.analytics[key].percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                              </td>
+                              <td>{{WeeklyVendorMISLast3WeekSummary.analytics[key].percentage_by_flat || 'NA'  | limitTo:5}} %
+                                <span ng-if="WeeklyVendorMISLast3WeekSummary.analytics[key].percentage_by_flat > WeeklyVendorMISOverallSummary.analytics[key].percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+                                <span ng-if="WeeklyVendorMISLast3WeekSummary.analytics[key].percentage_by_flat < WeeklyVendorMISOverallSummary.analytics[key].percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+                              </td>
+                            </tr>
                         </tbody>
                       </table>
                     </div>
@@ -3361,9 +3366,15 @@
               <th style="background:#8e1921 !important;color:#ffffff !important">Supplier Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads </th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads <br> in %</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads Ratio <br> (%)</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key,data) in overallVendorSummary.overall.lead_keys">
+                Hotness {{$index+1}}
+              </th>
+              <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key,data) in overallVendorSummary.overall.lead_keys">
+                Hotness {{$index+1}} <br> in %
+              </th>
+              <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key,data) in overallVendorSummary.overall.lead_keys">
+                Hotness {{$index+1}} <br> (%)
+              </th>
             </tr>
       </thead>
         <tbody style="text-align:center;">
@@ -3374,10 +3385,16 @@
             <td>{{data.total}}</td>
             <td ng-if="data.flat_count != 0">{{(data.total / data.flat_count) * 100 | limitTo:5}}%</td>
             <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{data.interested}}</td>
-            <td ng-if="data.flat_count != 0">{{(data.interested / data.flat_count) * 100 | limitTo:5 }}%</td>
-            <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{(data.interested / data.total) * 100 | limitTo:5 }}%</td>
+            <td ng-repeat="(key1,data1) in overallVendorSummary.overall.lead_keys">
+              {{data[key1]}}
+            </td>
+            <td ng-repeat="(key1,data1) in overallVendorSummary.overall.lead_keys">
+              <span ng-if="data.flat_count != 0">{{(data[key1] / data.flat_count) * 100 | limitTo:5 }}%</span>
+              <span ng-if="data.flat_count == 0">NA</span>
+            </td>
+            <td ng-repeat="(key1,data1) in overallVendorSummary.overall.lead_keys">
+              {{(data[key1] / data.total) * 100 | limitTo:5 }}%
+            </td>
           </tr>
         </tbody>
       </table>
@@ -3465,58 +3482,63 @@
           <td>{{(WeeklyMISLast3WeekSummary.all_campaigns.total / WeeklyMISLast3WeekSummary.all_campaigns.flat_count)  * 100 | limitTo:5}} %</td>
           </tr>
           <tr>
-          <td><small style="font-weight:bold">Hot Leads</small></td>
-          <td>{{WeeklyMISOverallSummary.all_campaigns.interested || 'NA'}}</td>
-          <td>{{WeeklyMISLastWeekSummary.all_campaigns.interested || 'NA'}}</td>
-          <td>{{WeeklyMISLast2WeekSummary.all_campaigns.interested || 'NA'}}</td>
-          <td>{{WeeklyMISLast3WeekSummary.all_campaigns.interested || 'NA'}}</td>
+            <td><small style="font-weight:bold">Mean of Leads</small></td>
+            <td>{{WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %</td>
+            <td>{{WeeklyMISLastWeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
+              <span ng-if="WeeklyMISLastWeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat > WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+              <span ng-if="WeeklyMISLastWeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat < WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+  
+            </td>
+            <td>{{WeeklyMISLast2WeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
+              <span ng-if="WeeklyMISLast2WeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat > WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+              <span ng-if="WeeklyMISLast2WeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat < WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+            </td>
+            <td>{{WeeklyMISLast3WeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
+              <span ng-if="WeeklyMISLast3WeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat > WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+              <span ng-if="WeeklyMISLast3WeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat < WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+            </td>
           </tr>
+        </tbody>
+        <tbody ng-repeat="(key, value) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
           <tr>
-          <td><small style="font-weight:bold">Hot Leads in %</small></td>
-          <td>{{(WeeklyMISOverallSummary.all_campaigns.interested / WeeklyMISOverallSummary.all_campaigns.flat_count)  * 100 | limitTo:5}} %</td>
-          <td>{{(WeeklyMISLastWeekSummary.all_campaigns.interested / WeeklyMISLastWeekSummary.all_campaigns.flat_count)  * 100 | limitTo:5}} %</td>
-          <td>{{(WeeklyMISLast2WeekSummary.all_campaigns.interested / WeeklyMISLast2WeekSummary.all_campaigns.flat_count)  * 100 | limitTo:5}} %</td>
-          <td>{{(WeeklyMISLast3WeekSummary.all_campaigns.interested / WeeklyMISLast3WeekSummary.all_campaigns.flat_count)  * 100 | limitTo:5}} %</td>
+            <td><small style="font-weight:bold">Hotness {{$index+1}}</small></td>
+            <td>{{WeeklyMISOverallSummary.all_campaigns[key] || 'NA'}}</td>
+            <td>{{WeeklyMISLastWeekSummary.all_campaigns[key] || 'NA'}}</td>
+            <td>{{WeeklyMISLast2WeekSummary.all_campaigns[key] || 'NA'}}</td>
+            <td>{{WeeklyMISLast3WeekSummary.all_campaigns[key] || 'NA'}}</td>
           </tr>
-          <tr>
-          <td><small style="font-weight:bold">Hot Leads Ratio (%)</small></td>
-          <td>{{(WeeklyMISOverallSummary.all_campaigns.interested / WeeklyMISOverallSummary.all_campaigns.total)  * 100 | limitTo:5}} %</td>
-          <td>{{(WeeklyMISLastWeekSummary.all_campaigns.interested / WeeklyMISLastWeekSummary.all_campaigns.total)  * 100 | limitTo:5}} %</td>
-          <td>{{(WeeklyMISLast2WeekSummary.all_campaigns.interested / WeeklyMISLast2WeekSummary.all_campaigns.total)  * 100 | limitTo:5}} %</td>
-          <td>{{(WeeklyMISLast3WeekSummary.all_campaigns.interested / WeeklyMISLast3WeekSummary.all_campaigns.total)  * 100 | limitTo:5}} %</td>
-          </tr>
-          <tr>
-          <td><small style="font-weight:bold">Mean of Leads</small></td>
-          <td>{{WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %</td>
-          <td>{{WeeklyMISLastWeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
-            <span ng-if="WeeklyMISLastWeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat > WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-            <span ng-if="WeeklyMISLastWeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat < WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
 
-          </td>
-          <td>{{WeeklyMISLast2WeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
-            <span ng-if="WeeklyMISLast2WeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat > WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-            <span ng-if="WeeklyMISLast2WeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat < WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-          </td>
-          <td>{{WeeklyMISLast3WeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
-            <span ng-if="WeeklyMISLast3WeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat > WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-            <span ng-if="WeeklyMISLast3WeekSummary.all_campaigns.total_leads_analytics.percentage_by_flat < WeeklyMISOverallSummary.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-          </td>
-          </tr>
           <tr>
-          <td><small style="font-weight:bold">Mean of Hot Leads</small></td>
-          <td>{{WeeklyMISOverallSummary.all_campaigns.hot_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %</td>
-          <td>{{WeeklyMISLastWeekSummary.all_campaigns.hot_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
-            <span ng-if="WeeklyMISLastWeekSummary.all_campaigns.hot_leads_analytics.percentage_by_flat > WeeklyMISOverallSummary.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-            <span ng-if="WeeklyMISLastWeekSummary.all_campaigns.hot_leads_analytics.percentage_by_flat < WeeklyMISOverallSummary.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-          </td>
-          <td>{{WeeklyMISLast2WeekSummary.all_campaigns.hot_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
-            <span ng-if="WeeklyMISLast2WeekSummary.all_campaigns.hot_leads_analytics.percentage_by_flat > WeeklyMISOverallSummary.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-            <span ng-if="WeeklyMISLast2WeekSummary.all_campaigns.hot_leads_analytics.percentage_by_flat < WeeklyMISOverallSummary.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-          </td>
-          <td>{{WeeklyMISLast3WeekSummary.all_campaigns.hot_leads_analytics.percentage_by_flat || 'NA'  | limitTo:5}} %
-            <span ng-if="WeeklyMISLast3WeekSummary.all_campaigns.hot_leads_analytics.percentage_by_flat > WeeklyMISOverallSummary.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-            <span ng-if="WeeklyMISLast3WeekSummary.all_campaigns.hot_leads_analytics.percentage_by_flat < WeeklyMISOverallSummary.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-          </td>
+            <td><small style="font-weight:bold">Hotness {{$index+1}} in %</small></td>
+            <td>{{(WeeklyMISOverallSummary.all_campaigns[key] / WeeklyMISOverallSummary.all_campaigns.flat_count)  * 100 | limitTo:5}} %</td>
+            <td>{{(WeeklyMISLastWeekSummary.all_campaigns[key] / WeeklyMISLastWeekSummary.all_campaigns.flat_count)  * 100 | limitTo:5}} %</td>
+            <td>{{(WeeklyMISLast2WeekSummary.all_campaigns[key] / WeeklyMISLast2WeekSummary.all_campaigns.flat_count)  * 100 | limitTo:5}} %</td>
+            <td>{{(WeeklyMISLast3WeekSummary.all_campaigns[key] / WeeklyMISLast3WeekSummary.all_campaigns.flat_count)  * 100 | limitTo:5}} %</td>
+          </tr>
+
+          <tr>
+            <td><small style="font-weight:bold">Hotness {{$index+1}} Ratio (%)</small></td>
+            <td>{{(WeeklyMISOverallSummary.all_campaigns[key] / WeeklyMISOverallSummary.all_campaigns.total)  * 100 | limitTo:5}} %</td>
+            <td>{{(WeeklyMISLastWeekSummary.all_campaigns[key] / WeeklyMISLastWeekSummary.all_campaigns.total)  * 100 | limitTo:5}} %</td>
+            <td>{{(WeeklyMISLast2WeekSummary.all_campaigns[key] / WeeklyMISLast2WeekSummary.all_campaigns.total)  * 100 | limitTo:5}} %</td>
+            <td>{{(WeeklyMISLast3WeekSummary.all_campaigns[key] / WeeklyMISLast3WeekSummary.all_campaigns.total)  * 100 | limitTo:5}} %</td>
+          </tr>
+
+          <tr>
+            <td><small style="font-weight:bold">Mean of Hotness {{$index+1}}</small></td>
+            <td>{{WeeklyMISOverallSummary.all_campaigns.analytics[key].percentage_by_flat || 'NA'  | limitTo:5}} %</td>
+            <td>{{WeeklyMISLastWeekSummary.all_campaigns.analytics[key].percentage_by_flat || 'NA'  | limitTo:5}} %
+              <span ng-if="WeeklyMISLastWeekSummary.all_campaigns.analytics[key].percentage_by_flat > WeeklyMISOverallSummary.all_campaigns.analytics[key].percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+              <span ng-if="WeeklyMISLastWeekSummary.all_campaigns.analytics[key].percentage_by_flat < WeeklyMISOverallSummary.all_campaigns.analytics[key].percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+            </td>
+            <td>{{WeeklyMISLast2WeekSummary.all_campaigns.analytics[key].percentage_by_flat || 'NA'  | limitTo:5}} %
+              <span ng-if="WeeklyMISLast2WeekSummary.all_campaigns.analytics[key].percentage_by_flat > WeeklyMISOverallSummary.all_campaigns.analytics[key].percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+              <span ng-if="WeeklyMISLast2WeekSummary.all_campaigns.analytics[key].percentage_by_flat < WeeklyMISOverallSummary.all_campaigns.analytics[key].percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+            </td>
+            <td>{{WeeklyMISLast3WeekSummary.all_campaigns.analytics[key].percentage_by_flat || 'NA'  | limitTo:5}} %
+              <span ng-if="WeeklyMISLast3WeekSummary.all_campaigns.analytics[key].percentage_by_flat > WeeklyMISOverallSummary.all_campaigns.analytics[key].percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+              <span ng-if="WeeklyMISLast3WeekSummary.all_campaigns.analytics[key].percentage_by_flat < WeeklyMISOverallSummary.all_campaigns.analytics[key].percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -3543,11 +3565,20 @@
               <th style="background:#8e1921 !important;color:#ffffff !important">Supplier Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads </th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads <br> in %</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads Ratio <br> (%)</th>
+
+              <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key, value) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+                Hotness {{$index+1}}
+              </th>
+
+              <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key, value) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+                Hotness {{$index+1}} <br> in %
+              </th>
+
+              <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key, value) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+                Hotness {{$index+1}} Ratio <br> (%)
+              </th>
             </tr>
-      </thead>
+        </thead>
         <tbody style="text-align:center;">
           <tr ng-repeat="(key,data) in overallCampaignSummary">
             <td style="font-weight:bold">{{data.name}}</td>
@@ -3556,10 +3587,19 @@
             <td>{{data.total}}</td>
             <td ng-if="data.flat_count != 0">{{(data.total / data.flat_count) * 100 | limitTo:5}}%</td>
             <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{data.interested}}</td>
-            <td ng-if="data.flat_count != 0">{{(data.interested / data.flat_count) * 100 | limitTo:5 }}%</td>
-            <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{(data.interested / data.total) * 100 | limitTo:5 }}%</td>
+
+            <td ng-repeat="(key1, value1) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+              {{data[key1]}}
+            </td>
+
+            <td ng-repeat="(key1, value1) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+              <span ng-if="data.flat_count != 0">{{(data[key1] / data.flat_count) * 100 | limitTo:5 }}%</span>
+              <span ng-if="data.flat_count == 0">NA</span>
+            </td>
+
+            <td ng-repeat="(key1, value1) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+              {{(data[key1] / data.total) * 100 | limitTo:5 }}%
+            </td>
           </tr>
         </tbody>
       </table>
@@ -3612,28 +3652,29 @@
       </td>
       <td ng-if="!campaignSummary.last_three_weeks.all_campaigns.total_leads_analytics.percentage_by_flat">NA </td>
       </tr>
-      <tr>
-      <td><small style="font-weight:bold">Mean of Hot Leads</small></td>
-      <td ng-if="campaignSummary.overall.all_campaigns.hot_leads_analytics.percentage_by_flat">{{campaignSummary.overall.all_campaigns.hot_leads_analytics.percentage_by_flat | limitTo:5}} %</td>
-      <td ng-if="!campaignSummary.overall.all_campaigns.hot_leads_analytics.percentage_by_flat">NA</td>
+      
+      <tr ng-repeat="(key, value) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+        <td><small style="font-weight:bold">Mean of Hotness {{$index+1}}</small></td>
+        <td ng-if="campaignSummary.overall.all_campaigns.analytics[key].percentage_by_flat">{{campaignSummary.overall.all_campaigns.analytics[key].percentage_by_flat | limitTo:5}} %</td>
+        <td ng-if="!campaignSummary.overall.all_campaigns.analytics[key].percentage_by_flat">NA</td>
 
-      <td ng-if="campaignSummary.last_week.all_campaigns.hot_leads_analytics.percentage_by_flat">{{campaignSummary.last_week.all_campaigns.hot_leads_analytics.percentage_by_flat | limitTo:5 }} %
-        <span ng-if="campaignSummary.last_week.all_campaigns.hot_leads_analytics.percentage_by_flat > campaignSummary.overall.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-        <span ng-if="campaignSummary.last_week.all_campaigns.hot_leads_analytics.percentage_by_flat < campaignSummary.overall.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-      </td>
-      <td ng-if="!campaignSummary.last_week.all_campaigns.hot_leads_analytics.percentage_by_flat">NA</td>
+        <td ng-if="campaignSummary.last_week.all_campaigns.analytics[key].percentage_by_flat">{{campaignSummary.last_week.all_campaigns.analytics[key].percentage_by_flat | limitTo:5 }} %
+          <span ng-if="campaignSummary.last_week.all_campaigns.analytics[key].percentage_by_flat > campaignSummary.overall.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+          <span ng-if="campaignSummary.last_week.all_campaigns.analytics[key].percentage_by_flat < campaignSummary.overall.all_campaigns.total_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+        </td>
+        <td ng-if="!campaignSummary.last_week.all_campaigns.analytics[key].percentage_by_flat">NA</td>
 
-      <td ng-if="campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat">{{campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat | limitTo:5 }} %
-        <span ng-if="campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat > campaignSummary.overall.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-        <span ng-if="campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat < campaignSummary.overall.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-      </td>
-      <td ng-if="!campaignSummary.last_two_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat">NA </td>
+        <td ng-if="campaignSummary.last_two_weeks.all_campaigns.analytics[key].percentage_by_flat">{{campaignSummary.last_two_weeks.all_campaigns.analytics[key].percentage_by_flat | limitTo:5 }} %
+          <span ng-if="campaignSummary.last_two_weeks.all_campaigns.analytics[key].percentage_by_flat > campaignSummary.overall.all_campaigns.analytics[key].percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+          <span ng-if="campaignSummary.last_two_weeks.all_campaigns.analytics[key].percentage_by_flat < campaignSummary.overall.all_campaigns.analytics[key].percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+        </td>
+        <td ng-if="!campaignSummary.last_two_weeks.all_campaigns.analytics[key].percentage_by_flat">NA </td>
 
-      <td ng-if="campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat">{{campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat | limitTo:5 }} %
-        <span ng-if="campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat > campaignSummary.overall.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
-        <span ng-if="campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat < campaignSummary.overall.all_campaigns.hot_leads_analytics.percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
-      </td>
-      <td ng-if="!campaignSummary.last_three_weeks.all_campaigns.hot_leads_analytics.percentage_by_flat">NA </td>
+        <td ng-if="campaignSummary.last_three_weeks.all_campaigns.analytics[key].percentage_by_flat">{{campaignSummary.last_three_weeks.all_campaigns.analytics[key].percentage_by_flat | limitTo:5 }} %
+          <span ng-if="campaignSummary.last_three_weeks.all_campaigns.analytics[key].percentage_by_flat > campaignSummary.overall.all_campaigns.analytics[key].percentage_by_flat" class="glyphicon glyphicon-arrow-up green"></span>
+          <span ng-if="campaignSummary.last_three_weeks.all_campaigns.analytics[key].percentage_by_flat < campaignSummary.overall.all_campaigns.analytics[key].percentage_by_flat" class="glyphicon glyphicon-arrow-down red"></span>
+        </td>
+        <td ng-if="!campaignSummary.last_three_weeks.all_campaigns.analytics[key].percentage_by_flat">NA </td>
       </tr>
 
     </tbody>
@@ -3686,9 +3727,16 @@
               <th style="background:#8e1921 !important;color:#ffffff !important">Supplier Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads </th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads <br> in %</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads Ratio <br> (%)</th>
+
+              <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key, value) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+                Hotness {{$index+1}}
+              </th>
+              <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key, value) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+                Hotness {{$index+1}} <br> in %
+              </th>
+              <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key, value) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+                Hotness {{$index+1}} Ratio <br> (%)
+              </th>
             </tr>
       </thead>
         <tbody style="text-align:center;">
@@ -3699,10 +3747,19 @@
             <td>{{data.total}}</td>
             <td ng-if="data.flat_count != 0">{{(data.total / data.flat_count) * 100 | limitTo:5}}%</td>
             <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{data.interested}}</td>
-            <td ng-if="data.flat_count != 0">{{(data.interested / data.flat_count) * 100 | limitTo:5 }}%</td>
-            <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{(data.interested / data.total) * 100 | limitTo:5 }}%</td>
+
+            <td ng-repeat="(key1, value1) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+              {{data[key1]}}
+            </td>
+
+            <td ng-repeat="(key1, value1) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+              <span ng-if="data.flat_count != 0">{{(data[key1] / data.flat_count) * 100 | limitTo:5 }}%</span>
+              <span ng-if="data.flat_count == 0">NA</span>
+            </td>
+
+            <td ng-repeat="(key1, value1) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+              {{(data[key1] / data.total) * 100 | limitTo:5 }}%
+            </td>
           </tr>
         </tbody>
       </table>
@@ -3722,7 +3779,10 @@
       <tr>
         <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
         <th style="background:#8e1921 !important;color:#ffffff !important">Mean of Leads</th>
-        <th style="background:#8e1921 !important;color:#ffffff !important">Mean of Hot Leads</th>
+
+        <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key, value) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+          Mean of Hotness {{$index+1}}
+        </th>
       </tr>
   </thead>
     <tbody style="text-align:center;">
@@ -3731,8 +3791,8 @@
           <td ng-if="data.total_leads_analytics.percentage_by_flat">{{data.total_leads_analytics.percentage_by_flat | limitTo:5 }} %</td>
           <td ng-if="!data.total_leads_analytics.percentage_by_flat">NA</td>
 
-          <td ng-if="data.hot_leads_analytics.percentage_by_flat">{{data.hot_leads_analytics.percentage_by_flat | limitTo:5 }} %</td>
-          <td ng-if="!data.hot_leads_analytics.percentage_by_flat">NA</td>
+          <td ng-repeat="(key1, value1) in WeeklyMISOverallSummary.all_campaigns.lead_keys" ng-if="data.analytics[key1].percentage_by_flat">{{data.analytics[key1].percentage_by_flat | limitTo:5 }} %</td>
+          <td ng-repeat="(key1, value1) in WeeklyMISOverallSummary.all_campaigns.lead_keys" ng-if="!data.analytics[key1].percentage_by_flat">NA</td>
 
       <tr>
   </tbody>
@@ -3784,9 +3844,15 @@
               <th style="background:#8e1921 !important;color:#ffffff !important">Society Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads </th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads <br> in %</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads Ratio <br> (%)</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key, value) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+                Hotness {{$index+1}}
+              </th>
+              <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key, value) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+                Hotness {{$index+1}} <br> in %
+              </th>
+              <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key, value) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+                Hotness {{$index+1}} Ratio <br> (%)
+              </th>
             </tr>
       </thead>
         <tbody style="text-align:center;">
@@ -3797,10 +3863,19 @@
             <td>{{data.total}}</td>
             <td ng-if="data.flat_count != 0">{{(data.total / data.flat_count) * 100 | limitTo:5}}%</td>
             <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{data.interested}}</td>
-            <td ng-if="data.flat_count != 0">{{(data.interested / data.flat_count) * 100 | limitTo:5 }}%</td>
-            <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{(data.interested / data.total) * 100 | limitTo:5 }}%</td>
+
+            <td ng-repeat="(key1, value1) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+              {{data[key1]}}
+            </td>
+          
+            <td ng-repeat="(key1, value1) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+              <span ng-if="data.flat_count != 0">{{(data[key1] / data.flat_count) * 100 | limitTo:5 }}%</span>
+              <span ng-if="data.flat_count == 0">NA</span>
+            </td>
+          
+            <td ng-repeat="(key1, value1) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+              {{(data[key1] / data.total) * 100 | limitTo:5 }}%
+            </td>
           </tr>
         </tbody>
       </table>
@@ -3820,7 +3895,9 @@
       <tr>
         <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
         <th style="background:#8e1921 !important;color:#ffffff !important">Mean of Leads</th>
-        <th style="background:#8e1921 !important;color:#ffffff !important">Mean of Hot Leads</th>
+        <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key, value) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+          Mean of Hotness {{$index+1}}
+        </th>
       </tr>
   </thead>
     <tbody style="text-align:center;">
@@ -3829,8 +3906,8 @@
           <td ng-if="data.total_leads_analytics.percentage_by_flat">{{data.total_leads_analytics.percentage_by_flat | limitTo:5 }} %</td>
           <td ng-if="!data.total_leads_analytics.percentage_by_flat">NA</td>
 
-          <td ng-if="data.hot_leads_analytics.percentage_by_flat">{{data.hot_leads_analytics.percentage_by_flat | limitTo:5 }} %</td>
-          <td ng-if="!data.hot_leads_analytics.percentage_by_flat">NA</td>
+          <td ng-repeat="(key1, value1) in WeeklyMISOverallSummary.all_campaigns.lead_keys" ng-if="data.analytics[key1].percentage_by_flat">{{data.analytics[key1].percentage_by_flat | limitTo:5 }} %</td>
+          <td ng-repeat="(key1, value1) in WeeklyMISOverallSummary.all_campaigns.lead_keys" ng-if="!data.analytics[key1].percentage_by_flat">NA</td>
 
       <tr>
   </tbody>
@@ -3881,9 +3958,15 @@
               <th style="background:#8e1921 !important;color:#ffffff !important">Supplier Count</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
               <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads <br>in %</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads </th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads <br> in %</th>
-              <th style="background:#8e1921 !important;color:#ffffff !important">Hot Leads Ratio <br> (%)</th>
+              <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key, value) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+                Hotness {{$index+1}}
+              </th>
+              <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key, value) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+                Hotness {{$index+1}} <br> in %
+              </th>
+              <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key, value) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+                Hotness {{$index+1}} Ratio <br> (%)
+              </th>
             </tr>
       </thead>
         <tbody style="text-align:center;">
@@ -3894,10 +3977,18 @@
             <td>{{data.total}}</td>
             <td ng-if="data.flat_count != 0">{{(data.total / data.flat_count) * 100 | limitTo:5}}%</td>
             <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{data.interested}}</td>
-            <td ng-if="data.flat_count != 0">{{(data.interested / data.flat_count) * 100 | limitTo:5 }}%</td>
-            <td ng-if="data.flat_count == 0">NA</td>
-            <td>{{(data.interested / data.total) * 100 | limitTo:5 }}%</td>
+            <td ng-repeat="(key1, value1) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+              {{data[key1]}}
+            </td>
+          
+            <td ng-repeat="(key1, value1) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+              <span ng-if="data.flat_count != 0">{{(data[key1] / data.flat_count) * 100 | limitTo:5 }}%</span>
+              <span ng-if="data.flat_count == 0">NA</span>
+            </td>
+          
+            <td ng-repeat="(key1, value1) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+              {{(data[key1] / data.total) * 100 | limitTo:5 }}%
+            </td>
           </tr>
         </tbody>
       </table>
@@ -3917,7 +4008,9 @@
       <tr>
         <th style="background:#8e1921 !important;color:#ffffff !important">Campaign Name</th>
         <th style="background:#8e1921 !important;color:#ffffff !important">Mean of Leads</th>
-        <th style="background:#8e1921 !important;color:#ffffff !important">Mean of Hot Leads</th>
+        <th style="background:#8e1921 !important;color:#ffffff !important" ng-repeat="(key, value) in WeeklyMISOverallSummary.all_campaigns.lead_keys">
+          Mean of Hotness {{$index+1}}
+        </th>
       </tr>
   </thead>
     <tbody style="text-align:center;">
@@ -3926,8 +4019,8 @@
           <td ng-if="data.total_leads_analytics.percentage_by_flat">{{data.total_leads_analytics.percentage_by_flat | limitTo:5 }} %</td>
           <td ng-if="!data.total_leads_analytics.percentage_by_flat">NA</td>
 
-          <td ng-if="data.hot_leads_analytics.percentage_by_flat">{{data.hot_leads_analytics.percentage_by_flat | limitTo:5 }} %</td>
-          <td ng-if="!data.hot_leads_analytics.percentage_by_flat">NA</td>
+          <td ng-repeat="(key1, value1) in WeeklyMISOverallSummary.all_campaigns.lead_keys" ng-if="data.analytics[key1].percentage_by_flat">{{data.analytics[key1].percentage_by_flat | limitTo:5 }} %</td>
+          <td ng-repeat="(key1, value1) in WeeklyMISOverallSummary.all_campaigns.lead_keys" ng-if="!data.analytics[key1].percentage_by_flat">NA</td>
 
       <tr>
   </tbody>
