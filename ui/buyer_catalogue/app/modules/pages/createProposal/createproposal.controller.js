@@ -6,8 +6,8 @@ angular.module('catalogueApp')
 	$scope.model.centers = new Array();
 	$scope.society = 'RS';
 	$scope.suppliers = [
-		{name:"Societies", code:"RS", selected:"false"},
-		{name:"Corporate Parks", code:"CP", selected:"false"},
+		{name:"Society", code:"RS", selected:"false"},
+		{name:"Corporate Park", code:"CP", selected:"false"},
 		{name:"Bus Shelter", code:"BS", selected:"false"},
 		{name:"Gym", code:"GY", selected:"false"},
 		{name:"Saloon", code:"SA", selected:"false"},
@@ -119,14 +119,16 @@ angular.module('catalogueApp')
 			});
 			//changes for searching societies on basis of area,subarea
   $scope.get_areas = function(id,index) {
-			$scope.areas = [];
-			$scope.sub_areas = [];
+			// $scope.areas = [];
+			// $scope.sub_areas = [];
      	var id = id;
 			for(var i=0;i<$scope.cities.length;i++){
 				if($scope.cities[i].id == id){
 					$scope.model.centers[index].center.city = $scope.cities[i].city_name;
 				}
 			}
+			$scope.model.centers[index].center.area = "";
+			$scope.model.centers[index].center.subarea = "";
    createProposalService.getLocations('areas', id,index)
       .then(function onSuccess(response){
           $scope.areas[index] = response.data;
@@ -137,7 +139,8 @@ angular.module('catalogueApp')
     }
   $scope.get_sub_areas = function(id,index) {
     console.log($scope.cities);
-      var id = id;
+			var id = id;
+			$scope.model.centers[index].center.subarea = "";
 			for(var i=0;i<$scope.areas[index].length;i++){
 				if($scope.areas[index][i].id == id){
 					$scope.model.centers[index].center.area = $scope.areas[index][i].label;
@@ -210,6 +213,14 @@ angular.module('catalogueApp')
 				centers[i].center.pincode = '';
 			}
 	}
+
+	$scope.tentativeBudget = function(){
+	
+    if(!$scope.model.tentative_cost){
+			$scope.model.tentative_cost ="";
+		}
+	}
+
 	$scope.submit = function(){
 	    var status = checkSupplierCode();
 	    if(status >= 0){
@@ -217,7 +228,6 @@ angular.module('catalogueApp')
 			$scope.model.organisation_id = $window.localStorage.organisationId;
 			// $scope.model.parent = $window.localStorage.proposal_id;
 			$scope.requestData = angular.copy($scope.model);
-			console.log($scope.requestData);
 			convertPincodeToString($scope.requestData.centers);
 			// call backend to save only if all the latitudes are found
 			if($scope.requestData.centers.length > 1){

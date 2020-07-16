@@ -413,7 +413,7 @@
           <tbody ng-repeat="center in center_data | filter : query">
             <tr ng-repeat="supplier in center.suppliers['RS'] | filter : query">
               <td>{{$index+1}}</td>
-              <td>{{center.center.center_name}}</td>
+              <td>{{center.center.city}}</td>
               <td><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages"
                   ng-click="getSocietyDetails(supplier,supplier.supplier_id,center,$index)"
                   target="_blank">{{supplier.name}}</a></td>
@@ -494,7 +494,7 @@
           <tbody ng-repeat="center in center_data | filter : query">
             <tr ng-repeat="supplier in center.suppliers['CP'] | filter : query">
               <td>{{$index+1}}</td>
-              <td>{{center.center.center_name}}</td>
+              <td>{{center.center.city}}</td>
               <td>{{supplier.name}}</td>
               <td>{{supplier.subarea}}</td>
               <td>{{supplier.unit_primary_count}}</td>
@@ -562,7 +562,7 @@
             <tr ng-repeat="supplier in center.suppliers[supplierCode.busShelter] | filter : query">
               {{center.suppliers[supplierCode.busShelter]}}
               <td>{{$index+1}}</td>
-              <td>{{center.center.center_name}}</td>
+              <td>{{center.center.city}}</td>
               <td>{{supplier.name}}</td>
               <td>{{supplier.subarea}}</td>
               <td>{{supplier.unit_primary_count}}</td>
@@ -620,7 +620,7 @@
           <tbody ng-repeat="center in center_data | filter : query">
             <tr ng-repeat="supplier in center.suppliers[supplierCode.gym] | filter : query">
               <td>{{$index+1}}</td>
-              <td>{{center.center.center_name}}</td>
+              <td>{{center.center.city}}</td>
               <td>{{supplier.name}}</td>
               <td>{{supplier.subarea}}</td>
               <td>{{supplier.unit_primary_count}}</td>
@@ -676,7 +676,7 @@
           <tbody ng-repeat="center in center_data | filter : query">
             <tr ng-if="supplier" ng-repeat="supplier in center.suppliers[supplierCode.saloon] | filter : query">
               <td>{{$index+1}}</td>
-              <td>{{center.center.center_name}}</td>
+              <td>{{center.center.city}}</td>
               <td>{{supplier.name}}</td>
               <td>{{supplier.subarea}}</td>
               <td>{{supplier.unit_primary_count}}</td>
@@ -736,7 +736,7 @@
           <tbody ng-repeat="center in center_data | filter : query">
             <tr ng-repeat="supplier in center.suppliers[supplierCode.retailStore] | filter : query">
               <td>{{$index+1}}</td>
-              <td>{{center.center.center_name}}</td>
+              <td>{{center.center.city}}</td>
               <td>{{supplier.name}}</td>
               <td>{{supplier.subarea}}</td>
               <td>{{supplier.unit_primary_count}}</td>
