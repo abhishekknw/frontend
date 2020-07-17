@@ -467,7 +467,7 @@
               </td>
 
 
-              <td class="col-md-4" ng-show="$first">
+              <td class="col-md-4"  rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" >
                 <select class="form-control spacing input-width" ng-model="supplier.booking_status"
                   permission="[permissions.changeBookingStatus]" ng-change="changePhase(supplier,$parent.$parent.$index)"
                   ng-disabled="supplier.is_completed">
