@@ -740,7 +740,7 @@ angular.module('machadaloPages')
         //   console.log($scope.profileData);
         //   // $scope.profileData.organisation = $scope.profileData.organisation.organisation_id;
         //   $scope.getContent(contentItem);
-        // }
+         }
 
         $scope.deleteProfile = function (profile) {
 
@@ -1084,4 +1084,5 @@ angular.module('machadaloPages')
 
         $scope.checkClick();
 
-      }]);//end of controller
+
+       }]);//end of controller

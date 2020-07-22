@@ -2176,10 +2176,6 @@
         } else {
           result = DashboardService.getLeadsByCampaign(campaignId,'',$scope.selectedSupplierType.code)
         }
-
-
-
-        $scope.getDistributionGraphsStatics();
            
         // DashboardService.getLeadsByCampaign(campaignId)
         result.then(function onSuccess(response) {
@@ -2221,6 +2217,8 @@
             ];
             /* /sortMenu */
           }
+
+          $scope.getDistributionGraphsStatics();
 
           $scope.localityData = $scope.LeadsByCampaign.locality_data;
           $scope.phaseData = $scope.LeadsByCampaign.phase_data;
@@ -2325,7 +2323,7 @@
             if(!values[i]){
               values[i] = [];
             }
-            var leadPercent = $scope.getPercent(data.is_hot_level_2, data['flat_count']);
+            var leadPercent = $scope.getPercent(data.hot_level_values[i], data['flat_count']);
             value = [keyWithFlatLabel, leadPercent];
             values[i].push(value);
           }
@@ -2412,7 +2410,7 @@
             if(!values[i]){
               values[i] = [];
             }
-            var leadPercent = $scope.getPercent(data.is_hot_level_2, data['flat_count']);
+            var leadPercent = $scope.getPercent(data.hot_level_values[i], data['flat_count']);
             value = { x: keyWithFlatLabel, y: leadPercent };
             values[i].push(value);
           }
@@ -2488,7 +2486,7 @@
             if(!values[i]){
               values[i] = [];
             }
-            var leadPercent = $scope.getPercent(data.is_hot_level_2, data['flat_count']);
+            var leadPercent = $scope.getPercent(data.hot_level_values[i], data['flat_count']);
             value = { x: keyWithFlatLabel, y: leadPercent };
             values[i].push(value);
           }
@@ -2569,16 +2567,20 @@
               ]
           }
         ];
-
+        
         for(key in $scope.Data.overall_data.hot_level_keys){
+          let last_week_y = $scope.Data.last_week.hot_level_values? $scope.Data.last_week.hot_level_values[key] / data.last_week.flat_count * 100:0;
+          let last_two_week_y = $scope.Data.last_two_weeks.hot_level_values? $scope.Data.last_two_weeks.hot_level_values[key] / data.last_week.flat_count * 100:0;
+          let last_three_week_y = $scope.Data.last_three_weeks.hot_level_values? $scope.Data.last_three_weeks.hot_level_values[key] / data.last_week.flat_count * 100:0;
+          
           var row = {
             key: $scope.Data.overall_data.hot_level_keys[key] + " in %",
             values:
               [
-                { x: 'Overall' + '(' + data.overall_data.flat_count + ')', y: data.overall_data.is_hot_level_1 / data.overall_data.flat_count * 100 },
-                { x: 'Last Week' + '(' + data.last_week.flat_count + ')', y: data.last_week.is_hot_level_1 / data.last_week.flat_count * 100 },
-                { x: 'Last Two Week' + '(' + data.last_two_weeks.flat_count + ')', y: data.last_two_weeks.is_hot_level_1 / data.last_two_weeks.flat_count * 100 },
-                { x: 'Last Three Week' + '(' + data.last_three_weeks.flat_count + ')', y: data.last_three_weeks.is_hot_level_1 / data.last_three_weeks.flat_count * 100 }
+                { x: 'Overall' + '(' + data.overall_data.flat_count + ')', y: $scope.Data.overall_data.hot_level_values[key] / data.overall_data.flat_count * 100 },
+                { x: 'Last Week' + '(' + data.last_week.flat_count + ')', y: last_week_y },
+                { x: 'Last Two Week' + '(' + data.last_two_weeks.flat_count + ')', y: last_two_week_y },
+                { x: 'Last Three Week' + '(' + data.last_three_weeks.flat_count + ')', y: last_three_week_y }
               ]
           };
 
@@ -4021,8 +4023,8 @@
 
             $scope.stackedBarAllCampaignWiseChart = formatAllCampaignWiseChart($scope.overallCampaignSummary);
             $scope.stackedBarLastWeekChart = formatLastWeekWiseChart($scope.lastWeekCampaignSummary);
-            $scope.stackedBarLast2WeeksChart = formatLast2WeekWiseChart($scope.last2WeeksCampaignSummary);
-            $scope.stackedBarLast3WeeksChart = formatLast3WeekWiseChart($scope.last3WeeksCampaignSummary);
+            $scope.stackedBarLast2WeeksChart = formatLastWeekWiseChart($scope.last2WeeksCampaignSummary);
+            $scope.stackedBarLast3WeeksChart = formatLastWeekWiseChart($scope.last3WeeksCampaignSummary);
 
             cfpLoadingBar.complete();
           }).catch(function onError(response) {
@@ -4078,8 +4080,8 @@
 
             $scope.stackedBarAllCampaignWiseChart = formatAllCampaignWiseChart($scope.overallCampaignSummary);
             $scope.stackedBarLastWeekChart = formatLastWeekWiseChart($scope.lastWeekCampaignSummary);
-            $scope.stackedBarLast2WeeksChart = formatLast2WeekWiseChart($scope.last2WeeksCampaignSummary);
-            $scope.stackedBarLast3WeeksChart = formatLast3WeekWiseChart($scope.last3WeeksCampaignSummary);
+            $scope.stackedBarLast2WeeksChart = formatLastWeekWiseChart($scope.last2WeeksCampaignSummary);
+            $scope.stackedBarLast3WeeksChart = formatLastWeekWiseChart($scope.last3WeeksCampaignSummary);
 
             cfpLoadingBar.complete();
           }).catch(function onError(response) {
@@ -4089,81 +4091,90 @@
 
 
       var formatAllCampaignWiseChart = function (data) {
-        var values1 = [];
-        var values2 = [];
+        var leadValues = [];
+        var values = {};
+
         angular.forEach(data, function (data, key) {
-          if (data.flat_count != 0) {
-            $scope.hotLeadsValues = data.interested / data.flat_count * 100;
-            $scope.normalLeadsValues = data.total / data.flat_count * 100;
-          }
-          else {
-            $scope.hotLeadsValues = data.interested;
-            $scope.normalLeadsValues = data.total;
+          $scope.hotLeadsValues = $scope.getPercent(data.interested, data['flat_count']);
+          $scope.normalLeadsValues = $scope.getPercent(data.total, data['flat_count']);
 
-          }
           var keyWithFlatLabel = data.name + ' (' + data.flat_count + ')';
-          var value1 =
-            { x: keyWithFlatLabel, y: $scope.normalLeadsValues };
-          var value2 =
-            { x: keyWithFlatLabel, y: $scope.hotLeadsValues };
-          values1.push(value1);
-          values2.push(value2);
+          var value1 = { x: keyWithFlatLabel, y: $scope.normalLeadsValues };
+          
+          leadValues.push(value1);
 
-
+          for(var i in $scope.WeeklyMISOverallSummary.all_campaigns.lead_keys){
+            if(!values[i]){
+              values[i] = [];
+            }
+            var leadPercent = $scope.getPercent(data[i], data['flat_count']);
+            var value = { x: keyWithFlatLabel, y: leadPercent };
+            values[i].push(value);
+          }
         })
 
-        var temp_data = [
-          {
-            key: "Total Leads in %",
-            color: constants.colorKey1,
-            values: values1
-          },
-          {
-            key: "High Potential Leads in %",
-            color: constants.colorKey2,
-            values: values2
-          }
-        ];
+        var temp_data = [];
 
+        var row = {
+          key: "Total Leads in % :",
+          values: leadValues
+        };
+        
+        temp_data.push(row);
+
+        var k = 1;
+        for(var i in $scope.WeeklyMISOverallSummary.all_campaigns.lead_keys){
+          row = {
+            key: "Hotness "+k+" in % :",
+            values: values[i]
+          };
+          
+          temp_data.push(row);
+          k++;
+        }
         return temp_data;
       }
 
       var formatLastWeekWiseChart = function (data) {
-        var values1 = [];
-        var values2 = [];
+        var leadValues = [];
+        var values = {};
         angular.forEach(data, function (data, key) {
-          if (data.flat_count != 0) {
-            $scope.hotLeadsValues = data.interested / data.flat_count * 100;
-            $scope.normalLeadsValues = data.total / data.flat_count * 100;
+          $scope.hotLeadsValues = $scope.getPercent(data.interested, data['flat_count']);
+          $scope.normalLeadsValues = $scope.getPercent(data.total, data['flat_count']);
+
+          var keyWithFlatLabel = data.name + ' (' + data['flat_count'] + ')';
+          var value1 = { x: keyWithFlatLabel, y: $scope.normalLeadsValues };
+          leadValues.push(value1);
+
+          for(var i in $scope.WeeklyMISOverallSummary.all_campaigns.lead_keys){
+            if(!values[i]){
+              values[i] = [];
+            }
+            var leadPercent = $scope.getPercent(data[i], data['flat_count']);
+            var value = { x: keyWithFlatLabel, y: leadPercent };
+            values[i].push(value);
           }
-          else {
-            $scope.hotLeadsValues = data.interested;
-            $scope.normalLeadsValues = data.total;
-
-          }
-          var keyWithFlatLabel = data.name + ' (' + data.flat_count + ')';
-          var value1 =
-            { x: keyWithFlatLabel, y: $scope.normalLeadsValues };
-          var value2 =
-            { x: keyWithFlatLabel, y: $scope.hotLeadsValues };
-          values1.push(value1);
-          values2.push(value2);
-
-
         })
 
-        var temp_data = [
-          {
-            key: "Total Leads in %",
-            color: constants.colorKey1,
-            values: values1
-          },
-          {
-            key: "High Potential Leads in %",
-            color: constants.colorKey2,
-            values: values2
-          }
-        ];
+        var temp_data = [];
+
+        var row = {
+          key: "Total Leads in % :",
+          values: leadValues
+        };
+        
+        temp_data.push(row);
+
+        var k = 1;
+        for(var i in $scope.WeeklyMISOverallSummary.all_campaigns.lead_keys){
+          row = {
+            key: "Hotness "+k+" in % :",
+            values: values[i]
+          };
+          
+          temp_data.push(row);
+          k++;
+        }
 
         return temp_data;
       }
@@ -4267,6 +4278,20 @@
 
 
       $scope.getDistributionGraphsStatics = function () {
+        let raw_data = ["lead", "hot_lead", "flat"];
+        let metrics = [["1", "3", "/"], ["m1", 100, "*"], ["2", "3", "/"], ["m3", 100, "*"]];
+        let m_count = 5;
+        let start_count = 4;
+        let higher_level_metrics = ["m2", "m4"];
+        for(let i in $scope.Data.overall_data.hot_level_keys){
+          raw_data.push(i);
+          metrics.push([String(start_count), "3", "/"]);
+          metrics.push(["m"+m_count, 100, "*"]);
+          higher_level_metrics.push("m"+(m_count+1));
+          m_count+=2;
+          start_count++;
+        }
+
         var data = {
           "data_scope": {
             "1": {
@@ -4278,19 +4303,20 @@
             "category": "unordered",
             "level": ["supplier", "campaign"]
           },
-          "raw_data": ["lead", "hot_lead", "flat"],
-          "metrics": [["1", "3", "/"], ["m1", 100, "*"], ["2", "3", "/"], ["m3", 100, "*"]],
+          "raw_data": raw_data,
+          "metrics": metrics,
           // "metrics": [["2","3","/"],["m1",100,"*"]],
           // "metrics" :[["1","3","/"],["2","3","/"],["m1","100","*"],["m2","100","*"]],
           "statistical_information": { "stats": ["z_score"], "metrics": ["m1", "m3"] },
           "higher_level_statistical_information": {
             "level": ["campaign"], "stats": ["frequency_distribution", "mean", "variance_stdev"],
-            "metrics": ["m2", "m4"]
-          }
+            "metrics": higher_level_metrics
+          },
+          "supplier_code": $scope.selectedSupplierType.code
         }
 
-
-        DashboardService.getDistributionGraphsStatics(data,$scope.selectedSupplierType.code)
+        console.log("data data", data);
+        DashboardService.getDistributionGraphsStatics(data)
           .then(function onSuccess(response) {
             $scope.lineChartLeadsDistributed = angular.copy(lineChartLeads);
             $scope.lineChartLeadsDistributed.chart.xAxis.axisLabel = "Frequency Distribution Graph(Leads)";
@@ -5841,42 +5867,51 @@
 
 
       var formatAllVendorWiseChart = function (data) {
-        var values1 = [];
-        var values2 = [];
+        var leadValues = [];
+        var values = {};
+        
         angular.forEach(data, function (data, key) {
-          if (data.flat_count != 0) {
-            $scope.hotLeadsValues = data.interested / data.flat_count * 100;
-            $scope.normalLeadsValues = data.total / data.flat_count * 100;
-          }
-          else {
-            $scope.hotLeadsValues = data.interested;
-            $scope.normalLeadsValues = data.total;
-          }
+          
+          $scope.hotLeadsValues = $scope.getPercent(data.interested, data['flat_count']);
+          $scope.normalLeadsValues = $scope.getPercent(data.total, data['flat_count']);
+    
           if (key != 'overall') {
-            $scope.vendorKeyName = $scope.vendorSummary.vendor_details[key].name;
-            var keyWithFlatLabel = $scope.vendorKeyName + ' (' + data.flat_count + ')';
-            var value1 =
-              { x: keyWithFlatLabel, y: $scope.normalLeadsValues };
-            var value2 =
-              { x: keyWithFlatLabel, y: $scope.hotLeadsValues };
-            values1.push(value1);
-            values2.push(value2);
+            var keyWithFlatLabel = $scope.vendorSummary.vendor_details[key].name; + ' (' + data['flat_count'] + ')';
+            var value1 = { x: keyWithFlatLabel, y: $scope.normalLeadsValues };
+            leadValues.push(value1);
+    
+            for(var i in $scope.WeeklyVendorMISOverallSummary.lead_keys){
+              if(!values[i]){
+                values[i] = [];
+              }
+              var leadPercent = $scope.getPercent(data[i], data['flat_count']);
+              var value = { x: keyWithFlatLabel, y: leadPercent };
+              values[i].push(value);
+            }
           }
+    
         })
-
-        var temp_data = [
-          {
-            key: "Total Leads in %",
-            color: constants.colorKey1,
-            values: values1
-          },
-          {
-            key: "High Potential Leads in %",
-            color: constants.colorKey2,
-            values: values2
-          }
-        ];
-
+    
+        var temp_data = [];
+    
+        var row = {
+          key: "Total Leads in % :",
+          values: leadValues
+        };
+        
+        temp_data.push(row);
+    
+        var k = 1;
+        for(var i in $scope.WeeklyVendorMISOverallSummary.lead_keys){
+          row = {
+            key: "Hotness "+k+" in % :",
+            values: values[i]
+          };
+          
+          temp_data.push(row);
+          k++;
+        }
+    
         return temp_data;
       }
       $scope.dynamicGraphSelectedOrder = {};

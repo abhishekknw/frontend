@@ -122,9 +122,9 @@ angular.module('catalogueApp')
                 let shortlisted_suppliers = [];
                 for(x in response.data.data.shortlisted_suppliers){
                   let row = response.data.data.shortlisted_suppliers[x];
-                  if(row.phase_no){
+                  //if(row.phase_no){
                     shortlisted_suppliers.push(row);
-                  }
+                  //}
                 }
                 response.data.data.shortlisted_suppliers = shortlisted_suppliers;
                 
