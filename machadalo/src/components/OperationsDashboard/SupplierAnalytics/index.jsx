@@ -2,6 +2,8 @@ import React from 'react';
 import request from 'superagent';
 import config from '../../../config';
 import getCampaignSummaryColumn from './SupplierCampaignSummaryGridConfig';
+import getBtobCampaignSummaryColumn from './btobSupplierCampaignSummaryGridConfig';
+import getOtherCampaignSummaryColumn from './otherSupplierCampaignSummaryGridConfig';
 import InnerGrid from '../../InnerGrid';
 import SupplierCampaignModal from '../../Modals/SupplierCampaignModal';
 
@@ -74,6 +76,20 @@ class SupplierAnalytics extends React.Component {
     this.setState({ showModal: true, supplierDetails });
   };
 
+  getTypeOfCampaign = () => {
+    const { campaignType } = this.props;
+    console.log(campaignType);
+    if (campaignType == 'b_to_c') {
+      return getCampaignSummaryColumn();
+    }
+    if (campaignType == 'b_to_b') {
+      return getBtobCampaignSummaryColumn();
+    }
+    if (campaignType == 'others') {
+      return getOtherCampaignSummaryColumn();
+    }
+  };
+
   render() {
     const { supplierData } = this.props;
     const data = this.addMissingDatafield(supplierData);
@@ -83,7 +99,7 @@ class SupplierAnalytics extends React.Component {
           <div>
             {/* <h5 style={{ color: 'white' }}>Booking Status Summary</h5> */}
             <InnerGrid
-              columns={getCampaignSummaryColumn()}
+              columns={this.getTypeOfCampaign()}
               data={data}
               exportCsv={false}
               search={false}
@@ -106,7 +122,7 @@ class SupplierAnalytics extends React.Component {
               campaignId={supplierData.campaign_id}
               campaignName={supplierData.campaign_name}
               handleCloseModal={this.handleCloseModal}
-              columns={getCampaignSummaryColumn()}
+              columns={this.getTypeOfCampaign()}
               data={this.state.supplierDetails}
             />
           </div>
