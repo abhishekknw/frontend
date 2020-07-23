@@ -267,9 +267,7 @@ angular.module('catalogueApp')
           
           releaseCampaignService.bookingStatusData($scope.campaign_id)
           .then(function onSuccess(ResponseData) {
-            $scope.bookingStatus = ResponseData.data.data;
-            console.log('11111111111111111111111111111',$scope.bookingStatus);
-               
+            $scope.bookingStatus = ResponseData.data.data;        
           });
           
           releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id, newPage, data)
