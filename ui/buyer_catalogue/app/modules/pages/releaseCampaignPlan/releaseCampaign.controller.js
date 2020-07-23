@@ -267,7 +267,8 @@ angular.module('catalogueApp')
           
           releaseCampaignService.bookingStatusData($scope.campaign_id)
           .then(function onSuccess(ResponseData) {
-            $scope.bookingStatus = ResponseData.data.data
+            $scope.bookingStatus = ResponseData.data.data;
+            console.log('11111111111111111111111111111',$scope.bookingStatus);
                
           });
           
@@ -1814,7 +1815,15 @@ if (localindex_index != -1) {
 
         $scope.completionStatus = function (idOfSupplier) {
           let indexOfSupplier = $scope.releaseDetails.shortlisted_suppliers.findIndex(x => x.id === idOfSupplier);
-          if ($scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "BK" && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "MC") {
+          if ($scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "BK"
+           && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "MC" 
+           && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "OEL"
+           && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "OCL"
+           && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "OPBL"
+           && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "OPFL"
+           && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "OPHL"
+           && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "OP"
+           ) {
             swal(constants.name, constants.booking_completion_status, constants.warning);
             $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].is_completed = false;
           }
