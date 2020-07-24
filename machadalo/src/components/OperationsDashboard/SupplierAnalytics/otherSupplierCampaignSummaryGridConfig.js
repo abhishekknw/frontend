@@ -1,26 +1,66 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+const getOtherCampaignStatus = (booking_sub_status, booking_status) => {
+  let vegetable_and_fruits,
+    medicine,
+    grocery,
+    other_essentials,
+    no_requirment = null;
+
+  if (
+    booking_sub_status['Vegetable and Fruits'] &&
+    booking_sub_status['Vegetable and Fruits'].status === booking_status
+  ) {
+    vegetable_and_fruits = booking_sub_status['Vegetable and Fruits'].count;
+  }
+  if (booking_sub_status['Medicine'] && booking_sub_status['Medicine'].status === booking_status) {
+    medicine = booking_sub_status['Medicine'].count;
+  }
+  if (booking_sub_status['Grocery'] && booking_sub_status['Grocery'].status === booking_status) {
+    grocery = booking_sub_status['Grocery'].count;
+  }
+  if (
+    booking_sub_status['Other Essentials'] &&
+    booking_sub_status['Other Essentials'].status === booking_status
+  ) {
+    other_essentials = booking_sub_status['Other Essentials'].count;
+  }
+  if (
+    booking_sub_status['No Requirment'] &&
+    booking_sub_status['No Requirment'].status === booking_status
+  ) {
+    no_requirment = booking_sub_status['No Requirment'].count;
+  }
+
+  return {
+    vegetable_and_fruits,
+    medicine,
+    grocery,
+    other_essentials,
+    no_requirment,
+  };
+};
+
 const getOtherCampaignSummaryColumn = () => {
   return [
     {
-      dataField: 'emergency situation',
+      dataField: 'Emergency Situation',
       text: 'Emergency Situation',
       formatter: (cell, row) => {
         const { booking_sub_status } = row;
-        let emergency_situation = 0;
-        emergency_situation = row['emergency situation'];
-        let vegetable_and_fruits,
-          medicine,
-          grocery,
-          other_essentials,
-          no_requirment = null;
+        let emergency_situation = row['Emergency Situation'] || 0;
+
+        let substatusCountObject = {
+          vegetable_and_fruits: 0,
+          medicine: 0,
+          grocery: 0,
+          other_essentials: 0,
+          no_requirment: 0,
+        };
+
         if (booking_sub_status) {
-          vegetable_and_fruits = booking_sub_status['Vegetable and Fruits'] || 0;
-          medicine = booking_sub_status['Medicine'] || 0;
-          grocery = booking_sub_status['Grocery'] || 0;
-          other_essentials = booking_sub_status['Other Essentials'] || 0;
-          no_requirment = booking_sub_status['No Requirment'] || 0;
+          substatusCountObject = getOtherCampaignStatus(booking_sub_status, 'Emergency Situation');
         }
         return (
           <div>
@@ -28,12 +68,24 @@ const getOtherCampaignSummaryColumn = () => {
             {booking_sub_status && (
               <div style={{ color: 'green' }}>
                 <p>
-                  {vegetable_and_fruits > 0 && `Vegetable and Fruits : ${vegetable_and_fruits}`}
+                  {substatusCountObject.vegetable_and_fruits > 0 &&
+                    `Vegetable and Fruits : ${substatusCountObject.vegetable_and_fruits}`}
                 </p>
-                <p>{medicine > 0 && `Medicine : ${medicine}`}</p>
-                <p>{grocery > 0 && `Grocery : ${grocery}`}</p>
-                <p>{other_essentials > 0 && `Other Essentials : ${other_essentials}`}</p>
-                <p>{no_requirment > 0 && `No Requirment : ${no_requirment}`}</p>
+                <p>
+                  {substatusCountObject.medicine > 0 &&
+                    `Medicine : ${substatusCountObject.medicine}`}
+                </p>
+                <p>
+                  {substatusCountObject.grocery > 0 && `Grocery : ${substatusCountObject.grocery}`}
+                </p>
+                <p>
+                  {substatusCountObject.other_essentials > 0 &&
+                    `Other Essentials : ${substatusCountObject.other_essentials}`}
+                </p>
+                <p>
+                  {substatusCountObject.no_requirment > 0 &&
+                    `No Requirment : ${substatusCountObject.no_requirment}`}
+                </p>
               </div>
             )}
           </div>
@@ -42,23 +94,22 @@ const getOtherCampaignSummaryColumn = () => {
     },
 
     {
-      dataField: 'Complete lockdown',
-      text: 'Complete lockdown',
+      dataField: 'Complete Lockdown',
+      text: 'Complete Lockdown',
       formatter: (cell, row) => {
         const { booking_sub_status } = row;
-        let complete_lockdown = 0;
-        complete_lockdown = row['Complete lockdown'];
-        let vegetable_and_fruits,
-          medicine,
-          grocery,
-          other_essentials,
-          no_requirment = null;
+        let complete_lockdown = row['Complete Lockdown'] || 0;
+
+        let substatusCountObject = {
+          vegetable_and_fruits: 0,
+          medicine: 0,
+          grocery: 0,
+          other_essentials: 0,
+          no_requirment: 0,
+        };
+
         if (booking_sub_status) {
-          vegetable_and_fruits = booking_sub_status['Vegetable and Fruits'] || 0;
-          medicine = booking_sub_status['Medicine'] || 0;
-          grocery = booking_sub_status['Grocery'] || 0;
-          other_essentials = booking_sub_status['Other Essentials'] || 0;
-          no_requirment = booking_sub_status['No Requirment'] || 0;
+          substatusCountObject = getOtherCampaignStatus(booking_sub_status, 'Complete Lockdown');
         }
         return (
           <div>
@@ -66,12 +117,24 @@ const getOtherCampaignSummaryColumn = () => {
             {booking_sub_status && (
               <div style={{ color: 'green' }}>
                 <p>
-                  {vegetable_and_fruits > 0 && `Vegetable and Fruits : ${vegetable_and_fruits}`}
+                  {substatusCountObject.vegetable_and_fruits > 0 &&
+                    `Vegetable and Fruits : ${substatusCountObject.vegetable_and_fruits}`}
                 </p>
-                <p>{medicine > 0 && `Medicine : ${medicine}`}</p>
-                <p>{grocery > 0 && `Grocery : ${grocery}`}</p>
-                <p>{other_essentials > 0 && `Other Essentials : ${other_essentials}`}</p>
-                <p>{no_requirment > 0 && `No Requirment : ${no_requirment}`}</p>
+                <p>
+                  {substatusCountObject.medicine > 0 &&
+                    `Medicine : ${substatusCountObject.medicine}`}
+                </p>
+                <p>
+                  {substatusCountObject.grocery > 0 && `Grocery : ${substatusCountObject.grocery}`}
+                </p>
+                <p>
+                  {substatusCountObject.other_essentials > 0 &&
+                    `Other Essentials : ${substatusCountObject.other_essentials}`}
+                </p>
+                <p>
+                  {substatusCountObject.no_requirment > 0 &&
+                    `No Requirment : ${substatusCountObject.no_requirment}`}
+                </p>
               </div>
             )}
           </div>
@@ -80,23 +143,25 @@ const getOtherCampaignSummaryColumn = () => {
     },
 
     {
-      dataField: 'Partial building/tower lockdown',
-      text: 'Partial building/tower lockdown',
+      dataField: 'Partial Building/Tower Lockdown',
+      text: 'Partial Building/Tower Lockdown',
       formatter: (cell, row) => {
         const { booking_sub_status } = row;
-        let partial_building_lockdown = 0;
-        partial_building_lockdown = row['Partial building/tower lockdown'];
-        let vegetable_and_fruits,
-          medicine,
-          grocery,
-          other_essentials,
-          no_requirment = null;
+        let partial_building_lockdown = row['Partial Building/Tower Lockdown'] || 0;
+
+        let substatusCountObject = {
+          vegetable_and_fruits: 0,
+          medicine: 0,
+          grocery: 0,
+          other_essentials: 0,
+          no_requirment: 0,
+        };
+
         if (booking_sub_status) {
-          vegetable_and_fruits = booking_sub_status['Vegetable and Fruits'] || 0;
-          medicine = booking_sub_status['Medicine'] || 0;
-          grocery = booking_sub_status['Grocery'] || 0;
-          other_essentials = booking_sub_status['Other Essentials'] || 0;
-          no_requirment = booking_sub_status['No Requirment'] || 0;
+          substatusCountObject = getOtherCampaignStatus(
+            booking_sub_status,
+            'Partial Building/Tower Lockdown'
+          );
         }
         return (
           <div>
@@ -104,12 +169,24 @@ const getOtherCampaignSummaryColumn = () => {
             {booking_sub_status && (
               <div style={{ color: 'green' }}>
                 <p>
-                  {vegetable_and_fruits > 0 && `Vegetable and Fruits : ${vegetable_and_fruits}`}
+                  {substatusCountObject.vegetable_and_fruits > 0 &&
+                    `Vegetable and Fruits : ${substatusCountObject.vegetable_and_fruits}`}
                 </p>
-                <p>{medicine > 0 && `Medicine : ${medicine}`}</p>
-                <p>{grocery > 0 && `Grocery : ${grocery}`}</p>
-                <p>{other_essentials > 0 && `Other Essentials : ${other_essentials}`}</p>
-                <p>{no_requirment > 0 && `No Requirment : ${no_requirment}`}</p>
+                <p>
+                  {substatusCountObject.medicine > 0 &&
+                    `Medicine : ${substatusCountObject.medicine}`}
+                </p>
+                <p>
+                  {substatusCountObject.grocery > 0 && `Grocery : ${substatusCountObject.grocery}`}
+                </p>
+                <p>
+                  {substatusCountObject.other_essentials > 0 &&
+                    `Other Essentials : ${substatusCountObject.other_essentials}`}
+                </p>
+                <p>
+                  {substatusCountObject.no_requirment > 0 &&
+                    `No Requirment : ${substatusCountObject.no_requirment}`}
+                </p>
               </div>
             )}
           </div>
@@ -118,23 +195,25 @@ const getOtherCampaignSummaryColumn = () => {
     },
 
     {
-      dataField: 'Partial floor lockdown',
+      dataField: 'Partial Floor Lockdown',
       text: 'Partial Floor Lockdown',
       formatter: (cell, row) => {
         const { booking_sub_status } = row;
-        let partial_floor_lockdown = 0;
-        partial_floor_lockdown = row['Partial floor lockdown'];
-        let vegetable_and_fruits,
-          medicine,
-          grocery,
-          other_essentials,
-          no_requirment = null;
+        let partial_floor_lockdown = row['Partial Floor Lockdown'] || 0;
+
+        let substatusCountObject = {
+          vegetable_and_fruits: 0,
+          medicine: 0,
+          grocery: 0,
+          other_essentials: 0,
+          no_requirment: 0,
+        };
+
         if (booking_sub_status) {
-          vegetable_and_fruits = booking_sub_status['Vegetable and Fruits'] || 0;
-          medicine = booking_sub_status['Medicine'] || 0;
-          grocery = booking_sub_status['Grocery'] || 0;
-          other_essentials = booking_sub_status['Other Essentials'] || 0;
-          no_requirment = booking_sub_status['No Requirment'] || 0;
+          substatusCountObject = getOtherCampaignStatus(
+            booking_sub_status,
+            'Partial Floor Lockdown'
+          );
         }
         return (
           <div>
@@ -142,12 +221,24 @@ const getOtherCampaignSummaryColumn = () => {
             {booking_sub_status && (
               <div style={{ color: 'green' }}>
                 <p>
-                  {vegetable_and_fruits > 0 && `Vegetable and Fruits : ${vegetable_and_fruits}`}
+                  {substatusCountObject.vegetable_and_fruits > 0 &&
+                    `Vegetable and Fruits : ${substatusCountObject.vegetable_and_fruits}`}
                 </p>
-                <p>{medicine > 0 && `Medicine : ${medicine}`}</p>
-                <p>{grocery > 0 && `Grocery : ${grocery}`}</p>
-                <p>{other_essentials > 0 && `Other Essentials : ${other_essentials}`}</p>
-                <p>{no_requirment > 0 && `No Requirment : ${no_requirment}`}</p>
+                <p>
+                  {substatusCountObject.medicine > 0 &&
+                    `Medicine : ${substatusCountObject.medicine}`}
+                </p>
+                <p>
+                  {substatusCountObject.grocery > 0 && `Grocery : ${substatusCountObject.grocery}`}
+                </p>
+                <p>
+                  {substatusCountObject.other_essentials > 0 &&
+                    `Other Essentials : ${substatusCountObject.other_essentials}`}
+                </p>
+                <p>
+                  {substatusCountObject.no_requirment > 0 &&
+                    `No Requirment : ${substatusCountObject.no_requirment}`}
+                </p>
               </div>
             )}
           </div>
@@ -156,23 +247,25 @@ const getOtherCampaignSummaryColumn = () => {
     },
 
     {
-      dataField: 'Partial house/flat lockdown',
+      dataField: 'Partial House/Flat Lockdown',
       text: 'Partial House/Flat Lockdown',
       formatter: (cell, row) => {
         const { booking_sub_status } = row;
-        let partial_house_lockdown = 0;
-        partial_house_lockdown = row['Partial house/flat lockdown'];
-        let vegetable_and_fruits,
-          medicine,
-          grocery,
-          other_essentials,
-          no_requirment = null;
+        let partial_house_lockdown = row['Partial House/Flat Lockdown'] || 0;
+
+        let substatusCountObject = {
+          vegetable_and_fruits: 0,
+          medicine: 0,
+          grocery: 0,
+          other_essentials: 0,
+          no_requirment: 0,
+        };
+
         if (booking_sub_status) {
-          vegetable_and_fruits = booking_sub_status['Vegetable and Fruits'] || 0;
-          medicine = booking_sub_status['Medicine'] || 0;
-          grocery = booking_sub_status['Grocery'] || 0;
-          other_essentials = booking_sub_status['Other Essentials'] || 0;
-          no_requirment = booking_sub_status['No Requirment'] || 0;
+          substatusCountObject = getOtherCampaignStatus(
+            booking_sub_status,
+            'Partial House/Flat Lockdown'
+          );
         }
         return (
           <div>
@@ -180,12 +273,24 @@ const getOtherCampaignSummaryColumn = () => {
             {booking_sub_status && (
               <div style={{ color: 'green' }}>
                 <p>
-                  {vegetable_and_fruits > 0 && `Vegetable and Fruits : ${vegetable_and_fruits}`}
+                  {substatusCountObject.vegetable_and_fruits > 0 &&
+                    `Vegetable and Fruits : ${substatusCountObject.vegetable_and_fruits}`}
                 </p>
-                <p>{medicine > 0 && `Medicine : ${medicine}`}</p>
-                <p>{grocery > 0 && `Grocery : ${grocery}`}</p>
-                <p>{other_essentials > 0 && `Other Essentials : ${other_essentials}`}</p>
-                <p>{no_requirment > 0 && `No Requirment : ${no_requirment}`}</p>
+                <p>
+                  {substatusCountObject.medicine > 0 &&
+                    `Medicine : ${substatusCountObject.medicine}`}
+                </p>
+                <p>
+                  {substatusCountObject.grocery > 0 && `Grocery : ${substatusCountObject.grocery}`}
+                </p>
+                <p>
+                  {substatusCountObject.other_essentials > 0 &&
+                    `Other Essentials : ${substatusCountObject.other_essentials}`}
+                </p>
+                <p>
+                  {substatusCountObject.no_requirment > 0 &&
+                    `No Requirment : ${substatusCountObject.no_requirment}`}
+                </p>
               </div>
             )}
           </div>
@@ -194,23 +299,22 @@ const getOtherCampaignSummaryColumn = () => {
     },
 
     {
-      dataField: 'open',
-      text: 'Open',
+      dataField: 'OPEN',
+      text: 'OPEN',
       formatter: (cell, row) => {
         const { booking_sub_status } = row;
-        let open = 0;
-        open = row['open'];
-        let vegetable_and_fruits,
-          medicine,
-          grocery,
-          other_essentials,
-          no_requirment = null;
+        let open = row['OPEN'] || 0;
+
+        let substatusCountObject = {
+          vegetable_and_fruits: 0,
+          medicine: 0,
+          grocery: 0,
+          other_essentials: 0,
+          no_requirment: 0,
+        };
+
         if (booking_sub_status) {
-          vegetable_and_fruits = booking_sub_status['Vegetable and Fruits'] || 0;
-          medicine = booking_sub_status['Medicine'] || 0;
-          grocery = booking_sub_status['Grocery'] || 0;
-          other_essentials = booking_sub_status['Other Essentials'] || 0;
-          no_requirment = booking_sub_status['No Requirment'] || 0;
+          substatusCountObject = getOtherCampaignStatus(booking_sub_status, 'OPEN');
         }
         return (
           <div>
@@ -218,12 +322,24 @@ const getOtherCampaignSummaryColumn = () => {
             {booking_sub_status && (
               <div style={{ color: 'green' }}>
                 <p>
-                  {vegetable_and_fruits > 0 && `Vegetable and Fruits : ${vegetable_and_fruits}`}
+                  {substatusCountObject.vegetable_and_fruits > 0 &&
+                    `Vegetable and Fruits : ${substatusCountObject.vegetable_and_fruits}`}
                 </p>
-                <p>{medicine > 0 && `Medicine : ${medicine}`}</p>
-                <p>{grocery > 0 && `Grocery : ${grocery}`}</p>
-                <p>{other_essentials > 0 && `Other Essentials : ${other_essentials}`}</p>
-                <p>{no_requirment > 0 && `No Requirment : ${no_requirment}`}</p>
+                <p>
+                  {substatusCountObject.medicine > 0 &&
+                    `Medicine : ${substatusCountObject.medicine}`}
+                </p>
+                <p>
+                  {substatusCountObject.grocery > 0 && `Grocery : ${substatusCountObject.grocery}`}
+                </p>
+                <p>
+                  {substatusCountObject.other_essentials > 0 &&
+                    `Other Essentials : ${substatusCountObject.other_essentials}`}
+                </p>
+                <p>
+                  {substatusCountObject.no_requirment > 0 &&
+                    `No Requirment : ${substatusCountObject.no_requirment}`}
+                </p>
               </div>
             )}
           </div>

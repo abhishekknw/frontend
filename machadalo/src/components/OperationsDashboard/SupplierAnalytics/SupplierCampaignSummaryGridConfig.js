@@ -4,17 +4,20 @@ import { Link } from 'react-router-dom';
 const getCampaignSummaryColumn = () => {
   return [
     {
-      dataField: 'unknown',
+      dataField: 'Unknown',
       text: 'Unknown(Others)',
       formatter: (cell, row) => {
         const { booking_sub_status } = row;
-        let unknown = 0;
-        unknown = row['unknown'];
+        let unknown = row['Unknown'] || 0;
         let phone_number_issue,
-          contact_person_issue = null;
+          contact_person_issue = 0;
         if (booking_sub_status) {
-          phone_number_issue = booking_sub_status['Phone Number Issue'] || 0;
-          contact_person_issue = booking_sub_status['Contact Person Issue'] || 0;
+          phone_number_issue =
+            booking_sub_status['Phone Number Issue'] &&
+            booking_sub_status['Phone Number Issue'].count;
+          contact_person_issue =
+            booking_sub_status['Contact Person Issue'] &&
+            booking_sub_status['Contact Person Issue'].count;
         }
         return (
           <div>
@@ -36,21 +39,24 @@ const getCampaignSummaryColumn = () => {
       text: 'New Entity',
       formatter: (cell, row) => {
         const { booking_sub_status } = row;
-        let new_entity = 0;
-        new_entity = row['New Entity'];
+        let new_entity = row['New Entity'] || 0;
         let wikimapia,
           google,
           acres,
           magic_brick,
           first_time_assigned,
-          others = null;
+          others = 0;
         if (booking_sub_status) {
-          wikimapia = booking_sub_status['Wikimapia'] || 0;
-          google = booking_sub_status['Google'] || 0;
-          acres = booking_sub_status['99Acres'] || 0;
-          magic_brick = booking_sub_status['Magic Brick'] || 0;
-          first_time_assigned = booking_sub_status['First Time Assigned'] || 0;
-          others = booking_sub_status['NE Others'] || 0;
+          wikimapia = booking_sub_status['Wikimapia'] && booking_sub_status['Wikimapia'].count;
+          google = booking_sub_status['Google'] && booking_sub_status['Google'].count;
+          acres = booking_sub_status['99Acres'] && booking_sub_status['99Acres'].count;
+          magic_brick =
+            booking_sub_status['Magic Brick'] && booking_sub_status['Magic Brick'].count;
+          first_time_assigned =
+            booking_sub_status['First Time Assigned'] &&
+            booking_sub_status['First Time Assigned'].count;
+          others =
+            booking_sub_status['Others(specify)'] && booking_sub_status['Others(specify)'].count;
         }
         return (
           <div>
@@ -78,13 +84,14 @@ const getCampaignSummaryColumn = () => {
       text: 'Recce',
       formatter: (cell, row) => {
         const { booking_sub_status } = row;
-        let recce = 0;
-        recce = row['Recce'];
+        let recce = row['Recce'] || 0;
         let recce_required,
-          recce_approved = null;
+          recce_approved = 0;
         if (booking_sub_status) {
-          recce_required = booking_sub_status['Recce Required'] || 0;
-          recce_approved = booking_sub_status['Recce Approved'] || 0;
+          recce_required =
+            booking_sub_status['Recce Required'] && booking_sub_status['Recce Required'].count;
+          recce_approved =
+            booking_sub_status['Recce Approved'] && booking_sub_status['Recce Approved'].count;
         }
         return (
           <div>
@@ -104,23 +111,30 @@ const getCampaignSummaryColumn = () => {
       text: 'Decision Pending',
       formatter: (cell, row) => {
         const { booking_sub_status } = row;
-        let decision_pending = 0;
-        decision_pending = row['Decision Pending'];
+        let decision_pending = row['Decision Pending'] || 0;
         let visit_required,
           call_required,
           negotiation_required,
           not_available,
           postponed,
           specific_occasion_only,
-          others = null;
+          others = 0;
         if (booking_sub_status) {
-          visit_required = booking_sub_status['Visit Required'] || 0;
-          call_required = booking_sub_status['Call Required'] || 0;
-          negotiation_required = booking_sub_status['Negotiation Required'] || 0;
-          not_available = booking_sub_status['Not Available'] || 0;
-          postponed = booking_sub_status['Postponed'] || 0;
-          specific_occasion_only = booking_sub_status['Specific Occasion Only'] || 0;
-          others = booking_sub_status['DP Others'] || 0;
+          visit_required =
+            booking_sub_status['Visit Required'] && booking_sub_status['Visit Required'].count;
+          call_required =
+            booking_sub_status['Call Required'] && booking_sub_status['Call Required'].count;
+          negotiation_required =
+            booking_sub_status['Negotiation Required'] &&
+            booking_sub_status['Negotiation Required'].count;
+          not_available =
+            booking_sub_status['Not Available'] && booking_sub_status['Not Available'].count;
+          postponed = booking_sub_status['Postponed'] && booking_sub_status['Postponed'].count;
+          specific_occasion_only =
+            booking_sub_status['Specific Occasion Only'] &&
+            booking_sub_status['Specific Occasion Only'].count;
+          others =
+            booking_sub_status['Others(specify)'] && booking_sub_status['Others(specify)'].count;
         }
         return (
           <div>
@@ -150,23 +164,30 @@ const getCampaignSummaryColumn = () => {
       text: 'Rejected',
       formatter: (cell, row) => {
         const { booking_sub_status } = row;
-        let rejected = 0;
-        rejected = row['Rejected'];
+        let rejected = row['Rejected'] || 0;
         let less_occupancy,
           less_children,
           under_builder,
           very_expensive,
           client_rejected,
           rejected_by_society,
-          others = null;
+          others = 0;
         if (booking_sub_status) {
-          less_occupancy = booking_sub_status['Less occupancy'] || 0;
-          less_children = booking_sub_status['Less Children'] || 0;
-          under_builder = booking_sub_status['Under Builder'] || 0;
-          very_expensive = booking_sub_status['Very Expensive'] || 0;
-          client_rejected = booking_sub_status['Client Rejected'] || 0;
-          rejected_by_society = booking_sub_status['Rejected by Society'] || 0;
-          others = booking_sub_status['Rejected Others'] || 0;
+          less_occupancy =
+            booking_sub_status['Less occupancy'] && booking_sub_status['Less occupancy'].count;
+          less_children =
+            booking_sub_status['Less Children'] && booking_sub_status['Less Children'].count;
+          under_builder =
+            booking_sub_status['Under Builder'] && booking_sub_status['Under Builder'].count;
+          very_expensive =
+            booking_sub_status['Very Expensive'] && booking_sub_status['Very Expensive'].count;
+          client_rejected =
+            booking_sub_status['Client Rejected'] && booking_sub_status['Client Rejected'].count;
+          rejected_by_society =
+            booking_sub_status['Rejected by Society'] &&
+            booking_sub_status['Rejected by Society'].count;
+          others =
+            booking_sub_status['Others(specify)'] && booking_sub_status['Others(specify)'].count;
         }
         return (
           <div>
@@ -191,13 +212,14 @@ const getCampaignSummaryColumn = () => {
       text: 'Tentative Booked',
       formatter: (cell, row) => {
         const { booking_sub_status } = row;
-        let tentative_booking = 0;
-        tentative_booking = row['Tentative Booking'];
+        let tentative_booking = row['Tentative Booking'] || 0;
         let phone_booking,
-          visit_booking = null;
+          visit_booking = 0;
         if (booking_sub_status) {
-          phone_booking = booking_sub_status['Phone Booking'] || 0;
-          visit_booking = booking_sub_status['Visit Booking'] || 0;
+          phone_booking =
+            booking_sub_status['Phone Booking'] && booking_sub_status['Phone Booking'].count;
+          visit_booking =
+            booking_sub_status['Visit Booking'] && booking_sub_status['Visit Booking'].count;
         }
         return (
           <div>

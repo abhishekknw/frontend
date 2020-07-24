@@ -10,6 +10,7 @@ const getCampaignColumn = () => {
       text: 'Booking Status',
       row: 0,
       rowSpan: 2,
+      width: '250px',
       formatter: (cell, row) => {
         const status = get(row, 'status');
         const colorStatus = status ? status.toLowerCase().replace(/ /g, '_') : status;
@@ -28,6 +29,15 @@ const getCampaignColumn = () => {
             variant = 'info';
             break;
           case 'not_booked':
+            variant = 'danger';
+            break;
+          case 'complete_lockdown':
+            variant = 'danger';
+            break;
+          case 'open':
+            variant = 'success';
+            break;
+          case 'emergency_situation':
             variant = 'danger';
             break;
           default:
