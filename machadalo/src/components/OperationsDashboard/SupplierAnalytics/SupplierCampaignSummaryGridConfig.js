@@ -14,10 +14,10 @@ const getCampaignSummaryColumn = () => {
         if (booking_sub_status) {
           phone_number_issue =
             booking_sub_status['Phone Number Issue'] &&
-            booking_sub_status['Phone Number Issue'].count;
+            booking_sub_status['Phone Number Issue']['Unknown'].count;
           contact_person_issue =
             booking_sub_status['Contact Person Issue'] &&
-            booking_sub_status['Contact Person Issue'].count;
+            booking_sub_status['Contact Person Issue']['Unknown'].count;
         }
         return (
           <div>
@@ -47,16 +47,20 @@ const getCampaignSummaryColumn = () => {
           first_time_assigned,
           others = 0;
         if (booking_sub_status) {
-          wikimapia = booking_sub_status['Wikimapia'] && booking_sub_status['Wikimapia'].count;
-          google = booking_sub_status['Google'] && booking_sub_status['Google'].count;
-          acres = booking_sub_status['99Acres'] && booking_sub_status['99Acres'].count;
+          wikimapia =
+            booking_sub_status['Wikimapia'] && booking_sub_status['Wikimapia']['New Entity'].count;
+          google = booking_sub_status['Google'] && booking_sub_status['Google']['New Entity'].count;
+          acres =
+            booking_sub_status['99Acres'] && booking_sub_status['99Acres']['New Entity'].count;
           magic_brick =
-            booking_sub_status['Magic Brick'] && booking_sub_status['Magic Brick'].count;
+            booking_sub_status['Magic Brick'] &&
+            booking_sub_status['Magic Brick']['New Entity'].count;
           first_time_assigned =
             booking_sub_status['First Time Assigned'] &&
-            booking_sub_status['First Time Assigned'].count;
+            booking_sub_status['First Time Assigned']['New Entity'].count;
           others =
-            booking_sub_status['Others(specify)'] && booking_sub_status['Others(specify)'].count;
+            booking_sub_status['Others(specify)'] &&
+            booking_sub_status['Others(specify)']['New Entity'].count;
         }
         return (
           <div>
@@ -89,9 +93,11 @@ const getCampaignSummaryColumn = () => {
           recce_approved = 0;
         if (booking_sub_status) {
           recce_required =
-            booking_sub_status['Recce Required'] && booking_sub_status['Recce Required'].count;
+            booking_sub_status['Recce Required'] &&
+            booking_sub_status['Recce Required']['Recce'].count;
           recce_approved =
-            booking_sub_status['Recce Approved'] && booking_sub_status['Recce Approved'].count;
+            booking_sub_status['Recce Approved'] &&
+            booking_sub_status['Recce Approved']['Recce'].count;
         }
         return (
           <div>
@@ -121,20 +127,26 @@ const getCampaignSummaryColumn = () => {
           others = 0;
         if (booking_sub_status) {
           visit_required =
-            booking_sub_status['Visit Required'] && booking_sub_status['Visit Required'].count;
+            booking_sub_status['Visit Required'] &&
+            booking_sub_status['Visit Required']['Decision Pending'].count;
           call_required =
-            booking_sub_status['Call Required'] && booking_sub_status['Call Required'].count;
+            booking_sub_status['Call Required'] &&
+            booking_sub_status['Call Required']['Decision Pending'].count;
           negotiation_required =
             booking_sub_status['Negotiation Required'] &&
-            booking_sub_status['Negotiation Required'].count;
+            booking_sub_status['Negotiation Required']['Decision Pending'].count;
           not_available =
-            booking_sub_status['Not Available'] && booking_sub_status['Not Available'].count;
-          postponed = booking_sub_status['Postponed'] && booking_sub_status['Postponed'].count;
+            booking_sub_status['Not Available'] &&
+            booking_sub_status['Not Available']['Decision Pending'].count;
+          postponed =
+            booking_sub_status['Postponed'] &&
+            booking_sub_status['Postponed']['Decision Pending'].count;
           specific_occasion_only =
             booking_sub_status['Specific Occasion Only'] &&
-            booking_sub_status['Specific Occasion Only'].count;
+            booking_sub_status['Specific Occasion Only']['Decision Pending'].count;
           others =
-            booking_sub_status['Others(specify)'] && booking_sub_status['Others(specify)'].count;
+            booking_sub_status['Others(specify)'] &&
+            booking_sub_status['Others(specify)']['Decision Pending'].count;
         }
         return (
           <div>
@@ -174,20 +186,26 @@ const getCampaignSummaryColumn = () => {
           others = 0;
         if (booking_sub_status) {
           less_occupancy =
-            booking_sub_status['Less occupancy'] && booking_sub_status['Less occupancy'].count;
+            booking_sub_status['Less occupancy'] &&
+            booking_sub_status['Less occupancy']['Rejected'].count;
           less_children =
-            booking_sub_status['Less Children'] && booking_sub_status['Less Children'].count;
+            booking_sub_status['Less Children'] &&
+            booking_sub_status['Less Children']['Rejected'].count;
           under_builder =
-            booking_sub_status['Under Builder'] && booking_sub_status['Under Builder'].count;
+            booking_sub_status['Under Builder'] &&
+            booking_sub_status['Under Builder']['Rejected'].count;
           very_expensive =
-            booking_sub_status['Very Expensive'] && booking_sub_status['Very Expensive'].count;
+            booking_sub_status['Very Expensive'] &&
+            booking_sub_status['Very Expensive']['Rejected'].count;
           client_rejected =
-            booking_sub_status['Client Rejected'] && booking_sub_status['Client Rejected'].count;
+            booking_sub_status['Client Rejected'] &&
+            booking_sub_status['Client Rejected']['Rejected'].count;
           rejected_by_society =
             booking_sub_status['Rejected by Society'] &&
-            booking_sub_status['Rejected by Society'].count;
+            booking_sub_status['Rejected by Society']['Rejected'].count;
           others =
-            booking_sub_status['Others(specify)'] && booking_sub_status['Others(specify)'].count;
+            booking_sub_status['Others(specify)'] &&
+            booking_sub_status['Others(specify)']['Rejected'].count;
         }
         return (
           <div>
@@ -217,9 +235,11 @@ const getCampaignSummaryColumn = () => {
           visit_booking = 0;
         if (booking_sub_status) {
           phone_booking =
-            booking_sub_status['Phone Booking'] && booking_sub_status['Phone Booking'].count;
+            booking_sub_status['Phone Booking'] &&
+            booking_sub_status['Phone Booking']['Tentative Booking'].count;
           visit_booking =
-            booking_sub_status['Visit Booking'] && booking_sub_status['Visit Booking'].count;
+            booking_sub_status['Visit Booking'] &&
+            booking_sub_status['Visit Booking']['Tentative Booking'].count;
         }
         return (
           <div>

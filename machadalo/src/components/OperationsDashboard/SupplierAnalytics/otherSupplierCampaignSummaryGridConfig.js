@@ -10,27 +10,24 @@ const getOtherCampaignStatus = (booking_sub_status, booking_status) => {
 
   if (
     booking_sub_status['Vegetable and Fruits'] &&
-    booking_sub_status['Vegetable and Fruits'].status === booking_status
+    booking_sub_status['Vegetable and Fruits'][booking_status]
   ) {
-    vegetable_and_fruits = booking_sub_status['Vegetable and Fruits'].count;
+    vegetable_and_fruits = booking_sub_status['Vegetable and Fruits'][booking_status].count;
   }
-  if (booking_sub_status['Medicine'] && booking_sub_status['Medicine'].status === booking_status) {
-    medicine = booking_sub_status['Medicine'].count;
+  if (booking_sub_status['Medicine'] && booking_sub_status['Medicine'][booking_status]) {
+    medicine = booking_sub_status['Medicine'][booking_status].count;
   }
-  if (booking_sub_status['Grocery'] && booking_sub_status['Grocery'].status === booking_status) {
-    grocery = booking_sub_status['Grocery'].count;
+  if (booking_sub_status['Grocery'] && booking_sub_status['Grocery'][booking_status]) {
+    grocery = booking_sub_status['Grocery'][booking_status].count;
   }
   if (
     booking_sub_status['Other Essentials'] &&
-    booking_sub_status['Other Essentials'].status === booking_status
+    booking_sub_status['Other Essentials'][booking_status]
   ) {
-    other_essentials = booking_sub_status['Other Essentials'].count;
+    other_essentials = booking_sub_status['Other Essentials'][booking_status].count;
   }
-  if (
-    booking_sub_status['No Requirment'] &&
-    booking_sub_status['No Requirment'].status === booking_status
-  ) {
-    no_requirment = booking_sub_status['No Requirment'].count;
+  if (booking_sub_status['No Requirment'] && booking_sub_status['No Requirment'][booking_status]) {
+    no_requirment = booking_sub_status['No Requirment'][booking_status].count;
   }
 
   return {

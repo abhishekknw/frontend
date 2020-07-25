@@ -14,10 +14,10 @@ const getBtobCampaignSummaryColumn = () => {
         if (booking_sub_status) {
           phone_number_issue =
             booking_sub_status['Phone Number Issue'] &&
-            booking_sub_status['Phone Number Issue'].count;
+            booking_sub_status['Phone Number Issue']['Unknown'].count;
           contact_person_issue =
             booking_sub_status['Contact Person Issue'] &&
-            booking_sub_status['Contact Person Issue'].count;
+            booking_sub_status['Contact Person Issue']['Unknown'].count;
         }
         return (
           <div>
@@ -47,16 +47,20 @@ const getBtobCampaignSummaryColumn = () => {
           first_time_assigned,
           others = 0;
         if (booking_sub_status) {
-          wikimapia = booking_sub_status['Wikimapia'] && booking_sub_status['Wikimapia'].count;
-          google = booking_sub_status['Google'] && booking_sub_status['Google'].count;
-          acres = booking_sub_status['99Acres'] && booking_sub_status['99Acres'].count;
+          wikimapia =
+            booking_sub_status['Wikimapia'] && booking_sub_status['Wikimapia']['New Entity'].count;
+          google = booking_sub_status['Google'] && booking_sub_status['Google']['New Entity'].count;
+          acres =
+            booking_sub_status['99Acres'] && booking_sub_status['99Acres']['New Entity'].count;
           magic_brick =
-            booking_sub_status['Magic Brick'] && booking_sub_status['Magic Brick'].count;
+            booking_sub_status['Magic Brick'] &&
+            booking_sub_status['Magic Brick']['New Entity'].count;
           first_time_assigned =
             booking_sub_status['First Time Assigned'] &&
-            booking_sub_status['First Time Assigned'].count;
+            booking_sub_status['First Time Assigned']['New Entity'].count;
           others =
-            booking_sub_status['Others(specify)'] && booking_sub_status['Others(specify)'].count;
+            booking_sub_status['Others(specify)'] &&
+            booking_sub_status['Others(specify)']['New Entity'].count;
         }
         return (
           <div>
@@ -95,20 +99,26 @@ const getBtobCampaignSummaryColumn = () => {
           others = 0;
         if (booking_sub_status) {
           visit_required =
-            booking_sub_status['Visit Required'] && booking_sub_status['Visit Required'].count;
+            booking_sub_status['Visit Required'] &&
+            booking_sub_status['Visit Required']['Decision Pending'].count;
           call_required =
-            booking_sub_status['Call Required'] && booking_sub_status['Call Required'].count;
+            booking_sub_status['Call Required'] &&
+            booking_sub_status['Call Required']['Decision Pending'].count;
           negotiation_required =
             booking_sub_status['Negotiation Required'] &&
-            booking_sub_status['Negotiation Required'].count;
+            booking_sub_status['Negotiation Required']['Decision Pending'].count;
           not_available =
-            booking_sub_status['Not Available'] && booking_sub_status['Not Available'].count;
-          postponed = booking_sub_status['Postponed'] && booking_sub_status['Postponed'].count;
+            booking_sub_status['Not Available'] &&
+            booking_sub_status['Not Available']['Decision Pending'].count;
+          postponed =
+            booking_sub_status['Postponed'] &&
+            booking_sub_status['Postponed']['Decision Pending'].count;
           specific_occasion_only =
             booking_sub_status['Specific Occasion Only'] &&
-            booking_sub_status['Specific Occasion Only'].count;
+            booking_sub_status['Specific Occasion Only']['Decision Pending'].count;
           others =
-            booking_sub_status['Others(specify)'] && booking_sub_status['Others(specify)'].count;
+            booking_sub_status['Others(specify)'] &&
+            booking_sub_status['Others(specify)']['Decision Pending'].count;
         }
         return (
           <div>
@@ -148,20 +158,26 @@ const getBtobCampaignSummaryColumn = () => {
           others = 0;
         if (booking_sub_status) {
           less_occupancy =
-            booking_sub_status['Less occupancy'] && booking_sub_status['Less occupancy'].count;
+            booking_sub_status['Less occupancy'] &&
+            booking_sub_status['Less occupancy']['Rejected'].count;
           less_children =
-            booking_sub_status['Less Children'] && booking_sub_status['Less Children'].count;
+            booking_sub_status['Less Children'] &&
+            booking_sub_status['Less Children']['Rejected'].count;
           under_builder =
-            booking_sub_status['Under Builder'] && booking_sub_status['Under Builder'].count;
+            booking_sub_status['Under Builder'] &&
+            booking_sub_status['Under Builder']['Rejected'].count;
           very_expensive =
-            booking_sub_status['Very Expensive'] && booking_sub_status['Very Expensive'].count;
+            booking_sub_status['Very Expensive'] &&
+            booking_sub_status['Very Expensive']['Rejected'].count;
           client_rejected =
-            booking_sub_status['Client Rejected'] && booking_sub_status['Client Rejected'].count;
+            booking_sub_status['Client Rejected'] &&
+            booking_sub_status['Client Rejected']['Rejected'].count;
           rejected_by_society =
             booking_sub_status['Rejected by Society'] &&
-            booking_sub_status['Rejected by Society'].count;
+            booking_sub_status['Rejected by Society']['Rejected'].count;
           others =
-            booking_sub_status['Others(specify)'] && booking_sub_status['Others(specify)'].count;
+            booking_sub_status['Others(specify)'] &&
+            booking_sub_status['Others(specify)']['Rejected'].count;
         }
         return (
           <div>
@@ -195,19 +211,20 @@ const getBtobCampaignSummaryColumn = () => {
           meeting_with_other = 0;
         if (booking_sub_status) {
           meeting_with_agm =
-            booking_sub_status['Meeting with AGM'] && booking_sub_status['Meeting with AGM'].count;
+            booking_sub_status['Meeting with AGM'] &&
+            booking_sub_status['Meeting with AGM']['Meeting Fixed'].count;
           meeting_with_secratory =
             booking_sub_status['Meeting with Secretory'] &&
-            booking_sub_status['Meeting with Secretory'].count;
+            booking_sub_status['Meeting with Secretory']['Meeting Fixed'].count;
           meeting_with_chairman =
             booking_sub_status['Meeting with Chairman'] &&
-            booking_sub_status['Meeting with Chairman'].count;
+            booking_sub_status['Meeting with Chairman']['Meeting Fixed'].count;
           meeting_with_treasurer =
             booking_sub_status['Meeting with Treasurer'] &&
-            booking_sub_status['Meeting with Treasurer'].count;
+            booking_sub_status['Meeting with Treasurer']['Meeting Fixed'].count;
           meeting_with_other =
             booking_sub_status['Meeting with Other'] &&
-            booking_sub_status['Meeting with Other'].count;
+            booking_sub_status['Meeting with Other']['Meeting Fixed'].count;
         }
         return (
           <div>
