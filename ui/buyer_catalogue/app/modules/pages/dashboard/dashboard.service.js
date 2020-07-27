@@ -103,7 +103,7 @@ angular.module('catalogueApp')
       // }
 
       DashboardService.getCompareCampaignChartData = function (data, supplierType) {
-        var url = url_base + "dashboard/proposal_id/get_leads_by_multiple_campaigns";
+        var url = url_base + "dashboard/proposal_id/get_leads_by_multiple_campaigns/";
         // if (supplierType) {
         //   url += "?supplier_code=" + supplierType;
         // }

@@ -11,6 +11,7 @@ angular.module('catalogueApp')
       $scope.campaign_end_date;
       $scope.errorMsg = constants.emptyResponse;
       $scope.proposalState = $window.localStorage.proposalState;
+      $scope.updateDisable = true;
       if($scope.proposalState == constants.finalized)
         $scope.invoiceStatus = true;
       console.log($scope.proposalState);
@@ -39,6 +40,7 @@ angular.module('catalogueApp')
 
       $scope.maxDate = new Date(2020, 5, 22);
       $scope.today = new Date();
+      
       $scope.popup1 = false;
       $scope.popup2 = false;
       $scope.error = false;
@@ -52,6 +54,7 @@ angular.module('catalogueApp')
         formatYear: 'yy',
         startingDay: 1
       };
+   
 
       $scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
       $scope.format = $scope.formats[1];
@@ -61,7 +64,12 @@ angular.module('catalogueApp')
 
     	currentProposalService.getProposal($stateParams.proposal_id)
     	.then(function onSuccess(response, status){
-    		$scope.proposal = response.data.data;
+        $scope.proposal = response.data.data;
+        $scope.campaign_start_date =  new Date($scope.proposal.tentative_start_date);
+        $scope.campaign_end_date = new Date($scope.proposal.tentative_end_date);
+        if($scope.campaign_start_date && $scope.campaign_end_date){
+          $scope.updateDisable = false;
+        }
     	})
     	.catch(function onError(response, status){
         commonDataShare.showErrorMessage(response);
@@ -207,6 +215,30 @@ angular.module('catalogueApp')
      $scope.showHistory = function(){
        $location.path('/' + $stateParams.proposal_id + '/showproposalhistory');
      }
+
+     $scope.options = {};
+     $scope.options.minDate = new Date();
+     $scope.changeStartDate = function () {
+      if ($scope.campaign_start_date) {
+        var startDate = new Date($scope.campaign_start_date);
+        if($scope.campaign_end_date){
+          var endDate = new Date($scope.campaign_end_date);
+          if(endDate < startDate){
+            $scope.campaign_end_date = "";
+            $scope.updateDisable = true;
+          }
+        }
+        $scope.options1.minDate = $scope.campaign_start_date;
+      } else {
+        $scope.updateDisable = true;
+      }
+    }
+
+    $scope.changeEndDate = function () {
+      if ($scope.campaign_end_date) {
+        $scope.updateDisable = false;
+      }
+    }
 
      $scope.saveInvoiceDetails = function(){
        swal({
