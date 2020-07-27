@@ -270,7 +270,7 @@ angular.module('catalogueApp')
 
       DashboardService.getDistributionGraphsStatics = function (data) {
         console.log("data data data",data);
-        var url = url_root + "analytics/get-leads-data-generic";
+        var url = url_root + "analytics/get-leads-data-generic/";
         return machadaloHttp.put(url, data);
       }
 
