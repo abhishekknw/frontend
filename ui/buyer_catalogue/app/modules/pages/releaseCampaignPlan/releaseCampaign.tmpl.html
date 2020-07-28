@@ -1926,7 +1926,7 @@
                               class="glyphicon glyphicon-calendar"></i></button>
                         </span> -->
 
-                        <input type="text" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="dd/mm/yyyy"
+                        <input type="text" readonly class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
                           ng-change="changeStartDate($index)" ng-model="phase.start_date" is-open="isDatepickerOpen"
                           datepicker-options="datepickerOptions" ng-required="true" close-text="Close"
                           alt-input-formats="altInputFormats" required>
@@ -1949,7 +1949,7 @@
                               class="glyphicon glyphicon-calendar"></i></button>
                         </span> -->
 
-                        <input type="text" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="dd/mm/yyyy"
+                        <input type="text" readonly class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
                           ng-change="changeEndDate($index)" ng-model="phase.end_date" is-open="isEndDateOpen"
                           datepicker-options="options" ng-required="true" close-text="Close"
                           alt-input-formats="altInputFormats" required>
@@ -1974,7 +1974,7 @@
             <button class="btn btn-success" ng-disabled="phases.length == 0" ng-click="editPhaseDetails()">Edit</button>
             <button class="btn btn-success" type="button" name="button" ng-click="addPhases()">Add</button>
             <button class="btn btn-success" ng-disabled="phases.length == 0" type="button" name="button"
-              ng-click="savePhases()">Save</button>
+              ng-click="checkPhase()">Save</button>
           </div>
         </div>
       </div>
