@@ -956,12 +956,27 @@
             <div ng-if="corporate_allowed_gridview" class="nbCheckbox two-col">Employee Count: {{corporate_employee_count}}</div>
             <div ng-if="corporate_allowed_gridview" class="nbCheckbox two-col">Visitors Count: {{corporate_visitors_count}}</div>
 
-            <div ng-if="busShelter_allowed_gridview" class="nbCheckbox two-col">Bus Shelters:
-              {{total_busShleters_count}}</div>
+            <div ng-if="busShelter_allowed_gridview" class="nbCheckbox two-col">Bus Shelters: {{total_busShleters_count}}
+            </div>
+            <div ng-if="busShelter_allowed_gridview" class="nbCheckbox two-col">Footfall Count: {{bus_footfall_count}}</div>
+            <div ng-if="busShelter_allowed_gridview" class="nbCheckbox two-col">Traffic Count: {{bus_traffic_count}}</div>
+            
+            <!-- <div ng-if="busShelter_allowed_gridview" class="nbCheckbox two-col">Bus Shelters:
+              {{total_busShleters_count}}</div> -->
             <div ng-if="gym_allowed_gridview" class="nbCheckbox two-col">Gyms: {{total_gyms_count}}</div>
+            <div ng-if="gym_allowed_gridview" class="nbCheckbox two-col">Weekend Daily Footfall Count: {{gym_weekend_count}}</div>
+            <div ng-if="gym_allowed_gridview" class="nbCheckbox two-col">Weekday Daily Footfall Count: {{gym_weekday_count}}</div>
+
+
             <div ng-if="saloon_allowed_gridview" class="nbCheckbox two-col">Saloons: {{total_saloons_count}}</div>
+            <div ng-if="saloon_allowed_gridview" class="nbCheckbox two-col">Weekend Daily Footfall Count: {{saloon_weekend_count}}</div>
+            <div ng-if="saloon_allowed_gridview" class="nbCheckbox two-col">Weekday Daily Footfall Count: {{saloon_weekday_count}}</div>
+
+
             <div ng-if="retailStore_allowed_gridview" class="nbCheckbox two-col">Retail Stores:
               {{total_retailStores_count}}</div>
+              <div ng-if="retailStore_allowed_gridview" class="nbCheckbox two-col">Weekend Daily Footfall Count: {{retail_weekend_count}}</div>
+            <div ng-if="retailStore_allowed_gridview" class="nbCheckbox two-col">Weekday Daily Footfall Count: {{retail_weekday_count}}</div>
            
             <!--added if condition below to display those inventories selected by user in sumarry section-->
             <hr>
@@ -1098,21 +1113,21 @@
               <!-- <input class="form-control input-size" placeholder="Search" type="text" ng-model="search"
                 class="form-control spacing col-width" style="margin-left:10px"> -->
 
-              <select class="form-control input-size" style="width:140px; margin-left:20px;" ng-model="center_index"
+              <select class="form-control input-size" ng-disabled="!supplier_type_code" style="width:140px; margin-left:20px;" ng-model="center_index"
                 ng-change="selectCenter(center_index)" required>
-                <option value="">Select Center</option>
+                <option value="" disabled="true">Select Center</option>
                 <option ng-repeat="center_var in center_data" value="{{center_var.center.id}}">
                   {{center_var.center.city}} </option>
               </select>
               <div ng-if="center_err" > <font color="red">Please select center</font></div>
 
-              <select  name="areas" class="form-control input-size" ng-change="get_sub_areas(center.area)" ng-model="center.area" required>
-                <option value="">Select Area</option>
+              <select  name="areas" ng-disabled="!supplier_type_code" class="form-control input-size" ng-change="get_sub_areas(center.area)" ng-model="center.area" required>
+                <option value="" disabled="true">Select Area</option>
                 <option  ng-repeat="area in areas" value="{{$index}}" required>{{area.label}}</option>
               </select>
 
-              <select  name="subareas" class="form-control input-size" ng-change="selectSubArea(center.sub_area_id)" ng-model="center.sub_area_id" required>
-                <option value="">Select SubArea </option>
+              <select  name="subareas" ng-disabled="!supplier_type_code" class="form-control input-size" ng-change="selectSubArea(center.sub_area_id)" ng-model="center.sub_area_id" required>
+                <option value="" disabled="true">Select SubArea </option>
                 <option  ng-repeat="subarea in sub_areas" value="{{$index}}" required>{{subarea.subarea_name}}</option>
               </select>
               <button data-target="" ng-disabled="searchDisable" class="btn btn-danger active" data-toggle="modal"

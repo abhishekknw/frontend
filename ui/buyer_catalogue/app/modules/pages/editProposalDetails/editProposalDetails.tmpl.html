@@ -8,11 +8,11 @@
         <div class="gridTwoColumnSection">
           <div class="item">
             <label>Proposal Name</label>
-            <input type="text" placeholder="Proposal Name" class="field" ng-model="proposalData.name">
+            <input type="text" readonly placeholder="Proposal Name" class="field" ng-model="proposalData.name">
           </div>
           <div class="item">
             <label>Invoice Number</label>
-            <input type="text" placeholder="Invoice Number" class="field" ng-model="proposalData.invoice_number">
+            <input type="text" readonly placeholder="Invoice Number" class="field" ng-model="proposalData.invoice_number">
           </div>
           <div class="item" ng-class="{ 'has-error' : leadForm.email.$invalid && !leadForm.email.$pristine }">
             <label>Start Date</label>

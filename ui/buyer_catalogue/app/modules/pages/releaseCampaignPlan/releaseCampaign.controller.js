@@ -1051,7 +1051,22 @@ if (localindex_index != -1) {
         $scope.editPhaseDetails = function () {
           $scope.editPhase = true;
         }
+        $scope.checkPhase = function (){
+          for(let i in $scope.phases){
+            if(!$scope.phases[i].start_date){
+              swal(constants.name, "Please select start date", constants.warning);
+              return false
+            } 
+            if(!$scope.phases[i].end_date){
+              swal(constants.name, "Please select end date", constants.warning);
+              return false
+            } 
+          }
+          $scope.savePhases();
+        }
         $scope.savePhases = function () {
+         
+         
           if ($scope.phases[0] && $scope.phases[0].phase_no) {
             releaseCampaignService.savePhases($scope.phases, $scope.campaign_id)
               .then(function onSuccess(response) {
@@ -1309,6 +1324,7 @@ if (localindex_index != -1) {
 
         $scope.changeStartDate = function (index) {
           $scope.options.minDate = new Date($scope.phases[index].start_date);
+          $scope.phases[index].end_date = "";
         }
 
 
