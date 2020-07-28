@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const getCampaignSummaryColumn = () => {
+const getBtobCampaignSummaryColumn = () => {
   return [
     {
       dataField: 'Unknown',
@@ -83,35 +83,7 @@ const getCampaignSummaryColumn = () => {
       dataField: 'Not Initiated',
       text: 'Not Initiated',
     },
-    {
-      dataField: 'Recce',
-      text: 'Recce',
-      formatter: (cell, row) => {
-        const { booking_sub_status } = row;
-        let recce = row['Recce'] || 0;
-        let recce_required,
-          recce_approved = 0;
-        if (booking_sub_status) {
-          recce_required =
-            booking_sub_status['Recce Required'] &&
-            booking_sub_status['Recce Required']['Recce'].count;
-          recce_approved =
-            booking_sub_status['Recce Approved'] &&
-            booking_sub_status['Recce Approved']['Recce'].count;
-        }
-        return (
-          <div>
-            {recce}
-            {booking_sub_status && (
-              <div style={{ color: 'green' }}>
-                <p>{recce_approved > 0 && `Recce Approved : ${recce_approved}`}</p>
-                <p>{recce_required > 0 && `Recce Required : ${recce_required}`}</p>
-              </div>
-            )}
-          </div>
-        );
-      },
-    },
+
     {
       dataField: 'Decision Pending',
       text: 'Decision Pending',
@@ -162,7 +134,7 @@ const getCampaignSummaryColumn = () => {
                 <p>{postponed > 0 && `Postponed : ${postponed}`}</p>
                 <p>
                   {specific_occasion_only > 0 &&
-                    `specific_occasion_only: ${specific_occasion_only}`}
+                    `Specific Occasion Only: ${specific_occasion_only}`}
                 </p>
                 <p>{others > 0 && `Others : ${others}`}</p>
               </div>
@@ -225,44 +197,65 @@ const getCampaignSummaryColumn = () => {
         );
       },
     },
+
     {
-      dataField: 'Tentative Booking',
-      text: 'Tentative Booked',
+      dataField: 'Meeting Fixed',
+      text: 'Meeting Fixed',
       formatter: (cell, row) => {
         const { booking_sub_status } = row;
-        let tentative_booking = row['Tentative Booking'] || 0;
-        let phone_booking,
-          visit_booking = 0;
+        let meeting_fixed = row['Meeting Fixed'] || 0;
+        let meeting_with_agm,
+          meeting_with_secratory,
+          meeting_with_chairman,
+          meeting_with_treasurer,
+          meeting_with_other = 0;
         if (booking_sub_status) {
-          phone_booking =
-            booking_sub_status['Phone Booking'] &&
-            booking_sub_status['Phone Booking']['Tentative Booking'].count;
-          visit_booking =
-            booking_sub_status['Visit Booking'] &&
-            booking_sub_status['Visit Booking']['Tentative Booking'].count;
+          meeting_with_agm =
+            booking_sub_status['Meeting with AGM'] &&
+            booking_sub_status['Meeting with AGM']['Meeting Fixed'].count;
+          meeting_with_secratory =
+            booking_sub_status['Meeting with Secretory'] &&
+            booking_sub_status['Meeting with Secretory']['Meeting Fixed'].count;
+          meeting_with_chairman =
+            booking_sub_status['Meeting with Chairman'] &&
+            booking_sub_status['Meeting with Chairman']['Meeting Fixed'].count;
+          meeting_with_treasurer =
+            booking_sub_status['Meeting with Treasurer'] &&
+            booking_sub_status['Meeting with Treasurer']['Meeting Fixed'].count;
+          meeting_with_other =
+            booking_sub_status['Meeting with Other'] &&
+            booking_sub_status['Meeting with Other']['Meeting Fixed'].count;
         }
         return (
           <div>
-            {tentative_booking}
+            {meeting_fixed}{' '}
             {booking_sub_status && (
               <div style={{ color: 'green' }}>
-                <p>{phone_booking > 0 && `Phone Booking : ${phone_booking}`}</p>
-                <p>{visit_booking > 0 && `Visit Booking : ${visit_booking}`}</p>
+                <p>{meeting_with_agm > 0 && `Meeting with AGM : ${meeting_with_agm}`}</p>
+                <p>
+                  {meeting_with_secratory > 0 &&
+                    `Meeting with Secretory : ${meeting_with_secratory}`}
+                </p>
+                <p>
+                  {meeting_with_chairman > 0 && `Meeting with Chairman : ${meeting_with_chairman}`}
+                </p>
+                <p>
+                  {meeting_with_treasurer > 0 &&
+                    `Meeting with Treasurer : ${meeting_with_treasurer}`}
+                </p>
+                <p>{meeting_with_other > 0 && `Meeting with Other : ${meeting_with_other}`}</p>
               </div>
             )}
           </div>
         );
       },
     },
-    {
-      dataField: 'Confirmed Booking',
-      text: 'Confirmed Booked',
-    },
+
     {
       dataField: 'completed',
-      text: 'Completed',
+      text: 'Meeting Completed',
     },
   ];
 };
 
-export default getCampaignSummaryColumn;
+export default getBtobCampaignSummaryColumn;

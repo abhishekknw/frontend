@@ -245,7 +245,7 @@ angular.module('catalogueApp')
 
       DashboardService.getCampaignDateWiseData = function (data, supplierType) {
         if (data && data.hasOwnProperty('start_date') && data.hasOwnProperty('end_date')) {
-          var url = url_root + "campaign/campaign-wise-summary/" + "?start_date=" + data.start_date + "&end_date=" + data.end_date;
+          var url = url_root + "campaign/campaign-wise-summary" + "?start_date=" + data.start_date + "&end_date=" + data.end_date;
           console.log(data.start_date, data.end_date);
           if (supplierType) {
             url += "&supplier_code=" + supplierType;

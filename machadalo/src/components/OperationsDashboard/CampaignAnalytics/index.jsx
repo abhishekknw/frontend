@@ -14,6 +14,7 @@ class CampaignAnalytics extends React.Component {
       supplierData: {},
       selectedCampaign: '',
       token: '',
+      typeOfCampaign: '',
     };
   }
   componentDidMount() {
@@ -25,15 +26,23 @@ class CampaignAnalytics extends React.Component {
   };
 
   expandComponent = () => {
-    return <SupplierAnalytics supplierData={this.state.supplierData} token={this.state.token} />;
+    return (
+      <SupplierAnalytics
+        supplierData={this.state.supplierData}
+        token={this.state.token}
+        campaignType={this.state.typeOfCampaign}
+      />
+    );
   };
 
-  getSupplierCampaignDetails = (campaignId) => {
+  getSupplierCampaignDetails = (campaignId, typeOfCampaign) => {
     const { tappingData } = this.props.tappingDetails;
+    console.log(typeOfCampaign);
     const { token } = tappingData;
     this.setState({
       selectedCampaign: campaignId,
       token,
+      typeOfCampaign,
     });
     request
       .get(`${config.API_URL}/v0/ui/ops/campaign/supplier-count/?campaign_id=${campaignId}`)
@@ -71,7 +80,7 @@ class CampaignAnalytics extends React.Component {
             search={true}
             pagination={true}
             onRowClick={(row) => {
-              this.getSupplierCampaignDetails(row.campaign_id);
+              this.getSupplierCampaignDetails(row.campaign_id, row.type_of_end_customer);
             }}
             isExpandableRow={this.isExpandableRow}
             expandComponent={this.expandComponent}
