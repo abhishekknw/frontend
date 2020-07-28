@@ -59,6 +59,7 @@ angular.module('catalogueApp')
               confirmButtonText: "ok",
             },
               function (isConfirm) {
+                console.log('')
                  if (isConfirm) {
                   $location.path("/campaignDecisionBoard");
                 }
