@@ -3981,16 +3981,16 @@
         // $scope.getVendorWiseSummary();
         // $scope.getDynamicGraphsStatics();
         cfpLoadingBar.start();
-
+        var dateRange = {}
 
         if ($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date') &&
           !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
 
-          $scope.dateRangeModel.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
-          $scope.dateRangeModel.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
+            dateRange.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
+            dateRange.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
           $scope.selectedSupplierType.code = "RS";
         }
-        DashboardService.getCampaignDateWiseData($scope.dateRangeModel,$scope.selectedSupplierType.code)
+        DashboardService.getCampaignDateWiseData(dateRange,$scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
             // $scope.dateRangeModel.start_date = new Date($scope.dateRangeModel.start_date);
             // $scope.dateRangeModel.end_date = new Date($scope.dateRangeModel.end_date);
@@ -4035,12 +4035,13 @@
 
 
       $scope.getCampaignWiseSummary = function () {
+        var dateRange = {}
         if($scope.dateRangeModel.start_dates && $scope.dateRangeModel.end_dates){
         //   if ($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date') &&
         //   !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
 
-           $scope.dateRangeModel.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_dates);
-           $scope.dateRangeModel.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_dates);
+            dateRange.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_dates);
+            dateRange.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_dates);
           
         // }
         } else {
@@ -4049,7 +4050,7 @@
         }
       
         cfpLoadingBar.start();
-        DashboardService.getCampaignWiseSummary($scope.dateRangeModel,$scope.selectedSupplierType.code)
+        DashboardService.getCampaignWiseSummary(dateRange,$scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
             $scope.showPerfMetrics = $scope.perfMetrics.overall;
             $scope.selectAllCampaignLeads = true;
