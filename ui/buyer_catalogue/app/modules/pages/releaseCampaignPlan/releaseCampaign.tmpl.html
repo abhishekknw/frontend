@@ -1645,7 +1645,7 @@
               <div class="row form-inline">
                 <!-- <span style="float:left"> -->
                 <select class="form-control input-size" ng-change="selectSupplier()" ng-model="supplier_type_code.code">
-                  <option value="">Select Supplier</option>
+                  <option value="" disabled="true">Select Supplier</option>
                   <option ng-repeat="supplier in supplier_names" value="{{supplier.code}}" required>{{supplier.name}}
                   </option>
                 </select>
@@ -1654,9 +1654,9 @@
                   <font color="red">Please select supplier</font>
                 </div>
 
-                <select class="form-control input-size" style="width:140px; margin-left:20px;"
+                <select class="form-control input-size" ng-disabled="!supplier_type_code.code" style="width:140px; margin-left:20px;"
                   ng-model="indexData.center_index" ng-change="selectCenter(indexData.center_index)" required>
-                  <option value="">Select Center</option>
+                  <option value="" disabled="true">Select Center</option>
                   <option ng-repeat="center_var in releaseDetailsData" value="{{center_var.id}}">
                     {{center_var.city}}</option>
                 </select>
@@ -1664,15 +1664,15 @@
                   <font color="red">Please select center</font>
                 </div>
 
-                <select name="areas" class="form-control input-size" ng-change="get_sub_areas(centers.area)"
+                <select name="areas" ng-disabled="!supplier_type_code.code" class="form-control input-size" ng-change="get_sub_areas(centers.area)"
                   ng-model="centers.area" required>
-                  <option value="">Select Area</option>
+                  <option value="" disabled="true">Select Area</option>
                   <option ng-repeat="area in areas" value="{{$index}}" required>{{area.label}}</option>
                 </select>
 
-                <select name="subareas" class="form-control input-size" ng-change="selectSubArea(centers.sub_area_id)"
+                <select name="subareas" ng-disabled="!supplier_type_code.code" class="form-control input-size" ng-change="selectSubArea(centers.sub_area_id)"
                   ng-model="centers.sub_area_id" required>
-                  <option value="">Select SubArea </option>
+                  <option value="" disabled="true">Select SubArea </option>
                   <option ng-repeat="subarea in sub_areas" value="{{$index}}" required>{{subarea.subarea_name}}</option>
                 </select>
 
@@ -1926,7 +1926,7 @@
                               class="glyphicon glyphicon-calendar"></i></button>
                         </span> -->
 
-                        <input type="text" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="dd/mm/yyyy"
+                        <input type="text" readonly class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
                           ng-change="changeStartDate($index)" ng-model="phase.start_date" is-open="isDatepickerOpen"
                           datepicker-options="datepickerOptions" ng-required="true" close-text="Close"
                           alt-input-formats="altInputFormats" required>
@@ -1949,7 +1949,7 @@
                               class="glyphicon glyphicon-calendar"></i></button>
                         </span> -->
 
-                        <input type="text" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="dd/mm/yyyy"
+                        <input type="text" readonly class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
                           ng-change="changeEndDate($index)" ng-model="phase.end_date" is-open="isEndDateOpen"
                           datepicker-options="options" ng-required="true" close-text="Close"
                           alt-input-formats="altInputFormats" required>
@@ -1974,7 +1974,7 @@
             <button class="btn btn-success" ng-disabled="phases.length == 0" ng-click="editPhaseDetails()">Edit</button>
             <button class="btn btn-success" type="button" name="button" ng-click="addPhases()">Add</button>
             <button class="btn btn-success" ng-disabled="phases.length == 0" type="button" name="button"
-              ng-click="savePhases()">Save</button>
+              ng-click="checkPhase()">Save</button>
           </div>
         </div>
       </div>

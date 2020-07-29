@@ -150,7 +150,7 @@ angular.module('catalogueApp')
       // TO show different colors for suppliers based on status
       $scope.status_color;
       function getIcon(supplier, key) {
-      
+
         if (supplier.status == 'S')
           $scope.status_color = "FFFF00";// yellow
         if (supplier.status == 'F')
@@ -427,28 +427,28 @@ angular.module('catalogueApp')
       //start:summary for mapview
       var getSummary = function (supplier_code, center) {
         console.log($scope.center_data);
-       
+
         center.summary_meta[supplier_code] = angular.copy(summarySupplierStatus);
         //supplier count calculated
         center.summary_meta[supplier_code].count = center.suppliers[supplier_code].length;
         angular.forEach(center.suppliers[supplier_code], function (supplier) {
-  
+
           //flat and tower count for societies
           if (supplier_code == $scope.supplierCode.society) {
             center.summary_meta[supplier_code].flat_count += supplier.flat_count;
             center.summary_meta[supplier_code].tower_count += supplier.tower_count;
-          }  else {
-            if(!center.summary_meta[supplier_code].unit_primary_count){
+          } else {
+            if (!center.summary_meta[supplier_code].unit_primary_count) {
               center.summary_meta[supplier_code].unit_primary_count = 0;
             }
-            if(!center.summary_meta[supplier_code].unit_secondary_count){
+            if (!center.summary_meta[supplier_code].unit_secondary_count) {
               center.summary_meta[supplier_code].unit_secondary_count = 0;
             }
             center.summary_meta[supplier_code].unit_primary_count += supplier.unit_primary_count;
             center.summary_meta[supplier_code].unit_secondary_count += supplier.unit_secondary_count;
           }
 
-         
+
           //count of suppliers finalized
           if (supplier.status == supplierStatus.finalized) {
             center.summary_meta[supplier_code].finalized.count += 1;
@@ -496,9 +496,11 @@ angular.module('catalogueApp')
       // end mapview summary
       //start: gridview summary
       var getComprehinsiveSummary = function (supplier_code) {
+       
         $scope.gridViewSummary[supplier_code] = angular.copy(summarySupplierStatus);
         if ($scope.center_data.length > 0) {
           for (var i = 0; i < $scope.center_data.length; i++) {
+ 
             if ($scope.center_data[i].suppliers[supplier_code]) {
               $scope.center_data[i].summary_meta[supplier_code].count = $scope.center_data[i].suppliers[supplier_code].length;
             }
@@ -537,6 +539,8 @@ angular.module('catalogueApp')
                   $scope.gridViewSummary[supplier_code].shortlisted.stall_count += $scope.center_data[i].summary_meta[supplier_code].shortlisted.stall_count;
               }
             }
+
+            console.log('88888888888888888888999999999999999999999999999999', $scope.gridViewSummary)
           }
         }
         getComprehinsiveImpressions(supplier_code);
@@ -632,9 +636,57 @@ angular.module('catalogueApp')
             $scope.total_tower_count += $scope.total_societies[temp].tower_count;
           }
 
+          $scope.corporate_employee_count = 0;
+          $scope.corporate_visitors_count = 0;
+          $scope.bus_footfall_count = 0;
+          $scope.bus_traffic_count = 0;
+          $scope.gym_weekend_count = 0;
+          $scope.gym_weekday_count = 0;
+          $scope.saloon_weekend_count = 0;
+          $scope.saloon_weekday_count = 0;
+          $scope.retail_weekend_count = 0;
+          $scope.retail_weekday_count = 0;
+
+          if ($scope.total_corporates && $scope.total_corporates.length > 0) {
+            for (let i in $scope.total_corporates) {
+              $scope.corporate_employee_count += $scope.total_corporates[i].unit_primary_count;
+              $scope.corporate_visitors_count += $scope.total_corporates[i].unit_secondary_count;
+            }
+          }
+
+          if ($scope.total_busShleters && $scope.total_busShleters.length > 0) {
+            for (let j in $scope.total_busShleters) {
+              $scope.bus_footfall_count += $scope.total_busShleters[j].unit_primary_count;
+              $scope.bus_traffic_count += $scope.total_busShleters[j].unit_secondary_count;
+            }
+          }
+
+          if ($scope.total_gyms && $scope.total_gyms.length > 0) {
+            for (let k in $scope.total_gyms) {
+              $scope.gym_weekend_count += $scope.total_gyms[k].unit_primary_count;
+              $scope.gym_weekday_count += $scope.total_gyms[k].unit_secondary_count;
+            }
+          }
+
+          if ($scope.total_saloons && $scope.total_saloons.length > 0) {
+            for (let p in $scope.total_saloons) {
+              $scope.saloon_weekend_count += $scope.total_saloons[p].unit_primary_count;
+              $scope.saloon_weekday_count += $scope.total_saloons[p].unit_secondary_count;
+            }
+          }
+
+          if ($scope.total_retailStores && $scope.total_retailStores.length > 0) {
+            for (let q in $scope.total_retailStores) {
+              $scope.retail_weekend_count += $scope.total_retailStores[q].unit_primary_count;
+              $scope.retail_weekday_count += $scope.total_retailStores[q].unit_secondary_count;
+            }
+          }
+
+
+
           // for (var i = 0; i < $scope.total_corporates_count; i++) {
-          
-           
+
+
           //   if(!$scope.total_corporates[i].unit_primary_count){
           //     $scope.total_corporates[i].unit_primary_count = 0;
           //   }
@@ -652,9 +704,9 @@ angular.module('catalogueApp')
           //   $scope.corporate_employee_count += $scope.total_corporates[i].unit_primary_count;
           //   $scope.corporate_visitors_count += $scope.total_corporates[i].unit_secondary_count;
           // }
-          
-         
-          
+
+
+
         } catch (error) {
           console.log(error.message);
         }
@@ -1099,6 +1151,7 @@ angular.module('catalogueApp')
                     getComprehinsiveSummary($scope.supplierCode.corporate);
                   if ($scope.unique_suppliers.has($scope.supplierCode.busShelter))
                     getComprehinsiveSummary($scope.supplierCode.busShelter);
+                  
                   // gridView_Summary();
                   for (var i = 0; i < $scope.center_data.length; i++) {
                     $scope.initial_center_changed.push(false);
@@ -1178,7 +1231,20 @@ angular.module('catalogueApp')
                   suppliersData();
                   gridViewBasicSummary();
                   gridViewFilterSummary();
+                  // getComprehinsiveSummary($scope.supplierCode.society);
+                  if ($scope.unique_suppliers.has($scope.supplierCode.society))
                   getComprehinsiveSummary($scope.supplierCode.society);
+                if ($scope.unique_suppliers.has($scope.supplierCode.corporate))
+                  getComprehinsiveSummary($scope.supplierCode.corporate);
+                if ($scope.unique_suppliers.has($scope.supplierCode.busShelter))
+                  getComprehinsiveSummary($scope.supplierCode.busShelter);
+                  if ($scope.unique_suppliers.has($scope.supplierCode.gym))
+                  getComprehinsiveSummary($scope.supplierCode.gym);
+                  if ($scope.unique_suppliers.has($scope.supplierCode.saloon))
+                  getComprehinsiveSummary($scope.supplierCode.saloon);
+                  if ($scope.unique_suppliers.has($scope.supplierCode.retailStore))
+                  getComprehinsiveSummary($scope.supplierCode.retailStore);
+               
 
                   for (var i = 0; i < $scope.center_data.length; i++)
                     $scope.initial_center_changed.push(false);
@@ -2042,10 +2108,19 @@ angular.module('catalogueApp')
         $scope.center_areas = {};
         $scope.supplier_center = "";
         $scope.supplier_err = false;
+        $scope.search = "";
+        $scope.supplierData = [];
+        $scope.errorMsg = "";
       }
       //Start: function to select center at add more suplliers
       $scope.selectCenter = function (center_index) {
         $scope.center = [];
+        $scope.search = "";
+        $scope.center.area  = "";
+        $scope.center_areas = {}
+        $scope.supplier_center = null
+        $scope.supplierData = [];
+        $scope.errorMsg = "";
         try {
           $scope.center_index = center_index;
           if (center_index != null) {
@@ -2067,13 +2142,19 @@ angular.module('catalogueApp')
             } else {
               $scope.areas = [];
             }
-          }
+          } 
         } catch (error) {
           console.log(error.message);
         }
       }
 
       $scope.get_sub_areas = function (index) {
+        $scope.center_areas.sub_areas = "";
+        $scope.sub_areas = [];
+        $scope.center.sub_area_id = "";
+        $scope.search = "";
+        $scope.supplierData = [];
+        $scope.errorMsg = "";
         if (index) {
           $scope.center_areas = {
             areas: $scope.areas[index].label
@@ -2090,6 +2171,7 @@ angular.module('catalogueApp')
       }
 
       $scope.selectSubArea = function (index) {
+        $scope.supplierData = [];
         if (index) {
           $scope.center_areas.sub_areas = $scope.sub_areas[index].subarea_name;
         } else {

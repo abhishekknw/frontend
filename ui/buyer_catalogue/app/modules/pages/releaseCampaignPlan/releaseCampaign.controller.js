@@ -622,6 +622,8 @@ angular.module('catalogueApp')
           $scope.center_areas = {};
           $scope.centers = {};
           $scope.releaseDetailsData = $scope.releaseDetails.campaign.centerData;
+          $scope.search = {};
+          $scope.errorMsg = "";
         }
 
 
@@ -629,6 +631,11 @@ angular.module('catalogueApp')
         $scope.selectCenter = function (center_index) {
 
           $scope.supplierData = [];
+          $scope.search = {};
+          $scope.center_areas = {};
+          $scope.centers.area  = "";
+          $scope.supplier_center = null
+          $scope.errorMsg = "";
           try {
             $scope.center_index = center_index;
             if (center_index != null) {
@@ -661,7 +668,13 @@ angular.module('catalogueApp')
         }
 
         $scope.get_sub_areas = function (index) {
+          $scope.center_areas.sub_areas = "";
+          $scope.sub_areas = {};
+          $scope.centers.sub_area_id = "";
+          $scope.errorMsg = "";
+
           $scope.supplierData = [];
+          $scope.search = {};
           if (index) {
             $scope.center_areas = {
               areas: $scope.areas[index].label
@@ -679,6 +692,7 @@ angular.module('catalogueApp')
 
         $scope.selectSubArea = function (index) {
           $scope.supplierData = [];
+          $scope.search = {};
           if (index) {
             $scope.center_areas.sub_areas = $scope.sub_areas[index].subarea_name;
           } else {
@@ -1051,7 +1065,22 @@ if (localindex_index != -1) {
         $scope.editPhaseDetails = function () {
           $scope.editPhase = true;
         }
+        $scope.checkPhase = function (){
+          for(let i in $scope.phases){
+            if(!$scope.phases[i].start_date){
+              swal(constants.name, "Please select start date", constants.warning);
+              return false
+            } 
+            if(!$scope.phases[i].end_date){
+              swal(constants.name, "Please select end date", constants.warning);
+              return false
+            } 
+          }
+          $scope.savePhases();
+        }
         $scope.savePhases = function () {
+         
+         
           if ($scope.phases[0] && $scope.phases[0].phase_no) {
             releaseCampaignService.savePhases($scope.phases, $scope.campaign_id)
               .then(function onSuccess(response) {
@@ -1309,6 +1338,7 @@ if (localindex_index != -1) {
 
         $scope.changeStartDate = function (index) {
           $scope.options.minDate = new Date($scope.phases[index].start_date);
+          $scope.phases[index].end_date = "";
         }
 
 
