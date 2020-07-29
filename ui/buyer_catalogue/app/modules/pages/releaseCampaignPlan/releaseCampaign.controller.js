@@ -622,6 +622,8 @@ angular.module('catalogueApp')
           $scope.center_areas = {};
           $scope.centers = {};
           $scope.releaseDetailsData = $scope.releaseDetails.campaign.centerData;
+          $scope.search = {};
+          $scope.errorMsg = "";
         }
 
 
@@ -629,6 +631,11 @@ angular.module('catalogueApp')
         $scope.selectCenter = function (center_index) {
 
           $scope.supplierData = [];
+          $scope.search = {};
+          $scope.center_areas = {};
+          $scope.centers.area  = "";
+          $scope.supplier_center = null
+          $scope.errorMsg = "";
           try {
             $scope.center_index = center_index;
             if (center_index != null) {
@@ -661,7 +668,13 @@ angular.module('catalogueApp')
         }
 
         $scope.get_sub_areas = function (index) {
+          $scope.center_areas.sub_areas = "";
+          $scope.sub_areas = {};
+          $scope.centers.sub_area_id = "";
+          $scope.errorMsg = "";
+
           $scope.supplierData = [];
+          $scope.search = {};
           if (index) {
             $scope.center_areas = {
               areas: $scope.areas[index].label
@@ -679,6 +692,7 @@ angular.module('catalogueApp')
 
         $scope.selectSubArea = function (index) {
           $scope.supplierData = [];
+          $scope.search = {};
           if (index) {
             $scope.center_areas.sub_areas = $scope.sub_areas[index].subarea_name;
           } else {

@@ -841,6 +841,18 @@
             <span class="space filterPanelHeader">Finalized Count</span>
             <div ng-if="current_center.suppliers_allowed.society_allowed " class="nbCheckbox two-col">Societies:
               {{current_center.summary_meta[supplierCode.society].finalized.count}}</div>
+
+              <div ng-if="current_center.suppliers_allowed.corporate_allowed " class="nbCheckbox two-col">Corporates:
+                {{current_center.summary_meta[supplierCode.corporate].finalized.count}}</div>
+                <div ng-if="current_center.suppliers_allowed.busShelter_allowed " class="nbCheckbox two-col">Bus Shelters:
+                  {{current_center.summary_meta[supplierCode.busShelter].finalized.count}}</div>
+                  <div ng-if="current_center.suppliers_allowed.gym_allowed " class="nbCheckbox two-col">Gyms:
+                    {{current_center.summary_meta[supplierCode.gym].finalized.count}}</div>
+                    <div ng-if="current_center.suppliers_allowed.saloon_allowed " class="nbCheckbox two-col">Saloons:
+                      {{current_center.summary_meta[supplierCode.saloon].finalized.count}}</div>
+                      <div ng-if="current_center.suppliers_allowed.retailStore_allowed " class="nbCheckbox two-col">Retail Stores:
+                        {{current_center.summary_meta[supplierCode.retailStore].finalized.count}}</div>
+
             </br>
             <span class="space panelSubHeader" ng-click="finalInv=!finalInv">Inventory Count<span
                 class="caret"></span></span>
@@ -881,6 +893,16 @@
             <span class="space filterPanelHeader">Shortlisted Count</span>
             <div ng-if="current_center.suppliers_allowed.society_allowed " class="nbCheckbox two-col">Societies:
               {{current_center.summary_meta[supplierCode.society].shortlisted.count}}</div>
+              <div ng-if="current_center.suppliers_allowed.corporate_allowed " class="nbCheckbox two-col">Corporates:
+                {{current_center.summary_meta[supplierCode.corporate].shortlisted.count}}</div>
+                <div ng-if="current_center.suppliers_allowed.busShelter_allowed " class="nbCheckbox two-col">Bus Shelters:
+                  {{current_center.summary_meta[supplierCode.busShelter].shortlisted.count}}</div>
+                  <div ng-if="current_center.suppliers_allowed.gym_allowed " class="nbCheckbox two-col">Gyms:
+                    {{current_center.summary_meta[supplierCode.gym].shortlisted.count}}</div>
+                    <div ng-if="current_center.suppliers_allowed.saloon_allowed " class="nbCheckbox two-col">Saloons:
+                      {{current_center.summary_meta[supplierCode.saloon].shortlisted.count}}</div>
+                      <div ng-if="current_center.suppliers_allowed.retailStore_allowed " class="nbCheckbox two-col">Retail Stores:
+                        {{current_center.summary_meta[supplierCode.retailStore].shortlisted.count}}</div>
             </br>
             <span class="space panelSubHeader" ng-click="shortInv=!shortInv">Inventory Count<span
                 class="caret"></span></span>
@@ -921,10 +943,30 @@
             <span class="space filterPanelHeader">Buffered Count</span>
             <div ng-if="current_center.suppliers_allowed.society_allowed " class="nbCheckbox two-col">Societies:
               {{current_center.summary_meta[supplierCode.society].buffered.count}}</div>
+              <div ng-if="current_center.suppliers_allowed.corporate_allowed " class="nbCheckbox two-col">Corporates:
+                {{current_center.summary_meta[supplierCode.corporate].buffered.count}}</div>
+                <div ng-if="current_center.suppliers_allowed.busShelter_allowed " class="nbCheckbox two-col">Bus Shelters:
+                  {{current_center.summary_meta[supplierCode.busShelter].buffered.count}}</div>
+                  <div ng-if="current_center.suppliers_allowed.gym_allowed " class="nbCheckbox two-col">Gyms:
+                    {{current_center.summary_meta[supplierCode.gym].buffered.count}}</div>
+                    <div ng-if="current_center.suppliers_allowed.saloon_allowed " class="nbCheckbox two-col">Saloons:
+                      {{current_center.summary_meta[supplierCode.saloon].buffered.count}}</div>
+                      <div ng-if="current_center.suppliers_allowed.retailStore_allowed " class="nbCheckbox two-col">Retail Stores:
+                        {{current_center.summary_meta[supplierCode.retailStore].buffered.count}}</div>
             </br>
             <span class="space filterPanelHeader">Removed Count</span>
             <div ng-if="current_center.suppliers_allowed.society_allowed " class="nbCheckbox two-col">Societies:
               {{current_center.summary_meta[supplierCode.society].removed.count}}</div>
+              <div ng-if="current_center.suppliers_allowed.corporate_allowed " class="nbCheckbox two-col">Corporates:
+                {{current_center.summary_meta[supplierCode.corporate].removed.count}}</div>
+                <div ng-if="current_center.suppliers_allowed.busShelter_allowed " class="nbCheckbox two-col">Bus Shelters:
+                  {{current_center.summary_meta[supplierCode.busShelter].removed.count}}</div>
+                  <div ng-if="current_center.suppliers_allowed.gym_allowed " class="nbCheckbox two-col">Gyms:
+                    {{current_center.summary_meta[supplierCode.gym].removed.count}}</div>
+                    <div ng-if="current_center.suppliers_allowed.saloon_allowed " class="nbCheckbox two-col">Saloons:
+                      {{current_center.summary_meta[supplierCode.saloon].removed.count}}</div>
+                      <div ng-if="current_center.suppliers_allowed.retailStore_allowed " class="nbCheckbox two-col">Retail Stores:
+                        {{current_center.summary_meta[supplierCode.retailStore].removed.count}}</div>
             </br></br>
 
           </div>
@@ -993,6 +1035,16 @@
             <span class="space filterPanelHeader">Finalized Count</span>
             <div ng-if="society_allowed_gridview" class="nbCheckbox two-col">Societies:
               {{gridViewSummary[supplierCode.society].finalized.count}}</div>
+              <div ng-if="corporate_allowed_gridview" class="nbCheckbox two-col">Corporates:
+                {{gridViewSummary[supplierCode.corporate].finalized.count}}</div>
+                <div ng-if="busShelter_allowed_gridview" class="nbCheckbox two-col">Bus Shelters:
+                  {{gridViewSummary[supplierCode.busShelter].finalized.count}}</div>
+                  <div ng-if="gym_allowed_gridview" class="nbCheckbox two-col">Gyms:
+                    {{gridViewSummary[supplierCode.gym].finalized.count}}</div>
+                    <div ng-if="saloon_allowed_gridview" class="nbCheckbox two-col">Saloons:
+                      {{gridViewSummary[supplierCode.saloon].finalized.count}}</div>
+                      <div ng-if="retailStore_allowed_gridview" class="nbCheckbox two-col">Retail Stores:
+                        {{gridViewSummary[supplierCode.retailStore].finalized.count}}</div>
             </br>
             <span class="space panelSubHeader" ng-click="finInv=!finInv">Inventory Count<span
                 class="caret"></span></span>
@@ -1024,6 +1076,17 @@
             <span class="space filterPanelHeader">Shortlisted Count</span>
             <div ng-if="society_allowed_gridview" class="nbCheckbox two-col">Societies:
               {{gridViewSummary[supplierCode.society].shortlisted.count}}</div>
+              <div ng-if="corporate_allowed_gridview" class="nbCheckbox two-col">Corporates:
+                {{gridViewSummary[supplierCode.corporate].shortlisted.count}}</div>
+                <div ng-if="busShelter_allowed_gridview" class="nbCheckbox two-col">Bus Shelters:
+                  {{gridViewSummary[supplierCode.busShelter].shortlisted.count}}</div>
+                  <div ng-if="gym_allowed_gridview" class="nbCheckbox two-col">Gyms:
+                    {{gridViewSummary[supplierCode.gym].shortlisted.count}}</div>
+                    <div ng-if="saloon_allowed_gridview" class="nbCheckbox two-col">Saloons:
+                      {{gridViewSummary[supplierCode.saloon].shortlisted.count}}</div>
+                      <div ng-if="retailStore_allowed_gridview" class="nbCheckbox two-col">Retail Stores:
+                        {{gridViewSummary[supplierCode.retailStore].shortlisted.count}}</div>
+            
             </br>
             <span class="space panelSubHeader" ng-click="shortlistedInv=!shortlistedInv">Inventory Count<span
                 class="caret"></span></span>
@@ -1054,9 +1117,31 @@
             <span class="space filterPanelHeader">Buffered Count</span>
             <div ng-if="society_allowed_gridview" class="nbCheckbox two-col">Societies:
               {{gridViewSummary[supplierCode.society].buffered.count}}</div>
+              <div ng-if="corporate_allowed_gridview" class="nbCheckbox two-col">Corporates:
+                {{gridViewSummary[supplierCode.corporate].buffered.count}}</div>
+                <div ng-if="busShelter_allowed_gridview" class="nbCheckbox two-col">Bus Shelters:
+                  {{gridViewSummary[supplierCode.busShelter].buffered.count}}</div>
+                  <div ng-if="gym_allowed_gridview" class="nbCheckbox two-col">Gyms:
+                    {{gridViewSummary[supplierCode.gym].buffered.count}}</div>
+                    <div ng-if="saloon_allowed_gridview" class="nbCheckbox two-col">Saloons:
+                      {{gridViewSummary[supplierCode.saloon].buffered.count}}</div>
+                      <div ng-if="retailStore_allowed_gridview" class="nbCheckbox two-col">Retail Stores:
+                        {{gridViewSummary[supplierCode.retailStore].buffered.count}}</div>
+
+
             <span class="space filterPanelHeader">Removed Count</span>
             <div ng-if="society_allowed_gridview" class="nbCheckbox two-col">Societies:
               {{gridViewSummary[supplierCode.society].removed.count}}</div>
+              <div ng-if="corporate_allowed_gridview" class="nbCheckbox two-col">Corporates:
+                {{gridViewSummary[supplierCode.corporate].removed.count}}</div>
+                <div ng-if="busShelter_allowed_gridview" class="nbCheckbox two-col">Bus Shelters:
+                  {{gridViewSummary[supplierCode.busShelter].removed.count}}</div>
+                  <div ng-if="gym_allowed_gridview" class="nbCheckbox two-col">Gyms:
+                    {{gridViewSummary[supplierCode.gym].removed.count}}</div>
+                    <div ng-if="saloon_allowed_gridview" class="nbCheckbox two-col">Saloons:
+                      {{gridViewSummary[supplierCode.saloon].removed.count}}</div>
+                      <div ng-if="retailStore_allowed_gridview" class="nbCheckbox two-col">Retail Stores:
+                        {{gridViewSummary[supplierCode.retailStore].removed.count}}</div>
 
             <span class="space filterPanelHeader">Inventory Count</span>
             <div class="nbCheckbox two-col" ng-if="inventoryHeaders.flier && society_allowed_gridview">Flyers:

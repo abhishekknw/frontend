@@ -496,9 +496,11 @@ angular.module('catalogueApp')
       // end mapview summary
       //start: gridview summary
       var getComprehinsiveSummary = function (supplier_code) {
+       
         $scope.gridViewSummary[supplier_code] = angular.copy(summarySupplierStatus);
         if ($scope.center_data.length > 0) {
           for (var i = 0; i < $scope.center_data.length; i++) {
+ 
             if ($scope.center_data[i].suppliers[supplier_code]) {
               $scope.center_data[i].summary_meta[supplier_code].count = $scope.center_data[i].suppliers[supplier_code].length;
             }
@@ -537,6 +539,8 @@ angular.module('catalogueApp')
                   $scope.gridViewSummary[supplier_code].shortlisted.stall_count += $scope.center_data[i].summary_meta[supplier_code].shortlisted.stall_count;
               }
             }
+
+            console.log('88888888888888888888999999999999999999999999999999', $scope.gridViewSummary)
           }
         }
         getComprehinsiveImpressions(supplier_code);
@@ -1147,6 +1151,7 @@ angular.module('catalogueApp')
                     getComprehinsiveSummary($scope.supplierCode.corporate);
                   if ($scope.unique_suppliers.has($scope.supplierCode.busShelter))
                     getComprehinsiveSummary($scope.supplierCode.busShelter);
+                  
                   // gridView_Summary();
                   for (var i = 0; i < $scope.center_data.length; i++) {
                     $scope.initial_center_changed.push(false);
@@ -1226,7 +1231,20 @@ angular.module('catalogueApp')
                   suppliersData();
                   gridViewBasicSummary();
                   gridViewFilterSummary();
+                  // getComprehinsiveSummary($scope.supplierCode.society);
+                  if ($scope.unique_suppliers.has($scope.supplierCode.society))
                   getComprehinsiveSummary($scope.supplierCode.society);
+                if ($scope.unique_suppliers.has($scope.supplierCode.corporate))
+                  getComprehinsiveSummary($scope.supplierCode.corporate);
+                if ($scope.unique_suppliers.has($scope.supplierCode.busShelter))
+                  getComprehinsiveSummary($scope.supplierCode.busShelter);
+                  if ($scope.unique_suppliers.has($scope.supplierCode.gym))
+                  getComprehinsiveSummary($scope.supplierCode.gym);
+                  if ($scope.unique_suppliers.has($scope.supplierCode.saloon))
+                  getComprehinsiveSummary($scope.supplierCode.saloon);
+                  if ($scope.unique_suppliers.has($scope.supplierCode.retailStore))
+                  getComprehinsiveSummary($scope.supplierCode.retailStore);
+               
 
                   for (var i = 0; i < $scope.center_data.length; i++)
                     $scope.initial_center_changed.push(false);
