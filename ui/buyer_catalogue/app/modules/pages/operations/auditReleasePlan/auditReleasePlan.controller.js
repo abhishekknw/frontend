@@ -354,22 +354,6 @@ angular.module('catalogueApp')
             $scope.adInvModel.inv_count = 50
           }
         }
-        $scope.checkObj = function(){
-      
-          for(let i in $scope.requestaActivityData.assignment_detail){
-          for(var key in $scope.requestaActivityData.assignment_detail[i].date_user_assignments) {
-            if($scope.requestaActivityData.assignment_detail[i].date_user_assignments.hasOwnProperty(key)){
-              $scope.requestaActivityData.assignment_detail.splice(i,1)
-              alert('r')
-            } else {
-              alert('ffffff')
-            }
-           
-            }
-
-      }
-        }
-
 
         $scope.saveActivityDates = function () {
           $scope.savingDates = true;
