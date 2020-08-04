@@ -61,7 +61,8 @@ angular.module('catalogueApp')
               function (isConfirm) {
                 console.log('')
                  if (isConfirm) {
-                  $location.path("/campaignDecisionBoard");
+                  //  $location.path("/campaignDecisionBoard");
+                   window.location ="/#/campaignDecisionBoard"
                 }
               }
             );
@@ -69,6 +70,8 @@ angular.module('catalogueApp')
             console.log(response);
           })
       }
+
+     
 
       $scope.changeStartDate = function () {
         if ($scope.proposalData.startDate) {
