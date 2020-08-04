@@ -37,7 +37,7 @@
       </tr>
       <tr st-select-row='proposal' dir-paginate="proposal in campaignData|filter:f|filter:searchQuery|itemsPerPage:10">
         <td>{{$index + 1}}</td>
-        <td> {{proposal.campaign.organisationName}} <br>  ({{proposal.campaign.accountName}}) </td>
+        <td> {{proposal.campaign.accountOrganisationName}} <br>  ({{proposal.campaign.accountName}})  </td>
         <td> <span ng-if="proposal.campaign.brand == 'single_brand'"> Single Brand </span> <span ng-if="proposal.campaign.brand == 'multi_brand'"> Multi Brand </span></td>
         <td>{{proposal.campaign.name}}</td>
         <td>
@@ -52,12 +52,16 @@
         <td class="campaignStatus" style="text-transform:lowercase;">{{proposal.campaign.campaign_state==="POH"?"On Hold":proposal.campaign.status}}</td>
 
         <td rowspan="{{key.length}}" >
-          <div class="comment" ng-if="comments[supplier.id]">
+          <!-- <div class="comment" ng-if="comments[supplier.id]">
             <b>{{comments[supplier.id].external.username}} </b> 
             <span><small> {{comments[supplier.id].external.created_on | date}}</small></span>
             <p>{{comments[supplier.id].external.comment.slice(0,20)}}</p>
+          </div> -->
+            <div class="comment">
+          
+            <p>{{proposal.comment.slice(0,20)}}</p>
           </div>
-          <button type="button" class="linkBtn" ng-click="viewComments(proposal.campaign)">View/Add</button>
+          <button type="button" class="linkBtn" ng-click="viewComments(proposal.campaign,proposal.id)">View/Add</button>
         </td>
         <td>
           <a class="linkBtn" ng-click="getDetails(proposal.campaign.proposal_id)">Details </a>
