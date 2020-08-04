@@ -175,8 +175,9 @@ angular.module('catalogueApp')
 
 
       $scope.selectedCommentForView = {};
-      $scope.viewComments = function (campaign) {
+      $scope.viewComments = function (campaign,Id) {
          $scope.campaignDataForComment = campaign;
+         $scope.campaignId = Id;
         //  $scope.campaignDataForComment.id = campaignId;
          $scope.commentsData = {};
         if($scope.selectedCommentForView.type == undefined){
@@ -199,7 +200,13 @@ angular.module('catalogueApp')
 
       $scope.addComment = function(){
         $scope.commentModal['related_to'] = 'CAMPAIGN';
-   
+
+        var localindex_index = $scope.campaignData.map(function(el) { 
+          return el.id;
+        }).indexOf($scope.campaignId);      
+        if (localindex_index != -1) { 
+          $scope.campaignData[localindex_index].comment = $scope.commentModal.comment
+         }
         campaignListService.addComment($scope.campaignDataForComment.proposal_id,$scope.commentModal)
         .then(function onSuccess(response){
           $scope.commentModal = {};

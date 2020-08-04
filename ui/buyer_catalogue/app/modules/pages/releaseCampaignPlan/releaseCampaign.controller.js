@@ -264,12 +264,12 @@ angular.module('catalogueApp')
         var supplierIdForSearch;
         var getResultsPage = function (newPage) {
           var data = getFilterData();
-          
+
           releaseCampaignService.bookingStatusData($scope.campaign_id)
-          .then(function onSuccess(ResponseData) {
-            $scope.bookingStatus = ResponseData.data.data;        
-          });
-          
+            .then(function onSuccess(ResponseData) {
+              $scope.bookingStatus = ResponseData.data.data;
+            });
+
           releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id, newPage, data)
             .then(function onSuccess(response) {
               releaseCampaignService.getCampaignReleaseDetailsHeader()
@@ -283,11 +283,11 @@ angular.module('catalogueApp')
                   }
                 })
 
-                // releaseCampaignService.bookingStatusData($scope.campaign_id)
-                // .then(function onSuccess(ResponseData) {
-                //   $scope.bookingStatus = ResponseData.data.data
-                     
-                // });
+              // releaseCampaignService.bookingStatusData($scope.campaign_id)
+              // .then(function onSuccess(ResponseData) {
+              //   $scope.bookingStatus = ResponseData.data.data
+
+              // });
 
 
 
@@ -319,12 +319,12 @@ angular.module('catalogueApp')
 
                 $scope.getTotalSupplierPriceNew($scope.initialReleaseData.shortlisted_suppliers[i], i);
 
-                var localindex_index = $scope.bookingStatus.map(function(el) { 
+                var localindex_index = $scope.bookingStatus.map(function (el) {
                   return el.code;
-                }).indexOf($scope.initialReleaseData.shortlisted_suppliers[i].booking_status);  
-                 if (localindex_index != -1) {  
+                }).indexOf($scope.initialReleaseData.shortlisted_suppliers[i].booking_status);
+                if (localindex_index != -1) {
                   $scope.initialReleaseData.shortlisted_suppliers[i].meeting_status = $scope.bookingStatus[localindex_index].booking_substatus;
-                 }
+                }
 
               }
 
@@ -559,7 +559,7 @@ angular.module('catalogueApp')
 
         $scope.searchSuppliers = function () {
           var proposal_id = $scope.releaseDetails.campaign.proposal_id;
-          if($scope.releaseDetails.campaign.brand == "multi_brand"){
+          if ($scope.releaseDetails.campaign.brand == "multi_brand") {
             proposal_id = undefined;
           }
 
@@ -573,8 +573,8 @@ angular.module('catalogueApp')
           try {
             $scope.search_status = false;
             if ($scope.supplier_type_code.code && $scope.supplier_center) {
-               mapViewService.searchSuppliers($scope.supplier_type_code.code, $scope.search.query, '', $scope.supplier_center, $scope.center_areas, proposal_id)
-              .then(function onSuccess(response, status) {
+              mapViewService.searchSuppliers($scope.supplier_type_code.code, $scope.search.query, '', $scope.supplier_center, $scope.center_areas, proposal_id)
+                .then(function onSuccess(response, status) {
                   $scope.center_index = null;
                   $scope.supplierData = response.data.data;
                   $scope.searchDisable = false;
@@ -633,7 +633,7 @@ angular.module('catalogueApp')
           $scope.supplierData = [];
           $scope.search = {};
           $scope.center_areas = {};
-          $scope.centers.area  = "";
+          $scope.centers.area = "";
           $scope.supplier_center = null
           $scope.errorMsg = "";
           try {
@@ -894,18 +894,32 @@ angular.module('catalogueApp')
         }
 
         var temp_data = [];
+        $scope.checkContactDetails = function () {
+          $scope.contactArray = [];
+          for (let i = 0; i <= $scope.payment.contacts.length; i++) {
+            if ($scope.payment.contacts[i] && $scope.payment.contacts[i].name) {
+              $scope.contactArray.push($scope.payment.contacts[i])
+            }
+          }
+          $scope.payment.contacts = $scope.contactArray;
+          $scope.saveContactDetails();
+
+        }
 
         $scope.saveContactDetails = function () {
-          $scope.payment['basic_contact_available'] = true;
-          $scope.payment['basic_contacts'] = $scope.payment.contacts;
-          $scope.payment['food_tasting_allowed'] = null;
-          releaseCampaignService.saveContactDetails($scope.payment, $scope.payment.supplier_id)
-            .then(function onSuccess(response) {
-              $scope.editContactDetails = true;
-              swal(constants.name, constants.add_data_success, constants.success);
-            }).catch(function onError(response) {
-              console.log(response);
-            })
+          if ($scope.payment.contacts.length > 0) {
+            $scope.payment['basic_contact_available'] = true;
+            $scope.payment['basic_contacts'] = $scope.payment.contacts;
+            $scope.payment['food_tasting_allowed'] = null;
+
+            releaseCampaignService.saveContactDetails($scope.payment, $scope.payment.supplier_id)
+              .then(function onSuccess(response) {
+                $scope.editContactDetails = true;
+                swal(constants.name, constants.add_data_success, constants.success);
+              }).catch(function onError(response) {
+                console.log(response);
+              })
+          }
 
         }
         $scope.setEditContactDetails = function () {
@@ -919,7 +933,24 @@ angular.module('catalogueApp')
         }
 
         $scope.removeContact = function (index) {
-          $scope.payment.contacts.splice(index, 1);
+          swal({
+            title: 'Are you sure ?',
+            text: 'Remove contact',
+            type: constants.warning,
+            showCancelButton: true,
+            confirmButtonClass: "btn-success",
+            confirmButtonText: "Yes, Remove!",
+            closeOnConfirm: true
+          },
+            function (confirm) {
+              if (confirm) {
+                $scope.$apply(function () {
+                  $scope.payment.contacts.splice(index, 1);
+                });
+
+              }
+
+            });
         }
         $scope.IsVisible = false;
         $scope.updateSupplierStatus = function (value) {
@@ -967,16 +998,16 @@ angular.module('catalogueApp')
           };
 
 
-var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function(el) { 
-  return el.id;
-}).indexOf($scope.supplierPaymentData.id);  
-   
-if (localindex_index != -1) {   
-  $scope.releaseDetails.shortlisted_suppliers[localindex_index].account_number = $scope.body.Bank_Account_Number;
-  $scope.releaseDetails.shortlisted_suppliers[localindex_index].beneficiary_name = $scope.body.Beneficiary_Name;
-  $scope.releaseDetails.shortlisted_suppliers[localindex_index].ifsc_code = $scope.body.IFSC_Code;
-  $scope.releaseDetails.shortlisted_suppliers[localindex_index].payment_message = $scope.body.msg;
-}
+          var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+            return el.id;
+          }).indexOf($scope.supplierPaymentData.id);
+
+          if (localindex_index != -1) {
+            $scope.releaseDetails.shortlisted_suppliers[localindex_index].account_number = $scope.body.Bank_Account_Number;
+            $scope.releaseDetails.shortlisted_suppliers[localindex_index].beneficiary_name = $scope.body.Beneficiary_Name;
+            $scope.releaseDetails.shortlisted_suppliers[localindex_index].ifsc_code = $scope.body.IFSC_Code;
+            $scope.releaseDetails.shortlisted_suppliers[localindex_index].payment_message = $scope.body.msg;
+          }
           releaseCampaignService.sendMail(email_Data)
             .then(function onSuccess(response) {
               $scope.taskId = response.data.data.task_id;
@@ -1065,22 +1096,22 @@ if (localindex_index != -1) {
         $scope.editPhaseDetails = function () {
           $scope.editPhase = true;
         }
-        $scope.checkPhase = function (){
-          for(let i in $scope.phases){
-            if(!$scope.phases[i].start_date){
+        $scope.checkPhase = function () {
+          for (let i in $scope.phases) {
+            if (!$scope.phases[i].start_date) {
               swal(constants.name, "Please select start date", constants.warning);
               return false
-            } 
-            if(!$scope.phases[i].end_date){
+            }
+            if (!$scope.phases[i].end_date) {
               swal(constants.name, "Please select end date", constants.warning);
               return false
-            } 
+            }
           }
           $scope.savePhases();
         }
         $scope.savePhases = function () {
-         
-         
+
+
           if ($scope.phases[0] && $scope.phases[0].phase_no) {
             releaseCampaignService.savePhases($scope.phases, $scope.campaign_id)
               .then(function onSuccess(response) {
@@ -1092,10 +1123,10 @@ if (localindex_index != -1) {
                 $scope.getPhases();
                 $scope.editPhase = false;
               }).catch(function onError(response) {
-                if(response && response.data && response.data.data){
+                if (response && response.data && response.data.data) {
                   swal(constants.name, response.data.data.general_error, constants.error);
                 }
-              
+
               })
           } else {
             swal(constants.name, "Please add phase first", constants.warning);
@@ -1356,11 +1387,72 @@ if (localindex_index != -1) {
         $scope.addComment = function (commentType) {
           $scope.commentModal['shortlisted_spaces_id'] = $scope.supplierDataForComment.id;
           $scope.commentModal['related_to'] = commentType;
+          var todayDate = new Date().toISOString();
+            if ($scope.comments[$scope.commentModal.shortlisted_spaces_id]) {
+              if ($scope.comments[$scope.commentModal.shortlisted_spaces_id].external) {
+                if (commentType == "EXTERNAL") {
+                $scope.comments[$scope.commentModal.shortlisted_spaces_id].external = {
+                  comment: $scope.commentModal.comment,
+                  "created_on": todayDate,
+                  username: $rootScope.globals.userInfo.username
+                  // internal:{},
+                }
+              }
+              } else {
+                if (commentType == "EXTERNAL") {
+                  $scope.comments[$scope.commentModal.shortlisted_spaces_id]['external'] = {
+                    comment: $scope.commentModal.comment,
+                     "created_on": todayDate,
+                    username: $rootScope.globals.userInfo.username
+                    // internal:{},
+                  }
+                }
+              }
+              if ($scope.comments[$scope.commentModal.shortlisted_spaces_id].internal) {
+                if (commentType != "EXTERNAL") {
+                $scope.comments[$scope.commentModal.shortlisted_spaces_id].internal = {
+                  comment: $scope.commentModal.comment,
+                   "created_on": todayDate,
+                  username: $rootScope.globals.userInfo.username
+                  // internal:{},
+                }
+              }
+              } else {
+                if (commentType != "EXTERNAL") {
+                  $scope.comments[$scope.commentModal.shortlisted_spaces_id]['internal'] = {
+                    comment: $scope.commentModal.comment,
+                     "created_on": todayDate,
+                    username: $rootScope.globals.userInfo.username
+                    // internal:{},
+                  }
+                }
+              }
+            } else {
+              if (commentType == "EXTERNAL") {
+                $scope.comments[$scope.commentModal.shortlisted_spaces_id] = {
+                  external: {
+                    comment: $scope.commentModal.comment,
+                     "created_on": todayDate,
+                    username: $rootScope.globals.userInfo.username
+                  },
+                    internal:{},
+                }
+              } else {
+                $scope.comments[$scope.commentModal.shortlisted_spaces_id] = {
+                  internal: {
+                    comment: $scope.commentModal.comment,
+                     "created_on": todayDate,
+                    username: $rootScope.globals.userInfo.username
+                  },
+                   external:{},
+                }
+              }
+            }
           releaseCampaignService.addComment($scope.campaign_id, $scope.commentModal)
             .then(function onSuccess(response) {
               $scope.commentModal = {};
               $scope.supplierDataForComment = undefined;
-              $('#addComments').modal('hide');
+              $('#viewComments').modal('hide');
               swal(constants.name, constants.add_data_success, constants.success);
             }).catch(function onError(response) {
               console.log(response);
@@ -1411,6 +1503,7 @@ if (localindex_index != -1) {
                       comment: comments[j].comment,
                       username: comments[j].user_name,
                       created_on: comments[j].timestamp
+
                     }
                   } else {
                     $scope.comments[shortlisted_spaces_id]['external'] = {
@@ -1421,6 +1514,7 @@ if (localindex_index != -1) {
                   }
                 }
               }
+
             })
             .catch(function onError(error) {
               console.log('No comments to show');
@@ -1649,7 +1743,7 @@ if (localindex_index != -1) {
           "Building ERP",
           "Door To Door",
         ];
-        $scope.changePhase = function (supplier,index) {
+        $scope.changePhase = function (supplier, index) {
           if (supplier.booking_status == 'NB') {
             supplier.phase_no = '';
           }
@@ -1657,24 +1751,26 @@ if (localindex_index != -1) {
           $scope.releaseDetails.shortlisted_suppliers[index].booking_sub_status = null;
           $scope.releaseDetails.shortlisted_suppliers[index].bk_status_id = null;
           $scope.releaseDetails.shortlisted_suppliers[index].bk_substatus_id = null;
-          
-            var localindex_index = $scope.bookingStatus.map(function(el) { 
-              return el.code;
-            }).indexOf(supplier.booking_status);      
-             if (localindex_index != -1) {  
-              $scope.releaseDetails.shortlisted_suppliers[index].meeting_status = $scope.bookingStatus[localindex_index].booking_substatus;
-              $scope.releaseDetails.shortlisted_suppliers[index].bk_status_id = $scope.bookingStatus[localindex_index].id;
-             }
-          
+
+          var localindex_index = $scope.bookingStatus.map(function (el) {
+            return el.code;
+          }).indexOf(supplier.booking_status);
+          if (localindex_index != -1) {
+            $scope.releaseDetails.shortlisted_suppliers[index].meeting_status = $scope.bookingStatus[localindex_index].booking_substatus;
+            $scope.releaseDetails.shortlisted_suppliers[index].bk_status_id = $scope.bookingStatus[localindex_index].id;
+          }
+
+
+
         }
 
-        $scope.changeSubStatus = function (supplier,index) {
-          var localindex_index = supplier.meeting_status.map(function(el) { 
+        $scope.changeSubStatus = function (supplier, index) {
+          var localindex_index = supplier.meeting_status.map(function (el) {
             return el.code;
-          }).indexOf(supplier.booking_sub_status);      
-           if (localindex_index != -1) {  
+          }).indexOf(supplier.booking_sub_status);
+          if (localindex_index != -1) {
             $scope.releaseDetails.shortlisted_suppliers[index].bk_substatus_id = supplier.meeting_status[localindex_index].id;
-           }
+          }
         }
 
 
@@ -1691,8 +1787,22 @@ if (localindex_index != -1) {
             supplierName: $scope.userSupplierData.name,
           }
           $scope.societySupplierName = data.supplierName;
+          var assignUser = {};
+          var localindex_index = $scope.usersMapListWithObjects.map(function (el) {
+            return el.id;
+          }).indexOf(parseInt($scope.userData.user));
+          if (localindex_index != -1) {
+            assignUser.id = $scope.usersMapListWithObjects[localindex_index].id;
+            assignUser.username = $scope.usersMapListWithObjects[localindex_index].username;
+            assignUser.supplier_id = data.supplier_id;
+            assignUser.updated_at = new Date();
+          }
+
+
           releaseCampaignService.setUserForBooking(data)
             .then(function onSuccess(response) {
+              $scope.userData.user = "";
+
               // swal(constants.name, constants.assign_success, constants.success)
               // location.reload();
 
@@ -1704,6 +1814,11 @@ if (localindex_index != -1) {
               },
                 function (isConfirm) {
                   if (isConfirm) {
+                    $('#addUserModal1').modal('hide');
+                    $('#addUserModal').modal('hide');
+                    $scope.$apply(function () {
+                      $scope.assignedUserList.push(assignUser);
+                    });
                     // location.reload();
                   }
                 }
@@ -1844,14 +1959,14 @@ if (localindex_index != -1) {
         $scope.completionStatus = function (idOfSupplier) {
           let indexOfSupplier = $scope.releaseDetails.shortlisted_suppliers.findIndex(x => x.id === idOfSupplier);
           if ($scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "BK"
-           && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "MC" 
-           && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "OEL"
-           && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "OCL"
-           && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "OPBL"
-           && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "OPFL"
-           && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "OPHL"
-           && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "OP"
-           ) {
+            && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "MC"
+            && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "OEL"
+            && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "OCL"
+            && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "OPBL"
+            && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "OPFL"
+            && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "OPHL"
+            && $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].booking_status !== "OP"
+          ) {
             swal(constants.name, constants.booking_completion_status, constants.warning);
             $scope.releaseDetails.shortlisted_suppliers[indexOfSupplier].is_completed = false;
           }

@@ -304,16 +304,31 @@ angular.module('catalogueApp')
         $scope.key;
         $scope.invIdList = [];
         //adding adIds to list to send in request
-        $scope.addInventory = function (inventory, rowIndex, index) {
+        $scope.addInventory = function (inventory, rowIndex, index,supplierId) {
+              if($scope.supplierId && $scope.supplierId != supplierId){
+                $scope.invIdList = [];
+              }
           if (inventory.status == true) {
             $scope.invIdList.push(inventory.id);
             $scope.selectedRow = rowIndex;
           }
-          else
-            $scope.invIdList.splice(index, 1);
+          else {
+            var localindex_index = $scope.invIdList.map(function(el) { 
+              return el;
+            }).indexOf(inventory.id);      
+          if (localindex_index != -1) { 
+            $scope.invIdList.splice(localindex_index, 1);
+          }
         }
+        $scope.supplierId = supplierId;
+        if($scope.invIdList.length == 0){
+          $scope.supplierId = null
+        }
+        }
+        
         //To disable other checkboxes of other rows of adInventory Id
         $scope.isDisable = function (index) {
+       
           if ($scope.invIdList.length == 0)
             $scope.selectedRow = undefined;
           if ($scope.selectedRow == undefined || $scope.selectedRow == index)
@@ -339,17 +354,34 @@ angular.module('catalogueApp')
             $scope.adInvModel.inv_count = 50
           }
         }
+        $scope.checkObj = function(){
+      
+          for(let i in $scope.requestaActivityData.assignment_detail){
+          for(var key in $scope.requestaActivityData.assignment_detail[i].date_user_assignments) {
+            if($scope.requestaActivityData.assignment_detail[i].date_user_assignments.hasOwnProperty(key)){
+              $scope.requestaActivityData.assignment_detail.splice(i,1)
+              alert('r')
+            } else {
+              alert('ffffff')
+            }
+           
+            }
+
+      }
+        }
 
 
         $scope.saveActivityDates = function () {
           $scope.savingDates = true;
           //below function creates complex request structure for data
           editActivityDates();
+
           auditReleasePlanService.saveActivityDetails($scope.requestaActivityData)
             .then(function onSuccess(response) {
               getResultsPage(1);
               $scope.resetData();
               $scope.savingDates = false;
+              $scope.supplierId = null
               $('#manageDatesModal').modal('hide');
               swal(constants.name, constants.inventory_date_success, constants.success);
             })
@@ -561,6 +593,7 @@ angular.module('catalogueApp')
               })
           } else {
             swal(constants.name, "Only 50 inventory can be added", constants.error);
+             $scope.adInvModel = {};
           }
 
         }
@@ -569,6 +602,7 @@ angular.module('catalogueApp')
             .then(function onSuccess(response) {
               getResultsPage(1);
               $scope.invIdList = [];
+              $scope.supplierId = null
               swal(constants.name, response.data.data.msg, constants.success);
             }).catch(function onError(response) {
               console.log(response);
