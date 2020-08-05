@@ -181,6 +181,7 @@ angular.module('machadaloPages')
           });
         }
         $scope.register = function (wizardFinish) {
+        
           //  $scope.model['groups'] = $scope.selectedGroupList;
           if (!wizardFinish || (wizardFinish && $scope.model.first_name && $scope.model.last_name && $scope.model.username && $scope.model.email && $scope.model.password)) {
             if (wizardFinish)
@@ -512,7 +513,6 @@ angular.module('machadaloPages')
           $scope.userInfo = user;
         }
         $scope.checkPassword = function (password, confirm_password) {
-          console.log(password, confirm_password);
           if (password == confirm_password)
             $scope.passwordValid = true;
           else
@@ -535,8 +535,36 @@ angular.module('machadaloPages')
               // swal(constants.name,constants.errorMsg,constants.error);
             });
         }
-        //end : change password
 
+        $scope.createOrganisation = function(){
+          userService.createOrganisation($scope.organisationData)
+          .then(function onSuccess(response){
+            console.log(response);
+            $scope.onBoardOrgId = response.data.data.organisation_id;
+            swal(constants.name,constants.create_success,constants.success);
+          }).catch(function onError(response){
+            console.log(response);
+          })
+        }
+        //end : change password
+        $scope.updateOrganisation = function(){
+          userService.updateOrganisationDetails($scope.organisationData)
+          .then(function onSuccess(response){
+            console.log(response);
+            swal(constants.name,constants.update_success,constants.success);
+          }).catch(function onError(response){
+            console.log(response);
+          })
+        }
+        $scope.goToOrganisation = function(contentItem, operation, data={}){
+          console.log(data);
+            $scope.organisationData = data;
+            $scope.operationOrganisation.view = false;
+            $scope.operationOrganisation.create = false;
+            $scope.operationOrganisation.edit = false;
+            $scope.operationOrganisation[operation] = true;
+            $scope.getContent(contentItem);
+        }
     //start: create profile
     $scope.createProfile = function(){
       $scope.profileData.general_user_permission = [];
@@ -701,79 +729,41 @@ angular.module('machadaloPages')
         $scope.showMobileError = false;
       }
     }
-    // end : update object and general user level permission
-    //start:onboard functionality
-    $scope.activityNumber = 1;
-    $scope.createOnBoardActivity = function(number){
-      if(number == 1 && $scope.organisationData.name && $scope.organisationData.phone && $scope.organisationData.email && $scope.organisationData.category){
-        console.log("org");
-        $scope.createOrganisation();
-        console.log($scope.onBoardOrgId);
-        $scope.activityNumber++;
-      }
-      if(number == 2 && $scope.profileData.name && $scope.cloneFromProfileId.id){
-        $scope.cloneProfileGeneral($scope.cloneFromProfileId.id, $scope.onBoardOrgId, $scope.profileData.name);
-      }
-    }
-    // use this function to clone a profile within an organisation
-    $scope.cloneProfileGeneral = function(cloneFromProfileId, onBoardOrgId, profileNewName){
+ 
+         
 
-        //   userService.createProfile($scope.profileData)
-        //     .then(function onSuccess(response) {
-        //       console.log(response);
-        //       $scope.profileData = response.data.data;
+        // $scope.deleteProfile = function (profile) {
 
-        //       swal(constants.name, constants.create_success, constants.success);
-        //     }).catch(function onError(response) {
-        //       console.log(response);
-        //     })
-        // }
-        // //end: create profile
-        // $scope.goToProfiles = function (contentItem, operation, data = {}) {
+        //   swal({
+        //     title: constants.warn_user_msg,
+        //     text: constants.delete_profile,
+        //     type: constants.warning,
+        //     showCancelButton: true,
+        //     confirmButtonClass: constants.btn_success,
+        //     confirmButtonText: constants.delete_confirm,
+        //     closeOnConfirm: true
+        //   },
+        //     function () {
 
-
-        //   $scope.profileData = data;
-        //   $scope.operationProfile.view = false;
-        //   $scope.operationProfile.create = false;
-        //   $scope.operationProfile.edit = false;
-        //   $scope.operationProfile[operation] = true;
-        //   console.log($scope.profileData);
-        //   // $scope.profileData.organisation = $scope.profileData.organisation.organisation_id;
-        //   $scope.getContent(contentItem);
-         }
-
-        $scope.deleteProfile = function (profile) {
-
-          swal({
-            title: constants.warn_user_msg,
-            text: constants.delete_profile,
-            type: constants.warning,
-            showCancelButton: true,
-            confirmButtonClass: constants.btn_success,
-            confirmButtonText: constants.delete_confirm,
-            closeOnConfirm: true
-          },
-            function () {
-
-              userService.deleteProfile(profile.id)
-                .then(function onSuccess(response) {
-                  console.log(response);
-                  if (response && response.data && response.data.status) {
-                    swal(constants.name, constants.delete_success, constants.success);
-                    var localindex_index = $scope.profilesList.map(function (el) {
-                      return el.id;
-                    }).indexOf(profile.id);
-                    if (localindex_index != -1) {
-                      $scope.profilesList.splice(localindex_index, 1);
-                    }
-                  }
+        //       userService.deleteProfile(profile.id)
+        //         .then(function onSuccess(response) {
+        //           console.log(response);
+        //           if (response && response.data && response.data.status) {
+        //             swal(constants.name, constants.delete_success, constants.success);
+        //             var localindex_index = $scope.profilesList.map(function (el) {
+        //               return el.id;
+        //             }).indexOf(profile.id);
+        //             if (localindex_index != -1) {
+        //               $scope.profilesList.splice(localindex_index, 1);
+        //             }
+        //           }
                  
-                }).catch(function onError(response) {
-                  console.log(response);
-                  commonDataShare.showErrorMessage(response);
-                });
-            });
-        }
+        //         }).catch(function onError(response) {
+        //           console.log(response);
+        //           commonDataShare.showErrorMessage(response);
+        //         });
+        //     });
+        // }
         // $scope.updateProfile = function () {
         //   console.log($scope.profileData);
         //   userService.updateProfile($scope.profileData)
@@ -887,25 +877,13 @@ angular.module('machadaloPages')
 
         }
 
-        $scope.mobileValidation = function () {
-          $scope.showMobileError = true;
-          if ($scope.organisationData.phone.toString().length == 10) {
-            $scope.showMobileError = false;
-          }
-        }
-        // end : update object and general user level permission
+
         //start:onboard functionality
         $scope.activityNumber = 1;
         $scope.createOnBoardActivity = function (number) {
-          if (number == 1 && $scope.organisationData.name && $scope.organisationData.phone && $scope.organisationData.email && $scope.organisationData.category) {
-
-
-            console.log("org");
+          if (number == 1 && $scope.organisationData.name && $scope.organisationData.phone && $scope.organisationData.email && $scope.organisationData.category && !$scope.showMobileError) {
             $scope.createOrganisation();
-            console.log($scope.onBoardOrgId);
             $scope.activityNumber++;
-
-
           }
           if (number == 2 && $scope.profileData.name && $scope.cloneFromProfileId.id) {
             $scope.cloneProfileGeneral($scope.cloneFromProfileId.id, $scope.onBoardOrgId, $scope.profileData.name);
