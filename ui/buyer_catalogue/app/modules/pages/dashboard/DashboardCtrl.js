@@ -44,6 +44,7 @@
       $scope.flat_count_header = "Unit Primary Count";
       $scope.tower_count_header = "Unit Secondary Count";
       $scope.flat = "Unit Primary";
+      $scope.printLeadsInExcelData = {};
 
       $scope.typeOfSocietyLists = [
         { id: 1, name: 'Ultra High' },
@@ -4469,7 +4470,7 @@
       $scope.getPrintLeadsInExcelData = function (campaignId) {
         var campaignIdForExcel = campaignId;
         $scope.getFormDetails($scope.campaignIdForLeads);
-        getShortlistedSuppliers($scope.campaignIdForLeads);
+        // getShortlistedSuppliers($scope.campaignIdForLeads);
       }
       var getShortlistedSuppliers = function (campaignId) {
         var supplier_code = 'RS';
@@ -4485,10 +4486,19 @@
 
         DashboardService.printLeadsInExcel($scope.printLeadsInExcelData)
           .then(function onSuccess(response) {
-            var link = document.createElement("a");
-            link.download = "mydata.xlsx";
-            link.href = response.data.data;
-            link.click();
+            if (response.data.data.one_time_hash && $scope.emailCampaignLeadsModel.start_date &&
+              $scope.emailCampaignLeadsModel.end_date) {
+              $window.open(Config.APIBaseUrl + 'v0/ui/leads/download_lead_data_excel/' + response.data.data.one_time_hash +
+                "/?start_date=" + $scope.emailCampaignLeadsModel.start_date +
+                "&end_date=" + $scope.emailCampaignLeadsModel.end_date, '_blank');
+            } else if (response.data.data.one_time_hash) {
+              $window.open(Config.APIBaseUrl + 'v0/ui/leads/download_lead_data_excel/' + response.data.data.one_time_hash + "/", '_blank');
+            }
+
+            // var link = document.createElement("a");
+            // link.download = "mydata.xlsx";
+            // link.href = response.data.data;
+            // link.click();
           }).catch(function onError(response) {
             console.log(response);
           })

@@ -1153,7 +1153,7 @@
                     <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ></dir-pagination-controls>
                     </div>
                     <br /> <br />
-                    <button class="btn btn-danger" ng-click="getPrintLeadsInExcelData(campaignIdForLeads)" data-target="#printLeadsInExcelModal" data-toggle="modal">Print Leads In Excel</button>
+                    <button ng-if="!showCampaigns" class="btn btn-danger" ng-click="getPrintLeadsInExcelData(campaignIdForLeads)" data-target="#printLeadsInExcelModal" data-toggle="modal">Print Leads In Excel</button>
 
                   </div>
                 </uib-tab>
@@ -4781,7 +4781,7 @@
 
                     </td>
                   </tr>
-                  <tr>
+                  <!--<tr>
                     <td class="col-md-2">
                       <p class="input-group">
                         Select By Supplier (Optional):
@@ -4791,7 +4791,7 @@
                         </select>
                       </p>
                     </td>
-                  </tr>
+                  </tr>-->
                 </tbody>
               </table>
             </br>
