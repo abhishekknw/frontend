@@ -173,6 +173,11 @@ angular.module('catalogueApp')
           { name: 'Gateway Arch', code: 'GA', selected: false },
           { name: 'SunBoard(SB)', code: 'SB', selected: false },
         ];
+
+        $scope.categorylist = ['Ultra High','High','Medium High','Standard'],
+        $scope.assignUserData = {
+          campaign_id:'',
+        }
         $scope.invForComments = constants.inventoryNames;
         $scope.commentsType = constants.comments_type;
         $scope.shortlisted = constants.shortlisted;
@@ -810,14 +815,14 @@ angular.module('catalogueApp')
           }
 
           if (filters.length) {
+    
             releaseCampaignService.addSuppliersToCampaign(data)
               .then(function onSuccess(response) {
                 //synergy
                 if (response) {
                   $scope.releaseDetails.shortlisted_suppliers = response.data.data;
-                  window.location.reload();
+                  //window.location.reload();
                 }
-
                 $('#addNewSocities').modal('hide');
                 swal(constants.name, constants.add_data_success, constants.success);
               }).catch(function onError(response) {
@@ -1090,6 +1095,20 @@ angular.module('catalogueApp')
             }).catch(function onError(response) {
               console.log(response);
             })
+        }
+
+        $scope.assignUsers = function(){
+          let users = [];
+          users.push(JSON.parse($scope.assignUserData.userid));
+          $scope.assignUserData.assigned_to_ids = users;
+          $scope.assignUserData.campaign_id = $scope.campaign_id;
+          releaseCampaignService.assignUserSupplier($scope.assignUserData)
+          .then(function onSuccess(response) {
+            console.log('eeeeeeeeeeeeeeeeeeeeee',response)
+            $scope.assignUserData = {};
+          }).catch(function onError(response) {
+            console.log(response);
+          })
         }
 
 
