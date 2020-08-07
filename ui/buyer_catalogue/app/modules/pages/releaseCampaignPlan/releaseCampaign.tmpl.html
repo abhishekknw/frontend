@@ -88,8 +88,51 @@
           <button class="btn btn-danger" ng-click="getFilteredResult()"
             style="margin-bottom: 20px; margin-left: 5px;">Submit</button>
         </div>
+        <div class="col-md-12">
+          <input type="checkbox" ng-model="assignUser">
+          <label><h4>Assign User<h4></label>
+      </div>
       </div>
     </div>
+
+    <form name = "form" ng-if="assignUser" style="margin-top: 4%">
+      <!-- <div class="breadcrumb" ncy-breadcrumb></div> -->
+      <div style="color:#000000;" class = "panel panel-default date-panel">
+        <h3 class = "panel-heading">Assign User</h3>
+         <div class = "table">
+           <div class="form-group">
+              <div class = "row">
+                <div class = "col-md-3"><label>Select Phase </label></div>
+                <div class = "col-md-3">
+                  <select class="form-control" ng-model="assignUserData.quality_rating">
+                    <option value="" disabled>Select Quality Rating</option>
+                  <option ng-repeat="cat in categorylist" value="{{cat}}">
+                    {{cat}}
+                  </option>
+                </select>
+                </div>
+  
+                <div class = "col-md-3"><label>Assigned To </label></div>
+                <div class = "col-md-3">
+                  <select class="form-control" ng-model="assignUserData.userid" required >
+                    <option value="" disabled>Select User</option>
+                            <option ng-repeat="user in usersMapListWithObjects  | orderBy:'username' | unique:'id'"
+                              value="{{user.id}}">{{user.username}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+  
+    
+           <button type="submit" class="btn btn-danger" ng-disabled="form.$invalid" ng-click="assignUsers()"  permission = "[permissions.assignDates]">Assign</button>
+         </div>
+       </div>
+     </form>
+
+  
+   
+      
+ 
 
 
 
@@ -177,7 +220,8 @@
             <th>{{detailsHeader.inventory_supplier_price}}</th>
             <th>{{detailsHeader.total_supplier_price}}</th>
             <th>{{detailsHeader.negotiated_price}}</th>
-            <th>{{detailsHeader.cost_per_unit}}</th>
+            <!-- <th>{{detailsHeader.cost_per_unit}}</th> -->
+            <th>Cost Per Supplier</th>
             <th>{{detailsHeader.freebies}}</th>
             <th>{{detailsHeader.mode_of_payment}}</th>
             <th>{{detailsHeader.transaction_cheque_number}}</th>
@@ -219,7 +263,8 @@
             <th>{{detailsHeader.inventory_supplier_price}}</th>
             <th>{{detailsHeader.total_supplier_price}}</th>
             <th>{{detailsHeader.negotiated_price}}</th>
-            <th>{{detailsHeader.cost_per_flat}}</th>
+            <!-- <th>{{detailsHeader.cost_per_flat}}</th> -->
+            <th>Cost Per Supplier</th>
             <th>{{detailsHeader.freebies}}</th>
             <th>{{detailsHeader.mode_of_payment}}</th>
             <th>{{detailsHeader.transaction_cheque_number}}</th>
@@ -295,10 +340,10 @@
             <th>{{detailsHeader.total_supplier_price}}</th>
 
             <th>{{detailsHeader.negotiated_price}}</th>
+             <th>Cost Per Supplier</th>
+          
 
-            <!-- <th>{{detailsHeader.cost_per_average_daily_footfall}}</th> -->
-
-            <th ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter == 'RE'">
+            <!-- <th ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter == 'RE'">
               {{detailsHeader.cost_per_weekend_daily_footfall}}
             </th>
             <th ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter == 'CP'">
@@ -318,7 +363,7 @@
 
 
             <th ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter == 'HO'">
-              {{detailsHeader.cost_per_eyeball }}</th>
+              {{detailsHeader.cost_per_eyeball }}</th> -->
 
 
             <th>{{detailsHeader.freebies}}</th>
@@ -594,7 +639,7 @@
               <td class="col-md-6" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <input ng-disabled="!supplier.phase_no || supplier.is_completed" type="number"
                   ng-model="supplier.cost_per_flat" class="form-control spacing input-width" min="0">
-                <br>{{(supplier.cost_per_flat * supplier.flat_count)|| 0 | limitTo:8}}
+                <br>{{(supplier.cost_per_flat / supplier.flat_count)|| 0 | limitTo:8}}
               </td>
 
               <td class="col-md-6" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
@@ -1088,7 +1133,7 @@
                 <input ng-disabled="!supplier.phase_no || supplier.is_completed" type="number"
                   ng-model="supplier.cost_per_flat" class="form-control spacing input-width" min="0">
                 <!-- new formula req -->
-                <br>{{(supplier.cost_per_flat * (supplier.unit_primary_count))|| 0 | limitTo:8}}
+                <br>{{(supplier.cost_per_flat / (supplier.unit_primary_count))|| 0 | limitTo:8}}
               </td>
 
               <td class="col-md-6" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">

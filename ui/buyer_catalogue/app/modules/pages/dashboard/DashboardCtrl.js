@@ -2282,12 +2282,13 @@
           $scope.stackedBarPhaseChart = formatPhaseChart(response.data.data.phase_data);
           $scope.stackedBarThreeWeeksChart = formatThreeWeeksSummary(response.data.data);
 
-
-          if (Object.keys(response.data.data.supplier_data).length > 4) {
-            $scope.stackedBarChartSocietyWise.chart['width'] = Object.keys(response.data.data.supplier_data).length * 100;
+          $scope.stackedBarChartSocietyWise.chart['width'] = 500;
+          $scope.stackedBarChartDateWise.chart['width'] = 500;
+          if (Object.keys(response.data.data.supplier_data).length > 1) {
+            $scope.stackedBarChartSocietyWise.chart['width'] = Object.keys(response.data.data.supplier_data).length * 150;
           }
-          if (Object.keys(response.data.data.date_data).length > 4) {
-            $scope.stackedBarChartDateWise.chart['width'] = Object.keys(response.data.data.date_data).length * 100;
+          if (Object.keys(response.data.data.date_data).length > 1) {
+            $scope.stackedBarChartDateWise.chart['width'] = Object.keys(response.data.data.date_data).length * 150;
           }
           if (Object.keys(response.data.data.locality_data).length > 4) {
             $scope.stackedBarChartLocationWise.chart['width'] = Object.keys(response.data.data.locality_data).length * 100;
@@ -2312,11 +2313,11 @@
         var values = {};
         
         angular.forEach(data, function (data, key) {
-          
+
           $scope.hotLeadsValues = $scope.getPercent(data.interested, data['flat_count']);
           $scope.normalLeadsValues = $scope.getPercent(data.total, data['flat_count']);
 
-          var keyWithFlatLabel = key + ' (' + data['flat_count'] + ')';
+          var keyWithFlatLabel = data.data.name + ' (' + data['flat_count'] + ')';
           var value = [keyWithFlatLabel, $scope.normalLeadsValues ];
           leadValues.push(value);
 
