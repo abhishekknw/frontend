@@ -37,6 +37,11 @@
       return machadaloHttp.put(url,data);
     }
 
+    releaseCampaignService.assignUserSupplier = function(data){
+      var url = url_base  + "assign-supplier-users/";
+   return machadaloHttp.put(url,data);
+ }
+
     releaseCampaignService.addSuppliersToCampaign = function(data){
       var url = url_base + 'add-suppliers-direct-to-campaign/';
       return machadaloHttp.post(url,data);

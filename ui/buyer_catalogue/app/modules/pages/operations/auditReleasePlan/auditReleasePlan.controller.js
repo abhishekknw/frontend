@@ -66,6 +66,7 @@ angular.module('catalogueApp')
           current: 1
         };
         $scope.pageChanged = function (newPage) {
+          $scope.newPage = newPage;
           getResultsPage(newPage);
         };
         function init() {
@@ -371,7 +372,7 @@ angular.module('catalogueApp')
           if ($scope.requestaActivityData.assignment_detail.length > 0) {
             auditReleasePlanService.saveActivityDetails($scope.requestaActivityData)
               .then(function onSuccess(response) {
-                getResultsPage(1);
+                getResultsPage($scope.newPage);
                 $scope.resetData();
                 $scope.savingDates = false;
                 $scope.supplierId = null
@@ -583,7 +584,7 @@ angular.module('catalogueApp')
               .then(function onSuccess(response) {
                 $('#addInventoryModal').on('hide.bs.modal', function () { });
                 $scope.adInvModel = {};
-                getResultsPage(1);
+                getResultsPage($scope.newPage);
                 swal(constants.name, constants.add_data_success, constants.success);
               }).catch(function onError(response) {
                 console.log(response);
