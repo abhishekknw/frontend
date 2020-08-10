@@ -584,7 +584,12 @@ angular.module('catalogueApp')
               .then(function onSuccess(response) {
                 $('#addInventoryModal').on('hide.bs.modal', function () { });
                 $scope.adInvModel = {};
-                getResultsPage($scope.newPage);
+                if($scope.newPage){
+                  getResultsPage($scope.newPage);
+                } else {
+                  getResultsPage(1);
+                }
+                
                 swal(constants.name, constants.add_data_success, constants.success);
               }).catch(function onError(response) {
                 console.log(response);
