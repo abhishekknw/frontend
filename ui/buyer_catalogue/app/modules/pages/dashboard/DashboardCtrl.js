@@ -700,7 +700,7 @@
 
             ];
             $scope.options = angular.copy(doughnutChartOptions);
-            $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.pieChartClick(e.data.label); };
+            $scope.options.chart.pie.dispatch['elementClick'] = function (e) {  $scope.pieChartClick(e.data.label); };
             $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.getCampaignInvData(e.data); };
             
             $scope.showPerfPanel = $scope.perfPanel.all;
@@ -712,10 +712,12 @@
 
 
       $scope.pieChartClick = function (label) {
+  
         $anchorScroll('bottom');
         $scope.campaignStatusName = label;
         var campaignStatus = _.findKey($scope.campaignStatus, { 'campaignLabel': label });
         getCountOfSupplierTypesByCampaignStatus(campaignStatus);
+    
       }
       var getCountOfSupplierTypesByCampaignStatus = function (campaignStatus) {
         cfpLoadingBar.start();
@@ -1727,6 +1729,8 @@
         $scope.campaignOwner = campaign.organisation;
         $scope.campaignTabPropsalName = campaign.name;
         $scope.campaignLabel = true;
+         $scope.f = {};
+          $scope.show = false;
         $scope.getCampaignFilters(campaign.campaign);
         $scope.campaignId = campaign.campaign;
         $scope.inv = campaign;
@@ -1851,13 +1855,14 @@
 
             ];
 
-
+          
             $scope.options1 = angular.copy(doughnutChartOptions);
             $scope.options1.chart.pie.dispatch['elementClick'] = function (e) {
               $scope.getSupplierAndInvData(e.data);
             };
             $scope.supplierStatus = undefined;
             //default map
+         
             $scope.showAllMapData = true
             if ($scope.campaignStatusData) {
               let allCampaign = [];
@@ -2744,6 +2749,7 @@
 
 
       $scope.getCompareCampaignChartData = function (campaignChartData) {
+       
         cfpLoadingBar.start();
         var proposalIdData = [];
         var proposalIdDataNames = {};
@@ -2953,8 +2959,49 @@
       }
 
       $scope.getCampaignInvData = function (data) {
-        $scope.supplierStatus = data.status;
+   
+        $scope.supplierStatus = data.status; 
         $scope.campaignDetailsData = $scope.campaignAllStatusTypeData[data.status];
+         if( $scope.supplierStatus == 'onhold_campaigns'){
+             $scope.f = {
+              campaign_status:'on_hold'
+             }
+         } else if($scope.supplierStatus == 'completed_campaigns'){
+              $scope.f = {
+                campaign_status:'completed'
+              }
+         } else if($scope.supplierStatus == 'ongoing_campaigns'){
+          $scope.f = {
+            campaign_status:'ongoing'
+          }
+     }  else if($scope.supplierStatus == 'upcoming_campaigns'){
+      $scope.f = {
+        campaign_status:'upcoming'
+      }
+ }
+//  $scope.AllCampaignTotalLeadsCount = 0;
+//             $scope.AllCampaignHotLeadsCount = 0;
+//             $scope.AllCampaignSupplierCount = 0;
+//             $scope.AllCampaignFlatCount = 0;
+//  angular.forEach($scope.allCampaignDetailsData, function (data) {
+//    if(data.campaign_status == $scope.f.campaign_status){
+
+//   $scope.campaignLength = data.length;
+//   if (data.total_leads) {
+//     $scope.AllCampaignTotalLeadsCount += data.total_leads;
+//   }
+//   if (data.hot_leads) {
+//     $scope.AllCampaignHotLeadsCount += data.hot_leads;
+//   }
+//   if (data.supplier_count) {
+//     $scope.AllCampaignSupplierCount += data.supplier_count;
+//   }
+//   if (data.flat_count) {
+//     $scope.AllCampaignFlatCount += data.flat_count;
+//   }
+// }
+// });
+
         $scope.showTableForAllCampaignDisplay = true;
         $scope.$apply();
 
@@ -3020,7 +3067,7 @@
 
 
         })
-
+     
         $scope.showDisplayDetailsTable = true;
         $scope.showAllCampaignDisplay = false;
         $scope.map = { zoom: 13, bounds: {}, center: { latitude: $scope.latitude, longitude: $scope.longitude } };
@@ -3062,7 +3109,7 @@
           }
         }
       };
-
+   
       function assignPanIndiaMarkersToMap(panIndiaCampaigns) {
         var markersOfPanIndia = [];
         angular.forEach(panIndiaCampaigns, function (data) {
@@ -3118,6 +3165,7 @@
               icon = icon + 'blue-dot.png'
             }
            }
+    $scope.map = { zoom: 10, bounds: {}, center: { latitude: supplier.supplier.latitude, longitude: supplier.supplier.longitude, } };
             markers.push({
               latitude: supplier.supplier.latitude,
               longitude: supplier.supplier.longitude,
@@ -3339,10 +3387,10 @@
 
       $scope.getBookingCampaigns = function (campaign) {
         cfpLoadingBar.start();
+        getAllComments(campaign.campaign);
         $scope.headerForSupplierBookings = undefined;
         $scope.bookingPhases = [];
         $scope.bookingSuppliersData = [];
-
         $scope.proposalId = campaign.campaign;
         $scope.campaignOwner = campaign.organisation;
         $scope.principalVendor = campaign.principal_vendor;
@@ -3367,6 +3415,8 @@
             //  if(!$scope.bookingPhases.length){
             // swal(constants.name, "Suppliers Booking is going on.Currently, No supplier is Booked", constants.warning)
             // }
+          
+
           }).catch(function onError(response) {
             console.log(response);
           })
@@ -3411,7 +3461,6 @@
               $scope.dynamicValuesCampaignIdMap[data.campaign_id] = data;
             })
             $scope.showTableForAllCampaignDisplay = false;
-
             angular.forEach($scope.allCampaignDetailsData, function (data) {
               $scope.campaignLength = data.length;
               if (data.total_leads) {
@@ -3499,6 +3548,7 @@
       }
 
       $scope.viewBookingComments = function (supplier) {
+        $scope.supplierPipleline = supplier;
         $scope.supplierNameForComment = undefined;
         $scope.supplierNameForComment = supplier.name;
         $scope.commentsData = {};
@@ -3508,14 +3558,16 @@
           .then(function onSuccess(response) {
             $scope.commentModal = {};
             $scope.commentsData = response.data.data;
+            $('#viewComments').modal('show');
             if (Object.keys($scope.commentsData).length != 0) {
               $scope.viewInvForComments = Object.keys($scope.commentsData);
               $scope.selectedInvForView = $scope.viewInvForComments[0];
               $('#viewComments').modal('show');
-            } else {
-              $('#viewComments').modal('hide');
-              swal(constants.name, constants.no_comments_msg, constants.warning);
-            }
+            } 
+            // else {
+            //   $('#viewComments').modal('hide');
+            //   swal(constants.name, constants.no_comments_msg, constants.warning);
+            // }
           }).catch(function onError(response) {
             console.log(response);
           })
@@ -3724,6 +3776,35 @@
             $scope.supplierDataForComment = undefined;
             getAllComments($scope.campaignId)
             swal(constants.name, constants.add_data_success, constants.success);
+          }).catch(function onError(error) {
+            console.log(error);
+            swal(constants.name, 'Error adding comments', constants.failure);
+          })
+      }
+
+      $scope.addPipelineComment = function () {
+        $scope.commentModal['related_to'] = "EXTERNAL";
+        $scope.commentModal['shortlisted_spaces_id'] = $scope.supplierPipleline.space_id;
+        if($scope.comments[$scope.supplierPipleline.space_id] && $scope.comments[$scope.supplierPipleline.space_id].external){
+          $scope.comments[$scope.supplierPipleline.space_id].external = {
+            comment:$scope.commentModal.comment,
+            created_on: new Date(),
+            username: userInfo.username,
+          }
+        } else {
+          $scope.comments[$scope.supplierPipleline.space_id] = {
+            external:{
+              comment:$scope.commentModal.comment,
+              created_on: new Date(),
+              username: userInfo.username,
+            }
+          }
+        }
+        DashboardService.addComment($scope.proposalId , $scope.commentModal)
+          .then(function onSuccess(response) {
+            $scope.commentModal = {};
+            swal(constants.name, constants.add_data_success, constants.success);
+            $('#viewComments').modal('hide');
           }).catch(function onError(error) {
             console.log(error);
             swal(constants.name, 'Error adding comments', constants.failure);

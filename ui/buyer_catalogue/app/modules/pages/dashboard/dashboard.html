@@ -434,7 +434,7 @@
                             <div class="col-md-5 LeadsTable">
                               <div class="panel-heading content-title">
 
-                                <h5 style="background:'red';color:white;" ng-if="!showSingleCampaignChart">All Campaign Details</h5>
+                                <h5 style="background:'red';color:white;" ng-if="!showSingleCampaignChart">All Campaign Details </h5>
                                 <h5 style="background:'red';color:white;" ng-if="showSingleCampaignChart">Supplier / Leads Details</h5>
 
                               </div>
@@ -630,7 +630,7 @@
                                               <td><input ng-model="f.phase" class="form-control" placeholder="Search"><hr></td>
                                               <td><input ng-model="f.supplier.name" class="form-control" placeholder="Search"><hr></td>
                                                 <td></td>
-                                                <td><input ng-model="f.supplier.society_type_quality" class="form-control" placeholder="Search"><hr></td>
+                                                <td><input ng-model="f.supplier.society_type_quality " class="form-control" placeholder="Search"><hr></td>
                                             </tr>
                                             <hr>
                                             </thead>
@@ -823,6 +823,10 @@
                                     <style type="text/css">
                                           .angular-google-map-container { height: 550px;color: black;}
                                       </style>
+                                       <p class="map_icon_map">
+                                      <span style="color:#000000"> <img
+                                          src="http://maps.google.com/mapfiles/ms/icons/blue-dot.png">Ongoing</span>
+                                      </p>
                                         <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="false"
                                                             options="options" bounds="map.bounds" control="googlemap">
                                             <ui-gmap-window show="show" coords='windowCoords'>
@@ -851,6 +855,16 @@
                                     <style type="text/css">
                                           .angular-google-map-container { height: 550px;color: black;}
                                       </style>
+                                       <p class="map_icon_map">
+                                        <span style="color:#000000"> <img
+                                          src="http://maps.google.com/mapfiles/ms/icons/green-dot.png">Completed</span>
+                                          <span style="color:#000000"> <img
+                                            src="http://maps.google.com/mapfiles/ms/icons/orange-dot.png">Upcoming</span>
+                                      <span style="color:#000000"> <img
+                                          src="http://maps.google.com/mapfiles/ms/icons/blue-dot.png">Ongoing</span>
+                                    
+                                   
+                                      </p>
                                         <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="false"
                                                             options="options" bounds="map.bounds" control="googlemap">
                                             <ui-gmap-window show="show" coords='windowCoords'>
@@ -877,6 +891,10 @@
                                       <style type="text/css">
                                             .angular-google-map-container { height: 550px;color: black;}
                                         </style>
+                                          <p class="map_icon_map">
+                                            <span style="color:#000000"> <img
+                                              src="http://maps.google.com/mapfiles/ms/icons/green-dot.png">Completed</span>                       
+                                          </p>
                                           <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="false"
                                                               options="options" bounds="map.bounds" control="googlemap">
                                               <ui-gmap-window show="show" coords='windowCoords'>
@@ -901,6 +919,14 @@
                                         <style type="text/css">
                                               .angular-google-map-container { height: 550px;color: black;}
                                           </style>
+                                            <p class="map_icon_map">
+                                             
+                                                <span style="color:#000000"> <img
+                                                  src="http://maps.google.com/mapfiles/ms/icons/orange-dot.png">Upcoming</span>
+                                           
+                                          
+                                         
+                                            </p>
                                             <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="false"
                                                                 options="options" bounds="map.bounds" control="googlemap">
                                                 <ui-gmap-window show="show" coords='windowCoords'>
@@ -970,7 +996,8 @@
                                       <th ng-click="SortColumn('name')">Campaign Name &nbsp;<a><i class="icon-sort" style="color:white;cursor: pointer;"></i></a></th>
                                       <th ng-click="SortColumn('start_date')">Start Date &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                       <th>Campaign Status</th>
-                                      <th>Society Count</th>
+                                      <th ng-if="selectedSupplierType.code == 'RS'">Society Count</th>
+                                      <th ng-if="selectedSupplierType.code != 'RS'">Supplier Count</th>
                                       <th ng-click="SortColumn('flat_count')">Unit Count &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                       <th ng-click="SortColumn('total_leads')">Leads (% by Unit Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
                                       <th ng-click="SortColumn('hot_leads')" >Hot Leads (% by Unit Count) &nbsp;<a><i class="icon-sort" style="color:white;"></i></a></th>
@@ -987,11 +1014,11 @@
 
                                       <tbody class="detailedTable">
                                         <div class="row">
-                                            <tr ng-repeat="allCampaign in allCampaignDetailsData |filter:searchQuery |  filter:f | orderBy:sortColumn:reversesortcolumn">
-                                            <td style="vertical-align:middle">{{$index  + 1}}</td>
+                                            <tr ng-repeat="allCampaign in allCampaignDetailsData | filter:searchQuery |  filter:f |  orderBy:sortColumn:reversesortcolumn">
+                                            <td style="vertical-align:middle">{{$index  + 1}} </td>
                                             <td style="vertical-align:middle">{{allCampaign.name}}</td>
                                             <td class="col-md-2">{{allCampaign.start_date | date:mediumDate}}</td>
-                                            <td class="col-md-2" style="text-transform: capitalize;">{{allCampaign.campaign_status}}</td>
+                                            <td class="col-md-2" style="text-transform:capitalize">{{allCampaign.campaign_status}}</td>
                                             <td class="col-md-2">{{allCampaign.supplier_count}}</td>
                                             <td class="col-md-2">{{allCampaign.flat_count}}</td>
                                             <td class="col-md-2" style="color:#ffffff">{{allCampaign.total_leads || 0}} <small style="color:#cb1925;"> ({{(allCampaign.total_leads / allCampaign.flat_count) * 100 | limitTo:5 || 0}} %)</small></td>
@@ -1000,7 +1027,7 @@
 
                                         </div>
                                   </tbody>
-                                  <tfoot>
+                                  <tfoot ng-if="!searchQuery">
                                     <tr>
                                         <td>TOTAL</td>
                                         <td>{{campaignLength}}</td>
@@ -1898,7 +1925,14 @@
                        </td>
                   <td>{{supplierBookingStatus[supplier.booking_status||'Not Initiated']}}</td>
                   <td><a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank">View Details</a></td>
-                  <td><a ng-click="viewBookingComments(supplier)">View Comments</a></td>
+                  <td>
+                    <div class="comment" ng-if="comments[supplier.space_id]">
+                      <b>{{comments[supplier.space_id].external.username}} </b> <span> <br>
+                        <small>
+                          {{comments[supplier.space_id].external.created_on | date}}</small></span><br>
+                      <small>{{comments[supplier.space_id].external.comment.slice(0,20)}}</small>
+                    </div>
+                    <br><a ng-click="viewBookingComments(supplier)">View Comments</a></td>
                   <td>Poster : {{supplier.inventory_counts.POSTER}}<br>
                   Flyer : {{supplier.inventory_counts.FLIER}}<br>
                   Standee: {{supplier.inventory_counts.STANDEE}}<br>
@@ -4591,7 +4625,7 @@
               </select>
             </div>
             <br> -->
-            <div class="modal-dialog">
+            <!-- <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-body">
                   <div class="modal-header">
@@ -4618,7 +4652,56 @@
               </div>
             </div>
           </div>
-            </div>
+            </div> -->
+
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  View Comments For  {{supplierNameForComment}}
+                </div>
+                <div class="modal-body">
+                  <table class="table-bordered table-striped">
+                    <tbody>
+                      <tr ng-repeat="item in commentsData[selectedInvForView]">
+                        <td class="col-md-8">
+                          <div style="margin-top:10px;margin-bottom:10px">
+                            <img ng-src="{{userIcon}}">
+                            <b>{{item.user_name}} :</b> <br>
+                          </div>
+                       
+                          <div style="padding-left:30px">
+                            Comment : {{item.comment}}</br>
+                            <span> <small>{{item.timestamp|date:'medium'}}</small></span>
+                          </div><br>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!--  Add comment-->
+                  <div style="width:100%">
+                    <br>
+                    <!-- <label>Comments :</label> -->
+                    <textarea class="form-control col-md-10" rows="8" cols="200" ng-model="commentModal.comment"
+                      placeholder="Write here.."></textarea>
+                  </div>
+                  <br>
+                </div><br>
+                <br>
+                <!-- <button class="btn btn-success" type="button" ng-click="addComment(commentType)" style="margin:3%">Add
+                  Comment</button> -->
+                  <button class="btn btn-success" type="button" ng-click="addPipelineComment()" style="margin:3%">Add
+                    Comment</button>
+              </div>
+            </div><br>
+
+
+
+
+
+
+
+
 
           <br>
           <!-- <div> -->
