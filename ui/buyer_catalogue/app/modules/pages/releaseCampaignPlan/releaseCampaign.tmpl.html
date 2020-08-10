@@ -907,8 +907,10 @@
                 <a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank"
                   style="text-decoration: underline; cursor: pointer;color:#337ab7;font-weight: 600;">{{supplier.name}}<br>
                 </a>
-                <span ng-if="supplier.retail_shop_type">({{supplier.retail_shop_type}}<span
-                    ng-if="supplier.category_name">,{{supplier.category_name}}</span>)</span>
+                <!-- <span ng-if="supplier.retail_shop_type">({{supplier.retail_shop_type}}<span
+                    ng-if="supplier.category_name">,{{supplier.category_name}}</span>)</span> -->
+                    <span ng-if="supplier.supplier_type == 'RE'"><span ng-if="supplier.quantity_rating">(</span>{{supplier.quantity_rating}}<span ng-if="supplier.quantity_rating">)</span><br><span ng-if="supplier.category_name">{{supplier.category_name}}</span></span>
+                    <span ng-if="supplier.supplier_type != 'RE'"><span ng-if="supplier.quality_rating">(</span>{{supplier.quality_rating}}<span ng-if="supplier.quality_rating">)</span></span>
               </td>
 
               <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">{{supplier.object_id}}</td>
