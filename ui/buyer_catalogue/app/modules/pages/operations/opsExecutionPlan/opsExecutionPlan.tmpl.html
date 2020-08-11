@@ -75,14 +75,17 @@
                 </td>
               </md-progress-linear>
             </tr>
+           
           </table>
           <div st-pagination="" st-items-by-page="10" st-displayed-pages=""></div>
         </div>
+        <div ng-if="campaignDataList.length == 0" style="text-align:center;color:red"><h4>Record not found</h4></div>
         <div>
           <button class="smallBtn active notify"  data-target = "#reAssignModal" data-toggle = "modal" ng-disabled="!reAssign" permission = "[permissions.reAssignDates]">ReAssign</button>
           <button class="smallBtn active notify" ng-click="getSummary()" permission = "[permissions.viewSummary]">Summary</button>
           <button class="smallBtn active notify" ng-click="downloadImages()" ng-disabled="buttonDisable" permission = "[permissions.downloadImages]">Download</button>
         </div>
+        
       </div>
     </div><!-- middle-section -->
     <div class="fixfooter"></div>
