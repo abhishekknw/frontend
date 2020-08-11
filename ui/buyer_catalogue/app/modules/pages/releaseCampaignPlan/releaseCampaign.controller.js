@@ -889,8 +889,8 @@ angular.module('catalogueApp')
         };
 
         $scope.getRelationShipData = function (supplier) {
-
           $scope.relationshipData = {};
+          $scope.relationhipStatusData = supplier;
           // var supplierCode = 'RS';
           var supplierCode = supplier.supplierCode;
           var campaignId = $scope.releaseDetails.campaign.proposal_id;
@@ -1125,6 +1125,7 @@ angular.module('catalogueApp')
           releaseCampaignService.assignUserSupplier($scope.assignUserData)
           .then(function onSuccess(response) {
             $scope.assignUserData = {};
+            swal(constants.name, "Assign user successfully.", constants.success);
           }).catch(function onError(response) {
             console.log(response);
           })
@@ -1521,6 +1522,11 @@ angular.module('catalogueApp')
             }).catch(function onError(response) {
               console.log(response);
             })
+        }
+
+        $scope.viewContactComment = function(comments){
+           $scope.ContactComments = comments;
+          $('#viewCommentsContact').modal('show');
         }
 
         // Internal Comments to show in row
