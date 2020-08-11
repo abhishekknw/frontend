@@ -1476,14 +1476,15 @@
   <!-- </div> -->
   <!--Start: Code for contacts Modal Window -->
   <div id="contactModal" class="modal fade">
-    <div class="modal-dialog" style="width:700px">
+    <div class="modal-dialog" style="width:1200px">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h4 class="modal-title">Contact Details</h4>
           <hr />
-          <div class="modal-body" style="width: 650px; height: 300px;">
-            <div class="modal-body col-md-4 table-responsive" style="width: 650px; height: 350px">
+          <div class="modal-body" style="width: 1100px; height: 300px;">
+            <div class="modal-body col-md-4 table-responsive" style="width: 1100px; height: 350px">
+              
               <table class="table table-bordered" name="contactForm">
                 <thead>
                   <tr>
@@ -1492,11 +1493,13 @@
                 </thead>
                 <tbody>
                   <tr ng-if="editContactDetails" ng-repeat="contact in payment.contacts">
-                    <td class="alignment">{{contact.salutation}}</td>
+                    <!-- <td class="alignment">{{contact.salutation}}</td> -->
                     <td class="alignment">{{contact.name}}</td>
                     <td class="alignment">{{contact.contact_type}}</td>
                     <td class="alignment">{{contact.email}}</td>
-                    <td class="alignment">{{contact.std_code}}</td>
+                    <td class="alignment">{{contact.relationship_status}}</td>
+                    <td class="alignment">{{contact.comments}}</td>
+                    <!-- <td class="alignment">{{contact.std_code}}</td> -->
                     <td class="alignment">{{contact.landline}}</td>
                     <td class="alignment">{{contact.mobile}}</td>
                     <td class="alignment">
@@ -1506,7 +1509,7 @@
 
                   </tr>
                   <tr ng-if="!editContactDetails" ng-repeat="contact in payment.contacts">
-                    <td class="alignment"><input type="text" placeholder="Mr/Mrs" ng-model="contact.salutation"></td>
+                    <!-- <td class="alignment"><input type="text" placeholder="Mr/Mrs" ng-model="contact.salutation"></td>
                     <td class="alignment"><input type="text" placeholder="Name of the Person" ng-model="contact.name">
                     </td>
                     <td class="alignment"><input type="text"
@@ -1516,7 +1519,64 @@
                         ng-model="contact.email"></td>
                     <td class="alignment"><input type="int" placeholder="022/+91" ng-model="contact.std_code"></td>
                     <td class="alignment"><input type="tel" placeholder="Landline No" ng-model="contact.landline"></td>
-                    <td class="alignment"><input type="phone" placeholder="Mobile No" ng-model="contact.mobile"></td>
+                    <td class="alignment"><input type="phone" placeholder="Mobile No" ng-model="contact.mobile"></td> -->
+                    <td class="alignment">
+                      <input type="text" placeholder="Name" class="form-control" id="name_id" style="width:150px;"
+                      ng-model="contact.name">
+                   </td>
+                   <td class="alignment">
+                      <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
+                      ng-model="contact.contact_type" >
+                      <option value="" disabled>Select Contact Type</option>
+                      <option ng-repeat="ctype in Contact_Type track by $index" value="{{ctype}}">
+                        {{ctype}}
+                      </option>
+                    </select>
+                    <div ng-if="contact.contact_type =='Other'">
+                      <input type="text" placeholder="Contact Type" class="form-control" id="other_contact_type"
+                        style="width:150px;" ng-model="contact.other_contact_type">
+                    </div>
+                   </td>
+                  
+                   <td class="alignment">
+                    <input type="text" placeholder="Email" name="email_name_{{$index}}" class="form-control"
+                      id="email_id_{{$index}}" ng-model="contact.email"
+                      ng-pattern="/^[a-zA-Z0-9]+[.]?[_a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+$/">
+                    <div ng-show="retailshop_form.email_name_{{$index}}.$error.pattern" class="error"
+                      style="font-size:12px;">Email Invalid</div>
+                  </td>
+
+                  <td class="alignment">
+                    <select class="form-control" name="relationship_status_{{$index}}" id="relationship_status_id_{{$index}}"
+                    ng-model="contact.relationship_status" >
+                    <option value="" disabled>Select Relationship Status_</option>
+                    <option ng-repeat="status in Relationship_Status track by $index" value="{{status}}">
+                      {{status}}
+                    </option>
+                  </select>
+                  </td>
+
+                  <td class="alignment">
+                    <textarea placeholder="Comments" class="form-control" 
+                    style="width:150px;" ng-model="contact.comments" rows="4" cols="50">
+                
+                      </textarea>
+                   </td>
+
+                   <td class="alignment">
+                    <input type="number" placeholder="Phone" name="phone_{{$index}}" class="form-control"
+                      id="phone_{{$index}}" style="width:110px;" ng-model="contact.landline"
+                      >
+                    <!-- <div ng-show="retailshop_form.phone_{{$index}}.$error.pattern" class="error"
+                      style="font-size:12px;">Phone number Invalid</div> -->
+                  </td>
+                  <td class="alignment">
+                    <input type="number" placeholder="Mobile" name="mobile_{{$index}}" class="form-control"
+                      id="mobile_id_{{$index}}" style="width:110px;" ng-model="contact.mobile"
+                      ng-pattern="/^[0-9]{10}$/">
+                    <div ng-show="retailshop_form.mobile_{{$index}}.$error.pattern" class="error"
+                      style="font-size:12px;">Mobile number Invalid</div>
+                  </td>
                     <td class="alignment">
                       <button type="button" name="button" ng-click="removeContact($index)">Remove</button>
                     </td>
