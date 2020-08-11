@@ -148,11 +148,13 @@ angular.module('catalogueApp')
         ];
 
         $scope.contact_headings = [
-          { header: 'Salutation' },
+          // { header: 'Contact Type' },
           { header: 'Name' },
           { header: 'Designation' },
           { header: 'Email' },
-          { header: 'STD Code' },
+          { header: 'Relationship Status' },
+          { header: 'Comments' },
+          // { header: 'STD Code' },
           { header: 'Landline No' },
           { header: 'Mobile No' },
           { header: 'Remove' },
@@ -178,6 +180,9 @@ angular.module('catalogueApp')
         $scope.assignUserData = {
           campaign_id:'',
         }
+
+       
+        $scope.Relationship_Status = constants.relationship_status;
         $scope.invForComments = constants.inventoryNames;
         $scope.commentsType = constants.comments_type;
         $scope.shortlisted = constants.shortlisted;
@@ -456,11 +461,24 @@ angular.module('catalogueApp')
         }
         //Start:To set contacts to show in contactModal
         $scope.setContact = function (supplier) {
-
+          if(supplier.supplier_code == 'RE' || supplier.supplier_code == 'HO' || supplier.supplier_code == 'BS' ){
+            $scope.Contact_Type = constants.retail_shop_contact_type;
+          } else if(supplier.supplier_code == 'CP'){
+            $scope.Contact_Type = constants.corporate_contact_type;
+          } else if(supplier.supplier_code == 'SA' || supplier.supplier_code =='GY'){
+            $scope.Contact_Type = constants.salon_contact_type;
+          } else if(supplier.supplier_code == 'RS'){
+            $scope.Contact_Type = constants.society_contact_type;
+          } 
+        
           $scope.payment = supplier;
+          if($scope.payment && $scope.payment.contacts){
+            for(let i in  $scope.payment.contacts){
+              $scope.payment.contacts[i].landline = JSON.parse($scope.payment.contacts[i].landline);
+            }
+          }
           $scope.editContactDetails = true;
           $scope.statusEditContactDetails = (!supplier.is_completed);
-
         }
         //End:To set contacts to show in contactModal
         //Start:To set payment details to show in paymentModal
@@ -905,9 +923,10 @@ angular.module('catalogueApp')
             if ($scope.payment.contacts[i] && $scope.payment.contacts[i].name) {
               $scope.contactArray.push($scope.payment.contacts[i])
             }
+            
           }
           $scope.payment.contacts = $scope.contactArray;
-          $scope.saveContactDetails();
+           $scope.saveContactDetails();
 
         }
 
@@ -916,7 +935,7 @@ angular.module('catalogueApp')
             $scope.payment['basic_contact_available'] = true;
             $scope.payment['basic_contacts'] = $scope.payment.contacts;
             $scope.payment['food_tasting_allowed'] = null;
-
+         
             releaseCampaignService.saveContactDetails($scope.payment, $scope.payment.supplier_id)
               .then(function onSuccess(response) {
                 $scope.editContactDetails = true;
@@ -935,6 +954,7 @@ angular.module('catalogueApp')
           $scope.addRow = $scope.payment.contacts;
           $scope.addContactDetails = false;
           $scope.addRow.push({});
+         
         }
 
         $scope.removeContact = function (index) {
@@ -1104,7 +1124,6 @@ angular.module('catalogueApp')
           $scope.assignUserData.campaign_id = $scope.campaign_id;
           releaseCampaignService.assignUserSupplier($scope.assignUserData)
           .then(function onSuccess(response) {
-            console.log('eeeeeeeeeeeeeeeeeeeeee',response)
             $scope.assignUserData = {};
           }).catch(function onError(response) {
             console.log(response);

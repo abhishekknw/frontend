@@ -242,6 +242,13 @@ angular
     execution_related_comment : 'EXTERNAL',
     no_comments_msg : 'No Comments Available',
     flatCountHeader:{'RS':'Flat Count','RE':'Footfall Count ','CP':'Employees Count','GY':'Footfall Count','BS':'Footfall Count','EI':'Students Count'},
-    towerCountHeader:{'RS':'Flat Count','RE':'Weekday Footfall Count','CP':'Companies Count','GY':'Weekday Footfall Count','BS':'Weekday Footfall Count','EI':'Teachers Count'}
-
-  });
+    towerCountHeader:{'RS':'Flat Count','RE':'Weekday Footfall Count','CP':'Companies Count','GY':'Weekday Footfall Count','BS':'Weekday Footfall Count','EI':'Teachers Count'},
+    retail_shop_contact_type : ["Store Manager","Floor Manager","Category Manager","Other Employees","Accounts","Purchase Manager","Operations Manager","Inventory Manager","Admin-Desk","Other"
+  ],
+  relationship_status : ["Deep","Very Deep","Limited","Acquaintance","None"],
+bus_shelter_contact_type : ["Store Manager","Floor Manager","Category Manager","Other Employees","Accounts","Purchase Manager","Operations Manager","Inventory Manager","Admin-Desk",
+],
+salon_contact_type : ["Owner","Manager","Advertising Manager","Branding Manager","Other"],
+corporate_contact_type : ["Owner","Manager","Advertising Manager","Branding Manager","Admin","Supervisor","Superintendent","Hr-Manager","Hr-Head","Security Manager"],
+society_contact_type:[ "Chairman","Secretary","Treasurer","Manager","Supervisor","Committe Member","Other"]
+});
