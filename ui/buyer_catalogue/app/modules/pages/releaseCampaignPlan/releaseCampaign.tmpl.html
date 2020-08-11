@@ -102,7 +102,7 @@
          <div class = "table">
            <div class="form-group">
               <div class = "row">
-                <div class = "col-md-3"><label>Select Phase </label></div>
+                <div class = "col-md-3"><label>Select Quality Rating </label></div>
                 <div class = "col-md-3">
                   <select class="form-control" ng-model="assignUserData.quality_rating">
                     <option value="" disabled>Select Quality Rating</option>
@@ -1498,7 +1498,10 @@
                     <td class="alignment">{{contact.contact_type}}</td>
                     <td class="alignment">{{contact.email}}</td>
                     <td class="alignment">{{contact.relationship_status}}</td>
-                    <td class="alignment">{{contact.comments}}</td>
+                    <td class="alignment">{{contact.comments}}
+                      <button ng-if="contact.comments" type="button" class="btn btn-primary"
+                      ng-click="viewContactComment(contact.comments)">View</button>
+                    </td>
                     <!-- <td class="alignment">{{contact.std_code}}</td> -->
                     <td class="alignment">{{contact.landline}}</td>
                     <td class="alignment">{{contact.mobile}}</td>
@@ -1936,6 +1939,33 @@
                   </tr>
                 </tbody>
               </table>
+
+
+              <h3> Relationship Status </h3>
+              <table class="table table-bordered table-responsive">
+                <thead>
+                  <tr>
+                    <th>Index</th>
+                    <th>Name</th>
+                    <th>Designation</th>
+                    <th>Relationship status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="contact in relationhipStatusData.contacts">
+                    <td>{{$index+1}}</td>
+                    <td>{{contact.name}}</td>
+                    <td><p ng-if="contact.contact_type">{{contact.contact_type}}</p>
+                      <p ng-if="!contact.contact_type">_</p>
+                    </td>
+                    <td><p ng-if="contact.relationship_status">{{contact.relationship_status}}</p>
+                      <p ng-if="!contact.relationship_status">_</p>
+                    </td>
+                   
+                  
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -2160,6 +2190,29 @@
           <br>
           <button class="btn btn-success" type="button" ng-click="addComment(commentType)" style="margin:3%">Add
             Comment</button>
+        </div>
+      </div><br>
+      <!-- <div> -->
+      <br>
+      <!-- </div> -->
+      </br></br>
+    </div>
+  </div>
+
+
+  <div id="viewCommentsContact" class="modal fade">
+    <div>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            Comments
+          </div>
+          <div class="modal-body">
+           
+            <textarea class="form-control " rows="8" cols="200" ng-model="ContactComments"
+                placeholder="Write here.."></textarea>
+          </div>
         </div>
       </div><br>
       <!-- <div> -->
