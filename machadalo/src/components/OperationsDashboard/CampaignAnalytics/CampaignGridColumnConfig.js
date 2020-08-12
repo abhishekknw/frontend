@@ -31,6 +31,31 @@ const getCampaignColumn = () => {
       },
     },
     {
+      dataField: 'view_details',
+      text: 'Booking Plan',
+      row: 0,
+      rowSpan: 2,
+      width: '150px',
+      formatter: (cell, row) => {
+        const { campaign_id } = row;
+        return (
+          <div>
+            <Link
+              style={{ color: '#e8578d' }}
+              to={{
+                pathname: `/#/${campaign_id}/releasePlan`,
+                state: {
+                  campaign_id,
+                },
+              }}
+            >
+              {'View Details'}
+            </Link>
+          </div>
+        );
+      },
+    },
+    {
       dataField: 'supplier_count',
       text: 'Entity Count',
       row: 0,
