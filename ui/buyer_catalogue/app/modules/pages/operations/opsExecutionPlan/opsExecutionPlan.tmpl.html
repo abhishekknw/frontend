@@ -197,7 +197,7 @@
             </button>
             <div id="modalReAssign">
               <label>Activity Date </label>
-              <input type="text" ng-model="activity_date" class="field" uib-datepicker-popup="{{format}}" is-open="popup1" min-date="today" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" date-parser="{{format}}" ng-model-options="{timezone:'UTC'}"/>
+              <input type="text" ng-model="activity_date" class="field" uib-datepicker-popup="{{format}}" is-open="popup1" min-date="today" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" date-parser="{{format}}" readonly ng-model-options="{timezone:'UTC'}"/>
               <span class="input-group-btn">
                 <button type="button" class="smallBtn" ng-click="popup1 = true"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>

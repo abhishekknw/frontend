@@ -372,7 +372,12 @@ angular.module('catalogueApp')
           if ($scope.requestaActivityData.assignment_detail.length > 0) {
             auditReleasePlanService.saveActivityDetails($scope.requestaActivityData)
               .then(function onSuccess(response) {
-                getResultsPage($scope.newPage);
+                if($scope.newPage){
+                  getResultsPage($scope.newPage);
+                } else {
+                  getResultsPage(1);
+                }
+               
                 $scope.resetData();
                 $scope.savingDates = false;
                 $scope.supplierId = null
