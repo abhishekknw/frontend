@@ -143,6 +143,7 @@ angular.module('catalogueApp')
           });
         });
         $scope.paginationData = $scope.campaignDataList;
+        $scope.paginationDataNew = $scope.campaignDataList;
         console.log($scope.campaignDataList);
         $scope.dateCode ;
       }
@@ -216,6 +217,8 @@ angular.module('catalogueApp')
           $('#reAssignModal').modal('hide');
           $scope.reAssign = false;
           $scope.reAssignActivityList = {};
+          $scope.activity_date = "";
+          $scope.userCode = "";
           swal(constants.name,constants.reAssign_success,constants.success);
 
         })

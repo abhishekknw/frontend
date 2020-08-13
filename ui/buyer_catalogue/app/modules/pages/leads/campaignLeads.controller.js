@@ -641,7 +641,7 @@ angular.module('catalogueApp')
          // document.getElementById("globalHotLeadsCriteria").modal('toggle');
       }
       swal(constants.name,constants.update_success,constants.success);
-      $scope.changeView('viewLeadForms',$scope.campaignInfo);
+       $scope.changeView('viewLeadForms',$scope.campaignInfo);
     }).catch(function onError(response){
       console.log(response);
     })
