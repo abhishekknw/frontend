@@ -22,6 +22,11 @@
     	return machadaloHttp.get(url);
     }
 
+    releaseCampaignService.bookingStatusData = function(proposal_id){
+      var url = url_base + "booking-status/" + proposal_id ;
+    return machadaloHttp.get(url);
+  }
+
     releaseCampaignService.getCampaignReleaseDetailsHeader = function(){
         var url = url_base_ui + "getHeaderData";
     	return machadaloHttp.get(url);
@@ -31,6 +36,11 @@
          var url = url_base + proposal_id + "/campaign-inventories/";
       return machadaloHttp.put(url,data);
     }
+
+    releaseCampaignService.assignUserSupplier = function(data){
+      var url = url_base  + "assign-supplier-users/";
+   return machadaloHttp.put(url,data);
+ }
 
     releaseCampaignService.addSuppliersToCampaign = function(data){
       var url = url_base + 'add-suppliers-direct-to-campaign/';
@@ -131,6 +141,11 @@
 
     releaseCampaignService.setUserForBooking = function(data){
       var url = url_base + 'supplier-assignment/';
+      return machadaloHttp.post(url,data);
+    }
+
+    releaseCampaignService.setBrandForBooking = function(data){
+      var url = url_base + 'brand-assignment/';
       return machadaloHttp.post(url,data);
     }
 

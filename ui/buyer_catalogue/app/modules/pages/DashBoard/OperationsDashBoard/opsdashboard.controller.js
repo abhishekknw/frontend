@@ -59,7 +59,16 @@ angular.module('catalogueApp')
     $scope.getUsersList = function(orgId){
       commonDataShare.getUsersList(orgId)
         .then(function onSuccess(response){
-          $scope.userList = response.data.data;
+           $scope.userList = [];
+          var x = null;
+          $scope.userList = (response.data.data).filter(function(objFromA) {
+              return !$scope.assignment_detail.find(function(objFromB) {
+              return objFromA.id === objFromB.assigned_to.assigned_to_id
+            })
+          })
+          for (let x in $scope.userList){
+            $scope.userList[x].label = $scope.userList[x].username
+          }
       	})
       	.catch(function onError(response){
       		console.log("error occured", response);
@@ -132,9 +141,11 @@ angular.module('catalogueApp')
     	});
     }
 
-    $scope.convertProposalToCampaign = function(proposal){
+    $scope.convertProposalToCampaign = function(proposal,assignment_detail,index){
+      $scope.local_index = index;
       $scope.loadSpinner = false;
       $scope.currentProposal = proposal;
+      $scope.assignment_detail = assignment_detail;
       getOrganisationsForAssignment();
       opsDashBoardService.convertProposalToCampaign(proposal.proposal.proposal_id, proposal.proposal)
           .then(function onSuccess(response){
@@ -181,14 +192,14 @@ angular.module('catalogueApp')
       }
     }
 
-    $scope.assignementSettings = {
-      enableSearch: true,
-      keyboardControls: true, idProp: "id",
-      template: '{{option.username}}', smartButtonTextConverter(skip, option) { return option; },
-      selectionLimit: 4,
-      showCheckAll: true,
-      scrollableHeight: '300px', scrollable: true
-    };
+    // $scope.assignementSettings = {
+    //   enableSearch: true,
+    //   keyboardControls: true, idProp: "id",
+    //   template: '{{option.username}}', smartButtonTextConverter(skip, option) { return option; },
+    //   selectionLimit: 4,
+    //   showCheckAll: true,
+    //   scrollableHeight: '300px', scrollable: true
+    // };
 
     $scope.saveAssignment = function(){
       // var userId = $scope.userId;
@@ -196,16 +207,28 @@ angular.module('catalogueApp')
         to:$scope.assignedUsers,
         campaign_id:$scope.currentProposal.proposal.proposal_id
       };
+        var organisationName = "";
+        var localindex_index = $scope.organisationList.map(function(el) { 
+          return el.organisation_id;
+        }).indexOf($scope.orgId);      
+        if (localindex_index != -1) {       
+          organisationName =  $scope.organisationList[localindex_index].name
+        } 
       opsDashBoardService.saveAssignment(data)
           .then(function onSuccess(response){
-            getProposalDetails();
+               for(let i in $scope.assignedUsers){
+                $scope.proposals[$scope.local_index].assignment_detail.push({assigned_to:{assigned_to_name:$scope.assignedUsers[i].label,organisation_name:organisationName}})
+               }
+             $scope.orgId = "";
+             $scope.assignedUsers= [];
+             $scope.userList = [];
+
               $('#assignModal').modal('hide');
               swal(constants.name,constants.assign_user_success,constants.success);
     	})
           .catch(function onError(response){
             $('#assignModal').modal('hide');
             commonDataShare.showErrorMessage(response);
-            // swal(constants.name,constants.assign_user_error,constants.error);
     	  	    console.log("error occured", status);
     	});
     }
@@ -231,22 +254,30 @@ angular.module('catalogueApp')
     $scope.campaign_id = ""
 
     $scope.addComment = function(commentType) {
-      $scope.commentModal['shortlisted_spaces_id'] = 1;
-      $scope.commentModal['related_to'] = commentType;
-
+      $scope.commentModal['related_to'] = commentType;     
+      var localindex_index = $scope.proposals.map(function(el) { 
+        return el.id;
+      }).indexOf($scope.campaignId);      
+      if (localindex_index != -1) { 
+        $scope.proposals[localindex_index].latest_comment = $scope.commentModal.comment
+       }
       opsDashBoardService.addComment($scope.campaign_id, 1, $scope.commentType, $scope.commentModal)
         .then(function onSuccess(response) {
-          $scope.viewComments($scope.prposalDataForComment, "CAMPAIGN");
+          // $scope.viewComments($scope.prposalDataForComment, "CAMPAIGN");
           $scope.commentModal = {};
           $scope.prposalDataForComment = undefined;
+          
           swal(constants.name, constants.add_data_success, constants.success);
+          $('#viewComments').modal('hide');
+         
         }).catch(function onError(response) {
           console.log(response);
         })
     }
 
     $scope.viewComments = function(prposals, commentType) {
-
+  
+       $scope.campaignId = prposals.id;
       $scope.campaign_id = prposals.proposal.proposal_id;
       $scope.commentsData = {};
       if ($scope.selectedCommentForView.type == undefined) {
@@ -263,10 +294,22 @@ angular.module('catalogueApp')
           $scope.commentsData = response.data.data;
           $scope.viewInvForComments = Object.keys($scope.commentsData);
           $scope.selectedInvForView = $scope.viewInvForComments[0];
+          $scope.commentsData = $scope.commentsData[$scope.viewInvForComments[0]];
           $('#viewComments').modal('show');
         }).catch(function onError(response) {
           console.log(response);
         })
-    }
+    };
+
+    $scope.model = []; 
+    $scope.data = [{id: 1, label: "David"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"},{id: 4, label: "df"},{id: 5, label: "opp"},{id:6, label: "opkkkkp"},{id:7, label: "otttttttpkkkkp"}]; 
+    $scope.settings = {
+       smartButtonMaxItems: 4,
+      selectionLimit: 4,
+      showCheckAll: true,
+      scrollableHeight: '300px', scrollable: true,
+      enableSearch: true,
+     
+    };
 
 }]);//Controller function ends here

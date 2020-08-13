@@ -12,8 +12,8 @@ angular
     signature : "GsF32EZ1IFvr2ZDH3ww+tGzFvmw=",
     content_type : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     //amazon server
-    aws_bucket_url : 'http://mdimages.s3.amazonaws.com/',
-    aws_campaign_images_url : 'http://androidtokyo.s3.amazonaws.com/',
+    aws_bucket_url : 'https://mdimages.s3.amazonaws.com/',
+    aws_campaign_images_url : 'https://androidtokyo.s3.amazonaws.com/',
     account_email_id : 'tejas.pawar@machaddalo.com',
     //general
     name : '',
@@ -140,6 +140,7 @@ angular
     delete_confirm_user : 'Do you really want to delete this user?',
     delete_confirm : 'Yes! Delete it!',
     delete_confirm_group : 'Do you really want to delete this Group?',
+    delete_profile : 'Do you really want to delete this Profile?',
     changePassword_success : 'Password changed Successfully',
     
 
@@ -189,6 +190,27 @@ angular
       TB : 'Tentative Booking'
 
     },
+    
+    supplierTypeCode:[{name:'ALL', value:'all'},
+    {name:'Residential Society', value:'RS'},
+      {name:'Corporate', value:'CP'},
+      {name:'Bus Shelter', value:'BS'},
+      {name:'Gym', value:'GY'},
+      {name:'Saloon', value:'SA'},
+      {name:'Retail Store', value:'RE'},
+      {name:'Mix', value:'mix'},
+      ],
+
+      supplierTypeCodePerformanceDetail:[
+        {name:'Select Supplier Type', value:'all'},
+      {name:'Residential Society', value:'RS'},
+        {name:'Corporate', value:'CP'},
+        {name:'Bus Shelter', value:'BS'},
+        {name:'Gym', value:'GY'},
+        {name:'Saloon', value:'SA'},
+        {name:'Retail Store', value:'RE'},
+        ],
+
     distanceLimit : 500,
     release : 'RELEASE',
     closure : 'CLOSURE',
@@ -219,4 +241,14 @@ angular
     booking_related_comment : 'INTERNAL',
     execution_related_comment : 'EXTERNAL',
     no_comments_msg : 'No Comments Available',
-    });
+    flatCountHeader:{'RS':'Flat Count','RE':'Footfall Count ','CP':'Employees Count','GY':'Footfall Count','BS':'Footfall Count','EI':'Students Count'},
+    towerCountHeader:{'RS':'Flat Count','RE':'Weekday Footfall Count','CP':'Companies Count','GY':'Weekday Footfall Count','BS':'Weekday Footfall Count','EI':'Teachers Count'},
+    retail_shop_contact_type : ["Store Manager","Floor Manager","Category Manager","Other Employees","Accounts","Purchase Manager","Operations Manager","Inventory Manager","Admin-Desk","Other"
+  ],
+  relationship_status : ["Deep","Very Deep","Limited","Acquaintance","None"],
+bus_shelter_contact_type : ["Store Manager","Floor Manager","Category Manager","Other Employees","Accounts","Purchase Manager","Operations Manager","Inventory Manager","Admin-Desk",
+],
+salon_contact_type : ["Owner","Manager","Advertising Manager","Branding Manager","Other"],
+corporate_contact_type : ["Owner","Manager","Advertising Manager","Branding Manager","Admin","Supervisor","Superintendent","Hr-Manager","Hr-Head","Security Manager"],
+society_contact_type:[ "Chairman","Secretary","Treasurer","Manager","Supervisor","Committe Member","Other"]
+});

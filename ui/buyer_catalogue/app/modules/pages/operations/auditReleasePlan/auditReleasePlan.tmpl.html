@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="modules/pages/operations/auditReleasePlan/auditReleasePlan.tmpl.css"/>
 <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
-<div><nav-bar></nav-bar></div>
+<div style="margin-top: 10px"><nav-bar></nav-bar></div>
 <div ng-loading="loading"></div> <!--For displaying loading icon-->
 <br><br><br>
 <div class="panel-breadcrumb">
@@ -17,16 +17,16 @@
   <div class = "panel-body" style="text-align:center;margin-top:-20px">
     <div class="row">
       <div class="panel panel-default">
-        <div class="panel-heading">
-          <Label>Campaign Id:&nbsp;</Label><span class = "proposal-details">{{releaseDetails.campaign.proposal_id}}</span>
-          <Label class = "labels">Campaign Name:&nbsp;</Label><span class = "proposal-details">{{releaseDetails.campaign.name}}</span>
-          <Label class = "labels">BD Owner:&nbsp;</Label><span class = "proposal-details">{{releaseDetails.campaign.created_by}}</span>
-          <Label class = "labels">Campaign State:&nbsp;</Label><span class = "proposal-details">{{getCampaignState(releaseDetails.campaign.campaign_state)}}</span>
+        <div class="panel-heading panel-heading col-md-12">
+          <span>Campaign Ids:&nbsp;</span><span class = "proposal-details">{{releaseDetails.campaign.proposal_id}}</span>
+          <span">Campaign Name:&nbsp;</span><span class = "proposal-details">{{releaseDetails.campaign.name}}</span>
+          <span">BD Owner:&nbsp;</span><span class = "proposal-details">{{releaseDetails.campaign.created_by}}</span>
+          <span>Campaign State:&nbsp;</span><span class = "proposal-details">{{getCampaignState(releaseDetails.campaign.campaign_state)}}</span>
           </div>
       </div>
     </div>
     </div>
-  <div style="color:#000000;" class="assign-date">
+  <div style="color:#000000; margin-top: 10px" class="assign-date">
       <div class="col-md-12 pull-right" style="background-color:#ffffff;">
       <div class="col-md-4">
           <input type="checkbox" ng-model="dateChecked" permission = "[permissions.assignDates]">
@@ -124,8 +124,9 @@
            </thead>
            <tbody dir-paginate="supplier in releaseDetails.shortlisted_suppliers | itemsPerPage: suppliersPerPage"
                     total-items="totalSuppliers" current-page="pagination.current">
-            <tr ng-repeat="(key,filter) in getFilters(supplier)" ng-if="supplier.booking_status=='BK'">
-               <td class="col-md-1" rowspan="{{key.length}}" ng-show="$first"
+            <!-- <tr  ng-repeat="(key,filter) in getFilters(supplier)" ng-if="supplier.booking_status=='BK'"> -->
+                <tr  ng-repeat="(key,filter) in getFilters(supplier)">
+               <td class="col-md-1" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first"
               ng-style="phaseEndDate > currentDate && {'background-color':'green'}">
                  {{phaseMappingList[supplier.phase_no].phase_no || 'Not Assigned'}}
                </td>
@@ -136,18 +137,44 @@
                {{supplier.area}}&nbsp;({{supplier.subarea}}) <br>{{supplier.address2}} </td>
                <td class="col-md-4 checkboxes-btn">
                  <div class="pull-left" ng-repeat="inventory in filter.detail" style="margin-bottom: 10px;text-align: center;">
-                   <input type="checkbox" class="" ng-disabled="isDisable(rowIndex)" ng-model="inventory.status" ng-click="addInventory(inventory,rowIndex,$index)"  permission = "[permissions.assignDates]" /> {{key}}{{$index+1}}&nbsp;
+                   <input type="checkbox" class="" ng-disabled="isDisable(rowIndex)" ng-model="inventory.status" ng-click="addInventory(inventory,rowIndex,$index,supplier.id)"  permission = "[permissions.assignDates]" /> {{key}}{{$index+1}} &nbsp;
                  </div>
-                 <div class="col-md-6 pull-right">
-                   <button  class="btn" data-target="#addInventoryModal" style="background: #5bc0de; color: white;margin-left:20px;" data-toggle="modal" ng-click="getInventoryRelatedData(supplier)" ng-disabled="savingDates">Add Inventory</button>
-                 </div>
+                
+               </td>
+               <td>
+                  <div>
+                      <button   class="btn"  style="background: #5bc0de; color: white;" data-toggle="modal" ng-click="getInventoryRelatedData(supplier,filter.total_count)" ng-disabled="savingDates">Add Inventory</button>
+                      <button id="{{supplier.id}}_hhhhhhh"  class="btn btn-danger" style="margin-top: 5px" ng-disabled="supplierId != supplier.id" ng-click="deleteAdInventoryIds(supplier)" >Delete Inventory</button>
+                    </div>
                </td>
                <td class="col-md-3">
-                <div style="display: flex;">&ensp;
-                  <button  class="btn btn-info" ng-disabled="invIdList.length == 0 || isDisable(rowIndex)" data-target="#manageDatesModal" data-toggle="modal" data-backdrop="static" ng-click="getActivityDates(supplier)"  permission = "[permissions.assignDates]">Manage Date</button>&ensp;
+                  <div class="row ">      
+                      <div ng-repeat = "inventory in filter.detail">
+                         <div ng-show="$last">
+                        <div ng-if="inventory.inventory_activities.length > 0">
+                            <div>{{inventory.inventory_activities[(inventory.inventory_activities.length-1)].activity_type}}</div>
+                              <div ng-if="inventory.inventory_activities[(inventory.inventory_activities.length-1)].inventory_activity_assignment.length > 0">
+                                    {{inventory.inventory_activities[(inventory.inventory_activities.length-1)].inventory_activity_assignment[(inventory.inventory_activities[(inventory.inventory_activities.length-1)].inventory_activity_assignment.length-1)].activity_date |limitTo:10}}
+                              </div>
+                            
+                            <div ng-if="inventory.inventory_activities[(inventory.inventory_activities.length-1)].inventory_activity_assignment.length > 0">
+                                {{usersMapListWithObjects[(inventory.inventory_activities[(inventory.inventory_activities.length-1)].inventory_activity_assignment[(inventory.inventory_activities[(inventory.inventory_activities.length-1)].inventory_activity_assignment.length-1)].assigned_to)].username}}
+                          </div>
+                            
+                          </div>
+                        </div>
+                      </div>
+                      </div>
+                      <hr>
+                <div style="display: flex;">&nbsp;
+                  <button  class="btn btn-info" id="{{supplier.id}}_date" ng-disabled="supplierId != supplier.id" data-target="#manageDatesModal" data-toggle="modal" data-backdrop="static" ng-click="getActivityDates(supplier)"  permission = "[permissions.assignDates]">Manage Date</button>&ensp;
                   <button  class="btn" data-target="#showDatesModal" data-toggle="modal" ng-click="showActivityDates(filter.detail, supplier, key)" ng-disabled="savingDates"  permission = "[permissions.viewDates]">View Dates</button>&ensp;
-                  <button  class="btn btn-info" ng-disabled="invIdList.length == 0 || isDisable(rowIndex)" ng-click="deleteAdInventoryIds(supplier)" >Delete Inventory</button>
-               <div>
+                  <!-- <button  class="btn btn-info" ng-disabled="invIdList.length == 0 || isDisable(rowIndex)" ng-click="deleteAdInventoryIds(supplier)" >Delete Inventory</button> -->
+                
+                      
+                
+               
+                  <div>
              </div><br>
 
                </td>
@@ -307,6 +334,10 @@
                    <div class = "col-md-12 save ">
                      <button class="btn btn-danger active notify" ng-click="saveActivityDates()">Save</button>
                    </div>
+
+                   <div class = "col-md-12 ">
+                   <span class="error">{{emptyError}}</span>
+                  </div>
                  </div>
              </div>
            </div>
@@ -411,19 +442,22 @@
                   <div class="">
                     Select Inventory :
                     <select class="form-control" name="" ng-model="adInvModel.ad_inv_id">
+                      <option value="" disabled>Select Inventory</option>
                       <option value="{{inv.id}}" ng-repeat="inv in adInventoryTypes|unique:'adinventory_name'">{{inv.adinventory_name}}</option>
                     </select>
                   </div></br>
                   <div class="">
                     Select Duration Type :
                     <select class="form-control" name="" ng-model="adInvModel.duration_id">
+                        <option value="" disabled>Select Duration Type</option>
                       <option value="{{inv.id}}" ng-repeat="inv in durationTypes">{{inv.duration_name}}</option>
                     </select>
                   </div></br>
                   Inventory Count :
-                  <input type="number" min="1"ng-model="adInvModel.inv_count" class="form-control"/></br>
-                 <div class = "col-md-12" style="text-align:left">
-                   <button class="btn btn-danger active notify" ng-click="addAdInventoryIds()">Add</button>
+                  <input type="number" min="1"  ng-change="inventoryCount()" ng-model="adInvModel.inv_count" placeholder="Select Inventory Count" class="form-control"/></br>
+                  
+                  <div class = "col-md-12" style="text-align:left">
+                   <button class="btn btn-danger active notify" ng-disabled="(!adInvModel.ad_inv_id || !adInvModel.duration_id || !adInvModel.inv_count)"  ng-click="addAdInventoryIds()">Add</button>
                  </div>
              </div>
            </div>

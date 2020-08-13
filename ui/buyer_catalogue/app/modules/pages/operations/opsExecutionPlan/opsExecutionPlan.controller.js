@@ -2,6 +2,7 @@ angular.module('catalogueApp')
 .controller('OpsExecutionPlanCtrl',
     ['$scope', '$rootScope', '$window', '$location','opsExecutionPlanService','$stateParams','commonDataShare','constants','$timeout','Upload','cfpLoadingBar','permissions',
     function ($scope, $rootScope, $window, $location, opsExecutionPlanService, $stateParams,commonDataShare,constants,$timeout,Upload,cfpLoadingBar, permissions) {
+      $scope.aws_campaign_images_url = constants.aws_campaign_images_url;
       $scope.campaign_id = $stateParams.proposal_id;
       $scope.reAssign = false;
       var sleepTime = 0;
@@ -142,6 +143,7 @@ angular.module('catalogueApp')
           });
         });
         $scope.paginationData = $scope.campaignDataList;
+        $scope.paginationDataNew = $scope.campaignDataList;
         console.log($scope.campaignDataList);
         $scope.dateCode ;
       }
@@ -151,7 +153,7 @@ angular.module('catalogueApp')
         $scope.imageUrlList = [];
         for(var i=0; i<images.length; i++){
           var imageData = {
-            image_url : 'http://androidtokyo.s3.amazonaws.com/' + images[i].image_path,
+            image_url : $scope.aws_campaign_images_url + images[i].image_path,
             comment : images[i].comment,
           };
           $scope.imageUrlList.push(imageData);
@@ -215,6 +217,8 @@ angular.module('catalogueApp')
           $('#reAssignModal').modal('hide');
           $scope.reAssign = false;
           $scope.reAssignActivityList = {};
+          $scope.activity_date = "";
+          $scope.userCode = "";
           swal(constants.name,constants.reAssign_success,constants.success);
 
         })

@@ -10,7 +10,7 @@
   <div class="middle-section">
     <div class="breadcrumb" ncy-breadcrumb></div>
     <h2 class="heading">Campaign List</h2>
-    <div ng-show="!isEmpty">
+    <div ng-show="!isEmpty"> 
       <div class="searchBox">
         <input type="text" class="field" ng-model="searchQuery" placeholder="search" type="search">
         <button><i class="fas fa-search"></i></button>
@@ -19,6 +19,8 @@
     <table class="table-data" st-table="campaignData" st-safe-src="Data" default-sort-reverse="true">
       <tr>
         <th>Sr No</th>
+        <th>Organisation Name / Account</th>
+        <th>Brand Type</th>
         <th>Campaign Name</th>
         <th>Assigned To</th>
         <th>Assigned By</th>
@@ -35,6 +37,8 @@
       </tr>
       <tr st-select-row='proposal' dir-paginate="proposal in campaignData|filter:f|filter:searchQuery|itemsPerPage:10">
         <td>{{$index + 1}}</td>
+        <td> {{proposal.campaign.accountOrganisationName}} <br>  ({{proposal.campaign.accountName}})  </td>
+        <td> <span ng-if="proposal.campaign.brand == 'single_brand'"> Single Brand </span> <span ng-if="proposal.campaign.brand == 'multi_brand'"> Multi Brand </span></td>
         <td>{{proposal.campaign.name}}</td>
         <td>
           <div ng-repeat="assigned_data in proposal.assigned">{{assigned_data.assigned_to}}</div>
@@ -48,12 +52,16 @@
         <td class="campaignStatus" style="text-transform:lowercase;">{{proposal.campaign.campaign_state==="POH"?"On Hold":proposal.campaign.status}}</td>
 
         <td rowspan="{{key.length}}" >
-          <div class="comment" ng-if="comments[supplier.id]">
+          <!-- <div class="comment" ng-if="comments[supplier.id]">
             <b>{{comments[supplier.id].external.username}} </b> 
             <span><small> {{comments[supplier.id].external.created_on | date}}</small></span>
             <p>{{comments[supplier.id].external.comment.slice(0,20)}}</p>
+          </div> -->
+            <div class="comment">
+          
+            <p>{{proposal.comment.slice(0,20)}}</p>
           </div>
-          <button type="button" class="linkBtn" ng-click="viewComments(proposal.campaign)">View/Add</button>
+          <button type="button" class="linkBtn" ng-click="viewComments(proposal.campaign,proposal.id)">View/Add</button>
         </td>
         <td>
           <a class="linkBtn" ng-click="getDetails(proposal.campaign.proposal_id)">Details </a>
@@ -90,17 +98,30 @@
                       <option value="prehype">Prehype Email</option>
                     </select>
                     <div class="sendEmail1">
-                      <input type="email" class="field"  placeholder="Enter Email Id to test" ng-model="emailModel.email">
+                      <!-- <input type="email" class="field"  placeholder="Enter Email Id to test" ng-model="emailModel.email"> -->
+                       <div layout="column" ng-cloak>
+                        <md-content class="md-padding" layout="column">
+                            <md-chips
+                            md-type="email"
+                            md-on-add="validateEmail($chip)"
+                            ng-model="emailModel.email" input-aria-label="Emails"
+                            md-separator-keys="customKeys" placeholder="Enter Multiple User's Email To Send Mail "
+                            secondary-placeholder="Enter Email Id"
+                            input-aria-describedby="customSeparatorKeyDescription">
+                            </md-chips>
+                        </md-content>
+                       </div>
+
                       <div class="buttons">
                         <div>
                           <label>Note :- Use comma separation between emails to send multiple emails to users at the same time</label>
                         </div>
                         <div>
-                          <button type="button" name="button" ng-Click="sendBookingEmails(proposalDetail.proposal_id)" class="smallBtn" ng-disabled="isEmailButton || emailBtnDisabled">Test email for given user</button>
+                          <button type="button" name="button" ng-Click="sendBookingEmails(proposalDetail.proposal_id)" class="smallBtn" ng-disabled="isEmailButton || emailBtnDisabled || !emailModel.selected">Sendt email for given user</button>
                         </div>
                         <div>
                           <span>OR</span>
-                          <button type="button" name="button" class="smallBtn" ng-click="sendBookingEmails(proposalDetail.proposal_id, 'confirmed')" ng-disabled="emailBtnDisabled">Send email to all (Default)</button>
+                          <button type="button" name="button" class="smallBtn" ng-click="sendBookingEmails(proposalDetail.proposal_id, 'confirmed')" ng-disabled="emailBtnDisabled || !emailModel.selected">Send email to all (Default)</button>
                         </div>
                       </div>
                     </div>
@@ -131,7 +152,7 @@
             <span aria-hidden="true">×</span>
           </button>
           <table class="table-data">
-            <tr ng-repeat="item in commentsData[selectedInvForView]">
+            <tr ng-repeat="item in commentsData.general">
               <td>
                 <div>
                   <img ng-src="{{userIcon}}">

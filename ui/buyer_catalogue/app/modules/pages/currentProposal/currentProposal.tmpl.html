@@ -26,8 +26,9 @@
             <th ng-repeat="header in centerheaders">{{header.header}}</th>
           </tr>
           <tr ng-repeat="center in center_data">
+            {{center}}
             <td>{{$index+1}}</td>
-            <td>{{center.center.center_name}}</td>
+            <td>{{center.center.city}}</td>
             <td>{{center.center.area}}</td>
             <td>{{center.center.subarea}}</td>
             <td>{{center.center.radius}}</td>
@@ -62,22 +63,32 @@
             </button>
             <div class="im">
               <label>Invoice Number</label>
-              <input type = "text" name="invoicenumber" id="invoicenumber" class="field" ng-model="proposal.invoice_number">
+              <input type = "text" name="invoicenumber" id="invoicenumber" ng-disabled="true" class="field" ng-model="proposal.invoice_number">
               <label>GST Number</label>
               <input type = "text" name="gstnumber" id="gstnumber" class="field" ng-model="proposal.gst_number">
               <label>Amount</label>
               <input type = "text" name="amount" id="amount" class="field" ng-model="proposal.amount">
               <label>Start Date:</label>
               <div class="relative">
-                <input type="text" ng-model="campaign_start_date" class="field" uib-datepicker-popup="{{format}}" is-open="popup1" min-date="today" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model-options="{timezone:'UTC'}">
-                <button type="button" class="btn btn-default" ng-click="popup1 = true"><i class="glyphicon glyphicon-calendar"></i></button>
+                <!-- <input type="text" ng-model="campaign_start_date" readonly class="field" uib-datepicker-popup="{{format}}" is-open="popup1" min-date="today" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-model-options="{timezone:'UTC'}">
+                <button type="button" class="btn btn-default" ng-click="popup1 = true"><i class="glyphicon glyphicon-calendar"></i></button> -->
+             
+                <input type="text" class="field" uib-datepicker-popup="{{format}}" placeholder="YYYY-MM-DD"  ng-change="changeStartDate()"  ng-model="campaign_start_date" is-open="popup1" datepicker-options="options" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats">
+                <button type="button" class="smallBtn calendar" ng-click="popup1 = true">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
               </div>
               <label>End Date:</label>
               <div class="relative">
-                <input type="text" ng-model="campaign_end_date" class="field" uib-datepicker-popup="{{format}}" is-open="popup2" min-date="key.start_date" datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}" />
-                <button type="button" class="smallBtn" ng-click="popup2 = true"><i class="glyphicon glyphicon-calendar"></i></button>
+                <!-- <input type="text" ng-model="campaign_end_date" readonly class="field" uib-datepicker-popup="{{format}}" is-open="popup2" min-date="key.start_date" datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}" />
+                <button type="button" class="smallBtn" ng-click="popup2 = true"><i class="glyphicon glyphicon-calendar"></i></button> -->
+             
+                <input type="text" class="field" uib-datepicker-popup="{{format}}" placeholder="YYYY-MM-DD"  ng-change="changeEndDate()"  ng-model="campaign_end_date" is-open="popup2" datepicker-options="options1" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats">
+                <button type="button" class="smallBtn calendar" ng-click="popup2 = true">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
               </div>
-              <button class="smallBtn calendar active notify" ng-click="saveInvoiceDetails()">Save</button>
+              <button class="smallBtn calendar active notify" ng-disabled="updateDisable" ng-click="saveInvoiceDetails()">Save</button>
             </div>
           </div>
         </div>

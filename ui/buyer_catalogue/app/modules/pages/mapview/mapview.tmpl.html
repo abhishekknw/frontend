@@ -43,11 +43,22 @@
         </button>
 
         <div class="color-codes">
-          <a data-toggle="tooltip" title="Finalized"><img src="http://www.googlemapsmarkers.com/v1/00FF00/" alt=""></a>
+          <!-- <a data-toggle="tooltip" title="Finalized"><img src="http://www.googlemapsmarkers.com/v1/00FF00/" alt=""></a>
           <a data-toggle="tooltip" title="Shortlisted"><img src="http://www.googlemapsmarkers.com/v1/FFFF00/"
               alt=""></a>
           <a data-toggle="tooltip" title="Buffered"><img src="http://www.googlemapsmarkers.com/v1/654321/" alt=""></a>
-          <a data-toggle="tooltip" title="Removed"><img src="http://www.googlemapsmarkers.com/v1/FF0000/" alt=""></a>
+          <a data-toggle="tooltip" title="Removed"><img src="http://www.googlemapsmarkers.com/v1/FF0000/" alt=""></a> -->
+          <a data-toggle="tooltip" title="Corporate"><img src="http://www.googlemapsmarkers.com/v1/e60fe6/" alt=""></a>
+          <a data-toggle="tooltip" title="Bus Shelter"><img src="http://www.googlemapsmarkers.com/v1/ec0707/"
+              alt=""></a>
+                <a data-toggle="tooltip" title="Gym"><img src="http://www.googlemapsmarkers.com/v1/800080/"
+                  alt=""></a>
+                  <a data-toggle="tooltip" title="Saloon"><img src="http://www.googlemapsmarkers.com/v1/A52A2A/"
+                    alt=""></a>
+                    <a data-toggle="tooltip" title="Retail Store"><img src="http://www.googlemapsmarkers.com/v1/0000FF/"
+                      alt=""></a>
+                      <a data-toggle="tooltip" title="Residential Society"><img src="http://www.googlemapsmarkers.com/v1/FFFF00/"
+                        alt=""></a>
           &nbsp;&nbsp;
           <button class="btn btn-danger active" ng-disabled="!show_societies" ng-click="showSocieties()">Map
             View</button>
@@ -342,8 +353,8 @@
               <ui-gmap-markers models="society_markers" coords="'self'" icon="'icon'" events="'events'"
                 options="'options'" doRebuildAll="true" click="onClick">
               </ui-gmap-markers>
-              <ui-gmap-markers models="center_marker" coords="'self'" icon="'icon'" options="'options'"
-                doRebuildAll="true" click="onClick" events="'events'">
+              <!-- <ui-gmap-markers models="center_marker" coords="'self'" icon="'icon'" options="'options'"
+                doRebuildAll="true" click="onClick" events="'events'"> -->
               </ui-gmap-markers>
             </ui-gmap-google-map>
           </div>
@@ -402,7 +413,7 @@
           <tbody ng-repeat="center in center_data | filter : query">
             <tr ng-repeat="supplier in center.suppliers['RS'] | filter : query">
               <td>{{$index+1}}</td>
-              <td>{{center.center.center_name}}</td>
+              <td>{{center.center.city}}</td>
               <td><a href="/#/{{supplier.supplier_id}}/SocietyDetailsPages"
                   ng-click="getSocietyDetails(supplier,supplier.supplier_id,center,$index)"
                   target="_blank">{{supplier.name}}</a></td>
@@ -462,8 +473,8 @@
               <th class="col-md-4">Center Name</th>
               <th class="col-md-4">Supplier Name</th>
               <th class="col-md-4">SubArea-Area</th>
-              <th class="col-md-4">Company Count</th>
               <th class="col-md-4">Employee Count</th>
+              <th class="col-md-4">Visitors Count</th>
               <!-- <th class = "col-md-4">Society Type</th> -->
               <!-- <th class = "col-md-4">Locality Rating</th> -->
               <th class="col-md-4">Machadalo Index</th>
@@ -483,11 +494,11 @@
           <tbody ng-repeat="center in center_data | filter : query">
             <tr ng-repeat="supplier in center.suppliers['CP'] | filter : query">
               <td>{{$index+1}}</td>
-              <td>{{center.center.center_name}}</td>
+              <td>{{center.center.city}}</td>
               <td>{{supplier.name}}</td>
               <td>{{supplier.subarea}}</td>
-              <td>{{supplier.totalcompanies_count}}</td>
-              <td>{{supplier.totalemployees_count}}</td>
+              <td>{{supplier.unit_primary_count}}</td>
+              <td>{{supplier.unit_secondary_count}}</td>
               <!-- <td>{{society.society_type_quality}}</td> -->
               <!-- <td>{{society.society_location_type}}</td> -->
               <td>{{supplier.machadalo_index}}</td>
@@ -532,6 +543,8 @@
               <th class="col-md-4">Center Name</th>
               <th class="col-md-4">Supplier Name</th>
               <th class="col-md-4">SubArea-Area</th>
+              <th class="col-md-4">Footfall Count</th>
+              <th class="col-md-4">Traffic Count</th>
               <!-- <th class = "col-md-4">Society Type</th> -->
               <!-- <th class = "col-md-4">Locality Rating</th> -->
               <th class="col-md-4">Machadalo Index</th>
@@ -549,9 +562,11 @@
             <tr ng-repeat="supplier in center.suppliers[supplierCode.busShelter] | filter : query">
               {{center.suppliers[supplierCode.busShelter]}}
               <td>{{$index+1}}</td>
-              <td>{{center.center.center_name}}</td>
+              <td>{{center.center.city}}</td>
               <td>{{supplier.name}}</td>
               <td>{{supplier.subarea}}</td>
+              <td>{{supplier.unit_primary_count}}</td>
+              <td>{{supplier.unit_secondary_count}}</td>
               <!-- <td>{{society.society_type_quality}}</td> -->
               <!-- <td>{{society.society_location_type}}</td> -->
               <td>{{supplier.machadalo_index}}</td>
@@ -590,6 +605,8 @@
               <th class="col-md-4">Center Name</th>
               <th class="col-md-4">Supplier Name</th>
               <th class="col-md-4">SubArea-Area</th>
+              <th class="col-md-4">Weekend Daily Footfall Count</th>
+              <th class="col-md-4">Weekday Daily Footfall Count</th>
               <th class="col-md-4">Machadalo Index</th>
               <th class="col-md-4">
                 <a ng-click="getOrderBy(center_data,supplierCode.gym,finalize)"> Finalize </a>/
@@ -603,9 +620,11 @@
           <tbody ng-repeat="center in center_data | filter : query">
             <tr ng-repeat="supplier in center.suppliers[supplierCode.gym] | filter : query">
               <td>{{$index+1}}</td>
-              <td>{{center.center.center_name}}</td>
+              <td>{{center.center.city}}</td>
               <td>{{supplier.name}}</td>
               <td>{{supplier.subarea}}</td>
+              <td>{{supplier.unit_primary_count}}</td>
+              <td>{{supplier.unit_secondary_count}}</td>
               <td>{{supplier.machadalo_index}}</td>
               <td class="col-md-2">
                 <div class="radio">
@@ -642,6 +661,8 @@
               <th class="col-md-4">Center Name</th>
               <th class="col-md-4">Supplier Name</th>
               <th class="col-md-4">SubArea-Area</th>
+              <th class="col-md-4">Weekend Daily Footfall Count</th>
+              <th class="col-md-4">Weekday Daily Footfall Count</th>
               <th class="col-md-4">Machadalo Index</th>
               <th class="col-md-4">
                 <a ng-click="getOrderBy(center_data,supplierCode.saloon,finalize)"> Finalize </a>/
@@ -655,9 +676,11 @@
           <tbody ng-repeat="center in center_data | filter : query">
             <tr ng-if="supplier" ng-repeat="supplier in center.suppliers[supplierCode.saloon] | filter : query">
               <td>{{$index+1}}</td>
-              <td>{{center.center.center_name}}</td>
+              <td>{{center.center.city}}</td>
               <td>{{supplier.name}}</td>
               <td>{{supplier.subarea}}</td>
+              <td>{{supplier.unit_primary_count}}</td>
+              <td>{{supplier.unit_secondary_count}}</td>
               <!-- <td>{{society.society_type_quality}}</td> -->
               <!-- <td>{{society.society_location_type}}</td> -->
               <td>{{supplier.machadalo_index}}</td>
@@ -697,6 +720,8 @@
               <th class="col-md-4">Center Name</th>
               <th class="col-md-4">Supplier Name</th>
               <th class="col-md-4">SubArea-Area</th>
+              <th class="col-md-4">Weekend Daily Footfall Count</th>
+              <th class="col-md-4">Weekday Daily Footfall Count</th>
               <th class="col-md-4">Machadalo Index</th>
               <th class="col-md-4">
                 <a ng-click="getOrderBy(center_data,supplierCode.retailStore,finalize)"> Finalize </a>/
@@ -711,9 +736,11 @@
           <tbody ng-repeat="center in center_data | filter : query">
             <tr ng-repeat="supplier in center.suppliers[supplierCode.retailStore] | filter : query">
               <td>{{$index+1}}</td>
-              <td>{{center.center.center_name}}</td>
+              <td>{{center.center.city}}</td>
               <td>{{supplier.name}}</td>
               <td>{{supplier.subarea}}</td>
+              <td>{{supplier.unit_primary_count}}</td>
+              <td>{{supplier.unit_secondary_count}}</td>
               <!-- <td>{{society.society_type_quality}}</td> -->
               <!-- <td>{{society.society_location_type}}</td> -->
               <td>{{supplier.machadalo_index}}</td>
@@ -755,20 +782,46 @@
             <span class="space filterPanelHeader ">Space Count</span>
             <div ng-if="current_center.suppliers_allowed.society_allowed " class="nbCheckbox two-col">Societies:
               {{current_center.summary_meta[supplierCode.society].count}}</div>
+              <div ng-if="current_center.suppliers_allowed.society_allowed" class="nbCheckbox two-col">Flat Count:
+                {{current_center.summary_meta[supplierCode.society].flat_count}}</div>
+              <div ng-if="current_center.suppliers_allowed.society_allowed" class="nbCheckbox two-col">Tower Count:
+                {{current_center.summary_meta[supplierCode.society].tower_count}}</div>
+
             <div ng-if="current_center.suppliers_allowed.corporate_allowed" class="nbCheckbox two-col">Corporates:
               {{current_center.summary_meta[supplierCode.corporate].count}}</div>
+              <div ng-if="current_center.suppliers_allowed.corporate_allowed" class="nbCheckbox two-col">Employee Count:
+                {{current_center.summary_meta[supplierCode.corporate].unit_primary_count}}</div>
+              <div ng-if="current_center.suppliers_allowed.corporate_allowed" class="nbCheckbox two-col">Visitors Count:
+                {{current_center.summary_meta[supplierCode.corporate].unit_secondary_count}}</div>
+
             <div ng-if="current_center.suppliers_allowed.busShelter_allowed" class="nbCheckbox two-col">Bus Shelters:
               {{current_center.summary_meta[supplierCode.busShelter].count}}</div>
+              <div ng-if="current_center.suppliers_allowed.busShelter_allowed" class="nbCheckbox two-col">Footfall Count:
+                {{current_center.summary_meta[supplierCode.busShelter].unit_primary_count}}</div>
+              <div ng-if="current_center.suppliers_allowed.busShelter_allowed" class="nbCheckbox two-col">Traffic Count:
+                {{current_center.summary_meta[supplierCode.busShelter].unit_secondary_count}}</div>
+
             <div ng-if="current_center.suppliers_allowed.gym_allowed" class="nbCheckbox two-col">Gyms:
               {{current_center.summary_meta[supplierCode.gym].count}}</div>
+              <div ng-if="current_center.suppliers_allowed.gym_allowed" class="nbCheckbox two-col">Weekend Daily Footfall Count:
+                {{current_center.summary_meta[supplierCode.gym].unit_primary_count}}</div>
+              <div ng-if="current_center.suppliers_allowed.gym_allowed" class="nbCheckbox two-col">Weekday Daily Footfall Count:
+                {{current_center.summary_meta[supplierCode.gym].unit_secondary_count}}</div>
+
             <div ng-if="current_center.suppliers_allowed.saloon_allowed" class="nbCheckbox two-col">Saloons:
               {{current_center.summary_meta[supplierCode.saloon].count}}</div>
+              <div ng-if="current_center.suppliers_allowed.saloon_allowed" class="nbCheckbox two-col">Weekend Daily Footfall Count:
+                {{current_center.summary_meta[supplierCode.saloon].unit_primary_count}}</div>
+              <div ng-if="current_center.suppliers_allowed.saloon_allowed" class="nbCheckbox two-col">Weekday Daily Footfall Count:
+                {{current_center.summary_meta[supplierCode.saloon].unit_secondary_count}}</div>
+
             <div ng-if="current_center.suppliers_allowed.retailStore_allowed" class="nbCheckbox two-col">Retail Stores:
               {{current_center.summary_meta[supplierCode.retailStore].count}}</div>
-            <div ng-if="current_center.suppliers_allowed.society_allowed" class="nbCheckbox two-col">Flat Count:
-              {{current_center.summary_meta[supplierCode.society].flat_count}}</div>
-            <div ng-if="current_center.suppliers_allowed.society_allowed" class="nbCheckbox two-col">Tower Count:
-              {{current_center.summary_meta[supplierCode.society].tower_count}}</div>
+              <div ng-if="current_center.suppliers_allowed.retailStore_allowed" class="nbCheckbox two-col">Weekend Daily Footfall Count:
+                {{current_center.summary_meta[supplierCode.retailStore].unit_primary_count}}</div>
+              <div ng-if="current_center.suppliers_allowed.retailStore_allowed" class="nbCheckbox two-col">Weekday Daily Footfall Count:
+                {{current_center.summary_meta[supplierCode.retailStore].unit_secondary_count}}</div>
+           
             <!--added if condition below to display those inventories selected by user in sumarry section-->
             <hr>
             <span class="space filterPanelHeader">Total Number of Impressions</span>
@@ -788,6 +841,18 @@
             <span class="space filterPanelHeader">Finalized Count</span>
             <div ng-if="current_center.suppliers_allowed.society_allowed " class="nbCheckbox two-col">Societies:
               {{current_center.summary_meta[supplierCode.society].finalized.count}}</div>
+
+              <div ng-if="current_center.suppliers_allowed.corporate_allowed " class="nbCheckbox two-col">Corporates:
+                {{current_center.summary_meta[supplierCode.corporate].finalized.count}}</div>
+                <div ng-if="current_center.suppliers_allowed.busShelter_allowed " class="nbCheckbox two-col">Bus Shelters:
+                  {{current_center.summary_meta[supplierCode.busShelter].finalized.count}}</div>
+                  <div ng-if="current_center.suppliers_allowed.gym_allowed " class="nbCheckbox two-col">Gyms:
+                    {{current_center.summary_meta[supplierCode.gym].finalized.count}}</div>
+                    <div ng-if="current_center.suppliers_allowed.saloon_allowed " class="nbCheckbox two-col">Saloons:
+                      {{current_center.summary_meta[supplierCode.saloon].finalized.count}}</div>
+                      <div ng-if="current_center.suppliers_allowed.retailStore_allowed " class="nbCheckbox two-col">Retail Stores:
+                        {{current_center.summary_meta[supplierCode.retailStore].finalized.count}}</div>
+
             </br>
             <span class="space panelSubHeader" ng-click="finalInv=!finalInv">Inventory Count<span
                 class="caret"></span></span>
@@ -828,6 +893,16 @@
             <span class="space filterPanelHeader">Shortlisted Count</span>
             <div ng-if="current_center.suppliers_allowed.society_allowed " class="nbCheckbox two-col">Societies:
               {{current_center.summary_meta[supplierCode.society].shortlisted.count}}</div>
+              <div ng-if="current_center.suppliers_allowed.corporate_allowed " class="nbCheckbox two-col">Corporates:
+                {{current_center.summary_meta[supplierCode.corporate].shortlisted.count}}</div>
+                <div ng-if="current_center.suppliers_allowed.busShelter_allowed " class="nbCheckbox two-col">Bus Shelters:
+                  {{current_center.summary_meta[supplierCode.busShelter].shortlisted.count}}</div>
+                  <div ng-if="current_center.suppliers_allowed.gym_allowed " class="nbCheckbox two-col">Gyms:
+                    {{current_center.summary_meta[supplierCode.gym].shortlisted.count}}</div>
+                    <div ng-if="current_center.suppliers_allowed.saloon_allowed " class="nbCheckbox two-col">Saloons:
+                      {{current_center.summary_meta[supplierCode.saloon].shortlisted.count}}</div>
+                      <div ng-if="current_center.suppliers_allowed.retailStore_allowed " class="nbCheckbox two-col">Retail Stores:
+                        {{current_center.summary_meta[supplierCode.retailStore].shortlisted.count}}</div>
             </br>
             <span class="space panelSubHeader" ng-click="shortInv=!shortInv">Inventory Count<span
                 class="caret"></span></span>
@@ -868,10 +943,30 @@
             <span class="space filterPanelHeader">Buffered Count</span>
             <div ng-if="current_center.suppliers_allowed.society_allowed " class="nbCheckbox two-col">Societies:
               {{current_center.summary_meta[supplierCode.society].buffered.count}}</div>
+              <div ng-if="current_center.suppliers_allowed.corporate_allowed " class="nbCheckbox two-col">Corporates:
+                {{current_center.summary_meta[supplierCode.corporate].buffered.count}}</div>
+                <div ng-if="current_center.suppliers_allowed.busShelter_allowed " class="nbCheckbox two-col">Bus Shelters:
+                  {{current_center.summary_meta[supplierCode.busShelter].buffered.count}}</div>
+                  <div ng-if="current_center.suppliers_allowed.gym_allowed " class="nbCheckbox two-col">Gyms:
+                    {{current_center.summary_meta[supplierCode.gym].buffered.count}}</div>
+                    <div ng-if="current_center.suppliers_allowed.saloon_allowed " class="nbCheckbox two-col">Saloons:
+                      {{current_center.summary_meta[supplierCode.saloon].buffered.count}}</div>
+                      <div ng-if="current_center.suppliers_allowed.retailStore_allowed " class="nbCheckbox two-col">Retail Stores:
+                        {{current_center.summary_meta[supplierCode.retailStore].buffered.count}}</div>
             </br>
             <span class="space filterPanelHeader">Removed Count</span>
             <div ng-if="current_center.suppliers_allowed.society_allowed " class="nbCheckbox two-col">Societies:
               {{current_center.summary_meta[supplierCode.society].removed.count}}</div>
+              <div ng-if="current_center.suppliers_allowed.corporate_allowed " class="nbCheckbox two-col">Corporates:
+                {{current_center.summary_meta[supplierCode.corporate].removed.count}}</div>
+                <div ng-if="current_center.suppliers_allowed.busShelter_allowed " class="nbCheckbox two-col">Bus Shelters:
+                  {{current_center.summary_meta[supplierCode.busShelter].removed.count}}</div>
+                  <div ng-if="current_center.suppliers_allowed.gym_allowed " class="nbCheckbox two-col">Gyms:
+                    {{current_center.summary_meta[supplierCode.gym].removed.count}}</div>
+                    <div ng-if="current_center.suppliers_allowed.saloon_allowed " class="nbCheckbox two-col">Saloons:
+                      {{current_center.summary_meta[supplierCode.saloon].removed.count}}</div>
+                      <div ng-if="current_center.suppliers_allowed.retailStore_allowed " class="nbCheckbox two-col">Retail Stores:
+                        {{current_center.summary_meta[supplierCode.retailStore].removed.count}}</div>
             </br></br>
 
           </div>
@@ -894,16 +989,37 @@
             <hr>
             <span class="space filterPanelHeader ">Space Count</span>
             <div ng-if="society_allowed_gridview" class="nbCheckbox two-col">Societies: {{total_societies_count}}</div>
-            <div ng-if="corporate_allowed_gridview" class="nbCheckbox two-col">Corporates: {{total_corporates_count}}
-            </div>
-            <div ng-if="busShelter_allowed_gridview" class="nbCheckbox two-col">Bus Shelters:
-              {{total_busShleters_count}}</div>
-            <div ng-if="gym_allowed_gridview" class="nbCheckbox two-col">Gyms: {{total_gyms_count}}</div>
-            <div ng-if="saloon_allowed_gridview" class="nbCheckbox two-col">Saloons: {{total_saloons_count}}</div>
-            <div ng-if="retailStore_allowed_gridview" class="nbCheckbox two-col">Retail Stores:
-              {{total_retailStores_count}}</div>
             <div ng-if="society_allowed_gridview" class="nbCheckbox two-col">Flat Count: {{total_flat_count}}</div>
             <div ng-if="society_allowed_gridview" class="nbCheckbox two-col">Tower Count: {{total_tower_count}}</div>
+
+
+            <div ng-if="corporate_allowed_gridview" class="nbCheckbox two-col">Corporates: {{total_corporates_count}}
+            </div>
+            <div ng-if="corporate_allowed_gridview" class="nbCheckbox two-col">Employee Count: {{corporate_employee_count}}</div>
+            <div ng-if="corporate_allowed_gridview" class="nbCheckbox two-col">Visitors Count: {{corporate_visitors_count}}</div>
+
+            <div ng-if="busShelter_allowed_gridview" class="nbCheckbox two-col">Bus Shelters: {{total_busShleters_count}}
+            </div>
+            <div ng-if="busShelter_allowed_gridview" class="nbCheckbox two-col">Footfall Count: {{bus_footfall_count}}</div>
+            <div ng-if="busShelter_allowed_gridview" class="nbCheckbox two-col">Traffic Count: {{bus_traffic_count}}</div>
+            
+            <!-- <div ng-if="busShelter_allowed_gridview" class="nbCheckbox two-col">Bus Shelters:
+              {{total_busShleters_count}}</div> -->
+            <div ng-if="gym_allowed_gridview" class="nbCheckbox two-col">Gyms: {{total_gyms_count}}</div>
+            <div ng-if="gym_allowed_gridview" class="nbCheckbox two-col">Weekend Daily Footfall Count: {{gym_weekend_count}}</div>
+            <div ng-if="gym_allowed_gridview" class="nbCheckbox two-col">Weekday Daily Footfall Count: {{gym_weekday_count}}</div>
+
+
+            <div ng-if="saloon_allowed_gridview" class="nbCheckbox two-col">Saloons: {{total_saloons_count}}</div>
+            <div ng-if="saloon_allowed_gridview" class="nbCheckbox two-col">Weekend Daily Footfall Count: {{saloon_weekend_count}}</div>
+            <div ng-if="saloon_allowed_gridview" class="nbCheckbox two-col">Weekday Daily Footfall Count: {{saloon_weekday_count}}</div>
+
+
+            <div ng-if="retailStore_allowed_gridview" class="nbCheckbox two-col">Retail Stores:
+              {{total_retailStores_count}}</div>
+              <div ng-if="retailStore_allowed_gridview" class="nbCheckbox two-col">Weekend Daily Footfall Count: {{retail_weekend_count}}</div>
+            <div ng-if="retailStore_allowed_gridview" class="nbCheckbox two-col">Weekday Daily Footfall Count: {{retail_weekday_count}}</div>
+           
             <!--added if condition below to display those inventories selected by user in sumarry section-->
             <hr>
             <span class="space filterPanelHeader">Total Number of Impressions</span>
@@ -919,6 +1035,16 @@
             <span class="space filterPanelHeader">Finalized Count</span>
             <div ng-if="society_allowed_gridview" class="nbCheckbox two-col">Societies:
               {{gridViewSummary[supplierCode.society].finalized.count}}</div>
+              <div ng-if="corporate_allowed_gridview" class="nbCheckbox two-col">Corporates:
+                {{gridViewSummary[supplierCode.corporate].finalized.count}}</div>
+                <div ng-if="busShelter_allowed_gridview" class="nbCheckbox two-col">Bus Shelters:
+                  {{gridViewSummary[supplierCode.busShelter].finalized.count}}</div>
+                  <div ng-if="gym_allowed_gridview" class="nbCheckbox two-col">Gyms:
+                    {{gridViewSummary[supplierCode.gym].finalized.count}}</div>
+                    <div ng-if="saloon_allowed_gridview" class="nbCheckbox two-col">Saloons:
+                      {{gridViewSummary[supplierCode.saloon].finalized.count}}</div>
+                      <div ng-if="retailStore_allowed_gridview" class="nbCheckbox two-col">Retail Stores:
+                        {{gridViewSummary[supplierCode.retailStore].finalized.count}}</div>
             </br>
             <span class="space panelSubHeader" ng-click="finInv=!finInv">Inventory Count<span
                 class="caret"></span></span>
@@ -950,6 +1076,17 @@
             <span class="space filterPanelHeader">Shortlisted Count</span>
             <div ng-if="society_allowed_gridview" class="nbCheckbox two-col">Societies:
               {{gridViewSummary[supplierCode.society].shortlisted.count}}</div>
+              <div ng-if="corporate_allowed_gridview" class="nbCheckbox two-col">Corporates:
+                {{gridViewSummary[supplierCode.corporate].shortlisted.count}}</div>
+                <div ng-if="busShelter_allowed_gridview" class="nbCheckbox two-col">Bus Shelters:
+                  {{gridViewSummary[supplierCode.busShelter].shortlisted.count}}</div>
+                  <div ng-if="gym_allowed_gridview" class="nbCheckbox two-col">Gyms:
+                    {{gridViewSummary[supplierCode.gym].shortlisted.count}}</div>
+                    <div ng-if="saloon_allowed_gridview" class="nbCheckbox two-col">Saloons:
+                      {{gridViewSummary[supplierCode.saloon].shortlisted.count}}</div>
+                      <div ng-if="retailStore_allowed_gridview" class="nbCheckbox two-col">Retail Stores:
+                        {{gridViewSummary[supplierCode.retailStore].shortlisted.count}}</div>
+            
             </br>
             <span class="space panelSubHeader" ng-click="shortlistedInv=!shortlistedInv">Inventory Count<span
                 class="caret"></span></span>
@@ -980,9 +1117,31 @@
             <span class="space filterPanelHeader">Buffered Count</span>
             <div ng-if="society_allowed_gridview" class="nbCheckbox two-col">Societies:
               {{gridViewSummary[supplierCode.society].buffered.count}}</div>
+              <div ng-if="corporate_allowed_gridview" class="nbCheckbox two-col">Corporates:
+                {{gridViewSummary[supplierCode.corporate].buffered.count}}</div>
+                <div ng-if="busShelter_allowed_gridview" class="nbCheckbox two-col">Bus Shelters:
+                  {{gridViewSummary[supplierCode.busShelter].buffered.count}}</div>
+                  <div ng-if="gym_allowed_gridview" class="nbCheckbox two-col">Gyms:
+                    {{gridViewSummary[supplierCode.gym].buffered.count}}</div>
+                    <div ng-if="saloon_allowed_gridview" class="nbCheckbox two-col">Saloons:
+                      {{gridViewSummary[supplierCode.saloon].buffered.count}}</div>
+                      <div ng-if="retailStore_allowed_gridview" class="nbCheckbox two-col">Retail Stores:
+                        {{gridViewSummary[supplierCode.retailStore].buffered.count}}</div>
+
+
             <span class="space filterPanelHeader">Removed Count</span>
             <div ng-if="society_allowed_gridview" class="nbCheckbox two-col">Societies:
               {{gridViewSummary[supplierCode.society].removed.count}}</div>
+              <div ng-if="corporate_allowed_gridview" class="nbCheckbox two-col">Corporates:
+                {{gridViewSummary[supplierCode.corporate].removed.count}}</div>
+                <div ng-if="busShelter_allowed_gridview" class="nbCheckbox two-col">Bus Shelters:
+                  {{gridViewSummary[supplierCode.busShelter].removed.count}}</div>
+                  <div ng-if="gym_allowed_gridview" class="nbCheckbox two-col">Gyms:
+                    {{gridViewSummary[supplierCode.gym].removed.count}}</div>
+                    <div ng-if="saloon_allowed_gridview" class="nbCheckbox two-col">Saloons:
+                      {{gridViewSummary[supplierCode.saloon].removed.count}}</div>
+                      <div ng-if="retailStore_allowed_gridview" class="nbCheckbox two-col">Retail Stores:
+                        {{gridViewSummary[supplierCode.retailStore].removed.count}}</div>
 
             <span class="space filterPanelHeader">Inventory Count</span>
             <div class="nbCheckbox two-col" ng-if="inventoryHeaders.flier && society_allowed_gridview">Flyers:
@@ -1039,21 +1198,21 @@
               <!-- <input class="form-control input-size" placeholder="Search" type="text" ng-model="search"
                 class="form-control spacing col-width" style="margin-left:10px"> -->
 
-              <select class="form-control input-size" style="width:140px; margin-left:20px;" ng-model="center_index"
+              <select class="form-control input-size" ng-disabled="!supplier_type_code" style="width:140px; margin-left:20px;" ng-model="center_index"
                 ng-change="selectCenter(center_index)" required>
-                <option value="">Select Center</option>
+                <option value="" disabled="true">Select Center</option>
                 <option ng-repeat="center_var in center_data" value="{{center_var.center.id}}">
                   {{center_var.center.city}} </option>
               </select>
               <div ng-if="center_err" > <font color="red">Please select center</font></div>
 
-              <select  name="areas" class="form-control input-size" ng-change="get_sub_areas(center.area)" ng-model="center.area" required>
-                <option value="">Select Area</option>
+              <select  name="areas" ng-disabled="!supplier_type_code" class="form-control input-size" ng-change="get_sub_areas(center.area)" ng-model="center.area" required>
+                <option value="" disabled="true">Select Area</option>
                 <option  ng-repeat="area in areas" value="{{$index}}" required>{{area.label}}</option>
               </select>
 
-              <select  name="subareas" class="form-control input-size" ng-change="selectSubArea(center.sub_area_id)" ng-model="center.sub_area_id" required>
-                <option value="">Select SubArea </option>
+              <select  name="subareas" ng-disabled="!supplier_type_code" class="form-control input-size" ng-change="selectSubArea(center.sub_area_id)" ng-model="center.sub_area_id" required>
+                <option value="" disabled="true">Select SubArea </option>
                 <option  ng-repeat="subarea in sub_areas" value="{{$index}}" required>{{subarea.subarea_name}}</option>
               </select>
               <button data-target="" ng-disabled="searchDisable" class="btn btn-danger active" data-toggle="modal"
@@ -1085,24 +1244,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="supplier in supplierData">
+                  <tr  ng-repeat="supplier in supplierData">
                     <td>{{$index+1}}</td>
                     <td>{{supplier.name}}</td>
                     <td>{{supplier.city}}</td>
                     <td>{{supplier.area}}</td>
                     <td>{{supplier.subarea}}</td>
-                    <!-- <td>
-                      <div class="radio">
-                        <label><input type="radio" value="S"
-                            ng-click="addMoreSuppliers(supplier,$index,'S')" 
-                            permission="[permissions.finalizeStatus]">Finalize</label>
-                      </div>
-                      <div class="radio">
-                        <label><input type="radio"  value="B"
-                            ng-click="addMoreSuppliers(supplier,$index,'B')" 
-                            permission="[permissions.bufferStatus]">Buffer</label>
-                      </div>
-                    </td> -->
                     <td>
                       <div class="radio">
                         <label><input type="radio" ng-click="addMoreSuppliers(supplier,$index)">Add To Main List</label>

@@ -75,14 +75,17 @@
                 </td>
               </md-progress-linear>
             </tr>
+           
           </table>
           <div st-pagination="" st-items-by-page="10" st-displayed-pages=""></div>
         </div>
+        <div ng-if="campaignDataList.length == 0" style="text-align:center;color:red"><h4>Record not found</h4></div>
         <div>
           <button class="smallBtn active notify"  data-target = "#reAssignModal" data-toggle = "modal" ng-disabled="!reAssign" permission = "[permissions.reAssignDates]">ReAssign</button>
           <button class="smallBtn active notify" ng-click="getSummary()" permission = "[permissions.viewSummary]">Summary</button>
           <button class="smallBtn active notify" ng-click="downloadImages()" ng-disabled="buttonDisable" permission = "[permissions.downloadImages]">Download</button>
         </div>
+        
       </div>
     </div><!-- middle-section -->
     <div class="fixfooter"></div>
@@ -194,7 +197,7 @@
             </button>
             <div id="modalReAssign">
               <label>Activity Date </label>
-              <input type="text" ng-model="activity_date" class="field" uib-datepicker-popup="{{format}}" is-open="popup1" min-date="today" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" date-parser="{{format}}" ng-model-options="{timezone:'UTC'}"/>
+              <input type="text" ng-model="activity_date" class="field" uib-datepicker-popup="{{format}}" is-open="popup1" min-date="today" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" date-parser="{{format}}" readonly ng-model-options="{timezone:'UTC'}"/>
               <span class="input-group-btn">
                 <button type="button" class="smallBtn" ng-click="popup1 = true"><i class="glyphicon glyphicon-calendar"></i></button>
               </span>

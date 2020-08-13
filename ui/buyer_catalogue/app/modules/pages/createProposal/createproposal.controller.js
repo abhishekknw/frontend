@@ -6,12 +6,19 @@ angular.module('catalogueApp')
 	$scope.model.centers = new Array();
 	$scope.society = 'RS';
 	$scope.suppliers = [
-		{name:"Societies", code:"RS", selected:"false"},
-		{name:"Corporate Parks", code:"CP", selected:"false"},
+		{name:"Society", code:"RS", selected:"false"},
+		{name:"Corporate Park", code:"CP", selected:"false"},
 		{name:"Bus Shelter", code:"BS", selected:"false"},
 		{name:"Gym", code:"GY", selected:"false"},
 		{name:"Saloon", code:"SA", selected:"false"},
-		{name:"Retail Shop", code:"RE", selected:"false"},
+		{name:"Retail Shop", code:"RE", selected:"false",disabled:false},
+		{name:"Hording", code:"HO", selected:"false",disabled:true},
+		{name:"Educational Institute", code:"EI", selected:"false",disabled:true},
+		{name:"Bus", code:"BU", selected:"false",disabled:true},
+		{name:"Gantry", code:"GA", selected:"false",disabled:true},
+		{name:"Radio Channel", code:"RC", selected:"false",disabled:true},
+		{name:"TV Channel", code:"TC", selected:"false",disabled:true},
+		
 	];
 	$scope.proposalheaders = [
 			  {header : 'Advertising Area'},
@@ -25,7 +32,9 @@ angular.module('catalogueApp')
         {header : 'Action'}
       ];
   var count = 0;
-  var suppliersData = new Array();
+	var suppliersData = new Array();
+
+	$scope.modelSuppliers = suppliersData;
 	$scope.addCenter = function(){
 		// $scope.editProposal = false;
     suppliersData[count] = angular.copy($scope.suppliers);
@@ -49,9 +58,13 @@ angular.module('catalogueApp')
     count++;
 	}
 
+
+	
+
 	// $scope.addCenter();
 	$scope.areas = [];
 	$scope.sub_areas = [];
+	$scope.model.brand = "single_brand";
 
 	if($window.localStorage.proposal_id != '0'){
 		createProposalService.getProposal($window.localStorage.proposal_id)
@@ -69,6 +82,7 @@ angular.module('catalogueApp')
 		.then(function onSuccess(response){
 			console.log(response);
 			$scope.centers = response.data.data;
+		
 			for(var i=0; i<$scope.centers.length; i++){
 				$scope.addCenter();
 				$scope.model.centers[i].center = $scope.centers[i];
@@ -105,12 +119,16 @@ angular.module('catalogueApp')
 			});
 			//changes for searching societies on basis of area,subarea
   $scope.get_areas = function(id,index) {
+			// $scope.areas = [];
+			// $scope.sub_areas = [];
      	var id = id;
 			for(var i=0;i<$scope.cities.length;i++){
 				if($scope.cities[i].id == id){
 					$scope.model.centers[index].center.city = $scope.cities[i].city_name;
 				}
 			}
+			$scope.model.centers[index].center.area = "";
+			$scope.model.centers[index].center.subarea = "";
    createProposalService.getLocations('areas', id,index)
       .then(function onSuccess(response){
           $scope.areas[index] = response.data;
@@ -121,7 +139,8 @@ angular.module('catalogueApp')
     }
   $scope.get_sub_areas = function(id,index) {
     console.log($scope.cities);
-      var id = id;
+			var id = id;
+			$scope.model.centers[index].center.subarea = "";
 			for(var i=0;i<$scope.areas[index].length;i++){
 				if($scope.areas[index][i].id == id){
 					$scope.model.centers[index].center.area = $scope.areas[index][i].label;
@@ -137,13 +156,45 @@ angular.module('catalogueApp')
     count--;
 	}
 	// code chnaged to send codes like RS,CP..etc
-	$scope.checkSpace = function(supplier,center){
-		if(supplier.selected == true)
+	$scope.checkSpace = function (supplier, center, index) {
+		$scope.allSuppliers = $scope.model.centers[index].suppliers
+		if (supplier.selected == true) {
+			if (supplier.code == "RS") {
+				center.center.codes = [];
+				var localindex_index = $scope.model.centers[index].suppliers.map(function (el) {
+					return el.code;
+				}).indexOf("RS");
+				if (localindex_index != -1) {
+					let newSuppliers = [];
+					newSuppliers.push($scope.model.centers[index].suppliers[localindex_index]);
+					$scope.model.centers[index].suppliers = newSuppliers;
+				}
+			} else {
+				var _index = $scope.model.centers[index].suppliers.map(function (el) {
+					return el.code;
+				}).indexOf("RS");
+				if (_index != -1) {
+					$scope.rsSuppliers = $scope.model.centers[index].suppliers[_index];
+					$scope.model.centers[index].suppliers.splice(_index, 1);
+				}
+			}
 			center.center.codes.push(supplier.code);
+		}
 		else {
+			if (supplier.code == "RS") {
+				$scope.model.centers[index].suppliers = $scope.modelSuppliers[0];
+			} else {
+				var index_index = $scope.model.centers[index].suppliers.map(function (el) {
+					return el.selected;
+				}).indexOf(true);
+				if (index_index == -1) {
+					$scope.model.centers[index].suppliers.unshift($scope.rsSuppliers);
+				}
+
+			}
 			var index = center.center.codes.indexOf(supplier.code);
-			if(index > -1)
-				center.center.codes.splice(index,1);
+			if (index > -1)
+				center.center.codes.splice(index, 1);
 		}
 	}
   var checkSupplierCode = function() {
@@ -162,6 +213,14 @@ angular.module('catalogueApp')
 				centers[i].center.pincode = '';
 			}
 	}
+
+	$scope.tentativeBudget = function(){
+	
+    if(!$scope.model.tentative_cost){
+			$scope.model.tentative_cost ="";
+		}
+	}
+
 	$scope.submit = function(){
 	    var status = checkSupplierCode();
 	    if(status >= 0){
@@ -169,7 +228,6 @@ angular.module('catalogueApp')
 			$scope.model.organisation_id = $window.localStorage.organisationId;
 			// $scope.model.parent = $window.localStorage.proposal_id;
 			$scope.requestData = angular.copy($scope.model);
-			console.log($scope.requestData);
 			convertPincodeToString($scope.requestData.centers);
 			// call backend to save only if all the latitudes are found
 			if($scope.requestData.centers.length > 1){

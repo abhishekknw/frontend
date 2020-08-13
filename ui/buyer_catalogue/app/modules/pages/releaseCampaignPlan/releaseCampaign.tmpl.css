@@ -199,3 +199,34 @@ th{
   white-space: pre-line;
   overflow-wrap: break-word;
 }
+
+.release_plan_table .uib-datepicker-popup.dropdown-menu {
+  width: 300px;
+  padding: 6px;
+  z-index: 3;
+}
+
+.release_plan_table .uib-datepicker-popup.dropdown-menu table {
+  width: 100% !important;
+  min-width: auto !important;
+}
+
+.release_plan_table .uib-datepicker-popup.dropdown-menu table td, .release_plan_table .uib-datepicker-popup.dropdown-menu table th {
+  min-width: auto;
+}
+
+.release_plan_table .uib-datepicker-popup.dropdown-menu table 
+button.btn {
+  border-radius: 0;
+}
+#selectedPaymentModal .modal-body {
+  padding: 0;
+}
+
+#selectedPaymentModal .modal-body input.form-control, #selectedPaymentModal .modal-body textarea {
+  width: 100%;
+}
+
+#selectedPaymentModal .modal-body .col-md-12 {
+  padding: 0;
+}
