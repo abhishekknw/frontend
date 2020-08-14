@@ -28,7 +28,7 @@
     </div>
   <div style="color:#000000; margin-top: 10px" class="assign-date">
       <div class="col-md-12 pull-right" style="background-color:#ffffff;">
-      <div class="col-md-4">
+      <div class="col-md-2">
           <input type="checkbox" ng-model="dateChecked" permission = "[permissions.assignDates]">
           <label><h4>Assign Dates<h4></label>
       </div>
@@ -39,6 +39,9 @@
         <div class="col-md-2">
             <button type="button" name="button" class="btn btn-small btn-primary" ng-click="resetSupplierData()">Reset</button>
           </div>
+          <span class="col-md-2 pull-right">
+            <button class="btn btn-danger active notify" style="text-align:right" ng-click="changeLocation()">Back</button>
+          </span>
       </div>
   </div>
 
@@ -135,6 +138,9 @@
                {{supplier.name}}</a>&nbsp;({{supplier.quality_rating}})
                <br><br>
                {{supplier.area}}&nbsp;({{supplier.subarea}}) <br>{{supplier.address2}} </td>
+               <td><p ng-if="releaseDetails.campaign.brand == 'single_brand'">Single-Brand</p>
+                <p ng-if="releaseDetails.campaign.brand != 'single_brand'">Multi-Brand</p>
+              </td>
                <td class="col-md-4 checkboxes-btn">
                  <div class="pull-left" ng-repeat="inventory in filter.detail" style="margin-bottom: 10px;text-align: center;">
                    <input type="checkbox" class="" ng-disabled="isDisable(rowIndex)" ng-model="inventory.status" ng-click="addInventory(inventory,rowIndex,$index,supplier.id)"  permission = "[permissions.assignDates]" /> {{key}}{{$index+1}} &nbsp;
