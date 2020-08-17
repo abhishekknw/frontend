@@ -521,7 +521,7 @@
                     {{item.name}}</option>
                 </select>
                 <br>
-                <select ng-if="supplier.booking_status" class="form-control spacing input-width" ng-change="changeSubStatus(supplier,$parent.$parent.$index)"  ng-model="supplier.booking_sub_status">
+                <select ng-if="supplier.booking_status" class="form-control spacing input-width" ng-change="changeSubStatus(supplier,$parent.$parent.$index)"  ng-model="supplier.booking_sub_status" ng-disabled="supplier.is_completed">
                   <option value="" disabled="">Select Sub Status</option>
                   <option style="width:100%;" ng-repeat="item in supplier.meeting_status" value="{{item.code}}">
                     {{item.name}}</option>
@@ -569,7 +569,7 @@
               </td>
 
               <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
-                <input class="form-control spacing input-width" ng-model="supplier.next_action_date" type="date" name=""
+                <input class="form-control spacing input-width" ng-model="supplier.next_action_date" type="date" readonly name=""
                   ng-disabled="supplier.is_completed">
               </td>
 
@@ -591,7 +591,7 @@
               <td class="" ng-if="key!='FLIER'">{{filter.total_count}}</td>
               <!-- <td class="" ng-if="key!='FLIER'"> <button  class="btn" data-target="#addInventoryModal" ng-disabled="!filter.total_count" style="background: #5bc0de; color: white;margin-left:20px;" data-toggle="modal" ng-click="getInventoryRelatedData(supplier,key,$parent.$parent.$parent.$index)"><span ng-if="filter.total_count">{{filter.total_count}}</span> <span ng-if="!filter.total_count">N/A</span></button></td> -->
               <td class="">
-                <input class="form-control" type="number" ng-if="key!='FLIER'" style="max-width:70px;"
+                <input class="form-control" type="number" ng-if="key!='FLIER'" min="1"  style="max-width:80px;"
                   ng-model="filter.days" ng-change="changeInventoryInDays(supplier,key,filter)"
                   ng-disabled="supplier.is_completed">
 
@@ -1004,7 +1004,7 @@
                           {{item.name}}</option>
                       </select>
                       
-                      <select ng-if="supplier.booking_status && supplier.meeting_status.length > 0" class="form-control spacing input-width" ng-change="changeSubStatus(supplier,$parent.$parent.$index)" ng-model="supplier.booking_sub_status">
+                      <select ng-if="supplier.booking_status && supplier.meeting_status.length > 0" class="form-control spacing input-width" ng-change="changeSubStatus(supplier,$parent.$parent.$index)" ng-model="supplier.booking_sub_status" ng-disabled="supplier.is_completed">
                         <option value="" disabled="">Select Sub Status</option>
                         <option style="width:100%;" ng-repeat="item in supplier.meeting_status" value="{{item.code}}">
                           {{item.name}}</option>
@@ -1052,7 +1052,7 @@
               <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <p class="input-group">
                   <input type="text" class="form-control col-md-4" ng-model="supplier.next_action_date"
-                    ng-disabled="supplier.is_completed" uib-datepicker-popup="dd/MM/yyyy" is-open="popup1" min-date=""
+                    ng-disabled="supplier.is_completed" readonly uib-datepicker-popup="dd/MM/yyyy" is-open="popup1" min-date=""
                     datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}" />
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="popup1=true"><i
@@ -1080,7 +1080,7 @@
               <td class="" ng-if="key!='FLIER'">{{filter.total_count}}</td>
               <!-- <td class="" ng-if="key!='FLIER'"> <button  class="btn" data-target="#addInventoryModal" ng-disabled="!filter.total_count" style="background: #5bc0de; color: white;margin-left:20px;" data-toggle="modal" ng-click="getInventoryRelatedData(supplier,key,$parent.$parent.$parent.$index)"><span ng-if="filter.total_count">{{filter.total_count}}</span> <span ng-if="!filter.total_count">N/A</span></button></td> -->
               <td class="">
-                <input class="form-control" type="number" ng-if="key!='FLIER'" style="max-width:70px;"
+                <input class="form-control" type="number" ng-if="key!='FLIER'" min="1" style="max-width:80px;"
                   ng-model="filter.days" ng-change="changeInventoryInDays(supplier,key,filter)"
                   ng-disabled="supplier.is_completed">
               </td>

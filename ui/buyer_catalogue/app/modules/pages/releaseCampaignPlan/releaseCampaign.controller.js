@@ -1597,6 +1597,7 @@ angular.module('catalogueApp')
         }
         $scope.uploadImageReceipt = function (file) {
           $scope.ReceiptFile = file;
+         
         }
         $scope.permissionBoxData = {};
         $scope.uploadPermissionBoxImage = function (supplier) {
