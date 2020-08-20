@@ -2133,30 +2133,21 @@
         <div class="modal-header">
           Import Sheet
         </div>
+        <br>
         <div class="col-md-12" style="margin-left:5px;">
-          <div class="row">
+          <div class="col-md-3">
             <label>Select Sheet</label>
+            <a href="/sample_files/booking_plan_sheet_v1.xlsx" download>Demo File</a>
+          </div>
+          <div class="col-md-4">
             <input type="file" ngf-select="uploadFiles($file, 1)" class="buttonfile" accept=".xlsx" />
           </div>
-          </br>
-          <div class="row">
-            <div class="col-md-12">
-              <label>Assigned To</label>
-              <p class="input-group">
-                <div class="col-md-7">
-                  <select class="form-control" ng-model="assign.to" required>
-                    <option ng-repeat="user in userList" value="{{user.id}}">{{user.username}}</option>
-                  </select>
-                </div>
-              </p>
-            </div>
+          <div class="col-md-4">
+            <button class="btn btn-success import" type="button" name="button"
+            ng-click="importThroughSheet()">Submit</button>
           </div>
         </div>
-        <!-- </br></br> -->
-        <div class="row">
-          <button class="btn btn-success import" type="button" name="button"
-            ng-click="importThroughSheet()">Submit</button>
-        </div>
+        <br><br><br>
       </div>
     </div>
   </div>
