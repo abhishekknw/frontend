@@ -176,7 +176,7 @@ angular.module('catalogueApp')
           { name: 'SunBoard(SB)', code: 'SB', selected: false },
         ];
 
-        $scope.categorylist = ['Ultra High','High','Medium High','Standard'],
+        $scope.categorylist = ['Ultra High','High','Medium High','Medium','Standard'],
         $scope.assignUserData = {
           campaign_id:'',
         }
@@ -378,6 +378,15 @@ angular.module('catalogueApp')
                     $scope.selectedUser.supplier_type_filter = $scope.supplier_names[0].code;
                   }
 
+                  if($scope.selectedUser.supplier_type_filter == 'RE'){
+                    $scope.categorylist = ['Small','Medium','Large','Very Large','Super']
+                  } else if($scope.selectedUser.supplier_type_filter == 'SA'){
+                    $scope.categorylist = ['High','Medium','Standard']
+                  } else if(!$scope.selectedUser.supplier_type_filter || $scope.selectedUser.supplier_type_filter == 'ALL'){
+                    $scope.categorylist = ['Ultra High','High','Medium High','Medium','Standard','Small','Large','Very Large','Super']
+                  } else {
+                    $scope.categorylist = ['Ultra High','High','Medium High','Standard']
+                  }
 
                 }
 
@@ -409,8 +418,15 @@ angular.module('catalogueApp')
           } else {
             $scope.detailsHeader = $scope.detailsHeaders[$scope.selectedUser.supplier_type_filter];
           }
-
-
+          if($scope.selectedUser.supplier_type_filter == 'RE'){
+            $scope.categorylist = ['Small','Medium','Large','Very Large','Super']
+          } else if($scope.selectedUser.supplier_type_filter == 'SA'){
+            $scope.categorylist = ['High','Medium','Standard']
+          } else if($scope.selectedUser.supplier_type_filter == ''){
+            $scope.categorylist = ['Ultra High','High','Medium High','Medium','Standard','Small','Large','Very Large','Super']
+          } else {
+            $scope.categorylist = ['Ultra High','High','Medium High','Standard']
+          }
 
         }
 
@@ -625,6 +641,7 @@ angular.module('catalogueApp')
             console.log(error.message);
           }
         }
+       
 
         //End: code added to search & show all suppliers on add societies tab
         $scope.selectSupplier = function () {
@@ -836,10 +853,10 @@ angular.module('catalogueApp')
     
             releaseCampaignService.addSuppliersToCampaign(data)
               .then(function onSuccess(response) {
-                //synergy
                 if (response) {
-                  $scope.releaseDetails.shortlisted_suppliers = response.data.data;
-                  //window.location.reload();
+                  // $scope.releaseDetails.shortlisted_suppliers = [];
+                  //   $scope.releaseDetails.shortlisted_suppliers = response.data.data;
+                  window.location.reload();
                 }
                 $('#addNewSocities').modal('hide');
                 swal(constants.name, constants.add_data_success, constants.success);
@@ -1109,9 +1126,6 @@ angular.module('catalogueApp')
                 $scope.phaseMappingList[phase.id] = phase;
               })
               $scope.phases = response.data.data;
-
-
-
             }).catch(function onError(response) {
               console.log(response);
             })
@@ -1137,6 +1151,11 @@ angular.module('catalogueApp')
         }
         $scope.checkPhase = function () {
           for (let i in $scope.phases) {
+            
+            if(!$scope.phases[i].phase_no){
+              swal(constants.name, "Please add phase first", constants.warning);
+              return false
+            }
             if (!$scope.phases[i].start_date) {
               swal(constants.name, "Please select start date", constants.warning);
               return false
@@ -1149,8 +1168,7 @@ angular.module('catalogueApp')
           $scope.savePhases();
         }
         $scope.savePhases = function () {
-
-
+        
           if ($scope.phases[0] && $scope.phases[0].phase_no) {
             releaseCampaignService.savePhases($scope.phases, $scope.campaign_id)
               .then(function onSuccess(response) {
@@ -1617,6 +1635,7 @@ angular.module('catalogueApp')
               },
               headers: { 'Authorization': 'JWT ' + token }
             }).then(function onSuccess(response) {
+              $scope.permissionBoxImages.push({image_path:response.data.data.image_path,object_id:supplier.supplier_id});
               supplier.permissionComment = '';
               cfpLoadingBar.complete();
               swal(constants.name, constants.image_success, constants.success);
@@ -1648,6 +1667,7 @@ angular.module('catalogueApp')
               },
               headers: { 'Authorization': 'JWT ' + token }
             }).then(function onSuccess(response) {
+              $scope.receiptImages.push({image_path:response.data.data.image_path,object_id:supplier.supplier_id})
               supplier.receiptComment = '';
               cfpLoadingBar.complete();
               swal(constants.name, constants.image_success, constants.success);
@@ -1986,6 +2006,7 @@ angular.module('catalogueApp')
               for (var i = 0; i < $scope.hashtagImages.length; i++) {
                 if ($scope.hashtagImages[i].permission_box) {
                   $scope.permissionBoxImages.push($scope.hashtagImages[i].permission_box)
+                 
                 }
                 if ($scope.hashtagImages[i].receipt) {
                   $scope.receiptImages.push($scope.hashtagImages[i].receipt)

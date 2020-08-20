@@ -1927,11 +1927,14 @@
                       <span ng-if="supplier.quality_rating">{{supplier.quality_rating}}</span>
                      </td>
   
-                     <td >
+                     <!-- <td >
                         <span ng-if="supplier.society_locality">{{supplier.society_locality}} ({{supplier.subarea}})</span>
                         <span ng-if="supplier.locality_rating">{{supplier.locality_rating}} ({{supplier.subarea}})</span>
+                       </td> -->
+                       <td >
+                        <span>{{supplier.area}} ({{supplier.subarea}})</span>
                        </td>
-                  <td>{{supplierBookingStatus[supplier.booking_status||'Not Initiated']}}</td>
+                  <td>{{supplierBookingStatus[supplier.booking_status] ||'Not Initiated'}}</td>
                   <td><a href="https://www.google.com/maps/?q=+{{supplier.latitude}}+{{supplier.longitude}}" target="_blank">View Details</a></td>
                   <td>
                     <div class="comment" ng-if="comments[supplier.space_id]">
@@ -2856,23 +2859,23 @@
 
                           <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfRetailStore' && checkboxCheckedSociety">
                             <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfRetailStoreLists" extra-settings="settingsForDynamicGraphFlatType"
-                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfRetailStore" events="events"></span>
                           </div>
                           <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfCorporate' && checkboxCheckedSociety">
                             <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfCorporateLists" extra-settings="settingsForDynamicGraphFlatType"
-                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfCorporate" events="events"></span>
                           </div>
                           <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfBusShelter' && checkboxCheckedSociety">
                             <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfBusShelterLists" extra-settings="settingsForDynamicGraphFlatType"
-                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfBusShelter" events="events"></span>
                           </div>
                           <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfGym' && checkboxCheckedSociety">
                             <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfGymLists" extra-settings="settingsForDynamicGraphFlatType"
-                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfGym" events="events"></span>
                           </div>
                           <div class="row" ng-if="graphSelection.specificParam.society == 'sizeOfSaloon' && checkboxCheckedSociety">
                             <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="sizeOfSaloonLists" extra-settings="settingsForDynamicGraphFlatType"
-                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfFlats" events="events"></span>
+                            selected-model="selectedSizeOfFlats" translation-texts="selected_baselines_customTexts_sizeOfSaloon" events="events"></span>
                           </div>
 
                           <br />

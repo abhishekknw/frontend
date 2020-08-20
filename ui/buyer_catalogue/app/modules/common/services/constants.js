@@ -250,5 +250,5 @@ bus_shelter_contact_type : ["Store Manager","Floor Manager","Category Manager","
 ],
 salon_contact_type : ["Owner","Manager","Advertising Manager","Branding Manager","Other"],
 corporate_contact_type : ["Owner","Manager","Advertising Manager","Branding Manager","Admin","Supervisor","Superintendent","Hr-Manager","Hr-Head","Security Manager"],
-society_contact_type:[ "Chairman","Secretary","Treasurer","Manager","Supervisor","Committe Member","Other"]
+society_contact_type:[ "Chairman","Secretary","Treasurer","Manager","Supervisor","Committee Member","Decision maker No RWA","Other"]
 });
