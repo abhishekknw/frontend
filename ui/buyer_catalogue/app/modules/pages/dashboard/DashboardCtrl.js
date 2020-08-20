@@ -2702,6 +2702,11 @@
       $scope.selected_baselines_customTexts_vendor = { buttonDefaultText: 'Select Vendor' };
       $scope.selected_baselines_customTexts_qualityTypesociety = { buttonDefaultText: 'Select Type of Society' };
       $scope.selected_baselines_customTexts_sizeOfFlats = { buttonDefaultText: 'Select Size of Society' };
+      $scope.selected_baselines_customTexts_sizeOfCorporate = { buttonDefaultText: 'Select Size of Corporate' };
+      $scope.selected_baselines_customTexts_sizeOfBusShelter = { buttonDefaultText: 'Select Size of Bus Shelter' };
+      $scope.selected_baselines_customTexts_sizeOfGym = { buttonDefaultText: 'Select Size of Gym' };
+      $scope.selected_baselines_customTexts_sizeOfSaloon = { buttonDefaultText: 'Select Size of Saloon' };
+      $scope.selected_baselines_customTexts_sizeOfRetailStore = { buttonDefaultText: 'Select Size of Retail Store' };
       $scope.selected_baselines_customTexts_freebies = { buttonDefaultText: 'Select Freebies' };
       $scope.selected_baselines_customTexts_graphParams = { buttonDefaultText: 'Select Graph Param' };
 
