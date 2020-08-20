@@ -853,8 +853,6 @@ angular.module('catalogueApp')
     
             releaseCampaignService.addSuppliersToCampaign(data)
               .then(function onSuccess(response) {
-                console.log('1111111111111111111111111111',response.data.data);
-                console.log('22222222222222222222222222222222',$scope.releaseDetails.shortlisted_suppliers);
                 if (response) {
                   // $scope.releaseDetails.shortlisted_suppliers = [];
                   //   $scope.releaseDetails.shortlisted_suppliers = response.data.data;
