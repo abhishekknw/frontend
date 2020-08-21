@@ -206,7 +206,7 @@
         { header: 'GATEWAY ARCH' },
         { header: 'BANNER' },
         { header: 'SUNBOARD' },
-        { header: 'HORDING' },
+        { header: 'HOARDING' },
         { header: 'GENTRY' },
         { header: 'BUS SHELTER' },
         { header: 'BUS BACK' },
@@ -220,13 +220,12 @@
         { header: 'TENT CARD' },
         { header: 'TABLE' },
         { header: 'WALL' },
-        { header: 'HORDING LIT' },
+        { header: 'HOARDING LIT' },
         { header: 'BUS SHELTER LIT' },
         { header: 'GANTRY LIT' },
         { header: 'POSTER LIFT' },
         { header: 'CAR DISPLAY' },
         { header: 'GANTRY' },
-        { header: 'HORDING LIT' },
         { header: 'WHATSAPP INDIVIDUAL' },
         { header: 'WHATSAPP GROUP' },
       ];
@@ -366,6 +365,7 @@
             $scope.count = 0;
             $scope.invActDateList = [];
             $scope.inventoryActivityCountData = response.data.data;
+            console.log('===================---------------===================-----------',$scope.inventoryActivityCountData);
             $scope.showTableForAllCampaignDisplay = false;
             angular.forEach(response.data.data, function (data, key) {
               $scope.isPanelOpen = !$scope.isPanelOpen;
@@ -1738,6 +1738,7 @@
         DashboardService.getSuppliersOfCampaignWithStatus(campaign.campaign)
           .then(function onSuccess(response) {
             cfpLoadingBar.complete();
+            $scope.options1 = [];
             // $scope.getPhases(campaign.campaign);
 
             // $scope.overallMetricStatus = [
@@ -2904,7 +2905,7 @@
         'SUNBOARD': {
           status: false, total: 0
         },
-        'HORDING': {
+        'HOARDING': {
           status: false, total: 0
         },
         'GENTRY': {
@@ -2946,7 +2947,7 @@
         'WALL': {
           status: false, total: 0
         },
-        'HORDING LIT': {
+        'HOARDING LIT': {
           status: false, total: 0
         },
         'BUS SHELTER': {
@@ -4077,6 +4078,7 @@
             dateRange.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
             dateRange.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
           $scope.selectedSupplierType.code = "RS";
+          $scope.flat_count_header = "Flat Count";
         }
         DashboardService.getCampaignDateWiseData(dateRange,$scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
