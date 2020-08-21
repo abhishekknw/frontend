@@ -521,7 +521,7 @@
                     {{item.name}}</option>
                 </select>
                 <br>
-                <select ng-if="supplier.booking_status" class="form-control spacing input-width" ng-change="changeSubStatus(supplier,$parent.$parent.$index)"  ng-model="supplier.booking_sub_status">
+                <select ng-if="supplier.booking_status" class="form-control spacing input-width" ng-change="changeSubStatus(supplier,$parent.$parent.$index)"  ng-model="supplier.booking_sub_status" ng-disabled="supplier.is_completed">
                   <option value="" disabled="">Select Sub Status</option>
                   <option style="width:100%;" ng-repeat="item in supplier.meeting_status" value="{{item.code}}">
                     {{item.name}}</option>
@@ -569,7 +569,7 @@
               </td>
 
               <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
-                <input class="form-control spacing input-width" ng-model="supplier.next_action_date" type="date" name=""
+                <input class="form-control spacing input-width" ng-model="supplier.next_action_date" type="date" readonly name=""
                   ng-disabled="supplier.is_completed">
               </td>
 
@@ -591,7 +591,7 @@
               <td class="" ng-if="key!='FLIER'">{{filter.total_count}}</td>
               <!-- <td class="" ng-if="key!='FLIER'"> <button  class="btn" data-target="#addInventoryModal" ng-disabled="!filter.total_count" style="background: #5bc0de; color: white;margin-left:20px;" data-toggle="modal" ng-click="getInventoryRelatedData(supplier,key,$parent.$parent.$parent.$index)"><span ng-if="filter.total_count">{{filter.total_count}}</span> <span ng-if="!filter.total_count">N/A</span></button></td> -->
               <td class="">
-                <input class="form-control" type="number" ng-if="key!='FLIER'" style="max-width:70px;"
+                <input class="form-control" type="number" ng-if="key!='FLIER'" min="1"  style="max-width:80px;"
                   ng-model="filter.days" ng-change="changeInventoryInDays(supplier,key,filter)"
                   ng-disabled="supplier.is_completed">
 
@@ -1004,7 +1004,7 @@
                           {{item.name}}</option>
                       </select>
                       
-                      <select ng-if="supplier.booking_status && supplier.meeting_status.length > 0" class="form-control spacing input-width" ng-change="changeSubStatus(supplier,$parent.$parent.$index)" ng-model="supplier.booking_sub_status">
+                      <select ng-if="supplier.booking_status && supplier.meeting_status.length > 0" class="form-control spacing input-width" ng-change="changeSubStatus(supplier,$parent.$parent.$index)" ng-model="supplier.booking_sub_status" ng-disabled="supplier.is_completed">
                         <option value="" disabled="">Select Sub Status</option>
                         <option style="width:100%;" ng-repeat="item in supplier.meeting_status" value="{{item.code}}">
                           {{item.name}}</option>
@@ -1052,7 +1052,7 @@
               <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <p class="input-group">
                   <input type="text" class="form-control col-md-4" ng-model="supplier.next_action_date"
-                    ng-disabled="supplier.is_completed" uib-datepicker-popup="dd/MM/yyyy" is-open="popup1" min-date=""
+                    ng-disabled="supplier.is_completed" readonly uib-datepicker-popup="dd/MM/yyyy" is-open="popup1" min-date=""
                     datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}" />
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="popup1=true"><i
@@ -1080,9 +1080,10 @@
               <td class="" ng-if="key!='FLIER'">{{filter.total_count}}</td>
               <!-- <td class="" ng-if="key!='FLIER'"> <button  class="btn" data-target="#addInventoryModal" ng-disabled="!filter.total_count" style="background: #5bc0de; color: white;margin-left:20px;" data-toggle="modal" ng-click="getInventoryRelatedData(supplier,key,$parent.$parent.$parent.$index)"><span ng-if="filter.total_count">{{filter.total_count}}</span> <span ng-if="!filter.total_count">N/A</span></button></td> -->
               <td class="">
-                <input class="form-control" type="number" ng-if="key!='FLIER'" style="max-width:70px;"
+                <input class="form-control" type="number" ng-if="key!='FLIER'" min="1" style="max-width:80px;"
                   ng-model="filter.days" ng-change="changeInventoryInDays(supplier,key,filter)"
-                  ng-disabled="supplier.is_completed">
+                  ng-disabled="supplier.is_completed || key=='NA'">
+
               </td>
 
               <!-- <td class="">{{filter.price| currency : "₹"}}</td> -->
@@ -1209,7 +1210,7 @@
                         <div class="modal-body">
                           <div class="carousel" id="slider" ng-if="perBoxImageData && perBoxImageData.length > 0">
                             <div class="carousel-inner">
-                              <div class="item" ng-class="{active:!$index}" ng-repeat="image in perBoxImageData">
+                              <div class="item" ng-class="{active:!$index}" ng-repeat="image in perBoxImageData track by $index">
                                 <div class="row">
                                   <img ng-src="{{image.image_url}}" style="width:600px; height:400px;"
                                     class="img-responsive" alt="No Image Found" /></br>
@@ -1268,6 +1269,9 @@
                                 <div class="row">
                                   <img ng-src="{{image.image_url}}" style="width:600px; height:400px;"
                                     class="img-responsive" alt="No Image Found" /></br>
+                                </div>
+                                <div class="row" style="margin-left:10px;">
+                                  Comment : {{image.comment}} </br>
                                 </div>
                               </div>
                             </div> <a style="height:400px;" class="left carousel-control" data-toggle="carousel"
@@ -1484,7 +1488,7 @@
           <hr />
           <div class="modal-body" style="width: 1100px; height: 300px;">
             <div class="modal-body col-md-4 table-responsive" style="width: 1100px; height: 350px">
-              
+              <form name="myForm">
               <table class="table table-bordered" name="contactForm">
                 <thead>
                   <tr>
@@ -1511,6 +1515,7 @@
                     </td>
 
                   </tr>
+                  
                   <tr ng-if="!editContactDetails" ng-repeat="contact in payment.contacts">
                     <!-- <td class="alignment"><input type="text" placeholder="Mr/Mrs" ng-model="contact.salutation"></td>
                     <td class="alignment"><input type="text" placeholder="Name of the Person" ng-model="contact.name">
@@ -1568,37 +1573,41 @@
 
                    <td class="alignment">
                     <input type="number" placeholder="Phone" name="phone_{{$index}}" class="form-control"
-                      id="phone_{{$index}}" style="width:110px;" ng-model="contact.landline"
+                      id="phone_{{$index}}" style="width:110px;"  ng-model="contact.landline" ng-pattern="/^[0-9]{8}$/"
                       >
-                    <!-- <div ng-show="retailshop_form.phone_{{$index}}.$error.pattern" class="error"
-                      style="font-size:12px;">Phone number Invalid</div> -->
+                    <div ng-show="myForm.phone_{{$index}}.$error.pattern" class="error"
+                      style="font-size:12px;">Phone number Invalid</div>
                   </td>
                   <td class="alignment">
                     <input type="number" placeholder="Mobile" name="mobile_{{$index}}" class="form-control"
                       id="mobile_id_{{$index}}" style="width:110px;" ng-model="contact.mobile"
                       ng-pattern="/^[0-9]{10}$/">
-                    <div ng-show="retailshop_form.mobile_{{$index}}.$error.pattern" class="error"
+                    <div ng-show="myForm.mobile_{{$index}}.$error.pattern" class="error"
                       style="font-size:12px;">Mobile number Invalid</div>
                   </td>
                     <td class="alignment">
                       <button type="button" name="button" ng-click="removeContact($index)">Remove</button>
                     </td>
                   </tr>
+
+              
                   <tr>
 
 
                   </tr>
                 </tbody>
               </table>
+            
               <div class="" ng-show="editContactDetails" ng-if="statusEditContactDetails">
                 <button class="btn btn-danger pull-right" ng-click="setEditContactDetails()">Edit</button>
                 <button class="btn btn-danger" ng-click="addContactDetail()">Add </button>
-                <button class="btn btn-danger" ng-click="checkContactDetails()">Save</button>
+                <button class="btn btn-danger" ng-disabled="!myForm.$valid" ng-click="checkContactDetails()">Save</button>
 
               </div>
               <div class="" ng-show="!editContactDetails" ng-if="statusEditContactDetails">
-                <button class="btn btn-danger" ng-click="checkContactDetails()">Save</button>
+                <button class="btn btn-danger" ng-disabled="!myForm.$valid" ng-click="checkContactDetails()">Save</button>
               </div>
+            </form>
             </div>
           </div>
         </div>
@@ -2124,30 +2133,21 @@
         <div class="modal-header">
           Import Sheet
         </div>
+        <br>
         <div class="col-md-12" style="margin-left:5px;">
-          <div class="row">
+          <div class="col-md-3">
             <label>Select Sheet</label>
+            <a href="/sample_files/booking_plan_sheet_v1.xlsx" download>Demo File</a>
+          </div>
+          <div class="col-md-4">
             <input type="file" ngf-select="uploadFiles($file, 1)" class="buttonfile" accept=".xlsx" />
           </div>
-          </br>
-          <div class="row">
-            <div class="col-md-12">
-              <label>Assigned To</label>
-              <p class="input-group">
-                <div class="col-md-7">
-                  <select class="form-control" ng-model="assign.to" required>
-                    <option ng-repeat="user in userList" value="{{user.id}}">{{user.username}}</option>
-                  </select>
-                </div>
-              </p>
-            </div>
+          <div class="col-md-4">
+            <button class="btn btn-success import" type="button" name="button"
+            ng-click="importThroughSheet()">Submit</button>
           </div>
         </div>
-        <!-- </br></br> -->
-        <div class="row">
-          <button class="btn btn-success import" type="button" name="button"
-            ng-click="importThroughSheet()">Submit</button>
-        </div>
+        <br><br><br>
       </div>
     </div>
   </div>

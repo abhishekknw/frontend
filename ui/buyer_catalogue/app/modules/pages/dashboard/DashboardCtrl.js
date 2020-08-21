@@ -206,7 +206,7 @@
         { header: 'GATEWAY ARCH' },
         { header: 'BANNER' },
         { header: 'SUNBOARD' },
-        { header: 'HORDING' },
+        { header: 'HOARDING' },
         { header: 'GENTRY' },
         { header: 'BUS SHELTER' },
         { header: 'BUS BACK' },
@@ -220,13 +220,12 @@
         { header: 'TENT CARD' },
         { header: 'TABLE' },
         { header: 'WALL' },
-        { header: 'HORDING LIT' },
+        { header: 'HOARDING LIT' },
         { header: 'BUS SHELTER LIT' },
         { header: 'GANTRY LIT' },
         { header: 'POSTER LIFT' },
         { header: 'CAR DISPLAY' },
         { header: 'GANTRY' },
-        { header: 'HORDING LIT' },
         { header: 'WHATSAPP INDIVIDUAL' },
         { header: 'WHATSAPP GROUP' },
       ];
@@ -1738,6 +1737,7 @@
         DashboardService.getSuppliersOfCampaignWithStatus(campaign.campaign)
           .then(function onSuccess(response) {
             cfpLoadingBar.complete();
+            $scope.options1 = [];
             // $scope.getPhases(campaign.campaign);
 
             // $scope.overallMetricStatus = [
@@ -2702,6 +2702,11 @@
       $scope.selected_baselines_customTexts_vendor = { buttonDefaultText: 'Select Vendor' };
       $scope.selected_baselines_customTexts_qualityTypesociety = { buttonDefaultText: 'Select Type of Society' };
       $scope.selected_baselines_customTexts_sizeOfFlats = { buttonDefaultText: 'Select Size of Society' };
+      $scope.selected_baselines_customTexts_sizeOfCorporate = { buttonDefaultText: 'Select Size of Corporate' };
+      $scope.selected_baselines_customTexts_sizeOfBusShelter = { buttonDefaultText: 'Select Size of Bus Shelter' };
+      $scope.selected_baselines_customTexts_sizeOfGym = { buttonDefaultText: 'Select Size of Gym' };
+      $scope.selected_baselines_customTexts_sizeOfSaloon = { buttonDefaultText: 'Select Size of Saloon' };
+      $scope.selected_baselines_customTexts_sizeOfRetailStore = { buttonDefaultText: 'Select Size of Retail Store' };
       $scope.selected_baselines_customTexts_freebies = { buttonDefaultText: 'Select Freebies' };
       $scope.selected_baselines_customTexts_graphParams = { buttonDefaultText: 'Select Graph Param' };
 
@@ -2899,7 +2904,7 @@
         'SUNBOARD': {
           status: false, total: 0
         },
-        'HORDING': {
+        'HOARDING': {
           status: false, total: 0
         },
         'GENTRY': {
@@ -2941,7 +2946,7 @@
         'WALL': {
           status: false, total: 0
         },
-        'HORDING LIT': {
+        'HOARDING LIT': {
           status: false, total: 0
         },
         'BUS SHELTER': {
@@ -4072,6 +4077,7 @@
             dateRange.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
             dateRange.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
           $scope.selectedSupplierType.code = "RS";
+          $scope.flat_count_header = "Flat Count";
         }
         DashboardService.getCampaignDateWiseData(dateRange,$scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
