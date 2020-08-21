@@ -365,7 +365,6 @@
             $scope.count = 0;
             $scope.invActDateList = [];
             $scope.inventoryActivityCountData = response.data.data;
-            console.log('===================---------------===================-----------',$scope.inventoryActivityCountData);
             $scope.showTableForAllCampaignDisplay = false;
             angular.forEach(response.data.data, function (data, key) {
               $scope.isPanelOpen = !$scope.isPanelOpen;
