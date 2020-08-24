@@ -1,6 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+const onClickFunction = (data, path) => {
+  localStorage.setItem('pageData', JSON.stringify(data));
+  window.open(path, '_blank'); //to open new pge
+};
+
 const getEntityCitywiseCount = () => {
   return [
     {
@@ -34,27 +39,25 @@ const getEntityCitywiseCount = () => {
         return (
           <div>
             {contact_name_filled_count && contact_name_filled_suppliers.length > 0 ? (
-              <Link
+              <a
+                href="#"
                 style={{ color: '#e8578d' }}
-                to={{
-                  pathname: `suppliers`,
-                  state: {
-                    suppliers: contact_name_filled_suppliers,
-                    type: 'Contact Name Filled',
-                    isCampaign: false,
-                    name: `${name} Entities of ${city} City`,
-                    is_contact_number: true,
-                    supplier_type_code: type,
-                  },
-                }}
+                onClick={() =>
+                  onClickFunction(
+                    {
+                      suppliers: contact_name_filled_suppliers,
+                      type: 'Contact Name Filled',
+                      isCampaign: false,
+                      name: `${name} Entities of ${city} City`,
+                      is_contact_number: true,
+                      supplier_type_code: type,
+                    },
+                    `suppliers`
+                  )
+                }
               >
-                {' '}
                 {contact_name_filled_count}
-                {/* <p style={{ color: 'green' }}>
-                  ({flat_count_details_filled_percentage}
-                  %)
-                </p> */}
-              </Link>
+              </a>
             ) : (
               0
             )}
@@ -79,27 +82,25 @@ const getEntityCitywiseCount = () => {
         return (
           <div>
             {contact_name_total_filled_count && contact_name_total_filled_suppliers.length > 0 ? (
-              <Link
+              <a
+                href="#"
                 style={{ color: '#e8578d' }}
-                to={{
-                  pathname: `suppliers`,
-                  state: {
-                    suppliers: contact_name_total_filled_suppliers,
-                    type: 'Contact Name Total Filled',
-                    isCampaign: false,
-                    name: `${name} Entities of ${city} City`,
-                    is_multiple_contact_name: true,
-                    supplier_type_code: type,
-                  },
-                }}
+                onClick={() =>
+                  onClickFunction(
+                    {
+                      suppliers: contact_name_total_filled_suppliers,
+                      type: 'Contact Name Total Filled',
+                      isCampaign: false,
+                      name: `${name} Entities of ${city} City`,
+                      is_multiple_contact_name: true,
+                      supplier_type_code: type,
+                    },
+                    `suppliers`
+                  )
+                }
               >
-                {' '}
                 {contact_name_total_filled_count}
-                {/* <p style={{ color: 'green' }}>
-                  ({flat_count_details_filled_percentage}
-                  %)
-                </p> */}
-              </Link>
+              </a>
             ) : (
               0
             )}
@@ -124,26 +125,24 @@ const getEntityCitywiseCount = () => {
         return (
           <div>
             {contact_name_not_filled_count && contact_name_not_filled_suppliers.length > 0 ? (
-              <Link
+              <a
+                href="#"
                 style={{ color: '#e8578d' }}
-                to={{
-                  pathname: `suppliers`,
-                  state: {
-                    suppliers: contact_name_not_filled_suppliers,
-                    type: 'Contact Name Not Filled',
-                    isCampaign: false,
-                    name: `${name} Entities of ${city} City`,
-                    supplier_type_code: type,
-                  },
-                }}
+                onClick={() =>
+                  onClickFunction(
+                    {
+                      suppliers: contact_name_not_filled_suppliers,
+                      type: 'Contact Name Not Filled',
+                      isCampaign: false,
+                      name: `${name} Entities of ${city} City`,
+                      supplier_type_code: type,
+                    },
+                    `suppliers`
+                  )
+                }
               >
-                {' '}
                 {contact_name_not_filled_count}
-                {/* <p style={{ color: 'green' }}>
-                  ({flat_count_details_filled_percentage}
-                  %)
-                </p> */}
-              </Link>
+              </a>
             ) : (
               0
             )}
@@ -175,27 +174,25 @@ const getEntityCitywiseCount = () => {
         return (
           <div>
             {contact_number_filled_count && contact_number_filled_suppliers.length > 0 ? (
-              <Link
+              <a
+                href="#"
                 style={{ color: '#e8578d' }}
-                to={{
-                  pathname: `suppliers`,
-                  state: {
-                    suppliers: contact_number_filled_suppliers,
-                    type: 'Contact Number Filled',
-                    isCampaign: false,
-                    name: `${name} Entities of ${city} City`,
-                    is_contact_number: true,
-                    supplier_type_code: type,
-                  },
-                }}
+                onClick={() =>
+                  onClickFunction(
+                    {
+                      suppliers: contact_number_filled_suppliers,
+                      type: 'Contact Number Filled',
+                      isCampaign: false,
+                      name: `${name} Entities of ${city} City`,
+                      is_contact_number: true,
+                      supplier_type_code: type,
+                    },
+                    `suppliers`
+                  )
+                }
               >
-                {' '}
                 {contact_number_filled_count}
-                {/* <p style={{ color: 'green' }}>
-                  ({flat_count_details_filled_percentage}
-                  %)
-                </p> */}
-              </Link>
+              </a>
             ) : (
               0
             )}
@@ -221,27 +218,25 @@ const getEntityCitywiseCount = () => {
           <div>
             {contact_number_total_filled_count &&
             contact_number_total_filled_suppliers.length > 0 ? (
-              <Link
+              <a
+                href="#"
                 style={{ color: '#e8578d' }}
-                to={{
-                  pathname: `suppliers`,
-                  state: {
-                    suppliers: contact_number_total_filled_suppliers,
-                    type: 'Contact Number Total Filled',
-                    isCampaign: false,
-                    name: `${name} Entities of ${city} City`,
-                    is_multiple_contact_number: true,
-                    supplier_type_code: type,
-                  },
-                }}
+                onClick={() =>
+                  onClickFunction(
+                    {
+                      suppliers: contact_number_total_filled_suppliers,
+                      type: 'Contact Number Total Filled',
+                      isCampaign: false,
+                      name: `${name} Entities of ${city} City`,
+                      is_multiple_contact_number: true,
+                      supplier_type_code: type,
+                    },
+                    `suppliers`
+                  )
+                }
               >
-                {' '}
                 {contact_number_total_filled_count}
-                {/* <p style={{ color: 'green' }}>
-                  ({flat_count_details_filled_percentage}
-                  %)
-                </p> */}
-              </Link>
+              </a>
             ) : (
               0
             )}
@@ -266,26 +261,24 @@ const getEntityCitywiseCount = () => {
         return (
           <div>
             {contact_number_not_filled_count && contact_number_not_filled_suppliers.length > 0 ? (
-              <Link
+              <a
+                href="#"
                 style={{ color: '#e8578d' }}
-                to={{
-                  pathname: `suppliers`,
-                  state: {
-                    suppliers: contact_number_not_filled_suppliers,
-                    type: 'Contact Number Not Filled',
-                    isCampaign: false,
-                    name: `${name} Entities of ${city} City`,
-                    supplier_type_code: type,
-                  },
-                }}
+                onClick={() =>
+                  onClickFunction(
+                    {
+                      suppliers: contact_number_not_filled_suppliers,
+                      type: 'Contact Number Not Filled',
+                      isCampaign: false,
+                      name: `${name} Entities of ${city} City`,
+                      supplier_type_code: type,
+                    },
+                    `suppliers`
+                  )
+                }
               >
-                {' '}
                 {contact_number_not_filled_count}
-                {/* <p style={{ color: 'green' }}>
-                  ({flat_count_details_filled_percentage}
-                  %)
-                </p> */}
-              </Link>
+              </a>
             ) : (
               0
             )}
@@ -319,27 +312,25 @@ const getEntityCitywiseCount = () => {
           <div>
             {contact_number_decision_filled_count &&
             contact_number_decision_filled_suppliers.length > 0 ? (
-              <Link
+              <a
+                href="#"
                 style={{ color: '#e8578d' }}
-                to={{
-                  pathname: `suppliers`,
-                  state: {
-                    suppliers: contact_number_decision_filled_suppliers,
-                    type: 'Contact Number (Decision Maker) Filled',
-                    isCampaign: false,
-                    name: `${name} Entities of ${city} City`,
-                    is_contact_number: true,
-                    supplier_type_code: type,
-                  },
-                }}
+                onClick={() =>
+                  onClickFunction(
+                    {
+                      suppliers: contact_number_decision_filled_suppliers,
+                      type: 'Contact Number (Decision Maker) Filled',
+                      isCampaign: false,
+                      name: `${name} Entities of ${city} City`,
+                      is_contact_number: true,
+                      supplier_type_code: type,
+                    },
+                    `suppliers`
+                  )
+                }
               >
-                {' '}
                 {contact_number_decision_filled_count}
-                {/* <p style={{ color: 'green' }}>
-                  ({flat_count_details_filled_percentage}
-                  %)
-                </p> */}
-              </Link>
+              </a>
             ) : (
               0
             )}
@@ -365,27 +356,25 @@ const getEntityCitywiseCount = () => {
           <div>
             {contact_number_decision_total_filled_count &&
             contact_number_decision_total_filled_suppliers.length > 0 ? (
-              <Link
+              <a
+                href="#"
                 style={{ color: '#e8578d' }}
-                to={{
-                  pathname: `suppliers`,
-                  state: {
-                    suppliers: contact_number_decision_total_filled_suppliers,
-                    type: 'Contact Number (Decision Maker) Total Filled',
-                    isCampaign: false,
-                    name: `${name} Entities of ${city} City`,
-                    is_multiple_contact_number: true,
-                    supplier_type_code: type,
-                  },
-                }}
+                onClick={() =>
+                  onClickFunction(
+                    {
+                      suppliers: contact_number_decision_total_filled_suppliers,
+                      type: 'Contact Number (Decision Maker) Total Filled',
+                      isCampaign: false,
+                      name: `${name} Entities of ${city} City`,
+                      is_multiple_contact_number: true,
+                      supplier_type_code: type,
+                    },
+                    `suppliers`
+                  )
+                }
               >
-                {' '}
                 {contact_number_decision_total_filled_count}
-                {/* <p style={{ color: 'green' }}>
-                  ({flat_count_details_filled_percentage}
-                  %)
-                </p> */}
-              </Link>
+              </a>
             ) : (
               0
             )}
@@ -411,26 +400,24 @@ const getEntityCitywiseCount = () => {
           <div>
             {contact_number_decision_not_filled_count &&
             contact_number_decision_not_filled_suppliers.length > 0 ? (
-              <Link
+              <a
+                href="#"
                 style={{ color: '#e8578d' }}
-                to={{
-                  pathname: `suppliers`,
-                  state: {
-                    suppliers: contact_number_decision_not_filled_suppliers,
-                    type: 'Contact Number (Decision Maker) Not Filled',
-                    isCampaign: false,
-                    name: `${name} Entities of ${city} City`,
-                    supplier_type_code: type,
-                  },
-                }}
+                onClick={() =>
+                  onClickFunction(
+                    {
+                      suppliers: contact_number_decision_not_filled_suppliers,
+                      type: 'Contact Number (Decision Maker) Not Filled',
+                      isCampaign: false,
+                      name: `${name} Entities of ${city} City`,
+                      supplier_type_code: type,
+                    },
+                    `suppliers`
+                  )
+                }
               >
-                {' '}
                 {contact_number_decision_not_filled_count}
-                {/* <p style={{ color: 'green' }}>
-                  ({flat_count_details_filled_percentage}
-                  %)
-                </p> */}
-              </Link>
+              </a>
             ) : (
               0
             )}

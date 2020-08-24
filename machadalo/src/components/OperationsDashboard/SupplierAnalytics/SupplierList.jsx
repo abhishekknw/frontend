@@ -4,6 +4,7 @@ import config from '../../../config';
 import InnerGrid from '../../InnerGrid';
 import getSupplierColumn from './SupplierListGridConfig';
 import getSupplierColumnContactDetails from './ContactDetailsSuppliersGridConfig';
+import readXlsxFile from 'read-excel-file';
 
 class SupplierList extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class SupplierList extends Component {
       supplierDetails: [],
       suppliers: [],
       columns: [],
+      pageData: {},
     };
   }
 
@@ -34,6 +36,8 @@ class SupplierList extends Component {
   };
 
   componentDidMount() {
+    let pageData = localStorage.getItem('pageData');
+    pageData = JSON.parse(pageData);
     let {
       suppliers,
       name,
@@ -43,7 +47,8 @@ class SupplierList extends Component {
       is_contact_number,
       isCampaign,
       supplier_type_code,
-    } = this.props.location.state;
+    } = pageData;
+    this.setState({ pageData: pageData });
     if (isCampaign === false) this.setState({ isCampaign });
     if (!supplier_type_code) supplier_type_code = 'RS';
     this.setState({ name });
@@ -64,8 +69,45 @@ class SupplierList extends Component {
     }
   }
 
+  fileUpload(e) {
+    var fileSelect = e.target.files[0];
+
+    readXlsxFile(fileSelect).then((rows) => {
+      let fileData = [];
+      if (rows && rows.length > 1) {
+        let header = rows[0];
+        for (var i = 1; i < rows.length; i++) {
+          var obj = {};
+          var currentline = rows[i];
+          for (var j = 0; j < header.length; j++) {
+            obj[header[j]] = currentline[j];
+          }
+          fileData.push(obj);
+        }
+      }
+      // return JSON.stringify(fileData);
+      this.fetchSupplierData(fileData);
+    });
+  }
+
+  fetchSupplierData = (fileData) => {
+    const { token } = this.props.auth;
+    request
+      .post(`${config.API_URL}/v0/ui/website/update-supplier-data/`)
+      .set('Authorization', `JWT ${token}`)
+      .send(fileData)
+      .then((resp) => {
+        this.setState({
+          supplierData: resp.body.data,
+        });
+      })
+      .catch((ex) => {
+        console.log('Failed to get data');
+      });
+  };
+
   render() {
-    let { status, type } = this.props.location.state;
+    let { status, type } = this.state.pageData;
     status = status ? status.charAt(0).toUpperCase() + status.slice(1) : '';
     let path = `/r/operations-dashboard/entity`;
     let headerValue = `List of ${this.state.name} (${type})`;
@@ -90,6 +132,10 @@ class SupplierList extends Component {
           <i className="fa fa-arrow-left" aria-hidden="true" />
           &nbsp; Back
         </button>
+        <span className="pull-right">
+          <label>Upload Supplier Excel </label> &nbsp;
+          <input type="file" id="upload_file" onChange={(e) => this.fileUpload(e)} />
+        </span>
         {this.state.isCampaign && (
           <div style={{ fontStyle: 'oblique', textAlign: 'center' }}>
             <h5
