@@ -6,6 +6,7 @@ import getCampaignColumn from './CampaignGridColumnConfig';
 import Grid from '../../Grid';
 import SupplierAnalytics from '../SupplierAnalytics';
 import LoadingWrapper from '../../Error/LoadingWrapper';
+import readXlsxFile from 'read-excel-file';
 
 class CampaignAnalytics extends React.Component {
   constructor(props) {
@@ -57,6 +58,43 @@ class CampaignAnalytics extends React.Component {
       });
   };
 
+  fileUpload(e) {
+    var fileSelect = e.target.files[0];
+
+    readXlsxFile(fileSelect).then((rows) => {
+      let fileData = [];
+      if (rows && rows.length > 1) {
+        let header = rows[0];
+        for (var i = 1; i < rows.length; i++) {
+          var obj = {};
+          var currentline = rows[i];
+          for (var j = 0; j < header.length; j++) {
+            obj[header[j]] = currentline[j];
+          }
+          fileData.push(obj);
+        }
+      }
+      // return JSON.stringify(fileData);
+      this.fetchAreaData(fileData);
+    });
+  }
+
+  fetchAreaData = (fileData) => {
+    const { token } = this.props.auth;
+    request
+      .post(`${config.API_URL}/v0/ui/bulk-locations/`)
+      .set('Authorization', `JWT ${token}`)
+      .send(fileData)
+      .then((resp) => {
+        this.setState({
+          supplierData: resp.body.data,
+        });
+      })
+      .catch((ex) => {
+        console.log('Failed to get data');
+      });
+  };
+
   render() {
     const { tappingData, isFetchingTappingList } = this.props.tappingDetails;
     const { data } = tappingData;
@@ -69,6 +107,15 @@ class CampaignAnalytics extends React.Component {
 
     return (
       <div className="bootstrap-iso">
+        <span className="pull-right">
+          <label>Upload Area/Subarea Excel </label>
+          <input type="file" id="upload_file" onChange={(e) => this.fileUpload(e)} />
+          <br />
+          <a href="/sample_files/area_subarea.xlsx" download>
+            Download demo{' '}
+          </a>
+        </span>
+
         {isFetchingTappingList ? (
           <LoadingWrapper />
         ) : (

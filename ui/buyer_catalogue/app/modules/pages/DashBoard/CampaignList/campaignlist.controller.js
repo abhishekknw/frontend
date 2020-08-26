@@ -135,7 +135,10 @@ angular.module('catalogueApp')
         }
         campaignListService.sendEmail(proposalId, $scope.emailModel.email, emailType)
           .then(function onSuccess() {
-            $scope.emailModel = {};
+            $scope.emailModel = {
+              "selected": "",
+              "email": []
+            };
             $scope.emailBtnDisabled = false;
             cfpLoadingBar.complete();
             swal(constants.name, constants.email_success, constants.success);

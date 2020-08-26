@@ -1,6 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+const onClickFunction = (data, path) => {
+  localStorage.setItem('pageData', JSON.stringify(data));
+  window.open(path, '_blank'); //to open new pge
+};
+
 const getEntityCitywiseCount = () => {
   return [
     {
@@ -16,6 +21,411 @@ const getEntityCitywiseCount = () => {
         return city || 'Not Defined';
       },
     },
+
+    {
+      dataField: 'contact_name',
+      text: 'Contact Name',
+      row: 0,
+      colSpan: 3,
+    },
+    {
+      dataField: 'contact_name_filled_count',
+      text: 'Filled(Unique)',
+      row: 1,
+      width: '150px',
+      formatter: (cell, row) => {
+        const { name, city, contact_name_filled_suppliers, contact_name_filled_count, type } = row;
+        // Get supplier details from supplier ids
+        return (
+          <div>
+            {contact_name_filled_count && contact_name_filled_suppliers.length > 0 ? (
+              <a
+                href="#"
+                style={{ color: '#e8578d' }}
+                onClick={() =>
+                  onClickFunction(
+                    {
+                      suppliers: contact_name_filled_suppliers,
+                      type: 'Contact Name Filled',
+                      isCampaign: false,
+                      name: `${name} Entities of ${city} City`,
+                      is_contact_number: true,
+                      supplier_type_code: type,
+                    },
+                    `suppliers`
+                  )
+                }
+              >
+                {contact_name_filled_count}
+              </a>
+            ) : (
+              0
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      dataField: 'contact_name_total_filled_count',
+      text: 'Total Filled',
+      row: 1,
+      width: '120px',
+      formatter: (cell, row) => {
+        const {
+          contact_name_total_filled_suppliers,
+          contact_name_total_filled_count,
+          name,
+          city,
+          type,
+        } = row;
+        // Get supplier details from supplier ids
+        return (
+          <div>
+            {contact_name_total_filled_count && contact_name_total_filled_suppliers.length > 0 ? (
+              <a
+                href="#"
+                style={{ color: '#e8578d' }}
+                onClick={() =>
+                  onClickFunction(
+                    {
+                      suppliers: contact_name_total_filled_suppliers,
+                      type: 'Contact Name Total Filled',
+                      isCampaign: false,
+                      name: `${name} Entities of ${city} City`,
+                      is_multiple_contact_name: true,
+                      supplier_type_code: type,
+                    },
+                    `suppliers`
+                  )
+                }
+              >
+                {contact_name_total_filled_count}
+              </a>
+            ) : (
+              0
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      dataField: 'contact_name_not_filled_count',
+      text: 'Not Filled',
+      row: 1,
+      width: '100px',
+      formatter: (cell, row) => {
+        const {
+          contact_name_not_filled_suppliers,
+          contact_name_not_filled_count,
+          name,
+          city,
+          type,
+        } = row;
+        // Get supplier details from supplier ids
+        return (
+          <div>
+            {contact_name_not_filled_count && contact_name_not_filled_suppliers.length > 0 ? (
+              <a
+                href="#"
+                style={{ color: '#e8578d' }}
+                onClick={() =>
+                  onClickFunction(
+                    {
+                      suppliers: contact_name_not_filled_suppliers,
+                      type: 'Contact Name Not Filled',
+                      isCampaign: false,
+                      name: `${name} Entities of ${city} City`,
+                      supplier_type_code: type,
+                    },
+                    `suppliers`
+                  )
+                }
+              >
+                {contact_name_not_filled_count}
+              </a>
+            ) : (
+              0
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      dataField: 'contact_number',
+      text: 'Contact Number',
+      row: 0,
+      colSpan: 3,
+      sort: false,
+    },
+    {
+      dataField: 'contact_number_filled_count',
+      text: 'Filled(Unique)',
+      row: 1,
+      width: '150px',
+      formatter: (cell, row) => {
+        const {
+          contact_number_filled_suppliers,
+          contact_number_filled_count,
+          name,
+          city,
+          type,
+        } = row;
+        // Get supplier details from supplier ids
+        return (
+          <div>
+            {contact_number_filled_count && contact_number_filled_suppliers.length > 0 ? (
+              <a
+                href="#"
+                style={{ color: '#e8578d' }}
+                onClick={() =>
+                  onClickFunction(
+                    {
+                      suppliers: contact_number_filled_suppliers,
+                      type: 'Contact Number Filled',
+                      isCampaign: false,
+                      name: `${name} Entities of ${city} City`,
+                      is_contact_number: true,
+                      supplier_type_code: type,
+                    },
+                    `suppliers`
+                  )
+                }
+              >
+                {contact_number_filled_count}
+              </a>
+            ) : (
+              0
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      dataField: 'contact_number_total_filled_count',
+      text: 'Total Filled',
+      row: 1,
+      width: '120px',
+      formatter: (cell, row) => {
+        const {
+          contact_number_total_filled_suppliers,
+          contact_number_total_filled_count,
+          name,
+          city,
+          type,
+        } = row;
+        // Get supplier details from supplier ids
+        return (
+          <div>
+            {contact_number_total_filled_count &&
+            contact_number_total_filled_suppliers.length > 0 ? (
+              <a
+                href="#"
+                style={{ color: '#e8578d' }}
+                onClick={() =>
+                  onClickFunction(
+                    {
+                      suppliers: contact_number_total_filled_suppliers,
+                      type: 'Contact Number Total Filled',
+                      isCampaign: false,
+                      name: `${name} Entities of ${city} City`,
+                      is_multiple_contact_number: true,
+                      supplier_type_code: type,
+                    },
+                    `suppliers`
+                  )
+                }
+              >
+                {contact_number_total_filled_count}
+              </a>
+            ) : (
+              0
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      dataField: 'contact_number_not_filled_count',
+      text: 'Not Filled',
+      row: 1,
+      width: '100px',
+      formatter: (cell, row) => {
+        const {
+          contact_number_not_filled_suppliers,
+          contact_number_not_filled_count,
+          name,
+          city,
+          type,
+        } = row;
+        // Get supplier details from supplier ids
+        return (
+          <div>
+            {contact_number_not_filled_count && contact_number_not_filled_suppliers.length > 0 ? (
+              <a
+                href="#"
+                style={{ color: '#e8578d' }}
+                onClick={() =>
+                  onClickFunction(
+                    {
+                      suppliers: contact_number_not_filled_suppliers,
+                      type: 'Contact Number Not Filled',
+                      isCampaign: false,
+                      name: `${name} Entities of ${city} City`,
+                      supplier_type_code: type,
+                    },
+                    `suppliers`
+                  )
+                }
+              >
+                {contact_number_not_filled_count}
+              </a>
+            ) : (
+              0
+            )}
+          </div>
+        );
+      },
+    },
+
+    {
+      dataField: 'contact_number_decision_maker',
+      text: 'Contact Number(Decision Maker)',
+      row: 0,
+      colSpan: 3,
+      sort: false,
+    },
+    {
+      dataField: 'contact_number_decision_filled_count',
+      text: 'Filled(Unique)',
+      row: 1,
+      width: '150px',
+      formatter: (cell, row) => {
+        const {
+          contact_number_decision_filled_suppliers,
+          contact_number_decision_filled_count,
+          name,
+          city,
+          type,
+        } = row;
+        // Get supplier details from supplier ids
+        return (
+          <div>
+            {contact_number_decision_filled_count &&
+            contact_number_decision_filled_suppliers.length > 0 ? (
+              <a
+                href="#"
+                style={{ color: '#e8578d' }}
+                onClick={() =>
+                  onClickFunction(
+                    {
+                      suppliers: contact_number_decision_filled_suppliers,
+                      type: 'Contact Number (Decision Maker) Filled',
+                      isCampaign: false,
+                      name: `${name} Entities of ${city} City`,
+                      is_contact_number: true,
+                      supplier_type_code: type,
+                    },
+                    `suppliers`
+                  )
+                }
+              >
+                {contact_number_decision_filled_count}
+              </a>
+            ) : (
+              0
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      dataField: 'contact_number_decision_total_filled_count',
+      text: 'Total Filled',
+      row: 1,
+      width: '120px',
+      formatter: (cell, row) => {
+        const {
+          contact_number_decision_total_filled_suppliers,
+          contact_number_decision_total_filled_count,
+          name,
+          city,
+          type,
+        } = row;
+        // Get supplier details from supplier ids
+        return (
+          <div>
+            {contact_number_decision_total_filled_count &&
+            contact_number_decision_total_filled_suppliers.length > 0 ? (
+              <a
+                href="#"
+                style={{ color: '#e8578d' }}
+                onClick={() =>
+                  onClickFunction(
+                    {
+                      suppliers: contact_number_decision_total_filled_suppliers,
+                      type: 'Contact Number (Decision Maker) Total Filled',
+                      isCampaign: false,
+                      name: `${name} Entities of ${city} City`,
+                      is_multiple_contact_number: true,
+                      supplier_type_code: type,
+                    },
+                    `suppliers`
+                  )
+                }
+              >
+                {contact_number_decision_total_filled_count}
+              </a>
+            ) : (
+              0
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      dataField: 'contact_number_decision_not_filled_count',
+      text: 'Not Filled',
+      row: 1,
+      width: '100px',
+      formatter: (cell, row) => {
+        const {
+          contact_number_decision_not_filled_suppliers,
+          contact_number_decision_not_filled_count,
+          name,
+          city,
+          type,
+        } = row;
+        // Get supplier details from supplier ids
+        return (
+          <div>
+            {contact_number_decision_not_filled_count &&
+            contact_number_decision_not_filled_suppliers.length > 0 ? (
+              <a
+                href="#"
+                style={{ color: '#e8578d' }}
+                onClick={() =>
+                  onClickFunction(
+                    {
+                      suppliers: contact_number_decision_not_filled_suppliers,
+                      type: 'Contact Number (Decision Maker) Not Filled',
+                      isCampaign: false,
+                      name: `${name} Entities of ${city} City`,
+                      supplier_type_code: type,
+                    },
+                    `suppliers`
+                  )
+                }
+              >
+                {contact_number_decision_not_filled_count}
+              </a>
+            ) : (
+              0
+            )}
+          </div>
+        );
+      },
+    },
+
     {
       dataField: 'count',
       text: 'Entity Count',
@@ -140,282 +550,6 @@ const getEntityCitywiseCount = () => {
           percentageChange = percentageChange.toFixed(2);
         }
         return <div>{last_3_month_count}</div>;
-      },
-    },
-    {
-      dataField: 'contact_name',
-      text: 'Contact Name',
-      row: 0,
-      colSpan: 3,
-    },
-    {
-      dataField: 'contact_name_filled_count',
-      text: 'Filled(Unique)',
-      row: 1,
-      width: '150px',
-      formatter: (cell, row) => {
-        const { name, city, contact_name_filled_suppliers, contact_name_filled_count, type } = row;
-        // Get supplier details from supplier ids
-        return (
-          <div>
-            {contact_name_filled_count && contact_name_filled_suppliers.length > 0 ? (
-              <Link
-                style={{ color: '#e8578d' }}
-                to={{
-                  pathname: `suppliers`,
-                  state: {
-                    suppliers: contact_name_filled_suppliers,
-                    type: 'Contact Name Filled',
-                    isCampaign: false,
-                    name: `${name} Entities of ${city} City`,
-                    is_contact_number: true,
-                    supplier_type_code: type,
-                  },
-                }}
-              >
-                {' '}
-                {contact_name_filled_count}
-                {/* <p style={{ color: 'green' }}>
-                  ({flat_count_details_filled_percentage}
-                  %)
-                </p> */}
-              </Link>
-            ) : (
-              0
-            )}
-          </div>
-        );
-      },
-    },
-    {
-      dataField: 'contact_name_total_filled_count',
-      text: 'Total Filled',
-      row: 1,
-      width: '120px',
-      formatter: (cell, row) => {
-        const {
-          contact_name_total_filled_suppliers,
-          contact_name_total_filled_count,
-          name,
-          city,
-          type,
-        } = row;
-        // Get supplier details from supplier ids
-        return (
-          <div>
-            {contact_name_total_filled_count && contact_name_total_filled_suppliers.length > 0 ? (
-              <Link
-                style={{ color: '#e8578d' }}
-                to={{
-                  pathname: `suppliers`,
-                  state: {
-                    suppliers: contact_name_total_filled_suppliers,
-                    type: 'Contact Name Total Filled',
-                    isCampaign: false,
-                    name: `${name} Entities of ${city} City`,
-                    is_multiple_contact_name: true,
-                    supplier_type_code: type,
-                  },
-                }}
-              >
-                {' '}
-                {contact_name_total_filled_count}
-                {/* <p style={{ color: 'green' }}>
-                  ({flat_count_details_filled_percentage}
-                  %)
-                </p> */}
-              </Link>
-            ) : (
-              0
-            )}
-          </div>
-        );
-      },
-    },
-    {
-      dataField: 'contact_name_not_filled_count',
-      text: 'Not Filled',
-      row: 1,
-      width: '100px',
-      formatter: (cell, row) => {
-        const {
-          contact_name_not_filled_suppliers,
-          contact_name_not_filled_count,
-          name,
-          city,
-          type,
-        } = row;
-        // Get supplier details from supplier ids
-        return (
-          <div>
-            {contact_name_not_filled_count && contact_name_not_filled_suppliers.length > 0 ? (
-              <Link
-                style={{ color: '#e8578d' }}
-                to={{
-                  pathname: `suppliers`,
-                  state: {
-                    suppliers: contact_name_not_filled_suppliers,
-                    type: 'Contact Name Not Filled',
-                    isCampaign: false,
-                    name: `${name} Entities of ${city} City`,
-                    supplier_type_code: type,
-                  },
-                }}
-              >
-                {' '}
-                {contact_name_not_filled_count}
-                {/* <p style={{ color: 'green' }}>
-                  ({flat_count_details_filled_percentage}
-                  %)
-                </p> */}
-              </Link>
-            ) : (
-              0
-            )}
-          </div>
-        );
-      },
-    },
-    {
-      dataField: 'contact_number',
-      text: 'Contact Number',
-      row: 0,
-      colSpan: 3,
-      sort: false,
-    },
-    {
-      dataField: 'contact_number_filled_count',
-      text: 'Filled(Unique)',
-      row: 1,
-      width: '150px',
-      formatter: (cell, row) => {
-        const {
-          contact_number_filled_suppliers,
-          contact_number_filled_count,
-          name,
-          city,
-          type,
-        } = row;
-        // Get supplier details from supplier ids
-        return (
-          <div>
-            {contact_number_filled_count && contact_number_filled_suppliers.length > 0 ? (
-              <Link
-                style={{ color: '#e8578d' }}
-                to={{
-                  pathname: `suppliers`,
-                  state: {
-                    suppliers: contact_number_filled_suppliers,
-                    type: 'Contact Number Filled',
-                    isCampaign: false,
-                    name: `${name} Entities of ${city} City`,
-                    is_contact_number: true,
-                    supplier_type_code: type,
-                  },
-                }}
-              >
-                {' '}
-                {contact_number_filled_count}
-                {/* <p style={{ color: 'green' }}>
-                  ({flat_count_details_filled_percentage}
-                  %)
-                </p> */}
-              </Link>
-            ) : (
-              0
-            )}
-          </div>
-        );
-      },
-    },
-    {
-      dataField: 'contact_number_total_filled_count',
-      text: 'Total Filled',
-      row: 1,
-      width: '120px',
-      formatter: (cell, row) => {
-        const {
-          contact_number_total_filled_suppliers,
-          contact_number_total_filled_count,
-          name,
-          city,
-          type,
-        } = row;
-        // Get supplier details from supplier ids
-        return (
-          <div>
-            {contact_number_total_filled_count &&
-            contact_number_total_filled_suppliers.length > 0 ? (
-              <Link
-                style={{ color: '#e8578d' }}
-                to={{
-                  pathname: `suppliers`,
-                  state: {
-                    suppliers: contact_number_total_filled_suppliers,
-                    type: 'Contact Number Total Filled',
-                    isCampaign: false,
-                    name: `${name} Entities of ${city} City`,
-                    is_multiple_contact_number: true,
-                    supplier_type_code: type,
-                  },
-                }}
-              >
-                {' '}
-                {contact_number_total_filled_count}
-                {/* <p style={{ color: 'green' }}>
-                  ({flat_count_details_filled_percentage}
-                  %)
-                </p> */}
-              </Link>
-            ) : (
-              0
-            )}
-          </div>
-        );
-      },
-    },
-    {
-      dataField: 'contact_number_not_filled_count',
-      text: 'Not Filled',
-      row: 1,
-      width: '100px',
-      formatter: (cell, row) => {
-        const {
-          contact_number_not_filled_suppliers,
-          contact_number_not_filled_count,
-          name,
-          city,
-          type,
-        } = row;
-        // Get supplier details from supplier ids
-        return (
-          <div>
-            {contact_number_not_filled_count && contact_number_not_filled_suppliers.length > 0 ? (
-              <Link
-                style={{ color: '#e8578d' }}
-                to={{
-                  pathname: `suppliers`,
-                  state: {
-                    suppliers: contact_number_not_filled_suppliers,
-                    type: 'Contact Number Not Filled',
-                    isCampaign: false,
-                    name: `${name} Entities of ${city} City`,
-                    supplier_type_code: type,
-                  },
-                }}
-              >
-                {' '}
-                {contact_number_not_filled_count}
-                {/* <p style={{ color: 'green' }}>
-                  ({flat_count_details_filled_percentage}
-                  %)
-                </p> */}
-              </Link>
-            ) : (
-              0
-            )}
-          </div>
-        );
       },
     },
   ];

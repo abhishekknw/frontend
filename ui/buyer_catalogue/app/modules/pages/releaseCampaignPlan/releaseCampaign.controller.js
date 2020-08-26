@@ -1383,7 +1383,7 @@ angular.module('catalogueApp')
           }
         }
         $scope.initialiseImportSheet = function () {
-          getUsersList();
+          // getUsersList();
           getProposalCenters();
         }
         var getProposalCenters = function () {

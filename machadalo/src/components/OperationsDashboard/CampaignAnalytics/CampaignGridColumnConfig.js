@@ -48,6 +48,7 @@ const getCampaignColumn = () => {
                   campaign_id,
                 },
               }}
+              target={'_blank'}
             >
               {'View Details'}
             </Link>
