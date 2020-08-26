@@ -569,8 +569,18 @@
               </td>
 
               <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
-                <input class="form-control spacing input-width" ng-model="supplier.next_action_date" type="date" readonly name=""
-                  ng-disabled="supplier.is_completed">
+                <!-- <input class="form-control spacing input-width" ng-model="supplier.next_action_date" type="date" readonly name=""
+                  ng-disabled="supplier.is_completed"> -->
+
+                  <p class="input-group">
+                    <input type="text" class="form-control col-md-4" ng-model="supplier.next_action_date"
+                      ng-disabled="supplier.is_completed" readonly uib-datepicker-popup="dd/MM/yyyy" is-open="popup1" min-date=""
+                      datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}" />
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="popup1=true"><i
+                          class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                  </p>
               </td>
 
               <td ng-if="key=='NA'">{{key}} </td>

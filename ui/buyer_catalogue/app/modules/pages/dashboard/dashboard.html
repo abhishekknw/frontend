@@ -1060,6 +1060,9 @@
                   </uib-tab-heading>
                   <div class="container-fluid">
                     <div class="panel panel-default">
+                        <div class="col-md-12 " ng-if="!showCampaigns" style="text-align:right;margin-bottom:10px;">
+                        <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button>
+                        </div>
                       <div class="col-md-6">
                             <h4 class="panel-title">
                               <select class="form-control" ng-model="selectedVendor.name" ng-change="getCampaignsByVendor()">
@@ -1151,7 +1154,7 @@
                     </div>
                   </div>
                     <div class="viewLeadstable" ng-if="!showCampaigns">
-                      <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button>
+                      <!-- <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button> -->
                     </br><br>
                       <input type="text" class="form-control" ng-model="searchData" placeholder="search">
                       <div class="table-responsive">
