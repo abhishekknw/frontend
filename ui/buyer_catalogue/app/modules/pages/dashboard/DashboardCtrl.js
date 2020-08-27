@@ -690,15 +690,13 @@
             })
 
             $scope.vendorsList = Object.keys($scope.vendorsData);
-
-            $scope.campaigns = [$scope.campaignData.ongoing_campaigns.length, $scope.campaignData.completed_campaigns.length, $scope.campaignData.upcoming_campaigns.length, $scope.campaignData.onhold_campaigns.length];
-            $scope.campaignChartdata = [
-              { label: $scope.allCampaignStatusType.ongoing.campaignLabel, value: $scope.campaignData.ongoing_campaigns.length, status: $scope.allCampaignStatusType.ongoing.status },
-              { label: $scope.allCampaignStatusType.completed.campaignLabel, value: $scope.campaignData.completed_campaigns.length, status: $scope.allCampaignStatusType.completed.status },
-              { label: $scope.allCampaignStatusType.upcoming.campaignLabel, value: $scope.campaignData.upcoming_campaigns.length, status: $scope.allCampaignStatusType.upcoming.status },
-              { label: $scope.allCampaignStatusType.onhold.campaignLabel, value: $scope.campaignData.onhold_campaigns.length, status: $scope.allCampaignStatusType.onhold.status }
-
-            ];
+            // $scope.campaigns = [$scope.campaignData.ongoing_campaigns.length, $scope.campaignData.completed_campaigns.length, $scope.campaignData.upcoming_campaigns.length, $scope.campaignData.onhold_campaigns.length];
+            // $scope.campaignChartdata = [
+            //   { label: $scope.allCampaignStatusType.ongoing.campaignLabel, value: $scope.campaignData.ongoing_campaigns.length, status: $scope.allCampaignStatusType.ongoing.status },
+            //   { label: $scope.allCampaignStatusType.completed.campaignLabel, value: $scope.campaignData.completed_campaigns.length, status: $scope.allCampaignStatusType.completed.status },
+            //   { label: $scope.allCampaignStatusType.upcoming.campaignLabel, value: $scope.campaignData.upcoming_campaigns.length, status: $scope.allCampaignStatusType.upcoming.status },
+            //   { label: $scope.allCampaignStatusType.onhold.campaignLabel, value: $scope.campaignData.onhold_campaigns.length, status: $scope.allCampaignStatusType.onhold.status }
+            // ];
             $scope.options = angular.copy(doughnutChartOptions);
             $scope.options.chart.pie.dispatch['elementClick'] = function (e) {  $scope.pieChartClick(e.data.label); };
             $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.getCampaignInvData(e.data); };
@@ -2965,7 +2963,7 @@
       }
 
       $scope.getCampaignInvData = function (data) {
-   
+      
         $scope.supplierStatus = data.status; 
         $scope.campaignDetailsData = $scope.campaignAllStatusTypeData[data.status];
          if( $scope.supplierStatus == 'onhold_campaigns'){
@@ -3453,6 +3451,7 @@
         return isNaN(number);
       }
       $scope.viewCampaignLeads = function (value) {
+      
         cfpLoadingBar.start();
         DashboardService.viewCampaignLeads($scope.selectedVendor.name, $scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
@@ -3461,6 +3460,34 @@
             $scope.AllCampaignSupplierCount = 0;
             $scope.AllCampaignFlatCount = 0;
             $scope.allCampaignDetailsData = response.data.data;
+            let completed_campaigns_length = 0
+            let ongoing_campaigns_length = 0
+            let upcoming_campaigns_length = 0
+            let onhold_campaigns_length = 0
+            for(let i in $scope.allCampaignDetailsData){
+              if($scope.allCampaignDetailsData[i].campaign_status == 'completed'){
+                completed_campaigns_length = completed_campaigns_length + 1;
+              }
+
+              if($scope.allCampaignDetailsData[i].campaign_status == 'on_hold'){
+                onhold_campaigns_length = onhold_campaigns_length + 1;
+              }
+
+              if($scope.allCampaignDetailsData[i].campaign_status == 'ongoing'){
+                ongoing_campaigns_length = ongoing_campaigns_length + 1;
+              }
+
+              if($scope.allCampaignDetailsData[i].campaign_status == 'upcoming'){
+                upcoming_campaigns_length = upcoming_campaigns_length + 1;
+              }
+            }
+            $scope.campaigns = [ongoing_campaigns_length, completed_campaigns_length,upcoming_campaigns_length, onhold_campaigns_length];
+            $scope.campaignChartdata = [
+              { label: $scope.allCampaignStatusType.ongoing.campaignLabel, value: ongoing_campaigns_length, status: $scope.allCampaignStatusType.ongoing.status },
+              { label: $scope.allCampaignStatusType.completed.campaignLabel, value: completed_campaigns_length, status: $scope.allCampaignStatusType.completed.status },
+              { label: $scope.allCampaignStatusType.upcoming.campaignLabel, value: upcoming_campaigns_length, status: $scope.allCampaignStatusType.upcoming.status },
+              { label: $scope.allCampaignStatusType.onhold.campaignLabel, value: onhold_campaigns_length, status: $scope.allCampaignStatusType.onhold.status }
+            ];
             $scope.dynamicValues = $scope.allCampaignDetailsData;
             $scope.dynamicValuesCampaignIdMap = {};
             angular.forEach($scope.dynamicValues, function (data) {
@@ -3468,6 +3495,7 @@
             })
             $scope.showTableForAllCampaignDisplay = false;
             angular.forEach($scope.allCampaignDetailsData, function (data) {
+        
               $scope.campaignLength = data.length;
               if (data.total_leads) {
                 $scope.AllCampaignTotalLeadsCount += data.total_leads;
