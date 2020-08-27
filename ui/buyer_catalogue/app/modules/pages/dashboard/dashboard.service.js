@@ -229,7 +229,7 @@ angular.module('catalogueApp')
         // if (supplierType) {
         //     url += "?supplier_code=" + supplierType;
         // }
-        console.log('111111111111111111111111111111111111111111111111111111111111', data)
+        
         if (data && data.hasOwnProperty('start_date') && data.hasOwnProperty('end_date') && data.start_date != "Invalid Date" && data.end_date != "Invalid Date") {
           url += "?start_date=" + data.start_date + "&end_date=" + data.end_date;
           if (supplierType) {

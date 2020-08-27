@@ -15,6 +15,7 @@ angular.module('catalogueApp')
         $scope.headings = [
           { header: 'Phase' },
           { header: 'Supplier Name & Address' },
+          { header: 'Brand' },
           { header: 'AdInventory Id' },
           { header: 'Action' },
           { header: 'Activity Date' },
@@ -294,6 +295,10 @@ angular.module('catalogueApp')
               commonDataShare.showErrorMessage(response);
               console.log("error occured", response.status);
             });
+        }
+
+        $scope.changeLocation = function () {
+          $location.path('/' + $scope.campaign_id + '/releasePlan');
         }
 
         $scope.invActivityData_struct = [

@@ -206,7 +206,7 @@
         { header: 'GATEWAY ARCH' },
         { header: 'BANNER' },
         { header: 'SUNBOARD' },
-        { header: 'HORDING' },
+        { header: 'HOARDING' },
         { header: 'GENTRY' },
         { header: 'BUS SHELTER' },
         { header: 'BUS BACK' },
@@ -220,13 +220,12 @@
         { header: 'TENT CARD' },
         { header: 'TABLE' },
         { header: 'WALL' },
-        { header: 'HORDING LIT' },
+        { header: 'HOARDING LIT' },
         { header: 'BUS SHELTER LIT' },
         { header: 'GANTRY LIT' },
         { header: 'POSTER LIFT' },
         { header: 'CAR DISPLAY' },
         { header: 'GANTRY' },
-        { header: 'HORDING LIT' },
         { header: 'WHATSAPP INDIVIDUAL' },
         { header: 'WHATSAPP GROUP' },
       ];
@@ -691,15 +690,13 @@
             })
 
             $scope.vendorsList = Object.keys($scope.vendorsData);
-
-            $scope.campaigns = [$scope.campaignData.ongoing_campaigns.length, $scope.campaignData.completed_campaigns.length, $scope.campaignData.upcoming_campaigns.length, $scope.campaignData.onhold_campaigns.length];
-            $scope.campaignChartdata = [
-              { label: $scope.allCampaignStatusType.ongoing.campaignLabel, value: $scope.campaignData.ongoing_campaigns.length, status: $scope.allCampaignStatusType.ongoing.status },
-              { label: $scope.allCampaignStatusType.completed.campaignLabel, value: $scope.campaignData.completed_campaigns.length, status: $scope.allCampaignStatusType.completed.status },
-              { label: $scope.allCampaignStatusType.upcoming.campaignLabel, value: $scope.campaignData.upcoming_campaigns.length, status: $scope.allCampaignStatusType.upcoming.status },
-              { label: $scope.allCampaignStatusType.onhold.campaignLabel, value: $scope.campaignData.onhold_campaigns.length, status: $scope.allCampaignStatusType.onhold.status }
-
-            ];
+            // $scope.campaigns = [$scope.campaignData.ongoing_campaigns.length, $scope.campaignData.completed_campaigns.length, $scope.campaignData.upcoming_campaigns.length, $scope.campaignData.onhold_campaigns.length];
+            // $scope.campaignChartdata = [
+            //   { label: $scope.allCampaignStatusType.ongoing.campaignLabel, value: $scope.campaignData.ongoing_campaigns.length, status: $scope.allCampaignStatusType.ongoing.status },
+            //   { label: $scope.allCampaignStatusType.completed.campaignLabel, value: $scope.campaignData.completed_campaigns.length, status: $scope.allCampaignStatusType.completed.status },
+            //   { label: $scope.allCampaignStatusType.upcoming.campaignLabel, value: $scope.campaignData.upcoming_campaigns.length, status: $scope.allCampaignStatusType.upcoming.status },
+            //   { label: $scope.allCampaignStatusType.onhold.campaignLabel, value: $scope.campaignData.onhold_campaigns.length, status: $scope.allCampaignStatusType.onhold.status }
+            // ];
             $scope.options = angular.copy(doughnutChartOptions);
             $scope.options.chart.pie.dispatch['elementClick'] = function (e) {  $scope.pieChartClick(e.data.label); };
             $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.getCampaignInvData(e.data); };
@@ -1738,6 +1735,7 @@
         DashboardService.getSuppliersOfCampaignWithStatus(campaign.campaign)
           .then(function onSuccess(response) {
             cfpLoadingBar.complete();
+            $scope.options1 = [];
             // $scope.getPhases(campaign.campaign);
 
             // $scope.overallMetricStatus = [
@@ -2702,6 +2700,11 @@
       $scope.selected_baselines_customTexts_vendor = { buttonDefaultText: 'Select Vendor' };
       $scope.selected_baselines_customTexts_qualityTypesociety = { buttonDefaultText: 'Select Type of Society' };
       $scope.selected_baselines_customTexts_sizeOfFlats = { buttonDefaultText: 'Select Size of Society' };
+      $scope.selected_baselines_customTexts_sizeOfCorporate = { buttonDefaultText: 'Select Size of Corporate' };
+      $scope.selected_baselines_customTexts_sizeOfBusShelter = { buttonDefaultText: 'Select Size of Bus Shelter' };
+      $scope.selected_baselines_customTexts_sizeOfGym = { buttonDefaultText: 'Select Size of Gym' };
+      $scope.selected_baselines_customTexts_sizeOfSaloon = { buttonDefaultText: 'Select Size of Saloon' };
+      $scope.selected_baselines_customTexts_sizeOfRetailStore = { buttonDefaultText: 'Select Size of Retail Store' };
       $scope.selected_baselines_customTexts_freebies = { buttonDefaultText: 'Select Freebies' };
       $scope.selected_baselines_customTexts_graphParams = { buttonDefaultText: 'Select Graph Param' };
 
@@ -2899,7 +2902,7 @@
         'SUNBOARD': {
           status: false, total: 0
         },
-        'HORDING': {
+        'HOARDING': {
           status: false, total: 0
         },
         'GENTRY': {
@@ -2941,7 +2944,7 @@
         'WALL': {
           status: false, total: 0
         },
-        'HORDING LIT': {
+        'HOARDING LIT': {
           status: false, total: 0
         },
         'BUS SHELTER': {
@@ -2960,7 +2963,7 @@
       }
 
       $scope.getCampaignInvData = function (data) {
-   
+      
         $scope.supplierStatus = data.status; 
         $scope.campaignDetailsData = $scope.campaignAllStatusTypeData[data.status];
          if( $scope.supplierStatus == 'onhold_campaigns'){
@@ -3448,6 +3451,7 @@
         return isNaN(number);
       }
       $scope.viewCampaignLeads = function (value) {
+      
         cfpLoadingBar.start();
         DashboardService.viewCampaignLeads($scope.selectedVendor.name, $scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
@@ -3456,6 +3460,34 @@
             $scope.AllCampaignSupplierCount = 0;
             $scope.AllCampaignFlatCount = 0;
             $scope.allCampaignDetailsData = response.data.data;
+            let completed_campaigns_length = 0
+            let ongoing_campaigns_length = 0
+            let upcoming_campaigns_length = 0
+            let onhold_campaigns_length = 0
+            for(let i in $scope.allCampaignDetailsData){
+              if($scope.allCampaignDetailsData[i].campaign_status == 'completed'){
+                completed_campaigns_length = completed_campaigns_length + 1;
+              }
+
+              if($scope.allCampaignDetailsData[i].campaign_status == 'on_hold'){
+                onhold_campaigns_length = onhold_campaigns_length + 1;
+              }
+
+              if($scope.allCampaignDetailsData[i].campaign_status == 'ongoing'){
+                ongoing_campaigns_length = ongoing_campaigns_length + 1;
+              }
+
+              if($scope.allCampaignDetailsData[i].campaign_status == 'upcoming'){
+                upcoming_campaigns_length = upcoming_campaigns_length + 1;
+              }
+            }
+            $scope.campaigns = [ongoing_campaigns_length, completed_campaigns_length,upcoming_campaigns_length, onhold_campaigns_length];
+            $scope.campaignChartdata = [
+              { label: $scope.allCampaignStatusType.ongoing.campaignLabel, value: ongoing_campaigns_length, status: $scope.allCampaignStatusType.ongoing.status },
+              { label: $scope.allCampaignStatusType.completed.campaignLabel, value: completed_campaigns_length, status: $scope.allCampaignStatusType.completed.status },
+              { label: $scope.allCampaignStatusType.upcoming.campaignLabel, value: upcoming_campaigns_length, status: $scope.allCampaignStatusType.upcoming.status },
+              { label: $scope.allCampaignStatusType.onhold.campaignLabel, value: onhold_campaigns_length, status: $scope.allCampaignStatusType.onhold.status }
+            ];
             $scope.dynamicValues = $scope.allCampaignDetailsData;
             $scope.dynamicValuesCampaignIdMap = {};
             angular.forEach($scope.dynamicValues, function (data) {
@@ -3463,6 +3495,7 @@
             })
             $scope.showTableForAllCampaignDisplay = false;
             angular.forEach($scope.allCampaignDetailsData, function (data) {
+        
               $scope.campaignLength = data.length;
               if (data.total_leads) {
                 $scope.AllCampaignTotalLeadsCount += data.total_leads;
@@ -4072,6 +4105,7 @@
             dateRange.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
             dateRange.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
           $scope.selectedSupplierType.code = "RS";
+          $scope.flat_count_header = "Flat Count";
         }
         DashboardService.getCampaignDateWiseData(dateRange,$scope.selectedSupplierType.code)
           .then(function onSuccess(response) {

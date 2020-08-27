@@ -364,7 +364,7 @@
       <div class="col-md-4 table-responsive gridViewTable" ng-if="show_societies" style="height: 550px">
 
 
-        <h2>Grid View </h2>
+        <h2>Grid View</h2>
         <div class="col-md-12">
           <div class="col-md-6 pull-left">
             <select class="drop-width box-spacing form-control" ng-model="supplierListCode"
@@ -525,6 +525,7 @@
                 </div>
               </td>
             </tr>
+            <h4 style="color:red;text-align: center" ng-show="(center_data | filter : query).length==0" >Record not found.</h4>
             <!-- <span ng-if="(!supplier && (corporate_allowed_gridview && ((supplierListCode == supplierName.corporate) || (supplierListCode == supplierName.all))))">Data Not Found</span> -->
           </tbody>
 
