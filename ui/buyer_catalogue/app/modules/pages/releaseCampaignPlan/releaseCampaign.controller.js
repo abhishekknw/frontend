@@ -477,13 +477,14 @@ angular.module('catalogueApp')
         }
         //Start:To set contacts to show in contactModal
         $scope.setContact = function (supplier) {
+       
           if(supplier.supplier_code == 'RE' || supplier.supplier_code == 'HO' || supplier.supplier_code == 'BS' ){
             $scope.Contact_Type = constants.retail_shop_contact_type;
           } else if(supplier.supplier_code == 'CP'){
             $scope.Contact_Type = constants.corporate_contact_type;
           } else if(supplier.supplier_code == 'SA' || supplier.supplier_code =='GY'){
             $scope.Contact_Type = constants.salon_contact_type;
-          } else if(supplier.supplier_code == 'RS'){
+          } else if(supplier.supplier_code == 'RS' || supplier.supplier_code == 'SYN'){
             $scope.Contact_Type = constants.society_contact_type;
           } 
         
