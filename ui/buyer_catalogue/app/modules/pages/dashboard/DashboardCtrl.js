@@ -666,9 +666,11 @@
         $scope.showDisplayDetailsTable = false;
         $scope.showAllCampaignDisplay = false;
         $scope.allCampaignsLeadsData = {};
+        $scope.options = {};
         $scope.viewCampaignLeads(true,$scope.selectedSupplierType.code);
         DashboardService.getCampaigns(orgId, category, date, $scope.selectedVendor.name, supplierType)
           .then(function onSuccess(response) {
+     
             cfpLoadingBar.complete();
             $scope.searchSelectAllModel = [];
             $scope.showSingleCampaignChart = false;
@@ -3451,6 +3453,7 @@
         return isNaN(number);
       }
       $scope.viewCampaignLeads = function (value) {
+        // $scope.getCampaigns();
       
         cfpLoadingBar.start();
         DashboardService.viewCampaignLeads($scope.selectedVendor.name, $scope.selectedSupplierType.code)
