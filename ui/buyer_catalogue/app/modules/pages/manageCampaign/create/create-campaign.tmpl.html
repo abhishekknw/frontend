@@ -123,9 +123,9 @@
             </tr>
             <tr ng-repeat="proposal in account_proposals |orderBy : '-created_at'">
               <td>{{proposal.name}}</td>
-              <td>Vidhi</td><!-- {{proposal.created_by}} -->
+              <td>{{proposal.created_by}}</td><!-- {{proposal.created_by}} -->
               <td>{{proposal.created_on | limitTo:10 }}</td>
-              <td>Vidhi</td><!-- {{proposal.updated_by}} -->
+              <td>{{proposal.updated_by}}</td><!-- {{proposal.updated_by}} -->
               <td>{{proposal.updated_on | limitTo:10}}</td>
               <td ng-if="proposal.campaign_state == null"></td>
               <td ng-if="proposal.campaign_state == proposalRequested">
