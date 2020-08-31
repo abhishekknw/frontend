@@ -208,6 +208,8 @@
 
             <th>{{detailsHeader.contacts_details}}</th>
             <th>{{detailsHeader.assign_user}}</th>
+            <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b'">{{detailsHeader.requirement_given}}</th>
+
             <th>{{detailsHeader.booking_priority}}</th>
             <th>{{detailsHeader.booking_status_and_sub_status}}</th>
             <th>{{detailsHeader.phase}}</th>
@@ -251,6 +253,7 @@
 
             <th>{{detailsHeader.contacts_details}}</th>
             <th>{{detailsHeader.assign_user}}</th>
+            <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b'">{{detailsHeader.requirement_given}}</th>
             <th>{{detailsHeader.booking_priority}}</th>
             <th>{{detailsHeader.booking_status_and_sub_status}}</th>
             <th>{{detailsHeader.phase}}</th>
@@ -326,6 +329,7 @@
 
             <th>{{detailsHeader.contacts_details}}</th>
             <th>{{detailsHeader.assign_user}}</th>
+            <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b'">{{detailsHeader.requirement_given}}</th>
             <th>{{detailsHeader.booking_priority}}</th>
             <th>{{detailsHeader.booking_status_and_sub_status}}</th>
             <th>{{detailsHeader.phase}}</th>
@@ -501,6 +505,17 @@
                     </div>
                   </div>
               </td>
+
+              
+                <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b'">
+                  <select class="form-control spacing input-width" ng-model="supplier.requirement_given"
+                    ng-disabled="supplier.is_completed">
+                    <option value="" disabled="">select requirement</option>
+                    <option style="width:100%;" ng-repeat="requirement in requirement_Given" value="{{requirement}}">
+                      {{requirement}}</option>
+                  </select>
+                </td>
+              
 
               <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <select class="form-control spacing input-width" ng-model="supplier.booking_priority"
@@ -993,6 +1008,15 @@
                       </div>
                     </div>
                   </div>
+              </td>
+
+              <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b'">
+                <select class="form-control spacing input-width" ng-model="supplier.requirement_given"
+                  ng-disabled="supplier.is_completed">
+                  <option value="" disabled="">None</option>
+                  <option style="width:100%;" ng-repeat="requirement in requirement_Given" value="{{requirement}}">
+                    {{requirement}}</option>
+                </select>
               </td>
 
               <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
