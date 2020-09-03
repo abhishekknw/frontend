@@ -177,7 +177,8 @@
               <button class="smallBtn" data-target="#addNewLeadFormFields" data-toggle="modal" ng-if="updateForm">Add New Fields</button>
               <button class="smallBtn" ng-click="updateFormFields()" ng-disabled="$root.fieldForm.$invalid" ng-if="updateForm">Update Fields</button>
               <button class="smallBtn"  ng-disabled="$root.fieldForm.$invalid"  ng-click="saveLeadForm()" ng-if="!updateForm">Submit </button>
-              <button class="smallBtn"  data-target="#globalHotLeadsCriteria" data-toggle="modal">Global Hot Leads Criteria</button>
+              <button class="smallBtn"  data-target="#globalHotLeadsCriteria" ng-disabled="!updateForm" data-toggle="modal">Global Hot Leads Criteria</button>
+              <p class="red" ng-if="!updateForm">Please submit form first to add global hot lead criteria.</p>
             </div>
           </form>
         </div>
@@ -576,12 +577,16 @@
                       </div>
                       <br><br>
                         <button ng-click="addFieldInCriteria(op.items,fieldVal)" ng-disabled="!fieldVal" class="btn btn-danger">Add Field</button>
-                        <button class="btn btn-danger" ng-click="globalHotLeadCriteria.splice($index,1)">
+                        <!-- <button class="btn btn-danger" ng-click="globalHotLeadCriteria.splice($parent.$index,1)">
                             <span  class="glyphicon glyphicon-trash"></span>
-                        </button>
+                        </button> -->
+                        <button class="btn btn-danger" ng-click="removeglobalHot($parent.$index,item)">
+                          <span  class="glyphicon glyphicon-trash"></span>
+                      </button>
                     </div>                  
                     <br>
                   </td>
+               
                   <!-- </div> -->
                   
                 </tr>
