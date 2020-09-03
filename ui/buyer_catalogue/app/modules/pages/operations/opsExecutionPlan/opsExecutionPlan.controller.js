@@ -143,6 +143,7 @@ angular.module('catalogueApp')
           });
         });
         $scope.paginationData = $scope.campaignDataList;
+        console.log('++++++++++++++++++++++++++++++++++++++++++',$scope.paginationData)
         $scope.paginationDataNew = $scope.campaignDataList;
         console.log($scope.campaignDataList);
         $scope.dateCode ;
