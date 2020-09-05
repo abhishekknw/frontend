@@ -1567,6 +1567,7 @@
         "chart": {
           "type": "multiBarChart",
           "height": 450,
+         
           // "labelType" : "11",
           "margin": {
             "top": 100,
@@ -1608,6 +1609,7 @@
         "chart": {
           "type": "multiBarChart",
           "height": 450,
+          "width":500,
           // "labelType" : "11",
           "margin": {
             "top": 100,
@@ -1647,6 +1649,7 @@
         "chart": {
           "type": "multiBarChart",
           "height": 450,
+          "width":500,
           // "labelType" : "11",
           "margin": {
             "top": 100,
@@ -1686,6 +1689,7 @@
         "chart": {
           "type": "multiBarChart",
           "height": 450,
+          "width":500,
           // "labelType" : "11",
           "margin": {
             "top": 100,
@@ -2173,17 +2177,27 @@
         $scope.showPerfMetrics = $scope.perfMetrics.blank;
         var result;
 
-        if ($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date') &&
-          !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
-
-          $scope.dateRangeModel.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
-          $scope.dateRangeModel.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
+     
+         
+        // if ($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date') &&
+        //   !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
+        //   $scope.dateRangeModel.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
+        //   $scope.dateRangeModel.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
+        if($scope.dateRangeModel.start_dates && $scope.dateRangeModel.end_dates){ 
+          $scope.dateRangeModel.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_dates);
+          $scope.dateRangeModel.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_dates);
           result = DashboardService.getLeadsByCampaign(campaignId, $scope.dateRangeModel,$scope.selectedSupplierType.code)
         } else {
-          result = DashboardService.getLeadsByCampaign(campaignId,'',$scope.selectedSupplierType.code)
-        }
-           
+           if($scope.selectedSupplierType.code != 'all'){
+            result = DashboardService.getLeadsByCampaign(campaignId,'',$scope.selectedSupplierType.code)
+           } else {
+            swal(constants.name, "Please select supplier type first", constants.warning);
+            cfpLoadingBar.complete();
+           }
+          
+        }  
         // DashboardService.getLeadsByCampaign(campaignId)
+        if(result){
         result.then(function onSuccess(response) {
           $scope.dateRangeModel.start_date = new Date($scope.dateRangeModel.start_date);
           $scope.dateRangeModel.end_date = new Date($scope.dateRangeModel.end_date);
@@ -2312,6 +2326,7 @@
           console.log(response);
         })
       }
+      }
 
       var formatMultiBarChartDataForSuppliers = function (data) {
         var leadValues = [];
@@ -2346,10 +2361,10 @@
         
         temp_data.push(row);
 
-        for(var i in $scope.Data.overall_data.hot_level_keys){
+        for(var j in $scope.Data.overall_data.hot_level_keys){
           row = {
-            key: $scope.Data.overall_data.hot_level_keys[i]+" in % :",
-            values: values[i]
+            key: $scope.Data.overall_data.hot_level_keys[j]+" in % :",
+            values: values[j]
           };
           
           temp_data.push(row);
@@ -4096,20 +4111,22 @@
      
 
       $scope.getCampaignDateWiseSummary = function () {
-        
-        // $scope.getVendorWiseSummary();
-        // $scope.getDynamicGraphsStatics();
-        cfpLoadingBar.start();
         var dateRange = {}
-
         if ($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date') &&
-          !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
+        !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
 
-            dateRange.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
-            dateRange.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
-          $scope.selectedSupplierType.code = "RS";
-          $scope.flat_count_header = "Flat Count";
-        }
+          dateRange.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
+          dateRange.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
+        $scope.selectedSupplierType.code = "RS";
+        $scope.flat_count_header = "Flat Count";
+      }
+        $scope.getVendorWiseSummary();
+        $scope.getDynamicGraphsStatics();
+        cfpLoadingBar.start();
+       
+
+       
+
         DashboardService.getCampaignDateWiseData(dateRange,$scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
             // $scope.dateRangeModel.start_date = new Date($scope.dateRangeModel.start_date);
@@ -4136,9 +4153,9 @@
             $scope.last2WeekSummaryStackedBarChart = angular.copy(last2WeekSummaryStackedBar);
             $scope.last3WeekSummaryStackedBarChart = angular.copy(last3WeekSummaryStackedBar);
 
-
-            if (Object.keys($scope.overallCampaignSummary).length > 4) {
-              $scope.OverallSummaryStackedBarChart.chart['width'] = Object.keys($scope.overallCampaignSummary).length * 100;
+            $scope.OverallSummaryStackedBarChart.chart['width'] = 500 
+            if (Object.keys($scope.overallCampaignSummary).length > 1) {
+              $scope.OverallSummaryStackedBarChart.chart['width'] = Object.keys($scope.overallCampaignSummary).length * 150;
             }
 
             $scope.stackedBarAllCampaignWiseChart = formatAllCampaignWiseChart($scope.overallCampaignSummary);
@@ -4155,22 +4172,26 @@
 
 
       $scope.getCampaignWiseSummary = function () {
-        var dateRange = {}
+        var dateRanges = {}
         if($scope.dateRangeModel.start_dates && $scope.dateRangeModel.end_dates){
         //   if ($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date') &&
         //   !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
 
-            dateRange.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_dates);
-            dateRange.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_dates);
+            dateRanges.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_dates);
+            dateRanges.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_dates);
           
         // }
-        } else {
-          $scope.getVendorWiseSummary();
-          $scope.getDynamicGraphsStatics();
         }
+        //  else {
+        //   $scope.getVendorWiseSummary();
+        //   $scope.getDynamicGraphsStatics();
+        // }
+
+        $scope.getVendorWiseSummary();
+        $scope.getDynamicGraphsStatics();
       
         cfpLoadingBar.start();
-        DashboardService.getCampaignWiseSummary(dateRange,$scope.selectedSupplierType.code)
+        DashboardService.getCampaignWiseSummary(dateRanges,$scope.selectedSupplierType.code)
           .then(function onSuccess(response) {
             $scope.showPerfMetrics = $scope.perfMetrics.overall;
             $scope.selectAllCampaignLeads = true;
@@ -4194,9 +4215,9 @@
             $scope.last2WeekSummaryStackedBarChart = angular.copy(last2WeekSummaryStackedBar);
             $scope.last3WeekSummaryStackedBarChart = angular.copy(last3WeekSummaryStackedBar);
 
-
-            if (Object.keys($scope.overallCampaignSummary).length > 4) {
-              $scope.OverallSummaryStackedBarChart.chart['width'] = Object.keys($scope.overallCampaignSummary).length * 100;
+            $scope.OverallSummaryStackedBarChart.chart['width'] = 500
+            if (Object.keys($scope.overallCampaignSummary).length > 1) {
+              $scope.OverallSummaryStackedBarChart.chart['width'] = Object.keys($scope.overallCampaignSummary).length * 150;
             }
 
             $scope.stackedBarAllCampaignWiseChart = formatAllCampaignWiseChart($scope.overallCampaignSummary);
