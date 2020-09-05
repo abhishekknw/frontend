@@ -510,8 +510,7 @@
                 <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_lead_distribution'">
                   <select class="form-control spacing input-width" ng-model="supplier.requirement_given"
                     ng-disabled="supplier.is_completed">
-                    <option value="" disabled="">select requirement</option>
-                    <option style="width:100%;" ng-repeat="requirement in requirement_Given" value="{{requirement}}">
+                    <option style="width:100%;" ng-repeat="(key, requirement) in requirement_Given" value="{{key}}">
                       {{requirement}}</option>
                   </select>
                 </td>
@@ -1013,8 +1012,7 @@
               <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_lead_distribution'">
                 <select class="form-control spacing input-width" ng-model="supplier.requirement_given"
                   ng-disabled="supplier.is_completed">
-                  <option value="" disabled="">None</option>
-                  <option style="width:100%;" ng-repeat="requirement in requirement_Given" value="{{requirement}}">
+                  <option style="width:100%;" ng-repeat="(key, requirement) in requirement_Given" value="{{key}}">
                     {{requirement}}</option>
                 </select>
               </td>
