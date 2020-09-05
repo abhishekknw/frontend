@@ -118,7 +118,7 @@ angular.module('catalogueApp')
           { name: 'Others(Specify)', code: 'ROS' },
         ];
 
-        $scope.requirement_Given = ['yes','no'];
+        $scope.requirement_Given = ['Yes','No'];
         $scope.sheetUrl = '../../assets/img/booking_plan_sheet_v1.xlsx'
 
         $scope.booking_tentative = [
