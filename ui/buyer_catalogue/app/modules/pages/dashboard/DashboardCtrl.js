@@ -4214,7 +4214,7 @@
 
             $scope.OverallSummaryStackedBarChart.chart['width'] = 500
             if (Object.keys($scope.overallCampaignSummary).length > 1) {
-              $scope.OverallSummaryStackedBarChart.chart['width'] = Object.keys($scope.overallCampaignSummary).length * 150;
+              $scope.OverallSummaryStackedBarChart.chart['width'] = Object.keys($scope.overallCampaignSummary).length * 200;
             }
 
             $scope.stackedBarAllCampaignWiseChart = formatAllCampaignWiseChart($scope.overallCampaignSummary);
