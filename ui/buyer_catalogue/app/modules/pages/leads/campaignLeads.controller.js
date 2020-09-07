@@ -305,10 +305,22 @@ angular.module('catalogueApp')
       }
 
       $scope.getLeadForm = function(item){
+     
+        
         $scope.updateForm = false;
         $scope.formName.name = undefined;
         $scope.leadFormFields = [];
         if(item){
+          $scope.item = item;
+          var new_hotness_mapping = {};
+          angular.forEach(item.hotness_mapping, function(key,value){
+            angular.forEach(item.global_hot_lead_criteria, function(keys,values){
+              if(value == values){
+                new_hotness_mapping[value] = key
+              }
+            })
+          })  
+          item.hotness_mapping =  new_hotness_mapping 
           $scope.newLeadFormFields = [];
           $scope.addNewLeadFormField();
           $scope.updateForm = true;
@@ -316,8 +328,7 @@ angular.module('catalogueApp')
           $scope.formName.name = item.leads_form_name;
           $scope.leadFormFields = item.leads_form_items;
           setCriteria(item.global_hot_lead_criteria);        
-          setAliasMapping(item.hotness_mapping);  
-          
+          setAliasMapping(item.hotness_mapping); 
         }
         else{
           $scope.leadFormFields.push(angular.copy(leadFormField));
@@ -634,14 +645,16 @@ angular.module('catalogueApp')
     })
     campaignLeadsService.updateFormFields($scope.leads_form_id,data,$scope.campaignId)
     .then(function onSuccess(response){
-      $scope.leadFormFields = [];
-      $scope.formName.name = undefined;
-      if(document.getElementById("globalHotLeadsCriteria").style.display == 'block'){
-        angular.element('#globalHotLeadsCriteria').modal('hide');
-         // document.getElementById("globalHotLeadsCriteria").modal('toggle');
-      }
+      // $scope.leadFormFields = [];
+      // $scope.formName.name = undefined;
+      // if(document.getElementById("globalHotLeadsCriteria").style.display == 'block'){
+      //   angular.element('#globalHotLeadsCriteria').modal('hide');
+      //    // document.getElementById("globalHotLeadsCriteria").modal('toggle');
+      // }
+      // swal(constants.name,constants.update_success,constants.success);
+      //  $scope.changeView('viewLeadForms',$scope.campaignInfo);
       swal(constants.name,constants.update_success,constants.success);
-       $scope.changeView('viewLeadForms',$scope.campaignInfo);
+      angular.element('#globalHotLeadsCriteria').modal('hide');
     }).catch(function onError(response){
       console.log(response);
     })
@@ -708,8 +721,25 @@ angular.module('catalogueApp')
           items: []
         }        
       ]
-    })    
+    })   
   }
+  $scope.removeglobalHot = function(index,item){
+    $scope.globalHotLeadCriteria.splice(index,1); 
+    var new_hotness_mapping = {};
+    angular.forEach($scope.item.hotness_mapping, function(key,value){
+      angular.forEach($scope.item.global_hot_lead_criteria, function(keys,values){
+        if(values == item.name){
+          values = '';
+        }
+        if(value == values){
+          new_hotness_mapping[value] = key
+        }
+      })
+    })  
+    $scope.item.hotness_mapping =  new_hotness_mapping 
+    setAliasMapping($scope.item.hotness_mapping); 
+  }
+
   var setAliasMapping = function(data){
     if(data){
       $scope.textValue={};

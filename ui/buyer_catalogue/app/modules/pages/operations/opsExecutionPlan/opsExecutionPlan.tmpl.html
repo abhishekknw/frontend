@@ -38,15 +38,17 @@
             <div>
               <select class="field" ng-model="invCode">
                 <option value="" disabled>FilterBy Inventory Type</option>
-                <option value="{{paginationData.id}}">ALL</option>
-                <option ng-repeat="inv in paginationData | orderBy : 'inv_type' | unique:'inv_type' | filter : {act_date: dateCode}" value="{{inv.inv_type}}">{{inv.inv_type}}</option>
+                <option value="{{paginationData.id}}">ALL </option>
+                <!-- <option ng-repeat="inv in paginationData | orderBy : 'inv_type' | unique:'inv_type' | filter : {act_date: dateCode}" value="{{inv.inv_type}}">{{inv.inv_type}}</option> -->
+                <option ng-repeat="inv in paginationData | orderBy : 'inv_type' | unique:'inv_type'" value="{{inv.inv_type}}">{{inv.inv_type}}</option>
               </select>
             </div>
             <div>
               <select class="field" ng-model="dateCode">
                 <option value="" disabled>FilterBy Date</option>
                 <option value="{{paginationData.id}}">ALL</option>
-                <option ng-repeat="date in paginationData | orderBy : 'act_date' | unique:'act_date' | filter : {inv_type: invCode}" value="{{date.act_date}}">{{date.act_date}}</option>
+                <!-- <option ng-repeat="date in paginationData | orderBy : 'act_date' | unique:'act_date' | filter : {inv_type: invCode}" value="{{date.act_date}}">{{date.act_date}}</option> -->
+                <option ng-repeat="date in paginationData | orderBy : 'act_date' | unique:'act_date'" value="{{date.act_date}}">{{date.act_date}}</option>
               </select>
             </div>
           </div>
