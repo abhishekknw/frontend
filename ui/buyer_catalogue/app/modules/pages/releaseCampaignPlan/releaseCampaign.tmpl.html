@@ -208,7 +208,7 @@
 
             <th>{{detailsHeader.contacts_details}}</th>
             <th>{{detailsHeader.assign_user}}</th>
-            <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_lead_distribution'">{{detailsHeader.requirement_given}}</th>
+            <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'">{{detailsHeader.requirement_given}}</th>
 
             <th>{{detailsHeader.booking_priority}}</th>
             <th>{{detailsHeader.booking_status_and_sub_status}}</th>
@@ -253,7 +253,7 @@
 
             <th>{{detailsHeader.contacts_details}}</th>
             <th>{{detailsHeader.assign_user}}</th>
-            <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_lead_distribution'">{{detailsHeader.requirement_given}}</th>
+            <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'">{{detailsHeader.requirement_given}}</th>
             <th>{{detailsHeader.booking_priority}}</th>
             <th>{{detailsHeader.booking_status_and_sub_status}}</th>
             <th>{{detailsHeader.phase}}</th>
@@ -329,7 +329,7 @@
 
             <th>{{detailsHeader.contacts_details}}</th>
             <th>{{detailsHeader.assign_user}}</th>
-            <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_lead_distribution'">{{detailsHeader.requirement_given}}</th>
+            <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'">{{detailsHeader.requirement_given}}</th>
             <th>{{detailsHeader.booking_priority}}</th>
             <th>{{detailsHeader.booking_status_and_sub_status}}</th>
             <th>{{detailsHeader.phase}}</th>
@@ -507,7 +507,7 @@
               </td>
 
               
-                <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_lead_distribution'">
+                <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'">
                   <select class="form-control spacing input-width" ng-model="supplier.requirement_given"
                     ng-disabled="supplier.is_completed">
                     <option style="width:100%;" ng-repeat="(key, requirement) in requirement_Given" value="{{key}}">
@@ -1009,7 +1009,7 @@
                   </div>
               </td>
 
-              <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_lead_distribution'">
+              <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'">
                 <select class="form-control spacing input-width" ng-model="supplier.requirement_given"
                   ng-disabled="supplier.is_completed">
                   <option style="width:100%;" ng-repeat="(key, requirement) in requirement_Given" value="{{key}}">
