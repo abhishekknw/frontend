@@ -46,7 +46,11 @@
             </div> 
             <div ng-if="item.key_type == 'DATE'">
               <label class="capitalize">{{item.key_name}}</label>
-              <input autocomplete type="date"  name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value" required/>
+              <!-- <input autocomplete type="date"  name="{{keyTypesMap[item.key_type]}}" class="field" ng-model="item.value" required/> -->
+              <input type="text" readonly autocomplete name="{{keyTypesMap[item.key_type]}}" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="dd/mm/yyyy"  ng-model="item.value" is-open="isDatepickerOpen" datepicker-options="datepickerOptions" close-text="Close"  alt-input-formats="altInputFormats">
+                <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
             </div>            
             <div ng-if="item.key_type == 'PHONE'">
               <label class="capitalize">{{item.key_name}}</label>
