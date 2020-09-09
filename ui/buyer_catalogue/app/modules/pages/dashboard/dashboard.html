@@ -1337,11 +1337,11 @@
                 </td>
                 <td ng-if="bookingPhases.last_completed_phase.followup_required.supplier_data.length == 0"><small>0</small></td>
 
-                <td ng-if="bookingPhases.last_completed_phase.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.total_booked.supplier_data,'Last Completed Phase')">
-                  {{bookingPhases.last_completed_phase.total_booked.supplier_count}} ({{bookingPhases.last_completed_phase.total_booked.flat_count}})
+                <td ng-if="bookingPhases.last_completed_phase.total_pipeline.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.total_pipeline.supplier_data,'Last Completed Phase')">
+                  {{bookingPhases.last_completed_phase.total_pipeline.supplier_count}} ({{bookingPhases.last_completed_phase.total_pipeline.flat_count}})
                   </a>
               </small></td>
-              <td ng-if="bookingPhases.last_completed_phase.total_booked.supplier_data.length == 0"><small>0</small></td>
+              <td ng-if="bookingPhases.last_completed_phase.total_pipeline.supplier_data.length == 0"><small>0</small></td>
 
               </tr>
               <tr ng-if="bookingPhases.ongoing_phase">
@@ -1366,11 +1366,11 @@
                   {{bookingPhases.ongoing_phase.followup_required.supplier_count}} ({{bookingPhases.ongoing_phase.followup_required.flat_count}})</small></td>
                   <td ng-if="bookingPhases.ongoing_phase.followup_required.supplier_data.length == 0"><small>0</small></td>
 
-                <td ng-if="bookingPhases.ongoing_phase.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.total_booked.supplier_data,'Last Completed Phase')">
-                  {{bookingPhases.ongoing_phase.total_booked.supplier_count}} ({{bookingPhases.ongoing_phase.total_booked.flat_count}})
+                <td ng-if="bookingPhases.ongoing_phase.total_pipeline.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.total_pipeline.supplier_data,'Last Completed Phase')">
+                  {{bookingPhases.ongoing_phase.total_pipeline.supplier_count}} ({{bookingPhases.ongoing_phase.total_pipeline.flat_count}})
                   </a>
               </small></td>
-              <td ng-if="bookingPhases.ongoing_phase.total_booked.supplier_data.length == 0"><small>0</small></td>
+              <td ng-if="bookingPhases.ongoing_phase.total_pipeline.supplier_data.length == 0"><small>0</small></td>
 
               </tr>
               <tr ng-repeat="item in bookingPhases.upcoming_phases" ng-if="bookingPhases.upcoming_phases.length">
@@ -1391,10 +1391,10 @@
                 <td ng-if="item.followup_required.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.followup_required.supplier_data,'Upcoming Phase')">
                   {{item.followup_required.supplier_count}} ({{item.followup_required.flat_count}})</small></td>
                 <td ng-if="item.followup_required.supplier_data.length == 0"><small>0</small></td>
-                <td  ng-if="item.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.total_booked.supplier_data,'Upcoming Phase')">
-                  {{item.total_booked.supplier_count}} ({{item.total_booked.flat_count}})
+                <td  ng-if="item.total_pipeline.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.total_pipeline.supplier_data,'Upcoming Phase')">
+                  {{item.total_pipeline.supplier_count}} ({{item.total_pipeline.flat_count}})
                   </a></small></td>
-                <td ng-if="item.total_booked.supplier_data.length == 0"><small>0</small></td>
+                <td ng-if="item.total_pipeline.supplier_data.length == 0"><small>0</small></td>
               </tr>
             </tbody>
           </table>
@@ -1442,11 +1442,11 @@
                   </td>
                   <td ng-if="bookingPhases.last_completed_phase.meeting_converted.supplier_data.length == 0"><small>0</small></td>
   
-                  <td ng-if="bookingPhases.last_completed_phase.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.total_booked.supplier_data,'Last Completed Phase')">
-                    {{bookingPhases.last_completed_phase.total_booked.supplier_count}} ({{bookingPhases.last_completed_phase.total_booked.flat_count}})
+                  <td ng-if="bookingPhases.last_completed_phase.total_pipeline.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.total_pipeline.supplier_data,'Last Completed Phase')">
+                    {{bookingPhases.last_completed_phase.total_pipeline.supplier_count}} ({{bookingPhases.last_completed_phase.total_pipeline.flat_count}})
                     </a>
                 </small></td>
-                <td ng-if="bookingPhases.last_completed_phase.total_booked.supplier_data.length == 0"><small>0</small></td>
+                <td ng-if="bookingPhases.last_completed_phase.total_pipeline.supplier_data.length == 0"><small>0</small></td>
   
                 </tr>
                 <tr ng-if="bookingPhases.ongoing_phase">
@@ -1471,11 +1471,11 @@
                     {{bookingPhases.ongoing_phase.meeting_converted.supplier_count}} ({{bookingPhases.ongoing_phase.meeting_converted.flat_count}})</small></td>
                     <td ng-if="bookingPhases.ongoing_phase.meeting_converted.supplier_data.length == 0"><small>0</small></td>
   
-                  <td ng-if="bookingPhases.ongoing_phase.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.total_booked.supplier_data,'Last Completed Phase')">
-                    {{bookingPhases.ongoing_phase.total_booked.supplier_count}} ({{bookingPhases.ongoing_phase.total_booked.flat_count}})
+                  <td ng-if="bookingPhases.ongoing_phase.total_pipeline.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.total_pipeline.supplier_data,'Last Completed Phase')">
+                    {{bookingPhases.ongoing_phase.total_pipeline.supplier_count}} ({{bookingPhases.ongoing_phase.total_pipeline.flat_count}})
                     </a>
                 </small></td>
-                <td ng-if="bookingPhases.ongoing_phase.total_booked.supplier_data.length == 0"><small>0</small></td>
+                <td ng-if="bookingPhases.ongoing_phase.total_pipeline.supplier_data.length == 0"><small>0</small></td>
   
                 </tr>
                 <tr ng-repeat="item in bookingPhases.upcoming_phases" ng-if="bookingPhases.upcoming_phases.length">
@@ -1496,10 +1496,10 @@
                   <td ng-if="item.meeting_converted.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.meeting_converted.supplier_data,'Upcoming Phase')">
                     {{item.meeting_converted.supplier_count}} ({{item.meeting_converted.flat_count}})</small></td>
                   <td ng-if="item.meeting_converted.supplier_data.length == 0"><small>0</small></td>
-                  <td  ng-if="item.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.total_booked.supplier_data,'Upcoming Phase')">
-                    {{item.total_booked.supplier_count}} ({{item.total_booked.flat_count}})
+                  <td  ng-if="item.total_pipeline.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.total_pipeline.supplier_data,'Upcoming Phase')">
+                    {{item.total_pipeline.supplier_count}} ({{item.total_pipeline.flat_count}})
                     </a></small></td>
-                  <td ng-if="item.total_booked.supplier_data.length == 0"><small>0</small></td>
+                  <td ng-if="item.total_pipeline.supplier_data.length == 0"><small>0</small></td>
                 </tr>
               </tbody>
             </table>
@@ -1564,11 +1564,11 @@
                   </td>
                   <td ng-if="bookingPhases.last_completed_phase.partial_house_lockdown.supplier_data.length == 0"><small>0</small></td>
   
-                  <td ng-if="bookingPhases.last_completed_phase.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.total_booked.supplier_data,'Last Completed Phase')">
-                    {{bookingPhases.last_completed_phase.total_booked.supplier_count}} ({{bookingPhases.last_completed_phase.total_booked.flat_count}})
+                  <td ng-if="bookingPhases.last_completed_phase.total_pipeline.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.last_completed_phase.total_pipeline.supplier_data,'Last Completed Phase')">
+                    {{bookingPhases.last_completed_phase.total_pipeline.supplier_count}} ({{bookingPhases.last_completed_phase.total_pipeline.flat_count}})
                     </a>
                 </small></td>
-                <td ng-if="bookingPhases.last_completed_phase.total_booked.supplier_data.length == 0"><small>0</small></td>
+                <td ng-if="bookingPhases.last_completed_phase.total_pipeline.supplier_data.length == 0"><small>0</small></td>
   
                 </tr>
                 <tr ng-if="bookingPhases.ongoing_phase">
@@ -1611,11 +1611,11 @@
 
 
   
-                  <td ng-if="bookingPhases.ongoing_phase.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.total_booked.supplier_data,'Last Completed Phase')">
-                    {{bookingPhases.ongoing_phase.total_booked.supplier_count}} ({{bookingPhases.ongoing_phase.total_booked.flat_count}})
+                  <td ng-if="bookingPhases.ongoing_phase.total_pipeline.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(bookingPhases.ongoing_phase.total_pipeline.supplier_data,'Last Completed Phase')">
+                    {{bookingPhases.ongoing_phase.total_pipeline.supplier_count}} ({{bookingPhases.ongoing_phase.total_pipeline.flat_count}})
                     </a>
                 </small></td>
-                <td ng-if="bookingPhases.ongoing_phase.total_booked.supplier_data.length == 0"><small>0</small></td>
+                <td ng-if="bookingPhases.ongoing_phase.total_pipeline.supplier_data.length == 0"><small>0</small></td>
   
                 </tr>
                 <tr ng-repeat="item in bookingPhases.upcoming_phases" ng-if="bookingPhases.upcoming_phases.length">
@@ -1659,10 +1659,10 @@
                   <td ng-if="item.partial_house_lockdown.supplier_data.length == 0"><small>0</small></td>
                  
 
-                  <td  ng-if="item.total_booked.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.total_booked.supplier_data,'Upcoming Phase')">
-                    {{item.total_booked.supplier_count}} ({{item.total_booked.flat_count}})
+                  <td  ng-if="item.total_pipeline.supplier_data.length != 0"><small><a ng-click="getSuppliersOfBookingDetails(item.total_pipeline.supplier_data,'Upcoming Phase')">
+                    {{item.total_pipeline.supplier_count}} ({{item.total_pipeline.flat_count}})
                     </a></small></td>
-                  <td ng-if="item.total_booked.supplier_data.length == 0"><small>0</small></td>
+                  <td ng-if="item.total_pipeline.supplier_data.length == 0"><small>0</small></td>
                 </tr>
               </tbody>
             </table>
