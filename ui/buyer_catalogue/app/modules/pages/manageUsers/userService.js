@@ -190,5 +190,10 @@ angular.module('machadaloPages')
       return machadaloHttp.post(url,data);
     }
 
+    userService.getSector = function(){
+      var url = url_base + "accounts/create_business/load_business_types/";
+      return machadaloHttp.get(url);
+    }
+
   return userService;
 }]);

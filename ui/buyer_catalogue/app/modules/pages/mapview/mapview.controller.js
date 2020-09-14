@@ -539,8 +539,6 @@ angular.module('catalogueApp')
                   $scope.gridViewSummary[supplier_code].shortlisted.stall_count += $scope.center_data[i].summary_meta[supplier_code].shortlisted.stall_count;
               }
             }
-
-            console.log('88888888888888888888999999999999999999999999999999', $scope.gridViewSummary)
           }
         }
         getComprehinsiveImpressions(supplier_code);
@@ -1865,7 +1863,7 @@ angular.module('catalogueApp')
               gridViewFilterSummary();
               gridViewImpressions();
               getSummary(code, $scope.current_center);
-              getComprehinsiveSummary('RS');
+              getComprehinsiveSummary(code);
               $scope.society_markers = assignMarkersToMap($scope.current_center.suppliers);
               $scope.center_marker = assignCenterMarkerToMap($scope.current_center.center);
               $scope.checkFilters = false;
@@ -2082,7 +2080,7 @@ angular.module('catalogueApp')
             $scope.errorMsg = "Supplier Added Successfully";
             if ($scope.supplierData.length <= 0) {
               $scope.search_status = false;
-              $scope.supplier_type_code = null;
+              // $scope.supplier_type_code = null;
               $scope.search = null;
             }
           }
