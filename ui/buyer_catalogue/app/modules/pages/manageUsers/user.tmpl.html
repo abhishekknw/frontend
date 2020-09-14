@@ -589,6 +589,26 @@
                             <input name="name2" placeholder="Comments" type="text" class="field" ng-model="organisationData.comments">
                           </div>
                         </div>
+
+                        <div class="">
+                          <div class="form-group label-floating">
+                           
+                            <label>Select Business Type </label>
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="businessTypeData"  extra-settings="settingsForDynamicGraphFlatType"
+                            selected-model="selectedbusinessType" translation-texts="selected_business_type" events="events"></span>
+                          </div>
+                        </div>
+
+                        <div class="">
+                          <div class="form-group label-floating">
+                           
+                            <label>Select Business Sub Type</label>
+                            <span class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect="" options="businessSubTypeData"  extra-settings="settingsForDynamicGraphFlatType"
+                            selected-model="selectedbusinessSubType" translation-texts="selected_business_sub_type" ></span>
+                          </div>
+                        </div>
+
+
                       </div>
                     </div><!-- #details -->
                     <div class="tab-pane" id="captain">

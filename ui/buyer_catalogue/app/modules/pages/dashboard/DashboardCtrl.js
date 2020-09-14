@@ -594,6 +594,7 @@
 
 
       $scope.setSupplierType = function (tab) {
+        $scope.bookingPhases = [];
         if ($scope.selectedSupplierType.code == "RS") {
           $scope.flat_count_header = "Flat Count";
           $scope.tower_count_header = "Tower Count";
@@ -645,6 +646,7 @@
       }
 
       $scope.getCampaignsByVendor = function () {
+        $scope.bookingPhases = [];
         $scope.getCampaigns(undefined, $scope.selectedVendor.name, $scope.selectedSupplierType.code)
       }
       $scope.getCampaigns = function (date, vendor, supplierType) {
