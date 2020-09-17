@@ -540,7 +540,11 @@ angular.module('catalogueApp')
 
           auditReleasePlanService.saveActivityDetails(requestData)
             .then(function onSuccess(response) {
-              getResultsPage(1);
+              if($scope.newPage){
+                getResultsPage($scope.newPage);
+              } else {
+                getResultsPage(1);
+              }
               $scope.dateChecked = false;
               swal(constants.name, constants.inventory_date_success, constants.success);
             })
@@ -554,7 +558,13 @@ angular.module('catalogueApp')
           var data = {};
           auditReleasePlanService.deleteInvActAssignment(id, data)
             .then(function onSuccess(response) {
+              if($scope.newPage){
+                getResultsPage($scope.newPage);
+              } else {
+                getResultsPage(1);
+              }
               swal(constants.name, constants.delete_success, constants.success);
+              $('#showDatesModal').modal('hide');
             }).catch(function onError(response) {
               swal(constants.name, response.data.data.general_error, constants.error);
               console.log(response);
@@ -614,7 +624,11 @@ angular.module('catalogueApp')
         $scope.deleteAdInventoryIds = function () {
           auditReleasePlanService.deleteAdInventoryIds($scope.invIdList)
             .then(function onSuccess(response) {
-              getResultsPage(1);
+              if($scope.newPage){
+                getResultsPage($scope.newPage);
+              } else {
+                getResultsPage(1);
+              }
               $scope.invIdList = [];
               $scope.supplierId = null
               swal(constants.name, response.data.data.msg, constants.success);
