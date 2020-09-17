@@ -1403,9 +1403,13 @@ angular.module('catalogueApp')
         $scope.importThroughSheet = function () {
 
           var token = $rootScope.globals.currentUser.token;
+          var url = constants.base_url + constants.url_base + "import-sheet-in-existing-campaign/";
+          if($scope.releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'){
+            url = constants.base_url + constants.url_base + "b2b/import-lead/" + $scope.campaign_id + "/";
+          }
           if ($scope.file) {
             Upload.upload({
-              url: constants.base_url + constants.url_base + "import-sheet-in-existing-campaign/",
+              url: url,
               data: {
                 file: $scope.file,
                 is_import_sheet: true,
