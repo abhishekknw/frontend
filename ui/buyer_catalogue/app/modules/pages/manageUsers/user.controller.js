@@ -141,12 +141,14 @@ angular.module('machadaloPages')
                 }
               }
             $scope.settings = {
-              smartButtonMaxItems: 4,
-             selectionLimit: 4,
-             showCheckAll: true,
-             scrollableHeight: '300px', scrollable: true,
-             enableSearch: true,
-            
+            //   smartButtonMaxItems: 4,
+            //  selectionLimit: 4,
+            //  showCheckAll: true,
+            //  enableSearch: true,
+            showCheckAll: false,
+             scrollableHeight: '300px', scrollable: false,
+             enableSearch: false,
+             showUncheckAll:false
            };
           
 
