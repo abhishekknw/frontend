@@ -277,23 +277,27 @@ angular.module('catalogueApp')
         var getResultsPage = function (newPage) {
           var data = getFilterData();
 
-          releaseCampaignService.bookingStatusData($scope.campaign_id)
-            .then(function onSuccess(ResponseData) {
-              $scope.bookingStatus = ResponseData.data.data;
+          if($scope.master_data_status){
+            releaseCampaignService.bookingStatusData($scope.campaign_id)
+              .then(function onSuccess(ResponseData) {
+                $scope.bookingStatus = ResponseData.data.data;
             });
+          }
 
           releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id, newPage, data)
             .then(function onSuccess(response) {
-              releaseCampaignService.getCampaignReleaseDetailsHeader()
-                .then(function onSuccess(headerResponse) {
-                  $scope.detailsHeaders = headerResponse.data.data;
-                  var detailsHeader = headerResponse.data.data;
-                  if (!$scope.selectedUser.supplier_type_filter) {
-                    $scope.detailsHeader = detailsHeader['ALL'];
-                  } else {
-                    $scope.detailsHeader = detailsHeader[$scope.selectedUser.supplier_type_filter];
-                  }
-                })
+              if($scope.master_data_status){
+                releaseCampaignService.getCampaignReleaseDetailsHeader()
+                  .then(function onSuccess(headerResponse) {
+                    $scope.detailsHeaders = headerResponse.data.data;
+                    var detailsHeader = headerResponse.data.data;
+                    if (!$scope.selectedUser.supplier_type_filter) {
+                      $scope.detailsHeader = detailsHeader['ALL'];
+                    } else {
+                      $scope.detailsHeader = detailsHeader[$scope.selectedUser.supplier_type_filter];
+                    }
+                  })
+              }
 
               // releaseCampaignService.bookingStatusData($scope.campaign_id)
               // .then(function onSuccess(ResponseData) {
@@ -302,10 +306,11 @@ angular.module('catalogueApp')
               // });
 
 
-
-              getUsersList();
-              getAssignedSuppliers();
-              getOrganisationList();
+              if($scope.master_data_status){
+                getUsersList();
+                getAssignedSuppliers();
+                getOrganisationList();
+              }
 
               $scope.initialReleaseData = Object.assign({}, response.data.data);
               $scope.totalSuppliers = $scope.initialReleaseData.total_count;
@@ -395,6 +400,8 @@ angular.module('catalogueApp')
                 // setDataToModel($scope.releaseDetails.shortlisted_suppliers);
                 mapLeadsWithSuppliers();
                 $scope.loading = !!response;
+
+                $scope.master_data_status = false;
               } else {
                 swal(constants.name, "You do not have access to Proposal", constants.warning);
                 $scope.loading = !!response;
@@ -405,6 +412,7 @@ angular.module('catalogueApp')
               commonDataShare.showErrorMessage(response);
             });
         }
+        $scope.master_data_status = true;
         getResultsPage(1);
 
         var setDataToModel = function (suppliers) {
@@ -1346,11 +1354,11 @@ angular.module('catalogueApp')
           commonDataShare.getUsersList()
             .then(function onSuccess(response) {
               $scope.userList = response.data.data;
-              $scope.selectedUsers = [];
+              $scope.UserDataAssigned = response.data.data;
+              // $scope.selectedUsers = [];
               $scope.usersMapListWithObjects = [];
               angular.forEach($scope.userList, function (data) {
                 $scope.usersMapListWithObjects[data.id] = data;
-                $scope.UserDataAssigned = response.data.data;
               })
             })
             .catch(function onError(response) {
