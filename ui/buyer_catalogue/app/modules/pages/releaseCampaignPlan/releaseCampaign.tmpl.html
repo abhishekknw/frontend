@@ -387,7 +387,7 @@
         <!-- <tbody ng-show="(!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter == 'RS') && releaseDetails.shortlisted_suppliers.length > 0"
           dir-paginate="supplier in releaseDetails.shortlisted_suppliers  | itemsPerPage: suppliersPerPage"
           total-items="totalSuppliers" current-page="pagination.current" track by "$index"> -->
-        <tbody ng-show="(selectedUser.supplier_type_filter == 'RS')"
+        <tbody ng-if="(selectedUser.supplier_type_filter == 'RS')"
           dir-paginate="supplier in releaseDetails.shortlisted_suppliers  | itemsPerPage: suppliersPerPage"
           total-items="totalSuppliers" current-page="pagination.current" track by "$index">
           <div ng-if="releaseDetails.shortlisted_suppliers.length > 0">
@@ -888,7 +888,7 @@
         <!--End Retail Store supplier type -->
         <!--Start other supplier type -->
         <tbody
-          ng-show="(!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter != 'RS') && releaseDetails.shortlisted_suppliers.length > 0"
+          ng-if="(!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter != 'RS') && releaseDetails.shortlisted_suppliers.length > 0"
           dir-paginate="supplier in releaseDetails.shortlisted_suppliers | itemsPerPage: suppliersPerPage"
           total-items="totalSuppliers" current-page="pagination.current" track by "$index">
           <div ng-if="releaseDetails.shortlisted_suppliers.length > 0">
@@ -1409,8 +1409,7 @@
       <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
     </div>
   </div>
-  <form name="form" ng-if="dateChecked">
-    <!-- <div class="breadcrumb" ncy-breadcrumb></div> -->
+  <!--<form name="form" ng-if="dateChecked">
     <div style="color:#000000;" class="panel panel-default date-panel">
       <h3 class="panel-heading">Assign Dates</h3>
       <div class="table">
@@ -1429,7 +1428,6 @@
                 <option ng-repeat="inventory in inventoryTypes" value="{{inventory}}">{{inventory}}</option>
               </select>
             </div>
-            <!--<span class="show-error" ng-show="form.businessname.$error.pattern">Please Enter Valid Business Name</span> </div>-->
           </div>
         </div>
 
@@ -1468,7 +1466,6 @@
                 <option ng-repeat="user in userList" value="{{user.id}}">{{user.username}}</option>
               </select>
             </div>
-            <!--<span class="show-error" ng-show="form.reference_name.$error.pattern">Please Enter Valid Name</span></div>-->
           </div>
         </div>
 
@@ -1477,7 +1474,7 @@
           permission="[permissions.assignDates]">Assign</button>
       </div>
     </div>
-  </form>
+  </form>-->
   <div class="panel-body">
     <span class="col-md-2 pull-left">
       <button type="button" name="button" class="btn btn-danger active notify" data-target="#viewAddPhase"
@@ -2167,7 +2164,11 @@
         </div>
         <br>
         <div class="col-md-12" style="margin-left:5px;">
-          <div class="col-md-3">
+          <div class="col-md-3" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'">
+            <label>Select Sheet</label>
+            <a href="/sample_files/b2b_import_lead.xlsx" download>Demo File</a>
+          </div>
+          <div class="col-md-3" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name != 'b_to_b_r_g'">
             <label>Select Sheet</label>
             <a href="/sample_files/booking_plan_sheet_v1.xlsx" download>Demo File</a>
           </div>
