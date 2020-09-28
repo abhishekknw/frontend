@@ -1,8 +1,8 @@
 
 angular.module('catalogueApp')
   .controller('ReleaseCampaignCtrl',
-    ['$scope', '$rootScope', '$window', '$location', 'releaseCampaignService', 'createProposalService', 'auditReleasePlanService', '$stateParams', 'permissions', 'Upload', 'cfpLoadingBar', 'constants', 'mapViewService', '$timeout', 'commonDataShare',
-      function ($scope, $rootScope, $window, $location, releaseCampaignService, createProposalService, auditReleasePlanService, $stateParams, permissions, Upload, cfpLoadingBar, constants, mapViewService, $timeout, commonDataShare) {
+    ['$scope', '$rootScope', '$window', '$location', 'releaseCampaignService', 'userService', 'createProposalService', 'auditReleasePlanService', '$stateParams', 'permissions', 'Upload', 'cfpLoadingBar', 'constants', 'mapViewService', '$timeout', 'commonDataShare',
+      function ($scope, $rootScope, $window, $location, releaseCampaignService, userService, createProposalService, auditReleasePlanService, $stateParams, permissions, Upload, cfpLoadingBar, constants, mapViewService, $timeout, commonDataShare) {
         $scope.campaign_id = $stateParams.proposal_id;
         $scope.positiveNoError = constants.positive_number_error;
         $scope.campaign_manager = constants.campaign_manager;
@@ -118,7 +118,7 @@ angular.module('catalogueApp')
           { name: 'Others(Specify)', code: 'ROS' },
         ];
 
-        $scope.requirement_Given = {'yes':'Yes','no':'No'};
+        $scope.requirement_Given = { 'yes': 'Yes', 'no': 'No' };
         $scope.sheetUrl = '../../assets/img/booking_plan_sheet_v1.xlsx'
 
         $scope.booking_tentative = [
@@ -162,6 +162,56 @@ angular.module('catalogueApp')
           { header: 'Remove' },
 
         ];
+
+        $scope.requirement_submitted_headings = [
+          { header: '' },
+          { header: 'Sector' },
+          { header: 'Current Partner' },
+          { header: 'Preferred Partner' },
+          { header: 'Implementation Time' },
+          { header: 'Meeting Time' },
+          { header: 'Preferred Meeting Time' },
+          { header: 'Lead Status' },
+          { header: 'Lead Given by' },
+          { header: 'Comment' },
+          { header: 'Statisfaction State' },
+          { header: 'Reason' },
+          { header: 'Action' },
+        ];
+
+        $scope.requirement_sub_headings = [
+          { header: '' },
+          { header: 'Sub Sector' },
+          { header: 'Current Partner' },
+          { header: 'Preferred Partner' },
+          { header: 'Lead For' },
+          { header: 'Implementation Time' },
+          { header: 'Meeting Time' },
+          //  { header: 'Preferred Meeting Time' },
+          { header: 'Lead Status' },
+          { header: 'Lead Given by' },
+          { header: 'Comment' },
+          { header: 'Statisfaction State' },
+          { header: 'Reason' },
+          { header: 'Action' },
+        ];
+
+        $scope.requirement_browsed_headings = [
+          { header: '' },
+          { header: 'Sector' },
+          { header: 'Current Partner' },
+          { header: 'Preferred Partner' },
+          { header: 'Lead for' },
+          { header: 'Implementation Time' },
+          { header: 'Meeting Time' },
+          { header: 'Preferred Meeting Time' },
+          { header: 'Lead Status' },
+          { header: 'Lead Given by' },
+          { header: 'Comment' },
+          // { header: 'Statisfaction State' },
+          // { header: 'Reason' },
+          { header: 'Action' },
+        ];
         $scope.payment_headings = [
           { header: 'Name On Cheque' },
           { header: 'Bank Name' },
@@ -178,12 +228,12 @@ angular.module('catalogueApp')
           { name: 'SunBoard(SB)', code: 'SB', selected: false },
         ];
 
-        $scope.categorylist = ['Ultra High','High','Medium High','Medium','Standard'],
-        $scope.assignUserData = {
-          campaign_id:'',
-        }
+        $scope.categorylist = ['Ultra High', 'High', 'Medium High', 'Medium', 'Standard'],
+          $scope.assignUserData = {
+            campaign_id: '',
+          }
 
-       
+
         $scope.Relationship_Status = constants.relationship_status;
         $scope.invForComments = constants.inventoryNames;
         $scope.commentsType = constants.comments_type;
@@ -198,6 +248,10 @@ angular.module('catalogueApp')
           removed: constants.statusCode_removed,
           finalized: constants.statusCodeFinalized,
         }
+
+        $scope.requirement_lead_status = constants.requirement_lead_status;
+        $scope.requirement_implementation_time = constants.requirement_implementation_time;
+        $scope.requirement_meeting_time = constants.requirement_meeting_time;
 
         $scope.datePicker = {
           date: { startDate: null, endDate: null },
@@ -380,14 +434,14 @@ angular.module('catalogueApp')
                     $scope.selectedUser.supplier_type_filter = $scope.supplier_names[0].code;
                   }
 
-                  if($scope.selectedUser.supplier_type_filter == 'RE'){
-                    $scope.categorylist = ['Small','Medium','Large','Very Large','Super']
-                  } else if($scope.selectedUser.supplier_type_filter == 'SA'){
-                    $scope.categorylist = ['High','Medium','Standard']
-                  } else if(!$scope.selectedUser.supplier_type_filter || $scope.selectedUser.supplier_type_filter == 'ALL'){
-                    $scope.categorylist = ['Ultra High','High','Medium High','Medium','Standard','Small','Large','Very Large','Super']
+                  if ($scope.selectedUser.supplier_type_filter == 'RE') {
+                    $scope.categorylist = ['Small', 'Medium', 'Large', 'Very Large', 'Super']
+                  } else if ($scope.selectedUser.supplier_type_filter == 'SA') {
+                    $scope.categorylist = ['High', 'Medium', 'Standard']
+                  } else if (!$scope.selectedUser.supplier_type_filter || $scope.selectedUser.supplier_type_filter == 'ALL') {
+                    $scope.categorylist = ['Ultra High', 'High', 'Medium High', 'Medium', 'Standard', 'Small', 'Large', 'Very Large', 'Super']
                   } else {
-                    $scope.categorylist = ['Ultra High','High','Medium High','Standard']
+                    $scope.categorylist = ['Ultra High', 'High', 'Medium High', 'Standard']
                   }
 
                 }
@@ -420,14 +474,14 @@ angular.module('catalogueApp')
           } else {
             $scope.detailsHeader = $scope.detailsHeaders[$scope.selectedUser.supplier_type_filter];
           }
-          if($scope.selectedUser.supplier_type_filter == 'RE'){
-            $scope.categorylist = ['Small','Medium','Large','Very Large','Super']
-          } else if($scope.selectedUser.supplier_type_filter == 'SA'){
-            $scope.categorylist = ['High','Medium','Standard']
-          } else if($scope.selectedUser.supplier_type_filter == ''){
-            $scope.categorylist = ['Ultra High','High','Medium High','Medium','Standard','Small','Large','Very Large','Super']
+          if ($scope.selectedUser.supplier_type_filter == 'RE') {
+            $scope.categorylist = ['Small', 'Medium', 'Large', 'Very Large', 'Super']
+          } else if ($scope.selectedUser.supplier_type_filter == 'SA') {
+            $scope.categorylist = ['High', 'Medium', 'Standard']
+          } else if ($scope.selectedUser.supplier_type_filter == '') {
+            $scope.categorylist = ['Ultra High', 'High', 'Medium High', 'Medium', 'Standard', 'Small', 'Large', 'Very Large', 'Super']
           } else {
-            $scope.categorylist = ['Ultra High','High','Medium High','Standard']
+            $scope.categorylist = ['Ultra High', 'High', 'Medium High', 'Standard']
           }
 
         }
@@ -436,9 +490,7 @@ angular.module('catalogueApp')
           supplier.phase_no = id;
         }
 
-        $scope.test = function (index) {
-          alert(index);
-        }
+
 
         $scope.setBrandForBooking = function () {
           let data = {
@@ -479,12 +531,12 @@ angular.module('catalogueApp')
         }
         //Start:To set contacts to show in contactModal
         $scope.setContact = function (supplier) {
-       
-          if(supplier.supplier_code == 'RE' || supplier.supplier_code == 'HO' || supplier.supplier_code == 'BS' ){
+
+          if (supplier.supplier_code == 'RE' || supplier.supplier_code == 'HO' || supplier.supplier_code == 'BS') {
             $scope.Contact_Type = constants.retail_shop_contact_type;
-          } else if(supplier.supplier_code == 'CP'){
+          } else if (supplier.supplier_code == 'CP') {
             $scope.Contact_Type = constants.corporate_contact_type;
-          } else if(supplier.supplier_code == 'SA' || supplier.supplier_code =='GY'){
+          } else if (supplier.supplier_code == 'SA' || supplier.supplier_code == 'GY') {
             $scope.Contact_Type = constants.salon_contact_type;
           } else {
             $scope.Contact_Type = constants.society_contact_type;
@@ -492,10 +544,10 @@ angular.module('catalogueApp')
           // else if(supplier.supplier_code == 'RS' || supplier.supplier_code == 'SYN'){
           //   $scope.Contact_Type = constants.society_contact_type;
           // } 
-        
+
           $scope.payment = supplier;
-          if($scope.payment && $scope.payment.contacts){
-            for(let i in  $scope.payment.contacts){
+          if ($scope.payment && $scope.payment.contacts) {
+            for (let i in $scope.payment.contacts) {
               $scope.payment.contacts[i].landline = JSON.parse($scope.payment.contacts[i].landline);
             }
           }
@@ -647,7 +699,13 @@ angular.module('catalogueApp')
             console.log(error.message);
           }
         }
-       
+
+        $scope.detailedShow = [];
+        $scope.ShowDetailed = function (index) {
+          $scope.detailedShow[index] = !$scope.detailedShow[index];
+        }
+        $scope.sites = ['a', 'b', 'c']
+
 
         //End: code added to search & show all suppliers on add societies tab
         $scope.selectSupplier = function () {
@@ -856,7 +914,7 @@ angular.module('catalogueApp')
           }
 
           if (filters.length) {
-    
+
             releaseCampaignService.addSuppliersToCampaign(data)
               .then(function onSuccess(response) {
                 if (response) {
@@ -946,10 +1004,10 @@ angular.module('catalogueApp')
             if ($scope.payment.contacts[i] && $scope.payment.contacts[i].name) {
               $scope.contactArray.push($scope.payment.contacts[i])
             }
-            
+
           }
           $scope.payment.contacts = $scope.contactArray;
-           $scope.saveContactDetails();
+          $scope.saveContactDetails();
 
         }
 
@@ -958,7 +1016,7 @@ angular.module('catalogueApp')
             $scope.payment['basic_contact_available'] = true;
             $scope.payment['basic_contacts'] = $scope.payment.contacts;
             $scope.payment['food_tasting_allowed'] = null;
-         
+
             releaseCampaignService.saveContactDetails($scope.payment, $scope.payment.supplier_id)
               .then(function onSuccess(response) {
                 $scope.editContactDetails = true;
@@ -977,7 +1035,6 @@ angular.module('catalogueApp')
           $scope.addRow = $scope.payment.contacts;
           $scope.addContactDetails = false;
           $scope.addRow.push({});
-         
         }
 
         $scope.removeContact = function (index) {
@@ -1000,6 +1057,402 @@ angular.module('catalogueApp')
 
             });
         }
+
+
+
+
+        $scope.getRequirementDetail = function (id) {
+          userService.getSector()
+            .then(function onSuccess(response) {
+              $scope.sectorList = response.data;
+            })
+          releaseCampaignService.requirementDetail(id)
+            .then(function onSuccess(response) {
+              $scope.requirementDetailData = response.data.data.requirements;
+              $scope.companiesDetailData = response.data.data.companies;
+              for (let k in $scope.companiesDetailData) {
+                $scope.companiesDetailData[k].id = $scope.companiesDetailData[k].organisation_id;
+                $scope.companiesDetailData[k].label = $scope.companiesDetailData[k].name;
+              }
+
+              angular.forEach($scope.requirementDetailData, function (value, i) {
+                //start multiselect preferred company
+                var selected_preferred_company = [];
+                if ($scope.requirementDetailData[i].preferred_company.length > 0) {
+                  for (let j in $scope.requirementDetailData[i].preferred_company) {
+                    var localindex_index = $scope.companiesDetailData.map(function (el) {
+                      return el.organisation_id;
+                    }).indexOf($scope.requirementDetailData[i].preferred_company[j]);
+                    if (localindex_index != -1) {
+                      selected_preferred_company.push($scope.companiesDetailData[localindex_index])
+                    }
+                  }
+                  $scope.requirementDetailData[i].selected_preferred_company = selected_preferred_company
+                }
+                //end multiselect preferred company
+                //START sub sector multiselect preferred company
+
+                if ($scope.requirementDetailData[i].requirements.length > 0) {
+                  for (let x in $scope.requirementDetailData[i].requirements) {
+                    var selected_preferred_company_sub_sector = [];
+                    if ($scope.requirementDetailData[i].requirements[x].preferred_company.length > 0) {
+                      for (let y in $scope.requirementDetailData[i].requirements[x].preferred_company) {
+                        var _index = $scope.companiesDetailData.map(function (el) {
+                          return el.organisation_id;
+                        }).indexOf($scope.requirementDetailData[i].requirements[x].preferred_company[y]);
+                        if (_index != -1) {
+                          selected_preferred_company_sub_sector.push($scope.companiesDetailData[_index])
+                        }
+                      }
+                      $scope.requirementDetailData[i].requirements[x].selected_preferred_company_sub_sector = selected_preferred_company_sub_sector
+                    }
+                  }
+                }
+                //END sub sector multiselect preferred company
+                //start added sector name
+                if ($scope.sectorList) {
+                  var localindex_indexs = $scope.sectorList.map(function (el) {
+                    return el.id;
+                  }).indexOf($scope.requirementDetailData[i].sector);
+                  if (localindex_indexs != -1) {
+                    $scope.requirementDetailData[i].sector_name = $scope.sectorList[localindex_indexs].business_type
+                  }
+                }
+                //end added sector name
+
+                //start added sub sector name
+                if ($scope.requirementDetailData[i].requirements.length > 0 && $scope.sectorList) {
+                  for (let p in $scope.requirementDetailData[i].requirements) {
+                    var localindex_ = $scope.sectorList.map(function (el) {
+                      return el.id;
+                    }).indexOf($scope.requirementDetailData[i].requirements[p].sector);
+                    if (localindex_ != -1) {
+                      $scope.requirementDetailData[i].requirements[p].sub_sector_name = $scope.sectorList[localindex_].business_type
+                    }
+                  }
+                }
+                //end added sub sector name
+              })
+              $scope.getRequirementBrowsedData(id);
+              // $scope.companiesDetailData[0].organisation_id = "BUSAMA0AA5";
+              // $scope.companiesDetailData[1].organisation_id = "BUSANA7E3A";
+              // $scope.companiesDetailData[0].id = "BUSAMA0AA5";
+              // $scope.companiesDetailData[1].id = "BUSANA7E3A";
+              // $scope.companiesDetailData[0].label = "test1";
+              // $scope.companiesDetailData[1].label = "Test2";
+              // $scope.requirementDetailData[0].preferred_company.push($scope.companiesDetailData[0])
+              // $scope.requirementDetailData[0].preferred_company.push($scope.companiesDetailData[1])
+              // $scope.requirementDetailData[1].preferred_company.push($scope.companiesDetailData[0])
+              // $scope.requirementDetailData[1].preferred_company.push($scope.companiesDetailData[1])
+              // console.log('1111111111111111111111111111111111', $scope.companiesDetailData)
+
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
+
+        $scope.getRequirementBrowsedData = function (id) {
+          releaseCampaignService.requirementBrowsedData(id)
+            .then(function onSuccess(response) {
+              $scope.browsedDetailData = response.data.data;
+              for (let i in $scope.browsedDetailData) {
+                var selected_preferred_company = [];
+                if ($scope.browsedDetailData[i].prefered_patners.length > 0) {
+                  for (let j in $scope.browsedDetailData[i].prefered_patners) {
+                    var localindex_index = $scope.companiesDetailData.map(function (el) {
+                      return el.organisation_id;
+                    }).indexOf($scope.browsedDetailData[i].prefered_patners[j]);
+                    if (localindex_index != -1) {
+                      selected_preferred_company.push($scope.companiesDetailData[localindex_index])
+                    }
+                  }
+                  $scope.browsedDetailData[i].selected_preferred_company = selected_preferred_company
+                }
+              }
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
+
+        $scope.preferredMulticheck = function (key) {
+          if ($scope.requirementDetailData[key].selected_preferred_company.length > 0) {
+            $scope.requirementDetailData[key].preferred_company = []
+            for (let i in $scope.requirementDetailData[key].selected_preferred_company) {
+              $scope.requirementDetailData[key].preferred_company.push($scope.requirementDetailData[key].selected_preferred_company[i].id);
+            }
+          }
+        }
+
+        $scope.subSectorPreferredMulticheck = function (key, index) {
+          if ($scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector.length > 0) {
+            $scope.requirementDetailData[key].requirements[index].preferred_company = [];
+            for (let i in $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector) {
+              $scope.requirementDetailData[key].requirements[index].preferred_company.push($scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector[i].id);
+            }
+          }
+        }
+
+
+        //   $scope.events =  {
+        //     onItemSelect: function (item) {
+        //        for(let i in $scope.requirementDetailData){
+        //         $scope.requirementDetailData
+        //        }
+        //    }
+
+        //  }
+
+        $scope.settings = {
+          showCheckAll: false,
+          scrollable: false,
+          enableSearch: false,
+          showUncheckAll: false
+        };
+
+        $scope.addRequirementRow = ({});
+        $scope.addRequirementDetail = function () {
+          // $scope.addRequirementRow = $scope.requirementDetailData;
+          $scope.requirementDetailData.push({});
+        }
+
+        $scope.removeRequirement = function (key) {
+          let requirementData = $scope.requirementDetailData;
+          swal({
+            title: 'Are you sure ?',
+            text: 'Remove Requirement',
+            type: constants.warning,
+            showCancelButton: true,
+            confirmButtonClass: "btn-success",
+            confirmButtonText: "Yes, Remove!",
+            closeOnConfirm: true
+          },
+            function (confirm) {
+              if (confirm) {
+                let requirement_id = [];
+                if (requirementData[key].requirements.length > 0) {
+                  for (let i in requirementData[key].requirements) {
+                    requirement_id.push(requirementData[key].requirements[i].id)
+                  }
+                }
+                let deleteId = {
+                  "requirement_ids": requirement_id
+                }
+                releaseCampaignService.deleteSubmittedLeads(deleteId)
+                  .then(function onSuccess(response) {
+                    if (response && response.status) {
+                      swal(constants.name, constants.delete_success, constants.success);
+                    }
+                  }).catch(function onError(response) {
+                    console.log(response);
+                  })
+                $scope.$apply(function () {
+                  delete requirementData[key];
+                  $scope.requirementDetailData = requirementData;
+                });
+              }
+            });
+        }
+
+        $scope.removeSubSectorRequirement = function (data, key) {
+          let deleteSubSectorId = [];
+          for (let i in $scope.requirementDetailData[key].requirements) {
+            if ($scope.requirementDetailData[key].requirements[i].requirementCheck == true) {
+              deleteSubSectorId.push($scope.requirementDetailData[key].requirements[i].id);
+            }
+          }
+          if (deleteSubSectorId.length > 0) {
+            swal({
+              title: 'Are you sure ?',
+              text: 'Remove Requirement',
+              type: constants.warning,
+              showCancelButton: true,
+              confirmButtonClass: "btn-success",
+              confirmButtonText: "Yes, Remove!",
+              closeOnConfirm: true
+            },
+              function (confirm) {
+                if (confirm) {
+                  let deleteId = {
+                    "requirement_ids": deleteSubSectorId
+                  }
+                  releaseCampaignService.deleteSubmittedLeads(deleteId)
+                    .then(function onSuccess(response) {
+                      if (response && response.status) {
+                        swal(constants.name, constants.delete_success, constants.success);
+                      }
+                    }).catch(function onError(response) {
+                      console.log(response);
+                    })
+                  $scope.$apply(function () {
+                    for (let x in deleteSubSectorId) {
+                      var localindex_index = $scope.requirementDetailData[key].requirements.map(function (el) {
+                        return el.id;
+                      }).indexOf(deleteSubSectorId[x]);
+                      if (localindex_index != -1) { 
+                        $scope.requirementDetailData[key].requirements.splice(localindex_index, 1)
+                      }
+                    }
+
+                  });
+                }
+              });
+          }
+        }
+
+        $scope.updateRequirement = function (data) {
+          var reqData = [];
+          if (data) {
+            if (data.requirements && data.requirements.length > 0) {
+              for (let j in data.requirements) {
+                reqData.push(data.requirements[j]);
+              }
+            }
+          } else {
+            angular.forEach($scope.requirementDetailData, function (value, key) {
+              if (value.requirements.length > 0) {
+                for (let i in value.requirements) {
+                  reqData.push(value.requirements[i]);
+                }
+              }
+            })
+          }
+          var requirementData = {
+            "requirements": reqData
+          }
+          releaseCampaignService.updateRequirement(requirementData)
+            .then(function onSuccess(response) {
+              if (response && response.status) {
+                swal(constants.name, constants.update_success, constants.success);
+              }
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+        }
+
+        $scope.opsVerifyRequirement = function (data) {
+          let verifyId = [];
+          if (data.requirements.length > 0) {
+            for (let i in data.requirements) {
+              verifyId.push(data.requirements[i].id)
+            }
+          }
+          $scope.verifyRequirement(verifyId);
+        }
+
+        $scope.checkOpsVerifyRequirement = function (data) {
+          let verifyId = [];
+          for (let i in data) {
+            if (data[i].requirementCheck) {
+              verifyId.push(data[i].id);
+            }
+          }
+          if (verifyId.length > 0) {
+            $scope.verifyRequirement(verifyId);
+          }
+        }
+
+        $scope.updateSubSector = function (data) {
+          let updateData = [];
+          for (let i in data) {
+            if (data[i].requirementCheck) {
+              updateData.push(data[i]);
+            }
+          }
+          if (updateData.length > 0) {
+            var requirementData = {
+              "requirements": updateData
+            }
+            releaseCampaignService.updateRequirement(requirementData)
+              .then(function onSuccess(response) {
+                if (response && response.status) {
+                  swal(constants.name, constants.update_success, constants.success);
+                }
+              }).catch(function onError(response) {
+                console.log(response);
+              })
+          }
+        }
+
+        $scope.verifyRequirement = function (verifyId) {
+          swal({
+            title: 'Are you sure ?',
+            text: 'Do you want to proceed with sector level verification?',
+            type: constants.warning,
+            showCancelButton: true,
+            confirmButtonClass: "btn-success",
+            confirmButtonText: "Yes, Verify!",
+            closeOnConfirm: true
+          },
+            function (confirm) {
+              if (confirm) {
+                releaseCampaignService.opsVerifyRequirement({ "requirement_ids": verifyId })
+                  .then(function onSuccess(response) {
+                    if (response && response.status) {
+                      swal(constants.name, 'Verify successfully', constants.success);
+                    }
+                  }).catch(function onError(response) {
+                    console.log(response);
+                  })
+              }
+            });
+
+        }
+
+
+
+        $scope.bdVerifyRequirement = function (id) {
+          swal({
+            title: 'Are you sure ?',
+            text: 'Do you want to proceed with selected sub-sector verification?',
+            type: constants.warning,
+            showCancelButton: true,
+            confirmButtonClass: "btn-success",
+            confirmButtonText: "Yes, Verify!",
+            closeOnConfirm: true
+          },
+            function (confirm) {
+              if (confirm) {
+                let verifyId = [id];
+                releaseCampaignService.bdVerifyRequirement({ "requirement_ids": verifyId })
+                  .then(function onSuccess(response) {
+                    if (response && response.data && response.data.error) {
+                      swal(constants.name, response.data.error, constants.success);
+                    } else {
+                      swal(constants.name, 'bdVerify successfully', constants.success);
+                    }
+                  }).catch(function onError(response) {
+                    console.log(response);
+                  })
+              }
+            });
+        }
+
+        $scope.saveBrowsed = function () {
+          let browsedData = [];
+          for (let i in $scope.browsedDetailData) {
+            if ($scope.browsedDetailData[i].browsedCheck) {
+              browsedData.push($scope.browsedDetailData[i]._id);
+            }
+          }
+          if (browsedData.length > 0) {
+            var browsedId = {
+              "browsed_ids": browsedData
+            }
+            releaseCampaignService.saveBrowsed(browsedId)
+              .then(function onSuccess(response) {
+                if (response && response.status) {
+                  swal(constants.name, constants.update_success, constants.success);
+                }
+              }).catch(function onError(response) {
+                console.log(response);
+              })
+          }
+        }
+        $scope.selected_preferred_partner = { buttonDefaultText: 'Select Preferred Partner' };
+        $scope.addSubRequirementDetail = function (index) {
+          $scope.requirementDetailData[index].requirements.push({});
+        }
+
         $scope.IsVisible = false;
         $scope.updateSupplierStatus = function (value) {
           //If DIV is visible it will be hidden and vice versa.
@@ -1137,18 +1590,18 @@ angular.module('catalogueApp')
             })
         }
 
-        $scope.assignUsers = function(){
+        $scope.assignUsers = function () {
           let users = [];
           users.push(JSON.parse($scope.assignUserData.userid));
           $scope.assignUserData.assigned_to_ids = users;
           $scope.assignUserData.campaign_id = $scope.campaign_id;
           releaseCampaignService.assignUserSupplier($scope.assignUserData)
-          .then(function onSuccess(response) {
-            $scope.assignUserData = {};
-            swal(constants.name, "Assign user successfully.", constants.success);
-          }).catch(function onError(response) {
-            console.log(response);
-          })
+            .then(function onSuccess(response) {
+              $scope.assignUserData = {};
+              swal(constants.name, "Assign user successfully.", constants.success);
+            }).catch(function onError(response) {
+              console.log(response);
+            })
         }
 
 
@@ -1157,8 +1610,8 @@ angular.module('catalogueApp')
         }
         $scope.checkPhase = function () {
           for (let i in $scope.phases) {
-            
-            if(!$scope.phases[i].phase_no){
+
+            if (!$scope.phases[i].phase_no) {
               swal(constants.name, "Please add phase first", constants.warning);
               return false
             }
@@ -1174,7 +1627,7 @@ angular.module('catalogueApp')
           $scope.savePhases();
         }
         $scope.savePhases = function () {
-        
+
           if ($scope.phases[0] && $scope.phases[0].phase_no) {
             releaseCampaignService.savePhases($scope.phases, $scope.campaign_id)
               .then(function onSuccess(response) {
@@ -1404,8 +1857,8 @@ angular.module('catalogueApp')
 
           var token = $rootScope.globals.currentUser.token;
           var url = constants.base_url + constants.url_base + "import-sheet-in-existing-campaign/";
-          if($scope.releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'){
-            url = constants.base_url + constants.url_base + "b2b/import-lead/" + $scope.campaign_id + "/";
+          if ($scope.releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g') {
+            url = constants.base_url + constants.url_base_ui + "b2b/import-lead/" + $scope.campaign_id + "/";
           }
           if ($scope.file) {
             Upload.upload({
@@ -1455,9 +1908,9 @@ angular.module('catalogueApp')
           $scope.commentModal['shortlisted_spaces_id'] = $scope.supplierDataForComment.id;
           $scope.commentModal['related_to'] = commentType;
           var todayDate = new Date().toISOString();
-            if ($scope.comments[$scope.commentModal.shortlisted_spaces_id]) {
-              if ($scope.comments[$scope.commentModal.shortlisted_spaces_id].external) {
-                if (commentType == "EXTERNAL") {
+          if ($scope.comments[$scope.commentModal.shortlisted_spaces_id]) {
+            if ($scope.comments[$scope.commentModal.shortlisted_spaces_id].external) {
+              if (commentType == "EXTERNAL") {
                 $scope.comments[$scope.commentModal.shortlisted_spaces_id].external = {
                   comment: $scope.commentModal.comment,
                   "created_on": todayDate,
@@ -1465,56 +1918,56 @@ angular.module('catalogueApp')
                   // internal:{},
                 }
               }
-              } else {
-                if (commentType == "EXTERNAL") {
-                  $scope.comments[$scope.commentModal.shortlisted_spaces_id]['external'] = {
-                    comment: $scope.commentModal.comment,
-                     "created_on": todayDate,
-                    username: $rootScope.globals.userInfo.username
-                    // internal:{},
-                  }
-                }
-              }
-              if ($scope.comments[$scope.commentModal.shortlisted_spaces_id].internal) {
-                if (commentType != "EXTERNAL") {
-                $scope.comments[$scope.commentModal.shortlisted_spaces_id].internal = {
+            } else {
+              if (commentType == "EXTERNAL") {
+                $scope.comments[$scope.commentModal.shortlisted_spaces_id]['external'] = {
                   comment: $scope.commentModal.comment,
-                   "created_on": todayDate,
+                  "created_on": todayDate,
                   username: $rootScope.globals.userInfo.username
                   // internal:{},
                 }
               }
-              } else {
-                if (commentType != "EXTERNAL") {
-                  $scope.comments[$scope.commentModal.shortlisted_spaces_id]['internal'] = {
-                    comment: $scope.commentModal.comment,
-                     "created_on": todayDate,
-                    username: $rootScope.globals.userInfo.username
-                    // internal:{},
-                  }
+            }
+            if ($scope.comments[$scope.commentModal.shortlisted_spaces_id].internal) {
+              if (commentType != "EXTERNAL") {
+                $scope.comments[$scope.commentModal.shortlisted_spaces_id].internal = {
+                  comment: $scope.commentModal.comment,
+                  "created_on": todayDate,
+                  username: $rootScope.globals.userInfo.username
+                  // internal:{},
                 }
               }
             } else {
-              if (commentType == "EXTERNAL") {
-                $scope.comments[$scope.commentModal.shortlisted_spaces_id] = {
-                  external: {
-                    comment: $scope.commentModal.comment,
-                     "created_on": todayDate,
-                    username: $rootScope.globals.userInfo.username
-                  },
-                    internal:{},
-                }
-              } else {
-                $scope.comments[$scope.commentModal.shortlisted_spaces_id] = {
-                  internal: {
-                    comment: $scope.commentModal.comment,
-                     "created_on": todayDate,
-                    username: $rootScope.globals.userInfo.username
-                  },
-                   external:{},
+              if (commentType != "EXTERNAL") {
+                $scope.comments[$scope.commentModal.shortlisted_spaces_id]['internal'] = {
+                  comment: $scope.commentModal.comment,
+                  "created_on": todayDate,
+                  username: $rootScope.globals.userInfo.username
+                  // internal:{},
                 }
               }
             }
+          } else {
+            if (commentType == "EXTERNAL") {
+              $scope.comments[$scope.commentModal.shortlisted_spaces_id] = {
+                external: {
+                  comment: $scope.commentModal.comment,
+                  "created_on": todayDate,
+                  username: $rootScope.globals.userInfo.username
+                },
+                internal: {},
+              }
+            } else {
+              $scope.comments[$scope.commentModal.shortlisted_spaces_id] = {
+                internal: {
+                  comment: $scope.commentModal.comment,
+                  "created_on": todayDate,
+                  username: $rootScope.globals.userInfo.username
+                },
+                external: {},
+              }
+            }
+          }
           releaseCampaignService.addComment($scope.campaign_id, $scope.commentModal)
             .then(function onSuccess(response) {
               $scope.commentModal = {};
@@ -1552,8 +2005,8 @@ angular.module('catalogueApp')
             })
         }
 
-        $scope.viewContactComment = function(comments){
-           $scope.ContactComments = comments;
+        $scope.viewContactComment = function (comments) {
+          $scope.ContactComments = comments;
           $('#viewCommentsContact').modal('show');
         }
 
@@ -1625,7 +2078,7 @@ angular.module('catalogueApp')
         }
         $scope.uploadImageReceipt = function (file) {
           $scope.ReceiptFile = file;
-         
+
         }
         $scope.permissionBoxData = {};
         $scope.uploadPermissionBoxImage = function (supplier) {
@@ -1645,7 +2098,7 @@ angular.module('catalogueApp')
               },
               headers: { 'Authorization': 'JWT ' + token }
             }).then(function onSuccess(response) {
-              $scope.permissionBoxImages.push({image_path:response.data.data.image_path,object_id:supplier.supplier_id});
+              $scope.permissionBoxImages.push({ image_path: response.data.data.image_path, object_id: supplier.supplier_id });
               supplier.permissionComment = '';
               cfpLoadingBar.complete();
               swal(constants.name, constants.image_success, constants.success);
@@ -1677,7 +2130,7 @@ angular.module('catalogueApp')
               },
               headers: { 'Authorization': 'JWT ' + token }
             }).then(function onSuccess(response) {
-              $scope.receiptImages.push({image_path:response.data.data.image_path,object_id:supplier.supplier_id})
+              $scope.receiptImages.push({ image_path: response.data.data.image_path, object_id: supplier.supplier_id })
               supplier.receiptComment = '';
               cfpLoadingBar.complete();
               swal(constants.name, constants.image_success, constants.success);
@@ -2016,7 +2469,7 @@ angular.module('catalogueApp')
               for (var i = 0; i < $scope.hashtagImages.length; i++) {
                 if ($scope.hashtagImages[i].permission_box) {
                   $scope.permissionBoxImages.push($scope.hashtagImages[i].permission_box)
-                 
+
                 }
                 if ($scope.hashtagImages[i].receipt) {
                   $scope.receiptImages.push($scope.hashtagImages[i].receipt)
