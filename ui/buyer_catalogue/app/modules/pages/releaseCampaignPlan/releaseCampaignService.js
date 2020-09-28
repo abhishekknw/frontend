@@ -178,6 +178,46 @@
       return machadaloHttp.put(url,data);
     }
 
+    releaseCampaignService.requirementDetail = function(id){
+      var url = url_base_ui + "b2b/requirements/?shortlisted_spaces_id=" + id;
+      return machadaloHttp.get(url);
+    }
 
+    releaseCampaignService.updateRequirement = function(data){
+      var url = url_base_ui + "b2b/requirements/";
+      return machadaloHttp.put(url,data);
+    }
+
+    releaseCampaignService.requirementBrowsedData = function(id){
+      var url = url_base_ui + "b2b/browsed-leads/?shortlisted_spaces_id=" + id;
+      return machadaloHttp.get(url);
+    }
+
+    releaseCampaignService.deleteSubmittedLeads = function(data){
+      var url = url_base_ui + 'b2b/delete-requirement/';
+      return machadaloHttp.post(url,data);
+    }
+
+    releaseCampaignService.opsVerifyRequirement = function(data){
+      var url = url_base_ui + 'b2b/ops-lead-verification/';
+      return machadaloHttp.post(url,data);
+    }
+
+    releaseCampaignService.bdVerifyRequirement = function(data){
+      var url = url_base_ui + 'b2b/requirements/';
+      return machadaloHttp.post(url,data);
+    }
+
+    releaseCampaignService.saveBrowsed = function(data){
+      var url = url_base_ui + 'b2b/browsed-to-requirement/';
+      return machadaloHttp.post(url,data);
+    }
+
+    releaseCampaignService.sectorList = function(id){
+      var url = url_base_ui + "b2b/browsed-leads/?shortlisted_spaces_id=" + id;
+      return machadaloHttp.get(url);
+    }
+
+    
     return releaseCampaignService;
 }]);
