@@ -213,6 +213,11 @@
       return machadaloHttp.post(url,data);
     }
 
+    releaseCampaignService.removeBrowsed = function(data){
+      var url = url_base_ui + 'b2b/delete-browsed-lead/';
+      return machadaloHttp.post(url,data);
+    }
+
     releaseCampaignService.sectorList = function(id){
       var url = url_base_ui + "b2b/browsed-leads/?shortlisted_spaces_id=" + id;
       return machadaloHttp.get(url);

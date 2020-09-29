@@ -1142,18 +1142,6 @@ angular.module('catalogueApp')
                 //end added sub sector name
               })
               $scope.getRequirementBrowsedData(id);
-              // $scope.companiesDetailData[0].organisation_id = "BUSAMA0AA5";
-              // $scope.companiesDetailData[1].organisation_id = "BUSANA7E3A";
-              // $scope.companiesDetailData[0].id = "BUSAMA0AA5";
-              // $scope.companiesDetailData[1].id = "BUSANA7E3A";
-              // $scope.companiesDetailData[0].label = "test1";
-              // $scope.companiesDetailData[1].label = "Test2";
-              // $scope.requirementDetailData[0].preferred_company.push($scope.companiesDetailData[0])
-              // $scope.requirementDetailData[0].preferred_company.push($scope.companiesDetailData[1])
-              // $scope.requirementDetailData[1].preferred_company.push($scope.companiesDetailData[0])
-              // $scope.requirementDetailData[1].preferred_company.push($scope.companiesDetailData[1])
-              // console.log('1111111111111111111111111111111111', $scope.companiesDetailData)
-
             }).catch(function onError(response) {
               console.log(response);
             })
@@ -1446,6 +1434,17 @@ angular.module('catalogueApp')
             var browsedId = {
               "browsed_ids": browsedData
             }
+            swal({
+              title: 'Are you sure ?',
+              text: 'The lead will be moved into submitted leads, do you want to continue?',
+              type: constants.warning,
+              showCancelButton: true,
+              confirmButtonClass: "btn-success",
+              confirmButtonText: "Yes, save!",
+              closeOnConfirm: true
+            },
+              function (confirm) {
+                if(confirm){
             releaseCampaignService.saveBrowsed(browsedId)
               .then(function onSuccess(response) {
                 if (response && response.status) {
@@ -1454,8 +1453,48 @@ angular.module('catalogueApp')
               }).catch(function onError(response) {
                 console.log(response);
               })
+            }
+            });
           }
         }
+
+        $scope.removeBrowsed = function () {
+          let browsedData = [];
+          for (let i in $scope.browsedDetailData) {
+            if ($scope.browsedDetailData[i].browsedCheck) {
+              browsedData.push($scope.browsedDetailData[i]._id);
+            }
+          }
+           if (browsedData.length > 0) {
+            var browsedId = {
+              "browsed_ids": browsedData
+            }
+            swal({
+              title: 'Are you sure ?',
+              text: ' Remove Browsed Leads',
+              type: constants.warning,
+              showCancelButton: true,
+              confirmButtonClass: "btn-success",
+              confirmButtonText: "Yes, Remove!",
+              closeOnConfirm: true
+            },
+              function (confirm) {
+                if(confirm){
+            releaseCampaignService.removeBrowsed(browsedId)
+              .then(function onSuccess(response) {
+                if (response && response.status) {
+                  swal(constants.name, constants.delete_success, constants.success);
+                }
+              }).catch(function onError(response) {
+                console.log(response);
+              })
+            }
+            });
+          }
+        }
+
+
+
         $scope.selected_preferred_partner = { buttonDefaultText: 'Select Preferred Partner' };
         $scope.addSubRequirementDetail = function (index) {
           $scope.requirementDetailData[index].requirements.push({});
