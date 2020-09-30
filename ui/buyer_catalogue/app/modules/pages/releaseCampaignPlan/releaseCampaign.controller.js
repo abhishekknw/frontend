@@ -1624,6 +1624,11 @@ angular.module('catalogueApp')
                 $scope.phaseMappingList[phase.id] = phase;
               })
               $scope.phases = response.data.data;
+              for(let i in $scope.phases){
+              $scope.phases[i].phase_no = JSON.parse($scope.phases[i].phase_no);
+              }
+              
+           
             }).catch(function onError(response) {
               console.log(response);
             })
