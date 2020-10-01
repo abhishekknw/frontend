@@ -2717,4 +2717,38 @@ angular.module('catalogueApp')
           return keys.length;
         }
 
+        $scope.show_color = function(supplier) {
+          if($scope.releaseDetails.campaign.type_of_end_customer_formatted_name == "b_to_b_r_g"){
+            if(supplier.color_code == 1){
+              return 'yellow';
+            }
+            else if(supplier.color_code == 2){
+              return '#7C4700';
+            }
+            else if(supplier.color_code == 3){
+              return 'green';
+            }
+            else if(supplier.color_code == 4){
+              return 'white';
+            }
+          }
+          else{
+            if(supplier.booking_status==='BK' || supplier.booking_status==='MC'){
+              return 'green';
+            }
+            else if(supplier.booking_status==='UN' || supplier.booking_status==='NI' || supplier.booking_status==='NE'){
+              return 'white';
+            }
+            else if(supplier.booking_status==='SR'){
+              return 'red';
+            }
+            else if(supplier.booking_status==='DP' ||supplier.booking_status==='TB'||supplier.booking_status==='MF'||supplier.booking_status==='RE' ){
+              return 'yellow';
+            }
+            else if(supplier.booking_status){
+              return 'brown';
+            }
+          }
+        }
+
       }]);//Controller function ends here
