@@ -1368,6 +1368,28 @@ angular.module('catalogueApp')
           }
         }
 
+      
+        $scope.subSectorCheck = true
+        $scope.checkbooxCheck = function(key){
+          $scope.subSectorCheck = true
+            var requirementsData = $scope.requirementDetailData[key].requirements
+             for(let x in requirementsData){
+              if(requirementsData[x].requirementCheck && $scope.subSectorCheck){
+                $scope.subSectorCheck = false
+              }
+             }
+        }
+        $scope.browsedCheck = true;
+        $scope.checkbooxBrowesLeadCheck = function(){
+          $scope.browsedCheck = true;
+             for(let x in $scope.browsedDetailData){
+              if($scope.browsedDetailData[x].browsedCheck && $scope.browsedCheck){
+                $scope.browsedCheck = false
+              }
+             }
+        }
+
+
         $scope.singleOpsVerifyRequirement = function (id) {
           let verifyId = [];
           verifyId.push(id);

@@ -1790,7 +1790,7 @@
                       </td> -->
                       <td class="alignment">
                         <button style="margin-bottom:2px" type="button" name="button"
-                          class="btn btn-success" ng-disabled="opsVerifyButton" ng-click="opsVerifyRequirement(requirement)"> <p ng-if="!opsVerifyButton">Ops Verify</p>
+                          class="btn btn-success" ng-disabled="opsVerifyButton" ng-click="opsVerifyRequirement(requirement)"> <span ng-if="!opsVerifyButton">Ops Verify</span>
                           <span ng-if="opsVerifyButton">Ops Verified</span>
                         </button>
                         <button style="margin-bottom:2px" type="button" name="button"
@@ -1813,7 +1813,7 @@
                           <tbody>
                             <tr ng-repeat="subrequirement in requirement.requirements">
                               <td>
-                                <input type="checkbox" name="requirementCheck" id="requirementCheckId" ng-model="subrequirement.requirementCheck">
+                                <input type="checkbox" name="requirementCheck"  id="requirementCheckId" ng-click="checkbooxCheck(key)" ng-model="subrequirement.requirementCheck">
                                
                               </td>
                               <!-- <td class="alignment">
@@ -1918,11 +1918,12 @@
                           </tbody>
                         </table>
                         <button class="btn btn-danger" ng-click="addSubRequirementDetail(key)">Add Row</button>
-                        <button class="btn btn-success" ng-disabled="!myForm.$valid"
+                        <button class="btn btn-success" id="update_{{key}}" ng-disabled="subSectorCheck"
                           ng-click="updateSubSector(requirement.requirements)" >Update</button>
-                          <button style="margin-bottom:2px" type="button" name="button"
-                          class="btn btn-success" ng-click="checkOpsVerifyRequirement(requirement.requirements)">Ops Verify</button>
-                          <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                          <button style="margin-bottom:2px" id="verify_{{key}}" type="button" name="button"
+                          class="btn btn-success" ng-disabled="subSectorCheck || opsVerifyButton"  ng-click="checkOpsVerifyRequirement(requirement.requirements)"><span ng-if="!opsVerifyButton">Ops Verify</span>
+                          <span ng-if="opsVerifyButton">Ops Verified</span></button>
+                          <button style="margin-bottom:2px" id="remove_{{key}}" type="button" name="button" ng-disabled="subSectorCheck" class="btn btn-danger"
                           ng-click="removeSubSectorRequirement(requirement.requirements,key)">Remove</button>
                         </td>
                     </tr>
@@ -1959,7 +1960,7 @@
                   <tbody>
                     <tr ng-repeat="browsed in browsedDetailData">
                       <td class="alignment">
-                        <input type="checkbox" name="browsedCheck" id="browsedCheckId" ng-model="browsed.browsedCheck">
+                        <input type="checkbox" name="browsedCheck" ng-click="checkbooxBrowesLeadCheck()" id="browsedCheckId" ng-model="browsed.browsedCheck">
                       </td>
                       <td class="alignment">
                         {{browsed.sector_name}}
@@ -2055,11 +2056,11 @@
                 <div class="">
                   <!-- <button class="btn btn-danger pull-right" ng-click="setEditContactDetails()">Edit</button> -->
                   <button class="btn btn-danger" ng-click="addRequirementDetail()">Add Row</button>
-                  <button class="btn btn-success" ng-disabled="!myForms.$valid"
+                  <button class="btn btn-success" ng-disabled="browsedCheck"
                     ng-click="saveBrowsed()">Update</button>
 
                     <button class="btn btn-danger" 
-                    ng-click="removeBrowsed()">Remove</button>
+                    ng-click="removeBrowsed()" ng-disabled="browsedCheck">Remove</button>
 
                     
 
