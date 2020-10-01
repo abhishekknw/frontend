@@ -170,18 +170,18 @@ angular.module('catalogueApp')
           { header: 'Preferred Partner' },
           { header: 'Implementation Time' },
           { header: 'Meeting Time' },
-          { header: 'Preferred Meeting Time' },
+          // { header: 'Preferred Meeting Time' },
           { header: 'Lead Status' },
-          { header: 'Lead Given by' },
+          // { header: 'Lead Given by' },
           { header: 'Comment' },
-          { header: 'Statisfaction State' },
-          { header: 'Reason' },
+          // { header: 'Statisfaction State' },
+          // { header: 'Reason' },
           { header: 'Action' },
         ];
 
         $scope.requirement_sub_headings = [
           { header: '' },
-          { header: 'Sub Sector' },
+          // { header: 'Sub Sector' },
           { header: 'Current Partner' },
           { header: 'Preferred Partner' },
           { header: 'Lead For' },
@@ -189,10 +189,10 @@ angular.module('catalogueApp')
           { header: 'Meeting Time' },
           //  { header: 'Preferred Meeting Time' },
           { header: 'Lead Status' },
-          { header: 'Lead Given by' },
+          // { header: 'Lead Given by' },
           { header: 'Comment' },
-          { header: 'Statisfaction State' },
-          { header: 'Reason' },
+          // { header: 'Statisfaction State' },
+          // { header: 'Reason' },
           { header: 'Action' },
         ];
 
@@ -201,16 +201,16 @@ angular.module('catalogueApp')
           { header: 'Sector' },
           { header: 'Current Partner' },
           { header: 'Preferred Partner' },
-          { header: 'Lead for' },
+          // { header: 'Lead for' },
           { header: 'Implementation Time' },
           { header: 'Meeting Time' },
-          { header: 'Preferred Meeting Time' },
+          // { header: 'Preferred Meeting Time' },
           { header: 'Lead Status' },
-          { header: 'Lead Given by' },
+          // { header: 'Lead Given by' },
           { header: 'Comment' },
           // { header: 'Statisfaction State' },
           // { header: 'Reason' },
-          { header: 'Action' },
+          // { header: 'Action' },
         ];
         $scope.payment_headings = [
           { header: 'Name On Cheque' },
@@ -1060,7 +1060,7 @@ angular.module('catalogueApp')
 
 
 
-
+         $scope.opsVerifyButton = true;
         $scope.getRequirementDetail = function (id) {
           userService.getSector()
             .then(function onSuccess(response) {
@@ -1091,7 +1091,7 @@ angular.module('catalogueApp')
                 }
                 //end multiselect preferred company
                 //START sub sector multiselect preferred company
-
+                
                 if ($scope.requirementDetailData[i].requirements.length > 0) {
                   for (let x in $scope.requirementDetailData[i].requirements) {
                     var selected_preferred_company_sub_sector = [];
@@ -1105,6 +1105,18 @@ angular.module('catalogueApp')
                         }
                       }
                       $scope.requirementDetailData[i].requirements[x].selected_preferred_company_sub_sector = selected_preferred_company_sub_sector
+                    }
+
+                    var _indexCompany = $scope.companiesDetailData.map(function (el) {
+                      return el.organisation_id;
+                    }).indexOf($scope.requirementDetailData[i].requirements[x].company);
+                    if (_indexCompany != -1) {
+                      $scope.requirementDetailData[i].requirements[x].company_name = $scope.companiesDetailData[_indexCompany].name;
+                    }
+                     
+
+                    if($scope.opsVerifyButton && $scope.requirementDetailData[i].requirements[x].varified_ops == 'no' ){
+                      $scope.opsVerifyButton = false;
                     }
                   }
                 }
@@ -1156,6 +1168,17 @@ angular.module('catalogueApp')
                   }
                   $scope.browsedDetailData[i].selected_preferred_company = selected_preferred_company
                 }
+
+                  //start added sector name
+                  if ($scope.sectorList) {
+                    var localindex_indexs = $scope.sectorList.map(function (el) {
+                      return el.id;
+                    }).indexOf(JSON.parse($scope.browsedDetailData[i].sector_id));
+                    if (localindex_indexs != -1) {
+                      $scope.browsedDetailData[i].sector_name = $scope.sectorList[localindex_indexs].business_type
+                    }
+                  }
+                  //end added sector name
               }
             }).catch(function onError(response) {
               console.log(response);
@@ -1227,7 +1250,9 @@ angular.module('catalogueApp')
                 }
                 releaseCampaignService.deleteSubmittedLeads(deleteId)
                   .then(function onSuccess(response) {
-                    if (response && response.status) {
+                    if (response && response.data.data.error) {
+                      swal(constants.name, response.data.data.error, constants.error);
+                    } else {
                       swal(constants.name, constants.delete_success, constants.success);
                     }
                   }).catch(function onError(response) {
@@ -1265,7 +1290,9 @@ angular.module('catalogueApp')
                   }
                   releaseCampaignService.deleteSubmittedLeads(deleteId)
                     .then(function onSuccess(response) {
-                      if (response && response.status) {
+                      if (response && response.data.data.error) {
+                        swal(constants.name, response.data.data.error, constants.error);
+                      } else {
                         swal(constants.name, constants.delete_success, constants.success);
                       }
                     }).catch(function onError(response) {
@@ -1309,7 +1336,9 @@ angular.module('catalogueApp')
           }
           releaseCampaignService.updateRequirement(requirementData)
             .then(function onSuccess(response) {
-              if (response && response.status) {
+              if (response && response.data.data.error) {
+                swal(constants.name, response.data.data.error, constants.error);
+              } else {
                 swal(constants.name, constants.update_success, constants.success);
               }
             }).catch(function onError(response) {
@@ -1339,6 +1368,14 @@ angular.module('catalogueApp')
           }
         }
 
+        $scope.singleOpsVerifyRequirement = function (id) {
+          let verifyId = [];
+          verifyId.push(id);
+          if (verifyId.length > 0) {
+            $scope.verifyRequirement(verifyId);
+          }
+        }
+
         $scope.updateSubSector = function (data) {
           let updateData = [];
           for (let i in data) {
@@ -1352,7 +1389,9 @@ angular.module('catalogueApp')
             }
             releaseCampaignService.updateRequirement(requirementData)
               .then(function onSuccess(response) {
-                if (response && response.status) {
+                if (response && response.data.data.error) {
+                  swal(constants.name, response.data.data.error, constants.error);
+                } else {
                   swal(constants.name, constants.update_success, constants.success);
                 }
               }).catch(function onError(response) {
@@ -1375,8 +1414,10 @@ angular.module('catalogueApp')
               if (confirm) {
                 releaseCampaignService.opsVerifyRequirement({ "requirement_ids": verifyId })
                   .then(function onSuccess(response) {
-                    if (response && response.status) {
-                      swal(constants.name, 'Verify successfully', constants.success);
+                    if (response && response.data.data.error) {
+                      swal(constants.name, response.data.data.error, constants.error);
+                    } else {
+                      swal(constants.name, 'Verified Successfully', constants.success);
                     }
                   }).catch(function onError(response) {
                     console.log(response);
@@ -1403,10 +1444,10 @@ angular.module('catalogueApp')
                 let verifyId = [id];
                 releaseCampaignService.bdVerifyRequirement({ "requirement_ids": verifyId })
                   .then(function onSuccess(response) {
-                    if (response && response.data && response.data.error) {
-                      swal(constants.name, response.data.error, constants.success);
+                    if (response && response.data.data.error) {
+                      swal(constants.name, response.data.data.error, constants.error);
                     } else {
-                      swal(constants.name, 'bdVerify successfully', constants.success);
+                      swal(constants.name, 'Verified Successfully', constants.success);
                     }
                   }).catch(function onError(response) {
                     console.log(response);
@@ -1420,6 +1461,13 @@ angular.module('catalogueApp')
           for (let i in $scope.browsedDetailData) {
             if ($scope.browsedDetailData[i].browsedCheck) {
               browsedData.push($scope.browsedDetailData[i]._id);
+              
+              if($scope.browsedDetailData[i].selected_preferred_company.length > 0){
+                $scope.browsedDetailData[i].prefered_patners = [];
+                for(let j in $scope.browsedDetailData[i].selected_preferred_company){
+                  $scope.browsedDetailData[i].prefered_patners.push($scope.browsedDetailData[i].selected_preferred_company[j].id)
+                }
+              }
             }
           }
           if (browsedData.length > 0) {
@@ -1432,16 +1480,19 @@ angular.module('catalogueApp')
               type: constants.warning,
               showCancelButton: true,
               confirmButtonClass: "btn-success",
-              confirmButtonText: "Yes, save!",
+              confirmButtonText: "Yes, Save!",
               closeOnConfirm: true
             },
               function (confirm) {
                 if(confirm){
             releaseCampaignService.saveBrowsed(browsedId)
               .then(function onSuccess(response) {
-                if (response && response.status) {
+                if (response && response.data.data.error) {
+                  swal(constants.name, response.data.data.error, constants.error);
+                } else {
                   swal(constants.name, constants.update_success, constants.success);
                 }
+              
               }).catch(function onError(response) {
                 console.log(response);
               })
@@ -1474,12 +1525,26 @@ angular.module('catalogueApp')
                 if(confirm){
             releaseCampaignService.removeBrowsed(browsedId)
               .then(function onSuccess(response) {
-                if (response && response.status) {
+                if (response && response.data.data.error) {
+                  swal(constants.name, response.data.data.error, constants.error);
+                } else {
                   swal(constants.name, constants.delete_success, constants.success);
                 }
+               
               }).catch(function onError(response) {
                 console.log(response);
               })
+                for(let i in browsedData){
+                  var localindex_index = $scope.browsedDetailData.map(function (el) {
+                    return el._id;
+                  }).indexOf(browsedData[i]);
+                  alert(localindex_index)
+                  if (localindex_index != -1) { 
+                    $scope.$apply(function () {
+                    $scope.browsedDetailData.splice(localindex_index, 1);
+                    });
+                  }
+                }
             }
             });
           }

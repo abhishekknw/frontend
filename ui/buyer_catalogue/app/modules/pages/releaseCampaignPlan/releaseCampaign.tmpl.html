@@ -1676,14 +1676,14 @@
 
   <!-- start Requirement table -->
   <div id="RequirementModel" class="modal fade">
-    <div class="modal-dialog" style="width:1500px">
+    <div class="modal-dialog" style="width:1200px">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close"  data-dismiss="modal" aria-hidden="true"></button>
+          <button type="button" class="close"  data-dismiss="modal" aria-hidden="true">&times;</button>
           <h4 class="modal-title">Requirement Details</h4>
           <hr />
-          <div class="modal-body" style="width: 1250px; height: 500px;">
-            <div class="modal-body col-md-4 table-responsive" style="width: 1250px; height: 500px">
+          <div class="modal-body" style="width: 1100px; height: 500px;">
+            <div class="modal-body col-md-4 table-responsive" style="width: 1100px; height: 500px">
               <form name="myForm">
                 <!-- test -->
                 <h4 class="modal-title">Submitted Leads</h4>
@@ -1747,7 +1747,7 @@
                           </option>
                         </select>
                       </td>
-                      <td class="alignment">
+                      <!-- <td class="alignment">
                         <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
                           ng-model="contact.contact_type">
                           <option value="" disabled>Select Preferred Meeting Time</option>
@@ -1755,7 +1755,7 @@
                             {{ctype}}
                           </option>
                         </select>
-                      </td>
+                      </td> -->
                       <td class="alignment">
                         <select class="form-control" name="lead_status_{{$index}}" id="lead_status_id_{{$index}}"
                           ng-model="requirement.lead_status" style="width:150px;">
@@ -1766,18 +1766,16 @@
                           </option>
                         </select>
                       </td>
-                      <td class="alignment">
+                      <!-- <td class="alignment">
                         <input type="text" placeholder="Lead Given by	" class="form-control" id="lead_by_id"
                           style="width:100px;" ng-model="requirement.lead_by">
-                      </td>
+                      </td> -->
                       <td class="alignment">
-                        <!-- <input type="text" placeholder="comment" class="form-control" id="comment_id" style="width:100px;"
-              ng-model="requirement.comment"> -->
                         <textarea placeholder="Comments" class="form-control" style="width:150px;"
                           ng-model="requirement.comment" rows="4" cols="50">
               </textarea>
                       </td>
-                      <td class="alignment">
+                      <!-- <td class="alignment">
                         <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
                           ng-model="requirement.statisfaction ">
                           <option value="" disabled>Select Statisfaction State</option>
@@ -1789,10 +1787,12 @@
                       <td class="alignment">
                         <input type="text" placeholder="Reason" class="form-control" id="reason_id" style="width:100px;"
                           ng-model="requirement.reason">
-                      </td>
+                      </td> -->
                       <td class="alignment">
                         <button style="margin-bottom:2px" type="button" name="button"
-                          class="btn btn-success" ng-click="opsVerifyRequirement(requirement)">Ops Verify</button>
+                          class="btn btn-success" ng-disabled="opsVerifyButton" ng-click="opsVerifyRequirement(requirement)"> <p ng-if="!opsVerifyButton">Ops Verify</p>
+                          <span ng-if="opsVerifyButton">Ops Verified</span>
+                        </button>
                         <button style="margin-bottom:2px" type="button" name="button"
                           ng-click="updateRequirement(requirement)" class="btn btn-info">Update</button>
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
@@ -1816,9 +1816,9 @@
                                 <input type="checkbox" name="requirementCheck" id="requirementCheckId" ng-model="subrequirement.requirementCheck">
                                
                               </td>
-                              <td class="alignment">
+                              <!-- <td class="alignment">
                                   {{subrequirement.sub_sector_name}}
-                              </td>
+                              </td> -->
                               <td class="alignment">
                                 <select class="form-control" name="current_company_{{$index}}"
                                   id="current_company_id_{{$index}}" ng-model="subrequirement.current_company"
@@ -1840,7 +1840,7 @@
                               </td>
 
                               <td class="alignment">
-
+                                 {{subrequirement.company_name}}
                               </td>
         
         
@@ -1884,18 +1884,17 @@
                                   </option>
                                 </select>
                               </td>
-                              <td class="alignment">
+                              <!-- <td class="alignment">
                                 <input type="text" placeholder="Lead Given by	" class="form-control" id="lead_by_id"
                                   style="width:100px;" ng-model="subrequirement.lead_by">
-                              </td>
+                              </td> -->
                               <td class="alignment">
-                                <!-- <input type="text" placeholder="comment" class="form-control" id="comment_id" style="width:100px;"
-                      ng-model="requirement.comment"> -->
+                           
                                 <textarea placeholder="Comments" class="form-control" style="width:150px;"
                                   ng-model="subrequirement.comment" rows="4" cols="50">
                       </textarea>
                               </td>
-                              <td class="alignment">
+                              <!-- <td class="alignment">
                                 <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
                                   ng-model="subrequirement.statisfaction ">
                                   <option value="" disabled>Select Statisfaction State</option>
@@ -1907,11 +1906,13 @@
                               <td class="alignment">
                                 <input type="text" placeholder="Reason" class="form-control" id="reason_id" style="width:100px;"
                                   ng-model="subrequirement.reason">
-                              </td>
+                              </td> -->
                               <td class="alignment">
                                 <button style="margin-bottom:2px" type="button" name="button"
-                                  class="btn btn-success" ng-if="requirement.varified_ops == 'yes'" ng-click="bdVerifyRequirement(subrequirement.id)">BD Verify</button>
-                               
+                                  class="btn btn-success" ng-if="subrequirement.varified_ops == 'yes' && subrequirement.varified_bd == 'no'" ng-click="bdVerifyRequirement(subrequirement.id)">BD Verify</button>
+                                  <button style="margin-bottom:2px" type="button" name="button"
+                                  class="btn btn-success" ng-if="subrequirement.varified_ops == 'no'" ng-click="singleOpsVerifyRequirement(subrequirement.id)">Ops Verify</button>
+                                   <span ng-if="subrequirement.varified_bd == 'yes'">BD Verified </span>
                               </td>
                             </tr>
                           </tbody>
@@ -1945,7 +1946,7 @@
 
 
 
-            <div class="modal-body col-md-4 table-responsive" style="width: 1250px; height: 500px">
+            <div class="modal-body col-md-4 table-responsive" style="width: 1100px; height: 500px">
               <form name="myForms">
                 <h4 class="modal-title">Browsed Leads</h4>
                 <table class="table table-bordered" name="contactForm">
@@ -1961,8 +1962,7 @@
                         <input type="checkbox" name="browsedCheck" id="browsedCheckId" ng-model="browsed.browsedCheck">
                       </td>
                       <td class="alignment">
-                        <input type="text" placeholder="sector" class="form-control" id="sector_id" style="width:100px;"
-                          ng-model="browsed.sector_id">
+                        {{browsed.sector_name}}
                       </td>
                       <td class="alignment">
                         <select class="form-control" name="current_company_{{$index}}"
@@ -1985,10 +1985,10 @@
                           translation-texts="selected_business_type" events="events"></span>
                       </td>
 
-                      <td class="alignment">
+                      <!-- <td class="alignment">
                         <input type="text" placeholder="Lead for" class="form-control" id="lead_for_id"
                           style="width:100px;" ng-model="browsed.sector">
-                      </td>
+                      </td> -->
 
                       <td class="alignment">
                         <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
@@ -2010,7 +2010,7 @@
                           </option>
                         </select>
                       </td>
-                      <td class="alignment">
+                      <!-- <td class="alignment">
                         <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
                           ng-model="contact.contact_type">
                           <option value="" disabled>Select Preferred Meeting Time</option>
@@ -2018,7 +2018,7 @@
                             {{ctype}}
                           </option>
                         </select>
-                      </td>
+                      </td> -->
                       <td class="alignment">
                         <select class="form-control" name="lead_status_{{$index}}" id="lead_status_id_{{$index}}"
                           ng-model="browsed.lead_status" style="width:150px;">
@@ -2029,24 +2029,23 @@
                           </option>
                         </select>
                       </td>
-                      <td class="alignment">
+                      <!-- <td class="alignment">
                         <input type="text" placeholder="Lead Given by	" class="form-control" id="lead_by_id"
                           style="width:100px;" ng-model="browsed.lead_by">
-                      </td>
+                      </td> -->
                       <td class="alignment">
-                        <!-- <input type="text" placeholder="comment" class="form-control" id="comment_id" style="width:100px;"
-              ng-model="requirement.comment"> -->
+                       
                         <textarea placeholder="Comments" class="form-control" style="width:150px;"
                           ng-model="browsed.comment" rows="4" cols="50">
               </textarea>
                       </td>
 
-                      <td class="alignment">
-                        <!-- <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success" >Verify</button>
-                        <button style="margin-bottom:2px" type="button" name="button" ng-click="updateRequirement(requirement)" class="btn btn-info" >Update</button> -->
+                      <!-- <td class="alignment">
+                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success" >Verify</button>
+                        <button style="margin-bottom:2px" type="button" name="button" ng-click="updateRequirement(requirement)" class="btn btn-info" >Update</button>
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
                           ng-click="removeRequirement($index)">Remove</button>
-                      </td>
+                      </td> -->
                     </tr>
                   </tbody>
                 </table>
@@ -2605,11 +2604,11 @@
         <div class="col-md-12" style="margin-left:5px;">
           <div class="col-md-3" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'">
             <label>Select Sheet</label>
-            <a href="/sample_files/b2b_import_lead.xlsx" download>Demo File</a>
+            <a href="/sample_files/b2b_import_lead.xlsx" download>Sample Sheet</a>
           </div>
           <div class="col-md-3" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name != 'b_to_b_r_g'">
             <label>Select Sheet</label>
-            <a href="/sample_files/booking_plan_sheet_v1.xlsx" download>Demo File</a>
+            <a href="/sample_files/booking_plan_sheet_v1.xlsx" download>Sample Sheet</a>
           </div>
           <div class="col-md-4">
             <input type="file" ngf-select="uploadFiles($file, 1)" class="buttonfile" accept=".xlsx" />
