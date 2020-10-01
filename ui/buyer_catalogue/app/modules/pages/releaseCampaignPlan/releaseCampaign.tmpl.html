@@ -400,10 +400,7 @@
             <tr ng-if="releaseDetails.shortlisted_suppliers.length > 0"
               ng-repeat="(key,filter) in supplier.shortlisted_inventories track by $index" ng-disabled="$index != '15'">
 
-              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" style="width:40px;" ng-style="((supplier.booking_status==='BK' || supplier.booking_status==='MC') && {'background-color':'green'}) ||((supplier.booking_status==='UN' || supplier.booking_status==='NI' || supplier.booking_status==='NE') && {'background-color':'white'} )||(
-              (supplier.booking_status==='SR') && {'background-color':'red'}) ||(
-              (supplier.booking_status==='DP' ||supplier.booking_status==='TB'||supplier.booking_status==='MF'||supplier.booking_status==='RE' ) && {'background-color':'yellow'}) ||(
-              supplier.booking_status && {'background-color':'brown'})">{{$parent.$parent.$index + 1}}</td>
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" style="width:40px;" ng-style="background: {{show_color(supplier)}}">{{$parent.$parent.$index + 1}}</td>
 
               <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <span ng-if="supplier.brand_organisation_data.name">{{supplier.brand_organisation_data.name}}<br></span>
@@ -905,10 +902,7 @@
             <tr ng-if="releaseDetails.shortlisted_suppliers.length > 0"
               ng-repeat="(key,filter) in supplier.shortlisted_inventories" ng-disabled="$index != '15'">
 
-              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" style="width:40px;" ng-style="((supplier.booking_status==='BK' || supplier.booking_status==='MC') && {'background-color':'green'}) ||((supplier.booking_status==='UN' || supplier.booking_status==='NI' || supplier.booking_status==='NE') && {'background-color':'white'} )||(
-          (supplier.booking_status==='SR') && {'background-color':'red'}) ||(
-          (supplier.booking_status==='DP' ||supplier.booking_status==='TB'||supplier.booking_status==='MF'||supplier.booking_status==='RE' ) && {'background-color':'yellow'}) ||(
-          supplier.booking_status && {'background-color':'brown'})">{{$parent.$parent.$index + 1}}</td>
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" style="width:40px;" ng-style="{'background-color': '{{show_color(supplier)}}'}">{{$parent.$parent.$index + 1}}</td>
               <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <span ng-if="supplier.brand_organisation_data.name">{{supplier.brand_organisation_data.name}}<br></span>
                 <button type="button" class="btn btn-danger" name="button" data-toggle="modal"
