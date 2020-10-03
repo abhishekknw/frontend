@@ -1582,7 +1582,6 @@ angular.module('catalogueApp')
                   var localindex_index = $scope.browsedDetailData.map(function (el) {
                     return el._id;
                   }).indexOf(browsedData[i]);
-                  alert(localindex_index)
                   if (localindex_index != -1) { 
                     $scope.$apply(function () {
                     $scope.browsedDetailData.splice(localindex_index, 1);
