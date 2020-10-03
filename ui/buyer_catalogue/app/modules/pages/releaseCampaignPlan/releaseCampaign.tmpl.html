@@ -1909,7 +1909,7 @@
                               </td> -->
                               <td class="alignment">
                                 <button style="margin-bottom:2px" type="button" name="button"
-                                  class="btn btn-success" ng-if="subrequirement.varified_ops == 'yes' && subrequirement.varified_bd == 'no'" ng-click="bdVerifyRequirement(subrequirement.id)">BD Verify</button>
+                                  class="btn btn-success" ng-if="subrequirement.varified_ops == 'yes' && subrequirement.varified_bd == 'no'" ng-click="bdVerifyRequirement(subrequirement.id,key,$index)">BD Verify</button>
                                   <button style="margin-bottom:2px" type="button" name="button"
                                   class="btn btn-success" ng-if="subrequirement.varified_ops == 'no'" ng-click="singleOpsVerifyRequirement(subrequirement.id)">Ops Verify</button>
                                    <span ng-if="subrequirement.varified_bd == 'yes'">BD Verified </span>
@@ -2054,10 +2054,10 @@
                 <!-- test -->
 
                 <div class="">
-                  <!-- <button class="btn btn-danger pull-right" ng-click="setEditContactDetails()">Edit</button> -->
+                  
                   <button class="btn btn-danger" ng-click="addRequirementDetail()">Add Row</button>
                   <button class="btn btn-success" ng-disabled="browsedCheck"
-                    ng-click="saveBrowsed()">Update</button>
+                    ng-click="saveBrowsed()">Submit</button>
 
                     <button class="btn btn-danger" 
                     ng-click="removeBrowsed()" ng-disabled="browsedCheck">Remove</button>

@@ -1062,6 +1062,7 @@ angular.module('catalogueApp')
 
          $scope.opsVerifyButton = true;
         $scope.getRequirementDetail = function (id) {
+          $scope.shortlisted_spaces_id = id
           userService.getSector()
             .then(function onSuccess(response) {
               $scope.sectorList = response.data;
@@ -1350,10 +1351,15 @@ angular.module('catalogueApp')
           let verifyId = [];
           if (data.requirements.length > 0) {
             for (let i in data.requirements) {
-              verifyId.push(data.requirements[i].id)
+              if(data.requirements[i].varified_ops == 'no'){
+                verifyId.push(data.requirements[i].id)
+              }
             }
           }
-          $scope.verifyRequirement(verifyId);
+          if(verifyId.length > 0){
+            $scope.verifyRequirement(verifyId);
+          }
+          
         }
 
         $scope.checkOpsVerifyRequirement = function (data) {
@@ -1361,6 +1367,7 @@ angular.module('catalogueApp')
           for (let i in data) {
             if (data[i].requirementCheck) {
               verifyId.push(data[i].id);
+              
             }
           }
           if (verifyId.length > 0) {
@@ -1439,6 +1446,19 @@ angular.module('catalogueApp')
                     if (response && response.data.data.error) {
                       swal(constants.name, response.data.data.error, constants.error);
                     } else {
+                      for(let i in verifyId){
+                      angular.forEach($scope.requirementDetailData, function (value, key) {
+                        var localindex_index = $scope.requirementDetailData[key].requirements.map(function (el) {
+                          return el.id;
+                        }).indexOf(verifyId[i]);
+                        if (localindex_index != -1) { 
+                          $scope.requirementDetailData[key].requirements[localindex_index].varified_ops = 'yes';
+                          $scope.requirementDetailData[key].requirements[localindex_index].requirementCheck = false;
+                        }
+                      })
+                    }
+                    $scope.subSectorCheck = true;
+                    
                       swal(constants.name, 'Verified Successfully', constants.success);
                     }
                   }).catch(function onError(response) {
@@ -1451,7 +1471,7 @@ angular.module('catalogueApp')
 
 
 
-        $scope.bdVerifyRequirement = function (id) {
+        $scope.bdVerifyRequirement = function (id,key,index) {
           swal({
             title: 'Are you sure ?',
             text: 'Do you want to proceed with selected sub-sector verification?',
@@ -1464,11 +1484,12 @@ angular.module('catalogueApp')
             function (confirm) {
               if (confirm) {
                 let verifyId = [id];
-                releaseCampaignService.bdVerifyRequirement({ "requirement_ids": verifyId })
+                releaseCampaignService.bdVerifyRequirement({"requirement_ids": verifyId})
                   .then(function onSuccess(response) {
                     if (response && response.data.data.error) {
                       swal(constants.name, response.data.data.error, constants.error);
                     } else {
+                      $scope.requirementDetailData[key].requirements[index].varified_bd = 'yes';
                       swal(constants.name, 'Verified Successfully', constants.success);
                     }
                   }).catch(function onError(response) {
@@ -1512,7 +1533,8 @@ angular.module('catalogueApp')
                 if (response && response.data.data.error) {
                   swal(constants.name, response.data.data.error, constants.error);
                 } else {
-                  swal(constants.name, constants.update_success, constants.success);
+                  $scope.getRequirementDetail($scope.shortlisted_spaces_id);
+                  swal(constants.name, constants.save_success, constants.success);
                 }
               
               }).catch(function onError(response) {
