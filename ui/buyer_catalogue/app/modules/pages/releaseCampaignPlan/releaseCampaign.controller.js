@@ -476,7 +476,6 @@ angular.module('catalogueApp')
         }
 
         $scope.changeType = function () {
-
           if ($scope.selectedUser.supplier_type_filter == "") {
             $scope.detailsHeader = $scope.detailsHeaders['ALL'];
           } else {
