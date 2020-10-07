@@ -38,7 +38,8 @@
           <label>Supplier Type</label>
           <select class="form-control input-size" value="selectedUser.supplier_type_filter" ng-change="changeType()"
             ng-model="selectedUser.supplier_type_filter">
-            <option ng-if="supplier_names.length > 1" value="">All</option>
+            <!-- <option ng-if="supplier_names.length > 1" value="">All</option> -->
+            <option  value="">All</option>
             <option ng-repeat="supplier in supplier_names"
               ng-selected="selectedUser.supplier_type_filter_selected == supplier.name" value="{{supplier.code}}"
               required>{{supplier.name}}</option>
@@ -517,6 +518,9 @@
                   <option style="width:100%;" ng-repeat="(key, requirement) in requirement_Given" value="{{key}}">
                     {{requirement}}</option>
                 </select>
+                <button data-target="#RequirementModel" ng-click="getRequirementDetail(supplier.id) && (supplier.id)" data-toggle="modal"
+                  style="margin-top:10px" ng-if="supplier.requirement_given == 'yes'" type="button"
+                  class="btn btn-danger" name="button">Requirement</button>
               </td>
 
 
@@ -1026,7 +1030,7 @@
                     {{requirement}}</option>
                 </select>
                 <button data-target="#RequirementModel" ng-click="getRequirementDetail(supplier.id) && (supplier.id)" data-toggle="modal"
-                  style="margin-top:10px" ng-if="supplier.requirement_given =='yes'" type="button"
+                  style="margin-top:10px" ng-if="supplier.requirement_given == 'yes'" type="button"
                   class="btn btn-danger" name="button">Requirement</button>
                 <!-- ng-click="setContact(supplier)" -->
               </td>
@@ -2045,7 +2049,7 @@
                 <!-- test -->
 
                 <div class="">
-                  
+                
                   <!-- <button class="btn btn-danger" ng-click="addRequirementDetail()">Add Row</button> -->
                   <button class="btn btn-success" ng-disabled="browsedCheck"
                     ng-click="saveBrowsed()">Submit</button>
