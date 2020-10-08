@@ -76,6 +76,16 @@ margin-top: -10px;
 	overflow-x: visible !important;
 } */
 
+
+div#RequirementModel .modal-header button.close ~ h4.modal-title {
+  text-align: center;
+}
+div#RequirementModel form.ng-pristine .glyphicon-plus:before {
+  content: "\e252";
+}
+div#RequirementModel form.ng-pristine .glyphicon-minus:before {
+  content:"\e253";
+}
 .panel-bodyDashboard{
 
 	overflow: auto ;

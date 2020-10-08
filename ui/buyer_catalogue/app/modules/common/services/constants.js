@@ -6,6 +6,7 @@ angular
     base_url: Config.APIBaseUrl,
     url_base : 'v0/ui/website/',
     url_base_leads : 'v0/ui/leads/',
+    url_base_ui : 'v0/ui/',
     AWSAccessKeyId : 'AKIAI6PVCXJEAXV6UHUQ',
     policy : "eyJleHBpcmF0aW9uIjogIjIwMjAtMDEtMDFUMDA6MDA6MDBaIiwKICAiY29uZGl0aW9ucyI6IFsgCiAgICB7ImJ1Y2tldCI6ICJtZGltYWdlcyJ9LCAKICAgIFsic3RhcnRzLXdpdGgiLCAiJGtleSIsICIiXSwKICAgIHsiYWNsIjogInB1YmxpYy1yZWFkIn0sCiAgICBbInN0YXJ0cy13aXRoIiwgIiRDb250ZW50LVR5cGUiLCAiIl0sCiAgICBbImNvbnRlbnQtbGVuZ3RoLXJhbmdlIiwgMCwgNTI0Mjg4MDAwXQogIF0KfQoK",
     acl : 'public-read',
@@ -250,5 +251,8 @@ bus_shelter_contact_type : ["Store Manager","Floor Manager","Category Manager","
 ],
 salon_contact_type : ["Owner","Manager","Advertising Manager","Branding Manager","Other"],
 corporate_contact_type : ["Owner","Manager","Advertising Manager","Branding Manager","Admin","Supervisor","Superintendent","Hr-Manager","Hr-Head","Security Manager"],
-society_contact_type:[ "Chairman","Secretary","Treasurer","Manager","Supervisor","Committee Member","Decision maker No RWA","Other"]
+society_contact_type:[ "Chairman","Secretary","Treasurer","Manager","Supervisor","Committee Member","Decision maker No RWA","Other"],
+requirement_lead_status:["Very Deep Lead","Deep Lead","Hot Lead","Lead","Raw Lead"],
+requirement_implementation_time:{"immediate":"Immediate","next 2-4 months":"Next 2-4 Months","after 4 months":"After 4 Months","don't know":"Don't Know"},
+requirement_meeting_time:{"immediate":"Immediate","next 15 days-2 months":"Next 15 Days-2 Months","after 2 months":"After 2 Months","don't know":"Don't Know"},  
 });
