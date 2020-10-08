@@ -172,10 +172,10 @@ angular.module('catalogueApp')
           { header: 'Meeting Time' },
           // { header: 'Preferred Meeting Time' },
           { header: 'Lead Status' },
-          // { header: 'Lead Given by' },
+           { header: 'Lead Given by' },
           { header: 'Comment' },
-          // { header: 'Statisfaction State' },
-          // { header: 'Reason' },
+           { header: 'Feedback' },
+           { header: 'Reason' },
           { header: 'Action' },
         ];
 
@@ -189,10 +189,10 @@ angular.module('catalogueApp')
           { header: 'Meeting Time' },
           //  { header: 'Preferred Meeting Time' },
           { header: 'Lead Status' },
-          // { header: 'Lead Given by' },
+          { header: 'Lead Given by' },
           { header: 'Comment' },
-          // { header: 'Statisfaction State' },
-          // { header: 'Reason' },
+          { header: 'Feedback' },
+          { header: 'Reason' },
           { header: 'Action' },
         ];
 
@@ -206,10 +206,10 @@ angular.module('catalogueApp')
           { header: 'Meeting Time' },
           // { header: 'Preferred Meeting Time' },
           { header: 'Lead Status' },
-          // { header: 'Lead Given by' },
+           { header: 'Lead Given by' },
           { header: 'Comment' },
-          // { header: 'Statisfaction State' },
-          // { header: 'Reason' },
+          { header: 'Feedback' },
+          { header: 'Reason' },
           // { header: 'Action' },
         ];
         $scope.payment_headings = [
@@ -252,6 +252,7 @@ angular.module('catalogueApp')
         $scope.requirement_lead_status = constants.requirement_lead_status;
         $scope.requirement_implementation_time = constants.requirement_implementation_time;
         $scope.requirement_meeting_time = constants.requirement_meeting_time;
+        $scope.current_patner_feedback = constants.current_patner_feedback;
 
         $scope.datePicker = {
           date: { startDate: null, endDate: null },
@@ -434,9 +435,9 @@ angular.module('catalogueApp')
                     $scope.supplier_names.push({ name: 'ALL', code: 'ALL' });
                   }
 
-                  if ($scope.supplier_names.length == 1) {
+                  if ($scope.supplier_names.length == 1 && $scope.releaseDetails.campaign.type_of_end_customer_formatted_name != 'b_to_b_r_g' && $scope.releaseDetails.campaign.type_of_end_customer_formatted_name !='b_to_b_l_d') {
                     $scope.selectedUser.supplier_type_filter_selected = $scope.supplier_names[0].name;
-                    $scope.selectedUser.supplier_type_filter = $scope.supplier_names[0].code;
+                   $scope.selectedUser.supplier_type_filter = $scope.supplier_names[0].code;
                   }
 
                   if ($scope.selectedUser.supplier_type_filter == 'RE') {
@@ -1414,12 +1415,18 @@ angular.module('catalogueApp')
 
         $scope.updateSubSector = function (data) {
           let updateData = [];
+          var reason_error = false
           for (let i in data) {
             if (data[i].requirementCheck) {
               updateData.push(data[i]);
+              if(data[i].current_patner_feedback_reason == ""){
+                data[i].reason_error = true;
+                reason_error = true;
+              }
             }
+            
           }
-          if (updateData.length > 0) {
+          if (updateData.length > 0 && !reason_error) {
             var requirementData = {
               "requirements": updateData
             }

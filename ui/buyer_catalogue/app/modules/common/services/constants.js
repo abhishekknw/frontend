@@ -255,4 +255,5 @@ society_contact_type:[ "Chairman","Secretary","Treasurer","Manager","Supervisor"
 requirement_lead_status:["Very Deep Lead","Deep Lead","Hot Lead","Lead","Raw Lead"],
 requirement_implementation_time:{"immediate":"Immediate","next 2-4 months":"Next 2-4 Months","after 4 months":"After 4 Months","don't know":"Don't Know"},
 requirement_meeting_time:{"immediate":"Immediate","next 15 days-2 months":"Next 15 Days-2 Months","after 2 months":"After 2 Months","don't know":"Don't Know"},  
+current_patner_feedback:{"NA":"NA","Satisfied":"Satisfied","Dissatisfied":"Dissatisfied","Extremely Dissatisfied":"Extremely Dissatisfied"},  
 });

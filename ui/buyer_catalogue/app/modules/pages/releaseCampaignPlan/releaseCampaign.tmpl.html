@@ -38,7 +38,7 @@
           <label>Supplier Type</label>
           <select class="form-control input-size" value="selectedUser.supplier_type_filter" ng-change="changeType()"
             ng-model="selectedUser.supplier_type_filter">
-            <!-- <option ng-if="supplier_names.length > 1" value="">All</option> -->
+            
             <option  value="">All</option>
             <option ng-repeat="supplier in supplier_names"
               ng-selected="selectedUser.supplier_type_filter_selected == supplier.name" value="{{supplier.code}}"
@@ -1761,6 +1761,10 @@
                           </option>
                         </select>
                       </td>
+
+                      <td class="alignment">
+                       <span style="width:150px;"> {{requirement.lead_by.name}} </span>
+                      </td>
                       <!-- <td class="alignment">
                         <input type="text" placeholder="Lead Given by	" class="form-control" id="lead_by_id"
                           style="width:100px;" ng-model="requirement.lead_by">
@@ -1783,6 +1787,22 @@
                         <input type="text" placeholder="Reason" class="form-control" id="reason_id" style="width:100px;"
                           ng-model="requirement.reason">
                       </td> -->
+                      <td class="alignment">
+                        <select class="form-control" name="feedback_{{$index}}" id="feedback_id_{{$index}}"
+                          ng-model="requirement.current_patner_feedback" style="width:150px;">
+                          <option value="" disabled>Select Feedback</option>
+                          <option ng-repeat="(key,value) in current_patner_feedback track by $index"
+                            value="{{key}}">
+                            {{value}}
+                          </option>
+                        </select>
+                      </td>
+
+                      <td class="alignment">
+                        <input type="text" placeholder="Reason" class="form-control" id="reason_id_{{$index}}" style="width:100px;"
+                          ng-model="requirement.current_patner_feedback_reason">
+                      </td>
+
                       <td class="alignment">
                         <button style="margin-bottom:2px" type="button" name="button"
                           class="btn btn-success" ng-disabled="opsVerifyButton" ng-click="opsVerifyRequirement(requirement)"> <span ng-if="!opsVerifyButton">Ops Verify</span>
@@ -1879,6 +1899,10 @@
                                   </option>
                                 </select>
                               </td>
+
+                              <td class="alignment">
+                                  <span style="width:150px;"> {{requirement.lead_by.name}} </span>
+                                 </td>
                               <!-- <td class="alignment">
                                 <input type="text" placeholder="Lead Given by	" class="form-control" id="lead_by_id"
                                   style="width:100px;" ng-model="subrequirement.lead_by">
@@ -1902,6 +1926,23 @@
                                 <input type="text" placeholder="Reason" class="form-control" id="reason_id" style="width:100px;"
                                   ng-model="subrequirement.reason">
                               </td> -->
+
+                              <td class="alignment">
+                                <select class="form-control" name="feedback_{{$index}}" id="feedback_id_{{$index}}"
+                                  ng-model="subrequirement.current_patner_feedback" style="width:150px;">
+                                  <option value="" disabled>Select Feedback</option>
+                                  <option ng-repeat="(key,value) in current_patner_feedback track by $index"
+                                    value="{{key}}">
+                                    {{value}}
+                                  </option>
+                                </select>
+                              </td>
+        
+                              <td class="alignment">
+                                <input type="text" placeholder="Reason" class="form-control" id="reason_id_{{$index}}" style="width:100px;"
+                                  ng-model="subrequirement.current_patner_feedback_reason" >
+                                  <span class="error" ng-if="subrequirement.reason_error && subrequirement.current_patner_feedback_reason ==''">Reason is required.<span>
+                              </td>
                               <td class="alignment">
                                 <button style="margin-bottom:2px" type="button" name="button"
                                   class="btn btn-success" ng-if="subrequirement.varified_ops == 'yes' && subrequirement.varified_bd == 'no'" ng-click="bdVerifyRequirement(subrequirement.id,key,$index)">BD Verify</button>
@@ -1913,7 +1954,7 @@
                           </tbody>
                         </table>
                         <!-- <button class="btn btn-danger" ng-click="addSubRequirementDetail(key)">Add Row</button> -->
-                        <button class="btn btn-success" id="update_{{key}}" ng-disabled="subSectorCheck"
+                        <button class="btn btn-success" id="update_{{key}}" ng-disabled="subSectorCheck "
                           ng-click="updateSubSector(requirement.requirements)" >Update</button>
                           <button style="margin-bottom:2px" id="verify_{{key}}" type="button" name="button"
                           class="btn btn-success" ng-disabled="subSectorCheck || opsVerifyButton"  ng-click="checkOpsVerifyRequirement(requirement.requirements)"><span ng-if="!opsVerifyButton">Ops Verify</span>
@@ -2025,15 +2066,32 @@
                           </option>
                         </select>
                       </td>
-                      <!-- <td class="alignment">
-                        <input type="text" placeholder="Lead Given by	" class="form-control" id="lead_by_id"
-                          style="width:100px;" ng-model="browsed.lead_by">
-                      </td> -->
+                      <td class="alignment">
+                       {{browsed.lead_by_name}}
+                      </td>
+
                       <td class="alignment">
                        
                         <textarea placeholder="Comments" class="form-control" style="width:150px;"
                           ng-model="browsed.comment" rows="4" cols="50">
-              </textarea>
+                     </textarea>
+                      </td>
+
+                      <td class="alignment">
+                        <select class="form-control" name="feedback_{{$index}}" id="feedback_id_{{$index}}"
+                          ng-model="browsed.current_patner_feedback" style="width:150px;">
+                          <option value="" disabled>Select Feedback</option>
+                          <option ng-repeat="(key,value) in current_patner_feedback track by $index"
+                            value="{{key}}">
+                            {{value}}
+                          </option>
+                        </select>
+                      </td>
+
+                      <td class="alignment">
+                        <input type="text" placeholder="Reason" class="form-control" id="reason_id_{{$index}}" style="width:100px;"
+                          ng-model="browsed.current_patner_feedback_reason" >
+                         
                       </td>
 
                       <!-- <td class="alignment">
