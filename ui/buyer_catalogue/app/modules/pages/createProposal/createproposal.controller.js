@@ -127,11 +127,11 @@ angular.module('catalogueApp')
 					$scope.model.centers[index].center.city = $scope.cities[i].city_name;
 				}
 			}
-			$scope.model.centers[index].center.area = "";
+			$scope.model.centers[index].area = null;
 			$scope.model.centers[index].center.subarea = "";
    createProposalService.getLocations('areas', id,index)
       .then(function onSuccess(response){
-          $scope.areas[index] = response.data;
+		  $scope.areas[index] = response.data;
         }).
         catch(function onError(response){
 					commonDataShare.showErrorMessage(response);

@@ -172,16 +172,16 @@ angular.module('catalogueApp')
           { header: 'Meeting Time' },
           // { header: 'Preferred Meeting Time' },
           { header: 'Lead Status' },
-           { header: 'Lead Given by' },
+          { header: 'Lead Given by' },
           { header: 'Comment' },
-           { header: 'Feedback' },
-           { header: 'Reason' },
+          { header: 'Feedback' },
+          { header: 'Reason' },
           { header: 'Action' },
         ];
 
         $scope.requirement_sub_headings = [
           { header: '' },
-          // { header: 'Sub Sector' },
+          { header: 'Sub Sector' },
           { header: 'Current Partner' },
           { header: 'Preferred Partner' },
           { header: 'Lead For' },
@@ -206,7 +206,7 @@ angular.module('catalogueApp')
           { header: 'Meeting Time' },
           // { header: 'Preferred Meeting Time' },
           { header: 'Lead Status' },
-           { header: 'Lead Given by' },
+          { header: 'Lead Given by' },
           { header: 'Comment' },
           { header: 'Feedback' },
           { header: 'Reason' },
@@ -332,16 +332,16 @@ angular.module('catalogueApp')
         var getResultsPage = function (newPage) {
           var data = getFilterData();
 
-          if($scope.master_data_status){
+          if ($scope.master_data_status) {
             releaseCampaignService.bookingStatusData($scope.campaign_id)
               .then(function onSuccess(ResponseData) {
                 $scope.bookingStatus = ResponseData.data.data;
-            });
+              });
           }
 
           releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id, newPage, data)
             .then(function onSuccess(response) {
-              if($scope.master_data_status){
+              if ($scope.master_data_status) {
                 releaseCampaignService.getCampaignReleaseDetailsHeader()
                   .then(function onSuccess(headerResponse) {
                     $scope.detailsHeaders = headerResponse.data.data;
@@ -361,7 +361,7 @@ angular.module('catalogueApp')
               // });
 
 
-              if($scope.master_data_status){
+              if ($scope.master_data_status) {
                 getUsersList();
                 getAssignedSuppliers();
                 getOrganisationList();
@@ -435,9 +435,9 @@ angular.module('catalogueApp')
                     $scope.supplier_names.push({ name: 'ALL', code: 'ALL' });
                   }
 
-                  if ($scope.supplier_names.length == 1 && $scope.releaseDetails.campaign.type_of_end_customer_formatted_name != 'b_to_b_r_g' && $scope.releaseDetails.campaign.type_of_end_customer_formatted_name !='b_to_b_l_d') {
+                  if ($scope.supplier_names.length == 1 && $scope.releaseDetails.campaign.type_of_end_customer_formatted_name != 'b_to_b_r_g' && $scope.releaseDetails.campaign.type_of_end_customer_formatted_name != 'b_to_b_l_d') {
                     $scope.selectedUser.supplier_type_filter_selected = $scope.supplier_names[0].name;
-                   $scope.selectedUser.supplier_type_filter = $scope.supplier_names[0].code;
+                    $scope.selectedUser.supplier_type_filter = $scope.supplier_names[0].code;
                   }
 
                   if ($scope.selectedUser.supplier_type_filter == 'RE') {
@@ -1068,7 +1068,7 @@ angular.module('catalogueApp')
 
 
 
-         $scope.opsVerifyButton = true;
+        $scope.opsVerifyButton = true;
         $scope.getRequirementDetail = function (id) {
           $scope.shortlisted_spaces_id = id
           userService.getSector()
@@ -1100,7 +1100,6 @@ angular.module('catalogueApp')
                 }
                 //end multiselect preferred company
                 //START sub sector multiselect preferred company
-                
                 if ($scope.requirementDetailData[i].requirements.length > 0) {
                   for (let x in $scope.requirementDetailData[i].requirements) {
                     var selected_preferred_company_sub_sector = [];
@@ -1122,10 +1121,27 @@ angular.module('catalogueApp')
                     if (_indexCompany != -1) {
                       $scope.requirementDetailData[i].requirements[x].company_name = $scope.companiesDetailData[_indexCompany].name;
                     }
-                     
 
-                    if($scope.opsVerifyButton && $scope.requirementDetailData[i].requirements[x].varified_ops == 'no' ){
+
+                    if ($scope.opsVerifyButton && $scope.requirementDetailData[i].requirements[x].varified_ops == 'no') {
                       $scope.opsVerifyButton = false;
+                    }
+
+                    //start sub sector name
+                    if ($scope.requirementDetailData[i].requirements[x].sub_sector) {
+                      if ($scope.sectorList) {
+                        for (let p in $scope.sectorList) {
+                          if ($scope.sectorList[p].subtypes && $scope.sectorList[p].subtypes.length > 0) {
+                            var sub_index = $scope.sectorList[p].subtypes.map(function (el) {
+                              return el.id;
+                            }).indexOf($scope.requirementDetailData[i].requirements[x].sub_sector);
+                            if (sub_index != -1) {
+                              $scope.requirementDetailData[i].requirements[x].sub_sector_name = $scope.sectorList[p].subtypes[sub_index].business_sub_type;
+                            }
+                          }
+                        }
+                        //end sub sector name
+                      }
                     }
                   }
                 }
@@ -1141,18 +1157,6 @@ angular.module('catalogueApp')
                 }
                 //end added sector name
 
-                //start added sub sector name
-                if ($scope.requirementDetailData[i].requirements.length > 0 && $scope.sectorList) {
-                  for (let p in $scope.requirementDetailData[i].requirements) {
-                    var localindex_ = $scope.sectorList.map(function (el) {
-                      return el.id;
-                    }).indexOf($scope.requirementDetailData[i].requirements[p].sector);
-                    if (localindex_ != -1) {
-                      $scope.requirementDetailData[i].requirements[p].sub_sector_name = $scope.sectorList[localindex_].business_type
-                    }
-                  }
-                }
-                //end added sub sector name
               })
               $scope.getRequirementBrowsedData(id);
             }).catch(function onError(response) {
@@ -1178,16 +1182,16 @@ angular.module('catalogueApp')
                   $scope.browsedDetailData[i].selected_preferred_company = selected_preferred_company
                 }
 
-                  //start added sector name
-                  if ($scope.sectorList) {
-                    var localindex_indexs = $scope.sectorList.map(function (el) {
-                      return el.id;
-                    }).indexOf(JSON.parse($scope.browsedDetailData[i].sector_id));
-                    if (localindex_indexs != -1) {
-                      $scope.browsedDetailData[i].sector_name = $scope.sectorList[localindex_indexs].business_type
-                    }
+                //start added sector name
+                if ($scope.sectorList) {
+                  var localindex_indexs = $scope.sectorList.map(function (el) {
+                    return el.id;
+                  }).indexOf(JSON.parse($scope.browsedDetailData[i].sector_id));
+                  if (localindex_indexs != -1) {
+                    $scope.browsedDetailData[i].sector_name = $scope.sectorList[localindex_indexs].business_type
                   }
-                  //end added sector name
+                }
+                //end added sector name
               }
             }).catch(function onError(response) {
               console.log(response);
@@ -1312,7 +1316,7 @@ angular.module('catalogueApp')
                       var localindex_index = $scope.requirementDetailData[key].requirements.map(function (el) {
                         return el.id;
                       }).indexOf(deleteSubSectorId[x]);
-                      if (localindex_index != -1) { 
+                      if (localindex_index != -1) {
                         $scope.requirementDetailData[key].requirements.splice(localindex_index, 1)
                       }
                     }
@@ -1359,15 +1363,15 @@ angular.module('catalogueApp')
           let verifyId = [];
           if (data.requirements.length > 0) {
             for (let i in data.requirements) {
-              if(data.requirements[i].varified_ops == 'no'){
+              if (data.requirements[i].varified_ops == 'no') {
                 verifyId.push(data.requirements[i].id)
               }
             }
           }
-          if(verifyId.length > 0){
+          if (verifyId.length > 0) {
             $scope.verifyRequirement(verifyId);
           }
-          
+
         }
 
         $scope.checkOpsVerifyRequirement = function (data) {
@@ -1375,7 +1379,7 @@ angular.module('catalogueApp')
           for (let i in data) {
             if (data[i].requirementCheck) {
               verifyId.push(data[i].id);
-              
+
             }
           }
           if (verifyId.length > 0) {
@@ -1383,25 +1387,25 @@ angular.module('catalogueApp')
           }
         }
 
-      
+
         $scope.subSectorCheck = true
-        $scope.checkbooxCheck = function(key){
+        $scope.checkbooxCheck = function (key) {
           $scope.subSectorCheck = true
-            var requirementsData = $scope.requirementDetailData[key].requirements
-             for(let x in requirementsData){
-              if(requirementsData[x].requirementCheck && $scope.subSectorCheck){
-                $scope.subSectorCheck = false
-              }
-             }
+          var requirementsData = $scope.requirementDetailData[key].requirements
+          for (let x in requirementsData) {
+            if (requirementsData[x].requirementCheck && $scope.subSectorCheck) {
+              $scope.subSectorCheck = false
+            }
+          }
         }
         $scope.browsedCheck = true;
-        $scope.checkbooxBrowesLeadCheck = function(){
+        $scope.checkbooxBrowesLeadCheck = function () {
           $scope.browsedCheck = true;
-             for(let x in $scope.browsedDetailData){
-              if($scope.browsedDetailData[x].browsedCheck && $scope.browsedCheck){
-                $scope.browsedCheck = false
-              }
-             }
+          for (let x in $scope.browsedDetailData) {
+            if ($scope.browsedDetailData[x].browsedCheck && $scope.browsedCheck) {
+              $scope.browsedCheck = false
+            }
+          }
         }
 
 
@@ -1419,12 +1423,12 @@ angular.module('catalogueApp')
           for (let i in data) {
             if (data[i].requirementCheck) {
               updateData.push(data[i]);
-              if(data[i].current_patner_feedback_reason == ""){
+              if (data[i].current_patner_feedback_reason == "") {
                 data[i].reason_error = true;
                 reason_error = true;
               }
             }
-            
+
           }
           if (updateData.length > 0 && !reason_error) {
             var requirementData = {
@@ -1460,19 +1464,19 @@ angular.module('catalogueApp')
                     if (response && response.data.data.error) {
                       swal(constants.name, response.data.data.error, constants.error);
                     } else {
-                      for(let i in verifyId){
-                      angular.forEach($scope.requirementDetailData, function (value, key) {
-                        var localindex_index = $scope.requirementDetailData[key].requirements.map(function (el) {
-                          return el.id;
-                        }).indexOf(verifyId[i]);
-                        if (localindex_index != -1) { 
-                          $scope.requirementDetailData[key].requirements[localindex_index].varified_ops = 'yes';
-                          $scope.requirementDetailData[key].requirements[localindex_index].requirementCheck = false;
-                        }
-                      })
-                    }
-                    $scope.subSectorCheck = true;
-                    
+                      for (let i in verifyId) {
+                        angular.forEach($scope.requirementDetailData, function (value, key) {
+                          var localindex_index = $scope.requirementDetailData[key].requirements.map(function (el) {
+                            return el.id;
+                          }).indexOf(verifyId[i]);
+                          if (localindex_index != -1) {
+                            $scope.requirementDetailData[key].requirements[localindex_index].varified_ops = 'yes';
+                            $scope.requirementDetailData[key].requirements[localindex_index].requirementCheck = false;
+                          }
+                        })
+                      }
+                      $scope.subSectorCheck = true;
+
                       swal(constants.name, 'Verified Successfully', constants.success);
                     }
                   }).catch(function onError(response) {
@@ -1485,7 +1489,7 @@ angular.module('catalogueApp')
 
 
 
-        $scope.bdVerifyRequirement = function (id,key,index) {
+        $scope.bdVerifyRequirement = function (id, key, index) {
           swal({
             title: 'Are you sure ?',
             text: 'Do you want to proceed with selected sub-sector verification?',
@@ -1498,7 +1502,7 @@ angular.module('catalogueApp')
             function (confirm) {
               if (confirm) {
                 let verifyId = [id];
-                releaseCampaignService.bdVerifyRequirement({"requirement_ids": verifyId})
+                releaseCampaignService.bdVerifyRequirement({ "requirement_ids": verifyId })
                   .then(function onSuccess(response) {
                     if (response && response.data.data.error) {
                       swal(constants.name, response.data.data.error, constants.error);
@@ -1518,10 +1522,10 @@ angular.module('catalogueApp')
           for (let i in $scope.browsedDetailData) {
             if ($scope.browsedDetailData[i].browsedCheck) {
               browsedData.push($scope.browsedDetailData[i]._id);
-              
-              if($scope.browsedDetailData[i].selected_preferred_company.length > 0){
+
+              if ($scope.browsedDetailData[i].selected_preferred_company.length > 0) {
                 $scope.browsedDetailData[i].prefered_patners = [];
-                for(let j in $scope.browsedDetailData[i].selected_preferred_company){
+                for (let j in $scope.browsedDetailData[i].selected_preferred_company) {
                   $scope.browsedDetailData[i].prefered_patners.push($scope.browsedDetailData[i].selected_preferred_company[j].id)
                 }
               }
@@ -1541,21 +1545,21 @@ angular.module('catalogueApp')
               closeOnConfirm: true
             },
               function (confirm) {
-                if(confirm){
-            releaseCampaignService.saveBrowsed(browsedId)
-              .then(function onSuccess(response) {
-                if (response && response.data.data.error) {
-                  swal(constants.name, response.data.data.error, constants.error);
-                } else {
-                  $scope.getRequirementDetail($scope.shortlisted_spaces_id);
-                  swal(constants.name, constants.save_success, constants.success);
+                if (confirm) {
+                  releaseCampaignService.saveBrowsed(browsedId)
+                    .then(function onSuccess(response) {
+                      if (response && response.data.data.error) {
+                        swal(constants.name, response.data.data.error, constants.error);
+                      } else {
+                        $scope.getRequirementDetail($scope.shortlisted_spaces_id);
+                        swal(constants.name, constants.save_success, constants.success);
+                      }
+
+                    }).catch(function onError(response) {
+                      console.log(response);
+                    })
                 }
-              
-              }).catch(function onError(response) {
-                console.log(response);
-              })
-            }
-            });
+              });
           }
         }
 
@@ -1566,7 +1570,7 @@ angular.module('catalogueApp')
               browsedData.push($scope.browsedDetailData[i]._id);
             }
           }
-           if (browsedData.length > 0) {
+          if (browsedData.length > 0) {
             var browsedId = {
               "browsed_ids": browsedData
             }
@@ -1580,30 +1584,30 @@ angular.module('catalogueApp')
               closeOnConfirm: true
             },
               function (confirm) {
-                if(confirm){
-            releaseCampaignService.removeBrowsed(browsedId)
-              .then(function onSuccess(response) {
-                if (response && response.data.data.error) {
-                  swal(constants.name, response.data.data.error, constants.error);
-                } else {
-                  swal(constants.name, constants.delete_success, constants.success);
-                }
-               
-              }).catch(function onError(response) {
-                console.log(response);
-              })
-                for(let i in browsedData){
-                  var localindex_index = $scope.browsedDetailData.map(function (el) {
-                    return el._id;
-                  }).indexOf(browsedData[i]);
-                  if (localindex_index != -1) { 
-                    $scope.$apply(function () {
-                    $scope.browsedDetailData.splice(localindex_index, 1);
-                    });
+                if (confirm) {
+                  releaseCampaignService.removeBrowsed(browsedId)
+                    .then(function onSuccess(response) {
+                      if (response && response.data.data.error) {
+                        swal(constants.name, response.data.data.error, constants.error);
+                      } else {
+                        swal(constants.name, constants.delete_success, constants.success);
+                      }
+
+                    }).catch(function onError(response) {
+                      console.log(response);
+                    })
+                  for (let i in browsedData) {
+                    var localindex_index = $scope.browsedDetailData.map(function (el) {
+                      return el._id;
+                    }).indexOf(browsedData[i]);
+                    if (localindex_index != -1) {
+                      $scope.$apply(function () {
+                        $scope.browsedDetailData.splice(localindex_index, 1);
+                      });
+                    }
                   }
                 }
-            }
-            });
+              });
           }
         }
 
@@ -1746,11 +1750,11 @@ angular.module('catalogueApp')
                 $scope.phaseMappingList[phase.id] = phase;
               })
               $scope.phases = response.data.data;
-              for(let i in $scope.phases){
-              $scope.phases[i].phase_no = JSON.parse($scope.phases[i].phase_no);
+              for (let i in $scope.phases) {
+                $scope.phases[i].phase_no = JSON.parse($scope.phases[i].phase_no);
               }
-              
-           
+
+
             }).catch(function onError(response) {
               console.log(response);
             })
@@ -2766,35 +2770,35 @@ angular.module('catalogueApp')
           return keys.length;
         }
 
-        $scope.show_color = function(supplier) {
-          if($scope.releaseDetails.campaign.type_of_end_customer_formatted_name == "b_to_b_r_g"){
-            if(supplier.color_code == 1){
+        $scope.show_color = function (supplier) {
+          if ($scope.releaseDetails.campaign.type_of_end_customer_formatted_name == "b_to_b_r_g") {
+            if (supplier.color_code == 1) {
               return 'yellow';
             }
-            else if(supplier.color_code == 2){
+            else if (supplier.color_code == 2) {
               return '#7C4700';
             }
-            else if(supplier.color_code == 3){
+            else if (supplier.color_code == 3) {
               return 'green';
             }
-            else if(supplier.color_code == 4){
+            else if (supplier.color_code == 4) {
               return 'white';
             }
           }
-          else{
-            if(supplier.booking_status==='BK' || supplier.booking_status==='MC'){
+          else {
+            if (supplier.booking_status === 'BK' || supplier.booking_status === 'MC') {
               return 'green';
             }
-            else if(supplier.booking_status==='UN' || supplier.booking_status==='NI' || supplier.booking_status==='NE'){
+            else if (supplier.booking_status === 'UN' || supplier.booking_status === 'NI' || supplier.booking_status === 'NE') {
               return 'white';
             }
-            else if(supplier.booking_status==='SR'){
+            else if (supplier.booking_status === 'SR') {
               return 'red';
             }
-            else if(supplier.booking_status==='DP' ||supplier.booking_status==='TB'||supplier.booking_status==='MF'||supplier.booking_status==='RE' ){
+            else if (supplier.booking_status === 'DP' || supplier.booking_status === 'TB' || supplier.booking_status === 'MF' || supplier.booking_status === 'RE') {
               return 'yellow';
             }
-            else if(supplier.booking_status){
+            else if (supplier.booking_status) {
               return 'brown';
             }
           }
