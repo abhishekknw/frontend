@@ -665,6 +665,7 @@ footer .pull-center {
   float: none;
 }
 
+
 @media (max-width: 768px) {
   .footer .copyright {
     display: inline-block;

@@ -106,6 +106,52 @@ angular.module('machadaloPages')
             console.log("error occured");
           });
 
+       
+            userService.getSector()
+            .then(function onSuccess(response) {
+              $scope.businessTypeData = response.data;
+              for (let x in $scope.businessTypeData){
+                $scope.businessTypeData[x].label = $scope.businessTypeData[x].business_type
+              }
+            })
+            $scope.selected_business_type = { buttonDefaultText: 'Select Business Type' };
+            $scope.selected_business_sub_type = { buttonDefaultText: 'Select Business Sub Type' };
+
+            $scope.selectedbusinessType = []; 
+            $scope.businessSubTypeData = [];
+            $scope.selectedbusinessSubType = [];
+              $scope.events = {
+                 onItemSelect: function (item) {
+                  if(item.subtypes && item.subtypes.length > 0){
+                    for(let i in item.subtypes){
+                      $scope.businessSubTypeData.push({
+                        businessTypeId:item.subtypes[i].business_type,
+                        id:item.subtypes[i].id,
+                        label:item.subtypes[i].business_sub_type,
+                      })
+                    }
+                  }
+                },
+                onItemDeselect: function(items) {
+                  for(let j in $scope.businessSubTypeData){
+                    if($scope.businessSubTypeData[j].businessTypeId === items.id){
+                     delete $scope.businessSubTypeData[j];
+                    }
+                  }
+                }
+              }
+            $scope.settings = {
+            //   smartButtonMaxItems: 4,
+            //  selectionLimit: 4,
+            //  showCheckAll: true,
+            //  enableSearch: true,
+            showCheckAll: false,
+             scrollableHeight: '300px', scrollable: false,
+             enableSearch: false,
+             showUncheckAll:false
+           };
+          
+
         var getAllUserGroups = function () {
           userService.getAllUserGroups()
             .then(function onSuccess(response) {
@@ -882,6 +928,18 @@ angular.module('machadaloPages')
         $scope.activityNumber = 1;
         $scope.createOnBoardActivity = function (number) {
           if (number == 1 && $scope.organisationData.name && $scope.organisationData.phone && $scope.organisationData.email && $scope.organisationData.category && !$scope.showMobileError) {
+            $scope.organisationData.business_type = [];
+            if($scope.selectedbusinessType.length > 0){
+            for(let i in $scope.selectedbusinessType){
+              $scope.organisationData.business_type.push($scope.selectedbusinessType[i].id)
+            }
+          }
+          $scope.organisationData.business_subtype = [];
+          if($scope.selectedbusinessSubType.length > 0){
+            for(let j in $scope.selectedbusinessSubType){
+              $scope.organisationData.business_subtype.push($scope.selectedbusinessSubType[j].id)
+            }
+          }
             $scope.createOrganisation();
             $scope.activityNumber++;
           }

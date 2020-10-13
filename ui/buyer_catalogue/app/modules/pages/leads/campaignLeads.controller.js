@@ -762,9 +762,15 @@ angular.module('catalogueApp')
     $scope.entryId = entryId;
     campaignLeadsService.getEditLeads($scope.leadFormId, $scope.supplierData.supplier_id, entryId)
       .then(function onSuccess(response) {
-        if (response.data && response.data.data && response.data.data.leads_form_items && response.data.data.leads_form_items[1] && response.data.data.leads_form_items[1].key_type === "DATE") {
-          response.data.data.leads_form_items[1].value = new Date(response.data.data.leads_form_items[1].value);
+
+        if (response.data && response.data.data && response.data.data.leads_form_items && response.data.data.leads_form_items) {
+            for(let i in response.data.data.leads_form_items){
+              if(response.data.data.leads_form_items[i].key_type == "DATE"){
+                response.data.data.leads_form_items[i].value = new Date(response.data.data.leads_form_items[i].value)
+              } 
+            }
         }
+       
         $scope.leadModelData = response.data.data.leads_form_items;
         $scope.views.viewLeadsBySupplier = false;
         $scope.views.viewLeadsByFormCampaign = false;

@@ -1,6 +1,6 @@
 "use strict";
 angular.module('catalogueApp')
-    .controller('enterLeadFormCtrl', function($scope, $rootScope, $stateParams, $window, $location, enterLeadsService ,$http, constants, permissions, commonDataShare) {
+    .controller('enterLeadFormCtrl', function($scope, $rootScope, $stateParams, $window, $location,$filter, enterLeadsService ,$http, constants, permissions, commonDataShare) {
       $scope.formId = $stateParams.formId;
       $scope.supplierId = $stateParams.supplierId;
       $scope.searchQuery = undefined;
@@ -97,7 +97,7 @@ angular.module('catalogueApp')
                 if(response.data.data.values[x]){
                   for(let y in response.data.data.values[x]){
                     if(response.data.data.values[x][y].key_type == "DATE"){
-                       response.data.data.values[x][y].value =$filter('date')(new Date(response.data.data.values[x][y].value),'yyyy-MM-dd');
+                        response.data.data.values[x][y].value =$filter('date')(new Date(response.data.data.values[x][y].value),'yyyy-MM-dd');
                     }
                   }
                 }
@@ -118,9 +118,19 @@ angular.module('catalogueApp')
           .then(function onSuccess(response){
             $scope.viewLeads = false;
             $scope.editLeads = true;
-            if(response.data && response.data.data && response.data.data.leads_form_items && response.data.data.leads_form_items[1] && response.data.data.leads_form_items[1].key_type==="DATE"){
-              response.data.data.leads_form_items[1].value = new Date (response.data.data.leads_form_items[1].value); 
-            }
+
+            // if(response.data && response.data.data && response.data.data.leads_form_items && response.data.data.leads_form_items[1] && response.data.data.leads_form_items[1].key_type==="DATE"){
+            //   response.data.data.leads_form_items[1].value = new Date (response.data.data.leads_form_items[1].value); 
+            // }
+
+            if (response.data && response.data.data && response.data.data.leads_form_items && response.data.data.leads_form_items) {
+              for(let i in response.data.data.leads_form_items){
+                if(response.data.data.leads_form_items[i].key_type == "DATE"){
+                  response.data.data.leads_form_items[i].value = new Date(response.data.data.leads_form_items[i].value)
+                } 
+              }
+          }
+
             $scope.leadModelData = response.data.data.leads_form_items;
           }).catch(function onError(response){
           })

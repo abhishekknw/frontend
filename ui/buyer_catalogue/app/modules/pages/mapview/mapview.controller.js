@@ -496,11 +496,11 @@ angular.module('catalogueApp')
       // end mapview summary
       //start: gridview summary
       var getComprehinsiveSummary = function (supplier_code) {
-       
+
         $scope.gridViewSummary[supplier_code] = angular.copy(summarySupplierStatus);
         if ($scope.center_data.length > 0) {
           for (var i = 0; i < $scope.center_data.length; i++) {
- 
+
             if ($scope.center_data[i].suppliers[supplier_code]) {
               $scope.center_data[i].summary_meta[supplier_code].count = $scope.center_data[i].suppliers[supplier_code].length;
             }
@@ -539,8 +539,6 @@ angular.module('catalogueApp')
                   $scope.gridViewSummary[supplier_code].shortlisted.stall_count += $scope.center_data[i].summary_meta[supplier_code].shortlisted.stall_count;
               }
             }
-
-            console.log('88888888888888888888999999999999999999999999999999', $scope.gridViewSummary)
           }
         }
         getComprehinsiveImpressions(supplier_code);
@@ -1151,7 +1149,7 @@ angular.module('catalogueApp')
                     getComprehinsiveSummary($scope.supplierCode.corporate);
                   if ($scope.unique_suppliers.has($scope.supplierCode.busShelter))
                     getComprehinsiveSummary($scope.supplierCode.busShelter);
-                  
+
                   // gridView_Summary();
                   for (var i = 0; i < $scope.center_data.length; i++) {
                     $scope.initial_center_changed.push(false);
@@ -1233,18 +1231,18 @@ angular.module('catalogueApp')
                   gridViewFilterSummary();
                   // getComprehinsiveSummary($scope.supplierCode.society);
                   if ($scope.unique_suppliers.has($scope.supplierCode.society))
-                  getComprehinsiveSummary($scope.supplierCode.society);
-                if ($scope.unique_suppliers.has($scope.supplierCode.corporate))
-                  getComprehinsiveSummary($scope.supplierCode.corporate);
-                if ($scope.unique_suppliers.has($scope.supplierCode.busShelter))
-                  getComprehinsiveSummary($scope.supplierCode.busShelter);
+                    getComprehinsiveSummary($scope.supplierCode.society);
+                  if ($scope.unique_suppliers.has($scope.supplierCode.corporate))
+                    getComprehinsiveSummary($scope.supplierCode.corporate);
+                  if ($scope.unique_suppliers.has($scope.supplierCode.busShelter))
+                    getComprehinsiveSummary($scope.supplierCode.busShelter);
                   if ($scope.unique_suppliers.has($scope.supplierCode.gym))
-                  getComprehinsiveSummary($scope.supplierCode.gym);
+                    getComprehinsiveSummary($scope.supplierCode.gym);
                   if ($scope.unique_suppliers.has($scope.supplierCode.saloon))
-                  getComprehinsiveSummary($scope.supplierCode.saloon);
+                    getComprehinsiveSummary($scope.supplierCode.saloon);
                   if ($scope.unique_suppliers.has($scope.supplierCode.retailStore))
-                  getComprehinsiveSummary($scope.supplierCode.retailStore);
-               
+                    getComprehinsiveSummary($scope.supplierCode.retailStore);
+
 
                   for (var i = 0; i < $scope.center_data.length; i++)
                     $scope.initial_center_changed.push(false);
@@ -1865,7 +1863,7 @@ angular.module('catalogueApp')
               gridViewFilterSummary();
               gridViewImpressions();
               getSummary(code, $scope.current_center);
-              getComprehinsiveSummary('RS');
+              getComprehinsiveSummary(code);
               $scope.society_markers = assignMarkersToMap($scope.current_center.suppliers);
               $scope.center_marker = assignCenterMarkerToMap($scope.current_center.center);
               $scope.checkFilters = false;
@@ -2082,7 +2080,7 @@ angular.module('catalogueApp')
             $scope.errorMsg = "Supplier Added Successfully";
             if ($scope.supplierData.length <= 0) {
               $scope.search_status = false;
-              $scope.supplier_type_code = null;
+              // $scope.supplier_type_code = null;
               $scope.search = null;
             }
           }
@@ -2111,421 +2109,431 @@ angular.module('catalogueApp')
         $scope.search = "";
         $scope.supplierData = [];
         $scope.errorMsg = "";
-      }
-      //Start: function to select center at add more suplliers
-      $scope.selectCenter = function (center_index) {
-        $scope.center = [];
-        $scope.search = "";
-        $scope.center.area  = "";
-        $scope.center_areas = {}
-        $scope.supplier_center = null
-        $scope.supplierData = [];
-        $scope.errorMsg = "";
-        try {
-          $scope.center_index = center_index;
-          if (center_index != null) {
-            for (var i = 0; i < $scope.center_data.length; i++) {
-              if ($scope.center_data[i].center.id == center_index) {
-                $scope.current_center_index = i;
-                $scope.supplier_center = $scope.center_data[i].center.city
-              }
-            }
-            if ($scope.supplier_center) {
-              $scope.center_err = false;
-              mapViewService.getLocations($scope.supplier_center)
-                .then(function onSuccess(response) {
-                  $scope.areas = response.data.data;
-                }).
-                catch(function onError(response) {
-                  commonDataShare.showErrorMessage(response);
-                });
-            } else {
-              $scope.areas = [];
-            }
-          } 
-        } catch (error) {
-          console.log(error.message);
-        }
-      }
 
-      $scope.get_sub_areas = function (index) {
-        $scope.center_areas.sub_areas = "";
-        $scope.sub_areas = [];
-        $scope.center.sub_area_id = "";
-        $scope.search = "";
-        $scope.supplierData = [];
-        $scope.errorMsg = "";
-        if (index) {
-          $scope.center_areas = {
-            areas: $scope.areas[index].label
-          };
-          createProposalService.getLocations('sub_areas', $scope.areas[index].id)
-            .then(function onSuccess(response) {
-              $scope.sub_areas = response.data;
-            });
-        } else {
+        $scope.centers_datas  = [];
+        for (let i in $scope.center_data) {
+          if ($scope.center_data[i].center && $scope.center_data[i].center.codes.length > 0) {
+            var localindex_index = $scope.center_data[i].center.codes.map(function (el) {
+              return el;
+            }).indexOf($scope.supplier_type_code);
+             if (localindex_index != -1) {
+              $scope.centers_datas.push($scope.center_data[i]);
+             }
+            }
+          }
+        }
+        //Start: function to select center at add more suplliers
+        $scope.selectCenter = function (center_index) {
           $scope.center = [];
-          $scope.center_areas = {};
-          $scope.sub_areas = [];
-        }
-      }
-
-      $scope.selectSubArea = function (index) {
-        $scope.supplierData = [];
-        if (index) {
-          $scope.center_areas.sub_areas = $scope.sub_areas[index].subarea_name;
-        } else {
-          $scope.center_areas.sub_areas = "";
-        }
-      }
-      //End: function to select center at add more suplliers
-      //Start: upload and import functionality
-      //Start: For sending only shortlisted societies & selected inventory types
-      function saveSelectedFilters() {
-        //Start: For sending filtered inventory type
-        try {
-          var society_inventory_type_selected = [];
-          for (var center = 0; center < $scope.center_data.length; center++) {
-            if ($scope.center_data[center].suppliers_meta) {
-              if ($scope.center_data[center].suppliers_meta['RS']) {
-                $scope.center_data[center].suppliers_meta['RS'].inventory_type_selected = [];
-                $scope.center_data[center].suppliers_meta['RS'].quality_type = [];
-                $scope.center_data[center].suppliers_meta['RS'].quantity_type = [];
-                $scope.center_data[center].suppliers_meta['RS'].flat_type = [];
-                $scope.center_data[center].suppliers_meta['RS'].locality_rating = [];
-                makeFilters($scope.center_data[center].RS_filters.inventory, $scope.center_data[center].suppliers_meta['RS'].inventory_type_selected);
-                makeFilters($scope.center_data[center].RS_filters.quality_type, $scope.center_data[center].suppliers_meta['RS'].quality_type);
-                makeFilters($scope.center_data[center].RS_filters.quantity_type, $scope.center_data[center].suppliers_meta['RS'].quantity_type);
-                makeFilters($scope.center_data[center].RS_filters.flat_type, $scope.center_data[center].suppliers_meta['RS'].flat_type);
-                makeFilters($scope.center_data[center].RS_filters.locality_rating, $scope.center_data[center].suppliers_meta['RS'].locality_rating);
-              }
-              if ($scope.center_data[center].suppliers_meta['CP']) {
-                $scope.center_data[center].suppliers_meta['CP'].inventory_type_selected = [];
-                $scope.center_data[center].suppliers_meta['CP'].quality_type = [];
-                $scope.center_data[center].suppliers_meta['CP'].quantity_type = [];
-                $scope.center_data[center].suppliers_meta['CP'].employee_count = [];
-                $scope.center_data[center].suppliers_meta['CP'].locality_rating = [];
-
-                makeFilters($scope.center_data[center].CP_filters.inventory, $scope.center_data[center].suppliers_meta['CP'].inventory_type_selected);
-                makeFilters($scope.center_data[center].CP_filters.quality_type, $scope.center_data[center].suppliers_meta['CP'].quality_type);
-                makeFilters($scope.center_data[center].CP_filters.quantity_type, $scope.center_data[center].suppliers_meta['CP'].quantity_type);
-                makeFilters($scope.center_data[center].CP_filters.employee_count, $scope.center_data[center].suppliers_meta['CP'].employee_count);
-                makeFilters($scope.center_data[center].CP_filters.locality_rating, $scope.center_data[center].suppliers_meta['CP'].locality_rating);
-              }
-            }
-          }
-        } catch (error) {
-          console.log(error.message);
-        }
-      }
-      //End: For sending filtered inventory type
-
-      //Start: setting status of suppliers like shortlisted, removed or buffer
-      $scope.setSupplierStatus = function (supplier, value) {
-        try {
-          if (supplier.buffer_status == false && value == 'B')
-            supplier.status = 'F';
-          else if (supplier.buffer_status == true && value != 'R')
-            supplier.status = 'B';
-          else
-            supplier.status = value;
-          if (value != 'B')
-            supplier.shortlisted = !supplier.shortlisted;
-        } catch (error) {
-          console.log(error.message);
-        }
-      };
-      //End: setting status of suppliers like shortlisted, removed or buffer
-      $scope.submitProposal = function () {
-        saveSelectedFilters();
-      };
-      $scope.exportData = function () {
-
-        try {
-          $scope.hideSpinner = false;
-          $scope.requestProposal = false;
-          $scope.checkFileExport = true;
-          var parent_proposal_id = $window.localStorage.parent_proposal_id;
-          if (parent_proposal_id == undefined) {
-            parent_proposal_id = $stateParams.proposal_id;
-
-          }
-          if ($window.localStorage.isSavedProposal == undefined) {
-            $window.localStorage.isSavedProposal = false;
-          }
-          saveSelectedFilters();
-          var proposal_data = {
-            centers: $scope.center_data,
-            //  is_proposal_version_created:$window.localStorage.isSavedProposal,
-            is_proposal_version_created: false,
-          };
-          console.log("request proposal data", proposal_data);
-          console.log("sending proposal version API call");
-
-          mapViewService.proposalVersion($stateParams.proposal_id, proposal_data)
-            .then(function onSuccess(response) {
-              $scope.clientId = response.data.data.logged_in_user_async_id;
-              $scope.bdHeadId = response.data.data.bd_head_async_id;
-              $scope.uploadId = response.data.data.upload_to_amazon_async_id;
-              $scope.proposalFileName = response.data.data.file_name;
-              $scope.isSuperUser = $window.localStorage.is_Superuser;
-              sendEmailToClient();
-              sendEmailToBDHead();
-              uploadToAmazon();
-              $scope.hideSpinner = true;
-              $scope.isRequested = false;
-              $window.localStorage.isReadOnly = false;
-              $window.localStorage.isSavedProposal = true;
-              swal(constants.name, constants.request_proposal_success, constants.success);
-              $scope.checkFileExport = false;
-              $location.path('/manageCampaign/create');
-
-            }).catch(function onError(response) {
-              console.log("Error occurred in fetching response");
-              console.log(response);
-              $scope.hideSpinner = true;
-              commonDataShare.showErrorMessage(response);
-              // swal(constants.name,constants.request_proposal_error,constants.error);
-              $scope.checkFileExport = false;
-            });
-          /*  $http({
-                 url: constants.base_url + constants.url_base + parent_proposal_id + '/proposal-version/',
-                 method: 'POST',
-                 data: proposal_data, //this is your json data string
-                 headers: {
-                     'Content-type': 'application/json',
-                     'Authorization' : 'JWT ' + $rootScope.globals.currentUser.token
-                 }
-            }).then(function onSuccess(response){
-              $scope.clientId = response.data.data.logged_in_user_async_id;
-              $scope.bdHeadId = response.data.data.bd_head_async_id;
-              $scope.uploadId = response.data.data.upload_to_amazon_async_id;
-              $scope.proposalFileName = response.data.data.file_name;
-               $scope.isSuperUser = $window.localStorage.is_Superuser;
-               sendEmailToClient();
-               sendEmailToBDHead();
-               uploadToAmazon();
-              $scope.hideSpinner = true;
-              swal(constants.name,constants.request_proposal_success,constants.success);
-                 $scope.checkFileExport = false;
-            }).catch(function onError(response){
-              $scope.hideSpinner = true;
-                 swal(constants.name,constants.request_proposal_error,constants.error);
-                 $scope.checkFileExport = false;
-            });*/
-
-        } catch (error) {
-          $scope.hideSpinner = true;
-        }
-      }
-      var sendEmailToClient = function () {
-        mapViewService.sendEmailToClient($scope.clientId)
-          .then(function onSuccess(response) {
-            if (response.data.data.ready != true) {
-              $timeout(sendEmailToClient, 5000); // This will perform async
-            }
-            else if (response.data.data.status == true) {
-              $scope.emailToClient = true;
-              deleteFile();
-            }
-          }).catch(function onError(response) {
-            commonDataShare.showErrorMessage(response);
-            // swal(constants.name,constants.client_email_error,constants.error);
-          });
-      }
-
-
-      var sendEmailToBDHead = function () {
-        mapViewService.sendEmailToBDHead($scope.bdHeadId)
-          .then(function onSuccess(response) {
-            if (response.data.data.ready != true) {
-              $timeout(sendEmailToBDHead, 6000); // This will perform async
-            }
-            else if (response.data.data.status == true) {
-              $scope.emailToBDHead = true;
-              deleteFile();
-            }
-          }).catch(function onError(response) {
-            commonDataShare.showErrorMessage(response);
-            // swal(constants.name,constants.bdhead_email_error,constants.error);
-          });
-      }
-      var uploadToAmazon = function () {
-        mapViewService.uploadToAmazon($scope.uploadId)
-          .then(function onSuccess(response) {
-            if (response.data.data.ready != true) {
-              $timeout(uploadToAmazon, 7000); // This will perform async
-            }
-            else if (response.data.data.status == true) {
-              //  console.log("success");
-              $scope.uploadToAmazon = true;
-              deleteFile();
-            }
-          }).catch(function onError(response) {
-            commonDataShare.showErrorMessage(response);
-            // swal(constants.name,constants.upload_error,constants.error);
-          });
-      }
-
-      var deleteFile = function () {
-        if ($scope.emailToClient && $scope.emailToBDHead && $scope.uploadToAmazon) {
-          var data = {
-            file_name: $scope.proposalFileName,
-          }
-          mapViewService.deleteFile(data)
-            .then(function onSuccess(response) {
-              $scope.emailToClient = null;
-              $scope.emailToBDHead = null;
-              $scope.uploadToAmazon = null;
-              //  console.log(response);
-            }).catch(function onError(response) {
-              commonDataShare.showErrorMessage(response);
-              // swal(constants.name,constants.deletefile_error,constants.error);
-              //  console.log(response);
-            });
-        }
-      }
-
-      //Start : function to upload files to amazon server, just provide file name and file
-      //  var uploadFileToAmazonServer = function(file_name,file){
-      //   try{
-      //    Upload.upload({
-      //        url: constants.aws_bucket_url,
-      //        method : 'POST',
-      //        data: {
-      //            key: file_name, // the key to store the file on S3, could be file name or customized
-      //            AWSAccessKeyId : constants.AWSAccessKeyId,
-      //            acl : constants.acl, // sets the access to the uploaded file in the bucket: private, public-read, ...
-      //            policy : constants.policy,
-      //            signature : constants.signature, // base64-encoded signature based on policy string (see article below)
-      //            "Content-Type": constants.content_type,// content type of the file (NotEmpty)
-      //            file: file }
-      //        }).then(function onSuccess(response){
-      //             swal(constants.name,constants.uploadfile_success,constants.success);
-      //        }).catch(function onError(response) {
-      //          commonDataShare.showErrorMessage(response);
-      //             // swal(constants.name,constants.uploadfile_error,constants.error);
-      //        });
-      //      }catch(error){
-      //        $scope.hideSpinner = true;
-      //        console.log(error.message);
-      //      }
-      //  }
-      //End : function to upload files to amazon server, just provide file name and file
-      $scope.upload = function (file) {
-        if (file) {
+          $scope.search = "";
+          $scope.center.area = "";
+          $scope.center_areas = {}
+          $scope.supplier_center = null
+          $scope.supplierData = [];
+          $scope.errorMsg = "";
           try {
-            var uploadUrl = constants.base_url + constants.url_base;
-            $scope.hideSpinner = false;
-            var token = $rootScope.globals.currentUser.token;
-            Upload.upload({
-              url: uploadUrl + $scope.proposal_id_temp + '/import-supplier-data/',
-              data: { file: file, 'username': $scope.username },
-              headers: { 'Authorization': 'JWT ' + token },
-            }).then(function onSuccess(response) {
-              $scope.hideSpinner = true;
-              swal(constants.name, constants.uploadfile_success, constants.success);
-              // uploadFileToAmazonServer(response.data.data,file);
-
-            }).catch(function onError(response) {
-              $scope.hideSpinner = true;
-              commonDataShare.showErrorMessage(response);
-              // swal(constants.name,constants.importfile_error,constants.error);
-            });
+            $scope.center_index = center_index;
+            if (center_index != null) {
+              for (var i = 0; i < $scope.center_data.length; i++) {
+                if ($scope.center_data[i].center.id == center_index) {
+                  $scope.current_center_index = i;
+                  $scope.supplier_center = $scope.center_data[i].center.city
+                }
+              }
+              if ($scope.supplier_center) {
+                $scope.center_err = false;
+                mapViewService.getLocations($scope.supplier_center)
+                  .then(function onSuccess(response) {
+                    $scope.areas = response.data.data;
+                  }).
+                  catch(function onError(response) {
+                    commonDataShare.showErrorMessage(response);
+                  });
+              } else {
+                $scope.areas = [];
+              }
+            }
           } catch (error) {
-            $scope.hideSpinner = true;
             console.log(error.message);
           }
         }
-      };
-      //End: upload and import functionality
-      //Start:save suppliers and filters to save the current state
-      $scope.saveData = function () {
-        try {
-          saveSelectedFilters();
-          console.log($scope.center_data);
-          $window.localStorage.isSavedProposal = 'true';
-          mapViewService.saveData($scope.proposal_id_temp, $scope.center_data)
-            .then(function onSuccess(response, status) {
-              // alert("Saved Successfully");
-              swal(constants.name, constants.save_success, constants.success);
-            }).catch(function (response, status) {
-              commonDataShare.showErrorMessage(response);
-              // swal(constants.name,constants.save_error,constants.error);
-              // alert("Error Occured");
-            });//
-        } catch (error) {
-          console.log(error.message);
+
+        $scope.get_sub_areas = function (index) {
+          $scope.center_areas.sub_areas = "";
+          $scope.sub_areas = [];
+          $scope.center.sub_area_id = "";
+          $scope.search = "";
+          $scope.supplierData = [];
+          $scope.errorMsg = "";
+          if (index) {
+            $scope.center_areas = {
+              areas: $scope.areas[index].label
+            };
+            createProposalService.getLocations('sub_areas', $scope.areas[index].id)
+              .then(function onSuccess(response) {
+                $scope.sub_areas = response.data;
+              });
+          } else {
+            $scope.center = [];
+            $scope.center_areas = {};
+            $scope.sub_areas = [];
+          }
         }
-      }
-      //End:save suppliers and filters to save the current state
-      // Start: function to update status of supplier and save in db
-      $scope.updateSupplierStatus = function (supplier, center, code) {
 
-        try {
-          var data = {
-            'center_id': center.center.id,
-            'supplier_id': supplier.supplier_id,
-            'status': supplier.status,
-            'supplier_type_code': code,
-          };
-          mapViewService.updateSupplierStatus($scope.proposal_id_temp, data)
-            .then(function onSuccess(response, status) {
-              console.log(response);
-              getSummary(code, center);
-              getComprehinsiveSummary(code);
-            }).catch(function onError(response, status) {
-              commonDataShare.showErrorMessage(response);
-              // swal(constants.name,constants.supplier_status_error,constants.error);
-            });
-        } catch (error) {
-          console.log(error.message);
+        $scope.selectSubArea = function (index) {
+          $scope.supplierData = [];
+          if (index) {
+            $scope.center_areas.sub_areas = $scope.sub_areas[index].subarea_name;
+          } else {
+            $scope.center_areas.sub_areas = "";
+          }
         }
-      }
-      // End: function to update status of supplier and save in db
-      //Start:create dict of supplier_ids
-      $scope.createSupplierList = function () {
+        //End: function to select center at add more suplliers
+        //Start: upload and import functionality
+        //Start: For sending only shortlisted societies & selected inventory types
+        function saveSelectedFilters() {
+          //Start: For sending filtered inventory type
+          try {
+            var society_inventory_type_selected = [];
+            for (var center = 0; center < $scope.center_data.length; center++) {
+              if ($scope.center_data[center].suppliers_meta) {
+                if ($scope.center_data[center].suppliers_meta['RS']) {
+                  $scope.center_data[center].suppliers_meta['RS'].inventory_type_selected = [];
+                  $scope.center_data[center].suppliers_meta['RS'].quality_type = [];
+                  $scope.center_data[center].suppliers_meta['RS'].quantity_type = [];
+                  $scope.center_data[center].suppliers_meta['RS'].flat_type = [];
+                  $scope.center_data[center].suppliers_meta['RS'].locality_rating = [];
+                  makeFilters($scope.center_data[center].RS_filters.inventory, $scope.center_data[center].suppliers_meta['RS'].inventory_type_selected);
+                  makeFilters($scope.center_data[center].RS_filters.quality_type, $scope.center_data[center].suppliers_meta['RS'].quality_type);
+                  makeFilters($scope.center_data[center].RS_filters.quantity_type, $scope.center_data[center].suppliers_meta['RS'].quantity_type);
+                  makeFilters($scope.center_data[center].RS_filters.flat_type, $scope.center_data[center].suppliers_meta['RS'].flat_type);
+                  makeFilters($scope.center_data[center].RS_filters.locality_rating, $scope.center_data[center].suppliers_meta['RS'].locality_rating);
+                }
+                if ($scope.center_data[center].suppliers_meta['CP']) {
+                  $scope.center_data[center].suppliers_meta['CP'].inventory_type_selected = [];
+                  $scope.center_data[center].suppliers_meta['CP'].quality_type = [];
+                  $scope.center_data[center].suppliers_meta['CP'].quantity_type = [];
+                  $scope.center_data[center].suppliers_meta['CP'].employee_count = [];
+                  $scope.center_data[center].suppliers_meta['CP'].locality_rating = [];
 
-        try {
-          $scope.supplier_id_list = [];
-
-          for (var i = 0; i < $scope.center_data.length; i++) {
-            $scope.supplier_id_list[i] = {};
-
-            var supplier_keys = Object.keys($scope.center_data[i].suppliers);
-            angular.forEach(supplier_keys, function (key) {
-              $scope.supplier_id_list[i][key] = {};
-              for (var j = 0; j < $scope.center_data[i].suppliers[key].length; j++) {
-                $scope.supplier_id_list[i][key][$scope.center_data[i].suppliers[key][j].supplier_id] = j;
+                  makeFilters($scope.center_data[center].CP_filters.inventory, $scope.center_data[center].suppliers_meta['CP'].inventory_type_selected);
+                  makeFilters($scope.center_data[center].CP_filters.quality_type, $scope.center_data[center].suppliers_meta['CP'].quality_type);
+                  makeFilters($scope.center_data[center].CP_filters.quantity_type, $scope.center_data[center].suppliers_meta['CP'].quantity_type);
+                  makeFilters($scope.center_data[center].CP_filters.employee_count, $scope.center_data[center].suppliers_meta['CP'].employee_count);
+                  makeFilters($scope.center_data[center].CP_filters.locality_rating, $scope.center_data[center].suppliers_meta['CP'].locality_rating);
+                }
               }
-            });
+            }
+          } catch (error) {
+            console.log(error.message);
           }
-        } catch (error) {
-          console.log(error.message);
         }
-      }
-      //Start: check duplicate suppliers if adding more suppliers
-      var checkDuplicateSupplier = function (supplier) {
+        //End: For sending filtered inventory type
 
-        try {
-          if ($scope.supplier_id_list[$scope.current_center_index][$scope.supplier_type_code][supplier.supplier_id] != null) {
-            // var index = $scope.supplier_id_list[$scope.current_center_index][$scope.supplier_type_code][supplier.supplier_id]
-            // var center = $scope.center_data[$scope.current_center_index];
-            // $scope.updateSupplierStatus(supplier,center,$scope.supplier_type_code);
-            // center.suppliers[$scope.supplier_type_code][index].status = supplier.status;
-            // alert("Supplier already Exist and You changed Supplier status");
-            supplier.status = null;
-            $scope.errorMsg = "Supplier already Exist";
-            return false;
+        //Start: setting status of suppliers like shortlisted, removed or buffer
+        $scope.setSupplierStatus = function (supplier, value) {
+          try {
+            if (supplier.buffer_status == false && value == 'B')
+              supplier.status = 'F';
+            else if (supplier.buffer_status == true && value != 'R')
+              supplier.status = 'B';
+            else
+              supplier.status = value;
+            if (value != 'B')
+              supplier.shortlisted = !supplier.shortlisted;
+          } catch (error) {
+            console.log(error.message);
           }
-          else {
-            return true;
+        };
+        //End: setting status of suppliers like shortlisted, removed or buffer
+        $scope.submitProposal = function () {
+          saveSelectedFilters();
+        };
+        $scope.exportData = function () {
+
+          try {
+            $scope.hideSpinner = false;
+            $scope.requestProposal = false;
+            $scope.checkFileExport = true;
+            var parent_proposal_id = $window.localStorage.parent_proposal_id;
+            if (parent_proposal_id == undefined) {
+              parent_proposal_id = $stateParams.proposal_id;
+
+            }
+            if ($window.localStorage.isSavedProposal == undefined) {
+              $window.localStorage.isSavedProposal = false;
+            }
+            saveSelectedFilters();
+            var proposal_data = {
+              centers: $scope.center_data,
+              //  is_proposal_version_created:$window.localStorage.isSavedProposal,
+              is_proposal_version_created: false,
+            };
+            console.log("request proposal data", proposal_data);
+            console.log("sending proposal version API call");
+
+            mapViewService.proposalVersion($stateParams.proposal_id, proposal_data)
+              .then(function onSuccess(response) {
+                $scope.clientId = response.data.data.logged_in_user_async_id;
+                $scope.bdHeadId = response.data.data.bd_head_async_id;
+                $scope.uploadId = response.data.data.upload_to_amazon_async_id;
+                $scope.proposalFileName = response.data.data.file_name;
+                $scope.isSuperUser = $window.localStorage.is_Superuser;
+                sendEmailToClient();
+                sendEmailToBDHead();
+                uploadToAmazon();
+                $scope.hideSpinner = true;
+                $scope.isRequested = false;
+                $window.localStorage.isReadOnly = false;
+                $window.localStorage.isSavedProposal = true;
+                swal(constants.name, constants.request_proposal_success, constants.success);
+                $scope.checkFileExport = false;
+                $location.path('/manageCampaign/create');
+
+              }).catch(function onError(response) {
+                console.log("Error occurred in fetching response");
+                console.log(response);
+                $scope.hideSpinner = true;
+                commonDataShare.showErrorMessage(response);
+                // swal(constants.name,constants.request_proposal_error,constants.error);
+                $scope.checkFileExport = false;
+              });
+            /*  $http({
+                   url: constants.base_url + constants.url_base + parent_proposal_id + '/proposal-version/',
+                   method: 'POST',
+                   data: proposal_data, //this is your json data string
+                   headers: {
+                       'Content-type': 'application/json',
+                       'Authorization' : 'JWT ' + $rootScope.globals.currentUser.token
+                   }
+              }).then(function onSuccess(response){
+                $scope.clientId = response.data.data.logged_in_user_async_id;
+                $scope.bdHeadId = response.data.data.bd_head_async_id;
+                $scope.uploadId = response.data.data.upload_to_amazon_async_id;
+                $scope.proposalFileName = response.data.data.file_name;
+                 $scope.isSuperUser = $window.localStorage.is_Superuser;
+                 sendEmailToClient();
+                 sendEmailToBDHead();
+                 uploadToAmazon();
+                $scope.hideSpinner = true;
+                swal(constants.name,constants.request_proposal_success,constants.success);
+                   $scope.checkFileExport = false;
+              }).catch(function onError(response){
+                $scope.hideSpinner = true;
+                   swal(constants.name,constants.request_proposal_error,constants.error);
+                   $scope.checkFileExport = false;
+              });*/
+
+          } catch (error) {
+            $scope.hideSpinner = true;
           }
-        } catch (error) {
-          console.log(error.message);
         }
-      }
-    });
+        var sendEmailToClient = function () {
+          mapViewService.sendEmailToClient($scope.clientId)
+            .then(function onSuccess(response) {
+              if (response.data.data.ready != true) {
+                $timeout(sendEmailToClient, 5000); // This will perform async
+              }
+              else if (response.data.data.status == true) {
+                $scope.emailToClient = true;
+                deleteFile();
+              }
+            }).catch(function onError(response) {
+              commonDataShare.showErrorMessage(response);
+              // swal(constants.name,constants.client_email_error,constants.error);
+            });
+        }
+
+
+        var sendEmailToBDHead = function () {
+          mapViewService.sendEmailToBDHead($scope.bdHeadId)
+            .then(function onSuccess(response) {
+              if (response.data.data.ready != true) {
+                $timeout(sendEmailToBDHead, 6000); // This will perform async
+              }
+              else if (response.data.data.status == true) {
+                $scope.emailToBDHead = true;
+                deleteFile();
+              }
+            }).catch(function onError(response) {
+              commonDataShare.showErrorMessage(response);
+              // swal(constants.name,constants.bdhead_email_error,constants.error);
+            });
+        }
+        var uploadToAmazon = function () {
+          mapViewService.uploadToAmazon($scope.uploadId)
+            .then(function onSuccess(response) {
+              if (response.data.data.ready != true) {
+                $timeout(uploadToAmazon, 7000); // This will perform async
+              }
+              else if (response.data.data.status == true) {
+                //  console.log("success");
+                $scope.uploadToAmazon = true;
+                deleteFile();
+              }
+            }).catch(function onError(response) {
+              commonDataShare.showErrorMessage(response);
+              // swal(constants.name,constants.upload_error,constants.error);
+            });
+        }
+
+        var deleteFile = function () {
+          if ($scope.emailToClient && $scope.emailToBDHead && $scope.uploadToAmazon) {
+            var data = {
+              file_name: $scope.proposalFileName,
+            }
+            mapViewService.deleteFile(data)
+              .then(function onSuccess(response) {
+                $scope.emailToClient = null;
+                $scope.emailToBDHead = null;
+                $scope.uploadToAmazon = null;
+                //  console.log(response);
+              }).catch(function onError(response) {
+                commonDataShare.showErrorMessage(response);
+                // swal(constants.name,constants.deletefile_error,constants.error);
+                //  console.log(response);
+              });
+          }
+        }
+
+        //Start : function to upload files to amazon server, just provide file name and file
+        //  var uploadFileToAmazonServer = function(file_name,file){
+        //   try{
+        //    Upload.upload({
+        //        url: constants.aws_bucket_url,
+        //        method : 'POST',
+        //        data: {
+        //            key: file_name, // the key to store the file on S3, could be file name or customized
+        //            AWSAccessKeyId : constants.AWSAccessKeyId,
+        //            acl : constants.acl, // sets the access to the uploaded file in the bucket: private, public-read, ...
+        //            policy : constants.policy,
+        //            signature : constants.signature, // base64-encoded signature based on policy string (see article below)
+        //            "Content-Type": constants.content_type,// content type of the file (NotEmpty)
+        //            file: file }
+        //        }).then(function onSuccess(response){
+        //             swal(constants.name,constants.uploadfile_success,constants.success);
+        //        }).catch(function onError(response) {
+        //          commonDataShare.showErrorMessage(response);
+        //             // swal(constants.name,constants.uploadfile_error,constants.error);
+        //        });
+        //      }catch(error){
+        //        $scope.hideSpinner = true;
+        //        console.log(error.message);
+        //      }
+        //  }
+        //End : function to upload files to amazon server, just provide file name and file
+        $scope.upload = function (file) {
+          if (file) {
+            try {
+              var uploadUrl = constants.base_url + constants.url_base;
+              $scope.hideSpinner = false;
+              var token = $rootScope.globals.currentUser.token;
+              Upload.upload({
+                url: uploadUrl + $scope.proposal_id_temp + '/import-supplier-data/',
+                data: { file: file, 'username': $scope.username },
+                headers: { 'Authorization': 'JWT ' + token },
+              }).then(function onSuccess(response) {
+                $scope.hideSpinner = true;
+                swal(constants.name, constants.uploadfile_success, constants.success);
+                // uploadFileToAmazonServer(response.data.data,file);
+
+              }).catch(function onError(response) {
+                $scope.hideSpinner = true;
+                commonDataShare.showErrorMessage(response);
+                // swal(constants.name,constants.importfile_error,constants.error);
+              });
+            } catch (error) {
+              $scope.hideSpinner = true;
+              console.log(error.message);
+            }
+          }
+        };
+        //End: upload and import functionality
+        //Start:save suppliers and filters to save the current state
+        $scope.saveData = function () {
+          try {
+            saveSelectedFilters();
+            console.log($scope.center_data);
+            $window.localStorage.isSavedProposal = 'true';
+            mapViewService.saveData($scope.proposal_id_temp, $scope.center_data)
+              .then(function onSuccess(response, status) {
+                // alert("Saved Successfully");
+                swal(constants.name, constants.save_success, constants.success);
+              }).catch(function (response, status) {
+                commonDataShare.showErrorMessage(response);
+                // swal(constants.name,constants.save_error,constants.error);
+                // alert("Error Occured");
+              });//
+          } catch (error) {
+            console.log(error.message);
+          }
+        }
+        //End:save suppliers and filters to save the current state
+        // Start: function to update status of supplier and save in db
+        $scope.updateSupplierStatus = function (supplier, center, code) {
+
+          try {
+            var data = {
+              'center_id': center.center.id,
+              'supplier_id': supplier.supplier_id,
+              'status': supplier.status,
+              'supplier_type_code': code,
+            };
+            mapViewService.updateSupplierStatus($scope.proposal_id_temp, data)
+              .then(function onSuccess(response, status) {
+                console.log(response);
+                getSummary(code, center);
+                getComprehinsiveSummary(code);
+              }).catch(function onError(response, status) {
+                commonDataShare.showErrorMessage(response);
+                // swal(constants.name,constants.supplier_status_error,constants.error);
+              });
+          } catch (error) {
+            console.log(error.message);
+          }
+        }
+        // End: function to update status of supplier and save in db
+        //Start:create dict of supplier_ids
+        $scope.createSupplierList = function () {
+
+          try {
+            $scope.supplier_id_list = [];
+            for (var i = 0; i < $scope.center_data.length; i++) {
+              $scope.supplier_id_list[i] = {};
+              var supplier_keys = Object.keys($scope.center_data[i].suppliers);
+              angular.forEach(supplier_keys, function (key) {
+                $scope.supplier_id_list[i][key] = {};
+                for (var j = 0; j < $scope.center_data[i].suppliers[key].length; j++) {
+                  $scope.supplier_id_list[i][key][$scope.center_data[i].suppliers[key][j].supplier_id] = j;
+                }
+              });
+            }
+          } catch (error) {
+            console.log(error.message);
+          }
+        }
+        //Start: check duplicate suppliers if adding more suppliers
+        var checkDuplicateSupplier = function (supplier) {
+
+          try {
+            if ($scope.supplier_id_list[$scope.current_center_index][$scope.supplier_type_code][supplier.supplier_id] != null) {
+              // var index = $scope.supplier_id_list[$scope.current_center_index][$scope.supplier_type_code][supplier.supplier_id]
+              // var center = $scope.center_data[$scope.current_center_index];
+              // $scope.updateSupplierStatus(supplier,center,$scope.supplier_type_code);
+              // center.suppliers[$scope.supplier_type_code][index].status = supplier.status;
+              // alert("Supplier already Exist and You changed Supplier status");
+              supplier.status = null;
+              $scope.errorMsg = "Supplier already Exist";
+              return false;
+            }
+            else {
+              return true;
+            }
+          } catch (error) {
+            console.log(error.message);
+          }
+        }
+      });
 
 
 

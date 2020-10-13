@@ -38,7 +38,8 @@
           <label>Supplier Type</label>
           <select class="form-control input-size" value="selectedUser.supplier_type_filter" ng-change="changeType()"
             ng-model="selectedUser.supplier_type_filter">
-            <option ng-if="supplier_names.length > 1" value="">All</option>
+            
+            <option  value="">All</option>
             <option ng-repeat="supplier in supplier_names"
               ng-selected="selectedUser.supplier_type_filter_selected == supplier.name" value="{{supplier.code}}"
               required>{{supplier.name}}</option>
@@ -90,49 +91,52 @@
         </div>
         <div class="col-md-12">
           <input type="checkbox" ng-model="assignUser">
-          <label><h4>Assign User<h4></label>
-      </div>
+          <label>
+            <h4>Assign User<h4>
+          </label>
+        </div>
       </div>
     </div>
 
-    <form name = "form" ng-if="assignUser" style="margin-top: 4%">
+    <form name="form" ng-if="assignUser" style="margin-top: 4%">
       <!-- <div class="breadcrumb" ncy-breadcrumb></div> -->
-      <div style="color:#000000;" class = "panel panel-default date-panel">
-        <h3 class = "panel-heading">Assign User</h3>
-         <div class = "table">
-           <div class="form-group">
-              <div class = "row">
-                <div class = "col-md-3"><label>Select Quality Rating </label></div>
-                <div class = "col-md-3">
-                  <select class="form-control" ng-model="assignUserData.quality_rating">
-                    <option value="" disabled>Select Quality Rating</option>
+      <div style="color:#000000;" class="panel panel-default date-panel">
+        <h3 class="panel-heading">Assign User</h3>
+        <div class="table">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-3"><label>Select Quality Rating </label></div>
+              <div class="col-md-3">
+                <select class="form-control" ng-model="assignUserData.quality_rating">
+                  <option value="" disabled>Select Quality Rating</option>
                   <option ng-repeat="cat in categorylist" value="{{cat}}">
                     {{cat}}
                   </option>
                 </select>
-                </div>
-  
-                <div class = "col-md-3"><label>Assigned To </label></div>
-                <div class = "col-md-3">
-                  <select class="form-control" ng-model="assignUserData.userid" required >
-                    <option value="" disabled>Select User</option>
-                            <option ng-repeat="user in usersMapListWithObjects  | orderBy:'username' | unique:'id'"
-                              value="{{user.id}}">{{user.username}}</option>
-                  </select>
-                </div>
+              </div>
+
+              <div class="col-md-3"><label>Assigned To </label></div>
+              <div class="col-md-3">
+                <select class="form-control" ng-model="assignUserData.userid" required>
+                  <option value="" disabled>Select User</option>
+                  <option ng-repeat="user in usersMapListWithObjects  | orderBy:'username' | unique:'id'"
+                    value="{{user.id}}">{{user.username}}</option>
+                </select>
               </div>
             </div>
-  
-    
-           <button type="submit" class="btn btn-danger" ng-disabled="form.$invalid" ng-click="assignUsers()"  permission = "[permissions.assignDates]">Assign</button>
-         </div>
-       </div>
-     </form>
+          </div>
 
-  
-   
-      
- 
+
+          <button type="submit" class="btn btn-danger" ng-disabled="form.$invalid" ng-click="assignUsers()"
+            permission="[permissions.assignDates]">Assign</button>
+        </div>
+      </div>
+    </form>
+
+
+
+
+
 
 
 
@@ -208,7 +212,8 @@
 
             <th>{{detailsHeader.contacts_details}}</th>
             <th>{{detailsHeader.assign_user}}</th>
-            <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'">{{detailsHeader.requirement_given}}</th>
+            <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'">
+              {{detailsHeader.requirement_given}}</th>
 
             <th>{{detailsHeader.booking_priority}}</th>
             <th>{{detailsHeader.booking_status_and_sub_status}}</th>
@@ -253,7 +258,8 @@
 
             <th>{{detailsHeader.contacts_details}}</th>
             <th>{{detailsHeader.assign_user}}</th>
-            <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'">{{detailsHeader.requirement_given}}</th>
+            <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'">
+              {{detailsHeader.requirement_given}}</th>
             <th>{{detailsHeader.booking_priority}}</th>
             <th>{{detailsHeader.booking_status_and_sub_status}}</th>
             <th>{{detailsHeader.phase}}</th>
@@ -329,7 +335,8 @@
 
             <th>{{detailsHeader.contacts_details}}</th>
             <th>{{detailsHeader.assign_user}}</th>
-            <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'">{{detailsHeader.requirement_given}}</th>
+            <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'">
+              {{detailsHeader.requirement_given}}</th>
             <th>{{detailsHeader.booking_priority}}</th>
             <th>{{detailsHeader.booking_status_and_sub_status}}</th>
             <th>{{detailsHeader.phase}}</th>
@@ -344,8 +351,8 @@
             <th>{{detailsHeader.total_supplier_price}}</th>
 
             <th>{{detailsHeader.negotiated_price}}</th>
-             <th>Cost Per Supplier</th>
-          
+            <th>Cost Per Supplier</th>
+
 
             <!-- <th ng-if="selectedUser.supplier_type_filter && selectedUser.supplier_type_filter == 'RE'">
               {{detailsHeader.cost_per_weekend_daily_footfall}}
@@ -387,17 +394,14 @@
         <!-- <tbody ng-show="(!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter == 'RS') && releaseDetails.shortlisted_suppliers.length > 0"
           dir-paginate="supplier in releaseDetails.shortlisted_suppliers  | itemsPerPage: suppliersPerPage"
           total-items="totalSuppliers" current-page="pagination.current" track by "$index"> -->
-        <tbody ng-show="(selectedUser.supplier_type_filter == 'RS')"
+        <tbody ng-if="(selectedUser.supplier_type_filter == 'RS')"
           dir-paginate="supplier in releaseDetails.shortlisted_suppliers  | itemsPerPage: suppliersPerPage"
           total-items="totalSuppliers" current-page="pagination.current" track by "$index">
           <div ng-if="releaseDetails.shortlisted_suppliers.length > 0">
             <tr ng-if="releaseDetails.shortlisted_suppliers.length > 0"
               ng-repeat="(key,filter) in supplier.shortlisted_inventories track by $index" ng-disabled="$index != '15'">
 
-              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" style="width:40px;" ng-style="((supplier.booking_status==='BK' || supplier.booking_status==='MC') && {'background-color':'green'}) ||((supplier.booking_status==='UN' || supplier.booking_status==='NI' || supplier.booking_status==='NE') && {'background-color':'white'} )||(
-              (supplier.booking_status==='SR') && {'background-color':'red'}) ||(
-              (supplier.booking_status==='DP' ||supplier.booking_status==='TB'||supplier.booking_status==='MF'||supplier.booking_status==='RE' ) && {'background-color':'yellow'}) ||(
-              supplier.booking_status && {'background-color':'brown'})">{{$parent.$parent.$index + 1}}</td>
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" style="width:40px;" ng-style="background: {{show_color(supplier)}}">{{$parent.$parent.$index + 1}}</td>
 
               <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <span ng-if="supplier.brand_organisation_data.name">{{supplier.brand_organisation_data.name}}<br></span>
@@ -506,15 +510,19 @@
                   </div>
               </td>
 
-              
-                <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'">
-                  <select class="form-control spacing input-width" ng-model="supplier.requirement_given"
-                    ng-disabled="supplier.is_completed">
-                    <option style="width:100%;" ng-repeat="(key, requirement) in requirement_Given" value="{{key}}">
-                      {{requirement}}</option>
-                  </select>
-                </td>
-              
+
+              <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first"
+                ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'">
+                <select class="form-control spacing input-width" ng-model="supplier.requirement_given"
+                  ng-disabled="supplier.is_completed">
+                  <option style="width:100%;" ng-repeat="(key, requirement) in requirement_Given" value="{{key}}">
+                    {{requirement}}</option>
+                </select>
+                <button data-target="#RequirementModel" ng-click="getRequirementDetail(supplier.id) && (supplier.id)" data-toggle="modal"
+                  style="margin-top:10px" ng-if="supplier.requirement_given == 'yes'" type="button"
+                  class="btn btn-danger" name="button">Requirement</button>
+              </td>
+
 
               <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <select class="form-control spacing input-width" ng-model="supplier.booking_priority"
@@ -526,16 +534,18 @@
               </td>
 
 
-              <td class="col-md-4"  rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" >
+              <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <select class="form-control spacing input-width" ng-model="supplier.booking_status"
-                  permission="[permissions.changeBookingStatus]" ng-change="changePhase(supplier,$parent.$parent.$index)"
-                  ng-disabled="supplier.is_completed">
+                  permission="[permissions.changeBookingStatus]"
+                  ng-change="changePhase(supplier,$parent.$parent.$index)" ng-disabled="supplier.is_completed">
                   <option value="" disabled="">Select Booking Status</option>
                   <option style="width:100%;" ng-repeat="item in bookingStatus" value="{{item.code}}">
                     {{item.name}}</option>
                 </select>
                 <br>
-                <select ng-if="supplier.booking_status" class="form-control spacing input-width" ng-change="changeSubStatus(supplier,$parent.$parent.$index)"  ng-model="supplier.booking_sub_status" ng-disabled="supplier.is_completed">
+                <select ng-if="supplier.booking_status" class="form-control spacing input-width"
+                  ng-change="changeSubStatus(supplier,$parent.$parent.$index)" ng-model="supplier.booking_sub_status"
+                  ng-disabled="supplier.is_completed">
                   <option value="" disabled="">Select Sub Status</option>
                   <option style="width:100%;" ng-repeat="item in supplier.meeting_status" value="{{item.code}}">
                     {{item.name}}</option>
@@ -545,9 +555,9 @@
               <td class="col-md-2" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" ng-form name="phaseform">
                 <input class="form-control spacing input-width" type="text" ng-disabled="true"
                   ng-model="phaseMappingList[supplier.phase_no].phase_no" />
-                <select ng-disabled="supplier.is_completed" name="phase"
-                  class="form-control spacing input-width-phase" ng-change="setPhase(supplier,supplier.phaseNo)"
-                  ng-model="supplier.phaseNo" min="1" permission="[permissions.addPhase, permissions.viewPhase]">
+                <select ng-disabled="supplier.is_completed" name="phase" class="form-control spacing input-width-phase"
+                  ng-change="setPhase(supplier,supplier.phaseNo)" ng-model="supplier.phaseNo" min="1"
+                  permission="[permissions.addPhase, permissions.viewPhase]">
                   <option value="" disabled>Select Phase</option>
                   <!-- <option value="" >None</option> -->
                   <option ng-repeat="phase in phases | unique:'phase_no'" value="{{phase.id}}">{{phase.phase_no}}
@@ -586,15 +596,16 @@
                 <!-- <input class="form-control spacing input-width" ng-model="supplier.next_action_date" type="date" readonly name=""
                   ng-disabled="supplier.is_completed"> -->
 
-                  <p class="input-group">
-                    <input type="text" class="form-control col-md-4" ng-model="supplier.next_action_date"
-                      ng-disabled="supplier.is_completed" readonly uib-datepicker-popup="dd/MM/yyyy" is-open="popup1" min-date=""
-                      datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}" />
-                    <span class="input-group-btn">
-                      <button type="button" class="btn btn-default" ng-click="popup1=true"><i
-                          class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                  </p>
+                <p class="input-group">
+                  <input type="text" class="form-control col-md-4" ng-model="supplier.next_action_date"
+                    ng-disabled="supplier.is_completed" readonly uib-datepicker-popup="dd/MM/yyyy" is-open="popup1"
+                    min-date="" datepicker-options="dateOptions" close-text="Close"
+                    ng-model-options="{timezone:'UTC'}" />
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="popup1=true"><i
+                        class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+                </p>
               </td>
 
               <td ng-if="key=='NA'">{{key}} </td>
@@ -615,7 +626,7 @@
               <td class="" ng-if="key!='FLIER'">{{filter.total_count}}</td>
               <!-- <td class="" ng-if="key!='FLIER'"> <button  class="btn" data-target="#addInventoryModal" ng-disabled="!filter.total_count" style="background: #5bc0de; color: white;margin-left:20px;" data-toggle="modal" ng-click="getInventoryRelatedData(supplier,key,$parent.$parent.$parent.$index)"><span ng-if="filter.total_count">{{filter.total_count}}</span> <span ng-if="!filter.total_count">N/A</span></button></td> -->
               <td class="">
-                <input class="form-control" type="number" ng-if="key!='FLIER'" min="1"  style="max-width:80px;"
+                <input class="form-control" type="number" ng-if="key!='FLIER'" min="1" style="max-width:80px;"
                   ng-model="filter.days" ng-change="changeInventoryInDays(supplier,key,filter)"
                   ng-disabled="supplier.is_completed">
 
@@ -888,17 +899,14 @@
         <!--End Retail Store supplier type -->
         <!--Start other supplier type -->
         <tbody
-          ng-show="(!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter != 'RS') && releaseDetails.shortlisted_suppliers.length > 0"
+          ng-if="(!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter != 'RS') && releaseDetails.shortlisted_suppliers.length > 0"
           dir-paginate="supplier in releaseDetails.shortlisted_suppliers | itemsPerPage: suppliersPerPage"
           total-items="totalSuppliers" current-page="pagination.current" track by "$index">
           <div ng-if="releaseDetails.shortlisted_suppliers.length > 0">
             <tr ng-if="releaseDetails.shortlisted_suppliers.length > 0"
               ng-repeat="(key,filter) in supplier.shortlisted_inventories" ng-disabled="$index != '15'">
 
-              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" style="width:40px;" ng-style="((supplier.booking_status==='BK' || supplier.booking_status==='MC') && {'background-color':'green'}) ||((supplier.booking_status==='UN' || supplier.booking_status==='NI' || supplier.booking_status==='NE') && {'background-color':'white'} )||(
-          (supplier.booking_status==='SR') && {'background-color':'red'}) ||(
-          (supplier.booking_status==='DP' ||supplier.booking_status==='TB'||supplier.booking_status==='MF'||supplier.booking_status==='RE' ) && {'background-color':'yellow'}) ||(
-          supplier.booking_status && {'background-color':'brown'})">{{$parent.$parent.$index + 1}}</td>
+              <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" style="width:40px;" ng-style="{'background-color': '{{show_color(supplier)}}'}">{{$parent.$parent.$index + 1}}</td>
               <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <span ng-if="supplier.brand_organisation_data.name">{{supplier.brand_organisation_data.name}}<br></span>
                 <button type="button" class="btn btn-danger" name="button" data-toggle="modal"
@@ -933,8 +941,13 @@
                 </a>
                 <!-- <span ng-if="supplier.retail_shop_type">({{supplier.retail_shop_type}}<span
                     ng-if="supplier.category_name">,{{supplier.category_name}}</span>)</span> -->
-                    <span ng-if="supplier.supplier_type == 'RE'"><span ng-if="supplier.quantity_rating">(</span>{{supplier.quantity_rating}}<span ng-if="supplier.quantity_rating">)</span><br><span ng-if="supplier.category_name">{{supplier.category_name}}</span></span>
-                    <span ng-if="supplier.supplier_type != 'RE'"><span ng-if="supplier.quality_rating">(</span>{{supplier.quality_rating}}<span ng-if="supplier.quality_rating">)</span></span>
+                <span ng-if="supplier.supplier_type == 'RE'"><span
+                    ng-if="supplier.quantity_rating">(</span>{{supplier.quantity_rating}}<span
+                    ng-if="supplier.quantity_rating">)</span><br><span
+                    ng-if="supplier.category_name">{{supplier.category_name}}</span></span>
+                <span ng-if="supplier.supplier_type != 'RE'"><span
+                    ng-if="supplier.quality_rating">(</span>{{supplier.quality_rating}}<span
+                    ng-if="supplier.quality_rating">)</span></span>
               </td>
 
               <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">{{supplier.object_id}}</td>
@@ -1009,12 +1022,17 @@
                   </div>
               </td>
 
-              <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'">
+              <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first"
+                ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'">
                 <select class="form-control spacing input-width" ng-model="supplier.requirement_given"
                   ng-disabled="supplier.is_completed">
                   <option style="width:100%;" ng-repeat="(key, requirement) in requirement_Given" value="{{key}}">
                     {{requirement}}</option>
                 </select>
+                <button data-target="#RequirementModel" ng-click="getRequirementDetail(supplier.id) && (supplier.id)" data-toggle="modal"
+                  style="margin-top:10px" ng-if="supplier.requirement_given == 'yes'" type="button"
+                  class="btn btn-danger" name="button">Requirement</button>
+                <!-- ng-click="setContact(supplier)" -->
               </td>
 
               <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
@@ -1026,30 +1044,32 @@
                 </select>
               </td>
 
-            
-                  <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
-                      <select class="form-control spacing input-width" ng-model="supplier.booking_status"
-                        permission="[permissions.changeBookingStatus]" ng-change="changePhase(supplier,$parent.$parent.$index)"
-                        ng-disabled="supplier.is_completed">
-                        <option value="" disabled="">Select Booking Status</option>
-                        <option style="width:100%;" ng-repeat="item in bookingStatus" value="{{item.code}}">
-                          {{item.name}}</option>
-                      </select>
-                      
-                      <select ng-if="supplier.booking_status && supplier.meeting_status.length > 0" class="form-control spacing input-width" ng-change="changeSubStatus(supplier,$parent.$parent.$index)" ng-model="supplier.booking_sub_status" ng-disabled="supplier.is_completed">
-                        <option value="" disabled="">Select Sub Status</option>
-                        <option style="width:100%;" ng-repeat="item in supplier.meeting_status" value="{{item.code}}">
-                          {{item.name}}</option>
-                      </select>
-                  </td>
-               
+
+              <td class="col-md-4" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
+                <select class="form-control spacing input-width" ng-model="supplier.booking_status"
+                  permission="[permissions.changeBookingStatus]"
+                  ng-change="changePhase(supplier,$parent.$parent.$index)" ng-disabled="supplier.is_completed">
+                  <option value="" disabled="">Select Booking Status</option>
+                  <option style="width:100%;" ng-repeat="item in bookingStatus" value="{{item.code}}">
+                    {{item.name}}</option>
+                </select>
+
+                <select ng-if="supplier.booking_status && supplier.meeting_status.length > 0"
+                  class="form-control spacing input-width" ng-change="changeSubStatus(supplier,$parent.$parent.$index)"
+                  ng-model="supplier.booking_sub_status" ng-disabled="supplier.is_completed">
+                  <option value="" disabled="">Select Sub Status</option>
+                  <option style="width:100%;" ng-repeat="item in supplier.meeting_status" value="{{item.code}}">
+                    {{item.name}}</option>
+                </select>
+              </td>
+
 
               <td class="col-md-2" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" ng-form name="phaseform">
                 <input class="form-control spacing input-width" type="text" ng-disabled="true"
                   ng-model="phaseMappingList[supplier.phase_no].phase_no" />
-                <select ng-disabled="supplier.is_completed" name="phase"
-                  class="form-control spacing input-width-phase" ng-change="setPhase(supplier,supplier.phaseNo)"
-                  ng-model="supplier.phaseNo" min="1" permission="[permissions.addPhase, permissions.viewPhase]">
+                <select ng-disabled="supplier.is_completed" name="phase" class="form-control spacing input-width-phase"
+                  ng-change="setPhase(supplier,supplier.phaseNo)" ng-model="supplier.phaseNo" min="1"
+                  permission="[permissions.addPhase, permissions.viewPhase]">
                   <option value="" disabled>Select Phase</option>
                   <!-- <option value="" >None</option> -->
                   <option ng-repeat="phase in phases | unique:'phase_no'" value="{{phase.id}}">{{phase.phase_no}}
@@ -1084,21 +1104,21 @@
               <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <p class="input-group">
                   <input type="text" class="form-control col-md-4" ng-model="supplier.next_action_date"
-                    ng-disabled="supplier.is_completed" readonly uib-datepicker-popup="dd/MM/yyyy" is-open="popup1" min-date=""
-                    datepicker-options="dateOptions" close-text="Close" ng-model-options="{timezone:'UTC'}" />
+                    ng-disabled="supplier.is_completed" readonly uib-datepicker-popup="dd/MM/yyyy" is-open="popup1"
+                    min-date="" datepicker-options="dateOptions" close-text="Close"
+                    ng-model-options="{timezone:'UTC'}" />
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="popup1=true"><i
                         class="glyphicon glyphicon-calendar"></i></button>
                   </span>
                 </p>
               </td>
-                
+
               <td ng-if="key=='NA'">{{key}} </td>
 
               <td ng-if="key!='NA'">
-                <a class="" data-target="#invTypeModal" data-toggle="modal"
-                  ng-click="setInventoryIds(filter)" permission="[permissions.viewInventoryIds]"
-                  ng-disabled="supplier.is_completed"><b>{{key}} </b></a>
+                <a class="" data-target="#invTypeModal" data-toggle="modal" ng-click="setInventoryIds(filter)"
+                  permission="[permissions.viewInventoryIds]" ng-disabled="supplier.is_completed"><b>{{key}} </b></a>
                 <multiselect ng-if="key=='STALL'" ng-model="supplier.stall_locations" options="StallOptions"
                   show-select-all="true" show-unselect-all="true" ng-disabled="supplier.is_completed">
                 </multiselect>
@@ -1242,7 +1262,8 @@
                         <div class="modal-body">
                           <div class="carousel" id="slider" ng-if="perBoxImageData && perBoxImageData.length > 0">
                             <div class="carousel-inner">
-                              <div class="item" ng-class="{active:!$index}" ng-repeat="image in perBoxImageData track by $index">
+                              <div class="item" ng-class="{active:!$index}"
+                                ng-repeat="image in perBoxImageData track by $index">
                                 <div class="row">
                                   <img ng-src="{{image.image_url}}" style="width:600px; height:400px;"
                                     class="img-responsive" alt="No Image Found" /></br>
@@ -1409,8 +1430,7 @@
       <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
     </div>
   </div>
-  <form name="form" ng-if="dateChecked">
-    <!-- <div class="breadcrumb" ncy-breadcrumb></div> -->
+  <!--<form name="form" ng-if="dateChecked">
     <div style="color:#000000;" class="panel panel-default date-panel">
       <h3 class="panel-heading">Assign Dates</h3>
       <div class="table">
@@ -1429,7 +1449,6 @@
                 <option ng-repeat="inventory in inventoryTypes" value="{{inventory}}">{{inventory}}</option>
               </select>
             </div>
-            <!--<span class="show-error" ng-show="form.businessname.$error.pattern">Please Enter Valid Business Name</span> </div>-->
           </div>
         </div>
 
@@ -1468,7 +1487,6 @@
                 <option ng-repeat="user in userList" value="{{user.id}}">{{user.username}}</option>
               </select>
             </div>
-            <!--<span class="show-error" ng-show="form.reference_name.$error.pattern">Please Enter Valid Name</span></div>-->
           </div>
         </div>
 
@@ -1477,7 +1495,7 @@
           permission="[permissions.assignDates]">Assign</button>
       </div>
     </div>
-  </form>
+  </form>-->
   <div class="panel-body">
     <span class="col-md-2 pull-left">
       <button type="button" name="button" class="btn btn-danger active notify" data-target="#viewAddPhase"
@@ -1521,35 +1539,36 @@
           <div class="modal-body" style="width: 1100px; height: 300px;">
             <div class="modal-body col-md-4 table-responsive" style="width: 1100px; height: 350px">
               <form name="myForm">
-              <table class="table table-bordered" name="contactForm">
-                <thead>
-                  <tr>
-                    <th ng-repeat="header in contact_headings" class="col-md-2 alignment"><b>{{header.header}}</b></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-if="editContactDetails" ng-repeat="contact in payment.contacts">
-                    <!-- <td class="alignment">{{contact.salutation}}</td> -->
-                    <td class="alignment">{{contact.name}}</td>
-                    <td class="alignment">{{contact.contact_type}}</td>
-                    <td class="alignment">{{contact.email}}</td>
-                    <td class="alignment">{{contact.relationship_status}}</td>
-                    <td class="alignment">{{contact.comments}}
-                      <button ng-if="contact.comments" type="button" class="btn btn-primary"
-                      ng-click="viewContactComment(contact.comments)">View</button>
-                    </td>
-                    <!-- <td class="alignment">{{contact.std_code}}</td> -->
-                    <td class="alignment">{{contact.landline}}</td>
-                    <td class="alignment">{{contact.mobile}}</td>
-                    <td class="alignment">
-                      <button type="button" name="button" ng-hide="payment.is_completed"
-                        ng-click="removeContact($index)">Remove</button>
-                    </td>
+                <table class="table table-bordered" name="contactForm">
+                  <thead>
+                    <tr>
+                      <th ng-repeat="header in contact_headings" class="col-md-2 alignment"><b>{{header.header}}</b>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-if="editContactDetails" ng-repeat="contact in payment.contacts">
+                      <!-- <td class="alignment">{{contact.salutation}}</td> -->
+                      <td class="alignment">{{contact.name}}</td>
+                      <td class="alignment">{{contact.contact_type}}</td>
+                      <td class="alignment">{{contact.email}}</td>
+                      <td class="alignment">{{contact.relationship_status}}</td>
+                      <td class="alignment">{{contact.comments}}
+                        <button ng-if="contact.comments" type="button" class="btn btn-primary"
+                          ng-click="viewContactComment(contact.comments)">View</button>
+                      </td>
+                      <!-- <td class="alignment">{{contact.std_code}}</td> -->
+                      <td class="alignment">{{contact.landline}}</td>
+                      <td class="alignment">{{contact.mobile}}</td>
+                      <td class="alignment">
+                        <button type="button" name="button" ng-hide="payment.is_completed"
+                          ng-click="removeContact($index)">Remove</button>
+                      </td>
 
-                  </tr>
-                  
-                  <tr ng-if="!editContactDetails" ng-repeat="contact in payment.contacts">
-                    <!-- <td class="alignment"><input type="text" placeholder="Mr/Mrs" ng-model="contact.salutation"></td>
+                    </tr>
+
+                    <tr ng-if="!editContactDetails" ng-repeat="contact in payment.contacts">
+                      <!-- <td class="alignment"><input type="text" placeholder="Mr/Mrs" ng-model="contact.salutation"></td>
                     <td class="alignment"><input type="text" placeholder="Name of the Person" ng-model="contact.name">
                     </td>
                     <td class="alignment"><input type="text"
@@ -1560,86 +1579,88 @@
                     <td class="alignment"><input type="int" placeholder="022/+91" ng-model="contact.std_code"></td>
                     <td class="alignment"><input type="tel" placeholder="Landline No" ng-model="contact.landline"></td>
                     <td class="alignment"><input type="phone" placeholder="Mobile No" ng-model="contact.mobile"></td> -->
-                    <td class="alignment">
-                      <input type="text" placeholder="Name" class="form-control" id="name_id" style="width:150px;"
-                      ng-model="contact.name">
-                   </td>
-                   <td class="alignment">
-                      <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
-                      ng-model="contact.contact_type" >
-                      <option value="" disabled>Select Contact Type</option>
-                      <option ng-repeat="ctype in Contact_Type track by $index" value="{{ctype}}">
-                        {{ctype}}
-                      </option>
-                    </select>
-                    <div ng-if="contact.contact_type =='Other'">
-                      <input type="text" placeholder="Contact Type" class="form-control" id="other_contact_type"
-                        style="width:150px;" ng-model="contact.other_contact_type">
-                    </div>
-                   </td>
-                  
-                   <td class="alignment">
-                    <input type="text" placeholder="Email" name="email_name_{{$index}}" class="form-control"
-                      id="email_id_{{$index}}" ng-model="contact.email"
-                      ng-pattern="/^[a-zA-Z0-9]+[.]?[_a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+$/">
-                    <div ng-show="retailshop_form.email_name_{{$index}}.$error.pattern" class="error"
-                      style="font-size:12px;">Email Invalid</div>
-                  </td>
+                      <td class="alignment">
+                        <input type="text" placeholder="Name" class="form-control" id="name_id" style="width:150px;"
+                          ng-model="contact.name">
+                      </td>
+                      <td class="alignment">
+                        <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
+                          ng-model="contact.contact_type">
+                          <option value="" disabled>Select Contact Type</option>
+                          <option ng-repeat="ctype in Contact_Type track by $index" value="{{ctype}}">
+                            {{ctype}}
+                          </option>
+                        </select>
+                        <div ng-if="contact.contact_type =='Other'">
+                          <input type="text" placeholder="Contact Type" class="form-control" id="other_contact_type"
+                            style="width:150px;" ng-model="contact.other_contact_type">
+                        </div>
+                      </td>
 
-                  <td class="alignment">
-                    <select class="form-control" name="relationship_status_{{$index}}" id="relationship_status_id_{{$index}}"
-                    ng-model="contact.relationship_status" >
-                    <option value="" disabled>Select Relationship Status_</option>
-                    <option ng-repeat="status in Relationship_Status track by $index" value="{{status}}">
-                      {{status}}
-                    </option>
-                  </select>
-                  </td>
+                      <td class="alignment">
+                        <input type="text" placeholder="Email" name="email_name_{{$index}}" class="form-control"
+                          id="email_id_{{$index}}" ng-model="contact.email"
+                          ng-pattern="/^[a-zA-Z0-9]+[.]?[_a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+$/">
+                        <div ng-show="retailshop_form.email_name_{{$index}}.$error.pattern" class="error"
+                          style="font-size:12px;">Email Invalid</div>
+                      </td>
 
-                  <td class="alignment">
-                    <textarea placeholder="Comments" class="form-control" 
-                    style="width:150px;" ng-model="contact.comments" rows="4" cols="50">
-                
+                      <td class="alignment">
+                        <select class="form-control" name="relationship_status_{{$index}}"
+                          id="relationship_status_id_{{$index}}" ng-model="contact.relationship_status">
+                          <option value="" disabled>Select Relationship Status_</option>
+                          <option ng-repeat="status in Relationship_Status track by $index" value="{{status}}">
+                            {{status}}
+                          </option>
+                        </select>
+                      </td>
+
+                      <td class="alignment">
+                        <textarea placeholder="Comments" class="form-control" style="width:150px;"
+                          ng-model="contact.comments" rows="4" cols="50">
+
                       </textarea>
-                   </td>
+                      </td>
 
-                   <td class="alignment">
-                    <input type="number" placeholder="Phone" name="phone_{{$index}}" class="form-control"
-                      id="phone_{{$index}}" style="width:110px;"  ng-model="contact.landline" ng-pattern="/^[0-9]{8}$/"
-                      >
-                    <div ng-show="myForm.phone_{{$index}}.$error.pattern" class="error"
-                      style="font-size:12px;">Phone number Invalid</div>
-                  </td>
-                  <td class="alignment">
-                    <input type="number" placeholder="Mobile" name="mobile_{{$index}}" class="form-control"
-                      id="mobile_id_{{$index}}" style="width:110px;" ng-model="contact.mobile"
-                      ng-pattern="/^[0-9]{10}$/">
-                    <div ng-show="myForm.mobile_{{$index}}.$error.pattern" class="error"
-                      style="font-size:12px;">Mobile number Invalid</div>
-                  </td>
-                    <td class="alignment">
-                      <button type="button" name="button" ng-click="removeContact($index)">Remove</button>
-                    </td>
-                  </tr>
-
-              
-                  <tr>
+                      <td class="alignment">
+                        <input type="number" placeholder="Phone" name="phone_{{$index}}" class="form-control"
+                          id="phone_{{$index}}" style="width:110px;" ng-model="contact.landline"
+                          ng-pattern="/^[0-9]{8}$/">
+                        <div ng-show="myForm.phone_{{$index}}.$error.pattern" class="error" style="font-size:12px;">
+                          Phone number Invalid</div>
+                      </td>
+                      <td class="alignment">
+                        <input type="number" placeholder="Mobile" name="mobile_{{$index}}" class="form-control"
+                          id="mobile_id_{{$index}}" style="width:110px;" ng-model="contact.mobile"
+                          ng-pattern="/^[0-9]{10}$/">
+                        <div ng-show="myForm.mobile_{{$index}}.$error.pattern" class="error" style="font-size:12px;">
+                          Mobile number Invalid</div>
+                      </td>
+                      <td class="alignment">
+                        <button type="button" name="button" ng-click="removeContact($index)">Remove</button>
+                      </td>
+                    </tr>
 
 
-                  </tr>
-                </tbody>
-              </table>
-            
-              <div class="" ng-show="editContactDetails" ng-if="statusEditContactDetails">
-                <button class="btn btn-danger pull-right" ng-click="setEditContactDetails()">Edit</button>
-                <button class="btn btn-danger" ng-click="addContactDetail()">Add </button>
-                <button class="btn btn-danger" ng-disabled="!myForm.$valid" ng-click="checkContactDetails()">Save</button>
+                    <tr>
 
-              </div>
-              <div class="" ng-show="!editContactDetails" ng-if="statusEditContactDetails">
-                <button class="btn btn-danger" ng-disabled="!myForm.$valid" ng-click="checkContactDetails()">Save</button>
-              </div>
-            </form>
+
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="" ng-show="editContactDetails" ng-if="statusEditContactDetails">
+                  <button class="btn btn-danger pull-right" ng-click="setEditContactDetails()">Edit</button>
+                  <button class="btn btn-danger" ng-click="addContactDetail()">Add </button>
+                  <button class="btn btn-danger" ng-disabled="!myForm.$valid"
+                    ng-click="checkContactDetails()">Save</button>
+
+                </div>
+                <div class="" ng-show="!editContactDetails" ng-if="statusEditContactDetails">
+                  <button class="btn btn-danger" ng-disabled="!myForm.$valid"
+                    ng-click="checkContactDetails()">Save</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -1647,6 +1668,467 @@
     </div>
   </div>
   <!--End: Code for contacts Modal Window -->
+
+  <!-- start Requirement table -->
+  <div id="RequirementModel" class="modal fade">
+    <div class="modal-dialog" style="width:1200px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close"  data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Requirement Details</h4>
+          <hr />
+          <div class="modal-body" style="width: 1100px; height: 500px;">
+            <div class="modal-body col-md-4 table-responsive" style="width: 1100px; height: 500px">
+              <form name="myForm">
+                <!-- test -->
+                <h4 class="modal-title">Submitted Leads</h4>
+                <table class="table table-bordered" name="contactForm">
+                  <thead>
+                    <tr>
+                      <th ng-repeat="header in requirement_submitted_headings" class="col-md-2 alignment">
+                        <b>{{header.header}}</b></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat-start="(key, requirement) in requirementDetailData">
+                      <td class="alignment">
+                        <span ng-if="!detailedShow[$index]" ng-click="ShowDetailed($index)"
+                          class="glyphicon glyphicon-plus"></span>
+                        <span ng-if="detailedShow[$index]" ng-click="ShowDetailed($index)"
+                          class="glyphicon glyphicon-minus"></span>
+                      </td>
+                      <td class="alignment">
+                       {{requirement.sector_name}}
+                      </td>
+                      <td class="alignment">
+                        <select class="form-control" name="current_company_{{$index}}"
+                          id="current_company_id_{{$index}}" ng-model="requirement.current_company"
+                          style="width:100px;">
+                          <option value="" disabled>Select Current Partner</option>
+                          <option ng-repeat="cpartner in companiesDetailData track by $index"
+                            value="{{cpartner.organisation_id}}">
+                            {{cpartner.name}}
+                          </option>
+                        </select>
+                      </td>
+
+                      <td class="alignment">
+                        <span style="width:150px;" class="multiselectDropdown"
+                          style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect=""
+                          options="companiesDetailData" extra-settings="settings"
+                          selected-model="requirement.selected_preferred_company" ng-click="preferredMulticheck(key)"
+                          translation-texts="selected_business_type" events="events"></span>
+                      </td>
+
+
+
+                      <td class="alignment">
+                        <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
+                          ng-model="requirement.impl_timeline" style="width:150px;">
+                          <option value="" disabled>Select Implementation Time</option>
+                          <option ng-repeat="(key,value) in requirement_implementation_time track by $index"
+                            value="{{key}}">
+                            {{value}}
+                          </option>
+                        </select>
+                      </td>
+
+                      <td class="alignment">
+                        <select class="form-control" name="meating_time_{{$index}}" id="meating_time_id_{{$index}}"
+                          ng-model="requirement.meating_timeline" style="width:150px;">
+                          <option value="" disabled>Select Meeting Time</option>
+                          <option ng-repeat="(key,value) in requirement_meeting_time track by $index" value="{{key}}">
+                            {{value}}
+                          </option>
+                        </select>
+                      </td>
+                      <!-- <td class="alignment">
+                        <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
+                          ng-model="contact.contact_type">
+                          <option value="" disabled>Select Preferred Meeting Time</option>
+                          <option ng-repeat="ctype in Contact_Type track by $index" value="{{ctype}}">
+                            {{ctype}}
+                          </option>
+                        </select>
+                      </td> -->
+                      <td class="alignment">
+                        <select class="form-control" name="lead_status_{{$index}}" id="lead_status_id_{{$index}}"
+                          ng-model="requirement.lead_status" style="width:150px;">
+                          <option value="" disabled>Select Lead Status</option>
+                          <option ng-repeat="leadstatus in requirement_lead_status track by $index"
+                            value="{{leadstatus}}">
+                            {{leadstatus}}
+                          </option>
+                        </select>
+                      </td>
+
+                      <td class="alignment">
+                       <span style="width:150px;"> {{requirement.lead_by.name}} </span>
+                      </td>
+                      <!-- <td class="alignment">
+                        <input type="text" placeholder="Lead Given by	" class="form-control" id="lead_by_id"
+                          style="width:100px;" ng-model="requirement.lead_by">
+                      </td> -->
+                      <td class="alignment">
+                        <textarea placeholder="Comments" class="form-control" style="width:150px;"
+                          ng-model="requirement.comment" rows="4" cols="50">
+              </textarea>
+                      </td>
+                      <!-- <td class="alignment">
+                        <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
+                          ng-model="requirement.statisfaction ">
+                          <option value="" disabled>Select Statisfaction State</option>
+                          <option ng-repeat="ctype in Contact_Type track by $index" value="{{ctype}}">
+                            {{ctype}}
+                          </option>
+                        </select>
+                      </td>
+                      <td class="alignment">
+                        <input type="text" placeholder="Reason" class="form-control" id="reason_id" style="width:100px;"
+                          ng-model="requirement.reason">
+                      </td> -->
+                      <td class="alignment">
+                        <select class="form-control" name="feedback_{{$index}}" id="feedback_id_{{$index}}"
+                          ng-model="requirement.current_patner_feedback" style="width:150px;">
+                          <option value="" disabled>Select Feedback</option>
+                          <option ng-repeat="(key,value) in current_patner_feedback track by $index"
+                            value="{{key}}">
+                            {{value}}
+                          </option>
+                        </select>
+                      </td>
+
+                      <td class="alignment">
+                        <input type="text" placeholder="Reason" class="form-control" id="reason_id_{{$index}}" style="width:100px;"
+                          ng-model="requirement.current_patner_feedback_reason">
+                      </td>
+
+                      <td class="alignment">
+                        <button style="margin-bottom:2px" type="button" name="button"
+                          class="btn btn-success" ng-disabled="opsVerifyButton" ng-click="opsVerifyRequirement(requirement)"> <span ng-if="!opsVerifyButton">Ops Verify</span>
+                          <span ng-if="opsVerifyButton">Ops Verified</span>
+                        </button>
+                        <button style="margin-bottom:2px" type="button" name="button"
+                          ng-click="updateRequirement(requirement)" class="btn btn-info">Update</button>
+                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                          ng-click="removeRequirement(key,requirement)">Remove</button>
+                      </td>
+                    </tr>
+                    <tr ng-show="detailedShow[$index]" ng-repeat-end>
+                      <td> </td>
+                      <td colspan="11">
+
+                        <table class="table table-bordered" ng-show="detailedShow[$index]">
+                          <thead>
+                            <tr>
+                              <th ng-repeat="header in requirement_sub_headings" class="col-md-2 alignment">
+                                <b>{{header.header}}</b></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="subrequirement in requirement.requirements">
+                              <td>
+                                <input type="checkbox" name="requirementCheck"  id="requirementCheckId" ng-click="checkbooxCheck(key)" ng-model="subrequirement.requirementCheck">
+                               
+                              </td>
+                              <!-- <td class="alignment">
+                                  {{subrequirement.sub_sector_name}}
+                              </td> -->
+                              <td class="alignment">
+                                <select class="form-control" name="current_company_{{$index}}"
+                                  id="current_company_id_{{$index}}" ng-model="subrequirement.current_company"
+                                  style="width:100px;">
+                                  <option value="" disabled>Select Current Partner</option>
+                                  <option ng-repeat="cpartner in companiesDetailData track by $index"
+                                    value="{{cpartner.organisation_id}}">
+                                    {{cpartner.name}}
+                                  </option>
+                                </select>
+                              </td>
+        
+                              <td class="alignment">
+                                <span style="width:150px;" class="multiselectDropdown"
+                                  style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect=""
+                                  options="companiesDetailData" extra-settings="settings"
+                                  selected-model="subrequirement.selected_preferred_company_sub_sector" ng-click="subSectorPreferredMulticheck(key,$index)"
+                                  translation-texts="selected_business_type" events="events"></span>
+                              </td>
+
+                              <td class="alignment">
+                                 {{subrequirement.company_name}}
+                              </td>
+        
+        
+        
+                              <td class="alignment">
+                                <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
+                                  ng-model="subrequirement.impl_timeline" style="width:150px;">
+                                  <option value="" disabled>Select Implementation Time</option>
+                                  <option ng-repeat="(key,value) in requirement_implementation_time track by $index"
+                                    value="{{key}}">
+                                    {{value}}
+                                  </option>
+                                </select>
+                              </td>
+        
+                              <td class="alignment">
+                                <select class="form-control" name="meating_time_{{$index}}" id="meating_time_id_{{$index}}"
+                                  ng-model="subrequirement.meating_timeline" style="width:150px;">
+                                  <option value="" disabled>Select Meeting Time</option>
+                                  <option ng-repeat="(key,value) in requirement_meeting_time track by $index" value="{{key}}">
+                                    {{value}}
+                                  </option>
+                                </select>
+                              </td>
+                              <!-- <td class="alignment">
+                                <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
+                                  ng-model="contact.contact_type">
+                                  <option value="" disabled>Select Preferred Meeting Time</option>
+                                  <option ng-repeat="ctype in Contact_Type track by $index" value="{{ctype}}">
+                                    {{ctype}}
+                                  </option>
+                                </select>
+                              </td> -->
+                              <td class="alignment">
+                                <select class="form-control" name="lead_status_{{$index}}" id="lead_status_id_{{$index}}"
+                                  ng-model="subrequirement.lead_status" style="width:150px;">
+                                  <option value="" disabled>Select Lead Status</option>
+                                  <option ng-repeat="leadstatus in requirement_lead_status track by $index"
+                                    value="{{leadstatus}}">
+                                    {{leadstatus}}
+                                  </option>
+                                </select>
+                              </td>
+
+                              <td class="alignment">
+                                  <span style="width:150px;"> {{requirement.lead_by.name}} </span>
+                                 </td>
+                              <!-- <td class="alignment">
+                                <input type="text" placeholder="Lead Given by	" class="form-control" id="lead_by_id"
+                                  style="width:100px;" ng-model="subrequirement.lead_by">
+                              </td> -->
+                              <td class="alignment">
+                           
+                                <textarea placeholder="Comments" class="form-control" style="width:150px;"
+                                  ng-model="subrequirement.comment" rows="4" cols="50">
+                      </textarea>
+                              </td>
+                              <!-- <td class="alignment">
+                                <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
+                                  ng-model="subrequirement.statisfaction ">
+                                  <option value="" disabled>Select Statisfaction State</option>
+                                  <option ng-repeat="ctype in Contact_Type track by $index" value="{{ctype}}">
+                                    {{ctype}}
+                                  </option>
+                                </select>
+                              </td>
+                              <td class="alignment">
+                                <input type="text" placeholder="Reason" class="form-control" id="reason_id" style="width:100px;"
+                                  ng-model="subrequirement.reason">
+                              </td> -->
+
+                              <td class="alignment">
+                                <select class="form-control" name="feedback_{{$index}}" id="feedback_id_{{$index}}"
+                                  ng-model="subrequirement.current_patner_feedback" style="width:150px;">
+                                  <option value="" disabled>Select Feedback</option>
+                                  <option ng-repeat="(key,value) in current_patner_feedback track by $index"
+                                    value="{{key}}">
+                                    {{value}}
+                                  </option>
+                                </select>
+                              </td>
+        
+                              <td class="alignment">
+                                <input type="text" placeholder="Reason" class="form-control" id="reason_id_{{$index}}" style="width:100px;"
+                                  ng-model="subrequirement.current_patner_feedback_reason" >
+                                  <span class="error" ng-if="subrequirement.reason_error && subrequirement.current_patner_feedback_reason ==''">Reason is required.<span>
+                              </td>
+                              <td class="alignment">
+                                <button style="margin-bottom:2px" type="button" name="button"
+                                  class="btn btn-success" ng-if="subrequirement.varified_ops == 'yes' && subrequirement.varified_bd == 'no'" ng-click="bdVerifyRequirement(subrequirement.id,key,$index)">BD Verify</button>
+                                  <button style="margin-bottom:2px" type="button" name="button"
+                                  class="btn btn-success" ng-if="subrequirement.varified_ops == 'no'" ng-click="singleOpsVerifyRequirement(subrequirement.id)">Ops Verify</button>
+                                   <span ng-if="subrequirement.varified_bd == 'yes'">BD Verified </span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <!-- <button class="btn btn-danger" ng-click="addSubRequirementDetail(key)">Add Row</button> -->
+                        <button class="btn btn-success" id="update_{{key}}" ng-disabled="subSectorCheck "
+                          ng-click="updateSubSector(requirement.requirements)" >Update</button>
+                          <button style="margin-bottom:2px" id="verify_{{key}}" type="button" name="button"
+                          class="btn btn-success" ng-disabled="subSectorCheck || opsVerifyButton"  ng-click="checkOpsVerifyRequirement(requirement.requirements)"><span ng-if="!opsVerifyButton">Ops Verify</span>
+                          <span ng-if="opsVerifyButton">Ops Verified</span></button>
+                          <button style="margin-bottom:2px" id="remove_{{key}}" type="button" name="button" ng-disabled="subSectorCheck" class="btn btn-danger"
+                          ng-click="removeSubSectorRequirement(requirement.requirements,key)">Remove</button>
+                        </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <!-- test -->
+
+                <div class="">
+                  <!-- <button class="btn btn-danger pull-right" ng-click="setEditContactDetails()">Edit</button> -->
+                  <!-- <button class="btn btn-danger" ng-click="addRequirementDetail()">Add Row</button> -->
+                  <button class="btn btn-success" ng-disabled="!myForm.$valid"
+                    ng-click="updateRequirement()">Update</button>
+
+                </div>
+                <!-- <div class="" ng-show="!editContactDetails" ng-if="statusEditContactDetails">
+                <button class="btn btn-danger" ng-disabled="!myForm.$valid" ng-click="checkContactDetails()">Save</button>
+              </div> -->
+              </form>
+            </div>
+
+
+
+            <div class="modal-body col-md-4 table-responsive" style="width: 1100px; height: 500px">
+              <form name="myForms">
+                <h4 class="modal-title">Browsed Leads</h4>
+                <table class="table table-bordered" name="contactForm">
+                  <thead>
+                    <tr>
+                      <th ng-repeat="header in requirement_browsed_headings" class="col-md-2 alignment">
+                        <b>{{header.header}}</b></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="browsed in browsedDetailData">
+                      <td class="alignment">
+                        <input type="checkbox" name="browsedCheck" ng-click="checkbooxBrowesLeadCheck()" id="browsedCheckId" ng-model="browsed.browsedCheck">
+                      </td>
+                      <td class="alignment">
+                        {{browsed.sector_name}}
+                      </td>
+                      <td class="alignment">
+                        <select class="form-control" name="current_company_{{$index}}"
+                          id="current_company_id_{{$index}}" ng-model="browsed.current_patner_id"
+                          style="width:100px;">
+                          <option value="" disabled>Select Current Partner</option>
+                          <option ng-repeat="cpartner in companiesDetailData track by $index"
+                            value="{{cpartner.organisation_id}}">
+                            {{cpartner.name}}
+                          </option>
+                        </select>
+                      </td>
+
+                      <td class="alignment">
+
+                        <span style="width:150px;" class="multiselectDropdown"
+                          style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect=""
+                          options="companiesDetailData" extra-settings="settings"
+                          selected-model="browsed.selected_preferred_company" 
+                          translation-texts="selected_business_type" events="events"></span>
+                      </td>
+
+                      <!-- <td class="alignment">
+                        <input type="text" placeholder="Lead for" class="form-control" id="lead_for_id"
+                          style="width:100px;" ng-model="browsed.sector">
+                      </td> -->
+
+                      <td class="alignment">
+                        <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
+                          ng-model="browsed.implementation_timeline" style="width:150px;">
+                          <option value="" disabled>Select Implementation Time</option>
+                          <option ng-repeat="(key,value) in requirement_implementation_time track by $index"
+                            value="{{key}}">
+                            {{value}}
+                          </option>
+                        </select>
+                      </td>
+
+                      <td class="alignment">
+                        <select class="form-control" name="meating_time_{{$index}}" id="meating_time_id_{{$index}}"
+                          ng-model="browsed.meating_timeline" style="width:150px;">
+                          <option value="" disabled>Select Meeting Time</option>
+                          <option ng-repeat="(key,value) in requirement_meeting_time track by $index" value="{{key}}">
+                            {{value}}
+                          </option>
+                        </select>
+                      </td>
+                      <!-- <td class="alignment">
+                        <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
+                          ng-model="contact.contact_type">
+                          <option value="" disabled>Select Preferred Meeting Time</option>
+                          <option ng-repeat="ctype in Contact_Type track by $index" value="{{ctype}}">
+                            {{ctype}}
+                          </option>
+                        </select>
+                      </td> -->
+                      <td class="alignment">
+                        <select class="form-control" name="lead_status_{{$index}}" id="lead_status_id_{{$index}}"
+                          ng-model="browsed.lead_status" style="width:150px;">
+                          <option value="" disabled>Select Lead Status</option>
+                          <option ng-repeat="leadstatus in requirement_lead_status track by $index"
+                            value="{{leadstatus}}">
+                            {{leadstatus}}
+                          </option>
+                        </select>
+                      </td>
+                      <td class="alignment">
+                       {{browsed.lead_by_name}}
+                      </td>
+
+                      <td class="alignment">
+                       
+                        <textarea placeholder="Comments" class="form-control" style="width:150px;"
+                          ng-model="browsed.comment" rows="4" cols="50">
+                     </textarea>
+                      </td>
+
+                      <td class="alignment">
+                        <select class="form-control" name="feedback_{{$index}}" id="feedback_id_{{$index}}"
+                          ng-model="browsed.current_patner_feedback" style="width:150px;">
+                          <option value="" disabled>Select Feedback</option>
+                          <option ng-repeat="(key,value) in current_patner_feedback track by $index"
+                            value="{{key}}">
+                            {{value}}
+                          </option>
+                        </select>
+                      </td>
+
+                      <td class="alignment">
+                        <input type="text" placeholder="Reason" class="form-control" id="reason_id_{{$index}}" style="width:100px;"
+                          ng-model="browsed.current_patner_feedback_reason" >
+                         
+                      </td>
+
+                      <!-- <td class="alignment">
+                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success" >Verify</button>
+                        <button style="margin-bottom:2px" type="button" name="button" ng-click="updateRequirement(requirement)" class="btn btn-info" >Update</button>
+                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                          ng-click="removeRequirement($index)">Remove</button>
+                      </td> -->
+                    </tr>
+                  </tbody>
+                </table>
+
+                <!-- test -->
+
+                <div class="">
+                
+                  <!-- <button class="btn btn-danger" ng-click="addRequirementDetail()">Add Row</button> -->
+                  <button class="btn btn-success" ng-disabled="browsedCheck"
+                    ng-click="saveBrowsed()">Submit</button>
+
+                    <button class="btn btn-danger" 
+                    ng-click="removeBrowsed()" ng-disabled="browsedCheck">Remove</button>
+
+                    
+
+                </div>
+                <!-- <div class="" ng-show="!editContactDetails" ng-if="statusEditContactDetails">
+                <button class="btn btn-danger" ng-disabled="!myForm.$valid" ng-click="checkContactDetails()">Save</button>
+              </div> -->
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end Requirement table -->
 
   <!--Start: Code for  inventory Count mode Modal Window -->
 
@@ -1700,10 +2182,14 @@
               </thead>
               <tbody>
                 <tr ng-if="editPaymentDetails">
-                  <td class="alignment">{{payment.name_for_payment}}</td>
+                  <!-- <td class="alignment">{{payment.name_for_payment}}</td>
                   <td class="alignment">{{payment.bank_name}}</td>
                   <td class="alignment">{{payment.ifsc_code}}</td>
-                  <td class="alignment">{{payment.account_no}}</td>
+                  <td class="alignment">{{payment.account_no}}</td> -->
+                  <td class="alignment">{{payment.payment_method}}</td>
+                  <td class="alignment">{{payment.beneficiary_name}}</td>
+                  <td class="alignment">{{payment.ifsc_code}}</td>
+                  <td class="alignment">{{payment.account_number}}</td>
                 </tr>
                 <tr ng-if="!editPaymentDetails">
                   <td class="alignment"><input ng-model="payment.name_for_payment"></td>
@@ -1805,8 +2291,9 @@
                   <font color="red">Please select supplier</font>
                 </div>
 
-                <select class="form-control input-size" ng-disabled="!supplier_type_code.code" style="width:140px; margin-left:20px;"
-                  ng-model="indexData.center_index" ng-change="selectCenter(indexData.center_index)" required>
+                <select class="form-control input-size" ng-disabled="!supplier_type_code.code"
+                  style="width:140px; margin-left:20px;" ng-model="indexData.center_index"
+                  ng-change="selectCenter(indexData.center_index)" required>
                   <option value="" disabled="true">Select Center</option>
                   <option ng-repeat="center_var in releaseDetailsData" value="{{center_var.id}}">
                     {{center_var.city}}</option>
@@ -1815,14 +2302,14 @@
                   <font color="red">Please select center</font>
                 </div>
 
-                <select name="areas" ng-disabled="!supplier_type_code.code" class="form-control input-size" ng-change="get_sub_areas(centers.area)"
-                  ng-model="centers.area" required>
+                <select name="areas" ng-disabled="!supplier_type_code.code" class="form-control input-size"
+                  ng-change="get_sub_areas(centers.area)" ng-model="centers.area" required>
                   <option value="" disabled="true">Select Area</option>
                   <option ng-repeat="area in areas" value="{{$index}}" required>{{area.label}}</option>
                 </select>
 
-                <select name="subareas" ng-disabled="!supplier_type_code.code" class="form-control input-size" ng-change="selectSubArea(centers.sub_area_id)"
-                  ng-model="centers.sub_area_id" required>
+                <select name="subareas" ng-disabled="!supplier_type_code.code" class="form-control input-size"
+                  ng-change="selectSubArea(centers.sub_area_id)" ng-model="centers.sub_area_id" required>
                   <option value="" disabled="true">Select SubArea </option>
                   <option ng-repeat="subarea in sub_areas" value="{{$index}}" required>{{subarea.subarea_name}}</option>
                 </select>
@@ -1996,14 +2483,16 @@
                   <tr ng-repeat="contact in relationhipStatusData.contacts">
                     <td>{{$index+1}}</td>
                     <td>{{contact.name}}</td>
-                    <td><p ng-if="contact.contact_type">{{contact.contact_type}}</p>
+                    <td>
+                      <p ng-if="contact.contact_type">{{contact.contact_type}}</p>
                       <p ng-if="!contact.contact_type">_</p>
                     </td>
-                    <td><p ng-if="contact.relationship_status">{{contact.relationship_status}}</p>
+                    <td>
+                      <p ng-if="contact.relationship_status">{{contact.relationship_status}}</p>
                       <p ng-if="!contact.relationship_status">_</p>
                     </td>
-                   
-                  
+
+
                   </tr>
                 </tbody>
               </table>
@@ -2091,7 +2580,7 @@
                 </tr>
                 <tr ng-repeat="phase in phases" ng-show="editPhase">
                   <td>{{$index+1}}</td>
-                  <td><input type="text" class="form-control" ng-model="phase.phase_no" required></td>
+                  <td><input type="text" class="form-control"  ng-model="phase.phase_no" required></td>
                   <td>
                     <div>
                       <p class="input-group col-md-12">
@@ -2104,10 +2593,10 @@
                               class="glyphicon glyphicon-calendar"></i></button>
                         </span> -->
 
-                        <input type="text" readonly class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
-                          ng-change="changeStartDate($index)" ng-model="phase.start_date" is-open="isDatepickerOpen"
-                          datepicker-options="datepickerOptions" ng-required="true" close-text="Close"
-                          alt-input-formats="altInputFormats" required>
+                        <input type="text" readonly class="field" uib-datepicker-popup="dd/MM/yyyy"
+                          placeholder="DD/MM/YYYY" ng-change="changeStartDate($index)" ng-model="phase.start_date"
+                          is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true"
+                          close-text="Close" alt-input-formats="altInputFormats" required>
                         <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
                           <i class="glyphicon glyphicon-calendar"></i>
                         </button>
@@ -2127,9 +2616,9 @@
                               class="glyphicon glyphicon-calendar"></i></button>
                         </span> -->
 
-                        <input type="text" readonly class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"
-                          ng-change="changeEndDate($index)" ng-model="phase.end_date" is-open="isEndDateOpen"
-                          datepicker-options="options" ng-required="true" close-text="Close"
+                        <input type="text" readonly class="field" uib-datepicker-popup="dd/MM/yyyy"
+                          placeholder="DD/MM/YYYY" ng-change="changeEndDate($index)" ng-model="phase.end_date"
+                          is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"
                           alt-input-formats="altInputFormats" required>
                         <button type="button" class="smallBtn calendar" ng-disabled="!phase.start_date"
                           ng-click="isEndDateOpen = !isEndDateOpen">
@@ -2167,16 +2656,20 @@
         </div>
         <br>
         <div class="col-md-12" style="margin-left:5px;">
-          <div class="col-md-3">
+          <div class="col-md-3" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'">
             <label>Select Sheet</label>
-            <a href="/sample_files/booking_plan_sheet_v1.xlsx" download>Demo File</a>
+            <a href="/sample_files/b2b_import_lead.xlsx" download>Sample Sheet</a>
+          </div>
+          <div class="col-md-3" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name != 'b_to_b_r_g'">
+            <label>Select Sheet</label>
+            <a href="/sample_files/booking_plan_sheet_v1.xlsx" download>Sample Sheet</a>
           </div>
           <div class="col-md-4">
             <input type="file" ngf-select="uploadFiles($file, 1)" class="buttonfile" accept=".xlsx" />
           </div>
           <div class="col-md-4">
             <button class="btn btn-success import" type="button" name="button"
-            ng-click="importThroughSheet()">Submit</button>
+              ng-click="importThroughSheet()">Submit</button>
           </div>
         </div>
         <br><br><br>
@@ -2241,9 +2734,9 @@
             Comments
           </div>
           <div class="modal-body">
-           
+
             <textarea class="form-control " rows="8" cols="200" ng-model="ContactComments"
-                placeholder="Write here.."></textarea>
+              placeholder="Write here.."></textarea>
           </div>
         </div>
       </div><br>
