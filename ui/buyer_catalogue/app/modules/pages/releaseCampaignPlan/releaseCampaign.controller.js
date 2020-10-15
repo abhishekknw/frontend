@@ -1093,6 +1093,7 @@ angular.module('catalogueApp')
               angular.forEach($scope.requirementDetailData, function (value, i) {
                 //start multiselect preferred company
                 var selected_preferred_company = [];
+                $scope.requirementDetailData[i].selected_preferred_company = [];
                 if ($scope.requirementDetailData[i] && $scope.requirementDetailData[i].preferred_company && $scope.requirementDetailData[i].preferred_company.length > 0) {
                   for (let j in $scope.requirementDetailData[i].preferred_company) {
                     var localindex_index = $scope.companiesDetailData.map(function (el) {
@@ -1103,14 +1104,13 @@ angular.module('catalogueApp')
                     }
                   }
                   $scope.requirementDetailData[i].selected_preferred_company = selected_preferred_company
-                  
-                  
                 }
                 //end multiselect preferred company
                 //START sub sector multiselect preferred company
                 if ($scope.requirementDetailData[i].requirements.length > 0) {
                   for (let x in $scope.requirementDetailData[i].requirements) {
                     var selected_preferred_company_sub_sector = [];
+                    $scope.requirementDetailData[i].requirements[x].selected_preferred_company_sub_sector = [];
                     if ($scope.requirementDetailData[i].requirements[x].preferred_company && $scope.requirementDetailData[i].requirements[x].preferred_company.length > 0) {
                       for (let y in $scope.requirementDetailData[i].requirements[x].preferred_company) {
                         var _index = $scope.companiesDetailData.map(function (el) {
@@ -1179,6 +1179,7 @@ angular.module('catalogueApp')
               $scope.browsedDetailData = response.data.data;
               for (let i in $scope.browsedDetailData) {
                 var selected_preferred_company = [];
+                $scope.browsedDetailData[i].selected_preferred_company = [];
                 if ($scope.browsedDetailData[i].prefered_patners.length > 0) {
                   for (let j in $scope.browsedDetailData[i].prefered_patners) {
                     var localindex_index = $scope.companiesDetailData.map(function (el) {
@@ -1207,7 +1208,7 @@ angular.module('catalogueApp')
             })
         }
         $scope.selected_preferred_partner = { buttonDefaultText: 'Select Preferred Partner' };
-        $scope.preferredMulticheck = function (key) {
+        $scope.preferredMulticheck = function (key) { 
           if ($scope.requirementDetailData[key].selected_preferred_company && $scope.requirementDetailData[key].selected_preferred_company.length > 0) {
             $scope.requirementDetailData[key].preferred_company = []
             for (let i in $scope.requirementDetailData[key].selected_preferred_company) {
@@ -1585,12 +1586,11 @@ angular.module('catalogueApp')
                         }).indexOf($scope.shortlisted_spaces_id);
                         if (localindex_index != -1) {
                           $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 1;
+                          $scope.show_color($scope.releaseDetails.shortlisted_suppliers[localindex_index]);
                         }
                         $scope.getRequirementDetail($scope.shortlisted_spaces_id);
                         swal(constants.name, constants.save_success, constants.success);
-
                       }
-
                     }).catch(function onError(response) {
                       console.log(response);
                     })
