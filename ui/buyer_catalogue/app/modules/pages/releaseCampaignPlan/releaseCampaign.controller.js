@@ -1576,38 +1576,24 @@ angular.module('catalogueApp')
             },
               function (confirm) {
                 if (confirm) {
-                  var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
-                            return el.id;
-                          }).indexOf($scope.shortlisted_spaces_id);
-                         
-                          if (localindex_index != -1) {
-                            $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 1;
-                            $scope.show_color($scope.releaseDetails.shortlisted_suppliers[localindex_index]);
-                       
-                          }
-                  // releaseCampaignService.saveBrowsed(browsedId)
-                  //   .then(function onSuccess(response) {
-                  //     if (response && response.data.data.error) {
-                  //       swal(constants.name, response.data.data.error, constants.error);
-                  //     } else {
-                  //       console.log('1111111111111111111111111111',$scope.shortlisted_spaces_id)
-                  //       var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
-                  //         return el.id;
-                  //       }).indexOf($scope.shortlisted_spaces_id);
-                  //       console.log('2222222222222222222222222222',localindex_index)
-                  //       if (localindex_index != -1) {
-                        
-                  //         $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 1;
-                     
-                  //       }
-                  //       $scope.getRequirementDetail($scope.shortlisted_spaces_id);
-                  //       swal(constants.name, constants.save_success, constants.success);
-
-                  //     }
-
-                  //   }).catch(function onError(response) {
-                  //     console.log(response);
-                  //   })
+                  releaseCampaignService.saveBrowsed(browsedId)
+                    .then(function onSuccess(response) {
+                      if (response && response.data.data.error) {
+                        swal(constants.name, response.data.data.error, constants.error);
+                      } else {
+                        var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+                          return el.id;
+                        }).indexOf($scope.shortlisted_spaces_id);
+                        if (localindex_index != -1) {
+                          $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 1;
+                          $scope.show_color($scope.releaseDetails.shortlisted_suppliers[localindex_index]);
+                        }
+                        $scope.getRequirementDetail($scope.shortlisted_spaces_id);
+                        swal(constants.name, constants.save_success, constants.success);
+                      }
+                    }).catch(function onError(response) {
+                      console.log(response);
+                    })
                 }
               });
           }
