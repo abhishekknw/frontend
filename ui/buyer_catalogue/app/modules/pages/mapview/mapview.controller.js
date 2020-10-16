@@ -496,11 +496,7 @@ angular.module('catalogueApp')
       // end mapview summary
       //start: gridview summary
       var getComprehinsiveSummary = function (supplier_code) {
-
-        console.log('1111111111111111111111111111111111111',supplier_code);
-
         $scope.gridViewSummary[supplier_code] = angular.copy(summarySupplierStatus);
-        console.log('2222222222222222222222222222222222',$scope.gridViewSummary[supplier_code])
         if ($scope.center_data.length > 0) {
           for (var i = 0; i < $scope.center_data.length; i++) {
 
