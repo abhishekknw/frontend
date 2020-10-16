@@ -1931,6 +1931,12 @@
                                   ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
                                 </textarea>
                               </td>
+
+                              <td class="alignment" style="width:200px;">
+                               <p> Submitted: {{subrequirement.created_at | date:'medium' }} </p>
+                               <p> Ops Verify: {{subrequirement.varified_ops_date | date:'medium'}} </p>
+                               <p> BD Verify: {{subrequirement.varified_bd_date | date:'medium'}} </p>
+                              </td>
                               <!-- <td class="alignment">
                                 <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
                                   ng-model="subrequirement.statisfaction ">

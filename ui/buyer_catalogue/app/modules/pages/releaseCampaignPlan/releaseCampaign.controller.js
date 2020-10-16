@@ -191,6 +191,7 @@ angular.module('catalogueApp')
           { header: 'Lead Status' },
           { header: 'Lead Given by' },
           { header: 'Comment' },
+          { header: 'Timestamps' },
           { header: 'Satisfaction Level' },
           { header: 'Reason' },
           { header: 'Action' },

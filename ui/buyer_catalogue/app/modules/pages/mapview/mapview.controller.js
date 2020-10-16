@@ -497,7 +497,10 @@ angular.module('catalogueApp')
       //start: gridview summary
       var getComprehinsiveSummary = function (supplier_code) {
 
+        console.log('1111111111111111111111111111111111111',supplier_code);
+
         $scope.gridViewSummary[supplier_code] = angular.copy(summarySupplierStatus);
+        console.log('2222222222222222222222222222222222',$scope.gridViewSummary[supplier_code])
         if ($scope.center_data.length > 0) {
           for (var i = 0; i < $scope.center_data.length; i++) {
 
@@ -1149,6 +1152,13 @@ angular.module('catalogueApp')
                     getComprehinsiveSummary($scope.supplierCode.corporate);
                   if ($scope.unique_suppliers.has($scope.supplierCode.busShelter))
                     getComprehinsiveSummary($scope.supplierCode.busShelter);
+
+                  if ($scope.unique_suppliers.has($scope.supplierCode.gym))
+                    getComprehinsiveSummary($scope.supplierCode.gym);
+                  if ($scope.unique_suppliers.has($scope.supplierCode.saloon))
+                    getComprehinsiveSummary($scope.supplierCode.saloon);
+                  if ($scope.unique_suppliers.has($scope.supplierCode.retailStore))
+                    getComprehinsiveSummary($scope.supplierCode.retailStore);
 
                   // gridView_Summary();
                   for (var i = 0; i < $scope.center_data.length; i++) {
