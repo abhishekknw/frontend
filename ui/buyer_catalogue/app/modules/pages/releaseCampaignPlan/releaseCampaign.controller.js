@@ -191,6 +191,7 @@ angular.module('catalogueApp')
           { header: 'Lead Status' },
           { header: 'Lead Given by' },
           { header: 'Comment' },
+          { header: 'Timestamps' },
           { header: 'Satisfaction Level' },
           { header: 'Reason' },
           { header: 'Action' },
@@ -1489,6 +1490,8 @@ angular.module('catalogueApp')
                           if (localindex_index != -1) {
                             $scope.requirementDetailData[key].requirements[localindex_index].varified_ops = 'yes';
                             $scope.requirementDetailData[key].requirements[localindex_index].requirementCheck = false;
+                            $scope.requirementDetailData[key].requirements[localindex_index].varified_ops_date = new Date();
+
                           }
                           var chechIfVerify = false
                           for(let j in $scope.requirementDetailData[key].requirements){
@@ -1538,6 +1541,7 @@ angular.module('catalogueApp')
                       swal(constants.name, response.data.data.error, constants.error);
                     } else {
                       $scope.requirementDetailData[key].requirements[index].varified_bd = 'yes';
+                      $scope.requirementDetailData[key].requirements[index].varified_bd_date = new Date();
                       swal(constants.name, 'Verified Successfully', constants.success);
                     }
                   }).catch(function onError(response) {
