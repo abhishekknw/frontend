@@ -166,16 +166,19 @@ angular.module('catalogueApp')
         $scope.requirement_submitted_headings = [
           { header: '' },
           { header: 'Sector' },
+          { header: 'Sub Sector' },
           { header: 'Current Partner' },
+          { header: 'FeedBack' },
           { header: 'Preferred Partner' },
+          { header: 'L1 Answers' },
+          { header: 'L2 Answers' },
           { header: 'Implementation Time' },
           { header: 'Meeting Time' },
           // { header: 'Preferred Meeting Time' },
           { header: 'Lead Status' },
-          { header: 'Lead Given by' },
           { header: 'Comment' },
-          { header: 'Satisfaction Level' },
-          { header: 'Reason' },
+          { header: 'Lead Given by' },
+          { header: 'Timestamp' },
           { header: 'Action' },
         ];
 
@@ -326,14 +329,14 @@ angular.module('catalogueApp')
           current: 1
         };
         $scope.pageChanged = function (newPage) {
-         $scope.sno =  ((newPage - 1)* 10);
+          $scope.sno = ((newPage - 1) * 10);
           getResultsPage(newPage);
         };
         var assigned = 0;
         var supplierIdForSearch;
         var getResultsPage = function (newPage) {
           var data = getFilterData();
-          if(!$scope.sno){
+          if (!$scope.sno) {
             $scope.sno = 0
           }
           if ($scope.master_data_status) {
@@ -371,7 +374,7 @@ angular.module('catalogueApp')
                 getOrganisationList();
               }
 
-              
+
 
               $scope.initialReleaseData = Object.assign({}, response.data.data);
               $scope.totalSuppliers = $scope.initialReleaseData.total_count;
@@ -716,7 +719,27 @@ angular.module('catalogueApp')
 
         $scope.detailedShow = [];
         $scope.ShowDetailed = function (index) {
+          $scope.oldIndex = index;
+          $scope.$watch('oldIndex', function (newValue, oldValue) {
+            if (newValue != oldValue) {
+              $scope.detailedShow[oldValue] = false
+            }
+          });
           $scope.detailedShow[index] = !$scope.detailedShow[index];
+          $scope.opsVerifyButtonDiable = true
+          $scope.removeSubSectorDiable = true
+          for (let i in $scope.requirementDetailData[index].requirements) {
+            $scope.requirementDetailData[index].requirements[i].requirementCheck = false;
+            if ($scope.opsVerifyButtonDiable && $scope.requirementDetailData[index].requirements[i].varified_ops == 'no') {
+              $scope.opsVerifyButtonDiable = false;
+            }
+
+            if ($scope.removeSubSectorDiable && $scope.requirementDetailData[index].requirements[i].is_deleted == 'no') {
+              $scope.removeSubSectorDiable = false;
+            }
+
+          }
+          $scope.subSectorCheck = true
         }
         $scope.sites = ['a', 'b', 'c']
 
@@ -1074,8 +1097,8 @@ angular.module('catalogueApp')
 
 
 
-        $scope.opsVerifyButton = true;
-        $scope.getRequirementDetail = function (id,suppleName) {
+        $scope.opsVerifyButtonDiable = true;
+        $scope.getRequirementDetail = function (id, suppleName) {
           $scope.supplierName = suppleName;
           $scope.shortlisted_spaces_id = id
           userService.getSector()
@@ -1089,7 +1112,11 @@ angular.module('catalogueApp')
               for (let k in $scope.companiesDetailData) {
                 $scope.companiesDetailData[k].id = $scope.companiesDetailData[k].organisation_id;
                 $scope.companiesDetailData[k].label = $scope.companiesDetailData[k].name;
+                if(k == response.data.data.companies.length-1){
+                  $scope.companiesDetailData.push({id:'other',label:'other',organisation_id:'',name:'other'})
+                }
               }
+              
 
               angular.forEach($scope.requirementDetailData, function (value, i) {
                 //start multiselect preferred company
@@ -1110,6 +1137,9 @@ angular.module('catalogueApp')
                 //START sub sector multiselect preferred company
                 if ($scope.requirementDetailData[i].requirements.length > 0) {
                   for (let x in $scope.requirementDetailData[i].requirements) {
+                    if(!$scope.requirementDetailData[i].requirements[x].current_company){
+                      $scope.requirementDetailData[i].requirements[x].current_company = '';
+                    }
                     var selected_preferred_company_sub_sector = [];
                     $scope.requirementDetailData[i].requirements[x].selected_preferred_company_sub_sector = [];
                     if ($scope.requirementDetailData[i].requirements[x].preferred_company && $scope.requirementDetailData[i].requirements[x].preferred_company.length > 0) {
@@ -1121,7 +1151,7 @@ angular.module('catalogueApp')
                           selected_preferred_company_sub_sector.push($scope.companiesDetailData[_index])
                         }
                       }
-                      
+
                       $scope.requirementDetailData[i].requirements[x].selected_preferred_company_sub_sector = selected_preferred_company_sub_sector;
                     }
 
@@ -1132,10 +1162,19 @@ angular.module('catalogueApp')
                       $scope.requirementDetailData[i].requirements[x].company_name = $scope.companiesDetailData[_indexCompany].name;
                     }
 
-                    if ($scope.opsVerifyButton && $scope.requirementDetailData[i].requirements[x].varified_ops == 'no') {
-                      $scope.opsVerifyButton = false;
+                    // if ($scope.opsVerifyButtonDiable && $scope.requirementDetailData[i].requirements[x].varified_ops == 'no') {
+                    //   $scope.opsVerifyButtonDiable = false;
+                    // }
+
+                    $scope.requirementDetailData[i].requirements[x].color_class = 'yellow'
+                    if ($scope.requirementDetailData[i].requirements[x].varified_ops == 'yes') {
+                      $scope.requirementDetailData[i].requirements[x].color_class = 'green'
                     }
-                    
+
+                    if ($scope.requirementDetailData[i].requirements[x].is_deleted == 'yes') {
+                      $scope.requirementDetailData[i].requirements[x].color_class = 'red'
+                    }
+
 
                     //start sub sector name
                     if ($scope.requirementDetailData[i].requirements[x].sub_sector) {
@@ -1209,7 +1248,7 @@ angular.module('catalogueApp')
             })
         }
         $scope.selected_preferred_partner = { buttonDefaultText: 'Select Preferred Partner' };
-        $scope.preferredMulticheck = function (key) { 
+        $scope.preferredMulticheck = function (key) {
           if ($scope.requirementDetailData[key].selected_preferred_company && $scope.requirementDetailData[key].selected_preferred_company.length > 0) {
             $scope.requirementDetailData[key].preferred_company = []
             for (let i in $scope.requirementDetailData[key].selected_preferred_company) {
@@ -1220,28 +1259,32 @@ angular.module('catalogueApp')
 
         $scope.subSectorPreferredMulticheck = function (key, index) {
           $scope.requirementDetailData[key].requirements[index].requirementCheck = true;
-          if ($scope.requirementDetailData[key] && $scope.requirementDetailData[key].requirements[index] && $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector &&  $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector.length > 0) {
+          if ($scope.requirementDetailData[key] && $scope.requirementDetailData[key].requirements[index] && $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector && $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector.length > 0) {
             $scope.requirementDetailData[key].requirements[index].preferred_company = [];
+            $scope.otherPreferredCompany = false;
             for (let i in $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector) {
+              if($scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector[i].id == 'other'){
+                $scope.otherPreferredCompany = true
+              }
               $scope.requirementDetailData[key].requirements[index].preferred_company.push($scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector[i].id);
             }
           }
         }
 
-        $scope.checkBoxAutoCheck = function(key, index){
+        $scope.checkBoxAutoCheck = function (key, index) {
           $scope.requirementDetailData[key].requirements[index].requirementCheck = true;
           $scope.checkbooxCheck(key);
         }
 
-        $scope.browsCheckBoxAutoCheck = function(index){
+        $scope.browsCheckBoxAutoCheck = function (index) {
           $scope.browsedDetailData[index].browsedCheck = true;
         }
 
 
-          $scope.events =  {
-            onItemSelect: function (item) {
-           }
-         }
+        $scope.events = {
+          onItemSelect: function (item) {
+          }
+        }
 
         $scope.settings = {
           showCheckAll: false,
@@ -1334,10 +1377,47 @@ angular.module('catalogueApp')
                         return el.id;
                       }).indexOf(deleteSubSectorId[x]);
                       if (localindex_index != -1) {
-                        $scope.requirementDetailData[key].requirements.splice(localindex_index, 1)
+                        $scope.requirementDetailData[key].requirements[localindex_index].is_deleted = 'yes';
+                        $scope.requirementDetailData[key].requirements[localindex_index].color_class = 'red';
                       }
                     }
+                  });
+                }
+              });
+          }
+        }
 
+        $scope.singleRemoveSubSector = function (id,key,index) {
+          let deleteSubSectorId = [];
+          deleteSubSectorId.push(id);
+          if (deleteSubSectorId.length > 0) {
+            swal({
+              title: 'Are you sure ?',
+              text: 'Remove Requirement',
+              type: constants.warning,
+              showCancelButton: true,
+              confirmButtonClass: "btn-success",
+              confirmButtonText: "Yes, Remove!",
+              closeOnConfirm: true
+            },
+              function (confirm) {
+                if (confirm) {
+                  let deleteId = {
+                    "requirement_ids": deleteSubSectorId
+                  }
+                  releaseCampaignService.deleteSubmittedLeads(deleteId)
+                    .then(function onSuccess(response) {
+                      if (response && response.data.data.error) {
+                        swal(constants.name, response.data.data.error, constants.error);
+                      } else {
+                        swal(constants.name, constants.delete_success, constants.success);
+                      }
+                    }).catch(function onError(response) {
+                      console.log(response);
+                    })
+                  $scope.$apply(function () {
+                    $scope.requirementDetailData[key].requirements[index].is_deleted = 'yes';
+                    $scope.requirementDetailData[key].requirements[index].color_class = 'red';
                   });
                 }
               });
@@ -1376,31 +1456,32 @@ angular.module('catalogueApp')
             })
         }
 
-        $scope.opsVerifyRequirement = function (data) {
-          let verifyId = [];
-          if (data.requirements.length > 0) {
-            for (let i in data.requirements) {
-              if (data.requirements[i].varified_ops == 'no') {
-                verifyId.push(data.requirements[i].id)
-              }
-            }
-          }
-          if (verifyId.length > 0) {
-            $scope.verifyRequirement(verifyId);
-          }
+        // $scope.opsVerifyRequirement = function (data) {
+        //   let verifyId = [];
+        //   if (data.requirements.length > 0) {
+        //     for (let i in data.requirements) {
+        //       if (data.requirements[i].varified_ops == 'no') {
+        //         verifyId.push(data.requirements[i].id)
+        //       }
+        //     }
+        //   }
+        //   if (verifyId.length > 0) {
+        //     $scope.verifyRequirement(verifyId);
+        //   }
 
-        }
+        // }
 
         $scope.checkOpsVerifyRequirement = function (data) {
           let verifyId = [];
           for (let i in data) {
-            if (data[i].requirementCheck) {
+            if (data[i].requirementCheck && data[i].varified_ops == 'no') {
               verifyId.push(data[i].id);
-
             }
           }
           if (verifyId.length > 0) {
             $scope.verifyRequirement(verifyId);
+          } else {
+            swal(constants.name, 'Already Verified', constants.error);
           }
         }
 
@@ -1413,6 +1494,7 @@ angular.module('catalogueApp')
             if (requirementsData[x].requirementCheck && $scope.subSectorCheck) {
               $scope.subSectorCheck = false
             }
+
           }
         }
         $scope.browsedCheck = true;
@@ -1437,18 +1519,32 @@ angular.module('catalogueApp')
 
         $scope.updateSubSector = function (data) {
           let updateData = [];
-          var reason_error = false
           for (let i in data) {
             if (data[i].requirementCheck) {
               updateData.push(data[i]);
-              if (data[i].current_patner_feedback_reason == "") {
-                data[i].reason_error = true;
-                reason_error = true;
-              }
             }
           }
+          if (updateData.length > 0) {
+            var requirementData = {
+              "requirements": updateData
+            }
+            releaseCampaignService.updateRequirement(requirementData)
+              .then(function onSuccess(response) {
+                if (response && response.data.data.error) {
+                  swal(constants.name, response.data.data.error, constants.error);
+                } else {
+                  swal(constants.name, constants.update_success, constants.success);
+                }
+              }).catch(function onError(response) {
+                console.log(response);
+              })
+          }
+        }
 
-          if (updateData.length > 0 && !reason_error) {
+        $scope.updateSubSectorRow = function (data) {
+          let updateData = [];
+          updateData.push(data);
+          if (updateData.length > 0) {
             var requirementData = {
               "requirements": updateData
             }
@@ -1489,21 +1585,26 @@ angular.module('catalogueApp')
                           }).indexOf(verifyId[i]);
                           if (localindex_index != -1) {
                             $scope.requirementDetailData[key].requirements[localindex_index].varified_ops = 'yes';
+                            if ($scope.requirementDetailData[key].requirements[localindex_index].is_deleted == 'no') {
+                              $scope.requirementDetailData[key].requirements[localindex_index].color_class = 'green';
+                            }
                             $scope.requirementDetailData[key].requirements[localindex_index].requirementCheck = false;
                             $scope.requirementDetailData[key].requirements[localindex_index].varified_ops_date = new Date();
 
                           }
+
                           var chechIfVerify = false
-                          for(let j in $scope.requirementDetailData[key].requirements){
-                            if($scope.requirementDetailData[key].requirements[j].varified_ops == 'no' && !chechIfVerify){
+                          for (let j in $scope.requirementDetailData[key].requirements) {
+                            if ($scope.requirementDetailData[key].requirements[j].varified_ops == 'no' && !chechIfVerify) {
                               chechIfVerify = true
-                            } 
+                            }
                           }
-                          if(chechIfVerify){
-                            $scope.opsVerifyButton = false ;
+                          if (chechIfVerify) {
+                            $scope.opsVerifyButtonDiable = false;
                           } else {
-                            $scope.opsVerifyButton = true;
+                            $scope.opsVerifyButtonDiable = true;
                           }
+
                         })
                       }
 
