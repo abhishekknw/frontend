@@ -1699,305 +1699,173 @@
                   <tbody>
                     <tr ng-repeat-start="(key, requirement) in requirementDetailData">
                       <td class="alignment">
-                        <span ng-if="!detailedShow[$index]" ng-click="ShowDetailed($index)"
+                        <span ng-if="!detailedShow[key]" ng-click="ShowDetailed(key)"
                           class="glyphicon glyphicon-plus"></span>
-                        <span ng-if="detailedShow[$index]" ng-click="ShowDetailed($index)"
+                        <span ng-if="detailedShow[key]" ng-click="ShowDetailed(key)"
                           class="glyphicon glyphicon-minus"></span>
                       </td>
                       <td class="alignment">
                         {{requirement.sector_name}}
                       </td>
-                      <td class="alignment">
-                        <select class="form-control" name="current_company_{{$index}}"
-                          id="current_company_id_{{$index}}" ng-model="requirement.current_company"
-                          style="width:100px;">
-                          <option value="" disabled>Select Current Partner</option>
-                          <option ng-repeat="cpartner in companiesDetailData track by $index"
-                            value="{{cpartner.organisation_id}}">
-                            {{cpartner.name}}
-                          </option>
-                        </select>
-                      </td>
+                      <tr  ng-show="detailedShow[key]" id="detailedSho_{{key}}" ng-repeat-end  ng-repeat-start="subrequirement in requirement.requirements">    
+                        <td  ng-style="{'background-color': subrequirement.color_class}"> </td>
+                                <td  ng-style="{'background-color': subrequirement.color_class}">
+                                  <input type="checkbox" ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
+                                    name="requirementCheck" id="requirementCheckId" ng-click="checkbooxCheck(key,$index)"
+                                    ng-model="subrequirement.requirementCheck">
+                                </td>
+                                <td class="alignment">
+                                  {{subrequirement.sub_sector_name}}
+                                </td>
+                                <td class="alignment">
+                                  <select class="form-control" ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
+                                    name="current_company_{{$index}}" id="current_company_id_{{$index}}"
+                                    ng-change="checkBoxAutoCheck(key,$index)" ng-model="subrequirement.current_company"
+                                    style="width:100px;">
+                                    <option value="" disabled>Select Current Partner</option>
+                                    <option ng-repeat="cpartner in companiesDetailData track by $index"
+                                      value="{{cpartner.organisation_id}}">
+                                      {{cpartner.name}}
+                                    </option>
+                                  </select>
+                                  <input style="margin-top:10px" type="text" class="form-control"  placeholder="Other Current Company" ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'" ng-if="subrequirement.current_company == ''"
+                                    name="currentCompanyOther" id="currentCompanyOtherId" 
+                                    ng-model="subrequirement.current_company_other">
+                                </td>
 
-                      <td class="alignment">
-                        <div style="width:150px;" class="multiselectDropdown"
-                          style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect=""
-                          options="companiesDetailData" extra-settings="settings"
-                          selected-model="requirement.selected_preferred_company" ng-click="preferredMulticheck(key)"
-                          events="events" ></div>
-                      </td>
-                     
+                                <td class="alignment">
+                                 {{subrequirement.current_patner_feedback}}<br>
+                                 <span ng-if="subrequirement.current_patner_feedback_reason">Reason:{{subrequirement.current_patner_feedback_reason}}</span>
+                                 <span ng-if="!subrequirement.current_patner_feedback_reason">Reason:NA</span>
+                                </td>
+  
+                                <td class="alignment">
+                                  <span style="width:150px;" ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
+                                    class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;"
+                                    ng-dropdown-multiselect="" options="companiesDetailData" extra-settings="settings"
+                                    selected-model="subrequirement.selected_preferred_company_sub_sector"
+                                    ng-click="subSectorPreferredMulticheck(key,$index)"
+                                    translation-texts="selected_business_type" events="events"></span>
 
-                      <td class="alignment">
-                        <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
-                          ng-model="requirement.impl_timeline" style="width:150px;">
-                          <option value="" disabled>Select Implementation Time</option>
-                          <option ng-repeat="(key,value) in requirement_implementation_time track by $index"
-                            value="{{key}}">
-                            {{value}}
-                          </option>
-                        </select>
-                      </td>
+                                    <input style="margin-top:10px" type="text" class="form-control" placeholder="Other Preferred Company" ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'" ng-if="otherPreferredCompany"
+                                    name="other_preferred_company" id="other_preferred_company" 
+                                    ng-model="subrequirement.preferred_company_other">
+                                </td>
 
-                      <td class="alignment">
-                        <select class="form-control" name="meating_time_{{$index}}" id="meating_time_id_{{$index}}"
-                          ng-model="requirement.meating_timeline" style="width:150px;">
-                          <option value="" disabled>Select Meeting Time</option>
-                          <option ng-repeat="(key,value) in requirement_meeting_time track by $index" value="{{key}}">
-                            {{value}}
-                          </option>
-                        </select>
-                      </td>
-                      <!-- <td class="alignment">
-                        <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
-                          ng-model="contact.contact_type">
-                          <option value="" disabled>Select Preferred Meeting Time</option>
-                          <option ng-repeat="ctype in Contact_Type track by $index" value="{{ctype}}">
-                            {{ctype}}
-                          </option>
-                        </select>
-                      </td> -->
-                      <td class="alignment">
-                        <select class="form-control" name="lead_status_{{$index}}" id="lead_status_id_{{$index}}"
-                          ng-model="requirement.lead_status" style="width:150px;">
-                          <option value="" disabled>Select Lead Status</option>
-                          <option ng-repeat="leadstatus in requirement_lead_status track by $index"
-                            value="{{leadstatus}}">
-                            {{leadstatus}}
-                          </option>
-                        </select>
-                      </td>
+                                <td class="alignment">
+                                  <span ng-if="subrequirement.l1_answers">{{subrequirement.l1_answers}}</span>
+                                  <span ng-if="!subrequirement.l1_answers">NA</span>
+                                  
+                                </td>
 
-                      <td class="alignment">
-                        <span style="width:150px;"> {{requirement.lead_by.name}} </span>
-                      </td>
-                      <!-- <td class="alignment">
-                        <input type="text" placeholder="Lead Given by	" class="form-control" id="lead_by_id"
-                          style="width:100px;" ng-model="requirement.lead_by">
-                      </td> -->
-                      <td class="alignment">
-                        <textarea placeholder="Comments" class="form-control" style="width:150px;"
-                          ng-model="requirement.comment" rows="4" cols="50">
-              </textarea>
-                      </td>
-                      <!-- <td class="alignment">
-                        <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
-                          ng-model="requirement.statisfaction ">
-                          <option value="" disabled>Select Statisfaction State</option>
-                          <option ng-repeat="ctype in Contact_Type track by $index" value="{{ctype}}">
-                            {{ctype}}
-                          </option>
-                        </select>
-                      </td>
-                      <td class="alignment">
-                        <input type="text" placeholder="Reason" class="form-control" id="reason_id" style="width:100px;"
-                          ng-model="requirement.reason">
-                      </td> -->
-                      <td class="alignment">
-                        <select class="form-control" name="feedback_{{$index}}" id="feedback_id_{{$index}}"
-                          ng-model="requirement.current_patner_feedback" style="width:150px;">
-                          <option value="" disabled>Select Feedback</option>
-                          <option ng-repeat="(key,value) in current_patner_feedback track by $index" value="{{key}}">
-                            {{value}}
-                          </option>
-                        </select>
-                      </td>
+                                <td class="alignment">
+                                    <span ng-if="subrequirement.l2_answers">{{subrequirement.l2_answers}}</span>
+                                    <span ng-if="!subrequirement.l2_answers">NA</span>
+                                  </td>
 
-                      <td class="alignment">
-                        <input type="text" placeholder="Reason" class="form-control" id="reason_id_{{$index}}"
-                          style="width:100px;" ng-model="requirement.current_patner_feedback_reason">
-                      </td>
+                                <td class="alignment">
+                                  <select class="form-control" ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'" name="contact_type_{{$index}}"
+                                    id="contact_type_id_{{$index}}" ng-model="subrequirement.impl_timeline"
+                                    ng-change="checkBoxAutoCheck(key,$index)" style="width:150px;">
+                                    <option value="" disabled>Select Implementation Time</option>
+                                    <option ng-repeat="(key,value) in requirement_implementation_time track by $index"
+                                      value="{{key}}">
+                                      {{value}}
+                                    </option>
+                                  </select>
+                                </td>
+  
+                                <td class="alignment">
+                                  <select class="form-control" name="meating_time_{{$index}}"
+                                  ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'" id="meating_time_id_{{$index}}"
+                                    ng-model="subrequirement.meating_timeline" ng-change="checkBoxAutoCheck(key,$index)"
+                                    style="width:150px;">
+                                    <option value="" disabled>Select Meeting Time</option>
+                                    <option ng-repeat="(key,value) in requirement_meeting_time track by $index"
+                                      value="{{key}}">
+                                      {{value}}
+                                    </option>
+                                  </select>
+                                </td>
+                                
+                                <td class="alignment">
+                                  <!-- <select class="form-control" name="lead_status_{{$index}}"
+                                    id="lead_status_id_{{$index}}" ng-model="subrequirement.lead_status"
+                                    ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
+                                    ng-change="checkBoxAutoCheck(key,$index)" style="width:150px;">
+                                    <option value="" disabled>Select Lead Status</option>
+                                    <option ng-repeat="leadstatus in requirement_lead_status track by $index"
+                                      value="{{leadstatus}}">
+                                      {{leadstatus}}
+                                    </option>
+                                  </select> -->
+                                  {{subrequirement.lead_status}}
+                                </td>
 
-                      <td class="alignment">
-                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
-                          ng-disabled="opsVerifyButton" ng-click="opsVerifyRequirement(requirement)"> <span
-                            ng-if="!opsVerifyButton">Ops Verify</span>
-                          <span ng-if="opsVerifyButton">Ops Verified</span>
-                        </button>
-                        <button style="margin-bottom:2px" type="button" name="button"
-                          ng-click="updateRequirement(requirement)" class="btn btn-info">Update</button>
-                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                          ng-click="removeRequirement(key,requirement)">Remove</button>
-                      </td>
-                    </tr>
-                    <tr ng-show="detailedShow[$index]" ng-repeat-end>
-                      <td> </td>
-                      <td colspan="11">
+                                <td class="alignment">
+                                    <textarea placeholder="Comments" ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
+                                      class="form-control" style="width:150px;" ng-model="subrequirement.comment"
+                                      ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
+                                    </textarea>
+                                  </td>
+  
+                                <td class="alignment">
+                                    
+                                  <span style="width:150px;">Name: {{requirement.lead_by.name}} </span>
+                                  <span style="width:150px;">Number: {{requirement.lead_by.mobile}} </span>
+                                  
+                                </td>
+                              
+                                
+  
+                                <td class="alignment" style="width:300px;">
+                                 <p> Submitted: {{subrequirement.created_at | date:'medium' }} </p>
+                                 <p> Ops Verify: {{subrequirement.varified_ops_date | date:'medium'}} </p>
+                                 <p> Ops Verify Name: {{subrequirement.verified_ops_by_obj.first_name}} {{subrequirement.verified_ops_by_obj.last_name}} </p>
+                                 <!-- <p> BD Verify: {{subrequirement.varified_bd_date | date:'medium'}} </p> -->
+                                </td>
+                               
+                                <td class="alignment">
+                                  <!-- <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
+                                    ng-if="subrequirement.varified_ops == 'yes' && subrequirement.varified_bd == 'no'"
+                                    ng-click="bdVerifyRequirement(subrequirement.id,key,$index)">BD Verify</button> -->
+                                  <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
+                                    ng-if="subrequirement.varified_ops == 'no'" ng-disabled="subrequirement.color_class == 'red'"
+                                    ng-click="singleOpsVerifyRequirement(subrequirement.id)">Ops Verify</button>
+                                  <span ng-if="subrequirement.varified_ops == 'yes'">Ops Verified </span>
 
-                        <table class="table table-bordered" ng-show="detailedShow[$index]">
-                          <thead>
-                            <tr>
-                              <th ng-repeat="header in requirement_sub_headings" class="col-md-2 alignment">
-                                <b>{{header.header}}</b></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr ng-repeat="subrequirement in requirement.requirements">
-                              <td>
-                                <input type="checkbox" ng-disabled="subrequirement.varified_bd == 'yes'"
-                                  name="requirementCheck" id="requirementCheckId" ng-click="checkbooxCheck(key)"
-                                  ng-model="subrequirement.requirementCheck">
+                                  <button style="margin-top:10px" class="btn btn-success" ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"  type="button" name="button" class="btn btn-success"
+                                  ng-click="updateSubSectorRow(subrequirement)">Update</button>
+                                  <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
+                                   ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
+                                  ng-click="singleRemoveSubSector(subrequirement.id,key,$index)">Remove</button>
+                         
 
-                              </td>
-                              <td class="alignment">
-                                {{subrequirement.sub_sector_name}}
-                              </td>
-                              <td class="alignment">
-                                <select class="form-control" ng-disabled="subrequirement.varified_bd == 'yes'"
-                                  name="current_company_{{$index}}" id="current_company_id_{{$index}}"
-                                  ng-change="checkBoxAutoCheck(key,$index)" ng-model="subrequirement.current_company"
-                                  style="width:100px;">
-                                  <option value="" disabled>Select Current Partner</option>
-                                  <option ng-repeat="cpartner in companiesDetailData track by $index"
-                                    value="{{cpartner.organisation_id}}">
-                                    {{cpartner.name}}
-                                  </option>
-                                </select>
-                              </td>
-
-                              <td class="alignment">
-                                <span style="width:150px;" ng-disabled="subrequirement.varified_bd == 'yes'"
-                                  class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;"
-                                  ng-dropdown-multiselect="" options="companiesDetailData" extra-settings="settings"
-                                  selected-model="subrequirement.selected_preferred_company_sub_sector"
-                                  ng-click="subSectorPreferredMulticheck(key,$index)"
-                                  translation-texts="selected_business_type" events="events"></span>
-                              </td>
-
-                              <td class="alignment">
-                                {{subrequirement.company_name}}
-                              </td>
-
-
-
-                              <td class="alignment">
-                                <select class="form-control" name="contact_type_{{$index}}"
-                                  id="contact_type_id_{{$index}}" ng-model="subrequirement.impl_timeline"
-                                  ng-disabled="subrequirement.varified_bd == 'yes'"
-                                  ng-change="checkBoxAutoCheck(key,$index)" style="width:150px;">
-                                  <option value="" disabled>Select Implementation Time</option>
-                                  <option ng-repeat="(key,value) in requirement_implementation_time track by $index"
-                                    value="{{key}}">
-                                    {{value}}
-                                  </option>
-                                </select>
-                              </td>
-
-                              <td class="alignment">
-                                <select class="form-control" name="meating_time_{{$index}}"
-                                  ng-disabled="subrequirement.varified_bd == 'yes'" id="meating_time_id_{{$index}}"
-                                  ng-model="subrequirement.meating_timeline" ng-change="checkBoxAutoCheck(key,$index)"
-                                  style="width:150px;">
-                                  <option value="" disabled>Select Meeting Time</option>
-                                  <option ng-repeat="(key,value) in requirement_meeting_time track by $index"
-                                    value="{{key}}">
-                                    {{value}}
-                                  </option>
-                                </select>
-                              </td>
-                              <!-- <td class="alignment">
-                                <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
-                                  ng-model="contact.contact_type">
-                                  <option value="" disabled>Select Preferred Meeting Time</option>
-                                  <option ng-repeat="ctype in Contact_Type track by $index" value="{{ctype}}">
-                                    {{ctype}}
-                                  </option>
-                                </select>
-                              </td> -->
-                              <td class="alignment">
-                                <select class="form-control" name="lead_status_{{$index}}"
-                                  id="lead_status_id_{{$index}}" ng-model="subrequirement.lead_status"
-                                  ng-disabled="subrequirement.varified_bd == 'yes'"
-                                  ng-change="checkBoxAutoCheck(key,$index)" style="width:150px;">
-                                  <option value="" disabled>Select Lead Status</option>
-                                  <option ng-repeat="leadstatus in requirement_lead_status track by $index"
-                                    value="{{leadstatus}}">
-                                    {{leadstatus}}
-                                  </option>
-                                </select>
-                              </td>
-
-                              <td class="alignment">
-                                <span style="width:150px;"> {{requirement.lead_by.name}} </span>
-                              </td>
-                              <!-- <td class="alignment">
-                                <input type="text" placeholder="Lead Given by	" class="form-control" id="lead_by_id"
-                                  style="width:100px;" ng-model="subrequirement.lead_by">
-                              </td> -->
-                              <td class="alignment">
-
-                                <textarea placeholder="Comments" ng-disabled="subrequirement.varified_bd == 'yes'"
-                                  class="form-control" style="width:150px;" ng-model="subrequirement.comment"
-                                  ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
-                                </textarea>
-                              </td>
-
-                              <td class="alignment" style="width:200px;">
-                               <p> Submitted: {{subrequirement.created_at | date:'medium' }} </p>
-                               <p> Ops Verify: {{subrequirement.varified_ops_date | date:'medium'}} </p>
-                               <p> BD Verify: {{subrequirement.varified_bd_date | date:'medium'}} </p>
-                              </td>
-                              <!-- <td class="alignment">
-                                <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
-                                  ng-model="subrequirement.statisfaction ">
-                                  <option value="" disabled>Select Statisfaction State</option>
-                                  <option ng-repeat="ctype in Contact_Type track by $index" value="{{ctype}}">
-                                    {{ctype}}
-                                  </option>
-                                </select>
-                              </td>
-                              <td class="alignment">
-                                <input type="text" placeholder="Reason" class="form-control" id="reason_id" style="width:100px;"
-                                  ng-model="subrequirement.reason">
-                              </td> -->
-
-                              <td class="alignment">
-                                <select class="form-control" ng-disabled="subrequirement.varified_bd == 'yes'"
-                                  name="feedback_{{$index}}" id="feedback_id_{{$index}}"
-                                  ng-model="subrequirement.current_patner_feedback"
-                                  ng-change="checkBoxAutoCheck(key,$index)" style="width:150px;">
-                                  <option value="" disabled>Select Feedback</option>
-                                  <option ng-repeat="(key,value) in current_patner_feedback track by $index"
-                                    value="{{key}}">
-                                    {{value}}
-                                  </option>
-                                </select>
-                              </td>
-
-                              <td class="alignment">
-                                <input type="text" placeholder="Reason"
-                                  ng-disabled="subrequirement.varified_bd == 'yes'" class="form-control"
-                                  id="reason_id_{{$index}}" style="width:100px;"
-                                  ng-model="subrequirement.current_patner_feedback_reason"
-                                  ng-change="checkBoxAutoCheck(key,$index)">
-                                <span class="error"
-                                  ng-if="subrequirement.reason_error && subrequirement.current_patner_feedback_reason ==''">Reason
-                                  is required.<span>
-                              </td>
-                              <td class="alignment">
-                                <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
-                                  ng-if="subrequirement.varified_ops == 'yes' && subrequirement.varified_bd == 'no'"
-                                  ng-click="bdVerifyRequirement(subrequirement.id,key,$index)">BD Verify</button>
-                                <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
-                                  ng-if="subrequirement.varified_ops == 'no'"
-                                  ng-click="singleOpsVerifyRequirement(subrequirement.id)">Ops Verify</button>
-                                <span ng-if="subrequirement.varified_bd == 'yes'">BD Verified </span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <!-- <button class="btn btn-danger" ng-click="addSubRequirementDetail(key)">Add Row</button> -->
-                        <button class="btn btn-success" id="update_{{key}}" ng-disabled="subSectorCheck "
-                          ng-click="updateSubSector(requirement.requirements)">Update</button>
-                        <button style="margin-bottom:2px" id="verify_{{key}}" type="button" name="button"
-                          class="btn btn-success" ng-disabled="subSectorCheck || opsVerifyButton"
-                          ng-click="checkOpsVerifyRequirement(requirement.requirements)"><span
-                            ng-if="!opsVerifyButton">Ops Verify</span>
-                          <span ng-if="opsVerifyButton">Ops Verified</span></button>
-                        <button style="margin-bottom:2px" id="remove_{{key}}" type="button" name="button"
-                          ng-disabled="subSectorCheck" class="btn btn-danger"
-                          ng-click="removeSubSectorRequirement(requirement.requirements,key)">Remove</button>
-                      </td>
+                               
+                                </td>
+                              <!-- </tr> -->
+                            <!-- </tbody>
+                          </table> -->
+                          <!-- <button class="btn btn-danger" ng-click="addSubRequirementDetail(key)">Add Row</button> -->
+                        
+                        <!-- </td> -->
+                      
+                      <tr ng-show="detailedShow[key]" ng-repeat-end >
+                          <td colspan="15">
+                         <button class="btn btn-success" id="update_{{key}}" ng-disabled="subSectorCheck "
+                           ng-click="updateSubSector(requirement.requirements)">Update</button>
+                         <button style="margin-bottom:2px" id="verify_{{key}}" type="button" name="button"
+                           class="btn btn-success" ng-disabled="subSectorCheck || opsVerifyButtonDiable"
+                           ng-click="checkOpsVerifyRequirement(requirement.requirements)"><span
+                             ng-if="!opsVerifyButtonDiable">Ops Verify</span>
+                           <span ng-if="opsVerifyButtonDiable">Ops Verified</span></button>
+                         <button style="margin-bottom:2px" id="remove_{{key}}" type="button" name="button"
+                           ng-disabled="subSectorCheck || removeSubSectorDiable" class="btn btn-danger"
+                           ng-click="removeSubSectorRequirement(requirement.requirements,key)">Remove</button>
+                          </td>
+                        </tr>
+                       
+                      </tr>
                     </tr>
                   </tbody>
                 </table>
@@ -2007,8 +1875,8 @@
                 <div class="">
                   <!-- <button class="btn btn-danger pull-right" ng-click="setEditContactDetails()">Edit</button> -->
                   <!-- <button class="btn btn-danger" ng-click="addRequirementDetail()">Add Row</button> -->
-                  <button class="btn btn-success" ng-disabled="!myForm.$valid"
-                    ng-click="updateRequirement()">Update</button>
+                  <!-- <button class="btn btn-success" ng-disabled="!myForm.$valid"
+                    ng-click="updateRequirement()">Update</button> -->
 
                 </div>
                 <!-- <div class="" ng-show="!editContactDetails" ng-if="statusEditContactDetails">
