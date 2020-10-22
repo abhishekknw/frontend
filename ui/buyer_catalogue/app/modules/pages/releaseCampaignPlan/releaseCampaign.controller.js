@@ -1112,38 +1112,44 @@ angular.module('catalogueApp')
               for (let k in $scope.companiesDetailData) {
                 $scope.companiesDetailData[k].id = $scope.companiesDetailData[k].organisation_id;
                 $scope.companiesDetailData[k].label = $scope.companiesDetailData[k].name;
-                if(k == response.data.data.companies.length-1){
-                  $scope.companiesDetailData.push({id:'other',label:'other',organisation_id:'',name:'other'})
+                if (k == response.data.data.companies.length - 1) {
+                  $scope.companiesDetailData.push({ id: 'other', label: 'other', organisation_id: '', name: 'other' })
                 }
               }
-              
+
 
               angular.forEach($scope.requirementDetailData, function (value, i) {
                 //start multiselect preferred company
-                var selected_preferred_company = [];
-                $scope.requirementDetailData[i].selected_preferred_company = [];
-                if ($scope.requirementDetailData[i] && $scope.requirementDetailData[i].preferred_company && $scope.requirementDetailData[i].preferred_company.length > 0) {
-                  for (let j in $scope.requirementDetailData[i].preferred_company) {
-                    var localindex_index = $scope.companiesDetailData.map(function (el) {
-                      return el.organisation_id;
-                    }).indexOf($scope.requirementDetailData[i].preferred_company[j]);
-                    if (localindex_index != -1) {
-                      selected_preferred_company.push($scope.companiesDetailData[localindex_index])
-                    }
-                  }
-                  $scope.requirementDetailData[i].selected_preferred_company = selected_preferred_company
-                }
+                // var selected_preferred_company = [];
+                // $scope.requirementDetailData[i].selected_preferred_company = [];
+                // if ($scope.requirementDetailData[i] && $scope.requirementDetailData[i].preferred_company && $scope.requirementDetailData[i].preferred_company.length > 0) {
+                //   for (let j in $scope.requirementDetailData[i].preferred_company) {
+                //     var localindex_index = $scope.companiesDetailData.map(function (el) {
+                //       return el.organisation_id;
+                //     }).indexOf($scope.requirementDetailData[i].preferred_company[j]);
+                //     if (localindex_index != -1) {
+                //       selected_preferred_company.push($scope.companiesDetailData[localindex_index])
+                //     }
+                //   }
+                //   $scope.requirementDetailData[i].selected_preferred_company = selected_preferred_company
+                // }
                 //end multiselect preferred company
                 //START sub sector multiselect preferred company
                 if ($scope.requirementDetailData[i].requirements.length > 0) {
                   for (let x in $scope.requirementDetailData[i].requirements) {
-                    if(!$scope.requirementDetailData[i].requirements[x].current_company){
+                    if (!$scope.requirementDetailData[i].requirements[x].current_company) {
                       $scope.requirementDetailData[i].requirements[x].current_company = '';
                     }
                     var selected_preferred_company_sub_sector = [];
                     $scope.requirementDetailData[i].requirements[x].selected_preferred_company_sub_sector = [];
+
+                    if ($scope.requirementDetailData[i].requirements[x].preferred_company_other) {
+                      $scope.requirementDetailData[i].requirements[x].preferred_company.push("")
+                    }
                     if ($scope.requirementDetailData[i].requirements[x].preferred_company && $scope.requirementDetailData[i].requirements[x].preferred_company.length > 0) {
+
                       for (let y in $scope.requirementDetailData[i].requirements[x].preferred_company) {
+
                         var _index = $scope.companiesDetailData.map(function (el) {
                           return el.organisation_id;
                         }).indexOf($scope.requirementDetailData[i].requirements[x].preferred_company[y]);
@@ -1151,6 +1157,7 @@ angular.module('catalogueApp')
                           selected_preferred_company_sub_sector.push($scope.companiesDetailData[_index])
                         }
                       }
+
 
                       $scope.requirementDetailData[i].requirements[x].selected_preferred_company_sub_sector = selected_preferred_company_sub_sector;
                     }
@@ -1263,7 +1270,7 @@ angular.module('catalogueApp')
             $scope.requirementDetailData[key].requirements[index].preferred_company = [];
             $scope.otherPreferredCompany = false;
             for (let i in $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector) {
-              if($scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector[i].id == 'other'){
+              if ($scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector[i].id == 'other') {
                 $scope.otherPreferredCompany = true
               }
               $scope.requirementDetailData[key].requirements[index].preferred_company.push($scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector[i].id);
@@ -1342,7 +1349,7 @@ angular.module('catalogueApp')
         $scope.removeSubSectorRequirement = function (data, key) {
           let deleteSubSectorId = [];
           for (let i in $scope.requirementDetailData[key].requirements) {
-            if ($scope.requirementDetailData[key].requirements[i].requirementCheck == true) {
+            if ($scope.requirementDetailData[key].requirements[i].requirementCheck == true && $scope.requirementDetailData[key].requirements[i].is_deleted == 'no') {
               deleteSubSectorId.push($scope.requirementDetailData[key].requirements[i].id);
             }
           }
@@ -1387,7 +1394,7 @@ angular.module('catalogueApp')
           }
         }
 
-        $scope.singleRemoveSubSector = function (id,key,index) {
+        $scope.singleRemoveSubSector = function (id, key, index) {
           let deleteSubSectorId = [];
           deleteSubSectorId.push(id);
           if (deleteSubSectorId.length > 0) {
@@ -1418,6 +1425,100 @@ angular.module('catalogueApp')
                   $scope.$apply(function () {
                     $scope.requirementDetailData[key].requirements[index].is_deleted = 'yes';
                     $scope.requirementDetailData[key].requirements[index].color_class = 'red';
+                  });
+                }
+              });
+          }
+        }
+
+        $scope.singleRestoreSubSector = function (id, key, index) {
+          let restoreSubSectorId = [];
+          restoreSubSectorId.push(id);
+          if (restoreSubSectorId.length > 0) {
+            swal({
+              title: 'Are you sure ?',
+              text: 'Restore Requirement',
+              type: constants.warning,
+              showCancelButton: true,
+              confirmButtonClass: "btn-success",
+              confirmButtonText: "Yes, Restore!",
+              closeOnConfirm: true
+            },
+              function (confirm) {
+                if (confirm) {
+                  let restoreId = {
+                    "requirement_ids": restoreSubSectorId
+                  }
+                  releaseCampaignService.restoreSubmittedLeads(restoreId)
+                    .then(function onSuccess(response) {
+                      if (response && response.data.data.error) {
+                        swal(constants.name, response.data.data.error, constants.error);
+                      } else {
+                        swal(constants.name, 'Restore Successfully', constants.success);
+                      }
+                    }).catch(function onError(response) {
+                      console.log(response);
+                    })
+                  $scope.$apply(function () {
+                    $scope.requirementDetailData[key].requirements[index].is_deleted = 'no';
+                    if ($scope.requirementDetailData[key].requirements[index].varified_ops == 'yes') {
+                      $scope.requirementDetailData[key].requirements[index].color_class = 'green';
+                    } else {
+                      $scope.requirementDetailData[key].requirements[index].color_class = 'yellow';
+                    }
+
+                  });
+                }
+              });
+          }
+        }
+
+        $scope.restoreMultiRequirement = function (data, key) {
+          let restoreSubSectorId = [];
+          for (let i in $scope.requirementDetailData[key].requirements) {
+            if ($scope.requirementDetailData[key].requirements[i].requirementCheck == true && $scope.requirementDetailData[key].requirements[i].is_deleted == 'yes') {
+              restoreSubSectorId.push($scope.requirementDetailData[key].requirements[i].id);
+            }
+          }
+          if (restoreSubSectorId.length > 0) {
+            swal({
+              title: 'Are you sure ?',
+              text: 'Restore Requirement',
+              type: constants.warning,
+              showCancelButton: true,
+              confirmButtonClass: "btn-success",
+              confirmButtonText: "Yes, Restore!",
+              closeOnConfirm: true
+            },
+              function (confirm) {
+                if (confirm) {
+                  let deleteId = {
+                    "requirement_ids": restoreSubSectorId
+                  }
+                  releaseCampaignService.restoreSubmittedLeads(deleteId)
+                    .then(function onSuccess(response) {
+                      if (response && response.data.data.error) {
+                        swal(constants.name, response.data.data.error, constants.error);
+                      } else {
+                        swal(constants.name, 'Restore Successfully', constants.success);
+                      }
+                    }).catch(function onError(response) {
+                      console.log(response);
+                    })
+                  $scope.$apply(function () {
+                    for (let x in restoreSubSectorId) {
+                      var localindex_index = $scope.requirementDetailData[key].requirements.map(function (el) {
+                        return el.id;
+                      }).indexOf(restoreSubSectorId[x]);
+                      if (localindex_index != -1) {
+                        $scope.requirementDetailData[key].requirements[localindex_index].is_deleted = 'no';
+                        if ($scope.requirementDetailData[key].requirements[localindex_index].varified_ops == 'yes') {
+                          $scope.requirementDetailData[key].requirements[localindex_index].color_class = 'green';
+                        } else {
+                          $scope.requirementDetailData[key].requirements[localindex_index].color_class = 'yellow';
+                        }
+                      }
+                    }
                   });
                 }
               });
@@ -1520,9 +1621,20 @@ angular.module('catalogueApp')
         $scope.updateSubSector = function (data) {
           let updateData = [];
           for (let i in data) {
+            if (data[i].current_company == "") {
+              data[i].current_company = null
+            }
+            if (data[i].preferred_company.length > 0) {
+              for (let j in data[i].preferred_company) {
+                if (data[i].preferred_company[j] == 'other') {
+                  data[i].preferred_company.splice(j, 1)
+                }
+              }
+            }
             if (data[i].requirementCheck) {
               updateData.push(data[i]);
             }
+
           }
           if (updateData.length > 0) {
             var requirementData = {
