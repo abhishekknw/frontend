@@ -1708,9 +1708,9 @@
                         {{requirement.sector_name}}
                       </td>
                       <tr  ng-show="detailedShow[key]" id="detailedSho_{{key}}" ng-repeat-end  ng-repeat-start="subrequirement in requirement.requirements">    
-                        <td  ng-style="{'background-color': subrequirement.color_class}"  class="input_td_req11"> </td>
+                        <td  ng-style="{'background-color': subrequirement.color_class}" class="input_td_req11"> </td>
                                 <td  ng-style="{'background-color': subrequirement.color_class}" class="input_td_req">
-                                  <input type="checkbox" ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
+                                  <input type="checkbox" ng-disabled="subrequirement.varified_ops == 'yes'"
                                     name="requirementCheck" id="requirementCheckId" ng-click="checkbooxCheck(key,$index)"
                                     ng-model="subrequirement.requirementCheck">
                                 </td>
@@ -1836,9 +1836,15 @@
 
                                   <button style="margin-top:10px" class="btn btn-success" ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"  type="button" name="button" class="btn btn-success"
                                   ng-click="updateSubSectorRow(subrequirement)">Update</button>
+
                                   <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
-                                   ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
+                                  ng-if="subrequirement.color_class != 'red'"
                                   ng-click="singleRemoveSubSector(subrequirement.id,key,$index)">Remove</button>
+
+                                  <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
+                                  ng-if="subrequirement.color_class == 'red'"
+                                  ng-click="singleRestoreSubSector(subrequirement.id,key,$index)">Restore</button>
+                         
                          
 
                                
@@ -1862,6 +1868,10 @@
                          <button style="margin-bottom:2px" id="remove_{{key}}" type="button" name="button"
                            ng-disabled="subSectorCheck || removeSubSectorDiable" class="btn btn-danger"
                            ng-click="removeSubSectorRequirement(requirement.requirements,key)">Remove</button>
+
+                           <button style="margin-bottom:2px" id="restore_{{key}}" type="button" name="button"
+                           ng-disabled="subSectorCheck" class="btn btn-success"
+                           ng-click="restoreMultiRequirement(requirement.requirements,key)">Remove</button>
                           </td>
                         </tr>
                        
