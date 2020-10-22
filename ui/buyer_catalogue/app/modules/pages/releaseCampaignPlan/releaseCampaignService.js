@@ -198,6 +198,11 @@
       return machadaloHttp.post(url,data);
     }
 
+    releaseCampaignService.restoreSubmittedLeads = function(data){
+      var url = url_base_ui + 'b2b/restore-requirement/';
+      return machadaloHttp.post(url,data);
+    }
+
     releaseCampaignService.opsVerifyRequirement = function(data){
       var url = url_base_ui + 'b2b/ops-lead-verification/';
       return machadaloHttp.post(url,data);
