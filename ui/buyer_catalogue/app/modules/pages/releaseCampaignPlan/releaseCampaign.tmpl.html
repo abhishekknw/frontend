@@ -1708,8 +1708,8 @@
                         {{requirement.sector_name}}
                       </td>
                       <tr  ng-show="detailedShow[key]" id="detailedSho_{{key}}" ng-repeat-end  ng-repeat-start="subrequirement in requirement.requirements">    
-                        <td  ng-style="{'background-color': subrequirement.color_class}"> </td>
-                                <td  ng-style="{'background-color': subrequirement.color_class}">
+                        <td  ng-style="{'background-color': subrequirement.color_class}" class="input_td_req11"> </td>
+                                <td  ng-style="{'background-color': subrequirement.color_class}" class="input_td_req">
                                   <input type="checkbox" ng-disabled="subrequirement.varified_ops == 'yes'"
                                     name="requirementCheck" id="requirementCheckId" ng-click="checkbooxCheck(key,$index)"
                                     ng-model="subrequirement.requirementCheck">

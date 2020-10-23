@@ -10,6 +10,32 @@ th{
     text-align: center;
   	color: #fff;
 }
+.input_td_req{
+    text-align: center;
+}
+input#requirementCheckId {
+    width: 20px;
+    height: 20px;
+}
+div#RequirementModel th, div#RequirementModel td {
+    min-width: 140px;
+}
+div#RequirementModel th:nth-child(1), div#RequirementModel td:nth-child(1) {
+    max-width: 31px !important;
+    min-width: auto;
+}
+div#RequirementModel th:nth-child(2), div#RequirementModel td:nth-child(2) {
+    max-width: 77px !important;
+    min-width: auto;
+}
+div#RequirementModel span.ng-binding {
+    clear: both;
+    display: block;
+}
+input#browsedCheckId {
+    width: 18px;
+    height: 18px;
+}
 
 
 body{
