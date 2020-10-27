@@ -1475,9 +1475,11 @@ angular.module('catalogueApp')
 
         $scope.restoreMultiRequirement = function (data, key) {
           let restoreSubSectorId = [];
+          $scope.disableRestore = true
           for (let i in $scope.requirementDetailData[key].requirements) {
             if ($scope.requirementDetailData[key].requirements[i].requirementCheck == true && $scope.requirementDetailData[key].requirements[i].is_deleted == 'yes') {
               restoreSubSectorId.push($scope.requirementDetailData[key].requirements[i].id);
+              $scope.disableRestore = false
             }
           }
           if (restoreSubSectorId.length > 0) {
@@ -1623,6 +1625,7 @@ angular.module('catalogueApp')
           for (let i in data) {
             if (data[i].current_company == "") {
               data[i].current_company = null
+              data[i].old_current_company = true;
             }
             if (data[i].preferred_company.length > 0) {
               for (let j in data[i].preferred_company) {
@@ -1645,6 +1648,11 @@ angular.module('catalogueApp')
                 if (response && response.data.data.error) {
                   swal(constants.name, response.data.data.error, constants.error);
                 } else {
+                  for (let k in data) {
+                    if (data[k].old_current_company) {
+                      data[k].current_company = ""
+                    }
+                  }
                   swal(constants.name, constants.update_success, constants.success);
                 }
               }).catch(function onError(response) {
