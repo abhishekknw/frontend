@@ -733,13 +733,22 @@ angular.module('catalogueApp')
             if ($scope.opsVerifyButtonDiable && $scope.requirementDetailData[index].requirements[i].varified_ops == 'no') {
               $scope.opsVerifyButtonDiable = false;
             }
-
             if ($scope.removeSubSectorDiable && $scope.requirementDetailData[index].requirements[i].is_deleted == 'no') {
               $scope.removeSubSectorDiable = false;
             }
 
           }
           $scope.subSectorCheck = true
+        }
+        $scope.bddetailedShow = [];
+        $scope.bdShowDetailed = function (index){
+          $scope.oldIndex = index;
+          $scope.$watch('oldIndex', function (newValue, oldValue) {
+            if (newValue != oldValue) {
+              $scope.bddetailedShow[oldValue] = false
+            }
+          });
+          $scope.bddetailedShow[index] = !$scope.bddetailedShow[index];
         }
         $scope.sites = ['a', 'b', 'c']
 
@@ -1285,6 +1294,7 @@ angular.module('catalogueApp')
 
         $scope.browsCheckBoxAutoCheck = function (index) {
           $scope.browsedDetailData[index].browsedCheck = true;
+          $scope.checkboxBrowesLeadCheck()
         }
 
 
@@ -1600,6 +1610,18 @@ angular.module('catalogueApp')
 
           }
         }
+
+        $scope.bdcheckboxCheck = function (key) {
+          $scope.subSectorCheck = true
+          var requirementsData = $scope.bdrequirementDetailData[key].requirements
+          for (let x in requirementsData) {
+            if (requirementsData[x].requirementCheck && $scope.subSectorCheck) {
+              $scope.subSectorCheck = false
+            }
+
+          }
+        }
+
         $scope.browsedCheck = true;
         $scope.checkboxBrowesLeadCheck = function () {
           $scope.browsedCheck = true;
@@ -1617,7 +1639,78 @@ angular.module('catalogueApp')
           if (verifyId.length > 0) {
             $scope.verifyRequirement(verifyId);
           }
+        }
 
+        $scope.getBdRequirementDetail = function (id, suppleName) {
+          userService.getSector()
+            .then(function onSuccess(response) {
+              $scope.sectorList = response.data;
+            })
+          releaseCampaignService.bdRequirementDetail(id)
+            .then(function onSuccess(response) {
+              $scope.bdrequirementDetailData = response.data.data.requirements;
+              $scope.bdcompaniesDetailData = response.data.data.companies;
+              // for (let k in $scope.bdcompaniesDetailData) {
+              //   $scope.bdcompaniesDetailData[k].id = $scope.bdcompaniesDetailData[k].organisation_id;
+              //   $scope.bdcompaniesDetailData[k].label = $scope.bdcompaniesDetailData[k].name;
+              //   if (k == response.data.data.companies.length - 1) {
+              //     $scope.bdcompaniesDetailData.push({ id: 'other', label: 'other', organisation_id: '', name: 'other' })
+              //   }
+              // }
+
+              angular.forEach($scope.bdrequirementDetailData, function (value, i) {
+                if ($scope.sectorList) {
+                  //start added sector name
+                  var localindex_indexs = $scope.sectorList.map(function (el) {
+                    return el.id;
+                  }).indexOf($scope.bdrequirementDetailData[i].sector);
+                  if (localindex_indexs != -1) {
+                    $scope.bdrequirementDetailData[i].sector_name = $scope.sectorList[localindex_indexs].business_type
+                  }
+
+                  //end added sector name
+                  //start sub sector name
+                  for (let x in $scope.bdrequirementDetailData[i].requirements) {
+                    if($scope.bdrequirementDetailData[i].requirements[x].varified_bd == 'yes'){
+                      $scope.bdrequirementDetailData[i].requirements[x].color_class = 'green';
+                    } else {
+                      $scope.bdrequirementDetailData[i].requirements[x].color_class = 'yellow';
+                    }
+                    if ($scope.bdrequirementDetailData[i].requirements[x].sub_sector) {
+                      for (let p in $scope.sectorList) {
+                        if ($scope.sectorList[p].subtypes && $scope.sectorList[p].subtypes.length > 0) {
+                          var sub_index = $scope.sectorList[p].subtypes.map(function (el) {
+                            return el.id;
+                          }).indexOf($scope.bdrequirementDetailData[i].requirements[x].sub_sector);
+                          if (sub_index != -1) {
+                            $scope.bdrequirementDetailData[i].requirements[x].sub_sector_name = $scope.sectorList[p].subtypes[sub_index].business_sub_type;
+                          }
+                        }
+                      }
+
+                    }
+
+                    //end sub sector name
+                   // start added preferred_company  yes no
+                    $scope.bdrequirementDetailData[i].requirements[x].is_preferred_company = 'No';
+                    if ($scope.bdrequirementDetailData[i] && $scope.bdrequirementDetailData[i].requirements[x].preferred_company && $scope.bdrequirementDetailData[i].requirements[x].preferred_company.length > 0) {
+                      for (let j in $scope.bdrequirementDetailData[i].requirements[x].preferred_company) {
+                        var localindex_index = $scope.bdcompaniesDetailData.map(function (el) {
+                          return el.organisation_id;
+                        }).indexOf($scope.bdrequirementDetailData[i].requirements[x].preferred_company[j]);
+                        if (localindex_index != -1) {
+                          $scope.bdrequirementDetailData[i].requirements[x].is_preferred_company = 'Yes'
+                        }
+                      }
+
+                    }
+                    // end added preferred_company  yes no
+                  }
+                }
+
+              })
+          
+            })
         }
 
         $scope.updateSubSector = function (data) {
@@ -1626,14 +1719,22 @@ angular.module('catalogueApp')
             if (data[i].current_company == "") {
               data[i].current_company = null
               data[i].old_current_company = true;
+            } else {
+              data[i].current_company_other = ""
             }
+             $scope.checkIsPreferredCompanyOther = true;
             if (data[i].preferred_company.length > 0) {
               for (let j in data[i].preferred_company) {
                 if (data[i].preferred_company[j] == 'other') {
+                  $scope.checkIsPreferredCompanyOther  = false;
                   data[i].preferred_company.splice(j, 1)
-                }
+                } 
               }
             }
+            if($scope.checkIsPreferredCompanyOther){
+              data[i].preferred_company_other = "";
+            }
+          
             if (data[i].requirementCheck) {
               updateData.push(data[i]);
             }
@@ -1663,6 +1764,23 @@ angular.module('catalogueApp')
 
         $scope.updateSubSectorRow = function (data) {
           let updateData = [];
+          if (data.current_company == "") {
+            data.current_company = null
+          } else {
+            data.current_company_other = ""
+          }
+          if (data.preferred_company.length > 0) {
+            $scope.checkIsPreferredCompanyOther = true;
+            for (let j in data.preferred_company) {
+              if (data.preferred_company[j] == 'other') {
+            $scope.checkIsPreferredCompanyOther = false;
+                data.preferred_company.splice(j, 1)
+              } 
+            }
+            if($scope.checkIsPreferredCompanyOther){
+              data.preferred_company_other = "";
+            }
+          }
           updateData.push(data);
           if (updateData.length > 0) {
             var requirementData = {
@@ -1761,8 +1879,9 @@ angular.module('catalogueApp')
                     if (response && response.data.data.error) {
                       swal(constants.name, response.data.data.error, constants.error);
                     } else {
-                      $scope.requirementDetailData[key].requirements[index].varified_bd = 'yes';
-                      $scope.requirementDetailData[key].requirements[index].varified_bd_date = new Date();
+                      $scope.bdrequirementDetailData[key].requirements[index].varified_bd = 'yes';
+                      $scope.bdrequirementDetailData[key].requirements[index].color_class = 'green';
+                      $scope.bdrequirementDetailData[key].requirements[index].varified_bd_date = new Date();
                       swal(constants.name, 'Verified Successfully', constants.success);
                     }
                   }).catch(function onError(response) {
@@ -3032,7 +3151,7 @@ angular.module('catalogueApp')
         }
 
         $scope.show_color = function (supplier) {
-          if ($scope.releaseDetails.campaign.type_of_end_customer_formatted_name == "b_to_b_r_g") {
+          if ($scope.releaseDetails.campaign.type_of_end_customer_formatted_name == "b_to_b_r_g" || $scope.releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d') {
             if (supplier.color_code == 1) {
               return 'yellow';
             }
