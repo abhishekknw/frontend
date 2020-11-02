@@ -209,7 +209,7 @@
     }
 
     releaseCampaignService.bdVerifyRequirement = function(data){
-      var url = url_base_ui + 'b2b/requirements/';
+      var url = url_base_ui + 'b2b/bd-lead-verification/';
       return machadaloHttp.post(url,data);
     }
 
@@ -228,6 +228,10 @@
       return machadaloHttp.get(url);
     }
 
-    
+    releaseCampaignService.bdRequirementDetail = function(id){
+      var url = url_base_ui + "b2b/bd-requirement/?company_shortlisted_spaces_id=" + id;
+      return machadaloHttp.get(url);
+    }
+
     return releaseCampaignService;
 }]);
