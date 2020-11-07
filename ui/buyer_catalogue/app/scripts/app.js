@@ -462,7 +462,7 @@ angular
       })
       .state('b2bdashboard', {
         url: '/b2b/dashboard',
-        controller: 'DashboardCtrl',
+        controller: 'B2BDashboardCtrl',
         templateUrl: 'modules/pages/b2bdashboard/b2bdashboard.html',
         sidebarMeta: {
           icon: 'ion-android-home',
@@ -618,6 +618,8 @@ angular
           $location.path("/login");
         }else if ($rootScope.globals.currentUser && $location.path() == '/changePassword') {
           $location.path("/changePassword");
+        } else if ($rootScope.globals.currentUser && $location.path() == '/b2b/dashboard') {
+          $location.path("/b2b/dashboard");
         }
         else if ($rootScope.globals.currentUser && typeof $cookieStore.get('returnUrl') != 'undefined' && $cookieStore.get('returnUrl') && category != 'BUSINESS') {
           $location.path($cookieStore.get('returnUrl'));

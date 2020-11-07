@@ -2,7 +2,7 @@
 
 
 angular.module('catalogueApp')
-  .factory('DashboardService', ['machadaloHttp', '$stateParams', '$rootScope', '$routeParams', '$location', '$http',
+  .factory('B2BDashboardService', ['machadaloHttp', '$stateParams', '$rootScope', '$routeParams', '$location', '$http',
     function (machadaloHttp, $stateParams, $scope, $rootScope, $routeParams, $location, $http) {
 
       var url_base = 'v0/ui/website/';
@@ -335,6 +335,91 @@ angular.module('catalogueApp')
         var url = url_base + campaignId + "/comment/";
         return machadaloHttp.get(url);
       }
+
+      //lead start 
+
+      DashboardService.leadCountByDate = function (date) {
+       // var url = url_root + "b2b/lead-count-by-date/?date=2020-11-6 00:00:00.00000";
+        var url = url_root + "b2b/lead-count-by-date/";
+        if(date){
+          url += "?date=" + date;
+        }
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.leadCampaignData = function (date) {
+       // var url = url_root + "b2b/lead-campaign-data/?date=2020-10-31 08:15:27.243860";
+        var url = url_root + "b2b/lead-campaign-data/";
+        if(date){
+          url += "?date=" + date;
+        }
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.getLeadSupplier = function (campaignId) {
+        var url = url_root + "b2b/supplier-by-campaign/?campaign_id=" + campaignId;
+        return machadaloHttp.get(url);
+      }
+
+   
+
+      DashboardService.existingClientFeedbackData = function (date) {
+       // var url = url_root + "b2b/existing-client-feedback/?date=2020-10-31 08:15:27.243860";
+        var url = url_root + "b2b/existing-client-feedback/";
+        if(date){
+          url += "?date=" + date;
+        }
+        return machadaloHttp.get(url);
+      }
+      
+
+      DashboardService.getCampaignsList = function () {
+        var url = url_root + "b2b/campaign-list-by-status/";
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.leadCount = function (data) {
+       // var url = url_root + "b2b/donut-1st/?campaign_id=MACJITEC8F";
+        var url = url_root + "b2b/donut-1st/";
+        if(data && data.campaign_id){
+          url += "?campaign_id=" + data.campaign_id;
+        }
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.clientFeedback = function (data) {
+        //var url = url_root + "b2b/donut-2nd/?campaign_id=MACJITEC8F";
+        var url = url_root + "b2b/donut-2nd/";
+        if(data && data.campaign_id){
+          url += "?campaign_id=" + data.campaign_id;
+        }
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.leadSupplerDetail = function (campaignId,purchasedStatus) {
+       // var url = url_root + "b2b/donut-table-1st/?campaign_id=MACJITEC8F&is_purchased=no";
+         var url = url_root + "b2b/donut-table-1st/";
+        if(campaignId){
+          url += "?campaign_id=" + campaignId;
+             if(purchasedStatus){
+              url += "&is_purchased=" + purchasedStatus;
+             }
+        }
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.ClientFeedbackSupplierDetail = function (campaignId,purchasedStatus) {
+       // var url = url_root + "b2b/donut-table-2nd/?campaign_id=MACJITEC8F&is_purchased=no";
+          var url = url_root + "b2b/donut-table-2nd/";
+        if(campaignId){
+          url += "?campaign_id=" + campaignId;
+             if(purchasedStatus){
+              url += "&is_purchased=" + purchasedStatus;
+             }
+        }
+        return machadaloHttp.get(url);
+      }
+      
 
       return DashboardService;
 

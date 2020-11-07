@@ -521,12 +521,12 @@
                 </select>
                 <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'" data-target="#RequirementModel"
                   ng-click="getRequirementDetail(supplier.id,supplier.name) && (supplier.id)" data-toggle="modal"
-                  style="margin-top:10px" ng-if="supplier.requirement_given == 'yes'" type="button"
+                  style="margin-top:10px" ng-hide="supplier.requirement_given == 'no'" type="button"
                   class="btn btn-danger" name="button">Requirement</button>
 
                   <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'" data-target="#BDRequirementModel"
                   ng-click="getBdRequirementDetail(supplier.id,supplier.name) && (supplier.id)" data-toggle="modal"
-                  style="margin-top:10px" ng-if="supplier.requirement_given == 'yes'" type="button"
+                  style="margin-top:10px" ng-hide="supplier.requirement_given == 'no'" type="button"
                   class="btn btn-danger" name="button">Requirement</button>
               </td>
 
@@ -1042,11 +1042,11 @@
                 </select>
                 <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'" data-target="#RequirementModel"
                   ng-click="getRequirementDetail(supplier.id,supplier.name) && (supplier.id)" data-toggle="modal"
-                  style="margin-top:10px" ng-if="supplier.requirement_given == 'yes'" type="button"
+                  style="margin-top:10px" ng-hide="supplier.requirement_given == 'no'"type="button"
                   class="btn btn-danger" name="button">Requirement</button>
                   <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'" data-target="#BDRequirementModel"
                   ng-click="getBdRequirementDetail(supplier.id,supplier.name) && (supplier.id)" data-toggle="modal"
-                  style="margin-top:10px" ng-if="supplier.requirement_given == 'yes'" type="button"
+                  style="margin-top:10px" ng-hide="supplier.requirement_given == 'no'" type="button"
                   class="btn btn-danger" name="button">Requirement</button>
                 <!-- ng-click="setContact(supplier)" -->
               </td>
