@@ -1755,6 +1755,7 @@
 
                       <td class="alignment">
                         <span style="width:150px;"
+                        
                           ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
                           class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;"
                           ng-dropdown-multiselect="" options="companiesDetailData" extra-settings="settings"
@@ -1860,7 +1861,7 @@
                           ng-click="updateSubSectorRow(subrequirement)">Update</button>
 
                         <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
-                          ng-if="subrequirement.color_class != 'red'"
+                          ng-if="subrequirement.color_class != 'red'" ng-disabled="subrequirement.varified_ops == 'yes'"
                           ng-click="singleRemoveSubSector(subrequirement.id,key,$index)">Remove</button>
 
                         <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
@@ -1880,10 +1881,11 @@
 
                     <tr ng-show="detailedShow[key]" ng-repeat-end>
                       <td colspan="15">
-                        <button class="btn btn-success" id="update_{{key}}" ng-disabled="subSectorCheck "
+                        <button class="btn btn-success" id="update_{{key}}" ng-disabled="subSectorCheck || updateDisable"
                           ng-click="updateSubSector(requirement.requirements)">Update</button>
-                        <button style="margin-bottom:2px" id="verify_{{key}}" type="button" name="button"
-                          class="btn btn-success" ng-disabled="subSectorCheck || opsVerifyButtonDiable"
+      
+                          <button  style="margin-bottom:2px" id="verify_{{key}}" type="button" name="button"
+                          class="btn btn-success" ng-disabled="subSectorCheck || opsVerifyButtonDiable || updateDisable"
                           ng-click="checkOpsVerifyRequirement(requirement.requirements)"><span
                             ng-if="!opsVerifyButtonDiable">Ops Verify</span>
                           <span ng-if="opsVerifyButtonDiable">Ops Verified</span></button>

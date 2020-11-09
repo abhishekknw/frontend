@@ -178,7 +178,7 @@
                                 <td><a ng-click="getLeadSupplier(item.proposal_id,item.name)">{{item.name}}</a>
                                 </td>
                                 <td>{{item.purchased_count}}</td>
-                                <td>Total Available</td>
+                                <td>{{item.not_purchased_count}}</td>
                               </tr>
                             </tbody>
                           </table>
@@ -416,28 +416,28 @@
                             <table class="table-responsive table table-bordered equal-width">
                               <thead>
                                 <tr style="font-size:12px;">
-                                  <td>Campaign Status</td>
+                                 
                                   <td>Leads Offered (premium) </td>
                                   <td>Leads Purchased</td>
                                   <td>Leads Purchased %</td>
-                                  <td>Leads Assigned</td>
+                                  <!-- <td>Leads Assigned</td> -->
                                   <td>Leads Remaining</td>
                                   <td>Leads Remaining %</td>
-                                  <td>Total Points Purchased (ultra)</td>
-                                  <td>Overall Licenses Remaining %</td>
+                                  <!-- <td>Total Points Purchased (ultra)</td>
+                                  <td>Overall Licenses Remaining %</td> -->
                                 </tr>
                               </thead>
                               <tbody>
                                 <tr>
-                                  <td></td>
+                                 
                                   <td>{{AllLeadsData.total_leads}}</td>
                                   <td>{{AllLeadsData.total_leads_purchased}}</td>
-                                  <td>{{AllLeadsData.leads_purchased_per}}</td>
-                                  <td></td>
+                                  <td>{{AllLeadsData.leads_purchased_per}}%</td>
+                                  <!-- <td></td> -->
                                   <td>{{AllLeadsData.leads_remain}}</td>
-                                  <td>{{AllLeadsData.leads_remain_per}}</td>
-                                  <td></td>
-                                  <td></td>
+                                  <td>{{AllLeadsData.leads_remain_per}}%</td>
+                                  <!-- <td></td>
+                                  <td></td> -->
                                 </tr>
                               </tbody>
                             </table>
@@ -460,25 +460,25 @@
                               <table class="table-responsive table table-bordered equal-width">
                                 <thead>
                                   <tr style="font-size:12px;">
-                                    <td>Campaign Status</td>
+                               
                                     <td>Total Current </td>
                                     <td>Dis Satisfied Purchased (%)</td>
                                     <td>Dis Satisfied Not Purchased</td>
                                     <td>Satisfied</td>
-                                    <td>Total Points Purchased (ultra)</td>
-                                    <td>Overall Licenses Remaining %</td>
+                                    <!-- <td>Total Points Purchased (ultra)</td>
+                                    <td>Overall Licenses Remaining %</td> -->
                                   </tr>
                                 </thead>
                                 <tbody>
                                   <tr>
-                                    <td></td>
+                                   
                                     <td>{{leadFeedbackData.total_leads}}</td>
                                     <td>{{leadFeedbackData.dissatisfied_purchased}}
                                       ({{leadFeedbackData.dissatisfied_purchased}}%)</td>
                                     <td>{{leadFeedbackData.dissatisfied_not_purchased}}</td>
                                     <td>{{leadFeedbackData.total_satisfied}}</td>
-                                    <td></td>
-                                    <td></td>
+                                    <!-- <td></td>
+                                    <td></td> -->
 
 
                                   </tr>

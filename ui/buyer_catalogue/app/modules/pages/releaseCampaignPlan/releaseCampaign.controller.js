@@ -728,7 +728,9 @@ angular.module('catalogueApp')
           $scope.detailedShow[index] = !$scope.detailedShow[index];
           $scope.opsVerifyButtonDiable = true
           $scope.removeSubSectorDiable = true
+          $scope.updateDisable = false;
           for (let i in $scope.requirementDetailData[index].requirements) {
+          //  console.log('test')
             $scope.requirementDetailData[index].requirements[i].requirementCheck = false;
             if ($scope.opsVerifyButtonDiable && $scope.requirementDetailData[index].requirements[i].varified_ops == 'no') {
               $scope.opsVerifyButtonDiable = false;
@@ -737,7 +739,14 @@ angular.module('catalogueApp')
               $scope.removeSubSectorDiable = false;
             }
 
+            if (!$scope.updateDisable && $scope.requirementDetailData[index].requirements[i].is_deleted == 'yes') {
+              $scope.updateDisable = true;
+            }
+
+         
+
           }
+
           $scope.subSectorCheck = true
         }
         $scope.bddetailedShow = [];
@@ -1108,6 +1117,11 @@ angular.module('catalogueApp')
 
         $scope.opsVerifyButtonDiable = true;
         $scope.getRequirementDetail = function (id, suppleName) {
+          if($scope.oldIndex){
+            $scope.detailedShow[$scope.oldIndex] = false
+          }
+          
+          $scope.disableRestore = false
           $scope.supplierName = suppleName;
           $scope.shortlisted_spaces_id = id
           userService.getSector()
@@ -1274,7 +1288,7 @@ angular.module('catalogueApp')
         }
 
         $scope.subSectorPreferredMulticheck = function (key, index) {
-          $scope.requirementDetailData[key].requirements[index].requirementCheck = true;
+          // $scope.requirementDetailData[key].requirements[index].requirementCheck = true;
           if ($scope.requirementDetailData[key] && $scope.requirementDetailData[key].requirements[index] && $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector && $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector.length > 0) {
             $scope.requirementDetailData[key].requirements[index].preferred_company = [];
             $scope.otherPreferredCompany = false;
@@ -1464,7 +1478,7 @@ angular.module('catalogueApp')
                       if (response && response.data.data.error) {
                         swal(constants.name, response.data.data.error, constants.error);
                       } else {
-                        swal(constants.name, 'Restore Successfully', constants.success);
+                        swal(constants.name, 'Recovered Successfully', constants.success);
                       }
                     }).catch(function onError(response) {
                       console.log(response);
@@ -1512,7 +1526,7 @@ angular.module('catalogueApp')
                       if (response && response.data.data.error) {
                         swal(constants.name, response.data.data.error, constants.error);
                       } else {
-                        swal(constants.name, 'Restore Successfully', constants.success);
+                        swal(constants.name, 'Recovered Successfully', constants.success);
                       }
                     }).catch(function onError(response) {
                       console.log(response);
@@ -1735,7 +1749,7 @@ angular.module('catalogueApp')
               data[i].preferred_company_other = "";
             }
           
-            if (data[i].requirementCheck) {
+            if (data[i].requirementCheck  ) {
               updateData.push(data[i]);
             }
 
@@ -1852,7 +1866,9 @@ angular.module('catalogueApp')
                       swal(constants.name, 'Verified Successfully', constants.success);
                     }
                   }).catch(function onError(response) {
-                    console.log(response);
+                    if(response && response.data && response.data.data && response.data.data.general_error && response.data.data.general_error.error){
+                      swal(constants.name, response.data.data.general_error.error, constants.error);
+                    }
                   })
               }
             });
