@@ -741,6 +741,7 @@
         }
         B2BDashboardService.leadCampaignData(date).then(function onSuccess(response) {
           $scope.campaignLeadData = response.data.data;
+          console.log('++++++++++++++++++9999999999999999',$scope.campaignLeadData)
           if($scope.campaignLeadData.campaigns.length > 0){
             $scope.leadCampaignTable = false;
           }
