@@ -192,12 +192,12 @@
                     <div class="col-md-12">
                       <div class="panel-heading" >
                         <h4><a ng-click="getCampaign(proposalId)" style="color: white;cursor: pointer;">Supplier Details
-                            of <span style="color:#3bff00c4;font-style: italic;text-transform:capitalize"> {{campaignName}} </span> Campaign</a></h4><br />
+                            of <span style="color:#3bff00c4;font-style: italic;text-transform:capitalize;font-weight: 900;text-decoration: underline;"> {{campaignName}} </span> Campaign</a></h4><br />
                         <!-- <div class="row">
                           <span class="pull-left"><label for="heading"><small>Campaign Owner :
                               </small><span><small style="color:orange">{{campaignOwner}}</small> </span></label></span>
                           <span class="pull-right"><label for="heading"><small>Principal Vendor :
-                              </small><span><small style="color:orange">{{principalVendor}}</small></span></label></span>
+                              </small><span><small style="color:orange">{{principalVendor}}</small></span></label></span>  
                         </div> -->
                       </div>
 
@@ -260,7 +260,7 @@
 
                         <div class="col-md-12 panel-heading content-title CampaignDetails">
                           <h4 ng-if="!selectedCampaignName" style="text-align:center;">All Campaigns Details</h4>
-                          <h4 ng-if="selectedCampaignName" style="text-align:center;">Details Of <span style="color:#3bff00c4;font-style: italic;text-transform:capitalize">{{selectedCampaignName}} </span> 
+                          <h4 ng-if="selectedCampaignName" style="text-align:center;">Details Of <span style="text-decoration: underline;font-weight: 900;color:#3bff00c4;font-style: italic;text-transform:capitalize">{{selectedCampaignName}} </span> 
                           </h4>
                           <span>
                             <!-- <div class="row" ng-if="selectedCampaignName">
@@ -408,7 +408,7 @@
                           <div class="panel-heading content-title">
                             <h5 style="background:'red';color:white;" ng-if="!selectedCampaignName">All Campaign
                               Details </h5>
-                              <h5 style="background:'red';color:white;" ng-if="selectedCampaignName"><span style="color:#3bff00c4;font-style: italic;text-transform:capitalize">{{selectedCampaignName}} </span> Campaign
+                              <h5 style="background:'red';color:white;" ng-if="selectedCampaignName"><span style="text-decoration: underline;font-weight: 900;color:#3bff00c4;font-style: italic;text-transform:capitalize">{{selectedCampaignName}} </span> Campaign
                                 Details </h5>
                             <!-- <h5 style="background:'red';color:white;" ng-if="showSingleCampaignChart">Supplier / Leads
                               Details</h5> -->
@@ -500,7 +500,7 @@
                             <div class="panel-heading" style="height:70px;">
                               <h5 style="background:'red';color:white;text-transform:capitalize" ng-if="selectedCampaignName">Details of Leads
                                 Purchased
-                                <span style="color:#3bff00c4;font-style: italic;text-transform:capitalize">{{selectedCampaignName}} </span></h5>
+                                <span style="color:#3bff00c4;font-style: italic;text-transform:capitalize;font-weight: 900;text-decoration: underline;">{{selectedCampaignName}} </span></h5>
                               <h5 style="background:'red';color:white;text-transform:capitalize" ng-if="!selectedCampaignName">Details of All Leads</h5>
 
                             </div>
@@ -571,7 +571,7 @@
                       <div class="row">
                         <div class="col-md-12">
                           <div class="panel-heading content-title">
-                            <h5 style="background:'red'" ng-if="selectedCampaignName">Map View for <span style="color:#3bff00c4;font-style: italic;text-transform:capitalize">{{selectedCampaignName}} </span></h5>
+                            <h5 style="background:'red'" ng-if="selectedCampaignName">Map View for <span style="text-decoration: underline;font-weight: 900;color:#3bff00c4;font-style: italic;text-transform:capitalize">{{selectedCampaignName}} </span></h5>
                             <h5 style="background:'red'" ng-if="!selectedCampaignName">Map View for All Campaign</h5>
                           </div>
                           <style type="text/css">
