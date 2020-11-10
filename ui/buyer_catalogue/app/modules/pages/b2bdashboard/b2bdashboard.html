@@ -175,7 +175,7 @@
                             <tbody>
                               <tr ng-repeat="item in campaignLeadData.campaigns | filter : searchQuery">
                                 <td>{{$index + 1}}</td>
-                                <td><a ng-click="getLeadSupplier(item.proposal_id,item.name)">{{item.name}}</a>
+                                <td><a ng-click="getLeadSupplier(item)">{{item.name}}</a>
                                 </td>
                                 <td>{{item.purchased_count}}</td>
                                 <td>{{item.not_purchased_count}}</td>
@@ -195,9 +195,9 @@
                             of {{campaignName}} Campaign</a></h4><br />
                         <div class="row">
                           <span class="pull-left"><label for="heading"><small>Campaign Owner :
-                              </small><span><small>{{campaignOwner}}</small> </span></label></span>
+                              </small><span><small style="color:orange">{{campaignOwner}}</small> </span></label></span>
                           <span class="pull-right"><label for="heading"><small>Principal Vendor :
-                              </small><span><small>{{principalVendor}}</small></span></label></span>
+                              </small><span><small style="color:orange">{{principalVendor}}</small></span></label></span>
                         </div>
                       </div>
 
@@ -259,16 +259,16 @@
                             </div> -->
 
                         <div class="col-md-12 panel-heading content-title CampaignDetails">
-                          <h4 ng-if="!campaignLabel" style="text-align:center;">All Campaigns Details</h4>
-                          <h4 ng-if="campaignLabel" style="text-align:center;">Details Of {{campaignTabPropsalName}}
+                          <h4 ng-if="!selectedCampaignName" style="text-align:center;">All Campaigns Details</h4>
+                          <h4 ng-if="selectedCampaignName" style="text-align:center;">Details Of {{selectedCampaignName}}
                           </h4>
                           <span>
-                            <div class="row" ng-if="campaignLabel">
+                            <!-- <div class="row" ng-if="selectedCampaignName">
                               <span class="pull-left"><label for="heading"><small>Campaign Owner :
                                   </small><span><small>{{campaignOwner}}</small> </span></label></span>
                               <span class="pull-right"><label for="heading"><small>Principal Vendor :
                                   </small><span><small>{{principalVendor}}</small></span></label></span>
-                            </div>
+                            </div> -->
                           </span>
                         </div>
                         <br />
@@ -278,14 +278,14 @@
 
 
                           <div class="panel-group" id="accordion">
-                            <div class="panel panel-default">
+                            <!-- <div class="panel panel-default">
                               <div ng-if="showCampaignGraph" class="panel-heading" ng-click="getCampaigns()">
                                 <h4 class="panel-title">
                                   All Campaigns
                                 </h4>
 
                               </div>
-                            </div>
+                            </div> -->
                             <!-- <div class="panel panel-default">
                               <div class="row" style="width:100%;margin-left:0px;">
                                 <h4 class="panel-title">
@@ -406,8 +406,10 @@
                         </div>
                         <div class="col-md-5 LeadsTable">
                           <div class="panel-heading content-title">
-                            <h5 style="background:'red';color:white;">All Campaign
+                            <h5 style="background:'red';color:white;" ng-if="!selectedCampaignName">All Campaign
                               Details </h5>
+                              <h5 style="background:'red';color:white;" ng-if="selectedCampaignName">{{selectedCampaignName}} Campaign
+                                Details </h5>
                             <!-- <h5 style="background:'red';color:white;" ng-if="showSingleCampaignChart">Supplier / Leads
                               Details</h5> -->
                           </div>
@@ -474,7 +476,7 @@
                                    
                                     <td>{{leadFeedbackData.total_leads}}</td>
                                     <td>{{leadFeedbackData.dissatisfied_purchased}}
-                                      ({{leadFeedbackData.dissatisfied_purchased}}%)</td>
+                                      ({{leadFeedbackData.dissatisfied_purchased_per}}%)</td>
                                     <td>{{leadFeedbackData.dissatisfied_not_purchased}}</td>
                                     <td>{{leadFeedbackData.total_satisfied}}</td>
                                     <!-- <td></td>
