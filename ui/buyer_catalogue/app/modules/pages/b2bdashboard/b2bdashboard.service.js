@@ -396,26 +396,34 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
-      DashboardService.leadSupplerDetail = function (campaignId,purchasedStatus) {
+      DashboardService.leadSupplerDetail = function (data) {
        // var url = url_root + "b2b/donut-table-1st/?campaign_id=MACJITEC8F&is_purchased=no";
          var url = url_root + "b2b/donut-table-1st/";
-        if(campaignId){
-          url += "?campaign_id=" + campaignId;
-             if(purchasedStatus){
-              url += "&is_purchased=" + purchasedStatus;
+        if(data && data.campaign_id){
+          url += "?campaign_id=" + data.campaign_id;
+             if(data.status){
+              url += "&is_purchased=" +  data.status;
              }
+        } else {
+          url += "?is_purchased=" +  data.status;
         }
         return machadaloHttp.get(url);
       }
 
-      DashboardService.ClientFeedbackSupplierDetail = function (campaignId,purchasedStatus) {
+      DashboardService.ClientFeedbackSupplierDetail = function (data) {
        // var url = url_root + "b2b/donut-table-2nd/?campaign_id=MACJITEC8F&is_purchased=no";
           var url = url_root + "b2b/donut-table-2nd/";
-        if(campaignId){
-          url += "?campaign_id=" + campaignId;
-             if(purchasedStatus){
-              url += "&is_purchased=" + purchasedStatus;
+        if(data && data.campaign_id){
+          url += "?campaign_id=" + data.campaign_id;
+             if(data.status){
+              url += "&is_purchased=" + data.status;
              }
+        } else {
+          url += "?is_purchased=" +  data.status;
+        }
+
+        if(data.satisfied_status){
+          url += "&is_satisfied=" +  data.satisfied_status;
         }
         return machadaloHttp.get(url);
       }

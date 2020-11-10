@@ -741,7 +741,6 @@
         }
         B2BDashboardService.leadCampaignData(date).then(function onSuccess(response) {
           $scope.campaignLeadData = response.data.data;
-          console.log('++++++++++++++++++9999999999999999',$scope.campaignLeadData)
           if($scope.campaignLeadData.campaigns.length > 0){
             $scope.leadCampaignTable = false;
           }
@@ -751,9 +750,10 @@
         });
       }
       $scope.leadSupplierTable = true;
-      $scope.getLeadSupplier = function (campaignId,campaignname) {  
-        $scope.campaignName = campaignname;
-        B2BDashboardService.getLeadSupplier(campaignId).then(function onSuccess(response) {
+      $scope.getLeadSupplier = function (campaign) {  
+        $scope.principalVendor = campaign.principal_vendor 
+        $scope.campaignName = campaign.name;
+        B2BDashboardService.getLeadSupplier(campaign.proposal_id).then(function onSuccess(response) {
           $scope.leadSupplierData = response.data.data;
            $scope.leadSupplierTable = false;
         });
@@ -780,12 +780,14 @@
 
 
 
-      $scope.leadCount = function (campaign) {
+      $scope.leadCount = function (campaign) { 
+        $scope.selectedCampaignName = undefined;    
         var data = {}
         var campaignId
         if (campaign && campaign.proposal_id) {
           data.campaign_id = campaign.proposal_id;
           campaignId = campaign.proposal_id;
+          $scope.selectedCampaignName = campaign.name;
         }
       
         B2BDashboardService.leadCount(data).then(function onSuccess(response) {
@@ -793,10 +795,10 @@
           $scope.options = {};
           $scope.options = angular.copy(doughnutChartOptions);
           $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.pieChartClick(e.data.label); };
-          $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.getCampaignInvData(e.data, campaignId); };
+          $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.getCampaignInvData(e.data); };
           $scope.campaignChartdata = [
-            { label: 'Leads Purchased', value: $scope.AllLeadsData.total_leads_purchased, status: 'yes' },
-            { label: 'Leads Not Purchased', value: $scope.AllLeadsData.leads_remain, status: 'no' },
+            { label: 'Leads Purchased', value: $scope.AllLeadsData.total_leads_purchased, status: 'yes',campaign_id: campaignId},
+            { label: 'Leads Not Purchased', value: $scope.AllLeadsData.leads_remain, status: 'no',campaign_id: campaignId},
           ];
         })
         $scope.clientFeedback(campaign);
@@ -816,9 +818,9 @@
           $scope.feedbackOptions.chart.pie.dispatch['elementClick'] = function (e) { $scope.pieChartClick(e.data.label); };
           $scope.feedbackOptions.chart.pie.dispatch['elementClick'] = function (e) { $scope.getClientFeedbackSummary(e.data, campaignId); };
           $scope.campaignChartdatafeedback = [
-            { label: 'Dis Satisfied Purchased', value: $scope.leadFeedbackData.dissatisfied_purchased, status: 'yes' },
-            { label: 'Dis Satisfied Not Purchased', value: $scope.leadFeedbackData.dissatisfied_not_purchased, status: 'no' },
-            { label: 'Satisfied', value: $scope.leadFeedbackData.total_satisfied, status: 'test1' },
+            { label: 'Dis Satisfied Purchased', value: $scope.leadFeedbackData.dissatisfied_purchased, status: 'yes',campaign_id: campaignId,satisfied_status:'no' },
+            { label: 'Dis Satisfied Not Purchased', value: $scope.leadFeedbackData.dissatisfied_not_purchased, status: 'no',campaign_id: campaignId,satisfied_status:'no' },
+            { label: 'Satisfied', value: $scope.leadFeedbackData.total_satisfied, status: '',campaign_id: campaignId,satisfied_status:'yes' },
           ];
         })
       }
@@ -3098,10 +3100,9 @@
         },
       }
 
-      $scope.getCampaignInvData = function (data, campaignId) {
+      $scope.getCampaignInvData = function (data) {
 
-        console.log('11111111111111111111',data)
-        console.log('11111111111111111111',campaignId)
+    
 
         // $scope.supplierStatus = data.status;
         //  $scope.campaignDetailsData = $scope.campaignAllStatusTypeData[data.status];
@@ -3123,7 +3124,7 @@
         //   }
         // }
 
-        B2BDashboardService.leadSupplerDetail(campaignId, data.status).then(function onSuccess(response) {
+        B2BDashboardService.leadSupplerDetail(data).then(function onSuccess(response) {
           $scope.supplierData = response.data.data;
           if($scope.supplierData.length > 0){
             $scope.showLeadtable = true;
@@ -3136,9 +3137,9 @@
       $scope.showLeadtable = false;
       $scope.showClientFeedbackTable = false;
 
-      $scope.getClientFeedbackSummary = function (data, campaignId) {
-        B2BDashboardService.ClientFeedbackSupplierDetail(campaignId, data.status).then(function onSuccess(response) {
-          $scope.supplierData = response.data.data;
+      $scope.getClientFeedbackSummary = function (data) {
+        B2BDashboardService.ClientFeedbackSupplierDetail(data).then(function onSuccess(response) {
+          $scope.supplierData = response.data.data.lead_data;
           if($scope.supplierData.length > 0){
             $scope.showClientFeedbackTable = true;
             $scope.showLeadtable = false;
@@ -3634,7 +3635,6 @@
               { label: $scope.allCampaignStatusType.onhold.campaignLabel, value: onhold_campaigns_length, status: $scope.allCampaignStatusType.onhold.status }
             ];
 
-            console.log('jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj', $scope.campaignChartdata)
             $scope.dynamicValues = $scope.allCampaignDetailsData;
             $scope.dynamicValuesCampaignIdMap = {};
             angular.forEach($scope.dynamicValues, function (data) {
