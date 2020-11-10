@@ -460,6 +460,18 @@ angular
           permission: 'dashboard_page_access'
         }
       })
+      .state('b2bdashboard', {
+        url: '/b2b/dashboard',
+        controller: 'DashboardCtrl',
+        templateUrl: 'modules/pages/b2bdashboard/b2bdashboard.html',
+        sidebarMeta: {
+          icon: 'ion-android-home',
+          order: 0,
+        },
+        data: {
+          permission: 'dashboard_page_access'
+        }
+      })
       .state('sheetToCampaign', {
         url: '/sheetToCampaign',
         controller: 'sheetToCampaignController',
