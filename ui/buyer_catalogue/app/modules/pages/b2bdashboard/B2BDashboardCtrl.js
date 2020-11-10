@@ -781,6 +781,8 @@
 
 
       $scope.leadCount = function (campaign) { 
+        $scope.hideDonetOne = false;
+        $scope.hideDonettwo = false;
         $scope.selectedCampaignName = undefined;    
         var data = {}
         var campaignId
@@ -796,6 +798,12 @@
           $scope.options = angular.copy(doughnutChartOptions);
           $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.pieChartClick(e.data.label); };
           $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.getCampaignInvData(e.data); };
+         if($scope.AllLeadsData.total_leads_purchased == 0 && $scope.AllLeadsData.leads_remain == 0){
+          $scope.hideDonetOne = true;
+         }
+         if(!$scope.AllLeadsData.total_leads_purchased && !$scope.AllLeadsData.leads_remain){
+          $scope.hideDonetOne = true;
+         }
           $scope.campaignChartdata = [
             { label: 'Leads Purchased', value: $scope.AllLeadsData.total_leads_purchased, status: 'yes',campaign_id: campaignId},
             { label: 'Leads Not Purchased', value: $scope.AllLeadsData.leads_remain, status: 'no',campaign_id: campaignId},
@@ -803,6 +811,8 @@
         })
         $scope.clientFeedback(campaign);
       }
+      $scope.hideDonetOne = false;
+      $scope.hideDonettwo = false;
 
       $scope.clientFeedback = function (campaign) {
         var data = {};
@@ -813,15 +823,23 @@
         }
         B2BDashboardService.clientFeedback(data).then(function onSuccess(response) {
           $scope.leadFeedbackData = response.data.data
+          
           $scope.feedbackOptions = {};
           $scope.feedbackOptions = angular.copy(doughnutChartOptions);
           $scope.feedbackOptions.chart.pie.dispatch['elementClick'] = function (e) { $scope.pieChartClick(e.data.label); };
           $scope.feedbackOptions.chart.pie.dispatch['elementClick'] = function (e) { $scope.getClientFeedbackSummary(e.data, campaignId); };
-          $scope.campaignChartdatafeedback = [
-            { label: 'Dis Satisfied Purchased', value: $scope.leadFeedbackData.dissatisfied_purchased, status: 'yes',campaign_id: campaignId,satisfied_status:'no' },
-            { label: 'Dis Satisfied Not Purchased', value: $scope.leadFeedbackData.dissatisfied_not_purchased, status: 'no',campaign_id: campaignId,satisfied_status:'no' },
-            { label: 'Satisfied', value: $scope.leadFeedbackData.total_satisfied, status: '',campaign_id: campaignId,satisfied_status:'yes' },
-          ];
+          if($scope.leadFeedbackData.dissatisfied_purchased == 0 && $scope.leadFeedbackData.dissatisfied_not_purchased == 0 && $scope.leadFeedbackData.total_satisfied ==0){
+            $scope.hideDonettwo = true;
+          } 
+          if($scope.leadFeedbackData && !$scope.leadFeedbackData.dissatisfied_purchased && !$scope.leadFeedbackData.dissatisfied_not_purchased && !$scope.leadFeedbackData.total_satisfied){
+            $scope.hideDonettwo = true;
+          } 
+            
+        $scope.campaignChartdatafeedback = [
+          { label: 'Dis Satisfied Purchased', value: $scope.leadFeedbackData.dissatisfied_purchased, status: 'yes',campaign_id: campaignId,satisfied_status:'no' },
+          { label: 'Dis Satisfied Not Purchased', value: $scope.leadFeedbackData.dissatisfied_not_purchased, status: 'no',campaign_id: campaignId,satisfied_status:'no' },
+          { label: 'Satisfied', value: $scope.leadFeedbackData.total_satisfied, status: 'no',campaign_id: campaignId,satisfied_status:'yes' },
+        ];
         })
       }
 
