@@ -132,6 +132,9 @@ div#RequirementModel span.glyphicon.glyphicon-minus:before {
 tr, td {
   color: #000000 !important;
 }
+.campaigndetailtable table.table {
+  width: 100%;
+}
 
 
 h3 {
