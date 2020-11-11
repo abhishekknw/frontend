@@ -399,6 +399,7 @@
                             </div>
                           </div>
                         </div>
+                       <div style="color:red;text-align: center;margin-top: 10px" ng-if="hideDonetOne && hideDonettwo"><h4>Campaign Not Found.</h4></div>
 
                         <div class="row col-md-4" ng-hide="hideDonetOne">
                           <nvd3 options="options" data="campaignChartdata"></nvd3>
@@ -597,17 +598,15 @@
                                     <h3>{{space.title.name}}</h3>
                                   </div>
                                   <tr>
-                                    <td>Hot Leads Percentage</td>
-                                    <td><small>{{(space.completedLeadsSupplierData.hot_leads_count)  || 'NA'}}
-                                        ({{((space.completedLeadsSupplierData.hot_leads_count/space.completedLeadsSupplierData.flat_count)|number:2) || 0}}%)</small>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td>Total Leads</td>
-                                    <td><small>{{(space.completedLeadsSupplierData.total_leads_count || 'NA')}}
-                                        ({{((space.completedLeadsSupplierData.total_leads_count/space.completedLeadsSupplierData.flat_count) | number:2) || 0}}%)</small>
-                                    </td>
-                                  </tr>
+                                      <td>{{mapTextFirst}}</td>
+                                      <td><small>{{(space.title.leadDate | date:'medium')  || 'NA'}}</small>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>{{mapTextSecond}}</td>
+                                      <td><small>{{(space.title.leadType)  || 'NA'}}</small>
+                                      </td>
+                                    </tr>
                                 </table>
                               </div>
                             </ui-gmap-window>
@@ -625,11 +624,14 @@
                       <div class="row">
                         <div class="col-md-12">
                           <div class="campaigndetailtable">
-                            <div class="panel-heading" style="height:70px;">
-                              <h5 style="background:'red';color:white;text-transform:capitalize">Details of Leads
-                                Purchased
-                                {{campaignTabPropsalName}}</h5>
-                            </div>
+                              <div class="panel-heading" style="height:70px;">
+                                  <h5 style="background:'red';color:white;text-transform:capitalize" ng-if="selectedCampaignName">Details of Leads
+                                    Purchased
+                                    <span style="color:#3bff00c4;font-style: italic;text-transform:capitalize">{{selectedCampaignName}} </span></h5>
+                                  <h5 style="background:'red';color:white;text-transform:capitalize" ng-if="!selectedCampaignName">Details of All Leads</h5>
+    
+                                </div>
+                            
                             <br />
                             <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
                             <br />
@@ -697,7 +699,8 @@
                       <div class="row">
                         <div class="col-md-12">
                           <div class="panel-heading content-title">
-                            <h5 style="background:'red'">Map View for {{campaignTabPropsalName}}</h5>
+                            <h5 style="background:'red'" ng-if="selectedCampaignName">Map View for <span style="color:#3bff00c4;font-style: italic;text-transform:capitalize">{{selectedCampaignName}} </span></h5>
+                            <h5 style="background:'red'" ng-if="!selectedCampaignName">Map View for All Campaign</h5>
                           </div>
                           <style type="text/css">
                             .angular-google-map-container {
@@ -722,15 +725,13 @@
                                     <h3>{{space.title.name}}</h3>
                                   </div>
                                   <tr>
-                                    <td>Hot Leads Percentage</td>
-                                    <td><small>{{(space.completedLeadsSupplierData.hot_leads_count)  || 'NA'}}
-                                        ({{((space.completedLeadsSupplierData.hot_leads_count/space.completedLeadsSupplierData.flat_count)|number:2) || 0}}%)</small>
+                                    <td>{{mapTextFirst}}</td>
+                                    <td><small>{{(space.title.leadDate |  date:'medium')  || 'NA'}}</small>
                                     </td>
                                   </tr>
                                   <tr>
-                                    <td>Total Leads</td>
-                                    <td><small>{{(space.completedLeadsSupplierData.total_leads_count || 'NA')}}
-                                        ({{((space.completedLeadsSupplierData.total_leads_count/space.completedLeadsSupplierData.flat_count) | number:2) || 0}}%)</small>
+                                    <td>{{mapTextSecond}}</td>
+                                    <td><small>{{(space.title.feedback)  || 'NA'}}</small>
                                     </td>
                                   </tr>
                                 </table>
@@ -750,7 +751,8 @@
 
 
               <!-- <uib-tab id="uib-tabs-width"  ng-click="viewCampaignLeads()" index="1"> -->
-              <uib-tab id="uib-tabs-width" ng-click="getCampaigns()" index="1">
+              <!-- <uib-tab id="uib-tabs-width" ng-click="getCampaigns()" index="1"> -->
+                  <uib-tab id="uib-tabs-width" >
                 <uib-tab-heading>
                   <h5>View Leads</h5>
                 </uib-tab-heading>
@@ -871,7 +873,7 @@
                     </div>
                   </div>
                   <div class="viewLeadstable" ng-if="!showCampaigns">
-                    <!-- <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button> -->
+                 
                     </br><br>
                     <input type="text" class="form-control" ng-model="searchData" placeholder="search">
                     <div class="table-responsive">
