@@ -730,7 +730,6 @@ angular.module('catalogueApp')
           $scope.removeSubSectorDiable = true
           $scope.updateDisable = false;
           for (let i in $scope.requirementDetailData[index].requirements) {
-          //  console.log('test')
             $scope.requirementDetailData[index].requirements[i].requirementCheck = false;
             if ($scope.opsVerifyButtonDiable && $scope.requirementDetailData[index].requirements[i].varified_ops == 'no') {
               $scope.opsVerifyButtonDiable = false;
@@ -1120,7 +1119,7 @@ angular.module('catalogueApp')
           if($scope.oldIndex){
             $scope.detailedShow[$scope.oldIndex] = false
           }
-          
+          $scope.otherPreferredCompany = false;
           $scope.disableRestore = false
           $scope.supplierName = suppleName;
           $scope.shortlisted_spaces_id = id
@@ -1167,6 +1166,7 @@ angular.module('catalogueApp')
                     $scope.requirementDetailData[i].requirements[x].selected_preferred_company_sub_sector = [];
 
                     if ($scope.requirementDetailData[i].requirements[x].preferred_company_other) {
+                      $scope.otherPreferredCompany = true
                       $scope.requirementDetailData[i].requirements[x].preferred_company.push("")
                     }
                     if ($scope.requirementDetailData[i].requirements[x].preferred_company && $scope.requirementDetailData[i].requirements[x].preferred_company.length > 0) {
@@ -1233,7 +1233,10 @@ angular.module('catalogueApp')
                   if (localindex_indexs != -1) {
                     $scope.requirementDetailData[i].sector_name = $scope.sectorList[localindex_indexs].business_type
                   }
+                  $('#RequirementModel').modal('show');
                 }
+
+            
                 //end added sector name
 
               })
@@ -1286,7 +1289,7 @@ angular.module('catalogueApp')
             }
           }
         }
-
+        $scope.otherPreferredCompany = false;
         $scope.subSectorPreferredMulticheck = function (key, index) {
           // $scope.requirementDetailData[key].requirements[index].requirementCheck = true;
           if ($scope.requirementDetailData[key] && $scope.requirementDetailData[key].requirements[index] && $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector && $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector.length > 0) {
@@ -1719,12 +1722,16 @@ angular.module('catalogueApp')
 
                     }
                     // end added preferred_company  yes no
+                    // if($scope.bdrequirementDetailData[i].requirements.length-1 == x){
+                    //   $('#RequirementModel').modal('show');
+                    // }
+                    
                   }
                 }
 
               })
-          
             })
+            $('#BDRequirementModel').modal('show');
         }
 
         $scope.updateSubSector = function (data) {
@@ -1772,6 +1779,15 @@ angular.module('catalogueApp')
                 }
               }).catch(function onError(response) {
                 console.log(response);
+                if(response.data.status == false){
+                  if(response.data.data && response.data.data.general_error && response.data.data.general_error.errors && response.data.data.general_error.errors.impl_timeline){
+                    swal(constants.name, response.data.data.general_error.errors.impl_timeline[0], constants.error);
+                  }
+                  if(response.data.data && response.data.data.general_error && response.data.data.general_error.errors && response.data.data.general_error.errors.preferred_company){
+                    swal(constants.name, response.data.data.general_error.errors.preferred_company[0], constants.error);
+                  }
+                  
+                }
               })
           }
         }
@@ -1809,6 +1825,15 @@ angular.module('catalogueApp')
                 }
               }).catch(function onError(response) {
                 console.log(response);
+                if(response.data.status == false){
+                  if(response.data.data && response.data.data.general_error && response.data.data.general_error.errors && response.data.data.general_error.errors.impl_timeline){
+                    swal(constants.name, response.data.data.general_error.errors.impl_timeline[0], constants.error);
+                  }
+                  if(response.data.data && response.data.data.general_error && response.data.data.general_error.errors && response.data.data.general_error.errors.preferred_company){
+                    swal(constants.name, response.data.data.general_error.errors.preferred_company[0], constants.error);
+                  }
+                  
+                }
               })
           }
         }
@@ -1902,6 +1927,11 @@ angular.module('catalogueApp')
                     }
                   }).catch(function onError(response) {
                     console.log(response);
+                    if(response.data.status == false){
+                      if(response.data.data && response.data.data.general_error){
+                        swal(constants.name, response.data.data.general_error, constants.error);
+                      }
+                    }
                   })
               }
             });
@@ -3167,6 +3197,7 @@ angular.module('catalogueApp')
         }
 
         $scope.show_color = function (supplier) {
+         
           if ($scope.releaseDetails.campaign.type_of_end_customer_formatted_name == "b_to_b_r_g" || $scope.releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d') {
             if (supplier.color_code == 1) {
               return 'yellow';

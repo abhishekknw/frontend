@@ -519,12 +519,12 @@
                   <option style="width:100%;" ng-repeat="(key, requirement) in requirement_Given" value="{{key}}">
                     {{requirement}}</option>
                 </select>
-                <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'" data-target="#RequirementModel"
+                <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'" 
                   ng-click="getRequirementDetail(supplier.id,supplier.name) && (supplier.id)" data-toggle="modal"
                   style="margin-top:10px" ng-hide="supplier.requirement_given == 'no'" type="button"
                   class="btn btn-danger" name="button">Requirement</button>
 
-                  <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'" data-target="#BDRequirementModel"
+                  <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'" 
                   ng-click="getBdRequirementDetail(supplier.id,supplier.name) && (supplier.id)" data-toggle="modal"
                   style="margin-top:10px" ng-hide="supplier.requirement_given == 'no'" type="button"
                   class="btn btn-danger" name="button">Requirement</button>
@@ -1040,11 +1040,11 @@
                   <option style="width:100%;" ng-repeat="(key, requirement) in requirement_Given" value="{{key}}">
                     {{requirement}}</option>
                 </select>
-                <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'" data-target="#RequirementModel"
+                <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'" 
                   ng-click="getRequirementDetail(supplier.id,supplier.name) && (supplier.id)" data-toggle="modal"
                   style="margin-top:10px" ng-hide="supplier.requirement_given == 'no'"type="button"
                   class="btn btn-danger" name="button">Requirement</button>
-                  <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'" data-target="#BDRequirementModel"
+                  <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'" 
                   ng-click="getBdRequirementDetail(supplier.id,supplier.name) && (supplier.id)" data-toggle="modal"
                   style="margin-top:10px" ng-hide="supplier.requirement_given == 'no'" type="button"
                   class="btn btn-danger" name="button">Requirement</button>
@@ -1762,7 +1762,10 @@
                           selected-model="subrequirement.selected_preferred_company_sub_sector"
                           ng-click="subSectorPreferredMulticheck(key,$index)" translation-texts="selected_business_type"
                           events="events"></span>
-
+                          <span ng-repeat="selectedName in subrequirement.selected_preferred_company_sub_sector">
+                            {{selectedName.name}}
+                            <p ng-if="!$last">,</p>
+                          </span>
                         <input style="margin-top:10px" ng-change="checkBoxAutoCheck(key,$index)" type="text"
                           class="form-control" placeholder="Other Preferred Company"
                           ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
@@ -2089,9 +2092,9 @@
                     <tr ng-repeat-start="(key, requirement) in bdrequirementDetailData">
                       <td class="alignment">
                         <span ng-if="!bddetailedShow[key]" ng-click="bdShowDetailed(key)"
-                          class="glyphicon glyphicon-plus"></span>
+                          class="glyphicon glyphicon-triangle-bottom"></span>
                         <span ng-if="bddetailedShow[key]" ng-click="bdShowDetailed(key)"
-                          class="glyphicon glyphicon-minus"></span>
+                          class="	glyphicon glyphicon-triangle-top"></span>
                       </td>
                       <td class="alignment">
                         {{requirement.sector_name}}
@@ -2163,7 +2166,13 @@
                         <p> Ops Verify: {{subrequirement.varified_ops_date | date:'medium'}} </p>
                         <p> Ops Verify Name: {{subrequirement.verified_ops_by_obj.first_name}}
                           {{subrequirement.verified_ops_by_obj.last_name}} </p>
-                        <p> BD Verify: {{subrequirement.varified_bd_date | date:'medium'}} </p>
+                        <p  ng-if="subrequirement.varified_bd_date"> BD Verify:  {{subrequirement.varified_bd_date | date:'medium'}}
+  
+                      </p>
+                        <p ng-if="subrequirement.verified_bd_by_obj.first_name"> BD Verify Name:  {{subrequirement.verified_bd_by_obj.first_name}}
+                          {{subrequirement.verified_bd_by_obj.last_name}} 
+                        
+                        </p>
                       </td>
 
                       <td class="alignment">
