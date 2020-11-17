@@ -791,10 +791,9 @@
           campaignId = campaign.proposal_id;
           $scope.selectedCampaignName = campaign.name;
         }
-      
+        $scope.options = {};
         B2BDashboardService.leadCount(data).then(function onSuccess(response) {
           $scope.AllLeadsData = response.data.data
-          $scope.options = {};
           $scope.options = angular.copy(doughnutChartOptions);
           $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.pieChartClick(e.data.label); };
           $scope.options.chart.pie.dispatch['elementClick'] = function (e) { $scope.getCampaignInvData(e.data); };
@@ -821,10 +820,11 @@
           data.campaign_id = campaign.proposal_id;
           campaignId = campaign.proposal_id;
         }
+        $scope.feedbackOptions = {};
         B2BDashboardService.clientFeedback(data).then(function onSuccess(response) {
           $scope.leadFeedbackData = response.data.data
           
-          $scope.feedbackOptions = {};
+         
           $scope.feedbackOptions = angular.copy(doughnutChartOptions);
           $scope.feedbackOptions.chart.pie.dispatch['elementClick'] = function (e) { $scope.pieChartClick(e.data.label); };
           $scope.feedbackOptions.chart.pie.dispatch['elementClick'] = function (e) { $scope.getClientFeedbackSummary(e.data, campaignId); };
@@ -3148,7 +3148,7 @@
             $scope.showLeadtable = true;
             $scope.showClientFeedbackTable = false;
           }
-          $scope.supplierMarkers = assignMarkersToMap($scope.supplierData);
+          $scope.supplierMarkers = assignMarkersToMap($scope.supplierData,'Lead');
         })
        
       }
@@ -3247,7 +3247,7 @@
       $scope.marker = {
         events: {
           mouseover: function (marker, eventName, model) {
-
+            console.log('+++++++++777777777777777',model);
             $scope.space = model;
             $scope.campaignInventory = model;
             $scope.windowCoords.latitude = model.latitude;
@@ -3291,7 +3291,14 @@
         return markersOfPanIndia;
 
       };
-      function assignMarkersToMap(suppliers) {
+      function assignMarkersToMap(suppliers,type) {
+        if(type == 'Lead'){
+         $scope.mapTextFirst = 'Lead Date';
+         $scope.mapTextSecond = 'Type of Lead';
+        } else {
+          $scope.mapTextFirst = 'Survey Date';
+          $scope.mapTextSecond = 'Satisfaction Level';
+        }
         var markers = [];
         var icon = 'http://maps.google.com/mapfiles/ms/icons/';
         var checkInv = true;
@@ -3344,6 +3351,9 @@
             title: {
               name: supplier.supplier_data.name,
               flat_count: supplier.supplier_data.flat_count,
+              leadDate:supplier.created_at,
+              leadType:supplier.company_lead_status,
+              feedback:supplier.current_patner_feedback   
             },
           });
           // }
