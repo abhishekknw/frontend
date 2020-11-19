@@ -253,10 +253,9 @@
 
             <th>{{detailsHeader.flat_count}}</th>
             <th>{{detailsHeader.tower_count}}</th>
+            <th>{{detailsHeader.average_household_points}}</th>
 
-
-
-            <th>{{detailsHeader.contacts_details}}</th>
+          <th>{{detailsHeader.contacts_details}}</th>
             <th>{{detailsHeader.assign_user}}</th>
             <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g' || releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'">
               {{detailsHeader.requirement_given}}</th>
@@ -471,6 +470,9 @@
                 {{supplier.flat_count}}
               </td>
               <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">{{supplier.tower_count}}</td>
+
+              <td>{{supplier.avg_household_occupants}}</td>
+
               <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div class="" ng-repeat="supplier in supplier.contacts | limitTo: 1">
                   <p ng-if="supplier.name">{{supplier.name}}</p><br>
@@ -609,6 +611,17 @@
                     ng-model-options="{timezone:'UTC'}" />
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="popup1=true"><i
+                        class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+                </p>
+                <span><h5>Date of Last Call</h5></span>
+                <p class="input-group">
+                  <input type="text" class="form-control col-md-4" ng-model="supplier.last_call_date"
+                    ng-disabled="supplier.is_completed" readonly uib-datepicker-popup="dd/MM/yyyy" is-open="popup4"
+                    min-date="" datepicker-options="dateOptions" close-text="Close"
+                    ng-model-options="{timezone:'UTC'}" />
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="popup4=true"><i
                         class="glyphicon glyphicon-calendar"></i></button>
                   </span>
                 </p>
@@ -1124,6 +1137,17 @@
                     ng-model-options="{timezone:'UTC'}" />
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="popup1=true"><i
+                        class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+                </p>
+                <span><h5>Date of Last Call</h5></span>
+                <p class="input-group">
+                  <input type="text" class="form-control col-md-4" ng-model="supplier.last_call_date"
+                    ng-disabled="supplier.is_completed" readonly uib-datepicker-popup="dd/MM/yyyy" is-open="popup4"
+                    min-date="" datepicker-options="dateOptions" close-text="Close"
+                    ng-model-options="{timezone:'UTC'}" />
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="popup4=true"><i
                         class="glyphicon glyphicon-calendar"></i></button>
                   </span>
                 </p>
@@ -2074,7 +2098,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h4 class="modal-title">BD Requirement Details {{supplierName}}</h4>
-          <hr />
+          <hr/>
           <div class="modal-body" style="width: 1100px; height: 500px;">
             <div class="modal-body col-md-4 table-responsive" style="width: 1100px; height: 500px">
               <form name="myForm">
@@ -2083,7 +2107,7 @@
                 <table class="table table-bordered" name="contactForm">
                   <thead>
                     <tr>
-                      <th ng-repeat="header in requirement_submitted_headings" class="col-md-2 alignment">
+                      <th ng-repeat="header in requirement_distribution_headings" class="col-md-2 alignment">
                         <b>{{header.header}}</b></th>
                     </tr>
                   </thead>
@@ -2172,6 +2196,13 @@
                           {{subrequirement.verified_bd_by_obj.last_name}} 
                         
                         </p>
+                      </td>
+
+                      <td class="alignment" style="width:300px;">
+                        <input type="number" ng-model="subrequirement.price" name="price" class="form-control" placeholder="Price" id="price_id"
+                        style="width:100px;">
+                        <span ng-if="!subrequirement.price">Price (Points): ****</span>
+                        <span ng-if="subrequirement.price">Price (Points): {{subrequirement.price}}</span>
                       </td>
 
                       <td class="alignment">
