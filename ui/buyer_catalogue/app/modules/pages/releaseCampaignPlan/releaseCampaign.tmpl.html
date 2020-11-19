@@ -471,7 +471,6 @@
                 {{supplier.flat_count}}
               </td>
               <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">{{supplier.tower_count}}</td>
-
               <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div class="" ng-repeat="supplier in supplier.contacts | limitTo: 1">
                   <p ng-if="supplier.name">{{supplier.name}}</p><br>
