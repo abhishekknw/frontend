@@ -254,7 +254,9 @@
             <th>{{detailsHeader.flat_count}}</th>
             <th>{{detailsHeader.tower_count}}</th>
 
-          <th>{{detailsHeader.contacts_details}}</th>
+
+
+            <th>{{detailsHeader.contacts_details}}</th>
             <th>{{detailsHeader.assign_user}}</th>
             <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g' || releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'">
               {{detailsHeader.requirement_given}}</th>
@@ -469,9 +471,6 @@
                 {{supplier.flat_count}}
               </td>
               <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">{{supplier.tower_count}}</td>
-
-              <td>{{supplier.avg_household_occupants}}</td>
-
               <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div class="" ng-repeat="supplier in supplier.contacts | limitTo: 1">
                   <p ng-if="supplier.name">{{supplier.name}}</p><br>
