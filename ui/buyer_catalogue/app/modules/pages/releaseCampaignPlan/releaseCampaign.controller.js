@@ -182,26 +182,6 @@ angular.module('catalogueApp')
           { header: 'Action' },
         ];
 
-        $scope.requirement_distribution_headings = [
-          { header: '' },
-          { header: 'Sector' },
-          { header: 'Sub Sector' },
-          { header: 'Current Partner' },
-          { header: 'FeedBack' },
-          { header: 'Preferred Partner' },
-          { header: 'L1 Answers' },
-          { header: 'L2 Answers' },
-          { header: 'Implementation Time' },
-          { header: 'Meeting Time' },
-          // { header: 'Preferred Meeting Time' },
-          { header: 'Lead Status' },
-          { header: 'Comment' },
-          { header: 'Lead Given by' },
-          { header: 'Timestamp' },
-          { header: 'Lead Price (Points)' },
-          { header: 'Action' },
-        ];
-
         $scope.requirement_sub_headings = [
           { header: '' },
           { header: 'Sub Sector' },
