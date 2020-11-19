@@ -253,10 +253,9 @@
 
             <th>{{detailsHeader.flat_count}}</th>
             <th>{{detailsHeader.tower_count}}</th>
+            <th>{{detailsHeader.average_household_points}}</th>
 
-
-
-            <th>{{detailsHeader.contacts_details}}</th>
+          <th>{{detailsHeader.contacts_details}}</th>
             <th>{{detailsHeader.assign_user}}</th>
             <th ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g' || releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'">
               {{detailsHeader.requirement_given}}</th>
@@ -471,6 +470,9 @@
                 {{supplier.flat_count}}
               </td>
               <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">{{supplier.tower_count}}</td>
+
+              <td>{{supplier.avg_household_occupants}}</td>
+
               <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div class="" ng-repeat="supplier in supplier.contacts | limitTo: 1">
                   <p ng-if="supplier.name">{{supplier.name}}</p><br>
@@ -609,6 +611,17 @@
                     ng-model-options="{timezone:'UTC'}" />
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="popup1=true"><i
+                        class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+                </p>
+                <span><h5>Date of Last Call</h5></span>
+                <p class="input-group">
+                  <input type="text" class="form-control col-md-4" ng-model="supplier.last_call_date"
+                    ng-disabled="supplier.is_completed" readonly uib-datepicker-popup="dd/MM/yyyy" is-open="popup4"
+                    min-date="" datepicker-options="dateOptions" close-text="Close"
+                    ng-model-options="{timezone:'UTC'}" />
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="popup4=true"><i
                         class="glyphicon glyphicon-calendar"></i></button>
                   </span>
                 </p>
@@ -1124,6 +1137,17 @@
                     ng-model-options="{timezone:'UTC'}" />
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="popup1=true"><i
+                        class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+                </p>
+                <span><h5>Date of Last Call</h5></span>
+                <p class="input-group">
+                  <input type="text" class="form-control col-md-4" ng-model="supplier.last_call_date"
+                    ng-disabled="supplier.is_completed" readonly uib-datepicker-popup="dd/MM/yyyy" is-open="popup4"
+                    min-date="" datepicker-options="dateOptions" close-text="Close"
+                    ng-model-options="{timezone:'UTC'}" />
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="popup4=true"><i
                         class="glyphicon glyphicon-calendar"></i></button>
                   </span>
                 </p>
