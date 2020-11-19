@@ -629,8 +629,9 @@
         } else if(tab == 'performance'){
           
           if($scope.selectedSupplierType.code && $scope.selectedSupplierType.code != 'all'){
-            $scope.getCampaignWiseSummary();
-            $scope.clearDatesFromDynamicGraph();
+            // $scope.getCampaignWiseSummary();
+            // $scope.clearDatesFromDynamicGraph();
+            $scope.getCampaigns(undefined, $scope.selectedVendor.name, $scope.selectedSupplierType.code);
             $scope.applyClickedFilters.value = false;
           }
        
