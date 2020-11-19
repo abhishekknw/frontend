@@ -277,6 +277,7 @@ angular.module('catalogueApp')
         $scope.popup1 = false;
         $scope.popup2 = false;
         $scope.popup3 = false;
+        $scope.popup4 = false;
         $scope.phaseStartDate = false;
         $scope.phaseEndDate = false;
         $scope.error = false;
