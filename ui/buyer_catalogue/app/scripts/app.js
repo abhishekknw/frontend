@@ -620,6 +620,8 @@ angular
           $location.path("/changePassword");
         } else if ($rootScope.globals.currentUser && $location.path() == '/b2b/dashboard') {
           $location.path("/b2b/dashboard");
+        } else if ($rootScope.globals.currentUser && $location.path() == '/b2b/dashboard1') {
+          $location.path("/b2b/dashboard1");
         }
         else if ($rootScope.globals.currentUser && typeof $cookieStore.get('returnUrl') != 'undefined' && $cookieStore.get('returnUrl') && category != 'BUSINESS') {
           $location.path($cookieStore.get('returnUrl'));
