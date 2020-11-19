@@ -277,6 +277,7 @@ angular.module('catalogueApp')
         $scope.popup1 = false;
         $scope.popup2 = false;
         $scope.popup3 = false;
+        $scope.popup4 = false;
         $scope.phaseStartDate = false;
         $scope.phaseEndDate = false;
         $scope.error = false;
@@ -1233,7 +1234,7 @@ angular.module('catalogueApp')
                   if (localindex_indexs != -1) {
                     $scope.requirementDetailData[i].sector_name = $scope.sectorList[localindex_indexs].business_type
                   }
-                  $('#RequirementModel').modal('show');
+                  
                 }
 
             
@@ -1244,6 +1245,7 @@ angular.module('catalogueApp')
             }).catch(function onError(response) {
               console.log(response);
             })
+            $('#RequirementModel').modal('show');
         }
 
         $scope.getRequirementBrowsedData = function (id) {
