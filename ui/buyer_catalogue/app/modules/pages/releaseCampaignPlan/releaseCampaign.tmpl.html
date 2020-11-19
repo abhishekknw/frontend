@@ -2074,7 +2074,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h4 class="modal-title">BD Requirement Details {{supplierName}}</h4>
-          <hr />
+          <hr/>
           <div class="modal-body" style="width: 1100px; height: 500px;">
             <div class="modal-body col-md-4 table-responsive" style="width: 1100px; height: 500px">
               <form name="myForm">
@@ -2083,7 +2083,7 @@
                 <table class="table table-bordered" name="contactForm">
                   <thead>
                     <tr>
-                      <th ng-repeat="header in requirement_submitted_headings" class="col-md-2 alignment">
+                      <th ng-repeat="header in requirement_distribution_headings" class="col-md-2 alignment">
                         <b>{{header.header}}</b></th>
                     </tr>
                   </thead>
@@ -2172,6 +2172,13 @@
                           {{subrequirement.verified_bd_by_obj.last_name}} 
                         
                         </p>
+                      </td>
+
+                      <td class="alignment" style="width:300px;">
+                        <input type="number" ng-model="subrequirement.price" name="price" class="form-control" placeholder="Price" id="price_id"
+                        style="width:100px;">
+                        <span ng-if="!subrequirement.price">Price (Points): ****</span>
+                        <span ng-if="subrequirement.price">Price (Points): {{subrequirement.price}}</span>
                       </td>
 
                       <td class="alignment">
