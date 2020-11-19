@@ -470,7 +470,9 @@
                 {{supplier.flat_count}}
               </td>
               <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">{{supplier.tower_count}}</td>
+
               <td>{{supplier.avg_household_occupants}}</td>
+
               <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div class="" ng-repeat="supplier in supplier.contacts | limitTo: 1">
                   <p ng-if="supplier.name">{{supplier.name}}</p><br>
@@ -518,14 +520,14 @@
                   <option style="width:100%;" ng-repeat="(key, requirement) in requirement_Given" value="{{key}}">
                     {{requirement}}</option>
                 </select>
-                <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'" data-target="#RequirementModel"
+                <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'" 
                   ng-click="getRequirementDetail(supplier.id,supplier.name) && (supplier.id)" data-toggle="modal"
-                  style="margin-top:10px" ng-if="supplier.requirement_given == 'yes'" type="button"
+                  style="margin-top:10px" ng-hide="supplier.requirement_given == 'no'" type="button"
                   class="btn btn-danger" name="button">Requirement</button>
 
-                  <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'" data-target="#BDRequirementModel"
+                  <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'" 
                   ng-click="getBdRequirementDetail(supplier.id,supplier.name) && (supplier.id)" data-toggle="modal"
-                  style="margin-top:10px" ng-if="supplier.requirement_given == 'yes'" type="button"
+                  style="margin-top:10px" ng-hide="supplier.requirement_given == 'no'" type="button"
                   class="btn btn-danger" name="button">Requirement</button>
               </td>
 
@@ -1050,13 +1052,13 @@
                   <option style="width:100%;" ng-repeat="(key, requirement) in requirement_Given" value="{{key}}">
                     {{requirement}}</option>
                 </select>
-                <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'" data-target="#RequirementModel"
+                <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'" 
                   ng-click="getRequirementDetail(supplier.id,supplier.name) && (supplier.id)" data-toggle="modal"
-                  style="margin-top:10px" ng-if="supplier.requirement_given == 'yes'" type="button"
+                  style="margin-top:10px" ng-hide="supplier.requirement_given == 'no'"type="button"
                   class="btn btn-danger" name="button">Requirement</button>
-                  <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'" data-target="#BDRequirementModel"
+                  <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'" 
                   ng-click="getBdRequirementDetail(supplier.id,supplier.name) && (supplier.id)" data-toggle="modal"
-                  style="margin-top:10px" ng-if="supplier.requirement_given == 'yes'" type="button"
+                  style="margin-top:10px" ng-hide="supplier.requirement_given == 'no'" type="button"
                   class="btn btn-danger" name="button">Requirement</button>
                 <!-- ng-click="setContact(supplier)" -->
               </td>
@@ -1776,13 +1778,17 @@
 
                       <td class="alignment">
                         <span style="width:150px;"
+                        
                           ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
                           class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;"
                           ng-dropdown-multiselect="" options="companiesDetailData" extra-settings="settings"
                           selected-model="subrequirement.selected_preferred_company_sub_sector"
                           ng-click="subSectorPreferredMulticheck(key,$index)" translation-texts="selected_business_type"
                           events="events"></span>
-
+                          <span ng-repeat="selectedName in subrequirement.selected_preferred_company_sub_sector">
+                            {{selectedName.name}}
+                            <p ng-if="!$last">,</p>
+                          </span>
                         <input style="margin-top:10px" ng-change="checkBoxAutoCheck(key,$index)" type="text"
                           class="form-control" placeholder="Other Preferred Company"
                           ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
@@ -1881,7 +1887,7 @@
                           ng-click="updateSubSectorRow(subrequirement)">Update</button>
 
                         <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
-                          ng-if="subrequirement.color_class != 'red'"
+                          ng-if="subrequirement.color_class != 'red'" ng-disabled="subrequirement.varified_ops == 'yes'"
                           ng-click="singleRemoveSubSector(subrequirement.id,key,$index)">Remove</button>
 
                         <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
@@ -1901,10 +1907,11 @@
 
                     <tr ng-show="detailedShow[key]" ng-repeat-end>
                       <td colspan="15">
-                        <button class="btn btn-success" id="update_{{key}}" ng-disabled="subSectorCheck "
+                        <button class="btn btn-success" id="update_{{key}}" ng-disabled="subSectorCheck || updateDisable"
                           ng-click="updateSubSector(requirement.requirements)">Update</button>
-                        <button style="margin-bottom:2px" id="verify_{{key}}" type="button" name="button"
-                          class="btn btn-success" ng-disabled="subSectorCheck || opsVerifyButtonDiable"
+      
+                          <button  style="margin-bottom:2px" id="verify_{{key}}" type="button" name="button"
+                          class="btn btn-success" ng-disabled="subSectorCheck || opsVerifyButtonDiable || updateDisable"
                           ng-click="checkOpsVerifyRequirement(requirement.requirements)"><span
                             ng-if="!opsVerifyButtonDiable">Ops Verify</span>
                           <span ng-if="opsVerifyButtonDiable">Ops Verified</span></button>
@@ -2091,7 +2098,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h4 class="modal-title">BD Requirement Details {{supplierName}}</h4>
-          <hr />
+          <hr/>
           <div class="modal-body" style="width: 1100px; height: 500px;">
             <div class="modal-body col-md-4 table-responsive" style="width: 1100px; height: 500px">
               <form name="myForm">
@@ -2100,7 +2107,7 @@
                 <table class="table table-bordered" name="contactForm">
                   <thead>
                     <tr>
-                      <th ng-repeat="header in requirement_submitted_headings" class="col-md-2 alignment">
+                      <th ng-repeat="header in requirement_distribution_headings" class="col-md-2 alignment">
                         <b>{{header.header}}</b></th>
                     </tr>
                   </thead>
@@ -2108,9 +2115,9 @@
                     <tr ng-repeat-start="(key, requirement) in bdrequirementDetailData">
                       <td class="alignment">
                         <span ng-if="!bddetailedShow[key]" ng-click="bdShowDetailed(key)"
-                          class="glyphicon glyphicon-plus"></span>
+                          class="glyphicon glyphicon-triangle-bottom"></span>
                         <span ng-if="bddetailedShow[key]" ng-click="bdShowDetailed(key)"
-                          class="glyphicon glyphicon-minus"></span>
+                          class="	glyphicon glyphicon-triangle-top"></span>
                       </td>
                       <td class="alignment">
                         {{requirement.sector_name}}
@@ -2182,7 +2189,20 @@
                         <p> Ops Verify: {{subrequirement.varified_ops_date | date:'medium'}} </p>
                         <p> Ops Verify Name: {{subrequirement.verified_ops_by_obj.first_name}}
                           {{subrequirement.verified_ops_by_obj.last_name}} </p>
-                        <p> BD Verify: {{subrequirement.varified_bd_date | date:'medium'}} </p>
+                        <p  ng-if="subrequirement.varified_bd_date"> BD Verify:  {{subrequirement.varified_bd_date | date:'medium'}}
+  
+                      </p>
+                        <p ng-if="subrequirement.verified_bd_by_obj.first_name"> BD Verify Name:  {{subrequirement.verified_bd_by_obj.first_name}}
+                          {{subrequirement.verified_bd_by_obj.last_name}} 
+                        
+                        </p>
+                      </td>
+
+                      <td class="alignment" style="width:300px;">
+                        <input type="number" ng-model="subrequirement.price" name="price" class="form-control" placeholder="Price" id="price_id"
+                        style="width:100px;">
+                        <span ng-if="!subrequirement.price">Price (Points): ****</span>
+                        <span ng-if="subrequirement.price">Price (Points): {{subrequirement.price}}</span>
                       </td>
 
                       <td class="alignment">
