@@ -390,6 +390,11 @@ angular.module('catalogueApp')
                 if ($scope.initialReleaseData.shortlisted_suppliers[i].next_action_date) {
                   $scope.initialReleaseData.shortlisted_suppliers[i].next_action_date = new Date($scope.initialReleaseData.shortlisted_suppliers[i].next_action_date);
                 }
+
+                if ($scope.initialReleaseData.shortlisted_suppliers[i].last_call_date) {
+                  $scope.initialReleaseData.shortlisted_suppliers[i].last_call_date = new Date($scope.initialReleaseData.shortlisted_suppliers[i].last_call_date);
+                }
+
                 $scope.shortlistedSuppliersIdList[$scope.initialReleaseData.shortlisted_suppliers[i].supplier_id] = $scope.initialReleaseData.shortlisted_suppliers[i];
                 if (Object.keys($scope.initialReleaseData.shortlisted_suppliers[i].shortlisted_inventories).length == 0) {
                   $scope.initialReleaseData.shortlisted_suppliers[i].shortlisted_inventories['NA'] = 'NA';
@@ -414,7 +419,7 @@ angular.module('catalogueApp')
 
               if ($scope.initialReleaseData) {
                 $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
-
+  
                 // if ($scope.releaseDetails.shortlisted_suppliers.length) {
                 //   for (let i in $scope.releaseDetails.shortlisted_suppliers.length) {
 
