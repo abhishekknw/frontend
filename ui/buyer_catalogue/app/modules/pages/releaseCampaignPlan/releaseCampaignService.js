@@ -233,5 +233,10 @@
       return machadaloHttp.get(url);
     }
 
+    releaseCampaignService.updateLeadDistribution = function(data){
+      var url = url_base_ui + "b2b/add-requirement-price/";
+      return machadaloHttp.post(url,data);
+    }
+
     return releaseCampaignService;
 }]);

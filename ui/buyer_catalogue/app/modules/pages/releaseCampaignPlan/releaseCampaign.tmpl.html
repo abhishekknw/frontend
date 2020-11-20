@@ -2150,7 +2150,10 @@
                       </td>
 
                       <td class="alignment">
-                                    {{subrequirement.comment}}
+                                   
+                                    <textarea placeholder="Comments" class="form-control" style="width:150px;"
+                                    ng-model="subrequirement.comment" ng-change="distributionBoxAutoCheck(key,$index)"  rows="4" cols="50">
+                               </textarea>
                       </td>
 
                       <td class="alignment">
@@ -2175,10 +2178,10 @@
                       </td>
 
                       <td class="alignment" style="width:300px;">
-                        <input type="number" ng-model="subrequirement.price" name="price" class="form-control" placeholder="Price" id="price_id"
+                        <input type="number" ng-change="distributionBoxAutoCheck(key,$index)" ng-model="subrequirement.lead_price" name="lead_price" class="form-control" placeholder="Price" id="price_id"
                         style="width:100px;">
-                        <span ng-if="!subrequirement.price">Price (Points): ****</span>
-                        <span ng-if="subrequirement.price">Price (Points): {{subrequirement.price}}</span>
+                        <span ng-if="!subrequirement.lead_price">Price (Points): ****</span>
+                        <span ng-if="subrequirement.lead_price">Price (Points): {{subrequirement.lead_price}}</span>
                       </td>
 
                       <td class="alignment">
@@ -2187,10 +2190,10 @@
                           ng-click="bdVerifyRequirement(subrequirement.id,key,$index)">BD Verify</button>
                         <span ng-if="subrequirement.varified_bd == 'yes'">BD Verified </span>
 
-                        <!-- <button style="margin-top:10px" class="btn btn-success"
-                          ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
+                        <button style="margin-top:10px" class="btn btn-success"
+                          ng-disabled="subrequirement.varified_bd == 'yes'"
                           type="button" name="button" class="btn btn-success"
-                          ng-click="updateSubSectorRow(subrequirement)">Update</button> -->
+                          ng-click="updateLeadDistributionRow(subrequirement)">Update</button>
 
                         <!-- <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
                           ng-if="subrequirement.color_class != 'red'"
@@ -2205,8 +2208,8 @@
                       </td>
                     <tr ng-show="bddetailedShow[key]" ng-repeat-end>
                       <td colspan="15">
-                        <!-- <button class="btn btn-success" id="update_{{key}}" ng-disabled="subSectorCheck "
-                          ng-click="updateSubSector(requirement.requirements)">Update</button> -->
+                        <button class="btn btn-success" id="update_{{key}}" ng-disabled="subSectorCheck "
+                          ng-click="updateLeadDistribution(requirement.requirements)">Update</button>
                         <!-- <button style="margin-bottom:2px" id="verify_{{key}}" type="button" name="button"
                           class="btn btn-success" ng-disabled="subSectorCheck || opsVerifyButtonDiable"
                           ng-click="checkOpsVerifyRequirement(requirement.requirements)"><span
