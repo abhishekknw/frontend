@@ -1336,6 +1336,13 @@ angular.module('catalogueApp')
           $scope.checkboxBrowesLeadCheck()
         }
 
+        $scope.distributionBoxAutoCheck = function (key,index) {
+          $scope.bdrequirementDetailData[key].requirements[index].requirementCheck = true;
+          $scope.bdcheckboxCheck(key);
+        }
+
+        
+
 
         $scope.events = {
           onItemSelect: function (item) {
@@ -1657,7 +1664,6 @@ angular.module('catalogueApp')
             if (requirementsData[x].requirementCheck && $scope.subSectorCheck) {
               $scope.subSectorCheck = false
             }
-
           }
         }
 
@@ -1860,6 +1866,68 @@ angular.module('catalogueApp')
           }
         }
 
+        $scope.updateLeadDistributionRow = function (data) {
+          let updateData = [];
+          updateData.push({'lead_price':data.lead_price,'comment':data.comment,'requirement_id':data.id});
+          
+          if (updateData.length > 0) {
+            var DistributionData = {
+              "data": updateData
+            }
+            releaseCampaignService.updateLeadDistribution(DistributionData)
+              .then(function onSuccess(response) {
+                if (response && response.data.data.error) {
+                  swal(constants.name, response.data.data.error, constants.error);
+                } else {
+                  swal(constants.name, constants.update_success, constants.success);
+                }
+              }).catch(function onError(response) {
+                console.log(response);
+                // if(response.data.status == false){
+                //   if(response.data.data && response.data.data.general_error && response.data.data.general_error.errors && response.data.data.general_error.errors.impl_timeline){
+                //     swal(constants.name, response.data.data.general_error.errors.impl_timeline[0], constants.error);
+                //   }
+                //   if(response.data.data && response.data.data.general_error && response.data.data.general_error.errors && response.data.data.general_error.errors.preferred_company){
+                //     swal(constants.name, response.data.data.general_error.errors.preferred_company[0], constants.error);
+                //   }
+                  
+                // }
+              })
+          }
+        }
+
+
+        $scope.updateLeadDistribution = function (){
+          let updateData = [];
+          
+          for(let i in $scope.bdrequirementDetailData){
+            if($scope.bdrequirementDetailData[i].requirements.length > 0){
+              let checkData = $scope.bdrequirementDetailData[i].requirements;
+              for(let j in checkData){
+                if(checkData[j].requirementCheck){
+                  updateData.push({'lead_price':checkData[j].lead_price,'comment':checkData[j].comment,'requirement_id':checkData[j].id});
+                }
+              }
+            }
+          }
+        
+          if (updateData.length > 0) {
+            var DistributionData = {
+              "data": updateData
+            }
+            releaseCampaignService.updateLeadDistribution(DistributionData)
+              .then(function onSuccess(response) {
+                if (response && response.data.data.error) {
+                  swal(constants.name, response.data.data.error, constants.error);
+                } else {
+                  swal(constants.name, constants.update_success, constants.success);
+                }
+              }).catch(function onError(response) {
+                console.log(response);
+              
+              })
+          }
+        }
         $scope.verifyRequirement = function (verifyId) {
           swal({
             title: 'Are you sure ?',
