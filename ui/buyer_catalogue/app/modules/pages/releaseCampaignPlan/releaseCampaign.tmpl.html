@@ -253,6 +253,7 @@
 
             <th>{{detailsHeader.flat_count}}</th>
             <th>{{detailsHeader.tower_count}}</th>
+            <th>{{detailsHeader.average_household_points}}</th>
 
 
 
@@ -471,6 +472,12 @@
                 {{supplier.flat_count}}
               </td>
               <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">{{supplier.tower_count}}</td>
+
+              <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
+                <span ng-if="supplier.avg_household_occupants">{{supplier.avg_household_occupants}}</span>
+                <span ng-if="!supplier.avg_household_occupants">NA</span>
+              </td>
+              
               <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <div class="" ng-repeat="supplier in supplier.contacts | limitTo: 1">
                   <p ng-if="supplier.name">{{supplier.name}}</p><br>
