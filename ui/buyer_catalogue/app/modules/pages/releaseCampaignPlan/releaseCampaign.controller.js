@@ -1650,7 +1650,7 @@ angular.module('catalogueApp')
           $scope.subSectorCheck = true
           var requirementsData = $scope.requirementDetailData[key].requirements
           for (let x in requirementsData) {
-            if (requirementsData[x].requirementCheck && $scope.subSectorCheck) {
+            if (requirementsData[x].requirementCheck && $scope.subSectorCheck) {            
               $scope.subSectorCheck = false
             }
 
@@ -1659,10 +1659,14 @@ angular.module('catalogueApp')
 
         $scope.bdcheckboxCheck = function (key) {
           $scope.subSectorCheck = true
+          
           var requirementsData = $scope.bdrequirementDetailData[key].requirements
           for (let x in requirementsData) {
             if (requirementsData[x].requirementCheck && $scope.subSectorCheck) {
-              $scope.subSectorCheck = false
+              if(requirementsData[x].varified_bd == 'no'){
+                $scope.subSectorCheck = false
+              }
+              
             }
           }
         }
@@ -1759,6 +1763,7 @@ angular.module('catalogueApp')
 
               })
             })
+            $scope.subSectorCheck = true
             $('#BDRequirementModel').modal('show');
         }
 
@@ -2003,6 +2008,12 @@ angular.module('catalogueApp')
             closeOnConfirm: true
           },
             function (confirm) {
+              // angular.forEach($scope.releaseDetails.shortlisted_suppliers, function (supplier, key) {
+              //   console.log('111111111111111111111111',supplier);
+              //   console.log('2222222222222222222222222',key);
+
+              // })
+           
               if (confirm) {
                 let verifyId = [id];
                 releaseCampaignService.bdVerifyRequirement({ "requirement_ids": verifyId })
