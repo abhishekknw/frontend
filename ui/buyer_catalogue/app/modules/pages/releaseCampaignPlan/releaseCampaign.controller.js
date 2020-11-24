@@ -1789,7 +1789,7 @@ angular.module('catalogueApp')
               data[i].preferred_company_other = "";
             }
           
-            if (data[i].requirementCheck  ) {
+            if (data[i].requirementCheck) {
               updateData.push(data[i]);
             }
 
@@ -1803,10 +1803,26 @@ angular.module('catalogueApp')
                 if (response && response.data.data.error) {
                   swal(constants.name, response.data.data.error, constants.error);
                 } else {
+                  let responseData = response.data.data;
                   for (let k in data) {
                     if (data[k].old_current_company) {
                       data[k].current_company = ""
                     }
+
+                    angular.forEach($scope.requirementDetailData, function (value, key) {
+                      var localindex_index = $scope.requirementDetailData[key].requirements.map(function (el) {
+                        return el.id;
+                      }).indexOf(data[k].id);
+                      if (localindex_index != -1) {
+                        if(responseData && responseData.length > 0){
+                          for(let n in responseData){
+                            if(responseData[n].id == data[k].id){
+                              $scope.requirementDetailData[key].requirements[localindex_index].lead_status = responseData[n].lead_status;
+                            }
+                          }
+                        }
+                      }
+                    })
                   }
                   swal(constants.name, constants.update_success, constants.success);
                 }
@@ -1854,6 +1870,21 @@ angular.module('catalogueApp')
                 if (response && response.data.data.error) {
                   swal(constants.name, response.data.data.error, constants.error);
                 } else {
+                  let responseData = response.data.data;
+                  angular.forEach($scope.requirementDetailData, function (value, key) {
+                    var localindex_index = $scope.requirementDetailData[key].requirements.map(function (el) {
+                      return el.id;
+                    }).indexOf(data.id);
+                    if (localindex_index != -1) {
+                      if(responseData && responseData.length > 0){
+                        for(let i in responseData){
+                          if(responseData[i].id == data.id){
+                            $scope.requirementDetailData[key].requirements[localindex_index].lead_status = responseData[i].lead_status;
+                          }
+                        }
+                      }
+                    }
+                  })
                   swal(constants.name, constants.update_success, constants.success);
                 }
               }).catch(function onError(response) {
@@ -1865,7 +1896,6 @@ angular.module('catalogueApp')
                   if(response.data.data && response.data.data.general_error && response.data.data.general_error.errors && response.data.data.general_error.errors.preferred_company){
                     swal(constants.name, response.data.data.general_error.errors.preferred_company[0], constants.error);
                   }
-                  
                 }
               })
           }
@@ -1933,6 +1963,7 @@ angular.module('catalogueApp')
               })
           }
         }
+
         $scope.verifyRequirement = function (verifyId) {
           swal({
             title: 'Are you sure ?',
@@ -1976,13 +2007,9 @@ angular.module('catalogueApp')
                           } else {
                             $scope.opsVerifyButtonDiable = true;
                           }
-
                         })
                       }
-
-
                       $scope.subSectorCheck = true;
-
                       swal(constants.name, 'Verified Successfully', constants.success);
                     }
                   }).catch(function onError(response) {
@@ -2007,13 +2034,7 @@ angular.module('catalogueApp')
             confirmButtonText: "Yes, Verify!",
             closeOnConfirm: true
           },
-            function (confirm) {
-              // angular.forEach($scope.releaseDetails.shortlisted_suppliers, function (supplier, key) {
-              //   console.log('111111111111111111111111',supplier);
-              //   console.log('2222222222222222222222222',key);
-
-              // })
-           
+            function (confirm) {  
               if (confirm) {
                 let verifyId = [id];
                 releaseCampaignService.bdVerifyRequirement({ "requirement_ids": verifyId })
