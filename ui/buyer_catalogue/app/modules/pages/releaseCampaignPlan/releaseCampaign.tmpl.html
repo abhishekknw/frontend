@@ -402,7 +402,7 @@
               ng-repeat="(key,filter) in supplier.shortlisted_inventories track by $index" ng-disabled="$index != '15'">
 
               <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first" style="width:40px;"
-                ng-style="background: {{show_color(supplier)}}"><span>{{sno + $parent.$parent.$index + 1 }}</span></td>
+              ng-style="background: {{show_color(supplier)}}"><span>{{sno + $parent.$parent.$index + 1 }}</span></td>
 
               <td rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">
                 <span ng-if="supplier.brand_organisation_data.name">{{supplier.brand_organisation_data.name}}<br></span>
@@ -1761,9 +1761,9 @@
                           selected-model="subrequirement.selected_preferred_company_sub_sector"
                           ng-click="subSectorPreferredMulticheck(key,$index)" translation-texts="selected_business_type"
                           events="events"></span>
-                          <span ng-repeat="selectedName in subrequirement.selected_preferred_company_sub_sector">
+                          <span ng-repeat="selectedName in subrequirement.selected_preferred_company_sub_sector" style="text-align: left; display: inline-block">
                             {{selectedName.name}}
-                            <p ng-if="!$last">,</p>
+                            <span ng-if="!$last">,</span>
                           </span>
                         <input style="margin-top:10px" ng-change="checkBoxAutoCheck(key,$index)" type="text"
                           class="form-control" placeholder="Other Preferred Company"
