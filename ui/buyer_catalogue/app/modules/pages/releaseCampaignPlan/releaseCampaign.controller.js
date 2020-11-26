@@ -481,6 +481,40 @@ angular.module('catalogueApp')
                   }
 
                 }
+                let supplier = $scope.releaseDetails.shortlisted_suppliers;
+                for(let q in supplier){
+                  if ($scope.releaseDetails.campaign.type_of_end_customer_formatted_name == "b_to_b_r_g" || $scope.releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d') {
+                    if (supplier[q].color_code == 1) {
+                      supplier[q].color_class =  'yellow';;
+                    }
+                    else if (supplier[q].color_code == 2) {
+                      supplier[q].color_class = '#7C4700';
+                    }
+                    else if (supplier[q].color_code == 3) {
+                      supplier[q].color_class = 'green';
+                    }
+                    else if (supplier[q].color_code == 4) {
+                      supplier[q].color_class = 'white';
+                    }
+                  }
+                  else {
+                    if (supplier[q].booking_status === 'BK' || supplier[q].booking_status === 'MC') {
+                      supplier[q].color_class = 'green';
+                    }
+                    else if (supplier[q].booking_status === 'UN' || supplier[q].booking_status === 'NI' || supplier[q].booking_status === 'NE') {
+                      supplier[q].color_class = 'white';
+                    }
+                    else if (supplier[q].booking_status === 'SR') {
+                      supplier[q].color_class = 'red';
+                    }
+                    else if (supplier[q].booking_status === 'DP' || supplier[q].booking_status === 'TB' || supplier[q].booking_status === 'MF' || supplier[q].booking_status === 'RE') {
+                      supplier[q].color_class = 'yellow';
+                    }
+                    else if (supplier[q].booking_status) {
+                      supplier[q].color_class = 'brown';
+                    }
+                  }
+                }
 
                 // setDataToModel($scope.releaseDetails.shortlisted_suppliers);
                 mapLeadsWithSuppliers();
@@ -1691,6 +1725,7 @@ angular.module('catalogueApp')
         }
 
         $scope.getBdRequirementDetail = function (id, suppleName) {
+          $scope.shortlisted_spaces_id = id
           userService.getSector()
             .then(function onSuccess(response) {
               $scope.sectorList = response.data;
@@ -1993,6 +2028,15 @@ angular.module('catalogueApp')
                             }
                             $scope.requirementDetailData[key].requirements[localindex_index].requirementCheck = false;
                             $scope.requirementDetailData[key].requirements[localindex_index].varified_ops_date = new Date();
+                            if(response && response.data && response.data.data && response.data.data.color_code != 'null'){
+                              var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+                                return el.id;
+                              }).indexOf($scope.shortlisted_spaces_id);
+                              if (localindex_index != -1) {
+                                $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 3;
+                                  $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = 'green';
+                              }
+                            }
 
                           }
 
@@ -2044,12 +2088,21 @@ angular.module('catalogueApp')
                     } else {
                       $scope.bdrequirementDetailData[key].requirements[index].varified_bd = 'yes';
                       $scope.bdrequirementDetailData[key].requirements[index].color_class = 'green';
-                      $scope.bdrequirementDetailData[key].requirements[index].varified_bd_date = new Date();
+                      $scope.bdrequirementDetailData[key].requirements[index].varified_bd_date = new Date();   
+                      if(response && response.data && response.data.data && response.data.data.color_code != 'null'){
+                        var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+                          return el.id;
+                        }).indexOf($scope.shortlisted_spaces_id);
+                        if (localindex_index != -1) {
+                          $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 3;
+                            $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = 'green';
+                        }
+                      }
                       swal(constants.name, 'Verified Successfully', constants.success);
                     }
                   }).catch(function onError(response) {
                     console.log(response);
-                    if(response.data.status == false){
+                    if(response && response.data && response.data.status && response.data.status == false){
                       if(response.data.data && response.data.data.general_error){
                         swal(constants.name, response.data.data.general_error, constants.error);
                       }
