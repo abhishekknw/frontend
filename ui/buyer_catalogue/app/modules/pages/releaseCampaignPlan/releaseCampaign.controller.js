@@ -182,26 +182,6 @@ angular.module('catalogueApp')
           { header: 'Action' },
         ];
 
-        $scope.requirement_distribution_headings = [
-          { header: '' },
-          { header: 'Sector' },
-          { header: 'Sub Sector' },
-          { header: 'Current Partner' },
-          { header: 'FeedBack' },
-          { header: 'Preferred Partner' },
-          { header: 'L1 Answers' },
-          { header: 'L2 Answers' },
-          { header: 'Implementation Time' },
-          { header: 'Meeting Time' },
-          // { header: 'Preferred Meeting Time' },
-          { header: 'Lead Status' },
-          { header: 'Comment' },
-          { header: 'Lead Given by' },
-          { header: 'Timestamp' },
-          { header: 'Lead Price (Points)' },
-          { header: 'Action' },
-        ];
-
         $scope.requirement_sub_headings = [
           { header: '' },
           { header: 'Sub Sector' },
@@ -297,7 +277,6 @@ angular.module('catalogueApp')
         $scope.popup1 = false;
         $scope.popup2 = false;
         $scope.popup3 = false;
-        $scope.popup4 = false;
         $scope.phaseStartDate = false;
         $scope.phaseEndDate = false;
         $scope.error = false;
@@ -410,6 +389,11 @@ angular.module('catalogueApp')
                 if ($scope.initialReleaseData.shortlisted_suppliers[i].next_action_date) {
                   $scope.initialReleaseData.shortlisted_suppliers[i].next_action_date = new Date($scope.initialReleaseData.shortlisted_suppliers[i].next_action_date);
                 }
+
+                if ($scope.initialReleaseData.shortlisted_suppliers[i].last_call_date) {
+                  $scope.initialReleaseData.shortlisted_suppliers[i].last_call_date = new Date($scope.initialReleaseData.shortlisted_suppliers[i].last_call_date);
+                }
+
                 $scope.shortlistedSuppliersIdList[$scope.initialReleaseData.shortlisted_suppliers[i].supplier_id] = $scope.initialReleaseData.shortlisted_suppliers[i];
                 if (Object.keys($scope.initialReleaseData.shortlisted_suppliers[i].shortlisted_inventories).length == 0) {
                   $scope.initialReleaseData.shortlisted_suppliers[i].shortlisted_inventories['NA'] = 'NA';
@@ -434,7 +418,7 @@ angular.module('catalogueApp')
 
               if ($scope.initialReleaseData) {
                 $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
-
+  
                 // if ($scope.releaseDetails.shortlisted_suppliers.length) {
                 //   for (let i in $scope.releaseDetails.shortlisted_suppliers.length) {
 
