@@ -2088,7 +2088,7 @@ angular.module('catalogueApp')
                     console.log(response);
                     if(response && response.data && response.data.status && response.data.status == false){
                       if(response.data.data && response.data.data.general_error){
-                        swal(constants.name, response.data.data.general_error, constants.error);
+                        swal(constants.name, response.data.data.general_error.errors, constants.error);
                       }
                     }
                   })
@@ -2632,12 +2632,13 @@ angular.module('catalogueApp')
               },
               headers: { 'Authorization': 'JWT ' + token }
             }).then(function onSuccess(response) {
-              swal(constants.name, "Import sheet successfully", constants.success);
-              window.location.reload();
-
+                swal(constants.name, "Import sheet successfully", constants.success);
+                window.location.reload();
             })
               .catch(function onError(response) {
-                console.log(response);
+                if(response && response.data && response.data.data && response.data.data.general_error){
+                  swal(constants.name, response.data.data.general_error.errors, constants.warning);
+                } 
               });
           }
         }
