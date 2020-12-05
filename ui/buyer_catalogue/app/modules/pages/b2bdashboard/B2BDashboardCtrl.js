@@ -15,7 +15,7 @@
     
       $scope.supplierTypeCode = constants.supplierTypeCode;
       $scope.supplierTypeCodePerformanceDetail = constants.supplierTypeCodePerformanceDetail;
-
+      $scope.selectedSupplierType = { code: "all",codes: "all" };
      
       $scope.invKeysLead = [
         { header: 'LEAD COUNT' },
@@ -465,6 +465,43 @@
           }).catch(function onError(response) {
             console.log(response);
           })
+      }
+
+      $scope.purchasedTable = false;
+      $scope.notPurchasedTable = false;
+      $scope.viewCampaignLeads = function () {
+        B2BDashboardService.viewCampaignLeads('',$scope.selectedSupplierType.code)
+      // B2BDashboardService.viewCampaignLeads()
+          .then(function onSuccess(response) {
+            $scope.leadsDataCampaigns = response.data.data;
+          });
+      }
+
+      $scope.getPurchasedLead = function (CampaignId,campaignName) {
+        $scope.purchasedTable = true;
+        $scope.notPurchasedTable = false;
+        $scope.CampaignNameofLeads = campaignName;
+        B2BDashboardService.getPurchasedLead(CampaignId)
+          .then(function onSuccess(response) {
+            $scope.purchasedLeadData = response.data.data;
+  
+          });
+      }
+
+      $scope.getNotPurchasedLead = function (CampaignId,campaignName) {
+        $scope.purchasedTable = false;
+        $scope.notPurchasedTable = true;
+        $scope.CampaignNameofLeads = campaignName;
+        B2BDashboardService.notPurchasedLead(CampaignId)
+          .then(function onSuccess(response) {
+            $scope.notPurchasedLeadData = response.data.data;
+          });
+      }
+
+
+
+      $scope.setSupplierType = function () {
+        $scope.viewCampaignLeads()
       }
 
       $scope.doughnutChartOptions = function () {

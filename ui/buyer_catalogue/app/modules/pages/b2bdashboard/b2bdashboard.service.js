@@ -129,21 +129,23 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
-      DashboardService.viewCampaignLeads = function (vendor, supplierType) {
-        if (vendor) {
-          var url = url_root + "leads/summary/?vendor=" + vendor;
-        } else {
-          var url = url_root + "leads/summary/";
-        }
-        if (supplierType) {
-          if (vendor) {
-            url += "&supplier_code=" + supplierType;
-          } else {
-            url += "?supplier_code=" + supplierType;
-          }
-        }
-        return machadaloHttp.get(url);
-      }
+      // DashboardService.viewCampaignLeads = function (vendor, supplierType) {
+      //   if (vendor) {
+      //     var url = url_root + "leads/summary/?vendor=" + vendor;
+      //   } else {
+      //     var url = url_root + "leads/summary/";
+      //   }
+      //   if (supplierType) {
+      //     if (vendor) {
+      //       url += "&supplier_code=" + supplierType;
+      //     } else {
+      //       url += "?supplier_code=" + supplierType;
+      //     }
+      //   }
+      //   return machadaloHttp.get(url);
+      // }
+
+    
 
       DashboardService.viewLeadsForSelectedCampaign = function (data, campaignId) {
         var url = url_root + "leads/" + campaignId + "/entry_list_by_campaign_id";
@@ -425,6 +427,38 @@ angular.module('catalogueApp')
         if(data.satisfied_status){
           url += "&is_satisfied=" +  data.satisfied_status;
         }
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.viewCampaignLeads = function (vendor, supplierType) {
+        if (vendor) {
+          var url = url_root + "b2b/lead-distribution-campaign/?vendor=" + vendor;
+        } else {
+          var url = url_root + "b2b/lead-distribution-campaign/";
+        }
+        if (supplierType) {
+          if (vendor) {
+            url += "&supplier_code=" + supplierType;
+          } else {
+            url += "?supplier_code=" + supplierType;
+          }
+        }
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.getPurchasedLead = function (campaignId) {
+        var url = url_root + "b2b/purchased-lead-data/";
+        if (campaignId) {
+          var url = url_root + "b2b/purchased-lead-data/?campaign_id=SYNSYNCEFF";
+        } 
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.notPurchasedLead = function (campaignId) {
+        // var url = url_root + "b2b/not-purchased-lead-data/";
+        // if (campaignId) {
+          var url = url_root + "b2b/not-purchased-lead-data/?campaign_id=SYNSYNCEFF";
+     //   } 
         return machadaloHttp.get(url);
       }
       

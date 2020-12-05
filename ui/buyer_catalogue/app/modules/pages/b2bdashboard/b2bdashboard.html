@@ -752,12 +752,220 @@
            
 
               <!--START : Performance Metrics -->
-              <uib-tab id="uib-tabs-width" ng-click="getCampaigns()" index="4">
+              <!-- <uib-tab id="uib-tabs-width" ng-click="getCampaigns()" index="4">
             
           </div>
 
-          </uib-tab>
+          </uib-tab> -->
           <!--END : Performance Metrics  -->
+
+          <!-- view leads start -->
+          <uib-tab id="uib-tabs-width"  ng-click="viewCampaignLeads()" index="4">
+            <uib-tab-heading>
+              <h5>View Leads</h5>
+            </uib-tab-heading>
+            <div class="container-fluid">
+              <div class="panel panel-default">
+                  <div class="col-md-12 "  style="text-align:right;margin-bottom:10px;">
+                  <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button>
+                  </div>
+                <div class="col-md-6">
+                      <h4 class="panel-title">
+                        <select class="form-control" ng-model="selectedVendor.name" ng-change="getCampaignsByVendor()">
+                          <option value="">Select Vendor</option>
+                          <option value="{{vendor.vendor_id}}">All</option>
+                          <option value="{{vendor.vendor_id}}" ng-repeat="vendor in vendorsData">{{vendor.principal_vendor}}</option>
+                        </select>
+                      </h4>
+                  </div>
+                  <div class="animate-show">
+                    <div class="panel-bodyDashboard camp-menu-content">
+                        <table class="table">
+                            <tr ng-repeat="vendors in vendorsData">
+                            {{vendors}}
+                            </tr>
+                        </table>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <h4 class="panel-title">
+                        <select class="form-control" name="supplierType" ng-model="selectedSupplierType.code" value="supplierType.value"   ng-change="setSupplierType()">
+                            <option value="">Select Supplier Type</option>
+                            <option value="{{supplierType.value}}" ng-selected="selectedSupplierType == supplierType.value" ng-repeat="supplierType in supplierTypeCode">{{supplierType.name}}</option>
+                          </select>
+                      </h4>
+                    </div>
+
+              </div><br /><br />
+              <!-- <div class="viewLeadstable" ng-if="showCampaigns"> -->
+                  <div class="viewLeadstable">
+                <br /><br /><br /><br />
+                <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
+                  <div class="table-responsive">
+                  <table class="table">
+                <thead>
+                    <tr>
+                      <th>Index</th>
+                      <th style="width:200px;" class="col-md-2">Campaign Name</th>
+                      <th ng-click="Sort('start_date')">Start Date <a><i class="icon-sort" style="color:white;"></i></a></th>
+                      <th>End Date</th>
+                      <!-- <th>Phase</br>Completed</th> -->
+                      <th>Campaign Status</th>
+                      <th style="width:100px;" class="col-md-2" ng-click="Sort('supplier_count')">Supplier</br> Count <a><i class="icon-sort" style="color:white;"></i></a></th>
+                      <th style="width:100px;" class="col-md-2" ng-click="Sort('flat_count')">Unit primary Count<a><i class="icon-sort" style="color:white;"></i></a></th>
+                      <th style="width:120px;" class="col-md-2" ng-click="Sort('total_leads')">Purchased Survey <a><i class="icon-sort" style="color:white;"></i></a></th>
+                      <!-- <th style="width:100px;" class="col-md-2" ng-click="Sort('hot_leads')">Hot Leads <a><i class="icon-sort" style="color:white;"></i></a></th> -->
+                      <th>View Leads</th>
+                      <th>Email Leads</th>
+                      <th>Download Leads</th>
+
+                    </tr>
+                    <tr colspan="9">
+                      <td></td>
+                      <td><input ng-model="f.name" class="form-control" placeholder="Search"><hr></td>
+                      <td></td>
+                      <td></td>
+                      <td><input ng-model="f.campaign_status" class="form-control" placeholder="Search"><hr></td>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index ">
+                      <td>{{$index + 1}}</td>
+                      <td style="width:200px;" class="col-md-2">{{campaign.name}}</td>
+                      <td>{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
+                      <td ng-if="campaign.campaign_status == 'completed'" style="text-transform:capitalize">{{campaign.end_date|limitTo:10|date:mediumDate}}</td>
+                      <td ng-if="campaign.campaign_status != 'completed'">NA</td>
+                      <!-- <td>{{campaign.phase_complete}}</td> -->
+                      <td ng-if="campaign.campaign_status == 'on_hold'" style="text-transform:capitalize">OnHold</td>
+                      <td ng-if="campaign.campaign_status != 'on_hold'" style="text-transform:capitalize">{{campaign.campaign_status}}</td>
+                      <td style="width:100px;" class="col-md-2" >{{campaign.supplier_count}}</td>
+                      <td style="width:100px;" class="col-md-2" >{{campaign.flat_count}}</td>
+                      <td style="width:100px;" class="col-md-2" >{{campaign.purchased_survey}}</td>
+                      <!-- <td style="width:100px;" class="col-md-2" >{{campaign.hot_leads}}</td> -->
+                      <td>
+                        <button class="btn btn-danger" ng-click="getPurchasedLead(campaign.campaign_id,campaign.name)">View Leads Purchased</button>
+                        <button class="btn btn-danger" ng-click="getNotPurchasedLead(campaign.campaign_id,campaign.name)">View Leads Not Purchased</button>
+                      </td>
+                      <td>
+                        <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id, 'email')" data-target="#sendEmailModal" data-toggle="modal">Email Leads</button>
+                      </td>
+                      <td>
+                        <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id)" data-target="#sendEmailModal" data-toggle="modal">Download Leads</button>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+              <div class="viewLeadstable">
+                <!-- <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button> -->
+              </br><br>
+                <input type="text" class="form-control" ng-model="searchData" ng-if="purchasedTable" placeholder="search">
+                <div class="table-responsive">
+                  <div class="panel-heading content-title" ng-if="purchasedTable || notPurchasedTable"   style="height:70px">
+                    <h3 style="background:'red'">Leads of {{CampaignNameofLeads}}</h3>
+                    <div class="row">
+                      <span class="pull-left"><label for="heading"><small>Campaign Owner :  </small><span><small>{{campaignOwner}}</small> </span></label></span>
+                      <span class="pull-right"><label for="heading"><small>Principal Vendor :  </small><span><small>{{principalVendor}}</small></span></label></span>
+                      </div>
+                  </div>
+                  <br />
+                  <table class="table" ng-if="purchasedTable">
+                    <thead>
+                      <tr>
+                        <th>Index</th>
+                        <th>Client Name</th>
+                        <th>Primary Count</th>
+                        <th>City</th>
+                        <th>Purchased on</th>
+                        <th>Comments</th>
+                        <th>Assigned To</th>
+                        <th>Internal Comments</th>
+                        <th>Meeting Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="lead in purchasedLeadData | filter : searchData | filter : Code | itemsPerPage:20 track by $index">
+                        <td  style="width:200px;" class="col-md-2">{{$index + 1}}</td>
+                        <td  style="width:200px;" class="col-md-2">{{lead.leads_data[0].supplier_name}}</td>
+                        <td  style="width:200px;" class="col-md-2">{{lead.leads_data[0].unit_primary_count}}</td>
+                        <td  style="width:200px;" class="col-md-2">{{lead.leads_data[0].city}}</td>
+                        <td  style="width:200px;" class="col-md-2">{{lead.leads_data[0].city}}</td>
+                        <td  style="width:200px;" class="col-md-2">{{lead.contact_data.external_comments}}</td>
+                        <td  style="width:200px;" class="col-md-2">{{lead.leads_data[0].city}}</td>
+                        <td  style="width:200px;" class="col-md-2">{{lead.contact_data.internal_comments}}</td>
+                        <td  style="width:200px;" class="col-md-2">{{lead.leads_data[0].city}}</td>
+                        <!-- <td>{{lead.unit_primary_count}}</td>
+                        <td>{{lead.city}}</td>
+                        <td>{{lead.supplier_name}}</td> -->
+                       
+
+                        <!-- <td ng-repeat="alias in lead">{{alias.value}}</td> -->
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <br /><br />
+              <div style="text-align:center">
+              <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ></dir-pagination-controls>
+              </div>
+              <br /> <br />
+
+
+              <div class="viewLeadstable">
+                <!-- <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button> -->
+              </br><br>
+                <input ng-if="notPurchasedTable" type="text" class="form-control" ng-model="searchData" placeholder="search">
+                <div class="table-responsive">
+                  <table class="table" ng-if="notPurchasedTable">
+                    <thead>
+                      <tr>
+                        <th>Index</th>
+                        <th>Client Name</th>
+                        <th>Area</th>
+                        <th>Price/Point</th>
+                        <th>Comments</th>
+                        <th>Primary Count (Ultra)</th>
+                       
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="leaddata in notPurchasedLeadData | filter : searchData | filter : Code | itemsPerPage:20 track by $index">
+                        <td  style="width:200px;" class="col-md-2">{{$index + 1}}</td>
+                        <td  style="width:200px;" class="col-md-2">{{leaddata.leads_data[0].supplier_name}}</td>
+                        <td  style="width:200px;" class="col-md-2">{{leaddata.leads_data[0].area}}</td>
+                        <td  style="width:200px;" class="col-md-2">{{leaddata.leads_data.price}}</td>
+                        <td  style="width:200px;" class="col-md-2">{{leaddata.internal_comments}}</td>
+                        <td  style="width:200px;" class="col-md-2">{{leaddata.leads_data[0].unit_primary_count}}</td>
+                        <!-- <td>{{lead.unit_primary_count}}</td>
+                        <td>{{lead.city}}</td>
+                        <td>{{lead.supplier_name}}</td> -->
+                       
+
+                        <!-- <td ng-repeat="alias in lead">{{alias.value}}</td> -->
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <br /><br />
+              <div style="text-align:center">
+              <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ></dir-pagination-controls>
+              </div>
+              <br /> <br />
+
+
+              
+              <!-- <button ng-if="!showCampaigns" class="btn btn-danger" ng-click="getPrintLeadsInExcelData(campaignIdForLeads)" data-target="#printLeadsInExcelModal" data-toggle="modal">Print Leads In Excel</button> -->
+
+            </div>
+          </uib-tab>
+          <!-- view leads end -->
           </uib-tabset>
 
 
