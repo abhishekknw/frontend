@@ -748,9 +748,7 @@
                   </div>
                 </div>
               </uib-tab>
-
-           
-
+             
               <!--START : Performance Metrics -->
               <!-- <uib-tab id="uib-tabs-width" ng-click="getCampaigns()" index="4">
             
@@ -966,6 +964,377 @@
             </div>
           </uib-tab>
           <!-- view leads end -->
+
+           
+              <!--START : Analysis -->
+              <uib-tab  id="uib-tabs-width" ng-click="getCampaigns()" index="4" >
+                <uib-tab-heading>
+                  <h5 style="margin-left:-10px;"> Analysis</h5>
+
+                </uib-tab-heading>
+
+                <div class="container-fluid" print-section>
+                  <div class="row">
+                    <div class="panel panel-default" style="color:'0000ff'" >
+                      <div class="col-md-12">
+                        <!-- Filter -->
+                        <div class="col-md-12" print-remove>
+                          <div class="col-md-8" print-remove>
+                            <label for="" style="color:#000000;">Select Date Range</label>
+                            <div class="col-md-4">
+                            <input type="text"  style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates" is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats">
+                            <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
+                              <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                          </div>
+                          <div class="col-md-4">
+                            <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"  ng-change="changeEndDate()"  ng-model="dateRangeModel.end_dates" is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats">
+                            <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates" ng-click="isEndDateOpen = !isEndDateOpen">
+                              <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                          </div>
+
+                          <button class="btn btn-danger" ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates" ng-click="getCampaignDateWiseSummary()">Submit</button>
+
+                        </div>
+                        <!-- /Filter -->
+                        <br /><br /><br />
+                        <br />
+
+                        <!-- Campaign List -->
+                        <div class="panel-group" print-remove>
+                          <div class="col-md-12">
+                            <div class="col-md-4">
+                              <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.completed.status)">
+                                <div class="button" type="button">
+                                  <div class="panel-heading">
+                                    Completed Campaigns  
+                                  </div>
+                                </div>
+
+                                <div id="completed" class="animate-show" ng-show="campaignStatus.completed.value">
+                                  <div class="panel-bodyDashboard camp-menu-content">
+                                    <table class="table">
+                                        <tr ng-repeat="campaign in campaignData.completed_campaigns | orderBy: 'name'">
+                                        <td >
+                                          <!-- <md-menu> -->
+                                            <div class="" ng-click="getLeadsByCampaign(campaign)">
+                                              {{campaign.name}}
+                                            </div>
+                                            
+                                          </td>
+                                        </tr>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+
+                              <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.ongoing.status)">
+                                <div class="button" type="button">
+                                  <div class="panel-heading">
+                                    Ongoing Campaigns
+                                  </div>
+                                </div>
+                                <div id="ongoing" class="animate-show" ng-show="campaignStatus.ongoing.value">
+                                  <div class="panel-bodyDashboard camp-menu-content">
+                                    <table class="table">
+                                      <tr ng-repeat="campaign in campaignData.ongoing_campaigns | orderBy: 'name'">
+                                        <td>
+                                          <div class="" ng-click="getLeadsByCampaign(campaign)">
+                                            {{campaign.name}}
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-4">
+                              <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.onhold.status)">
+                                <div class="button" type="button">
+                                  <div class="panel-heading">
+                                        OnHold Campaigns
+                                  </div>
+                                </div>
+                                
+                                <div id="onhold" class="animate-show" ng-show="campaignStatus.onhold.value">
+                                  <div class="panel-bodyDashboard camp-menu-content">
+                                    <table class="table">
+                                        <tr ng-repeat="campaign in campaignData.onhold_campaigns | orderBy: 'name'">
+                                        <td >
+                                            <div class="" ng-click="getLeadsByCampaign(campaign)">
+                                              {{campaign.name}}
+                                            </div>
+                                          </td>
+                                        </tr>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- /Campaign List -->
+
+                        <br /><br /><br />
+                        <div class="col-lg-12" ng-if="CampaignLeadsName" style="margin-top:30px;">
+                          <br /> <br />
+                          <div class="panel-heading content-title" style="height:70px">
+                            <h3 for="heading">Leads of {{CampaignLeadsName}}</h3>
+                          </div>
+                        </div>
+                        
+                        <!-- Summary Report-->
+                        <div class="col-lg-12" ng-if="CampaignLeadsName" style="margin-top:50px;">
+                          <div class="col-lg-6">
+                            <div class="panel panel-primary">
+                              <div class="panel-heading content-title">
+                                <label for="Flat">Summary Report</label>
+                              </div>
+                            </div>
+                            <div class="campaigndetailtable">
+                              <div class="table-responsive">
+                                
+                                <table class="table table-striped"  st-table="LeadsByCampaign" st-safe-src="Data">
+                                  <thead>
+                                    <tr>
+                                      <th style="background:#8e1921 !important;color:#ffffff !important">Details</th>
+                                      <th style="background:#8e1921 !important;color:#ffffff !important">Overall</th>
+                                      <th style="background:#8e1921 !important;color:#ffffff !important">Last Week</th>
+                                      <th style="background:#8e1921 !important;color:#ffffff !important">Last 2 Week</th>
+                                      <th style="background:#8e1921 !important;color:#ffffff !important">Last 3 Week</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody style="text-align:center;">
+                                    <tr>
+                                    <td><small style="font-weight:bold">Flat count</small></td>
+                                    <td>{{summary_report.overall_data.primary_count || 'NA'}}</td>
+                                    <td>{{summary_report.last_week.primary_count || 'NA'}}</td>
+                                    <td>{{summary_report.last_two_weeks.primary_count || 'NA'}}</td>
+                                    <td>{{summary_report.last_three_weeks.primary_count || 'NA'}}</td>
+                                    </tr>
+                                  </tbody>
+
+                                  <tbody style="text-align:center;">
+                                    <tr>
+                                    <td><small style="font-weight:bold">Total Lead</small></td>
+                                    <td>{{summary_report.overall_data.total_lead || 'NA'}}</td>
+                                    <td>{{summary_report.last_week.total_lead || 'NA'}}</td>
+                                    <td>{{summary_report.last_two_weeks.total_lead || 'NA'}}</td>
+                                    <td>{{summary_report.last_three_weeks.total_lead || 'NA'}}</td>
+                                    </tr>
+                                  </tbody>
+
+                                  <tbody style="text-align:center;">
+                                    <tr>
+                                    <td><small style="font-weight:bold">{getHotLeadName}} (%)</small></td>
+                                    <td>{{summary_report.overall_data.hot_lead_count || 'NA'}} {{getPercentBrackets(summary_report.overall_data.hot_lead_count, summary_report.overall_data.total_lead)}}</td>
+                                    <td>{{summary_report.last_week.hot_lead_count || 'NA'}} {{getPercentBrackets(summary_report.last_week.hot_lead_count, summary_report.last_week.total_lead)}}</td>
+                                    <td>{{summary_report.last_two_weeks.hot_lead_count || 'NA'}} {{getPercentBrackets(summary_report.last_two_weeks.hot_lead_count, summary_report.last_two_weeks.total_lead)}}</td>
+                                    <td>{{summary_report.last_three_weeks.hot_lead_count || 'NA'}} {{getPercentBrackets(summary_report.last_three_weeks.hot_lead_count, summary_report.last_three_weeks.total_lead)}}</td>
+                                    </tr>
+                                  </tbody>
+
+                                  <tbody style="text-align:center;">
+                                    <tr>
+                                    <td><small style="font-weight:bold">{{getDeepLeadName}} (%)</small></td>
+                                    <td>{{summary_report.overall_data.total_deep_count || 'NA'}} {{getPercentBrackets(summary_report.overall_data.total_deep_count, summary_report.overall_data.total_lead)}}</td>
+                                    <td>{{summary_report.last_week.total_deep_count || 'NA'}} {{getPercentBrackets(summary_report.last_week.total_deep_count, summary_report.last_week.total_lead)}}</td>
+                                    <td>{{summary_report.last_two_weeks.total_deep_count || 'NA'}} {{getPercentBrackets(summary_report.last_two_weeks.total_deep_count, summary_report.last_two_weeks.total_lead)}}</td>
+                                    <td>{{summary_report.last_three_weeks.total_deep_count || 'NA'}} {{getPercentBrackets(summary_report.last_three_weeks.total_deep_count, summary_report.last_three_weeks.total_lead)}}</td>
+                                    </tr>
+                                  </tbody>
+
+                                </table>
+
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-6">
+                            <div class="panel panel-primary">
+                              <div class="panel-heading content-title">
+                                <label for="flat graph">Summary Report Graph</label>
+                              </div>
+                            </div>
+                            <div class="row">
+                           
+                              <div class="outerFlat">
+                                <div class="innerFlat">
+                                  <nvd3 options="weekSummaryStackedBar" data="summary_report_graph_data"></nvd3>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+
+                        </div>
+                        <!-- Summary Report-->
+
+                      </div>
+
+                      <div class="col-sm-12" ng-if="CampaignLeadsName">
+                        <br /><br /><br />
+
+
+                        <!-- Flat summary Report -->
+                        <div class="col-lg-6">
+                          <div class="panel panel-primary">
+                            <div class="panel-heading content-title">
+                              <label for="Flat">Flat Summary Details</label>
+                            </div>
+                          </div>
+                          <div class="campaigndetailtable">
+                            <div class="table-responsive">
+                              <table class="table table-striped" st-table="LeadsByCampaign" st-safe-src="Data">
+                                <thead>
+                                  <tr>
+                                    <th style="background:#8e1921 !important;color:#ffffff !important;">Details</th>
+                                    <th style="background:#8e1921 !important;color:#ffffff !important">Overall Campaign <br>Total</th>
+                                    <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count <br> <small style="color:#ffffff !important"> < 150 </small></th>
+                                    <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count <br><small style="color:#ffffff !important"> Between 151 to 400</small></th>
+                                    <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count <br> <small style="color:#ffffff !important"> > 401</small></th>
+                                  </tr>
+                                </thead>
+                                <tbody style="text-align:center;">
+
+                                  <tr>
+                                    <td><small style="font-weight:bold">Lead Count</small></td>
+                                    <td>{{summary_report.overall_data.total_lead}}</td>
+                                    <td>{{flat_summary["<150"].lead_count}}</td>
+                                    <td>{{flat_summary["150-400"].lead_count}}</td>
+                                    <td>{{flat_summary[">400"].lead_count}}</td>
+                                  </tr>
+
+                                  <tr>
+                                    <td><small style="font-weight:bold">Flat Count</small></td>
+                                    <td>{{summary_report.overall_data.primary_count}}</td>
+                                    <td>{{flat_summary["<150"].flat_count}}</td>
+                                    <td>{{flat_summary["150-400"].flat_count}}</td>
+                                    <td>{{flat_summary[">400"].flat_count}}</td>
+                                  </tr>
+
+                                  <tr>
+                                    <td><small style="font-weight:bold">{{getHotLeadName}} (%)</small></td>
+                                    <td>{{summary_report.overall_data.hot_lead_count}} {{getPercentBrackets(summary_report.overall_data.hot_lead_count, summary_report.overall_data.total_lead)}}</td>
+                                    <td>{{flat_summary["<150"].hot_lead_count}} {{getPercentBrackets(flat_summary["<150"].hot_lead_count, flat_summary["<150"].lead_count)}}</td>
+                                    <td>{{flat_summary["150-400"].hot_lead_count}} {{getPercentBrackets(flat_summary["150-400"].hot_lead_count, flat_summary["150-400"].lead_count)}}</td>
+                                    <td>{{flat_summary[">400"].hot_lead_count}} {{getPercentBrackets(flat_summary[">400"].hot_lead_count, flat_summary[">400"].lead_count)}}</td>
+                                  </tr>
+
+                                  <tr>
+                                    <td><small style="font-weight:bold">{{getDeepLeadName}} (%)</small></td>
+                                    <td>{{summary_report.overall_data.total_deep_count}} {{getPercentBrackets(summary_report.overall_data.total_deep_count, summary_report.overall_data.total_lead)}}</td>
+                                    <td>{{flat_summary["<150"].deep_lead_count}} {{getPercentBrackets(flat_summary["<150"].deep_lead_count, flat_summary["<150"].lead_count)}}</td>
+                                    <td>{{flat_summary["150-400"].deep_lead_count}} {{getPercentBrackets(flat_summary["150-400"].deep_lead_count, flat_summary["150-400"].lead_count)}}</td>
+                                    <td>{{flat_summary[">400"].deep_lead_count}} {{getPercentBrackets(flat_summary[">400"].deep_lead_count, flat_summary[">400"].lead_count)}}</td>
+                                  </tr>
+
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                          <div class="panel panel-primary">
+                            <div class="panel-heading content-title">
+                              <label for="flat graph">Flat Graph Summary</label>
+                            </div>
+                          </div>
+                          <div class="row">
+
+                            <select class="form-control" ng-change="sortData('flat_summary_graph_data',sortModel)"  ng-model="sortModel" print-remove>
+                              <option value="" disabled>Select For Sorting</option>
+                              <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
+                            </select>
+
+                            <div class="outerFlat">
+                              <div class="innerFlat">
+                                <nvd3 options="flatSummaryBarChart" data="flat_summary_graph_data" ng-if="!toggle_sort_data['flat_summary_graph_data']"></nvd3>
+                                <nvd3 options="flatSummaryBarChart" data="toggle_sort_data['flat_summary_graph_data']" ng-if="toggle_sort_data['flat_summary_graph_data']"></nvd3>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <!-- /Flat summary Report -->
+                      </div>
+
+                      <br /><br />
+                      <div class="col-lg-12"  ng-if="CampaignLeadsName" style="margin-top:50px;">
+
+                        <div class="col-lg-6">
+                          <div class="panel panel-primary">
+                            <div class="panel-heading content-title">
+                              <label for="Location">Location Summary Details</label>
+                            </div>
+                          </div>
+                          <div class="campaigndetailtable">
+                            <div class="table-responsive">
+                              <table class="table table-striped" st-table="LeadsByCampaign.locality_data" st-safe-src="localityData">
+                                <thead>
+                                  <tr>
+                                    <th style="background:#8e1921 !important;color:#ffffff !important">Supplier Area</th>
+                                    <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
+                                    <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count</th>
+                                    <th style="background:#8e1921 !important;color:#ffffff !important">{{getHotLeadName}} <br>(%)</th>
+                                    <th style="background:#8e1921 !important;color:#ffffff !important">{{getDeepLeadName}} <br>(%)</th>
+                                  </tr>
+                                </thead>
+                                <tbody style="text-align:center;">
+                                  <tr ng-repeat="(key,data) in location_summary">
+                                    <td style="font-weight:bold">{{key}}</td>
+                                    <td>{{data.lead_count}}</td>
+                                    <td>{{data.flat_count}}</td>
+                                    <td>{{data.hot_lead_count}} <br> <small style="font-weight:bold">{{ getPercentBrackets(data.hot_lead_count, data.lead_count)}}</small> </td>
+                                    <td>{{data.deep_lead_count}} <br> <small style="font-weight:bold">{{getPercent(data.deep_lead_count, data.lead_count)}}</small></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          <br>
+                        </div>
+                            
+                        <div class="col-lg-6" style="overflow:auto">
+                          <div class="panel panel-primary">
+                            <div class="panel-heading content-title">
+                              <label for="flat graph">Location Graph Summary</label>
+                            </div>
+                          </div>
+                          <div class="row">
+
+                            <select class="form-control" ng-change="sortData('location_summary_graph_data',sortModel)"  ng-model="sortModel" print-remove>
+                              <option value="" disabled>Select For Sorting</option>
+                              <option ng-repeat="item in sortMenu" value="{{item.id}}" >{{item.name}}</option>
+                            </select>
+
+                            <div class="outerFlat">
+                              <div class="innerFlat">
+                                <nvd3 options="flatSummaryBarChart" data="location_summary_graph_data" ng-if="!toggle_sort_data['location_summary_graph_data']"></nvd3>
+                                <nvd3 options="flatSummaryBarChart" data="toggle_sort_data['location_summary_graph_data']" ng-if="toggle_sort_data['location_summary_graph_data']"></nvd3>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </uib-tab>
+            
+          </div>
+          <!--END : Analysis  -->
+
           </uib-tabset>
 
 

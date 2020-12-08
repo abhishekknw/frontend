@@ -12,16 +12,18 @@ angular.module('catalogueApp')
       var url_base_user = 'v0/';
       var DashboardService = {};
 
-      DashboardService.getCampaigns = function (campaignId, category, date, vendor, supplierType) {
-        if (vendor) {
-          var url = url_base + "campaign-list/" + campaignId + "/?category=" + category + "&date=" + date + "&vendor=" + vendor;
-        } else {
-          var url = url_base + "campaign-list/" + campaignId + "/?category=" + category + "&date=" + date;
-        }
+      DashboardService.getCampaigns = function () {
+        var url = url_root + "b2b/campaign-list-by-status/";
+        return machadaloHttp.get(url);
+      }
 
-        if (supplierType) {
-          url += "&supplier_code=" + supplierType;
-        }
+      DashboardService.getSummaryReport = function (campaign_id) {
+        var url = url_root + "b2b/summary-reports/?campaign_id="+campaign_id;
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.getFlatSummaryReport = function (campaign_id) {
+        var url = url_root + "b2b/flat-summary-details/?campaign_id="+campaign_id;
         return machadaloHttp.get(url);
       }
 

@@ -775,7 +775,318 @@
       };
 
      
+      $scope.getCampaigns = function () {
+        if (!$scope.campaignListData && !$scope.campaignData) {
+          cfpLoadingBar.start();
+          B2BDashboardService.getCampaigns().then(function onSuccess(response) {
+            cfpLoadingBar.complete();
+            $scope.campaignData = response.data.data;
+          }).catch(function onError(response) {
+            cfpLoadingBar.complete();
+          });
+        }else if($scope.campaignListData && !$scope.campaignData){
+          $scope.campaignData = $scope.campaignListData;
+        }
+      }
 
+      $scope.getLeadsByCampaign = function (campaign) {
+        $scope.toggle_sort_data = {};
+
+        $scope.CampaignLeadsName = campaign.name;
+
+        $scope.getSummaryReport(campaign);
+      }
+
+      $scope.getFlatSummaryReport = function(campaign){
+
+        B2BDashboardService.getFlatSummaryReport(campaign.proposal_id).then(function onSuccess(response) {
+          $scope.flat_summary_res = response.data.data;
+
+          let obj = {
+            "lead_count": 0,
+            "hot_lead_count": 0,
+            "deep_lead_count": 0,
+            "flat_count": 0
+          };
+
+          $scope.flat_summary = {
+            "<150": angular.copy(obj),
+            "150-400": angular.copy(obj),
+            ">400": angular.copy(obj)
+          };
+
+          $scope.location_summary = {};
+
+          for(var x in response.data.data){
+            var row = response.data.data[x];
+
+            if(!$scope.location_summary[row.supplier_area]){
+              $scope.location_summary[row.supplier_area] = angular.copy(obj);
+            }
+            
+            var type = "<150";
+            if(row.supplier_primary_count > 150 && row.supplier_primary_count < 400){
+              type = "150-400";
+            }
+            else if(row.supplier_primary_count > 400){
+              type = ">400";
+            }
+
+            $scope.flat_summary[type].lead_count += 1;
+            $scope.flat_summary[type].flat_count += row.supplier_primary_count?row.supplier_primary_count:0;
+
+            $scope.location_summary[row.supplier_area].lead_count += 1;
+            $scope.location_summary[row.supplier_area].flat_count += row.supplier_primary_count?row.supplier_primary_count:0;
+
+            if(row.lead_status == "Hot Lead"){
+              $scope.flat_summary[type].hot_lead_count += 1;
+              $scope.location_summary[row.supplier_area].hot_lead_count += 1;
+            }else if(row.lead_status == "Deep Lead"){
+              $scope.flat_summary[type].deep_lead_count += 1;
+              $scope.location_summary[row.supplier_area].deep_lead_count += 1;
+            }
+
+          }
+
+          $scope.flat_summary_graph_data = [
+            {
+              key: "Total Leads",
+              values:
+                [
+                  { x: '1-150', y: $scope.flat_summary["<150"].lead_count },
+                  { x: '151-400', y: $scope.flat_summary["150-400"].lead_count },
+                  { x: '401+', y: $scope.flat_summary[">400"].lead_count},
+                ]
+            },
+            {
+              key: $scope.getHotLeadName,
+              values:
+                [
+                  { x: '1-150', y: $scope.flat_summary["<150"].hot_lead_count },
+                  { x: '151-400', y: $scope.flat_summary["150-400"].hot_lead_count },
+                  { x: '401+', y: $scope.flat_summary[">400"].hot_lead_count},
+                ]
+            },
+            {
+              key: $scope.getDeepLeadName,
+              values:
+                [
+                  { x: '1-150', y: $scope.flat_summary["<150"].deep_lead_count },
+                  { x: '151-400', y: $scope.flat_summary["150-400"].deep_lead_count },
+                  { x: '401+', y: $scope.flat_summary[">400"].deep_lead_count},
+                ]
+            },
+          ];
+
+          $scope.location_summary_graph_data = [
+            {
+              key: "Total Leads",
+              values: $scope.getLocationGraphValues("lead_count")
+            },
+            {
+              key: $scope.getHotLeadName,
+              values: $scope.getLocationGraphValues("hot_lead_count")
+            },
+            {
+              key: $scope.getDeepLeadName,
+              values: $scope.getLocationGraphValues("deep_lead_count")
+            },
+          ];
+
+          cfpLoadingBar.complete();
+        }).catch(function onError(response) {
+          cfpLoadingBar.complete();
+        });
+      }
+
+      $scope.getLocationGraphValues = function(type){
+        let values = [];
+
+        for(let i in $scope.location_summary){
+          values.push({ x: i, y: $scope.location_summary[i][type] });
+        }
+
+        return values;
+      }
+
+      $scope.getSummaryReport = function(campaign){
+        cfpLoadingBar.start();
+
+        B2BDashboardService.getSummaryReport(campaign.proposal_id).then(function onSuccess(response) {
+          $scope.summary_report = response.data.data;
+
+          $scope.getHotLeadName = ($scope.summary_report.overall_data.company_hot_lead_status || 'Hot Leads');
+      
+          $scope.getDeepLeadName = ($scope.summary_report.overall_data.company_deep_lead_status || 'Deep Leads');
+
+          $scope.sortMenu = [
+            { name: 'Total Leads(ASC)', type: 'Total Leads', order: 'ASC', id: 1 },
+            { name: 'Total Leads(DESC)', type: 'Total Leads', order: 'DESC', id: 2 },
+            { name: $scope.getHotLeadName+'(ASC)', type: $scope.getHotLeadName, order: 'ASC', id: 3 },
+            { name: $scope.getHotLeadName+'(DESC)', type: $scope.getHotLeadName, order: 'DESC', id: 4 },
+            { name: $scope.getDeepLeadName+'(ASC)', type: $scope.getDeepLeadName, order: 'ASC', id: 5 },
+            { name: $scope.getDeepLeadName+'(DESC)', type: $scope.getDeepLeadName, order: 'DESC', id: 6 },
+            { name: 'All', type: '', order: '', id: 7 },
+          ];
+
+          var summary_report = response.data.data;
+
+          $scope.summary_report_graph_data = [
+            {
+              key: "Total Leads",
+              values:
+                [
+                  { x: 'Overall', y: summary_report.overall_data.total_lead },
+                  { x: 'Last Week', y: summary_report.last_week.total_lead },
+                  { x: 'Last Two Week', y: summary_report.last_two_weeks.total_lead},
+                  { x: 'Last Three Week', y: summary_report.last_three_weeks.total_lead }
+                ]
+            },
+            {
+              key: $scope.getHotLeadName,
+              values:
+                [
+                  { x: 'Overall', y: summary_report.overall_data.hot_lead_count },
+                  { x: 'Last Week', y: summary_report.last_week.hot_lead_count },
+                  { x: 'Last Two Week', y: summary_report.last_two_weeks.hot_lead_count},
+                  { x: 'Last Three Week', y: summary_report.last_three_weeks.hot_lead_count }
+                ]
+            },
+            {
+              key: $scope.getDeepLeadName,
+              values:
+                [
+                  { x: 'Overall', y: summary_report.overall_data.total_deep_count },
+                  { x: 'Last Week', y: summary_report.last_week.total_deep_count },
+                  { x: 'Last Two Week', y: summary_report.last_two_weeks.total_deep_count},
+                  { x: 'Last Three Week', y: summary_report.last_three_weeks.total_deep_count }
+                ]
+            }
+          ];
+          
+          $scope.getFlatSummaryReport(campaign);
+        }).catch(function onError(response) {
+          cfpLoadingBar.complete();
+        });
+      };
+
+      $scope.getPercentBrackets = function (num1, num2) {
+        if (num1 && num2) {
+          var percent = num1 / num2 * 100;
+
+          return "("+ percent + "%)";
+        }
+
+        return "";
+      }
+
+      $scope.weekSummaryStackedBar = {
+        "chart": {
+          "type": "multiBarChart",
+          "height": 450,
+          "margin": {
+            "top": 100,
+            "right": 20,
+            "bottom": 145,
+            "left": 45
+          },
+          "clipEdge": true,
+          "duration": 500,
+          "grouped": true,
+          "sortDescending": false,
+          "xAxis": {
+            "axisLabel": "Summary Report Graph",
+            "axisLabelDistance": -50,
+            "showMaxMin": false,
+            "rotateLabels": -30
+          },
+          "yAxis": {
+            "axisLabel": "Leads",
+            "axisLabelDistance": -20
+          },
+          "legend": {
+            "margin": {
+              "top": 5,
+              "right": 3,
+              "bottom": 5,
+              "left": 15
+            },
+          },
+
+          "reduceXTicks": false
+        }
+      };
+
+      $scope.flatSummaryBarChart = {
+        "chart": {
+          "type": "multiBarChart",
+          "height": 450,
+          "margin": {
+            "top": 100,
+            "right": 20,
+            "bottom": 145,
+            "left": 45
+          },
+          "clipEdge": true,
+          "duration": 500,
+          "grouped": true,
+          "sortDescending": false,
+          "xAxis": {
+            "axisLabel": "Flat Range",
+            "axisLabelDistance": -50,
+            "showMaxMin": false,
+            "rotateLabels": -30
+          },
+          "yAxis": {
+            "axisLabel": "Leads",
+            "axisLabelDistance": -20,
+          },
+          "legend": {
+            "margin": {
+              "top": 5,
+              "right": 3,
+              "bottom": 5,
+              "left": 15
+            },
+          },
+
+          "reduceXTicks": false
+        }
+      };
+
+      /** Sort funtionality */
+
+      $scope.toggle_sort_data = {};
+
+      $scope.sortData = function(keyName, id){
+        let selectMenu = $scope.sortMenu.filter(row => id==row.id)[0];
+        
+        if(keyName && selectMenu.name && selectMenu.type && selectMenu.order){
+          var data = angular.copy($scope[keyName]);
+          
+          var new_data = {};
+          
+          for(var i in data){
+            if(data[i].key == selectMenu.type){
+              new_data = data[i];
+            }
+          }
+
+          new_data.values.sort(function(a, b) {
+            return a.y - b.y;
+          });
+
+          if(selectMenu.order == "DESC"){
+            new_data.values.reverse();
+          }
+
+          $scope.toggle_sort_data[keyName] = [new_data];
+        }
+        else{
+          delete $scope.toggle_sort_data[keyName];
+        }
+      }
+      /** /Sort funtionality */
     })
 })();
 app.factory('Excel', function ($window) {
