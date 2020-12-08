@@ -994,7 +994,7 @@
                             </button>
                           </div>
 
-                          <button class="btn btn-danger" ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates" ng-click="getCampaignDateWiseSummary()">Submit</button>
+                          <button class="btn btn-danger" ng-disabled="!dateRangeModel.start_dates || !dateRangeModel.end_dates" ng-click="submitAnalysisDate()">Submit</button>
 
                         </div>
                         <!-- /Filter -->
@@ -1132,7 +1132,7 @@
 
                                   <tbody style="text-align:center;">
                                     <tr>
-                                    <td><small style="font-weight:bold">{getHotLeadName}} (%)</small></td>
+                                    <td><small style="font-weight:bold">{{getHotLeadName}} (%)</small></td>
                                     <td>{{summary_report.overall_data.hot_lead_count || 'NA'}} {{getPercentBrackets(summary_report.overall_data.hot_lead_count, summary_report.overall_data.total_lead)}}</td>
                                     <td>{{summary_report.last_week.hot_lead_count || 'NA'}} {{getPercentBrackets(summary_report.last_week.hot_lead_count, summary_report.last_week.total_lead)}}</td>
                                     <td>{{summary_report.last_two_weeks.hot_lead_count || 'NA'}} {{getPercentBrackets(summary_report.last_two_weeks.hot_lead_count, summary_report.last_two_weeks.total_lead)}}</td>

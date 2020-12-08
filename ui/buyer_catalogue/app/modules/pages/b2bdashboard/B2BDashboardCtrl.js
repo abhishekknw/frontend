@@ -16,6 +16,7 @@
       $scope.supplierTypeCode = constants.supplierTypeCode;
       $scope.supplierTypeCodePerformanceDetail = constants.supplierTypeCodePerformanceDetail;
       $scope.selectedSupplierType = { code: "all",codes: "all" };
+      $scope.dateRangeModel = {};
      
       $scope.invKeysLead = [
         { header: 'LEAD COUNT' },
@@ -774,7 +775,6 @@
         $scope.map.showInfoWindow('myWindow', this);
       };
 
-     
       $scope.getCampaigns = function () {
         if (!$scope.campaignListData && !$scope.campaignData) {
           cfpLoadingBar.start();
@@ -789,7 +789,14 @@
         }
       }
 
+      $scope.submitAnalysisDate = function(){
+        if($scope.analysisCampaign){
+          $scope.getLeadsByCampaign($scope.analysisCampaign);
+        }
+      }
+
       $scope.getLeadsByCampaign = function (campaign) {
+        $scope.analysisCampaign = angular.copy(campaign);
         $scope.toggle_sort_data = {};
 
         $scope.CampaignLeadsName = campaign.name;
@@ -799,7 +806,14 @@
 
       $scope.getFlatSummaryReport = function(campaign){
 
-        B2BDashboardService.getFlatSummaryReport(campaign.proposal_id).then(function onSuccess(response) {
+        let start_date = null;
+        let end_date = null;
+        if($scope.dateRangeModel.start_dates && $scope.dateRangeModel.end_dates){
+          start_date = commonDataShare.formatDate($scope.dateRangeModel.start_dates);
+          end_date = commonDataShare.formatDate($scope.dateRangeModel.end_dates);
+        }
+        
+        B2BDashboardService.getFlatSummaryReport(campaign.proposal_id, start_date, end_date).then(function onSuccess(response) {
           $scope.flat_summary_res = response.data.data;
 
           let obj = {
@@ -912,7 +926,14 @@
       $scope.getSummaryReport = function(campaign){
         cfpLoadingBar.start();
 
-        B2BDashboardService.getSummaryReport(campaign.proposal_id).then(function onSuccess(response) {
+        let start_date = null;
+        let end_date = null;
+        if($scope.dateRangeModel.start_dates && $scope.dateRangeModel.end_dates){
+          start_date = commonDataShare.formatDate($scope.dateRangeModel.start_dates);
+          end_date = commonDataShare.formatDate($scope.dateRangeModel.end_dates);
+        }
+
+        B2BDashboardService.getSummaryReport(campaign.proposal_id, start_date, end_date).then(function onSuccess(response) {
           $scope.summary_report = response.data.data;
 
           $scope.getHotLeadName = ($scope.summary_report.overall_data.company_hot_lead_status || 'Hot Leads');
