@@ -17,13 +17,19 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
-      DashboardService.getSummaryReport = function (campaign_id) {
+      DashboardService.getSummaryReport = function (campaign_id, start_date=null, end_date=null) {
         var url = url_root + "b2b/summary-reports/?campaign_id="+campaign_id;
+        if(start_date && end_date){
+          url += "&start_date="+start_date+"&end_date="+end_date;
+        }
         return machadaloHttp.get(url);
       }
 
-      DashboardService.getFlatSummaryReport = function (campaign_id) {
+      DashboardService.getFlatSummaryReport = function (campaign_id, start_date=null, end_date=null) {
         var url = url_root + "b2b/flat-summary-details/?campaign_id="+campaign_id;
+        if(start_date && end_date){
+          url += "&start_date="+start_date+"&end_date="+end_date;
+        }
         return machadaloHttp.get(url);
       }
 
