@@ -471,6 +471,8 @@
       $scope.purchasedTable = false;
       $scope.notPurchasedTable = false;
       $scope.viewCampaignLeads = function () {
+        $scope.purchasedTable = false;
+        $scope.notPurchasedTable = false;
         B2BDashboardService.viewCampaignLeads('',$scope.selectedSupplierType.code)
       // B2BDashboardService.viewCampaignLeads()
           .then(function onSuccess(response) {
@@ -485,6 +487,7 @@
         B2BDashboardService.getPurchasedLead(CampaignId)
           .then(function onSuccess(response) {
             $scope.purchasedLeadData = response.data.data;
+            console.log('11111111111111111111111111111111',$scope.purchasedLeadData);
   
           });
       }
@@ -922,6 +925,19 @@
 
         return values;
       }
+
+      $scope.Sort = function (val) {
+        if ($scope.sort == val) {
+          $scope.reversesort = !$scope.reversesort;
+          //return;
+        }
+        $scope.sort = val;
+        $('td a i').each(function () {
+          //alert(this.className);
+          $(this).removeClass().addClass('icon-sort');
+        });
+
+      };
 
       $scope.getSummaryReport = function(campaign){
         cfpLoadingBar.start();

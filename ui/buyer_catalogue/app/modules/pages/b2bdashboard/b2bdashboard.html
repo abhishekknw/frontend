@@ -758,7 +758,7 @@
           <!--END : Performance Metrics  -->
 
           <!-- view leads start -->
-          <uib-tab id="uib-tabs-width"  ng-click="viewCampaignLeads()" index="4">
+          <uib-tab id="uib-tabs-width"  ng-click="viewCampaignLeads()" index="3">
             <uib-tab-heading>
               <h5>View Leads</h5>
             </uib-tab-heading>
@@ -877,26 +877,28 @@
                       <tr>
                         <th>Index</th>
                         <th>Client Name</th>
-                        <th>Primary Count</th>
-                        <th>City</th>
+                        <!-- <th>Primary Count</th> -->
+                        <th style="width:100px;" class="col-md-2" ng-click="Sort('unit_primary_count')">Primary Count<a><i class="icon-sort" style="color:white;"></i></a></th>
+                        <th style="width:100px;" class="col-md-2" ng-click="Sort('city')">City<a><i class="icon-sort" style="color:white;"></i></a></th>
+                        <!-- <th>City</th> -->
                         <th>Purchased on</th>
                         <th>Comments</th>
-                        <th>Assigned To</th>
+                        <!-- <th>Assigned To</th> -->
                         <th>Internal Comments</th>
-                        <th>Meeting Date</th>
+                        <th>Meeting Timeline</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="lead in purchasedLeadData | filter : searchData | filter : Code | itemsPerPage:20 track by $index">
+                      <tr ng-repeat="lead in purchasedLeadData | filter : searchData | filter : Code | orderBy:sort:reversesort | itemsPerPage:20 track by $index">
                         <td  style="width:200px;" class="col-md-2">{{$index + 1}}</td>
                         <td  style="width:200px;" class="col-md-2">{{lead.leads_data[0].supplier_name}}</td>
                         <td  style="width:200px;" class="col-md-2">{{lead.leads_data[0].unit_primary_count}}</td>
                         <td  style="width:200px;" class="col-md-2">{{lead.leads_data[0].city}}</td>
-                        <td  style="width:200px;" class="col-md-2">{{lead.leads_data[0].city}}</td>
+                        <td  style="width:200px;" class="col-md-2"></td>
                         <td  style="width:200px;" class="col-md-2">{{lead.contact_data.external_comments}}</td>
-                        <td  style="width:200px;" class="col-md-2">{{lead.leads_data[0].city}}</td>
+                        <!-- <td  style="width:200px;" class="col-md-2">{{lead.leads_data[0].city}}</td> -->
                         <td  style="width:200px;" class="col-md-2">{{lead.contact_data.internal_comments}}</td>
-                        <td  style="width:200px;" class="col-md-2">{{lead.leads_data[0].city}}</td>
+                        <td  style="width:200px;" class="col-md-2">{{lead.meating_timeline}}</td>
                         <!-- <td>{{lead.unit_primary_count}}</td>
                         <td>{{lead.city}}</td>
                         <td>{{lead.supplier_name}}</td> -->
@@ -923,6 +925,8 @@
                   <table class="table" ng-if="notPurchasedTable">
                     <thead>
                       <tr>
+                        <th></th>
+                       
                         <th>Index</th>
                         <th>Client Name</th>
                         <th>Area</th>
@@ -934,11 +938,13 @@
                     </thead>
                     <tbody>
                       <tr ng-repeat="leaddata in notPurchasedLeadData | filter : searchData | filter : Code | itemsPerPage:20 track by $index">
+                       <td><input type="checkbox"></td>
+                       <td><button class="btn btn-danger">Buy</button></td>
                         <td  style="width:200px;" class="col-md-2">{{$index + 1}}</td>
                         <td  style="width:200px;" class="col-md-2">{{leaddata.leads_data[0].supplier_name}}</td>
                         <td  style="width:200px;" class="col-md-2">{{leaddata.leads_data[0].area}}</td>
-                        <td  style="width:200px;" class="col-md-2">{{leaddata.leads_data.price}}</td>
-                        <td  style="width:200px;" class="col-md-2">{{leaddata.internal_comments}}</td>
+                        <td  style="width:200px;" class="col-md-2">{{leaddata.price}}</td>
+                        <td  style="width:200px;" class="col-md-2">{{leaddata.internal_comments[0].comment}}</td>
                         <td  style="width:200px;" class="col-md-2">{{leaddata.leads_data[0].unit_primary_count}}</td>
                         <!-- <td>{{lead.unit_primary_count}}</td>
                         <td>{{lead.city}}</td>
