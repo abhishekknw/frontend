@@ -15,7 +15,8 @@
     
       $scope.supplierTypeCode = constants.supplierTypeCode;
       $scope.supplierTypeCodePerformanceDetail = constants.supplierTypeCodePerformanceDetail;
-
+      $scope.selectedSupplierType = { code: "all",codes: "all" };
+      $scope.dateRangeModel = {};
      
       $scope.invKeysLead = [
         { header: 'LEAD COUNT' },
@@ -467,6 +468,46 @@
           })
       }
 
+      $scope.purchasedTable = false;
+      $scope.notPurchasedTable = false;
+      $scope.viewCampaignLeads = function () {
+        $scope.purchasedTable = false;
+        $scope.notPurchasedTable = false;
+        B2BDashboardService.viewCampaignLeads('',$scope.selectedSupplierType.code)
+      // B2BDashboardService.viewCampaignLeads()
+          .then(function onSuccess(response) {
+            $scope.leadsDataCampaigns = response.data.data;
+          });
+      }
+
+      $scope.getPurchasedLead = function (CampaignId,campaignName) {
+        $scope.purchasedTable = true;
+        $scope.notPurchasedTable = false;
+        $scope.CampaignNameofLeads = campaignName;
+        B2BDashboardService.getPurchasedLead(CampaignId)
+          .then(function onSuccess(response) {
+            $scope.purchasedLeadData = response.data.data;
+            console.log('11111111111111111111111111111111',$scope.purchasedLeadData);
+  
+          });
+      }
+
+      $scope.getNotPurchasedLead = function (CampaignId,campaignName) {
+        $scope.purchasedTable = false;
+        $scope.notPurchasedTable = true;
+        $scope.CampaignNameofLeads = campaignName;
+        B2BDashboardService.notPurchasedLead(CampaignId)
+          .then(function onSuccess(response) {
+            $scope.notPurchasedLeadData = response.data.data;
+          });
+      }
+
+
+
+      $scope.setSupplierType = function () {
+        $scope.viewCampaignLeads()
+      }
+
       $scope.doughnutChartOptions = function () {
         $anchorScroll('bottom');
       }
@@ -737,7 +778,6 @@
         $scope.map.showInfoWindow('myWindow', this);
       };
 
-     
       $scope.getCampaigns = function () {
         if (!$scope.campaignListData && !$scope.campaignData) {
           cfpLoadingBar.start();
@@ -752,7 +792,14 @@
         }
       }
 
+      $scope.submitAnalysisDate = function(){
+        if($scope.analysisCampaign){
+          $scope.getLeadsByCampaign($scope.analysisCampaign);
+        }
+      }
+
       $scope.getLeadsByCampaign = function (campaign) {
+        $scope.analysisCampaign = angular.copy(campaign);
         $scope.toggle_sort_data = {};
 
         $scope.CampaignLeadsName = campaign.name;
@@ -762,7 +809,14 @@
 
       $scope.getFlatSummaryReport = function(campaign){
 
-        B2BDashboardService.getFlatSummaryReport(campaign.proposal_id).then(function onSuccess(response) {
+        let start_date = null;
+        let end_date = null;
+        if($scope.dateRangeModel.start_dates && $scope.dateRangeModel.end_dates){
+          start_date = commonDataShare.formatDate($scope.dateRangeModel.start_dates);
+          end_date = commonDataShare.formatDate($scope.dateRangeModel.end_dates);
+        }
+        
+        B2BDashboardService.getFlatSummaryReport(campaign.proposal_id, start_date, end_date).then(function onSuccess(response) {
           $scope.flat_summary_res = response.data.data;
 
           let obj = {
@@ -779,12 +833,20 @@
           };
 
           $scope.location_summary = {};
+          $scope.date_summary = {};
 
           for(var x in response.data.data){
             var row = response.data.data[x];
 
             if(!$scope.location_summary[row.supplier_area]){
               $scope.location_summary[row.supplier_area] = angular.copy(obj);
+            }
+
+            var created_at = new Date(row.created_at);
+            var dateKey = created_at.getFullYear() + "-" + (created_at.getMonth()+1) + "-" + created_at.getDate();
+
+            if(!$scope.date_summary[dateKey]){
+              $scope.date_summary[dateKey] = angular.copy(obj);
             }
             
             var type = "<150";
@@ -801,12 +863,17 @@
             $scope.location_summary[row.supplier_area].lead_count += 1;
             $scope.location_summary[row.supplier_area].flat_count += row.supplier_primary_count?row.supplier_primary_count:0;
 
+            $scope.date_summary[dateKey].lead_count += 1;
+            $scope.date_summary[dateKey].flat_count += row.supplier_primary_count?row.supplier_primary_count:0;
+
             if(row.lead_status == "Hot Lead"){
               $scope.flat_summary[type].hot_lead_count += 1;
               $scope.location_summary[row.supplier_area].hot_lead_count += 1;
+              $scope.date_summary[dateKey].hot_lead_count += 1;
             }else if(row.lead_status == "Deep Lead"){
               $scope.flat_summary[type].deep_lead_count += 1;
               $scope.location_summary[row.supplier_area].deep_lead_count += 1;
+              $scope.date_summary[dateKey].deep_lead_count += 1;
             }
 
           }
@@ -856,6 +923,21 @@
             },
           ];
 
+          $scope.date_summary_graph_data = [
+            {
+              key: "Total Leads",
+              values: $scope.getDateGraphValues("lead_count")
+            },
+            {
+              key: $scope.getHotLeadName,
+              values: $scope.getDateGraphValues("hot_lead_count")
+            },
+            {
+              key: $scope.getDeepLeadName,
+              values: $scope.getDateGraphValues("deep_lead_count")
+            },
+          ];
+
           cfpLoadingBar.complete();
         }).catch(function onError(response) {
           cfpLoadingBar.complete();
@@ -872,10 +954,40 @@
         return values;
       }
 
+      $scope.getDateGraphValues = function(type){
+        let values = [];
+
+        for(let i in $scope.date_summary){
+          values.push({ x: i, y: $scope.date_summary[i][type] });
+        }
+
+        return values;
+      }
+
+      $scope.Sort = function (val) {
+        if ($scope.sort == val) {
+          $scope.reversesort = !$scope.reversesort;
+          //return;
+        }
+        $scope.sort = val;
+        $('td a i').each(function () {
+          //alert(this.className);
+          $(this).removeClass().addClass('icon-sort');
+        });
+
+      };
+
       $scope.getSummaryReport = function(campaign){
         cfpLoadingBar.start();
 
-        B2BDashboardService.getSummaryReport(campaign.proposal_id).then(function onSuccess(response) {
+        let start_date = null;
+        let end_date = null;
+        if($scope.dateRangeModel.start_dates && $scope.dateRangeModel.end_dates){
+          start_date = commonDataShare.formatDate($scope.dateRangeModel.start_dates);
+          end_date = commonDataShare.formatDate($scope.dateRangeModel.end_dates);
+        }
+
+        B2BDashboardService.getSummaryReport(campaign.proposal_id, start_date, end_date).then(function onSuccess(response) {
           $scope.summary_report = response.data.data;
 
           $scope.getHotLeadName = ($scope.summary_report.overall_data.company_hot_lead_status || 'Hot Leads');
