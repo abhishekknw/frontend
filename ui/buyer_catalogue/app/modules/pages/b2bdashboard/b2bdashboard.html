@@ -1333,6 +1333,28 @@
                         </div>
 
                       </div>
+
+                      <!-- Leads By Date -->
+                      <div class="col-md-12" ng-if="CampaignLeadsName" style="margin-top:50px;">
+                        <div class="panel-heading content-title">
+                            <h4 style="text-align: center"> Leads By Date </h4>
+                        </div>
+                        <div class="col-md-12" ng-scrollable>
+                          <select class="form-control" ng-change="sortData('date_summary_graph_data',sortModel)" ng-model="sortModel" print-remove>
+                            <option value="" disabled>Select For Sorting</option>
+                            <option ng-repeat="item in sortMenu" value="{{item.id}}">{{item.name}}</option>
+                          </select>
+
+                          <div class="outerFlat">
+                            <div class="innerFlat">
+                              <nvd3 options="flatSummaryBarChart" data="date_summary_graph_data" ng-if="!toggle_sort_data['date_summary_graph_data']"></nvd3>
+                              <nvd3 options="flatSummaryBarChart" data="toggle_sort_data['date_summary_graph_data']" ng-if="toggle_sort_data['date_summary_graph_data']"></nvd3>
+                            </div>
+                          </div>
+                          
+                        </div>
+                      </div>
+                      <!-- /Leads By Date -->
                     </div>
                   </div>
                 </div>
