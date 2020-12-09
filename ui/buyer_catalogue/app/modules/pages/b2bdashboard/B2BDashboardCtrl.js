@@ -831,12 +831,20 @@
           };
 
           $scope.location_summary = {};
+          $scope.date_summary = {};
 
           for(var x in response.data.data){
             var row = response.data.data[x];
 
             if(!$scope.location_summary[row.supplier_area]){
               $scope.location_summary[row.supplier_area] = angular.copy(obj);
+            }
+
+            var created_at = new Date(row.created_at);
+            var dateKey = created_at.getFullYear() + "-" + (created_at.getMonth()+1) + "-" + created_at.getDate();
+
+            if(!$scope.date_summary[dateKey]){
+              $scope.date_summary[dateKey] = angular.copy(obj);
             }
             
             var type = "<150";
@@ -853,12 +861,17 @@
             $scope.location_summary[row.supplier_area].lead_count += 1;
             $scope.location_summary[row.supplier_area].flat_count += row.supplier_primary_count?row.supplier_primary_count:0;
 
+            $scope.date_summary[dateKey].lead_count += 1;
+            $scope.date_summary[dateKey].flat_count += row.supplier_primary_count?row.supplier_primary_count:0;
+
             if(row.lead_status == "Hot Lead"){
               $scope.flat_summary[type].hot_lead_count += 1;
               $scope.location_summary[row.supplier_area].hot_lead_count += 1;
+              $scope.date_summary[dateKey].hot_lead_count += 1;
             }else if(row.lead_status == "Deep Lead"){
               $scope.flat_summary[type].deep_lead_count += 1;
               $scope.location_summary[row.supplier_area].deep_lead_count += 1;
+              $scope.date_summary[dateKey].deep_lead_count += 1;
             }
 
           }
@@ -908,6 +921,21 @@
             },
           ];
 
+          $scope.date_summary_graph_data = [
+            {
+              key: "Total Leads",
+              values: $scope.getDateGraphValues("lead_count")
+            },
+            {
+              key: $scope.getHotLeadName,
+              values: $scope.getDateGraphValues("hot_lead_count")
+            },
+            {
+              key: $scope.getDeepLeadName,
+              values: $scope.getDateGraphValues("deep_lead_count")
+            },
+          ];
+
           cfpLoadingBar.complete();
         }).catch(function onError(response) {
           cfpLoadingBar.complete();
@@ -926,6 +954,16 @@
       $scope.surveyLeadArray = ['Survey','Leads'];
       $scope.surveyLeadFilter = function(filter){
        $scope.filterType = filter;
+      }
+
+      $scope.getDateGraphValues = function(type){
+        let values = [];
+
+        for(let i in $scope.date_summary){
+          values.push({ x: i, y: $scope.date_summary[i][type] });
+        }
+
+        return values;
       }
 
       $scope.Sort = function (val) {
