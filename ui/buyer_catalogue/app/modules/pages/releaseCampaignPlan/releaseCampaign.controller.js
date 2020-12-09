@@ -1305,6 +1305,11 @@ angular.module('catalogueApp')
                   $scope.browsedDetailData[i].selected_preferred_company = selected_preferred_company
                 }
 
+                userService.getSector()
+                .then(function onSuccess(response) {
+                  $scope.sectorList = response.data;
+                });
+
                 //start added sector name
                 if ($scope.sectorList) {
                   var localindex_indexs = $scope.sectorList.map(function (el) {

@@ -487,8 +487,6 @@
         B2BDashboardService.getPurchasedLead(CampaignId)
           .then(function onSuccess(response) {
             $scope.purchasedLeadData = response.data.data;
-            console.log('11111111111111111111111111111111',$scope.purchasedLeadData);
-  
           });
       }
 
@@ -922,21 +920,22 @@
         for(let i in $scope.location_summary){
           values.push({ x: i, y: $scope.location_summary[i][type] });
         }
-
         return values;
+      }
+
+      $scope.surveyLeadArray = ['Survey','Leads'];
+      $scope.surveyLeadFilter = function(filter){
+       $scope.filterType = filter;
       }
 
       $scope.Sort = function (val) {
         if ($scope.sort == val) {
           $scope.reversesort = !$scope.reversesort;
-          //return;
         }
         $scope.sort = val;
         $('td a i').each(function () {
-          //alert(this.className);
           $(this).removeClass().addClass('icon-sort');
         });
-
       };
 
       $scope.getSummaryReport = function(campaign){
