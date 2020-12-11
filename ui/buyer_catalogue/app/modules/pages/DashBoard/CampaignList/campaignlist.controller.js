@@ -255,6 +255,27 @@ angular.module('catalogueApp')
           })
       }
 
+      $scope.suspenseView = false;
+      $scope.suspenseSection = function(){
+        $scope.suspenseView = true;
+      }
+      $scope.options = {};
+      $scope.options1 = {};
+      $scope.options.minDate = new Date();
+      $scope.fromDate = new Date();
+      $scope.toDate = new Date();
+      
+
+      $scope.changeFromDate = function () {
+        $scope.options1.minDate = new Date($scope.fromDate);
+      }
+
+      $scope.getSuspenseData = function(){
+        $window.open(Config.APIBaseUrl + "v0/ui/b2b/suspance-leads/?start_date=" + commonDataShare.formatDate($scope.fromDate) + "&end_date=" + commonDataShare.formatDate($scope.toDate));
+      }
+
+
+
       $scope.closeModel = function(){
         $scope.emailModel = {};
       }

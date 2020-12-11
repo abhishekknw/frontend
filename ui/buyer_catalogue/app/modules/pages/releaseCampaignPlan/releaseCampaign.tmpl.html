@@ -2011,13 +2011,18 @@
                         </select>
                       </td>
                       <td class="alignment">
-                        {{browsed.lead_by_name}}
+                        <p> Name: {{browsed.lead_by_name}}</p>
+                        <p> Phone: {{browsed.phone_number}}</p>
                       </td>
 
                       <td class="alignment">
                         <textarea placeholder="Comments" class="form-control" style="width:150px;"
                           ng-model="browsed.comment" ng-change="browsCheckBoxAutoCheck($index)" rows="4" cols="50">
                      </textarea>
+                      </td>
+
+                      <td class="alignment" style="width:300px;">
+                        <p>Lead Entry:{{browsed.created_at | date:'medium'}}</p>
                       </td>
 
                       <td class="alignment">
@@ -2052,6 +2057,7 @@
                 <div class="">
                   <!-- <button class="btn btn-danger" ng-click="addRequirementDetail()">Add Row</button> -->
                   <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="saveBrowsed()">Submit</button>
+                  <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="updateBrowsed()">Update</button>
                   <button class="btn btn-danger" ng-click="removeBrowsed()" ng-disabled="browsedCheck">Remove</button>
                 </div>
                 <!-- <div class="" ng-show="!editContactDetails" ng-if="statusEditContactDetails">

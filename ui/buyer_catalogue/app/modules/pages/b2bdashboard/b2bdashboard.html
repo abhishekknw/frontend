@@ -763,9 +763,9 @@
             </uib-tab-heading>
             <div class="container-fluid">
               <div class="panel panel-default">
-                  <div class="col-md-12 "  style="text-align:right;margin-bottom:10px;">
+                  <!-- <div class="col-md-12 "  style="text-align:right;margin-bottom:10px;">
                   <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button>
-                  </div>
+                  </div> -->
                 <div class="col-md-6">
                       <h4 class="panel-title">
                         <!-- <select class="form-control" ng-model="surveyLeadFilter" ng-change="setSurveyLeadFilter(surveyLeadFilter.value)">
@@ -846,12 +846,15 @@
                       <td style="width:100px;" class="col-md-2" >{{campaign.purchased_survey}}</td>
                       <!-- <td style="width:100px;" class="col-md-2" >{{campaign.hot_leads}}</td> -->
                       <td>
-                        <!-- <button class="btn btn-danger" id="viewLeads_{{$index}}">View Leads</button> -->
-                        <button class="btn btn-danger" ng-click="getPurchasedLead(campaign.campaign_id,campaign.name)">
+                        <button class="btn btn-danger" ng-hide="$index == buttonIndex"  id="viewLeads_{{$index}}" ng-click="setButtonIndex($index)">
+                            <p ng-if="filterType == 'Leads'">View Leads</p>
+                            <p ng-if="filterType != 'Leads'">View Survey</p>
+                        </button>
+                        <button class="btn btn-danger" ng-if="$index == buttonIndex" ng-click="getPurchasedLead(campaign.campaign_id,campaign.name)">
                             <p ng-if="filterType == 'Leads'">View Leads Purchased</p>
                             <p ng-if="filterType != 'Leads'">View Survey Purchased</p>
                           </button>
-                        <button class="btn btn-danger" ng-click="getNotPurchasedLead(campaign.campaign_id,campaign.name)">
+                        <button class="btn btn-danger"  ng-if="$index == buttonIndex" ng-click="getNotPurchasedLead(campaign.campaign_id,campaign.name)">
                             <p ng-if="filterType == 'Leads'">View Leads Not Purchased</p>
                             <p ng-if="filterType != 'Leads'">View Survey Not Purchased</p>
                           </button>

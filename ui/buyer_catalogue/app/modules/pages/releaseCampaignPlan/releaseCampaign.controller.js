@@ -212,6 +212,7 @@ angular.module('catalogueApp')
           { header: 'Lead Status' },
           { header: 'Lead Given by' },
           { header: 'Comment' },
+          { header: 'Timestamps' },
           { header: 'Satisfaction Level' },
           { header: 'Reason' },
           // { header: 'Action' },
@@ -1309,7 +1310,6 @@ angular.module('catalogueApp')
                 .then(function onSuccess(response) {
                   $scope.sectorList = response.data;
                 });
-
                 //start added sector name
                 if ($scope.sectorList) {
                   var localindex_indexs = $scope.sectorList.map(function (el) {
@@ -2151,6 +2151,60 @@ angular.module('catalogueApp')
                 }
               });
           }
+        }
+
+        $scope.updateBrowsed = function () {
+          let browsedData = [];
+          for (let i in $scope.browsedDetailData) {
+            if ($scope.browsedDetailData[i].browsedCheck) {
+              browsedData.push($scope.browsedDetailData[i]);
+
+              if ($scope.browsedDetailData[i].selected_preferred_company && $scope.browsedDetailData[i].selected_preferred_company.length > 0) {
+                $scope.browsedDetailData[i].prefered_patners = [];
+                for (let j in $scope.browsedDetailData[i].selected_preferred_company) {
+                  $scope.browsedDetailData[i].prefered_patners.push($scope.browsedDetailData[i].selected_preferred_company[j].id)
+                }
+              }
+            }
+          }
+
+          console.log('++++++++++++++++++++++++++++++++jitu',browsedData);
+          // if (browsedData.length > 0) {
+          //   var browsedId = {
+          //     "browsed_ids": browsedData
+          //   }
+          //   swal({
+          //     title: 'Are you sure ?',
+          //     text: 'The lead will be moved into submitted leads, do you want to continue?',
+          //     type: constants.warning,
+          //     showCancelButton: true,
+          //     confirmButtonClass: "btn-success",
+          //     confirmButtonText: "Yes, Save!",
+          //     closeOnConfirm: true
+          //   },
+          //     function (confirm) {
+          //       if (confirm) {
+          //         releaseCampaignService.saveBrowsed(browsedId)
+          //           .then(function onSuccess(response) {
+          //             if (response && response.data.data.error) {
+          //               swal(constants.name, response.data.data.error, constants.error);
+          //             } else {
+          //               var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+          //                 return el.id;
+          //               }).indexOf($scope.shortlisted_spaces_id);
+          //               if (localindex_index != -1) {
+          //                 $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 1;
+          //                 $scope.show_color($scope.releaseDetails.shortlisted_suppliers[localindex_index]);
+          //               }
+          //               $scope.getRequirementDetail($scope.shortlisted_spaces_id);
+          //               swal(constants.name, constants.save_success, constants.success);
+          //             }
+          //           }).catch(function onError(response) {
+          //             console.log(response);
+          //           })
+          //       }
+          //     });
+          // }
         }
 
         $scope.removeBrowsed = function () {
