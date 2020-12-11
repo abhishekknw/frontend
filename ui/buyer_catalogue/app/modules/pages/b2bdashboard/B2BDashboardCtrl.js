@@ -956,6 +956,10 @@
        $scope.filterType = filter;
       }
 
+      $scope.setButtonIndex = function(index){
+        $scope.buttonIndex = index;
+      }
+
       $scope.getDateGraphValues = function(type){
         let values = [];
 

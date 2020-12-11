@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('catalogueApp')
-.factory('campaignListService', ['machadaloHttp','$stateParams','$rootScope','$routeParams', '$location', '$http',
+.factory('campaignListService', ['machadaloHttp','$stateParams','$window','$rootScope','$routeParams', '$location', '$http',
 
-function (machadaloHttp, $stateParams, $rootScope, $routeParams, $location, $http) {
+function (machadaloHttp, $stateParams, $rootScope,$window, $routeParams, $location, $http) {
 
   var base_url = 'v0/ui/';
   var url_base = 'v0/ui/website/';
@@ -47,6 +47,13 @@ function (machadaloHttp, $stateParams, $rootScope, $routeParams, $location, $htt
   campaignListService.viewComments = function(campaignId, spaceId, relatedTo){
     var url = url_base +  campaignId + "/comment/?related_to=" + relatedTo;
     return machadaloHttp.get(url);
+  }
+
+  campaignListService.getSuspenseData = function(fromDate,toDate){
+ 
+     var url = base_url + "b2b/suspance-leads/?start_date=" + fromDate + "&end_date=" + toDate;
+     $window.open(Config.APIBaseUrl + "b2b/suspance-leads/?start_date=" + fromDate + "&end_date=" + toDate);
+       return machadaloHttp.get(url);
   }
 
 
