@@ -178,7 +178,28 @@ angular.module('catalogueApp')
           { header: 'Lead Status' },
           { header: 'Comment' },
           { header: 'Lead Given by' },
+          { header: 'Call Back Time' },
           { header: 'Timestamp' },
+          { header: 'Action' },
+        ];
+
+        $scope.bdrequirement_submitted_headings = [
+          { header: '' },
+          { header: 'Sector' },
+          { header: 'Sub Sector' },
+          { header: 'Current Partner' },
+          { header: 'FeedBack' },
+          { header: 'Preferred Partner' },
+          { header: 'L1 Answers' },
+          { header: 'L2 Answers' },
+          { header: 'Implementation Time' },
+          { header: 'Meeting Time' },
+          // { header: 'Preferred Meeting Time' },
+          { header: 'Lead Status' },
+          { header: 'Comment' },
+          { header: 'Lead Given by' },
+          { header: 'Timestamp' },
+          { header: 'Lead Price (Points)' },
           { header: 'Action' },
         ];
 
@@ -209,7 +230,7 @@ angular.module('catalogueApp')
           { header: 'Implementation Time' },
           { header: 'Meeting Time' },
           // { header: 'Preferred Meeting Time' },
-          { header: 'Lead Status' },
+          // { header: 'Lead Status' },
           { header: 'Lead Given by' },
           { header: 'Comment' },
           { header: 'Timestamps' },
@@ -258,6 +279,7 @@ angular.module('catalogueApp')
         $scope.requirement_implementation_time = constants.requirement_implementation_time;
         $scope.requirement_meeting_time = constants.requirement_meeting_time;
         $scope.current_patner_feedback = constants.current_patner_feedback;
+        $scope.call_back_time = constants.call_back_time;
 
         $scope.datePicker = {
           date: { startDate: null, endDate: null },
@@ -2105,7 +2127,7 @@ angular.module('catalogueApp')
           let browsedData = [];
           for (let i in $scope.browsedDetailData) {
             if ($scope.browsedDetailData[i].browsedCheck) {
-              browsedData.push($scope.browsedDetailData[i]._id);
+              browsedData.push({'_id':$scope.browsedDetailData[i]._id,'comment':$scope.browsedDetailData[i].comment});
 
               if ($scope.browsedDetailData[i].selected_preferred_company && $scope.browsedDetailData[i].selected_preferred_company.length > 0) {
                 $scope.browsedDetailData[i].prefered_patners = [];
@@ -2119,6 +2141,7 @@ angular.module('catalogueApp')
             var browsedId = {
               "browsed_ids": browsedData
             }
+         
             swal({
               title: 'Are you sure ?',
               text: 'The lead will be moved into submitted leads, do you want to continue?',
@@ -2153,59 +2176,57 @@ angular.module('catalogueApp')
           }
         }
 
-        $scope.updateBrowsed = function () {
-          let browsedData = [];
-          for (let i in $scope.browsedDetailData) {
-            if ($scope.browsedDetailData[i].browsedCheck) {
-              browsedData.push($scope.browsedDetailData[i]);
+        // $scope.updateBrowsed = function () {
+        //   let browsedData = [];
+        //   for (let i in $scope.browsedDetailData) {
+        //     if ($scope.browsedDetailData[i].browsedCheck) {
+        //       browsedData.push($scope.browsedDetailData[i]);
 
-              if ($scope.browsedDetailData[i].selected_preferred_company && $scope.browsedDetailData[i].selected_preferred_company.length > 0) {
-                $scope.browsedDetailData[i].prefered_patners = [];
-                for (let j in $scope.browsedDetailData[i].selected_preferred_company) {
-                  $scope.browsedDetailData[i].prefered_patners.push($scope.browsedDetailData[i].selected_preferred_company[j].id)
-                }
-              }
-            }
-          }
-
-          console.log('++++++++++++++++++++++++++++++++jitu',browsedData);
-          // if (browsedData.length > 0) {
-          //   var browsedId = {
-          //     "browsed_ids": browsedData
-          //   }
-          //   swal({
-          //     title: 'Are you sure ?',
-          //     text: 'The lead will be moved into submitted leads, do you want to continue?',
-          //     type: constants.warning,
-          //     showCancelButton: true,
-          //     confirmButtonClass: "btn-success",
-          //     confirmButtonText: "Yes, Save!",
-          //     closeOnConfirm: true
-          //   },
-          //     function (confirm) {
-          //       if (confirm) {
-          //         releaseCampaignService.saveBrowsed(browsedId)
-          //           .then(function onSuccess(response) {
-          //             if (response && response.data.data.error) {
-          //               swal(constants.name, response.data.data.error, constants.error);
-          //             } else {
-          //               var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
-          //                 return el.id;
-          //               }).indexOf($scope.shortlisted_spaces_id);
-          //               if (localindex_index != -1) {
-          //                 $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 1;
-          //                 $scope.show_color($scope.releaseDetails.shortlisted_suppliers[localindex_index]);
-          //               }
-          //               $scope.getRequirementDetail($scope.shortlisted_spaces_id);
-          //               swal(constants.name, constants.save_success, constants.success);
-          //             }
-          //           }).catch(function onError(response) {
-          //             console.log(response);
-          //           })
-          //       }
-          //     });
-          // }
-        }
+        //       if ($scope.browsedDetailData[i].selected_preferred_company && $scope.browsedDetailData[i].selected_preferred_company.length > 0) {
+        //         $scope.browsedDetailData[i].prefered_patners = [];
+        //         for (let j in $scope.browsedDetailData[i].selected_preferred_company) {
+        //           $scope.browsedDetailData[i].prefered_patners.push($scope.browsedDetailData[i].selected_preferred_company[j].id)
+        //         }
+        //       }
+        //     }
+        //   }
+        //   if (browsedData.length > 0) {
+        //     var browsedId = {
+        //       "browsed_ids": browsedData
+        //     }
+        //     swal({
+        //       title: 'Are you sure ?',
+        //       text: 'The lead will be moved into submitted leads, do you want to continue?',
+        //       type: constants.warning,
+        //       showCancelButton: true,
+        //       confirmButtonClass: "btn-success",
+        //       confirmButtonText: "Yes, Save!",
+        //       closeOnConfirm: true
+        //     },
+        //       function (confirm) {
+        //         if (confirm) {
+        //           releaseCampaignService.saveBrowsed(browsedId)
+        //             .then(function onSuccess(response) {
+        //               if (response && response.data.data.error) {
+        //                 swal(constants.name, response.data.data.error, constants.error);
+        //               } else {
+        //                 var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+        //                   return el.id;
+        //                 }).indexOf($scope.shortlisted_spaces_id);
+        //                 if (localindex_index != -1) {
+        //                   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 1;
+        //                   $scope.show_color($scope.releaseDetails.shortlisted_suppliers[localindex_index]);
+        //                 }
+        //                 $scope.getRequirementDetail($scope.shortlisted_spaces_id);
+        //                 swal(constants.name, constants.save_success, constants.success);
+        //               }
+        //             }).catch(function onError(response) {
+        //               console.log(response);
+        //             })
+        //         }
+        //       });
+        //   }
+        // }
 
         $scope.removeBrowsed = function () {
           let browsedData = [];
