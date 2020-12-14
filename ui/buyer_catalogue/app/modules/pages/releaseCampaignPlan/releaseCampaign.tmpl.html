@@ -1839,7 +1839,19 @@
 
                       </td>
 
-
+                      <td class="alignment">
+                        <select class="form-control"
+                          ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
+                          name="call_back_time_{{$index}}" id="call_back_time_id_{{$index}}"
+                          ng-model="subrequirement.call_back_preference" ng-change="checkBoxAutoCheck(key,$index)"
+                          style="width:150px;">
+                          <option value="" disabled>Select Call Back Time</option>
+                          <option ng-repeat="(key,value) in call_back_time track by $index"
+                            value="{{key}}">
+                            {{value}}
+                          </option>
+                        </select>
+                      </td>
 
                       <td class="alignment" style="width:300px;">
                         <p> Submitted: {{subrequirement.created_at | date:'medium' }} </p>
@@ -1999,7 +2011,7 @@
                           </option>
                         </select>
                       </td> -->
-                      <td class="alignment">
+                      <!-- <td class="alignment">
                         <select class="form-control" name="lead_status_{{$index}}" id="lead_status_id_{{$index}}"
                           ng-model="browsed.lead_status" ng-change="browsCheckBoxAutoCheck($index)"
                           style="width:150px;">
@@ -2009,7 +2021,7 @@
                             {{leadstatus}}
                           </option>
                         </select>
-                      </td>
+                      </td> -->
                       <td class="alignment">
                         <p> Name: {{browsed.lead_by_name}}</p>
                         <p> Phone: {{browsed.phone_number}}</p>
@@ -2090,7 +2102,7 @@
                 <table class="table table-bordered" name="contactForm">
                   <thead>
                     <tr>
-                      <th ng-repeat="header in requirement_submitted_headings" class="col-md-2 alignment">
+                      <th ng-repeat="header in bdrequirement_submitted_headings" class="col-md-2 alignment">
                         <b>{{header.header}}</b></th>
                     </tr>
                   </thead>

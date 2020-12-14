@@ -269,4 +269,13 @@ requirement_meeting_time:{'as soon as possible':'As Soon As Possible',
 'within a month':'Within A Month',
 'after a month':'After A Month'},  
 current_patner_feedback:{"NA":"NA","Satisfied":"Satisfied","Dissatisfied":"Dissatisfied","Extremely Dissatisfied":"Extremely Dissatisfied"},  
+call_back_time:{
+  'anytime':'Anytime',
+  'no need of call. arrange a meeting directly':'No need of call. Arrange a meeting directly',
+  'weekday morning':'Weekday Morning',
+  "weekday evening":"Weekday Evening",
+  "weekend morning":"Weekend Morning",
+  'weekend evening':'Weekend Evening',
+  "customized calling period":"Customized Calling Period",
+}
 });
