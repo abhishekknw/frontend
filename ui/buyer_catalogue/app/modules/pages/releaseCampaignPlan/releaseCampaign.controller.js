@@ -224,9 +224,13 @@ angular.module('catalogueApp')
         $scope.requirement_browsed_headings = [
           { header: '' },
           { header: 'Sector' },
+          { header: 'Sub Sector' },
           { header: 'Current Partner' },
+          { header: 'FeedBack' },
           { header: 'Preferred Partner' },
           // { header: 'Lead for' },
+          { header: 'L1 Answers' },
+          { header: 'L2 Answers' },
           { header: 'Implementation Time' },
           { header: 'Meeting Time' },
           // { header: 'Preferred Meeting Time' },
@@ -234,8 +238,8 @@ angular.module('catalogueApp')
           { header: 'Lead Given by' },
           { header: 'Comment' },
           { header: 'Timestamps' },
-          { header: 'Satisfaction Level' },
-          { header: 'Reason' },
+          // { header: 'Satisfaction Level' },
+          // { header: 'Reason' },
           // { header: 'Action' },
         ];
         $scope.payment_headings = [
@@ -1342,6 +1346,23 @@ angular.module('catalogueApp')
                   }
                 }
                 //end added sector name
+
+
+                if ($scope.browsedDetailData[i].sub_sector_id) {
+                  if ($scope.sectorList) {
+                    for (let p in $scope.sectorList) {
+                      if ($scope.sectorList[p].subtypes && $scope.sectorList[p].subtypes.length > 0) {
+                        var sub_index = $scope.sectorList[p].subtypes.map(function (el) {
+                          return el.id;
+                        }).indexOf($scope.browsedDetailData[i].sub_sector_id);
+                        if (sub_index != -1) {
+                          $scope.browsedDetailData[i].sub_sector_name = $scope.sectorList[p].subtypes[sub_index].business_sub_type;
+                        }
+                      }
+                    }
+                    //end sub sector name
+                  }
+                }
               }
             }).catch(function onError(response) {
               console.log(response);
@@ -2065,7 +2086,7 @@ angular.module('catalogueApp')
                         })
                       }
                       $scope.subSectorCheck = true;
-                      swal(constants.name, 'Verified Successfully', constants.success);
+                      swal(constants.name, response.data.data.message, constants.success);
                     }
                   }).catch(function onError(response) {
                     if(response && response.data && response.data.data && response.data.data.general_error && response.data.data.general_error.error){
@@ -2169,7 +2190,11 @@ angular.module('catalogueApp')
                         swal(constants.name, constants.save_success, constants.success);
                       }
                     }).catch(function onError(response) {
-                      console.log(response);
+                      if(response && response.data && response.data.status && response.data.status == false){
+                        if(response.data.data && response.data.data.general_error){
+                          swal(constants.name, response.data.data.general_error.errors, constants.error);
+                        }
+                      }
                     })
                 }
               });

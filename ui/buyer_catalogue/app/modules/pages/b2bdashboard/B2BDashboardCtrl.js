@@ -980,6 +980,16 @@
         });
       };
 
+      $scope.Sorts = function (val) {
+        if ($scope.sorts == val) {
+          $scope.reversesorts = !$scope.reversesorts;
+        }
+        $scope.sorts = val;
+        $('td a i').each(function () {
+          $(this).removeClass().addClass('icon-sort');
+        });
+      };
+
       $scope.getSummaryReport = function(campaign){
         cfpLoadingBar.start();
 
