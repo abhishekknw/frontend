@@ -897,8 +897,8 @@
                         <th>Index</th>
                         <th>Client Name</th>
                         <!-- <th>Primary Count</th> -->
-                        <th style="width:100px;" class="col-md-2" ng-click="Sort('unit_primary_count')">Primary Count<a><i class="icon-sort" style="color:white;"></i></a></th>
-                        <th style="width:100px;" class="col-md-2" ng-click="Sort('city')">City<a><i class="icon-sort" style="color:white;"></i></a></th>
+                        <th style="width:100px;" class="col-md-2" ng-click="Sorts('unit_primary_count')">Primary Count<a><i class="icon-sort" style="color:white;"></i></a></th>
+                        <th style="width:100px;" class="col-md-2" ng-click="Sorts('city')">City<a><i class="icon-sort" style="color:white;"></i></a></th>
                         <th>Purchased on</th>
                         <th>Comments</th>
                         <!-- <th>Assigned To</th> -->
@@ -911,7 +911,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="lead in purchasedLeadData | filter : searchData | filter : Code | orderBy:sort:reversesort | itemsPerPage:20 track by $index">
+                      <tr ng-repeat="lead in purchasedLeadData | filter : searchData | filter : Code | orderBy:sorts:reversesorts | itemsPerPage:20 track by $index">
                         <td  style="width:200px;" class="col-md-2">{{$index + 1}}</td>
                         <td  style="width:200px;" class="col-md-2">{{lead.leads_data[0].supplier_name}}</td>
                         <td  style="width:200px;" class="col-md-2">{{lead.leads_data[0].unit_primary_count}}</td>
