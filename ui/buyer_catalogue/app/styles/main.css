@@ -13,6 +13,32 @@ th{
 .input_td_req{
     text-align: center;
 }
+.position.input_date_cls input.form-control {
+  width: 90%;
+  display: inline-block;
+}
+.position.input_date_cls div {
+  display: inline-block;
+}
+button.calendar.btn_cls_date_picker {
+  display: inline-block;
+}
+.mb_20{
+  margin-bottom: 20px;
+}
+.btn_box_lead_survey button{
+  width: 100%;
+}
+td.btn_box_lead_survey {
+  width: 210px !important;
+  text-align: center !important;
+}  
+th.btn_box_lead_survey_th{
+  width: 210px !important;
+}
+td.btn_box_lead_survey button{
+  margin-bottom: 10px; 
+}
 input#requirementCheckId {
     width: 20px;
     height: 20px;

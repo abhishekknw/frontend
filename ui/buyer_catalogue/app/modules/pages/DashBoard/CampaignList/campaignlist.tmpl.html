@@ -10,7 +10,7 @@
   <div class="middle-section">
     <div class="breadcrumb" ncy-breadcrumb></div>
     <h2 class="heading">Campaign List</h2>
-    <button class="btn btn-danger" ng-click="suspenseSection()">Suspense Leads</button>
+    <button class="btn btn-danger mb_20" ng-click="suspenseSection()">Suspense Leads</button>
     <form name="form" ng-if="suspenseView" style="margin-top: 4%">
       <!-- <div class="breadcrumb" ncy-breadcrumb></div> -->
       <div style="color:#000000;" class="panel panel-default date-panel">
@@ -21,9 +21,9 @@
                 <div class="col-md-6">
               <div class="item ">
                 <label>From Date</label>
-                <div class="position" >
+                <div class="position input_date_cls" >
                   <input type="text"  class="form-control" readonly uib-datepicker-popup="dd/MM/yyyy" placeholder="dd/mm/yyyy" ng-change="changeFromDate()" ng-model="fromDate" is-open="isDatepickerOpen" datepicker-options="options" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats">
-                  <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
+                  <button type="button" class="smallBtn calendar btn_cls_date_picker" ng-click="isDatepickerOpen = !isDatepickerOpen">
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
                 </div>
@@ -32,9 +32,9 @@
             <div class="col-md-6">
               <div class="item">
                 <label>To Date</label>
-                <div class="position">
+                <div class="position input_date_cls">
                   <input type="text"  class="form-control" readonly  uib-datepicker-popup="dd/MM/yyyy" placeholder="dd/mm/yyyy"  ng-change="changeToDate()"  ng-model="toDate" is-open="isEndDateOpen" datepicker-options="options1" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats">
-                  <button type="button" class="smallBtn calendar" ng-click="isEndDateOpen = !isEndDateOpen">
+                  <button type="button" class="smallBtn calendar btn_cls_date_picker" ng-click="isEndDateOpen = !isEndDateOpen">
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
                 </div>
@@ -44,7 +44,7 @@
           </div>
 
 
-          <button type="submit" class="btn btn-danger" ng-disabled="form.$invalid" ng-click="getSuspenseData()">Download</button>
+          <button type="submit" class="btn btn-danger mb_20" ng-disabled="form.$invalid" ng-click="getSuspenseData()">Download</button>
         </div>
       </div>
     </form>

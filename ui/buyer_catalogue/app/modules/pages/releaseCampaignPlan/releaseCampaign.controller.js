@@ -1354,7 +1354,7 @@ angular.module('catalogueApp')
                       if ($scope.sectorList[p].subtypes && $scope.sectorList[p].subtypes.length > 0) {
                         var sub_index = $scope.sectorList[p].subtypes.map(function (el) {
                           return el.id;
-                        }).indexOf($scope.browsedDetailData[i].sub_sector_id);
+                        }).indexOf(JSON.parse($scope.browsedDetailData[i].sub_sector_id));
                         if (sub_index != -1) {
                           $scope.browsedDetailData[i].sub_sector_name = $scope.sectorList[p].subtypes[sub_index].business_sub_type;
                         }
