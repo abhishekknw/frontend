@@ -2190,10 +2190,8 @@ angular.module('catalogueApp')
                         swal(constants.name, constants.save_success, constants.success);
                       }
                     }).catch(function onError(response) {
-                      if(response && response.data && response.data.status && response.data.status == false){
                         if(response.data.data && response.data.data.general_error){
-                          swal(constants.name, response.data.data.general_error.errors, constants.error);
-                        }
+                          swal(constants.name, response.data.data.general_error.error, constants.error);
                       }
                     })
                 }
