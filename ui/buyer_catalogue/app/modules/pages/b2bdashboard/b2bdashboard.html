@@ -817,9 +817,9 @@
                       <th style="width:100px;" class="col-md-2" ng-click="Sort('flat_count')">Unit primary Count<a><i class="icon-sort" style="color:white;"></i></a></th>
                       <th style="width:120px;" class="col-md-2" ng-click="Sort('total_leads')">Purchased Survey <a><i class="icon-sort" style="color:white;"></i></a></th>
                       <!-- <th style="width:100px;" class="col-md-2" ng-click="Sort('hot_leads')">Hot Leads <a><i class="icon-sort" style="color:white;"></i></a></th> -->
-                      <th>View Leads</th>
-                      <th>Email Leads</th>
-                      <th>Download Leads</th>
+                      <th class="btn_box_lead_survey_th">View Leads</th>
+                      <th class="btn_box_lead_survey_th">Email Leads</th>
+                      <th class="btn_box_lead_survey_th">Download Leads</th>
 
                     </tr>
                     <tr colspan="9">
@@ -845,7 +845,7 @@
                       <td style="width:100px;" class="col-md-2" >{{campaign.flat_count}}</td>
                       <td style="width:100px;" class="col-md-2" >{{campaign.purchased_survey}}</td>
                       <!-- <td style="width:100px;" class="col-md-2" >{{campaign.hot_leads}}</td> -->
-                      <td>
+                      <td class="btn_box_lead_survey">
                         <button class="btn btn-danger" ng-hide="$index == buttonIndex"  id="viewLeads_{{$index}}" ng-click="setButtonIndex($index)">
                             <p ng-if="filterType == 'Leads'">View Leads</p>
                             <p ng-if="filterType != 'Leads'">View Survey</p>
@@ -859,13 +859,13 @@
                             <p ng-if="filterType != 'Leads'">View Survey Not Purchased</p>
                           </button>
                       </td>
-                      <td>
+                      <td class="btn_box_lead_survey">
                         <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id, 'email')" data-target="#sendEmailModal" data-toggle="modal">
                           <p ng-if="filterType == 'Leads'">Email Leads</p>
                           <p ng-if="filterType != 'Leads'">Email Survey</p>
                         </button>
                       </td>
-                      <td>
+                      <td class="btn_box_lead_survey">
                         <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id)" data-target="#sendEmailModal" data-toggle="modal">
                           
                           <p ng-if="filterType == 'Leads'">Download Leads</p>
