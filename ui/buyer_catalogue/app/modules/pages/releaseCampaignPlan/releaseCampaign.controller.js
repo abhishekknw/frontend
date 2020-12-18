@@ -2146,16 +2146,23 @@ angular.module('catalogueApp')
 
         $scope.saveBrowsed = function () {
           let browsedData = [];
+          
           for (let i in $scope.browsedDetailData) {
             if ($scope.browsedDetailData[i].browsedCheck) {
-              browsedData.push({'_id':$scope.browsedDetailData[i]._id,'comment':$scope.browsedDetailData[i].comment});
-
               if ($scope.browsedDetailData[i].selected_preferred_company && $scope.browsedDetailData[i].selected_preferred_company.length > 0) {
                 $scope.browsedDetailData[i].prefered_patners = [];
                 for (let j in $scope.browsedDetailData[i].selected_preferred_company) {
                   $scope.browsedDetailData[i].prefered_patners.push($scope.browsedDetailData[i].selected_preferred_company[j].id)
                 }
               }
+              browsedData.push({'_id':$scope.browsedDetailData[i]._id,
+              'comment':$scope.browsedDetailData[i].comment,
+              'meating_timeline':$scope.browsedDetailData[i].meating_timeline,
+              'implementation_timeline':$scope.browsedDetailData[i].implementation_timeline,
+              'current_patner_id':$scope.browsedDetailData[i].current_patner_id,
+              'prefered_patners_id':$scope.browsedDetailData[i].prefered_patners,
+            });
+
             }
           }
           if (browsedData.length > 0) {
