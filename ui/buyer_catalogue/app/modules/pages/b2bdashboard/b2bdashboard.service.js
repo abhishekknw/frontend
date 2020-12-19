@@ -440,7 +440,7 @@ angular.module('catalogueApp')
 
       DashboardService.viewCampaignLeads = function (vendor, supplierType) {
         if (vendor) {
-          var url = url_root + "b2b/lead-distribution-campaign/?vendor=" + vendor;
+          var url = url_root + "b2b/lead-distribution-campaign/?lead_type=" + vendor;
         } else {
           var url = url_root + "b2b/lead-distribution-campaign/";
         }

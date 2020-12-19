@@ -471,9 +471,12 @@
       $scope.purchasedTable = false;
       $scope.notPurchasedTable = false;
       $scope.viewCampaignLeads = function () {
+        // if(!$scope.filterType){
+        //   $scope.filterType = 'Leads';
+        // }
         $scope.purchasedTable = false;
         $scope.notPurchasedTable = false;
-        B2BDashboardService.viewCampaignLeads('',$scope.selectedSupplierType.code)
+        B2BDashboardService.viewCampaignLeads($scope.filterType,$scope.selectedSupplierType.code)
       // B2BDashboardService.viewCampaignLeads()
           .then(function onSuccess(response) {
             $scope.leadsDataCampaigns = response.data.data;
@@ -954,6 +957,8 @@
       $scope.surveyLeadArray = ['Survey','Leads'];
       $scope.surveyLeadFilter = function(filter){
        $scope.filterType = filter;
+       $scope.viewCampaignLeads();
+
       }
 
       $scope.setButtonIndex = function(index){

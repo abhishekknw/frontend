@@ -1246,8 +1246,7 @@ angular.module('catalogueApp')
                           selected_preferred_company_sub_sector.push($scope.companiesDetailData[_index])
                         }
                       }
-
-
+  
                       $scope.requirementDetailData[i].requirements[x].selected_preferred_company_sub_sector = selected_preferred_company_sub_sector;
                     }
 
@@ -1289,6 +1288,7 @@ angular.module('catalogueApp')
                       }
                     }
                   }
+                  
                 }
                 //END sub sector multiselect preferred company
                 //start added sector name
@@ -1331,6 +1331,8 @@ angular.module('catalogueApp')
                   }
                   $scope.browsedDetailData[i].selected_preferred_company = selected_preferred_company
                 }
+
+              
 
                 userService.getSector()
                 .then(function onSuccess(response) {
