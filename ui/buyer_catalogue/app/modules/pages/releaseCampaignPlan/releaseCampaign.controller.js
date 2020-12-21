@@ -1382,6 +1382,7 @@ angular.module('catalogueApp')
         $scope.otherPreferredCompany = false;
         $scope.subSectorPreferredMulticheck = function (key, index) {
           // $scope.requirementDetailData[key].requirements[index].requirementCheck = true;
+          
           if ($scope.requirementDetailData[key] && $scope.requirementDetailData[key].requirements[index] && $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector && $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector.length > 0) {
             $scope.requirementDetailData[key].requirements[index].preferred_company = [];
             $scope.otherPreferredCompany = false;
@@ -1391,6 +1392,9 @@ angular.module('catalogueApp')
               }
               $scope.requirementDetailData[key].requirements[index].preferred_company.push($scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector[i].id);
             }
+          }  
+          if($scope.requirementDetailData[key] && $scope.requirementDetailData[key].requirements[index] && $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector && $scope.requirementDetailData[key].requirements[index].selected_preferred_company_sub_sector.length == 0){
+            $scope.requirementDetailData[key].requirements[index].preferred_company = [];
           }
         }
 
