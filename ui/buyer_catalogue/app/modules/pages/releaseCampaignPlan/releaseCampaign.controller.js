@@ -1316,17 +1316,27 @@ angular.module('catalogueApp')
         $scope.getRequirementBrowsedData = function (id) {
           releaseCampaignService.requirementBrowsedData(id)
             .then(function onSuccess(response) {
-              $scope.browsedDetailData = response.data.data;
+              $scope.browsedDetailData = response.data.data.browsed;
+
+              $scope.companiesDetailDataBrowsed = response.data.data.companies;
+              for (let k in $scope.companiesDetailDataBrowsed) {
+                $scope.companiesDetailDataBrowsed[k].id = $scope.companiesDetailDataBrowsed[k].organisation_id;
+                $scope.companiesDetailDataBrowsed[k].label = $scope.companiesDetailDataBrowsed[k].name;
+                if (k == response.data.data.companies.length - 1) {
+                  $scope.companiesDetailDataBrowsed.push({ id: 'other', label: 'other', organisation_id: '', name: 'other' })
+                }
+              }
+
               for (let i in $scope.browsedDetailData) {
                 var selected_preferred_company = [];
                 $scope.browsedDetailData[i].selected_preferred_company = [];
                 if ($scope.browsedDetailData[i].prefered_patners.length > 0) {
                   for (let j in $scope.browsedDetailData[i].prefered_patners) {
-                    var localindex_index = $scope.companiesDetailData.map(function (el) {
+                    var localindex_index = $scope.companiesDetailDataBrowsed.map(function (el) {
                       return el.organisation_id;
                     }).indexOf($scope.browsedDetailData[i].prefered_patners[j]);
                     if (localindex_index != -1) {
-                      selected_preferred_company.push($scope.companiesDetailData[localindex_index])
+                      selected_preferred_company.push($scope.companiesDetailDataBrowsed[localindex_index])
                     }
                   }
                   $scope.browsedDetailData[i].selected_preferred_company = selected_preferred_company
@@ -2152,7 +2162,7 @@ angular.module('catalogueApp')
 
         $scope.saveBrowsed = function () {
           let browsedData = [];
-          
+         
           for (let i in $scope.browsedDetailData) {
             if ($scope.browsedDetailData[i].browsedCheck) {
               if ($scope.browsedDetailData[i].selected_preferred_company && $scope.browsedDetailData[i].selected_preferred_company.length > 0) {
@@ -2161,6 +2171,12 @@ angular.module('catalogueApp')
                   $scope.browsedDetailData[i].prefered_patners.push($scope.browsedDetailData[i].selected_preferred_company[j].id)
                 }
               }
+
+              if($scope.browsedDetailData[i].selected_preferred_company && $scope.browsedDetailData[i].selected_preferred_company.length == 0){
+                $scope.browsedDetailData[i].prefered_patners = []; 
+              }
+
+              
               browsedData.push({'_id':$scope.browsedDetailData[i]._id,
               'comment':$scope.browsedDetailData[i].comment,
               'meating_timeline':$scope.browsedDetailData[i].meating_timeline,
