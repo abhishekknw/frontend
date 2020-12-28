@@ -261,13 +261,14 @@ angular.module('catalogueApp')
       }
       $scope.options = {};
       $scope.options1 = {};
-      $scope.options.minDate = new Date();
+      $scope.options.maxDate = new Date();
       $scope.fromDate = new Date();
       $scope.toDate = new Date();
       
 
       $scope.changeFromDate = function () {
-        $scope.options1.minDate = new Date($scope.fromDate);
+        //$scope.options1.minDate = new Date($scope.fromDate);
+        $scope.options1.maxDate = new Date();
       }
 
       $scope.getSuspenseData = function(){
