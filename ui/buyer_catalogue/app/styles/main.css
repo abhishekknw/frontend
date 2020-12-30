@@ -3,8 +3,39 @@ html{
   overflow-x: visible !important;
   color: #000000 !important;
 }
-
-
+/* .submitted_lead_table {
+    overflow-x: auto !important;
+    overflow: hidden;
+}
+.submitted_lead_table .modal-body.table-responsive {
+  overflow-x: auto !important;
+  overflow: hidden;
+}
+.submitted_lead_table thead {
+  display: block; 
+}
+.submitted_lead_table tbody {
+  overflow: auto;
+  overflow-x: hidden;
+  max-height: 400px;
+  display: block;
+  max-width: 1100px;
+  min-width: 1100px;
+} */
+.submitted_lead_table .modal-body.col-md-4.table-responsive {
+  overflow-y: hidden;
+}
+.submitted_lead_table thead {
+  display: block; 
+}
+.submitted_lead_table tbody {
+  overflow: auto;
+  overflow-x: hidden;
+  max-height: 400px;
+  display: block;
+  max-width: 2300px;
+  min-width: 2300px;
+}
 th{
   	background: #8e1921;
     text-align: center;

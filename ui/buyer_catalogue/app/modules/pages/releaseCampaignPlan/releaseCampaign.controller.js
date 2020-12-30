@@ -1331,6 +1331,9 @@ angular.module('catalogueApp')
 
             
               for (let i in $scope.browsedDetailData) {
+                if (!$scope.browsedDetailData[i].current_patner_id) {
+                  $scope.browsedDetailData[i].current_patner_id = '';
+                }
                 var selected_preferred_company = [];
                 $scope.browsedDetailData[i].selected_preferred_company = [];
                  if($scope.browsedDetailData[i].prefered_patner_other){
