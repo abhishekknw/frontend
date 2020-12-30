@@ -1386,7 +1386,6 @@ angular.module('catalogueApp')
                   }
                 }
               }
-              console.log('+++++++++----------------------------',$scope.browsedDetailData)
             }).catch(function onError(response) {
               console.log(response);
             })
