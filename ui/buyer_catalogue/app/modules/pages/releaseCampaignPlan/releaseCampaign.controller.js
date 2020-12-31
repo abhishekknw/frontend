@@ -2195,9 +2195,13 @@ angular.module('catalogueApp')
          
           for (let i in $scope.browsedDetailData) {
             if ($scope.browsedDetailData[i].browsedCheck) {
+              let preferred_company_other = null;
               if ($scope.browsedDetailData[i].selected_preferred_company && $scope.browsedDetailData[i].selected_preferred_company.length > 0) {
                 $scope.browsedDetailData[i].prefered_patners = [];
                 for (let j in $scope.browsedDetailData[i].selected_preferred_company) {
+                  if($scope.browsedDetailData[i].selected_preferred_company[j].id == 'other'){
+                    preferred_company_other = $scope.browsedDetailData[i].preferred_company_other;
+                  }
                   $scope.browsedDetailData[i].prefered_patners.push($scope.browsedDetailData[i].selected_preferred_company[j].id)
                 }
               }
@@ -2220,10 +2224,11 @@ angular.module('catalogueApp')
               'current_patner_id':current_patner_id,
               'prefered_patners_id':$scope.browsedDetailData[i].prefered_patners,
               'current_company_other' :current_patner_other,
+              'preferred_company_other' :preferred_company_other,
             });
-
             }
           }
+         
           if (browsedData.length > 0) {
             var browsedId = {
               "browsed_ids": browsedData
