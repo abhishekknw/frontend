@@ -266,11 +266,18 @@ angular.module('catalogueApp')
       $scope.toDate = new Date();
       
 
-      $scope.changeFromDate = function () {
+      $scope.changeFromDate = function (fromDate) {
+        $scope.fromDate = fromDate;
         //$scope.options1.minDate = new Date($scope.fromDate);
         $scope.options1.maxDate = new Date();
       }
 
+      $scope.changeToDate = function (toDate) {
+        $scope.toDate = toDate;
+      
+      }
+
+    
       $scope.getSuspenseData = function(){
         $window.open(Config.APIBaseUrl + "v0/ui/b2b/suspance-leads/?start_date=" + commonDataShare.formatDate($scope.fromDate) + "&end_date=" + commonDataShare.formatDate($scope.toDate));
       }
