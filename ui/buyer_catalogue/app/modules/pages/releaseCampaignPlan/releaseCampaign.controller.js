@@ -2205,14 +2205,21 @@ angular.module('catalogueApp')
               if($scope.browsedDetailData[i].selected_preferred_company && $scope.browsedDetailData[i].selected_preferred_company.length == 0){
                 $scope.browsedDetailData[i].prefered_patners = []; 
               }
+              let current_patner_id = $scope.browsedDetailData[i].current_patner_id;
+              let current_patner_other = $scope.browsedDetailData[i].current_patner_other;
+             if($scope.browsedDetailData[i].current_patner_id == "" && $scope.browsedDetailData[i].current_patner_other){
+              current_patner_id = null;
+             } else {
+              current_patner_other = null;
+             }
 
-              
               browsedData.push({'_id':$scope.browsedDetailData[i]._id,
               'comment':$scope.browsedDetailData[i].comment,
               'meating_timeline':$scope.browsedDetailData[i].meating_timeline,
               'implementation_timeline':$scope.browsedDetailData[i].implementation_timeline,
-              'current_patner_id':$scope.browsedDetailData[i].current_patner_id,
+              'current_patner_id':current_patner_id,
               'prefered_patners_id':$scope.browsedDetailData[i].prefered_patners,
+              'current_company_other' :current_patner_other,
             });
 
             }
