@@ -3,38 +3,45 @@ html{
   overflow-x: visible !important;
   color: #000000 !important;
 }
-/* .submitted_lead_table {
+.submitted_lead_table tbody {
+    display: block;
+}
+.submitted_lead_table thead {
+    display: block;
+    padding-right: 18px;
+    background: grey;
+}
+ .submitted_lead_table {
     overflow-x: auto !important;
     overflow: hidden;
 }
 .submitted_lead_table .modal-body.table-responsive {
   overflow-x: auto !important;
   overflow: hidden;
-}
-.submitted_lead_table thead {
-  display: block; 
-}
-.submitted_lead_table tbody {
-  overflow: auto;
-  overflow-x: hidden;
-  max-height: 400px;
-  display: block;
-  max-width: 1100px;
-  min-width: 1100px;
-} */
+}                 
 .submitted_lead_table .modal-body.col-md-4.table-responsive {
   overflow-y: hidden;
 }
-.submitted_lead_table thead {
-  display: block; 
-}
 .submitted_lead_table tbody {
   overflow: auto;
   overflow-x: hidden;
-  max-height: 400px;
-  display: block;
+  max-height: 350px;
+/*
   max-width: 2300px;
   min-width: 2300px;
+*/
+}
+div#RequirementModel .browsed_leads_main th, div#RequirementModel .browsed_leads_main td {
+    min-width: 160px;
+}
+.bd_requirement_detail thead th:nth-child(1), .bd_requirement_detail tbody td:nth-child(1) {
+    min-width: 40px;
+}
+.bd_requirement_detail th, .bd_requirement_detail td {
+    min-width: 120px;
+}
+.modal-body.table-responsive.browsed_leads_main{
+    overflow-y: hidden;
 }
 th{
   	background: #8e1921;
