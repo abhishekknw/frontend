@@ -774,7 +774,7 @@
                           <option value=Leads">Leads</option>
                         </select> -->
                         <select  ng-model="supplierType" class="form-control" ng-change="surveyLeadFilter(supplierType)">
-                          <option value="" >Select Leads,Surveyed Clients</option>
+                          <option value="" ng-disabled='true'>Select Leads,Surveyed Clients</option>
                           <option value="{{supplierType}}"  ng-repeat="supplierType in surveyLeadArray">{{supplierType}}</option>
                         </select>
                       </h4>

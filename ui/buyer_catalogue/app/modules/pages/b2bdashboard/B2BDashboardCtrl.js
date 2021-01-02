@@ -954,7 +954,7 @@
         return values;
       }
 
-      $scope.surveyLeadArray = ['Survey','Leads'];
+      $scope.surveyLeadArray = ['Leads','Survey'];
       $scope.surveyLeadFilter = function(filter){
        $scope.filterType = filter;
        $scope.viewCampaignLeads();

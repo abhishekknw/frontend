@@ -1853,15 +1853,20 @@ angular.module('catalogueApp')
                    // start added preferred_company  yes no
                     $scope.bdrequirementDetailData[i].requirements[x].is_preferred_company = 'No';
                     if ($scope.bdrequirementDetailData[i] && $scope.bdrequirementDetailData[i].requirements[x].preferred_company && $scope.bdrequirementDetailData[i].requirements[x].preferred_company.length > 0) {
-                      for (let j in $scope.bdrequirementDetailData[i].requirements[x].preferred_company) {
-                        var localindex_index = $scope.bdcompaniesDetailData.map(function (el) {
-                          return el.organisation_id;
-                        }).indexOf($scope.bdrequirementDetailData[i].requirements[x].preferred_company[j]);
+                      // for (let j in $scope.bdrequirementDetailData[i].requirements[x].preferred_company) {
+                      //   var localindex_index = $scope.bdcompaniesDetailData.map(function (el) {
+                      //     return el.organisation_id;
+                      //   }).indexOf($scope.bdrequirementDetailData[i].requirements[x].preferred_company[j]);
+                      //   if (localindex_index != -1) {
+                      //     $scope.bdrequirementDetailData[i].requirements[x].is_preferred_company = 'Yes'
+                      //   }
+                      // }
+                        var localindex_index = $scope.bdrequirementDetailData[i].requirements[x].preferred_company.map(function (el) {
+                          return el;
+                        }).indexOf($scope.bdrequirementDetailData[i].requirements[x].current_company);
                         if (localindex_index != -1) {
                           $scope.bdrequirementDetailData[i].requirements[x].is_preferred_company = 'Yes'
                         }
-                      }
-
                     }
                     // end added preferred_company  yes no
                     // if($scope.bdrequirementDetailData[i].requirements.length-1 == x){
