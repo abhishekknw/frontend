@@ -1331,6 +1331,7 @@ angular.module('catalogueApp')
 
             
               for (let i in $scope.browsedDetailData) {
+                $scope.browsedDetailData[i].created_at = moment($scope.browsedDetailData[i].created_at).toISOString();               
                 if (!$scope.browsedDetailData[i].current_patner_id) {
                   $scope.browsedDetailData[i].current_patner_id = '';
                 }
@@ -1851,23 +1852,23 @@ angular.module('catalogueApp')
 
                     //end sub sector name
                    // start added preferred_company  yes no
-                    $scope.bdrequirementDetailData[i].requirements[x].is_preferred_company = 'No';
-                    if ($scope.bdrequirementDetailData[i] && $scope.bdrequirementDetailData[i].requirements[x].preferred_company && $scope.bdrequirementDetailData[i].requirements[x].preferred_company.length > 0) {
-                      // for (let j in $scope.bdrequirementDetailData[i].requirements[x].preferred_company) {
-                      //   var localindex_index = $scope.bdcompaniesDetailData.map(function (el) {
-                      //     return el.organisation_id;
-                      //   }).indexOf($scope.bdrequirementDetailData[i].requirements[x].preferred_company[j]);
-                      //   if (localindex_index != -1) {
-                      //     $scope.bdrequirementDetailData[i].requirements[x].is_preferred_company = 'Yes'
-                      //   }
-                      // }
-                        var localindex_index = $scope.bdrequirementDetailData[i].requirements[x].preferred_company.map(function (el) {
-                          return el;
-                        }).indexOf($scope.bdrequirementDetailData[i].requirements[x].current_company);
-                        if (localindex_index != -1) {
-                          $scope.bdrequirementDetailData[i].requirements[x].is_preferred_company = 'Yes'
-                        }
-                    }
+                    // $scope.bdrequirementDetailData[i].requirements[x].is_preferred_company = 'No';
+                    // if ($scope.bdrequirementDetailData[i] && $scope.bdrequirementDetailData[i].requirements[x].preferred_company && $scope.bdrequirementDetailData[i].requirements[x].preferred_company.length > 0) {
+                    //   // for (let j in $scope.bdrequirementDetailData[i].requirements[x].preferred_company) {
+                    //   //   var localindex_index = $scope.bdcompaniesDetailData.map(function (el) {
+                    //   //     return el.organisation_id;
+                    //   //   }).indexOf($scope.bdrequirementDetailData[i].requirements[x].preferred_company[j]);
+                    //   //   if (localindex_index != -1) {
+                    //   //     $scope.bdrequirementDetailData[i].requirements[x].is_preferred_company = 'Yes'
+                    //   //   }
+                    //   // }
+                    //     var localindex_index = $scope.bdrequirementDetailData[i].requirements[x].preferred_company.map(function (el) {
+                    //       return el;
+                    //     }).indexOf($scope.bdrequirementDetailData[i].requirements[x].current_company);
+                    //     if (localindex_index != -1) {
+                    //       $scope.bdrequirementDetailData[i].requirements[x].is_preferred_company = 'Yes'
+                    //     }
+                    // }
                     // end added preferred_company  yes no
                     // if($scope.bdrequirementDetailData[i].requirements.length-1 == x){
                     //   $('#RequirementModel').modal('show');
@@ -2184,11 +2185,10 @@ angular.module('catalogueApp')
                       swal(constants.name, 'Verified Successfully', constants.success);
                     }
                   }).catch(function onError(response) {
-                    console.log(response);
-                    if(response && response.data && response.data.status && response.data.status == false){
+                
                       if(response.data.data && response.data.data.general_error){
-                        swal(constants.name, response.data.data.general_error.errors, constants.error);
-                      }
+                        swal(constants.name, response.data.data.general_error, constants.error);
+                      
                     }
                   })
               }
@@ -2205,7 +2205,7 @@ angular.module('catalogueApp')
                 $scope.browsedDetailData[i].prefered_patners = [];
                 for (let j in $scope.browsedDetailData[i].selected_preferred_company) {
                   if($scope.browsedDetailData[i].selected_preferred_company[j].id == 'other'){
-                    preferred_company_other = $scope.browsedDetailData[i].preferred_company_other;
+                    preferred_company_other = $scope.browsedDetailData[i].prefered_patner_other;
                   }
                   $scope.browsedDetailData[i].prefered_patners.push($scope.browsedDetailData[i].selected_preferred_company[j].id)
                 }

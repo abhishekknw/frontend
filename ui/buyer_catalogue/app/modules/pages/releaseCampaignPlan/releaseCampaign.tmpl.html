@@ -2002,7 +2002,7 @@
                           <input style="margin-top:10px" ng-change="browsCheckBoxAutoCheck($index)" type="text"
                           class="form-control" placeholder="Other Preferred Company"
                           ng-if="browsed.otherPreferredCompanyBrowsed" name="other_preferred_company" id="other_preferred_company"
-                          ng-model="browsed.preferred_company_other">
+                          ng-model="browsed.prefered_patner_other">
                       </td>
 
                       <td class="alignment">
@@ -2093,7 +2093,6 @@
                       <td class="alignment" style="width:300px;">
                         <p>Lead Entry:{{browsed.created_at | date:'medium'}}</p>
                       </td>
-
                       <!-- <td class="alignment">
                         <select class="form-control" name="feedback_{{$index}}" id="feedback_id_{{$index}}"
                           ng-model="browsed.current_patner_feedback" ng-change="browsCheckBoxAutoCheck($index)"
@@ -2197,8 +2196,7 @@
                       </td>
 
                       <td class="alignment">
-
-                        <span>{{subrequirement.is_preferred_company}}</span>
+                        <span style=" text-transform: capitalize;">{{subrequirement.is_preferred_company}}</span>
 
                       </td>
 
