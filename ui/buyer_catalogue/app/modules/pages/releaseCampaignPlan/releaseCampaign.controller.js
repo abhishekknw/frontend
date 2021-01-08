@@ -2153,6 +2153,7 @@ angular.module('catalogueApp')
 
 
         $scope.bdVerifyRequirement = function (id, key, index) {
+          if($scope.bdrequirementDetailData[key].requirements[index].lead_price > 0){
           swal({
             title: 'Are you sure ?',
             text: 'Do you want to proceed with selected sub-sector verification?',
@@ -2193,6 +2194,9 @@ angular.module('catalogueApp')
                   })
               }
             });
+          } else {
+            swal(constants.name, 'Please add lead price.', constants.error);
+          }
         }
 
         $scope.saveBrowsed = function () {
