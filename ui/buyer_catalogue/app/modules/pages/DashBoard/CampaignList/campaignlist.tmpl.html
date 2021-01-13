@@ -45,6 +45,7 @@
 
 
           <button type="submit" class="btn btn-danger mb_20" ng-disabled="form.$invalid" ng-click="getSuspenseData()">Download</button>
+          <button type="submit" class="btn btn-danger mb_20" ng-disabled="form.$invalid" ng-click="getSuspenseCount()">Count</button>
         </div>
       </div>
     </form>
@@ -213,3 +214,21 @@
     </div>
   </div>
 </div><!-- modal -->
+
+
+<div id="viewCommentsq" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modalBodyBox"> 
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+          <h3>Suspense Leads Count : <span style="color:red"> {{suspenseLeadsCount}} </span></h3>
+          <div> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

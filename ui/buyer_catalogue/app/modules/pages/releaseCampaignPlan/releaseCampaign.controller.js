@@ -200,6 +200,7 @@ angular.module('catalogueApp')
           { header: 'Lead Given by' },
           { header: 'Timestamp' },
           { header: 'Lead Price (Points)' },
+          // { header: 'Hotness of Lead' },
           { header: 'Action' },
         ];
 
