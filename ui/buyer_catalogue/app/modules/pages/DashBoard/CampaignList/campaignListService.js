@@ -57,7 +57,6 @@ function (machadaloHttp, $stateParams, $rootScope,$window, $routeParams, $locati
   }
 
   campaignListService.suspenseCount = function(fromDate,toDate){
-    console.log('++++++++--------------',JSON.parse(fromDate.getMonth() + 1) )
     var url = base_url + "b2b/suspance-leads-count/?start_date=" + fromDate.getFullYear() +'-'+ JSON.parse(fromDate.getMonth() + 1) +'-'+  fromDate.getDate() + "&end_date=" +  toDate.getFullYear() +'-'+ JSON.parse(toDate.getMonth() + 1) +'-'+  toDate.getDate();
       return machadaloHttp.get(url);
  }
