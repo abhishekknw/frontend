@@ -2125,7 +2125,7 @@
                 <div class="">
                   <!-- <button class="btn btn-danger" ng-click="addRequirementDetail()">Add Row</button> -->
                   <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="saveBrowsed()">Submit</button>
-                  <!-- <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="updateBrowsed()">Update</button> -->
+                  <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="updateBrowsed()">Update</button>
                   <button class="btn btn-danger" ng-click="removeBrowsed()" ng-disabled="browsedCheck">Remove</button>
                 </div>
                 <!-- <div class="" ng-show="!editContactDetails" ng-if="statusEditContactDetails">
@@ -2273,18 +2273,17 @@
                         <span ng-if="!subrequirement.lead_price">Price (Points): ****</span>
                         <span ng-if="subrequirement.lead_price">Price (Points): {{subrequirement.lead_price}}</span>
                       </td>
-                      <!-- <td class="alignment" style="width:300px;">
+                      <td class="alignment" style="width:300px;">
                         <select class="form-control" name="hotness_lead" id="hotness_lead_id_{{$index}}"
-                        ng-model="browsed.hotness_lead" ng-change="browsCheckBoxAutoCheck($index)"
+                        ng-model="subrequirement.hotness_of_lead" ng-change="browsCheckBoxAutoCheck($index)"
                         style="width:150px;">
-                        <option value="" disabled>Select Hotness of Lead</option>
-                        <option value="H2">H2</option>
-                        <option value="H3">H3</option>
-                        <option value="H4">H4</option>
-                        <option value="H5">H5</option>
-                        <option value="H6">H6</option>
+                        <!-- <option value="H1" disabled>H1</option> -->
+
+                        <option ng-repeat="(key,value) in hotnessLead track by $index" value="{{key}}">
+                          {{value}} 
+                        </option>
                       </select>
-                      </td> -->
+                      </td>+
                       <td class="alignment">
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
                           ng-if="subrequirement.varified_bd == 'no'"
