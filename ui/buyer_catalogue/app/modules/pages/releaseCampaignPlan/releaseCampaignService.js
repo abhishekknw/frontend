@@ -218,6 +218,11 @@
       return machadaloHttp.post(url,data);
     }
 
+    releaseCampaignService.updateBrowsed = function(data){
+      var url = url_base_ui + 'b2b/update-browsed-lead/';
+      return machadaloHttp.post(url,data);
+    }
+
     releaseCampaignService.removeBrowsed = function(data){
       var url = url_base_ui + 'b2b/delete-browsed-lead/';
       return machadaloHttp.post(url,data);
