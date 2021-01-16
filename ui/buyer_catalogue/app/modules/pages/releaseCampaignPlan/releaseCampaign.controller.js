@@ -200,6 +200,7 @@ angular.module('catalogueApp')
           { header: 'Lead Given by' },
           { header: 'Timestamp' },
           { header: 'Lead Price (Points)' },
+          { header: 'Hotness of Lead' },
           { header: 'Action' },
         ];
 
@@ -282,6 +283,7 @@ angular.module('catalogueApp')
         $scope.requirement_lead_status = constants.requirement_lead_status;
         $scope.requirement_implementation_time = constants.requirement_implementation_time;
         $scope.requirement_meeting_time = constants.requirement_meeting_time;
+        $scope.hotnessLead = constants.hotnessLead;
         $scope.current_patner_feedback = constants.current_patner_feedback;
         $scope.call_back_time = constants.call_back_time;
 
@@ -1331,6 +1333,7 @@ angular.module('catalogueApp')
 
             
               for (let i in $scope.browsedDetailData) {
+                $scope.browsedDetailData[i].created_at = moment($scope.browsedDetailData[i].created_at).toISOString();               
                 if (!$scope.browsedDetailData[i].current_patner_id) {
                   $scope.browsedDetailData[i].current_patner_id = '';
                 }
@@ -1851,18 +1854,23 @@ angular.module('catalogueApp')
 
                     //end sub sector name
                    // start added preferred_company  yes no
-                    $scope.bdrequirementDetailData[i].requirements[x].is_preferred_company = 'No';
-                    if ($scope.bdrequirementDetailData[i] && $scope.bdrequirementDetailData[i].requirements[x].preferred_company && $scope.bdrequirementDetailData[i].requirements[x].preferred_company.length > 0) {
-                      for (let j in $scope.bdrequirementDetailData[i].requirements[x].preferred_company) {
-                        var localindex_index = $scope.bdcompaniesDetailData.map(function (el) {
-                          return el.organisation_id;
-                        }).indexOf($scope.bdrequirementDetailData[i].requirements[x].preferred_company[j]);
-                        if (localindex_index != -1) {
-                          $scope.bdrequirementDetailData[i].requirements[x].is_preferred_company = 'Yes'
-                        }
-                      }
-
-                    }
+                    // $scope.bdrequirementDetailData[i].requirements[x].is_preferred_company = 'No';
+                    // if ($scope.bdrequirementDetailData[i] && $scope.bdrequirementDetailData[i].requirements[x].preferred_company && $scope.bdrequirementDetailData[i].requirements[x].preferred_company.length > 0) {
+                    //   // for (let j in $scope.bdrequirementDetailData[i].requirements[x].preferred_company) {
+                    //   //   var localindex_index = $scope.bdcompaniesDetailData.map(function (el) {
+                    //   //     return el.organisation_id;
+                    //   //   }).indexOf($scope.bdrequirementDetailData[i].requirements[x].preferred_company[j]);
+                    //   //   if (localindex_index != -1) {
+                    //   //     $scope.bdrequirementDetailData[i].requirements[x].is_preferred_company = 'Yes'
+                    //   //   }
+                    //   // }
+                    //     var localindex_index = $scope.bdrequirementDetailData[i].requirements[x].preferred_company.map(function (el) {
+                    //       return el;
+                    //     }).indexOf($scope.bdrequirementDetailData[i].requirements[x].current_company);
+                    //     if (localindex_index != -1) {
+                    //       $scope.bdrequirementDetailData[i].requirements[x].is_preferred_company = 'Yes'
+                    //     }
+                    // }
                     // end added preferred_company  yes no
                     // if($scope.bdrequirementDetailData[i].requirements.length-1 == x){
                     //   $('#RequirementModel').modal('show');
@@ -2016,7 +2024,7 @@ angular.module('catalogueApp')
 
         $scope.updateLeadDistributionRow = function (data) {
           let updateData = [];
-          updateData.push({'lead_price':data.lead_price,'comment':data.comment,'requirement_id':data.id});
+          updateData.push({'lead_price':data.lead_price,'comment':data.comment,'requirement_id':data.id,'hotness_of_lead':data.hotness_of_lead});
           
           if (updateData.length > 0) {
             var DistributionData = {
@@ -2147,6 +2155,7 @@ angular.module('catalogueApp')
 
 
         $scope.bdVerifyRequirement = function (id, key, index) {
+          if($scope.bdrequirementDetailData[key].requirements[index].lead_price > 0){
           swal({
             title: 'Are you sure ?',
             text: 'Do you want to proceed with selected sub-sector verification?',
@@ -2179,15 +2188,17 @@ angular.module('catalogueApp')
                       swal(constants.name, 'Verified Successfully', constants.success);
                     }
                   }).catch(function onError(response) {
-                    console.log(response);
-                    if(response && response.data && response.data.status && response.data.status == false){
+                
                       if(response.data.data && response.data.data.general_error){
-                        swal(constants.name, response.data.data.general_error.errors, constants.error);
-                      }
+                        swal(constants.name, response.data.data.general_error, constants.error);
+                      
                     }
                   })
               }
             });
+          } else {
+            swal(constants.name, 'Please add lead price.', constants.error);
+          }
         }
 
         $scope.saveBrowsed = function () {
@@ -2200,7 +2211,7 @@ angular.module('catalogueApp')
                 $scope.browsedDetailData[i].prefered_patners = [];
                 for (let j in $scope.browsedDetailData[i].selected_preferred_company) {
                   if($scope.browsedDetailData[i].selected_preferred_company[j].id == 'other'){
-                    preferred_company_other = $scope.browsedDetailData[i].preferred_company_other;
+                    preferred_company_other = $scope.browsedDetailData[i].prefered_patner_other;
                   }
                   $scope.browsedDetailData[i].prefered_patners.push($scope.browsedDetailData[i].selected_preferred_company[j].id)
                 }
@@ -2258,6 +2269,86 @@ angular.module('catalogueApp')
                           $scope.show_color($scope.releaseDetails.shortlisted_suppliers[localindex_index]);
                         }
                         $scope.getRequirementDetail($scope.shortlisted_spaces_id);
+                        swal(constants.name, constants.save_success, constants.success);
+                      }
+                    }).catch(function onError(response) {
+                        if(response.data.data && response.data.data.general_error){
+                          swal(constants.name, response.data.data.general_error.error, constants.error);
+                      }
+                    })
+                }
+              });
+          }
+        }
+
+        $scope.updateBrowsed = function () {
+          let browsedData = [];
+         
+          for (let i in $scope.browsedDetailData) {
+            if ($scope.browsedDetailData[i].browsedCheck) {
+              let preferred_company_other = null;
+              if ($scope.browsedDetailData[i].selected_preferred_company && $scope.browsedDetailData[i].selected_preferred_company.length > 0) {
+                $scope.browsedDetailData[i].prefered_patners = [];
+                for (let j in $scope.browsedDetailData[i].selected_preferred_company) {
+                  if($scope.browsedDetailData[i].selected_preferred_company[j].id == 'other'){
+                    preferred_company_other = $scope.browsedDetailData[i].prefered_patner_other;
+                  }
+                  $scope.browsedDetailData[i].prefered_patners.push($scope.browsedDetailData[i].selected_preferred_company[j].id)
+                }
+              }
+
+              if($scope.browsedDetailData[i].selected_preferred_company && $scope.browsedDetailData[i].selected_preferred_company.length == 0){
+                $scope.browsedDetailData[i].prefered_patners = []; 
+              }
+              let current_patner_id = $scope.browsedDetailData[i].current_patner_id;
+              let current_patner_other = $scope.browsedDetailData[i].current_patner_other;
+             if($scope.browsedDetailData[i].current_patner_id == "" && $scope.browsedDetailData[i].current_patner_other){
+              current_patner_id = null;
+             } else {
+              current_patner_other = null;
+             }
+
+              browsedData.push({'_id':$scope.browsedDetailData[i]._id,
+              'comment':$scope.browsedDetailData[i].comment,
+              'meating_timeline':$scope.browsedDetailData[i].meating_timeline,
+              'implementation_timeline':$scope.browsedDetailData[i].implementation_timeline,
+              'current_patner_id':current_patner_id,
+              'prefered_patners_id':$scope.browsedDetailData[i].prefered_patners,
+              'current_company_other' :current_patner_other,
+              'preferred_company_other' :preferred_company_other,
+            });
+            }
+          }
+         
+          if (browsedData.length > 0) {
+            var browsed_leads = {
+              "browsed_leads": browsedData
+            }
+         
+            swal({
+              title: 'Are you sure ?',
+              text: 'Update browes lead',
+              type: constants.warning,
+              showCancelButton: true,
+              confirmButtonClass: "btn-success",
+              confirmButtonText: "Yes, Save!",
+              closeOnConfirm: true
+            },
+              function (confirm) {
+                if (confirm) {
+                  releaseCampaignService.updateBrowsed(browsed_leads)
+                    .then(function onSuccess(response) {
+                      if (response && response.data.data.error) {
+                        swal(constants.name, response.data.data.error, constants.error);
+                      } else {
+                        // var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+                        //   return el.id;
+                        // }).indexOf($scope.shortlisted_spaces_id);
+                        // if (localindex_index != -1) {
+                        //   $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 1;
+                        //   $scope.show_color($scope.releaseDetails.shortlisted_suppliers[localindex_index]);
+                        // }
+                       // $scope.getRequirementDetail($scope.shortlisted_spaces_id);
                         swal(constants.name, constants.save_success, constants.success);
                       }
                     }).catch(function onError(response) {

@@ -2002,7 +2002,7 @@
                           <input style="margin-top:10px" ng-change="browsCheckBoxAutoCheck($index)" type="text"
                           class="form-control" placeholder="Other Preferred Company"
                           ng-if="browsed.otherPreferredCompanyBrowsed" name="other_preferred_company" id="other_preferred_company"
-                          ng-model="browsed.preferred_company_other">
+                          ng-model="browsed.prefered_patner_other">
                       </td>
 
                       <td class="alignment">
@@ -2093,7 +2093,6 @@
                       <td class="alignment" style="width:300px;">
                         <p>Lead Entry:{{browsed.created_at | date:'medium'}}</p>
                       </td>
-
                       <!-- <td class="alignment">
                         <select class="form-control" name="feedback_{{$index}}" id="feedback_id_{{$index}}"
                           ng-model="browsed.current_patner_feedback" ng-change="browsCheckBoxAutoCheck($index)"
@@ -2126,7 +2125,7 @@
                 <div class="">
                   <!-- <button class="btn btn-danger" ng-click="addRequirementDetail()">Add Row</button> -->
                   <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="saveBrowsed()">Submit</button>
-                  <!-- <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="updateBrowsed()">Update</button> -->
+                  <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="updateBrowsed()">Update</button>
                   <button class="btn btn-danger" ng-click="removeBrowsed()" ng-disabled="browsedCheck">Remove</button>
                 </div>
                 <!-- <div class="" ng-show="!editContactDetails" ng-if="statusEditContactDetails">
@@ -2197,8 +2196,7 @@
                       </td>
 
                       <td class="alignment">
-
-                        <span>{{subrequirement.is_preferred_company}}</span>
+                        <span style=" text-transform: capitalize;">{{subrequirement.is_preferred_company}}</span>
 
                       </td>
 
@@ -2275,6 +2273,17 @@
                         <span ng-if="!subrequirement.lead_price">Price (Points): ****</span>
                         <span ng-if="subrequirement.lead_price">Price (Points): {{subrequirement.lead_price}}</span>
                       </td>
+                      <td class="alignment" style="width:300px;">
+                        <select class="form-control" name="hotness_lead" id="hotness_lead_id_{{$index}}"
+                        ng-model="subrequirement.hotness_of_lead" ng-change="browsCheckBoxAutoCheck($index)"
+                        style="width:150px;">
+                        <!-- <option value="H1" disabled>H1</option> -->
+
+                        <option ng-repeat="(key,value) in hotnessLead track by $index" value="{{key}}">
+                          {{value}} 
+                        </option>
+                      </select>
+                      </td>+
                       <td class="alignment">
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
                           ng-if="subrequirement.varified_bd == 'no'"

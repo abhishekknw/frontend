@@ -457,7 +457,7 @@ angular.module('catalogueApp')
       DashboardService.getPurchasedLead = function (campaignId) {
         var url = url_root + "b2b/purchased-lead-data/";
         if (campaignId) {
-          var url = url_root + "b2b/purchased-lead-data/?campaign_id=SYNSYNCEFF";
+          var url = url_root + "b2b/purchased-lead-data/?campaign_id=" + campaignId;
         } 
         return machadaloHttp.get(url);
       }
@@ -465,7 +465,7 @@ angular.module('catalogueApp')
       DashboardService.notPurchasedLead = function (campaignId) {
         // var url = url_root + "b2b/not-purchased-lead-data/";
         // if (campaignId) {
-          var url = url_root + "b2b/not-purchased-lead-data/?campaign_id=SYNSYNCEFF";
+          var url = url_root + "b2b/not-purchased-lead-data/?campaign_id=" + campaignId;
      //   } 
         return machadaloHttp.get(url);
       }

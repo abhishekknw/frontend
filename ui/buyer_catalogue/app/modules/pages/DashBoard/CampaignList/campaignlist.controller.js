@@ -282,7 +282,15 @@ angular.module('catalogueApp')
         $window.open(Config.APIBaseUrl + "v0/ui/b2b/suspance-leads/?start_date=" + commonDataShare.formatDate($scope.fromDate) + "&end_date=" + commonDataShare.formatDate($scope.toDate));
       }
 
-
+      $scope.getSuspenseCount = function(){
+        campaignListService.suspenseCount($scope.fromDate,$scope.toDate)
+        .then(function onSuccess(response){ 
+          if(response && response.data){
+            $scope.suspenseLeadsCount = response.data.data.count;
+            $('#viewCommentsq').modal('show');
+          }
+        });
+      }
 
       $scope.closeModel = function(){
         $scope.emailModel = {};

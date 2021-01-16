@@ -277,5 +277,13 @@ call_back_time:{
   "weekend morning":"Weekend Morning",
   'weekend evening':'Weekend Evening',
   "customized calling period":"Customized Calling Period",
+},
+hotnessLead:{
+'H1':'H1',
+'H2':'H2',
+'H3':'H3',
+'H4':'H4',
+'H5':'H5',
+'H6':'H6',
 }
 });
