@@ -100,6 +100,26 @@ div#RequirementModel th:nth-child(2), div#RequirementModel td:nth-child(2) {
     overflow-wrap: break-word;
     width: 77px;
 }
+.bd_requirement_detail th, .bd_requirement_detail td {
+    min-width: 170px;
+    width: 170px;
+    max-width: 170px;
+}
+.bd_requirement_detail th:nth-child(1), .bd_requirement_detail td:nth-child(1) {
+    max-width: 31px !important;
+    min-width: 31px;
+    width: 31px;
+}
+td.alignment button {
+    display: block;
+        margin: 0 auto;
+}
+.bd_requirement_detail th:nth-child(2), .bd_requirement_detail td:nth-child(2) {
+    max-width: 77px !important;
+    min-width: 77px;
+    overflow-wrap: break-word;
+    width: 77px;
+}
 div#RequirementModel a.option span.ng-binding {
   clear: both;
   display: inline-block;
