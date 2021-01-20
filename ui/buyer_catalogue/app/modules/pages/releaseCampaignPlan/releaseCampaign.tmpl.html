@@ -2269,7 +2269,7 @@
 
                       <td class="alignment" style="width:300px;">
                         <input type="number" ng-change="distributionBoxAutoCheck(key,$index)" ng-model="subrequirement.lead_price" name="lead_price" class="form-control" placeholder="Price" id="price_id"
-                        style="width:100px;">
+                        style="width:150px;">
                         <span ng-if="!subrequirement.lead_price">Price (Points): ****</span>
                         <span ng-if="subrequirement.lead_price">Price (Points): {{subrequirement.lead_price}}</span>
                       </td>
@@ -2283,7 +2283,7 @@
                           {{value}} 
                         </option>
                       </select>
-                      </td>+
+                      </td>
                       <td class="alignment">
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
                           ng-if="subrequirement.varified_bd == 'no'"
@@ -2307,7 +2307,7 @@
 
                       </td>
                     <tr ng-show="bddetailedShow[key]" ng-repeat-end>
-                      <td colspan="15">
+                      <td colspan="17">
                         <button class="btn btn-success" id="update_{{key}}" ng-disabled="subSectorCheck "
                           ng-click="updateLeadDistribution(requirement.requirements)">Update</button>
                         <!-- <button style="margin-bottom:2px" id="verify_{{key}}" type="button" name="button"
