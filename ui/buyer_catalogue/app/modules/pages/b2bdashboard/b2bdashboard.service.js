@@ -469,6 +469,11 @@ angular.module('catalogueApp')
      //   } 
         return machadaloHttp.get(url);
       }
+
+      DashboardService.purchasedNotPurchasedLead = function (campaignId) {
+          var url = url_root + "b2b/lead-form-headers/?campaign_id=" + campaignId;
+        return machadaloHttp.get(url);
+      }
       
 
       return DashboardService;

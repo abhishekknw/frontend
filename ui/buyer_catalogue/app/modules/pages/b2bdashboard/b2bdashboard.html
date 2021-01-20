@@ -773,9 +773,9 @@
                           <option value="Survey">Survey</option>
                           <option value=Leads">Leads</option>
                         </select> -->
-                        <select  ng-model="supplierType" class="form-control" ng-change="surveyLeadFilter(supplierType)">
-                          <option value="" ng-disabled='true'>Search</option>
-                          <option value="{{supplierType}}"  ng-repeat="supplierType in surveyLeadArray">{{supplierType}}</option>
+                        <select ng-options="supplierType for supplierType in surveyLeadArray"  ng-model="supplierType" class="form-control" ng-change="surveyLeadFilter(supplierType)" default-option="{{defaultOption}}">
+                          <!-- <option value="" ng-disabled='true'></option> -->
+                          <!-- <option value="{{supplierType}}"  ng-repeat="supplierType in surveyLeadArray">{{supplierType}}</option> -->
                         </select>
                       </h4>
                   </div>
@@ -850,11 +850,19 @@
                             <p ng-if="filterType == 'Leads'">View Leads</p>
                             <p ng-if="filterType != 'Leads'">View Survey</p>
                         </button>
-                        <button class="btn btn-danger" ng-if="$index == buttonIndex" ng-click="getPurchasedLead(campaign.campaign_id,campaign.name)">
+                        <!-- <button class="btn btn-danger" ng-if="$index == buttonIndex" ng-click="getPurchasedLead(campaign.campaign_id,campaign.name)">
                             <p ng-if="filterType == 'Leads'">View Leads Purchased</p>
                             <p ng-if="filterType != 'Leads'">View Survey Purchased</p>
                           </button>
                         <button class="btn btn-danger"  ng-if="$index == buttonIndex" ng-click="getNotPurchasedLead(campaign.campaign_id,campaign.name)">
+                            <p ng-if="filterType == 'Leads'">View Leads Not Purchased</p>
+                            <p ng-if="filterType != 'Leads'">View Survey Not Purchased</p>
+                          </button> -->
+                          <button class="btn btn-danger" ng-if="$index == buttonIndex" ng-click="getPurchasedNotPurchasedLead(campaign.campaign_id,campaign.name,'yes')">
+                            <p ng-if="filterType == 'Leads'">View Leads Purchased</p>
+                            <p ng-if="filterType != 'Leads'">View Survey Purchased</p>
+                          </button>
+                        <button class="btn btn-danger"  ng-if="$index == buttonIndex" ng-click="getPurchasedNotPurchasedLead(campaign.campaign_id,campaign.name,'no')">
                             <p ng-if="filterType == 'Leads'">View Leads Not Purchased</p>
                             <p ng-if="filterType != 'Leads'">View Survey Not Purchased</p>
                           </button>
@@ -878,7 +886,7 @@
                 </table>
               </div>
             </div>
-              <div class="viewLeadstable">
+              <div class="viewLeadstable" ng-if="purchasedNotPurchasedLead">
                 <!-- <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button> -->
               </br><br>
                 <input type="text" class="form-control" ng-model="searchData" ng-if="purchasedTable" placeholder="search">
@@ -891,17 +899,15 @@
                       </div> -->
                   </div>
                   <br />
-                  <table class="table" ng-if="purchasedTable">
+                  <!-- <table class="table" ng-if="purchasedTable">
                     <thead>
                       <tr>
                         <th>Index</th>
                         <th>Client Name</th>
-                        <!-- <th>Primary Count</th> -->
                         <th style="width:100px;" class="col-md-2" ng-click="Sorts('unit_primary_count')">Primary Count<a><i class="icon-sort" style="color:white;"></i></a></th>
                         <th style="width:100px;" class="col-md-2" ng-click="Sorts('city')">City<a><i class="icon-sort" style="color:white;"></i></a></th>
                         <th>Purchased on</th>
                         <th>Comments</th>
-                        <!-- <th>Assigned To</th> -->
                         <th>Internal Comments</th>
                         <th ng-if="filterType == 'Leads'">Installation/AMC Timeline</th>
                         <th>Meeting Timeline</th>
@@ -922,14 +928,12 @@
                             ng-model="lead.contact_data.external_comments" rows="4" cols="50">
                        </textarea>
                         </td>
-                        <!-- <td  style="width:200px;" class="col-md-2">{{lead.leads_data[0].city}}</td> -->
                         <td  style="width:200px;" class="col-md-2">
                             <textarea placeholder="Internal Comments" class="form-control" style="width:150px;"
                             ng-model="lead.contact_data.internal_comments" rows="4" cols="50">
                        </textarea>
                         </td>
-                        <td  style="width:200px;" class="col-md-2" ng-if="filterType == 'Leads'">
-                            
+                        <td  style="width:200px;" class="col-md-2" ng-if="filterType == 'Leads'">              
                                 <input type="text"  ng-model="lead.Installation_Timeline" name="Installation/AMC_Timeline" class="form-control" placeholder="Installation/AMC Timeline" id="Installation_id"
                                 style="width:100px;">
                               </td>
@@ -944,15 +948,39 @@
                         </td>
                         <td  style="width:200px;" class="col-md-2" ng-if="filterType == 'Leads'"></td>
                         <td  style="width:200px;" class="col-md-2" ng-if="filterType == 'Leads'"></td>
-                        <!-- <td>{{lead.unit_primary_count}}</td>
-                        <td>{{lead.city}}</td>
-                        <td>{{lead.supplier_name}}</td> -->
-                       
-
-                        <!-- <td ng-repeat="alias in lead">{{alias.value}}</td> -->
                       </tr>
                     </tbody>
-                  </table>
+                  </table> -->
+                     <table class="table" >
+                    <thead>
+                      <tr>
+                        <th>Index</th>
+                        <th   ng-repeat="(key,filter) in purchasedNotPurchasedLead.header track by $index">{{key}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                            <tr ng-repeat="lead in purchasedNotPurchasedLead.values">
+                              <td ng-if="lead[0].lead_purchased == leadPurchasedStatus"  class="col-md-2">{{$index + 1}}</td>
+                              <td ng-if="lead[0].lead_purchased == leadPurchasedStatus">{{lead[1].value}}</td>
+                              <td ng-if="lead[0].lead_purchased == leadPurchasedStatus">{{lead[2].value}}</td>
+                              <td ng-if="lead[0].lead_purchased == leadPurchasedStatus">{{lead[3].value}}</td>
+                              <td ng-if="lead[0].lead_purchased == leadPurchasedStatus">{{lead[4].value}}</td>
+                              <td ng-if="lead[0].lead_purchased == leadPurchasedStatus">{{lead[5].value}}</td>
+                              <td ng-if="lead[0].lead_purchased == leadPurchasedStatus">{{lead[6].value}}</td>
+                              <td ng-if="lead[0].lead_purchased == leadPurchasedStatus">{{lead[7].value}}</td>
+                              <td ng-if="lead[0].lead_purchased == leadPurchasedStatus">{{lead[8].value}}</td>
+                              <td ng-if="lead[0].lead_purchased == leadPurchasedStatus">{{lead[9].value}}</td>
+                              <td ng-if="lead[0].lead_purchased == leadPurchasedStatus">{{lead[10].value}}</td>
+                              <td ng-if="lead[0].lead_purchased == leadPurchasedStatus">{{lead[11].value}}</td>
+                              <td ng-if="lead[0].lead_purchased == leadPurchasedStatus">{{lead[12].value}}</td>
+                              <td ng-if="lead[0].lead_purchased == leadPurchasedStatus">{{lead[13].value}}</td>
+                              <td ng-if="lead[0].lead_purchased == leadPurchasedStatus">{{lead[14].value}}</td>
+                              <td ng-if="lead[0].lead_purchased == leadPurchasedStatus">{{lead[15].value}}</td>
+                              </div>
+                            </tr>
+                              
+                      </tbody>
+                     </table>
                 </div>
               </div>
               <br /><br />
@@ -1016,9 +1044,20 @@
           </uib-tab>
           <!-- view leads end -->
 
+            <!--Payment start -->
+            <uib-tab id="uib-tabs-width"  ng-click="viewCampaignLeads()" index="4">
+              <uib-tab-heading>
+                <h5>Payment</h5>
+              </uib-tab-heading>
+              <div class="container-fluid">
+                           
+            </div>
+            </uib-tab>
+            <!--Payment end -->
+
            
               <!--START : Analysis -->
-              <uib-tab  id="uib-tabs-width" ng-click="getCampaigns()" index="4" >
+              <uib-tab  id="uib-tabs-width" ng-click="getCampaigns()" index="5" >
                 <uib-tab-heading>
                   <h5 style="margin-left:-10px;"> Analysis</h5>
 

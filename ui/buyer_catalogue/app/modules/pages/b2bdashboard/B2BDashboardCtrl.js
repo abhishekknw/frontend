@@ -4,9 +4,18 @@
  */
 (function () {
   'use strict';
-
-  angular.module('catalogueApp')
-    .controller('B2BDashboardCtrl', function ($scope, NgMap, $rootScope, baConfig, colorHelper, DashboardService, B2BDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
+  angular.module('catalogueApp').directive('select', function($interpolate) {
+    return {
+      restrict: 'E',
+      require: 'ngModel',
+      link: function(scope, elem, attrs, ctrl) {
+        var defaultOptionTemplate;
+        scope.defaultOptionText = attrs.defaultOption || 'Select...';
+        defaultOptionTemplate = '<option value="" disabled selected style="display: none;">{{defaultOptionText}}</option>';
+        elem.prepend($interpolate(defaultOptionTemplate)(scope));
+      }
+    };
+  }).controller('B2BDashboardCtrl', function ($scope, NgMap, $rootScope, baConfig, colorHelper, DashboardService, B2BDashboardService, commonDataShare, constants, $location, $anchorScroll, uiGmapGoogleMapApi, uiGmapIsReady, Upload, cfpLoadingBar, $stateParams, $timeout, Excel, permissions, $window) {
     
       $scope.campaign_id = $stateParams.proposal_id;
    
@@ -22,7 +31,7 @@
         { header: 'LEAD COUNT' },
         { header: 'EXISTING CLIENT FEEDBACK COUNT' },
       ];
-        
+      
       $scope.campaignStatus = {
         overall: {
           status: 'overall', value: false, campaignLabel: 'Overall Campaigns', supplierLabel: 'Overall Societies'
@@ -97,7 +106,7 @@
         act_date: '',
         reAssign_date: '',
       };
-
+      $scope.defaultOption = 'Select Leads,Surveyed Clients';
       var category = $rootScope.globals.userInfo.profile.organisation.category;
       var orgId = $rootScope.globals.userInfo.profile.organisation.organisation_id;
       $scope.campaignDataList = [];
@@ -500,6 +509,15 @@
         B2BDashboardService.notPurchasedLead(CampaignId)
           .then(function onSuccess(response) {
             $scope.notPurchasedLeadData = response.data.data;
+          });
+      }
+
+      $scope.getPurchasedNotPurchasedLead = function (CampaignId,campaignName,leadStatus) {
+        $scope.leadPurchasedStatus = leadStatus;
+        $scope.CampaignNameofLeads = campaignName;
+        B2BDashboardService.purchasedNotPurchasedLead(CampaignId)
+          .then(function onSuccess(response) {
+            $scope.purchasedNotPurchasedLead = response.data.data;
           });
       }
 
