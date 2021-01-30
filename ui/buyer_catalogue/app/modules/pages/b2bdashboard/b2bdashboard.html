@@ -1332,25 +1332,38 @@
               </div>
             </div>
             <div ng-if="paymentTab">
-              <div class="col-md-6" style="clear: both;">
+              <div class="col-md-12" style="clear: both;">
                 <div class="panel-title box_detail">
-                  <h4>My Details</h4>
-                  <p>Name- <span
-                      ng-if="viewLicenceDetailData.mydetail.first_name">{{viewLicenceDetailData.mydetail.first_name}}
-                      {{viewLicenceDetailData.mydetail.last_name}}</span>
-                    <span
-                      ng-if="!viewLicenceDetailData.mydetail.first_name && !viewLicenceDetailData.mydetail.last_name">NA</span>
-                  </p>
-                  <p>Email- <span
-                      ng-if="viewLicenceDetailData.mydetail.email">{{viewLicenceDetailData.mydetail.email}}</span>
-                    <span ng-if="!viewLicenceDetailData.mydetail.email">NA</span></p>
-                  <p>Contact Number- <span
-                      ng-if="viewLicenceDetailData.mydetail.mobile">{{viewLicenceDetailData.mydetail.mobile}}</span>
-                    <span ng-if="!viewLicenceDetailData.mydetail.mobile">NA</span></p>
-                  <p>Designation- <span
-                      ng-if="viewLicenceDetailData.mydetail.designation">{{viewLicenceDetailData.mydetail.designation}}</span>
-                    <span ng-if="!viewLicenceDetailData.mydetail.designation">NA</span></p>
-                  <button>Edit</button>
+                  <div class="viewLeadstable">
+                    <br /><br /><br /><br />
+                    <!-- <input type="text" class="form-control" ng-model="searchQuery" placeholder="search"> -->
+                   <h4>Payment Summary</h4>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Date</th>
+                            <th class="btn_box_lead_survey_th">Amount</th>
+                            <th class="btn_box_lead_survey_th">Payment Status</th>
+                            <th class="btn_box_lead_survey_th">URL</th>
+                          </tr>
+                          <!-- <tr colspan="9">
+                            <td></td>
+                          </tr> -->
+                        </thead>
+                        <tbody>
+                          <!-- <tr
+                            dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index "> -->
+                          <tr>
+                            <td>{{$index + 1}}</td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

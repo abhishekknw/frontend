@@ -2275,7 +2275,7 @@
                       </td>
                       <td class="alignment" style="width:300px;">
                         <select class="form-control" name="hotness_lead" id="hotness_lead_id_{{$index}}"
-                        ng-model="subrequirement.hotness_of_lead" ng-change="browsCheckBoxAutoCheck($index)"
+                        ng-model="subrequirement.hotness_of_lead" ng-change="distributionBoxAutoCheck(key,$index)"
                         style="width:150px;">
                         <!-- <option value="H1" disabled>H1</option> -->
 
@@ -2287,7 +2287,7 @@
 
                       <td class="alignment" style="width:300px;">
                         <select class="form-control" name="client_status" id="client_status_id_{{$index}}"
-                        ng-model="subrequirement.client_status" ng-change="browsCheckBoxAutoCheck($index)"
+                        ng-model="subrequirement.client_status" ng-change="distributionBoxAutoCheck(key,$index)"
                         style="width:150px;">
                         <!-- <option value="H1" disabled>H1</option> -->
 

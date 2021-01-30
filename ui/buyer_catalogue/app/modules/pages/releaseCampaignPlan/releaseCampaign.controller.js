@@ -2026,8 +2026,7 @@ angular.module('catalogueApp')
 
         $scope.updateLeadDistributionRow = function (data) {
           let updateData = [];
-          updateData.push({'lead_price':data.lead_price,'comment':data.comment,'requirement_id':data.id,'hotness_of_lead':data.hotness_of_lead});
-          
+          updateData.push({'lead_price':data.lead_price,'comment':data.comment,'requirement_id':data.id,'hotness_of_lead':data.hotness_of_lead,'client_status':data.client_status});
           if (updateData.length > 0) {
             var DistributionData = {
               "data": updateData
@@ -2063,12 +2062,11 @@ angular.module('catalogueApp')
               let checkData = $scope.bdrequirementDetailData[i].requirements;
               for(let j in checkData){
                 if(checkData[j].requirementCheck){
-                  updateData.push({'lead_price':checkData[j].lead_price,'comment':checkData[j].comment,'requirement_id':checkData[j].id});
+                  updateData.push({'lead_price':checkData[j].lead_price,'comment':checkData[j].comment,'requirement_id':checkData[j].id,'hotness_of_lead':checkData[j].hotness_of_lead,'client_status':checkData[j].client_status});
                 }
               }
             }
-          }
-        
+          }      
           if (updateData.length > 0) {
             var DistributionData = {
               "data": updateData
