@@ -476,6 +476,11 @@ angular.module('catalogueApp')
       }
       
 
+      DashboardService.viewLicenceDetail = function () {
+        var url = url_root + "b2b/licence-details/";
+        return machadaloHttp.get(url);
+      }
+
       return DashboardService;
 
     }]);

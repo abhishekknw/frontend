@@ -527,6 +527,36 @@
         $scope.viewCampaignLeads()
       }
 
+
+      $scope.viewLicenceDetail = function () {
+        B2BDashboardService.viewLicenceDetail()
+          .then(function onSuccess(response) {
+            $scope.viewLicenceDetailData = response.data.data;
+          });
+      }
+      $scope.licenceTab = true;
+      $scope.changeTab = function(value){
+        if(value == 'licence'){
+          $scope.licenceTab = true;
+          $scope.paymentTab = false;
+        } else {
+          $scope.licenceTab = false;
+          $scope.paymentTab = true;
+        }
+      }
+
+      $scope.updateCompanyDetails = function(){
+        console.log('++++++++++++++++++++++++++++++++++++',$scope.viewLicenceDetailData)
+      }
+
+      $scope.updateRelationshipManagerDetails = function(){
+        console.log('++++++++++++++++++++++++++++++++++++',$scope.viewLicenceDetailData)
+      }
+
+      $scope.updateMyDetails = function(){
+        console.log('++++++++++++++++++++++++++++++++++++',$scope.viewLicenceDetailData)
+      }
+
       $scope.doughnutChartOptions = function () {
         $anchorScroll('bottom');
       }

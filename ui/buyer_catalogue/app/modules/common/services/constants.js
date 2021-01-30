@@ -285,5 +285,8 @@ hotnessLead:{
 'H4':'H4',
 'H5':'H5',
 'H6':'H6',
-}
+},
+clientStatus:{'Accepted':'Accepted',
+'Decision Pending':'Decision Pending',
+'Decline':'Decline'}
 });

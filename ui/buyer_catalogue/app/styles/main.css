@@ -30,6 +30,65 @@ html{
   min-width: 2300px;
 */
 }
+ul.licence_detail_bx li {
+    color: #fff;
+    display: inline-block;
+    width: 49%;
+    background: #cb3328;
+    padding: 15px;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+}
+ul.licence_detail_bx li:hover {
+    background: #8e1921;
+}
+ul.licence_detail_bx li.active_detail {
+    background: #8e1921;
+}
+ul.licence_detail_bx li:nth-child(1) {
+    width: 50%;
+}
+ul.licence_detail_bx li:nth-last-child(1) {
+    margin-left: -5px;
+    width: 50%;
+}
+div.box_detail {
+    text-align: left;
+    padding: 15px !important;
+    margin-bottom: 20px;
+    background: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+}
+.panel-title.box_detail h4 {
+    margin-bottom: 20px;
+}
+div.box_detail p {
+    margin-bottom: 15px !important;
+}
+.panel-title.box_detail button {
+    background: #cb3328;
+    outline: none;
+    padding: 10px 45px;
+    font-weight: 600;
+    border-radius: 5px;
+    color: #ffffff;
+    border: 1px solid #c54632;
+    font-weight: 500;
+}
+.panel-title.box_detail button:hover {
+    background: transparent;
+    color: #c54632;
+    border: 1px solid #c54632;
+}
+.panel-title.box_detail p {
+    color: #333 !important;
+    font-weight: 500;
+}
+ul.licence_detail_bx {
+    margin-bottom: 20px;
+}
 div#RequirementModel .browsed_leads_main th, div#RequirementModel .browsed_leads_main td {
     min-width: 170px;
 }

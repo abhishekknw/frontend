@@ -2284,6 +2284,18 @@
                         </option>
                       </select>
                       </td>
+
+                      <td class="alignment" style="width:300px;">
+                        <select class="form-control" name="client_status" id="client_status_id_{{$index}}"
+                        ng-model="subrequirement.client_status" ng-change="browsCheckBoxAutoCheck($index)"
+                        style="width:150px;">
+                        <!-- <option value="H1" disabled>H1</option> -->
+
+                        <option ng-repeat="(key,value) in clientStatus track by $index" value="{{key}}">
+                          {{value}} 
+                        </option>
+                      </select>
+                      </td>
                       <td class="alignment">
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
                           ng-if="subrequirement.varified_bd == 'no'"

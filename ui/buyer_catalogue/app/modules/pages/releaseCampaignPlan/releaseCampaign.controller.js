@@ -201,6 +201,7 @@ angular.module('catalogueApp')
           { header: 'Timestamp' },
           { header: 'Lead Price (Points)' },
           { header: 'Hotness of Lead' },
+          { header: 'Client Status' },
           { header: 'Action' },
         ];
 
@@ -284,6 +285,7 @@ angular.module('catalogueApp')
         $scope.requirement_implementation_time = constants.requirement_implementation_time;
         $scope.requirement_meeting_time = constants.requirement_meeting_time;
         $scope.hotnessLead = constants.hotnessLead;
+        $scope.clientStatus = constants.clientStatus;
         $scope.current_patner_feedback = constants.current_patner_feedback;
         $scope.call_back_time = constants.call_back_time;
 
