@@ -1,4 +1,4 @@
-<div ng-cloak ng-init="leadCountByDate()">
+<div ng-cloak ng-init="leadDecisionPanding()">
   <div ng-loading="loading"></div>
   <!--For displaying loading icon-->
   <main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading">
@@ -19,67 +19,17 @@
             <uib-tabset class="dashboard-tab" active="selectTabIndex.value">
               <uib-tab index="0">
                 <uib-tab-heading>
-                  <h5 style="margin-left:-10px">
-                    <span style="color:#ffffff;" class="glyphicon glyphicon-backward" ng-click="getRecentActivity(pre)"
-                      data-toggle="tooltip" title="Go To Previous Activity!"></span>
-                    <span style="color:#ffffff;" class="glyphicon glyphicon-chevron-left"
-                      ng-click="getDate(pre)"></span>
-                    <span style="margin-left:10px;margin-right:10px;">{{date|date : "dd-MM-yyyy"}}</span>
-                    <span style="color:#ffffff;" class="glyphicon glyphicon-chevron-right"
-                      ng-click="getDate(next)"></span>
-                    <span style="color:#ffffff;" class="glyphicon glyphicon-forward" ng-click="getRecentActivity(next)"
-                      data-toggle="tooltip" title="Go To Next Activity!"></span>
-                    <span style="color:#ffffff;left:16px;margin-top:1px;"
-                      class="glyphicon glyphicon-calendar pull-right" ng-click="visible=!visible;">
-                      <div ng-class="{'is-visible':visible}" class="menu">
-                        <table class="table-responsive table table-bordered sidePanelTable" style="width:300px;">
-                          <thead>
-                            <tr>
-                              <td style="color:#ffffff !important;" style="width:20px">DATE</td>
-                              <td style="width:20px">
-                                <button type="button" name="button" class="col-xs-5"
-                                  style="margin: 0px 9px 0px -1px;width:80px;height:70px;color:black;background-color:#ffe000;">Total
-                                  Release (%)</button>
-
-                              </td>
-
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr ng-repeat="(key,item) in historyData" ng-if="$index < 15">
-                              <td class="col-xs-3" style="background-color: #8e1921;"><a
-                                  ng-click="getDateData(key)">{{key| date :'d-MMM-yy'}}</a></td>
-                              <td class="col-xs-2">
-                                <button class="col-xs-5 " style="width:80px;height:35px;" id="greenColor"
-                                  ng-if="item['RELEASE'].actual/item['RELEASE'].total*100==100" type="button"
-                                  name="button"
-                                  class="btn btn-danger">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}
-                                  &#10004;</button>
-                                <button class="col-xs-5 " style="width:80px;height:35px;" id="lightGreen"
-                                  ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 75 && item['RELEASE'].actual/item['RELEASE'].total*100 != 100"
-                                  type="button" name="button">
-                                  {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
-                                <button class="col-xs-5 " style="width:80px;height:35px;" id="yellow"
-                                  ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 50 && item['RELEASE'].actual/item['RELEASE'].total*100 < 75"
-                                  type="button" name="button">
-                                  {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
-                                <button class="col-xs-5 " style="width:80px;height:35px;" id="redColor"
-                                  ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 < 50" type="button"
-                                  name="button">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
-                                <button class="col-xs-5 " style="width:80px;height:35px;cursor:default;"
-                                  ng-if="!item['RELEASE'].total" type="button" name="button">NA</button>
-                              </td>
-
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </span>
-                  </h5>
+                 <h5>New Leads</h5>
 
                 </uib-tab-heading>
-
+                <div class="col-md-12">
+                  <ul class="licence_detail_bx">
+                    <li ng-class="decisionPendingTab ? 'active_detail' : ''" ng-click="changeLeadTab('decisionPending')">Leads - Decision Pending</li>
+                    <li ng-class="newLeadsTab ? 'active_detail' : ''" ng-click="changeLeadTab('newLeads')">New Leads</li>
+                  </ul>
+                </div>
                 <div class="row panel-hide">
+                  <div ng-if="newLeadsTab">
                   <div class="row">
                     <div class="col-xlg-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 dashboard-side-label">
                     </div>
@@ -92,6 +42,147 @@
                   <!-- start b2b code -->
 
                   <!-- end b2b code -->
+                  <div class="row">
+                      <div class="col-xlg-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 dashboard-side-label">
+                        <h4 style="margin-left:140px;">Select Date </h4>
+                      </div>
+                      <div class="col-xlg-10 col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                        <div class="row">
+                          <div class="col-xlg-6 col-lg-6 col-md-6 col-sm-6 col-xs-6" style="margin-left:140px;">
+                            <div class="form-group has-success">
+                              <div class="pie-chart-item-container ng-scope">
+                                <div class="custom-panel">
+                                  <uib-accordion close-others="oneAtATime">
+                                    <div uib-accordion-group panel-class="panel panel-blur date-grid-tab custom-panel"
+                                      id="custompanelmobile">
+                                      <div uib-accordion-heading class="container">
+                                        <div class="pie-chart-item ng-scope">
+                                            <h5 style="margin-left:-10px">
+                                                <span style="color:#ffffff;" class="glyphicon glyphicon-backward" ng-click="getRecentActivity(pre)"
+                                                  data-toggle="tooltip" title="Go To Previous Activity!"></span>
+                                                <span style="color:#ffffff;" class="glyphicon glyphicon-chevron-left"
+                                                  ng-click="getDate(pre)"></span>
+                                                <span style="margin-left:10px;margin-right:10px;">{{date|date : "dd-MM-yyyy"}}</span>
+                                                <span style="color:#ffffff;" class="glyphicon glyphicon-chevron-right"
+                                                  ng-click="getDate(next)"></span>
+                                                <span style="color:#ffffff;" class="glyphicon glyphicon-forward" ng-click="getRecentActivity(next)"
+                                                  data-toggle="tooltip" title="Go To Next Activity!"></span>
+                                                <!-- <span style="color:#ffffff;left:16px;margin-top:1px;"
+                                                  class="glyphicon glyphicon-calendar pull-right" ng-click="visible=!visible;"> -->
+                                                  <div ng-class="{'is-visible':visible}" class="menu">
+                                                    <table class="table-responsive table table-bordered sidePanelTable" style="width:300px;">
+                                                      <thead>
+                                                        <tr>
+                                                          <td style="color:#ffffff !important;" style="width:20px">DATE</td>
+                                                          <td style="width:20px">
+                                                            <button type="button" name="button" class="col-xs-5"
+                                                              style="margin: 0px 9px 0px -1px;width:80px;height:70px;color:black;background-color:#ffe000;">Total
+                                                              Release (%)</button>
+                            
+                                                          </td>
+                            
+                                                        </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                        <tr ng-repeat="(key,item) in historyData" ng-if="$index < 15">
+                                                          <td class="col-xs-3" style="background-color: #8e1921;"><a
+                                                              ng-click="getDateData(key)">{{key| date :'d-MMM-yy'}}</a></td>
+                                                          <td class="col-xs-2">
+                                                            <button class="col-xs-5 " style="width:80px;height:35px;" id="greenColor"
+                                                              ng-if="item['RELEASE'].actual/item['RELEASE'].total*100==100" type="button"
+                                                              name="button"
+                                                              class="btn btn-danger">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}
+                                                              &#10004;</button>
+                                                            <button class="col-xs-5 " style="width:80px;height:35px;" id="lightGreen"
+                                                              ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 75 && item['RELEASE'].actual/item['RELEASE'].total*100 != 100"
+                                                              type="button" name="button">
+                                                              {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
+                                                            <button class="col-xs-5 " style="width:80px;height:35px;" id="yellow"
+                                                              ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 50 && item['RELEASE'].actual/item['RELEASE'].total*100 < 75"
+                                                              type="button" name="button">
+                                                              {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
+                                                            <button class="col-xs-5 " style="width:80px;height:35px;" id="redColor"
+                                                              ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 < 50" type="button"
+                                                              name="button">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
+                                                            <button class="col-xs-5 " style="width:80px;height:35px;cursor:default;"
+                                                              ng-if="!item['RELEASE'].total" type="button" name="button">NA</button>
+                                                          </td>
+                            
+                                                        </tr>
+                                                      </tbody>
+                                                    </table>
+                                                  </div>
+                                                <!-- </span> -->
+                                              </h5>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </uib-accordion>
+                                  <h5 style="margin-left:-10px">
+                                      <span style="color:#ffffff;" class="glyphicon glyphicon-backward" ng-click="getRecentActivity(pre)"
+                                        data-toggle="tooltip" title="Go To Previous Activity!"></span>
+                                      <span style="color:#ffffff;" class="glyphicon glyphicon-chevron-left"
+                                        ng-click="getDate(pre)"></span>
+                                      <span style="margin-left:10px;margin-right:10px;">{{date|date : "dd-MM-yyyy"}}</span>
+                                      <span style="color:#ffffff;" class="glyphicon glyphicon-chevron-right"
+                                        ng-click="getDate(next)"></span>
+                                      <span style="color:#ffffff;" class="glyphicon glyphicon-forward" ng-click="getRecentActivity(next)"
+                                        data-toggle="tooltip" title="Go To Next Activity!"></span>
+                                      <span style="color:#ffffff;left:16px;margin-top:1px;"
+                                        class="glyphicon glyphicon-calendar pull-right" ng-click="visible=!visible;">
+                                        <div ng-class="{'is-visible':visible}" class="menu">
+                                          <table class="table-responsive table table-bordered sidePanelTable" style="width:300px;">
+                                            <thead>
+                                              <tr>
+                                                <td style="color:#ffffff !important;" style="width:20px">DATE</td>
+                                                <td style="width:20px">
+                                                  <button type="button" name="button" class="col-xs-5"
+                                                    style="margin: 0px 9px 0px -1px;width:80px;height:70px;color:black;background-color:#ffe000;">Total
+                                                    Release (%)</button>
+                  
+                                                </td>
+                  
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              <tr ng-repeat="(key,item) in historyData" ng-if="$index < 15">
+                                                <td class="col-xs-3" style="background-color: #8e1921;"><a
+                                                    ng-click="getDateData(key)">{{key| date :'d-MMM-yy'}}</a></td>
+                                                <td class="col-xs-2">
+                                                  <button class="col-xs-5 " style="width:80px;height:35px;" id="greenColor"
+                                                    ng-if="item['RELEASE'].actual/item['RELEASE'].total*100==100" type="button"
+                                                    name="button"
+                                                    class="btn btn-danger">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}
+                                                    &#10004;</button>
+                                                  <button class="col-xs-5 " style="width:80px;height:35px;" id="lightGreen"
+                                                    ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 75 && item['RELEASE'].actual/item['RELEASE'].total*100 != 100"
+                                                    type="button" name="button">
+                                                    {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
+                                                  <button class="col-xs-5 " style="width:80px;height:35px;" id="yellow"
+                                                    ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 50 && item['RELEASE'].actual/item['RELEASE'].total*100 < 75"
+                                                    type="button" name="button">
+                                                    {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
+                                                  <button class="col-xs-5 " style="width:80px;height:35px;" id="redColor"
+                                                    ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 < 50" type="button"
+                                                    name="button">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
+                                                  <button class="col-xs-5 " style="width:80px;height:35px;cursor:default;"
+                                                    ng-if="!item['RELEASE'].total" type="button" name="button">NA</button>
+                                                </td>
+                  
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </span>
+                                    </h5>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                   <div class="row">
                     <div class="col-xlg-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 dashboard-side-label">
                       <h4 style="margin-left:140px;">LEAD COUNT </h4>
@@ -150,6 +241,7 @@
                       </div>
                     </div>
                   </div>
+                 
                   <!-- start lead details -->
                   <div ng-hide="leadCampaignTable">
                     <div class="campaigndetailtable">
@@ -241,6 +333,68 @@
                       </table>
                     </div>
                   </div>
+                  </div>
+                 
+                </div>
+                <div ng-if="decisionPendingTab">
+                    <div class="table-responsive">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>Select Multiple</th>
+                              <th>Entity Name</th>
+                              <th>Type of Entity</th>
+                              <th>Flat count / Primary Count</th>
+                              <th>Area</th>
+                              <th>City</th>
+                              <th>Action</th>
+                            </tr>
+                            <!-- <tr colspan="9">
+                              <td></td>
+                            </tr> -->
+                          </thead>
+                          <tbody>
+                            <!-- <tr
+                              dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index "> -->
+                            <tr>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>1</td>
+                              <td>1</td>
+                             <td></td>
+                             <td></td>
+                             <td></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                              </tr>
+                              <tr>
+                                  <td>1</td>
+                                  <td>1</td>
+                                  <td>1</td>
+                                  <td>1</td>
+                                 <td></td>
+                                 <td></td>
+                                 <td></td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                   <td></td>
+                                   <td></td>
+                                   <td></td>
+                                  </tr>
+                          </tbody>
+                        </table>
+                      </div>
                 </div>
               </uib-tab>
 
@@ -1250,7 +1404,7 @@
           <!--Payment start -->
           <uib-tab id="uib-tabs-width" ng-click="viewLicenceDetail()" index="4">
             <uib-tab-heading>
-              <h5>Payment</h5>
+              <h5>Licenses & Payment</h5>
             </uib-tab-heading>
             <div class="col-md-12">
               <ul class="licence_detail_bx">
@@ -1263,21 +1417,21 @@
                 <div class="panel-title box_detail">
                   <h4>Company Details:</h4>
                   <p>Company Name- <span
-                      ng-if="viewLicenceDetailData.companydetail.name">{{viewLicenceDetailData.companydetail.name}}</span>
-                    <span ng-if="!viewLicenceDetailData.companydetail.name">NA</span>
+                      ng-if="viewLicenceDetailData.companydetail.company">{{viewLicenceDetailData.companydetail.company}}</span>
+                    <span ng-if="!viewLicenceDetailData.companydetail.company">NA</span>
                   </p>
                   <p>Website URL- <span
-                      ng-if="viewLicenceDetailData.companydetail.url">{{viewLicenceDetailData.companydetail.url}}</span>
-                    <span ng-if="!viewLicenceDetailData.companydetail.url">NA</span></p>
+                      ng-if="viewLicenceDetailData.companydetail.website_url">{{viewLicenceDetailData.companydetail.website_url}}</span>
+                    <span ng-if="!viewLicenceDetailData.companydetail.website_url">NA</span></p>
                   <p>Contact Number- <span
-                      ng-if="viewLicenceDetailData.companydetail.phone">{{viewLicenceDetailData.companydetail.phone}}</span>
-                    <span ng-if="!viewLicenceDetailData.companydetail.phone">NA</span></p>
+                      ng-if="viewLicenceDetailData.companydetail.contact_number">{{viewLicenceDetailData.companydetail.contact_number}}</span>
+                    <span ng-if="!viewLicenceDetailData.companydetail.contact_number">NA</span></p>
                   <p>GSTIN Number- <span
-                      ng-if="viewLicenceDetailData.companydetail.gstin">{{viewLicenceDetailData.companydetail.gstin}}</span>
-                    <span ng-if="!viewLicenceDetailData.companydetail.gstin">NA</span></p>
+                      ng-if="viewLicenceDetailData.companydetail.gstin_number">{{viewLicenceDetailData.companydetail.gstin_number}}</span>
+                    <span ng-if="!viewLicenceDetailData.companydetail.gstin_number">NA</span></p>
                   <p>HQ Address- <span
-                      ng-if="viewLicenceDetailData.companydetail.address">{{viewLicenceDetailData.companydetail.address}}</span>
-                    <span ng-if="!viewLicenceDetailData.companydetail.address">NA</span></p>
+                      ng-if="viewLicenceDetailData.companydetail.registered_address">{{viewLicenceDetailData.companydetail.registered_address}}</span>
+                    <span ng-if="!viewLicenceDetailData.companydetail.registered_address">NA</span></p>
                   <p>City- <span
                       ng-if="viewLicenceDetailData.companydetail.city">{{viewLicenceDetailData.companydetail.city}}</span>
                     <span ng-if="!viewLicenceDetailData.companydetail.city">NA</span></p>
@@ -1306,7 +1460,7 @@
                   <p>Phone Number-<span
                       ng-if="viewLicenceDetailData.relationship_manager.phone_number">{{viewLicenceDetailData.relationship_manager.phone_number}}</span>
                     <span ng-if="!viewLicenceDetailData.relationship_manager.phone_number">NA</span></p>
-                  <button data-target="#relationshipManagerDetailsModal" data-toggle="modal">Edit</button>
+                  <!-- <button data-target="#relationshipManagerDetailsModal" data-toggle="modal">Edit</button> -->
                 </div>
               </div>
               <div class="col-md-6" style="clear: both;">
@@ -1354,12 +1508,16 @@
                         <tbody>
                           <!-- <tr
                             dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index "> -->
-                          <tr>
-                            <td>{{$index + 1}}</td>
+                          <tr ng-if="paymentDetailsData.paymentdetail.length >0" ng-repeat="payment in paymentDetailsData.paymentdetail">
+                            <td></td>
                            <td></td>
                            <td></td>
                            <td></td>
                           </tr>
+                          <div ng-if="paymentDetailsData.paymentdetail.length  == 0">
+                            Record not Found.
+                          </div>
+
                         </tbody>
                       </table>
                     </div>
@@ -1380,19 +1538,19 @@
                         <div class="col-md-12" style="margin-top: 10px">
                           <lable> Company Name : </lable>
                           <input type="text" placeholder="Name" class="form-control" name="company_name" id="name_id" "
-                                  ng-model=" viewLicenceDetailData.companydetail.name" required>
+                                  ng-model="viewLicenceDetailData.companydetail.company" >
                         </div>
                         <div class="col-md-12" style="margin-top: 10px">
                           <lable> Website URL : </lable>
                           <input type="text" placeholder="Website URL" class="form-control" name="website_url"
                             id="website_url_id" "
-                                  ng-model=" viewLicenceDetailData.companydetail.name">
+                                  ng-model="viewLicenceDetailData.companydetail.website_url">
                         </div>
                         <div class="col-md-12" style="margin-top: 10px">
                           <lable> Contact Number : </lable>
                           <input type="text" ng-pattern="/^[0-9]{6,9}$/" placeholder="Contact Number"
                             class="form-control" name="contact_number" id="contact_number_id" "
-                                  ng-model=" viewLicenceDetailData.companydetail.phone">
+                                  ng-model="viewLicenceDetailData.companydetail.contact_number">
                           <div ng-show="myForm.contact_number.$error.pattern" class="error" style="font-size:12px;">
                             Phone number Invalid</div>
                         </div>
@@ -1400,42 +1558,42 @@
                           <lable> GSTIN Number : </lable>
                           <input type="text" placeholder="GSTIN Number" class="form-control" name="gst_number"
                             id="gst_number_id" "
-                                  ng-model=" viewLicenceDetailData.companydetail.gstin">
+                                  ng-model="viewLicenceDetailData.companydetail.gstin_number">
                         </div>
                         <div>
                           <lable> HQ Address : </lable>
                           <input type="text" placeholder="HQ Address" class="form-control" name="address"
                             id="address_id" "
-                                  ng-model=" viewLicenceDetailData.companydetail.address">
+                                  ng-model="viewLicenceDetailData.companydetail.registered_address">
                         </div>
                         <div>
                           <lable> City : </lable>
                           <input type="text" placeholder="City" class="form-control" name="city" id="city_id" "
-                                  ng-model=" viewLicenceDetailData.companydetail.city">
+                                  ng-model="viewLicenceDetailData.companydetail.city">
                         </div>
                         <div>
                           <lable> PIN Code : </lable>
                           <input type="text" placeholder="PIN Code" class="form-control" name="pin_code"
                             id="pin_code_id" "
-                                  ng-model=" viewLicenceDetailData.companydetail.pin_code">
+                                  ng-model="viewLicenceDetailData.companydetail.pin_code">
                         </div>
                         <div>
                           <lable> Billing Number : </lable>
                           <input type="text" placeholder="Billing Number" class="form-control" name="billing_number"
                             id="billing_number_id" "
-                                  ng-model=" viewLicenceDetailData.companydetail.billing_address">
+                                  ng-model="viewLicenceDetailData.companydetail.billing_address">
                         </div>
                         <div>
                           <lable> PAN : </lable>
                           <input type="text" placeholder="PAN" class="form-control" name="pan" id="pan_id" "
-                                  ng-model=" viewLicenceDetailData.companydetail.pan_number">
+                                  ng-model="viewLicenceDetailData.companydetail.pan_number">
                         </div>
 
-                        <div>
+                        <!-- <div>
                           <button class="btn btn-danger" ng-disabled="!myForm.$valid"
                             ng-click="updateCompanyDetails()">Save</button>
-                        </div>
-                        <button type="submit" class="smallBtn">Update Retail Shop</button>
+                        </div> -->
+                        <button type="submit" class="smallBtn">Update</button>
                       </form>
                     </div>
                   </div>
@@ -1456,20 +1614,15 @@
                         name="relationshipManagerDetailsForm">
                         <div class="col-md-12" style="margin-top: 10px">
                           <lable> Name : </lable>
-                          <input type="text" placeholder="Name" class="form-control" name="company_name" id="name_id" "
-                                  ng-model=" viewLicenceDetailData.relationship_manager.name" required>
+                          <input type="text" placeholder="Name" class="form-control" name="company_name" id="relationship_name_id" "
+                                  ng-model="viewLicenceDetailData.relationship_manager.name" required>
                         </div>
-                        <div class="col-md-12" style="margin-top: 10px">
-                          <lable> Email : </lable>
-                          <input type="text" placeholder="Website URL" class="form-control" name="website_url"
-                            id="website_url_id" "
-                                  ng-model=" viewLicenceDetailData.relationship_manager.name">
-                        </div>
+                  
 
                         <div class="col-md-12" style="margin-top: 10px">
                           <lable> Email : </lable>
                           <input type="text" placeholder="Email" name="email_name" class="form-control"
-                            id="email_id_{{$index}}" ng-model="viewLicenceDetailData.relationship_manager.email"
+                            id="relationship_email_id" ng-model="viewLicenceDetailData.relationship_manager.email"
                             ng-pattern="/^[a-zA-Z0-9]+[.]?[_a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+$/">
                           <div ng-show="relationshipManagerDetailsForm.email_name.$error.pattern" class="error" style="font-size:12px;">
                             Email Invalid</div>
@@ -1477,8 +1630,8 @@
                         <div class="col-md-12" style="margin-top: 10px">
                           <lable> Phone Number : </lable>
                           <input type="text" ng-pattern="/^[0-9]{10}$/" placeholder="Phone Number"
-                            class="form-control" name="contact_number" id="contact_number_id" "
-                                  ng-model=" viewLicenceDetailData.relationship_manager.phone_number">
+                            class="form-control" name="contact_number" id="contacts_number_id" "
+                                  ng-model="viewLicenceDetailData.relationship_manager.phone_number">
                           <div ng-show="relationshipManagerDetailsForm.contact_number.$error.pattern" class="error"
                             style="font-size:12px;">Phone Number Invalid</div>
                         </div>
@@ -1504,19 +1657,19 @@
                           <lable> First Name : </lable>
                           <input type="text" placeholder="First Name" class="form-control" name="first_name"
                             id="first_name_id" "
-                                  ng-model=" viewLicenceDetailData.mydetail.first_name" required>
+                                  ng-model="viewLicenceDetailData.mydetail.first_name">
                         </div>
 
                         <div class="col-md-12" style="margin-top: 10px">
                           <lable> Last Name : </lable>
                           <input type="text" placeholder="Last Name" class="form-control" name="last_name"
                             id="last_name_id" "
-                                   ng-model=" viewLicenceDetailData.mydetail.last_name" required>
+                                   ng-model="viewLicenceDetailData.mydetail.last_name">
                         </div>
                         <div class="col-md-12" style="margin-top: 10px">
                           <lable> Email : </lable>
                           <input type="text" placeholder="Email" name="email_name" class="form-control"
-                            id="email_id_{{$index}}" ng-model="viewLicenceDetailData.mydetail.email"
+                            id="my_email_id" ng-model="viewLicenceDetailData.mydetail.email"
                             ng-pattern="/^[a-zA-Z0-9]+[.]?[_a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+$/">
                           <div ng-show="myDetailsForm.email_name.$error.pattern" class="error" style="font-size:12px;">
                             Email Invalid</div>
@@ -1524,8 +1677,8 @@
                         <div class="col-md-12" style="margin-top: 10px">
                           <lable> Contact Number : </lable>
                           <input type="text" ng-pattern="/^[0-9]{10}$/" placeholder="Contact Number"
-                            class="form-control" name="contact_number" id="contact_number_id" "
-                                  ng-model=" viewLicenceDetailData.mydetail.mobile">
+                            class="form-control" name="contact_number" id="my_contact_number_id" "
+                                  ng-model="viewLicenceDetailData.mydetail.mobile">
                           <div ng-show="myDetailsForm.contact_number.$error.pattern" class="error"
                             style="font-size:12px;">Contact Number Invalid</div>
                         </div>
@@ -1533,7 +1686,7 @@
                           <lable> Designation : </lable>
                           <input type="text" placeholder="Designation" class="form-control" name="designation"
                             id="designation_id" "
-                                  ng-model=" viewLicenceDetailData.mydetail.designation">
+                                  ng-model="viewLicenceDetailData.mydetail.designation">
                         </div>
 
                         <button type="submit" class="smallBtn">Update</button>
