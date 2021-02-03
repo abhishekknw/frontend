@@ -260,7 +260,7 @@
                                 <th>Index</th>
                                 <th>Campaign Name</th>
                                 <th>Total purchased</th>
-                                <th>Total Available</th>
+                                <th>Total Availabel</th>
                               </tr>
                             </thead>
 
@@ -1535,59 +1535,95 @@
                     <hr />
                     <div class="modal-body">
                       <form role="form" class="form-inline" ng-submit="updateCompanyDetails()" name="myForm">
-                        <div class="col-md-12" style="margin-top: 10px">
-                          <lable> Company Name : </lable>
-                          <input type="text" placeholder="Name" class="form-control" name="company_name" id="name_id" "
-                                  ng-model="viewLicenceDetailData.companydetail.company" >
+                        <div class="row">
+                        <div class="col-md-4" style="margin-top: 10px">
+                          <label> Company Name : </label>
+                            </div>
+                        <div class="col-md-8" style="margin-top: 10px">
+                          <input type="text" placeholder="Name" class="form-control" name="company_name" id="name_id" 
+                                  ng-model="viewLicenceDetailData.companydetail.company">
                         </div>
-                        <div class="col-md-12" style="margin-top: 10px">
-                          <lable> Website URL : </lable>
+                        </div>
+                        <div class="row">
+                        <div class="col-md-4" style="margin-top: 10px">
+                          <label> Website URL : </label>
+                            </div>
+                        <div class="col-md-8" style="margin-top: 10px">
                           <input type="text" placeholder="Website URL" class="form-control" name="website_url"
-                            id="website_url_id" "
+                            id="website_url_id"
                                   ng-model="viewLicenceDetailData.companydetail.website_url">
                         </div>
-                        <div class="col-md-12" style="margin-top: 10px">
-                          <lable> Contact Number : </lable>
+                          </div>
+                        <div class="row">
+                        <div class="col-md-4" style="margin-top: 10px">
+                          <label> Contact Number : </label>
+                            </div>
+                        <div class="col-md-8" style="margin-top: 10px">
                           <input type="text" ng-pattern="/^[0-9]{6,9}$/" placeholder="Contact Number"
-                            class="form-control" name="contact_number" id="contact_number_id" "
+                            class="form-control" name="contact_number" id="contact_number_id" 
                                   ng-model="viewLicenceDetailData.companydetail.contact_number">
                           <div ng-show="myForm.contact_number.$error.pattern" class="error" style="font-size:12px;">
                             Phone number Invalid</div>
                         </div>
-                        <div>
-                          <lable> GSTIN Number : </lable>
+                          </div>
+                        <div class="row">
+                        <div class="col-md-4" style="margin-top: 10px">
+                          <label> GSTIN Number : </label>
+                            </div>
+                        <div class="col-md-8" style="margin-top: 10px">
                           <input type="text" placeholder="GSTIN Number" class="form-control" name="gst_number"
-                            id="gst_number_id" "
+                            id="gst_number_id" 
                                   ng-model="viewLicenceDetailData.companydetail.gstin_number">
                         </div>
-                        <div>
-                          <lable> HQ Address : </lable>
+                          </div>
+                        <div class="row">
+                        <div class="col-md-4" style="margin-top: 10px">
+                          <label> HQ Address : </label>
+                            </div>
+                        <div class="col-md-8" style="margin-top: 10px">
                           <input type="text" placeholder="HQ Address" class="form-control" name="address"
-                            id="address_id" "
+                            id="address_id"
                                   ng-model="viewLicenceDetailData.companydetail.registered_address">
                         </div>
-                        <div>
-                          <lable> City : </lable>
-                          <input type="text" placeholder="City" class="form-control" name="city" id="city_id" "
+                          </div>
+                        <div class="row">
+                        <div class="col-md-4" style="margin-top: 10px">
+                          <label> City : </label>
+                            </div>
+                        <div class="col-md-8" style="margin-top: 10px">
+                          <input type="text" placeholder="City" class="form-control" name="city" id="city_id" 
                                   ng-model="viewLicenceDetailData.companydetail.city">
                         </div>
-                        <div>
-                          <lable> PIN Code : </lable>
+                          </div>
+                        <div class="row">
+                        <div class="col-md-4" style="margin-top: 10px">
+                          <label> PIN Code : </label>
+                            </div>
+                        <div class="col-md-8" style="margin-top: 10px">
                           <input type="text" placeholder="PIN Code" class="form-control" name="pin_code"
-                            id="pin_code_id" "
+                            id="pin_code_id" 
                                   ng-model="viewLicenceDetailData.companydetail.pin_code">
                         </div>
-                        <div>
-                          <lable> Billing Number : </lable>
+                          </div>
+                        <div class="row">
+                        <div class="col-md-4" style="margin-top: 10px">
+                          <label> Billing Number : </label>
+                            </div>
+                        <div class="col-md-8" style="margin-top: 10px">
                           <input type="text" placeholder="Billing Number" class="form-control" name="billing_number"
-                            id="billing_number_id" "
+                            id="billing_number_id" 
                                   ng-model="viewLicenceDetailData.companydetail.billing_address">
                         </div>
-                        <div>
-                          <lable> PAN : </lable>
-                          <input type="text" placeholder="PAN" class="form-control" name="pan" id="pan_id" "
+                          </div>
+                       <div class="row">
+                        <div class="col-md-4" style="margin-top: 10px">
+                          <label> PAN : </label>
+                            </div>
+                        <div class="col-md-8" style="margin-top: 10px">
+                          <input type="text" placeholder="PAN" class="form-control" name="pan" id="pan_id" 
                                   ng-model="viewLicenceDetailData.companydetail.pan_number">
                         </div>
+                          </div>
 
                         <!-- <div>
                           <button class="btn btn-danger" ng-disabled="!myForm.$valid"
@@ -1613,14 +1649,14 @@
                       <form role="form" class="form-inline" ng-submit="updateRelationshipManagerDetails()"
                         name="relationshipManagerDetailsForm">
                         <div class="col-md-12" style="margin-top: 10px">
-                          <lable> Name : </lable>
-                          <input type="text" placeholder="Name" class="form-control" name="company_name" id="relationship_name_id" "
+                          <label> Name : </label>
+                          <input type="text" placeholder="Name" class="form-control" name="company_name" id="relationship_name_id"
                                   ng-model="viewLicenceDetailData.relationship_manager.name" required>
                         </div>
                   
 
                         <div class="col-md-12" style="margin-top: 10px">
-                          <lable> Email : </lable>
+                          <label> Email : </label>
                           <input type="text" placeholder="Email" name="email_name" class="form-control"
                             id="relationship_email_id" ng-model="viewLicenceDetailData.relationship_manager.email"
                             ng-pattern="/^[a-zA-Z0-9]+[.]?[_a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+$/">
@@ -1628,9 +1664,9 @@
                             Email Invalid</div>
                         </div>
                         <div class="col-md-12" style="margin-top: 10px">
-                          <lable> Phone Number : </lable>
+                          <label> Phone Number : </label>
                           <input type="text" ng-pattern="/^[0-9]{10}$/" placeholder="Phone Number"
-                            class="form-control" name="contact_number" id="contacts_number_id" "
+                            class="form-control" name="contact_number" id="contacts_number_id" 
                                   ng-model="viewLicenceDetailData.relationship_manager.phone_number">
                           <div ng-show="relationshipManagerDetailsForm.contact_number.$error.pattern" class="error"
                             style="font-size:12px;">Phone Number Invalid</div>
@@ -1653,42 +1689,60 @@
                     <hr />
                     <div class="modal-body">
                       <form role="form" class="form-inline" ng-submit="updateMyDetails()" name="myDetailsForm">
-                        <div class="col-md-12" style="margin-top: 10px">
-                          <lable> First Name : </lable>
+                        <div class="row">
+                        <div class="col-md-4" style="margin-top: 10px">
+                          <label> First Name : </label>
+                            </div>
+                        <div class="col-md-8" style="margin-top: 10px">
                           <input type="text" placeholder="First Name" class="form-control" name="first_name"
-                            id="first_name_id" "
+                            id="first_name_id" 
                                   ng-model="viewLicenceDetailData.mydetail.first_name">
                         </div>
-
-                        <div class="col-md-12" style="margin-top: 10px">
-                          <lable> Last Name : </lable>
+                          </div>
+                        <div class="row">
+                        <div class="col-md-4" style="margin-top: 10px">
+                          <label> Last Name : </label>
+                        </div>
+                        <div class="col-md-8" style="margin-top: 10px">
                           <input type="text" placeholder="Last Name" class="form-control" name="last_name"
-                            id="last_name_id" "
+                            id="last_name_id" 
                                    ng-model="viewLicenceDetailData.mydetail.last_name">
                         </div>
-                        <div class="col-md-12" style="margin-top: 10px">
-                          <lable> Email : </lable>
+                          </div>
+                        <div class="row">
+                        <div class="col-md-4" style="margin-top: 10px">
+                          <label> Email : </label>
+                            </div>
+                        <div class="col-md-8" style="margin-top: 10px">
                           <input type="text" placeholder="Email" name="email_name" class="form-control"
                             id="my_email_id" ng-model="viewLicenceDetailData.mydetail.email"
                             ng-pattern="/^[a-zA-Z0-9]+[.]?[_a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+$/">
                           <div ng-show="myDetailsForm.email_name.$error.pattern" class="error" style="font-size:12px;">
                             Email Invalid</div>
                         </div>
-                        <div class="col-md-12" style="margin-top: 10px">
-                          <lable> Contact Number : </lable>
+                          </div>
+                        <div class="row">
+                        <div class="col-md-4" style="margin-top: 10px">
+                          <label> Contact Number : </label>
+                            </div>
+                            <div class="col-md-8" style="margin-top: 10px">
                           <input type="text" ng-pattern="/^[0-9]{10}$/" placeholder="Contact Number"
-                            class="form-control" name="contact_number" id="my_contact_number_id" "
+                            class="form-control" name="contact_number" id="my_contact_number_id" 
                                   ng-model="viewLicenceDetailData.mydetail.mobile">
                           <div ng-show="myDetailsForm.contact_number.$error.pattern" class="error"
                             style="font-size:12px;">Contact Number Invalid</div>
                         </div>
-                        <div>
-                          <lable> Designation : </lable>
+                          </div>
+                        <div class="row">
+                        <div class="col-md-4" style="margin-top: 10px">
+                          <label> Designation : </label>
+                            </div>
+                            <div class="col-md-8" style="margin-top: 10px">
                           <input type="text" placeholder="Designation" class="form-control" name="designation"
-                            id="designation_id" "
+                            id="designation_id" 
                                   ng-model="viewLicenceDetailData.mydetail.designation">
                         </div>
-
+                          </div>
                         <button type="submit" class="smallBtn">Update</button>
                       </form>
                     </div>
@@ -2125,7 +2179,7 @@
                       <div class="panel-heading content-title">
                         <h4 style="text-align: center"> Leads By Date </h4>
                       </div>
-                      <div class="col-md-12" ng-scrollable>
+                      <div class="col-md-12" ng-scrollabel>
                         <select class="form-control" ng-change="sortData('date_summary_graph_data',sortModel)"
                           ng-model="sortModel" print-remove>
                           <option value="" disabled>Select For Sorting</option>
