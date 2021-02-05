@@ -2,8 +2,8 @@
 
 
 angular.module('catalogueApp')
-  .factory('B2BDashboardService', ['machadaloHttp', '$stateParams', '$rootScope', '$routeParams', '$location', '$http',
-    function (machadaloHttp, $stateParams, $scope, $rootScope, $routeParams, $location, $http) {
+  .factory('B2BDashboardService', ['machadaloHttp', '$stateParams','$window', '$rootScope', '$routeParams', '$location', '$http',
+    function (machadaloHttp, $stateParams, $scope, $rootScope,$window, $routeParams, $location, $http) {
 
       var url_base = 'v0/ui/website/';
       var url_base_proposal = 'v0/ui/proposal/';
@@ -479,6 +479,31 @@ angular.module('catalogueApp')
       DashboardService.viewLicenceDetail = function () {
         var url = url_root + "b2b/licence-details/";
         return machadaloHttp.get(url);
+      }
+
+      DashboardService.updateCompanyDetails = function (data) {
+        var url = url_root + "b2b/licence-details/";
+        return machadaloHttp.put(url,data);
+      }
+
+      DashboardService.updateMyDetails = function (data) {
+         var url = url_base_user + "user/" + data.id + "/";
+        return machadaloHttp.put(url,data);
+      }
+
+      DashboardService.paymentDetails = function () {
+        var url = url_root + "b2b/payment-details/";
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.leadDecisionPanding = function () {
+        var url = url_root + "b2b/lead-decision-panding/";
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.acceptDeclineDecisionPanding = function (data) {
+        var url = url_root + "b2b/update-client-decision-status/";
+        return machadaloHttp.post(url, data);
       }
 
       return DashboardService;

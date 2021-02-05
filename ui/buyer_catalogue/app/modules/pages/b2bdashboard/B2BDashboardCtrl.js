@@ -243,12 +243,9 @@
       }
 
 
-
-
      
       //lead code start here
       $scope.leadCountByDate = function (date) {
-       
         if(!date){
           var date = new Date();
           date = commonDataShare.formatDate(date);
@@ -542,11 +539,34 @@
         } else {
           $scope.licenceTab = false;
           $scope.paymentTab = true;
+          $scope.paymentDetails();
         }
       }
 
+      $scope.decisionPendingTab = true;
+      $scope.changeLeadTab = function(value){
+        if(value == 'decisionPending'){
+          $scope.decisionPendingTab = true;
+          $scope.newLeadsTab = false;
+         $scope.leadDecisionPanding();
+        } else {
+          $scope.decisionPendingTab = false;
+          $scope.newLeadsTab = true;
+          $scope.leadCountByDate();
+        }
+      }
+
+
       $scope.updateCompanyDetails = function(){
-        console.log('++++++++++++++++++++++++++++++++++++',$scope.viewLicenceDetailData)
+        var Request = $scope.viewLicenceDetailData.companydetail;
+        B2BDashboardService.updateCompanyDetails(Request)
+        .then(function onSuccess(response) {
+          if(response && response.data && response.data.data && response.data.data.data){
+            swal(constants.name, response.data.data.data, constants.error);
+          } else{
+            swal(constants.name, constants.updateData_success, constants.success);
+          }
+        });
       }
 
       $scope.updateRelationshipManagerDetails = function(){
@@ -554,7 +574,69 @@
       }
 
       $scope.updateMyDetails = function(){
-        console.log('++++++++++++++++++++++++++++++++++++',$scope.viewLicenceDetailData)
+        B2BDashboardService.updateMyDetails($scope.viewLicenceDetailData.mydetail)
+        .then(function onSuccess(response) {
+          if(response){
+            swal(constants.name, constants.updateData_success, constants.success);
+          }
+        });
+      }
+
+
+      $scope.paymentDetails = function () {
+        B2BDashboardService.paymentDetails()
+          .then(function onSuccess(response) {
+            $scope.paymentDetailsData = response.data.data;
+          });
+      }
+
+      $scope.leadDecisionPanding = function () {
+        B2BDashboardService.leadDecisionPanding()
+          .then(function onSuccess(response) {
+            $scope.leadDecisionPandingData = response.data.data.lead;
+          });
+      }
+      $scope.isCheck = false;
+      $scope.checkboxCheck = function () {
+        for (let i in  $scope.leadDecisionPandingData){
+          if($scope.leadDecisionPandingData[i].checkStatus){
+            $scope.isCheck = true;
+          } 
+        }
+        
+      }
+
+      $scope.acceptDeclineDecisionPanding = function (index,value){
+         let data = [{
+          "requirement_id":$scope.leadDecisionPandingData[index].requirement_id,
+          "client_status":value
+         }]
+         B2BDashboardService.acceptDeclineDecisionPanding({'data':data})
+         .then(function onSuccess(response) {
+          if(response){
+            swal(constants.name, value + " Successfully", constants.success);
+          }
+         });
+      }
+
+      $scope.acceptDeclineMultiple = function(value){
+        let data = [];
+        for (let i in  $scope.leadDecisionPandingData){
+          if($scope.leadDecisionPandingData[i].checkStatus){
+            data.push({
+              "requirement_id":$scope.leadDecisionPandingData[i].requirement_id,
+              "client_status":value
+            })
+          } 
+        }
+        if(data.length > 0){
+          B2BDashboardService.acceptDeclineDecisionPanding({'data':data})
+          .then(function onSuccess(response) {
+           if(response){
+             swal(constants.name, value + " Successfully", constants.success);
+           }
+          });
+        }
       }
 
       $scope.doughnutChartOptions = function () {
