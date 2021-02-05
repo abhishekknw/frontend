@@ -202,6 +202,16 @@ angular
       {name:'Mix', value:'mix'},
       ],
 
+      entityType:[{name:'ALL', value:'all'},
+    {name:'Residential Society', value:'RS'},
+      {name:'Corporate', value:'CP'},
+      {name:'Bus Shelter', value:'BS'},
+      {name:'Gym', value:'GY'},
+      {name:'Saloon', value:'SA'},
+      {name:'Retail Store', value:'RE'},
+     
+      ],
+
       supplierTypeCodePerformanceDetail:[
         {name:'Select Supplier Type', value:'all'},
       {name:'Residential Society', value:'RS'},
