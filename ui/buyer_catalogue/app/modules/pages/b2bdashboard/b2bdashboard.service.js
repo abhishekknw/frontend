@@ -501,6 +501,11 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
+      DashboardService.acceptDeclineDecisionPanding = function (data) {
+        var url = url_root + "b2b/update-client-decision-status/";
+        return machadaloHttp.post(url, data);
+      }
+
       return DashboardService;
 
     }]);

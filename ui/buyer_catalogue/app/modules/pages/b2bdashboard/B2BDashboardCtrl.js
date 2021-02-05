@@ -587,7 +587,6 @@
         B2BDashboardService.paymentDetails()
           .then(function onSuccess(response) {
             $scope.paymentDetailsData = response.data.data;
-            console.log('+++++++++++++99999999999999++++++++++++++',$scope.paymentDetailsData);
           });
       }
 
@@ -596,6 +595,48 @@
           .then(function onSuccess(response) {
             $scope.leadDecisionPandingData = response.data.data.lead;
           });
+      }
+      $scope.isCheck = false;
+      $scope.checkboxCheck = function () {
+        for (let i in  $scope.leadDecisionPandingData){
+          if($scope.leadDecisionPandingData[i].checkStatus){
+            $scope.isCheck = true;
+          } 
+        }
+        
+      }
+
+      $scope.acceptDeclineDecisionPanding = function (index,value){
+         let data = [{
+          "requirement_id":$scope.leadDecisionPandingData[index].requirement_id,
+          "client_status":value
+         }]
+         B2BDashboardService.acceptDeclineDecisionPanding({'data':data})
+         .then(function onSuccess(response) {
+          if(response){
+            swal(constants.name, value + " Successfully", constants.success);
+          }
+         });
+      }
+
+      $scope.acceptDeclineMultiple = function(value){
+        let data = [];
+        for (let i in  $scope.leadDecisionPandingData){
+          if($scope.leadDecisionPandingData[i].checkStatus){
+            data.push({
+              "requirement_id":$scope.leadDecisionPandingData[i].requirement_id,
+              "client_status":value
+            })
+          } 
+        }
+        if(data.length > 0){
+          B2BDashboardService.acceptDeclineDecisionPanding({'data':data})
+          .then(function onSuccess(response) {
+           if(response){
+             swal(constants.name, value + " Successfully", constants.success);
+           }
+          });
+        }
       }
 
       $scope.doughnutChartOptions = function () {

@@ -356,44 +356,29 @@
                           <tbody>
                             <!-- <tr
                               dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index "> -->
-                            <tr>
-                              <td>1</td>
-                              <td>1</td>
-                              <td>1</td>
-                              <td>1</td>
-                             <td></td>
-                             <td></td>
-                             <td></td>
+                            <tr ng-repeat = "decisionPanding in leadDecisionPandingData track by $index">
+                              <td class="alignment"> <input type="checkbox"
+                                name="checkBox" id="checkBox_id" ng-click="checkboxCheck($index)"
+                                ng-model="decisionPanding.checkStatus"></td>
+                              <td class="alignment">{{decisionPanding.entity_name}}</td>
+                              <td class="alignment">{{decisionPanding.entity_type}}</td>
+                              <td class="alignment">{{decisionPanding.primary_count}}</td>
+                              <td class="alignment">{{decisionPanding.area}}</td>
+                              <td class="alignment">{{decisionPanding.city}}</td>
+
+                              <td class="alignment">
+                                <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                                ng-click="acceptDeclineDecisionPanding($index,'Accepted')">Accept</button>
+                                <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                                ng-click="acceptDeclineDecisionPanding($index,'Decline')">Decline</button></td>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                              </tr>
-                              <tr>
-                                  <td>1</td>
-                                  <td>1</td>
-                                  <td>1</td>
-                                  <td>1</td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                   <td></td>
-                                   <td></td>
-                                   <td></td>
-                                  </tr>
+                           
                           </tbody>
                         </table>
+                      </div>
+                      <div class="">
+                        <button class="btn btn-danger" ng-click="acceptDeclineMultiple()" ng-disabled="!isCheck">Accept</button>
+                        <button class="btn btn-danger" ng-click="acceptDeclineMultiple()" ng-disabled="!isCheck">Decline</button>
                       </div>
                 </div>
               </uib-tab>
