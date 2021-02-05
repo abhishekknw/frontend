@@ -23,6 +23,7 @@
       $scope.userInfo = $rootScope.globals.userInfo;
     
       $scope.supplierTypeCode = constants.supplierTypeCode;
+      $scope.entityTypes = constants.entityType;
       $scope.supplierTypeCodePerformanceDetail = constants.supplierTypeCodePerformanceDetail;
       $scope.selectedSupplierType = { code: "all",codes: "all" };
       $scope.dateRangeModel = {};
@@ -590,8 +591,8 @@
           });
       }
 
-      $scope.leadDecisionPanding = function () {
-        B2BDashboardService.leadDecisionPanding()
+      $scope.leadDecisionPanding = function (value) {
+        B2BDashboardService.leadDecisionPanding(value)
           .then(function onSuccess(response) {
             $scope.leadDecisionPandingData = response.data.data.lead;
           });
@@ -603,7 +604,10 @@
             $scope.isCheck = true;
           } 
         }
-        
+      }
+
+      $scope.setEntityType = function(value){
+        $scope.leadDecisionPanding(value)
       }
 
       $scope.acceptDeclineDecisionPanding = function (index,value){
@@ -614,11 +618,12 @@
          B2BDashboardService.acceptDeclineDecisionPanding({'data':data})
          .then(function onSuccess(response) {
           if(response){
+            $scope.leadDecisionPandingData.splice(index, 1); 
             swal(constants.name, value + " Successfully", constants.success);
           }
          });
       }
-
+ 
       $scope.acceptDeclineMultiple = function(value){
         let data = [];
         for (let i in  $scope.leadDecisionPandingData){
@@ -633,6 +638,11 @@
           B2BDashboardService.acceptDeclineDecisionPanding({'data':data})
           .then(function onSuccess(response) {
            if(response){
+            for (let i in  $scope.leadDecisionPandingData){
+              if($scope.leadDecisionPandingData[i].checkStatus){
+                $scope.leadDecisionPandingData.splice(i, 1); 
+              } 
+            }
              swal(constants.name, value + " Successfully", constants.success);
            }
           });

@@ -1857,6 +1857,12 @@
                         </select>
                       </td>
 
+                      <td class="alignment">
+                      <input type="number" ng-change="checkBoxAutoCheck(key,$index)" ng-model="subrequirement.lead_price" name="lead_price" class="form-control" placeholder="Price" id="price_id"
+                      style="width:150px;">
+                      <span ng-if="subrequirement.lead_price">Price (Points): {{subrequirement.lead_price}}</span>
+                      </td>
+
                       <td class="alignment" style="width:300px;">
                         <p> Submitted: {{subrequirement.created_at | date:'medium' }} </p>
                         <p> Ops Verify: {{subrequirement.varified_ops_date | date:'medium'}} </p>

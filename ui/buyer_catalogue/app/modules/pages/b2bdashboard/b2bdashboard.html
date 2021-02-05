@@ -337,6 +337,22 @@
                  
                 </div>
                 <div ng-if="decisionPendingTab">
+                  <div >
+                    <h4 class="panel-title">
+                      <!-- <select class="form-control" name="supplierType" ng-model="selectedentityType"
+                        value="supplierType.value" default-option="Select Supplier Type" ng-change="setEntityType(supplierType.value)">
+                        <option value="">Select Supplier Type</option>
+                        <option value="{{supplierType.value}}"
+                        ng-repeat="supplierType in entityType">{{supplierType.name}}</option>
+                      </select> -->
+
+                      <select ng-options="entityType.name for entityType in entityTypes" ng-model="entityType"
+                      class="form-control" ng-change="setEntityType(entityType.value)"
+                      default-option="Select Entity Type">
+                    </select>
+                    </h4>
+                  </div>
+
                     <div class="table-responsive">
                         <table class="table">
                           <thead>
@@ -344,19 +360,28 @@
                               <th>Select Multiple</th>
                               <th>Entity Name</th>
                               <th>Type of Entity</th>
-                              <th>Flat count / Primary Count</th>
+                              <th style="width:120px;" class="col-md-2" ng-click="Sort('entity_type')">Flat count / Primary Count  <a><i class="icon-sort" style="color:white;"></i></a></th>
                               <th>Area</th>
                               <th>City</th>
                               <th>Action</th>
                             </tr>
-                            <!-- <tr colspan="9">
+                            <tr colspan="9">
                               <td></td>
-                            </tr> -->
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td style="width: 100px;"><input ng-model="f.city" class="form-control" placeholder="Search">
+                                <hr>
+                              </td>
+                              
+  
+                            </tr>
                           </thead>
                           <tbody>
-                            <!-- <tr
-                              dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index "> -->
-                            <tr ng-repeat = "decisionPanding in leadDecisionPandingData track by $index">
+                            <tr
+                              dir-paginate="decisionPanding in leadDecisionPandingData| filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index ">
+                            <!-- <tr ng-repeat = "decisionPanding in leadDecisionPandingData track by $index"> -->
                               <td class="alignment"> <input type="checkbox"
                                 name="checkBox" id="checkBox_id" ng-click="checkboxCheck($index)"
                                 ng-model="decisionPanding.checkStatus"></td>
@@ -375,10 +400,14 @@
                            
                           </tbody>
                         </table>
+                      
                       </div>
-                      <div class="">
+                      <div class="" ng-if="leadDecisionPandingData.length  != 0">
                         <button class="btn btn-danger" ng-click="acceptDeclineMultiple()" ng-disabled="!isCheck">Accept</button>
                         <button class="btn btn-danger" ng-click="acceptDeclineMultiple()" ng-disabled="!isCheck">Decline</button>
+                      </div>
+                      <div style="text-align: center; margin-top: 10px; color: red;" ng-if="leadDecisionPandingData.length  == 0">
+                        Record not Found.
                       </div>
                 </div>
               </uib-tab>
@@ -1499,12 +1528,13 @@
                            <td></td>
                            <td></td>
                           </tr>
-                          <div ng-if="paymentDetailsData.paymentdetail.length  == 0">
-                            Record not Found.
-                          </div>
+                        
 
                         </tbody>
                       </table>
+                      <div style="text-align: center; margin-top: 10px;" ng-if="paymentDetailsData.paymentdetail.length  == 0">
+                        Record not Found.
+                      </div>
                     </div>
                   </div>
                 </div>

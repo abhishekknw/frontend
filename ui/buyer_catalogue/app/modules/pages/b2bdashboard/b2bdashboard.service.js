@@ -496,8 +496,11 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
-      DashboardService.leadDecisionPanding = function () {
+      DashboardService.leadDecisionPanding = function (type) {
         var url = url_root + "b2b/lead-decision-panding/";
+        if(type){
+          url = url_root + "b2b/lead-decision-panding/?type_of_entity=" + type ;
+        }
         return machadaloHttp.get(url);
       }
 

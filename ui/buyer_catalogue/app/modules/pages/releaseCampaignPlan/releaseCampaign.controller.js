@@ -179,6 +179,7 @@ angular.module('catalogueApp')
           { header: 'Comment' },
           { header: 'Lead Given by' },
           { header: 'Call Back Time' },
+          { header: 'Price' },
           { header: 'Timestamp' },
           { header: 'Action' },
         ];
