@@ -1755,8 +1755,7 @@
 
                       <td class="alignment">
                         <span style="width:150px;"
-                        
-                          ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
+                          disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
                           class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;"
                           ng-dropdown-multiselect="" options="companiesDetailData" extra-settings="settings"
                           selected-model="subrequirement.selected_preferred_company_sub_sector"
@@ -1858,7 +1857,7 @@
                       </td>
 
                       <td class="alignment">
-                      <input type="number" ng-change="checkBoxAutoCheck(key,$index)" ng-model="subrequirement.lead_price" name="lead_price" class="form-control" placeholder="Price" id="price_id"
+                      <input type="number" ng-change="checkBoxAutoCheck(key,$index)" ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'" ng-model="subrequirement.lead_price" name="lead_price" class="form-control" placeholder="Price" id="price_id"
                       style="width:150px;">
                       <span ng-if="subrequirement.lead_price">Price (Points): {{subrequirement.lead_price}}</span>
                       </td>

@@ -513,7 +513,7 @@
       $scope.getPurchasedNotPurchasedLead = function (CampaignId,campaignName,leadStatus) {
         $scope.leadPurchasedStatus = leadStatus;
         $scope.CampaignNameofLeads = campaignName;
-        B2BDashboardService.purchasedNotPurchasedLead(CampaignId)
+        B2BDashboardService.purchasedNotPurchasedLead(CampaignId,$scope.filterType)
           .then(function onSuccess(response) {
             $scope.purchasedNotPurchasedLead = response.data.data;
           });
