@@ -64,7 +64,8 @@ ul.licence_detail_bx li.active_detail {
     background: #c70202;
 }
 ul.licence_detail_bx li:nth-child(1) {
-    width: 50%;
+    width: 47%;
+    margin-right: 3%;
 }
 ul.licence_detail_bx li:nth-last-child(1) {
     margin-left: -5px;
