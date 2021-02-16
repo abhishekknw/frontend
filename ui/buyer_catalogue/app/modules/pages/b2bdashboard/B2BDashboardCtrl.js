@@ -24,6 +24,7 @@
     
       $scope.supplierTypeCode = constants.supplierTypeCode;
       $scope.entityTypes = constants.entityType;
+      $scope.entityType = {value:'all',name:'ALL'};
       $scope.supplierTypeCodePerformanceDetail = constants.supplierTypeCodePerformanceDetail;
       $scope.selectedSupplierType = { code: "all",codes: "all" };
       $scope.dateRangeModel = {};
@@ -513,7 +514,7 @@
       $scope.getPurchasedNotPurchasedLead = function (CampaignId,campaignName,leadStatus) {
         $scope.leadPurchasedStatus = leadStatus;
         $scope.CampaignNameofLeads = campaignName;
-        B2BDashboardService.purchasedNotPurchasedLead(CampaignId)
+        B2BDashboardService.purchasedNotPurchasedLead(CampaignId,$scope.filterType)
           .then(function onSuccess(response) {
             $scope.purchasedNotPurchasedLead = response.data.data;
           });
@@ -592,6 +593,9 @@
       }
 
       $scope.leadDecisionPanding = function (value) {
+        if(!value){
+          value = 'all'
+        }
         B2BDashboardService.leadDecisionPanding(value)
           .then(function onSuccess(response) {
             $scope.leadDecisionPandingData = response.data.data.lead;
