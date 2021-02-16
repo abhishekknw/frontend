@@ -638,20 +638,19 @@
             })
           } 
         }
-        console.log('++++++++++++++++++++',data);
-        // if(data.length > 0){
-        //   B2BDashboardService.acceptDeclineDecisionPanding({'data':data})
-        //   .then(function onSuccess(response) {
-        //    if(response){
-        //     for (let i in  $scope.leadDecisionPandingData){
-        //       if($scope.leadDecisionPandingData[i].checkStatus){
-        //         $scope.leadDecisionPandingData.splice(i, 1); 
-        //       } 
-        //     }
-        //      swal(constants.name, value + " Successfully", constants.success);
-        //    }
-        //   });
-        // }
+        if(data.length > 0){
+          B2BDashboardService.acceptDeclineDecisionPanding({'data':data})
+          .then(function onSuccess(response) {
+           if(response){
+            for (let i in  $scope.leadDecisionPandingData){
+              if($scope.leadDecisionPandingData[i].checkStatus){
+                $scope.leadDecisionPandingData.splice(i, 1); 
+              } 
+            }
+             swal(constants.name, value + " Successfully", constants.success);
+           }
+          });
+        }
       }
 
       $scope.doughnutChartOptions = function () {
