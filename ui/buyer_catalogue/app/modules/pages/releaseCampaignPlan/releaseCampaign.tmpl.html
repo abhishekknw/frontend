@@ -2245,7 +2245,7 @@
 
                       <td class="alignment">
                                    
-                                    <textarea placeholder="Comments" class="form-control" style="width:150px;"
+                                    <textarea placeholder="Comments" ng-disabled="subrequirement.varified_bd == 'yes'" class="form-control" style="width:150px;"
                                     ng-model="subrequirement.comment" ng-change="distributionBoxAutoCheck(key,$index)"  rows="4" cols="50">
                                </textarea>
                       </td>
@@ -2273,13 +2273,13 @@
 
 
                       <td class="alignment" style="width:300px;">
-                        <input type="number" ng-change="distributionBoxAutoCheck(key,$index)" ng-model="subrequirement.lead_price" name="lead_price" class="form-control" placeholder="Price" id="price_id"
+                        <input type="number" ng-disabled="subrequirement.varified_bd == 'yes'" ng-change="distributionBoxAutoCheck(key,$index)" ng-model="subrequirement.lead_price" name="lead_price" class="form-control" placeholder="Price" id="price_id"
                         style="width:150px;">
                         <span ng-if="!subrequirement.lead_price">Price (Points): ****</span>
                         <span ng-if="subrequirement.lead_price">Price (Points): {{subrequirement.lead_price}}</span>
                       </td>
                       <td class="alignment" style="width:300px;">
-                        <select class="form-control" name="hotness_lead" id="hotness_lead_id_{{$index}}"
+                        <select class="form-control" ng-disabled="subrequirement.varified_bd == 'yes'" name="hotness_lead" id="hotness_lead_id_{{$index}}"
                         ng-model="subrequirement.hotness_of_lead" ng-change="distributionBoxAutoCheck(key,$index)"
                         style="width:150px;">
                         <!-- <option value="H1" disabled>H1</option> -->
@@ -2291,7 +2291,7 @@
                       </td>
 
                       <td class="alignment" style="width:300px;">
-                        <select class="form-control" name="client_status" id="client_status_id_{{$index}}"
+                        <select class="form-control" ng-disabled="subrequirement.varified_bd == 'yes'" name="client_status" id="client_status_id_{{$index}}"
                         ng-model="subrequirement.client_status" ng-change="distributionBoxAutoCheck(key,$index)"
                         style="width:150px;">
                         <!-- <option value="H1" disabled>H1</option> -->
