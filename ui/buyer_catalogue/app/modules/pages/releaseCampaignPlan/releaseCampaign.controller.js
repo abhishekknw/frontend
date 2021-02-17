@@ -2177,6 +2177,9 @@ angular.module('catalogueApp')
                       $scope.bdrequirementDetailData[key].requirements[index].varified_bd = 'yes';
                       $scope.bdrequirementDetailData[key].requirements[index].color_class = 'green';
                       $scope.bdrequirementDetailData[key].requirements[index].varified_bd_date = new Date();   
+                      $scope.bdrequirementDetailData[key].requirements[index].verified_bd_by_obj = {
+                        first_name: response.data.data.varified_bd_by
+                      };   
                       if(response && response.data && response.data.data && response.data.data.color_code != 'null'){
                         var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
                           return el.id;

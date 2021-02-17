@@ -295,7 +295,7 @@
             <th ng-repeat="header in entryListLeadsData.headers">{{header.key_name}}</th>
             <th ng-if="views.viewleadForEdit">Action</th>
           </tr>
-           <tr ng-repeat="lead in entryListLeadsData.values | filter : query">
+           <tr ng-repeat="lead in entryListLeadsData.values | filter : query track by $index">
              <td  ng-repeat="alias in lead">{{alias.value}}</td>
              <td ng-if="views.viewleadForEdit"><button class="linkBtn" ng-click="getEditLeads(lead[0].value)">Edit</button></td>
            </tr>
