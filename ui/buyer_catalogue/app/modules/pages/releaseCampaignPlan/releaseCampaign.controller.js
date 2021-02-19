@@ -458,6 +458,7 @@ angular.module('catalogueApp')
                 // }
                 $scope.releaseDetailsData = $scope.releaseDetails.campaign.centerData;
                 var centerSuppliers = $scope.releaseDetails.campaign.centerSuppliers;
+              
 
                 if (centerSuppliers) {
 
@@ -475,6 +476,25 @@ angular.module('catalogueApp')
                       $scope.supplier_names.push({ name: 'Saloon', code: 'SA' });
                     } else if (centerSuppliers[i].supplier_type_code == 'RE') {
                       $scope.supplier_names.push({ name: 'Retail Store', code: 'RE' });
+
+                    } else if (centerSuppliers[i].supplier_type_code == 'BU') {
+                      $scope.supplier_names.push({ name: 'Bus', code: 'BU' });
+                    } else if (centerSuppliers[i].supplier_type_code == 'CO') {
+                      $scope.supplier_names.push({ name: 'Corporates', code: 'CO' });
+                    } else if (centerSuppliers[i].supplier_type_code == 'EI') {
+                      $scope.supplier_names.push({ name: 'Educational Institute', code: 'EI' });
+                    } else if (centerSuppliers[i].supplier_type_code == 'GN') {
+                      $scope.supplier_names.push({ name: 'Gantry', code: 'GN' });
+                    } else if (centerSuppliers[i].supplier_type_code == 'HL') {
+                      $scope.supplier_names.push({ name: 'Hospital', code: 'HL' });
+                    } else if (centerSuppliers[i].supplier_type_code == 'HO') {
+                      $scope.supplier_names.push({ name: 'Hording', code: 'HO' });
+                    } else if (centerSuppliers[i].supplier_type_code == 'IR') {
+                      $scope.supplier_names.push({ name: 'In-shop Retail', code: 'IR' });
+                    } else if (centerSuppliers[i].supplier_type_code == 'RC') {
+                      $scope.supplier_names.push({ name: 'Radio Channel', code: 'RC' });
+                    } else if (centerSuppliers[i].supplier_type_code == 'TV') {
+                      $scope.supplier_names.push({ name: 'TV Channel', code: 'TV' });
                     }
                   }
                   if (centerSuppliers.length == 0) {

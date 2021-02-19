@@ -451,6 +451,19 @@
                 <span ng-if="supplier.supplierCode == 'GY'">Gym</span>
                 <span ng-if="supplier.supplierCode == 'SA'">Saloon</span>
                 <span ng-if="supplier.supplierCode == 'RE'">Retail Store</span>
+
+                <span ng-if="supplier.supplierCode == 'BU'">Bus</span>
+                <span ng-if="supplier.supplierCode == 'CO'">Corporates</span>
+                <span ng-if="supplier.supplierCode == 'EI'">Educational Institute</span>
+                <span ng-if="supplier.supplierCode == 'GN'">Gantry</span>
+                <span ng-if="supplier.supplierCode == 'HL'">Hospital</span>
+                <span ng-if="supplier.supplierCode == 'HO'">Hording</span>
+                <span ng-if="supplier.supplierCode == 'IR'">In-shop Retail</span>
+                <span ng-if="supplier.supplierCode == 'RC'">Radio Channel</span>
+                <span ng-if="supplier.supplierCode == 'TV'">TV Channel</span>
+              
+                
+
               </td>
 
               <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">{{supplier.area}} <br> <span
@@ -969,6 +982,15 @@
                 <span ng-if="supplier.supplierCode == 'GY'">Gym</span>
                 <span ng-if="supplier.supplierCode == 'SA'">Saloon</span>
                 <span ng-if="supplier.supplierCode == 'RE'">Retail Store</span>
+                <span ng-if="supplier.supplierCode == 'BU'">Bus</span>
+                <span ng-if="supplier.supplierCode == 'CO'">Corporates</span>
+                <span ng-if="supplier.supplierCode == 'EI'">Educational Institute</span>
+                <span ng-if="supplier.supplierCode == 'GN'">Gantry</span>
+                <span ng-if="supplier.supplierCode == 'HL'">Hospital</span>
+                <span ng-if="supplier.supplierCode == 'HO'">Hording</span>
+                <span ng-if="supplier.supplierCode == 'IR'">In-shop Retail</span>
+                <span ng-if="supplier.supplierCode == 'RC'">Radio Channel</span>
+                <span ng-if="supplier.supplierCode == 'TV'">TV Channel</span>
               </td>
 
               <td class="" rowspan="{{getFiltersCount(supplier)}}" ng-show="$first">{{supplier.area}} <br> <span
@@ -1904,7 +1926,7 @@
                       <!-- </td> -->
 
                     <tr ng-show="detailedShow[key]" ng-repeat-end>
-                      <td colspan="15">
+                      <td colspan="17">
                         <button class="btn btn-success" id="update_{{key}}" ng-disabled="subSectorCheck || updateDisable"
                           ng-click="updateSubSector(requirement.requirements)">Update</button>
       

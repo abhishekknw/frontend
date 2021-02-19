@@ -199,6 +199,15 @@ angular
       {name:'Gym', value:'GY'},
       {name:'Saloon', value:'SA'},
       {name:'Retail Store', value:'RE'},
+      {name:'Bus', value:'BU'},
+      {name:'Corporates', value:'CO'},
+      {name:'Educational Institute', value:'EI'},
+      {name:'Gantry', value:'GN'},
+      {name:'Hospital', value:'HL'},
+      {name:'Hording', value:'HO'},
+      {name:'In-shop Retail', value:'IR'},
+      {name:'Radio Channel', value:'RC'},
+      {name:'TV Channel', value:'TV'},
       {name:'Mix', value:'mix'},
       ],
 
@@ -209,6 +218,16 @@ angular
       {name:'Gym', value:'GY'},
       {name:'Saloon', value:'SA'},
       {name:'Retail Store', value:'RE'},
+      {name:'Bus', value:'BU'},
+      {name:'Corporates', value:'CO'},
+      {name:'Educational Institute', value:'EI'},
+      {name:'Gantry', value:'GN'},
+      {name:'Hospital', value:'HL'},
+      {name:'Hording', value:'HO'},
+      {name:'In-shop Retail', value:'IR'},
+      {name:'Radio Channel', value:'RC'},
+      {name:'TV Channel', value:'TV'},
+
      
       ],
 
