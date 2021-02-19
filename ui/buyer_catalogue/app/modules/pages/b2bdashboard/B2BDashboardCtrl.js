@@ -380,6 +380,9 @@
           $scope.supplierData = response.data.data;
           if( $scope.supplierData.length > 0){
             for(let i in $scope.supplierData){
+              if($scope.supplierData[i] && $scope.supplierData[i].supplier_data && $scope.supplierData[i].supplier_data.supplier_code){
+
+              
               if($scope.supplierData[i].supplier_data.supplier_code == 'RS'){
                 $scope.supplierData[i].supplier_data.supplier_type_name = 'Residential Society';
               } else if($scope.supplierData[i].supplier_data.supplier_code == 'CP'){
@@ -392,7 +395,27 @@
                 $scope.supplierData[i].supplier_data.supplier_type_name = 'Saloon';
               } else if($scope.supplierData[i].supplier_data.supplier_code == 'RE'){
                 $scope.supplierData[i].supplier_data.supplier_type_name = 'Retail Store';
-              } 
+              
+            } else if ($scope.supplierData[i].supplier_data.supplier_code == 'BU') {
+              $scope.supplierData[i].supplier_data.supplier_type_name = 'Bus';
+            } else if ($scope.supplierData[i].supplier_data.supplier_code == 'CO') {
+              $scope.supplierData[i].supplier_data.supplier_type_name = 'Corporates';
+            } else if ($scope.supplierData[i].supplier_data.supplier_code == 'EI') {
+              $scope.supplierData[i].supplier_data.supplier_type_name = 'Educational Institute';
+            } else if ($scope.supplierData[i].supplier_data.supplier_code == 'GN') {
+              $scope.supplierData[i].supplier_data.supplier_type_name = 'Gantry';
+            } else if ($scope.supplierData[i].supplier_data.supplier_code == 'HL') {
+              $scope.supplierData[i].supplier_data.supplier_type_name = 'Hospital';
+            } else if ($scope.supplierData[i].supplier_data.supplier_code == 'HO') {
+              $scope.supplierData[i].supplier_data.supplier_type_name = 'Hording';
+            } else if ($scope.supplierData[i].supplier_data.supplier_code == 'IR') {
+              $scope.supplierData[i].supplier_data.supplier_type_name = 'In-shop Retail';
+            } else if ($scope.supplierData[i].supplier_data.supplier_code == 'RC') {
+              $scope.supplierData[i].supplier_data.supplier_type_name = 'Radio Channel';
+            } else if ($scope.supplierData[i].supplier_data.supplier_code == 'TV') {
+              $scope.supplierData[i].supplier_data.supplier_type_name = 'TV Channel';
+            } 
+          }
             }
           }
           if($scope.supplierData.length > 0){
@@ -411,6 +434,7 @@
           $scope.supplierData = response.data.data.lead_data;
           if( $scope.supplierData.length > 0){
             for(let i in $scope.supplierData){
+              if($scope.supplierData[i] && $scope.supplierData[i].supplier_data && $scope.supplierData[i].supplier_data.supplier_code){
               if($scope.supplierData[i].supplier_data.supplier_code == 'RS'){
                 $scope.supplierData[i].supplier_data.supplier_type_name = 'Residential Society';
               } else if($scope.supplierData[i].supplier_data.supplier_code == 'CP'){
@@ -424,6 +448,26 @@
               } else if($scope.supplierData[i].supplier_data.supplier_code == 'RE'){
                 $scope.supplierData[i].supplier_data.supplier_type_name = 'Retail Store';
               } 
+             else if ($scope.supplierData[i].supplier_data.supplier_code == 'BU') {
+              $scope.supplierData[i].supplier_data.supplier_type_name = 'Bus';
+            } else if ($scope.supplierData[i].supplier_data.supplier_code == 'CO') {
+              $scope.supplierData[i].supplier_data.supplier_type_name = 'Corporates';
+            } else if ($scope.supplierData[i].supplier_data.supplier_code == 'EI') {
+              $scope.supplierData[i].supplier_data.supplier_type_name = 'Educational Institute';
+            } else if ($scope.supplierData[i].supplier_data.supplier_code == 'GN') {
+              $scope.supplierData[i].supplier_data.supplier_type_name = 'Gantry';
+            } else if ($scope.supplierData[i].supplier_data.supplier_code == 'HL') {
+              $scope.supplierData[i].supplier_data.supplier_type_name = 'Hospital';
+            } else if ($scope.supplierData[i].supplier_data.supplier_code == 'HO') {
+              $scope.supplierData[i].supplier_data.supplier_type_name = 'Hording';
+            } else if ($scope.supplierData[i].supplier_data.supplier_code == 'IR') {
+              $scope.supplierData[i].supplier_data.supplier_type_name = 'In-shop Retail';
+            } else if ($scope.supplierData[i].supplier_data.supplier_code == 'RC') {
+              $scope.supplierData[i].supplier_data.supplier_type_name = 'Radio Channel';
+            } else if ($scope.supplierData[i].supplier_data.supplier_code == 'TV') {
+              $scope.supplierData[i].supplier_data.supplier_type_name = 'TV Channel';
+            }  
+          }
             }
           }
           if($scope.supplierData.length > 0){
