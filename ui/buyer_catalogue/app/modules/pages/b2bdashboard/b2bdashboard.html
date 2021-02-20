@@ -339,18 +339,20 @@
                 <div ng-if="decisionPendingTab">
                   <div >
                     <h4 class="panel-title">
-                      <!-- <select class="form-control" name="supplierType" ng-model="selectedentityType"
-                        value="supplierType.value" default-option="Select Supplier Type" ng-change="setEntityType(supplierType.value)">
-                        <option value="">Select Supplier Type</option>
-                        <option value="{{supplierType.value}}"
-                        ng-repeat="supplierType in entityType">{{supplierType.name}}</option>
-                      </select> -->
+                     
 
-                      <select ng-options="entityType.name for entityType in entityTypes" ng-model="entityType"
+                      <!-- <select ng-options="entityType.name for entityType in entityTypes" ng-model="entityType.value"
                       class="form-control" ng-change="setEntityType(entityType.value)"
-                      default-option="{{entityType.name}}">
-                      
-                    </select>
+                      default-option="{{entityType.name}}">  
+                    </select> -->
+
+                    <select class="form-control" name="supplierType" ng-model="entityType.value"
+                    value="entityType.value" ng-change="setEntityType(entityType.value)">
+                    <option value="">Select Supplier Type</option>
+                    <option value="{{entityType.value}}"
+                      ng-selected="selectedEntityType == entityType.value"
+                      ng-repeat="entityType in entityTypes">{{entityType.name}}</option>
+                  </select>
                     </h4>
                   </div>
                   <br />
@@ -959,16 +961,14 @@
                   </div> -->
                     <div class="col-md-6">
                       <h4 class="panel-title">
-                        <!-- <select class="form-control" ng-model="surveyLeadFilter" ng-change="setSurveyLeadFilter(surveyLeadFilter.value)">
+                        <!-- <select class="form-control" ng-model="surveyLeadFilter" aria-placeholder="Select Leads,Surveyed Clients" ng-change="setSurveyLeadFilter(surveyLeadFilter.value)">
                           <option value="">Select Leads,Surveyed Clients</option>
                           <option value="Survey">Survey</option>
-                          <option value=Leads">Leads</option>
+                          <option value="Leads">Leads</option>
                         </select> -->
                         <select ng-options="supplierType for supplierType in surveyLeadArray" ng-model="supplierType"
                           class="form-control" ng-change="surveyLeadFilter(supplierType)"
                           default-option="{{defaultOption}}">
-                          <!-- <option value="" ng-disabled='true'></option> -->
-                          <!-- <option value="{{supplierType}}"  ng-repeat="supplierType in surveyLeadArray">{{supplierType}}</option> -->
                         </select>
                       </h4>
                     </div>
