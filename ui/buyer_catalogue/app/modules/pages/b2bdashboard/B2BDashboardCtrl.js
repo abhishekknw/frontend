@@ -10,7 +10,7 @@
       require: 'ngModel',
       link: function(scope, elem, attrs, ctrl) {
         var defaultOptionTemplate;
-        scope.defaultOptionText = attrs.defaultOption || 'Select...';
+        scope.defaultOptionText = attrs.defaultOption || 'Select';
         defaultOptionTemplate = '<option value="" disabled selected style="display: none;">{{defaultOptionText}}</option>';
         elem.prepend($interpolate(defaultOptionTemplate)(scope));
       }
@@ -25,6 +25,7 @@
       $scope.supplierTypeCode = constants.supplierTypeCode;
       $scope.entityTypes = constants.entityType;
       $scope.entityType = {value:'all',name:'ALL'};
+      $scope.selectedEntityType = {value:'all',name:'ALL'}
       $scope.supplierTypeCodePerformanceDetail = constants.supplierTypeCodePerformanceDetail;
       $scope.selectedSupplierType = { code: "all",codes: "all" };
       $scope.dateRangeModel = {};

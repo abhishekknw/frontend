@@ -2492,6 +2492,10 @@ angular.module('catalogueApp')
           $scope.requirementDetailData[index].requirements.push({});
         }
 
+        $scope.downloadSheet = function (campaignId) {
+          $window.open(Config.APIBaseUrl + 'v0/ui/b2b/download-b2b-leads/?campaign_id=MACJITEC8F');
+        }
+
         $scope.IsVisible = false;
         $scope.updateSupplierStatus = function (value) {
           //If DIV is visible it will be hidden and vice versa.
