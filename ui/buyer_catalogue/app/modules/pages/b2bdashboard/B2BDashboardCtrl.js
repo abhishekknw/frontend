@@ -4,7 +4,7 @@
  */
 (function () {
   'use strict';
-  angular.module('catalogueApp').directive('select', function($interpolate) {
+  angular.module('catalogueApp').directive('selects', function($interpolate) {
     return {
       restrict: 'E',
       require: 'ngModel',

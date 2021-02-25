@@ -194,7 +194,7 @@ angular
     
     supplierTypeCode:[{name:'ALL', value:'all'},
     {name:'Residential Society', value:'RS'},
-      {name:'Corporate', value:'CP'},
+      {name:'Corporate Park', value:'CP'},
       {name:'Bus Shelter', value:'BS'},
       {name:'Gym', value:'GY'},
       {name:'Saloon', value:'SA'},
@@ -213,7 +213,7 @@ angular
 
       entityType:[{name:'ALL', value:'all'},
     {name:'Residential Society', value:'RS'},
-      {name:'Corporate', value:'CP'},
+      {name:'Corporate Park', value:'CP'},
       {name:'Bus Shelter', value:'BS'},
       {name:'Gym', value:'GY'},
       {name:'Saloon', value:'SA'},
@@ -234,7 +234,7 @@ angular
       supplierTypeCodePerformanceDetail:[
         {name:'Select Supplier Type', value:'all'},
       {name:'Residential Society', value:'RS'},
-        {name:'Corporate', value:'CP'},
+        {name:'Corporate Park', value:'CP'},
         {name:'Bus Shelter', value:'BS'},
         {name:'Gym', value:'GY'},
         {name:'Saloon', value:'SA'},
