@@ -140,9 +140,9 @@
 
 
 
-    <div class="table-wrapper" style="overflow-x: auto;">
+    <div class="table-wrapper" style="overflow-x: auto;" ng-if="releaseDetails.shortlisted_suppliers.length > 0">
 
-      <table class="table table-striped table-suppliers release_plan_table" data-ng-init="initTable()">
+      <table class="table table-striped table-suppliers release_plan_table" data-ng-init="initTable()" >
         <thead>
 
           <!-- <tr>
@@ -403,7 +403,8 @@
         <!-- <tbody ng-show="(!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter == 'RS') && releaseDetails.shortlisted_suppliers.length > 0"
           dir-paginate="supplier in releaseDetails.shortlisted_suppliers  | itemsPerPage: suppliersPerPage"
           total-items="totalSuppliers" current-page="pagination.current" track by "$index"> -->
-        <tbody ng-if="(selectedUser.supplier_type_filter == 'RS')"
+ 
+          <tbody ng-if="(selectedUser.supplier_type_filter == 'RS' && releaseDetails.shortlisted_suppliers.length > 0)"
           dir-paginate="supplier in releaseDetails.shortlisted_suppliers  | itemsPerPage: suppliersPerPage"
           total-items="totalSuppliers" current-page="pagination.current" track by "$index">
           <div ng-if="releaseDetails.shortlisted_suppliers.length > 0">
@@ -1543,7 +1544,8 @@
       </div>
     </div>
   </form>-->
-  <div class="panel-body">
+  <div class="panel-body" ng-if="releaseDetails.shortlisted_suppliers.length == 0"><h4 style="color: red; text-align: center;">Record not found.</h4></div>
+  <div class="panel-body" ng-if="releaseDetails.shortlisted_suppliers.length > 0">
     <span class="col-md-2 pull-left">
       <button type="button" name="button" class="btn btn-danger active notify" data-target="#viewAddPhase"
         data-toggle="modal">View
@@ -1564,7 +1566,7 @@
         Sheet</button>
     </span>
     <span class="col-md-3 pull-right">
-    <button type="button" name="button" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'" class="btn btn-danger active notify" ng-click="downloadSheet(releaseDetails.campaign.proposal_id)" >Download Leads</button>
+    <button type="button" name="button" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g' || releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'" class="btn btn-danger active notify" ng-click="downloadSheet(releaseDetails.campaign.proposal_id)" >Download Leads</button>
   </span>
     <span class="col-md-3 pull-right">
       <button class="btn btn-danger active notify" style="text-align:right" ng-click="changeLocation()">Campaign

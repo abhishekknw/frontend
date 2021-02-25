@@ -243,5 +243,10 @@
       return machadaloHttp.post(url,data);
     }
 
+    releaseCampaignService.downloadSheet = function(campaignId){
+      var url = url_base_ui + "leads/generate-campaign-hash/" + campaignId + "/";
+        return machadaloHttp.get(url);
+    }
+
     return releaseCampaignService;
 }]);

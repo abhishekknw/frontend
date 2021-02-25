@@ -380,6 +380,7 @@ angular.module('catalogueApp')
 
           releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id, newPage, data)
             .then(function onSuccess(response) {
+             
               if ($scope.master_data_status) {
                 releaseCampaignService.getCampaignReleaseDetailsHeader()
                   .then(function onSuccess(headerResponse) {
@@ -410,6 +411,7 @@ angular.module('catalogueApp')
 
               $scope.initialReleaseData = Object.assign({}, response.data.data);
               $scope.totalSuppliers = $scope.initialReleaseData.total_count;
+              
 
               for (var i = 0, l = $scope.initialReleaseData.shortlisted_suppliers.length; i < l; i += 1) {
                 $scope.initialReleaseData.shortlisted_suppliers[i].average_weekday = parseInt($scope.initialReleaseData.shortlisted_suppliers[i].average_weekday, 10);
@@ -450,7 +452,7 @@ angular.module('catalogueApp')
 
               if ($scope.initialReleaseData) {
                 $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
-  
+              
                 // if ($scope.releaseDetails.shortlisted_suppliers.length) {
                 //   for (let i in $scope.releaseDetails.shortlisted_suppliers.length) {
 
@@ -458,11 +460,18 @@ angular.module('catalogueApp')
                 // }
                 $scope.releaseDetailsData = $scope.releaseDetails.campaign.centerData;
                 var centerSuppliers = $scope.releaseDetails.campaign.centerSuppliers;
-              
+            
 
                 if (centerSuppliers) {
-
                   $scope.supplier_names = [];
+                  if($scope.releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g' || $scope.releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'){
+                    $scope.supplier_names = [{name: 'Residential Society', code: 'RS'},
+                    {name: 'Educational Institute', code: 'EI'},
+                    {name: 'Corporates', code: 'CO'},
+                    {name: 'Hospital', code: 'HL'},
+                  ]
+                  } else {
+                  
                   for (let i in centerSuppliers) {
                     if (centerSuppliers[i].supplier_type_code == 'RS') {
                       $scope.supplier_names.push({ name: 'Residential Society', code: 'RS' });
@@ -497,6 +506,8 @@ angular.module('catalogueApp')
                       $scope.supplier_names.push({ name: 'TV Channel', code: 'TV' });
                     }
                   }
+                }
+
                   if (centerSuppliers.length == 0) {
                     $scope.supplier_names.push({ name: 'ALL', code: 'ALL' });
                   }
@@ -2493,7 +2504,21 @@ angular.module('catalogueApp')
         }
 
         $scope.downloadSheet = function (campaignId) {
-          $window.open(Config.APIBaseUrl + 'v0/ui/b2b/download-b2b-leads/?campaign_id=MACJITEC8F');
+          if($scope.releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'){
+            // $window.open(Config.APIBaseUrl + 'v0/ui/leads/generate-campaign-hash/?campaign_id=' +campaignId );  
+            releaseCampaignService.downloadSheet(campaignId)
+            .then(function onSuccess(response) {
+              console.log(response);
+              if (response.data.data.one_time_hash) {
+                $window.open(Config.APIBaseUrl + 'v0/ui/leads/download-campaign-data-sheet/' + response.data.data.one_time_hash + "/", '_blank');
+              }
+            }).catch(function onError(response_data) {
+              console.log(response_data);
+            })  
+          } else {
+            $window.open(Config.APIBaseUrl + 'v0/ui/b2b/download-b2b-leads/?campaign_id=' +campaignId );
+          }
+         
         }
 
         $scope.IsVisible = false;
