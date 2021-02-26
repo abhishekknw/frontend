@@ -140,7 +140,7 @@
 
 
 
-    <div class="table-wrapper" style="overflow-x: auto;" ng-if="releaseDetails.shortlisted_suppliers.length > 0">
+    <div class="table-wrapper" style="overflow-x: auto;">
 
       <table class="table table-striped table-suppliers release_plan_table" data-ng-init="initTable()" >
         <thead>
@@ -1544,8 +1544,8 @@
       </div>
     </div>
   </form>-->
-  <div class="panel-body" ng-if="releaseDetails.shortlisted_suppliers.length == 0"><h4 style="color: red; text-align: center;">Record not found.</h4></div>
-  <div class="panel-body" ng-if="releaseDetails.shortlisted_suppliers.length > 0">
+  <!-- <div class="panel-body" ng-if="releaseDetails.shortlisted_suppliers.length == 0"><h4 style="color: red; text-align: center;">Record not found.</h4></div> -->
+  <div class="panel-body" >
     <span class="col-md-2 pull-left">
       <button type="button" name="button" class="btn btn-danger active notify" data-target="#viewAddPhase"
         data-toggle="modal">View

@@ -377,7 +377,7 @@ angular.module('catalogueApp')
                 $scope.bookingStatus = ResponseData.data.data;
               });
           }
-
+          // $scope.releaseDetails = [];
           releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id, newPage, data)
             .then(function onSuccess(response) {
              
@@ -407,7 +407,7 @@ angular.module('catalogueApp')
                 getOrganisationList();
               }
 
-             var responsedata = JSON.parse(JSON.stringify(response.data.data))
+             var responsedata = response.data.data
 
               $scope.initialReleaseData = Object.assign({}, responsedata);
               $scope.totalSuppliers = $scope.initialReleaseData.total_count;
@@ -448,11 +448,12 @@ angular.module('catalogueApp')
 
               }
 
-              $scope.releaseDetails = {};
+               $scope.releaseDetails = {};
 
               if ($scope.initialReleaseData) {
-                $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
-              
+                var iniData = $scope.initialReleaseData;
+                $scope.releaseDetails = Object.assign({}, iniData);
+               
                 // if ($scope.releaseDetails.shortlisted_suppliers.length) {
                 //   for (let i in $scope.releaseDetails.shortlisted_suppliers.length) {
 
@@ -461,9 +462,9 @@ angular.module('catalogueApp')
                 $scope.releaseDetailsData = $scope.releaseDetails.campaign.centerData;
                 var centerSuppliers = $scope.releaseDetails.campaign.centerSuppliers;
             
-
+                $scope.supplier_names = [];
                 if (centerSuppliers) {
-                  $scope.supplier_names = [];
+              
                   if($scope.releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g' || $scope.releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'){
                     $scope.supplier_names = [{name: 'Residential Society', code: 'RS'},
                     {name: 'Educational Institute', code: 'EI'},
