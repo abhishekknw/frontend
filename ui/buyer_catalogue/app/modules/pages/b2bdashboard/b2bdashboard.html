@@ -1177,9 +1177,134 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr ng-repeat="lead in purchasedNotPurchasedLead.values">
+                         
+                          <tr ng-repeat="lead in all_values">
+                           <td >{{$index + 1}}</td>
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Supplier Name']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Supplier Type']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Area']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Address']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Lat/Long']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['City']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['State']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Country']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Pin Code']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Primary Count']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Service']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Sub service']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['L1.1 Answer']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['L1.2 Answer']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['L2.1 Answer']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['L2.2 Answer']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['L3.1 Answer']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['L3.2 Answer']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Prefered Patner']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Implementation Time']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Meeting Time']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Call back time']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Comments']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Time Stamp']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Lead Status']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['H2']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['H3']}}</span>
+                            </td> 
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['H4']}}</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['H5']}}</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['H6']}}</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['dummyfild']}}</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Name']}}</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Number']}}</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Designation']}}</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Current Partner']}}</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Reasons for Dissatisfaction']}}</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Price']}}</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2">
+                              <span>{{lead['Client Status']}}</span>
+                            </td>
+                          </tr>
+                         
+                          <!-- <tr ng-repeat="lead in purchasedNotPurchasedLead.values">
+                          
                             <td ng-if="lead[0].lead_purchased == leadPurchasedStatus">{{$index + 1}}</td>
                             <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[1].value">{{lead[1].value}}</span>
+                              <span ng-if="!lead[1].value">NA</span>
+                            </td> -->
+                            <!-- <td style="width:100px;" class="col-md-2"
                               ng-if="lead[0].lead_purchased == leadPurchasedStatus">
                               <span ng-if="lead[1].value">{{lead[1].value}}</span>
                               <span ng-if="!lead[1].value">NA</span>
@@ -1374,7 +1499,7 @@
                               ng-if="lead[0].lead_purchased == leadPurchasedStatus">
                               <span ng-if="lead[39].value">{{lead[39].value}}</span>
                               <span ng-if="!lead[39].value">NA</span>
-                            </td>
+                            </td> -->
 
                     </div>
                     </tr>
