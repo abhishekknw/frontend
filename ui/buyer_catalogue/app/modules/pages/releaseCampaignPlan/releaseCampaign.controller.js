@@ -377,7 +377,7 @@ angular.module('catalogueApp')
                 $scope.bookingStatus = ResponseData.data.data;
               });
           }
-
+          // $scope.releaseDetails = [];
           releaseCampaignService.getCampaignReleaseDetails($scope.campaign_id, newPage, data)
             .then(function onSuccess(response) {
              
@@ -407,9 +407,9 @@ angular.module('catalogueApp')
                 getOrganisationList();
               }
 
+             var responsedata = response.data.data
 
-
-              $scope.initialReleaseData = Object.assign({}, response.data.data);
+              $scope.initialReleaseData = Object.assign({}, responsedata);
               $scope.totalSuppliers = $scope.initialReleaseData.total_count;
               
 
@@ -448,11 +448,12 @@ angular.module('catalogueApp')
 
               }
 
-              $scope.releaseDetails = {};
+               $scope.releaseDetails = {};
 
               if ($scope.initialReleaseData) {
-                $scope.releaseDetails = Object.assign({}, $scope.initialReleaseData);
-              
+                var iniData = $scope.initialReleaseData;
+                $scope.releaseDetails = Object.assign({}, iniData);
+               
                 // if ($scope.releaseDetails.shortlisted_suppliers.length) {
                 //   for (let i in $scope.releaseDetails.shortlisted_suppliers.length) {
 
@@ -461,9 +462,9 @@ angular.module('catalogueApp')
                 $scope.releaseDetailsData = $scope.releaseDetails.campaign.centerData;
                 var centerSuppliers = $scope.releaseDetails.campaign.centerSuppliers;
             
-
+                $scope.supplier_names = [];
                 if (centerSuppliers) {
-                  $scope.supplier_names = [];
+              
                   if($scope.releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g' || $scope.releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'){
                     $scope.supplier_names = [{name: 'Residential Society', code: 'RS'},
                     {name: 'Educational Institute', code: 'EI'},
@@ -2131,11 +2132,12 @@ angular.module('catalogueApp')
               if (confirm) {
                 releaseCampaignService.opsVerifyRequirement({ "requirement_ids": verifyId })
                   .then(function onSuccess(response) {
+                    var changedBookingPlanListcolor = true;
                     if (response && response.data.data.error) {
                       swal(constants.name, response.data.data.error, constants.error);
                     } else {
                       for (let i in verifyId) {
-                        angular.forEach($scope.requirementDetailData, function (value, key) {
+                        angular.forEach($scope.requirementDetailData, function (value, key) {                   
                           var localindex_index = $scope.requirementDetailData[key].requirements.map(function (el) {
                             return el.id;
                           }).indexOf(verifyId[i]);
@@ -2146,17 +2148,23 @@ angular.module('catalogueApp')
                             }
                             $scope.requirementDetailData[key].requirements[localindex_index].requirementCheck = false;
                             $scope.requirementDetailData[key].requirements[localindex_index].varified_ops_date = new Date();
-                            if(response && response.data && response.data.data && response.data.data.color_code != 'null'){
-                              var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
-                                return el.id;
-                              }).indexOf($scope.shortlisted_spaces_id);
-                              if (localindex_index != -1) {
-                                $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 3;
-                                  $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = 'green';
-                              }
-                            }
+                            // if(response && response.data && response.data.data && response.data.data.color_code != 'null'){
+                            //   var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+                            //     return el.id;
+                            //   }).indexOf($scope.shortlisted_spaces_id);
+                            //   if (localindex_index != -1) {
+                            //     $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 3;
+                            //       $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = 'green';
+                            //   }
+                            // }
 
                           }
+                       for(let p in $scope.requirementDetailData[key].requirements){
+                        if($scope.requirementDetailData[key].requirements[p].color_class == 'yellow'){
+                          changedBookingPlanListcolor = false;
+                        }
+                       }
+                         
 
                           var chechIfVerify = false
                           for (let j in $scope.requirementDetailData[key].requirements) {
@@ -2170,6 +2178,15 @@ angular.module('catalogueApp')
                             $scope.opsVerifyButtonDiable = true;
                           }
                         })
+                      }
+                      if(response && response.data && response.data.data && response.data.data.color_code != 'null' && changedBookingPlanListcolor){
+                        var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+                          return el.id;
+                        }).indexOf($scope.shortlisted_spaces_id);
+                        if (localindex_index != -1) {
+                          $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 3;
+                            $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = 'green';
+                        }
                       }
                       $scope.subSectorCheck = true;
                       swal(constants.name, response.data.data.message, constants.success);
