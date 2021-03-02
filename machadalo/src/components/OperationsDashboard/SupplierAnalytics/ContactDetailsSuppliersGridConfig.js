@@ -130,6 +130,16 @@ const getSupplierColumnContactDetails = () => {
       },
     },
     {
+      dataField: 'landmark',
+      text: 'Landmark',
+      sort: true,
+      width: '400px',
+      formatter: (cell, row) => {
+        const { landmark } = row;
+        return landmark || '-';
+      },
+    },
+    {
       dataField: 'contact_name',
       text: 'Contact Name',
       formatter: (cell, row) => {
