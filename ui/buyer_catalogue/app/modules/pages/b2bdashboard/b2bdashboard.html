@@ -405,6 +405,7 @@
                            
                           </tbody>
                         </table>
+                        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
                       
                       </div>
                       <div class="" ng-if="leadDecisionPandingData.length  != 0">
@@ -962,13 +963,13 @@
                     <div class="col-md-6">
                       <h4 class="panel-title">
                         <!-- <select class="form-control" ng-model="surveyLeadFilter" aria-placeholder="Select Leads,Surveyed Clients" ng-change="setSurveyLeadFilter(surveyLeadFilter.value)">
-                          <option value="">Select Leads,Surveyed Clients</option>
+                          <option ng-selected="aa" disabled='true' value="">Select Leads,Surveyed Clients</option>
                           <option value="Survey">Survey</option>
                           <option value="Leads">Leads</option>
                         </select> -->
-                        <select ng-options="supplierType for supplierType in surveyLeadArray" ng-model="supplierType"
+                        <select ng-options="supplierType for supplierType in surveyLeadArray" aria-placeholder="Select Leads,Surveyed Clients" ng-model="supplierType"
                           class="form-control" ng-change="surveyLeadFilter(supplierType)"
-                          default-option="{{defaultOption}}">
+                        >
                         </select>
                       </h4>
                     </div>
@@ -1035,7 +1036,7 @@
 
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody ng-if="leadsDataCampaigns.length > 0 ">
                           <tr
                             dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index ">
                             <td>{{$index + 1}}</td>
@@ -1096,7 +1097,11 @@
                             </td>
                           </tr>
                         </tbody>
+                       
                       </table>
+                      <div  ng-if="leadsDataCampaigns.length == 0">
+                        <h4 style="color: red; text-align: center;">Record Not Found.</h4>
+                        </div>
                     </div>
                   </div>
                   <div class="viewLeadstable" ng-if="purchasedNotPurchasedLead">
@@ -1166,7 +1171,7 @@
                       </tr>
                     </tbody>
                   </table> -->
-                      <table class="table table_content">
+                      <table class="table table_content" ng-if="!isTableHide">
                         <thead>
                           <tr>
                             <th>Index</th>
@@ -1177,7 +1182,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                         <>
+                         
                           <tr ng-if="lead_purchased == leadPurchasedStatus" ng-repeat="lead in all_values">
                            <td >{{$index + 1}}</td>
                             <td style="width:100px;" class="col-md-2">
@@ -1295,9 +1300,6 @@
                               <span>{{lead['Client Status']}}</span>
                             </td>
                           </tr>
-                         
-                        
-
                     </div>
                     </tr>
 
@@ -1529,10 +1531,10 @@
                           <label> Contact Number : </label>
                             </div>
                         <div class="col-md-8" style="margin-top: 10px">
-                          <input type="text" ng-pattern="/^[0-9]{6,9}$/" placeholder="Contact Number"
+                          <input type="text" ng-pattern="/^[0-9]{10,10}$/" maxlength="10" placeholder="Contact Number"
                             class="form-control" name="contact_number" id="contact_number_id" 
                                   ng-model="viewLicenceDetailData.companydetail.contact_number">
-                          <div ng-show="myForm.contact_number.$error.pattern" class="error" style="font-size:12px;">
+                          <div ng-show="myForm.contact_number.$error.pattern" class="error" style="font-size:12px; color: red;">
                             Phone number Invalid</div>
                         </div>
                           </div>
@@ -1639,7 +1641,7 @@
                             class="form-control" name="contact_number" id="contacts_number_id" 
                                   ng-model="viewLicenceDetailData.relationship_manager.phone_number">
                           <div ng-show="relationshipManagerDetailsForm.contact_number.$error.pattern" class="error"
-                            style="font-size:12px;">Phone Number Invalid</div>
+                            style="font-size:12px; color: red;">Phone Number Invalid</div>
                         </div>
                         <button type="submit" class="smallBtn">Update</button>
                       </form>
@@ -1696,11 +1698,11 @@
                           <label> Contact Number : </label>
                             </div>
                             <div class="col-md-8" style="margin-top: 10px">
-                          <input type="text" ng-pattern="/^[0-9]{10}$/" placeholder="Contact Number"
+                          <input type="text" ng-pattern="/^[0-9]{10}$/" maxlength="10" placeholder="Contact Number"
                             class="form-control" name="contact_number" id="my_contact_number_id" 
                                   ng-model="viewLicenceDetailData.mydetail.mobile">
                           <div ng-show="myDetailsForm.contact_number.$error.pattern" class="error"
-                            style="font-size:12px;">Contact Number Invalid</div>
+                            style="font-size:12px; color: red;">Contact Number Invalid</div>
                         </div>
                           </div>
                         <div class="row">

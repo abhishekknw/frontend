@@ -532,7 +532,10 @@
       B2BDashboardService.viewCampaignLeads($scope.filterType, $scope.selectedSupplierType.code)
         // B2BDashboardService.viewCampaignLeads()
         .then(function onSuccess(response) {
-          $scope.leadsDataCampaigns = response.data.data;
+          if(response.data.data){
+            $scope.leadsDataCampaigns = response.data.data;
+          }
+          
         });
     }
 
@@ -561,6 +564,7 @@
       $scope.CampaignNameofLeads = campaignName;
       B2BDashboardService.purchasedNotPurchasedLead(CampaignId, $scope.filterType)
         .then(function onSuccess(response) {
+          $scope.isTableHide = false;
           $scope.purchasedNotPurchasedLead = response.data.data;
           let values = response.data.data.values;
           $scope.all_values = [];
@@ -578,9 +582,12 @@
         });
     }
 
+    $scope.isTableHide = true;
+
 
 
     $scope.setSupplierType = function () {
+      $scope.isTableHide = true;
       $scope.viewCampaignLeads()
     }
 
@@ -681,6 +688,9 @@
         .then(function onSuccess(response) {
           if (response) {
             $scope.leadDecisionPandingData.splice(index, 1);
+            if(value == 'Decline'){
+              value = 'Declined';
+            }
             swal(constants.name, value + " Successfully", constants.success);
           }
         });
@@ -697,13 +707,19 @@
         }
       }
       if (data.length > 0) {
+        let lead_Decision = [];
         B2BDashboardService.acceptDeclineDecisionPanding({ 'data': data })
           .then(function onSuccess(response) {
             if (response) {
               for (let i in $scope.leadDecisionPandingData) {
-                if ($scope.leadDecisionPandingData[i].checkStatus) {
-                  $scope.leadDecisionPandingData.splice(i, 1);
+                if (!$scope.leadDecisionPandingData[i].checkStatus) {
+                  lead_Decision.push($scope.leadDecisionPandingData[i]);
+                  //$scope.leadDecisionPandingData.splice(i, 1);
                 }
+              }
+              $scope.leadDecisionPandingData = lead_Decision;
+              if(value == 'Decline'){
+                value = 'Declined';
               }
               swal(constants.name, value + " Successfully", constants.success);
             }
@@ -1155,11 +1171,16 @@
       }
       return values;
     }
-
-    $scope.surveyLeadArray = ['Leads', 'Survey'];
+     $scope.aa = 'Select Leads,Surveyed Clients';
+     $scope.supplierType = 'Select Leads,Surveyed Clients';
+    $scope.surveyLeadArray = ['Select Leads,Surveyed Clients','Leads', 'Survey'];
     $scope.surveyLeadFilter = function (filter) {
-      $scope.filterType = filter;
-      $scope.viewCampaignLeads();
+      if(filter == 'Leads' || filter == 'Survey'){
+        $scope.filterType = filter;
+        $scope.isTableHide = true;
+        $scope.viewCampaignLeads();
+      }
+      
 
     }
 

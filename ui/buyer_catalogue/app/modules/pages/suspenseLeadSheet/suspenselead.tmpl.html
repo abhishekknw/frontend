@@ -1,0 +1,66 @@
+<link rel="stylesheet" href="modules/pages/DashBoard/CampaignList/campaignlist.tmpl.css"/>
+<link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css"/>
+
+
+<div ></div> <!--For displaying loading icon-->
+<main ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" >
+<div class="wrapperBox">
+  <div ng-show="isEmpty" style="text-align:center;"><h2>{{msg}}</h2></div>
+  <nav-bar></nav-bar>
+  <div class="middle-section">
+    <div class="breadcrumb" ncy-breadcrumb></div>
+    <h2 class="heading">Suspense Lead</h2>
+    <form role="form" class="form-inline" ng-submit="updateMyDetails()" name="suspenseLeadForm">
+      <table class="table table-bordered" name="suspenseLead">
+        <thead>
+          <tr>
+            <th  class="alignment">Sno</th>
+            <th  class="alignment">Phone Number</th>
+            <th  class="alignment"></th>
+            <th  class="alignment"></th>
+            <th  class="alignment"></th>
+            <th  class="alignment"></th>
+            <th  class="alignment"></th>
+            <th  class="alignment"></th>
+            <th  class="alignment">Sector</th>
+            <th  class="alignment">Sub Sector</th>
+            <th  class="alignment">Current Partner</th>
+            <th  class="alignment">Current Partner Feedback</th>
+            <th  class="alignment">Reason</th>
+            <th  class="alignment">Preferred Partner</th>
+            <th  class="alignment">Implementation TimeLine</th>
+            <th  class="alignment">Meeting TimeLine</th>
+            <th  class="alignment">L1 Answers</th>
+            <th  class="alignment">L2 Answers</th>
+            <th  class="alignment">Lead Status</th>
+            <th  class="alignment">Callback Preference</th>
+            <th  class="alignment">Comment</th>
+            <th  class="alignment">Time Stamp</th>
+            <th  class="alignment">Chat</th>
+            <th  class="alignment">Action</th>
+            <th  class="alignment">Action 1</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="alignment">1</td>
+            <td class="alignment">Jitendra</td>
+            <td class="alignment">Indore</td>
+            <td class="alignment">action</td>
+          </tr>
+          <tr>
+            <td class="alignment">1</td>
+            <td class="alignment">Jitendra</td>
+            <td class="alignment">Indore</td>
+            <td class="alignment">action</td>
+          </tr>
+        </tbody>
+          </table>
+      </form>
+  </div><!-- middle-section -->
+  <div class="fixfooter"></div>
+</div><!-- wrapperBox -->
+<footer-bar></footer-bar>
+</main>
+

@@ -928,7 +928,7 @@
         <!--Start Retail Store supplier type -->
         <!--End Retail Store supplier type -->
         <!--Start other supplier type -->
-        <tbody
+        <tbody 
           ng-if="(!selectedUser.supplier_type_filter || selectedUser.supplier_type_filter != 'RS') && releaseDetails.shortlisted_suppliers.length > 0"
           dir-paginate="supplier in releaseDetails.shortlisted_suppliers | itemsPerPage: suppliersPerPage"
           total-items="totalSuppliers" current-page="pagination.current" track by "$index">
@@ -1902,6 +1902,7 @@
                         <p> Ops Verify: {{subrequirement.varified_ops_date | date:'medium'}} </p>
                         <p> Ops Verify Name: {{subrequirement.verified_ops_by_obj.first_name}}
                           {{subrequirement.verified_ops_by_obj.last_name}} </p>
+                         
                         <!-- <p> BD Verify: {{subrequirement.varified_bd_date | date:'medium'}} </p> -->
                       </td>
 
@@ -2298,7 +2299,7 @@
                         <p> Ops Verify Name: {{subrequirement.verified_ops_by_obj.first_name}}
                           {{subrequirement.verified_ops_by_obj.last_name}} </p>
                         <p  ng-if="subrequirement.varified_bd_date"> BD Verify:  {{subrequirement.varified_bd_date | date:'medium'}}
-  
+                          
                       </p>
                         <p ng-if="subrequirement.verified_bd_by_obj.first_name"> BD Verify Name:  {{subrequirement.verified_bd_by_obj.first_name}}
                           {{subrequirement.verified_bd_by_obj.last_name}} 

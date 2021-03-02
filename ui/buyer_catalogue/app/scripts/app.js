@@ -372,6 +372,18 @@ angular
             }
         })
 
+        .state('SuspenseLeadSheet',{
+          url : '/SuspenseLeadSheet',
+          controller : 'SuspenseLeadSheetCtrl',
+          templateUrl : 'modules/pages/suspenseLeadSheet/suspenselead.tmpl.html',
+          // controller : 'CampaignListCtrl',
+          // templateUrl : 'modules/pages/DashBoard/CampaignList/campaignlist.tmpl.html',
+          ncyBreadcrumb: {
+            label:'Suspense Lead Sheet',
+          },
+          
+      })
+
       // .state('manageUsers', {
       //   url: '/manageUser',
       //   controller: 'userCtrl',

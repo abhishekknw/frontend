@@ -1,0 +1,24 @@
+.campaignStatus::first-letter{
+  text-transform: capitalize !important;
+}
+.modalBodyBox .sendEmail1 .buttons {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 30px;
+}
+.modalBodyBox .sendEmail1 .buttons div {
+	position: relative;
+}
+.modalBodyBox .sendEmail1 .buttons span {
+	display: block;
+	text-align: center;
+	font-size: 14px;
+	color: #333;
+	position: absolute;
+	top: -25px;
+	width: 100%;
+}
+.modalBodyBox .sendEmail1 .smallBtn {
+  width: 100%;
+  padding: 15px;
+}
