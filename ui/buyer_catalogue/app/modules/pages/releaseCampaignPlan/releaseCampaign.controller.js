@@ -1518,7 +1518,8 @@ angular.module('catalogueApp')
             showCancelButton: true,
             confirmButtonClass: "btn-success",
             confirmButtonText: "Yes, Remove!",
-            closeOnConfirm: true
+            closeOnConfirm: false,
+              closeOnCancel: true
           },
             function (confirm) {
               if (confirm) {
@@ -1564,7 +1565,8 @@ angular.module('catalogueApp')
               showCancelButton: true,
               confirmButtonClass: "btn-success",
               confirmButtonText: "Yes, Remove!",
-              closeOnConfirm: true
+              closeOnConfirm: false,
+              closeOnCancel: true
             },
               function (confirm) {
                 if (confirm) {
@@ -1608,7 +1610,8 @@ angular.module('catalogueApp')
               showCancelButton: true,
               confirmButtonClass: "btn-success",
               confirmButtonText: "Yes, Remove!",
-              closeOnConfirm: true
+              closeOnConfirm: false,
+              closeOnCancel: true
             },
               function (confirm) {
                 if (confirm) {
@@ -1645,7 +1648,8 @@ angular.module('catalogueApp')
               showCancelButton: true,
               confirmButtonClass: "btn-success",
               confirmButtonText: "Yes, Restore!",
-              closeOnConfirm: true
+              closeOnConfirm: false,
+              closeOnCancel: true
             },
               function (confirm) {
                 if (confirm) {
@@ -1693,7 +1697,8 @@ angular.module('catalogueApp')
               showCancelButton: true,
               confirmButtonClass: "btn-success",
               confirmButtonText: "Yes, Restore!",
-              closeOnConfirm: true
+              closeOnConfirm: false,
+              closeOnCancel: true
             },
               function (confirm) {
                 if (confirm) {
@@ -2126,13 +2131,14 @@ angular.module('catalogueApp')
             showCancelButton: true,
             confirmButtonClass: "btn-success",
             confirmButtonText: "Yes, Verify!",
-            closeOnConfirm: true
+            closeOnConfirm: false,
+              closeOnCancel: true
           },
             function (confirm) {
               if (confirm) {
                 releaseCampaignService.opsVerifyRequirement({ "requirement_ids": verifyId })
                   .then(function onSuccess(response) {
-                    var changedBookingPlanListcolor = true;
+                    // var changedBookingPlanListcolor = true;
                     if (response && response.data.data.error) {
                       swal(constants.name, response.data.data.error, constants.error);
                     } else {
@@ -2148,6 +2154,9 @@ angular.module('catalogueApp')
                             }
                             $scope.requirementDetailData[key].requirements[localindex_index].requirementCheck = false;
                             $scope.requirementDetailData[key].requirements[localindex_index].varified_ops_date = new Date();
+                            $scope.requirementDetailData[key].requirements[localindex_index].verified_ops_by_obj = {
+                              first_name :response.data.data.verified_ops_by
+                            }
                             // if(response && response.data && response.data.data && response.data.data.color_code != 'null'){
                             //   var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
                             //     return el.id;
@@ -2159,11 +2168,11 @@ angular.module('catalogueApp')
                             // }
 
                           }
-                       for(let p in $scope.requirementDetailData[key].requirements){
-                        if($scope.requirementDetailData[key].requirements[p].color_class == 'yellow'){
-                          changedBookingPlanListcolor = false;
-                        }
-                       }
+                      //  for(let p in $scope.requirementDetailData[key].requirements){
+                      //   if($scope.requirementDetailData[key].requirements[p].color_class == 'yellow' || $scope.requirementDetailData[key].requirements[p].color_code == 1){
+                      //     changedBookingPlanListcolor = false;
+                      //   }
+                      //  }
                          
 
                           var chechIfVerify = false
@@ -2179,14 +2188,40 @@ angular.module('catalogueApp')
                           }
                         })
                       }
-                      if(response && response.data && response.data.data && response.data.data.color_code != 'null' && changedBookingPlanListcolor){
+                      // if(response && response.data && response.data.data && response.data.data.color_code != 'null' && changedBookingPlanListcolor){
+                      //   var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+                      //     return el.id;
+                      //   }).indexOf($scope.shortlisted_spaces_id);
+                      //   if (localindex_index != -1) {
+                      //     $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 3;
+                      //       $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = 'green';
+                      //   }
+                      // }
+                      if(response && response.data && response.data.data && response.data.data.color_code != 'null'){
+                        let color_class = '';
+                        if (response.data.data.list_color_code == 1) {
+                         color_class =  'yellow';;
+                       }
+                       else if (response.data.data.list_color_code == 2) {
+                         color_class = '#7C4700';
+                       }
+                       else if (response.data.data.list_color_code == 3) {
+                         color_class = 'green';
+                       }
+                       else if (response.data.data.list_color_code == 4) {
+                         color_class = 'white';
+                       }
                         var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
                           return el.id;
                         }).indexOf($scope.shortlisted_spaces_id);
                         if (localindex_index != -1) {
-                          $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 3;
-                            $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = 'green';
-                        }
+                        
+                          $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
+                            $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
+                           // $scope.releaseDetails.shortlisted_suppliers[localindex_index].verified_ops_by = response.data.data.verified_ops_by;
+    
+                            
+                          }
                       }
                       $scope.subSectorCheck = true;
                       swal(constants.name, response.data.data.message, constants.success);
@@ -2212,7 +2247,8 @@ angular.module('catalogueApp')
             showCancelButton: true,
             confirmButtonClass: "btn-success",
             confirmButtonText: "Yes, Verify!",
-            closeOnConfirm: true
+            closeOnConfirm: false,
+            closeOnCancel: true
           },
             function (confirm) {  
               if (confirm) {
@@ -2229,12 +2265,25 @@ angular.module('catalogueApp')
                         first_name: response.data.data.varified_bd_by
                       };   
                       if(response && response.data && response.data.data && response.data.data.color_code != 'null'){
+                        let color_class = '';
+                         if (response.data.data.list_color_code == 1) {
+                          color_class =  'yellow';;
+                        }
+                        else if (response.data.data.list_color_code == 2) {
+                          color_class = '#7C4700';
+                        }
+                        else if (response.data.data.list_color_code == 3) {
+                          color_class = 'green';
+                        }
+                        else if (response.data.data.list_color_code == 4) {
+                          color_class = 'white';
+                        }
                         var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
                           return el.id;
                         }).indexOf($scope.shortlisted_spaces_id);
                         if (localindex_index != -1) {
-                          $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 3;
-                            $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = 'green';
+                          $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
+                            $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
                         }
                       }
                       swal(constants.name, 'Verified Successfully', constants.success);
@@ -2304,13 +2353,16 @@ angular.module('catalogueApp')
               showCancelButton: true,
               confirmButtonClass: "btn-success",
               confirmButtonText: "Yes, Save!",
-              closeOnConfirm: true
+              closeOnConfirm: false,
+              closeOnCancel: true
+          
             },
               function (confirm) {
                 if (confirm) {
                   releaseCampaignService.saveBrowsed(browsedId)
                     .then(function onSuccess(response) {
                       if (response && response.data.data.error) {
+                    
                         swal(constants.name, response.data.data.error, constants.error);
                       } else {
                         var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
@@ -2324,7 +2376,8 @@ angular.module('catalogueApp')
                         swal(constants.name, constants.save_success, constants.success);
                       }
                     }).catch(function onError(response) {
-                        if(response.data.data && response.data.data.general_error){
+                       
+                       if(response.data.data && response.data.data.general_error){
                           swal(constants.name, response.data.data.general_error.error, constants.error);
                       }
                     })
@@ -2384,7 +2437,9 @@ angular.module('catalogueApp')
               showCancelButton: true,
               confirmButtonClass: "btn-success",
               confirmButtonText: "Yes, Save!",
-              closeOnConfirm: true
+              closeOnConfirm: false,
+              closeOnCancel: true
+              
             },
               function (confirm) {
                 if (confirm) {
@@ -2483,7 +2538,8 @@ angular.module('catalogueApp')
               showCancelButton: true,
               confirmButtonClass: "btn-success",
               confirmButtonText: "Yes, Remove!",
-              closeOnConfirm: true
+              closeOnConfirm: false,
+              closeOnCancel: true
             },
               function (confirm) {
                 if (confirm) {
@@ -2757,7 +2813,8 @@ angular.module('catalogueApp')
               showCancelButton: true,
               confirmButtonClass: "btn-success",
               confirmButtonText: "Yes, Remove!",
-              closeOnConfirm: true
+              closeOnConfirm: false,
+              closeOnCancel: true
             },
               function () {
                 $scope.editPhase = false;
