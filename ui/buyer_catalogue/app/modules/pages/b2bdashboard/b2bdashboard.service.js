@@ -474,7 +474,7 @@ angular.module('catalogueApp')
         //var url = url_root + "b2b/lead-form-headers/?campaign_id=" + campaignId + "&lead_type=" + filterType;
         var url = url_root + "b2b/lead-form-headers/?campaign_id=" + campaignId + "&supplier_type=" + supplierCode;
         if(filterType){
-          url += "?lead_type=" + filterType;
+          url += "&lead_type=" + filterType;
         }
         return machadaloHttp.get(url);
       }
