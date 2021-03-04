@@ -560,9 +560,10 @@
     }
 
     $scope.getPurchasedNotPurchasedLead = function (CampaignId, campaignName, leadStatus) {
+      console.log('11111111111111111',$scope.filterType, $scope.selectedSupplierType.code);
       $scope.leadPurchasedStatus = leadStatus;
       $scope.CampaignNameofLeads = campaignName;
-      B2BDashboardService.purchasedNotPurchasedLead(CampaignId, $scope.filterType)
+      B2BDashboardService.purchasedNotPurchasedLead(CampaignId, $scope.filterType,$scope.selectedSupplierType.code)
         .then(function onSuccess(response) {
           $scope.isTableHide = false;
           $scope.purchasedNotPurchasedLead = response.data.data;
