@@ -1873,6 +1873,10 @@ angular.module('catalogueApp')
                   //end added sector name
                   //start sub sector name
                   for (let x in $scope.bdrequirementDetailData[i].requirements) {
+                    if($scope.bdrequirementDetailData[i].requirements[x].varified_bd_date){
+                      let date = new Date($scope.bdrequirementDetailData[i].requirements[x].varified_bd_date).toUTCString();
+                      $scope.bdrequirementDetailData[i].requirements[x].varified_bd_date = date;
+                    }
                     if($scope.bdrequirementDetailData[i].requirements[x].varified_bd == 'yes'){
                       $scope.bdrequirementDetailData[i].requirements[x].color_class = 'green';
                     } else {
