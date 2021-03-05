@@ -567,18 +567,18 @@
           $scope.isTableHide = false;
           $scope.purchasedNotPurchasedLead = response.data.data;
           let values = response.data.data.values;
-          $scope.all_values = [];
-          for (let i in values) {
-              let row = {};
-              for (let t in values[i]) {
-                if(t != 0 ){
-                  row[values[i][t].key_name] = values[i][t].value;
-                } else {               
-                  $scope.lead_purchased = values[i][t].lead_purchased;
-                }
-              }
-              $scope.all_values.push(row);
-          }
+          // $scope.all_values = [];
+          // for (let i in values) {
+          //     let row = {};
+          //     for (let t in values[i]) {
+          //       if(t != 0 ){
+          //         row[values[i][t].key_name] = values[i][t].value;
+          //       } else {               
+          //         $scope.lead_purchased = values[i][t].lead_purchased;
+          //       }
+          //     }
+          //     $scope.all_values.push(row);
+          // }
         });
     }
 
