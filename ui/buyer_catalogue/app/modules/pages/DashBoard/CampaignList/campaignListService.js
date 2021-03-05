@@ -61,6 +61,11 @@ function (machadaloHttp, $stateParams, $rootScope,$window, $routeParams, $locati
       return machadaloHttp.get(url);
  }
 
+ campaignListService.getAllSuspenseLead = function(){
+  var url = base_url + "b2b/suspense-leads/";
+    return machadaloHttp.get(url);
+  }
+
 
   return campaignListService;
 }]);

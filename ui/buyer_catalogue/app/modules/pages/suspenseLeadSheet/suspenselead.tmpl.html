@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="modules/pages/releaseCampaignPlan/releaseCampaign.tmpl.css" />
 <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css" />
-<div></div>
+<!-- <div ng-loading="loading"></div> -->
 <div style="margin-top: 10px">
   <nav-bar></nav-bar>
 </div>
@@ -13,7 +13,7 @@
   <div class="pageTitle">
     <h3>Suspense Lead</h3>
   </div>
-  <div class="wrapperBox">
+  <div class="wrapperBox" ng-init="getAllSuspenseLeads()">
     <!-- <div class="middle-section"> -->
     <div class="al-main">
       <div class="al-content">
