@@ -9,10 +9,10 @@ function (machadaloHttp, $stateParams, $rootScope,$window, $routeParams, $locati
   var url_base = 'v0/ui/website/';
   var suspenseLeadService = {};
 
-//   campaignListService.getCampaignDetails = function(assigned_by,userId,fetch_all){
-//     var url = url_base + "campaign-assignment/?include_assigned_by="+ assigned_by +  "&to="+userId + "&fetch_all=" + fetch_all;
-//       return machadaloHttp.get(url);
-//     }
+  suspenseLeadService.getAllSuspenseLead = function(){
+    var url = base_url + "b2b/suspense-leads/";
+      return machadaloHttp.get(url);
+    }
 
 //   campaignListService.getAllCampaignDetails = function(fetch_all){
 //     var url = url_base + "campaign-assignment/?fetch_all=" + fetch_all;
