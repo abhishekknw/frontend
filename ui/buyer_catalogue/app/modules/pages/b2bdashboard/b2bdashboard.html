@@ -19,30 +19,32 @@
             <uib-tabset class="dashboard-tab" active="selectTabIndex.value">
               <uib-tab index="0">
                 <uib-tab-heading>
-                 <h5>New Leads</h5>
+                  <h5>New Leads</h5>
 
                 </uib-tab-heading>
                 <div class="col-md-12">
                   <ul class="licence_detail_bx">
-                    <li ng-class="decisionPendingTab ? 'active_detail' : ''" ng-click="changeLeadTab('decisionPending')">Leads - Decision Pending</li>
-                    <li ng-class="newLeadsTab ? 'active_detail' : ''" ng-click="changeLeadTab('newLeads')">New Leads</li>
+                    <li ng-class="decisionPendingTab ? 'active_detail' : ''"
+                      ng-click="changeLeadTab('decisionPending')">Leads - Decision Pending</li>
+                    <li ng-class="newLeadsTab ? 'active_detail' : ''" ng-click="changeLeadTab('newLeads')">New Leads
+                    </li>
                   </ul>
                 </div>
                 <div class="row panel-hide">
                   <div ng-if="newLeadsTab">
-                  <div class="row">
-                    <div class="col-xlg-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 dashboard-side-label">
-                    </div>
-                    <div class="col-xlg-10 col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                      <!-- <div class="row zeroCampAct">
+                    <div class="row">
+                      <div class="col-xlg-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 dashboard-side-label">
+                      </div>
+                      <div class="col-xlg-10 col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                        <!-- <div class="row zeroCampAct">
                         <h1>NO LEAD ACTIVITY !!</h1>
                       </div> -->
+                      </div>
                     </div>
-                  </div>
-                  <!-- start b2b code -->
+                    <!-- start b2b code -->
 
-                  <!-- end b2b code -->
-                  <div class="row">
+                    <!-- end b2b code -->
+                    <div class="row">
                       <div class="col-xlg-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 dashboard-side-label">
                         <h4 style="margin-left:140px;">Select Date </h4>
                       </div>
@@ -57,124 +59,142 @@
                                       id="custompanelmobile">
                                       <div uib-accordion-heading class="container">
                                         <div class="pie-chart-item ng-scope">
-                                            <h5 style="margin-left:-10px">
-                                                <span style="color:#ffffff;" class="glyphicon glyphicon-backward" ng-click="getRecentActivity(pre)"
-                                                  data-toggle="tooltip" title="Go To Previous Activity!"></span>
-                                                <span style="color:#ffffff;" class="glyphicon glyphicon-chevron-left"
-                                                  ng-click="getDate(pre)"></span>
-                                                <span style="margin-left:10px;margin-right:10px;">{{date|date : "dd-MM-yyyy"}}</span>
-                                                <span style="color:#ffffff;" class="glyphicon glyphicon-chevron-right"
-                                                  ng-click="getDate(next)"></span>
-                                                <span style="color:#ffffff;" class="glyphicon glyphicon-forward" ng-click="getRecentActivity(next)"
-                                                  data-toggle="tooltip" title="Go To Next Activity!"></span>
-                                                <!-- <span style="color:#ffffff;left:16px;margin-top:1px;"
+                                          <h5 style="margin-left:-10px">
+                                            <span style="color:#ffffff;" class="glyphicon glyphicon-backward"
+                                              ng-click="getRecentActivity(pre)" data-toggle="tooltip"
+                                              title="Go To Previous Activity!"></span>
+                                            <span style="color:#ffffff;" class="glyphicon glyphicon-chevron-left"
+                                              ng-click="getDate(pre)"></span>
+                                            <span style="margin-left:10px;margin-right:10px;">{{date|date :
+                                              "dd-MM-yyyy"}}</span>
+                                            <span style="color:#ffffff;" class="glyphicon glyphicon-chevron-right"
+                                              ng-click="getDate(next)"></span>
+                                            <span style="color:#ffffff;" class="glyphicon glyphicon-forward"
+                                              ng-click="getRecentActivity(next)" data-toggle="tooltip"
+                                              title="Go To Next Activity!"></span>
+                                            <!-- <span style="color:#ffffff;left:16px;margin-top:1px;"
                                                   class="glyphicon glyphicon-calendar pull-right" ng-click="visible=!visible;"> -->
-                                                  <div ng-class="{'is-visible':visible}" class="menu">
-                                                    <table class="table-responsive table table-bordered sidePanelTable" style="width:300px;">
-                                                      <thead>
-                                                        <tr>
-                                                          <td style="color:#ffffff !important;" style="width:20px">DATE</td>
-                                                          <td style="width:20px">
-                                                            <button type="button" name="button" class="col-xs-5"
-                                                              style="margin: 0px 9px 0px -1px;width:80px;height:70px;color:black;background-color:#ffe000;">Total
-                                                              Release (%)</button>
-                            
-                                                          </td>
-                            
-                                                        </tr>
-                                                      </thead>
-                                                      <tbody>
-                                                        <tr ng-repeat="(key,item) in historyData" ng-if="$index < 15">
-                                                          <td class="col-xs-3" style="background-color: #8e1921;"><a
-                                                              ng-click="getDateData(key)">{{key| date :'d-MMM-yy'}}</a></td>
-                                                          <td class="col-xs-2">
-                                                            <button class="col-xs-5 " style="width:80px;height:35px;" id="greenColor"
-                                                              ng-if="item['RELEASE'].actual/item['RELEASE'].total*100==100" type="button"
-                                                              name="button"
-                                                              class="btn btn-danger">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}
-                                                              &#10004;</button>
-                                                            <button class="col-xs-5 " style="width:80px;height:35px;" id="lightGreen"
-                                                              ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 75 && item['RELEASE'].actual/item['RELEASE'].total*100 != 100"
-                                                              type="button" name="button">
-                                                              {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
-                                                            <button class="col-xs-5 " style="width:80px;height:35px;" id="yellow"
-                                                              ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 50 && item['RELEASE'].actual/item['RELEASE'].total*100 < 75"
-                                                              type="button" name="button">
-                                                              {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
-                                                            <button class="col-xs-5 " style="width:80px;height:35px;" id="redColor"
-                                                              ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 < 50" type="button"
-                                                              name="button">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
-                                                            <button class="col-xs-5 " style="width:80px;height:35px;cursor:default;"
-                                                              ng-if="!item['RELEASE'].total" type="button" name="button">NA</button>
-                                                          </td>
-                            
-                                                        </tr>
-                                                      </tbody>
-                                                    </table>
-                                                  </div>
-                                                <!-- </span> -->
-                                              </h5>
+                                            <div ng-class="{'is-visible':visible}" class="menu">
+                                              <table class="table-responsive table table-bordered sidePanelTable"
+                                                style="width:300px;">
+                                                <thead>
+                                                  <tr>
+                                                    <td style="color:#ffffff !important;" style="width:20px">DATE</td>
+                                                    <td style="width:20px">
+                                                      <button type="button" name="button" class="col-xs-5"
+                                                        style="margin: 0px 9px 0px -1px;width:80px;height:70px;color:black;background-color:#ffe000;">Total
+                                                        Release (%)</button>
+
+                                                    </td>
+
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                  <tr ng-repeat="(key,item) in historyData" ng-if="$index < 15">
+                                                    <td class="col-xs-3" style="background-color: #8e1921;"><a
+                                                        ng-click="getDateData(key)">{{key| date :'d-MMM-yy'}}</a></td>
+                                                    <td class="col-xs-2">
+                                                      <button class="col-xs-5 " style="width:80px;height:35px;"
+                                                        id="greenColor"
+                                                        ng-if="item['RELEASE'].actual/item['RELEASE'].total*100==100"
+                                                        type="button" name="button"
+                                                        class="btn btn-danger">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}
+                                                        &#10004;</button>
+                                                      <button class="col-xs-5 " style="width:80px;height:35px;"
+                                                        id="lightGreen"
+                                                        ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 75 && item['RELEASE'].actual/item['RELEASE'].total*100 != 100"
+                                                        type="button" name="button">
+                                                        {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
+                                                      <button class="col-xs-5 " style="width:80px;height:35px;"
+                                                        id="yellow"
+                                                        ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 50 && item['RELEASE'].actual/item['RELEASE'].total*100 < 75"
+                                                        type="button" name="button">
+                                                        {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
+                                                      <button class="col-xs-5 " style="width:80px;height:35px;"
+                                                        id="redColor"
+                                                        ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 < 50"
+                                                        type="button"
+                                                        name="button">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
+                                                      <button class="col-xs-5 "
+                                                        style="width:80px;height:35px;cursor:default;"
+                                                        ng-if="!item['RELEASE'].total" type="button"
+                                                        name="button">NA</button>
+                                                    </td>
+
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                            </div>
+                                            <!-- </span> -->
+                                          </h5>
                                         </div>
                                       </div>
                                     </div>
                                   </uib-accordion>
                                   <h5 style="margin-left:-10px">
-                                      <span style="color:#ffffff;" class="glyphicon glyphicon-backward" ng-click="getRecentActivity(pre)"
-                                        data-toggle="tooltip" title="Go To Previous Activity!"></span>
-                                      <span style="color:#ffffff;" class="glyphicon glyphicon-chevron-left"
-                                        ng-click="getDate(pre)"></span>
-                                      <span style="margin-left:10px;margin-right:10px;">{{date|date : "dd-MM-yyyy"}}</span>
-                                      <span style="color:#ffffff;" class="glyphicon glyphicon-chevron-right"
-                                        ng-click="getDate(next)"></span>
-                                      <span style="color:#ffffff;" class="glyphicon glyphicon-forward" ng-click="getRecentActivity(next)"
-                                        data-toggle="tooltip" title="Go To Next Activity!"></span>
-                                      <span style="color:#ffffff;left:16px;margin-top:1px;"
-                                        class="glyphicon glyphicon-calendar pull-right" ng-click="visible=!visible;">
-                                        <div ng-class="{'is-visible':visible}" class="menu">
-                                          <table class="table-responsive table table-bordered sidePanelTable" style="width:300px;">
-                                            <thead>
-                                              <tr>
-                                                <td style="color:#ffffff !important;" style="width:20px">DATE</td>
-                                                <td style="width:20px">
-                                                  <button type="button" name="button" class="col-xs-5"
-                                                    style="margin: 0px 9px 0px -1px;width:80px;height:70px;color:black;background-color:#ffe000;">Total
-                                                    Release (%)</button>
-                  
-                                                </td>
-                  
-                                              </tr>
-                                            </thead>
-                                            <tbody>
-                                              <tr ng-repeat="(key,item) in historyData" ng-if="$index < 15">
-                                                <td class="col-xs-3" style="background-color: #8e1921;"><a
-                                                    ng-click="getDateData(key)">{{key| date :'d-MMM-yy'}}</a></td>
-                                                <td class="col-xs-2">
-                                                  <button class="col-xs-5 " style="width:80px;height:35px;" id="greenColor"
-                                                    ng-if="item['RELEASE'].actual/item['RELEASE'].total*100==100" type="button"
-                                                    name="button"
-                                                    class="btn btn-danger">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}
-                                                    &#10004;</button>
-                                                  <button class="col-xs-5 " style="width:80px;height:35px;" id="lightGreen"
-                                                    ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 75 && item['RELEASE'].actual/item['RELEASE'].total*100 != 100"
-                                                    type="button" name="button">
-                                                    {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
-                                                  <button class="col-xs-5 " style="width:80px;height:35px;" id="yellow"
-                                                    ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 50 && item['RELEASE'].actual/item['RELEASE'].total*100 < 75"
-                                                    type="button" name="button">
-                                                    {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
-                                                  <button class="col-xs-5 " style="width:80px;height:35px;" id="redColor"
-                                                    ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 < 50" type="button"
-                                                    name="button">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
-                                                  <button class="col-xs-5 " style="width:80px;height:35px;cursor:default;"
-                                                    ng-if="!item['RELEASE'].total" type="button" name="button">NA</button>
-                                                </td>
-                  
-                                              </tr>
-                                            </tbody>
-                                          </table>
-                                        </div>
-                                      </span>
-                                    </h5>
+                                    <span style="color:#ffffff;" class="glyphicon glyphicon-backward"
+                                      ng-click="getRecentActivity(pre)" data-toggle="tooltip"
+                                      title="Go To Previous Activity!"></span>
+                                    <span style="color:#ffffff;" class="glyphicon glyphicon-chevron-left"
+                                      ng-click="getDate(pre)"></span>
+                                    <span style="margin-left:10px;margin-right:10px;">{{date|date :
+                                      "dd-MM-yyyy"}}</span>
+                                    <span style="color:#ffffff;" class="glyphicon glyphicon-chevron-right"
+                                      ng-click="getDate(next)"></span>
+                                    <span style="color:#ffffff;" class="glyphicon glyphicon-forward"
+                                      ng-click="getRecentActivity(next)" data-toggle="tooltip"
+                                      title="Go To Next Activity!"></span>
+                                    <span style="color:#ffffff;left:16px;margin-top:1px;"
+                                      class="glyphicon glyphicon-calendar pull-right" ng-click="visible=!visible;">
+                                      <div ng-class="{'is-visible':visible}" class="menu">
+                                        <table class="table-responsive table table-bordered sidePanelTable"
+                                          style="width:300px;">
+                                          <thead>
+                                            <tr>
+                                              <td style="color:#ffffff !important;" style="width:20px">DATE</td>
+                                              <td style="width:20px">
+                                                <button type="button" name="button" class="col-xs-5"
+                                                  style="margin: 0px 9px 0px -1px;width:80px;height:70px;color:black;background-color:#ffe000;">Total
+                                                  Release (%)</button>
+
+                                              </td>
+
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            <tr ng-repeat="(key,item) in historyData" ng-if="$index < 15">
+                                              <td class="col-xs-3" style="background-color: #8e1921;"><a
+                                                  ng-click="getDateData(key)">{{key| date :'d-MMM-yy'}}</a></td>
+                                              <td class="col-xs-2">
+                                                <button class="col-xs-5 " style="width:80px;height:35px;"
+                                                  id="greenColor"
+                                                  ng-if="item['RELEASE'].actual/item['RELEASE'].total*100==100"
+                                                  type="button" name="button"
+                                                  class="btn btn-danger">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}
+                                                  &#10004;</button>
+                                                <button class="col-xs-5 " style="width:80px;height:35px;"
+                                                  id="lightGreen"
+                                                  ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 75 && item['RELEASE'].actual/item['RELEASE'].total*100 != 100"
+                                                  type="button" name="button">
+                                                  {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
+                                                <button class="col-xs-5 " style="width:80px;height:35px;" id="yellow"
+                                                  ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 >= 50 && item['RELEASE'].actual/item['RELEASE'].total*100 < 75"
+                                                  type="button" name="button">
+                                                  {{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
+                                                <button class="col-xs-5 " style="width:80px;height:35px;" id="redColor"
+                                                  ng-if="item['RELEASE'].actual/item['RELEASE'].total*100 < 50"
+                                                  type="button"
+                                                  name="button">{{item['RELEASE'].actual/item['RELEASE'].total*100|limitTo:4||NA}}</button>
+                                                <button class="col-xs-5 " style="width:80px;height:35px;cursor:default;"
+                                                  ng-if="!item['RELEASE'].total" type="button" name="button">NA</button>
+                                              </td>
+
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    </span>
+                                  </h5>
                                 </div>
                               </div>
                             </div>
@@ -183,194 +203,196 @@
                       </div>
                     </div>
 
-                  <div class="row">
-                    <div class="col-xlg-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 dashboard-side-label">
-                      <h4 style="margin-left:140px;">LEAD COUNT </h4>
-                    </div>
-                    <div class="col-xlg-10 col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                      <div class="row">
-                        <div class="col-xlg-6 col-lg-6 col-md-6 col-sm-6 col-xs-6" style="margin-left:140px;">
-                          <div class="form-group has-success">
-                            <div class="pie-chart-item-container ng-scope">
-                              <div class="custom-panel">
-                                <uib-accordion close-others="oneAtATime">
-                                  <div uib-accordion-group panel-class="panel panel-blur date-grid-tab custom-panel"
-                                    id="custompanelmobile">
-                                    <div uib-accordion-heading class="container">
-                                      <div class="pie-chart-item ng-scope">
-                                        <div ng-click="leadCampaignData()">
-                                          {{leadCountData.lead_count}}
+                    <div class="row">
+                      <div class="col-xlg-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 dashboard-side-label">
+                        <h4 style="margin-left:140px;">LEAD COUNT </h4>
+                      </div>
+                      <div class="col-xlg-10 col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                        <div class="row">
+                          <div class="col-xlg-6 col-lg-6 col-md-6 col-sm-6 col-xs-6" style="margin-left:140px;">
+                            <div class="form-group has-success">
+                              <div class="pie-chart-item-container ng-scope">
+                                <div class="custom-panel">
+                                  <uib-accordion close-others="oneAtATime">
+                                    <div uib-accordion-group panel-class="panel panel-blur date-grid-tab custom-panel"
+                                      id="custompanelmobile">
+                                      <div uib-accordion-heading class="container">
+                                        <div class="pie-chart-item ng-scope">
+                                          <div ng-click="leadCampaignData()">
+                                            {{leadCountData.lead_count}}
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
-                                  </div>
-                                </uib-accordion>
+                                  </uib-accordion>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-xlg-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 dashboard-side-label">
-                      <h4 style="margin-left:140px;">EXISTING CLIENT FEEDBACK COUNT </h4>
-                    </div>
-                    <div class="col-xlg-10 col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                      <div class="row">
-                        <div class="col-xlg-6 col-lg-6 col-md-6 col-sm-6 col-xs-6" style="margin-left:140px;">
-                          <div class="form-group has-success">
-                            <div class="pie-chart-item-container ng-scope">
-                              <div class="custom-panel">
-                                <uib-accordion close-others="oneAtATime">
-                                  <div uib-accordion-group panel-class="panel panel-blur date-grid-tab custom-panel"
-                                    id="custompanelmobile">
-                                    <div uib-accordion-heading class="container">
-                                      <div class="pie-chart-item ng-scope">
-                                        <div ng-click="existingClientFeedbackData()">
-                                          {{leadCountData.existing_client_count}}
+                    <div class="row">
+                      <div class="col-xlg-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 dashboard-side-label">
+                        <h4 style="margin-left:140px;">EXISTING CLIENT FEEDBACK COUNT </h4>
+                      </div>
+                      <div class="col-xlg-10 col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                        <div class="row">
+                          <div class="col-xlg-6 col-lg-6 col-md-6 col-sm-6 col-xs-6" style="margin-left:140px;">
+                            <div class="form-group has-success">
+                              <div class="pie-chart-item-container ng-scope">
+                                <div class="custom-panel">
+                                  <uib-accordion close-others="oneAtATime">
+                                    <div uib-accordion-group panel-class="panel panel-blur date-grid-tab custom-panel"
+                                      id="custompanelmobile">
+                                      <div uib-accordion-heading class="container">
+                                        <div class="pie-chart-item ng-scope">
+                                          <div ng-click="existingClientFeedbackData()">
+                                            {{leadCountData.existing_client_count}}
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
-                                  </div>
-                                </uib-accordion>
+                                  </uib-accordion>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                 
-                  <!-- start lead details -->
-                  <div ng-hide="leadCampaignTable">
-                    <div class="campaigndetailtable">
+
+                    <!-- start lead details -->
+                    <div ng-hide="leadCampaignTable">
+                      <div class="campaigndetailtable">
+                        <div class="col-md-12">
+                          <div class="panel-heading" style="height:70px;">
+                            <h5 style="background:'red';color:white;">Lead Details</h5>
+                            <h5 class="pull-right">({{date|date : "dd-MM-yyyy"}})</h5>
+                          </div>
+                          <br />
+                          <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
+                          <br />
+                          <div class="table-responsive">
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <th>Index</th>
+                                  <th>Campaign Name</th>
+                                  <th>Total purchased</th>
+                                  <th>Total available</th>
+                                </tr>
+                              </thead>
+
+                              <tbody>
+                                <tr ng-repeat="item in campaignLeadData.campaigns | filter : searchQuery">
+                                  <td>{{$index + 1}}</td>
+                                  <td><a ng-click="getLeadSupplier(item)">{{item.name}}</a>
+                                  </td>
+                                  <td>{{item.purchased_count}}</td>
+                                  <td>{{item.not_purchased_count}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end lead details -->
+                    <!-- start lead suppler detail -->
+                    <div class="campaigndetailtable" ng-hide="leadSupplierTable">
                       <div class="col-md-12">
-                        <div class="panel-heading" style="height:70px;">
-                          <h5 style="background:'red';color:white;">Lead Details</h5>
-                          <h5 class="pull-right">({{date|date : "dd-MM-yyyy"}})</h5>
+                        <div class="panel-heading">
+                          <h4><a ng-click="getCampaign(proposalId)" style="color: white;cursor: pointer;">Supplier
+                              Details
+                              of <span
+                                style="color:#ffe000;font-style: italic;text-transform:capitalize;font-weight: 900;text-decoration: underline;">
+                                {{campaignName}} </span> Campaign</a></h4><br />
+                          <!-- <div class="row">
+                          <span class="pull-left"><label for="heading"><small>Campaign Owner :
+                              </small><span><small style="color:orange">{{campaignOwner}}</small> </span></label></span>
+                          <span class="pull-right"><label for="heading"><small>Principal Vendor :
+                              </small><span><small style="color:orange">{{principalVendor}}</small></span></label></span>  
+                        </div> -->
                         </div>
-                        <br />
-                        <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
-                        <br />
+
                         <div class="table-responsive">
-                          <table class="table">
+                          <table class="table" id="tablescroll">
                             <thead>
                               <tr>
-                                <th>Index</th>
-                                <th>Campaign Name</th>
-                                <th>Total purchased</th>
-                                <th>Total available</th>
+                                <th>Supplier Name</th>
+                                <th>Flat Count / Primary Count</th>
+                                <th>Area</th>
+                                <th>City</th>
                               </tr>
                             </thead>
-
                             <tbody>
-                              <tr ng-repeat="item in campaignLeadData.campaigns | filter : searchQuery">
-                                <td>{{$index + 1}}</td>
-                                <td><a ng-click="getLeadSupplier(item)">{{item.name}}</a>
-                                </td>
-                                <td>{{item.purchased_count}}</td>
-                                <td>{{item.not_purchased_count}}</td>
+                              <tr ng-repeat="supplier in leadSupplierData">
+                                <td><b>{{supplier.supplier_name}}</b></td>
+                                <td> {{supplier.unit_primary_count}}</td>
+                                <td> {{supplier.area}}</td>
+                                <td> {{supplier.city}}</td>
+
                               </tr>
                             </tbody>
                           </table>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <!-- end lead details -->
-                  <!-- start lead suppler detail -->
-                  <div class="campaigndetailtable" ng-hide="leadSupplierTable">
-                    <div class="col-md-12">
-                      <div class="panel-heading">
-                        <h4><a ng-click="getCampaign(proposalId)" style="color: white;cursor: pointer;">Supplier Details
-                            of <span
-                              style="color:#ffe000;font-style: italic;text-transform:capitalize;font-weight: 900;text-decoration: underline;">
-                              {{campaignName}} </span> Campaign</a></h4><br />
-                        <!-- <div class="row">
-                          <span class="pull-left"><label for="heading"><small>Campaign Owner :
-                              </small><span><small style="color:orange">{{campaignOwner}}</small> </span></label></span>
-                          <span class="pull-right"><label for="heading"><small>Principal Vendor :
-                              </small><span><small style="color:orange">{{principalVendor}}</small></span></label></span>  
-                        </div> -->
-                      </div>
+                    <!-- end lead suppler detail -->
 
+                    <div ng-hide="existingClientTable">
                       <div class="table-responsive">
                         <table class="table" id="tablescroll">
                           <thead>
                             <tr>
-                              <th>Supplier Name</th>
-                              <th>Flat Count / Primary Count</th>
-                              <th>Area</th>
-                              <th>City</th>
+                              <th>Dis-Satisfied Count : {{clientFeedbackData.dissatisfied_count}}</th>
+                              <th>Extremely Dis-Satisfied Count : {{clientFeedbackData.extremely_dissatisfied_count}}
+                              </th>
+                              <th>Satisfied Count : {{clientFeedbackData.satisfied_count}}</th>
                             </tr>
                           </thead>
-                          <tbody>
-                            <tr ng-repeat="supplier in leadSupplierData">
-                              <td><b>{{supplier.supplier_name}}</b></td>
-                              <td> {{supplier.unit_primary_count}}</td>
-                              <td> {{supplier.area}}</td>
-                              <td> {{supplier.city}}</td>
-
-                            </tr>
-                          </tbody>
                         </table>
                       </div>
                     </div>
                   </div>
-                  <!-- end lead suppler detail -->
 
-                  <div ng-hide="existingClientTable">
-                    <div class="table-responsive">
-                      <table class="table" id="tablescroll">
-                        <thead>
-                          <tr>
-                            <th>Dis-Satisfied Count : {{clientFeedbackData.dissatisfied_count}}</th>
-                            <th>Extremely Dis-Satisfied Count : {{clientFeedbackData.extremely_dissatisfied_count}}</th>
-                            <th>Satisfied Count : {{clientFeedbackData.satisfied_count}}</th>
-                          </tr>
-                        </thead>
-                      </table>
-                    </div>
-                  </div>
-                  </div>
-                 
                 </div>
                 <div ng-if="decisionPendingTab">
-                  <div >
+                  <div>
                     <h4 class="panel-title">
-                     
+
 
                       <!-- <select ng-options="entityType.name for entityType in entityTypes" ng-model="entityType.value"
                       class="form-control" ng-change="setEntityType(entityType.value)"
                       default-option="{{entityType.name}}">  
                     </select> -->
 
-                    <select class="form-control" name="supplierType" ng-model="entityType.value"
-                    value="entityType.value" ng-change="setEntityType(entityType.value)">
-                    <option value="">Select Supplier Type</option>
-                    <option value="{{entityType.value}}"
-                      ng-selected="selectedEntityType == entityType.value"
-                      ng-repeat="entityType in entityTypes">{{entityType.name}}</option>
-                  </select>
+                      <select class="form-control" name="supplierType" ng-model="entityType.value"
+                        value="entityType.value" ng-change="setEntityType(entityType.value)">
+                        <option value="">Select Supplier Type</option>
+                        <option value="{{entityType.value}}" ng-selected="selectedEntityType == entityType.value"
+                          ng-repeat="entityType in entityTypes">{{entityType.name}}</option>
+                      </select>
                     </h4>
                   </div>
                   <br />
                   <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
                   <br />
-                    <div class="table-responsive">
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th>Select Multiple</th>
-                              <th>Entity Name</th>
-                              <th>Type of Entity</th>
-                              <th style="width:120px;" class="col-md-2" ng-click="Sort('entity_type')">Flat Count / Primary Count  <a><i class="icon-sort" style="color:white;"></i></a></th>
-                              <th>Area</th>
-                              <th>City</th>
-                              <th>Action</th>
-                            </tr>
-                            <!-- <tr colspan="9">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Select Multiple</th>
+                          <th>Entity Name</th>
+                          <th>Type of Entity</th>
+                          <th style="width:120px;" class="col-md-2" ng-click="Sort('entity_type')">Flat Count / Primary
+                            Count <a><i class="icon-sort" style="color:white;"></i></a></th>
+                          <th>Area</th>
+                          <th>City</th>
+                          <th>Action</th>
+                        </tr>
+                        <!-- <tr colspan="9">
                               <td></td>
                               <td></td>
                               <td></td>
@@ -382,39 +404,43 @@
                               
   
                             </tr> -->
-                          </thead>
-                          <tbody>
-                            <tr
-                              dir-paginate="decisionPanding in leadDecisionPandingData |filter:searchQuery | orderBy:sort:reversesort | itemsPerPage:10 track by $index ">
-                            <!-- <tr ng-repeat = "decisionPanding in leadDecisionPandingData track by $index"> -->
-                              <td class="alignment"> <input type="checkbox"
-                                name="checkBox" id="checkBox_id" ng-click="checkboxCheck($index)"
-                                ng-model="decisionPanding.checkStatus"></td>
-                              <td class="alignment">{{decisionPanding.entity_name}}</td>
-                              <td class="alignment">{{decisionPanding.entity_type}}</td>
-                              <td class="alignment">{{decisionPanding.primary_count}}</td>
-                              <td class="alignment">{{decisionPanding.area}}</td>
-                              <td class="alignment">{{decisionPanding.city}}</td>
+                      </thead>
+                      <tbody>
+                        <tr
+                          dir-paginate="decisionPanding in leadDecisionPandingData |filter:searchQuery | orderBy:sort:reversesort | itemsPerPage:10 track by $index ">
+                          <!-- <tr ng-repeat = "decisionPanding in leadDecisionPandingData track by $index"> -->
+                          <td class="alignment"> <input type="checkbox" name="checkBox" id="checkBox_id"
+                              ng-click="checkboxCheck($index)" ng-model="decisionPanding.checkStatus"></td>
+                          <td class="alignment">{{decisionPanding.entity_name}}</td>
+                          <td class="alignment">{{decisionPanding.entity_type}}</td>
+                          <td class="alignment">{{decisionPanding.primary_count}}</td>
+                          <td class="alignment">{{decisionPanding.area}}</td>
+                          <td class="alignment">{{decisionPanding.city}}</td>
 
-                              <td class="alignment">
-                                <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                                ng-click="acceptDeclineDecisionPanding($index,'Accepted')">Accept</button>
-                                <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                                ng-click="acceptDeclineDecisionPanding($index,'Decline')">Decline</button></td>
-                            </tr>
-                           
-                          </tbody>
-                        </table>
-                        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
-                      
-                      </div>
-                      <div class="" ng-if="leadDecisionPandingData.length  != 0">
-                        <button class="btn btn-danger" ng-click="acceptDeclineMultiple('Accepted')" ng-disabled="!isCheck">Accept</button>
-                        <button class="btn btn-danger" ng-click="acceptDeclineMultiple('Decline')" ng-disabled="!isCheck">Decline</button>
-                      </div>
-                      <div style="text-align: center; margin-top: 10px; color: red;" ng-if="leadDecisionPandingData.length  == 0">
-                        Record not Found.
-                      </div>
+                          <td class="alignment">
+                            <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                              ng-click="acceptDeclineDecisionPanding($index,'Accepted')">Accept</button>
+                            <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                              ng-click="acceptDeclineDecisionPanding($index,'Decline')">Decline</button>
+                          </td>
+                        </tr>
+
+                      </tbody>
+                    </table>
+                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                    </dir-pagination-controls>
+
+                  </div>
+                  <div class="" ng-if="leadDecisionPandingData.length  != 0">
+                    <button class="btn btn-danger" ng-click="acceptDeclineMultiple('Accepted')"
+                      ng-disabled="!isCheck">Accept</button>
+                    <button class="btn btn-danger" ng-click="acceptDeclineMultiple('Decline')"
+                      ng-disabled="!isCheck">Decline</button>
+                  </div>
+                  <div style="text-align: center; margin-top: 10px; color: red;"
+                    ng-if="leadDecisionPandingData.length  == 0">
+                    Record not Found.
+                  </div>
                 </div>
               </uib-tab>
 
@@ -685,7 +711,8 @@
                                 Purchased
                                 <span
                                   style="color:#ffe000;font-style: italic;text-transform:capitalize;font-weight: 900;text-decoration: underline;">{{selectedCampaignName}}
-                                </span></h5>
+                                </span>
+                              </h5>
                               <h5 style="background:'red';color:white;text-transform:capitalize"
                                 ng-if="!selectedCampaignName">Details of All Leads</h5>
 
@@ -728,7 +755,7 @@
                                       <td>{{supplier.supplier_data.area}} <br> ({{supplier.supplier_data.subarea}})</td>
                                       <td>{{supplier.supplier_data.supplier_type_name}}</td>
                                       <td>{{supplier.supplier_data.flat_count}}</td>
-                                      <td>{{supplier.lead_date |  date:'medium'}}</td>
+                                      <td>{{supplier.lead_date | date:'medium'}}</td>
                                       <td>{{supplier.company_lead_status}}</td>
                                     </tr>
 
@@ -786,12 +813,12 @@
                                   </div>
                                   <tr>
                                     <td>{{mapTextFirst}}</td>
-                                    <td><small>{{(space.title.leadDate | date:'medium')  || 'NA'}}</small>
+                                    <td><small>{{(space.title.leadDate | date:'medium') || 'NA'}}</small>
                                     </td>
                                   </tr>
                                   <tr>
                                     <td>{{mapTextSecond}}</td>
-                                    <td><small>{{(space.title.leadType)  || 'NA'}}</small>
+                                    <td><small>{{(space.title.leadType) || 'NA'}}</small>
                                     </td>
                                   </tr>
                                 </table>
@@ -817,7 +844,8 @@
                                 Purchased
                                 <span
                                   style="color:#3bff00c4;font-style: italic;text-transform:capitalize">{{selectedCampaignName}}
-                                </span></h5>
+                                </span>
+                              </h5>
                               <h5 style="background:'red';color:white;text-transform:capitalize"
                                 ng-if="!selectedCampaignName">Details of All Leads</h5>
 
@@ -861,7 +889,7 @@
                                       <td>{{supplier.supplier_data.area}} <br> ({{supplier.supplier_data.subarea}})</td>
                                       <td>{{supplier.supplier_data.supplier_type_name}}</td>
                                       <td>{{supplier.supplier_data.flat_count}}</td>
-                                      <td>{{supplier.lead_date |  date:'medium'}}</td>
+                                      <td>{{supplier.lead_date | date:'medium'}}</td>
                                       <td>{{supplier.company_lead_status}}</td>
                                     </tr>
 
@@ -919,12 +947,12 @@
                                   </div>
                                   <tr>
                                     <td>{{mapTextFirst}}</td>
-                                    <td><small>{{(space.title.leadDate |  date:'medium')  || 'NA'}}</small>
+                                    <td><small>{{(space.title.leadDate | date:'medium') || 'NA'}}</small>
                                     </td>
                                   </tr>
                                   <tr>
                                     <td>{{mapTextSecond}}</td>
-                                    <td><small>{{(space.title.feedback)  || 'NA'}}</small>
+                                    <td><small>{{(space.title.feedback) || 'NA'}}</small>
                                     </td>
                                   </tr>
                                 </table>
@@ -967,9 +995,9 @@
                           <option value="Survey">Survey</option>
                           <option value="Leads">Leads</option>
                         </select> -->
-                        <select ng-options="supplierType for supplierType in surveyLeadArray" aria-placeholder="Select Leads,Surveyed Clients" ng-model="supplierType"
-                          class="form-control" ng-change="surveyLeadFilter(supplierType)"
-                        >
+                        <select ng-options="supplierType for supplierType in surveyLeadArray"
+                          aria-placeholder="Select Leads,Surveyed Clients" ng-model="supplierType" class="form-control"
+                          ng-change="surveyLeadFilter(supplierType)">
                         </select>
                       </h4>
                     </div>
@@ -1016,7 +1044,8 @@
                             <th style="width:100px;" class="col-md-2" ng-click="Sort('flat_count')">Unit primary
                               Count<a><i class="icon-sort" style="color:white;"></i></a></th>
                             <th style="width:120px;" class="col-md-2" ng-click="Sort('total_leads')">Purchased Survey
-                              <a><i class="icon-sort" style="color:white;"></i></a></th>
+                              <a><i class="icon-sort" style="color:white;"></i></a>
+                            </th>
                             <!-- <th style="width:100px;" class="col-md-2" ng-click="Sort('hot_leads')">Hot Leads <a><i class="icon-sort" style="color:white;"></i></a></th> -->
                             <th class="btn_box_lead_survey_th">View Leads</th>
                             <th class="btn_box_lead_survey_th">Email Leads</th>
@@ -1097,11 +1126,11 @@
                             </td>
                           </tr>
                         </tbody>
-                       
+
                       </table>
-                      <div  ng-if="leadsDataCampaigns.length == 0">
+                      <div ng-if="leadsDataCampaigns.length == 0">
                         <h4 style="color: red; text-align: center;">Record Not Found.</h4>
-                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="viewLeadstable" ng-if="purchasedNotPurchasedLead">
@@ -1171,7 +1200,7 @@
                       </tr>
                     </tbody>
                   </table> -->
-                      <table class="table table_content" ng-if="!isTableHide">
+                      <!-- <table class="table table_content" ng-if="!isTableHide">
                         <thead>
                           <tr>
                             <th>Index</th>
@@ -1182,124 +1211,228 @@
                           </tr>
                         </thead>
                         <tbody>
-                         
                           <tr ng-if="lead_purchased == leadPurchasedStatus" ng-repeat="lead in all_values">
                            <td >{{$index + 1}}</td>
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Supplier Name']}}</span>
+                           <td style="width:100px;" class="col-md-2" ng-repeat="(key,filter) in purchasedNotPurchasedLead.header track by $index">
+                              <span>{{lead[key]}}</span>
                             </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Supplier Type']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Area']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Address']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Lat/Long']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['City']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['State']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Country']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Pin Code']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Primary Count']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Service']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Sub service']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['L1.1 Answer']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['L1.2 Answer']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['L2.1 Answer']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['L2.2 Answer']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['L3.1 Answer']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['L3.2 Answer']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Prefered Patner']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Implementation Time']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Meeting Time']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Call back time']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Comments']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Time Stamp']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Lead Status']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['H2']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['H3']}}</span>
-                            </td> 
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['H4']}}</span>
-                            </td>
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['H5']}}</span>
-                            </td>
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['H6']}}</span>
-                            </td>
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['dummyfild']}}</span>
-                            </td>
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Name']}}</span>
-                            </td>
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Number']}}</span>
-                            </td>
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Designation']}}</span>
-                            </td>
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Current Partner']}}</span>
-                            </td>
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Reasons for Dissatisfaction']}}</span>
-                            </td>
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Price']}}</span>
-                            </td>
-                            <td style="width:100px;" class="col-md-2">
-                              <span>{{lead['Client Status']}}</span>
-                            </td>
                           </tr>
+                    </div>
+                    </tr>
+
+                    </tbody>
+                    </table> -->
+
+                      <table class="table table_content">
+                        <thead>
+                          <tr>
+                            <th>Index</th>
+                            <th style="width:100px;" class="col-md-2"
+                              ng-repeat="(key,filter) in purchasedNotPurchasedLead.header track by $index">
+                              <span> {{key}} </span>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="lead in purchasedNotPurchasedLead.values">
+                            <td ng-if="lead[0].lead_purchased == leadPurchasedStatus">{{$index + 1}}</td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[1].value">{{lead[1].value}}</span>
+                              <span ng-if="!lead[1].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[2].value">{{lead[2].value}}</span>
+                              <span ng-if="!lead[3].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[3].value">{{lead[3].value}}</span>
+                              <span ng-if="!lead[3].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[4].value">{{lead[4].value}}</span>
+                              <span ng-if="!lead[4].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[5].value">{{lead[5].value}}</span>
+                              <span ng-if="!lead[5].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[6].value">{{lead[6].value}}</span>
+                              <span ng-if="!lead[6].value">NA</span>
+                            </td>
+
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[7].value">{{lead[7].value}}</span>
+                              <span ng-if="!lead[7].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[8].value">{{lead[8].value}}</span>
+                              <span ng-if="!lead[8].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[9].value">{{lead[9].value}}</span>
+                              <span ng-if="!lead[9].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[10].value">{{lead[10].value}}</span>
+                              <span ng-if="!lead[10].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[11].value">{{lead[11].value}}</span>
+                              <span ng-if="!lead[11].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[12].value">{{lead[12].value}}</span>
+                              <span ng-if="!lead[12].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[13].value">{{lead[13].value}}</span>
+                              <span ng-if="!lead[13].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[14].value">{{lead[14].value}}</span>
+                              <span ng-if="!lead[14].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[15].value">{{lead[15].value}}</span>
+                              <span ng-if="!lead[15].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[16].value">{{lead[16].value}}</span>
+                              <span ng-if="!lead[16].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[17].value">{{lead[17].value}}</span>
+                              <span ng-if="!lead[17].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[18].value">{{lead[18].value}}</span>
+                              <span ng-if="!lead[18].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[19].value">{{lead[19].value}}</span>
+                              <span ng-if="!lead[19].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[20].value">{{lead[20].value}}</span>
+                              <span ng-if="!lead[20].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[21].value">{{lead[21].value}}</span>
+                              <span ng-if="!lead[21].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[22].value">{{lead[22].value}}</span>
+                              <span ng-if="!lead[22].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[23].value">{{lead[23].value}}</span>
+                              <span ng-if="!lead[23].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[24].value">{{lead[24].value}}</span>
+                              <span ng-if="!lead[24].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[25].value">{{lead[25].value}}</span>
+                              <span ng-if="!lead[25].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[26].value">{{lead[26].value}}</span>
+                              <span ng-if="!lead[26].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[27].value">{{lead[27].value}}</span>
+                              <span ng-if="!lead[27].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[28].value">{{lead[28].value}}</span>
+                              <span ng-if="!lead[28].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[29].value">{{lead[29].value}}</span>
+                              <span ng-if="!lead[29].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[30].value">{{lead[30].value}}</span>
+                              <span ng-if="!lead[30].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[31].value">{{lead[31].value}}</span>
+                              <span ng-if="!lead[31].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[32].value">{{lead[32].value}}</span>
+                              <span ng-if="!lead[32].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[33].value">{{lead[33].value}}</span>
+                              <span ng-if="!lead[33].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[34].value">{{lead[34].value}}</span>
+                              <span ng-if="!lead[34].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[35].value">{{lead[35].value}}</span>
+                              <span ng-if="!lead[35].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[36].value">{{lead[36].value}}</span>
+                              <span ng-if="!lead[36].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[37].value">{{lead[37].value}}</span>
+                              <span ng-if="!lead[37].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[38].value">{{lead[38].value}}</span>
+                              <span ng-if="!lead[38].value">NA</span>
+                            </td>
+                            <td style="width:100px;" class="col-md-2"
+                              ng-if="lead[0].lead_purchased == leadPurchasedStatus">
+                              <span ng-if="lead[39].value">{{lead[39].value}}</span>
+                              <span ng-if="!lead[39].value">NA</span>
+                            </td>
+
                     </div>
                     </tr>
 
@@ -1393,28 +1526,36 @@
                   </p>
                   <p>Website URL- <span
                       ng-if="viewLicenceDetailData.companydetail.website_url">{{viewLicenceDetailData.companydetail.website_url}}</span>
-                    <span ng-if="!viewLicenceDetailData.companydetail.website_url">NA</span></p>
+                    <span ng-if="!viewLicenceDetailData.companydetail.website_url">NA</span>
+                  </p>
                   <p>Contact Number- <span
                       ng-if="viewLicenceDetailData.companydetail.contact_number">{{viewLicenceDetailData.companydetail.contact_number}}</span>
-                    <span ng-if="!viewLicenceDetailData.companydetail.contact_number">NA</span></p>
+                    <span ng-if="!viewLicenceDetailData.companydetail.contact_number">NA</span>
+                  </p>
                   <p>GSTIN Number- <span
                       ng-if="viewLicenceDetailData.companydetail.gstin_number">{{viewLicenceDetailData.companydetail.gstin_number}}</span>
-                    <span ng-if="!viewLicenceDetailData.companydetail.gstin_number">NA</span></p>
+                    <span ng-if="!viewLicenceDetailData.companydetail.gstin_number">NA</span>
+                  </p>
                   <p>HQ Address- <span
                       ng-if="viewLicenceDetailData.companydetail.registered_address">{{viewLicenceDetailData.companydetail.registered_address}}</span>
-                    <span ng-if="!viewLicenceDetailData.companydetail.registered_address">NA</span></p>
+                    <span ng-if="!viewLicenceDetailData.companydetail.registered_address">NA</span>
+                  </p>
                   <p>City- <span
                       ng-if="viewLicenceDetailData.companydetail.city">{{viewLicenceDetailData.companydetail.city}}</span>
-                    <span ng-if="!viewLicenceDetailData.companydetail.city">NA</span></p>
+                    <span ng-if="!viewLicenceDetailData.companydetail.city">NA</span>
+                  </p>
                   <p>PIN Code- <span
                       ng-if="viewLicenceDetailData.companydetail.pin_code">{{viewLicenceDetailData.companydetail.pin_code}}</span>
-                    <span ng-if="!viewLicenceDetailData.companydetail.pin_code">NA</span></p>
+                    <span ng-if="!viewLicenceDetailData.companydetail.pin_code">NA</span>
+                  </p>
                   <p>Billing Number- <span
                       ng-if="viewLicenceDetailData.companydetail.billing_address">{{viewLicenceDetailData.companydetail.billing_address}}</span>
-                    <span ng-if="!viewLicenceDetailData.companydetail.billing_address">NA</span></p>
+                    <span ng-if="!viewLicenceDetailData.companydetail.billing_address">NA</span>
+                  </p>
                   <p>PAN- <span
                       ng-if="viewLicenceDetailData.companydetail.pan_number">{{viewLicenceDetailData.companydetail.pan_number}}</span>
-                    <span ng-if="!viewLicenceDetailData.companydetail.pan_number">NA</span></p>
+                    <span ng-if="!viewLicenceDetailData.companydetail.pan_number">NA</span>
+                  </p>
                   <button data-target="#companyDetailModal" data-toggle="modal">Edit</button>
                 </div>
               </div>
@@ -1427,10 +1568,12 @@
                   </p>
                   <p>Email- <span
                       ng-if="viewLicenceDetailData.relationship_manager.email">{{viewLicenceDetailData.relationship_manager.email}}</span>
-                    <span ng-if="!viewLicenceDetailData.relationship_manager.email">NA</span></p>
+                    <span ng-if="!viewLicenceDetailData.relationship_manager.email">NA</span>
+                  </p>
                   <p>Phone Number-<span
                       ng-if="viewLicenceDetailData.relationship_manager.phone_number">{{viewLicenceDetailData.relationship_manager.phone_number}}</span>
-                    <span ng-if="!viewLicenceDetailData.relationship_manager.phone_number">NA</span></p>
+                    <span ng-if="!viewLicenceDetailData.relationship_manager.phone_number">NA</span>
+                  </p>
                   <!-- <button data-target="#relationshipManagerDetailsModal" data-toggle="modal">Edit</button> -->
                 </div>
               </div>
@@ -1445,13 +1588,16 @@
                   </p>
                   <p>Email- <span
                       ng-if="viewLicenceDetailData.mydetail.email">{{viewLicenceDetailData.mydetail.email}}</span>
-                    <span ng-if="!viewLicenceDetailData.mydetail.email">NA</span></p>
+                    <span ng-if="!viewLicenceDetailData.mydetail.email">NA</span>
+                  </p>
                   <p>Contact Number- <span
                       ng-if="viewLicenceDetailData.mydetail.mobile">{{viewLicenceDetailData.mydetail.mobile}}</span>
-                    <span ng-if="!viewLicenceDetailData.mydetail.mobile">NA</span></p>
+                    <span ng-if="!viewLicenceDetailData.mydetail.mobile">NA</span>
+                  </p>
                   <p>Designation- <span
                       ng-if="viewLicenceDetailData.mydetail.designation">{{viewLicenceDetailData.mydetail.designation}}</span>
-                    <span ng-if="!viewLicenceDetailData.mydetail.designation">NA</span></p>
+                    <span ng-if="!viewLicenceDetailData.mydetail.designation">NA</span>
+                  </p>
                   <button data-target="#myDetailsModal" data-toggle="modal">Edit</button>
                 </div>
               </div>
@@ -1462,7 +1608,7 @@
                   <div class="viewLeadstable">
                     <br /><br /><br /><br />
                     <!-- <input type="text" class="form-control" ng-model="searchQuery" placeholder="search"> -->
-                   <h4>Payment Summary</h4>
+                    <h4>Payment Summary</h4>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
@@ -1479,17 +1625,19 @@
                         <tbody>
                           <!-- <tr
                             dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index "> -->
-                          <tr ng-if="paymentDetailsData.paymentdetail.length >0" ng-repeat="payment in paymentDetailsData.paymentdetail">
+                          <tr ng-if="paymentDetailsData.paymentdetail.length >0"
+                            ng-repeat="payment in paymentDetailsData.paymentdetail">
                             <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                           </tr>
-                        
+
 
                         </tbody>
                       </table>
-                      <div style="text-align: center; margin-top: 10px;" ng-if="paymentDetailsData.paymentdetail.length  == 0">
+                      <div style="text-align: center; margin-top: 10px;"
+                        ng-if="paymentDetailsData.paymentdetail.length  == 0">
                         Record not Found.
                       </div>
                     </div>
@@ -1508,94 +1656,90 @@
                     <div class="modal-body">
                       <form role="form" class="form-inline" ng-submit="updateCompanyDetails()" name="myForm">
                         <div class="row">
-                        <div class="col-md-4" style="margin-top: 10px">
-                          <label> Company Name : </label>
-                            </div>
-                        <div class="col-md-8" style="margin-top: 10px">
-                          <input type="text" placeholder="Name" class="form-control" name="company_name" id="name_id" 
-                                  ng-model="viewLicenceDetailData.companydetail.company">
-                        </div>
+                          <div class="col-md-4" style="margin-top: 10px">
+                            <label> Company Name : </label>
+                          </div>
+                          <div class="col-md-8" style="margin-top: 10px">
+                            <input type="text" placeholder="Name" class="form-control" name="company_name" id="name_id"
+                              ng-model="viewLicenceDetailData.companydetail.company">
+                          </div>
                         </div>
                         <div class="row">
-                        <div class="col-md-4" style="margin-top: 10px">
-                          <label> Website URL : </label>
-                            </div>
-                        <div class="col-md-8" style="margin-top: 10px">
-                          <input type="text" placeholder="Website URL" class="form-control" name="website_url"
-                            id="website_url_id"
-                                  ng-model="viewLicenceDetailData.companydetail.website_url">
-                        </div>
+                          <div class="col-md-4" style="margin-top: 10px">
+                            <label> Website URL : </label>
                           </div>
+                          <div class="col-md-8" style="margin-top: 10px">
+                            <input type="text" placeholder="Website URL" class="form-control" name="website_url"
+                              id="website_url_id" ng-model="viewLicenceDetailData.companydetail.website_url">
+                          </div>
+                        </div>
                         <div class="row">
-                        <div class="col-md-4" style="margin-top: 10px">
-                          <label> Contact Number : </label>
-                            </div>
-                        <div class="col-md-8" style="margin-top: 10px">
-                          <input type="text" ng-pattern="/^[0-9]{10,10}$/" maxlength="10" placeholder="Contact Number"
-                            class="form-control" name="contact_number" id="contact_number_id" 
-                                  ng-model="viewLicenceDetailData.companydetail.contact_number">
-                          <div ng-show="myForm.contact_number.$error.pattern" class="error" style="font-size:12px; color: red;">
-                            Phone number Invalid</div>
-                        </div>
+                          <div class="col-md-4" style="margin-top: 10px">
+                            <label> Contact Number : </label>
                           </div>
+                          <div class="col-md-8" style="margin-top: 10px">
+                            <input type="text" ng-pattern="/^[0-9]{10,10}$/" maxlength="10" placeholder="Contact Number"
+                              class="form-control" name="contact_number" id="contact_number_id"
+                              ng-model="viewLicenceDetailData.companydetail.contact_number">
+                            <div ng-show="myForm.contact_number.$error.pattern" class="error"
+                              style="font-size:12px; color: red;">
+                              Phone number Invalid</div>
+                          </div>
+                        </div>
                         <div class="row">
-                        <div class="col-md-4" style="margin-top: 10px">
-                          <label> GSTIN Number : </label>
-                            </div>
-                        <div class="col-md-8" style="margin-top: 10px">
-                          <input type="text" placeholder="GSTIN Number" class="form-control" name="gst_number"
-                            id="gst_number_id" 
-                                  ng-model="viewLicenceDetailData.companydetail.gstin_number">
-                        </div>
+                          <div class="col-md-4" style="margin-top: 10px">
+                            <label> GSTIN Number : </label>
                           </div>
+                          <div class="col-md-8" style="margin-top: 10px">
+                            <input type="text" placeholder="GSTIN Number" class="form-control" name="gst_number"
+                              id="gst_number_id" ng-model="viewLicenceDetailData.companydetail.gstin_number">
+                          </div>
+                        </div>
                         <div class="row">
-                        <div class="col-md-4" style="margin-top: 10px">
-                          <label> HQ Address : </label>
-                            </div>
-                        <div class="col-md-8" style="margin-top: 10px">
-                          <input type="text" placeholder="HQ Address" class="form-control" name="address"
-                            id="address_id"
-                                  ng-model="viewLicenceDetailData.companydetail.registered_address">
-                        </div>
+                          <div class="col-md-4" style="margin-top: 10px">
+                            <label> HQ Address : </label>
                           </div>
+                          <div class="col-md-8" style="margin-top: 10px">
+                            <input type="text" placeholder="HQ Address" class="form-control" name="address"
+                              id="address_id" ng-model="viewLicenceDetailData.companydetail.registered_address">
+                          </div>
+                        </div>
                         <div class="row">
-                        <div class="col-md-4" style="margin-top: 10px">
-                          <label> City : </label>
-                            </div>
-                        <div class="col-md-8" style="margin-top: 10px">
-                          <input type="text" placeholder="City" class="form-control" name="city" id="city_id" 
-                                  ng-model="viewLicenceDetailData.companydetail.city">
-                        </div>
+                          <div class="col-md-4" style="margin-top: 10px">
+                            <label> City : </label>
                           </div>
+                          <div class="col-md-8" style="margin-top: 10px">
+                            <input type="text" placeholder="City" class="form-control" name="city" id="city_id"
+                              ng-model="viewLicenceDetailData.companydetail.city">
+                          </div>
+                        </div>
                         <div class="row">
-                        <div class="col-md-4" style="margin-top: 10px">
-                          <label> PIN Code : </label>
-                            </div>
-                        <div class="col-md-8" style="margin-top: 10px">
-                          <input type="text" placeholder="PIN Code" class="form-control" name="pin_code"
-                            id="pin_code_id" 
-                                  ng-model="viewLicenceDetailData.companydetail.pin_code">
-                        </div>
+                          <div class="col-md-4" style="margin-top: 10px">
+                            <label> PIN Code : </label>
                           </div>
+                          <div class="col-md-8" style="margin-top: 10px">
+                            <input type="text" placeholder="PIN Code" class="form-control" name="pin_code"
+                              id="pin_code_id" ng-model="viewLicenceDetailData.companydetail.pin_code">
+                          </div>
+                        </div>
                         <div class="row">
-                        <div class="col-md-4" style="margin-top: 10px">
-                          <label> Billing Number : </label>
-                            </div>
-                        <div class="col-md-8" style="margin-top: 10px">
-                          <input type="text" placeholder="Billing Number" class="form-control" name="billing_number"
-                            id="billing_number_id" 
-                                  ng-model="viewLicenceDetailData.companydetail.billing_address">
-                        </div>
+                          <div class="col-md-4" style="margin-top: 10px">
+                            <label> Billing Number : </label>
                           </div>
-                       <div class="row">
-                        <div class="col-md-4" style="margin-top: 10px">
-                          <label> PAN : </label>
-                            </div>
-                        <div class="col-md-8" style="margin-top: 10px">
-                          <input type="text" placeholder="PAN" class="form-control" name="pan" id="pan_id" 
-                                  ng-model="viewLicenceDetailData.companydetail.pan_number">
-                        </div>
+                          <div class="col-md-8" style="margin-top: 10px">
+                            <input type="text" placeholder="Billing Number" class="form-control" name="billing_number"
+                              id="billing_number_id" ng-model="viewLicenceDetailData.companydetail.billing_address">
                           </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-4" style="margin-top: 10px">
+                            <label> PAN : </label>
+                          </div>
+                          <div class="col-md-8" style="margin-top: 10px">
+                            <input type="text" placeholder="PAN" class="form-control" name="pan" id="pan_id"
+                              ng-model="viewLicenceDetailData.companydetail.pan_number">
+                          </div>
+                        </div>
 
                         <!-- <div>
                           <button class="btn btn-danger" ng-disabled="!myForm.$valid"
@@ -1622,24 +1766,26 @@
                         name="relationshipManagerDetailsForm">
                         <div class="col-md-12" style="margin-top: 10px">
                           <label> Name : </label>
-                          <input type="text" placeholder="Name" class="form-control" name="company_name" id="relationship_name_id"
-                                  ng-model="viewLicenceDetailData.relationship_manager.name" required>
+                          <input type="text" placeholder="Name" class="form-control" name="company_name"
+                            id="relationship_name_id" ng-model="viewLicenceDetailData.relationship_manager.name"
+                            required>
                         </div>
-                  
+
 
                         <div class="col-md-12" style="margin-top: 10px">
                           <label> Email : </label>
                           <input type="text" placeholder="Email" name="email_name" class="form-control"
                             id="relationship_email_id" ng-model="viewLicenceDetailData.relationship_manager.email"
                             ng-pattern="/^[a-zA-Z0-9]+[.]?[_a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+$/">
-                          <div ng-show="relationshipManagerDetailsForm.email_name.$error.pattern" class="error" style="font-size:12px;">
+                          <div ng-show="relationshipManagerDetailsForm.email_name.$error.pattern" class="error"
+                            style="font-size:12px;">
                             Email Invalid</div>
                         </div>
                         <div class="col-md-12" style="margin-top: 10px">
                           <label> Phone Number : </label>
-                          <input type="text" ng-pattern="/^[0-9]{10}$/" placeholder="Phone Number"
-                            class="form-control" name="contact_number" id="contacts_number_id" 
-                                  ng-model="viewLicenceDetailData.relationship_manager.phone_number">
+                          <input type="text" ng-pattern="/^[0-9]{10}$/" placeholder="Phone Number" class="form-control"
+                            name="contact_number" id="contacts_number_id"
+                            ng-model="viewLicenceDetailData.relationship_manager.phone_number">
                           <div ng-show="relationshipManagerDetailsForm.contact_number.$error.pattern" class="error"
                             style="font-size:12px; color: red;">Phone Number Invalid</div>
                         </div>
@@ -1662,59 +1808,57 @@
                     <div class="modal-body">
                       <form role="form" class="form-inline" ng-submit="updateMyDetails()" name="myDetailsForm">
                         <div class="row">
-                        <div class="col-md-4" style="margin-top: 10px">
-                          <label> First Name : </label>
-                            </div>
-                        <div class="col-md-8" style="margin-top: 10px">
-                          <input type="text" placeholder="First Name" class="form-control" name="first_name"
-                            id="first_name_id" 
-                                  ng-model="viewLicenceDetailData.mydetail.first_name">
-                        </div>
+                          <div class="col-md-4" style="margin-top: 10px">
+                            <label> First Name : </label>
                           </div>
+                          <div class="col-md-8" style="margin-top: 10px">
+                            <input type="text" placeholder="First Name" class="form-control" name="first_name"
+                              id="first_name_id" ng-model="viewLicenceDetailData.mydetail.first_name">
+                          </div>
+                        </div>
                         <div class="row">
-                        <div class="col-md-4" style="margin-top: 10px">
-                          <label> Last Name : </label>
-                        </div>
-                        <div class="col-md-8" style="margin-top: 10px">
-                          <input type="text" placeholder="Last Name" class="form-control" name="last_name"
-                            id="last_name_id" 
-                                   ng-model="viewLicenceDetailData.mydetail.last_name">
-                        </div>
+                          <div class="col-md-4" style="margin-top: 10px">
+                            <label> Last Name : </label>
                           </div>
+                          <div class="col-md-8" style="margin-top: 10px">
+                            <input type="text" placeholder="Last Name" class="form-control" name="last_name"
+                              id="last_name_id" ng-model="viewLicenceDetailData.mydetail.last_name">
+                          </div>
+                        </div>
                         <div class="row">
-                        <div class="col-md-4" style="margin-top: 10px">
-                          <label> Email : </label>
-                            </div>
-                        <div class="col-md-8" style="margin-top: 10px">
-                          <input type="text" placeholder="Email" name="email_name" class="form-control"
-                            id="my_email_id" ng-model="viewLicenceDetailData.mydetail.email"
-                            ng-pattern="/^[a-zA-Z0-9]+[.]?[_a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+$/">
-                          <div ng-show="myDetailsForm.email_name.$error.pattern" class="error" style="font-size:12px;">
-                            Email Invalid</div>
-                        </div>
+                          <div class="col-md-4" style="margin-top: 10px">
+                            <label> Email : </label>
                           </div>
+                          <div class="col-md-8" style="margin-top: 10px">
+                            <input type="text" placeholder="Email" name="email_name" class="form-control"
+                              id="my_email_id" ng-model="viewLicenceDetailData.mydetail.email"
+                              ng-pattern="/^[a-zA-Z0-9]+[.]?[_a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+$/">
+                            <div ng-show="myDetailsForm.email_name.$error.pattern" class="error"
+                              style="font-size:12px;">
+                              Email Invalid</div>
+                          </div>
+                        </div>
                         <div class="row">
-                        <div class="col-md-4" style="margin-top: 10px">
-                          <label> Contact Number : </label>
-                            </div>
-                            <div class="col-md-8" style="margin-top: 10px">
-                          <input type="text" ng-pattern="/^[0-9]{10}$/" maxlength="10" placeholder="Contact Number"
-                            class="form-control" name="contact_number" id="my_contact_number_id" 
-                                  ng-model="viewLicenceDetailData.mydetail.mobile">
-                          <div ng-show="myDetailsForm.contact_number.$error.pattern" class="error"
-                            style="font-size:12px; color: red;">Contact Number Invalid</div>
-                        </div>
+                          <div class="col-md-4" style="margin-top: 10px">
+                            <label> Contact Number : </label>
                           </div>
+                          <div class="col-md-8" style="margin-top: 10px">
+                            <input type="text" ng-pattern="/^[0-9]{10}$/" maxlength="10" placeholder="Contact Number"
+                              class="form-control" name="contact_number" id="my_contact_number_id"
+                              ng-model="viewLicenceDetailData.mydetail.mobile">
+                            <div ng-show="myDetailsForm.contact_number.$error.pattern" class="error"
+                              style="font-size:12px; color: red;">Contact Number Invalid</div>
+                          </div>
+                        </div>
                         <div class="row">
-                        <div class="col-md-4" style="margin-top: 10px">
-                          <label> Designation : </label>
-                            </div>
-                            <div class="col-md-8" style="margin-top: 10px">
-                          <input type="text" placeholder="Designation" class="form-control" name="designation"
-                            id="designation_id" 
-                                  ng-model="viewLicenceDetailData.mydetail.designation">
-                        </div>
+                          <div class="col-md-4" style="margin-top: 10px">
+                            <label> Designation : </label>
                           </div>
+                          <div class="col-md-8" style="margin-top: 10px">
+                            <input type="text" placeholder="Designation" class="form-control" name="designation"
+                              id="designation_id" ng-model="viewLicenceDetailData.mydetail.designation">
+                          </div>
+                        </div>
                         <button type="submit" class="smallBtn">Update</button>
                       </form>
                     </div>
@@ -1902,16 +2046,20 @@
                                   <tr>
                                     <td><small style="font-weight:bold">{{getHotLeadName}} (%)</small></td>
                                     <td>{{summary_report.overall_data.hot_lead_count || 'NA'}}
-                                      {{getPercentBrackets(summary_report.overall_data.hot_lead_count, summary_report.overall_data.total_lead)}}
+                                      {{getPercentBrackets(summary_report.overall_data.hot_lead_count,
+                                      summary_report.overall_data.total_lead)}}
                                     </td>
                                     <td>{{summary_report.last_week.hot_lead_count || 'NA'}}
-                                      {{getPercentBrackets(summary_report.last_week.hot_lead_count, summary_report.last_week.total_lead)}}
+                                      {{getPercentBrackets(summary_report.last_week.hot_lead_count,
+                                      summary_report.last_week.total_lead)}}
                                     </td>
                                     <td>{{summary_report.last_two_weeks.hot_lead_count || 'NA'}}
-                                      {{getPercentBrackets(summary_report.last_two_weeks.hot_lead_count, summary_report.last_two_weeks.total_lead)}}
+                                      {{getPercentBrackets(summary_report.last_two_weeks.hot_lead_count,
+                                      summary_report.last_two_weeks.total_lead)}}
                                     </td>
                                     <td>{{summary_report.last_three_weeks.hot_lead_count || 'NA'}}
-                                      {{getPercentBrackets(summary_report.last_three_weeks.hot_lead_count, summary_report.last_three_weeks.total_lead)}}
+                                      {{getPercentBrackets(summary_report.last_three_weeks.hot_lead_count,
+                                      summary_report.last_three_weeks.total_lead)}}
                                     </td>
                                   </tr>
                                 </tbody>
@@ -1920,16 +2068,20 @@
                                   <tr>
                                     <td><small style="font-weight:bold">{{getDeepLeadName}} (%)</small></td>
                                     <td>{{summary_report.overall_data.total_deep_count || 'NA'}}
-                                      {{getPercentBrackets(summary_report.overall_data.total_deep_count, summary_report.overall_data.total_lead)}}
+                                      {{getPercentBrackets(summary_report.overall_data.total_deep_count,
+                                      summary_report.overall_data.total_lead)}}
                                     </td>
                                     <td>{{summary_report.last_week.total_deep_count || 'NA'}}
-                                      {{getPercentBrackets(summary_report.last_week.total_deep_count, summary_report.last_week.total_lead)}}
+                                      {{getPercentBrackets(summary_report.last_week.total_deep_count,
+                                      summary_report.last_week.total_lead)}}
                                     </td>
                                     <td>{{summary_report.last_two_weeks.total_deep_count || 'NA'}}
-                                      {{getPercentBrackets(summary_report.last_two_weeks.total_deep_count, summary_report.last_two_weeks.total_lead)}}
+                                      {{getPercentBrackets(summary_report.last_two_weeks.total_deep_count,
+                                      summary_report.last_two_weeks.total_lead)}}
                                     </td>
                                     <td>{{summary_report.last_three_weeks.total_deep_count || 'NA'}}
-                                      {{getPercentBrackets(summary_report.last_three_weeks.total_deep_count, summary_report.last_three_weeks.total_lead)}}
+                                      {{getPercentBrackets(summary_report.last_three_weeks.total_deep_count,
+                                      summary_report.last_three_weeks.total_lead)}}
                                     </td>
                                   </tr>
                                 </tbody>
@@ -1980,14 +2132,18 @@
                                 <tr>
                                   <th style="background:#8e1921 !important;color:#ffffff !important;">Details</th>
                                   <th style="background:#8e1921 !important;color:#ffffff !important">Overall Campaign
-                                    <br>Total</th>
+                                    <br>Total
+                                  </th>
                                   <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count <br>
                                     <small style="color:#ffffff !important">
-                                      < 150 </small> </th> <th
-                                        style="background:#8e1921 !important;color:#ffffff !important">Flat Count
-                                        <br><small style="color:#ffffff !important"> Between 151 to 400</small></th>
+                                      < 150 </small>
+                                  </th>
+                                  <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count
+                                    <br><small style="color:#ffffff !important"> Between 151 to 400</small>
+                                  </th>
                                   <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count <br>
-                                    <small style="color:#ffffff !important"> > 401</small></th>
+                                    <small style="color:#ffffff !important"> > 401</small>
+                                  </th>
                                 </tr>
                               </thead>
                               <tbody style="text-align:center;">
@@ -1995,7 +2151,7 @@
                                 <tr>
                                   <td><small style="font-weight:bold">Lead Count</small></td>
                                   <td>{{summary_report.overall_data.total_lead}}</td>
-                                  <td>{{flat_summary["<150"].lead_count}}</td>
+                                  <td>{{flat_summary["<150"].lead_count}}< /td>
                                   <td>{{flat_summary["150-400"].lead_count}}</td>
                                   <td>{{flat_summary[">400"].lead_count}}</td>
                                 </tr>
@@ -2003,7 +2159,7 @@
                                 <tr>
                                   <td><small style="font-weight:bold">Flat Count</small></td>
                                   <td>{{summary_report.overall_data.primary_count}}</td>
-                                  <td>{{flat_summary["<150"].flat_count}}</td>
+                                  <td>{{flat_summary["<150"].flat_count}}< /td>
                                   <td>{{flat_summary["150-400"].flat_count}}</td>
                                   <td>{{flat_summary[">400"].flat_count}}</td>
                                 </tr>
@@ -2011,32 +2167,38 @@
                                 <tr>
                                   <td><small style="font-weight:bold">{{getHotLeadName}} (%)</small></td>
                                   <td>{{summary_report.overall_data.hot_lead_count}}
-                                    {{getPercentBrackets(summary_report.overall_data.hot_lead_count, summary_report.overall_data.total_lead)}}
+                                    {{getPercentBrackets(summary_report.overall_data.hot_lead_count,
+                                    summary_report.overall_data.total_lead)}}
                                   </td>
                                   <td>{{flat_summary["<150"].hot_lead_count}}
-                                    {{getPercentBrackets(flat_summary["<150"].hot_lead_count, flat_summary["<150"].lead_count)}}
-                                  </td>
+                                      {{getPercentBrackets(flat_summary["<150"].hot_lead_count,
+                                      flat_summary["<150"].lead_count)}} </td>
                                   <td>{{flat_summary["150-400"].hot_lead_count}}
-                                    {{getPercentBrackets(flat_summary["150-400"].hot_lead_count, flat_summary["150-400"].lead_count)}}
+                                    {{getPercentBrackets(flat_summary["150-400"].hot_lead_count,
+                                    flat_summary["150-400"].lead_count)}}
                                   </td>
                                   <td>{{flat_summary[">400"].hot_lead_count}}
-                                    {{getPercentBrackets(flat_summary[">400"].hot_lead_count, flat_summary[">400"].lead_count)}}
+                                    {{getPercentBrackets(flat_summary[">400"].hot_lead_count,
+                                    flat_summary[">400"].lead_count)}}
                                   </td>
                                 </tr>
 
                                 <tr>
                                   <td><small style="font-weight:bold">{{getDeepLeadName}} (%)</small></td>
                                   <td>{{summary_report.overall_data.total_deep_count}}
-                                    {{getPercentBrackets(summary_report.overall_data.total_deep_count, summary_report.overall_data.total_lead)}}
+                                    {{getPercentBrackets(summary_report.overall_data.total_deep_count,
+                                    summary_report.overall_data.total_lead)}}
                                   </td>
                                   <td>{{flat_summary["<150"].deep_lead_count}}
-                                    {{getPercentBrackets(flat_summary["<150"].deep_lead_count, flat_summary["<150"].lead_count)}}
-                                  </td>
+                                      {{getPercentBrackets(flat_summary["<150"].deep_lead_count,
+                                      flat_summary["<150"].lead_count)}} </td>
                                   <td>{{flat_summary["150-400"].deep_lead_count}}
-                                    {{getPercentBrackets(flat_summary["150-400"].deep_lead_count, flat_summary["150-400"].lead_count)}}
+                                    {{getPercentBrackets(flat_summary["150-400"].deep_lead_count,
+                                    flat_summary["150-400"].lead_count)}}
                                   </td>
                                   <td>{{flat_summary[">400"].deep_lead_count}}
-                                    {{getPercentBrackets(flat_summary[">400"].deep_lead_count, flat_summary[">400"].lead_count)}}
+                                    {{getPercentBrackets(flat_summary[">400"].deep_lead_count,
+                                    flat_summary[">400"].lead_count)}}
                                   </td>
                                 </tr>
 
@@ -2094,9 +2256,11 @@
                                   <th style="background:#8e1921 !important;color:#ffffff !important">Total Leads</th>
                                   <th style="background:#8e1921 !important;color:#ffffff !important">Flat Count</th>
                                   <th style="background:#8e1921 !important;color:#ffffff !important">{{getHotLeadName}}
-                                    <br>(%)</th>
+                                    <br>(%)
+                                  </th>
                                   <th style="background:#8e1921 !important;color:#ffffff !important">{{getDeepLeadName}}
-                                    <br>(%)</th>
+                                    <br>(%)
+                                  </th>
                                 </tr>
                               </thead>
                               <tbody style="text-align:center;">
@@ -2104,11 +2268,12 @@
                                   <td style="font-weight:bold">{{key}}</td>
                                   <td>{{data.lead_count}}</td>
                                   <td>{{data.flat_count}}</td>
-                                  <td>{{data.hot_lead_count}} <br> <small
-                                      style="font-weight:bold">{{ getPercentBrackets(data.hot_lead_count, data.lead_count)}}</small>
+                                  <td>{{data.hot_lead_count}} <br> <small style="font-weight:bold">{{
+                                      getPercentBrackets(data.hot_lead_count, data.lead_count)}}</small>
                                   </td>
                                   <td>{{data.deep_lead_count}} <br> <small
-                                      style="font-weight:bold">{{getPercent(data.deep_lead_count, data.lead_count)}}</small>
+                                      style="font-weight:bold">{{getPercent(data.deep_lead_count,
+                                      data.lead_count)}}</small>
                                   </td>
                                 </tr>
                               </tbody>
