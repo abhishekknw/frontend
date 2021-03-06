@@ -67,13 +67,230 @@
             </div>
           </uib-tab>
 
-          <uib-tab id="uib-tabs-width" ng-click="getCampaignsList()" index="1">
+          <uib-tab id="uib-tabs-width" ng-click="getLeadsTabSuspenseLeads()" index="1">
             <uib-tab-heading>
               <h5>Leads</h5>
             </uib-tab-heading>
-            <h4>dddddddddddddddddddddddddddddddddddd</h4>
+            <div class="panel-body table-style">
+              <div class="table-wrapper" style="overflow-x: auto;">
+                <table class="table table-striped table-bordered table-suppliers release_plan_table" data-ng-init="initTable()">
+                  <thead>
+                    <tr>
+                      <th>Sno</th>
+                      <th class="alignment">Phone Number</th>
+                      <th class="alignment">Sector</th>
+                      <th class="alignment">Sub Sector</th>
+                      <th class="alignment">Current Partner</th>
+                      <th class="alignment">Current Partner Feedback</th>
+                      <th class="alignment">Reason</th>
+                      <th class="alignment">Preferred Partner</th>
+                      <th class="alignment">Implementation TimeLine</th>
+                      <th class="alignment">Meeting TimeLine</th>
+                      <th class="alignment">L1 Answers</th>
+                      <th class="alignment">L2 Answers</th>
+                      <th class="alignment">Lead Status</th>
+                      <th class="alignment">Callback Preference</th>
+                      <th class="alignment">Comment</th>
+                      <th class="alignment">Time Stamp</th>
+                      <th class="alignment">Chat</th>
+                      <th class="alignment">Action</th>
+                      <th class="alignment">Action 1</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- <tr ng-repeat="leadTabData in leadTabSuspenseLeadData track by $index"> -->
+                      <tr  dir-paginate="leadTabData in leadTabSuspenseLeadData | itemsPerPage:itemsPerPage" current-page="currentPage">
+                      <td>{{itemsPerPage *(currentPage-1)+$index+1}}</td>
+                      <td class="alignment">{{leadTabData.phone_number}}</td>
+                      <td class="alignment">{{leadTabData.sector_name}}</td>
+                      <td class="alignment">{{leadTabData.sub_sector_name}}</td>
+                      <td class="alignment">current Patner</td>
+                      <td class="alignment">
+                        <input type="text"  ng-model="leadTabData.current_patner_feedback" name="current_patner_feedback" class="form-control" placeholder="Current Patner Feedback" id="current_patner_feedback_id">
+                      </td>
+                      <td class="alignment">
+                        <input type="text"  ng-model="leadTabData.current_patner_feedback_reason" name="current_patner_feedback_reason" class="form-control" placeholder="Current Patner Feedback Reason" id="current_patner_feedback_reason_id">
+                      </td>
+                      <td class="alignment">Preferred Patner</td>
+                      <td class="alignment">
+                        <select class="form-control"
+                          name="implementation_{{$index}}" id="implementation_id_{{$index}}"
+                          ng-model="leadTabData.implementation_timeline">
+                          <option value="" disabled>Select Implementation Time</option>
+                          <option ng-repeat="(key,value) in implementationTime track by $index"
+                            value="{{key}}">
+                            {{value}}
+                          </option>
+                        </select>
+                      </td>
+
+                      <td class="alignment" class="form-group">
+                        <select class="form-control" name="meating_time_{{$index}}"
+                          id="meating_time_id_{{$index}}" ng-model="leadTabData.meating_timeline">
+                          <option value="" disabled>Select Meeting Time</option>
+                          <option  ng-repeat="(key,value) in meetingTime track by $index" value="{{key}}">
+                            {{value}}
+                          </option>
+                        </select>
+                      </td>
+
+                      <td class="alignment">
+                        <textarea placeholder="L1 Answers" class="form-control" ng-model="leadTabData.l1_answers" rows="4" cols="50">
+                        </textarea>
+                      </td>
+                      <td class="alignment">
+                        <textarea placeholder="L2 Answers" class="form-control" ng-model="leadTabData.l2_answers" rows="4" cols="50">
+                        </textarea>
+                      </td>
+                      <td class="alignment">
+                        {{leadTabData.lead_status}}
+                      </td>
+                      <td class="alignment">
+                        <input type="text"  ng-model="leadTabData.call_back_preference" name="call_back_preference" class="form-control" placeholder="Call Back Preference" id="call_back_preference_id">
+                      </td>
+                      <td class="alignment">
+                        <textarea placeholder="Comment" class="form-control" ng-model="leadTabData.comment" rows="4" cols="50">
+                        </textarea>
+                      </td>
+                      <td class="alignment">
+                        <p> Submitted: {{leadTabData.created_at | date:'medium' }} </p>
+                      </td>
+                      <td class="alignment">
+                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-info">View & Intervene</button>
+                      </td>
+
+                      <td class="alignment">
+                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success btn-small" data-target="#companyDetailModal" data-toggle="modal">Add/Update Supplier</button>
+                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success btn-small">Add POC</button>
+                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success btn-small">Add RE</button>
+                      </td>
+
+                      <td class="alignment">
+                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success">Ops Verify</button>
+                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success">Update</button>
+                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger">Remove</button>
+                      </td>
+                     
+                    </tr>
+                  </tbody>
+                </table>
+                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                </dir-pagination-controls>
+              </div>
+            </div>
           </uib-tab>
         </uib-tabset>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="companyDetailModal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <div class="pageTitle">
+            <h4>Add/Update Supplier</h4>
+          </div>
+          <h4 class="modal-title">Company Details:</h4>
+          <hr />
+          <div class="modal-body">
+            <form role="form" class="form-inline" ng-submit="updateCompanyDetails()" name="myForm">
+              <div class="row">
+                <div class="col-md-4" style="margin-top: 10px">
+                  <label> Company Name : </label>
+                </div>
+                <div class="col-md-8" style="margin-top: 10px">
+                  <input type="text" placeholder="Name" class="form-control" name="company_name" id="name_id"
+                    ng-model="viewLicenceDetailData.companydetail.company">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4" style="margin-top: 10px">
+                  <label> Website URL : </label>
+                </div>
+                <div class="col-md-8" style="margin-top: 10px">
+                  <input type="text" placeholder="Website URL" class="form-control" name="website_url"
+                    id="website_url_id" ng-model="viewLicenceDetailData.companydetail.website_url">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4" style="margin-top: 10px">
+                  <label> Contact Number : </label>
+                </div>
+                <div class="col-md-8" style="margin-top: 10px">
+                  <input type="text" ng-pattern="/^[0-9]{10,10}$/" maxlength="10" placeholder="Contact Number"
+                    class="form-control" name="contact_number" id="contact_number_id"
+                    ng-model="viewLicenceDetailData.companydetail.contact_number">
+                  <div ng-show="myForm.contact_number.$error.pattern" class="error"
+                    style="font-size:12px; color: red;">
+                    Phone number Invalid</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4" style="margin-top: 10px">
+                  <label> GSTIN Number : </label>
+                </div>
+                <div class="col-md-8" style="margin-top: 10px">
+                  <input type="text" placeholder="GSTIN Number" class="form-control" name="gst_number"
+                    id="gst_number_id" ng-model="viewLicenceDetailData.companydetail.gstin_number">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4" style="margin-top: 10px">
+                  <label> HQ Address : </label>
+                </div>
+                <div class="col-md-8" style="margin-top: 10px">
+                  <input type="text" placeholder="HQ Address" class="form-control" name="address"
+                    id="address_id" ng-model="viewLicenceDetailData.companydetail.registered_address">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4" style="margin-top: 10px">
+                  <label> City : </label>
+                </div>
+                <div class="col-md-8" style="margin-top: 10px">
+                  <input type="text" placeholder="City" class="form-control" name="city" id="city_id"
+                    ng-model="viewLicenceDetailData.companydetail.city">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4" style="margin-top: 10px">
+                  <label> PIN Code : </label>
+                </div>
+                <div class="col-md-8" style="margin-top: 10px">
+                  <input type="text" placeholder="PIN Code" class="form-control" name="pin_code"
+                    id="pin_code_id" ng-model="viewLicenceDetailData.companydetail.pin_code">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4" style="margin-top: 10px">
+                  <label> Billing Number : </label>
+                </div>
+                <div class="col-md-8" style="margin-top: 10px">
+                  <input type="text" placeholder="Billing Number" class="form-control" name="billing_number"
+                    id="billing_number_id" ng-model="viewLicenceDetailData.companydetail.billing_address">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4" style="margin-top: 10px">
+                  <label> PAN : </label>
+                </div>
+                <div class="col-md-8" style="margin-top: 10px">
+                  <input type="text" placeholder="PAN" class="form-control" name="pan" id="pan_id"
+                    ng-model="viewLicenceDetailData.companydetail.pan_number">
+                </div>
+              </div>
+
+              <!-- <div>
+                <button class="btn btn-danger" ng-disabled="!myForm.$valid"
+                  ng-click="updateCompanyDetails()">Save</button>
+              </div> -->
+              <button type="submit" class="smallBtn">Update</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
