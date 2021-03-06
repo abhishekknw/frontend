@@ -1133,7 +1133,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="viewLeadstable" ng-if="purchasedNotPurchasedLead">
+                  <div class="viewLeadstable" ng-hide="isTableHide" ng-if="purchasedNotPurchasedLead">
                     <!-- <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button> -->
                     </br><br>
                     <input type="text" class="form-control" ng-model="searchData" ng-if="purchasedTable"
