@@ -19,6 +19,11 @@ function (machadaloHttp, $stateParams, $rootScope,$window, $routeParams, $locati
         return machadaloHttp.get(url);
       }
 
+      suspenseLeadService.removeSuspenseLead = function(){
+        var url = base_url + "b2b/delete-suspense-leads/";
+          return machadaloHttp.get(url);
+        }
+
 //   campaignListService.getAllCampaignDetails = function(fetch_all){
 //     var url = url_base + "campaign-assignment/?fetch_all=" + fetch_all;
 //       return machadaloHttp.get(url);

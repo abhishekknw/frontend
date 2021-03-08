@@ -106,10 +106,10 @@
                       <td class="alignment">{{leadTabData.sub_sector_name}}</td>
                       <td class="alignment">current Patner</td>
                       <td class="alignment">
-                        <input type="text"  ng-model="leadTabData.current_patner_feedback" name="current_patner_feedback" class="form-control" placeholder="Current Patner Feedback" id="current_patner_feedback_id">
+                        <input type="text"  ng-model="leadTabData.current_patner_feedback" name="current_patner_feedback" class="form-control" placeholder="Current Patner Feedback" id="current_patner_feedback_id_{{$index}}">
                       </td>
                       <td class="alignment">
-                        <input type="text"  ng-model="leadTabData.current_patner_feedback_reason" name="current_patner_feedback_reason" class="form-control" placeholder="Current Patner Feedback Reason" id="current_patner_feedback_reason_id">
+                        <input type="text"  ng-model="leadTabData.current_patner_feedback_reason" name="current_patner_feedback_reason" class="form-control" placeholder="Current Patner Feedback Reason" id="current_patner_feedback_reason_id_{{$index}}">
                       </td>
                       <td class="alignment">Preferred Patner</td>
                       <td class="alignment">
@@ -146,7 +146,7 @@
                         {{leadTabData.lead_status}}
                       </td>
                       <td class="alignment">
-                        <input type="text"  ng-model="leadTabData.call_back_preference" name="call_back_preference" class="form-control" placeholder="Call Back Preference" id="call_back_preference_id">
+                        <input type="text"  ng-model="leadTabData.call_back_preference" name="call_back_preference" class="form-control" placeholder="Call Back Preference" id="call_back_preference_id_{{$index}}">
                       </td>
                       <td class="alignment">
                         <textarea placeholder="Comment" class="form-control" ng-model="leadTabData.comment" rows="4" cols="50">
@@ -168,7 +168,7 @@
                       <td class="alignment">
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success">Ops Verify</button>
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success">Update</button>
-                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger">Remove</button>
+                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger" ng-click="removeSuspenseLead(leadTabData._id,$index)">Remove</button>
                       </td>
                      
                     </tr>
