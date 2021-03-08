@@ -666,3 +666,14 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
 	animation: gradientBG 15s ease infinite;
 	transition: all 0.5s ease-in-out;
 }
+
+
+
+/*6-mar-21*/
+.li-popup .multiselectDropdown .dropdown-menu {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  z-index: 999999;
+  transform: translateX(-50%);
+}
