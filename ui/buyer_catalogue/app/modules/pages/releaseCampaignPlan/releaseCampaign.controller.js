@@ -544,6 +544,9 @@ angular.module('catalogueApp')
                     else if (supplier[q].color_code == 4) {
                       supplier[q].color_class = 'white';
                     }
+                    else if (supplier[q].color_code == 5) {
+                      supplier[q].color_class = 'red';
+                    }
                   }
                   else {
                     if (supplier[q].booking_status === 'BK' || supplier[q].booking_status === 'MC') {
@@ -2685,6 +2688,7 @@ angular.module('catalogueApp')
                           if (localindex_index != -1) {
                             $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
                               $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
+                              //$scope.releaseDetails.shortlisted_suppliers.splice(localindex_index, 1);
                             }
                         }
                         swal(constants.name, constants.delete_success, constants.success);
@@ -2693,14 +2697,12 @@ angular.module('catalogueApp')
                     }).catch(function onError(response) {
                       console.log(response);
                     })
-                  for (let i in browsedData) {
+                  for (let j in browsedData) {
                     var localindex_index = $scope.browsedDetailData.map(function (el) {
                       return el._id;
-                    }).indexOf(browsedData[i]);
+                    }).indexOf(browsedData[j]._id);
                     if (localindex_index != -1) {
-                      $scope.$apply(function () {
-                        $scope.browsedDetailData.splice(localindex_index, 1);
-                      });
+                        $scope.browsedDetailData.splice(localindex_index, 1);                
                     }
                   }
                 }
