@@ -2718,7 +2718,7 @@ angular.module('catalogueApp')
         }
 
         $scope.downloadSheet = function (campaignId) {
-          if($scope.releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'){
+          // if($scope.releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'){
             // $window.open(Config.APIBaseUrl + 'v0/ui/leads/generate-campaign-hash/?campaign_id=' +campaignId );  
             releaseCampaignService.downloadSheet(campaignId)
             .then(function onSuccess(response) {
@@ -2729,9 +2729,9 @@ angular.module('catalogueApp')
             }).catch(function onError(response_data) {
               console.log(response_data);
             })  
-          } else {
-            $window.open(Config.APIBaseUrl + 'v0/ui/b2b/download-b2b-leads/?campaign_id=' +campaignId );
-          }
+          // } else {
+          //   $window.open(Config.APIBaseUrl + 'v0/ui/b2b/download-b2b-leads/?campaign_id=' +campaignId );
+          // }
          
         }
 
