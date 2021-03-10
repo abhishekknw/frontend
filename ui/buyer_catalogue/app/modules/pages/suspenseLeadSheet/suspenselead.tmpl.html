@@ -98,24 +98,57 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!-- <tr ng-repeat="leadTabData in leadTabSuspenseLeadData track by $index"> -->
-                      <tr  dir-paginate="leadTabData in leadTabSuspenseLeadData | itemsPerPage:itemsPerPage" current-page="currentPage">
+                    <div ng-loading="loading"></div>
+                    <!-- <tr ng-repeat="leadData in leadTabData track by $index"> -->
+                      <tr ng-if="leadTabData.length > 0"  dir-paginate="leadData in leadTabData | itemsPerPage:itemsPerPage" current-page="currentPage">
                       <td>{{itemsPerPage *(currentPage-1)+$index+1}}</td>
-                      <td class="alignment">{{leadTabData.phone_number}}</td>
-                      <td class="alignment">{{leadTabData.sector_name}}</td>
-                      <td class="alignment">{{leadTabData.sub_sector_name}}</td>
-                      <td class="alignment">current Patner</td>
+                      <td class="alignment">{{leadData.phone_number}}</td>
+                      <td class="alignment">{{leadData.sector_name}}</td>
+                      <td class="alignment">{{leadData.sub_sector_name}}</td>
                       <td class="alignment">
-                        <input type="text"  ng-model="leadTabData.current_patner_feedback" name="current_patner_feedback" class="form-control" placeholder="Current Patner Feedback" id="current_patner_feedback_id_{{$index}}">
+                        <select class="form-control"
+                        name="current_company_{{$index}}"   id="current_company_id_{{$index}}"
+                        ng-model="leadData.current_company"
+                        style="width:100px;">
+                        <option value="" disabled>Select Current Partner</option>
+                        <option ng-repeat="cpartner in companiesData track by $index"
+                          value="{{cpartner.name}}">
+                          {{cpartner.name}}
+                        </option>
+                      </select>
+                      <input style="margin-top:10px" type="text" 
+                        class="form-control" placeholder="Other Current Company"
+                        ng-if="leadData.current_company == ''" name="currentCompanyOther"
+                        id="currentCompanyOtherId" ng-model="leadData.current_company_other">
                       </td>
                       <td class="alignment">
-                        <input type="text"  ng-model="leadTabData.current_patner_feedback_reason" name="current_patner_feedback_reason" class="form-control" placeholder="Current Patner Feedback Reason" id="current_patner_feedback_reason_id_{{$index}}">
+                        <input type="text"  ng-model="leadData.current_patner_feedback" name="current_patner_feedback" class="form-control" placeholder="Current Patner Feedback" id="current_patner_feedback_id_{{$index}}">
                       </td>
-                      <td class="alignment">Preferred Patner</td>
+                      <td class="alignment">
+                        <input type="text"  ng-model="leadData.current_patner_feedback_reason" name="current_patner_feedback_reason" class="form-control" placeholder="Current Patner Feedback Reason" id="current_patner_feedback_reason_id_{{$index}}">
+                      </td>
+
+                      <td class="alignment">
+                        <span style="width:150px;"
+                        class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;"
+                        ng-dropdown-multiselect="" options="companiesDetailData" extra-settings="dropdownSettings"
+                        selected-model="leadData.selected_preferred_patner"
+                        ng-click="leadPreferredMulticheck(key,$index)" translation-texts="selected_business_type"
+                        events="events"></span>
+                        <span ng-repeat="selectedName in leadData.selected_preferred_patner" class="custom-dropdown" style="text-align: left; display: inline-block">
+                          {{selectedName.name}}
+                          <span ng-if="!$last">,</span>
+                        </span>
+                      <input style="margin-top:10px" type="text"
+                        class="form-control" placeholder="Other Preferred Company"
+                        ng-if="leadData.otherPreferredPatner" name="other_preferred_company" id="other_preferred_company"
+                        ng-model="leadData.preferred_patner_other">
+                      </td>
+
                       <td class="alignment">
                         <select class="form-control"
                           name="implementation_{{$index}}" id="implementation_id_{{$index}}"
-                          ng-model="leadTabData.implementation_timeline">
+                          ng-model="leadData.implementation_timeline">
                           <option value="" disabled>Select Implementation Time</option>
                           <option ng-repeat="(key,value) in implementationTime track by $index"
                             value="{{key}}">
@@ -126,7 +159,7 @@
 
                       <td class="alignment" class="form-group">
                         <select class="form-control" name="meating_time_{{$index}}"
-                          id="meating_time_id_{{$index}}" ng-model="leadTabData.meating_timeline">
+                          id="meating_time_id_{{$index}}" ng-model="leadData.meating_timeline">
                           <option value="" disabled>Select Meeting Time</option>
                           <option  ng-repeat="(key,value) in meetingTime track by $index" value="{{key}}">
                             {{value}}
@@ -135,25 +168,25 @@
                       </td>
 
                       <td class="alignment">
-                        <textarea placeholder="L1 Answers" class="form-control" ng-model="leadTabData.l1_answers" rows="4" cols="50">
+                        <textarea placeholder="L1 Answers" class="form-control" ng-model="leadData.l1_answers" rows="4" cols="50">
                         </textarea>
                       </td>
                       <td class="alignment">
-                        <textarea placeholder="L2 Answers" class="form-control" ng-model="leadTabData.l2_answers" rows="4" cols="50">
+                        <textarea placeholder="L2 Answers" class="form-control" ng-model="leadData.l2_answers" rows="4" cols="50">
                         </textarea>
                       </td>
                       <td class="alignment">
-                        {{leadTabData.lead_status}}
+                        {{leadData.lead_status}}
                       </td>
                       <td class="alignment">
-                        <input type="text"  ng-model="leadTabData.call_back_preference" name="call_back_preference" class="form-control" placeholder="Call Back Preference" id="call_back_preference_id_{{$index}}">
+                        <input type="text"  ng-model="leadData.call_back_preference" name="call_back_preference" class="form-control" placeholder="Call Back Preference" id="call_back_preference_id_{{$index}}">
                       </td>
                       <td class="alignment">
-                        <textarea placeholder="Comment" class="form-control" ng-model="leadTabData.comment" rows="4" cols="50">
+                        <textarea placeholder="Comment" class="form-control" ng-model="leadData.comment" rows="4" cols="50">
                         </textarea>
                       </td>
                       <td class="alignment">
-                        <p> Submitted: {{leadTabData.created_at | date:'medium' }} </p>
+                        <p> Submitted: {{leadData.created_at | date:'medium' }} </p>
                       </td>
                       <td class="alignment">
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-info">View & Intervene</button>
@@ -168,13 +201,15 @@
                       <td class="alignment">
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success">Ops Verify</button>
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success">Update</button>
-                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger" ng-click="removeSuspenseLead(leadTabData._id,$index)">Remove</button>
+                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger" ng-click="removeSuspenseLead(leadData._id,$index)">Remove</button>
                       </td>
                      
                     </tr>
+                    
                   </tbody>
                 </table>
-                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                <div ng-if="leadTabData.length == 0" style="text-align: center;color: red;"><h4>Record Not Found.</h4></div>
+                <dir-pagination-controls ng-if="leadTabData.length > 0" max-size="5" direction-links="true" boundary-links="true">
                 </dir-pagination-controls>
               </div>
             </div>

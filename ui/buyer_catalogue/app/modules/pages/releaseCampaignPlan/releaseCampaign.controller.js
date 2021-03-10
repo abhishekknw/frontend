@@ -2482,6 +2482,29 @@ angular.module('catalogueApp')
                           $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = 1;
                           $scope.show_color($scope.releaseDetails.shortlisted_suppliers[localindex_index]);
                         }
+                        let color_class = '';
+                        if (response.data.data.list_color_code == 1) {
+                         color_class =  'yellow';;
+                       }
+                       else if (response.data.data.list_color_code == 2) {
+                         color_class = '#7C4700';
+                       }
+                       else if (response.data.data.list_color_code == 3) {
+                         color_class = 'green';
+                       }
+                       else if (response.data.data.list_color_code == 4) {
+                         color_class = 'white';
+                       } 
+                       else if (response.data.data.list_color_code == 5) {
+                        color_class = 'red';
+                      }
+                        var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+                          return el.id;
+                        }).indexOf($scope.shortlisted_spaces_id);
+                        if (localindex_index != -1) {
+                          $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
+                            $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
+                          }
                         $scope.getRequirementDetail($scope.shortlisted_spaces_id);
                         swal(constants.name, constants.save_success, constants.success);
                       }
