@@ -15,13 +15,13 @@ function (machadaloHttp, $stateParams, $rootScope,$window, $routeParams, $locati
     }
 
     suspenseLeadService.getLeasTabSuspenseLead = function(){
-      var url = base_url + "b2b/suspense-leads/";
+      var url = base_url + "b2b/all-suspense-leads/";
         return machadaloHttp.get(url);
       }
 
-      suspenseLeadService.removeSuspenseLead = function(){
+      suspenseLeadService.removeSuspenseLead = function(data){
         var url = base_url + "b2b/delete-suspense-leads/";
-          return machadaloHttp.get(url);
+          return machadaloHttp.post(url,data);
         }
 
 //   campaignListService.getAllCampaignDetails = function(fetch_all){
