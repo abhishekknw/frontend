@@ -1,76 +1,59 @@
 'use strict';
 
 angular.module('catalogueApp')
-.factory('suspenseLeadService', ['machadaloHttp','$stateParams','$window','$rootScope','$routeParams', '$location', '$http',
+  .factory('suspenseLeadService', ['machadaloHttp', '$stateParams', '$window', '$rootScope', '$routeParams', '$location', '$http',
 
-function (machadaloHttp, $stateParams, $rootScope,$window, $routeParams, $location, $http) {
+    function (machadaloHttp, $stateParams, $rootScope, $window, $routeParams, $location, $http) {
 
-  var base_url = 'v0/ui/';
-  var url_base = 'v0/ui/website/';
-  var suspenseLeadService = {};
+      var base_url = 'v0/ui/';
+      var url_base = 'v0/ui/website/';
+      var suspenseLeadService = {};
 
-  suspenseLeadService.getAllSuspenseLead = function(){
-    var url = base_url + "b2b/suspense-leads/";
-      return machadaloHttp.get(url);
-    }
-
-    suspenseLeadService.getLeasTabSuspenseLead = function(){
-      var url = base_url + "b2b/all-suspense-leads/";
+      suspenseLeadService.getAllSuspenseLead = function () {
+        var url = base_url + "b2b/suspense-leads/";
         return machadaloHttp.get(url);
       }
 
-      suspenseLeadService.removeSuspenseLead = function(data){
+      suspenseLeadService.getLeasTabSuspenseLead = function () {
+        var url = base_url + "b2b/suspense-leads-tab/";
+        return machadaloHttp.get(url);
+      }
+
+      suspenseLeadService.removeSuspenseLead = function (data) {
         var url = base_url + "b2b/delete-suspense-leads/";
-          return machadaloHttp.post(url,data);
-        }
+        return machadaloHttp.post(url, data);
+      }
 
-//   campaignListService.getAllCampaignDetails = function(fetch_all){
-//     var url = url_base + "campaign-assignment/?fetch_all=" + fetch_all;
-//       return machadaloHttp.get(url);
-//     }
+      suspenseLeadService.updateLeadTab = function (data) {
+        var url = base_url + "b2b/update-suspense-leads/";
+        return machadaloHttp.post(url, data);
+      }
 
-//   campaignListService.downloadSheet = function(campaignId){
-//     var url = base_url + "leads/generate-campaign-hash/" + campaignId + "/";
-//       return machadaloHttp.get(url);
-//   }
+      suspenseLeadService.initialData = function () {
+        var url = base_url + "create_supplier/load_initial_data/";
+        return machadaloHttp.get(url);
+      };
 
-//   campaignListService.sendEmail = function(campaignId,email, emailType){
-//     var url = url_base + emailType + "/" + campaignId + "/";
-//     if (email) {
-//       url = url + "?email=" + email;
-//     }
-//     return machadaloHttp.get(url);
-//   }
-
-//   campaignListService.getCampaignWiseSummary = function(){
-//     var url = url_root  + "campaign/campaign-wise-summary/";
-//     return machadaloHttp.get(url);
-//   }
-
-
-  
-//   campaignListService.addComment = function(campaignId, data){
-//     var url = url_base +  campaignId + "/comment/";
-//     return machadaloHttp.post(url,data);
-//   }
-
-//   campaignListService.viewComments = function(campaignId, spaceId, relatedTo){
-//     var url = url_base +  campaignId + "/comment/?related_to=" + relatedTo;
-//     return machadaloHttp.get(url);
-//   }
-
-//   campaignListService.getSuspenseData = function(fromDate,toDate){
- 
-//      var url = base_url + "b2b/suspance-leads/?start_date=" + fromDate + "&end_date=" + toDate;
-//      $window.open(Config.APIBaseUrl + "b2b/suspance-leads/?start_date=" + fromDate + "&end_date=" + toDate);
-//        return machadaloHttp.get(url);
-//   }
-
-//   campaignListService.suspenseCount = function(fromDate,toDate){
-//     var url = base_url + "b2b/suspance-leads-count/?start_date=" + fromDate.getFullYear() +'-'+ JSON.parse(fromDate.getMonth() + 1) +'-'+  fromDate.getDate() + "&end_date=" +  toDate.getFullYear() +'-'+ JSON.parse(toDate.getMonth() + 1) +'-'+  toDate.getDate();
-//       return machadaloHttp.get(url);
-//  }
-
-
-  return suspenseLeadService;
-}]);
+      suspenseLeadService.getAreas = function (type, id) {
+        var url = base_url + "locations/" + id + "/?type=" + type;
+        return machadaloHttp.get(url);
+      };
+      suspenseLeadService.getSupplierNameList = function (data) {
+        var url = base_url + "b2b/suspense-to-supplier/?city=" + data.city + '&area=' + data.area + '&supplier_type=' + data.supplier_type;
+        return machadaloHttp.get(url);
+      };
+      suspenseLeadService.addUpdateSupplier = function (data) {
+        var url = base_url + "b2b/suspense-to-supplier/";
+        return machadaloHttp.post(url, data);
+      }
+      suspenseLeadService.addPoc = function (data) {
+        var url = base_url + "b2b/add-poc/";
+        return machadaloHttp.post(url, data);
+      }
+      suspenseLeadService.opsVerify = function (id) {
+        var url = base_url + "b2b/suspense-lead-ops-verification/?_id=" + id ;
+        return machadaloHttp.get(url);
+      };
+    
+      return suspenseLeadService;
+    }]);
