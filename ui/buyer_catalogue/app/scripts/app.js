@@ -64,7 +64,9 @@ angular
     'btorfs.multiselect',
     'angularUtils.directives.dirPagination',
     'angularMoment',
-    'daterangepicker'
+    'daterangepicker',
+    'ui.select',
+    'ngSanitize'
   ])
   .config(function ($routeProvider, $stateProvider, $urlRouterProvider, $httpProvider, $qProvider, $locationProvider, cfpLoadingBarProvider) {
     $stateProvider

@@ -1,5 +1,4 @@
 angular.module('catalogueApp')
-
   .controller('SuspenseLeadSheetCtrl', ['$scope', '$rootScope', '$window', '$location', 'commonDataShare', 'constants', 'campaignListService', 'suspenseLeadService', 'cfpLoadingBar',
     function ($scope, $rootScope, $window, $location, commonDataShare, constants, campaignListService, suspenseLeadService, cfpLoadingBar) {
 
@@ -13,6 +12,44 @@ angular.module('catalogueApp')
         enableSearch: false,
         showUncheckAll: false
       };
+
+
+      $scope.areaSettings = {
+        smartButtonMaxItems: 4,
+        selectionLimit: 1,
+        showCheckAll: false,
+        showUncheckAll: false,
+        scrollable: true,
+        closeOnSelect: true,
+        enableSearch: true,
+        //   smartButtonTextConverter: function(itemText, originalItem) {
+        //    
+        // }
+      };
+
+      $scope.supplierSettings = {
+        smartButtonMaxItems: 4,
+        selectionLimit: 1,
+        showCheckAll: false,
+        showUncheckAll: false,
+        scrollable: true,
+        closeOnSelect: true,
+        enableSearch: true,
+
+      };
+
+      $scope.pocModel = [];
+
+
+      $scope.initialData = function () {
+        suspenseLeadService.initialData()
+          .then(function onSuccess(response) {
+            $scope.Cities = response.data.cities;
+            $scope.supplierTypes = response.data.supplier_types;
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+      }
       $scope.getAllSuspenseLeads = function () {
         suspenseLeadService.getAllSuspenseLead()
           .then(function onSuccess(response) {
@@ -37,34 +74,34 @@ angular.module('catalogueApp')
               }
             }
 
-            if($scope.leadTabData && $scope.leadTabData.length > 0){
-              for(let i in $scope.leadTabData){
+            if ($scope.leadTabData && $scope.leadTabData.length > 0) {
+              for (let i in $scope.leadTabData) {
                 if (!$scope.leadTabData[i].current_patner) {
-                   $scope.leadTabData[i].current_patner = '';
+                  $scope.leadTabData[i].current_patner = '';
                 }
                 var selected_preferred_patner = [];
                 $scope.leadTabData[i].selected_preferred_patner = [];
-                if ($scope.leadTabData[i].preferred_patner_other) {
+                if ($scope.leadTabData[i].prefered_patner_other) {
                   $scope.otherPreferredPatner = true
                   $scope.leadTabData[i].otherPreferredPatner = true
-                  $scope.leadTabData[i].preferred_patner.push("")
+                  $scope.leadTabData[i].prefered_patners.push("")
                 }
 
-                if ($scope.leadTabData[i].preferred_patner && $scope.leadTabData[i].preferred_patner.length > 0) {
-                  for (let y in $scope.leadTabData[i].preferred_patner) {
+                if ($scope.leadTabData[i].prefered_patners && $scope.leadTabData[i].prefered_patners.length > 0) {
+                  for (let y in $scope.leadTabData[i].prefered_patners) {
                     var _index = $scope.companiesData.map(function (el) {
                       return el.organisation_id;
-                    }).indexOf($scope.leadTabData[i].preferred_patner[y]);
+                    }).indexOf($scope.leadTabData[i].prefered_patners[y]);
                     if (_index != -1) {
                       selected_preferred_patner.push($scope.companiesData[_index])
                     }
                   }
                   $scope.leadTabData[i].selected_preferred_patner = selected_preferred_patner;
                 }
-                
+
               }
             }
-         
+
           }).catch(function onError(response) {
             console.log(response);
           })
@@ -73,41 +110,79 @@ angular.module('catalogueApp')
 
       $scope.otherPreferredPatner = false;
       $scope.leadPreferredMulticheck = function (index) {
-        // if ($scope.requirementDetailData[key] && $scope.requirementDetailData[key].requirements[index] && $scope.requirementDetailData[key].requirements[index].selected_preferred_patner && $scope.requirementDetailData[key].requirements[index].selected_preferred_patner.length > 0) {
-        //   $scope.requirementDetailData[key].requirements[index].preferred_company = [];
-        //   $scope.otherPreferredPatner = false;
-        //   for (let i in $scope.requirementDetailData[key].requirements[index].selected_preferred_patner) {
-        //     $scope.requirementDetailData[key].requirements[index].otherPreferredPatner = false
-        //     if ($scope.requirementDetailData[key].requirements[index].selected_preferred_patner[i].id == 'other') {
-        //       $scope.otherPreferredPatner = true
-        //       $scope.requirementDetailData[key].requirements[index].otherPreferredPatner = true
-        //     } 
-        //     $scope.requirementDetailData[key].requirements[index].preferred_company.push($scope.requirementDetailData[key].requirements[index].selected_preferred_patner[i].id);
-        //   }
-        // }  
-        // if($scope.requirementDetailData[key] && $scope.requirementDetailData[key].requirements[index] && $scope.requirementDetailData[key].requirements[index].selected_preferred_patner && $scope.requirementDetailData[key].requirements[index].selected_preferred_patner.length == 0){
-        //   $scope.requirementDetailData[key].requirements[index].preferred_company = [];
-        //   $scope.requirementDetailData[key].requirements[index].otherPreferredPatner = false
-        // }
+        if ($scope.leadTabData[index] && $scope.leadTabData[index].selected_preferred_patner && $scope.leadTabData[index].selected_preferred_patner.length > 0) {
+          $scope.leadTabData[index].prefered_patners = [];
+          $scope.otherPreferredPatner = false;
+          for (let i in $scope.leadTabData[index].selected_preferred_patner) {
+            $scope.leadTabData[index].otherPreferredPatner = false
+            if ($scope.leadTabData[index].selected_preferred_patner[i].id == 'other') {
+              $scope.otherPreferredPatner = true
+              $scope.leadTabData[index].otherPreferredPatner = true
+            }
+            $scope.leadTabData[index].prefered_patners.push($scope.leadTabData[index].selected_preferred_patner[i].id);
+          }
+        }
+        if ($scope.leadTabData[index] && $scope.leadTabData[index].selected_preferred_patner && $scope.leadTabData[index].selected_preferred_patner.length == 0) {
+          $scope.leadTabData[index].prefered_patners = [];
+          $scope.leadTabData[index].otherPreferredPatner = false
+        }
       }
 
-      // $scope.leadsTabUpdate = function () {
-      //   suspenseLeadService.leadsTabUpdate()
-      //     .then(function onSuccess(response) {
-      //       $scope.leadTabData = response.data.data.suspense_lead;
-      //       $scope.companiesData = response.data.data.companies;
-      //       for (let k in $scope.companiesData) {
-      //         $scope.companiesData[k].id = $scope.companiesData[k].organisation_id;
-      //         $scope.companiesData[k].label = $scope.companiesData[k].name;
-      //         if (k == response.data.data.companies.length - 1) {
-      //           $scope.companiesData.push({ id: 'other', label: 'other', organisation_id: '', name: 'other' })
-      //         }
-      //       }
+      $scope.updateLeadTab = function (index) {
+    
+        if($scope.leadTabData[index].current_patner){
+          $scope.leadTabData[index].current_patner_other = null;
+        }
+        
+        let otherPreferred = null
+        if($scope.leadTabData[index].prefered_patners && $scope.leadTabData[index].prefered_patners.length > 0){
+          for(let i in $scope.leadTabData[index].prefered_patners){
+            if($scope.leadTabData[index].prefered_patners[i] == 'other'){
+              otherPreferred =  $scope.leadTabData[index].prefered_patner_other
+            }
+          }
+        }
+        let data = [{
+          "_id": $scope.leadTabData[index]._id,
+          "implementation_timeline": $scope.leadTabData[index].implementation_timeline,
+          "meating_timeline": $scope.leadTabData[index].meating_timeline,
+          "comment": $scope.leadTabData[index].comment,
+          "current_patner_id": $scope.leadTabData[index].current_patner,
+          "current_patner_other": $scope.leadTabData[index].current_patner_other ? $scope.leadTabData[index].current_patner_other : null,
+          "prefered_patners_id": $scope.leadTabData[index].prefered_patners,
+          "prefered_patner_other": otherPreferred,
+          "call_back_preference": $scope.leadTabData[index].call_back_preference
+        }];
 
-      //     }).catch(function onError(response) {
-      //       console.log(response);
-      //     })
-      // }
+        let update = {
+          "suspense_leads": data
+        }
+        swal({
+          title: 'Are you sure ?',
+          text: 'Update Suspense Lead',
+          type: constants.warning,
+          showCancelButton: true,
+          confirmButtonClass: "btn-success",
+          confirmButtonText: "Yes, Save!",
+          closeOnConfirm: false,
+          closeOnCancel: true
+
+        },
+          function (confirm) {
+            if (confirm) {
+              suspenseLeadService.updateLeadTab(update)
+                .then(function onSuccess(response) {
+                  if (response && response.data.data.error) {
+                    swal(constants.name, response.data.data.error, constants.error);
+                  } else {
+                    swal(constants.name, response.data.data.message, constants.success);
+                  }
+                }).catch(function onError(response) {
+                  console.log(response);
+                })
+            }
+          });
+      }
 
       $scope.removeSuspenseLead = function (id, index) {
         let removeData = {
@@ -140,4 +215,146 @@ angular.module('catalogueApp')
           });
       }
 
+      $scope.supplierForAddUpdate = function (index) {
+        console.log('88888888888888888888888888888',$scope.leadTabData[index]);
+        // $scope.selectedSupplierName = [];
+        $scope.supplierForAddUpdateData = {};
+        $scope.supplierForAddUpdateData = JSON.parse(JSON.stringify($scope.leadTabData[index]));
+        $scope.suppliersName = [];
+        $scope.Areas = [];
+        $scope.model = {};
+        $scope.selectedArea = [];
+        $scope.selectedSupplierName = [];
+        // $scope.supplierForAddUpdateData.supplier_name = 'ffffffffffffff'
+        // if($scope.supplierForAddUpdateData.supplier_name){
+        //   $scope.selectedSupplierName.push({'label':$scope.supplierForAddUpdateData.supplier_name})
+        // }
+      }
+
+      $scope.getArea = function () {
+        $scope.selectedSupplierName = [];
+        var id = $scope.model.city_id;
+        var localindex_index = $scope.Cities.map(function (el) {
+          return el.id;
+        }).indexOf(JSON.parse($scope.model.city_id));
+        if (localindex_index != -1) {
+          $scope.supplierForAddUpdateData['city_id'] = $scope.Cities[localindex_index].id;
+          $scope.supplierForAddUpdateData['city'] = $scope.Cities[localindex_index].city_name;
+        }
+        suspenseLeadService.getAreas('areas', id)
+          .success(function (response) {
+            if (response != null) {
+              $scope.Areas = [];
+              $scope.supplierForAddUpdateData['area_id'] = "";
+              $scope.supplierForAddUpdateData['area'] = "";
+              $scope.selectedArea = [];
+              if (response.length == 0) {
+                $scope.areas.push({ "$$hashkey": "-1", "area_code": "NA", "city_code": "NA", "id": "-1", "label": "Not Available" });
+              }
+              else {
+                $scope.Areas = response;
+              }
+            }
+          });
+      }
+
+      // $scope.selectedArea = [];
+      // $scope.selectedSupplierName = [];
+      $scope.selectArea = function () {
+        $scope.suppliersName = [];
+        $scope.selectedSupplierName = [];
+        if ($scope.selectedArea && $scope.selectedArea.length > 0) {
+          $scope.supplierForAddUpdateData['area'] = $scope.selectedArea[0].label;
+          $scope.supplierForAddUpdateData['area_id'] = $scope.selectedArea[0].id;
+          let data = {
+            city: $scope.supplierForAddUpdateData.city,
+            area: $scope.supplierForAddUpdateData.area,
+            supplier_type: 'RS'
+          }
+          suspenseLeadService.getSupplierNameList(data)
+            .then(function onSuccess(response) {
+              if (response) {
+                $scope.suppliersName = response.data.data.supplier_list;
+                if ($scope.suppliersName.length > 0) {
+                  for (let i in $scope.suppliersName) {
+                    $scope.suppliersName[i].label = $scope.suppliersName[i].society_name;
+                  }
+                }
+              }
+            }).catch(function onError(response) {
+              console.log(response);
+            });
+        }
+      }
+
+      $scope.selectSupplierName = function () {
+        if ($scope.selectedSupplierName && $scope.selectedSupplierName.length > 0) {
+          $scope.supplierForAddUpdateData['supplier_name'] = $scope.selectedSupplierName[0].label;
+        }
+      }
+
+      $scope.addUpdateSupplier = function () {
+        $scope.supplierForAddUpdateData.suspense_id = $scope.supplierForAddUpdateData._id
+        suspenseLeadService.addUpdateSupplier($scope.supplierForAddUpdateData)
+          .then(function onSuccess(response) {
+            if (response && response.data.data.error) {
+              swal(constants.name, response.data.data.error, constants.error);
+            } else {
+              swal(constants.name, response.data.data.message, constants.success);
+            }
+          }).catch(function onError(response) {
+            console.log(response);
+          });
+      }
+      
+      $scope.openAddPoc = function (id) {
+        $scope.suspenseLeadId = id
+        $scope.pocModel = [{
+          'mobile':'',
+          'name':'',
+          'contact_type':''
+        }];
+      }
+
+      $scope.addPocField = function () {
+        $scope.pocModel.push({
+          'mobile':'',
+          'name':'',
+          'contact_type':''
+        });
+      }
+
+      $scope.removePocField = function (index) {
+        $scope.pocModel.splice(index,1)
+      }
+
+      $scope.addPoc = function () {
+        let data = {
+         'suspense_id':$scope.suspenseLeadId,
+         "contactData": $scope.pocModel
+        }
+        suspenseLeadService.addPoc(data)
+          .then(function onSuccess(response) {
+            if (response && response.data.data.error) {
+              swal(constants.name, response.data.data.error, constants.error);
+            } else {
+              swal(constants.name, response.data.data.message, constants.success);
+            }
+          }).catch(function onError(response) {
+            console.log(response);
+          });
+      }
+
+      $scope.opsVerify = function(id){
+        suspenseLeadService.opsVerify(id)
+        .then(function onSuccess(response) {
+          if (response && response.data.data.error) {
+            swal(constants.name, response.data.data.error, constants.error);
+          } else {
+            swal(constants.name, response.data.data.message, constants.success);
+          }
+        }).catch(function onError(response) {
+          console.log(response);
+        });
+      }
     }]);
