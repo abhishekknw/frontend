@@ -6,6 +6,7 @@ angular.module('catalogueApp')
       $scope.itemsPerPage = 10;
       $scope.implementationTime = constants.requirement_implementation_time;
       $scope.meetingTime = constants.requirement_meeting_time;
+      $scope.call_back_time = constants.call_back_time;
       $scope.dropdownSettings = {
         showCheckAll: false,
         scrollable: false,
@@ -356,5 +357,29 @@ angular.module('catalogueApp')
         }).catch(function onError(response) {
           console.log(response);
         });
+      }
+
+      $scope.changeArea = function(){
+        if($scope.supplierForAddUpdateData.isNewArea && $scope.supplierForAddUpdateData.area !=""){
+          $scope.supplierForAddUpdateData.old_area = $scope.supplierForAddUpdateData.area;
+          $scope.supplierForAddUpdateData.old_area_id = $scope.supplierForAddUpdateData.area_id;
+          $scope.supplierForAddUpdateData.area = "";
+          $scope.supplierForAddUpdateData.area_id = "";
+          $scope.selectedArea = [];
+        } else {
+          //remove commnet if  $scope.selectedArea comment in if case
+          // if($scope.supplierForAddUpdateData.old_area){
+          //   $scope.supplierForAddUpdateData.area = $scope.supplierForAddUpdateData.old_area;
+          //   $scope.supplierForAddUpdateData.area_id = $scope.supplierForAddUpdateData.old_area_id;
+          // }
+         
+        }
+      }
+
+      $scope.changeSupplier = function(){
+        if($scope.supplierForAddUpdateData.isNewSupplier){
+          $scope.supplierForAddUpdateData.supplier_name = "";
+          $scope.selectedSupplierName = [];
+        } 
       }
     }]);

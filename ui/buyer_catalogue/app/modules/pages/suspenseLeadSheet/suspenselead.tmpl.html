@@ -184,11 +184,25 @@
                       <td class="alignment">
                         {{leadData.lead_status}}
                       </td>
-                      <td class="alignment">
+                      <!-- <td class="alignment">
                         <input type="text" ng-model="leadData.call_back_preference" name="call_back_preference"
                           class="form-control" placeholder="Call Back Preference"
                           id="call_back_preference_id_{{$index}}">
+                      </td> -->
+
+                      <td class="alignment">
+                        <select class="form-control"
+                          name="call_back_time_{{$index}}" id="call_back_time_id_{{$index}}"
+                          ng-model="leadData.call_back_preference"
+                          style="width:150px;">
+                          <option value="" disabled>Select Call Back Time</option>
+                          <option ng-repeat="(key,value) in call_back_time track by $index"
+                            value="{{key}}">
+                            {{value}}
+                          </option>
+                        </select>
                       </td>
+                      
                       <td class="alignment">
                         <textarea placeholder="Comment" class="form-control" ng-model="leadData.comment" rows="4"
                           cols="50">
@@ -297,7 +311,7 @@
                   <label>Select Area & Edit : </label>
                 </div>
                 <div class="col-md-4" style="margin-top: 10px">
-                    <span disabled="Areas.length == 0"  class="multiselectDropdown"
+                    <span disabled="Areas.length == 0 || supplierForAddUpdateData.isNewArea"  class="multiselectDropdown"
                    ng-dropdown-multiselect=""
                     options="Areas"  search-filter ="" ng-click="selectArea()" extra-settings="areaSettings"
                     selected-model="selectedArea"
@@ -305,18 +319,28 @@
                   </span>
                   </div>
                   <div class="col-md-4">
-                    <md-switch ng-model="supplierForAddUpdateData.isNewArea" aria-label="Switch 1">
-                      <label>New Area</label>
+                    <md-switch ng-model="supplierForAddUpdateData.isNewArea" ng-change="changeArea()" aria-label="Switch 1">
+                      <label>Add New Area</label>
                     </md-switch>
                   </div>
               </div>
 
-              <div class="row" ng-if="supplierForAddUpdateData.isNewArea">
+              <div class="row" ng-if="!supplierForAddUpdateData.isNewArea && selectedArea.length > 0">
                 <div class="col-md-4" style="margin-top: 10px">
-                  <label>New Area: </label>
+                  <label>Edit Area: </label>
                 </div>
                 <div class="col-md-8" style="margin-top: 10px">
-                  <input type="text" placeholder="New Area " class="form-control" name="new_area" id="new_area_id"
+                  <input type="text" placeholder="Edit Area " class="form-control" name="edit_area" id="edit_area_id"
+                    ng-model="supplierForAddUpdateData.area">
+                </div>
+              </div>
+
+              <div class="row" ng-if="supplierForAddUpdateData.isNewArea">
+                <div class="col-md-4" style="margin-top: 10px">
+                  <label>Add New Area: </label>
+                </div>
+                <div class="col-md-8" style="margin-top: 10px">
+                  <input type="text" placeholder="Add New Area " class="form-control" name="new_area" id="new_area_id"
                     ng-model="supplierForAddUpdateData.area">
                 </div>
               </div>
@@ -327,38 +351,36 @@
                 </div>
                
                   <div class="col-md-4" style="margin-top: 10px">
-                    <span disabled="suppliersName == 0"  class="multiselectDropdown" ng-dropdown-multiselect=""
-                    options="suppliersName"  search-filter ="" ng-click="selectSupplierName()" extra-settings="supplierSettings"
+                    <span disabled="suppliersName == 0 || supplierForAddUpdateData.isNewSupplier"  class="multiselectDropdown" ng-dropdown-multiselect=""
+                    options="suppliersName"  search-filter ="" ng-click="selectSupplierName()"  extra-settings="supplierSettings"
                     selected-model="selectedSupplierName"
                     ></span>
                   </span>
                   
                 </div>
                 <div class="col-md-4">
-                  <md-switch ng-model="supplierForAddUpdateData.isNewSupplier" aria-label="Switch 1">
-                    <label>New Supplier</label>
+                  <md-switch ng-model="supplierForAddUpdateData.isNewSupplier" ng-change="changeSupplier()" aria-label="Switch 1">
+                    <label>Add New Supplier</label>
                   </md-switch>
                 </div>
               </div>
 
-
-              <!-- <div class="row" ng-if="supplierForAddUpdateData.supplier_name">
+              <div class="row" ng-if="!supplierForAddUpdateData.isNewSupplier && selectedSupplierName.length > 0">
                 <div class="col-md-4" style="margin-top: 10px">
-                  <label> </label>
+                  <label>Edit Supplier: </label>
                 </div>
-                  <div class="col-md-4" style="margin-top: 10px">
-                    <input type="text" placeholder="New Supplier " class="form-control" name="new_supplier"
-                    id="new_supplier_id" ng-model="supplierForAddUpdateData.supplier_name">
+                <div class="col-md-8" style="margin-top: 10px">
+                  <input type="text" placeholder="Add New Supplier " class="form-control" name="edit_supplier"
+                    id="edit_supplier_id" ng-model="supplierForAddUpdateData.supplier_name">
                 </div>
-              
-              </div> -->
+              </div>
 
               <div class="row" ng-if="supplierForAddUpdateData.isNewSupplier">
                 <div class="col-md-4" style="margin-top: 10px">
-                  <label>New Supplier: </label>
+                  <label>Add New Supplier: </label>
                 </div>
                 <div class="col-md-8" style="margin-top: 10px">
-                  <input type="text" placeholder="New Supplier " class="form-control" name="new_supplier"
+                  <input type="text" placeholder="Add New Supplier " class="form-control" name="new_supplier"
                     id="new_supplier_id" ng-model="supplierForAddUpdateData.supplier_name">
                 </div>
               </div>
