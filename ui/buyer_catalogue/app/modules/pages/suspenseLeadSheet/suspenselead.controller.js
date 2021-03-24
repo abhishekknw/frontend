@@ -89,7 +89,7 @@ angular.module('catalogueApp')
                   $scope.leadTabData[i].otherPreferredPatner = true
                   $scope.leadTabData[i].prefered_patners.push("")
                 }
-
+            
                 if ($scope.leadTabData[i].prefered_patners && $scope.leadTabData[i].prefered_patners.length > 0) {
                   for (let y in $scope.leadTabData[i].prefered_patners) {
                     var _index = $scope.companiesData.map(function (el) {
@@ -124,6 +124,7 @@ angular.module('catalogueApp')
             }
             $scope.leadTabData[index].prefered_patners.push($scope.leadTabData[index].selected_preferred_patner[i].id);
           }
+         
         }
         if ($scope.leadTabData[index] && $scope.leadTabData[index].selected_preferred_patner && $scope.leadTabData[index].selected_preferred_patner.length == 0) {
           $scope.leadTabData[index].prefered_patners = [];
@@ -132,7 +133,6 @@ angular.module('catalogueApp')
       }
 
       $scope.updateLeadTab = function (index) {
-    
         if($scope.leadTabData[index].current_patner){
           $scope.leadTabData[index].current_patner_other = null;
         }
@@ -140,6 +140,9 @@ angular.module('catalogueApp')
         let otherPreferred = null
         if($scope.leadTabData[index].prefered_patners && $scope.leadTabData[index].prefered_patners.length > 0){
           for(let i in $scope.leadTabData[index].prefered_patners){
+            if(!$scope.leadTabData[index].prefered_patners[i]){
+              $scope.leadTabData[index].prefered_patners.splice(i, 1);
+            }
             if($scope.leadTabData[index].prefered_patners[i] == 'other'){
               otherPreferred =  $scope.leadTabData[index].prefered_patner_other
             }
@@ -154,7 +157,9 @@ angular.module('catalogueApp')
           "current_patner_other": $scope.leadTabData[index].current_patner_other ? $scope.leadTabData[index].current_patner_other : null,
           "prefered_patners_id": $scope.leadTabData[index].prefered_patners,
           "prefered_patner_other": otherPreferred,
-          "call_back_preference": $scope.leadTabData[index].call_back_preference
+          "call_back_preference": $scope.leadTabData[index].call_back_preference,
+          "current_patner_feedback": $scope.leadTabData[index].current_patner_feedback,
+          "current_patner_feedback_reason": $scope.leadTabData[index].current_patner_feedback_reason
         }];
 
         let update = {
