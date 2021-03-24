@@ -54,6 +54,11 @@ angular.module('catalogueApp')
         var url = base_url + "b2b/suspense-lead-ops-verification/?_id=" + id ;
         return machadaloHttp.get(url);
       };
-    
+
+      suspenseLeadService.getPocList = function (id) {
+        var url = base_url + "b2b/add-poc/?suspense_id=" + id ;
+        return machadaloHttp.get(url);
+      };
+  
       return suspenseLeadService;
     }]);
