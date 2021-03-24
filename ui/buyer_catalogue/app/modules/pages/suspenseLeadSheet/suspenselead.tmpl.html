@@ -110,7 +110,7 @@
                       <td class="alignment">{{leadData.sub_sector_name}}</td>
                       <td class="alignment">
                         <select class="form-control" name="current_patner_{{$index}}" id="current_patner_id_{{$index}}"
-                          ng-model="leadData.current_patner" style="width:100px;">
+                          ng-model="leadData.current_patner">
                           <option value="" disabled>Select Current Partner</option>
                           <option ng-repeat="cpartner in companiesData track by $index"
                             value="{{cpartner.organisation_id}}">
@@ -123,9 +123,18 @@
                           ng-model="leadData.current_patner_other">
                       </td>
                       <td class="alignment">
-                        <input type="text" ng-model="leadData.current_patner_feedback" name="current_patner_feedback"
+                        <!-- <input type="text" ng-model="leadData.current_patner_feedback" name="current_patner_feedback"
                           class="form-control" placeholder="Current Patner Feedback"
-                          id="current_patner_feedback_id_{{$index}}">
+                          id="current_patner_feedback_id_{{$index}}"> -->
+
+                          <select class="form-control" name="current_patner_feedback" id="current_patner_feedback_id_{{$index}}"
+                          ng-model="leadData.current_patner_feedback" >
+                          <option value="" disabled>Select Current Partner Feedback</option>
+                          <option ng-repeat="cpartnerfeedback in current_patner_feedback track by $index"
+                            value="{{cpartnerfeedback}}">
+                            {{cpartnerfeedback}}
+                          </option>
+                        </select>
                       </td>
                       <td class="alignment">
                         <input type="text" ng-model="leadData.current_patner_feedback_reason"
@@ -172,14 +181,20 @@
                       </td>
 
                       <td class="alignment">
-                        <textarea placeholder="L1 Answers" class="form-control" ng-model="leadData.l1_answers" rows="4"
+                        <!-- <textarea placeholder="L1 Answers" class="form-control" ng-model="leadData.l1_answers" rows="4"
                           cols="50">
-                        </textarea>
+                        </textarea> -->
+                        <span>{{leadData.l1_answers}}
+                          <p>{{leadData.l1_answer_2}}</p>
+                        </span>
                       </td>
                       <td class="alignment">
-                        <textarea placeholder="L2 Answers" class="form-control" ng-model="leadData.l2_answers" rows="4"
+                        <!-- <textarea placeholder="L2 Answers" class="form-control" ng-model="leadData.l2_answers" rows="4"
                           cols="50">
-                        </textarea>
+                        </textarea> -->
+                        <span>{{leadData.l2_answers}}
+                          <p>{{leadData.l2_answer_2}}</p>
+                        </span>
                       </td>
                       <td class="alignment">
                         {{leadData.lead_status}}
@@ -220,18 +235,18 @@
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success btn-small"
                           data-target="#companyDetailModal" ng-click="supplierForAddUpdate($index)" data-toggle="modal">Add/Update Supplier</button>
                         <button style="margin-bottom:2px" type="button" name="button"
-                          class="btn btn-success btn-small"  data-target="#pocModal" ng-click="openAddPoc(leadData._id)" data-toggle="modal">Add POC</button>
-                        <button style="margin-bottom:2px" type="button" name="button"
+                          class="btn btn-success btn-small"  data-target="#pocModal"  ng-click="openAddPoc(leadData._id)" ng-disabled="leadData.is_updated == 'False'" data-toggle="modal">Add POC</button>
+                        <button style="margin-bottom:2px" type="button" ng-disabled="leadData.is_updated == 'False'" name="button"
                           class="btn btn-success btn-small">Add RE</button>
                       </td>
 
                       <td class="alignment">
-                        <button style="margin-bottom:2px" type="button" name="button" ng-click="opsVerify(leadData._id)" class="btn btn-success">Ops
+                        <button style="margin-bottom:2px"  type="button" name="button" ng-click="opsVerify(leadData._id)" class="btn btn-success" ng-disabled="leadData.is_updated == 'False'">Ops
                           Verify</button>
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
-                          ng-click="updateLeadTab($index)">Update</button>
+                          ng-click="updateLeadTab($index)" ng-disabled="leadData.is_updated == 'False'">Update</button>
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                          ng-click="removeSuspenseLead(leadData._id,$index)">Remove</button>
+                          ng-click="removeSuspenseLead(leadData._id,$index)" ng-disabled="leadData.is_updated == 'False'">Remove</button>
                       </td>
                     </tr>
                   </tbody>
@@ -296,9 +311,9 @@
                   <label> City *: </label>
                 </div>
                 <div class="col-md-8" style="margin-top: 10px">
-                  <select name="city" class="form-control" ng-change="getArea()" ng-model="model.city_id" ng-required="true">
+                  <select name="city" class="form-control" ng-change="getArea()" value="supplierForAddUpdateData.city_id"  ng-model="model.city_id" ng-required="true">
                     <option value="" disabled>Select City</option>
-                    <option ng-repeat="city in Cities | orderBy: 'city_name'" value="{{city.id}}" required>
+                    <option ng-repeat="city in Cities | orderBy: 'city_name'"  ng-selected="supplierForAddUpdateData.city_id == city.id"  value="{{city.id}}" required>
                       {{city.city_name}}</option>
                   </select>
                   <span ng-show="myForm.city.$dirty && myForm.city.$invalid" class="error">Select a City</span>
@@ -325,7 +340,7 @@
                   </div>
               </div>
 
-              <div class="row" ng-if="!supplierForAddUpdateData.isNewArea && selectedArea.length > 0">
+              <div class="row" ng-if="!supplierForAddUpdateData.isNewArea && supplierForAddUpdateData.area_id">
                 <div class="col-md-4" style="margin-top: 10px">
                   <label>Edit Area: </label>
                 </div>
@@ -365,7 +380,7 @@
                 </div>
               </div>
 
-              <div class="row" ng-if="!supplierForAddUpdateData.isNewSupplier && selectedSupplierName.length > 0">
+              <div class="row" ng-if="!supplierForAddUpdateData.isNewSupplier && supplierForAddUpdateData.supplier_id">
                 <div class="col-md-4" style="margin-top: 10px">
                   <label>Edit Supplier: </label>
                 </div>
@@ -411,7 +426,7 @@
                 </div>
                 <div class="col-md-8" style="margin-top: 10px">
                   <input type="text" placeholder="Address" class="form-control" name="address" id="address_id"
-                    ng-model="supplierForAddUpdateData.address" required>
+                    ng-model="supplierForAddUpdateData.address1" required>
                 </div>
               </div>
 
@@ -498,7 +513,7 @@
               <hr>
             </div>
             
-              <button type="submit"  class="smallBtn" ng-disabled="pocForm.$invalid">Save Detail</button>
+              <button type="submit"  class="smallBtn" ng-disabled="pocForm.$invalid || pocModel.length == 0">Save Detail</button>
               <button type="button" ng-click="addPocField()" class="smallBtn pocBtn">+ Add Poc</button>
             </form>
            
