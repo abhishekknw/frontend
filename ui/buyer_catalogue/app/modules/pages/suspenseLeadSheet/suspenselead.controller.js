@@ -228,6 +228,7 @@ angular.module('catalogueApp')
         // $scope.selectedSupplierName = [];
         $scope.supplierForAddUpdateData = {};
         $scope.supplierForAddUpdateData = JSON.parse(JSON.stringify($scope.leadTabData[index]));
+        $scope.leadDataIndex = index;
         // $scope.supplierForAddUpdateData['city_id'] = 1;
         // $scope.supplierForAddUpdateData['city'] = "mumbai";
         //  $scope.supplierForAddUpdateData['area_id'] = 1;
@@ -347,6 +348,7 @@ angular.module('catalogueApp')
             if (response && response.data.data.error) {
               swal(constants.name, response.data.data.error, constants.error);
             } else {
+              $scope.leadTabData[ $scope.leadDataIndex].is_updated = 'True'
               swal(constants.name, response.data.data.message, constants.success);
             }
           }).catch(function onError(response) {
