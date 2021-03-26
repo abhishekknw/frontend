@@ -25,7 +25,6 @@ angular.module('catalogueApp')
         closeOnSelect: true,
         enableSearch: true,
           smartButtonTextConverter: function(itemText, originalItem) {
-            console.log('ddddddddddddddd',itemText);
            return itemText
         }
       };
@@ -224,6 +223,7 @@ angular.module('catalogueApp')
       }
 
       $scope.supplierForAddUpdate = function (index) {
+        console.log('77777777777777777777777777',index);
         console.log('88888888888888888888888888888',$scope.leadTabData[index]);
         // $scope.selectedSupplierName = [];
         $scope.supplierForAddUpdateData = {};
@@ -411,7 +411,9 @@ angular.module('catalogueApp')
             swal(constants.name, response.data.data.message, constants.success);
           }
         }).catch(function onError(response) {
-          console.log(response);
+          if(response && response.data && response.data.data && response.data.data.general_error && response.data.data.general_error.error){
+            swal(constants.name, response.data.data.general_error.error, constants.error);
+          }
         });
       }
 
@@ -447,4 +449,9 @@ angular.module('catalogueApp')
         }
       }
 
+      $scope.indexCount = function(newPageNumber){
+        $scope.serial = newPageNumber * 10 - 9;
+        console.log('wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww',$scope.serial);
+    }
+    $scope.serial = 1;
     }]);
