@@ -342,3 +342,46 @@ input[type="radio"]{
 .cumulativeGraphTable{
   width: fit-content;
 }
+
+.style-modal .modal-header {
+    padding: 0;
+}
+.style-modal .full-width-header {
+    margin: 0;
+    border-radius: 0;
+}
+.style-modal .modal-header .close {
+    margin-top: 15px;
+    margin-right: 15px;
+}
+.style-modal.modal .modal-body{
+  padding: 20px;
+}
+
+.styled-tabs .nav-tabs {
+    display: flex;
+}
+.styled-tabs .nav-tabs > li {
+    background: #cb3328;
+    flex: 1;
+    border: none;
+}
+.styled-tabs .nav-tabs > li a{
+  color: #fff;
+  text-align: center;
+  border-radius: 0;
+  border: none;
+}
+.styled-tabs .nav-tabs > li a:hover{
+  background: #c70202;
+  border: none;
+}
+.styled-tabs .nav.nav-tabs > li.active > a {
+    color: #ffffff;
+    background: #8e1921 !important;
+    outline: none;
+}
+.styled-tabs .nav.nav-tabs > li.active > a:focus,.styled-tabs .nav.nav-tabs > li:focus > a{
+  outline: none;
+  border: none;
+}
