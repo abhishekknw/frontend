@@ -1,9 +1,14 @@
 angular.module('catalogueApp')
   .controller('SuspenseLeadSheetCtrl', ['$scope', '$rootScope', '$window', '$location', 'commonDataShare', 'constants', 'campaignListService', 'suspenseLeadService', 'cfpLoadingBar',
     function ($scope, $rootScope, $window, $location, commonDataShare, constants, campaignListService, suspenseLeadService, cfpLoadingBar) {
-
       $scope.currentPage = 1;
       $scope.itemsPerPage = 10;
+      $scope.totalData = 0;
+      $scope.serial = 1
+      // $scope.pageNo = 1;
+      $scope.pagination = {
+        current: 1
+      };
       $scope.implementationTime = constants.requirement_implementation_time;
       $scope.meetingTime = constants.requirement_meeting_time;
       $scope.call_back_time = constants.call_back_time;
@@ -41,8 +46,17 @@ angular.module('catalogueApp')
       };
 
       $scope.pocModel = [];
-
-
+    
+      $scope.pageChanged = function (newPageNumber,tab) {
+        // $scope.sno = ((newPage - 1) * 10);
+        $scope.serial = newPageNumber * 10 - 9;
+        if(tab == 'browsed'){
+          $scope.getBrowsedTabSuspenseLeads(newPageNumber);
+        } else {
+          $scope.getLeadsTabSuspenseLeads(newPageNumber);
+        }
+        
+      };
       $scope.initialData = function () {
         suspenseLeadService.initialData()
           .then(function onSuccess(response) {
@@ -62,11 +76,74 @@ angular.module('catalogueApp')
           })
       }
 
-      $scope.getLeadsTabSuspenseLeads = function () {
-        suspenseLeadService.getLeasTabSuspenseLead()
+      $scope.getLeadsTabSuspenseLeads = function (page) {
+        if(!page){
+          page = 1;
+        }
+        $scope.leadTabData = [{}];
+        $scope.totalCount = 0;
+        $scope.companiesData = [{}];
+        suspenseLeadService.getLeasTabSuspenseLead(page)
           .then(function onSuccess(response) {
             $scope.loading = response;
-            $scope.leadTabData = response.data.data.suspense_lead;
+            $scope.leadTabData = response.data.data.suspense_lead.suspense_data;
+            $scope.totalCount = response.data.data.suspense_lead.count;
+            $scope.companiesData = response.data.data.companies;
+            for (let k in $scope.companiesData) {
+              $scope.companiesData[k].id = $scope.companiesData[k].organisation_id;
+              $scope.companiesData[k].label = $scope.companiesData[k].name;
+              if (k == response.data.data.companies.length - 1) {
+                $scope.companiesData.push({ id: 'other', label: 'other', organisation_id: '', name: 'other' })
+              }
+            }
+
+            if ($scope.leadTabData && $scope.leadTabData.length > 0) {
+              for (let i in $scope.leadTabData) {
+                if (!$scope.leadTabData[i].current_patner) {
+                  $scope.leadTabData[i].current_patner = '';
+                }
+                var selected_preferred_patner = [];
+                $scope.leadTabData[i].selected_preferred_patner = [];
+                if ($scope.leadTabData[i].prefered_patner_other) {
+                  $scope.otherPreferredPatner = true
+                  $scope.leadTabData[i].otherPreferredPatner = true
+                  $scope.leadTabData[i].prefered_patners.push("")
+                }
+            
+                if ($scope.leadTabData[i].prefered_patners && $scope.leadTabData[i].prefered_patners.length > 0) {
+                  for (let y in $scope.leadTabData[i].prefered_patners) {
+                    var _index = $scope.companiesData.map(function (el) {
+                      return el.organisation_id;
+                    }).indexOf($scope.leadTabData[i].prefered_patners[y]);
+                    if (_index != -1) {
+                      selected_preferred_patner.push($scope.companiesData[_index])
+                    }
+                  }
+                  $scope.leadTabData[i].selected_preferred_patner = selected_preferred_patner;
+                }
+
+              }
+            }
+
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+      }
+
+      $scope.getBrowsedTabSuspenseLeads = function (page) {
+        $scope.loading = null;
+        if(!page){
+          page = 1;
+        }
+        $scope.leadTabData = [{}];
+        $scope.totalCount = 0;
+        $scope.companiesData = [{}];
+        
+        suspenseLeadService.getBrowsedTabSuspenseLead(page)
+          .then(function onSuccess(response) {
+            $scope.loading = response;
+            $scope.leadTabData = response.data.data.suspense_lead.suspense_data;
+            $scope.totalCount = response.data.data.suspense_lead.count;
             $scope.companiesData = response.data.data.companies;
             for (let k in $scope.companiesData) {
               $scope.companiesData[k].id = $scope.companiesData[k].organisation_id;
@@ -348,7 +425,9 @@ angular.module('catalogueApp')
             if (response && response.data.data.error) {
               swal(constants.name, response.data.data.error, constants.error);
             } else {
-              $scope.leadTabData[ $scope.leadDataIndex].is_updated = 'True'
+              $scope.leadTabData[$scope.leadDataIndex] = $scope.supplierForAddUpdateData;
+              $scope.leadTabData[$scope.leadDataIndex].is_updated = 'True'
+
               swal(constants.name, response.data.data.message, constants.success);
             }
           }).catch(function onError(response) {
@@ -449,9 +528,9 @@ angular.module('catalogueApp')
         }
       }
 
-      $scope.indexCount = function(newPageNumber){
-        $scope.serial = newPageNumber * 10 - 9;
-        console.log('wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww',$scope.serial);
-    }
-    $scope.serial = 1;
+    //   $scope.indexCount = function(newPageNumber){
+    //     $scope.serial = newPageNumber * 10 - 9;
+    //     console.log('wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww',$scope.serial);
+    // }
+    // $scope.serial = 1;
     }]);

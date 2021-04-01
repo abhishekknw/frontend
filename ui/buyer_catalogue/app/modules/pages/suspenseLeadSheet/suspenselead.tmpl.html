@@ -69,7 +69,7 @@
             </div>
           </uib-tab>
 
-          <uib-tab id="uib-tabs-width" ng-click="getLeadsTabSuspenseLeads()" index="1">
+          <uib-tab id="uib-tabs-width" active="activeTab" ng-click="getLeadsTabSuspenseLeads()" index="1">
             <uib-tab-heading>
               <h5>Leads</h5>
             </uib-tab-heading>
@@ -91,10 +91,13 @@
                       <th class="alignment">Meeting TimeLine</th>
                       <th class="alignment">L1 Answers</th>
                       <th class="alignment">L2 Answers</th>
+                      <th class="alignment">L3 Answers</th>
                       <th class="alignment">Lead Status</th>
                       <th class="alignment">Callback Preference</th>
                       <th class="alignment">Comment</th>
                       <th class="alignment">Time Stamp</th>
+                      <th class="alignment">Calling State</th>
+                      <th class="alignment">Internal Comment</th>
                       <th class="alignment">Chat</th>
                       <th class="alignment">Action</th>
                       <th class="alignment">Action 1</th>
@@ -103,9 +106,14 @@
                   <tbody>
                     <div ng-loading="loading"></div>
                     <!-- <tr ng-repeat="leadData in leadTabData track by $index"> -->
-                    <tr ng-if="leadTabData.length > 0"
-                      dir-paginate="leadData in leadTabData | itemsPerPage:itemsPerPage" current-page="currentPage">
+                      <tr ng-if="leadTabData.length > 0"
+                        dir-paginate="leadData in leadTabData | itemsPerPage:itemsPerPage"
+                        total-items="totalCount" current-page="pagination.current" track by "$index">
+                    <!-- <tr ng-if="leadTabData.length > 0"
+                      dir-paginate="leadData in leadTabData | itemsPerPage:itemsPerPage" current-page="currentPage"> -->
                       <td>{{$index+serial}}</td>
+                      <!-- <td> {{serial + $index }}</td> -->
+                     
                       <!-- <td>{{itemsPerPage *(currentPage-1)+$index+1}}</td> -->
                       <td class="alignment">{{leadData.phone_number}}</td>
                       <td class="alignment">{{leadData.sector_name}}</td>
@@ -198,6 +206,15 @@
                           <p>{{leadData.l2_answer_2}}</p>
                         </span>
                       </td>
+
+                      <td class="alignment">
+                        <!-- <textarea placeholder="L2 Answers" class="form-control" ng-model="leadData.l2_answers" rows="4"
+                          cols="50">
+                        </textarea> -->
+                        <span>{{leadData.l3_answer_1}}
+                          <p>{{leadData.l3_answer_2}}</p>
+                        </span>
+                      </td>
                       <td class="alignment">
                         {{leadData.lead_status}}
                       </td>
@@ -229,6 +246,18 @@
                         <p> Submitted: {{leadData.created_at | date:'medium' }} </p>
                       </td>
                       <td class="alignment">
+                        <p> {{leadData.calling_state }} 
+
+                          {{leadData.calling_state_time }} 
+                        </p>
+                      </td>
+                      <td class="alignment">
+                        <textarea placeholder="Internal Comment" class="form-control" ng-model="leadData.internal_comment" rows="4"
+                          cols="50">
+                        </textarea>
+                      </td>
+                     
+                      <td class="alignment">
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-info">View &
                           Intervene</button>
                       </td>
@@ -256,124 +285,20 @@
                 <div ng-if="leadTabData.length == 0" style="text-align: center;color: red;">
                   <h4>Record Not Found.</h4>
                 </div>
-                <!-- <dir-pagination-controls ng-if="leadTabData.length > 0" max-size="5" direction-links="true"
+                <dir-pagination-controls ng-if="leadTabData.length > 0" max-size="5" on-page-change="pageChanged(newPageNumber)" direction-links="true"
                   boundary-links="true">
-                </dir-pagination-controls> -->
+                </dir-pagination-controls>
               </div>
             </div>
           </uib-tab>
 
-          <uib-tab id="uib-tabs-width" ng-click="getCampaignsList()" index="0">
+          <uib-tab id="uib-tabs-width" ng-click="getBrowsedTabSuspenseLeads()" index="2">
             <uib-tab-heading>
-              <h5>TAB 3</h5>
-            </uib-tab-heading>
-            <!-- <div class="panel-body table-style">
-              <div class="table-wrapper" style="overflow-x: auto;">
-                <table class="table table-striped table-bordered table-suppliers release_plan_table"
-                  data-ng-init="initTable()">
-                  <thead>
-                    <tr>
-                      <th class="alignment">Sno</th>
-                      <th class="alignment">Phone Number</th>
-                      <th class="alignment">Sector</th>
-                      <th class="alignment">Sub Sector</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="alignment">1</td>
-                      <td class="alignment">Machadalo</td>
-                      <td class="alignment">Indore</td>
-                      <td class="alignment">action</td>
-                    </tr>
-                    <tr>
-                      <td class="alignment">1</td>
-                      <td class="alignment">Machadalo</td>
-                      <td class="alignment">Indore</td>
-                      <td class="alignment">action</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div> -->
-          </uib-tab>
-          <uib-tab id="uib-tabs-width" ng-click="getCampaignsList()" index="0">
-            <uib-tab-heading>
-              <h5>TAB 4</h5>
-            </uib-tab-heading>
-            <!-- <div class="panel-body table-style">
-              <div class="table-wrapper" style="overflow-x: auto;">
-                <table class="table table-striped table-bordered table-suppliers release_plan_table"
-                  data-ng-init="initTable()">
-                  <thead>
-                    <tr>
-                      <th class="alignment">Sno</th>
-                      <th class="alignment">Phone Number</th>
-                      <th class="alignment">Sector</th>
-                      <th class="alignment">Sub Sector</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="alignment">1</td>
-                      <td class="alignment">Machadalo</td>
-                      <td class="alignment">Indore</td>
-                      <td class="alignment">action</td>
-                    </tr>
-                    <tr>
-                      <td class="alignment">1</td>
-                      <td class="alignment">Machadalo</td>
-                      <td class="alignment">Indore</td>
-                      <td class="alignment">action</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div> -->
-          </uib-tab>
-          <uib-tab id="uib-tabs-width" ng-click="getCampaignsList()" index="0">
-            <uib-tab-heading>
-              <h5>TAB 5</h5>
-            </uib-tab-heading>
-            <!-- <div class="panel-body table-style">
-              <div class="table-wrapper" style="overflow-x: auto;">
-                <table class="table table-striped table-bordered table-suppliers release_plan_table"
-                  data-ng-init="initTable()">
-                  <thead>
-                    <tr>
-                      <th class="alignment">Sno</th>
-                      <th class="alignment">Phone Number</th>
-                      <th class="alignment">Sector</th>
-                      <th class="alignment">Sub Sector</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="alignment">1</td>
-                      <td class="alignment">Machadalo</td>
-                      <td class="alignment">Indore</td>
-                      <td class="alignment">action</td>
-                    </tr>
-                    <tr>
-                      <td class="alignment">1</td>
-                      <td class="alignment">Machadalo</td>
-                      <td class="alignment">Indore</td>
-                      <td class="alignment">action</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div> -->
-          </uib-tab>
-
-          <!-- <uib-tab id="uib-tabs-width" ng-click="getLeadsTabSuspenseLeads()" index="2">
-            <uib-tab-heading>
-              <h5>Browsed</h5>
+              <h5>Browsed Lead</h5>
             </uib-tab-heading>
             <div class="panel-body table-style">
               <div class="table-wrapper" style="overflow-x: auto;">
-                <table class="table table-striped table-bordered table-suppliers release_plan_table"
-                  data-ng-init="initTable()">
+                <table class="table table-striped table-bordered table-suppliers release_plan_table">
                   <thead>
                     <tr>
                       <th>Sno</th>
@@ -388,10 +313,13 @@
                       <th class="alignment">Meeting TimeLine</th>
                       <th class="alignment">L1 Answers</th>
                       <th class="alignment">L2 Answers</th>
+                      <th class="alignment">L3 Answers</th>
                       <th class="alignment">Lead Status</th>
                       <th class="alignment">Callback Preference</th>
                       <th class="alignment">Comment</th>
                       <th class="alignment">Time Stamp</th>
+                      <th class="alignment">Calling State</th>
+                      <th class="alignment">Internal Comment</th>
                       <th class="alignment">Chat</th>
                       <th class="alignment">Action</th>
                       <th class="alignment">Action 1</th>
@@ -399,16 +327,16 @@
                   </thead>
                   <tbody>
                     <div ng-loading="loading"></div>
-                   
-                    <tr ng-if="leadTabData.length > 0"
-                      dir-paginate="leadData in leadTabData | itemsPerPage:itemsPerPage" current-page="currentPage">
-                      <td>{{itemsPerPage *(currentPage-1)+$index+1}}</td>
-                      <td class="alignment">{{leadData.phone_number}}</td>
-                      <td class="alignment">{{leadData.sector_name}}</td>
-                      <td class="alignment">{{leadData.sub_sector_name}}</td>
+                      <tr ng-if="leadTabData.length > 0"
+                        dir-paginate="browseData in leadTabData | itemsPerPage:itemsPerPage"
+                        total-items="totalCount" current-page="pagination.current" track by "$index">
+                      <td>{{$index+serial}}</td>
+                      <td class="alignment">{{browseData.phone_number}}</td>
+                      <td class="alignment">{{browseData.sector_name}}</td>
+                      <td class="alignment">{{browseData.sub_sector_name}}</td>
                       <td class="alignment">
-                        <select class="form-control" name="current_patner_{{$index}}" id="current_patner_id_{{$index}}"
-                          ng-model="leadData.current_patner">
+                        <select class="form-control" name="current_patner_{{$index}}" id="browes_current_patner_id_{{$index}}"
+                          ng-model="browseData.current_patner">
                           <option value="" disabled>Select Current Partner</option>
                           <option ng-repeat="cpartner in companiesData track by $index"
                             value="{{cpartner.organisation_id}}">
@@ -416,15 +344,13 @@
                           </option>
                         </select>
                         <input style="margin-top:10px" type="text" class="form-control"
-                          placeholder="Other Current Company" ng-if="leadData.current_patner == ''"
-                          name="currentCompanyOther" id="currentCompanyOtherId_{{$index}}"
-                          ng-model="leadData.current_patner_other">
+                          placeholder="Other Current Company" ng-if="browseData.current_patner == ''"
+                          name="currentCompanyOther" id="browesCurrentCompanyOtherId_{{$index}}"
+                          ng-model="browseData.current_patner_other">
                       </td>
                       <td class="alignment">
-                       
-
-                          <select class="form-control" name="current_patner_feedback" id="current_patner_feedback_id_{{$index}}"
-                          ng-model="leadData.current_patner_feedback" >
+                          <select class="form-control" name="current_patner_feedback" id="browes_current_patner_feedback_id_{{$index}}"
+                          ng-model="browseData.current_patner_feedback" >
                           <option value="" disabled>Select Current Partner Feedback</option>
                           <option ng-repeat="cpartnerfeedback in current_patner_feedback track by $index"
                             value="{{cpartnerfeedback}}">
@@ -433,70 +359,67 @@
                         </select>
                       </td>
                       <td class="alignment">
-                        <input type="text" ng-model="leadData.current_patner_feedback_reason"
+                        <input type="text" ng-model="browseData.current_patner_feedback_reason"
                           name="current_patner_feedback_reason" class="form-control"
                           placeholder="Current Patner Feedback Reason"
-                          id="current_patner_feedback_reason_id_{{$index}}">
+                          id="browes_current_patner_feedback_reason_id_{{$index}}">
                       </td>
-
                       <td class="alignment">
                         <span style="width:150px;" class="multiselectDropdown"
                           style="color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect=""
                           options="companiesData" extra-settings="dropdownSettings"
-                          selected-model="leadData.selected_preferred_patner" ng-click="leadPreferredMulticheck($index)"
+                          selected-model="browseData.selected_preferred_patner" ng-click="leadPreferredMulticheck($index)"
                           translation-texts="selected_business_type" events="events"></span>
-                        <span ng-repeat="selectedName in leadData.selected_preferred_patner" class="custom-dropdown"
+                        <span ng-repeat="selectedName in browseData.selected_preferred_patner" class="custom-dropdown"
                           style="text-align: left; display: inline-block">
                           {{selectedName.name}}
                           <span ng-if="!$last">,</span>
                         </span>
                         <input style="margin-top:10px" type="text" class="form-control"
-                          placeholder="Other Preferred Company" ng-if="leadData.otherPreferredPatner"
-                          name="other_preferred_company" id="other_preferred_company_{{$index}}"
-                          ng-model="leadData.prefered_patner_other">
+                          placeholder="Other Preferred Company" ng-if="browseData.otherPreferredPatner"
+                          name="other_preferred_company" id="browes_other_preferred_company_{{$index}}"
+                          ng-model="browseData.prefered_patner_other">
                       </td>
-
                       <td class="alignment">
-                        <select class="form-control" name="implementation_{{$index}}" id="implementation_id_{{$index}}"
-                          ng-model="leadData.implementation_timeline">
+                        <select class="form-control" name="implementation_{{$index}}" id="browes_implementation_id_{{$index}}"
+                          ng-model="browseData.implementation_timeline">
                           <option value="" disabled>Select Implementation Time</option>
                           <option ng-repeat="(key,value) in implementationTime track by $index" value="{{key}}">
                             {{value}}
                           </option>
                         </select>
                       </td>
-
                       <td class="alignment" class="form-group">
-                        <select class="form-control" name="meating_time_{{$index}}" id="meating_time_id_{{$index}}"
-                          ng-model="leadData.meating_timeline">
+                        <select class="form-control" name="meating_time_{{$index}}" id="browes_meating_time_id_{{$index}}"
+                          ng-model="browseData.meating_timeline">
                           <option value="" disabled>Select Meeting Time</option>
                           <option ng-repeat="(key,value) in meetingTime track by $index" value="{{key}}">
                             {{value}}
                           </option>
                         </select>
                       </td>
-
                       <td class="alignment">
-                    
-                        <span>{{leadData.l1_answers}}
-                          <p>{{leadData.l1_answer_2}}</p>
+                        <span>{{browseData.l1_answers}}
+                          <p>{{browseData.l1_answer_2}}</p>
                         </span>
                       </td>
                       <td class="alignment">
-                      
-                        <span>{{leadData.l2_answers}}
-                          <p>{{leadData.l2_answer_2}}</p>
+                        <span>{{browseData.l2_answers}}
+                          <p>{{browseData.l2_answer_2}}</p>
                         </span>
                       </td>
                       <td class="alignment">
-                        {{leadData.lead_status}}
+                        <span>{{browseData.l3_answer_1}}
+                          <p>{{browseData.l3_answer_2}}</p>
+                        </span>
                       </td>
-                   
-
+                      <td class="alignment">
+                        {{browseData.lead_status}}
+                      </td>
                       <td class="alignment">
                         <select class="form-control"
-                          name="call_back_time_{{$index}}" id="call_back_time_id_{{$index}}"
-                          ng-model="leadData.call_back_preference"
+                          name="call_back_time_{{$index}}" id="browes_call_back_time_id_{{$index}}"
+                          ng-model="browseData.call_back_preference"
                           style="width:150px;">
                           <option value="" disabled>Select Call Back Time</option>
                           <option ng-repeat="(key,value) in call_back_time track by $index"
@@ -505,36 +428,44 @@
                           </option>
                         </select>
                       </td>
-                      
                       <td class="alignment">
-                        <textarea placeholder="Comment" class="form-control" ng-model="leadData.comment" rows="4"
+                        <textarea placeholder="Comment" class="form-control" ng-model="browseData.comment" rows="4"
                           cols="50">
                         </textarea>
                       </td>
                       <td class="alignment">
-                        <p> Submitted: {{leadData.created_at | date:'medium' }} </p>
+                        <p> Submitted: {{browseData.created_at | date:'medium' }} </p>
+                      </td>
+                      <td class="alignment">
+                        <p> {{browseData.calling_state }} 
+          
+                          {{browseData.calling_state_time }} 
+                        </p>
+                      </td>
+                      <td class="alignment">
+                        <textarea placeholder="Internal Comment" class="form-control" ng-model="browseData.internal_comment" rows="4"
+                          cols="50">
+                        </textarea>
                       </td>
                       <td class="alignment">
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-info">View &
                           Intervene</button>
                       </td>
-
                       <td class="alignment">
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success btn-small"
                           data-target="#companyDetailModal" ng-click="supplierForAddUpdate($index)" data-toggle="modal">Add/Update Supplier</button>
                         <button style="margin-bottom:2px" type="button" name="button"
-                          class="btn btn-success btn-small"  data-target="#pocModal"  ng-click="openAddPoc(leadData._id)" ng-disabled="leadData.is_updated == 'False'" data-toggle="modal">Add POC</button>
-                        <button style="margin-bottom:2px" type="button" ng-disabled="leadData.is_updated == 'False'" name="button"
+                          class="btn btn-success btn-small"  data-target="#pocModal"  ng-click="openAddPoc(browseData._id)" ng-disabled="browseData.is_updated == 'False'" data-toggle="modal">Add POC</button>
+                        <button style="margin-bottom:2px" type="button" ng-disabled="browseData.is_updated == 'False'" name="button"
                           class="btn btn-success btn-small">Add RE</button>
                       </td>
-
                       <td class="alignment">
-                        <button style="margin-bottom:2px"  type="button" name="button" ng-click="opsVerify(leadData._id)" class="btn btn-success" ng-disabled="leadData.is_updated == 'False'">Ops
+                        <button style="margin-bottom:2px"  type="button" name="button" ng-click="opsVerify(browseData._id)" class="btn btn-success" ng-disabled="browseData.is_updated == 'False'">Ops
                           Verify</button>
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
-                          ng-click="updateLeadTab($index)" ng-disabled="leadData.is_updated == 'False'">Update</button>
+                          ng-click="updateLeadTab($index)">Update</button>
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                          ng-click="removeSuspenseLead(leadData._id,$index)" ng-disabled="leadData.is_updated == 'False'">Remove</button>
+                          ng-click="removeSuspenseLead(browseData._id,$index)">Remove</button>
                       </td>
                     </tr>
                   </tbody>
@@ -542,13 +473,23 @@
                 <div ng-if="leadTabData.length == 0" style="text-align: center;color: red;">
                   <h4>Record Not Found.</h4>
                 </div>
-                <dir-pagination-controls ng-if="leadTabData.length > 0" max-size="5" direction-links="true"
-                  boundary-links="true" on-page-change='indexCount(newPageNumber)'>
+                <dir-pagination-controls ng-if="leadTabData.length > 0" max-size="5" on-page-change="pageChanged(newPageNumber,'browsed')" direction-links="true"
+                  boundary-links="true">
                 </dir-pagination-controls>
               </div>
             </div>
           </uib-tab>
-        </uib-tabset> -->
+          <uib-tab id="uib-tabs-width" ng-click="getCampaignsList()" index="0">
+            <uib-tab-heading>
+              <h5>TAB 4</h5>
+            </uib-tab-heading>
+
+          </uib-tab>
+          <uib-tab id="uib-tabs-width" ng-click="getCampaignsList()" index="0">
+            <uib-tab-heading>
+              <h5>TAB 5</h5>
+            </uib-tab-heading>
+          </uib-tab>
       </div>
     </div>
   </div>
