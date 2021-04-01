@@ -14,8 +14,8 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
-      suspenseLeadService.getLeasTabSuspenseLead = function () {
-        var url = base_url + "b2b/suspense-leads-tab/";
+      suspenseLeadService.getLeasTabSuspenseLead = function (page) {
+        var url = base_url + "b2b/suspense-leads-tab/?page=" + page;
         return machadaloHttp.get(url);
       }
 
@@ -59,6 +59,11 @@ angular.module('catalogueApp')
         var url = base_url + "b2b/add-poc/?suspense_id=" + id ;
         return machadaloHttp.get(url);
       };
+
+      suspenseLeadService.getBrowsedTabSuspenseLead = function (page) {
+        var url = base_url + "b2b/suspense-browsed-tab/?page=" + page;
+        return machadaloHttp.get(url);
+      }
   
       return suspenseLeadService;
     }]);
