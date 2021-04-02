@@ -207,14 +207,17 @@
                         </span>
                       </td>
 
-                      <td class="alignment">
-                        <!-- <textarea placeholder="L2 Answers" class="form-control" ng-model="leadData.l2_answers" rows="4"
-                          cols="50">
-                        </textarea> -->
-                        <span>{{leadData.l3_answer_1}}
-                          <p>{{leadData.l3_answer_2}}</p>
-                        </span>
-                      </td>
+                   
+                        <td class="alignment">
+                          <textarea placeholder="L3 Answer" class="form-control" ng-model="leadData.l3_answer_1" rows="4"
+                            cols="50">
+                          </textarea>
+                          <span>
+                            <p>{{leadData.l3_answer_2}}</p>
+                          </span>
+                        </td>
+                        
+                    
                       <td class="alignment">
                         {{leadData.lead_status}}
                       </td>
@@ -408,11 +411,17 @@
                           <p>{{browseData.l2_answer_2}}</p>
                         </span>
                       </td>
-                      <td class="alignment">
-                        <span>{{browseData.l3_answer_1}}
-                          <p>{{browseData.l3_answer_2}}</p>
-                        </span>
-                      </td>
+                    
+                        <td class="alignment">
+                          <textarea placeholder="L3 Answer" class="form-control" ng-model="browseData.l3_answer_1" rows="4"
+                            cols="50">
+                          </textarea>
+                          <span>
+                            <p>{{browseData.l3_answer_2}}</p>
+                          </span>
+                        </td>
+                       
+                      
                       <td class="alignment">
                         {{browseData.lead_status}}
                       </td>
@@ -526,7 +535,7 @@
                 </div>
                 <div class="col-md-8" style="margin-top: 10px">
                   <select class="form-control" name="supplier_type" id="supplier_type_id"
-                    ng-model="supplierForAddUpdateData.supplier_type">
+                    ng-model="supplierForAddUpdateData.supplier_type" ng-change= 'changeSupplier(supplierForAddUpdateData.supplier_type)'>
                     <option value="" disabled>Select Supplier Type</option>
                     <option ng-repeat="suppliertype in supplierTypes track by $index" value="{{suppliertype.supplier_type_code}}">
                       {{suppliertype.supplier_type_name}}
@@ -644,10 +653,29 @@
                   <label>Designation *: </label>
                 </div>
                 <div class="col-md-8" style="margin-top: 10px">
-                  <input type="text" placeholder="Designation" class="form-control" name="designation"
-                    id="designation_id" ng-model="supplierForAddUpdateData.designation">
+        
+                    <select name="designation" class="form-control"   ng-model="supplierForAddUpdateData.designation" ng-required="true">
+                      <option value="" disabled>Select Designation</option>
+                      <option ng-repeat="desig in designation"  value="{{desig}}" required>
+                        {{desig}}</option>
+                    </select>
+                    <span ng-show="myForm.designation.$dirty && myForm.designation.$invalid" class="error">Designation is required.</span>
+                    </select>
                 </div>
               </div>
+
+              <!-- <div class="row" ng-if="supplierForAddUpdateData.designation == 'Other'">
+                <div class="col-md-4" style="margin-top: 10px">
+                  <label>Other Designation *: </label>
+                </div>
+                <div class="col-md-8" style="margin-top: 10px">
+                  <input type="text" placeholder="Other Designation" class="form-control" name="other_designation"
+                    id="other_designation_id" ng-model="supplierForAddUpdateData.other_designation">
+                   
+                    <span ng-show="myForm.other_designation.$dirty && myForm.other_designation.$invalid" class="error">Other Designation is required.</span>
+                    </select>
+                </div>
+              </div> -->
 
               <div class="row">
                 <div class="col-md-4" style="margin-top: 10px">

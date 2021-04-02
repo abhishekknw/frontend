@@ -13,6 +13,8 @@ angular.module('catalogueApp')
       $scope.meetingTime = constants.requirement_meeting_time;
       $scope.call_back_time = constants.call_back_time;
       $scope.current_patner_feedback = constants.current_patner_feedback;
+      
+      
       $scope.dropdownSettings = {
         showCheckAll: false,
         scrollable: false,
@@ -235,7 +237,9 @@ angular.module('catalogueApp')
           "prefered_patner_other": otherPreferred,
           "call_back_preference": $scope.leadTabData[index].call_back_preference,
           "current_patner_feedback": $scope.leadTabData[index].current_patner_feedback,
-          "current_patner_feedback_reason": $scope.leadTabData[index].current_patner_feedback_reason
+          "current_patner_feedback_reason": $scope.leadTabData[index].current_patner_feedback_reason,
+          "l3_answer_1": $scope.leadTabData[index].l3_answer_1,
+          "internal_comment": $scope.leadTabData[index].internal_comment,
         }];
 
         let update = {
@@ -305,6 +309,19 @@ angular.module('catalogueApp')
         // $scope.selectedSupplierName = [];
         $scope.supplierForAddUpdateData = {};
         $scope.supplierForAddUpdateData = JSON.parse(JSON.stringify($scope.leadTabData[index]));
+        if($scope.supplierForAddUpdateData == 'RS'){
+          $scope.designation = constants.designation_society;
+        }else if($scope.supplierForAddUpdateData == 'CP'){
+          $scope.designation = constants.designation_corporate;
+        
+        }else if($scope.supplierForAddUpdateData == 'GY' || $scope.supplierForAddUpdateData == 'SA'){
+          $scope.designation = constants.designation_saloon;
+        
+        } else if($scope.supplierForAddUpdateData == 'EI' || $scope.supplierForAddUpdateData == 'GN'){
+          $scope.designation = constants.designation_gantry;
+        } else {
+          $scope.designation = constants.designation_bus_shelter;
+        }
         $scope.leadDataIndex = index;
         // $scope.supplierForAddUpdateData['city_id'] = 1;
         // $scope.supplierForAddUpdateData['city'] = "mumbai";
@@ -528,6 +545,22 @@ angular.module('catalogueApp')
         }
       }
 
+      $scope.changeSupplier = function(type){
+        if(type == 'RS'){
+          $scope.designation = constants.designation_society;
+        }else if(type == 'CP'){
+          $scope.designation = constants.designation_corporate;
+        
+        }else if(type == 'GY' || type == 'SA'){
+          $scope.designation = constants.designation_saloon;
+        
+        } else if(type == 'EI' || type == 'GN'){
+          $scope.designation = constants.designation_gantry;
+        
+        } else {
+          $scope.designation = constants.designation_bus_shelter;
+        }
+      }
     //   $scope.indexCount = function(newPageNumber){
     //     $scope.serial = newPageNumber * 10 - 9;
     //     console.log('wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww',$scope.serial);
