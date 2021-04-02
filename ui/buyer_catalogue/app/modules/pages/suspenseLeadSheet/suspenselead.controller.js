@@ -304,8 +304,6 @@ angular.module('catalogueApp')
       }
 
       $scope.supplierForAddUpdate = function (index) {
-        console.log('77777777777777777777777777',index);
-        console.log('88888888888888888888888888888',$scope.leadTabData[index]);
         // $scope.selectedSupplierName = [];
         $scope.supplierForAddUpdateData = {};
         $scope.supplierForAddUpdateData = JSON.parse(JSON.stringify($scope.leadTabData[index]));
