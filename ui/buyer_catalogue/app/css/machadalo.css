@@ -679,3 +679,22 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
   max-height: 400px;
   overflow-x: auto;
 }
+
+
+.scroll-tbody table tbody {
+    overflow: auto;
+    overflow-x: auto;
+    overflow-x: auto;
+    overflow-x: hidden;
+    max-height: 350px;
+    display: block;
+}
+.scroll-tbody table thead{
+  display: block;
+}
+.table-suppliers td:nth-child(2), .table-suppliers th:nth-child(2){
+  position: fixed;
+}
+.table-suppliers td:nth-child(3), .table-suppliers th:nth-child(3){
+  margin-left: 170px;
+}
