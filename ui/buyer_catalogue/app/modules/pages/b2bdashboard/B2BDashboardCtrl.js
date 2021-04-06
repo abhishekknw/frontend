@@ -1184,8 +1184,10 @@
 
     }
 
-    $scope.setButtonIndex = function (index) {
+    $scope.setButtonIndex = function (index,campaign_id,campaign_name) {
       $scope.buttonIndex = index;
+      $scope.getPurchasedNotPurchasedLead(campaign_id,campaign_name) 
+      //remove if show 2 butoon
     }
 
     $scope.getDateGraphValues = function (type) {
