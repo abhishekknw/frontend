@@ -692,9 +692,9 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
 .scroll-tbody table thead{
   display: block;
 }
-.table-suppliers td:nth-child(2), .table-suppliers th:nth-child(2){
+/*.table-suppliers td:nth-child(2), .table-suppliers th:nth-child(2){
   position: fixed;
 }
 .table-suppliers td:nth-child(3), .table-suppliers th:nth-child(3){
   margin-left: 170px;
-}
+}*/
