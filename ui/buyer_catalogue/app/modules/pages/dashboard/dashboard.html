@@ -2018,8 +2018,8 @@
                             <button class="btn btn-danger" ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates" ng-click="getCampaignDateWiseSummary()">Submit</button>
 
                           </div>
-
-                            <!-- <div class="col-md-3 right">
+                            <!-- comm -->
+                            <div class="col-md-3 right">
                               <div class="panel panel-default" ng-click="getCampaignsMenu(campaignStatus.overall.status)">
                                 <div class="button" type="button" ng-click="getCampaignWiseSummary()">
                                   <div class="panel-heading">
@@ -2034,9 +2034,10 @@
                                     </div>
                                 </div>
                               </div>
-                            </div> -->
+                            </div>
+                            <!-- comm -->
 
-                            <div class="col-md-3 right">
+                            <div class="col-md-3 right" style="margin-bottom: 10px;">
                               <h4 class="panel-title">
                                     <select class="form-control" name="supplierType" ng-model="selectedSupplierType.code" value="supplierType.value"   ng-change="setSupplierType('performance')">
                                         <option value="{{supplierType.value}}" ng-selected="selectedSupplierType == supplierType.value" ng-repeat="supplierType in supplierTypeCodePerformanceDetail">{{supplierType.name}}</option>

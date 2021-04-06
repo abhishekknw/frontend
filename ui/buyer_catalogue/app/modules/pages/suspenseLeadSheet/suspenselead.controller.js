@@ -48,7 +48,12 @@ angular.module('catalogueApp')
       };
 
       $scope.pocModel = [];
-    
+       $scope.setCurrentPage =  function(){
+        $scope.pagination = {
+          current: 1
+        };
+        $scope.serial = 1
+       }
       $scope.pageChanged = function (newPageNumber,tab) {
         // $scope.sno = ((newPage - 1) * 10);
         $scope.serial = newPageNumber * 10 - 9;
@@ -79,6 +84,7 @@ angular.module('catalogueApp')
       }
 
       $scope.getLeadsTabSuspenseLeads = function (page) {
+        $scope.loading = null;
         if(!page){
           page = 1;
         }
@@ -137,7 +143,7 @@ angular.module('catalogueApp')
         if(!page){
           page = 1;
         }
-        $scope.leadTabData = [{}];
+        $scope.leadTabData = [];
         $scope.totalCount = 0;
         $scope.companiesData = [{}];
         
@@ -264,6 +270,10 @@ angular.module('catalogueApp')
                     swal(constants.name, response.data.data.error, constants.error);
                   } else {
                     swal(constants.name, response.data.data.message, constants.success);
+                    $scope.leadTabData[index].lead_status = response.data.data.lead_status;
+                    if($scope.leadTabData[index].meating_timeline == 'not given'){
+                      $scope.leadTabData.splice(index, 1)
+                    }
                   }
                 }).catch(function onError(response) {
                   console.log(response);
