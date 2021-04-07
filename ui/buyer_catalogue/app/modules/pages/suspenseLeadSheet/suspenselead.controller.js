@@ -56,7 +56,6 @@ angular.module('catalogueApp')
         $scope.serial = 1
        }
       $scope.pageChanged = function (newPageNumber,tab) {
-        console.log('qqqqqqqqqqqqq',newPageNumber);
         // $scope.sno = ((newPage - 1) * 10);
         $scope.serial = newPageNumber * 10 - 9;
         // if(tab == 'browsed'){
@@ -67,7 +66,6 @@ angular.module('catalogueApp')
       };
 
       $scope.pageChangedBrowesd = function (newPageNumber,tab) {
-        console.log('qqqqqqqqqqqqq111111111111111',newPageNumber);
         // $scope.sno = ((newPage - 1) * 10);
         $scope.serial = newPageNumber * 10 - 9;
         // if(tab == 'browsed'){
