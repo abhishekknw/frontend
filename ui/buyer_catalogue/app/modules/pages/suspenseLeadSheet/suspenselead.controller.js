@@ -46,24 +46,38 @@ angular.module('catalogueApp')
         enableSearch: true,
 
       };
-
+      
       $scope.pocModel = [];
-       $scope.setCurrentPage =  function(){
+       $scope.setCurrentPage =  function(tabName){
+         $scope.selectedTab = tabName;
         $scope.pagination = {
           current: 1
         };
         $scope.serial = 1
        }
       $scope.pageChanged = function (newPageNumber,tab) {
+        console.log('qqqqqqqqqqqqq',newPageNumber);
         // $scope.sno = ((newPage - 1) * 10);
         $scope.serial = newPageNumber * 10 - 9;
-        if(tab == 'browsed'){
-          $scope.getBrowsedTabSuspenseLeads(newPageNumber);
-        } else {
+        // if(tab == 'browsed'){
+        //   $scope.getBrowsedTabSuspenseLeads(newPageNumber);
+        // } else {
           $scope.getLeadsTabSuspenseLeads(newPageNumber);
-        }
+       // }
+      };
+
+      $scope.pageChangedBrowesd = function (newPageNumber,tab) {
+        console.log('qqqqqqqqqqqqq111111111111111',newPageNumber);
+        // $scope.sno = ((newPage - 1) * 10);
+        $scope.serial = newPageNumber * 10 - 9;
+        // if(tab == 'browsed'){
+          $scope.getBrowsedTabSuspenseLeads(newPageNumber);
+        // } else {
+        //   $scope.getLeadsTabSuspenseLeads(newPageNumber);
+        // }
         
       };
+      
       $scope.initialData = function () {
         suspenseLeadService.initialData()
           .then(function onSuccess(response) {
@@ -88,7 +102,7 @@ angular.module('catalogueApp')
         if(!page){
           page = 1;
         }
-        $scope.leadTabData = [{}];
+        $scope.leadTabData = [];
         $scope.totalCount = 0;
         $scope.companiesData = [{}];
         suspenseLeadService.getLeasTabSuspenseLead(page)
@@ -431,6 +445,8 @@ angular.module('catalogueApp')
       $scope.selectSupplierName = function () {
         if ($scope.selectedSupplierName && $scope.selectedSupplierName.length > 0) {
           $scope.supplierForAddUpdateData['supplier_name'] = $scope.selectedSupplierName[0].label;
+          $scope.supplierForAddUpdateData['supplier_id'] = $scope.selectedSupplierName[0].id;
+         
         }
       }
 
