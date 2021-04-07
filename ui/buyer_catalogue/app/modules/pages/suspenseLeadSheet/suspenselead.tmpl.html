@@ -69,7 +69,7 @@
             </div>
           </uib-tab>
 
-          <uib-tab id="uib-tabs-width" active="activeTab" ng-click="getLeadsTabSuspenseLeads();setCurrentPage()" index="1">
+          <uib-tab id="uib-tabs-width" active="activeTab" ng-click="getLeadsTabSuspenseLeads();setCurrentPage('lead')" index="1">
             <uib-tab-heading>
               <h5>Leads</h5>
             </uib-tab-heading>
@@ -289,14 +289,14 @@
                 <div ng-if="leadTabData.length == 0 && loading" style="text-align: center;color: red;">
                   <h4>Record Not Found.</h4>
                 </div>
-                <dir-pagination-controls ng-if="leadTabData.length > 0" max-size="5" on-page-change="pageChanged(newPageNumber)" direction-links="true"
+                <dir-pagination-controls ng-if="leadTabData.length > 0 && selectedTab == 'lead'" max-size="10" on-page-change="pageChanged(newPageNumber)" direction-links="true"
                   boundary-links="true">
                 </dir-pagination-controls>
               </div>
             </div>
           </uib-tab>
 
-          <uib-tab id="uib-tabs-width" ng-click="getBrowsedTabSuspenseLeads();setCurrentPage()" index="2">
+          <uib-tab id="uib-tabs-width" ng-click="getBrowsedTabSuspenseLeads();setCurrentPage('browsed')" index="2">
             <uib-tab-heading>
               <h5>Browsed Lead</h5>
             </uib-tab-heading>
@@ -483,7 +483,7 @@
                 <div ng-if="leadTabData.length == 0 && loading" style="text-align: center;color: red;">
                   <h4>Record Not Found.</h4>
                 </div>
-                <dir-pagination-controls ng-if="leadTabData.length > 0" max-size="5" on-page-change="pageChanged(newPageNumber,'browsed')" direction-links="true"
+                <dir-pagination-controls ng-if="leadTabData.length > 0 && selectedTab == 'browsed'" max-size="10" on-page-change="pageChangedBrowesd(newPageNumber,'browsed')" direction-links="true"
                   boundary-links="true">
                 </dir-pagination-controls>
               </div>
@@ -684,7 +684,7 @@
                 </div>
                 <div class="col-md-8" style="margin-top: 10px">
                   <input type="text" placeholder="Address" class="form-control" name="address" id="address_id"
-                    ng-model="supplierForAddUpdateData.address1" required>
+                    ng-model="supplierForAddUpdateData.address1">
                 </div>
               </div>
 
