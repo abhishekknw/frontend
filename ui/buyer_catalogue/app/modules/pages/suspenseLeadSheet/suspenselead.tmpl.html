@@ -550,7 +550,7 @@
                   <label> City *: </label>
                 </div>
                 <div class="col-md-8" style="margin-top: 10px">
-                  <select name="city" class="form-control" ng-change="getArea()" value="supplierForAddUpdateData.city_id"  ng-model="model.city_id" ng-required="true">
+                  <select name="city" class="form-control" ng-change="getArea()" value="supplierForAddUpdateData.city_id"  ng-model="supplierForAddUpdateData.city_id" ng-required="true">
                     <option value="" disabled>Select City</option>
                     <option ng-repeat="city in Cities | orderBy: 'city_name'"  ng-selected="supplierForAddUpdateData.city_id == city.id"  value="{{city.id}}" required>
                       {{city.city_name}}</option>
@@ -609,11 +609,11 @@
                     options="suppliersName"  search-filter ="" ng-click="selectSupplierName()"  extra-settings="supplierSettings"
                     selected-model="selectedSupplierName"
                     ></span>
-                  </span>
-                  
+                    <span ng-if="suppliersName == 0" class="error">No supplier found</span>
                 </div>
+               
                 <div class="col-md-4">
-                  <md-switch ng-model="supplierForAddUpdateData.isNewSupplier" ng-change="changeSupplier()" aria-label="Switch 1">
+                  <md-switch ng-model="supplierForAddUpdateData.isNewSupplier" ng-change="addNewSupplier()" aria-label="Switch 1">
                     <label>Add New Supplier</label>
                   </md-switch>
                 </div>
@@ -655,9 +655,9 @@
                 </div>
                 <div class="col-md-8" style="margin-top: 10px">
         
-                    <select name="designation" class="form-control"   ng-model="supplierForAddUpdateData.designation" ng-required="true">
+                    <select name="designation" class="form-control" value="supplierForAddUpdateData.designation"    ng-model="supplierForAddUpdateData.designation" ng-required="true">
                       <option value="" disabled>Select Designation</option>
-                      <option ng-repeat="desig in designation"  value="{{desig}}" required>
+                      <option ng-repeat="desig in designation" ng-selected="desig == supplierForAddUpdateData.designation"  value="{{desig}}" required>
                         {{desig}}</option>
                     </select>
                     <span ng-show="myForm.designation.$dirty && myForm.designation.$invalid" class="error">Designation is required.</span>
@@ -742,9 +742,9 @@
                 </div>
                 <div class="col-md-6" style="margin-top: 10px">
                   <input type="text" ng-pattern="/^[0-9]{10,10}$/" maxlength="10" placeholder="Phone Number"
-                    class="form-control" name="phone_number" id="phone_number_{{$index}}"
+                    class="form-control" name="phone_number_{{$index}}" id="phone_number_{{$index}}"
                     ng-model="pocdata.mobile" required>
-                  <div ng-show="pocForm.phone_number.$error.pattern" class="error" style="font-size:12px; color: red;">
+                  <div ng-show="pocForm.phone_number_{{$index}}.$error.pattern" class="error" style="font-size:12px; color: red;">
                     Phone number Invalid</div>
                 </div>
               </div>

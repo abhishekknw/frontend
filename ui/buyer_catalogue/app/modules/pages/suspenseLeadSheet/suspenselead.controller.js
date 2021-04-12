@@ -284,7 +284,7 @@ angular.module('catalogueApp')
                     swal(constants.name, response.data.data.message, constants.success);
                     $scope.leadTabData[index].lead_status = response.data.data.lead_status;
                     if($scope.leadTabData[index].meating_timeline == 'not given'){
-                      $scope.leadTabData.splice(index, 1)
+                        $scope.leadTabData.splice(index, 1)
                     }
                   }
                 }).catch(function onError(response) {
@@ -328,16 +328,17 @@ angular.module('catalogueApp')
       $scope.supplierForAddUpdate = function (index) {
         // $scope.selectedSupplierName = [];
         $scope.supplierForAddUpdateData = {};
-        $scope.supplierForAddUpdateData = JSON.parse(JSON.stringify($scope.leadTabData[index]));
+       // $scope.supplierForAddUpdateData = JSON.parse(JSON.stringify($scope.leadTabData[index]));
+        $scope.supplierForAddUpdateData = $scope.leadTabData[index];
         if($scope.supplierForAddUpdateData == 'RS'){
           $scope.designation = constants.designation_society;
-        }else if($scope.supplierForAddUpdateData == 'CP'){
+        }else if($scope.supplierForAddUpdateData.supplier_type == 'CP'){
           $scope.designation = constants.designation_corporate;
         
-        }else if($scope.supplierForAddUpdateData == 'GY' || $scope.supplierForAddUpdateData == 'SA'){
+        }else if($scope.supplierForAddUpdateData.supplier_type == 'GY' || $scope.supplierForAddUpdateData.supplier_type == 'SA'){
           $scope.designation = constants.designation_saloon;
         
-        } else if($scope.supplierForAddUpdateData == 'EI' || $scope.supplierForAddUpdateData == 'GN'){
+        } else if($scope.supplierForAddUpdateData.supplier_type == 'EI' || $scope.supplierForAddUpdateData.supplier_type == 'GN'){
           $scope.designation = constants.designation_gantry;
         } else {
           $scope.designation = constants.designation_bus_shelter;
@@ -378,10 +379,10 @@ angular.module('catalogueApp')
 
       $scope.getArea = function (value) {
         $scope.selectedSupplierName = [];
-        var id = $scope.model.city_id;
+        var id = $scope.supplierForAddUpdateData.city_id;
         var localindex_index = $scope.Cities.map(function (el) {
           return el.id;
-        }).indexOf(JSON.parse($scope.model.city_id));
+        }).indexOf(JSON.parse($scope.supplierForAddUpdateData.city_id));
         if (localindex_index != -1) {
           $scope.supplierForAddUpdateData['city_id'] = $scope.Cities[localindex_index].id;
           $scope.supplierForAddUpdateData['city'] = $scope.Cities[localindex_index].city_name;
@@ -429,7 +430,12 @@ angular.module('catalogueApp')
                 $scope.suppliersName = response.data.data.supplier_list;
                 if ($scope.suppliersName.length > 0) {
                   for (let i in $scope.suppliersName) {
-                    $scope.suppliersName[i].label = $scope.suppliersName[i].supplier_name;
+                    if($scope.suppliersName[i].supplier_name){
+                      $scope.suppliersName[i].label = $scope.suppliersName[i].supplier_name;
+                    } else  {
+                      $scope.suppliersName[i].label = $scope.suppliersName[i].society_name;
+                    }
+                    
                     $scope.suppliersName[i].id = $scope.suppliersName[i].supplier_id;
                   }
                 }
@@ -541,18 +547,20 @@ angular.module('catalogueApp')
           $scope.supplierForAddUpdateData.old_area_id = $scope.supplierForAddUpdateData.area_id;
           $scope.supplierForAddUpdateData.area = "";
           $scope.supplierForAddUpdateData.area_id = "";
-        //  $scope.selectedArea = [];
+          $scope.selectedArea = [];
         } else {
           //remove commnet if  $scope.selectedArea comment in if case
           if($scope.supplierForAddUpdateData.old_area){
             $scope.supplierForAddUpdateData.area = $scope.supplierForAddUpdateData.old_area;
             $scope.supplierForAddUpdateData.area_id = $scope.supplierForAddUpdateData.old_area_id;
+            // $scope.selectedArea[0].label = $scope.supplierForAddUpdateData.old_area;;
+            //  $scope.selectedArea[0].id = $scope.supplierForAddUpdateData.old_area_id;;
           }
          
         }
       }
 
-      $scope.changeSupplier = function(){
+      $scope.addNewSupplier = function(){
         if($scope.supplierForAddUpdateData.isNewSupplier && $scope.supplierForAddUpdateData.supplier_id){
           $scope.supplierForAddUpdateData.old_supplier_name = $scope.supplierForAddUpdateData.supplier_name;
           $scope.supplierForAddUpdateData.old_supplier_id = $scope.supplierForAddUpdateData.supplier_id ;
