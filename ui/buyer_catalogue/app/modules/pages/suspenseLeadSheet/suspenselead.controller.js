@@ -118,7 +118,9 @@ angular.module('catalogueApp')
             }
 
             if ($scope.leadTabData && $scope.leadTabData.length > 0) {
-              for (let i in $scope.leadTabData) {
+              for (let i in $scope.leadTabData) { 
+                  var localTime  = moment.utc($scope.leadTabData[i].created_at).local();
+                  $scope.leadTabData[i].created_at =localTime._d;
                 if (!$scope.leadTabData[i].current_patner) {
                   $scope.leadTabData[i].current_patner = '';
                 }
@@ -175,6 +177,8 @@ angular.module('catalogueApp')
 
             if ($scope.leadTabData && $scope.leadTabData.length > 0) {
               for (let i in $scope.leadTabData) {
+                var localTime  = moment.utc($scope.leadTabData[i].created_at).local();
+                  $scope.leadTabData[i].created_at =localTime._d;
                 if (!$scope.leadTabData[i].current_patner) {
                   $scope.leadTabData[i].current_patner = '';
                 }
@@ -330,7 +334,7 @@ angular.module('catalogueApp')
         $scope.supplierForAddUpdateData = {};
        // $scope.supplierForAddUpdateData = JSON.parse(JSON.stringify($scope.leadTabData[index]));
         $scope.supplierForAddUpdateData = $scope.leadTabData[index];
-        if($scope.supplierForAddUpdateData == 'RS'){
+        if($scope.supplierForAddUpdateData.supplier_type == 'RS'){
           $scope.designation = constants.designation_society;
         }else if($scope.supplierForAddUpdateData.supplier_type == 'CP'){
           $scope.designation = constants.designation_corporate;
@@ -480,7 +484,20 @@ angular.module('catalogueApp')
           });
       }
       
-      $scope.openAddPoc = function (id) {
+      $scope.openAddPoc = function (id,supplier_type) {
+        if(supplier_type == 'RS'){
+          $scope.poc_designation = constants.designation_society;
+        }else if(supplier_type == 'CP'){
+          $scope.poc_designation = constants.designation_corporate;
+        
+        }else if(supplier_type == 'GY' || supplier_type == 'SA'){
+          $scope.poc_designation = constants.designation_saloon;
+        
+        } else if(supplier_type == 'EI' || supplier_type == 'GN'){
+          $scope.poc_designation = constants.designation_gantry;
+        } else {
+          $scope.poc_designation = constants.designation_bus_shelter;
+        }
         $scope.suspenseLeadId = id
         $scope.pocModel = [{
           'mobile':'',
@@ -590,6 +607,7 @@ angular.module('catalogueApp')
         } else {
           $scope.designation = constants.designation_bus_shelter;
         }
+        $scope.supplierForAddUpdateData.designation = "";
       }
     //   $scope.indexCount = function(newPageNumber){
     //     $scope.serial = newPageNumber * 10 - 9;
