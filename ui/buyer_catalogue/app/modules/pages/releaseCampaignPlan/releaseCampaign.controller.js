@@ -172,11 +172,13 @@ angular.module('catalogueApp')
           { header: 'Preferred Partner' },
           { header: 'L1 Answers' },
           { header: 'L2 Answers' },
+          { header: 'L3 Answers' },
           { header: 'Implementation Time' },
           { header: 'Meeting Time' },
           // { header: 'Preferred Meeting Time' },
           { header: 'Lead Status' },
           { header: 'Comment' },
+          { header: 'Internal Comment' },
           { header: 'Lead Given by' },
           { header: 'Call Back Time' },
           { header: 'Price' },
@@ -1185,8 +1187,10 @@ angular.module('catalogueApp')
                 console.log(response);
               })
           }
-
         }
+
+
+
         $scope.setEditContactDetails = function () {
           $scope.editContactDetails = false;
         }
@@ -1196,6 +1200,23 @@ angular.module('catalogueApp')
           $scope.addContactDetails = false;
           $scope.addRow.push({});
         }
+
+        $scope.addPoc = function(){
+          console.log('**********************',$scope.pocModel);
+          var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+            return el.id;
+          }).indexOf($scope.shortlisted_spaces_id);
+          if (localindex_index != -1) {
+            $scope.releaseDetails.shortlisted_suppliers[localindex_index].contacts = $scope.pocModel;
+            }
+            console.log('222222222222222222222222222222222',$scope.releaseDetails.shortlisted_suppliers[localindex_index]);
+            releaseCampaignService.saveContactDetails($scope.releaseDetails.shortlisted_suppliers[localindex_index], $scope.releaseDetails.shortlisted_suppliers[localindex_index].supplier_id)
+            .then(function onSuccess(response) {
+              swal(constants.name, constants.add_data_success, constants.success);
+            }).catch(function onError(response) {
+              console.log(response);
+            })
+          }
 
         $scope.removeContact = function (index) {
           swal({
@@ -1218,10 +1239,44 @@ angular.module('catalogueApp')
             });
         }
 
-
+        $scope.addPocField = function () {
+          $scope.pocModel.push({
+            'mobile':'',
+            'name':'',
+            'contact_type':''
+          });
+        }
+  
+        $scope.removePocField = function (index) {
+          $scope.pocModel.splice(index,1)
+        }
 
         $scope.opsVerifyButtonDiable = true;
-        $scope.getRequirementDetail = function (id, suppleName) {
+        $scope.getRequirementDetail = function (id, suppleName,supplier) {
+          if (supplier.supplier_code == 'RE' || supplier.supplier_code == 'HO' || supplier.supplier_code == 'BS') {
+            $scope.poc_designation = constants.retail_shop_contact_type;
+          } else if (supplier.supplier_code == 'CP') {
+            $scope.poc_designation = constants.corporate_contact_type;
+          } else if (supplier.supplier_code == 'SA' || supplier.supplier_code == 'GY') {
+            $scope.poc_designation = constants.salon_contact_type;
+          } else {
+            $scope.poc_designation = constants.society_contact_type;
+          }
+
+          // if(supplier.supplier_code == 'RS'){
+          //   $scope.poc_designation = constants.designation_society;
+          // }else if(supplier.supplier_code == 'CP'){
+          //   $scope.poc_designation = constants.designation_corporate;
+          
+          // }else if(supplier.supplier_code == 'GY' || supplier.supplier_code == 'SA'){
+          //   $scope.poc_designation = constants.designation_saloon;
+          
+          // } else if(supplier.supplier_code == 'EI' || supplier.supplier_code == 'GN'){
+          //   $scope.poc_designation = constants.designation_gantry;
+          // } else {
+          //   $scope.poc_designation = constants.designation_bus_shelter;
+          // }
+          $scope.pocModel = supplier.contacts;
           if($scope.oldIndex){
             $scope.detailedShow[$scope.oldIndex] = false
           }
@@ -1229,6 +1284,7 @@ angular.module('catalogueApp')
           $scope.disableRestore = false
           $scope.supplierName = suppleName;
           $scope.shortlisted_spaces_id = id
+
           userService.getSector()
             .then(function onSuccess(response) {
               $scope.sectorList = response.data;

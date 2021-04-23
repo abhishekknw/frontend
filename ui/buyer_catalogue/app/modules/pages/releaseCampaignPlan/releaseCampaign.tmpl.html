@@ -543,12 +543,12 @@
                     {{requirement}}</option>
                 </select>
                 <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'" 
-                  ng-click="getRequirementDetail(supplier.id,supplier.name) && (supplier.id)" data-toggle="modal"
+                  ng-click="getRequirementDetail(supplier.id,supplier.name,supplier)" data-toggle="modal"
                   style="margin-top:10px" ng-hide="supplier.requirement_given == 'no'" type="button"
                   class="btn btn-danger" name="button">Requirement</button>
 
                   <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'" 
-                  ng-click="getBdRequirementDetail(supplier.id,supplier.name) && (supplier.id)" data-toggle="modal"
+                  ng-click="getBdRequirementDetail(supplier.id,supplier.name,supplier) && (supplier.id)" data-toggle="modal"
                   style="margin-top:10px" ng-hide="supplier.requirement_given == 'no'" type="button"
                   class="btn btn-danger" name="button">Requirement</button>
               </td>
@@ -1073,7 +1073,7 @@
                     {{requirement}}</option>
                 </select>
                 <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g'" 
-                  ng-click="getRequirementDetail(supplier.id,supplier.name) && (supplier.id)" data-toggle="modal"
+                  ng-click="getRequirementDetail(supplier.id,supplier.name,supplier) && (supplier.id)" data-toggle="modal"
                   style="margin-top:10px" ng-hide="supplier.requirement_given == 'no'"type="button"
                   class="btn btn-danger" name="button">Requirement</button>
                   <button ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'" 
@@ -1719,6 +1719,80 @@
     </div>
   </div>
   <!--End: Code for contacts Modal Window -->
+  <div id="pocModal" class="modal fade style-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <div class="pageTitle smallBtn full-width-header">
+            <h4>Add POC</h4>
+          </div>
+          <div class="modal-body">
+            
+            <form role="form" class="form-inline" ng-submit="addPoc()" name="pocForm">
+              <div ng-repeat="pocdata in pocModel track by $index">
+              <div class="row">
+                <div class="col-md-4" style="margin-top: 10px">
+                  <label> Phone Number *: </label>
+                </div>
+                <div class="col-md-6" style="margin-top: 10px">
+                  <input type="text" ng-pattern="/^[0-9]{10,10}$/" maxlength="10" placeholder="Phone Number"
+                    class="form-control" name="phone_number_{{$index}}" id="phone_number_{{$index}}"
+                    ng-model="pocdata.mobile" required>
+                  <div ng-show="pocForm.phone_number_{{$index}}.$error.pattern" class="error" style="font-size:12px; color: red;">
+                    Phone number Invalid</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-4" style="margin-top: 10px">
+                  <label> POC Name *: </label>
+                </div>
+                <div class="col-md-6" style="margin-top: 10px">
+                  <input type="text" placeholder="POC Name" class="form-control" name="poc"
+                  id="poc_poc_{{$index}}" ng-model="pocdata.name" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4" style="margin-top: 10px">
+                  <label>Designation *: </label>
+                </div>
+                <div class="col-md-6" style="margin-top: 10px">
+                  <!-- <input type="text" placeholder="Designation" class="form-control" name="designation"
+                    id="poc_designation_{{$index}}" ng-model="pocdata.contact_type" required> -->
+
+                    <select name="designation" class="form-control" value="pocdata.contact_type"  ng-model="pocdata.contact_type" ng-required="true">
+                      <option value="" disabled>Select Designation</option>
+                      <option ng-repeat="desig in poc_designation" ng-selected="desig == pocdata.contact_type"  value="{{desig}}" required>
+                        {{desig}}</option>
+                    </select>
+                    <span ng-show="myForm.designation.$dirty && myForm.designation.$invalid" class="error">Designation is required.</span>
+                    </select>
+                </div>
+              </div>
+              <div class="text-right">
+                <button type="button" ng-click="removePocField($index)" id="remove_poc_{{$index}}" class="smallBtn pocBtn">-</button>
+              </div>
+              <hr>
+            </div>
+            
+              <div class="row">
+                <div class="col-md-6">
+                  <button type="submit"  class="smallBtn" ng-disabled="pocForm.$invalid || pocModel.length == 0">Save Detail</button>
+                </div>
+                <div class="col-md-6">
+              <div class="text-right">
+                <button type="button" ng-click="addPocField()" class="smallBtn pocBtn">+ Add Poc</button>
+              </div>
+              </div>
+            </div>
+            </form>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- start Requirement table -->
   <div id="RequirementModel" class="modal fade li-popup">
@@ -1823,6 +1897,18 @@
                       </td>
 
                       <td class="alignment">
+                        <span >
+                          <textarea placeholder="L3 Answer"
+                          ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
+                          class="form-control" style="width:150px;" ng-model="subrequirement.l3_answer_1"
+                          ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
+                            </textarea>
+                        </span>
+                        
+
+                      </td>
+
+                      <td class="alignment">
                         <select class="form-control"
                           ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
                           name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
@@ -1866,6 +1952,14 @@
                         <textarea placeholder="Comments"
                           ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
                           class="form-control" style="width:150px;" ng-model="subrequirement.comment"
+                          ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
+                                    </textarea>
+                      </td>
+
+                      <td class="alignment">
+                        <textarea placeholder="Internal Comments"
+                          ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
+                          class="form-control" style="width:150px;" ng-model="subrequirement.internal_comment"
                           ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
                                     </textarea>
                       </td>
@@ -1927,7 +2021,6 @@
                         <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
                           ng-if="subrequirement.color_class == 'red'"
                           ng-click="singleRestoreSubSector(subrequirement.id,key,$index)">Restore</button>
-
                       </td>
                       <!-- </tr> -->
                       <!-- </tbody>
@@ -1953,6 +2046,9 @@
                         <button style="margin-bottom:2px" id="restore_{{key}}" type="button" name="button"
                           ng-disabled="subSectorCheck || disableRestore" class="btn btn-success"
                           ng-click="restoreMultiRequirement(requirement.requirements,key)">Restore</button>
+
+                          <button style="margin-bottom:2px" type="button" name="button"
+                          class="btn btn-success btn-small"  data-target="#pocModal" data-toggle="modal">Add POC</button>
                       </td>
                     </tr>
 
