@@ -17,9 +17,10 @@ angular.module('catalogueApp')
       
       $scope.dropdownSettings = {
         showCheckAll: false,
-        scrollable: false,
+        scrollable: true,
         enableSearch: false,
-        showUncheckAll: false
+        showUncheckAll: false,
+        scrollableHeight: '250px',
       };
 
 
@@ -31,6 +32,8 @@ angular.module('catalogueApp')
         scrollable: true,
         closeOnSelect: true,
         enableSearch: true,
+        maxWidth:'180px !important',
+        scrollableHeight: '250px',
           smartButtonTextConverter: function(itemText, originalItem) {
            return itemText
         }
@@ -44,6 +47,8 @@ angular.module('catalogueApp')
         scrollable: true,
         closeOnSelect: true,
         enableSearch: true,
+        scrollableHeight: '250px',
+        width:'180px',
 
       };
       
