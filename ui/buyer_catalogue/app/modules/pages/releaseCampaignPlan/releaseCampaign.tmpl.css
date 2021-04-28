@@ -230,3 +230,11 @@ button.btn {
 #selectedPaymentModal .modal-body .col-md-12 {
   padding: 0;
 }
+#pocModal{
+  z-index: 1055;
+}
+.poc-form-modal{
+  max-height: 350px;
+  overflow: auto;
+overflow-x: hidden;
+}
