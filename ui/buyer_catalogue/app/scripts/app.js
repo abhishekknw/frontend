@@ -170,6 +170,16 @@ angular
         // }
       })
 
+      .state('covidHospital', {
+        url: '/covid-hospital',
+        controller: 'covidHospitalCtrl',
+        templateUrl: 'modules/pages/covidHospital/covid-hospital.tmpl.html',
+        // data :{
+        //   permission : 'loginAccess'
+        // }
+      })
+
+
       .state('resetPassword', {
         url: '/reset-password/:code/:email',
         controller: 'resetPasswordCtrl',
@@ -605,10 +615,14 @@ angular
         if (!$rootScope.globals.hasOwnProperty('userInfo') || !$rootScope.globals.userInfo.hasOwnProperty('profile')) {
           //  $location.path("/login");
           var url = $location.url().split("/");
+          console.log('++++++++++++++++++',url);
+          console.log('11111111111111111111111',$location.url());
           if ($location.path() == "/forgot-password") {
             $location.path("/forgot-password");
           } else if (url[1] == "reset-password") {
             $location.path($location.url());
+          } else if (url[1] == "covid-hospital") {
+            $location.path("/covid-hospital");
           } else {
             $location.path("/login");
           }
@@ -622,6 +636,8 @@ angular
             $location.path("/forgot-password");
           } else if (url[1] == "reset-password") {
             $location.path($location.url());
+          } else if (url[1] == "covid-hospital") {
+            $location.path("/covid-hospital");
           } else {
             $location.path("/login");
           }
