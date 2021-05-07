@@ -3,28 +3,392 @@
 <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 <link href="css/smallscreen.css" rel="stylesheet" media="screen">
 
-<div class="machadalo-login" style="background-image: url('img/bannerBG.jpg');">
-  <div class="column leftBox">
-    <div class="mclb">
-      <h2><a href="/#/login"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> Forgot <strong>Password</strong></h2>
-      <div class="loginForm">
-        <form role="form" ng-submit="resetPassword()">
-          <div class="successMessages">
-            <div ng-show="success" class="success">{{success}}</div>
+<div class="covid-hospital">
+  <div class="page-wrapper">
+    <div class="logo-sec">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvEtPxay1pqdeu3gbd5sBCelZ800p8KG-ClQ&usqp=CAU" alt="logo">
+    </div>
+    <div class="container">
+      <div class="page-inner">
+        <div class="top-select-option">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">              
+                <select class="form-control">
+                  <option>Select state</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+              <div class="form-group">              
+                <select class="form-control">
+                  <option>Select dist.</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+              <div class="form-group">              
+                <select class="form-control">
+                  <option>Select hopital</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+            </div>
+            <span class="or">or</span>
+            <div class="col-md-6">
+              <div class="form-group">
+                <select class="form-control">
+                  <option>Pin code(10km, 15km, 100km)</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+            </div>
           </div>
-          <input type="email" name="email" id="email" class="field" ng-model="userEmail" required placeholder="Email" />
-          <div ng-model="disabled">
-            <button ng-disabled="disabled" class="submit-btn" type="submit">Submit</button>
+        </div>
+        <div class="summery">
+          <h4 class="title">Summery</h4>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card">
+                <h3>Delhi Covid total hospital : <span>123</span></h3>
+                <div class="hospital-card-wrapper">
+                  <div class="hospital-card">
+                    <h4>Oxyzen Bed : <span>12</span></h4>
+                  </div>
+                  <div class="hospital-card">
+                    <h4>Non Oxyzen Bed : <span>20</span></h4>
+                  </div>
+                  <div class="hospital-card">
+                    <h4>ICU : <span>15</span></h4>
+                  </div>
+                  <div class="hospital-card">
+                    <h4>Ventilators : <span>8</span></h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card">
+                <h3>Delhi Covid beds available hospital : <span>456</span></h3>
+                <div class="hospital-card-wrapper">
+                  <div class="hospital-card">
+                    <h4>Oxyzen Bed : <span>12</span></h4>
+                  </div>
+                  <div class="hospital-card">
+                    <h4>Non Oxyzen Bed : <span>20</span></h4>
+                  </div>
+                  <div class="hospital-card">
+                    <h4>ICU : <span>15</span></h4>
+                  </div>
+                  <div class="hospital-card">
+                    <h4>Ventilators : <span>8</span></h4>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </form>
+          <div class="summery-bottom-cards">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="card">
+                  <div class="img-card">
+                    <img src="https://www.pngkey.com/png/full/357-3572177_hospital-white-noshadowai-icon.png  " alt="Hospital">
+                  </div>
+                  <h2>35</h2>
+                  <p>Hospital</p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card">
+                  <div class="img-card">
+                    <img src="https://www.pngkey.com/png/full/357-3572177_hospital-white-noshadowai-icon.png" alt="Hospital">
+                  </div>
+                  <h2>60</h2>
+                  <p>Testing Lab</p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card">
+                  <div class="img-card">
+                    <img src="https://www.pngkey.com/png/full/357-3572177_hospital-white-noshadowai-icon.png" alt="Hospital">
+                  </div>
+                  <h2>45</h2>
+                  <p>Care Center</p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card">
+                  <div class="img-card">
+                    <img src="https://www.pngkey.com/png/full/357-3572177_hospital-white-noshadowai-icon.png" alt="Hospital">
+                  </div>
+                  <h2>35</h2>
+                  <p>Collection Center</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="search-hopital">
+              <div class="search-form">
+                <form class="d-flex">
+                  <input class="form-control" type="search" placeholder="Search hospital" aria-label="Search">
+                  <span class="search-ic"><i class="fas fa-search"></i></span>
+                </form>
+              </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card">
+                  <h3>Facility Name : <span>Medanta Hospital and Research center Indore.</span></h3>
+                  <ul>
+                    <li>Available of Beds: <span>Yes (10)</span></li>
+                  </ul>
+                  <table class="table covid-hospital-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Oxyzen Beds:</th>
+                          <td scope="col">Total</td>
+                          <td scope="col">Available</td>
+                          <td scope="col">Occupied</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">Non-Oxyzen Beds:</th>
+                          <td>12</td>
+                          <td>23</td>
+                          <td>14</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">ICU Beds:</th>
+                          <td>22</td>
+                          <td>32</td>
+                          <td>12</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Ventilators: </th>
+                          <td >22</td>
+                          <td>323</td>
+                          <td>323</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card">
+                  <h3>Facility Name : <span>Medanta Hospital and Research center Indore.</span></h3>
+                  <ul>
+                    <li>Available of Beds: <span>Yes (255)</span></li>
+                  </ul>
+                  <table class="table covid-hospital-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Oxyzen Beds:</th>
+                          <td scope="col">Total</td>
+                          <td scope="col">Available</td>
+                          <td scope="col">Occupied</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">Non-Oxyzen Beds:</th>
+                          <td>12</td>
+                          <td>23</td>
+                          <td>14</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">ICU Beds:</th>
+                          <td>22</td>
+                          <td>32</td>
+                          <td>12</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Ventilators: </th>
+                          <td >22</td>
+                          <td>323</td>
+                          <td>323</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card">
+                  <h3>Facility Name : <span>Medanta Hospital and Research center Indore.</span></h3>
+                  <ul>
+                    <li>Available of Beds: <span>Yes (255)</span></li>
+                  </ul>
+                  <table class="table covid-hospital-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Oxyzen Beds:</th>
+                          <td scope="col">Total</td>
+                          <td scope="col">Available</td>
+                          <td scope="col">Occupied</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">Non-Oxyzen Beds:</th>
+                          <td>12</td>
+                          <td>23</td>
+                          <td>14</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">ICU Beds:</th>
+                          <td>22</td>
+                          <td>32</td>
+                          <td>12</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Ventilators: </th>
+                          <td >22</td>
+                          <td>323</td>
+                          <td>323</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card">
+                  <h3>Facility Name : <span>Medanta Hospital and Research center Indore.</span></h3>
+                  <ul>
+                    <li>Available of Beds: <span>Yes (255)</span></li>
+                  </ul>
+                  <table class="table covid-hospital-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Oxyzen Beds:</th>
+                          <td scope="col">Total</td>
+                          <td scope="col">Available</td>
+                          <td scope="col">Occupied</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">Non-Oxyzen Beds:</th>
+                          <td>12</td>
+                          <td>23</td>
+                          <td>14</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">ICU Beds:</th>
+                          <td>22</td>
+                          <td>32</td>
+                          <td>12</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Ventilators: </th>
+                          <td >22</td>
+                          <td>323</td>
+                          <td>323</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card">
+                  <h3>Facility Name : <span>Medanta Hospital and Research center Indore.</span></h3>
+                  <ul>
+                    <li>Available of Beds: <span>Yes (255)</span></li>
+                  </ul>
+                  <table class="table covid-hospital-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Oxyzen Beds:</th>
+                          <td scope="col">Total</td>
+                          <td scope="col">Available</td>
+                          <td scope="col">Occupied</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">Non-Oxyzen Beds:</th>
+                          <td>12</td>
+                          <td>23</td>
+                          <td>14</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">ICU Beds:</th>
+                          <td>22</td>
+                          <td>32</td>
+                          <td>12</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Ventilators: </th>
+                          <td >22</td>
+                          <td>323</td>
+                          <td>323</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="card">
+                  <h3>Facility Name : <span>Medanta Hospital and Research center Indore.</span></h3>
+                  <ul>
+                    <li>Available of Beds: <span>Yes (255)</span></li>
+                  </ul>
+                  <table class="table covid-hospital-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Oxyzen Beds:</th>
+                          <td scope="col">Total</td>
+                          <td scope="col">Available</td>
+                          <td scope="col">Occupied</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">Non-Oxyzen Beds:</th>
+                          <td>12</td>
+                          <td>23</td>
+                          <td>14</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">ICU Beds:</th>
+                          <td>22</td>
+                          <td>32</td>
+                          <td>12</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Ventilators: </th>
+                          <td >22</td>
+                          <td>323</td>
+                          <td>323</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul>
+        </nav>
       </div>
     </div>
   </div>
-  <div class="column rightBox">
-    <img src="images/machadalo-logo.png" alt="Machadalo" class="logo"/>
-    <div class="mcrb">
-      <h1>Every great achievement was first  considered impossible</h1>
-    </div>
-  </div>
+</div>
 
 </div><!-- machadalo-login -->
