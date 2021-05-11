@@ -47,12 +47,12 @@ angular.module('machadaloPages')
                 // }, 12000)
 
                 $scope.getState = function () {
-                    suspenseLeadService.getAllState()
-                        // .then(function onSuccess(response) {
-                        //     $scope.stateData = response.data.state;
-                        // }).catch(function onError(response) {
-                        //     console.log(response);
-                        // })
+                    AuthService.getAllState()
+                        .then(function onSuccess(response) {
+                            $scope.stateData = response.data.data;
+                        }).catch(function onError(response) {
+                            console.log(response);
+                        })
                 }
 
                 $scope.getCity = function () {

@@ -218,5 +218,15 @@ angular.module('Authentication')
       };
 
 
+      authService.getAllState = function (param,callback) {
+        return $http.get(apiHost + 'v0/ui/covid-bot/state/')
+            .then(function onSuccess(response) {
+                 return response
+            })
+            .catch(function onError(response) {
+               return response
+            });
+      };
+
         return authService;
     }])
