@@ -385,3 +385,225 @@ input[type="radio"]{
   outline: none;
   border: none;
 }
+
+
+
+/*Covid Hospital Styles*/
+.page-wrapper {
+    padding: 20px;
+}
+.logo-sec{
+  text-align: center;
+  margin-bottom: 30px;
+}
+.logo-sec img{
+  max-width: 250px;
+}
+.card {
+    background: #871420;
+    border-radius: 10px;
+    padding: 20px;
+    color: #fff;
+}
+.top-select-option .form-control{
+  height: 40px;
+}
+.summery-bottom-cards .card img{
+  max-width: 50px;
+}
+
+.summery-bottom-cards .card{
+  text-align: center !important;
+  background-color: #fff;
+  box-shadow: 2px 2px 30px rgba(0,0,0,0.10);
+} 
+.summery-bottom-cards .card h2{
+  font-size: 34px;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 10px;
+}
+.summery-bottom-cards .card p{
+  color: #000;
+  font-size: 16px;
+  margin: 0;
+  line-height: 26px;
+  text-transform: uppercase;
+}
+.top-select-option .row{
+  display: flex;
+  /*align-items: center;*/
+}
+.top-select-option .form-group{
+/*margin-bottom: 0;*/
+}
+.top-select-option {
+    padding: 20px;
+    box-shadow: 2px 2px 20px rgba(0,0,0,0.1);
+    border-radius: 6px;
+    margin-bottom: 30px;
+}
+.summery h4.title{
+  text-transform: uppercase;
+font-weight: bold;
+}
+.summery h4{
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+.summery .card{
+  text-align: left;
+  margin-bottom: 30px;
+  padding-bottom: 40px;
+}
+.summery .card h3{
+  margin-top: 0;
+  border-bottom: 1px solid;
+  border-color: rgba(255,255,255,0.1);
+  padding-bottom: 15px;
+  text-align: left;
+}
+.hospital-card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    /*justify-content: center;*/
+}
+.hospital-card {
+    background: #ffffff14;
+    box-shadow: 5px 5px 30px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+.hospital-card h4{
+  margin: 0;
+      font-size: 16px;
+    text-transform: uppercase;
+}
+.summery-bottom-cards {
+    margin-top: 50px;
+}
+.img-card {
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    background: #86131f;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-top: -50px;
+}
+.search-hopital h3{
+  font-size: 22px !important;
+}
+.search-hopital ul{
+  list-style: none;
+}
+.search-hopital ul li {
+    margin-bottom: 8px;
+    display: flex;
+    font-size: 16px;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+.search-hopital ul li span{
+  font-weight: 700;
+}
+.summery .search-hopital h4{
+  text-align: left;
+  padding-bottom: 15px;
+  border-bottom: 1px solid;
+  border-color: #000;
+}
+.search-hopital h4{
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+.search-hopital ul{
+  margin-bottom: 15px;
+}
+.search-form {
+    max-width: 500px;
+    margin: auto;
+    margin-bottom: 30px;
+}
+.search-form form{
+  position: relative;
+}
+.search-form form input[type="search"] {
+    border-radius: 30px;
+    background: #871420;
+    color: #fff;
+    border: none;
+    height: 50px;
+    padding-left: 20px;
+}
+.search-form form input[type="search"]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #fff;
+}
+.search-form form input[type="search"]::-moz-placeholder { /* Firefox 19+ */
+  color: #fff;
+}
+.search-form form input[type="search"]:-ms-input-placeholder { /* IE 10+ */
+  color: #fff;
+}
+.search-form form input[type="search"]:-moz-placeholder { /* Firefox 18- */
+  color: #fff;
+}
+.search-ic {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    color: #fff;
+}
+.search-hopital .card{
+  /*background-color: #f5f5f5;
+  border: 2px solid #eee;*/
+  background-color: #fff;
+  box-shadow: 5px 5px 30px rgba(0,0,0,0.1);
+  color: #000 !important;
+}
+.search-hopital .card h3{
+  border-color: #000;
+}
+.pagination > li > a, .pagination > li > span{
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #000;
+}
+.covid-hospital .pagination li.active a{
+  background: #871420;
+}
+table.covid-hospital-table th{
+  background-color: #fff;
+  color: #000;
+  text-align: left;
+  font-weight: normal;
+  /*border-bottom: 1px solid #ddd;*/
+}
+table.covid-hospital-table td{
+  text-align: center;
+}
+table.covid-hospital-table th,.covid-hospital-table td{
+  padding-left: 0 !important; 
+  padding-right: 0 !important;  
+}
+table.covid-hospital-table tr th:last-child,table.covid-hospital-table tr td:last-child{
+  text-align: right;
+}
+table.covid-hospital-table > thead > tr > th {
+    border-bottom: 1px solid #ddd;
+}
+.table.covid-hospital-table > thead > tr > td {
+    border-bottom: 1px solid #ddd;
+}
+.table.covid-hospital-table > tbody > tr > th:last-child{
+  border-bottom:  none;
+}

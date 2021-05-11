@@ -480,7 +480,13 @@ angular.module('catalogueApp')
               swal(constants.name, response.data.data.error, constants.error);
             } else {
               $scope.leadTabData[$scope.leadDataIndex] = $scope.supplierForAddUpdateData;
-              $scope.leadTabData[$scope.leadDataIndex].is_updated = 'True'
+              $scope.leadTabData[$scope.leadDataIndex].is_updated = 'True';
+
+              for(let i in $scope.leadTabData){
+                if($scope.leadTabData[i].phone_number == $scope.supplierForAddUpdateData.phone_number){
+                  $scope.leadTabData[i].is_updated = 'True';
+                }
+              }
 
               swal(constants.name, response.data.data.message, constants.success);
             }

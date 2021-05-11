@@ -14,6 +14,7 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
+
       suspenseLeadService.getLeasTabSuspenseLead = function (page) {
         var url = base_url + "b2b/suspense-leads-tab/?page=" + page;
         return machadaloHttp.get(url);
@@ -63,6 +64,27 @@ angular.module('catalogueApp')
       suspenseLeadService.getBrowsedTabSuspenseLead = function (page) {
         var url = base_url + "b2b/suspense-browsed-tab/?page=" + page;
         return machadaloHttp.get(url);
+      }
+
+      suspenseLeadService.getAllState = function () {
+        console.log('hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
+        return true;
+        // var url = base_url + "b2b/suspense-leads/";
+        // return machadaloHttp.get(url);
+      }
+
+      suspenseLeadService.getAllCity = function () {
+        console.log('citiesssssssssss');
+        return true;
+        // var url = base_url + "b2b/suspense-leads/";
+        // return machadaloHttp.get(url);
+      }
+
+      suspenseLeadService.getAllBeds = function () {
+        console.log('bedsssssssssssss');
+        return true;
+        // var url = base_url + "b2b/suspense-leads/";
+        // return machadaloHttp.get(url);
       }
   
       return suspenseLeadService;
