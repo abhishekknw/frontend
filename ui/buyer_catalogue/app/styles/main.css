@@ -605,5 +605,5 @@ table.covid-hospital-table > thead > tr > th {
     border-bottom: 1px solid #ddd;
 }
 .table.covid-hospital-table > tbody > tr > th:last-child{
-  border-bottom: : none;
+  border-bottom:  none;
 }
