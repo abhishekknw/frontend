@@ -67,10 +67,8 @@ angular.module('catalogueApp')
       }
 
       suspenseLeadService.getAllState = function () {
-        console.log('hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
-        return true;
-        // var url = base_url + "b2b/suspense-leads/";
-        // return machadaloHttp.get(url);
+         var url = base_url + "covid-bot/state/";
+         return machadaloHttp.get(url);
       }
 
       suspenseLeadService.getAllCity = function () {
