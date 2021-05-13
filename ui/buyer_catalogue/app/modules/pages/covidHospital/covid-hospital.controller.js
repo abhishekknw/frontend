@@ -6,7 +6,7 @@ angular.module('machadaloPages')
 
                 // $scope.error = false;
                 // $scope.success = false;
-               
+
                 // $scope.resetPassword = function () {
                 //     $scope.loadingSpinner = true;
                 //     var url = $location.host();
@@ -28,8 +28,8 @@ angular.module('machadaloPages')
                 //     });
                 // }
                 var url = $location.url().split("/");
-                $scope.categorys = ['Beds','Hospital'];
-                let cat = url[1].substring(0,1).toUpperCase()+url[1].substring(1);
+                $scope.categorys = ['Beds', 'Hospital'];
+                let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
                 $scope.selectedCategory = cat;
                 // setInterval(function () {
                 //     suspenseLeadService.getAllState()
@@ -54,23 +54,82 @@ angular.module('machadaloPages')
                             console.log(response);
                         })
                 }
-
                 $scope.getCity = function () {
-                    console.log('BBBBBBBBBBBBBBBBBBBBBBB');
-                    suspenseLeadService.getAllCity()
-                        // .then(function onSuccess(response) {
-                        //     $scope.cityData = response.data.city;
-                        // }).catch(function onError(response) {
-                        //     console.log(response);
-                        // })
+                    $scope.selectedCityName = null;
+                    var localindex_index = $scope.stateData.map(function (el) {
+                        return el.state_code;
+                    }).indexOf($scope.state_code);
+                    if (localindex_index != -1) {
+                        $scope.selectedStateName = $scope.stateData[localindex_index].name;
+                    }
+                    AuthService.getAllCity($scope.state_code)
+                        .then(function onSuccess(response) {
+                            $scope.cityData = response.data.data;
+                        }).catch(function onError(response) {
+                            console.log(response);
+                        })
+                    $scope.getBeds();
                 }
-
-                $scope.getBeds = function(){
-                    suspenseLeadService.getAllBeds()
+                $scope.totalOxyzenBeds = 0;
+                $scope.totalNonOxyzenBeds = 0;
+                $scope.totalICUBeds = 0;
+                $scope.totalVentilatorsBeds = 0;
+                $scope.totalNonVentilatorsBeds = 0;
+                $scope.totalBeds = 0;
+                $scope.getBeds = function () {
+                    let param = {
+                        state: $scope.selectedStateName,
+                        city: $scope.selectedCityName
+                    }
+                    console.log('111111111111111111111111', $scope.selectedStateName);
+                    console.log('22222222222222222222222222', $scope.selectedCityName);
+                    // suspenseLeadService.getAllBeds()
                     // .then(function onSuccess(response) {
                     //     $scope.bedsData = response.data;
                     // }).catch(function onError(response) {
                     //     console.log(response);
                     // })
+                    AuthService.getAllBeds(param)
+                        .then(function onSuccess(response) {
+                            $scope.bedsDetailData = response.data.data;
+                          
+                            if ($scope.bedsDetailData.length > 0) {
+                                for (let i in $scope.bedsDetailData) {
+                                    let hospitalData = $scope.bedsDetailData[i].hospital_data;
+                                    if (hospitalData.length > 0) {
+                                        for (let j in hospitalData) {
+                                          let resourcesData = hospitalData[j].resources;
+                                          if(resourcesData.length > 0){
+                                              for(let k in resourcesData){
+                                                  if(resourcesData[k].resourceType == 'BED_WITH_OXYGEN'){
+                                                    $scope.totalOxyzenBeds = $scope.totalOxyzenBeds + resourcesData[k].totalQuantity;
+                                                  }
+                                                  if(resourcesData[k].resourceType == 'BED_WITHOUT_OXYGEN'){
+                                                    $scope.totalNonOxyzenBeds = $scope.totalNonOxyzenBeds + resourcesData[k].totalQuantity;
+                                                  }
+
+                                                  if(resourcesData[k].resourceType == 'ICU_WITH_VENTILATOR'){
+                                                    $scope.totalVentilatorsBeds = $scope.totalVentilatorsBeds + resourcesData[k].totalQuantity;
+                                                  }
+                                                  if(resourcesData[k].resourceType == 'ICU_WITHOUT_VENTILATOR'){
+                                                    $scope.totalNonVentilatorsBeds = $scope.totalNonVentilatorsBeds + resourcesData[k].totalQuantity;
+                                                  }
+
+                                                  if(resourcesData[k].resourceType == 'BEDS'){
+                                                    $scope.totalBeds = $scope.totalBeds + resourcesData[k].totalQuantity;
+                                                  }
+
+                                                  if(resourcesData[k].resourceType == 'ICUS'){
+                                                    $scope.totalICUBeds = $scope.totalICUBeds + resourcesData[k].totalQuantity;
+                                                  }
+                                              }
+                                          }
+                                        }
+                                    }
+                                }
+                            }
+                        }).catch(function onError(response) {
+                            console.log(response);
+                        })
                 }
             }]);
