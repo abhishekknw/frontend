@@ -3,7 +3,7 @@
 <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 <link href="css/smallscreen.css" rel="stylesheet" media="screen">
 
-<div class="covid-hospital" ng-init="getState();getCity()">
+<div class="covid-hospital" ng-init="getState();">
   <div class="page-wrapper">
     <div class="logo-sec">
       <img src="images/machadalo-logo.png" alt="logo">
@@ -13,39 +13,40 @@
         <div class="top-select-option">
           <div class="row">
             <div class="col-md-12">
+              <div class="col-md-4">
               <div class="form-group">
-                <select class="form-control" name="category" id="Category_id"
-                ng-model="selectedCategory">
-                <option ng-repeat="cat in categorys track by $index"
-                value="{{cat}}" style="text-transform: capitalize;">
-                {{cat}}
-              </option>
+                <select class="form-control" name="category" id="Category_id" ng-model="selectedCategory">
+                  <option ng-repeat="cat in categorys track by $index" value="{{cat}}"
+                    style="text-transform: capitalize;">
+                    {{cat}}
+                  </option>
                 </select>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-4">
               <div class="form-group">
-                <select class="form-control" ng-change="ss()" name="state" id="state_id"
-                ng-model="state_code">
-                <option value="">
-                Select State
-              </option>
-                <option ng-repeat="state in stateData track by $index"
-                value="{{state.state_code}}" style="text-transform: capitalize;">
-                {{state.name}}
-              </option>
+                <select class="form-control" ng-change="getCity()" name="state" id="state_id" ng-model="state_code">
+                  <option value="" disabled>
+                    Select State
+                  </option>
+                  <option ng-repeat="state in stateData track by $index" value="{{state.state_code}}"
+                    style="text-transform: capitalize;">
+                    {{state.name}}
+                  </option>
                 </select>
               </div>
               <div class="form-group">
-                <select class="form-control">
-                  <option>Select District</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
+                <select class="form-control" name="city" ng-change="getBeds()" id="city_id" ng-model="selectedCityName">
+                  <option value="" disabled>
+                    Select District
+                  </option>
+                  <option ng-repeat="city in cityData track by $index" value="{{city.name}}"
+                    style="text-transform: capitalize;">
+                    {{city.name}}
+                  </option>
                 </select>
               </div>
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <select class="form-control">
                   <option>Select Hospital</option>
                   <option>2</option>
@@ -53,40 +54,53 @@
                   <option>4</option>
                   <option>5</option>
                 </select>
-              </div>
+              </div> -->
             </div>
-            <span class="or">or</span>
-            <div class="col-md-6">
+            <!-- <span class="or">or</span> -->
+            <div class="col-md-4">
               <div class="form-group">
-                <select class="form-control">
+                <input class="form-control" name="pin_code" ng-model="pin_code" placeholder="Pin Code">
+                <!-- <select class="form-control">
                   <option>Pin code</option>
                   <option>2</option>
                   <option>3</option>
                   <option>4</option>
                   <option>5</option>
-                </select>
+                </select> -->
               </div>
             </div>
           </div>
         </div>
+      </div>
         <div class="summery">
           <h4 class="title">Summery</h4>
           <div class="row">
             <div class="col-md-6">
               <div class="card">
-                <h3>Delhi Covid total hospital : <span>123</span></h3>
+                <h3>{{selectedStateName}} {{selectedCityName}} Covid Total Hospital : 
+                  <span ng-if="bedsDetailData.length > 0">{{bedsDetailData.length}}</span>
+                  <span ng-if="bedsDetailData.length == 0">00</span>
+                </h3>
                 <div class="hospital-card-wrapper">
+
                   <div class="hospital-card">
-                    <h4>Oxyzen Bed : <span>12</span></h4>
+                    <h4>Beds : <span>{{totalBeds}}</span></h4>
                   </div>
                   <div class="hospital-card">
-                    <h4>Non Oxyzen Bed : <span>20</span></h4>
+                    <h4>Oxyzen Bed : <span>{{totalOxyzenBeds}}</span></h4>
                   </div>
                   <div class="hospital-card">
-                    <h4>ICU : <span>15</span></h4>
+                    <h4>Non Oxyzen Bed : <span>{{totalNonOxyzenBeds}}</span></h4>
                   </div>
                   <div class="hospital-card">
-                    <h4>Ventilators : <span>8</span></h4>
+                    <h4>ICU : <span>{{totalICUBeds}}</span></h4>
+                  </div>
+                  <div class="hospital-card">
+                    <h4>ICU with Ventilators : <span>{{totalVentilatorsBeds}}</span></h4>
+                  </div>
+
+                  <div class="hospital-card">
+                    <h4>ICU without Ventilators : <span>{{totalNonVentilatorsBeds}}</span></h4>
                   </div>
                 </div>
               </div>
