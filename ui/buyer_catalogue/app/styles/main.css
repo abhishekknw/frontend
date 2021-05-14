@@ -607,3 +607,11 @@ table.covid-hospital-table > thead > tr > th {
 .table.covid-hospital-table > tbody > tr > th:last-child{
   border-bottom:  none;
 }
+
+#Category_id {
+  width: 50%;
+  margin: 0 auto;
+  }
+  .card h3 {
+  height: 110px;
+  }

@@ -36,9 +36,12 @@ angular.module('machadaloPages').filter('replace', [function () {
             //     });
             // }
             var url = $location.url().split("/");
-            $scope.categorys = ['Beds', 'Hospital'];
+            // $scope.categorys = ['Beds', 'Hospitals'];
+            $scope.categorys = ['Hospital Beds'];
             let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
-            $scope.selectedCategory = cat;
+            // $scope.selectedCategory = cat;
+             $scope.selectedCategory = 'Hospital Beds';
+            $scope.loading = true;
             // setInterval(function () {
             //     suspenseLeadService.getAllState()
             //         .then(function onSuccess(response) {
@@ -85,7 +88,9 @@ angular.module('machadaloPages').filter('replace', [function () {
             // $scope.totalNonVentilatorsBeds = 0;
             // $scope.totalBeds = 0;
             $scope.totalAvailableBeds = 0;
+            $scope.totalHospitalBeds = 0;
             $scope.getBeds = function () {
+                $scope.loading = null;
                 let param = {
                     state: $scope.selectedStateName,
                     city: $scope.selectedCityName
@@ -97,19 +102,37 @@ angular.module('machadaloPages').filter('replace', [function () {
                 // }).catch(function onError(response) {
                 //     console.log(response);
                 // })
+                $scope.notAvailableCount = 0;
                 AuthService.getAllBeds(param)
                     .then(function onSuccess(response) {
+                        $scope.loading = response;
                         $scope.hospitalDetailData = response.data.data;
                         $scope.resourcesTypeData = [];
                         $scope.totalAvailableBeds = 0;
+                        $scope.totalHospitalBeds = 0;
+                        
                         if ($scope.hospitalDetailData.length > 0) {
                             for (let i in $scope.hospitalDetailData) {
                                 let hospitalData = $scope.hospitalDetailData[i].hospital_data;
                                 if (hospitalData.length > 0) {
                                     for (let j in hospitalData) {
                                         let resourcesData = hospitalData[j].resources;
+                                        let checkAvailable = false;
                                         if (resourcesData.length > 0) {
                                             for (let k in resourcesData) {
+                                                if(resourcesData[k].quantity < 0){
+                                                    $scope.hospitalDetailData[i].hospital_data[j].resources[k].quantity= 0;
+                                                    resourcesData[k].quantity = 0;
+                                                }
+                                                if(resourcesData[k].totalQuantity < 0){
+                                                    $scope.hospitalDetailData[i].hospital_data[j].resources[k].totalQuantity = 0;
+                                                    resourcesData[k].totalQuantity = 0;
+                                                } 
+
+                                                if(resourcesData[k].quantity && resourcesData[k].quantity > 0){
+                                                    checkAvailable = true;
+                                                }
+
                                                 if ($scope.resourcesTypeData.length > 0) {
                                                     var localindex_index = $scope.resourcesTypeData.map(function (el) {
                                                         return el.resourceType;
@@ -118,7 +141,6 @@ angular.module('machadaloPages').filter('replace', [function () {
                                                         $scope.resourcesTypeData[localindex_index].totalQuantity = $scope.resourcesTypeData[localindex_index].totalQuantity + resourcesData[k].totalQuantity;
                                                         $scope.resourcesTypeData[localindex_index].quantity = $scope.resourcesTypeData[localindex_index].quantity + resourcesData[k].quantity;
                                                     }
-
                                                     if(localindex_index == -1){
                                                         $scope.resourcesTypeData.push({
                                                             'resourceType': resourcesData[k].resourceType,
@@ -126,7 +148,6 @@ angular.module('machadaloPages').filter('replace', [function () {
                                                             'quantity': resourcesData[k].quantity,
                                                         })
                                                     }
-
                                                 } else {
                                                     $scope.resourcesTypeData.push({
                                                         'resourceType': resourcesData[k].resourceType,
@@ -136,36 +157,23 @@ angular.module('machadaloPages').filter('replace', [function () {
                                                 }
                                                 if(resourcesData[k].quantity){
                                                     $scope.totalAvailableBeds =  $scope.totalAvailableBeds + resourcesData[k].quantity;
-                                                
+                                                }
+                                                if(resourcesData[k].totalQuantity){
+                                                    $scope.totalHospitalBeds =  $scope.totalHospitalBeds + resourcesData[k].totalQuantity;
+                                                }
+
+                                                if(resourcesData.length-1 == k && checkAvailable == false){
+                                                   $scope.notAvailableCount = ($scope.notAvailableCount + 1);
                                                 }
                                     
-                                                //   if(resourcesData[k].resourceType == 'BED_WITH_OXYGEN'){
-                                                //     $scope.totalOxyzenBeds = $scope.totalOxyzenBeds + resourcesData[k].totalQuantity;
-                                                //   }
-                                                //   if(resourcesData[k].resourceType == 'BED_WITHOUT_OXYGEN'){
-                                                //     $scope.totalNonOxyzenBeds = $scope.totalNonOxyzenBeds + resourcesData[k].totalQuantity;
-                                                //   }
-
-                                                //   if(resourcesData[k].resourceType == 'ICU_WITH_VENTILATOR'){
-                                                //     $scope.totalVentilatorsBeds = $scope.totalVentilatorsBeds + resourcesData[k].totalQuantity;
-                                                //   }
-                                                //   if(resourcesData[k].resourceType == 'ICU_WITHOUT_VENTILATOR'){
-                                                //     $scope.totalNonVentilatorsBeds = $scope.totalNonVentilatorsBeds + resourcesData[k].totalQuantity;
-                                                //   }
-
-                                                //   if(resourcesData[k].resourceType == 'BEDS'){
-                                                //     $scope.totalBeds = $scope.totalBeds + resourcesData[k].totalQuantity;
-                                                //   }
-
-                                                //   if(resourcesData[k].resourceType == 'ICUS'){
-                                                //     $scope.totalICUBeds = $scope.totalICUBeds + resourcesData[k].totalQuantity;
-                                                //   }
                                             }
+                                           
                                         }
                                     }
                                 }
                             }
                         }
+                        $scope.totalAvailableCountsData = $scope.hospitalDetailData.length -  $scope.notAvailableCount;
                     }).catch(function onError(response) {
                         console.log(response);
                     })
