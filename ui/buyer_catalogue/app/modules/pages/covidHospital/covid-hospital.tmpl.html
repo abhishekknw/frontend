@@ -112,7 +112,7 @@
                     <h3>Total Hospitals :
                       <span ng-if="hospitalDetailData.length > 0">{{hospitalDetailData.length}}</span>
                       <span ng-if="hospitalDetailData.length == 0 || !hospitalDetailData">0</span>
-                      <p>Total Hospital Beds:
+                      <p style="margin-top: 10px;">Total Hospital Beds:
                         <span>{{totalHospitalBeds}}</span>
                       </p>
                     </h3>
@@ -132,9 +132,9 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="card" style="background-color: seagreen;">
+                  <div class="card header" style="background-color: seagreen;">
                     <h3>Available Hospitals : <span>{{totalAvailableCountsData}}</span> 
-                      <p>Total Hospital Beds Available:
+                      <p style="margin-top: 10px;"> Total Hospital Beds Available:
                         <span>{{totalAvailableBeds}}</span>
                       </p>
                     </h3>
@@ -213,8 +213,9 @@
                 <div ng-if="!loading" ng-loadings="loading"></div>
                 <div class="row" ng-if="loading">
                   <div class="col-md-6" ng-repeat="hospital in hospitalDetailData | filter : searchQuery">
+
                     <div class="card">
-                      <h3>Hospital Name: <span>{{hospital.vendor_name}}</span>
+                      <h3>Facility Name: <span>{{hospital.vendor_name}}</span>
                         <span ng-if="hospital.address">,</span>
                         <span>{{hospital.address}}</span>
                         <!-- <span ng-if="hospital.city">,</span>
@@ -224,9 +225,11 @@
                         <span ng-if="hospital.state">,</span>
                         <span>{{hospital.state}}</span> -->
                       </h3>
-                      <!-- <ul>
-                    <li>Available of Beds: <span>Yes (10)</span></li>
-                  </ul> -->
+                      <ul>
+                    <li>Available of Beds: <span style="color:green" ng-if="hospital.AvailableofBedsinHospital > 0">Yes ({{hospital.AvailableofBedsinHospital}})</span>
+                      <span  style="color:red" ng-if="hospital.AvailableofBedsinHospital == 0">No</span>
+                    </li>
+                  </ul>
                       <table class="table covid-hospital-table">
                         <thead>
                           <tr>
@@ -275,7 +278,7 @@
                       </table>
                     </div>
                   </div>
-
+                  <h4 style="color:red;text-align: center" ng-show="(hospitalDetailData|filter:searchQuery).length==0" >No Hospital Found.</h4>
                   <!-- <div class="col-md-6">
                 <div class="card">
                   <h3>Facility Name : <span>Medanta Hospital and Research center Indore.</span></h3>

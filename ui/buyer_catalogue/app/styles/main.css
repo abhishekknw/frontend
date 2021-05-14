@@ -612,6 +612,10 @@ table.covid-hospital-table > thead > tr > th {
   width: 50%;
   margin: 0 auto;
   }
-  .card h3 {
+
+  .search-hopital .card h3 {
   height: 110px;
+  font-size: 20px;
   }
+
+
