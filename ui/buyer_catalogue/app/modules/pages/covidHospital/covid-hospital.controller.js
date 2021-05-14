@@ -42,6 +42,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             // $scope.selectedCategory = cat;
             $scope.selectedCategory = 'Hospital Beds';
             $scope.loading = true;
+
             // setInterval(function () {
             //     suspenseLeadService.getAllState()
             //         .then(function onSuccess(response) {
@@ -55,15 +56,20 @@ angular.module('machadaloPages').filter('replace', [function () {
             //         }).catch(function onError(response) {
             //             console.log(response);
             //         })
-            // }, 12000)
+            // }, 1800000)
 
             $scope.getState = function () {
-                AuthService.getAllState()
-                    .then(function onSuccess(response) {
-                        $scope.stateData = response.data.data;
-                    }).catch(function onError(response) {
-                        console.log(response);
-                    })
+                if (!localStorage.getItem("stateData")) {
+                    AuthService.getAllState()
+                        .then(function onSuccess(response) {
+                            $scope.stateData = response.data.data;
+                            localStorage.setItem("stateData", JSON.stringify($scope.stateData));
+                        }).catch(function onError(response) {
+                            console.log(response);
+                        })
+                } else {
+                    $scope.stateData = JSON.parse(localStorage.getItem("stateData"));
+                }
             }
             $scope.getCity = function () {
                 $scope.selectedCityName = null;
@@ -121,7 +127,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                                         if (resourcesData.length > 0) {
                                             $scope.AvailableofBedsinHospital = 0;
                                             for (let k in resourcesData) {
-                                                
+
                                                 if (resourcesData[k].quantity < 0) {
                                                     $scope.hospitalDetailData[i].hospital_data[j].resources[k].quantity = 0;
                                                     resourcesData[k].quantity = 0;
@@ -132,7 +138,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                                                 }
 
                                                 $scope.AvailableofBedsinHospital = $scope.AvailableofBedsinHospital + resourcesData[k].quantity
-                                                $scope.hospitalDetailData[i].AvailableofBedsinHospital =  $scope.AvailableofBedsinHospital;
+                                                $scope.hospitalDetailData[i].AvailableofBedsinHospital = $scope.AvailableofBedsinHospital;
                                                 if (resourcesData[k].quantity && resourcesData[k].quantity > 0) {
                                                     checkAvailable = true;
                                                 }
