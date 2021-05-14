@@ -84,7 +84,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             // $scope.totalVentilatorsBeds = 0;
             // $scope.totalNonVentilatorsBeds = 0;
             // $scope.totalBeds = 0;
-            $scope.totalAvailableBeds = 00;
+            $scope.totalAvailableBeds = 0;
             $scope.getBeds = function () {
                 let param = {
                     state: $scope.selectedStateName,
@@ -101,7 +101,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                     .then(function onSuccess(response) {
                         $scope.hospitalDetailData = response.data.data;
                         $scope.resourcesTypeData = [];
-                       
+                        $scope.totalAvailableBeds = 0;
                         if ($scope.hospitalDetailData.length > 0) {
                             for (let i in $scope.hospitalDetailData) {
                                 let hospitalData = $scope.hospitalDetailData[i].hospital_data;
@@ -110,7 +110,6 @@ angular.module('machadaloPages').filter('replace', [function () {
                                         let resourcesData = hospitalData[j].resources;
                                         if (resourcesData.length > 0) {
                                             for (let k in resourcesData) {
-                                               
                                                 if ($scope.resourcesTypeData.length > 0) {
                                                     var localindex_index = $scope.resourcesTypeData.map(function (el) {
                                                         return el.resourceType;
@@ -135,8 +134,11 @@ angular.module('machadaloPages').filter('replace', [function () {
                                                         'quantity': resourcesData[k].quantity,
                                                     })
                                                 }
-                                                $scope.totalAvailableBeds =  $scope.totalAvailableBeds + resourcesData[k].quantity;
-                                                console.log('11111111111111111111111111111111111111111',$scope.resourcesTypeData);
+                                                if(resourcesData[k].quantity){
+                                                    $scope.totalAvailableBeds =  $scope.totalAvailableBeds + resourcesData[k].quantity;
+                                                
+                                                }
+                                    
                                                 //   if(resourcesData[k].resourceType == 'BED_WITH_OXYGEN'){
                                                 //     $scope.totalOxyzenBeds = $scope.totalOxyzenBeds + resourcesData[k].totalQuantity;
                                                 //   }
@@ -169,13 +171,13 @@ angular.module('machadaloPages').filter('replace', [function () {
                     })
             }
 
-            $scope.getTotal = function(){
-                var total = 0;
-                for(var i = 0; i < $scope.resourcesTypeData.length; i++){
-                    total = total + $scope.resourcesTypeData[i].quantity;
-                }
-                return total;
-            }
+            // $scope.getTotal = function(){
+            //     var total = 0;
+            //     for(var i = 0; i < $scope.resourcesTypeData.length; i++){
+            //         total = total + $scope.resourcesTypeData[i].quantity;
+            //     }
+            //     return total;
+            // }
         }]);
 
             // angular.filter('replace', [function () {
