@@ -618,4 +618,33 @@ table.covid-hospital-table > thead > tr > th {
   font-size: 20px;
   }
 
+  .logo-sec img {
+    width: 100px;
+    }
+
+    .logo-sec {
+      display: flex;
+      align-items: center;
+      }
+
+      .logo-sec h1 {
+        margin: 0 auto;
+        }
+
+        @media only screen and (max-width:575px){
+          .logo-sec {
+            display: block;
+            }
+            .natext {
+            text-align: center;
+            }
+            .top-select-option .row {
+            display: block;
+            }
+            .top-select-option h2 {
+            text-align: center;
+            }
+          }
+
+
 
