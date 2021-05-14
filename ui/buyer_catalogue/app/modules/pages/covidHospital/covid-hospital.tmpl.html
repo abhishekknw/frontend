@@ -24,7 +24,7 @@
                 <div class="form-group">
                   <select class="form-control" ng-change="getCity()" name="state" id="state_id" ng-model="state_code">
                     <option value="" disabled>
-                      Select State
+                      Select State/UT
                     </option>
                     <option ng-repeat="state in stateData track by $index" value="{{state.state_code}}"
                       style="text-transform: capitalize;">
@@ -37,7 +37,7 @@
                   <select class="form-control" name="city" ng-change="getBeds()" id="city_id"
                     ng-model="selectedCityName">
                     <option value="" disabled>
-                      Select District
+                      Select District/City
                     </option>
                     <option ng-repeat="city in cityData track by $index" value="{{city.name}}"
                       style="text-transform: capitalize;">
@@ -46,10 +46,10 @@
                   </select>
                 </div>
               </div>
-             <h2> <span class="or">or</span> </h2>
+             <h2> <span class="or">OR</span> </h2>
               <div class="col-md-6">
                 <div class="form-group">
-                  <input class="form-control" name="pin_code" ng-model="pin_code" placeholder="Pin Code">
+                  <input class="form-control" name="pin_code" ng-model="pin_code" placeholder="Pin Code" disabled>
                 </div>
               </div>
 
@@ -112,8 +112,14 @@
                     <h3>Total Hospitals :
                       <span ng-if="hospitalDetailData.length > 0">{{hospitalDetailData.length}}</span>
                       <span ng-if="hospitalDetailData.length == 0 || !hospitalDetailData">0</span>
+                      <p>Total Hospital Beds:
+                        <span>{{totalHospitalBeds}}</span>
+                      </p>
                     </h3>
-                    <div class="hospital-card-wrapper">
+
+                    
+                    <div ng-if="!loading" ng-loadings="loading"></div>
+                    <div class="hospital-card-wrapper" ng-if="loading">
                       <div ng-repeat="beds in resourcesTypeData ">
                         <div class="hospital-card">
                           <h4>{{beds.resourceType |replace: '_':' '}} : <span
@@ -127,8 +133,13 @@
                 </div>
                 <div class="col-md-6">
                   <div class="card" style="background-color: seagreen;">
-                    <h3>Beds in Available Hospitals:<span>{{totalAvailableBeds}}</span></h3>
-                    <div class="hospital-card-wrapper">
+                    <h3>Available Hospitals : <span>{{totalAvailableCountsData}}</span> 
+                      <p>Total Hospital Beds Available:
+                        <span>{{totalAvailableBeds}}</span>
+                      </p>
+                    </h3>
+                    <div ng-if="!loading" ng-loadings="loading"></div>
+                    <div class="hospital-card-wrapper" ng-if="loading">
                       <div ng-repeat="availableBeds in resourcesTypeData">
                         <div class="hospital-card">
                           <h4>{{availableBeds.resourceType |replace: '_':' '}} : <span
@@ -155,7 +166,8 @@
                       <p> <span ng-if="hospitalDetailData.length > 0">{{hospitalDetailData.length}}</span>
                       </p>
                       <p><span ng-if="hospitalDetailData.length == 0 || !hospitalDetailData">N/A</span></p>
-                      <p>Hospital</p>
+                      <p>TOTAL HOSPITALS
+                      </p>
                     </div>
                   </div>
                   <div class="col-md-3">
@@ -165,7 +177,7 @@
                           alt="Hospital">
                       </div>
                       <p>N/A</p>
-                      <p>Testing Lab</p>
+                      <p>Testing Labs</p>
                     </div>
                   </div>
                   <div class="col-md-3">
@@ -175,7 +187,7 @@
                           alt="Hospital">
                       </div>
                       <p>N/A</p>
-                      <p>Care Center</p>
+                      <p>Care Centers</p>
                     </div>
                   </div>
                   <div class="col-md-3">
@@ -185,7 +197,7 @@
                           alt="Hospital">
                       </div>
                       <p>N/A</p>
-                      <p>Collection Center</p>
+                      <p>Collection Centers</p>
                     </div>
                   </div>
                 </div>
@@ -198,18 +210,19 @@
                     <span class="search-ic"><i class="fas fa-search"></i></span>
                   </form>
                 </div>
-                <div class="row">
+                <div ng-if="!loading" ng-loadings="loading"></div>
+                <div class="row" ng-if="loading">
                   <div class="col-md-6" ng-repeat="hospital in hospitalDetailData | filter : searchQuery">
                     <div class="card">
-                      <h3>Hospital Name : <span>{{hospital.vendor_name}}</span>
+                      <h3>Hospital Name: <span>{{hospital.vendor_name}}</span>
                         <span ng-if="hospital.address">,</span>
                         <span>{{hospital.address}}</span>
-                        <span ng-if="hospital.city">,</span>
+                        <!-- <span ng-if="hospital.city">,</span>
                         <span>{{hospital.city}}</span>
                         <span ng-if="hospital.district">,</span>
                         <span>{{hospital.district}}</span>
                         <span ng-if="hospital.state">,</span>
-                        <span>{{hospital.state}}</span>
+                        <span>{{hospital.state}}</span> -->
                       </h3>
                       <!-- <ul>
                     <li>Available of Beds: <span>Yes (10)</span></li>
@@ -235,7 +248,7 @@
 
                           </tr>
                           <tr>
-                            <th>Last Modified :</th>
+                            <th>Last Updated by Hospital:</th>
                             <td><span>{{hospital.hospital_data[0].last_updated_time | date:'medium'}}</span></td>
                             <td></td>
                             <td></td>
