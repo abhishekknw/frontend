@@ -5,14 +5,16 @@
 
 <div class="covid-hospital" ng-init="getState();">
   <div class="page-wrapper">
-    <!-- <div class="logo-sec"> -->
-      <div class="logo">
+    <div class="logo-sec">
       <img src="images/machadalo-logo.png" alt="logo">
        <h1>COVID19 HELPDESK</h1>
     </div>
-    N/A means Data Not Availabl.
+ 
     <div class="container">
       <div class="page-inner">
+        <div class="natext">
+          N/A means Data Not Available
+          </div>
         <div class="top-select-option">
              <div class="form-group">
                   <select class="form-control" name="category" id="Category_id" ng-model="selectedCategory">
@@ -22,6 +24,7 @@
                     </option>
                   </select>
                 </div>
+                <p style="text-align: center;"><h4 style="text-align: center;"> Data currently available for 17 States/UT and 300 Districts as per all available Online Government and Volunteer Sources</h4></p>
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
