@@ -43,20 +43,21 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.selectedCategory = 'Hospital Beds';
             $scope.loading = true;
 
-            // setInterval(function () {
-            //     suspenseLeadService.getAllState()
-            //         .then(function onSuccess(response) {
-            //             $scope.stateData = response.data.state;
-            //         }).catch(function onError(response) {
-            //             console.log(response);
-            //         })
-            //     suspenseLeadService.getAllCity()
-            //         .then(function onSuccess(response) {
-            //             $scope.cityData = response.data.city;
-            //         }).catch(function onError(response) {
-            //             console.log(response);
-            //         })
-            // }, 1800000)
+            setInterval(function () {
+                suspenseLeadService.getAllState()
+                    .then(function onSuccess(response) {
+                        $scope.stateData = response.data.state;
+                        localStorage.setItem("stateData", JSON.stringify($scope.stateData));
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+                // suspenseLeadService.getAllCity()
+                //     .then(function onSuccess(response) {
+                //         $scope.cityData = response.data.city;
+                //     }).catch(function onError(response) {
+                //         console.log(response);
+                //     })
+            }, 1800000)
 
             $scope.getState = function () {
                 if (!localStorage.getItem("stateData")) {
