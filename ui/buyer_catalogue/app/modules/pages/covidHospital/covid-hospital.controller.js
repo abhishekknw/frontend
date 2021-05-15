@@ -60,7 +60,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             }, 1800000)
 
             $scope.getState = function () {
-                if (!localStorage.getItem("stateData")) {
+                if (!localStorage.getItem("stateData") || localStorage.getItem("stateData") == undefined) {
                     AuthService.getAllState()
                         .then(function onSuccess(response) {
                             $scope.stateData = response.data.data;
