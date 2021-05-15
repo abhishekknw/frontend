@@ -60,7 +60,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             }, 1800000)
 
             $scope.getState = function () {
-                if (!localStorage.getItem("stateData") || localStorage.getItem("stateData") == undefined) {
+                // if (!localStorage.getItem("stateData") || localStorage.getItem("stateData") == undefined) {
                     AuthService.getAllState()
                         .then(function onSuccess(response) {
                             $scope.stateData = response.data.data;
@@ -68,9 +68,9 @@ angular.module('machadaloPages').filter('replace', [function () {
                         }).catch(function onError(response) {
                             console.log(response);
                         })
-                } else {
-                    $scope.stateData = JSON.parse(localStorage.getItem("stateData"));
-                }
+                // } else {
+                //     $scope.stateData = JSON.parse(localStorage.getItem("stateData"));
+                // }
             }
             $scope.getCity = function () {
                 $scope.selectedCityName = null;
