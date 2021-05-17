@@ -1,290 +1,290 @@
 html{
-  background-color: #ffffff;
-  overflow-x: visible !important;
-  color: #000000 !important;
+	background-color: #ffffff;
+	overflow-x: visible !important;
+	color: #000000 !important;
 }
 .submitted_lead_table tbody {
-    display: block;
+	display: block;
 }
 .submitted_lead_table thead {
-    display: block;
-    background: grey;
+	display: block;
+	background: grey;
 }
- .submitted_lead_table {
-    overflow-x: auto !important;
-    overflow: hidden;
+.submitted_lead_table {
+	overflow-x: auto !important;
+	overflow: hidden;
 }
 .submitted_lead_table .modal-body.table-responsive {
-  overflow-x: auto !important;
-  overflow: hidden;
+	overflow-x: auto !important;
+	overflow: hidden;
 }                 
 .submitted_lead_table .modal-body.col-md-4.table-responsive {
-  overflow-y: hidden;
+	overflow-y: hidden;
 }
 .submitted_lead_table tbody {
-  overflow: auto;
-  overflow-x: hidden;
-  max-height: 350px;
+	overflow: auto;
+	overflow-x: hidden;
+	max-height: 350px;
 /*
-  max-width: 2300px;
-  min-width: 2300px;
+max-width: 2300px;
+min-width: 2300px;
 */
 }
 .modal-dialog {
-    color: #333;
+	color: #333;
 }
 body .modal .modal-body {
-    background-color: #fff;
-    padding: 0px 15px;
-    border-radius: 5px;
+	background-color: #fff;
+	padding: 0px 15px;
+	border-radius: 5px;
 }
 .modal-dialog button.smallBtn {
-    margin-top: 20px;
-    padding: 12px 25px;
-    font-size: 16px;
-    font-weight: 600;
+	margin-top: 20px;
+	padding: 12px 25px;
+	font-size: 16px;
+	font-weight: 600;
 }
 .modal-content .col-md-8 input {
-    width: 100% !important;
+	width: 100% !important;
 }
 ul.licence_detail_bx li {
-    color: #fff;
-    display: inline-block;
-    width: 49%;
-    background: #cb3328;
-    padding: 15px;
-    font-size: 16px;
-    text-align: center;
-    cursor: pointer;
+	color: #fff;
+	display: inline-block;
+	width: 49%;
+	background: #cb3328;
+	padding: 15px;
+	font-size: 16px;
+	text-align: center;
+	cursor: pointer;
 }
 ul.licence_detail_bx li:hover {
-    background: #c70202;
+	background: #c70202;
 }
 ul.licence_detail_bx li.active_detail {
-    background: #c70202;
+	background: #c70202;
 }
 ul.licence_detail_bx li:nth-child(1) {
-    width: 47%;
-    margin-right: 3%;
+	width: 47%;
+	margin-right: 3%;
 }
 ul.licence_detail_bx li:nth-last-child(1) {
-    margin-left: -5px;
-    width: 50%;
+	margin-left: -5px;
+	width: 50%;
 }
 div.box_detail {
-    text-align: left;
-    padding: 15px !important;
-    margin-bottom: 20px;
-    background: #fff;
-    color: #333;
-    border: 1px solid #ccc;
+	text-align: left;
+	padding: 15px !important;
+	margin-bottom: 20px;
+	background: #fff;
+	color: #333;
+	border: 1px solid #ccc;
 }
 .panel-title.box_detail h4 {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 div.box_detail p {
-    margin-bottom: 15px !important;
+	margin-bottom: 15px !important;
 }
 .panel-title.box_detail button {
-    background: #cb3328;
-    outline: none;
-    padding: 10px 45px;
-    font-weight: 600;
-    border-radius: 5px;
-    color: #ffffff;
-    border: 1px solid #c54632;
-    font-weight: 500;
+	background: #cb3328;
+	outline: none;
+	padding: 10px 45px;
+	font-weight: 600;
+	border-radius: 5px;
+	color: #ffffff;
+	border: 1px solid #c54632;
+	font-weight: 500;
 }
 .panel-title.box_detail button:hover {
-    background: transparent;
-    color: #c54632;
-    border: 1px solid #c54632;
+	background: transparent;
+	color: #c54632;
+	border: 1px solid #c54632;
 }
 .panel-title.box_detail p {
-    color: #333 !important;
-    font-weight: 500;
+	color: #333 !important;
+	font-weight: 500;
 }
 ul.licence_detail_bx {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 div#RequirementModel .browsed_leads_main th, div#RequirementModel .browsed_leads_main td {
-    min-width: 170px;
+	min-width: 170px;
 }
 .bd_requirement_detail thead th:nth-child(1), .bd_requirement_detail tbody td:nth-child(1) {
-    min-width: 40px;
+	min-width: 40px;
 }
 .bd_requirement_detail th, .bd_requirement_detail td {
-    min-width: 120px;
+	min-width: 120px;
 }
 .modal-body.table-responsive.browsed_leads_main{
-    overflow-y: hidden;
+	overflow-y: hidden;
 }
 th{
-  	background: #8e1921;
-    text-align: center;
-  	color: #fff;
+	background: #8e1921;
+	text-align: center;
+	color: #fff;
 }
 .input_td_req{
-    text-align: center;
+	text-align: center;
 }
 .position.input_date_cls input.form-control {
-  width: 90%;
-  display: inline-block;
+	width: 90%;
+	display: inline-block;
 }
 .position.input_date_cls div {
-  display: inline-block;
+	display: inline-block;
 }
 button.calendar.btn_cls_date_picker {
-  display: inline-block;
+	display: inline-block;
 }
 .mb_20{
-  margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 .btn_box_lead_survey button{
-  width: 100%;
+	width: 100%;
 }
 td.btn_box_lead_survey {
-  width: 210px !important;
-  text-align: center !important;
+	width: 210px !important;
+	text-align: center !important;
 }  
 th.btn_box_lead_survey_th{
-  width: 210px !important;
+	width: 210px !important;
 }
 td.btn_box_lead_survey button{
-  margin-bottom: 10px; 
+	margin-bottom: 10px; 
 }
 input#requirementCheckId {
-    width: 20px;
-    height: 20px;
+	width: 20px;
+	height: 20px;
 }
 div#RequirementModel th, div#RequirementModel td {
-    min-width: 170px;
-    width: 170px;
-    max-width: 170px;
+	min-width: 170px;
+	width: 170px;
+	max-width: 170px;
 }
 div#RequirementModel th:nth-child(1), div#RequirementModel td:nth-child(1) {
-    max-width: 31px !important;
-    min-width: 31px;
-    width: 31px;
+	max-width: 31px !important;
+	min-width: 31px;
+	width: 31px;
 }
 td.alignment button {
-    display: block;
-        margin: 0 auto;
+	display: block;
+	margin: 0 auto;
 }
 div#RequirementModel th:nth-child(2), div#RequirementModel td:nth-child(2) {
-    max-width: 77px !important;
-    min-width: 77px;
-    overflow-wrap: break-word;
-    width: 77px;
+	max-width: 77px !important;
+	min-width: 77px;
+	overflow-wrap: break-word;
+	width: 77px;
 }
 .bd_requirement_detail th, .bd_requirement_detail td {
-    min-width: 170px;
-    width: 170px;
-    max-width: 170px;
+	min-width: 170px;
+	width: 170px;
+	max-width: 170px;
 }
 .bd_requirement_detail th:nth-child(1), .bd_requirement_detail td:nth-child(1) {
-    max-width: 31px !important;
-    min-width: 31px;
-    width: 31px;
+	max-width: 31px !important;
+	min-width: 31px;
+	width: 31px;
 }
 td.alignment button {
-    display: block;
-        margin: 0 auto;
+	display: block;
+	margin: 0 auto;
 }
 .bd_requirement_detail th:nth-child(2), .bd_requirement_detail td:nth-child(2) {
-    max-width: 77px !important;
-    min-width: 77px;
-    overflow-wrap: break-word;
-    width: 77px;
+	max-width: 77px !important;
+	min-width: 77px;
+	overflow-wrap: break-word;
+	width: 77px;
 }
 div#RequirementModel a.option span.ng-binding {
-  clear: both;
-  display: inline-block;
-  margin-left: 5px;
+	clear: both;
+	display: inline-block;
+	margin-left: 5px;
 }
 div#RequirementModel span.ng-binding {
-    clear: both;
-    display: block;
+	clear: both;
+	display: block;
 }
 input#browsedCheckId {
-    width: 18px;
-    height: 18px;
+	width: 18px;
+	height: 18px;
 }
 
 
 body{
 	background-color: #ffffff !important;
-  overflow-x: visible !important;
+	overflow-x: visible !important;
 	color: #000000 !important;
 }
 
 .breadcrumb{
 	background-color: transparent;
-  margin-left: auto;
-  margin-right: auto;
-  font-size : x-large;
+	margin-left: auto;
+	margin-right: auto;
+	font-size : x-large;
 }
 
 .pageTitle{
-  margin: 2%;
-  margin-top: -15px;
-  text-align: center;
-  background-color: #d9534f !important;
+	margin: 2%;
+	margin-top: -15px;
+	text-align: center;
+	background-color: #d9534f !important;
 	color: white !important;
-  padding: 10px 15px;
-  border-bottom: 1px solid transparent;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
+	padding: 10px 15px;
+	border-bottom: 1px solid transparent;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
 }
 
 .managementPageTitle{
-  margin: 2%;
-  margin-top: -25px;
-  margin-left: -40px;
-  text-align: center;
-  background-color: #d9534f !important;
-  color: white !important;
-  padding: 10px 15px;
-  border-bottom: 1px solid transparent;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-  width: 700px;
+	margin: 2%;
+	margin-top: -25px;
+	margin-left: -40px;
+	text-align: center;
+	background-color: #d9534f !important;
+	color: white !important;
+	padding: 10px 15px;
+	border-bottom: 1px solid transparent;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	width: 700px;
 }
 
 
 .createNewUserTitle{
-margin-left: -40px;
-margin-top: -10px;
-  text-align: center;
-  background-color: #d9534f !important;
-  color: white !important;
-  padding: 10px 15px;
-  border-bottom: 1px solid transparent;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-  width: 400px;
+	margin-left: -40px;
+	margin-top: -10px;
+	text-align: center;
+	background-color: #d9534f !important;
+	color: white !important;
+	padding: 10px 15px;
+	border-bottom: 1px solid transparent;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	width: 400px;
 }
 .panel-body{
-  margin-left:50px;
-  margin-right:50px;
-  margin-top: -15px;
+	margin-left:50px;
+	margin-right:50px;
+	margin-top: -15px;
 	overflow-x: visible !important;
 	padding: 15px 0px 0px 0px;
 }
 /*
 .panel-bodyUser{
-	overflow-x: visible !important;
+overflow-x: visible !important;
 } */
 
 
 div#RequirementModel .modal-header button.close ~ h4.modal-title {
-  text-align: center;
+	text-align: center;
 }
 div#RequirementModel form.ng-pristine .glyphicon-plus:before {
-  content: "\e252";
+	content: "\e252";
 }
 div#RequirementModel form.ng-pristine .glyphicon-minus:before {
-  content:"\e253";
+	content:"\e253";
 }
 .panel-bodyDashboard{
 
@@ -292,43 +292,43 @@ div#RequirementModel form.ng-pristine .glyphicon-minus:before {
 
 }
 div#RequirementModel span.glyphicon.glyphicon-plus:before {
-  content: "\e252";
+	content: "\e252";
 }
 div#RequirementModel span.glyphicon.glyphicon-minus:before {
-  content:"\e253";
+	content:"\e253";
 }    
 tr, td {
-  color: #000000 !important;
+	color: #000000 !important;
 }
 .campaigndetailtable table.table {
-  width: 100%;
+	width: 100%;
 }
 
 
 h3 {
-  text-align: center;
+	text-align: center;
 }
 
 .panel-heading{
-  text-align: center;
-  background-color: #d9534f;
-  color: white;
+	text-align: center;
+	background-color: #d9534f;
+	color: white;
 }
 
 .radio-button label{
-  color: #000000 !important;
-  font-family: Roboto, "Helvetica Neue", sans-serif !important;
+	color: #000000 !important;
+	font-family: Roboto, "Helvetica Neue", sans-serif !important;
 
 
 }
 input[type="radio"]{
-  margin: 0 10px 0 10px;
+	margin: 0 10px 0 10px;
 }
 
 .radio-button:after {
-   display:none;
-    border-color: #e91e63;
-    background-color: #e91e63;
+	display:none;
+	border-color: #e91e63;
+	background-color: #e91e63;
 }
 
 .labels{
@@ -336,315 +336,342 @@ input[type="radio"]{
 }
 
 .cumulativeChart{
-  overflow: auto
+	overflow: auto
 }
 
 .cumulativeGraphTable{
-  width: fit-content;
+	width: fit-content;
 }
 
 .style-modal .modal-header {
-    padding: 0;
+	padding: 0;
 }
 .style-modal .full-width-header {
-    margin: 0;
-    border-radius: 0;
+	margin: 0;
+	border-radius: 0;
 }
 .style-modal .modal-header .close {
-    margin-top: 15px;
-    margin-right: 15px;
+	margin-top: 15px;
+	margin-right: 15px;
 }
 .style-modal.modal .modal-body{
-  padding: 20px;
+	padding: 20px;
 }
 
 .styled-tabs .nav-tabs {
-    display: flex;
+	display: flex;
 }
 .styled-tabs .nav-tabs > li {
-    background: #cb3328;
-    flex: 1;
-    border: none;
+	background: #cb3328;
+	flex: 1;
+	border: none;
 }
 .styled-tabs .nav-tabs > li a{
-  color: #fff;
-  text-align: center;
-  border-radius: 0;
-  border: none;
+	color: #fff;
+	text-align: center;
+	border-radius: 0;
+	border: none;
 }
 .styled-tabs .nav-tabs > li a:hover{
-  background: #c70202;
-  border: none;
+	background: #c70202;
+	border: none;
 }
 .styled-tabs .nav.nav-tabs > li.active > a {
-    color: #ffffff;
-    background: #8e1921 !important;
-    outline: none;
+	color: #ffffff;
+	background: #8e1921 !important;
+	outline: none;
 }
 .styled-tabs .nav.nav-tabs > li.active > a:focus,.styled-tabs .nav.nav-tabs > li:focus > a{
-  outline: none;
-  border: none;
+	outline: none;
+	border: none;
 }
 
 
 
 /*Covid Hospital Styles*/
 .page-wrapper {
-    padding: 20px;
+	padding: 20px;
 }
 .logo-sec{
-  text-align: center;
-  margin-bottom: 30px;
+	text-align: center;
+	margin-bottom: 30px;
 }
 .logo-sec img{
-  max-width: 250px;
+	max-width: 250px;
 }
 .card {
-    background: #871420;
-    border-radius: 10px;
-    padding: 20px;
-    color: #fff;
+	background: #871420;
+	border-radius: 10px;
+	padding: 20px;
+	color: #fff;
 }
 .top-select-option .form-control{
-  height: 40px;
+	height: 40px;
 }
 .summery-bottom-cards .card img{
-  max-width: 50px;
+	max-width: 50px;
 }
 
 .summery-bottom-cards .card{
-  text-align: center !important;
-  background-color: #fff;
-  box-shadow: 2px 2px 30px rgba(0,0,0,0.10);
+	text-align: center !important;
+	background-color: #fff;
+	box-shadow: 2px 2px 30px rgba(0,0,0,0.10);
 } 
 .summery-bottom-cards .card h2{
-  font-size: 34px;
-  font-weight: 700;
-  color: #000;
-  margin-bottom: 10px;
+	font-size: 34px;
+	font-weight: 700;
+	color: #000;
+	margin-bottom: 10px;
 }
 .summery-bottom-cards .card p{
-  color: #000;
-  font-size: 16px;
-  margin: 0;
-  line-height: 26px;
-  text-transform: uppercase;
+	color: #000;
+	font-size: 16px;
+	margin: 0;
+	line-height: 26px;
+	text-transform: uppercase;
 }
 .top-select-option .row{
-  display: flex;
-  /*align-items: center;*/
+	display: flex;
+	/*align-items: center;*/
 }
 .top-select-option .form-group{
-/*margin-bottom: 0;*/
+	/*margin-bottom: 0;*/
 }
 .top-select-option {
-    padding: 20px;
-    box-shadow: 2px 2px 20px rgba(0,0,0,0.1);
-    border-radius: 6px;
-    margin-bottom: 30px;
+	padding: 20px;
+	box-shadow: 2px 2px 20px rgba(0,0,0,0.1);
+	border-radius: 6px;
+	margin-bottom: 30px;
 }
 .summery h4.title{
-  text-transform: uppercase;
-font-weight: bold;
+	text-transform: uppercase;
+	font-weight: bold;
 }
 .summery h4{
-  text-align: center;
-  font-size: 24px;
-  margin-bottom: 30px;
+	text-align: center;
+	font-size: 24px;
+	margin-bottom: 30px;
 }
 .summery .card{
-  text-align: left;
-  margin-bottom: 30px;
-  padding-bottom: 40px;
+	text-align: left;
+	margin-bottom: 30px;
+	padding-bottom: 40px;
 }
 .summery .card h3{
-  margin-top: 0;
-  border-bottom: 1px solid;
-  border-color: rgba(255,255,255,0.1);
-  padding-bottom: 15px;
-  text-align: left;
+	margin-top: 0;
+	border-bottom: 1px solid;
+	border-color: rgba(255,255,255,0.1);
+	padding-bottom: 15px;
+	text-align: left;
 }
 .hospital-card-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    /*justify-content: center;*/
+	display: flex;
+	flex-wrap: wrap;
+	/*justify-content: center;*/
 }
 .hospital-card {
-    background: #ffffff14;
-    box-shadow: 5px 5px 30px rgba(0,0,0,0.1);
-    border-radius: 10px;
-    margin: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
+	background: #ffffff14;
+	box-shadow: 5px 5px 30px rgba(0,0,0,0.1);
+	border-radius: 10px;
+	margin: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 15px;
 }
 .hospital-card h4{
-  margin: 0;
-      font-size: 16px;
-    text-transform: uppercase;
+	margin: 0;
+	font-size: 16px;
+	text-transform: uppercase;
 }
 .summery-bottom-cards {
-    margin-top: 50px;
+	margin-top: 50px;
 }
 .img-card {
-    width: 80px;
-    height: 80px;
-    overflow: hidden;
-    background: #86131f;
-    border-radius: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: auto;
-    margin-top: -50px;
+	width: 80px;
+	height: 80px;
+	overflow: hidden;
+	background: #86131f;
+	border-radius: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: auto;
+	margin-top: -50px;
+	margin-bottom: 15px;
 }
 .search-hopital h3{
-  font-size: 22px !important;
+	font-size: 22px !important;
 }
 .search-hopital ul{
-  list-style: none;
+	list-style: none;
 }
 .search-hopital ul li {
-    margin-bottom: 8px;
-    display: flex;
-    font-size: 16px;
-    justify-content: space-between;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
+	margin-bottom: 8px;
+	display: flex;
+	font-size: 16px;
+	justify-content: space-between;
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 10px;
 }
 .search-hopital ul li span{
-  font-weight: 700;
+	font-weight: 700;
 }
 .summery .search-hopital h4{
-  text-align: left;
-  padding-bottom: 15px;
-  border-bottom: 1px solid;
-  border-color: #000;
+	text-align: left;
+	padding-bottom: 15px;
+	border-bottom: 1px solid;
+	border-color: #000;
 }
 .search-hopital h4{
-  font-size: 22px;
-  margin-bottom: 15px;
+	font-size: 22px;
+	margin-bottom: 15px;
 }
 .search-hopital ul{
-  margin-bottom: 15px;
+	margin-bottom: 15px;
 }
 .search-form {
-    max-width: 500px;
-    margin: auto;
-    margin-bottom: 30px;
+	max-width: 500px;
+	margin: auto;
+	margin-bottom: 30px;
 }
 .search-form form{
-  position: relative;
+	position: relative;
 }
 .search-form form input[type="search"] {
-    border-radius: 30px;
-    background: #871420;
-    color: #fff;
-    border: none;
-    height: 50px;
-    padding-left: 20px;
+	border-radius: 30px;
+	background: #871420;
+	color: #fff;
+	border: none;
+	height: 50px;
+	width: calc(100% - 30px);
+	padding: 0px 15px;
 }
 .search-form form input[type="search"]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: #fff;
+	color: #fff;
 }
 .search-form form input[type="search"]::-moz-placeholder { /* Firefox 19+ */
-  color: #fff;
+	color: #fff;
 }
 .search-form form input[type="search"]:-ms-input-placeholder { /* IE 10+ */
-  color: #fff;
+	color: #fff;
 }
 .search-form form input[type="search"]:-moz-placeholder { /* Firefox 18- */
-  color: #fff;
+	color: #fff;
 }
 .search-ic {
-    position: absolute;
-    top: 20px;
-    right: 10px;
-    color: #fff;
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	color: #fff;
 }
 .search-hopital .card{
-  /*background-color: #f5f5f5;
-  border: 2px solid #eee;*/
-  background-color: #fff;
-  box-shadow: 5px 5px 30px rgba(0,0,0,0.1);
-  color: #000 !important;
+/*background-color: #f5f5f5;
+border: 2px solid #eee;*/
+background-color: #fff;
+box-shadow: 5px 5px 30px rgba(0,0,0,0.1);
+color: #000 !important;
 }
 .search-hopital .card h3{
-  border-color: #000;
+	border-color: #000;
 }
 .pagination > li > a, .pagination > li > span{
-    color: #000;
-    background-color: #fff;
-    border: 1px solid #000;
+	color: #000;
+	background-color: #fff;
+	border: 1px solid #000;
 }
 .covid-hospital .pagination li.active a{
-  background: #871420;
+	background: #871420;
 }
 table.covid-hospital-table th{
-  background-color: #fff;
-  color: #000;
-  text-align: left;
-  font-weight: normal;
-  /*border-bottom: 1px solid #ddd;*/
+	background-color: #fff;
+	color: #000;
+	text-align: left;
+	font-weight: normal;
+	/*border-bottom: 1px solid #ddd;*/
 }
 table.covid-hospital-table td{
-  text-align: center;
+	text-align: center;
 }
 table.covid-hospital-table th,.covid-hospital-table td{
-  padding-left: 0 !important; 
-  padding-right: 0 !important;  
+	padding-left: 0 !important; 
+	padding-right: 0 !important;  
 }
 table.covid-hospital-table tr th:last-child,table.covid-hospital-table tr td:last-child{
-  text-align: right;
+	text-align: right;
 }
 table.covid-hospital-table > thead > tr > th {
-    border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
 }
 .table.covid-hospital-table > thead > tr > td {
-    border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
 }
 .table.covid-hospital-table > tbody > tr > th:last-child{
-  border-bottom:  none;
+	border-bottom:  none;
 }
 
 #Category_id {
-  width: 50%;
-  margin: 0 auto;
-  }
+	width: 50%;
+	margin: 0 auto;
+}
 
-  .search-hopital .card h3 {
-  height: 110px;
+.search-hopital .card h3 {
+	min-height: 110px;
   font-size: 20px;
-  }
+  
+}
+.search-hopital .card
+{
 
-  .logo-sec img {
-    width: 100px;
-    }
+min-height: 430px;
+}
 
-    .logo-sec {
-      display: flex;
-      align-items: center;
-      }
+.logo-sec img {
+	width: 100px;
+}
 
-      .logo-sec h1 {
-        margin: 0 auto;
-        }
+.logo-sec {
+	display: flex;
+	align-items: center;
+}
 
-        @media only screen and (max-width:575px){
-          .logo-sec {
-            display: block;
-            }
-            .natext {
-            text-align: center;
-            }
-            .top-select-option .row {
-            display: block;
-            }
-            .top-select-option h2 {
-            text-align: center;
-            }
-          }
+.logo-sec h1 {
+	margin: 0 auto;
+}
+.natext {
+    margin-bottom: 15px;
+}
+
+
+@media only screen and (max-width:767px){
+	#Category_id {
+    width: 100%;
+    margin: 0 auto;
+}
+.summery .summery-bottom-cards .card {
+    margin-bottom: 50px;
+}
+.search-ic{
+	top: 15px;
+}
+.search-form form input[type="search"]{
+	padding: 0 15px;
+}
+}
+@media only screen and (max-width:575px){
+	.logo-sec {
+		display: block;
+	}
+	.natext {
+		text-align: center;
+	}
+	.top-select-option .row {
+		display: block;
+	}
+	.top-select-option h2 {
+		text-align: center;
+	}
+}
 
 
 
