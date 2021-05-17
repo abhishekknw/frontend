@@ -72,17 +72,11 @@ angular.module('catalogueApp')
       }
 
       suspenseLeadService.getAllCity = function () {
-        console.log('citiesssssssssss');
         return true;
-        // var url = base_url + "b2b/suspense-leads/";
-        // return machadaloHttp.get(url);
       }
 
       suspenseLeadService.getAllBeds = function () {
-        console.log('bedsssssssssssss');
         return true;
-        // var url = base_url + "b2b/suspense-leads/";
-        // return machadaloHttp.get(url);
       }
   
       return suspenseLeadService;

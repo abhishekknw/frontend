@@ -44,48 +44,60 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.loading = true;
 
             setInterval(function () {
-                suspenseLeadService.getAllState()
+                AuthService.getAllState()
                     .then(function onSuccess(response) {
-                        $scope.stateData = response.data.state;
+                        $scope.stateData = response.data.data;
                         localStorage.setItem("stateData", JSON.stringify($scope.stateData));
                     }).catch(function onError(response) {
                         console.log(response);
                     })
-                // suspenseLeadService.getAllCity()
-                //     .then(function onSuccess(response) {
-                //         $scope.cityData = response.data.city;
-                //     }).catch(function onError(response) {
-                //         console.log(response);
-                //     })
-            }, 1800000)
 
-            $scope.getState = function () {
-                // if (!localStorage.getItem("stateData") || localStorage.getItem("stateData") == undefined) {
+                    AuthService.getAllCity()
+                    .then(function onSuccess(response) {
+                        $scope.cityData = response.data.data;
+                        localStorage.setItem("cityData", JSON.stringify($scope.cityData));
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+            }, 1800000)
+          //  1800000
+            $scope.getStateCity = function () {
+                if (localStorage.getItem("stateData") && localStorage.getItem("stateData") != undefined) {
+                    $scope.stateData = JSON.parse(localStorage.getItem("stateData"));
+                } else {
                     AuthService.getAllState()
-                        .then(function onSuccess(response) {
-                            $scope.stateData = response.data.data;
-                            localStorage.setItem("stateData", JSON.stringify($scope.stateData));
-                        }).catch(function onError(response) {
-                            console.log(response);
-                        })
-                // } else {
-                //     $scope.stateData = JSON.parse(localStorage.getItem("stateData"));
-                // }
+                    .then(function onSuccess(response) {
+                        $scope.stateData = response.data.data;
+                        localStorage.setItem("stateData", JSON.stringify($scope.stateData));
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+                }
+
+                if (localStorage.getItem("cityData") && localStorage.getItem("cityData") != undefined) {
+                    $scope.cityData = JSON.parse(localStorage.getItem("cityData"));
+                } else {
+                    AuthService.getAllCity()
+                    .then(function onSuccess(response) {
+                        $scope.cityData = response.data.data;
+                        localStorage.setItem("cityData", JSON.stringify($scope.cityData));
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+                }
             }
+
+
             $scope.getCity = function () {
                 $scope.selectedCityName = null;
+                $scope.district_code = null;
                 var localindex_index = $scope.stateData.map(function (el) {
                     return el.state_code;
                 }).indexOf($scope.state_code);
                 if (localindex_index != -1) {
                     $scope.selectedStateName = $scope.stateData[localindex_index].name;
                 }
-                AuthService.getAllCity($scope.state_code)
-                    .then(function onSuccess(response) {
-                        $scope.cityData = response.data.data;
-                    }).catch(function onError(response) {
-                        console.log(response);
-                    })
+                $scope.cityList = $scope.cityData[$scope.state_code];
                 $scope.getBeds();
             }
             // $scope.totalOxyzenBeds = 0;
@@ -97,10 +109,16 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.totalAvailableBeds = 0;
             $scope.totalHospitalBeds = 0;
             $scope.getBeds = function () {
+                var localindex_index = $scope.cityList.map(function (el) {
+                    return el.district_code;
+                }).indexOf($scope.district_code);
+                if (localindex_index != -1) {
+                    $scope.selectedCityName = $scope.cityList[localindex_index].district_name;
+                }
                 $scope.loading = null;
                 let param = {
-                    state: $scope.selectedStateName,
-                    city: $scope.selectedCityName
+                    state: $scope.state_code,
+                    city: $scope.district_code
                 }
 
                 // suspenseLeadService.getAllBeds()
@@ -190,24 +208,328 @@ angular.module('machadaloPages').filter('replace', [function () {
                     })
             }
             $scope.totalAvailableCountsData = 0;
-            // $scope.getTotal = function(){
-            //     var total = 0;
-            //     for(var i = 0; i < $scope.resourcesTypeData.length; i++){
-            //         total = total + $scope.resourcesTypeData[i].quantity;
-            //     }
-            //     return total;
-            // }
+           let cdata = {
+                "002": [
+                    {
+                        "state_code": "002",
+                        "district_name": "anantapur",
+                        "district_code": "0004"
+                    },
+                    {
+                        "state_code": "002",
+                        "district_name": "chittoor",
+                        "district_code": "0005"
+                    },
+                    {
+                        "state_code": "002",
+                        "district_name": "east godavari",
+                        "district_code": "0006"
+                    },
+                    {
+                        "state_code": "002",
+                        "district_name": "guntur",
+                        "district_code": "0007"
+                    },
+                    {
+                        "state_code": "002",
+                        "district_name": "kadapa",
+                        "district_code": "0008"
+                    },
+                    {
+                        "state_code": "002",
+                        "district_name": "krishna",
+                        "district_code": "0009"
+                    },
+                    {
+                        "state_code": "002",
+                        "district_name": "kurnool",
+                        "district_code": "0010"
+                    },
+                    {
+                        "state_code": "002",
+                        "district_name": "nellore",
+                        "district_code": "0011"
+                    },
+                    {
+                        "state_code": "002",
+                        "district_name": "prakasam",
+                        "district_code": "0012"
+                    },
+                    {
+                        "state_code": "002",
+                        "district_name": "srikakulam",
+                        "district_code": "0013"
+                    },
+                    {
+                        "state_code": "002",
+                        "district_name": "visakhapatnam",
+                        "district_code": "0014"
+                    },
+                    {
+                        "state_code": "002",
+                        "district_name": "vizianagaram",
+                        "district_code": "0015"
+                    },
+                    {
+                        "state_code": "002",
+                        "district_name": "west godavari",
+                        "district_code": "0016"
+                    }
+                ],
+                "005": [
+                    {
+                        "state_code": "005",
+                        "district_name": "araria",
+                        "district_code": "0076"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "arwal",
+                        "district_code": "0077"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "aurangabad",
+                        "district_code": "0078"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "banka",
+                        "district_code": "0079"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "begusarai",
+                        "district_code": "0080"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "bhagalpur",
+                        "district_code": "0081"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "bhojpur",
+                        "district_code": "0082"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "buxar",
+                        "district_code": "0083"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "darbhanga",
+                        "district_code": "0084"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "east champaran",
+                        "district_code": "0085"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "gaya",
+                        "district_code": "0086"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "gopalganj",
+                        "district_code": "0087"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "jamui",
+                        "district_code": "0088"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "jehanabad",
+                        "district_code": "0089"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "kaimur",
+                        "district_code": "0090"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "katihar",
+                        "district_code": "0091"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "khagaria",
+                        "district_code": "0092"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "kishanganj",
+                        "district_code": "0093"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "lakhisarai",
+                        "district_code": "0094"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "madhepura",
+                        "district_code": "0095"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "madhubani",
+                        "district_code": "0096"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "munger",
+                        "district_code": "0097"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "muzaffarpur",
+                        "district_code": "0098"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "nalanda",
+                        "district_code": "0099"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "nawada",
+                        "district_code": "0100"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "patna",
+                        "district_code": "0101"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "purnia",
+                        "district_code": "0102"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "rohtas",
+                        "district_code": "0103"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "saharsa",
+                        "district_code": "0104"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "samastipur",
+                        "district_code": "0105"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "saran",
+                        "district_code": "0106"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "sheikhpura",
+                        "district_code": "0107"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "sheohar",
+                        "district_code": "0108"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "sitamarhi",
+                        "district_code": "0109"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "siwan",
+                        "district_code": "0110"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "supaul",
+                        "district_code": "0111"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "vaishali",
+                        "district_code": "0112"
+                    },
+                    {
+                        "state_code": "005",
+                        "district_name": "west champaran",
+                        "district_code": "0113"
+                    }
+                ],
+                "009": [
+                    {
+                        "state_code": "009",
+                        "district_name": "central delhi",
+                        "district_code": "0146"
+                    },
+                    {
+                        "state_code": "009",
+                        "district_name": "east delhi",
+                        "district_code": "0147"
+                    },
+                    {
+                        "state_code": "009",
+                        "district_name": "new delhi",
+                        "district_code": "0148"
+                    },
+                    {
+                        "state_code": "009",
+                        "district_name": "north delhi",
+                        "district_code": "0149"
+                    },
+                    {
+                        "state_code": "009",
+                        "district_name": "north east delhi",
+                        "district_code": "0150"
+                    },
+                    {
+                        "state_code": "009",
+                        "district_name": "north west delhi",
+                        "district_code": "0151"
+                    },
+                    {
+                        "state_code": "009",
+                        "district_name": "shahdara",
+                        "district_code": "0152"
+                    },
+                    {
+                        "state_code": "009",
+                        "district_name": "south delhi",
+                        "district_code": "0153"
+                    },
+                    {
+                        "state_code": "009",
+                        "district_name": "south east delhi",
+                        "district_code": "0154"
+                    },
+                    {
+                        "state_code": "009",
+                        "district_name": "south west delhi",
+                        "district_code": "0155"
+                    },
+                    {
+                        "state_code": "009",
+                        "district_name": "west delhi",
+                        "district_code": "0156"
+                    },
+                    {
+                        "state_code": "009",
+                        "district_name": "delhi",
+                        "district_code": "0742"
+                    }
+                ],
+            }
         }]);
 
-            // angular.filter('replace', [function () {
-            //     return function (input, from, to) {
-
-            //       if(input === undefined) {
-            //         return;
-            //       }
-            //       var regex = new RegExp(from, 'g');
-            //       return input.replace(regex, to);
-            //     };
-
-
-            // }]);

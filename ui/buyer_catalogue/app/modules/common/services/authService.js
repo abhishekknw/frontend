@@ -228,8 +228,8 @@ angular.module('Authentication')
                   });
             };
 
-            authService.getAllCity = function (state_code) {
-               return $http.get(apiHost + 'v0/ui/covid-bot/district/?state_code=' + state_code)
+            authService.getAllCity = function () {
+               return $http.get(apiHost + 'v0/ui/covid-bot/district/')
                   .then(function onSuccess(response) {
                      return response
                   })

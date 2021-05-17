@@ -3,7 +3,7 @@
 <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 <link href="css/smallscreen.css" rel="stylesheet" media="screen">
 
-<div class="covid-hospital" ng-init="getState();">
+<div class="covid-hospital" ng-init="getStateCity();">
   <div class="page-wrapper">
     <div class="logo-sec">
       <img src="images/machadalo-logo.png" alt="logo">
@@ -41,13 +41,13 @@
 
                 <div class="form-group">
                   <select class="form-control" name="city" ng-change="getBeds()" id="city_id"
-                    ng-model="selectedCityName">
+                    ng-model="district_code">
                     <option value="" disabled>
                       Select District/City
                     </option>
-                    <option ng-repeat="city in cityData track by $index" value="{{city.name}}"
+                    <option ng-repeat="city in cityList track by $index" value="{{city.district_code}}"
                       style="text-transform: capitalize;">
-                      {{city.name}}
+                      {{city.district_name}}
                     </option>
                   </select>
                 </div>
