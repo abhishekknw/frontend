@@ -46,44 +46,64 @@ angular.module('machadaloPages').filter('replace', [function () {
             setInterval(function () {
                 AuthService.getAllState()
                     .then(function onSuccess(response) {
-                        $scope.stateData = response.data.data;
-                        localStorage.setItem("stateData", JSON.stringify($scope.stateData));
+                        if (response && response.data && response.data.data) {
+                            $scope.stateData = response.data.data;
+                            localStorage.setItem("stateData", JSON.stringify($scope.stateData));
+                        } else {
+                            console.log('error', response);
+                        }
                     }).catch(function onError(response) {
                         console.log(response);
                     })
 
-                    AuthService.getAllCity()
+                AuthService.getAllCity()
                     .then(function onSuccess(response) {
-                        $scope.cityData = response.data.data;
-                        localStorage.setItem("cityData", JSON.stringify($scope.cityData));
+                        if (response && response.data && response.data.data) {
+                            $scope.cityData = response.data.data;
+                            localStorage.setItem("cityData", JSON.stringify($scope.cityData));
+                        } else {
+                            console.log('error', response);
+                        }
                     }).catch(function onError(response) {
                         console.log(response);
                     })
             }, 1800000)
-          //  1800000
+            //  1800000
             $scope.getStateCity = function () {
-                if (localStorage.getItem("stateData") && localStorage.getItem("stateData") != undefined) {
-                    $scope.stateData = JSON.parse(localStorage.getItem("stateData"));
+                let localState = localStorage.getItem("stateData");
+                // if (localStorage.getItem("stateData") && localStorage.getItem("stateData") != undefined) {
+                if (localState && localState != 'undefined') {
+
+                    $scope.stateData = JSON.parse(localState);
                 } else {
                     AuthService.getAllState()
-                    .then(function onSuccess(response) {
-                        $scope.stateData = response.data.data;
-                        localStorage.setItem("stateData", JSON.stringify($scope.stateData));
-                    }).catch(function onError(response) {
-                        console.log(response);
-                    })
+                        .then(function onSuccess(response) {
+                            if (response && response.data && response.data.data) {
+                                $scope.stateData = response.data.data;
+                                localStorage.setItem("stateData", JSON.stringify($scope.stateData));
+                            } else {
+                                console.log('error', response);
+                            }
+                        }).catch(function onError(response) {
+                            console.log(response);
+                        })
                 }
-
-                if (localStorage.getItem("cityData") && localStorage.getItem("cityData") != undefined) {
-                    $scope.cityData = JSON.parse(localStorage.getItem("cityData"));
+                let localCity = localStorage.getItem("cityData");
+                // if (localStorage.getItem("cityData") && localStorage.getItem("cityData") != undefined) {
+                if (localCity && localCity != 'undefined') {
+                    $scope.cityData = JSON.parse(localCity);
                 } else {
                     AuthService.getAllCity()
-                    .then(function onSuccess(response) {
-                        $scope.cityData = response.data.data;
-                        localStorage.setItem("cityData", JSON.stringify($scope.cityData));
-                    }).catch(function onError(response) {
-                        console.log(response);
-                    })
+                        .then(function onSuccess(response) {
+                            if (response && response.data && response.data.data) {
+                                $scope.cityData = response.data.data;
+                                localStorage.setItem("cityData", JSON.stringify($scope.cityData));
+                            } else {
+                                console.log('error', response);
+                            }
+                        }).catch(function onError(response) {
+                            console.log(response);
+                        })
                 }
             }
 
@@ -208,7 +228,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                     })
             }
             $scope.totalAvailableCountsData = 0;
-           let cdata = {
+            let cdata = {
                 "002": [
                     {
                         "state_code": "002",

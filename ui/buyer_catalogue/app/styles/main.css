@@ -617,13 +617,7 @@ table.covid-hospital-table > thead > tr > th {
 
 .search-hopital .card h3 {
 	min-height: 110px;
-  font-size: 20px;
-  
-}
-.search-hopital .card
-{
-
-min-height: 430px;
+	font-size: 20px;
 }
 
 .logo-sec img {
@@ -647,6 +641,15 @@ min-height: 430px;
 	#Category_id {
     width: 100%;
     margin: 0 auto;
+}
+.summery .card h3{
+	font-size: 18px;
+}
+table.covid-hospital-table th:first-child, .covid-hospital-table td:first-child{
+	padding-right: 8px !important;
+}
+table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
+	padding-left: 8px !important;
 }
 .summery .summery-bottom-cards .card {
     margin-bottom: 50px;
