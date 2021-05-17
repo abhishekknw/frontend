@@ -178,6 +178,14 @@ angular
         //   permission : 'loginAccess'
         // }
       })
+      // .state('covidHospital', {
+      //   url: '/hospitalbeds/covidhelpdesk/',
+      //   controller: 'covidHospitalCtrl',
+      //   templateUrl: 'modules/pages/covidHospital/covid-hospital.tmpl.html',
+      //   // data :{
+      //   //   permission : 'loginAccess'
+      //   // }
+      // })
 
 
       .state('resetPassword', {
@@ -622,6 +630,8 @@ angular
             $location.path($location.url());
           } else if (url[1] == "beds") {
             $location.path("/beds/covid/machadalo");
+          } else if (url[1] == "hospitalbeds") {
+            $location.path("/hospitalbeds/covidhelpdesk/");
           } else {
             $location.path("/login");
           }
@@ -637,6 +647,8 @@ angular
             $location.path($location.url());
           } else if (url[1] == "beds") {
             $location.path("/beds/covid/machadalo");
+          } else if (url[1] == "hospitalbeds") {
+            $location.path("/hospitalbeds/covidhelpdesk/");
           } else {
             $location.path("/login");
           }

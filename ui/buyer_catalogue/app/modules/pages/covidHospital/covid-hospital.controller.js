@@ -161,6 +161,20 @@ angular.module('machadaloPages').filter('replace', [function () {
                                 let hospitalData = $scope.hospitalDetailData[i].hospital_data;
                                 if (hospitalData.length > 0) {
                                     for (let j in hospitalData) {
+                                        let date = moment(hospitalData[j].last_updated_time).format('DD');
+                                        let month = moment(hospitalData[j].last_updated_time).format('MM');
+                                        let year = moment(hospitalData[j].last_updated_time).format('YYYY');
+                                        let currentYear = moment().format('YYYY');
+                                        let currentMonth = moment().format('MM');
+                                        let currentDate = moment().format('DD');
+                                        let date1 = moment([year, month, date])
+                                        let date2 = moment([currentYear, currentMonth, currentDate])
+                                        let dateDifference = date2.diff(date1, 'days');
+                                        $scope.hospitalDetailData[i].hospital_data[j].isDateShow = true;
+                                        if (dateDifference > 6) {
+                                            $scope.hospitalDetailData[i].hospital_data[j].isDateShow = false;
+                                        }
+
                                         let resourcesData = hospitalData[j].resources;
                                         let checkAvailable = false;
                                         if (resourcesData.length > 0) {
@@ -228,6 +242,6 @@ angular.module('machadaloPages').filter('replace', [function () {
                     })
             }
             $scope.totalAvailableCountsData = 0;
-            
+
         }]);
 
