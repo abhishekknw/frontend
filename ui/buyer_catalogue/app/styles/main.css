@@ -642,8 +642,9 @@ table.covid-hospital-table > thead > tr > th {
     width: 100%;
     margin: 0 auto;
 }
+
 .summery .card h3{
-	font-size: 18px;
+	font-size: 18px !important;
 }
 table.covid-hospital-table th:first-child, .covid-hospital-table td:first-child{
 	padding-right: 8px !important;
@@ -675,6 +676,12 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 		text-align: center;
 	}
 }
+@media (max-width: 340px) {
+	table.covid-hospital-table th, .covid-hospital-table td {
+		padding-left: 2px !important;
+		padding-right: 2px !important;
+	}
+	}
 
 
 
