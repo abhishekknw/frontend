@@ -258,7 +258,9 @@
                           </tr>
                           <tr>
                             <th colspan="2">Last Updated by Hospital:</th>
-                            <td colspan="2"><span class="ng-binding">{{hospital.hospital_data[0].last_updated_time | date:'medium'}}</span></td>
+                            <td colspan="2" ><span class="ng-binding" ng-if="hospital.hospital_data[0].isDateShow">{{hospital.hospital_data[0].last_updated_time | date:'medium'}}</span>
+                            <span class="ng-binding" ng-if="!hospital.hospital_data[0].isDateShow">As Per The Latest Records</span>
+                            </td>
                             </tr>
                           <!-- <tr>
                             <th>Last Updated by Hospital:</th>
