@@ -170,22 +170,22 @@ angular
         // }
       })
 
-      .state('covidHospital', {
-        url: '/beds/covid/machadalo',
-        controller: 'covidHospitalCtrl',
-        templateUrl: 'modules/pages/covidHospital/covid-hospital.tmpl.html',
-        // data :{
-        //   permission : 'loginAccess'
-        // }
-      })
       // .state('covidHospital', {
-      //   url: '/hospitalbeds/covidhelpdesk/',
+      //   url: '/beds/covid/machadalo',
       //   controller: 'covidHospitalCtrl',
       //   templateUrl: 'modules/pages/covidHospital/covid-hospital.tmpl.html',
       //   // data :{
       //   //   permission : 'loginAccess'
       //   // }
       // })
+      .state('covidHospital', {
+        url: '/hospitalbeds/covidhelpdesk/',
+        controller: 'covidHospitalCtrl',
+        templateUrl: 'modules/pages/covidHospital/covid-hospital.tmpl.html',
+        // data :{
+        //   permission : 'loginAccess'
+        // }
+      })
 
 
       .state('resetPassword', {
