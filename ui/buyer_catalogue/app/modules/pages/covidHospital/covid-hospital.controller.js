@@ -38,10 +38,11 @@ angular.module('machadaloPages').filter('replace', [function () {
             var url = $location.url().split("/");
             // $scope.categorys = ['Beds', 'Hospitals'];
             $scope.categorys = ['Hospital Beds'];
-            let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
+            //let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
             // $scope.selectedCategory = cat;
             $scope.selectedCategory = 'Hospital Beds';
             $scope.loading = true;
+            $scope.Phone = 9691642697
 
             setInterval(function () {
                 AuthService.getAllState()
