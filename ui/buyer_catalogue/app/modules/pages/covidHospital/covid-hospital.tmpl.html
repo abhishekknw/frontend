@@ -7,24 +7,21 @@
   <div class="page-wrapper">
     <div class="logo-sec">
       <img src="images/machadalo-logo.png" alt="logo">
-      <h1>COVID19 HELPDESK</h1>
+      <h1>COVID19 HELPDESK,AVAILABLE</h1>
     </div>
 
     <div class="container">
       <div class="page-inner">
-        <div class="natext">
-          N/A means Data Not Available
-        </div>
         <div class="top-select-option">
-          <div class="form-group">
+          <!-- <div class="form-group">
             <select class="form-control" name="category" id="Category_id" ng-model="selectedCategory">
               <option ng-repeat="cat in categorys track by $index" value="{{cat}}" style="text-transform: capitalize;">
                 {{cat}}
               </option>
             </select>
-          </div>
+          </div> -->
           <p style="text-align: center;">
-          <h4 style="text-align: center;"> Data currently available for 17 States/UT and 300 Districts as per all
+          <h4 style="text-align: center;"> Data currently available for {{stateData.length}} States/UT and {{totalCity}} Districts as per all
             available Online Government and Volunteer Sources</h4>
           </p>
           <div class="row">
@@ -41,6 +38,26 @@
                 </select>
               </div>
 
+              <!-- <div class="form-group">
+                <select class="form-control" name="city" ng-change="getBeds()" id="city_id" ng-model="district_code">
+                  <option value="" disabled>
+                    Select District/City
+                  </option>
+                  <option ng-repeat="city in cityList track by $index" value="{{city.district_code}}"
+                    style="text-transform: capitalize;">
+                    {{city.district_name}}
+                  </option>
+                </select>
+              </div> -->
+            </div>
+            <!-- <h2> <span class="or">OR</span> </h2> -->
+            <!-- <div class="col-md-6">
+              <div class="form-group">
+                <input class="form-control" name="pin_code" ng-model="pin_code" placeholder="Pin Code" disabled>
+              </div>
+            </div> -->
+
+            <div class="col-md-6">
               <div class="form-group">
                 <select class="form-control" name="city" ng-change="getBeds()" id="city_id" ng-model="district_code">
                   <option value="" disabled>
@@ -53,63 +70,11 @@
                 </select>
               </div>
             </div>
-            <h2> <span class="or">OR</span> </h2>
-            <div class="col-md-6">
-              <div class="form-group">
-                <input class="form-control" name="pin_code" ng-model="pin_code" placeholder="Pin Code" disabled>
-              </div>
-            </div>
 
-
-            <!-- <div class="row">
-            <div class="col-md-12">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <select class="form-control" name="category" id="Category_id" ng-model="selectedCategory">
-                    <option ng-repeat="cat in categorys track by $index" value="{{cat}}"
-                      style="text-transform: capitalize;">
-                      {{cat}}
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <select class="form-control" ng-change="getCity()" name="state" id="state_id" ng-model="state_code">
-                    <option value="" disabled>
-                      Select State
-                    </option>
-                    <option ng-repeat="state in stateData track by $index" value="{{state.state_code}}"
-                      style="text-transform: capitalize;">
-                      {{state.name}}
-                    </option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <select class="form-control" name="city" ng-change="getBeds()" id="city_id"
-                    ng-model="selectedCityName">
-                    <option value="" disabled>
-                      Select District
-                    </option>
-                    <option ng-repeat="city in cityData track by $index" value="{{city.name}}"
-                      style="text-transform: capitalize;">
-                      {{city.name}}
-                    </option>
-                  </select>
-                </div>
-              </div>
-           
-              <div class="col-md-4">
-                <div class="form-group">
-                  <input class="form-control" name="pin_code" ng-model="pin_code" placeholder="Pin Code">
-                </div>
-              </div>
-            </div>
-          </div> -->
           </div>
         </div>
-        <div class="summery">
-          <h4 class="title" ng-if="selectedCityName || selectedStateName">Summary of Hospital Beds for
+        <div class="summery">         
+          <h4 class="title" ng-if="selectedCityName || selectedStateName">Summary of Availability Hospital Beds for
             {{selectedCityName}} <span ng-if="selectedCityName && selectedStateName">,</span> {{selectedStateName}}
           </h4>
           <h4 class="title" ng-if="!selectedCityName && !selectedStateName">Summary </h4>
@@ -177,7 +142,7 @@
                   </p>
                 </div>
               </div>
-              <div class="col-md-3">
+              <!-- <div class="col-md-3">
                 <div class="card">
                   <div class="img-card">
                     <img src="https://www.pngkey.com/png/full/357-3572177_hospital-white-noshadowai-icon.png"
@@ -206,7 +171,7 @@
                   <p>N/A</p>
                   <p>Collection Centers</p>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="search-hopital">
@@ -216,6 +181,9 @@
                   aria-label="Search">
                 <span class="search-ic"><i class="fas fa-search"></i></span>
               </form>
+            </div>
+            <div class="natext" ng-show="(hospitalDetailData|filter:searchQuery).length > 0">
+              N/A means Data Not Available
             </div>
             <div ng-if="!loading" ng-loadings="loading"></div>
             <div class="row" ng-if="loading">

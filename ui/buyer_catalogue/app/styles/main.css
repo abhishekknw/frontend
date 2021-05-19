@@ -633,7 +633,8 @@ table.covid-hospital-table > thead > tr > th {
 	margin: 0 auto;
 }
 .natext {
-    margin-bottom: 15px;
+	margin-bottom: 15px;
+	text-align: center;
 }
 
 
