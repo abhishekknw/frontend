@@ -7,7 +7,7 @@
   <div class="page-wrapper">
     <div class="logo-sec">
       <img src="images/machadalo-logo.png" alt="logo">
-      <h1>COVID19 HELPDESK,AVAILABLE</h1>
+      <h1>COVID19 HELPDESK , AVAILABLE</h1>
     </div>
 
     <div class="container">
@@ -216,7 +216,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="resources in hospital.hospital_data[0].resources">
+                      <tr ng-repeat="resources in hospital.hospital_data[0].resources | orderBy:'-totalQuantity'">
                         <th scope="row">{{resources.resourceType |replace: '_':' '}}:</th>
                         <td ng-if="resources.totalQuantity">{{resources.totalQuantity}}</td>
                         <td ng-if="!resources.totalQuantity">N/A</td>
