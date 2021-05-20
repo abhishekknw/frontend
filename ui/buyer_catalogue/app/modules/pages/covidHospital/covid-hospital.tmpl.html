@@ -187,10 +187,11 @@
 
             <!-- <div ng-click="Sort(vendor_name)" > &nbsp;<a></a></div>
             <i class="bi bi-sort-up"></i> -->
-            <!-- <div>
-            <span class="fa fa-sort-down columnSortIcons" disable></span>
-            <span class="fa fa-sort-up columnSortIcons"></span>
-            </div> -->
+            <div>
+              Facility Name
+            <span class="fa fa-sort-down columnSortIcons" ng-click="Sort('+vendor_name')"></span>
+            <span class="fa fa-sort-up columnSortIcons" ng-click="Sort('-vendor_name')"></span>
+            </div>
             <div class="natext" ng-show="(hospitalDetailData|filter:searchQuery).length > 0">
               N/A means Data Not Available
             </div>

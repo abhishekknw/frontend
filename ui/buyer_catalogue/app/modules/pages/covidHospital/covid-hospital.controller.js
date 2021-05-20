@@ -118,7 +118,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             }
             $scope.sort = '+vendor_name';
             $scope.Sort = function (val) {
-                $scope.sort = - + "val"
+                $scope.sort = val;
                 // if ($scope.sort == val) {
                 //   $scope.reversesort = !$scope.reversesort;
                 //   //return;
