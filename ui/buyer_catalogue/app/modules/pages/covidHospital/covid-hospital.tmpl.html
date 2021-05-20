@@ -7,7 +7,7 @@
   <div class="page-wrapper">
     <div class="logo-sec">
       <img src="images/machadalo-logo.png" alt="logo">
-      <h1><span class="img_hospital"><img src="images/plus_icon.png" alt="logo"></span> COVID19 HELPDESK, AVAILABLE</h1>
+      <h1><span class="img_hospital"><img src="images/plus_icon.png" alt="logo"></span> COVID19 HELPDESK, AVAILABLE BEDS</h1>
     </div>
 
     <div class="container">
@@ -21,8 +21,10 @@
             </select>
           </div> -->
           <p style="text-align: center;">
-          <h4 style="text-align: center;"> Data currently available for {{stateData.length}} States/UT and {{totalCity}} Districts as per all
-            available Online Government and Volunteer Sources</h4>
+          <!-- <h4 style="text-align: center;"> Data currently available for {{stateData.length}} States/UT and {{totalCity}} Districts as per all
+            available Online Government and Volunteer Sources</h4> -->
+            <h4 style="text-align: center;"> Data currently available for {{stateData.length}} States/UT and 410 Districts as per all
+              available Online Government and Volunteer Sources</h4>
           </p>
           <div class="row">
             <div class="col-md-6">
@@ -74,7 +76,7 @@
           </div>
         </div>
         <div class="summery">         
-          <h4 class="title" ng-if="selectedCityName || selectedStateName">Summary of Availability Hospital Beds for
+          <h4 class="title" ng-if="selectedCityName || selectedStateName">Summary of Availability: Hospital Beds for
             {{selectedCityName}} <span ng-if="selectedCityName && selectedStateName">,</span> {{selectedStateName}}
           </h4>
           <h4 class="title" ng-if="!selectedCityName && !selectedStateName">Summary </h4>
@@ -182,13 +184,21 @@
                 <span class="search-ic"><i class="fas fa-search"></i></span>
               </form>
             </div>
+
+            <!-- <div ng-click="Sort(vendor_name)" > &nbsp;<a></a></div>
+            <i class="bi bi-sort-up"></i> -->
+            <!-- <div>
+            <span class="fa fa-sort-down columnSortIcons" disable></span>
+            <span class="fa fa-sort-up columnSortIcons"></span>
+            </div> -->
             <div class="natext" ng-show="(hospitalDetailData|filter:searchQuery).length > 0">
               N/A means Data Not Available
             </div>
             <div ng-if="!loading" ng-loadings="loading"></div>
             <div class="row" ng-if="loading">
-              <div class="col-md-6" ng-repeat="hospital in hospitalDetailData | filter : searchQuery">
-
+              <!-- <div class="col-md-6" ng-repeat="hospital in hospitalDetailData | filter : searchQuery | orderBy:'-vendor_name'"> -->
+              <div class="col-md-6" ng-repeat="hospital in hospitalDetailData | filter : searchQuery | orderBy:sort">
+                
                 <div class="card">
                   <h3>Facility Name: <span>{{hospital.vendor_name}}</span>
                     <span ng-if="hospital.address">,</span>

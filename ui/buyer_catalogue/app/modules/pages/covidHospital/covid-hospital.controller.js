@@ -116,6 +116,14 @@ angular.module('machadaloPages').filter('replace', [function () {
                         })
                 }
             }
+            $scope.sort = '+vendor_name';
+            $scope.Sort = function (val) {
+                $scope.sort = - + "val"
+                // if ($scope.sort == val) {
+                //   $scope.reversesort = !$scope.reversesort;
+                //   //return;
+                // }
+            }
 
 
             $scope.getCity = function () {
@@ -130,7 +138,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                     $scope.selectedStateName = $scope.stateData[localindex_index].name;
                 }
                 $scope.cityList = $scope.cityData[$scope.state_code];
-                $scope.getBeds();
+                // $scope.getBeds();
             }
             // $scope.totalOxyzenBeds = 0;
             // $scope.totalNonOxyzenBeds = 0;
@@ -254,6 +262,9 @@ angular.module('machadaloPages').filter('replace', [function () {
                         console.log(response);
                     })
             }
+
+           
+
             $scope.totalAvailableCountsData = 0;
 
         }]);
