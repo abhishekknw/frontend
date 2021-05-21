@@ -416,6 +416,8 @@ input[type="radio"]{
 	text-align: center !important;
 	background-color: #fff;
 	box-shadow: 2px 2px 30px rgba(0,0,0,0.10);
+	max-width: 300px;
+	margin: auto;
 } 
 .summery-bottom-cards .card h2{
 	font-size: 34px;
@@ -571,6 +573,10 @@ border: 2px solid #eee;*/
 background-color: #fff;
 box-shadow: 5px 5px 30px rgba(0,0,0,0.1);
 color: #000 !important;
+min-height: 470px;
+}
+.img_hospital img{
+	max-width: 50px;
 }
 .search-hopital .card h3{
 	border-color: #000;
@@ -633,7 +639,8 @@ table.covid-hospital-table > thead > tr > th {
 	margin: 0 auto;
 }
 .natext {
-    margin-bottom: 15px;
+	margin-bottom: 15px;
+	text-align: center;
 }
 
 
@@ -678,10 +685,13 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 }
 @media (max-width: 340px) {
 	table.covid-hospital-table th, .covid-hospital-table td {
-		padding-left: 2px !important;
-		padding-right: 2px !important;
+		padding-left: 6px !important;
+		padding-right: 6px !important;
 	}
+	.search-hopital .card{
+		padding: 20px 12px;
 	}
+}
 
 
 

@@ -7,295 +7,228 @@
   <div class="page-wrapper">
     <div class="logo-sec">
       <img src="images/machadalo-logo.png" alt="logo">
-       <h1>COVID19 HELPDESK</h1>
+      <h1><span class="img_hospital"><img src="images/plus_icon.png" alt="logo"></span> COVID19 HELPDESK, AVAILABLE BEDS</h1>
     </div>
- 
+
     <div class="container">
       <div class="page-inner">
-        <div class="natext">
-          N/A means Data Not Available
-          </div>
         <div class="top-select-option">
-             <div class="form-group">
-                  <select class="form-control" name="category" id="Category_id" ng-model="selectedCategory">
-                    <option ng-repeat="cat in categorys track by $index" value="{{cat}}"
-                      style="text-transform: capitalize;">
-                      {{cat}}
-                    </option>
-                  </select>
-                </div>
-                <p style="text-align: center;"><h4 style="text-align: center;"> Data currently available for 17 States/UT and 300 Districts as per all available Online Government and Volunteer Sources</h4></p>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <select class="form-control" ng-change="getCity()" name="state" id="state_id" ng-model="state_code">
-                    <option value="" disabled>
-                      Select State/UT
-                    </option>
-                    <option ng-repeat="state in stateData track by $index" value="{{state.state_code}}"
-                      style="text-transform: capitalize;">
-                      {{state.name}}
-                    </option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <select class="form-control" name="city" ng-change="getBeds()" id="city_id"
-                    ng-model="district_code">
-                    <option value="" disabled>
-                      Select District/City
-                    </option>
-                    <option ng-repeat="city in cityList track by $index" value="{{city.district_code}}"
-                      style="text-transform: capitalize;">
-                      {{city.district_name}}
-                    </option>
-                  </select>
-                </div>
-              </div>
-             <h2> <span class="or">OR</span> </h2>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <input class="form-control" name="pin_code" ng-model="pin_code" placeholder="Pin Code" disabled>
-                </div>
+          <!-- <div class="form-group">
+            <select class="form-control" name="category" id="Category_id" ng-model="selectedCategory">
+              <option ng-repeat="cat in categorys track by $index" value="{{cat}}" style="text-transform: capitalize;">
+                {{cat}}
+              </option>
+            </select>
+          </div> -->
+          <p style="text-align: center;">
+          <!-- <h4 style="text-align: center;"> Data currently available for {{stateData.length}} States/UT and {{totalCity}} Districts as per all
+            available Online Government and Volunteer Sources</h4> -->
+            <h4 style="text-align: center;"> Data currently available for {{stateData.length}} States/UT and 410 Districts as per all
+              available Online Government and Volunteer Sources</h4>
+          </p>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <select class="form-control" ng-change="getCity()" name="state" id="state_id" ng-model="state_code">
+                  <option value="" disabled>
+                    Select State/UT
+                  </option>
+                  <option ng-repeat="state in stateData track by $index" value="{{state.state_code}}"
+                    style="text-transform: capitalize;">
+                    {{state.name}}
+                  </option>
+                </select>
               </div>
 
+              <!-- <div class="form-group">
+                <select class="form-control" name="city" ng-change="getBeds()" id="city_id" ng-model="district_code">
+                  <option value="" disabled>
+                    Select District/City
+                  </option>
+                  <option ng-repeat="city in cityList track by $index" value="{{city.district_code}}"
+                    style="text-transform: capitalize;">
+                    {{city.district_name}}
+                  </option>
+                </select>
+              </div> -->
+            </div>
+            <!-- <h2> <span class="or">OR</span> </h2> -->
+            <!-- <div class="col-md-6">
+              <div class="form-group">
+                <input class="form-control" name="pin_code" ng-model="pin_code" placeholder="Pin Code" disabled>
+              </div>
+            </div> -->
 
-              <!-- <div class="row">
-            <div class="col-md-12">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <select class="form-control" name="category" id="Category_id" ng-model="selectedCategory">
-                    <option ng-repeat="cat in categorys track by $index" value="{{cat}}"
-                      style="text-transform: capitalize;">
-                      {{cat}}
-                    </option>
-                  </select>
-                </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <select class="form-control" name="city" ng-change="getBeds()" id="city_id" ng-model="district_code">
+                  <option value="" disabled>
+                    Select District/City
+                  </option>
+                  <option ng-repeat="city in cityList track by $index" value="{{city.district_code}}"
+                    style="text-transform: capitalize;">
+                    {{city.district_name}}
+                  </option>
+                </select>
               </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <select class="form-control" ng-change="getCity()" name="state" id="state_id" ng-model="state_code">
-                    <option value="" disabled>
-                      Select State
-                    </option>
-                    <option ng-repeat="state in stateData track by $index" value="{{state.state_code}}"
-                      style="text-transform: capitalize;">
-                      {{state.name}}
-                    </option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <select class="form-control" name="city" ng-change="getBeds()" id="city_id"
-                    ng-model="selectedCityName">
-                    <option value="" disabled>
-                      Select District
-                    </option>
-                    <option ng-repeat="city in cityData track by $index" value="{{city.name}}"
-                      style="text-transform: capitalize;">
-                      {{city.name}}
-                    </option>
-                  </select>
-                </div>
-              </div>
-           
-              <div class="col-md-4">
-                <div class="form-group">
-                  <input class="form-control" name="pin_code" ng-model="pin_code" placeholder="Pin Code">
+            </div>
+
+          </div>
+        </div>
+        <div class="summery">         
+          <h4 class="title" ng-if="selectedCityName || selectedStateName">Summary of Availability: Hospital Beds for
+            {{selectedCityName}} <span ng-if="selectedCityName && selectedStateName">,</span> {{selectedStateName}}
+          </h4>
+          <h4 class="title" ng-if="!selectedCityName && !selectedStateName">Summary </h4>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card">
+                <h3>Total Hospitals :
+                  <span ng-if="hospitalDetailData.length > 0">{{hospitalDetailData.length}}</span>
+                  <span ng-if="hospitalDetailData.length == 0 || !hospitalDetailData">0</span>
+                  <p style="margin-top: 10px;">Total Hospital Beds:
+                    <span>{{totalHospitalBeds}}</span>
+                  </p>
+                </h3>
+
+
+                <div ng-if="!loading" ng-loadings="loading"></div>
+                <div class="hospital-card-wrapper" ng-if="loading">
+                  <div ng-repeat="beds in resourcesTypeData ">
+                    <div class="hospital-card">
+                      <h4>{{beds.resourceType |replace: '_':' '}} : <span
+                          ng-if="beds.totalQuantity">{{beds.totalQuantity}}</span>
+                        <span ng-if="!beds.totalQuantity">N/A</span>
+                      </h4>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div> -->
+            <div class="col-md-6">
+              <div class="card header" style="background-color: seagreen;">
+                <h3>Available Hospitals : <span>{{totalAvailableCountsData}}</span>
+                  <p style="margin-top: 10px;"> Total Hospital Beds Available:
+                    <span>{{totalAvailableBeds}}</span>
+                  </p>
+                </h3>
+                <div ng-if="!loading" ng-loadings="loading"></div>
+                <div class="hospital-card-wrapper" ng-if="loading">
+                  <div ng-repeat="availableBeds in resourcesTypeData">
+                    <div class="hospital-card">
+                      <h4>{{availableBeds.resourceType |replace: '_':' '}} : <span
+                          ng-if="availableBeds.quantity">{{availableBeds.quantity}}</span>
+                        <span ng-if="!availableBeds.quantity">N/A</span>
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-            <div class="summery">
-              <h4 class="title" ng-if="selectedCityName || selectedStateName">Summary of Hospital Beds for
-                {{selectedCityName}} <span ng-if="selectedCityName && selectedStateName">,</span> {{selectedStateName}}
-              </h4>
-              <h4 class="title" ng-if="!selectedCityName && !selectedStateName">Summary </h4>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="card">
-                    <h3>Total Hospitals :
-                      <span ng-if="hospitalDetailData.length > 0">{{hospitalDetailData.length}}</span>
-                      <span ng-if="hospitalDetailData.length == 0 || !hospitalDetailData">0</span>
-                      <p style="margin-top: 10px;">Total Hospital Beds:
-                        <span>{{totalHospitalBeds}}</span>
-                      </p>
-                    </h3>
-
-                    
-                    <div ng-if="!loading" ng-loadings="loading"></div>
-                    <div class="hospital-card-wrapper" ng-if="loading">
-                      <div ng-repeat="beds in resourcesTypeData ">
-                        <div class="hospital-card">
-                          <h4>{{beds.resourceType |replace: '_':' '}} : <span
-                              ng-if="beds.totalQuantity">{{beds.totalQuantity}}</span>
-                            <span ng-if="!beds.totalQuantity">N/A</span>
-                          </h4>
-                        </div>
-                      </div>
-                    </div>
+          <div class="summery-bottom-cards">
+            <div class="row">
+              <div>
+                <div class="card">
+                  <div class="img-card">
+                    <img src="images/hospital-white-noshadowai-icon.png"
+                      alt="Hospital">
                   </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="card header" style="background-color: seagreen;">
-                    <h3>Available Hospitals : <span>{{totalAvailableCountsData}}</span> 
-                      <p style="margin-top: 10px;"> Total Hospital Beds Available:
-                        <span>{{totalAvailableBeds}}</span>
-                      </p>
-                    </h3>
-                    <div ng-if="!loading" ng-loadings="loading"></div>
-                    <div class="hospital-card-wrapper" ng-if="loading">
-                      <div ng-repeat="availableBeds in resourcesTypeData">
-                        <div class="hospital-card">
-                          <h4>{{availableBeds.resourceType |replace: '_':' '}} : <span
-                              ng-if="availableBeds.quantity">{{availableBeds.quantity}}</span>
-                            <span ng-if="!availableBeds.quantity">N/A</span>
-                          </h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="summery-bottom-cards">
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="card">
-                      <div class="img-card">
-                        <img src="https://www.pngkey.com/png/full/357-3572177_hospital-white-noshadowai-icon.png"
-                          alt="Hospital">
-                      </div>
-                      <!-- <h2> <span ng-if="hospitalDetailData.length > 0">{{hospitalDetailData.length}}</span>
+                  <!-- <h2> <span ng-if="hospitalDetailData.length > 0">{{hospitalDetailData.length}}</span>
                    </h2>
                    <p><span ng-if="hospitalDetailData.length == 0 || !hospitalDetailData">N/A</span></p> -->
-                      <p> <span ng-if="hospitalDetailData.length > 0">{{hospitalDetailData.length}}</span>
-                      </p>
-                      <p><span ng-if="hospitalDetailData.length == 0 || !hospitalDetailData">N/A</span></p>
-                      <p>TOTAL HOSPITALS
-                      </p>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="card">
-                      <div class="img-card">
-                        <img src="https://www.pngkey.com/png/full/357-3572177_hospital-white-noshadowai-icon.png"
-                          alt="Hospital">
-                      </div>
-                      <p>N/A</p>
-                      <p>Testing Labs</p>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="card">
-                      <div class="img-card">
-                        <img src="https://www.pngkey.com/png/full/357-3572177_hospital-white-noshadowai-icon.png"
-                          alt="Hospital">
-                      </div>
-                      <p>N/A</p>
-                      <p>Care Centers</p>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="card">
-                      <div class="img-card">
-                        <img src="https://www.pngkey.com/png/full/357-3572177_hospital-white-noshadowai-icon.png"
-                          alt="Hospital">
-                      </div>
-                      <p>N/A</p>
-                      <p>Collection Centers</p>
-                    </div>
-                  </div>
+                  <p> <span ng-if="hospitalDetailData.length > 0">{{hospitalDetailData.length}}</span>
+                  </p>
+                  <p><span ng-if="hospitalDetailData.length == 0 || !hospitalDetailData">N/A</span></p>
+                  <p>TOTAL HOSPITALS
+                  </p>
                 </div>
               </div>
-              <div class="search-hopital">
-                <div class="search-form">
-                  <form class="d-flex">
-                    <input class="form-control" type="search" ng-model="searchQuery" placeholder="Search Hospital"
-                      aria-label="Search">
-                    <span class="search-ic"><i class="fas fa-search"></i></span>
-                  </form>
+              <!-- <div class="col-md-3">
+                <div class="card">
+                  <div class="img-card">
+                    <img src="https://www.pngkey.com/png/full/357-3572177_hospital-white-noshadowai-icon.png"
+                      alt="Hospital">
+                  </div>
+                  <p>N/A</p>
+                  <p>Testing Labs</p>
                 </div>
-                <div ng-if="!loading" ng-loadings="loading"></div>
-                <div class="row" ng-if="loading">
-                  <div class="col-md-6" ng-repeat="hospital in hospitalDetailData | filter : searchQuery">
+              </div>
+              <div class="col-md-3">
+                <div class="card">
+                  <div class="img-card">
+                    <img src="https://www.pngkey.com/png/full/357-3572177_hospital-white-noshadowai-icon.png"
+                      alt="Hospital">
+                  </div>
+                  <p>N/A</p>
+                  <p>Care Centers</p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card">
+                  <div class="img-card">
+                    <img src="https://www.pngkey.com/png/full/357-3572177_hospital-white-noshadowai-icon.png"
+                      alt="Hospital">
+                  </div>
+                  <p>N/A</p>
+                  <p>Collection Centers</p>
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div class="search-hopital">
+            <div class="search-form">
+              <form class="d-flex">
+                <input class="form-control" type="search" ng-model="searchQuery" placeholder="Search Hospital"
+                  aria-label="Search">
+                <span class="search-ic"><i class="fas fa-search"></i></span>
+              </form>
+            </div>
 
-                    <div class="card">
-                      <h3>Facility Name: <span>{{hospital.vendor_name}}</span>
-                        <span ng-if="hospital.address">,</span>
-                        <span>{{hospital.address}}</span>
-                        <!-- <span ng-if="hospital.city">,</span>
+            <!-- <div ng-click="Sort(vendor_name)" > &nbsp;<a></a></div>
+            <i class="bi bi-sort-up"></i> -->
+            
+            <!-- <div>
+              Facility Name
+            <span class="fa fa-sort-down columnSortIcons" ng-click="Sort('+vendor_name')"></span>
+            <span class="fa fa-sort-up columnSortIcons" ng-click="Sort('-vendor_name')"></span>
+            </div>
+
+            <div>
+              Total
+            <span class="fa fa-sort-down columnSortIcons" ng-click="getBeds('quantity','DESC')"></span>
+            <span class="fa fa-sort-up columnSortIcons" ng-click="getBeds('quantity','ASC')"></span>
+            </div>
+
+            <div>
+            Available
+            <span class="fa fa-sort-down columnSortIcons" ng-click="getBeds('totalQuantity','DESC')"></span>
+            <span class="fa fa-sort-up columnSortIcons" ng-click="getBeds('totalQuantity','ASC')"></span>
+            </div> -->
+
+            <div class="natext" ng-show="(hospitalDetailData|filter:searchQuery).length > 0">
+              N/A means Data Not Available
+            </div>
+            <div ng-if="!loading" ng-loadings="loading"></div>
+            <div class="row" ng-if="loading">
+              <!-- <div class="col-md-6" ng-repeat="hospital in hospitalDetailData | filter : searchQuery | orderBy:'-vendor_name'"> -->
+              <div class="col-md-6" ng-repeat="hospital in hospitalDetailData | filter : searchQuery | orderBy:sort">
+                <div class="card">
+                  <h3>Facility Name: <span>{{hospital.vendor_name}}</span>
+                    <span ng-if="hospital.address">,</span>
+                    <span>{{hospital.address}}</span>
+                    <!-- <span ng-if="hospital.city">,</span>
                         <span>{{hospital.city}}</span>
                         <span ng-if="hospital.district">,</span>
                         <span>{{hospital.district}}</span>
                         <span ng-if="hospital.state">,</span>
                         <span>{{hospital.state}}</span> -->
-                      </h3>
-                      <ul>
-                    <li>Beds Available:<span style="color:green" ng-if="hospital.AvailableofBedsinHospital > 0">Yes ({{hospital.AvailableofBedsinHospital}})</span>
-                      <span  style="color:red" ng-if="hospital.AvailableofBedsinHospital == 0">No</span>
-                    </li>
-                  </ul>
-                      <table class="table covid-hospital-table">
-                        <thead>
-                          <tr>
-                            <th scope="col"></th>
-                            <td scope="col">Total</td>
-                            <td scope="col">Available</td>
-                            <td scope="col">Occupied</td>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr ng-repeat="resources in hospital.hospital_data[0].resources">
-                            <th scope="row">{{resources.resourceType |replace: '_':' '}}:</th>
-                            <td ng-if="resources.totalQuantity">{{resources.totalQuantity}}</td>
-                            <td ng-if="!resources.totalQuantity">N/A</td>
-                            <td ng-if="resources.quantity">{{resources.quantity}}</td>
-                            <td ng-if="!resources.quantity">N/A</td>
-                            <td ng-if="resources.totalQuantity">{{resources.totalQuantity - resources.quantity}}</td>
-                            <td ng-if="!resources.totalQuantity">N/A</td>
-
-                          </tr>
-                          <tr>
-                            <th colspan="2">Last Updated by Hospital:</th>
-                            <td colspan="2" ><span class="ng-binding" ng-if="hospital.hospital_data[0].isDateShow">{{hospital.hospital_data[0].last_updated_time | date:'medium'}}</span>
-                            <span class="ng-binding" ng-if="!hospital.hospital_data[0].isDateShow">As Per The Latest Records</span>
-                            </td>
-                            </tr>
-                          <!-- <tr>
-                            <th>Last Updated by Hospital:</th>
-                            <td><span>{{hospital.hospital_data[0].last_updated_time | date:'medium'}}</span></td>
-                            <td></td>
-                            <td></td>
-                          </tr> -->
-                          <!-- <tr>
-                        <th scope="row">Non-Oxyzen Beds:</th>
-                        <td>12</td>
-                        <td>23</td>
-                        <td>14</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">ICU Beds:</th>
-                        <td>22</td>
-                        <td>32</td>
-                        <td>12</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ventilators: </th>
-                        <td>22</td>
-                        <td>323</td>
-                        <td>323</td>
-                      </tr> -->
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <h4 style="color:red;text-align: center" ng-show="(hospitalDetailData|filter:searchQuery).length==0" >No Hospital Found.</h4>
-                  <!-- <div class="col-md-6">
-                <div class="card">
-                  <h3>Facility Name : <span>Medanta Hospital and Research center Indore.</span></h3>
+                  </h3>
                   <ul>
-                    <li>Available of Beds: <span>Yes (10)</span></li>
+                    <li>Beds Available:<span style="color:green" ng-if="hospital.AvailableofBedsinHospital > 0">Yes
+                        ({{hospital.AvailableofBedsinHospital}})</span>
+                      <span style="color:red" ng-if="hospital.AvailableofBedsinHospital == 0">No</span>
+                    </li>
                   </ul>
                   <table class="table covid-hospital-table">
                     <thead>
@@ -307,48 +240,44 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">Oxyzen Beds:</th>
-                        <td>12</td>
-                        <td>23</td>
-                        <td>14</td>
+                      <tr ng-repeat="resources in hospital.hospital_data[0].resources | orderBy:'-totalQuantity'">
+                        <th scope="row">{{resources.resourceType |replace: '_':' '}}:</th>
+                        <td ng-if="resources.totalQuantity">{{resources.totalQuantity}}</td>
+                        <td ng-if="!resources.totalQuantity">N/A</td>
+                        <td ng-if="resources.quantity">{{resources.quantity}}</td>
+                        <td ng-if="!resources.quantity">N/A</td>
+                        <td ng-if="resources.totalQuantity">{{resources.totalQuantity - resources.quantity}}</td>
+                        <td ng-if="!resources.totalQuantity">N/A</td>
+
                       </tr>
                       <tr>
-                        <th scope="row">Non-Oxyzen Beds:</th>
-                        <td>12</td>
-                        <td>23</td>
-                        <td>14</td>
+                        <th colspan="2">Last Updated by Hospital:</th>
+                        <td colspan="2"><span class="ng-binding"
+                            ng-if="hospital.hospital_data[0].isDateShow">{{hospital.hospital_data[0].last_updated_time |
+                            date:'medium'}}</span>
+                          <span class="ng-binding" ng-if="!hospital.hospital_data[0].isDateShow">As Per The Latest
+                            Records</span>
+                        </td>
                       </tr>
-                      <tr>
-                        <th scope="row">ICU Beds:</th>
-                        <td>22</td>
-                        <td>32</td>
-                        <td>12</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Ventilators: </th>
-                        <td>22</td>
-                        <td>323</td>
-                        <td>323</td>
-                      </tr>
+
+                      <!-- <tr>
+                        <th colspan="2">Phone 1:</th>
+                        <td colspan="2"><span class="ng-binding"><a href="tel:123-456-7890">123-456-7890</a>
+                          </span>
+                        </td>
+                      </tr> -->
+
                     </tbody>
                   </table>
                 </div>
-              </div> -->
-                </div>
               </div>
-              <!-- <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-          </ul>
-        </nav> -->
+              <h4 style="color:red;text-align: center" ng-show="(hospitalDetailData|filter:searchQuery).length==0">No
+                Hospital Found.</h4>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
 
-    </div><!-- machadalo-login -->
+</div><!-- machadalo-login -->

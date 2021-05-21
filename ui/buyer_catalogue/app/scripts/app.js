@@ -576,6 +576,7 @@ angular
           permission: 'editProposalDetailsPage'
         }
       })
+      
       // .state('dynamicGraphs',{
       //       url : '/dynamicGraphs',
       //       controller : 'DashboarddynamicGraphsCtrl',
@@ -621,9 +622,8 @@ angular
         // redirect to login page if not logged in
         $rootScope.globals.currentUser = AuthService.UserInfo();
         if (!$rootScope.globals.hasOwnProperty('userInfo') || !$rootScope.globals.userInfo.hasOwnProperty('profile')) {
-          //  $location.path("/login");
           var url = $location.url().split("/");
-          console.log('11111111111111111111',url);
+        // $location.path("/hospitalbeds/covidhelpdesk/");
           if ($location.path() == "/forgot-password") {
             $location.path("/forgot-password");
           } else if (url[1] == "reset-password") {
@@ -637,10 +637,8 @@ angular
           }
         }
         var category = $rootScope.globals.userInfo.profile.organisation.category;
+        // $location.path("/hospitalbeds/covidhelpdesk/");
         if (!$rootScope.globals.currentUser) {
-          // if(toState.name != 'login')
-          // $cookieStore.put('returnUrl', $location.url());
-          // $location.path("/login");
           if ($location.path() == "/forgot-password") {
             $location.path("/forgot-password");
           } else if (url[1] == "reset-password") {

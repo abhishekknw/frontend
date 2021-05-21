@@ -244,8 +244,9 @@ angular.module('Authentication')
                   url = "v0/ui/covid-bot/get-hospital-data/?state=" + param.state;
                }
                if (param.city) {
-                  url = "v0/ui/covid-bot/get-hospital-data/?state=" + param.state + "&district=" + param.city;
+                  url = "v0/ui/covid-bot/get-hospital-data/?state=" + param.state + "&district=" + param.city ;
                }
+               url += '&' + param.sortingParam + '=' + param.sortingType;
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
