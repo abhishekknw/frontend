@@ -131,7 +131,7 @@
               <div>
                 <div class="card">
                   <div class="img-card">
-                    <img src="https://www.pngkey.com/png/full/357-3572177_hospital-white-noshadowai-icon.png"
+                    <img src="images/hospital-white-noshadowai-icon.png"
                       alt="Hospital">
                   </div>
                   <!-- <h2> <span ng-if="hospitalDetailData.length > 0">{{hospitalDetailData.length}}</span>
@@ -187,11 +187,25 @@
 
             <!-- <div ng-click="Sort(vendor_name)" > &nbsp;<a></a></div>
             <i class="bi bi-sort-up"></i> -->
-            <div>
+            
+            <!-- <div>
               Facility Name
             <span class="fa fa-sort-down columnSortIcons" ng-click="Sort('+vendor_name')"></span>
             <span class="fa fa-sort-up columnSortIcons" ng-click="Sort('-vendor_name')"></span>
             </div>
+
+            <div>
+              Total
+            <span class="fa fa-sort-down columnSortIcons" ng-click="getBeds('quantity','DESC')"></span>
+            <span class="fa fa-sort-up columnSortIcons" ng-click="getBeds('quantity','ASC')"></span>
+            </div>
+
+            <div>
+            Available
+            <span class="fa fa-sort-down columnSortIcons" ng-click="getBeds('totalQuantity','DESC')"></span>
+            <span class="fa fa-sort-up columnSortIcons" ng-click="getBeds('totalQuantity','ASC')"></span>
+            </div> -->
+
             <div class="natext" ng-show="(hospitalDetailData|filter:searchQuery).length > 0">
               N/A means Data Not Available
             </div>
@@ -199,7 +213,6 @@
             <div class="row" ng-if="loading">
               <!-- <div class="col-md-6" ng-repeat="hospital in hospitalDetailData | filter : searchQuery | orderBy:'-vendor_name'"> -->
               <div class="col-md-6" ng-repeat="hospital in hospitalDetailData | filter : searchQuery | orderBy:sort">
-                
                 <div class="card">
                   <h3>Facility Name: <span>{{hospital.vendor_name}}</span>
                     <span ng-if="hospital.address">,</span>

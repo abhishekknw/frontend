@@ -148,7 +148,13 @@ angular.module('machadaloPages').filter('replace', [function () {
             // $scope.totalBeds = 0;
             $scope.totalAvailableBeds = 0;
             $scope.totalHospitalBeds = 0;
-            $scope.getBeds = function () {
+            $scope.getBeds = function (value,sortType) {
+                let sortingParam = 'quantity';
+                let sortingType = 'Desc';
+                if(value && sortType){
+                    sortingParam = value;
+                    sortingType = sortType;
+                }
                 // $scope.hospitalDetailData = [];
                 var localindex_index = $scope.cityList.map(function (el) {
                     return el.district_code;
@@ -159,7 +165,9 @@ angular.module('machadaloPages').filter('replace', [function () {
                 $scope.loading = null;
                 let param = {
                     state: $scope.state_code,
-                    city: $scope.district_code
+                    city: $scope.district_code,
+                    sortingParam:sortingParam,
+                    sortingType: sortingType
                 }
 
                 // suspenseLeadService.getAllBeds()
