@@ -118,6 +118,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             }
             $scope.sort = '+vendor_name';
             $scope.Sort = function (val) {
+                $scope.categoryFilter = undefined;
                 $scope.sort = val;
                 // if ($scope.sort == val) {
                 //   $scope.reversesort = !$scope.reversesort;
@@ -148,13 +149,18 @@ angular.module('machadaloPages').filter('replace', [function () {
             // $scope.totalBeds = 0;
             $scope.totalAvailableBeds = 0;
             $scope.totalHospitalBeds = 0;
-            $scope.getBeds = function (value,sortType) {
-                let sortingParam = 'quantity';
-                let sortingType = 'Desc';
-                if(value && sortType){
-                    sortingParam = value;
-                    sortingType = sortType;
+            $scope.getBeds = function (value) {
+                $scope.sort = '';
+                if(!value){
+                    $scope.categoryFilter = undefined;
                 }
+                // $scope.sortingParam = 'quantity';
+                // $scope.sortingType = 'Desc';
+                // if(value && sortType){
+                //     $scope.sort = '';
+                //     $scope.sortingParam = value;
+                //     $scope.sortingType = sortType;
+                // }
                 // $scope.hospitalDetailData = [];
                 var localindex_index = $scope.cityList.map(function (el) {
                     return el.district_code;
@@ -166,8 +172,9 @@ angular.module('machadaloPages').filter('replace', [function () {
                 let param = {
                     state: $scope.state_code,
                     city: $scope.district_code,
-                    sortingParam:sortingParam,
-                    sortingType: sortingType
+                    categoryFilter: $scope.categoryFilter,
+                    // sortingParam:$scope.sortingParam,
+                    // sortingType: $scope.sortingType
                 }
 
                 // suspenseLeadService.getAllBeds()

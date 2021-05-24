@@ -239,14 +239,28 @@ angular.module('Authentication')
             };
 
             authService.getAllBeds = function (param) {
-               let url = "v0/ui/covid-bot/get-hospital-data"
+               // let url = "v0/ui/covid-bot/get-hospital-data"
+               // if (param.state) {
+               //    url = "v0/ui/covid-bot/get-hospital-data/?state=" + param.state;
+               // }
+               // if (param.city) {
+               //    url = "v0/ui/covid-bot/get-hospital-data/?state=" + param.state + "&district=" + param.city ;
+               // }
+               // if(param.categoryFilter){
+               //    url += '&order=DESC&category=' + param.categoryFilter;
+               // }
+               //url += '&' + param.sortingParam + '=' + param.sortingType;
+
+               let url = "v0/ui/covid-bot/sort-hospital-data"
                if (param.state) {
-                  url = "v0/ui/covid-bot/get-hospital-data/?state=" + param.state;
+                  url = "v0/ui/covid-bot/sort-hospital-data/?state=" + param.state;
                }
                if (param.city) {
-                  url = "v0/ui/covid-bot/get-hospital-data/?state=" + param.state + "&district=" + param.city ;
+                  url = "v0/ui/covid-bot/sort-hospital-data/?state=" + param.state + "&district=" + param.city ;
                }
-               url += '&' + param.sortingParam + '=' + param.sortingType;
+               if(param.categoryFilter){
+                  url += '&order=DESC&category=' + param.categoryFilter;
+               }
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response

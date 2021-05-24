@@ -639,8 +639,24 @@ table.covid-hospital-table > thead > tr > th {
 	margin: 0 auto;
 }
 .natext {
-	margin-bottom: 15px;
+	margin-bottom: 30px;
+	margin-top: 30px;
 	text-align: center;
+}
+.dropdown-wrap {
+    display: flex;
+	justify-content: center;
+	margin-top:50px;
+}
+.drop-down-list {
+	margin: 0 60px;
+	position: relative;
+	font-size: 20px;
+}
+.drop-down-list span {
+    position: absolute;
+    right: -17px;
+    top: 4px;
 }
 
 
@@ -681,6 +697,24 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	}
 	.top-select-option h2 {
 		text-align: center;
+	}
+	.dropdown-wrap{
+	    display: block;
+	}
+	.drop-down-list{
+		margin-bottom:15px;
+		font-size: 16px;
+		display: inline-block;
+		margin-left:0;
+		margin-right:0;
+	}
+	.dropdown-wrap .col-md-3 {
+		margin-left: 0;
+		padding-left: 0;
+	}
+	.natext {
+		margin-top: 30px;
+		margin-bottom: 20px;
 	}
 }
 @media (max-width: 340px) {
