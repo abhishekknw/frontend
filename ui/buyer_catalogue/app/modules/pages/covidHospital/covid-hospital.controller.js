@@ -116,15 +116,15 @@ angular.module('machadaloPages').filter('replace', [function () {
                         })
                 }
             }
-            $scope.sort = '+vendor_name';
-            $scope.Sort = function (val) {
-                $scope.categoryFilter = undefined;
-                $scope.sort = val;
-                // if ($scope.sort == val) {
-                //   $scope.reversesort = !$scope.reversesort;
-                //   //return;
-                // }
-            }
+            // $scope.sort = '+vendor_name';
+            // $scope.Sort = function (val) {
+            //     $scope.categoryFilter = undefined;
+            //     $scope.sort = val;
+            //     // if ($scope.sort == val) {
+            //     //   $scope.reversesort = !$scope.reversesort;
+            //     //   //return;
+            //     // }
+            // }
 
 
             $scope.getCity = function () {
@@ -150,9 +150,9 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.totalAvailableBeds = 0;
             $scope.totalHospitalBeds = 0;
             $scope.getBeds = function (value) {
-                $scope.sort = '';
+                // $scope.sort = '';
                 if(!value){
-                    $scope.categoryFilter = undefined;
+                    $scope.categoryFilter = 'LATEST UPDATED TIME';
                 }
                 // $scope.sortingParam = 'quantity';
                 // $scope.sortingType = 'Desc';
@@ -177,6 +177,20 @@ angular.module('machadaloPages').filter('replace', [function () {
                     // sortingType: $scope.sortingType
                 }
 
+                if($scope.categoryFilter == 'FACILITY NAME - ASCENDING'){
+                    param.otherFiler = 'ASC';
+                    param.categoryFilter = undefined;
+                }
+
+                if($scope.categoryFilter == 'FACILITY NAME - DESCENDING'){
+                    param.otherFiler = 'DESC';
+                    param.categoryFilter = undefined;
+                }
+
+                if($scope.categoryFilter == 'LATEST UPDATED TIME'){
+                    param.categoryFilter = undefined;
+                }
+
                 // suspenseLeadService.getAllBeds()
                 // .then(function onSuccess(response) {
                 //     $scope.bedsData = response.data;
@@ -189,6 +203,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                         $scope.loading = response;
                         $scope.hospitalDetailData = response.data.data;
                         $scope.resourcesTypeData = [];
+                        $scope.resourcesTypeData.push({'resourceType':'LATEST UPDATED TIME'},{'resourceType':'FACILITY NAME - ASCENDING'},{'resourceType':'FACILITY NAME - DESCENDING'},);
                         $scope.totalAvailableBeds = 0;
                         $scope.totalHospitalBeds = 0;
 
@@ -268,6 +283,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                                             }
 
                                         }
+                                        
                                     }
                                 }
                             }

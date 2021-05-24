@@ -65,9 +65,8 @@
                   <option value="" disabled>
                     Select District/City
                   </option>
-                  <option ng-repeat="city in cityList track by $index" value="{{city.district_code}}"
-                    style="text-transform: capitalize;">
-                    {{city.district_name}}
+                  <option ng-repeat="city in cityList track by $index" value="{{city.district_code}}" style="text-transform: capitalize;">
+                   <p style="text-transform: capitalize;"> {{city.district_name}} </p>
                   </option>
                 </select>
               </div>
@@ -95,7 +94,7 @@
                 <div ng-if="!loading" ng-loadings="loading"></div>
                 <div class="hospital-card-wrapper" ng-if="loading">
                   <div ng-repeat="beds in resourcesTypeData ">
-                    <div class="hospital-card">
+                    <div class="hospital-card" ng-if="beds.resourceType !='LATEST UPDATED TIME' && beds.resourceType !='FACILITY NAME - ASCENDING' && beds.resourceType !='FACILITY NAME - DESCENDING'">
                       <h4>{{beds.resourceType |replace: '_':' '}} : <span
                           ng-if="beds.totalQuantity">{{beds.totalQuantity}}</span>
                         <span ng-if="!beds.totalQuantity">N/A</span>
@@ -115,7 +114,7 @@
                 <div ng-if="!loading" ng-loadings="loading"></div>
                 <div class="hospital-card-wrapper" ng-if="loading">
                   <div ng-repeat="availableBeds in resourcesTypeData">
-                    <div class="hospital-card">
+                    <div class="hospital-card" ng-if="availableBeds.resourceType !='LATEST UPDATED TIME' && availableBeds.resourceType !='FACILITY NAME - ASCENDING' && availableBeds.resourceType !='FACILITY NAME - DESCENDING'">
                       <h4>{{availableBeds.resourceType |replace: '_':' '}} : <span
                           ng-if="availableBeds.quantity">{{availableBeds.quantity}}</span>
                         <span ng-if="!availableBeds.quantity">N/A</span>
@@ -188,17 +187,21 @@
             <!-- <div ng-click="Sort(vendor_name)" > &nbsp;<a></a></div>
             <i class="bi bi-sort-up"></i> -->
             <div class="dropdown-wrap">
-            <div class="drop-down-list facility-name">
+            <!-- <div class="drop-down-list facility-name">
               Facility Name
             <span class="fa fa-sort-down columnSortIcons" ng-hide="sort == '-vendor_name'"  ng-click="Sort('-vendor_name')"></span>
             <span class="fa fa-sort-up columnSortIcons" ng-hide="sort == '+vendor_name'" ng-click="Sort('+vendor_name')"></span>
+            </div> -->
+
+            <div class="drop-down-list facility-name">
+              Select Filter/Category:
             </div>
 
             <div class="col-md-3">
               <div class="form-group">
                 <select class="form-control" name="catType" ng-change="getBeds('catFilter')" id="catType_id" ng-model="categoryFilter">
                   <option value="" disabled>
-                    Select Category
+                    Select Filter/Category
                   </option>
                   <option ng-repeat="availableBeds in resourcesTypeData track by $index" value="{{availableBeds.resourceType}}"
                     style="text-transform: capitalize;">
