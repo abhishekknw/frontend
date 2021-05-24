@@ -261,6 +261,12 @@ angular.module('Authentication')
                if(param.categoryFilter){
                   url += '&order=DESC&category=' + param.categoryFilter;
                }
+
+               if(param.otherFiler){
+                  url += '&hospital_order=' +param.otherFiler ;
+               }
+
+               
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
