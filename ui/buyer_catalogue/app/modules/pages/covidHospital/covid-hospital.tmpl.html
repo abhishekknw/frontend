@@ -187,24 +187,39 @@
 
             <!-- <div ng-click="Sort(vendor_name)" > &nbsp;<a></a></div>
             <i class="bi bi-sort-up"></i> -->
-            
-            <!-- <div>
+            <div class="dropdown-wrap">
+            <div class="drop-down-list facility-name">
               Facility Name
-            <span class="fa fa-sort-down columnSortIcons" ng-click="Sort('+vendor_name')"></span>
-            <span class="fa fa-sort-up columnSortIcons" ng-click="Sort('-vendor_name')"></span>
+            <span class="fa fa-sort-down columnSortIcons" ng-hide="sort == '-vendor_name'"  ng-click="Sort('-vendor_name')"></span>
+            <span class="fa fa-sort-up columnSortIcons" ng-hide="sort == '+vendor_name'" ng-click="Sort('+vendor_name')"></span>
             </div>
 
-            <div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <select class="form-control" name="catType" ng-change="getBeds('catFilter')" id="catType_id" ng-model="categoryFilter">
+                  <option value="" disabled>
+                    Select Category
+                  </option>
+                  <option ng-repeat="availableBeds in resourcesTypeData track by $index" value="{{availableBeds.resourceType}}"
+                    style="text-transform: capitalize;">
+                    {{availableBeds.resourceType |replace: '_':' '}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <!-- <div class="drop-down-list total">
               Total
-            <span class="fa fa-sort-down columnSortIcons" ng-click="getBeds('quantity','DESC')"></span>
-            <span class="fa fa-sort-up columnSortIcons" ng-click="getBeds('quantity','ASC')"></span>
+            <span class="fa fa-sort-down columnSortIcons" ng-hide="sortingParam == 'quantity' && sortingType == 'DESC'" ng-click="getBeds('quantity','DESC')"></span>
+            <span class="fa fa-sort-up columnSortIcons" ng-hide="sortingParam == 'quantity' && sortingType == 'ASC'" ng-click="getBeds('quantity','ASC')"></span>
             </div>
 
-            <div>
+            <div class="drop-down-list available">
             Available
-            <span class="fa fa-sort-down columnSortIcons" ng-click="getBeds('totalQuantity','DESC')"></span>
-            <span class="fa fa-sort-up columnSortIcons" ng-click="getBeds('totalQuantity','ASC')"></span>
+            <span class="fa fa-sort-down columnSortIcons"  ng-hide="sortingParam == 'totalQuantity' && sortingType == 'DESC'" ng-click="getBeds('totalQuantity','DESC')"></span>
+            <span class="fa fa-sort-up columnSortIcons"  ng-hide="sortingParam == 'totalQuantity' && sortingType == 'ASC'" ng-click="getBeds('totalQuantity','ASC')"></span>
             </div> -->
+          </div>
 
             <div class="natext" ng-show="(hospitalDetailData|filter:searchQuery).length > 0">
               N/A means Data Not Available
