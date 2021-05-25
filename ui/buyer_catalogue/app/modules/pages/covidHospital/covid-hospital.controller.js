@@ -152,7 +152,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.getBeds = function (value) {
                 // $scope.sort = '';
                 if(!value){
-                    $scope.categoryFilter = 'LATEST UPDATED TIME';
+                    $scope.categoryFilter = 'TOTAL BEDS AVAILABLE';
                 }
                 // $scope.sortingParam = 'quantity';
                 // $scope.sortingType = 'Desc';
@@ -203,7 +203,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                         $scope.loading = response;
                         $scope.hospitalDetailData = response.data.data;
                         $scope.resourcesTypeData = [];
-                        $scope.resourcesTypeData.push({'resourceType':'LATEST UPDATED TIME'},{'resourceType':'FACILITY NAME - ASCENDING'},{'resourceType':'FACILITY NAME - DESCENDING'},);
+                        $scope.resourcesTypeData.push({'resourceType':'TOTAL BEDS AVAILABLE'},{'resourceType':'LATEST UPDATED TIME'},{'resourceType':'FACILITY NAME - ASCENDING'},{'resourceType':'FACILITY NAME - DESCENDING'},);
                         $scope.totalAvailableBeds = 0;
                         $scope.totalHospitalBeds = 0;
 
