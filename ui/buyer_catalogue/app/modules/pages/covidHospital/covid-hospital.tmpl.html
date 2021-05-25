@@ -94,7 +94,7 @@
                 <div ng-if="!loading" ng-loadings="loading"></div>
                 <div class="hospital-card-wrapper" ng-if="loading">
                   <div ng-repeat="beds in resourcesTypeData ">
-                    <div class="hospital-card" ng-if="beds.resourceType !='LATEST UPDATED TIME' && beds.resourceType !='FACILITY NAME - ASCENDING' && beds.resourceType !='FACILITY NAME - DESCENDING'">
+                    <div class="hospital-card" ng-if="beds.resourceType !='LATEST UPDATED TIME' && beds.resourceType !='FACILITY NAME - ASCENDING' && beds.resourceType !='FACILITY NAME - DESCENDING' && beds.resourceType !='TOTAL BEDS AVAILABLE'">
                       <h4>{{beds.resourceType |replace: '_':' '}} : <span
                           ng-if="beds.totalQuantity">{{beds.totalQuantity}}</span>
                         <span ng-if="!beds.totalQuantity">N/A</span>
@@ -114,7 +114,7 @@
                 <div ng-if="!loading" ng-loadings="loading"></div>
                 <div class="hospital-card-wrapper" ng-if="loading">
                   <div ng-repeat="availableBeds in resourcesTypeData">
-                    <div class="hospital-card" ng-if="availableBeds.resourceType !='LATEST UPDATED TIME' && availableBeds.resourceType !='FACILITY NAME - ASCENDING' && availableBeds.resourceType !='FACILITY NAME - DESCENDING'">
+                    <div class="hospital-card" ng-if="availableBeds.resourceType !='LATEST UPDATED TIME' && availableBeds.resourceType !='FACILITY NAME - ASCENDING' && availableBeds.resourceType !='FACILITY NAME - DESCENDING' && availableBeds.resourceType !='TOTAL BEDS AVAILABLE'">
                       <h4>{{availableBeds.resourceType |replace: '_':' '}} : <span
                           ng-if="availableBeds.quantity">{{availableBeds.quantity}}</span>
                         <span ng-if="!availableBeds.quantity">N/A</span>
