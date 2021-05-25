@@ -150,10 +150,14 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.totalAvailableBeds = 0;
             $scope.totalHospitalBeds = 0;
             $scope.getBeds = function (value) {
-                // $scope.sort = '';
+                 $scope.sort = '';
                 if(!value){
                     $scope.categoryFilter = 'TOTAL BEDS AVAILABLE';
                 }
+
+                if($scope.categoryFilter == 'TOTAL BEDS AVAILABLE'){
+                    $scope.sort = '-AvailableofBedsinHospital';
+                } 
                 // $scope.sortingParam = 'quantity';
                 // $scope.sortingType = 'Desc';
                 // if(value && sortType){
@@ -188,6 +192,10 @@ angular.module('machadaloPages').filter('replace', [function () {
                 }
 
                 if($scope.categoryFilter == 'LATEST UPDATED TIME'){
+                    param.categoryFilter = undefined;
+                }
+
+                if($scope.categoryFilter == 'TOTAL BEDS AVAILABLE'){
                     param.categoryFilter = undefined;
                 }
 
