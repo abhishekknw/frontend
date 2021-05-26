@@ -674,11 +674,41 @@ label.infolable {
 .info-table-wrap {
     box-shadow: 0 0 12px #ddd;
     border: 1px solid #ddd;
-    padding: 10px;
+	padding: 10px;
+	margin-bottom: 30px;
 }
-
-
-
+.info-row.info-feedback {
+    display: block;
+}
+.info-table-heading h2 {
+    background: #5bc0de;
+    padding: 10px 20px;
+    border-radius: 50px;
+    color: #fff;
+    font-weight: 700;
+	font-size: 32px;
+	margin-bottom:40px;
+}
+.info-row.volanteer label.infolable{
+ min-width:auto;
+}
+.info-row.volanteer-btn span {
+    background: #24cc62;
+    color: #fff;
+    padding: 4px 15px;
+	border-radius: 5px;
+	font-weight: 600;
+	font-size: 17px;
+}
+.info-row.volanteer-btn img {
+    margin-right: -11px;
+    overflow: hidden;
+    z-index: 9;
+}
+.info-row.info-feedback .btn{
+ font-size: 17px;
+ font-weight:700;
+}
 
 @media only screen and (max-width:767px){
 	#Category_id {
@@ -737,8 +767,18 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 		margin-bottom: 20px;
 	}
 	label.infolable{
-	min-width: 100px;
+	min-width: 150px;
 	}
+	.info-row.info-feedback .btn {
+		display: block;
+		width: 100%;
+		margin-bottom: 10px;
+	}
+	.info-row.volanteer-btn span{
+       width:100%;
+	}
+	
+	
 }
 @media (max-width: 340px) {
 	table.covid-hospital-table th, .covid-hospital-table td {
