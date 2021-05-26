@@ -211,7 +211,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                         $scope.loading = response;
                         $scope.hospitalDetailData = response.data.data;
                         $scope.resourcesTypeData = [];
-                        $scope.resourcesTypeData.push({'resourceType':'TOTAL BEDS AVAILABLE'},{'resourceType':'LATEST UPDATED TIME'},{'resourceType':'FACILITY NAME - ASCENDING'},{'resourceType':'FACILITY NAME - DESCENDING'},);
+                        $scope.resourcesTypeData.push({'resourceType':'TOTAL BEDS AVAILABLE'});
                         $scope.totalAvailableBeds = 0;
                         $scope.totalHospitalBeds = 0;
 
@@ -291,11 +291,13 @@ angular.module('machadaloPages').filter('replace', [function () {
                                             }
 
                                         }
+
                                         
                                     }
                                 }
                             }
                         }
+                        $scope.resourcesTypeData.push({'resourceType':'LATEST UPDATED TIME'},{'resourceType':'FACILITY NAME - ASCENDING'},{'resourceType':'FACILITY NAME - DESCENDING'});
                         $scope.totalAvailableCountsData = $scope.hospitalDetailData.length - $scope.notAvailableCount;
                     }).catch(function onError(response) {
                         console.log(response);
