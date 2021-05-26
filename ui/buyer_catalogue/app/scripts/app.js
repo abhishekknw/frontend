@@ -187,6 +187,15 @@ angular
         // }
       })
 
+      .state('covidCylinder', {
+        url: '/cylinder/covidhelpdesk/',
+        controller: 'covidCylinderCtrl',
+        templateUrl: 'modules/pages/covidCylinder/covid-cylinder.tmpl.html',
+        // data :{
+        //   permission : 'loginAccess'
+        // }
+      })
+
 
       .state('resetPassword', {
         url: '/reset-password/:code/:email',
@@ -632,6 +641,8 @@ angular
             $location.path("/beds/covid/machadalo");
           } else if (url[1] == "hospitalbeds") {
             $location.path("/hospitalbeds/covidhelpdesk/");
+          } else if (url[1] == "cylinder") {
+            $location.path("/cylinder/covidhelpdesk/");
           } else {
             $location.path("/login");
           }
@@ -647,6 +658,8 @@ angular
             $location.path("/beds/covid/machadalo");
           } else if (url[1] == "hospitalbeds") {
             $location.path("/hospitalbeds/covidhelpdesk/");
+          } else if (url[1] == "cylinder") {
+            $location.path("/cylinder/covidhelpdesk/");
           } else {
             $location.path("/login");
           }
