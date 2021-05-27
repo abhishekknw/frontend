@@ -130,6 +130,11 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.getCity = function () {
                 // $scope.hospitalDetailData = [];
                 $scope.cityList = [];
+                $scope.hospitalDetailData = [];
+                $scope.resourcesTypeData = [];
+                $scope.totalHospitalBeds = 0;
+                $scope.totalAvailableCountsData = 0;
+                $scope.totalAvailableBeds = 0;
                 $scope.selectedCityName = null;
                 $scope.district_code = null;
                 var localindex_index = $scope.stateData.map(function (el) {

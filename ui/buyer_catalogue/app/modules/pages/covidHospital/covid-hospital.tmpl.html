@@ -186,7 +186,7 @@
 
             <!-- <div ng-click="Sort(vendor_name)" > &nbsp;<a></a></div>
             <i class="bi bi-sort-up"></i> -->
-            <div class="dropdown-wrap">
+            <div class="dropdown-wrap" ng-show="(hospitalDetailData|filter:searchQuery).length > 0">
             <!-- <div class="drop-down-list facility-name">
               Facility Name
             <span class="fa fa-sort-down columnSortIcons" ng-hide="sort == '-vendor_name'"  ng-click="Sort('-vendor_name')"></span>
