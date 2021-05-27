@@ -293,6 +293,17 @@ angular.module('Authentication')
                   });
             };
 
+            authService.getAllVolunteer = function () {
+               let url = "v0/ui/covid-bot/get_sheet_volunteer/"
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+
 
             return authService;
          }])
