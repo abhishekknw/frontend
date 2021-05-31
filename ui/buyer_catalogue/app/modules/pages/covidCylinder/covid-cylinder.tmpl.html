@@ -91,11 +91,13 @@
               <div class="info-row volanteer">
                 <label class="infolable">Volunteer Name: &nbsp;
                 </label>
-                   ABC
+                   {{cylinder.Volunteer_Name}}
               </div>
               <div class="info-row volanteer-btn">
-                  <img src="images/whatsapp-icon.png">
-                   <span>Chat with Volunteer</span> 
+                  <a href="{{cylinder.BitLink}}" data-action="share/whatsapp/share" target="_blank"> 
+                    <img src="images/whatsapp-icon.png">
+                     <span>Chat with Volunteer</span> 
+                    </a>
               </div>
 
 
@@ -104,9 +106,11 @@
              
               <div class="info-row info-feedback">
                 <label class="infolable"><strong>Provide Feedback</strong></label>
+                <div class="feedback-btns">
                 <button type="button" name="button" class="btn btn-success">Resources Available</button>
                   <button type="button" name="button" class="btn btn-warning">Not Available</button>
                     <button type="button" name="button" class="btn btn-danger">Wrong Number</button>
+                  </div>
               </div>
             </div>
           </div>
