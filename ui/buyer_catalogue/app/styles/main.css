@@ -699,15 +699,34 @@ label.infolable {
 	border-radius: 5px;
 	font-weight: 600;
 	font-size: 17px;
+	z-index: -1;
+	position: relative;
 }
 .info-row.volanteer-btn img {
     margin-right: -11px;
     overflow: hidden;
-    z-index: 9;
+	z-index: 9;
+	margin-top:-3px;
 }
 .info-row.info-feedback .btn{
  font-size: 17px;
  font-weight:700;
+}
+.info-row.volanteer {
+    border-bottom: 0;
+}
+.info-row.volanteer-btn {
+    justify-content: center;
+}
+.info-row.volanteer-btn {
+    justify-content: center;
+}
+.feedback-btns {
+    display: flex;
+    justify-content: space-around;
+}
+.valenteer-name{
+ text-align: left;
 }
 
 @media only screen and (max-width:767px){
@@ -776,6 +795,9 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	}
 	.info-row.volanteer-btn span{
        width:100%;
+	}
+	.feedback-btns{
+	display:block;
 	}
 	
 	
