@@ -103,9 +103,9 @@
               <div class="info-row info-feedback">
                 <label class="infolable"><strong>Provide Feedback</strong></label>
                 <div class="feedback-btns">
-                <button type="button" name="button" ng-disabled="cylinder.notAvailableButton || cylinder.wrongNumberButton" ng-click="resourcesAvailable($index)" class="btn btn-success">Resources Available</button>
-                  <button type="button" name="button" ng-disabled="cylinder.resourcesAvailableButton || cylinder.wrongNumberButton" ng-click="notAvailable($index)" class="btn btn-warning">Not Available</button>
-                    <button type="button" name="button" ng-disabled="cylinder.resourcesAvailableButton || cylinder.notAvailableButton" ng-click="wrongNumber($index)" class="btn btn-danger">Wrong Number</button>
+                <button type="button" name="button" ng-disabled="cylinder.notAvailableButton || cylinder.wrongNumberButton" ng-class="{cylinder.resourcesAvailableButton: btn-focus}" ng-click="resourcesAvailable($index)" class="btn btn-success res-btn">Resources Available</button>
+                  <button type="button" name="button" ng-disabled="cylinder.resourcesAvailableButton || cylinder.wrongNumberButton" ng-click="notAvailable($index)" class="btn btn-warning not-av-btn">Not Available</button>
+                    <button type="button" name="button" ng-disabled="cylinder.resourcesAvailableButton || cylinder.notAvailableButton" ng-click="wrongNumber($index)" class="btn btn-danger wr-btn">Wrong Number</button>
                   </div>
               </div>
             </div>
