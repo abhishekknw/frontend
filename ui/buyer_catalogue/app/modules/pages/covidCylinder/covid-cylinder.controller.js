@@ -24,11 +24,11 @@ angular.module('machadaloPages').filter('replace', [function () {
                 }
             }
             setInterval(function () {
-                AuthService.getAllState()
+                AuthService.getAllCylinderState()
                     .then(function onSuccess(response) {
                         if (response && response.data && response.data.data) {
                             $scope.stateData = response.data.data;
-                            localStorage.setItem("stateData", JSON.stringify($scope.stateData));
+                            localStorage.setItem("cylinderStateData", JSON.stringify($scope.stateData));
                         } else {
                             console.log('error', response);
                         }
@@ -36,11 +36,11 @@ angular.module('machadaloPages').filter('replace', [function () {
                         console.log(response);
                     })
 
-                AuthService.getAllCity()
+                AuthService.getAllCylinderCity()
                     .then(function onSuccess(response) {
                         if (response && response.data && response.data.data) {
                             $scope.cityData = response.data.data;
-                            localStorage.setItem("cityData", JSON.stringify($scope.cityData));
+                            localStorage.setItem("cylinderCityData", JSON.stringify($scope.cityData));
                         } else {
                             console.log('error', response);
                         }
@@ -50,17 +50,17 @@ angular.module('machadaloPages').filter('replace', [function () {
             }, 1800000)
             //  1800000
             $scope.getStateCity = function () {
-                let localState = localStorage.getItem("stateData");
+                let localState = localStorage.getItem("cylinderStateData");
                 // if (localStorage.getItem("stateData") && localStorage.getItem("stateData") != undefined) {
                 if (localState && localState != 'undefined') {
 
                     $scope.stateData = JSON.parse(localState);
                 } else {
-                    AuthService.getAllState()
+                    AuthService.getAllCylinderState()
                         .then(function onSuccess(response) {
                             if (response && response.data && response.data.data) {
                                 $scope.stateData = response.data.data;
-                                localStorage.setItem("stateData", JSON.stringify($scope.stateData));
+                                localStorage.setItem("cylinderStateData", JSON.stringify($scope.stateData));
                             } else {
                                 console.log('error', response);
                             }
@@ -68,15 +68,15 @@ angular.module('machadaloPages').filter('replace', [function () {
                             console.log(response);
                         })
                 }
-                let localCity = localStorage.getItem("cityData");
+                let localCity = localStorage.getItem("cylinderCityData");
                 if (localCity && localCity != 'undefined') {
                     $scope.cityData = JSON.parse(localCity);
                 } else {
-                    AuthService.getAllCity()
+                    AuthService.getAllCylinderCity()
                         .then(function onSuccess(response) {
                             if (response && response.data && response.data.data) {
                                 $scope.cityData = response.data.data;
-                                localStorage.setItem("cityData", JSON.stringify($scope.cityData));
+                                localStorage.setItem("cylinderCityData", JSON.stringify($scope.cityData));
                             } else {
                                 console.log('error', response);
                             }
