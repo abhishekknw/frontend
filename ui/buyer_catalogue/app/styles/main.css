@@ -681,7 +681,7 @@ label.infolable {
     display: block;
 }
 .info-table-heading h2 {
-    background: #5bc0de;
+    background: #871420;
     padding: 10px 20px;
     border-radius: 50px;
     color: #fff;
@@ -699,14 +699,14 @@ label.infolable {
 	border-radius: 5px;
 	font-weight: 600;
 	font-size: 17px;
-	z-index: -1;
 	position: relative;
 }
 .info-row.volanteer-btn img {
-    margin-right: -11px;
+    margin-right: -30px;
     overflow: hidden;
 	z-index: 9;
-	margin-top:-3px;
+	margin-top:0px;
+	position: relative;
 }
 .info-row.info-feedback .btn{
  font-size: 17px;
@@ -728,7 +728,70 @@ label.infolable {
 .valenteer-name{
  text-align: left;
 }
+.volanteer-btn a {
+    text-decoration: none;
+}
+td.valenteer-name {
+    float: left;
+}
+.hosptal-table.volanteer-btn span {
+    background: #24cc62;
+    padding: 4px 15px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 17px;
+}
+.hosptal-table.volanteer-btn img {
+    position: relative;
+    right: -30px;
+    top: -3px;
+}
+.hosptal-table.volanteer label{
+ font-weight: 400;
+}
+.hosptal-table.volanteer-btn {
+    border-bottom: 1px solid #d6d6d6;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	padding-top:12px;
+}
+.info-row.volanteer-btn{
+  padding-top:12px;
+}
 
+.btn-focus{
+ height: 50px !important;
+ position: relative;
+ bottom: 5px;
+ padding: 10px 30px;
+}
+.not-av-btn.btn-focus{
+ background:#d07f0b;
+}
+.res-btn.btn-focus{
+ background:#326832;
+}
+.wr-btn.btn-focus{
+ background:#8a130f;
+}
+.feedback-btns .btn {
+    height: 40px;
+}
+.info-row.info-feedback label {
+    font-weight: 400;
+}
+
+
+
+@media only screen and (min-width:767px){
+ .hosptal-table.volanteer-btn img, .info-row.volanteer-btn img{
+  width:40px;
+ }
+ .hosptal-table.volanteer-btn span, .info-row.volanteer-btn span{
+  padding:8px 50px;
+ }
+}
 @media only screen and (max-width:767px){
 	#Category_id {
     width: 100%;
@@ -752,6 +815,10 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 }
 .search-form form input[type="search"]{
 	padding: 0 15px;
+}
+.hosptal-table.volanteer-btn img, .info-row.volanteer-btn img{
+ width: 35px;
+ right:-15px;
 }
 }
 @media only screen and (max-width:575px){
@@ -793,13 +860,18 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 		width: 100%;
 		margin-bottom: 10px;
 	}
-	.info-row.volanteer-btn span{
+/*	.info-row.volanteer-btn span{
        width:100%;
-	}
+	}*/
 	.feedback-btns{
 	display:block;
 	}
-	
+	.hosptal-table.volanteer-btn span, .info-row.volanteer-btn span{
+    padding: 6px 22px;
+	}
+	.hosptal-table.volanteer-btn img{
+	 right:-20px;
+	}
 	
 }
 @media (max-width: 340px) {
@@ -810,6 +882,11 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	.search-hopital .card{
 		padding: 20px 12px;
 	}
+	.hosptal-table.volanteer-btn span{
+     font-size: 14px;
+     padding: 6px 10px;
+	}
+
 }
 
 

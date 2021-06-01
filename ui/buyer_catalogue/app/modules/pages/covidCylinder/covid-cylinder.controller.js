@@ -13,10 +13,10 @@ angular.module('machadaloPages').filter('replace', [function () {
             AuthService.Clear();
 
             var url = $location.url().split("/");
-            $scope.categorys = ['Hospital Beds', 'Cylinder'];
+            $scope.categorys = ['Hospital Beds', 'Cylinders'];
             //let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
             // $scope.selectedCategory = cat;
-            $scope.selectedCategory = 'Cylinder';
+            $scope.selectedCategory = 'Cylinders';
             $scope.loading = true;
             $scope.changeWeb = function () {
                 if ($scope.selectedCategory == 'Hospital Beds') {
@@ -24,11 +24,11 @@ angular.module('machadaloPages').filter('replace', [function () {
                 }
             }
             setInterval(function () {
-                AuthService.getAllState()
+                AuthService.getAllCylinderState()
                     .then(function onSuccess(response) {
                         if (response && response.data && response.data.data) {
                             $scope.stateData = response.data.data;
-                            localStorage.setItem("stateData", JSON.stringify($scope.stateData));
+                            localStorage.setItem("cylinderStateData", JSON.stringify($scope.stateData));
                         } else {
                             console.log('error', response);
                         }
@@ -36,11 +36,11 @@ angular.module('machadaloPages').filter('replace', [function () {
                         console.log(response);
                     })
 
-                AuthService.getAllCity()
+                AuthService.getAllCylinderCity()
                     .then(function onSuccess(response) {
                         if (response && response.data && response.data.data) {
                             $scope.cityData = response.data.data;
-                            localStorage.setItem("cityData", JSON.stringify($scope.cityData));
+                            localStorage.setItem("cylinderCityData", JSON.stringify($scope.cityData));
                         } else {
                             console.log('error', response);
                         }
@@ -50,17 +50,17 @@ angular.module('machadaloPages').filter('replace', [function () {
             }, 1800000)
             //  1800000
             $scope.getStateCity = function () {
-                let localState = localStorage.getItem("stateData");
+                let localState = localStorage.getItem("cylinderStateData");
                 // if (localStorage.getItem("stateData") && localStorage.getItem("stateData") != undefined) {
                 if (localState && localState != 'undefined') {
 
                     $scope.stateData = JSON.parse(localState);
                 } else {
-                    AuthService.getAllState()
+                    AuthService.getAllCylinderState()
                         .then(function onSuccess(response) {
                             if (response && response.data && response.data.data) {
                                 $scope.stateData = response.data.data;
-                                localStorage.setItem("stateData", JSON.stringify($scope.stateData));
+                                localStorage.setItem("cylinderStateData", JSON.stringify($scope.stateData));
                             } else {
                                 console.log('error', response);
                             }
@@ -68,15 +68,15 @@ angular.module('machadaloPages').filter('replace', [function () {
                             console.log(response);
                         })
                 }
-                let localCity = localStorage.getItem("cityData");
+                let localCity = localStorage.getItem("cylinderCityData");
                 if (localCity && localCity != 'undefined') {
                     $scope.cityData = JSON.parse(localCity);
                 } else {
-                    AuthService.getAllCity()
+                    AuthService.getAllCylinderCity()
                         .then(function onSuccess(response) {
                             if (response && response.data && response.data.data) {
                                 $scope.cityData = response.data.data;
-                                localStorage.setItem("cityData", JSON.stringify($scope.cityData));
+                                localStorage.setItem("cylinderCityData", JSON.stringify($scope.cityData));
                             } else {
                                 console.log('error', response);
                             }
@@ -86,28 +86,28 @@ angular.module('machadaloPages').filter('replace', [function () {
                 }
             }
 
-        //getVolunteerData
-        $scope.volunteerData = localStorage.getItem("volunteerData");
-        $scope.volunteerData = JSON.parse($scope.volunteerData);
-           if(!$scope.volunteerData){
-            AuthService.getAllVolunteer()
-                        .then(function onSuccess(response) {
-                            if (response && response.data && response.data.data) {
-                                $scope.volunteerData = response.data.data;
-                                localStorage.setItem("volunteerData", JSON.stringify($scope.volunteerData));
-                            } else {
-                                console.log('error', response);
-                            }
-                        }).catch(function onError(response) {
-                            console.log(response);
-                        })
-                    }
+            //getVolunteerData
+            $scope.volunteerData = localStorage.getItem("volunteerData");
+            $scope.volunteerData = JSON.parse($scope.volunteerData);
+            if (!$scope.volunteerData) {
+                AuthService.getAllVolunteer()
+                    .then(function onSuccess(response) {
+                        if (response && response.data && response.data.data) {
+                            $scope.volunteerData = response.data.data;
+                            localStorage.setItem("volunteerData", JSON.stringify($scope.volunteerData));
+                        } else {
+                            console.log('error', response);
+                        }
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+            }
 
 
             $scope.getCity = function () {
                 $scope.cityList = [];
                 $scope.selectedCityName = null;
-                $scope.district_code = null;
+                $scope.city_code = null;
                 var localindex_index = $scope.stateData.map(function (el) {
                     return el.state_code;
                 }).indexOf($scope.state_code);
@@ -119,10 +119,10 @@ angular.module('machadaloPages').filter('replace', [function () {
 
             $scope.getCylinderList = function () {
                 var localindex_index = $scope.cityList.map(function (el) {
-                    return el.district_code;
-                }).indexOf($scope.district_code);
+                    return el.city_code;
+                }).indexOf($scope.city_code);
                 if (localindex_index != -1) {
-                    $scope.selectedCityName = $scope.cityList[localindex_index].district_name;
+                    $scope.selectedCityName = $scope.cityList[localindex_index].city_name;
                 }
                 $scope.loading = null;
                 let param = {
@@ -133,9 +133,9 @@ angular.module('machadaloPages').filter('replace', [function () {
                 AuthService.getAllCylinder(param)
                     .then(function onSuccess(response) {
                         $scope.loading = response;
-                        if(response.data && response.data.data && !response.data.data.data){
+                        if (response.data && response.data.data && !response.data.data.data) {
                             $scope.cylinderDetailData = response.data.data;
-                            if($scope.cylinderDetailData.length > 0){
+                            if ($scope.cylinderDetailData.length > 0) {
                                 $scope.setVolunteer();
                             }
                         }
@@ -144,215 +144,252 @@ angular.module('machadaloPages').filter('replace', [function () {
                     })
             }
 
-            $scope.setVolunteer = function(){
+            $scope.setVolunteer = function () {
                 let volArray = [];
-                if($scope.cylinderDetailData && $scope.cylinderDetailData.length > 0){
+                if ($scope.cylinderDetailData && $scope.cylinderDetailData.length > 0) {
                     let vol = $scope.volunteerData
-                    console.log('44444444444444444444',vol);
-                   for(let i in vol){
-                    if(vol[i].City_Code == 149){
-                        volArray.push(vol[i]);
+                    for (let i in vol) {
+                        if (vol[i].City_Code == $scope.city_code) {
+                            volArray.push(vol[i]);
+                        }
                     }
-                   }
+                    if(volArray.length == 0){
+                        volArray = [{'Volunteer_Name':'Srishti','BitLink':'https://bit.ly/3fSzx4r'},
+                        {'Volunteer_Name':'Shifna','BitLink':'https://bit.ly/3wzfJK2'},
+                        {'Volunteer_Name':'Pranay','BitLink':'https://bit.ly/3fRp1KO'},
+                        {'Volunteer_Name':'Pradeep','BitLink':' https://bit.ly/3i07Rgx'},
+                        {'Volunteer_Name':'Shyamlee','BitLink':'https://bit.ly/3wKx4Qh'},
+                        {'Volunteer_Name':'Anmol','BitLink':'https://bit.ly/3wKxh61'},]
+                    }
+                } 
+                for (let j in $scope.cylinderDetailData) {
+                    for (let k in volArray) {
+                        if (!$scope.lastIndex || $scope.lastIndex == k) {
+                            $scope.cylinderDetailData[j].Volunteer_Name = volArray[k].Volunteer_Name;
+                            $scope.cylinderDetailData[j].BitLink = volArray[k].BitLink;
+                            $scope.lastIndex = k;
+                        }
+                        if (volArray.length - 1 == k) {
+                            $scope.lastIndex = JSON.parse($scope.lastIndex) + 1;
+                        }
+                        if ($scope.lastIndex == volArray.length) {
+                            $scope.lastIndex = undefined;
+                        }
+
+                    }
+
                 }
-               for(let j in $scope.cylinderDetailData){
-                   for(let k in volArray){
-                       if(!$scope.lastIndex || $scope.lastIndex == k){
-                        $scope.cylinderDetailData[j].Volunteer_Name = volArray[k].Volunteer_Name;
-                        $scope.cylinderDetailData[j].BitLink = volArray[k].BitLink;
-                        $scope.lastIndex = k;
-                       }
-                       if(volArray.length-1 == k){
-                        $scope.lastIndex = JSON.parse($scope.lastIndex) + 1;
-                       }
-                       if($scope.lastIndex == volArray.length){
-                        $scope.lastIndex = undefined;
-                       }
-                       
-                   }
-                   
-               }
-               console.log('+++++++++++++++++',$scope.cylinderDetailData);
             }
 
-//            let volunteerData =  {"status": true,
-// "data": [
-// {
-// "State": "Andhra Pradesh",
-// "State_Code": 2,
-// "District": "Visakhapatnam",
-// "District_Code": 14,
-// "City": "Visakhapatnam",
-// "City_Code": 110,
-// "Volunteer_Name": "Manjunath",
-// "Contact_Number": 9494616123,
-// "BitLink": "https://bit.ly/3eKGWlT"
-// },
-// {
-// "State": "Andhra Pradesh",
-// "State_Code": 2,
-// "District": "Krishna",
-// "District_Code": 9,
-// "City": "Vijayawada",
-// "City_Code": 57,
-// "Volunteer_Name": "Manjunath",
-// "Contact_Number": 9494616123,
-// "BitLink": "https://bit.ly/3eKGWlT"
-// },
-// {
-// "State": "Andhra Pradesh",
-// "State_Code": 2,
-// "District": "Krishna",
-// "District_Code": 9,
-// "City": "Vijayawada",
-// "City_Code": 57,
-// "Volunteer_Name": "Murali Krishna Ganguri",
-// "Contact_Number": 8309080672,
-// "BitLink": "https://bit.ly/3oRb6s5"
-// },
-// {
-// "State": "Andhra Pradesh",
-// "State_Code": 2,
-// "District": "Visakhapatnam",
-// "District_Code": 14,
-// "City": "Visakhapatnam",
-// "City_Code": 110,
-// "Volunteer_Name": "Mohammed Taha Khan",
-// "Contact_Number": 6303160604,
-// "BitLink": "https://bit.ly/34g4qKR"
-// },
-// {
-// "State": "Bihar",
-// "State_Code": 5,
-// "District": "Patna",
-// "District_Code": 101,
-// "City": "Patna",
-// "City_Code": 84,
-// "Volunteer_Name": "Jaya kumari",
-// "Contact_Number": 9304611151,
-// "BitLink": "https://bit.ly/3w3eR0d"
-// },
-// {
-// "State": "Chhattisgarh",
-// "State_Code": 7,
-// "District": "Raipur",
-// "District_Code": 138,
-// "City": "Raipur",
-// "City_Code": 141,
-// "Volunteer_Name": "Honey Gupta",
-// "Contact_Number": 7879331484,
-// "BitLink": "https://bit.ly/3w0IYFd"
-// },
-// {
-// "State": "Delhi",
-// "State_Code": 9,
-// "District": "Delhi",
-// "District_Code": 742,
-// "City": "Delhi",
-// "City_Code": 149,
-// "Volunteer_Name": "Sachin",
-// "Contact_Number": 9013955083,
-// "BitLink": "https://bit.ly/3nXOGFi"
-// },
-// {
-// "State": "Delhi",
-// "State_Code": 9,
-// "District": "Delhi",
-// "District_Code": 742,
-// "City": "Delhi",
-// "City_Code": 149,
-// "Volunteer_Name": "Mukulm",
-// "Contact_Number": 9599006765,
-// "BitLink": "https://bit.ly/3f7K6A9"
-// },
-// {
-// "State": "Delhi",
-// "State_Code": 9,
-// "District": "Delhi",
-// "District_Code": 742,
-// "City": "Delhi",
-// "City_Code": 149,
-// "Volunteer_Name": "Shashi Barla",
-// "Contact_Number": 9818061788,
-// "BitLink": "https://bit.ly/3f21sP6"
-// },
-// {
-// "State": "Delhi",
-// "State_Code": 9,
-// "District": "Delhi",
-// "District_Code": 742,
-// "City": "Delhi",
-// "City_Code": 149,
-// "Volunteer_Name": "Mukulm",
-// "Contact_Number": 9599006765,
-// "BitLink": "https://bit.ly/3f7K6A9"
-// },
-// {
-// "State": "Delhi",
-// "State_Code": 9,
-// "District": "Delhi",
-// "District_Code": 742,
-// "City": "Delhi",
-// "City_Code": 149,
-// "Volunteer_Name": "Brijesh singh",
-// "Contact_Number": 8097192580,
-// "BitLink": "https://bit.ly/3ujYLhf"
-// },
-// {
-// "State": "Delhi",
-// "State_Code": 9,
-// "District": "Delhi",
-// "District_Code": 742,
-// "City": "Delhi",
-// "City_Code": 149,
-// "Volunteer_Name": "Komal Priya Chaturvedi",
-// "Contact_Number": 9868121191,
-// "BitLink": "https://bit.ly/2R9OMxA"
-// },
-// {
-// "State": "Delhi",
-// "State_Code": 9,
-// "District": "Delhi",
-// "District_Code": 742,
-// "City": "Delhi",
-// "City_Code": 149,
-// "Volunteer_Name": "Ribhav R Karthikeyan",
-// "Contact_Number": 9871234224,
-// "BitLink": "https://bit.ly/3o3l5dC"
-// },
-// {
-// "State": "Delhi",
-// "State_Code": 9,
-// "District": "Delhi",
-// "District_Code": 742,
-// "City": "Delhi",
-// "City_Code": 149,
-// "Volunteer_Name": "Ashish",
-// "Contact_Number": 9899989167,
-// "BitLink": "https://bit.ly/3w2jaJ7"
-// },
-// {
-// "State": "Delhi",
-// "State_Code": 9,
-// "District": "Delhi",
-// "District_Code": 742,
-// "City": "Delhi",
-// "City_Code": 149,
-// "Volunteer_Name": "Sachin",
-// "Contact_Number": 9013955083,
-// "BitLink": "https://bit.ly/3nXOGFi"
-// },
-// {
-// "State": "Delhi",
-// "State_Code": 9,
-// "District": "Delhi",
-// "District_Code": 742,
-// "City": "Delhi",
-// "City_Code": 149,
-// "Volunteer_Name": "Shashi Barla",
-// "Contact_Number": 9818061788,
-// "BitLink": "https://bit.ly/3f21sP6"
-// }
-// ]}
+            $scope.resourcesAvailable = function (index) {
+                if ($scope.cylinderDetailData[index].resourcesAvailableButton) {
+                    $scope.cylinderDetailData[index].resourcesAvailableButton = false;
+                    swal("Feedback Removed", "Successfully", "success");
+                } else {
+                    $scope.cylinderDetailData[index].resourcesAvailableButton = true;
+                    swal("Feedback Accepted", "Successfully", "success");
+                }
+
+            }
+
+            $scope.notAvailable = function (index) {
+                if ($scope.cylinderDetailData[index].notAvailableButton) {
+                    $scope.cylinderDetailData[index].notAvailableButton = false;
+                    swal("Feedback Removed", "Successfully", "success");
+                } else {
+                    $scope.cylinderDetailData[index].notAvailableButton = true;
+                    swal("Feedback Accepted", "Successfully", "success");
+                }
+            }
+
+            $scope.wrongNumber = function (index) {
+                if ($scope.cylinderDetailData[index].wrongNumberButton) {
+                    $scope.cylinderDetailData[index].wrongNumberButton = false;
+                    swal("Feedback Removed", "Successfully", "success");
+                } else {
+                    $scope.cylinderDetailData[index].wrongNumberButton = true;
+                    swal("Feedback Accepted", "Successfully", "success");
+                }
+            }
+
+            //            let volunteerData =  {"status": true,
+            // "data": [
+            // {
+            // "State": "Andhra Pradesh",
+            // "State_Code": 2,
+            // "District": "Visakhapatnam",
+            // "District_Code": 14,
+            // "City": "Visakhapatnam",
+            // "City_Code": 110,
+            // "Volunteer_Name": "Manjunath",
+            // "Contact_Number": 9494616123,
+            // "BitLink": "https://bit.ly/3eKGWlT"
+            // },
+            // {
+            // "State": "Andhra Pradesh",
+            // "State_Code": 2,
+            // "District": "Krishna",
+            // "District_Code": 9,
+            // "City": "Vijayawada",
+            // "City_Code": 57,
+            // "Volunteer_Name": "Manjunath",
+            // "Contact_Number": 9494616123,
+            // "BitLink": "https://bit.ly/3eKGWlT"
+            // },
+            // {
+            // "State": "Andhra Pradesh",
+            // "State_Code": 2,
+            // "District": "Krishna",
+            // "District_Code": 9,
+            // "City": "Vijayawada",
+            // "City_Code": 57,
+            // "Volunteer_Name": "Murali Krishna Ganguri",
+            // "Contact_Number": 8309080672,
+            // "BitLink": "https://bit.ly/3oRb6s5"
+            // },
+            // {
+            // "State": "Andhra Pradesh",
+            // "State_Code": 2,
+            // "District": "Visakhapatnam",
+            // "District_Code": 14,
+            // "City": "Visakhapatnam",
+            // "City_Code": 110,
+            // "Volunteer_Name": "Mohammed Taha Khan",
+            // "Contact_Number": 6303160604,
+            // "BitLink": "https://bit.ly/34g4qKR"
+            // },
+            // {
+            // "State": "Bihar",
+            // "State_Code": 5,
+            // "District": "Patna",
+            // "District_Code": 101,
+            // "City": "Patna",
+            // "City_Code": 84,
+            // "Volunteer_Name": "Jaya kumari",
+            // "Contact_Number": 9304611151,
+            // "BitLink": "https://bit.ly/3w3eR0d"
+            // },
+            // {
+            // "State": "Chhattisgarh",
+            // "State_Code": 7,
+            // "District": "Raipur",
+            // "District_Code": 138,
+            // "City": "Raipur",
+            // "City_Code": 141,
+            // "Volunteer_Name": "Honey Gupta",
+            // "Contact_Number": 7879331484,
+            // "BitLink": "https://bit.ly/3w0IYFd"
+            // },
+            // {
+            // "State": "Delhi",
+            // "State_Code": 9,
+            // "District": "Delhi",
+            // "District_Code": 742,
+            // "City": "Delhi",
+            // "City_Code": 149,
+            // "Volunteer_Name": "Sachin",
+            // "Contact_Number": 9013955083,
+            // "BitLink": "https://bit.ly/3nXOGFi"
+            // },
+            // {
+            // "State": "Delhi",
+            // "State_Code": 9,
+            // "District": "Delhi",
+            // "District_Code": 742,
+            // "City": "Delhi",
+            // "City_Code": 149,
+            // "Volunteer_Name": "Mukulm",
+            // "Contact_Number": 9599006765,
+            // "BitLink": "https://bit.ly/3f7K6A9"
+            // },
+            // {
+            // "State": "Delhi",
+            // "State_Code": 9,
+            // "District": "Delhi",
+            // "District_Code": 742,
+            // "City": "Delhi",
+            // "City_Code": 149,
+            // "Volunteer_Name": "Shashi Barla",
+            // "Contact_Number": 9818061788,
+            // "BitLink": "https://bit.ly/3f21sP6"
+            // },
+            // {
+            // "State": "Delhi",
+            // "State_Code": 9,
+            // "District": "Delhi",
+            // "District_Code": 742,
+            // "City": "Delhi",
+            // "City_Code": 149,
+            // "Volunteer_Name": "Mukulm",
+            // "Contact_Number": 9599006765,
+            // "BitLink": "https://bit.ly/3f7K6A9"
+            // },
+            // {
+            // "State": "Delhi",
+            // "State_Code": 9,
+            // "District": "Delhi",
+            // "District_Code": 742,
+            // "City": "Delhi",
+            // "City_Code": 149,
+            // "Volunteer_Name": "Brijesh singh",
+            // "Contact_Number": 8097192580,
+            // "BitLink": "https://bit.ly/3ujYLhf"
+            // },
+            // {
+            // "State": "Delhi",
+            // "State_Code": 9,
+            // "District": "Delhi",
+            // "District_Code": 742,
+            // "City": "Delhi",
+            // "City_Code": 149,
+            // "Volunteer_Name": "Komal Priya Chaturvedi",
+            // "Contact_Number": 9868121191,
+            // "BitLink": "https://bit.ly/2R9OMxA"
+            // },
+            // {
+            // "State": "Delhi",
+            // "State_Code": 9,
+            // "District": "Delhi",
+            // "District_Code": 742,
+            // "City": "Delhi",
+            // "City_Code": 149,
+            // "Volunteer_Name": "Ribhav R Karthikeyan",
+            // "Contact_Number": 9871234224,
+            // "BitLink": "https://bit.ly/3o3l5dC"
+            // },
+            // {
+            // "State": "Delhi",
+            // "State_Code": 9,
+            // "District": "Delhi",
+            // "District_Code": 742,
+            // "City": "Delhi",
+            // "City_Code": 149,
+            // "Volunteer_Name": "Ashish",
+            // "Contact_Number": 9899989167,
+            // "BitLink": "https://bit.ly/3w2jaJ7"
+            // },
+            // {
+            // "State": "Delhi",
+            // "State_Code": 9,
+            // "District": "Delhi",
+            // "District_Code": 742,
+            // "City": "Delhi",
+            // "City_Code": 149,
+            // "Volunteer_Name": "Sachin",
+            // "Contact_Number": 9013955083,
+            // "BitLink": "https://bit.ly/3nXOGFi"
+            // },
+            // {
+            // "State": "Delhi",
+            // "State_Code": 9,
+            // "District": "Delhi",
+            // "District_Code": 742,
+            // "City": "Delhi",
+            // "City_Code": 149,
+            // "Volunteer_Name": "Shashi Barla",
+            // "Contact_Number": 9818061788,
+            // "BitLink": "https://bit.ly/3f21sP6"
+            // }
+            // ]}
         }]);
 
