@@ -55,7 +55,7 @@
         <div ng-if="!loading" ng-loadings="loading"></div>
         <div class="row info-table-row" ng-if="loading">
           <div class="info-table-heading" ng-if="cylinderDetailData.length > 0"><h2 style="text-align: center;">Covid Info List ({{cylinderDetailData.length}})</h2></div>
-          <div class="col-md-6" ng-if="cylinderDetailData.length > 0" ng-repeat="cylinder in cylinderDetailData">
+          <div class="col-md-6" ng-if="cylinderDetailData.length > 0" ng-repeat="cylinder in cylinderDetailData track by $index">
             <div class="info-table-wrap">
               <div class="info-row">
                 <label class="infolable"><strong>Contact Name: </strong></label>
@@ -100,10 +100,105 @@
                     </a>
               </div>
 
+              <div class="info-row info-feedback">
+                <label class="infolable"><strong>Provide Feedback</strong></label>
+                <div class="feedback-btns">
+                <button type="button" name="button" ng-disabled="cylinder.notAvailableButton || cylinder.wrongNumberButton" ng-click="resourcesAvailable($index)" class="btn btn-success">Resources Available</button>
+                  <button type="button" name="button" ng-disabled="cylinder.resourcesAvailableButton || cylinder.wrongNumberButton" ng-click="notAvailable($index)" class="btn btn-warning">Not Available</button>
+                    <button type="button" name="button" ng-disabled="cylinder.resourcesAvailableButton || cylinder.notAvailableButton" ng-click="wrongNumber($index)" class="btn btn-danger">Wrong Number</button>
+                  </div>
+              </div>
+            </div>
+          </div>
 
 
-              
+          <div class="col-md-6" ng-if="cylinderDetailData.length == 0 || !cylinderDetailData">
+            <div class="info-table-wrap">
+              <div class="info-row">
+                <label class="infolable"><strong>Contact Name: </strong></label>
              
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong> Address: </strong></label>
+              
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong>Quantity Available: </strong></label>
+               
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong>Last Updated Time: </strong></label>
+             
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong>Refill Available:
+                </strong></label>
+             
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong>Contact Number: </strong></label>
+                <a href="tel:cylinder.MDContactNumber"> </a>
+              </div>
+            
+              <div class="info-row volanteer">
+                <label class="infolable">Volunteer Name: &nbsp;
+                </label>
+                 
+              </div>
+              <div class="info-row volanteer-btn">
+                    <img src="images/whatsapp-icon.png">
+                     <span>Chat with Volunteer</span> 
+              </div>
+
+              <div class="info-row info-feedback">
+                <label class="infolable"><strong>Provide Feedback</strong></label>
+                <div class="feedback-btns">
+                <button type="button" name="button" class="btn btn-success">Resources Available</button>
+                  <button type="button" name="button" ng-disabled="true" class="btn btn-warning">Not Available</button>
+                    <button type="button" name="button" ng-disabled="true" class="btn btn-danger">Wrong Number</button>
+                  </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6" ng-if="cylinderDetailData.length == 0 || !cylinderDetailData">
+            <div class="info-table-wrap">
+              <div class="info-row">
+                <label class="infolable"><strong>Contact Name: </strong></label>
+             
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong> Address: </strong></label>
+              
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong>Quantity Available: </strong></label>
+               
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong>Last Updated Time: </strong></label>
+             
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong>Refill Available:
+                </strong></label>
+             
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong>Contact Number: </strong></label>
+                <a href="tel:cylinder.MDContactNumber"> </a>
+              </div>
+            
+              <div class="info-row volanteer">
+                <label class="infolable">Volunteer Name: &nbsp;
+                </label>
+                 
+              </div>
+              <div class="info-row volanteer-btn">
+                    <img src="images/whatsapp-icon.png">
+                     <span>Chat with Volunteer</span> 
+              </div>
+
               <div class="info-row info-feedback">
                 <label class="infolable"><strong>Provide Feedback</strong></label>
                 <div class="feedback-btns">

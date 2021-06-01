@@ -703,7 +703,7 @@ label.infolable {
 	position: relative;
 }
 .info-row.volanteer-btn img {
-    margin-right: -11px;
+    margin-right: -17px;
     overflow: hidden;
 	z-index: 9;
 	margin-top:-3px;
@@ -728,6 +728,34 @@ label.infolable {
 .valenteer-name{
  text-align: left;
 }
+.volanteer-btn a {
+    text-decoration: none;
+}
+td.valenteer-name {
+    float: left;
+}
+.hosptal-table.volanteer-btn span {
+    background: #24cc62;
+    padding: 4px 15px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 17px;
+}
+.hosptal-table.volanteer-btn img {
+    position: relative;
+    right: -14px;
+    top: -2px;
+}
+.hosptal-table.volanteer label{
+ font-weight: 400;
+}
+.hosptal-table.volanteer-btn {
+    border-bottom: 1px solid #d6d6d6;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+}
+
 
 @media only screen and (max-width:767px){
 	#Category_id {

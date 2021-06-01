@@ -277,12 +277,8 @@
                             Records</span>
                         </td>
                       </tr>
-                      <tr>
-                        <td colspan="2" class="valenteer-name">
-                          <strong>Volunteer Name:</strong>
-                        </td>
-                        <td colspan="2">Shashi Barla</td>
-                      </tr>
+                      
+                      
 
                  
 
@@ -295,6 +291,29 @@
 
                     </tbody>
                   </table>
+                  <div class="hosptal-table info-row volanteer">
+                    <label class="infolable">Volunteer Name: &nbsp;
+                    </label>
+                    {{hospital.Volunteer_Name}}
+                  </div>
+                  <div class="hosptal-table volanteer-btn text-center">
+                    <a ng-if="hospital.BitLink" href="{{hospital.BitLink}}" data-action="share/whatsapp/share" target="_blank"> 
+                      <img src="images/whatsapp-icon.png">
+                       <span>Chat with Volunteer</span> 
+                      </a>
+                      <a ng-if="!hospital.BitLink" href=""> 
+                        <img src="images/whatsapp-icon.png">
+                         <span>Chat with Volunteer</span> 
+                        </a>
+                </div>
+                <div class="info-row info-feedback">
+                  <label class="infolable"><strong>Provide Feedback</strong></label>
+                  <div class="feedback-btns">
+                  <button type="button" name="button" ng-disabled="hospital.notAvailableButton || hospital.wrongNumberButton" ng-click="resourcesAvailable(hospital.vendor_name)" class="btn btn-success">Resources Available</button>
+                    <button type="button" name="button" ng-disabled="hospital.resourcesAvailableButton || hospital.wrongNumberButton" ng-click="notAvailable(hospital.vendor_name)" class="btn btn-warning">Not Available</button>
+                      <button type="button" name="button" ng-disabled="hospital.resourcesAvailableButton || hospital.notAvailableButton" ng-click="wrongNumber(hospital.vendor_name)" class="btn btn-danger">Wrong Number</button>
+                    </div>
+                </div>
                 </div>
               </div>
               <h4 style="color:red;text-align: center" ng-show="(hospitalDetailData|filter:searchQuery).length==0">No

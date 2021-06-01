@@ -128,21 +128,21 @@ angular.module('machadaloPages').filter('replace', [function () {
 
 
             //gethospitalVolunteerData
-        $scope.hospitalVolunteerData = localStorage.getItem("hospitalVolunteerData");
-        $scope.hospitalVolunteerData = JSON.parse($scope.hospitalVolunteerData);
-           if(!$scope.hospitalVolunteerData){
-            AuthService.getAllVolunteer()
-                        .then(function onSuccess(response) {
-                            if (response && response.data && response.data.data) {
-                                $scope.hospitalVolunteerData = response.data.data;
-                                localStorage.setItem("hospitalVolunteerData", JSON.stringify($scope.hospitalVolunteerData));
-                            } else {
-                                console.log('error', response);
-                            }
-                        }).catch(function onError(response) {
-                            console.log(response);
-                        })
-                    }
+            $scope.hospitalVolunteerData = localStorage.getItem("hospitalVolunteerData");
+            $scope.hospitalVolunteerData = JSON.parse($scope.hospitalVolunteerData);
+            if (!$scope.hospitalVolunteerData) {
+                AuthService.getAllVolunteer()
+                    .then(function onSuccess(response) {
+                        if (response && response.data && response.data.data) {
+                            $scope.hospitalVolunteerData = response.data.data;
+                            localStorage.setItem("hospitalVolunteerData", JSON.stringify($scope.hospitalVolunteerData));
+                        } else {
+                            console.log('error', response);
+                        }
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+            }
 
 
             $scope.getCity = function () {
@@ -173,14 +173,14 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.totalAvailableBeds = 0;
             $scope.totalHospitalBeds = 0;
             $scope.getBeds = function (value) {
-                 $scope.sort = '';
-                if(!value){
+                $scope.sort = '';
+                if (!value) {
                     $scope.categoryFilter = 'TOTAL BEDS AVAILABLE';
                 }
 
-                if($scope.categoryFilter == 'TOTAL BEDS AVAILABLE'){
+                if ($scope.categoryFilter == 'TOTAL BEDS AVAILABLE') {
                     $scope.sort = '-AvailableofBedsinHospital';
-                } 
+                }
                 // $scope.sortingParam = 'quantity';
                 // $scope.sortingType = 'Desc';
                 // if(value && sortType){
@@ -204,21 +204,21 @@ angular.module('machadaloPages').filter('replace', [function () {
                     // sortingType: $scope.sortingType
                 }
 
-                if($scope.categoryFilter == 'FACILITY NAME - ASCENDING'){
+                if ($scope.categoryFilter == 'FACILITY NAME - ASCENDING') {
                     param.otherFiler = 'ASC';
                     param.categoryFilter = undefined;
                 }
 
-                if($scope.categoryFilter == 'FACILITY NAME - DESCENDING'){
+                if ($scope.categoryFilter == 'FACILITY NAME - DESCENDING') {
                     param.otherFiler = 'DESC';
                     param.categoryFilter = undefined;
                 }
 
-                if($scope.categoryFilter == 'LATEST UPDATED TIME'){
+                if ($scope.categoryFilter == 'LATEST UPDATED TIME') {
                     param.categoryFilter = undefined;
                 }
 
-                if($scope.categoryFilter == 'TOTAL BEDS AVAILABLE'){
+                if ($scope.categoryFilter == 'TOTAL BEDS AVAILABLE') {
                     param.categoryFilter = undefined;
                 }
 
@@ -234,10 +234,9 @@ angular.module('machadaloPages').filter('replace', [function () {
                         $scope.loading = response;
                         $scope.hospitalDetailData = response.data.data;
                         $scope.resourcesTypeData = [];
-                        $scope.resourcesTypeData.push({'resourceType':'TOTAL BEDS AVAILABLE'});
+                        $scope.resourcesTypeData.push({ 'resourceType': 'TOTAL BEDS AVAILABLE' });
                         $scope.totalAvailableBeds = 0;
                         $scope.totalHospitalBeds = 0;
-
                         if ($scope.hospitalDetailData.length > 0) {
                             for (let i in $scope.hospitalDetailData) {
                                 let hospitalData = $scope.hospitalDetailData[i].hospital_data;
@@ -249,8 +248,11 @@ angular.module('machadaloPages').filter('replace', [function () {
                                         let currentYear = moment().format('YYYY');
                                         let currentMonth = moment().format('MM');
                                         let currentDate = moment().format('DD');
-                                        let date1 = moment([year, month, date])
-                                        let date2 = moment([currentYear, currentMonth, currentDate])
+                                        //let date1 = moment([year, month, date])
+                                        // let date2 = moment([currentYear, currentMonth, currentDate])
+                                        let date1 = moment(hospitalData[j].last_updated_time)
+                                        let date2 = moment();
+
                                         let dateDifference = date2.diff(date1, 'days');
                                         $scope.hospitalDetailData[i].hospital_data[j].isDateShow = true;
                                         if (dateDifference > 6) {
@@ -315,12 +317,12 @@ angular.module('machadaloPages').filter('replace', [function () {
 
                                         }
 
-                                        
+
                                     }
                                 }
                             }
                         }
-                        $scope.resourcesTypeData.push({'resourceType':'LATEST UPDATED TIME'},{'resourceType':'FACILITY NAME - ASCENDING'},{'resourceType':'FACILITY NAME - DESCENDING'});
+                        $scope.resourcesTypeData.push({ 'resourceType': 'LATEST UPDATED TIME' }, { 'resourceType': 'FACILITY NAME - ASCENDING' }, { 'resourceType': 'FACILITY NAME - DESCENDING' });
                         $scope.totalAvailableCountsData = $scope.hospitalDetailData.length - $scope.notAvailableCount;
                         $scope.setVolunteer();
                     }).catch(function onError(response) {
@@ -328,35 +330,88 @@ angular.module('machadaloPages').filter('replace', [function () {
                     })
             }
 
-            $scope.setVolunteer = function(){
+            $scope.setVolunteer = function () {
                 let volArray = [];
-                if($scope.hospitalDetailData && $scope.hospitalDetailData.length > 0){
+                if ($scope.hospitalDetailData && $scope.hospitalDetailData.length > 0) {
                     let vol = $scope.hospitalVolunteerData
-                   for(let i in vol){
-                    if(vol[i].District_Code == $scope.district_code){
-                        volArray.push(vol[i]);
+                    for (let i in vol) {
+                        if (vol[i].District_Code == $scope.district_code) {
+                            volArray.push(vol[i]);
+                        }
                     }
-                   }
                 }
-               for(let j in $scope.hospitalDetailData){
-                   for(let k in volArray){
-                       if(!$scope.lastIndex || $scope.lastIndex == k){
-                        $scope.hospitalDetailData[j].Volunteer_Name = volArray[k].Volunteer_Name;
-                        $scope.hospitalDetailData[j].BitLink = volArray[k].BitLink;
-                        $scope.lastIndex = k;
-                       }
-                       if(volArray.length-1 == k){
-                        $scope.lastIndex = JSON.parse($scope.lastIndex) + 1;
-                       }
-                       if($scope.lastIndex == volArray.length){
-                        $scope.lastIndex = undefined;
-                       }
-                       
-                   }
-               }
+                for (let j in $scope.hospitalDetailData) {
+                    for (let k in volArray) {
+                        if (!$scope.lastIndex || $scope.lastIndex == k) {
+                            $scope.hospitalDetailData[j].Volunteer_Name = volArray[k].Volunteer_Name;
+                            $scope.hospitalDetailData[j].BitLink = volArray[k].BitLink;
+                            $scope.lastIndex = k;
+                        }
+                        if (volArray.length - 1 == k) {
+                            $scope.lastIndex = JSON.parse($scope.lastIndex) + 1;
+                        }
+                        if ($scope.lastIndex == volArray.length) {
+                            $scope.lastIndex = undefined;
+                        }
+
+                    }
+                }
             }
 
-           
+
+            $scope.resourcesAvailable = function (vender) {
+                var localindex_index = $scope.hospitalDetailData.map(function (el) {
+                    return el.vendor_name;
+                }).indexOf(vender);
+                if (localindex_index != -1) {
+                    if($scope.hospitalDetailData[localindex_index].resourcesAvailableButton){
+                        $scope.hospitalDetailData[localindex_index].resourcesAvailableButton = false;
+                        swal("Feedback Removed", "Successfully", "success");
+                    } else {
+                        $scope.hospitalDetailData[localindex_index].resourcesAvailableButton = true;
+                        swal("Feedback Accepted", "Successfully", "success");
+                    }
+                } else {
+                    swal("Hospital not found.", "", "error");
+                }
+            }
+
+            $scope.notAvailable = function (vender) {
+                var localindex_index = $scope.hospitalDetailData.map(function (el) {
+                    return el.vendor_name;
+                }).indexOf(vender);
+                if (localindex_index != -1) {
+                    if($scope.hospitalDetailData[localindex_index].notAvailableButton){
+                        $scope.hospitalDetailData[localindex_index].notAvailableButton = false;
+                        swal("Feedback Removed", "Successfully", "success");
+                    } else {
+                        $scope.hospitalDetailData[localindex_index].notAvailableButton = true;
+                        swal("Feedback Accepted", "Successfully", "success");
+                    }
+                } else {
+                    swal("Hospital not found.", "", "error");
+                }
+            }
+
+            $scope.wrongNumber = function (vender) {
+                var localindex_index = $scope.hospitalDetailData.map(function (el) {
+                    return el.vendor_name;
+                }).indexOf(vender);
+                if (localindex_index != -1) {
+                    if($scope.hospitalDetailData[localindex_index].notAvailableButton){
+                        $scope.hospitalDetailData[localindex_index].notAvailableButton = false;
+                        swal("Feedback Removed", "Successfully", "success");
+                    } else {
+                        $scope.hospitalDetailData[localindex_index].notAvailableButton = true;
+                        swal("Feedback Accepted", "Successfully", "success");
+                    }
+                } else {
+                    swal("Hospital not found.", "", "error");
+                }
+                
+            }
+
+
 
             $scope.totalAvailableCountsData = 0;
 
