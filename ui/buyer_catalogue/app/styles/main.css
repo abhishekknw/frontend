@@ -699,7 +699,6 @@ label.infolable {
 	border-radius: 5px;
 	font-weight: 600;
 	font-size: 17px;
-	z-index: -1;
 	position: relative;
 }
 .info-row.volanteer-btn img {
@@ -707,6 +706,7 @@ label.infolable {
     overflow: hidden;
 	z-index: 9;
 	margin-top:-3px;
+	position: relative;
 }
 .info-row.info-feedback .btn{
  font-size: 17px;
@@ -744,7 +744,7 @@ td.valenteer-name {
 }
 .hosptal-table.volanteer-btn img {
     position: relative;
-    right: -14px;
+    right: -22px;
     top: -2px;
 }
 .hosptal-table.volanteer label{
@@ -754,9 +754,43 @@ td.valenteer-name {
     border-bottom: 1px solid #d6d6d6;
 	padding-bottom: 5px;
 	margin-bottom: 5px;
+	border-top: 1px solid #d6d6d6;
+	padding-top:12px;
+}
+.info-row.volanteer-btn{
+  border-top: 1px solid #d6d6d6;
+  padding-top:12px;
+}
+
+.btn-focus{
+ height: 50px !important;
+ position: relative;
+ bottom: 5px;
+ padding: 10px 30px;
+}
+.not-av-btn.btn-focus{
+ background:#d07f0b;
+}
+.res-btn.btn-focus{
+ background:#326832;
+}
+.wr-btn.btn-focus{
+ background:#8a130f;
+}
+.feedback-btns .btn {
+    height: 40px;
 }
 
 
+
+@media only screen and (min-width:767px){
+ .hosptal-table.volanteer-btn img, .info-row.volanteer-btn img{
+  width:55px;
+ }
+ .hosptal-table.volanteer-btn span, .info-row.volanteer-btn span{
+  padding:12px 50px;
+ }
+}
 @media only screen and (max-width:767px){
 	#Category_id {
     width: 100%;
@@ -780,6 +814,10 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 }
 .search-form form input[type="search"]{
 	padding: 0 15px;
+}
+.hosptal-table.volanteer-btn img{
+ width: 45px;
+ right:-15px;
 }
 }
 @media only screen and (max-width:575px){

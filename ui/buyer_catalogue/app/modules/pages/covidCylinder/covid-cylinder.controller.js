@@ -107,7 +107,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.getCity = function () {
                 $scope.cityList = [];
                 $scope.selectedCityName = null;
-                $scope.district_code = null;
+                $scope.city_code = null;
                 var localindex_index = $scope.stateData.map(function (el) {
                     return el.state_code;
                 }).indexOf($scope.state_code);
@@ -119,10 +119,10 @@ angular.module('machadaloPages').filter('replace', [function () {
 
             $scope.getCylinderList = function () {
                 var localindex_index = $scope.cityList.map(function (el) {
-                    return el.district_code;
-                }).indexOf($scope.district_code);
+                    return el.city_code;
+                }).indexOf($scope.city_code);
                 if (localindex_index != -1) {
-                    $scope.selectedCityName = $scope.cityList[localindex_index].district_name;
+                    $scope.selectedCityName = $scope.cityList[localindex_index].city_name;
                 }
                 $scope.loading = null;
                 let param = {

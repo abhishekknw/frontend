@@ -398,11 +398,11 @@ angular.module('machadaloPages').filter('replace', [function () {
                     return el.vendor_name;
                 }).indexOf(vender);
                 if (localindex_index != -1) {
-                    if($scope.hospitalDetailData[localindex_index].notAvailableButton){
-                        $scope.hospitalDetailData[localindex_index].notAvailableButton = false;
+                    if($scope.hospitalDetailData[localindex_index].wrongNumberButton){
+                        $scope.hospitalDetailData[localindex_index].wrongNumberButton = false;
                         swal("Feedback Removed", "Successfully", "success");
                     } else {
-                        $scope.hospitalDetailData[localindex_index].notAvailableButton = true;
+                        $scope.hospitalDetailData[localindex_index].wrongNumberButton = true;
                         swal("Feedback Accepted", "Successfully", "success");
                     }
                 } else {
