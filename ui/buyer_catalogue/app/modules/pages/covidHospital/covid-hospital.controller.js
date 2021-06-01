@@ -37,10 +37,18 @@ angular.module('machadaloPages').filter('replace', [function () {
             // }
             var url = $location.url().split("/");
             // $scope.categorys = ['Beds', 'Hospitals'];
-            $scope.categorys = ['Hospital Beds'];
             //let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
             // $scope.selectedCategory = cat;
+            
+
+            $scope.categorys = ['Hospital Beds', 'Cylinders'];
             $scope.selectedCategory = 'Hospital Beds';
+            $scope.loading = true;
+            $scope.changeWeb = function () {
+                if ($scope.selectedCategory == 'Cylinders') {
+                    $location.path("/cylinder/covidhelpdesk/");
+                }
+            }
             $scope.loading = true;
             $scope.Phone = 1234567892;
             $scope.totalCity = 0;
@@ -338,6 +346,14 @@ angular.module('machadaloPages').filter('replace', [function () {
                         if (vol[i].District_Code == $scope.district_code) {
                             volArray.push(vol[i]);
                         }
+                    }
+                    if(volArray.length == 0){
+                        volArray = [{'Volunteer_Name':'Srishti','BitLink':'https://bit.ly/3fSzx4r'},
+                        {'Volunteer_Name':'Shifna','BitLink':'https://bit.ly/3wzfJK2'},
+                        {'Volunteer_Name':'Pranay','BitLink':'https://bit.ly/3fRp1KO'},
+                        {'Volunteer_Name':'Pradeep','BitLink':' https://bit.ly/3i07Rgx'},
+                        {'Volunteer_Name':'Shyamlee','BitLink':'https://bit.ly/3wKx4Qh'},
+                        {'Volunteer_Name':'Anmol','BitLink':'https://bit.ly/3wKxh61'},]
                     }
                 }
                 for (let j in $scope.hospitalDetailData) {

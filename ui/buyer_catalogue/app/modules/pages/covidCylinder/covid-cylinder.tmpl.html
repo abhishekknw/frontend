@@ -7,7 +7,7 @@
   <div class="page-wrapper">
     <div class="logo-sec">
       <img src="images/machadalo-logo.png" alt="logo">
-      <h1><span class="img_hospital"><img src="images/plus_icon.png" alt="logo"></span> COVID19 HELPDESK, AVAILABLE CYLINDER</h1>
+      <h1><span class="img_hospital"><img src="images/plus_icon.png" alt="logo"></span> COVID19 HELPDESK, AVAILABLE CYLINDERS</h1>
     </div>
 
     <div class="container">
@@ -54,7 +54,8 @@
         </div>
         <div ng-if="!loading" ng-loadings="loading"></div>
         <div class="row info-table-row" ng-if="loading">
-          <div class="info-table-heading" ng-if="cylinderDetailData.length > 0"><h2 style="text-align: center;">Covid Info List ({{cylinderDetailData.length}})</h2></div>
+          <div class="info-table-heading" ng-if="!selectedCityName" ><h2 style="text-align: center;">Top Suppliers <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
+          <div class="info-table-heading" ng-if="selectedStateName && selectedCityName" ><h2 style="text-align: center;">Top Suppliers in {{selectedStateName}}, {{selectedCityName}} <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
           <div class="col-md-6" ng-if="cylinderDetailData.length > 0" ng-repeat="cylinder in cylinderDetailData track by $index">
             <div class="info-table-wrap">
               <div class="info-row">
