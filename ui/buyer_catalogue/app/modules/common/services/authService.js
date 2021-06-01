@@ -276,6 +276,26 @@ angular.module('Authentication')
                   });
             };
 
+            authService.getAllCylinderState = function (param) {
+               return $http.get(apiHost + 'v0/ui/covid-bot/cylinder-state/')
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+            authService.getAllCylinderCity = function () {
+               return $http.get(apiHost + 'v0/ui/covid-bot/cylinder-city/')
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+
+
             authService.getAllCylinder = function (param) {
    
                let url = "v0/ui/covid-bot/covid-data/"

@@ -309,9 +309,9 @@
                 <div class="info-row info-feedback">
                   <label class="infolable">Provide Feedback</label>
                   <div class="feedback-btns">
-                  <button type="button" name="button" ng-disabled="hospital.notAvailableButton || hospital.wrongNumberButton" ng-click="resourcesAvailable(hospital.vendor_name)" class="btn btn-success">Resources Available</button>
-                    <button type="button" name="button" ng-disabled="hospital.resourcesAvailableButton || hospital.wrongNumberButton" ng-click="notAvailable(hospital.vendor_name)" class="btn btn-warning">Not Available</button>
-                      <button type="button" name="button" ng-disabled="hospital.resourcesAvailableButton || hospital.notAvailableButton" ng-click="wrongNumber(hospital.vendor_name)" class="btn btn-danger">Wrong Number</button>
+                  <button type="button" name="button" ng-disabled="hospital.notAvailableButton || hospital.wrongNumberButton" ng-click="resourcesAvailable(hospital.vendor_name)" class="btn btn-success" ng-class="{'btn-focus':hospital.resourcesAvailableButton}">Resources Available</button>
+                    <button type="button" name="button" ng-disabled="hospital.resourcesAvailableButton || hospital.wrongNumberButton" ng-click="notAvailable(hospital.vendor_name)" class="btn btn-warning" ng-class="{'btn-focus':hospital.notAvailableButton}">Not Available</button>
+                      <button type="button" name="button" ng-disabled="hospital.resourcesAvailableButton || hospital.notAvailableButton" ng-click="wrongNumber(hospital.vendor_name)" class="btn btn-danger" ng-class="{'btn-focus':hospital.wrongNumberButton}">Wrong Number</button>
                     </div>
                 </div>
                 </div>
