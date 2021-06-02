@@ -60,28 +60,41 @@
             <div class="info-table-wrap">
               <div class="info-row">
                 <label class="infolable"><strong>Contact Name: </strong></label>
-                {{cylinder.MDContactName}}
+                <span ng-show="cylinder.MDContactName">{{cylinder.MDContactName}}</span>
+                <span ng-show="!cylinder.MDContactName || cylinder.MDContactName == ' '">N/A</span>
               </div>
               <div class="info-row">
                 <label class="infolable"><strong> Address: </strong></label>
-                {{cylinder.MDAddress}} 
+                <span ng-show="cylinder.MDAddress"> {{cylinder.MDAddress}} </span>
+                <span ng-show="cylinder.MDAddress == ' ' || !cylinder.MDAddress"> N/A </span>
               </div>
               <div class="info-row">
                 <label class="infolable"><strong>Quantity Available: </strong></label>
-                {{cylinder.MDQty}}
+                <span ng-show="cylinder.MDQty">{{cylinder.MDQty}}</span>
+                <span ng-show="cylinder.MDQty == ' ' || !cylinder.MDQty"> N/A </span>
               </div>
               <div class="info-row">
                 <label class="infolable"><strong>Last Updated Time: </strong></label>
-                {{cylinder.MDLastUpdatedTime | date:'medium'}} 
+                <span ng-show="cylinder.MDLastUpdatedTime">{{cylinder.MDLastUpdatedTime | date:'medium'}} </span>
+                <span ng-show="cylinder.MDLastUpdatedTime == ' ' || !cylinder.MDLastUpdatedTime"> N/A </span>
               </div>
               <div class="info-row">
                 <label class="infolable"><strong>Refill Available:
                 </strong></label>
-                {{cylinder.MDRefillAvailable}} 
+                <span ng-show="cylinder.MDRefillAvailable">{{cylinder.MDRefillAvailable}} </span>
+                <span ng-show="cylinder.MDRefillAvailable == ' ' || !cylinder.MDRefillAvailable"> N/A </span>
               </div>
+
+              <div class="info-row">
+                <label class="infolable"><strong>GST:
+                </strong></label>
+                <span ng-show="cylinder.MDGSTVerificationStatus">{{cylinder.MDGSTVerificationStatus}} </span>
+                <span ng-show="cylinder.MDGSTVerificationStatus == ' ' || !cylinder.MDGSTVerificationStatus"> N/A </span>
+              </div>
+
               <div class="info-row">
                 <label class="infolable"><strong>Contact Number: </strong></label>
-                <a ng-href="{{'tel:'+cylinder.MDContactNumber}}"> {{cylinder.MDContactNumber }}</a>
+                <a ng-href="'tel:'+cylinder.MDContactNumber"> {{cylinder.MDContactNumber }}</a>
               </div>
             
              
@@ -111,9 +124,12 @@
               </div>
             </div>
           </div>
+          <div ng-if="errorMsg">
+            <h4 style="color:red;text-align: center">{{errorMsg}}</h4>
+          </div>
 
 
-          <div class="col-md-6" ng-if="cylinderDetailData.length == 0 || !cylinderDetailData">
+          <!-- <div class="col-md-6" ng-if="cylinderDetailData.length == 0 || !cylinderDetailData">
             <div class="info-table-wrap">
               <div class="info-row">
                 <label class="infolable"><strong>Contact Name: </strong></label>
@@ -160,9 +176,9 @@
                   </div>
               </div>
             </div>
-          </div>
+          </div> -->
 
-          <div class="col-md-6" ng-if="cylinderDetailData.length == 0 || !cylinderDetailData">
+          <!-- <div class="col-md-6" ng-if="cylinderDetailData.length == 0 || !cylinderDetailData">
             <div class="info-table-wrap">
               <div class="info-row">
                 <label class="infolable"><strong>Contact Name: </strong></label>
@@ -209,7 +225,7 @@
                   </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <!-- <h4 style="color:red;text-align: center" ng-if="cylinderDetailData.length == 0 || !cylinderDetailData.length">No
             Hospital Found.</h4> -->
         </div>
