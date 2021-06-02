@@ -688,6 +688,7 @@ label.infolable {
     font-weight: 700;
 	font-size: 32px;
 	margin-bottom:40px;
+	text-transform: uppercase
 }
 .info-row.volanteer label.infolable{
  min-width:auto;
