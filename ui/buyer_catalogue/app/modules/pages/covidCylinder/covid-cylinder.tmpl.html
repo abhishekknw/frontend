@@ -7,7 +7,7 @@
   <div class="page-wrapper">
     <div class="logo-sec">
       <img src="images/machadalo-logo.png" alt="logo">
-      <h1><span class="img_hospital"><img src="images/plus_icon.png" alt="logo"></span> COVID19 HELPDESK, AVAILABLE CYLINDERS</h1>
+      <h1><span class="img_hospital"><img src="images/plus_icon.png" alt="logo"></span> COVID19 HELPDESK, AVAILABLE <span> {{selectedCategory}}</span></h1>
     </div>
 
     <div class="container">
@@ -78,11 +78,27 @@
                 <span ng-show="cylinder.MDLastUpdatedTime">{{cylinder.MDLastUpdatedTime | date:'medium'}} </span>
                 <span ng-show="cylinder.MDLastUpdatedTime == ' ' || !cylinder.MDLastUpdatedTime"> N/A </span>
               </div>
-              <div class="info-row">
+
+
+              <div class="info-row" ng-if="selectedCategory == 'Cylinders'">
                 <label class="infolable"><strong>Refill Available:
                 </strong></label>
                 <span ng-show="cylinder.MDRefillAvailable">{{cylinder.MDRefillAvailable}} </span>
                 <span ng-show="cylinder.MDRefillAvailable == ' ' || !cylinder.MDRefillAvailable"> N/A </span>
+              </div>
+
+              <div class="info-row" ng-if="selectedCategory == 'Refills'">
+                <label class="infolable"><strong>Cylinder Available:
+                </strong></label>
+                <span ng-show="cylinder.MDCylinderAvailable">{{cylinder.MDCylinderAvailable}} </span>
+                <span ng-show="cylinder.MDCylinderAvailable == ' ' || !cylinder.MDCylinderAvailable"> N/A </span>
+              </div>
+
+              <div class="info-row" ng-if="selectedCategory == 'Concentrators'">
+                <label class="infolable"><strong>Delivery Available:
+                </strong></label>
+                <span ng-show="cylinder.MDDeliveryTime">{{cylinder.MDDeliveryTime}} </span>
+                <span ng-show="cylinder.MDDeliveryTime == ' ' || !cylinder.MDDeliveryTime"> N/A </span>
               </div>
 
               <div class="info-row">

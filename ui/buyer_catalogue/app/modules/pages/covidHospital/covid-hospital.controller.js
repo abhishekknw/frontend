@@ -46,7 +46,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.loading = true;
             $scope.changeWeb = function () {
                 if ($scope.selectedCategory == 'Cylinders') {
-                    $location.path("/cylinder/covidhelpdesk/");
+                    $location.path("/cylinders/covidhelpdesk/");
                 }
             }
             $scope.loading = true;

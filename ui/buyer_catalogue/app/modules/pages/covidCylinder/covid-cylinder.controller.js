@@ -13,14 +13,20 @@ angular.module('machadaloPages').filter('replace', [function () {
             AuthService.Clear();
 
             var url = $location.url().split("/");
-            $scope.categorys = ['Hospital Beds', 'Cylinders'];
-            //let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
-            // $scope.selectedCategory = cat;
-            $scope.selectedCategory = 'Cylinders';
+            $scope.categorys = ['Hospital Beds', 'Cylinders','Refills', 'Concentrators'];
+            let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
+             $scope.selectedCategory = cat;
+            //$scope.selectedCategory = 'Cylinders';
             $scope.loading = true;
             $scope.changeWeb = function () {
                 if ($scope.selectedCategory == 'Hospital Beds') {
                     $location.path("/hospitalbeds/covidhelpdesk/");
+                } else if($scope.selectedCategory == 'Refills'){
+                    $location.path("/refills/covidhelpdesk/");
+                } else if($scope.selectedCategory == 'Concentrators'){
+                    $location.path("/concentrators/covidhelpdesk/");
+                } else if($scope.selectedCategory == 'Cylinders'){
+                    $location.path("/cylinders/covidhelpdesk/");
                 }
             }
             setInterval(function () {
@@ -129,6 +135,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                 let param = {
                     //state: $scope.state_code,
                     city: $scope.selectedCityName,
+                    category: $scope.selectedCategory
                 }
                 $scope.cylinderDetailData = [];
                 $scope.errorMsg = "";
