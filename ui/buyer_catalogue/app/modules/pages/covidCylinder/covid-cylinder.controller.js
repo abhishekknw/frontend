@@ -105,6 +105,7 @@ angular.module('machadaloPages').filter('replace', [function () {
 
 
             $scope.getCity = function () {
+                $scope.cylinderDetailData = [];
                 $scope.cityList = [];
                 $scope.selectedCityName = null;
                 $scope.city_code = null;
@@ -130,11 +131,15 @@ angular.module('machadaloPages').filter('replace', [function () {
                     city: $scope.selectedCityName,
                 }
                 $scope.cylinderDetailData = [];
+                $scope.errorMsg = "";
                 AuthService.getAllCylinder(param)
                     .then(function onSuccess(response) {
                         $scope.loading = response;
                         if (response.data && response.data.data && !response.data.data.data) {
                             $scope.cylinderDetailData = response.data.data;
+                            if(!$scope.cylinderDetailData.length){
+                                $scope.errorMsg = "No Data Available"
+                            }
                             if ($scope.cylinderDetailData.length > 0) {
                                 $scope.setVolunteer();
                             }
@@ -153,15 +158,16 @@ angular.module('machadaloPages').filter('replace', [function () {
                             volArray.push(vol[i]);
                         }
                     }
-                    if(volArray.length == 0){
-                        volArray = [{'Volunteer_Name':'Srishti','BitLink':'https://bit.ly/3fSzx4r'},
-                        {'Volunteer_Name':'Shifna','BitLink':'https://bit.ly/3wzfJK2'},
-                        {'Volunteer_Name':'Pranay','BitLink':'https://bit.ly/3fRp1KO'},
-                        {'Volunteer_Name':'Pradeep','BitLink':' https://bit.ly/3i07Rgx'},
-                        {'Volunteer_Name':'Shyamlee','BitLink':'https://bit.ly/3wKx4Qh'},
-                        {'Volunteer_Name':'Anmol','BitLink':'https://bit.ly/3wKxh61'},]
-                    }
+                   
                 } 
+                if(volArray.length == 0){
+                    volArray = [{'Volunteer_Name':'Srishti','BitLink':'https://bit.ly/3fSzx4r'},
+                    {'Volunteer_Name':'Shifna','BitLink':'https://bit.ly/3wzfJK2'},
+                    {'Volunteer_Name':'Pranay','BitLink':'https://bit.ly/3fRp1KO'},
+                    {'Volunteer_Name':'Pradeep','BitLink':' https://bit.ly/3i07Rgx'},
+                    {'Volunteer_Name':'Shyamlee','BitLink':'https://bit.ly/3wKx4Qh'},
+                    {'Volunteer_Name':'Anmol','BitLink':'https://bit.ly/3wKxh61'},]
+                }
                 for (let j in $scope.cylinderDetailData) {
                     for (let k in volArray) {
                         if (!$scope.lastIndex || $scope.lastIndex == k) {

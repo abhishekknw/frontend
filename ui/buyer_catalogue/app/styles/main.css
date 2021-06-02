@@ -755,7 +755,7 @@ td.valenteer-name {
     border-bottom: 1px solid #d6d6d6;
 	padding-bottom: 5px;
 	margin-bottom: 5px;
-	padding-top:12px;
+	/*padding-top:12px;*/
 }
 .info-row.volanteer-btn{
   padding-top:12px;
@@ -782,9 +782,27 @@ td.valenteer-name {
 .info-row.info-feedback label {
     font-weight: 400;
 }
+.hosptal-table.volanteer-btn:hover span{
+ background:#169d48;
+}
+.table.covid-hospital-table{
+ border-bottom: 1px solid #ddd;
+}
+.hospital.hosptal-table.info-row.volanteer, .hospital.info-row.info-feedback label{
+ font-size: 15px;
+}
 
 
-
+@media only screen and (min-width:992px){
+ .info-row.info-feedback{
+ height: 95px;
+ }
+}
+@media only screen and (max-width:1024px) and (min-width:992px){
+ .info-row.info-feedback .btn{
+  font-size: 15px;
+ }
+}
 @media only screen and (min-width:767px){
  .hosptal-table.volanteer-btn img, .info-row.volanteer-btn img{
   width:40px;
