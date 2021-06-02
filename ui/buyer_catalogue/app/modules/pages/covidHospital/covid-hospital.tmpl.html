@@ -13,13 +13,13 @@
     <div class="container">
       <div class="page-inner">
         <div class="top-select-option">
-          <!-- <div class="form-group">
-            <select class="form-control" name="category" id="Category_id" ng-model="selectedCategory">
+          <div class="form-group">
+            <select class="form-control" name="category" ng-change="changeWeb()" id="Category_id" ng-model="selectedCategory">
               <option ng-repeat="cat in categorys track by $index" value="{{cat}}" style="text-transform: capitalize;">
                 {{cat}}
               </option>
             </select>
-          </div> -->
+          </div>
           <p style="text-align: center;">
           <!-- <h4 style="text-align: center;"> Data currently available for {{stateData.length}} States/UT and {{totalCity}} Districts as per all
             available Online Government and Volunteer Sources</h4> -->
@@ -309,9 +309,9 @@
                 <div class="info-row info-feedback">
                   <label class="infolable">Provide Feedback</label>
                   <div class="feedback-btns">
-                  <button type="button" name="button" ng-disabled="hospital.notAvailableButton || hospital.wrongNumberButton" ng-click="resourcesAvailable(hospital.vendor_name)" class="btn btn-success" ng-class="{'btn-focus':hospital.resourcesAvailableButton}">Resources Available</button>
-                    <button type="button" name="button" ng-disabled="hospital.resourcesAvailableButton || hospital.wrongNumberButton" ng-click="notAvailable(hospital.vendor_name)" class="btn btn-warning" ng-class="{'btn-focus':hospital.notAvailableButton}">Not Available</button>
-                      <button type="button" name="button" ng-disabled="hospital.resourcesAvailableButton || hospital.notAvailableButton" ng-click="wrongNumber(hospital.vendor_name)" class="btn btn-danger" ng-class="{'btn-focus':hospital.wrongNumberButton}">Wrong Number</button>
+                  <button type="button" name="button" ng-disabled="hospital.notAvailableButton || hospital.wrongNumberButton" ng-click="resourcesAvailable(hospital.vendor_name)" class="btn btn-success res-btn" ng-class="{'btn-focus':hospital.resourcesAvailableButton}">Resources Available</button>
+                    <button type="button" name="button" ng-disabled="hospital.resourcesAvailableButton || hospital.wrongNumberButton" ng-click="notAvailable(hospital.vendor_name)" class="btn btn-warning not-av-btn" ng-class="{'btn-focus':hospital.notAvailableButton}">Not Available</button>
+                      <button type="button" name="button" ng-disabled="hospital.resourcesAvailableButton || hospital.notAvailableButton" ng-click="wrongNumber(hospital.vendor_name)" class="btn btn-danger wr-btn" ng-class="{'btn-focus':hospital.wrongNumberButton}">Wrong Number</button>
                     </div>
                 </div>
                 </div>

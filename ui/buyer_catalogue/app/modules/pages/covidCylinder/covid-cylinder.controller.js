@@ -13,10 +13,10 @@ angular.module('machadaloPages').filter('replace', [function () {
             AuthService.Clear();
 
             var url = $location.url().split("/");
-            $scope.categorys = ['Hospital Beds', 'Cylinder'];
+            $scope.categorys = ['Hospital Beds', 'Cylinders'];
             //let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
             // $scope.selectedCategory = cat;
-            $scope.selectedCategory = 'Cylinder';
+            $scope.selectedCategory = 'Cylinders';
             $scope.loading = true;
             $scope.changeWeb = function () {
                 if ($scope.selectedCategory == 'Hospital Beds') {
@@ -135,7 +135,6 @@ angular.module('machadaloPages').filter('replace', [function () {
                         $scope.loading = response;
                         if (response.data && response.data.data && !response.data.data.data) {
                             $scope.cylinderDetailData = response.data.data;
-                            console.log('+++++++++++++++++++++++++++', $scope.cylinderDetailData);
                             if ($scope.cylinderDetailData.length > 0) {
                                 $scope.setVolunteer();
                             }
@@ -150,11 +149,19 @@ angular.module('machadaloPages').filter('replace', [function () {
                 if ($scope.cylinderDetailData && $scope.cylinderDetailData.length > 0) {
                     let vol = $scope.volunteerData
                     for (let i in vol) {
-                        if (vol[i].City_Code == 149) {
+                        if (vol[i].City_Code == $scope.city_code) {
                             volArray.push(vol[i]);
                         }
                     }
-                }
+                    if(volArray.length == 0){
+                        volArray = [{'Volunteer_Name':'Srishti','BitLink':'https://bit.ly/3fSzx4r'},
+                        {'Volunteer_Name':'Shifna','BitLink':'https://bit.ly/3wzfJK2'},
+                        {'Volunteer_Name':'Pranay','BitLink':'https://bit.ly/3fRp1KO'},
+                        {'Volunteer_Name':'Pradeep','BitLink':' https://bit.ly/3i07Rgx'},
+                        {'Volunteer_Name':'Shyamlee','BitLink':'https://bit.ly/3wKx4Qh'},
+                        {'Volunteer_Name':'Anmol','BitLink':'https://bit.ly/3wKxh61'},]
+                    }
+                } 
                 for (let j in $scope.cylinderDetailData) {
                     for (let k in volArray) {
                         if (!$scope.lastIndex || $scope.lastIndex == k) {
@@ -172,7 +179,6 @@ angular.module('machadaloPages').filter('replace', [function () {
                     }
 
                 }
-                console.log('+++++++++++++++++', $scope.cylinderDetailData);
             }
 
             $scope.resourcesAvailable = function (index) {
