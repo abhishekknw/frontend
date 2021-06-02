@@ -188,13 +188,24 @@ angular
       })
 
       .state('covidCylinder', {
-        url: '/cylinder/covidhelpdesk/',
+        url: '/cylinders/covidhelpdesk/',
         controller: 'covidCylinderCtrl',
         templateUrl: 'modules/pages/covidCylinder/covid-cylinder.tmpl.html',
-        // data :{
-        //   permission : 'loginAccess'
-        // }
+
       })
+
+      .state('covidRefill', {
+        url: '/refills/covidhelpdesk/',
+        controller: 'covidCylinderCtrl',
+        templateUrl: 'modules/pages/covidCylinder/covid-cylinder.tmpl.html',
+      })
+
+      .state('covidConcentrators', {
+        url: '/concentrators/covidhelpdesk/',
+        controller: 'covidCylinderCtrl',
+        templateUrl: 'modules/pages/covidCylinder/covid-cylinder.tmpl.html',
+      })
+      
 
 
       .state('resetPassword', {
@@ -641,9 +652,13 @@ angular
             $location.path("/beds/covid/machadalo");
           } else if (url[1] == "hospitalbeds") {
             $location.path("/hospitalbeds/covidhelpdesk/");
-          } else if (url[1] == "cylinder") {
-            $location.path("/cylinder/covidhelpdesk/");
-          } else {
+          } else if (url[1] == "cylinders") {
+            $location.path("/cylinders/covidhelpdesk/");
+          } else if (url[1] == "refills") {
+            $location.path("/refills/covidhelpdesk/");
+          } else if (url[1] == "concentrators") {
+            $location.path("/concentrators/covidhelpdesk/");
+          }else {
             $location.path("/login");
           }
         }
@@ -658,8 +673,12 @@ angular
             $location.path("/beds/covid/machadalo");
           } else if (url[1] == "hospitalbeds") {
             $location.path("/hospitalbeds/covidhelpdesk/");
-          } else if (url[1] == "cylinder") {
-            $location.path("/cylinder/covidhelpdesk/");
+          } else if (url[1] == "cylinders") {
+            $location.path("/cylinders/covidhelpdesk/");
+          } else if (url[1] == "refills") {
+            $location.path("/refills/covidhelpdesk/");
+          } else if (url[1] == "concentrators") {
+            $location.path("/concentrators/covidhelpdesk/");
           } else {
             $location.path("/login");
           }
