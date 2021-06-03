@@ -196,7 +196,10 @@ angular.module('machadaloPages').filter('replace', [function () {
                     }
 
                 }
-                console.log('BBBBBBBBBBBBBBBBB',$scope.cylinderDetailData);
+            }
+           
+            $scope.triggerCall = function(number){
+                document.location.href = 'tel:' + number;
             }
 
             $scope.resourcesAvailable = function (index) {
