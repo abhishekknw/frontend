@@ -3,7 +3,7 @@
 <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 <link href="css/smallscreen.css" rel="stylesheet" media="screen">
 
-<div class="covid-hospital" ng-init="getStateCity();">
+<div class="covid-hospital" ng-init="getCategory()">
   <div class="page-wrapper">
     <div class="logo-sec">
       <img src="images/machadalo-logo.png" alt="logo">
@@ -13,13 +13,23 @@
     <div class="container">
       <div class="page-inner">
         <div class="top-select-option">
-          <div class="form-group">
+          <!-- <div class="form-group">
             <select class="form-control" name="category" id="Category_id" ng-change="changeWeb()" ng-model="selectedCategory">
               <option ng-repeat="cat in categorys track by $index" value="{{cat}}" style="text-transform: capitalize;">
                 {{cat}}
               </option>
             </select>
+          </div> -->
+
+          <div class="form-group">
+            <select class="form-control" name="category" id="Category_id"  ng-change="changeWeb()" ng-model="selectedCategory">
+              <option ng-repeat="cat in categorysArray track by $index" value="{{cat.name}}"  style="text-transform: capitalize;">
+                {{cat.name}}
+              </option>
+            </select>
           </div>
+
+
           <p style="text-align: center;">
             <!-- <h4 style="text-align: center;"> Data currently available for {{stateData.length}} States/UT and 410 Districts as per all
               available Online Government and Volunteer Sources</h4> -->
@@ -33,7 +43,7 @@
                   </option>
                   <option ng-repeat="state in stateData track by $index" value="{{state.state_code}}"
                     style="text-transform: capitalize;">
-                    {{state.name}}
+                    {{state.state}}
                   </option>
                 </select>
               </div>
@@ -44,7 +54,7 @@
                   <option value="" disabled>
                     Select District/City
                   </option>
-                  <option ng-repeat="city in cityList track by $index" value="{{city.city_code}}">
+                  <option ng-repeat="city in cityData track by $index" value="{{city.city_code}}">
                    <p style="text-transform: capitalize !important"> {{city.city_name}} </p>
                   </option>
                 </select>
