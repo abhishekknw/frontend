@@ -276,24 +276,24 @@ angular.module('Authentication')
                   });
             };
 
-            authService.getAllCylinderState = function (param) {
-               return $http.get(apiHost + 'v0/ui/covid-bot/cylinder-state/')
-                  .then(function onSuccess(response) {
-                     return response
-                  })
-                  .catch(function onError(response) {
-                     return response
-                  });
-            };
-            authService.getAllCylinderCity = function () {
-               return $http.get(apiHost + 'v0/ui/covid-bot/cylinder-city/')
-                  .then(function onSuccess(response) {
-                     return response
-                  })
-                  .catch(function onError(response) {
-                     return response
-                  });
-            };
+            // authService.getAllCylinderState = function (param) {
+            //    return $http.get(apiHost + 'v0/ui/covid-bot/cylinder-state/')
+            //       .then(function onSuccess(response) {
+            //          return response
+            //       })
+            //       .catch(function onError(response) {
+            //          return response
+            //       });
+            // };
+            // authService.getAllCylinderCity = function () {
+            //    return $http.get(apiHost + 'v0/ui/covid-bot/cylinder-city/')
+            //       .then(function onSuccess(response) {
+            //          return response
+            //       })
+            //       .catch(function onError(response) {
+            //          return response
+            //       });
+            // };
 
 
             authService.getAllCylinder = function (param) {
@@ -313,8 +313,8 @@ angular.module('Authentication')
                   });
             };
 
-            authService.getAllVolunteer = function () {
-               let url = "v0/ui/covid-bot/get_sheet_volunteer/"
+            authService.getAllVolunteer = function (cityName) {
+               let url = "v0/ui/covid-bot/get_sheet_volunteer/?City=" + cityName
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -323,6 +323,38 @@ angular.module('Authentication')
                      return response
                   });
             };
+
+            authService.getAllCategory = function () {
+               let url = "v0/ui/covid-bot/available-category/"
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+
+            authService.getAllState = function (categoryCode) {
+               return $http.get(apiHost + 'v0/ui/covid-bot/available-state/?category_code=' + categoryCode)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+
+            authService.getAllCity = function (param) {
+               return $http.get(apiHost + 'v0/ui/covid-bot/available-city/?category_code=' + param.categoryCode + '&state_code=' + param.stateCode)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+
 
 
             return authService;

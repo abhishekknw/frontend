@@ -13,127 +13,75 @@ angular.module('machadaloPages').filter('replace', [function () {
             AuthService.Clear();
 
             var url = $location.url().split("/");
-            $scope.categorys = ['Hospital Beds', 'Cylinders','Refills', 'Concentrators'];
+            // $scope.categorys = ['Hospital Beds', 'Cylinders','Refills', 'Concentrators'];
             let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
-             $scope.selectedCategory = cat;
-            //$scope.selectedCategory = 'Cylinders';
+            $scope.selectedCategory = cat;
             $scope.loading = true;
+
+            $scope.getCategory = function () {
+                AuthService.getAllCategory()
+                    .then(function onSuccess(response) {
+                        $scope.categorysArray = response.data.data;
+                        if ($scope.selectedCategory && $scope.categorysArray.length > 0) {
+                            let selectedCategoryname = $scope.selectedCategory;
+                            var localindex_index = $scope.categorysArray.map(function (el) {
+                                return el.name;
+                            }).indexOf(selectedCategoryname);
+                            if (localindex_index != -1) {
+                                $scope.selectedCategoryCode = $scope.categorysArray[localindex_index].category_code;
+                                $scope.getState();
+                            }
+                        }
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+            }
+
             $scope.changeWeb = function () {
-                if ($scope.selectedCategory == 'Hospital Beds') {
+                if ($scope.selectedCategory == 'Hospital Beds' || $scope.selectedCategory == 'Beds') {
                     $location.path("/hospitalbeds/covidhelpdesk/");
-                } else if($scope.selectedCategory == 'Refills'){
+                } else if ($scope.selectedCategory == 'Refills') {
                     $location.path("/refills/covidhelpdesk/");
-                } else if($scope.selectedCategory == 'Concentrators'){
+                } else if ($scope.selectedCategory == 'Concentrators') {
                     $location.path("/concentrators/covidhelpdesk/");
-                } else if($scope.selectedCategory == 'Cylinders'){
+                } else if ($scope.selectedCategory == 'Cylinders') {
                     $location.path("/cylinders/covidhelpdesk/");
                 }
-            }
-            setInterval(function () {
-                AuthService.getAllCylinderState()
-                    .then(function onSuccess(response) {
-                        if (response && response.data && response.data.data) {
-                            $scope.stateData = response.data.data;
-                            localStorage.setItem("cylinderStateData", JSON.stringify($scope.stateData));
-                        } else {
-                            console.log('error', response);
-                        }
-                    }).catch(function onError(response) {
-                        console.log(response);
-                    })
 
-                AuthService.getAllCylinderCity()
-                    .then(function onSuccess(response) {
-                        if (response && response.data && response.data.data) {
-                            $scope.cityData = response.data.data;
-                            localStorage.setItem("cylinderCityData", JSON.stringify($scope.cityData));
-                        } else {
-                            console.log('error', response);
-                        }
-                    }).catch(function onError(response) {
-                        console.log(response);
-                    })
-            }, 1800000)
-            //  1800000
-            $scope.getStateCity = function () {
-                let localState = localStorage.getItem("cylinderStateData");
-                // if (localStorage.getItem("stateData") && localStorage.getItem("stateData") != undefined) {
-                if (localState && localState != 'undefined') {
-
-                    $scope.stateData = JSON.parse(localState);
-                } else {
-                    AuthService.getAllCylinderState()
-                        .then(function onSuccess(response) {
-                            if (response && response.data && response.data.data) {
-                                $scope.stateData = response.data.data;
-                                localStorage.setItem("cylinderStateData", JSON.stringify($scope.stateData));
-                            } else {
-                                console.log('error', response);
-                            }
-                        }).catch(function onError(response) {
-                            console.log(response);
-                        })
-                }
-                let localCity = localStorage.getItem("cylinderCityData");
-                if (localCity && localCity != 'undefined') {
-                    $scope.cityData = JSON.parse(localCity);
-                } else {
-                    AuthService.getAllCylinderCity()
-                        .then(function onSuccess(response) {
-                            if (response && response.data && response.data.data) {
-                                $scope.cityData = response.data.data;
-                                localStorage.setItem("cylinderCityData", JSON.stringify($scope.cityData));
-                            } else {
-                                console.log('error', response);
-                            }
-                        }).catch(function onError(response) {
-                            console.log(response);
-                        })
-                }
             }
 
-            //getVolunteerData
-            $scope.volunteerData = localStorage.getItem("volunteerData");
-            $scope.volunteerData = JSON.parse($scope.volunteerData);
-            if (!$scope.volunteerData) {
-                AuthService.getAllVolunteer()
+            $scope.getState = function () {
+                AuthService.getAllState($scope.selectedCategoryCode)
                     .then(function onSuccess(response) {
-                        if (response && response.data && response.data.data) {
-                            $scope.volunteerData = response.data.data;
-                            localStorage.setItem("volunteerData", JSON.stringify($scope.volunteerData));
-                        } else {
-                            console.log('error', response);
-                        }
+                        $scope.stateData = response.data.data;
                     }).catch(function onError(response) {
                         console.log(response);
                     })
             }
-
 
             $scope.getCity = function () {
-                $scope.cylinderDetailData = [];
-                $scope.cityList = [];
-                $scope.selectedCityName = null;
-                $scope.city_code = null;
-                var localindex_index = $scope.stateData.map(function (el) {
-                    return el.state_code;
-                }).indexOf($scope.state_code);
-                if (localindex_index != -1) {
-                    $scope.selectedStateName = $scope.stateData[localindex_index].name;
+                let param = {
+                    categoryCode : $scope.selectedCategoryCode,
+                    stateCode : $scope.state_code
                 }
-                $scope.cityList = $scope.cityData[$scope.state_code];
+                AuthService.getAllCity(param)
+                    .then(function onSuccess(response) {
+                        $scope.cityData = response.data.data;
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
             }
 
+
             $scope.getCylinderList = function () {
-                var localindex_index = $scope.cityList.map(function (el) {
+                var localindex_index = $scope.cityData.map(function (el) {
                     return el.city_code;
                 }).indexOf($scope.city_code);
                 if (localindex_index != -1) {
-                    $scope.selectedCityName = $scope.cityList[localindex_index].city_name;
+                    $scope.selectedCityName = $scope.cityData[localindex_index].city_name;
                 }
                 $scope.loading = null;
                 let param = {
-                    //state: $scope.state_code,
                     city: $scope.selectedCityName,
                     category: $scope.selectedCategory
                 }
@@ -144,12 +92,11 @@ angular.module('machadaloPages').filter('replace', [function () {
                         $scope.loading = response;
                         if (response.data && response.data.data && !response.data.data.data) {
                             $scope.cylinderDetailData = response.data.data;
-                            if(!$scope.cylinderDetailData.length){
+                            if (!$scope.cylinderDetailData.length) {
                                 $scope.errorMsg = "No Data Available"
                             }
                             if ($scope.cylinderDetailData.length > 0) {
-                                
-                                $scope.setVolunteer();
+                                $scope.getVolunteer();
                             }
                         }
                     }).catch(function onError(response) {
@@ -157,48 +104,42 @@ angular.module('machadaloPages').filter('replace', [function () {
                     })
             }
 
-            $scope.setVolunteer = function () {
-                let volArray = [];
-                if ($scope.cylinderDetailData && $scope.cylinderDetailData.length > 0) {
-                    let vol = $scope.volunteerData
-                    for (let i in vol) {
-                        if (vol[i].City_Code == $scope.city_code) {
-                            volArray.push(vol[i]);
-                        }
-                    }
-                   
-                } 
-
-                if(volArray.length == 0){
-                    volArray = [{'Volunteer_Name':'Srishti','BitLink':'https://bit.ly/3fSzx4r'},
-                    {'Volunteer_Name':'Shifna','BitLink':'https://bit.ly/3wzfJK2'},
-                    {'Volunteer_Name':'Pranay','BitLink':'https://bit.ly/3fRp1KO'},
-                    {'Volunteer_Name':'Pradeep','BitLink':' https://bit.ly/3i07Rgx'},
-                    {'Volunteer_Name':'Shyamlee','BitLink':'https://bit.ly/3wKx4Qh'},
-                    {'Volunteer_Name':'Anmol','BitLink':'https://bit.ly/3wKxh61'},]
-                }
-                console.log('AAAAAAAAAAAAAA',$scope.cylinderDetailData);
-                for (let j in $scope.cylinderDetailData) {
-                    $scope.cylinderDetailData[j].MDContactNumber = JSON.parse($scope.cylinderDetailData[j].MDContactNumber);
-                    for (let k in volArray) {
-                        if (!$scope.lastIndex || $scope.lastIndex == k) {
-                            $scope.cylinderDetailData[j].Volunteer_Name = volArray[k].Volunteer_Name;
-                            $scope.cylinderDetailData[j].BitLink = volArray[k].BitLink;
-                            $scope.lastIndex = k;
-                        }
-                        if (volArray.length - 1 == k) {
-                            $scope.lastIndex = JSON.parse($scope.lastIndex) + 1;
-                        }
-                        if ($scope.lastIndex == volArray.length) {
-                            $scope.lastIndex = undefined;
+            $scope.getVolunteer = function(){
+                AuthService.getAllVolunteer($scope.selectedCityName)
+                    .then(function onSuccess(response) {
+                        $scope.volunteerData = response.data.data;
+                        if($scope.volunteerData.length == 0){
+                            $scope.volunteerData = [{ 'Volunteer_Name': 'Srishti', 'BitLink': 'https://bit.ly/3fSzx4r' },
+                            { 'Volunteer_Name': 'Shifna', 'BitLink': 'https://bit.ly/3wzfJK2' },
+                            { 'Volunteer_Name': 'Pranay', 'BitLink': 'https://bit.ly/3fRp1KO' },
+                            { 'Volunteer_Name': 'Pradeep', 'BitLink': ' https://bit.ly/3i07Rgx' },
+                            { 'Volunteer_Name': 'Shyamlee', 'BitLink': 'https://bit.ly/3wKx4Qh' },
+                            { 'Volunteer_Name': 'Anmol', 'BitLink': 'https://bit.ly/3wKxh61' },]
                         }
 
-                    }
-
-                }
+                        for (let j in $scope.cylinderDetailData) {
+                            $scope.cylinderDetailData[j].MDContactNumber = JSON.parse($scope.cylinderDetailData[j].MDContactNumber);
+                            for (let k in $scope.volunteerData) {
+                                if (!$scope.lastIndex || $scope.lastIndex == k) {
+                                    $scope.cylinderDetailData[j].Volunteer_Name = $scope.volunteerData[k].Volunteer_Name;
+                                    $scope.cylinderDetailData[j].BitLink = $scope.volunteerData[k].BitLink;
+                                    $scope.lastIndex = k;
+                                }
+                                if ($scope.volunteerData.length - 1 == k) {
+                                    $scope.lastIndex = JSON.parse($scope.lastIndex) + 1;
+                                }
+                                if ($scope.lastIndex == $scope.volunteerData.length) {
+                                    $scope.lastIndex = undefined;
+                                }
+                            }
+                        }
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
             }
-           
-            $scope.triggerCall = function(number){
+
+
+            $scope.triggerCall = function (number) {
                 document.location.href = 'tel:' + number;
             }
 
@@ -233,184 +174,5 @@ angular.module('machadaloPages').filter('replace', [function () {
                 }
             }
 
-            //            let volunteerData =  {"status": true,
-            // "data": [
-            // {
-            // "State": "Andhra Pradesh",
-            // "State_Code": 2,
-            // "District": "Visakhapatnam",
-            // "District_Code": 14,
-            // "City": "Visakhapatnam",
-            // "City_Code": 110,
-            // "Volunteer_Name": "Manjunath",
-            // "Contact_Number": 9494616123,
-            // "BitLink": "https://bit.ly/3eKGWlT"
-            // },
-            // {
-            // "State": "Andhra Pradesh",
-            // "State_Code": 2,
-            // "District": "Krishna",
-            // "District_Code": 9,
-            // "City": "Vijayawada",
-            // "City_Code": 57,
-            // "Volunteer_Name": "Manjunath",
-            // "Contact_Number": 9494616123,
-            // "BitLink": "https://bit.ly/3eKGWlT"
-            // },
-            // {
-            // "State": "Andhra Pradesh",
-            // "State_Code": 2,
-            // "District": "Krishna",
-            // "District_Code": 9,
-            // "City": "Vijayawada",
-            // "City_Code": 57,
-            // "Volunteer_Name": "Murali Krishna Ganguri",
-            // "Contact_Number": 8309080672,
-            // "BitLink": "https://bit.ly/3oRb6s5"
-            // },
-            // {
-            // "State": "Andhra Pradesh",
-            // "State_Code": 2,
-            // "District": "Visakhapatnam",
-            // "District_Code": 14,
-            // "City": "Visakhapatnam",
-            // "City_Code": 110,
-            // "Volunteer_Name": "Mohammed Taha Khan",
-            // "Contact_Number": 6303160604,
-            // "BitLink": "https://bit.ly/34g4qKR"
-            // },
-            // {
-            // "State": "Bihar",
-            // "State_Code": 5,
-            // "District": "Patna",
-            // "District_Code": 101,
-            // "City": "Patna",
-            // "City_Code": 84,
-            // "Volunteer_Name": "Jaya kumari",
-            // "Contact_Number": 9304611151,
-            // "BitLink": "https://bit.ly/3w3eR0d"
-            // },
-            // {
-            // "State": "Chhattisgarh",
-            // "State_Code": 7,
-            // "District": "Raipur",
-            // "District_Code": 138,
-            // "City": "Raipur",
-            // "City_Code": 141,
-            // "Volunteer_Name": "Honey Gupta",
-            // "Contact_Number": 7879331484,
-            // "BitLink": "https://bit.ly/3w0IYFd"
-            // },
-            // {
-            // "State": "Delhi",
-            // "State_Code": 9,
-            // "District": "Delhi",
-            // "District_Code": 742,
-            // "City": "Delhi",
-            // "City_Code": 149,
-            // "Volunteer_Name": "Sachin",
-            // "Contact_Number": 9013955083,
-            // "BitLink": "https://bit.ly/3nXOGFi"
-            // },
-            // {
-            // "State": "Delhi",
-            // "State_Code": 9,
-            // "District": "Delhi",
-            // "District_Code": 742,
-            // "City": "Delhi",
-            // "City_Code": 149,
-            // "Volunteer_Name": "Mukulm",
-            // "Contact_Number": 9599006765,
-            // "BitLink": "https://bit.ly/3f7K6A9"
-            // },
-            // {
-            // "State": "Delhi",
-            // "State_Code": 9,
-            // "District": "Delhi",
-            // "District_Code": 742,
-            // "City": "Delhi",
-            // "City_Code": 149,
-            // "Volunteer_Name": "Shashi Barla",
-            // "Contact_Number": 9818061788,
-            // "BitLink": "https://bit.ly/3f21sP6"
-            // },
-            // {
-            // "State": "Delhi",
-            // "State_Code": 9,
-            // "District": "Delhi",
-            // "District_Code": 742,
-            // "City": "Delhi",
-            // "City_Code": 149,
-            // "Volunteer_Name": "Mukulm",
-            // "Contact_Number": 9599006765,
-            // "BitLink": "https://bit.ly/3f7K6A9"
-            // },
-            // {
-            // "State": "Delhi",
-            // "State_Code": 9,
-            // "District": "Delhi",
-            // "District_Code": 742,
-            // "City": "Delhi",
-            // "City_Code": 149,
-            // "Volunteer_Name": "Brijesh singh",
-            // "Contact_Number": 8097192580,
-            // "BitLink": "https://bit.ly/3ujYLhf"
-            // },
-            // {
-            // "State": "Delhi",
-            // "State_Code": 9,
-            // "District": "Delhi",
-            // "District_Code": 742,
-            // "City": "Delhi",
-            // "City_Code": 149,
-            // "Volunteer_Name": "Komal Priya Chaturvedi",
-            // "Contact_Number": 9868121191,
-            // "BitLink": "https://bit.ly/2R9OMxA"
-            // },
-            // {
-            // "State": "Delhi",
-            // "State_Code": 9,
-            // "District": "Delhi",
-            // "District_Code": 742,
-            // "City": "Delhi",
-            // "City_Code": 149,
-            // "Volunteer_Name": "Ribhav R Karthikeyan",
-            // "Contact_Number": 9871234224,
-            // "BitLink": "https://bit.ly/3o3l5dC"
-            // },
-            // {
-            // "State": "Delhi",
-            // "State_Code": 9,
-            // "District": "Delhi",
-            // "District_Code": 742,
-            // "City": "Delhi",
-            // "City_Code": 149,
-            // "Volunteer_Name": "Ashish",
-            // "Contact_Number": 9899989167,
-            // "BitLink": "https://bit.ly/3w2jaJ7"
-            // },
-            // {
-            // "State": "Delhi",
-            // "State_Code": 9,
-            // "District": "Delhi",
-            // "District_Code": 742,
-            // "City": "Delhi",
-            // "City_Code": 149,
-            // "Volunteer_Name": "Sachin",
-            // "Contact_Number": 9013955083,
-            // "BitLink": "https://bit.ly/3nXOGFi"
-            // },
-            // {
-            // "State": "Delhi",
-            // "State_Code": 9,
-            // "District": "Delhi",
-            // "District_Code": 742,
-            // "City": "Delhi",
-            // "City_Code": 149,
-            // "Volunteer_Name": "Shashi Barla",
-            // "Contact_Number": 9818061788,
-            // "BitLink": "https://bit.ly/3f21sP6"
-            // }
-            // ]}
         }]);
 
