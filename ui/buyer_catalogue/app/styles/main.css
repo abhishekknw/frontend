@@ -671,6 +671,7 @@ table.covid-hospital-table > thead > tr > th {
 }
 label.infolable {
     min-width: 170px;
+    font-weight: 400;
 }
 .info-table-wrap {
     box-shadow: 0 0 12px #ddd;
@@ -792,6 +793,33 @@ td.valenteer-name {
 .hospital.hosptal-table.info-row.volanteer, .hospital.info-row.info-feedback label{
  font-size: 15px;
 }
+.info-row.info-feedback.mobile, .hosptal-table.volanteer-btn.mobile{
+ display: none;
+}
+
+ .info-name-btn {
+    display: flex;
+    align-items: center;
+}
+.info-name-btn .info-row.volanteer{
+ width: 40%;
+}
+.info-name-btn .hosptal-table.volanteer-btn span{
+ padding: 8px 32px;
+}
+.info-name-btn .hosptal-table.volanteer-btn{
+ border-bottom: 0;
+}
+.info-name-btn{
+ border-bottom: 1px solid #d6d6d6; 
+ margin-bottom: 8px;
+}
+.info-name-btn .info-row, .info-name-btn.info-name-btn .hosptal-table.volanteer-btn{
+ margin-bottom: 0;
+}
+.info-name-btn .info-row.volanteer {
+    display: block;
+}
 
 
 @media only screen and (min-width:992px){
@@ -883,16 +911,42 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 /*	.info-row.volanteer-btn span{
        width:100%;
 	}*/
-	.feedback-btns{
+	/*.feedback-btns{
 	display:block;
-	}
-	.hosptal-table.volanteer-btn span, .info-row.volanteer-btn span{
-    padding: 6px 22px;
-	}
+	}*/
+
 	.hosptal-table.volanteer-btn img{
 	 right:-20px;
 	}
-	
+	.info-row.info-feedback.mobile, .hosptal-table.volanteer-btn.mobile{
+     display: block;
+	}
+	.info-row.info-feedback.desktop, .hosptal-table.volanteer-btn.desktop{
+	 display: none;
+	}
+	.info-row.info-feedback .btn{
+	 font-size: 15px;
+	 height: 60px;
+	}
+	.btn-focus{
+     height: 70px !important;
+	}
+	.info-name-btn .hosptal-table.volanteer-btn span{
+    display: inline-block;
+    font-size: 13px;
+    vertical-align: middle;
+    padding: 8px 20px;
+	}
+	.hosptal-table.volanteer-btn img{
+	 width:42px;
+	 top:0;
+	}
+}
+
+@media only screen and (max-width:375px){
+ .hosptal-table.volanteer label{
+ line-height: 8px;
+ }
 }
 @media (max-width: 340px) {
 	table.covid-hospital-table th, .covid-hospital-table td {
@@ -905,6 +959,9 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	.hosptal-table.volanteer-btn span{
      font-size: 14px;
      padding: 6px 10px;
+	}
+	.info-row.info-feedback .btn{
+     font-size: 14px;
 	}
 
 }

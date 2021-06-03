@@ -291,12 +291,13 @@
 
                     </tbody>
                   </table>
+                  <div class="info-name-btn">
                   <div class="hospital hosptal-table info-row volanteer">
                     <label class="infolable">Volunteer Name: &nbsp;
                     </label>
                     {{hospital.Volunteer_Name}}
                   </div>
-                  <div class="hosptal-table volanteer-btn text-center">
+                  <div class="hosptal-table volanteer-btn desktop text-center">
                     <a ng-if="hospital.BitLink" href="{{hospital.BitLink}}" data-action="share/whatsapp/share" target="_blank"> 
                       <img src="images/whatsapp-icon.png">
                        <span>Chat with Volunteer</span> 
@@ -306,12 +307,31 @@
                          <span>Chat with Volunteer</span> 
                         </a>
                 </div>
-                <div class="hospital info-row info-feedback">
+                <div class="hosptal-table volanteer-btn mobile text-center">
+                    <a ng-if="hospital.BitLink" href="{{hospital.BitLink}}" data-action="share/whatsapp/share" target="_blank"> 
+                      <img src="images/whatsapp-icon.png">
+                       <span>Chat with<br> Volunteer</span> 
+                      </a>
+                      <a ng-if="!hospital.BitLink" href=""> 
+                        <img src="images/whatsapp-icon.png">
+                         <span>Chat with<br> Volunteer</span> 
+                        </a>
+                </div>
+                </div>
+                <div class="hospital info-row info-feedback desktop">
                   <label class="infolable">Provide Feedback</label>
                   <div class="feedback-btns">
                   <button type="button" name="button" ng-disabled="hospital.notAvailableButton || hospital.wrongNumberButton" ng-click="resourcesAvailable(hospital.vendor_name)" class="btn btn-success res-btn" ng-class="{'btn-focus':hospital.resourcesAvailableButton}">Resources Available</button>
                     <button type="button" name="button" ng-disabled="hospital.resourcesAvailableButton || hospital.wrongNumberButton" ng-click="notAvailable(hospital.vendor_name)" class="btn btn-warning not-av-btn" ng-class="{'btn-focus':hospital.notAvailableButton}">Not Available</button>
                       <button type="button" name="button" ng-disabled="hospital.resourcesAvailableButton || hospital.notAvailableButton" ng-click="wrongNumber(hospital.vendor_name)" class="btn btn-danger wr-btn" ng-class="{'btn-focus':hospital.wrongNumberButton}">Wrong Number</button>
+                    </div>
+                </div>
+                <div class="hospital info-row info-feedback mobile">
+                  <label class="infolable">Provide Feedback</label>
+                  <div class="feedback-btns">
+                  <button type="button" name="button" ng-disabled="hospital.notAvailableButton || hospital.wrongNumberButton" ng-click="resourcesAvailable(hospital.vendor_name)" class="btn btn-success res-btn" ng-class="{'btn-focus':hospital.resourcesAvailableButton}">Resources<br> Available</button>
+                    <button type="button" name="button" ng-disabled="hospital.resourcesAvailableButton || hospital.wrongNumberButton" ng-click="notAvailable(hospital.vendor_name)" class="btn btn-warning not-av-btn" ng-class="{'btn-focus':hospital.notAvailableButton}">Not<br> Available</button>
+                      <button type="button" name="button" ng-disabled="hospital.resourcesAvailableButton || hospital.notAvailableButton" ng-click="wrongNumber(hospital.vendor_name)" class="btn btn-danger wr-btn" ng-class="{'btn-focus':hospital.wrongNumberButton}">Wrong<br> Number</button>
                     </div>
                 </div>
                 </div>

@@ -59,57 +59,53 @@
           <div class="col-md-6" ng-if="cylinderDetailData.length > 0" ng-repeat="cylinder in cylinderDetailData track by $index">
             <div class="info-table-wrap">
               <div class="info-row">
-                <label class="infolable"><strong>Contact Name: </strong></label>
+                <label class="infolable">Contact Name:</label>
                 <span ng-show="cylinder.MDContactName">{{cylinder.MDContactName}}</span>
                 <span ng-show="!cylinder.MDContactName || cylinder.MDContactName == ' '">N/A</span>
               </div>
               <div class="info-row">
-                <label class="infolable"><strong> Address: </strong></label>
+                <label class="infolable"> Address:</label>
                 <span ng-show="cylinder.MDAddress"> {{cylinder.MDAddress}} </span>
                 <span ng-show="cylinder.MDAddress == ' ' || !cylinder.MDAddress"> N/A </span>
               </div>
               <div class="info-row">
-                <label class="infolable"><strong>Quantity Available: </strong></label>
+                <label class="infolable">Quantity Available:</label>
                 <span ng-show="cylinder.MDQty">{{cylinder.MDQty}}</span>
                 <span ng-show="cylinder.MDQty == ' ' || !cylinder.MDQty"> N/A </span>
               </div>
               <div class="info-row">
-                <label class="infolable"><strong>Last Updated Time: </strong></label>
-                <span ng-show="cylinder.MDLastUpdatedTime">{{cylinder.MDLastUpdatedTime | date:'medium'}} </span>
+                <label class="infolable">Last Updated Time:</label>
+                <span ng-show="cylinder.MDLastUpdatedTime"><strong>{{cylinder.MDLastUpdatedTime | date:'medium'}} </strong></span>
                 <span ng-show="cylinder.MDLastUpdatedTime == ' ' || !cylinder.MDLastUpdatedTime"> N/A </span>
               </div>
 
 
               <div class="info-row" ng-if="selectedCategory == 'Cylinders'">
-                <label class="infolable"><strong>Refill Available:
-                </strong></label>
+                <label class="infolable">Refill Available:</label>
                 <span ng-show="cylinder.MDRefillAvailable">{{cylinder.MDRefillAvailable}} </span>
                 <span ng-show="cylinder.MDRefillAvailable == ' ' || !cylinder.MDRefillAvailable"> N/A </span>
               </div>
 
               <div class="info-row" ng-if="selectedCategory == 'Refills'">
-                <label class="infolable"><strong>Cylinder Available:
-                </strong></label>
+                <label class="infolable">Cylinder Available:</label>
                 <span ng-show="cylinder.MDCylinderAvailable">{{cylinder.MDCylinderAvailable}} </span>
                 <span ng-show="cylinder.MDCylinderAvailable == ' ' || !cylinder.MDCylinderAvailable"> N/A </span>
               </div>
 
               <div class="info-row" ng-if="selectedCategory == 'Concentrators'">
-                <label class="infolable"><strong>Delivery Available:
-                </strong></label>
+                <label class="infolable">Delivery Available:</label>
                 <span ng-show="cylinder.MDDeliveryTime">{{cylinder.MDDeliveryTime}} </span>
                 <span ng-show="cylinder.MDDeliveryTime == ' ' || !cylinder.MDDeliveryTime"> N/A </span>
               </div>
 
               <div class="info-row">
-                <label class="infolable"><strong>GST:
-                </strong></label>
+                <label class="infolable">GST:</label>
                 <span ng-show="cylinder.MDGSTVerificationStatus">{{cylinder.MDGSTVerificationStatus}} </span>
                 <span ng-show="cylinder.MDGSTVerificationStatus == ' ' || !cylinder.MDGSTVerificationStatus"> N/A </span>
               </div>
 
               <div class="info-row">
-                <label class="infolable"><strong>Contact Number: </strong></label>
+                <label class="infolable">Contact Number:</label>
                 <a href="" ng-click="triggerCall(cylinder.MDContactNumber)"> {{cylinder.MDContactNumber }}</a>
               </div>
             
@@ -118,24 +114,40 @@
                 <label class="infolable"><strong>Volunteer Name: </strong></label>
                 ABC
               </div> -->
+              <div class="info-name-btn">
               <div class="info-row volanteer">
                 <label class="infolable">Volunteer Name: &nbsp;
                 </label>
-                   {{cylinder.Volunteer_Name}}
+                   <strong>{{cylinder.Volunteer_Name}}</strong>
               </div>
-              <div class="hosptal-table volanteer-btn text-center">
+              <div class="hosptal-table volanteer-btn desktop text-center">
                   <a href="{{cylinder.BitLink}}" data-action="share/whatsapp/share" target="_blank"> 
                     <img src="images/whatsapp-icon.png">
                      <span>Chat with Volunteer</span> 
                     </a>
               </div>
+              <div class="hosptal-table volanteer-btn mobile text-center">
+                  <a href="{{cylinder.BitLink}}" data-action="share/whatsapp/share" target="_blank"> 
+                    <img src="images/whatsapp-icon.png">
+                     <span>Chat with<br> Volunteer</span> 
+                    </a>
+              </div>
+              </div>
 
-              <div class="info-row info-feedback">
-                <label class="infolable"><strong>Provide Feedback</strong></label>
+              <div class="info-row info-feedback desktop">
+                <label class="infolable">Provide Feedback</label>
                 <div class="feedback-btns">
                 <button type="button" name="button" ng-disabled="cylinder.notAvailableButton || cylinder.wrongNumberButton" ng-click="resourcesAvailable($index)" class="btn btn-success res-btn" ng-class="{'btn-focus':cylinder.resourcesAvailableButton}" >Resources Available</button>
                   <button type="button" name="button" ng-disabled="cylinder.resourcesAvailableButton || cylinder.wrongNumberButton" ng-click="notAvailable($index)" class="btn btn-warning not-av-btn" ng-class="{'btn-focus':cylinder.notAvailableButton}">Not Available</button>
                     <button type="button" name="button" ng-disabled="cylinder.resourcesAvailableButton || cylinder.notAvailableButton" ng-click="wrongNumber($index)" class="btn btn-danger wr-btn" ng-class="{'btn-focus':cylinder.wrongNumberButton}">Wrong Number</button>
+                  </div>
+              </div>
+              <div class="info-row info-feedback mobile">
+                <label class="infolable">Provide Feedback</label>
+                <div class="feedback-btns">
+                <button type="button" name="button" ng-disabled="cylinder.notAvailableButton || cylinder.wrongNumberButton" ng-click="resourcesAvailable($index)" class="btn btn-success res-btn" ng-class="{'btn-focus':cylinder.resourcesAvailableButton}" >Resources <br> Available</button>
+                  <button type="button" name="button" ng-disabled="cylinder.resourcesAvailableButton || cylinder.wrongNumberButton" ng-click="notAvailable($index)" class="btn btn-warning not-av-btn" ng-class="{'btn-focus':cylinder.notAvailableButton}">Not <br> Available</button>
+                    <button type="button" name="button" ng-disabled="cylinder.resourcesAvailableButton || cylinder.notAvailableButton" ng-click="wrongNumber($index)" class="btn btn-danger wr-btn" ng-class="{'btn-focus':cylinder.wrongNumberButton}">Wrong <br> Number</button>
                   </div>
               </div>
             </div>
