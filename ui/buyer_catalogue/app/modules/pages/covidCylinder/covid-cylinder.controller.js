@@ -148,6 +148,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                                 $scope.errorMsg = "No Data Available"
                             }
                             if ($scope.cylinderDetailData.length > 0) {
+                                
                                 $scope.setVolunteer();
                             }
                         }
@@ -167,6 +168,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                     }
                    
                 } 
+
                 if(volArray.length == 0){
                     volArray = [{'Volunteer_Name':'Srishti','BitLink':'https://bit.ly/3fSzx4r'},
                     {'Volunteer_Name':'Shifna','BitLink':'https://bit.ly/3wzfJK2'},
@@ -175,7 +177,9 @@ angular.module('machadaloPages').filter('replace', [function () {
                     {'Volunteer_Name':'Shyamlee','BitLink':'https://bit.ly/3wKx4Qh'},
                     {'Volunteer_Name':'Anmol','BitLink':'https://bit.ly/3wKxh61'},]
                 }
+                console.log('AAAAAAAAAAAAAA',$scope.cylinderDetailData);
                 for (let j in $scope.cylinderDetailData) {
+                    $scope.cylinderDetailData[j].MDContactNumber = JSON.parse($scope.cylinderDetailData[j].MDContactNumber);
                     for (let k in volArray) {
                         if (!$scope.lastIndex || $scope.lastIndex == k) {
                             $scope.cylinderDetailData[j].Volunteer_Name = volArray[k].Volunteer_Name;
@@ -192,6 +196,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                     }
 
                 }
+                console.log('BBBBBBBBBBBBBBBBB',$scope.cylinderDetailData);
             }
 
             $scope.resourcesAvailable = function (index) {
