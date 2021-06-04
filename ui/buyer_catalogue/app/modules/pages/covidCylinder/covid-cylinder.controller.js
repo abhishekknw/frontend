@@ -63,7 +63,15 @@ angular.module('machadaloPages').filter('replace', [function () {
             }
 
             $scope.getCity = function () {
+                var localindex_index = $scope.stateData.map(function (el) {
+                    return el.state_code;
+                }).indexOf($scope.state_code);
+                if (localindex_index != -1) {
+                    $scope.selectedStateName = $scope.stateData[localindex_index].state;
+                }
                 $scope.city_code = null;
+                $scope.selectedCityName = null;
+                $scope.cylinderDetailData = [];
                 let param = {
                     categoryCode : $scope.selectedCategoryCode,
                     stateCode : $scope.state_code

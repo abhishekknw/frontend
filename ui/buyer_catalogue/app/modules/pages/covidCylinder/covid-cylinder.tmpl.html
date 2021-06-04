@@ -65,7 +65,7 @@
         <div ng-if="!loading" ng-loadings="loading"></div>
         <div class="row info-table-row" ng-if="loading">
           <div class="info-table-heading" ng-if="!selectedCityName" ><h2 style="text-align: center;">Top Suppliers <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
-          <div class="info-table-heading"  ng-if="selectedCityName" ><h2 style="text-align: center;">Top Suppliers in {{selectedCityName}}, {{selectedStateName}}  <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
+          <div class="info-table-heading"  ng-if="selectedStateName && selectedCityName" ><h2 style="text-align: center;">Top Suppliers in {{selectedCityName}}, {{selectedStateName}}  <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
           <div class="col-md-6" ng-if="cylinderDetailData.length > 0" ng-repeat="cylinder in cylinderDetailData track by $index">
             <div class="info-table-wrap" ng-if="selectedCategory == 'Cylinders' || selectedCategory == 'Refills' || selectedCategory == 'Concentrators'">
               <div class="info-row">
