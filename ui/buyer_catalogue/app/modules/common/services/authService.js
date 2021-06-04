@@ -301,7 +301,7 @@ angular.module('Authentication')
                let url = "v0/ui/covid-bot/covid-data/"
     
                if (param.city) {
-                  url = "v0/ui/covid-bot/covid-data/?city=" + param.city + "&category=MDCylinders" ;
+                  url = "v0/ui/covid-bot/covid-data/?city=" + param.city + "&category=" + param.categoryKeyword ;
                }
             
                return $http.get(apiHost + url)

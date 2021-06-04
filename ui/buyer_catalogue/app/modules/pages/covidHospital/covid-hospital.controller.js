@@ -12,43 +12,30 @@ angular.module('machadaloPages').filter('replace', [function () {
         function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $state, userService, constants, AuthService, vcRecaptchaService) {
             AuthService.Clear();
 
-            // $scope.error = false;
-            // $scope.success = false;
-
-            // $scope.resetPassword = function () {
-            //     $scope.loadingSpinner = true;
-            //     var url = $location.host();
-            //     $scope.host = url;
-
-            //     AuthService.ForgotPassword($scope.userEmail, $scope.host, $location.protocol(), function (response) {
-            //         $scope.loadingSpinner = false;
-            //         if (response.status == 200) {
-            //             swal("Success!", response.msg, constants.success);
-            //             $scope.success = response.msg;
-            //             $scope.error = false
-            //         } else {
-            //             if (response.data.data.general_error) {
-            //                 swal("Error!", response.data.data.general_error, constants.error);
-            //             }
-            //             $scope.error = response.message;
-            //             $scope.success = false;
-            //         }
-            //     });
-            // }
             var url = $location.url().split("/");
-            // $scope.categorys = ['Beds', 'Hospitals'];
-            //let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
-            // $scope.selectedCategory = cat;
-            
-
-            $scope.categorys = ['Hospital Beds', 'Cylinders'];
-            $scope.selectedCategory = 'Hospital Beds';
+            let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
+            $scope.selectedCategory = cat;
+            if($scope.selectedCategory == 'Hospitalbeds'){
+                $scope.selectedCategory = 'Beds';
+            }
+            // $scope.categorys = ['Hospital Beds', 'Cylinders'];
+            // $scope.selectedCategory = 'Hospital Beds';
             $scope.loading = true;
             $scope.changeWeb = function () {
-                if ($scope.selectedCategory == 'Cylinders') {
+                if ($scope.selectedCategory == 'Hospital Beds' || $scope.selectedCategory == 'Beds') {
+                    $location.path("/hospitalbeds/covidhelpdesk/");
+                } else if ($scope.selectedCategory == 'Refills') {
+                    $location.path("/refills/covidhelpdesk/");
+                } else if ($scope.selectedCategory == 'Concentrators') {
+                    $location.path("/concentrators/covidhelpdesk/");
+                } else if ($scope.selectedCategory == 'Cylinders') {
                     $location.path("/cylinders/covidhelpdesk/");
+                } else if ($scope.selectedCategory == 'Medicines') {
+                    $location.path("/medicines/covidhelpdesk/");
                 }
+                $scope.hospitalDetailData = [];
             }
+
             $scope.loading = true;
             $scope.Phone = 1234567892;
             $scope.totalCity = 0;
@@ -81,6 +68,29 @@ angular.module('machadaloPages').filter('replace', [function () {
                     })
             }, 1800000)
             //  1800000
+
+            $scope.getCategory = function () {
+                AuthService.getAllCategory()
+                    .then(function onSuccess(response) {
+                        $scope.categorysArray = response.data.data;
+                        if ($scope.selectedCategory && $scope.categorysArray.length > 0) {
+
+                            let selectedCategoryname = $scope.selectedCategory;
+                            var localindex_index = $scope.categorysArray.map(function (el) {
+                                return el.name;
+                            }).indexOf(selectedCategoryname);
+                            if (localindex_index != -1) {
+                                $scope.selectedCategoryCode = $scope.categorysArray[localindex_index].category_code;
+                                $scope.selectedCategoryKeyword = $scope.categorysArray[localindex_index].keyword;
+                                // $scope.getState();
+                            }
+                        }
+        
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+            }
+
             $scope.getStateCity = function () {
                 let localState = localStorage.getItem("stateData");
                 // if (localStorage.getItem("stateData") && localStorage.getItem("stateData") != undefined) {
@@ -332,48 +342,84 @@ angular.module('machadaloPages').filter('replace', [function () {
                         }
                         $scope.resourcesTypeData.push({ 'resourceType': 'LATEST UPDATED TIME' }, { 'resourceType': 'FACILITY NAME - ASCENDING' }, { 'resourceType': 'FACILITY NAME - DESCENDING' });
                         $scope.totalAvailableCountsData = $scope.hospitalDetailData.length - $scope.notAvailableCount;
-                        $scope.setVolunteer();
+                       // $scope.setVolunteer();
+                        $scope.getVolunteer();
                     }).catch(function onError(response) {
                         console.log(response);
                     })
             }
 
-            $scope.setVolunteer = function () {
-                let volArray = [];
-                if ($scope.hospitalDetailData && $scope.hospitalDetailData.length > 0) {
-                    let vol = $scope.hospitalVolunteerData
-                    for (let i in vol) {
-                        if (vol[i].District_Code == $scope.district_code) {
-                            volArray.push(vol[i]);
-                        }
-                    }
+            // $scope.setVolunteer = function () {
+            //     let volArray = [];
+            //     if ($scope.hospitalDetailData && $scope.hospitalDetailData.length > 0) {
+            //         let vol = $scope.hospitalVolunteerData
+            //         for (let i in vol) {
+            //             if (vol[i].District_Code == $scope.district_code) {
+            //                 volArray.push(vol[i]);
+            //             }
+            //         }
                    
-                }
-                console.log(volArray);
-                if(volArray.length == 0){
-                    volArray = [{'Volunteer_Name':'Srishti','BitLink':'https://bit.ly/3fSzx4r'},
-                    {'Volunteer_Name':'Shifna','BitLink':'https://bit.ly/3wzfJK2'},
-                    {'Volunteer_Name':'Pranay','BitLink':'https://bit.ly/3fRp1KO'},
-                    {'Volunteer_Name':'Pradeep','BitLink':' https://bit.ly/3i07Rgx'},
-                    {'Volunteer_Name':'Shyamlee','BitLink':'https://bit.ly/3wKx4Qh'},
-                    {'Volunteer_Name':'Anmol','BitLink':'https://bit.ly/3wKxh61'},]
-                }
-                for (let j in $scope.hospitalDetailData) {
-                    for (let k in volArray) {
-                        if (!$scope.lastIndex || $scope.lastIndex == k) {
-                            $scope.hospitalDetailData[j].Volunteer_Name = volArray[k].Volunteer_Name;
-                            $scope.hospitalDetailData[j].BitLink = volArray[k].BitLink;
-                            $scope.lastIndex = k;
-                        }
-                        if (volArray.length - 1 == k) {
-                            $scope.lastIndex = JSON.parse($scope.lastIndex) + 1;
-                        }
-                        if ($scope.lastIndex == volArray.length) {
-                            $scope.lastIndex = undefined;
+            //     }
+            //     console.log(volArray);
+            //     if(volArray.length == 0){
+            //         volArray = [{'Volunteer_Name':'Srishti','BitLink':'https://bit.ly/3fSzx4r'},
+            //         {'Volunteer_Name':'Shifna','BitLink':'https://bit.ly/3wzfJK2'},
+            //         {'Volunteer_Name':'Pranay','BitLink':'https://bit.ly/3fRp1KO'},
+            //         {'Volunteer_Name':'Pradeep','BitLink':' https://bit.ly/3i07Rgx'},
+            //         {'Volunteer_Name':'Shyamlee','BitLink':'https://bit.ly/3wKx4Qh'},
+            //         {'Volunteer_Name':'Anmol','BitLink':'https://bit.ly/3wKxh61'},]
+            //     }
+            //     for (let j in $scope.hospitalDetailData) {
+            //         for (let k in volArray) {
+            //             if (!$scope.lastIndex || $scope.lastIndex == k) {
+            //                 $scope.hospitalDetailData[j].Volunteer_Name = volArray[k].Volunteer_Name;
+            //                 $scope.hospitalDetailData[j].BitLink = volArray[k].BitLink;
+            //                 $scope.lastIndex = k;
+            //             }
+            //             if (volArray.length - 1 == k) {
+            //                 $scope.lastIndex = JSON.parse($scope.lastIndex) + 1;
+            //             }
+            //             if ($scope.lastIndex == volArray.length) {
+            //                 $scope.lastIndex = undefined;
+            //             }
+
+            //         }
+            //     }
+            // }
+
+            $scope.getVolunteer = function(){
+                let city = 'D'+ $scope.selectedCityName;
+                AuthService.getAllVolunteer(city)
+                    .then(function onSuccess(response) {
+                        $scope.volunteerData = response.data.data;
+                        if($scope.volunteerData.length == 0){
+                            $scope.volunteerData = [{ 'Volunteer_Name': 'Srishti', 'BitLink': 'https://bit.ly/3fSzx4r' },
+                            { 'Volunteer_Name': 'Shifna', 'BitLink': 'https://bit.ly/3wzfJK2' },
+                            { 'Volunteer_Name': 'Pranay', 'BitLink': 'https://bit.ly/3fRp1KO' },
+                            { 'Volunteer_Name': 'Pradeep', 'BitLink': ' https://bit.ly/3i07Rgx' },
+                            { 'Volunteer_Name': 'Shyamlee', 'BitLink': 'https://bit.ly/3wKx4Qh' },
+                            { 'Volunteer_Name': 'Anmol', 'BitLink': 'https://bit.ly/3wKxh61' },]
                         }
 
-                    }
-                }
+                        for (let j in $scope.hospitalDetailData) {
+                       
+                            for (let k in $scope.volunteerData) {
+                                if (!$scope.lastIndex || $scope.lastIndex == k) {
+                                    $scope.hospitalDetailData[j].Volunteer_Name = $scope.volunteerData[k].Volunteer_Name;
+                                    $scope.hospitalDetailData[j].BitLink = $scope.volunteerData[k].BitLink;
+                                    $scope.lastIndex = k;
+                                }
+                                if ($scope.volunteerData.length - 1 == k) {
+                                    $scope.lastIndex = JSON.parse($scope.lastIndex) + 1;
+                                }
+                                if ($scope.lastIndex == $scope.volunteerData.length) {
+                                    $scope.lastIndex = undefined;
+                                }
+                            }
+                        }
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
             }
 
 
