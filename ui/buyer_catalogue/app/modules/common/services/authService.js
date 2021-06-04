@@ -355,6 +355,26 @@ angular.module('Authentication')
                   });
             };
 
+            authService.getAllBedsState = function (param) {
+               return $http.get(apiHost + 'v0/ui/covid-bot/state/')
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+
+            authService.getAllBedsCity = function () {
+               return $http.get(apiHost + 'v0/ui/covid-bot/district/')
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+
 
 
             return authService;

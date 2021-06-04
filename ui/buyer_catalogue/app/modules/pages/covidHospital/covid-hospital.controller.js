@@ -40,7 +40,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.Phone = 1234567892;
             $scope.totalCity = 0;
             setInterval(function () {
-                AuthService.getAllState()
+                AuthService.getAllBedsState()
                     .then(function onSuccess(response) {
                         if (response && response.data && response.data.data) {
                             $scope.stateData = response.data.data;
@@ -52,7 +52,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                         console.log(response);
                     })
 
-                AuthService.getAllCity()
+                AuthService.getAllBedsCity()
                     .then(function onSuccess(response) {
                         if (response && response.data && response.data.data) {
                             $scope.cityData = response.data.data;
@@ -94,11 +94,10 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.getStateCity = function () {
                 let localState = localStorage.getItem("stateData");
                 // if (localStorage.getItem("stateData") && localStorage.getItem("stateData") != undefined) {
-                if (localState && localState != 'undefined') {
-
+                if (localState && localState != 'undefined' && localState.length !=0) {
                     $scope.stateData = JSON.parse(localState);
                 } else {
-                    AuthService.getAllState()
+                    AuthService.getAllBedsState()
                         .then(function onSuccess(response) {
                             if (response && response.data && response.data.data) {
                                 $scope.stateData = response.data.data;
@@ -112,13 +111,13 @@ angular.module('machadaloPages').filter('replace', [function () {
                 }
                 let localCity = localStorage.getItem("cityData");
                 // if (localStorage.getItem("cityData") && localStorage.getItem("cityData") != undefined) {
-                if (localCity && localCity != 'undefined') {
+                if (localCity && localCity != 'undefined' && localCity !=0) {
                     $scope.cityData = JSON.parse(localCity);
                     angular.forEach($scope.cityData, function (value, key) {
                         $scope.totalCity = $scope.totalCity + value.length;
                     });
                 } else {
-                    AuthService.getAllCity()
+                    AuthService.getAllBedsCity()
                         .then(function onSuccess(response) {
                             if (response && response.data && response.data.data) {
                                 $scope.cityData = response.data.data;
@@ -146,21 +145,21 @@ angular.module('machadaloPages').filter('replace', [function () {
 
 
             //gethospitalVolunteerData
-            $scope.hospitalVolunteerData = localStorage.getItem("hospitalVolunteerData");
-            $scope.hospitalVolunteerData = JSON.parse($scope.hospitalVolunteerData);
-            if (!$scope.hospitalVolunteerData) {
-                AuthService.getAllVolunteer()
-                    .then(function onSuccess(response) {
-                        if (response && response.data && response.data.data) {
-                            $scope.hospitalVolunteerData = response.data.data;
-                            localStorage.setItem("hospitalVolunteerData", JSON.stringify($scope.hospitalVolunteerData));
-                        } else {
-                            console.log('error', response);
-                        }
-                    }).catch(function onError(response) {
-                        console.log(response);
-                    })
-            }
+            // $scope.hospitalVolunteerData = localStorage.getItem("hospitalVolunteerData");
+            // $scope.hospitalVolunteerData = JSON.parse($scope.hospitalVolunteerData);
+            // if (!$scope.hospitalVolunteerData) {
+            //     AuthService.getAllVolunteer()
+            //         .then(function onSuccess(response) {
+            //             if (response && response.data && response.data.data) {
+            //                 $scope.hospitalVolunteerData = response.data.data;
+            //                 localStorage.setItem("hospitalVolunteerData", JSON.stringify($scope.hospitalVolunteerData));
+            //             } else {
+            //                 console.log('error', response);
+            //             }
+            //         }).catch(function onError(response) {
+            //             console.log(response);
+            //         })
+            // }
 
 
             $scope.getCity = function () {
@@ -339,11 +338,12 @@ angular.module('machadaloPages').filter('replace', [function () {
                                     }
                                 }
                             }
+                            $scope.getVolunteer();
                         }
                         $scope.resourcesTypeData.push({ 'resourceType': 'LATEST UPDATED TIME' }, { 'resourceType': 'FACILITY NAME - ASCENDING' }, { 'resourceType': 'FACILITY NAME - DESCENDING' });
                         $scope.totalAvailableCountsData = $scope.hospitalDetailData.length - $scope.notAvailableCount;
                        // $scope.setVolunteer();
-                        $scope.getVolunteer();
+                       
                     }).catch(function onError(response) {
                         console.log(response);
                     })
