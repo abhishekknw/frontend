@@ -767,7 +767,7 @@ td.valenteer-name {
  height: 50px !important;
  position: relative;
  bottom: 5px;
- padding: 10px 30px;
+ padding: 8px 18px;
 }
 .not-av-btn.btn-focus{
  background:#d07f0b;
@@ -802,7 +802,7 @@ td.valenteer-name {
     align-items: center;
 }
 .info-name-btn .info-row.volanteer{
- width: 40%;
+ width: 45%;
 }
 .info-name-btn .hosptal-table.volanteer-btn span{
  padding: 8px 32px;
@@ -916,7 +916,7 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	}*/
 
 	.hosptal-table.volanteer-btn img{
-	 right:-20px;
+	 right:-16px;
 	}
 	.info-row.info-feedback.mobile, .hosptal-table.volanteer-btn.mobile{
      display: block;
@@ -925,17 +925,17 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	 display: none;
 	}
 	.info-row.info-feedback .btn{
-	 font-size: 15px;
-	 height: 60px;
+	 font-size: 13px;
+	 height: 50px;
 	}
 	.btn-focus{
-     height: 70px !important;
+     height: 58px !important;
 	}
 	.info-name-btn .hosptal-table.volanteer-btn span{
     display: inline-block;
     font-size: 13px;
     vertical-align: middle;
-    padding: 8px 20px;
+    padding: 8px 16px;
 	}
 	.hosptal-table.volanteer-btn img{
 	 width:42px;
@@ -945,7 +945,7 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 
 @media only screen and (max-width:375px){
  .hosptal-table.volanteer label{
- line-height: 8px;
+ line-height: 15px;
  }
 }
 @media (max-width: 340px) {
@@ -961,7 +961,7 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
      padding: 6px 10px;
 	}
 	.info-row.info-feedback .btn{
-     font-size: 14px;
+     font-size: 12px;
 	}
 
 }
