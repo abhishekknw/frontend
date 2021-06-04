@@ -408,6 +408,7 @@ input[type="radio"]{
 }
 .top-select-option .form-control{
 	height: 40px;
+	text-transform: capitalize;
 }
 .summery-bottom-cards .card img{
 	max-width: 50px;
@@ -925,8 +926,9 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	 display: none;
 	}
 	.info-row.info-feedback .btn{
-	 font-size: 13px;
+	 font-size: 12px;
 	 height: 50px;
+	 margin: 0 5px;
 	}
 	.btn-focus{
      height: 58px !important;
@@ -963,7 +965,12 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	.info-row.info-feedback .btn{
      font-size: 12px;
 	}
-
+    .info-row.info-feedback .btn{
+     padding: 6px;
+    }
+    .info-name-btn .info-row.volanteer {
+    width: 42%;
+}
 }
 
 
