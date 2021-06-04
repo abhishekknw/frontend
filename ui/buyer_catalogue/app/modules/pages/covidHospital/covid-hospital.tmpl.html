@@ -3,7 +3,7 @@
 <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 <link href="css/smallscreen.css" rel="stylesheet" media="screen">
 
-<div class="covid-hospital" ng-init="getStateCity();">
+<div class="covid-hospital" ng-init="getStateCity();getCategory();">
   <div class="page-wrapper">
     <div class="logo-sec">
       <img src="images/machadalo-logo.png" alt="logo">
@@ -14,9 +14,9 @@
       <div class="page-inner">
         <div class="top-select-option">
           <div class="form-group">
-            <select class="form-control" name="category" ng-change="changeWeb()" id="Category_id" ng-model="selectedCategory">
-              <option ng-repeat="cat in categorys track by $index" value="{{cat}}" style="text-transform: capitalize;">
-                {{cat}}
+            <select class="form-control" name="category" id="Category_id"  ng-change="changeWeb()" ng-model="selectedCategory">
+              <option ng-repeat="cat in categorysArray track by $index" value="{{cat.name}}"  style="text-transform: capitalize;">
+                {{cat.name}}
               </option>
             </select>
           </div>

@@ -65,9 +65,9 @@
         <div ng-if="!loading" ng-loadings="loading"></div>
         <div class="row info-table-row" ng-if="loading">
           <div class="info-table-heading" ng-if="!selectedCityName" ><h2 style="text-align: center;">Top Suppliers <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
-          <div class="info-table-heading"  ng-if="selectedStateName && selectedCityName" ><h2 style="text-align: center;">Top Suppliers in {{selectedCityName}}, {{selectedStateName}}  <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
+          <div class="info-table-heading"  ng-if="selectedCityName" ><h2 style="text-align: center;">Top Suppliers in {{selectedCityName}}, {{selectedStateName}}  <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
           <div class="col-md-6" ng-if="cylinderDetailData.length > 0" ng-repeat="cylinder in cylinderDetailData track by $index">
-            <div class="info-table-wrap">
+            <div class="info-table-wrap" ng-if="selectedCategory == 'Cylinders' || selectedCategory == 'Refills' || selectedCategory == 'Concentrators'">
               <div class="info-row">
                 <label class="infolable">Contact Name:</label>
                 <span ng-show="cylinder.MDContactName">{{cylinder.MDContactName}}</span>
@@ -119,11 +119,6 @@
                 <a href="" ng-click="triggerCall(cylinder.MDContactNumber)"> {{cylinder.MDContactNumber }}</a>
               </div>
             
-             
-              <!-- <div class="info-row">
-                <label class="infolable"><strong>Volunteer Name: </strong></label>
-                ABC
-              </div> -->
               <div class="info-name-btn">
               <div class="info-row volanteer">
                 <label class="infolable">Volunteer Name: &nbsp;
@@ -131,16 +126,25 @@
                    <strong>{{cylinder.Volunteer_Name}}</strong>
               </div>
               <div class="hosptal-table volanteer-btn desktop text-center">
-                  <a href="{{cylinder.BitLink}}" data-action="share/whatsapp/share" target="_blank"> 
+                  <a href="{{cylinder.BitLink}}" ng-if="cylinder.BitLink" data-action="share/whatsapp/share" target="_blank"> 
                     <img src="images/whatsapp-icon.png">
                      <span>Chat with Volunteer</span> 
                     </a>
+                    <a href="" ng-if="!cylinder.BitLink" data-action="share/whatsapp/share"> 
+                      <img src="images/whatsapp-icon.png">
+                       <span>Chat with Volunteer</span> 
+                      </a>
               </div>
               <div class="hosptal-table volanteer-btn mobile text-center">
-                  <a href="{{cylinder.BitLink}}" data-action="share/whatsapp/share" target="_blank"> 
+                  <a href="{{cylinder.BitLink}}" ng-if="cylinder.BitLink" data-action="share/whatsapp/share" target="_blank"> 
                     <img src="images/whatsapp-icon.png">
                      <span>Chat with<br> Volunteer</span> 
                     </a>
+
+                    <a href="" data-action="share/whatsapp/share" ng-if="!cylinder.BitLink"> 
+                      <img src="images/whatsapp-icon.png">
+                       <span>Chat with<br> Volunteer</span> 
+                      </a>
               </div>
               </div>
 
@@ -161,7 +165,85 @@
                   </div>
               </div>
             </div>
-          </div>
+         
+            <!-- Medicine -->
+
+            <div class="info-table-wrap" ng-if="selectedCategory == 'Medicines'">
+              <div class="info-row">
+                <label class="infolable">Medicine Name:</label>
+                <span ng-show="cylinder.MDMedicineName">{{cylinder.MDMedicineName}}</span>
+                <span ng-show="!cylinder.MDMedicineName || cylinder.MDMedicineName == ' '">N/A</span>
+              </div>
+              <div class="info-row">
+                <label class="infolable">Contact Name:</label>
+                <span ng-show="cylinder.MDContactName">{{cylinder.MDContactName}}</span>
+                <span ng-show="!cylinder.MDContactName || cylinder.MDContactName == ' '">N/A</span>
+              </div>
+              <div class="info-row">
+                <label class="infolable"> Address:</label>
+                <span ng-show="cylinder.MDAddress"> {{cylinder.MDAddress}} </span>
+                <span ng-show="cylinder.MDAddress == ' ' || !cylinder.MDAddress"> N/A </span>
+              </div>
+          
+              <div class="info-row">
+                <label class="infolable">Last Updated Time:</label>
+                <span ng-show="cylinder.MDLastUpdatedTime"><strong>{{cylinder.MDLastUpdatedTime | date:'medium'}} </strong></span>
+                <span ng-show="cylinder.MDLastUpdatedTime == ' ' || !cylinder.MDLastUpdatedTime"> N/A </span>
+              </div>
+          
+          
+              <div class="info-row">
+                <label class="infolable">Contact Number:</label>
+                <a href="" ng-click="triggerCall(cylinder.MDContactNumber)"> {{cylinder.MDContactNumber }}</a>
+              </div>
+            
+              <div class="info-name-btn">
+              <div class="info-row volanteer">
+                <label class="infolable">Volunteer Name: &nbsp;
+                </label>
+                   <strong>{{cylinder.Volunteer_Name}}</strong>
+              </div>
+              <div class="hosptal-table volanteer-btn desktop text-center">
+                  <a href="{{cylinder.BitLink}}" ng-if="cylinder.BitLink" data-action="share/whatsapp/share" target="_blank"> 
+                    <img src="images/whatsapp-icon.png">
+                     <span>Chat with Volunteer</span> 
+                    </a>
+                    <a href="" ng-if="!cylinder.BitLink" data-action="share/whatsapp/share" > 
+                      <img src="images/whatsapp-icon.png">
+                       <span>Chat with Volunteer</span> 
+                      </a>
+              </div>
+              <div class="hosptal-table volanteer-btn mobile text-center">
+                  <a href="{{cylinder.BitLink}}" ng-if="cylinder.BitLink" data-action="share/whatsapp/share" target="_blank"> 
+                    <img src="images/whatsapp-icon.png">
+                     <span>Chat with<br> Volunteer</span> 
+                    </a>
+                    <a href="" ng-if="!cylinder.BitLink" data-action="share/whatsapp/share"> 
+                      <img src="images/whatsapp-icon.png">
+                       <span>Chat with<br> Volunteer</span> 
+                      </a>
+              </div>
+              </div>
+          
+              <div class="info-row info-feedback desktop">
+                <label class="infolable">Provide Feedback</label>
+                <div class="feedback-btns">
+                <button type="button" name="button" ng-disabled="cylinder.notAvailableButton || cylinder.wrongNumberButton" ng-click="resourcesAvailable($index)" class="btn btn-success res-btn" ng-class="{'btn-focus':cylinder.resourcesAvailableButton}" >Resources Available</button>
+                  <button type="button" name="button" ng-disabled="cylinder.resourcesAvailableButton || cylinder.wrongNumberButton" ng-click="notAvailable($index)" class="btn btn-warning not-av-btn" ng-class="{'btn-focus':cylinder.notAvailableButton}">Not Available</button>
+                    <button type="button" name="button" ng-disabled="cylinder.resourcesAvailableButton || cylinder.notAvailableButton" ng-click="wrongNumber($index)" class="btn btn-danger wr-btn" ng-class="{'btn-focus':cylinder.wrongNumberButton}">Wrong Number</button>
+                  </div>
+              </div>
+              <div class="info-row info-feedback mobile">
+                <label class="infolable">Provide Feedback</label>
+                <div class="feedback-btns">
+                <button type="button" name="button" ng-disabled="cylinder.notAvailableButton || cylinder.wrongNumberButton" ng-click="resourcesAvailable($index)" class="btn btn-success res-btn" ng-class="{'btn-focus':cylinder.resourcesAvailableButton}" >Resources <br> Available</button>
+                  <button type="button" name="button" ng-disabled="cylinder.resourcesAvailableButton || cylinder.wrongNumberButton" ng-click="notAvailable($index)" class="btn btn-warning not-av-btn" ng-class="{'btn-focus':cylinder.notAvailableButton}">Not <br> Available</button>
+                    <button type="button" name="button" ng-disabled="cylinder.resourcesAvailableButton || cylinder.notAvailableButton" ng-click="wrongNumber($index)" class="btn btn-danger wr-btn" ng-class="{'btn-focus':cylinder.wrongNumberButton}">Wrong <br> Number</button>
+                  </div>
+              </div>
+            </div>
+        </div>
+      </div>
           <div ng-if="errorMsg">
             <h4 style="color:red;text-align: center">{{errorMsg}}</h4>
           </div>

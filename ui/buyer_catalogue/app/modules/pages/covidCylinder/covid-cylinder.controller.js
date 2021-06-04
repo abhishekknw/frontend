@@ -29,6 +29,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                             }).indexOf(selectedCategoryname);
                             if (localindex_index != -1) {
                                 $scope.selectedCategoryCode = $scope.categorysArray[localindex_index].category_code;
+                                $scope.selectedCategoryKeyword = $scope.categorysArray[localindex_index].keyword;
                                 $scope.getState();
                             }
                         }
@@ -46,8 +47,10 @@ angular.module('machadaloPages').filter('replace', [function () {
                     $location.path("/concentrators/covidhelpdesk/");
                 } else if ($scope.selectedCategory == 'Cylinders') {
                     $location.path("/cylinders/covidhelpdesk/");
+                } else if ($scope.selectedCategory == 'Medicines') {
+                    $location.path("/medicines/covidhelpdesk/");
                 }
-
+                $scope.cylinderDetailData = [];
             }
 
             $scope.getState = function () {
@@ -60,6 +63,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             }
 
             $scope.getCity = function () {
+                $scope.city_code = null;
                 let param = {
                     categoryCode : $scope.selectedCategoryCode,
                     stateCode : $scope.state_code
@@ -83,7 +87,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                 $scope.loading = null;
                 let param = {
                     city: $scope.selectedCityName,
-                    category: $scope.selectedCategory
+                    categoryKeyword: $scope.selectedCategoryKeyword
                 }
                 $scope.cylinderDetailData = [];
                 $scope.errorMsg = "";
@@ -118,7 +122,10 @@ angular.module('machadaloPages').filter('replace', [function () {
                         }
 
                         for (let j in $scope.cylinderDetailData) {
-                            $scope.cylinderDetailData[j].MDContactNumber = JSON.parse($scope.cylinderDetailData[j].MDContactNumber);
+                            // if($scope.cylinderDetailData[j].MDContactNumber){
+                            //     $scope.cylinderDetailData[j].MDContactNumber = JSON.parse($scope.cylinderDetailData[j].MDContactNumber);
+                            // }
+                            
                             for (let k in $scope.volunteerData) {
                                 if (!$scope.lastIndex || $scope.lastIndex == k) {
                                     $scope.cylinderDetailData[j].Volunteer_Name = $scope.volunteerData[k].Volunteer_Name;

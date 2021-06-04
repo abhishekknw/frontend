@@ -205,6 +205,12 @@ angular
         controller: 'covidCylinderCtrl',
         templateUrl: 'modules/pages/covidCylinder/covid-cylinder.tmpl.html',
       })
+
+      .state('covidMedicines', {
+        url: '/medicines/covidhelpdesk/',
+        controller: 'covidCylinderCtrl',
+        templateUrl: 'modules/pages/covidCylinder/covid-cylinder.tmpl.html',
+      })
       
 
 
@@ -658,7 +664,9 @@ angular
             $location.path("/refills/covidhelpdesk/");
           } else if (url[1] == "concentrators") {
             $location.path("/concentrators/covidhelpdesk/");
-          }else {
+          } else if (url[1] == "medicines") {
+            $location.path("/medicines/covidhelpdesk/");
+          } else {
             $location.path("/login");
           }
         }
@@ -679,6 +687,8 @@ angular
             $location.path("/refills/covidhelpdesk/");
           } else if (url[1] == "concentrators") {
             $location.path("/concentrators/covidhelpdesk/");
+          } else if (url[1] == "medicines") {
+            $location.path("/medicines/covidhelpdesk/");
           } else {
             $location.path("/login");
           }
