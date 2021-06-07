@@ -22,6 +22,20 @@ angular.module('machadaloPages').filter('replace', [function () {
                 AuthService.getAllCategory()
                     .then(function onSuccess(response) {
                         $scope.categorysArray = response.data.data;
+                        for(let i in $scope.categorysArray){
+                            if($scope.categorysArray[i].name == 'Ambulance'){
+                                 $scope.categorysArray.splice(i, 1); 
+                                 $scope.categorysArrayNew = $scope.categorysArray;
+                            }
+                        }
+
+                        for(let i in $scope.categorysArrayNew){
+                            if($scope.categorysArrayNew[i].name == 'Plasma'){
+                                 $scope.categorysArrayNew.splice(i, 1); 
+                                 $scope.categorysArray  = $scope.categorysArrayNew;
+                            }
+                        }
+
                         if ($scope.selectedCategory && $scope.categorysArray.length > 0) {
                             let selectedCategoryname = $scope.selectedCategory;
                             var localindex_index = $scope.categorysArray.map(function (el) {
