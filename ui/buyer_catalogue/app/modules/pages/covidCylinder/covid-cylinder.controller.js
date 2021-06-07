@@ -29,9 +29,9 @@ angular.module('machadaloPages').filter('replace', [function () {
                             }
                         }
 
-                        for(let i in $scope.categorysArrayNew){
-                            if($scope.categorysArrayNew[i].name == 'Plasma'){
-                                 $scope.categorysArrayNew.splice(i, 1); 
+                        for(let j in $scope.categorysArrayNew){
+                            if($scope.categorysArrayNew[j].name == 'Plasma'){
+                                 $scope.categorysArrayNew.splice(j, 1); 
                                  $scope.categorysArray  = $scope.categorysArrayNew;
                             }
                         }
