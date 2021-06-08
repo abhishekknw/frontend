@@ -437,51 +437,94 @@ angular.module('machadaloPages').filter('replace', [function () {
 
 
             $scope.resourcesAvailable = function (vender) {
+                let param = {
+                    "district": $scope.selectedCityName,
+                    "city": "",
+                    "category": $scope.selectedCategoryKeyword,
+                    "feedback": 'Resources Available',
+                    "contact_number": null,
+                }
                 var localindex_index = $scope.hospitalDetailData.map(function (el) {
                     return el.vendor_name;
                 }).indexOf(vender);
                 if (localindex_index != -1) {
+                    param.contact_name = $scope.hospitalDetailData[localindex_index].vendor_name;
                     if($scope.hospitalDetailData[localindex_index].resourcesAvailableButton){
+                        param.feedback = '-Resources Available';
                         $scope.hospitalDetailData[localindex_index].resourcesAvailableButton = false;
                         swal("Feedback Removed", "Successfully", "success");
                     } else {
                         $scope.hospitalDetailData[localindex_index].resourcesAvailableButton = true;
                         swal("Feedback Accepted", "Successfully", "success");
                     }
+                    AuthService.feedback(param)
+                    .then(function onSuccess(response) {
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
                 } else {
                     swal("Hospital not found.", "", "error");
                 }
             }
 
             $scope.notAvailable = function (vender) {
+                let param = {
+                    "district": $scope.selectedCityName,
+                    "city": "",
+                    "category": $scope.selectedCategoryKeyword,
+                    "feedback": 'Not Available',
+                    "contact_number": null,
+                }
                 var localindex_index = $scope.hospitalDetailData.map(function (el) {
                     return el.vendor_name;
                 }).indexOf(vender);
                 if (localindex_index != -1) {
+                    param.contact_name = $scope.hospitalDetailData[localindex_index].vendor_name;
                     if($scope.hospitalDetailData[localindex_index].notAvailableButton){
+                        param.feedback = '-Not Available';
                         $scope.hospitalDetailData[localindex_index].notAvailableButton = false;
                         swal("Feedback Removed", "Successfully", "success");
                     } else {
                         $scope.hospitalDetailData[localindex_index].notAvailableButton = true;
                         swal("Feedback Accepted", "Successfully", "success");
                     }
+                    AuthService.feedback(param)
+                    .then(function onSuccess(response) {
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
                 } else {
                     swal("Hospital not found.", "", "error");
                 }
             }
 
             $scope.wrongNumber = function (vender) {
+                let param = {
+                    "district": $scope.selectedCityName,
+                    "city": "",
+                    "category": $scope.selectedCategoryKeyword,
+                    "feedback": 'Wrong Number',
+                    "contact_number": null,
+                   
+                }
                 var localindex_index = $scope.hospitalDetailData.map(function (el) {
                     return el.vendor_name;
                 }).indexOf(vender);
                 if (localindex_index != -1) {
+                    param.contact_name = $scope.hospitalDetailData[localindex_index].vendor_name;
                     if($scope.hospitalDetailData[localindex_index].wrongNumberButton){
+                        param.feedback = '-Wrong Number';
                         $scope.hospitalDetailData[localindex_index].wrongNumberButton = false;
                         swal("Feedback Removed", "Successfully", "success");
                     } else {
                         $scope.hospitalDetailData[localindex_index].wrongNumberButton = true;
                         swal("Feedback Accepted", "Successfully", "success");
                     }
+                     AuthService.feedback(param)
+                    .then(function onSuccess(response) {
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
                 } else {
                     swal("Hospital not found.", "", "error");
                 }
