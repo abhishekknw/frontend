@@ -22,17 +22,17 @@ angular.module('machadaloPages').filter('replace', [function () {
                 AuthService.getAllCategory()
                     .then(function onSuccess(response) {
                         $scope.categorysArray = response.data.data;
-                        for(let i in $scope.categorysArray){
-                            if($scope.categorysArray[i].name == 'Ambulance'){
-                                 $scope.categorysArray.splice(i, 1); 
-                                 $scope.categorysArrayNew = $scope.categorysArray;
+                        for (let i in $scope.categorysArray) {
+                            if ($scope.categorysArray[i].name == 'Ambulance') {
+                                $scope.categorysArray.splice(i, 1);
+                                $scope.categorysArrayNew = $scope.categorysArray;
                             }
                         }
 
-                        for(let j in $scope.categorysArrayNew){
-                            if($scope.categorysArrayNew[j].name == 'Plasma'){
-                                 $scope.categorysArrayNew.splice(j, 1); 
-                                 $scope.categorysArray  = $scope.categorysArrayNew;
+                        for (let j in $scope.categorysArrayNew) {
+                            if ($scope.categorysArrayNew[j].name == 'Plasma') {
+                                $scope.categorysArrayNew.splice(j, 1);
+                                $scope.categorysArray = $scope.categorysArrayNew;
                             }
                         }
 
@@ -87,8 +87,8 @@ angular.module('machadaloPages').filter('replace', [function () {
                 $scope.selectedCityName = null;
                 $scope.cylinderDetailData = [];
                 let param = {
-                    categoryCode : $scope.selectedCategoryCode,
-                    stateCode : $scope.state_code
+                    categoryCode: $scope.selectedCategoryCode,
+                    stateCode: $scope.state_code
                 }
                 AuthService.getAllCity(param)
                     .then(function onSuccess(response) {
@@ -130,11 +130,11 @@ angular.module('machadaloPages').filter('replace', [function () {
                     })
             }
 
-            $scope.getVolunteer = function(){
+            $scope.getVolunteer = function () {
                 AuthService.getAllVolunteer($scope.selectedCityName)
                     .then(function onSuccess(response) {
                         $scope.volunteerData = response.data.data;
-                        if($scope.volunteerData.length == 0){
+                        if ($scope.volunteerData.length == 0) {
                             $scope.volunteerData = [{ 'Volunteer_Name': 'Srishti', 'BitLink': 'https://bit.ly/3fSzx4r' },
                             { 'Volunteer_Name': 'Shifna', 'BitLink': 'https://bit.ly/3wzfJK2' },
                             { 'Volunteer_Name': 'Pranay', 'BitLink': 'https://bit.ly/3fRp1KO' },
@@ -147,7 +147,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                             // if($scope.cylinderDetailData[j].MDContactNumber){
                             //     $scope.cylinderDetailData[j].MDContactNumber = JSON.parse($scope.cylinderDetailData[j].MDContactNumber);
                             // }
-                            
+
                             for (let k in $scope.volunteerData) {
                                 if (!$scope.lastIndex || $scope.lastIndex == k) {
                                     $scope.cylinderDetailData[j].Volunteer_Name = $scope.volunteerData[k].Volunteer_Name;
@@ -173,28 +173,66 @@ angular.module('machadaloPages').filter('replace', [function () {
             }
 
             $scope.resourcesAvailable = function (index) {
+                let param = {
+                    "district": "",
+                    "city": $scope.selectedCityName,
+                    "category": $scope.selectedCategoryKeyword,
+                    "feedback": 'Resources Available',
+                    "contact_number": $scope.cylinderDetailData[index].MDContactNumber,
+                    "contact_name": $scope.cylinderDetailData[index].MDContactName
+                }
                 if ($scope.cylinderDetailData[index].resourcesAvailableButton) {
+                    param.feedback = '-Resources Available';
                     $scope.cylinderDetailData[index].resourcesAvailableButton = false;
                     swal("Feedback Removed", "Successfully", "success");
+                   
                 } else {
                     $scope.cylinderDetailData[index].resourcesAvailableButton = true;
                     swal("Feedback Accepted", "Successfully", "success");
                 }
+                AuthService.feedback(param)
+                .then(function onSuccess(response) {
+                }).catch(function onError(response) {
+                    console.log(response);
+                })
 
             }
 
             $scope.notAvailable = function (index) {
+                let param = {
+                    "district": "",
+                    "city": $scope.selectedCityName,
+                    "category": $scope.selectedCategoryKeyword,
+                    "feedback": 'Not Available',
+                    "contact_number": $scope.cylinderDetailData[index].MDContactNumber,
+                    "contact_name": $scope.cylinderDetailData[index].MDContactName
+                }
                 if ($scope.cylinderDetailData[index].notAvailableButton) {
+                    param.feedback = '-Not Available';
                     $scope.cylinderDetailData[index].notAvailableButton = false;
                     swal("Feedback Removed", "Successfully", "success");
                 } else {
                     $scope.cylinderDetailData[index].notAvailableButton = true;
                     swal("Feedback Accepted", "Successfully", "success");
                 }
+                AuthService.feedback(param)
+                .then(function onSuccess(response) {
+                }).catch(function onError(response) {
+                    console.log(response);
+                })
             }
 
             $scope.wrongNumber = function (index) {
+                let param = {
+                    "district": "",
+                    "city": $scope.selectedCityName,
+                    "category": $scope.selectedCategoryKeyword,
+                    "feedback": 'Wrong Number',
+                    "contact_number": $scope.cylinderDetailData[index].MDContactNumber,
+                    "contact_name": $scope.cylinderDetailData[index].MDContactName
+                }
                 if ($scope.cylinderDetailData[index].wrongNumberButton) {
+                    param.feedback = '-Wrong Number';
                     $scope.cylinderDetailData[index].wrongNumberButton = false;
                     swal("Feedback Removed", "Successfully", "success");
                 } else {
