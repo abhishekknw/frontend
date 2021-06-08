@@ -375,6 +375,25 @@ angular.module('Authentication')
                   });
             };
 
+            authService.feedback = function (param) {
+               return $http.post(apiHost + 'v0/ui/covid-bot/feedback-from-bot/', param)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+
+
+                  // $http.post(apiHost + 'v0/ui/setResetPassword', { email: params.email, code: params.code, password: params.password })
+                  // .then(function onSuccess(response) {
+                  //    callback(response.data);
+                  // })
+                  // .catch(function onError(response) {
+                  //    callback(response);
+                  // });
+            };
+
 
 
             return authService;
