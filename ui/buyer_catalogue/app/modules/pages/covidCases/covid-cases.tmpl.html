@@ -1,0 +1,173 @@
+<link rel="stylesheet" href="modules/pages/login/login.tmpl.css" />
+<link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css" />
+<script src='https://www.google.com/recaptcha/api.js' async defer></script>
+<link href="css/smallscreen.css" rel="stylesheet" media="screen">
+
+<div class="covid-hospital" ng-init="getCovidCasesState();getCategory();">
+  <div class="page-wrapper">
+    <div class="logo-sec">
+      <img src="images/machadalo-logo.png" alt="logo">
+      <h1><span class="img_hospital"><img src="images/plus_icon.png" alt="logo"></span> COVID19 HELPDESK, AVAILABLE
+        {{selectedCategory}}</h1>
+    </div>
+
+    <div class="container">
+      <div class="page-inner">
+        <div class="top-select-option">
+          <div class="form-group">
+            <select class="form-control" name="category" id="Category_id" ng-change="changeWeb()"
+              ng-model="selectedCategory">
+              <option ng-repeat="cat in categorysArray track by $index" value="{{cat.name}}"
+                style="text-transform: capitalize;">
+                {{cat.name}}
+              </option>
+            </select>
+          </div>
+          <p style="text-align: center;">
+          <h4 style="text-align: center;"> Data currently available for {{stateData.length}} States/UT and 410 Districts
+            as per all
+            available Online Government and Volunteer Sources</h4>
+          </p>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <select class="form-control" ng-change="getCity();getCovidCases()" name="state" id="state_id"
+                  ng-model="state_code">
+                  <option value="" disabled>
+                    Select State/UT
+                  </option>
+                  <option ng-repeat="state in stateData track by $index" value="{{state.state_code}}"
+                    style="text-transform: capitalize;">
+                    {{state.state}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <select class="form-control" name="city" ng-change="getCovidCases()" id="city_id"
+                  ng-model="district_code">
+                  <option value="" disabled>
+                    Select District/City
+                  </option>
+                  <option ng-repeat="city in cityData track by $index" value="{{city.district_code}}"
+                    style="text-transform: capitalize;">
+                    <p style="text-transform: capitalize;"> {{city.district_name}} </p>
+                  </option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="summery">
+          <h4 class="title" ng-if="selectedCityName || selectedStateName">Summary of Covid Cases in
+            {{selectedCityName}} <span ng-if="selectedCityName && selectedStateName">,</span> {{selectedStateName}}
+          </h4>
+          <h4 class="title" ng-if="!selectedCityName && !selectedStateName">Summary </h4>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card">
+                <h3>Total Cases :</h3>
+                <div ng-if="!loading" ng-loadings="loading"></div>
+                <div class="hospital-card-wrapper" ng-if="loading">
+                  <div>
+                    <!-- <h4>Total Confirmed Cases : {{totalConfirmedCases}}</h4>
+                    <h4>Total Active Cases : {{totalActiveCases}}</h4>
+                    <h4>Total Recovered Cases : {{totalRecoveredCases}}</h4>
+                    <h4>Total Deceased Cases : {{totalDeceasedCases}}</h4> -->
+                    <div class="hospital-card">
+                      <h4>Total Confirmed Cases : {{totalConfirmedCases}}</h4>
+                    </div>
+                    <div class="hospital-card">
+                      <h4>Total Active Cases : {{totalActiveCases}}</h4>
+                    </div>
+                    <div class="hospital-card">
+                      <h4>Total Recovered Cases : {{totalRecoveredCases}}</h4>
+                    </div>
+                    <div class="hospital-card">
+                      <h4>Total Deceased Cases : {{totalDeceasedCases}}</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card header" style="background-color: seagreen;">
+                <h3>Yesterday's Cases :
+                </h3>
+                <div ng-if="!loading" ng-loadings="loading"></div>
+                <div class="hospital-card-wrapper" ng-if="loading">
+                  <div>
+ 
+                    <div class="hospital-card">
+                      <h4>Total Confirmed Cases : {{totalConfirmedCases}}</h4>
+                    </div>
+                    <!-- <div class="hospital-card">
+                    </div> -->
+                    <!-- <div class="hospital-card">
+                      <h4>Total Active Cases : {{totalActiveCases}}</h4>
+                    </div> -->
+                    <div class="hospital-card">
+                      <h4>Total Recovered Cases : {{totalRecoveredCases}}</h4>
+                    </div>
+                    <div class="hospital-card">
+                      <h4>Total Deceased Cases : {{totalDeceasedCases}}</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="search-hopital" ng-show="district_code =='all'">
+            <div class="natext" ng-show="covidCasesData.length > 0">
+              N/A means Data Not Available 
+            </div>
+            <div ng-if="!loading" ng-loadings="loading"></div>
+            <div class="row" ng-if="loading">
+
+
+              <div class="col-md-6" ng-if="covidCasesData.length > 0"
+                ng-repeat="cases in covidCasesData track by $index">
+                <div class="info-table-wrap">
+
+                  <div class="info-row">
+                    <!-- <label class="infolable">District Name:</label>
+                    <span>{{cases.district_name}}</span> -->
+                    <h3>District Name: <span> {{cases.district_name}}</span>
+                  </div>
+
+                  <div class="info-row">
+                    <label class="infolable">Total Confirmed Cases:</label>
+                    <span> {{cases.confirmed}}</span>
+                  </div>
+                  <div class="info-row">
+                    <label class="infolable">Total Active Cases:</label>
+                    <span> {{cases.active}}</span>
+                  </div>
+
+                  <div class="info-row">
+                    <label class="infolable">Total Recovered Cases:</label>
+                    <span> {{cases.recovered}}</span>
+                  </div>
+
+                  <div class="info-row">
+                    <label class="infolable">Total Deceased Cases:</label>
+                    <span> {{cases.deceased}}</span>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <h4 style="color:red;text-align: center" ng-show="covidCasesData.length==0">No
+                Covid Cases Found.</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- machadalo-login -->

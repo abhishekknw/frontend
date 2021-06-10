@@ -32,6 +32,8 @@ angular.module('machadaloPages').filter('replace', [function () {
                     $location.path("/cylinders/covidhelpdesk/");
                 } else if ($scope.selectedCategory == 'Medicines') {
                     $location.path("/medicines/covidhelpdesk/");
+                }else if ($scope.selectedCategory == 'Covid Cases' || $scope.selectedCategory == 'Covidcases') {
+                    $location.path("/covidcases/covidhelpdesk/");
                 }
                 $scope.hospitalDetailData = [];
             }
@@ -73,6 +75,11 @@ angular.module('machadaloPages').filter('replace', [function () {
                 AuthService.getAllCategory()
                     .then(function onSuccess(response) {
                         $scope.categorysArray = response.data.data;
+                        $scope.categorysArray.push({
+                            "category_code": "",
+                            "keyword": "MDCovidcases",
+                            "name": "Covid Cases",
+                        });
                         for(let i in $scope.categorysArray){
                             if($scope.categorysArray[i].name == 'Ambulance'){
                                  $scope.categorysArray.splice(i, 1); 
@@ -405,6 +412,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                 AuthService.getAllVolunteer(city)
                     .then(function onSuccess(response) {
                         $scope.volunteerData = response.data.data;
+                        
                         if($scope.volunteerData.length == 0){
                             $scope.volunteerData = [{ 'Volunteer_Name': 'Srishti', 'BitLink': 'https://bit.ly/3fSzx4r' },
                             { 'Volunteer_Name': 'Shifna', 'BitLink': 'https://bit.ly/3wzfJK2' },
@@ -417,17 +425,23 @@ angular.module('machadaloPages').filter('replace', [function () {
                         for (let j in $scope.hospitalDetailData) {
                        
                             for (let k in $scope.volunteerData) {
-                                if (!$scope.lastIndex || $scope.lastIndex == k) {
+                                if($scope.volunteerData.length == 1){
                                     $scope.hospitalDetailData[j].Volunteer_Name = $scope.volunteerData[k].Volunteer_Name;
                                     $scope.hospitalDetailData[j].BitLink = $scope.volunteerData[k].BitLink;
-                                    $scope.lastIndex = k;
+                                } else {
+                                    if (!$scope.lastIndex || $scope.lastIndex == k) {
+                                        $scope.hospitalDetailData[j].Volunteer_Name = $scope.volunteerData[k].Volunteer_Name;
+                                        $scope.hospitalDetailData[j].BitLink = $scope.volunteerData[k].BitLink;
+                                        $scope.lastIndex = k;
+                                    }
+                                    if ($scope.volunteerData.length - 1 == k) {
+                                        $scope.lastIndex = JSON.parse($scope.lastIndex) + 1;
+                                    }
+                                    if ($scope.lastIndex == $scope.volunteerData.length) {
+                                        $scope.lastIndex = undefined;
+                                    }
                                 }
-                                if ($scope.volunteerData.length - 1 == k) {
-                                    $scope.lastIndex = JSON.parse($scope.lastIndex) + 1;
-                                }
-                                if ($scope.lastIndex == $scope.volunteerData.length) {
-                                    $scope.lastIndex = undefined;
-                                }
+                               
                             }
                         }
                     }).catch(function onError(response) {

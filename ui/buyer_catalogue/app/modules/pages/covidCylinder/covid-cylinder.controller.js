@@ -22,6 +22,11 @@ angular.module('machadaloPages').filter('replace', [function () {
                 AuthService.getAllCategory()
                     .then(function onSuccess(response) {
                         $scope.categorysArray = response.data.data;
+                        $scope.categorysArray.push({
+                            "category_code": "",
+                            "keyword": "MDCovidcases",
+                            "name": "Covid Cases",
+                        });
                         for (let i in $scope.categorysArray) {
                             if ($scope.categorysArray[i].name == 'Ambulance') {
                                 $scope.categorysArray.splice(i, 1);
@@ -63,6 +68,8 @@ angular.module('machadaloPages').filter('replace', [function () {
                     $location.path("/cylinders/covidhelpdesk/");
                 } else if ($scope.selectedCategory == 'Medicines') {
                     $location.path("/medicines/covidhelpdesk/");
+                } else if ($scope.selectedCategory == 'Covid Cases' || $scope.selectedCategory == 'Covidcases') {
+                    $location.path("/covidcases/covidhelpdesk/");
                 }
                 $scope.cylinderDetailData = [];
             }
@@ -149,6 +156,10 @@ angular.module('machadaloPages').filter('replace', [function () {
                             // }
 
                             for (let k in $scope.volunteerData) {
+                                if($scope.volunteerData.length == 1){
+                                    $scope.cylinderDetailData[j].Volunteer_Name = $scope.volunteerData[k].Volunteer_Name;
+                                    $scope.cylinderDetailData[j].BitLink = $scope.volunteerData[k].BitLink;
+                                } else {
                                 if (!$scope.lastIndex || $scope.lastIndex == k) {
                                     $scope.cylinderDetailData[j].Volunteer_Name = $scope.volunteerData[k].Volunteer_Name;
                                     $scope.cylinderDetailData[j].BitLink = $scope.volunteerData[k].BitLink;
@@ -160,6 +171,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                                 if ($scope.lastIndex == $scope.volunteerData.length) {
                                     $scope.lastIndex = undefined;
                                 }
+                            }
                             }
                         }
                     }).catch(function onError(response) {
