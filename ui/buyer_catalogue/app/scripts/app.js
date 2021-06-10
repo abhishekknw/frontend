@@ -179,7 +179,7 @@ angular
       //   // }
       // })
       .state('covidHospital', {
-        url: '/hospitalbeds/covidhelpdesk/',
+        url: '/hospitalbeds/',
         controller: 'covidHospitalCtrl',
         templateUrl: 'modules/pages/covidHospital/covid-hospital.tmpl.html',
         // data :{
@@ -188,36 +188,43 @@ angular
       })
 
       .state('covidCylinder', {
-        url: '/cylinders/covidhelpdesk/',
+        url: '/cylinders/',
         controller: 'covidCylinderCtrl',
         templateUrl: 'modules/pages/covidCylinder/covid-cylinder.tmpl.html',
 
       })
 
       .state('covidRefill', {
-        url: '/refills/covidhelpdesk/',
+        url: '/refills/',
         controller: 'covidCylinderCtrl',
         templateUrl: 'modules/pages/covidCylinder/covid-cylinder.tmpl.html',
       })
 
       .state('covidConcentrators', {
-        url: '/concentrators/covidhelpdesk/',
+        url: '/concentrators/',
         controller: 'covidCylinderCtrl',
         templateUrl: 'modules/pages/covidCylinder/covid-cylinder.tmpl.html',
       })
 
       .state('covidMedicines', {
-        url: '/medicines/covidhelpdesk/',
+        url: '/medicines/',
         controller: 'covidCylinderCtrl',
         templateUrl: 'modules/pages/covidCylinder/covid-cylinder.tmpl.html',
       })
       
       .state('covidCases', {
-        url: '/covidcases/covidhelpdesk/',
+        url: '/covidcases/',
         controller: 'covidCasesCtrl',
         templateUrl: 'modules/pages/covidCases/covid-cases.tmpl.html',
       })
 
+      .state('covidLanding', {
+        url: '/covidLanding/',
+        controller: 'covidLandingCtrl',
+        templateUrl: 'modules/pages/covidLanding/covid-landing.tmpl.html',
+      })
+
+  
 
       .state('resetPassword', {
         url: '/reset-password/:code/:email',
@@ -662,17 +669,17 @@ angular
           } else if (url[1] == "beds") {
             $location.path("/beds/covid/machadalo");
           } else if (url[1] == "hospitalbeds") {
-            $location.path("/hospitalbeds/covidhelpdesk/");
+            $location.path("/hospitalbeds/");
           } else if (url[1] == "cylinders") {
-            $location.path("/cylinders/covidhelpdesk/");
+            $location.path("/cylinders/");
           } else if (url[1] == "refills") {
-            $location.path("/refills/covidhelpdesk/");
+            $location.path("/refills/");
           } else if (url[1] == "concentrators") {
-            $location.path("/concentrators/covidhelpdesk/");
+            $location.path("/concentrators/");
           } else if (url[1] == "medicines") {
-            $location.path("/medicines/covidhelpdesk/");
+            $location.path("/medicines/");
           } else if (url[1] == "covidcases") {
-            $location.path("/covidcases/covidhelpdesk/");
+            $location.path("/covidcases/");
           } else {
             $location.path("/login");
           }
@@ -687,17 +694,17 @@ angular
           } else if (url[1] == "beds") {
             $location.path("/beds/covid/machadalo");
           } else if (url[1] == "hospitalbeds") {
-            $location.path("/hospitalbeds/covidhelpdesk/");
+            $location.path("/hospitalbeds/");
           } else if (url[1] == "cylinders") {
-            $location.path("/cylinders/covidhelpdesk/");
+            $location.path("/cylinders/");
           } else if (url[1] == "refills") {
-            $location.path("/refills/covidhelpdesk/");
+            $location.path("/refills/");
           } else if (url[1] == "concentrators") {
-            $location.path("/concentrators/covidhelpdesk/");
+            $location.path("/concentrators/");
           } else if (url[1] == "medicines") {
-            $location.path("/medicines/covidhelpdesk/");
+            $location.path("/medicines/");
           } else if (url[1] == "covidcases") {
-            $location.path("/covidcases/covidhelpdesk/");
+            $location.path("/covidcases/");
           } else {
             $location.path("/login");
           }
