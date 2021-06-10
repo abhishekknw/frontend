@@ -24,17 +24,17 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.loading = true;
             $scope.changeWeb = function () {
                 if ($scope.selectedCategory == 'Hospital Beds' || $scope.selectedCategory == 'Beds') {
-                    $location.path("/hospitalbeds/covidhelpdesk/");
+                    $location.path("/hospitalbeds/");
                 } else if ($scope.selectedCategory == 'Refills') {
-                    $location.path("/refills/covidhelpdesk/");
+                    $location.path("/refills/");
                 } else if ($scope.selectedCategory == 'Concentrators') {
-                    $location.path("/concentrators/covidhelpdesk/");
+                    $location.path("/concentrators/");
                 } else if ($scope.selectedCategory == 'Cylinders') {
-                    $location.path("/cylinders/covidhelpdesk/");
+                    $location.path("/cylinders/");
                 } else if ($scope.selectedCategory == 'Medicines') {
-                    $location.path("/medicines/covidhelpdesk/");
+                    $location.path("/medicines/");
                 }else if ($scope.selectedCategory == 'Covid Cases' || $scope.selectedCategory == 'Covidcases') {
-                    $location.path("/covidcases/covidhelpdesk/");
+                    $location.path("/covidcases/");
                 }
                 $scope.hospitalDetailData = [];
             }
