@@ -1,0 +1,31 @@
+.page-wrapper {
+    padding: 20px;
+}
+.card {
+    background: #871420;
+    border-radius: 10px;
+    padding: 20px;
+    color: #fff;
+}
+.top-select-option .form-control{
+	height: 40px;
+}
+.summery-bottom-cards .card img{
+	max-width: 60px;
+}
+
+.summery-bottom-cards .card{
+	text-align: center;
+}	
+.summery-bottom-cards .card h2{
+	font-size: 34px;
+	font-weight: 500;
+	color: #10b3d6;
+	margin-bottom: 10px;
+}
+.summery-bottom-cards .card p{
+	color: #6b707f;
+	font-size: 16px;
+	margin: 0;
+	line-height: 26px;
+}

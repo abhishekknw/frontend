@@ -13,6 +13,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             AuthService.Clear();
 
             var url = $location.url().split("/");
+        
             let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
             $scope.selectedCategory = cat;
             if($scope.selectedCategory == 'Hospitalbeds'){
