@@ -212,6 +212,11 @@ angular
         templateUrl: 'modules/pages/covidCylinder/covid-cylinder.tmpl.html',
       })
       
+      .state('covidCases', {
+        url: '/covidcases/covidhelpdesk/',
+        controller: 'covidCasesCtrl',
+        templateUrl: 'modules/pages/covidCases/covid-cases.tmpl.html',
+      })
 
 
       .state('resetPassword', {
@@ -666,6 +671,8 @@ angular
             $location.path("/concentrators/covidhelpdesk/");
           } else if (url[1] == "medicines") {
             $location.path("/medicines/covidhelpdesk/");
+          } else if (url[1] == "covidcases") {
+            $location.path("/covidcases/covidhelpdesk/");
           } else {
             $location.path("/login");
           }
@@ -689,6 +696,8 @@ angular
             $location.path("/concentrators/covidhelpdesk/");
           } else if (url[1] == "medicines") {
             $location.path("/medicines/covidhelpdesk/");
+          } else if (url[1] == "covidcases") {
+            $location.path("/covidcases/covidhelpdesk/");
           } else {
             $location.path("/login");
           }

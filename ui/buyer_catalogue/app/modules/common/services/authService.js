@@ -256,17 +256,17 @@ angular.module('Authentication')
                   url = "v0/ui/covid-bot/sort-hospital-data/?state=" + param.state;
                }
                if (param.city) {
-                  url = "v0/ui/covid-bot/sort-hospital-data/?state=" + param.state + "&district=" + param.city ;
+                  url = "v0/ui/covid-bot/sort-hospital-data/?state=" + param.state + "&district=" + param.city;
                }
-               if(param.categoryFilter){
+               if (param.categoryFilter) {
                   url += '&order=DESC&category=' + param.categoryFilter;
                }
 
-               if(param.otherFiler){
-                  url += '&hospital_order=' +param.otherFiler ;
+               if (param.otherFiler) {
+                  url += '&hospital_order=' + param.otherFiler;
                }
 
-               
+
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -297,13 +297,13 @@ angular.module('Authentication')
 
 
             authService.getAllCylinder = function (param) {
-   
+
                let url = "v0/ui/covid-bot/covid-data/"
-    
+
                if (param.city) {
-                  url = "v0/ui/covid-bot/covid-data/?city=" + param.city + "&category=" + param.categoryKeyword ;
+                  url = "v0/ui/covid-bot/covid-data/?city=" + param.city + "&category=" + param.categoryKeyword;
                }
-            
+
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -385,15 +385,48 @@ angular.module('Authentication')
                   });
 
 
-                  // $http.post(apiHost + 'v0/ui/setResetPassword', { email: params.email, code: params.code, password: params.password })
-                  // .then(function onSuccess(response) {
-                  //    callback(response.data);
-                  // })
-                  // .catch(function onError(response) {
-                  //    callback(response);
-                  // });
+               // $http.post(apiHost + 'v0/ui/setResetPassword', { email: params.email, code: params.code, password: params.password })
+               // .then(function onSuccess(response) {
+               //    callback(response.data);
+               // })
+               // .catch(function onError(response) {
+               //    callback(response);
+               // });
             };
 
+            authService.getCovidCasesState = function () {
+               return $http.get(apiHost + 'v0/ui/covid-bot/covid-cases-state/')
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            }
+
+            authService.getCovidCasesCity = function (param) {
+               return $http.get(apiHost + 'v0/ui/covid-bot/covid-cases-district/?state_code=' + param.stateCode)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+
+            authService.getCovidCases = function (param) {
+               let url = 'v0/ui/covid-bot/get-covid-cases/?state_code=' + param.state_code;
+               if(param.district_code && param.district_code !='all'){
+                 url = 'v0/ui/covid-bot/get-covid-cases/?state_code=' + param.state_code + '&district_code=' + param.district_code
+               }
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
 
 
             return authService;
