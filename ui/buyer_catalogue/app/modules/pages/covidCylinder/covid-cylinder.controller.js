@@ -16,6 +16,14 @@ angular.module('machadaloPages').filter('replace', [function () {
             // $scope.categorys = ['Hospital Beds', 'Cylinders','Refills', 'Concentrators'];
             let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
             $scope.selectedCategory = cat;
+            if($scope.selectedCategory =='Ambulance'){
+                $scope.newSelectedCategory = 'Ambulance';  
+            } else if($scope.selectedCategory =='Plasma'){
+                $scope.newSelectedCategory = 'Plasma'; 
+            } else {
+                $scope.newSelectedCategory = $scope.selectedCategory.slice(0, -1);
+            }
+
             $scope.loading = true;
 
             $scope.getCategory = function () {
