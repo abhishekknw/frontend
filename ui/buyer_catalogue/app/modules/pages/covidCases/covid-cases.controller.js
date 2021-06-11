@@ -120,6 +120,15 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.totalRecoveredCases = 0;
             $scope.totalDeceasedCases = 0;
             $scope.getCovidCases = function () {
+                if ($scope.district_code){
+                    var localindex_index = $scope.cityData.map(function (el) {
+                        return el.district_code;
+                    }).indexOf($scope.district_code);
+                    if (localindex_index != -1) {
+                        $scope.selectedCityName = $scope.cityData[localindex_index].district_name;
+                    }
+                }
+
                 $scope.totalConfirmedCases = 0;
                 $scope.totalActiveCases = 0;
                 $scope.totalRecoveredCases = 0;

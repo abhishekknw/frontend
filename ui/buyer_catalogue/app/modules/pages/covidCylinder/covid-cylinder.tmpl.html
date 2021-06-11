@@ -64,8 +64,8 @@
         </div>
         <div ng-if="!loading" ng-loadings="loading"></div>
         <div class="row info-table-row" ng-if="loading">
-          <div class="info-table-heading" ng-if="!selectedCityName" ><h2 style="text-align: center;">Top Suppliers <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
-          <div class="info-table-heading"  ng-if="selectedStateName && selectedCityName" ><h2 style="text-align: center;">Top Suppliers in {{selectedCityName}}, {{selectedStateName}}  <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
+          <div class="info-table-heading" ng-if="!selectedCityName" ><h2 style="text-align: center;">Top {{selectedCategory}} Providers <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
+          <div class="info-table-heading"  ng-if="selectedStateName && selectedCityName" ><h2 style="text-align: center;">Top {{selectedCategory}} Providers in {{selectedCityName}}, {{selectedStateName}}  <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
           <div class="natext" ng-if="cylinderDetailData.length > 0">
             N/A means Data Not Available
           </div>
@@ -110,6 +110,15 @@
                 <span ng-show="cylinder.MDDeliveryTime">{{cylinder.MDDeliveryTime}} </span>
                 <span ng-show="cylinder.MDDeliveryTime == ' ' || !cylinder.MDDeliveryTime"> N/A </span>
               </div>
+
+              <div class="info-row">
+                <label class="infolable">Sources:</label>
+                <span ng-show="cylinder.Source">{{cylinder.Source}}</span>
+                <span ng-show="cylinder.Source == ' ' || !cylinder.Source"> N/A </span>
+              </div>
+              <!-- console.log("+++++") -->
+
+              
 
               <div class="info-row">
                 <label class="infolable">GST:</label>
