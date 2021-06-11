@@ -27,19 +27,19 @@ angular.module('machadaloPages').filter('replace', [function () {
                             "keyword": "MDCovidcases",
                             "name": "Covid Cases",
                         });
-                        for (let i in $scope.categorysArray) {
-                            if ($scope.categorysArray[i].name == 'Ambulance') {
-                                $scope.categorysArray.splice(i, 1);
-                                $scope.categorysArrayNew = $scope.categorysArray;
-                            }
-                        }
+                        // for (let i in $scope.categorysArray) {
+                        //     if ($scope.categorysArray[i].name == 'Ambulance') {
+                        //         $scope.categorysArray.splice(i, 1);
+                        //         $scope.categorysArrayNew = $scope.categorysArray;
+                        //     }
+                        // }
 
-                        for (let j in $scope.categorysArrayNew) {
-                            if ($scope.categorysArrayNew[j].name == 'Plasma') {
-                                $scope.categorysArrayNew.splice(j, 1);
-                                $scope.categorysArray = $scope.categorysArrayNew;
-                            }
-                        }
+                        // for (let j in $scope.categorysArrayNew) {
+                        //     if ($scope.categorysArrayNew[j].name == 'Plasma') {
+                        //         $scope.categorysArrayNew.splice(j, 1);
+                        //         $scope.categorysArray = $scope.categorysArrayNew;
+                        //     }
+                        // }
 
                         if ($scope.selectedCategory && $scope.categorysArray.length > 0) {
                             let selectedCategoryname = $scope.selectedCategory;
@@ -68,6 +68,10 @@ angular.module('machadaloPages').filter('replace', [function () {
                     $location.path("/cylinders/");
                 } else if ($scope.selectedCategory == 'Medicines') {
                     $location.path("/medicines/");
+                } else if ($scope.selectedCategory == 'Ambulance') {
+                    $location.path("/ambulance/");
+                } else if ($scope.selectedCategory == 'Plasma') {
+                    $location.path("/plasma/");
                 } else if ($scope.selectedCategory == 'Covid Cases' || $scope.selectedCategory == 'Covidcases') {
                     $location.path("/covidcases/");
                 }
