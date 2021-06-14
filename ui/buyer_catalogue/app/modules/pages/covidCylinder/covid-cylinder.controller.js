@@ -30,11 +30,11 @@ angular.module('machadaloPages').filter('replace', [function () {
                 AuthService.getAllCategory()
                     .then(function onSuccess(response) {
                         $scope.categorysArray = response.data.data;
-                        // $scope.categorysArray.push({
-                        //     "category_code": "",
-                        //     "keyword": "MDCovidcases",
-                        //     "name": "Covid Cases",
-                        // });
+                        $scope.categorysArray.push({
+                            "category_code": "",
+                            "keyword": "MDCovidcases",
+                            "name": "Covid Cases",
+                        });
                  
 
                         if ($scope.selectedCategory && $scope.categorysArray.length > 0) {
