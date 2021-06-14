@@ -203,7 +203,12 @@
                 <span ng-show="cylinder.MDLastUpdatedTime == ' ' || !cylinder.MDLastUpdatedTime"> N/A </span>
               </div>
           
-          
+              <div class="info-row">
+                <label class="infolable">Source:</label>
+                <span ng-show="cylinder.Source">{{cylinder.Source}}</span>
+                <span ng-show="cylinder.Source == ' ' || !cylinder.Source"> N/A </span>
+              </div>
+              
               <div class="info-row">
                 <label class="infolable">Contact Number:</label>
                 <a href="" ng-click="triggerCall(cylinder.MDContactNumber)"> {{cylinder.MDContactNumber }}</a>
