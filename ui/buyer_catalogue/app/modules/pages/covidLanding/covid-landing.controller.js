@@ -21,24 +21,12 @@ angular.module('machadaloPages').filter('replace', [function () {
                 AuthService.getAllCategory()
                     .then(function onSuccess(response) {
                         $scope.categorysArray = response.data.data;
-                        $scope.categorysArray.push({
-                            "category_code": "",
-                            "keyword": "MDCovidcases",
-                            "name": "Covid Cases",
-                        });
-                        for (let i in $scope.categorysArray) {
-                            if ($scope.categorysArray[i].name == 'Ambulance') {
-                                $scope.categorysArray.splice(i, 1);
-                                $scope.categorysArrayNew = $scope.categorysArray;
-                            }
-                        }
-
-                        for (let j in $scope.categorysArrayNew) {
-                            if ($scope.categorysArrayNew[j].name == 'Plasma') {
-                                $scope.categorysArrayNew.splice(j, 1);
-                                $scope.categorysArray = $scope.categorysArrayNew;
-                            }
-                        }
+                        // $scope.categorysArray.push({
+                        //     "category_code": "",
+                        //     "keyword": "MDCovidcases",
+                        //     "name": "Covid Cases",
+                        // });
+                
 
                         if ($scope.selectedCategory && $scope.categorysArray.length > 0) {
                             let selectedCategoryname = $scope.selectedCategory;
