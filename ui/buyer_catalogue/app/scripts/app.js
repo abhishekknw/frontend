@@ -223,6 +223,12 @@ angular
         controller: 'covidCylinderCtrl',
         templateUrl: 'modules/pages/covidCylinder/covid-cylinder.tmpl.html',
       })
+
+      .state('covidConsulation', {
+        url: '/consulation/',
+        controller: 'covidConsulationCtrl',
+        templateUrl: 'modules/pages/covidConsulation/covid-consulation.tmpl.html',
+      })
       
       .state('covidCases', {
         url: '/covidcases/',
@@ -696,6 +702,8 @@ angular
             $location.path("/ambulance/");
           } else if (url[1] == "plasma") {
             $location.path("/plasma/");
+          } else if (url[1] == "consulation") {
+            $location.path("/consulation/");
           } else {
             $location.path("/login");
           }
@@ -725,6 +733,8 @@ angular
             $location.path("/ambulance/");
           } else if (url[1] == "plasma") {
             $location.path("/plasma/");
+          } else if (url[1] == "consulation") {
+            $location.path("/consulation/");
           } else {
             $location.path("/login");
           }

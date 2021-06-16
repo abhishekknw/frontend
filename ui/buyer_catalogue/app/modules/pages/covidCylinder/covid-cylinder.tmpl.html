@@ -64,8 +64,19 @@
         </div>
         <div ng-if="!loading" ng-loadings="loading"></div>
         <div class="row info-table-row" ng-if="loading">
+          <div ng-if="newSelectedCategory != 'Ambulance' && newSelectedCategory != 'Plasma'">
           <div class="info-table-heading" ng-if="!selectedCityName" ><h2 style="text-align: center;">Top {{newSelectedCategory}} Providers <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
           <div class="info-table-heading"  ng-if="selectedStateName && selectedCityName" ><h2 style="text-align: center;">Top {{newSelectedCategory}} Providers in {{selectedCityName}}, {{selectedStateName}}  <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
+          </div>
+          <div ng-if="newSelectedCategory == 'Ambulance'">
+            <div class="info-table-heading" ng-if="!selectedCityName" ><h2 style="text-align: center;">{{newSelectedCategory}} Services <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
+            <div class="info-table-heading"  ng-if="selectedStateName && selectedCityName" ><h2 style="text-align: center;">{{newSelectedCategory}} Services in {{selectedCityName}}, {{selectedStateName}}  <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
+            </div>
+
+            <div ng-if="newSelectedCategory == 'Plasma'">
+              <div class="info-table-heading" ng-if="!selectedCityName" ><h2 style="text-align: center;">{{newSelectedCategory}} Providers <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
+              <div class="info-table-heading"  ng-if="selectedStateName && selectedCityName" ><h2 style="text-align: center;">{{newSelectedCategory}} Providers in {{selectedCityName}}, {{selectedStateName}}  <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
+              </div>
           <div class="natext" ng-if="cylinderDetailData.length > 0">
             N/A means Data Not Available
           </div>

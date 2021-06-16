@@ -623,6 +623,19 @@ table.covid-hospital-table > thead > tr > th {
 	margin: 0 auto;
 }
 
+#consulation_state {
+	width: 50%;
+	margin: 0 auto;
+}
+
+#specialisation_id {
+	width: 50%;
+	margin: 0 auto;
+}
+
+
+
+
 .search-hopital .card h3 {
 	min-height: 110px;
 	font-size: 20px;
@@ -843,6 +856,15 @@ td.valenteer-name {
 }
 @media only screen and (max-width:767px){
 	#Category_id {
+    width: 100%;
+    margin: 0 auto;
+} 
+#consulation_state {
+    width: 100%;
+    margin: 0 auto;
+}
+
+#specialisation_id {
     width: 100%;
     margin: 0 auto;
 }

@@ -427,7 +427,39 @@ angular.module('Authentication')
                      return response
                   });
             };
+            authService.getAllConsulationState = function () {
+               return $http.get(apiHost + 'v0/ui/covid-bot/doctor-summary/')
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
 
+            authService.getAllConsulation = function (param) {
+               return $http.get(apiHost + 'v0/ui/covid-bot/doctor-data/?state=' + param.state )
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+            authService.getAllConsulationVolunteer = function (stateName) {
+               let url = "v0/ui/covid-bot/volunteer-doctor/?state=" + stateName
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+
+            
+
+            
 
             return authService;
          }])
