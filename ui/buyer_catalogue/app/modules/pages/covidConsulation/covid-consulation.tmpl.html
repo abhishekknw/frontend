@@ -38,7 +38,7 @@
               available Online Government and Volunteer Sources</h4> -->
           </p>
           <div class="form-group">
-            <strong><h4 style="text-align: center;">Select State/UT :</h4></strong>
+            <strong><h4 style="text-align: center;font-weight: 700;">Select State/UT :</h4></strong>
             <select class="form-control" ng-change="getConsulationList()" name="state" id="consulation_state"
               ng-model="selectedStateName">
               <option value="" disabled>
@@ -99,7 +99,7 @@
             N/A means Data Not Available
           </div>
           <div class="form-group">
-            <select class="form-control" name="state" id="specialisation_id"
+            <select class="form-control specialize-option" name="state" id="specialisation_id"
               ng-model="selectedSpecialization">
               <option value="" disabled>
                 Select Specialization
@@ -183,7 +183,7 @@
               </div>
               <div class="hospital info-row info-feedback desktop">
                 <label class="infolable">Provide Feedback</label>
-                <div class="feedback-btns">
+                <div class="feedback-btns covid-cons-btns">
                 <button type="button" name="button" ng-disabled="consulation.notAvailableButton || consulation.wrongNumberButton" ng-click="resourcesAvailable($index)" class="btn btn-success res-btn" ng-class="{'btn-focus':consulation.resourcesAvailableButton}">Available</button>
                   <button type="button" name="button" ng-disabled="consulation.resourcesAvailableButton || consulation.wrongNumberButton" ng-click="notAvailable($index)" class="btn btn-warning not-av-btn" ng-class="{'btn-focus':consulation.notAvailableButton}">Not Available</button>
                     <button type="button" name="button" ng-disabled="consulation.resourcesAvailableButton || consulation.notAvailableButton" ng-click="wrongNumber($index)" class="btn btn-danger wr-btn" ng-class="{'btn-focus':consulation.wrongNumberButton}">Wrong Number</button>

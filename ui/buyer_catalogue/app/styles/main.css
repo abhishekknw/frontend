@@ -632,6 +632,9 @@ table.covid-hospital-table > thead > tr > th {
 	width: 50%;
 	margin: 0 auto;
 }
+.specialize-option#specialisation_id{
+ width: 35%;
+}
 
 
 
@@ -853,6 +856,9 @@ td.valenteer-name {
  .hosptal-table.volanteer-btn span, .info-row.volanteer-btn span{
   padding:8px 50px;
  }
+ .covid-cons-btns.feedback-btns .btn{
+ width:160px;
+ }
 }
 @media only screen and (max-width:767px){
 	#Category_id {
@@ -964,6 +970,9 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	.hosptal-table.volanteer-btn img{
 	 width:42px;
 	 top:0;
+	}
+	.specialize-option#specialisation_id{
+     width:50%;
 	}
 }
 
