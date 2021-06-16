@@ -225,7 +225,7 @@ angular
       })
 
       .state('covidConsulation', {
-        url: '/consulation/',
+        url: '/doctors/',
         controller: 'covidConsulationCtrl',
         templateUrl: 'modules/pages/covidConsulation/covid-consulation.tmpl.html',
       })
@@ -702,8 +702,8 @@ angular
             $location.path("/ambulance/");
           } else if (url[1] == "plasma") {
             $location.path("/plasma/");
-          } else if (url[1] == "consulation") {
-            $location.path("/consulation/");
+          } else if (url[1] == "doctors") {
+            $location.path("/doctors/");
           } else {
             $location.path("/login");
           }
@@ -733,8 +733,8 @@ angular
             $location.path("/ambulance/");
           } else if (url[1] == "plasma") {
             $location.path("/plasma/");
-          } else if (url[1] == "consulation") {
-            $location.path("/consulation/");
+          } else if (url[1] == "doctors") {
+            $location.path("/doctors/");
           } else {
             $location.path("/login");
           }
