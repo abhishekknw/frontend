@@ -38,7 +38,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                 } else if ($scope.selectedCategory == 'Plasma') {
                     $location.path("/plasma/");
                 }  else if ($scope.selectedCategory == 'Free Online Doctor Consulation') {
-                    $location.path("/consulation/");
+                    $location.path("/doctors/");
                 } else if ($scope.selectedCategory == 'Covid Cases' || $scope.selectedCategory == 'Covidcases') {
                     $location.path("/covidcases/");
                 }

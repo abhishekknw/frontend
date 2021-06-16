@@ -16,7 +16,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             // $scope.categorys = ['Hospital Beds', 'Cylinders','Refills', 'Concentrators'];
             let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
             $scope.selectedCategory = cat;
-            if($scope.selectedCategory =='Consulation'){
+            if($scope.selectedCategory =='Doctors'){
                 $scope.selectedCategory = 'Free Online Doctor Consulation';
             }
             if($scope.selectedCategory =='Ambulance'){
@@ -76,7 +76,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                 } else if ($scope.selectedCategory == 'Plasma') {
                     $location.path("/plasma/");
                 } else if ($scope.selectedCategory == 'Free Online Doctor Consulation') {
-                    $location.path("/consulation/");
+                    $location.path("/doctors/");
                 } else if ($scope.selectedCategory == 'Covid Cases' || $scope.selectedCategory == 'Covidcases') {
                     $location.path("/covidcases/");
                 }
