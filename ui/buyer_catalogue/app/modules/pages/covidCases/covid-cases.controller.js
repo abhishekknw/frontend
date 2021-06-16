@@ -36,6 +36,8 @@ angular.module('machadaloPages').filter('replace', [function () {
                     $location.path("/ambulance/");
                 } else if ($scope.selectedCategory == 'Plasma') {
                     $location.path("/plasma/");
+                } else if ($scope.selectedCategory == 'Free Online Doctor Consulation') {
+                    $location.path("/consulation/");
                 } else if ($scope.selectedCategory == 'Covid Cases' || $scope.selectedCategory == 'Covidcases') {
                     $location.path("/covidcases/");
                 }
@@ -51,6 +53,10 @@ angular.module('machadaloPages').filter('replace', [function () {
                             "category_code": "",
                             "keyword": "MDCovidcases",
                             "name": "Covid Cases",
+                        }, {
+                            "category_code": "",
+                            "keyword": "MDConsulation",
+                            "name": "Free Online Doctor Consulation",
                         });
 
                         // for (let i in $scope.categorysArray) {

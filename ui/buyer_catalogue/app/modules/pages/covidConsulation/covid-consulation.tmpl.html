@@ -1,0 +1,313 @@
+<link rel="stylesheet" href="modules/pages/login/login.tmpl.css" />
+<link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css" />
+<script src='https://www.google.com/recaptcha/api.js' async defer></script>
+<link href="css/smallscreen.css" rel="stylesheet" media="screen">
+
+<div class="covid-hospital" ng-init="getCategory()">
+  <div class="page-wrapper">
+    <div class="logo-sec">
+      <img src="images/machadalo-logo.png" alt="logo">
+      <h1><span class="img_hospital"><img src="images/plus_icon.png" alt="logo"></span> COVID19 HELPDESK, AVAILABLE
+        <span> Doctors</span></h1>
+    </div>
+
+    <div class="container">
+      <div class="page-inner">
+        <div class="top-select-option">
+          <!-- <div class="form-group">
+            <select class="form-control" name="category" id="Category_id" ng-change="changeWeb()" ng-model="selectedCategory">
+              <option ng-repeat="cat in categorys track by $index" value="{{cat}}" style="text-transform: capitalize;">
+                {{cat}}
+              </option>
+            </select>
+          </div> -->
+
+          <div class="form-group">
+            <select class="form-control" name="category" id="Category_id" ng-change="changeWeb()"
+              ng-model="selectedCategory">
+              <option ng-repeat="cat in categorysArray track by $index" value="{{cat.name}}"
+                style="text-transform: capitalize;">
+                {{cat.name}} 
+              </option>
+            </select>
+          </div>
+
+
+          <p style="text-align: center;">
+            <!-- <h4 style="text-align: center;"> Data currently available for {{stateData.length}} States/UT and 410 Districts as per all
+              available Online Government and Volunteer Sources</h4> -->
+          </p>
+          <div class="form-group">
+            <p style="text-align: center;">Select State/UT :</p>
+            <select class="form-control" ng-change="getConsulationList()" name="state" id="consulation_state"
+              ng-model="selectedStateName">
+              <option value="" disabled>
+                Select State/UT
+              </option>
+              <option ng-repeat="state in stateData track by $index" value="{{state.state}}"
+                style="text-transform: capitalize;">
+                {{state.state}}
+              </option>
+            </select>
+          </div>
+
+          <!-- <div class="form-group">
+            <select class="form-control" ng-change="getCity()" name="state" id="specialisation_id"
+              ng-model="state_code">
+              <option value="" disabled>
+                Select Specialisation
+              </option>
+              <option ng-repeat="state in stateData track by $index" value="{{state.state_code}}"
+                style="text-transform: capitalize;">
+                {{state.state}}
+              </option>
+            </select>
+          </div> -->
+          <!-- <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <select class="form-control" ng-change="getCity()" name="state" id="state_id" ng-model="state_code">
+                  <option value="" disabled>
+                    Select State/UT
+                  </option>
+                  <option ng-repeat="state in stateData track by $index" value="{{state.state_code}}"
+                    style="text-transform: capitalize;">
+                    {{state.state}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <select class="form-control" name="city" ng-change="getCylinderList()" id="city_id" ng-model="city_code">
+                  <option value="" disabled>
+                    Select District/City
+                  </option>
+                  <option ng-repeat="city in cityData track by $index" value="{{city.city_code}}">
+                   <p style="text-transform: capitalize !important"> {{city.city_name}} </p>
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div> -->
+        </div>
+        <div ng-if="!loading" ng-loadings="loading"></div>
+        <div class="row info-table-row" ng-if="loading">
+
+          <!-- <div class="natext" ng-if="cylinderDetailData.length > 0"> -->
+          <div class="natext">
+            N/A means Data Not Available
+          </div>
+          <!-- <div class="form-group">
+            <select class="form-control" name="state" id="specialisation_id"
+              ng-model="selectedSpecialization">
+              <option value="" disabled>
+                Select Specialization
+              </option>
+              <option ng-repeat="specialization in specializationList track by $index" value="{{specialization.name}}"
+                style="text-transform: capitalize;">
+                {{specialization.name}}
+              </option>
+            </select>
+          </div> -->
+          <div class="col-md-6" ng-if="consulationDetailData.length > 0" ng-repeat="consulation in consulationDetailData track by $index">
+          <!-- <div class="col-md-6"> -->
+            <div class="info-table-wrap">
+              <div class="info-row">
+                <label class="infolable">Contact Name:</label>
+                <span ng-show="consulation.contact_name">{{consulation.contact_name}}</span>
+                <span ng-show="!consulation.contact_name || consulation.contact_name == ' '">N/A</span>
+              </div>
+              <div class="info-row">
+                <label class="infolable"> NGO/ Source Name:</label>
+                <span ng-show="consulation.source"> {{consulation.source}} </span>
+                <span ng-show="consulation.source == ' ' || !consulation.source"> N/A </span>
+              </div>
+
+              <div class="info-row">
+                <label class="infolable">Available Time:</label>
+                <span ng-show="consulation.timings"><strong>{{consulation.timings |replace: ',':' ' | date:'medium'}} </strong></span>
+                <span ng-show="consulation.timings == ' ' || !consulation.timings"> N/A </span>
+              </div>
+
+
+              <div class="info-row">
+                <label class="infolable">Languages:</label>
+                <span ng-show="consulation.languages">{{consulation.languages}} </span>
+                <span ng-show="consulation.languages == ' ' || !consulation.languages"> N/A </span>
+              </div>
+
+
+
+              <div class="info-row">
+                <label class="infolable">Specialization:</label>
+                <span ng-show="consulation.specialization">{{consulation.specialization}}</span>
+                <span ng-show="consulation.specialization == ' ' || !consulation.specialization"> N/A </span>
+              </div>
+            
+              <div class="info-row">
+                <label class="infolable">Contact Number:</label>
+                <a href="" ng-click="triggerCall(consulation.contact_number)"> {{consulation.contact_number }}</a>
+              </div>
+
+              <div class="info-name-btn">
+                <div class="info-row volanteer">
+                  <label class="infolable">Volunteer Name: &nbsp;
+                  </label>
+                  <strong>{{consulation.Volunteer_Name}}</strong>
+                </div>
+                <div class="hosptal-table volanteer-btn desktop text-center">
+                  <a href="{{consulation.BitLink}}" ng-if="consulation.BitLink" data-action="share/whatsapp/share"
+                    target="_blank">
+                    <img src="images/whatsapp-icon.png">
+                    <span>Chat with Volunteer</span>
+                  </a>
+                  <a href="" ng-if="!consulation.BitLink" data-action="share/whatsapp/share">
+                    <img src="images/whatsapp-icon.png">
+                    <span>Chat with Volunteer</span>
+                  </a>
+                </div>
+                <div class="hosptal-table volanteer-btn mobile text-center">
+                  <a href="{{consulation.BitLink}}" ng-if="consulation.BitLink" data-action="share/whatsapp/share"
+                    target="_blank">
+                    <img src="images/whatsapp-icon.png">
+                    <span>Chat with<br> Volunteer</span>
+                  </a>
+
+                  <a href="" data-action="share/whatsapp/share" ng-if="!consulation.BitLink">
+                    <img src="images/whatsapp-icon.png">
+                    <span>Chat with<br> Volunteer</span>
+                  </a>
+                </div>
+                
+              </div>
+              <div class="hospital info-row info-feedback desktop">
+                <label class="infolable">Provide Feedback</label>
+                <div class="feedback-btns">
+                <button type="button" name="button" ng-disabled="consulation.notAvailableButton || consulation.wrongNumberButton" ng-click="resourcesAvailable($index)" class="btn btn-success res-btn" ng-class="{'btn-focus':consulation.resourcesAvailableButton}">Available</button>
+                  <button type="button" name="button" ng-disabled="consulation.resourcesAvailableButton || consulation.wrongNumberButton" ng-click="notAvailable($index)" class="btn btn-warning not-av-btn" ng-class="{'btn-focus':consulation.notAvailableButton}">Not Available</button>
+                    <button type="button" name="button" ng-disabled="consulation.resourcesAvailableButton || consulation.notAvailableButton" ng-click="wrongNumber($index)" class="btn btn-danger wr-btn" ng-class="{'btn-focus':consulation.wrongNumberButton}">Wrong Number</button>
+                  </div>
+              </div>
+              <div class="hospital info-row info-feedback mobile">
+                <label class="infolable">Provide Feedback</label>
+                <div class="feedback-btns">
+                <button type="button" name="button" ng-disabled="consulation.notAvailableButton || consulation.wrongNumberButton" ng-click="resourcesAvailable($index)" class="btn btn-success res-btn" ng-class="{'btn-focus':consulation.resourcesAvailableButton}">Available</button>
+                  <button type="button" name="button" ng-disabled="consulation.resourcesAvailableButton || consulation.wrongNumberButton" ng-click="notAvailable($index)" class="btn btn-warning not-av-btn" ng-class="{'btn-focus':consulation.notAvailableButton}">Not<br> Available</button>
+                    <button type="button" name="button" ng-disabled="consulation.resourcesAvailableButton || consulation.notAvailableButton" ng-click="wrongNumber($index)" class="btn btn-danger wr-btn" ng-class="{'btn-focus':consulation.wrongNumberButton}">Wrong<br> Number</button>
+                  </div>
+              </div>
+            </div>
+          </div>
+         
+        </div>
+        <div ng-if="errorMsg">
+          <h4 style="color:red;text-align: center">{{errorMsg}}</h4>
+        </div>
+
+
+        <!-- <div class="col-md-6" ng-if="cylinderDetailData.length == 0 || !cylinderDetailData">
+            <div class="info-table-wrap">
+              <div class="info-row">
+                <label class="infolable"><strong>Contact Name: </strong></label>
+             
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong> Address: </strong></label>
+              
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong>Quantity Available: </strong></label>
+               
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong>Last Updated Time: </strong></label>
+             
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong>Refill Available:
+                </strong></label>
+             
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong>Contact Number: </strong></label>
+                <a href="tel:cylinder.MDContactNumber"> </a>
+              </div>
+            
+              <div class="info-row volanteer">
+                <label class="infolable">Volunteer Name: &nbsp;
+                </label>
+                 
+              </div>
+              <div class="hosptal-table volanteer-btn text-center">
+                    <img src="images/whatsapp-icon.png">
+                     <span>Chat with Volunteer</span> 
+              </div>
+
+              <div class="info-row info-feedback">
+                <label class="infolable"><strong>Provide Feedback</strong></label>
+                <div class="feedback-btns">
+                <button type="button" name="button" class="btn btn-success">Resources Available</button>
+                  <button type="button" name="button" ng-disabled="true" class="btn btn-warning">Not Available</button>
+                    <button type="button" name="button" ng-disabled="true" class="btn btn-danger">Wrong Number</button>
+                  </div>
+              </div>
+            </div>
+          </div> -->
+
+        <!-- <div class="col-md-6" ng-if="cylinderDetailData.length == 0 || !cylinderDetailData">
+            <div class="info-table-wrap">
+              <div class="info-row">
+                <label class="infolable"><strong>Contact Name: </strong></label>
+             
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong> Address: </strong></label>
+              
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong>Quantity Available: </strong></label>
+               
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong>Last Updated Time: </strong></label>
+             
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong>Refill Available:
+                </strong></label>
+             
+              </div>
+              <div class="info-row">
+                <label class="infolable"><strong>Contact Number: </strong></label>
+                <a href="tel:cylinder.MDContactNumber"> </a>
+              </div>
+            
+              <div class="info-row volanteer">
+                <label class="infolable">Volunteer Name: &nbsp;
+                </label>
+                 
+              </div>
+              <div class="hosptal-table volanteer-btn text-center">
+                    <img src="images/whatsapp-icon.png">
+                     <span>Chat with Volunteer</span> 
+              </div>
+
+              <div class="info-row info-feedback">
+                <label class="infolable"><strong>Provide Feedback</strong></label>
+                <div class="feedback-btns">
+                <button type="button" name="button" class="btn btn-success">Resources Available</button>
+                  <button type="button" name="button" class="btn btn-warning">Not Available</button>
+                    <button type="button" name="button" class="btn btn-danger">Wrong Number</button>
+                  </div>
+              </div>
+            </div>
+          </div> -->
+        <!-- <h4 style="color:red;text-align: center" ng-if="cylinderDetailData.length == 0 || !cylinderDetailData.length">No
+            Hospital Found.</h4> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- machadalo-login -->
