@@ -99,7 +99,7 @@
             N/A means Data Not Available
           </div>
           <div class="form-group">
-            <select class="form-control specialize-option" name="state" id="specialisation_id"
+            <select class="form-control specialize-option" value="" ng-click="shorting(selectedSpecialization)" name="state" id="specialisation_id"
               ng-model="selectedSpecialization">
               <option value="" disabled>
                 Select Specialization
@@ -110,7 +110,7 @@
               </option>
             </select>
           </div>
-          <div class="col-md-6" ng-if="consulationDetailData.length > 0" ng-repeat="consulation in consulationDetailData track by $index">
+          <div class="col-md-6" ng-if="consulationDetailData.length > 0" ng-repeat="consulation in consulationDetailData  | filter : sort">
           <!-- <div class="col-md-6"> -->
             <div class="info-table-wrap">
               <div class="info-row">
@@ -142,7 +142,7 @@
               <div class="info-row">
                 <label class="infolable">Specialization:</label>
                 <span ng-show="consulation.specialization">{{consulation.specialization}}</span>
-                <span ng-show="consulation.specialization == ' ' || !consulation.specialization"> N/A </span>
+                <span ng-show="consulation.specialization == ' ' || !consulation.specialization"> General </span>
               </div>
             
               <div class="info-row">
