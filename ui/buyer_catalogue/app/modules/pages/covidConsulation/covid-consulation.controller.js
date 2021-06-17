@@ -141,19 +141,33 @@ angular.module('machadaloPages').filter('replace', [function () {
                                             return el.name;
                                         }).indexOf($scope.consulationDetailData[i].specialization);
                                         if (localindex_index == -1) {
-                                            $scope.specializationList.push({ 'name': $scope.consulationDetailData[i].specialization });
+                                            if ($scope.consulationDetailData[i].specialization != " ") {
+                                                $scope.specializationList.push({ 'name': $scope.consulationDetailData[i].specialization });
+                                            }
+
                                         }
                                     } else {
-                                        $scope.specializationList.push({ 'name': $scope.consulationDetailData[i].specialization });
+                                        if ($scope.consulationDetailData[i].specialization != " ") {
+                                            $scope.specializationList.push({'name':"All"},{ 'name': $scope.consulationDetailData[i].specialization });
+                                           
+                                        }
                                     }
                                 }
-                               
+
                                 $scope.getVolunteer();
                             }
                         }
+    
                     }).catch(function onError(response) {
                         console.log(response);
                     })
+            }
+
+            $scope.shorting = function (value) {
+                $scope.sort = value;
+                if(value == 'All'){
+                    $scope.sort = "";
+                }
             }
 
             $scope.getVolunteer = function () {
@@ -204,7 +218,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             }
 
             $scope.resourcesAvailable = function (index) {
-               
+
                 let param = {
                     "district": "",
                     "city": $scope.selectedCityName,
@@ -229,7 +243,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                     })
 
             }
- 
+
             $scope.notAvailable = function (index) {
                 let param = {
                     "district": "",
