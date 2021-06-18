@@ -49,15 +49,17 @@ angular.module('machadaloPages').filter('replace', [function () {
                 AuthService.getAllCategory()
                     .then(function onSuccess(response) {
                         $scope.categorysArray = response.data.data;
-                        $scope.categorysArray.push({
-                            "category_code": "",
-                            "keyword": "MDCovidcases",
-                            "name": "Covid Cases",
-                        }, {
-                            "category_code": "",
-                            "keyword": "MDConsulation",
-                            "name": "Free Online Doctor Consulation",
-                        });
+                        $scope.categorysArray.push(
+                            {
+                                "category_code": "",
+                                "keyword": "MDCovidcases",
+                                "name": "Covid Cases",
+                            },
+                            {
+                                "category_code": "",
+                                "keyword": "MDConsulation",
+                                "name": "Free Online Doctor Consulation",
+                            });
 
                         // for (let i in $scope.categorysArray) {
                         //     if ($scope.categorysArray[i].name == 'Ambulance') {
@@ -125,8 +127,13 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.totalActiveCases = 0;
             $scope.totalRecoveredCases = 0;
             $scope.totalDeceasedCases = 0;
+
+            $scope.yesterdayTotalConfirmedCases = 0;
+            $scope.yesterdayTotalActiveCases = 0;
+            $scope.yesterdayTotalRecoveredCases = 0;
+            $scope.yesterdayTotalDeceasedCases = 0;
             $scope.getCovidCases = function () {
-                if ($scope.district_code){
+                if ($scope.district_code) {
                     var localindex_index = $scope.cityData.map(function (el) {
                         return el.district_code;
                     }).indexOf($scope.district_code);
@@ -139,6 +146,11 @@ angular.module('machadaloPages').filter('replace', [function () {
                 $scope.totalActiveCases = 0;
                 $scope.totalRecoveredCases = 0;
                 $scope.totalDeceasedCases = 0;
+
+                $scope.yesterdayTotalConfirmedCases = 0;
+                $scope.yesterdayTotalActiveCases = 0;
+                $scope.yesterdayTotalRecoveredCases = 0;
+                $scope.yesterdayTotalDeceasedCases = 0;
                 let param = {
                     state_code: $scope.state_code,
                     district_code: $scope.district_code
@@ -152,6 +164,11 @@ angular.module('machadaloPages').filter('replace', [function () {
                                 $scope.totalActiveCases = $scope.totalActiveCases + $scope.covidCasesData[i].active;
                                 $scope.totalRecoveredCases = $scope.totalRecoveredCases + $scope.covidCasesData[i].recovered;
                                 $scope.totalDeceasedCases = $scope.totalDeceasedCases + $scope.covidCasesData[i].deceased;
+
+                                $scope.yesterdayTotalConfirmedCases = $scope.yesterdayTotalConfirmedCases + $scope.covidCasesData[i].yesterday_confirmed;
+                                $scope.yesterdayTotalActiveCases = $scope.yesterdayTotalActiveCases + $scope.covidCasesData[i].yesterday_active;
+                                $scope.yesterdayTotalRecoveredCases = $scope.yesterdayTotalRecoveredCases + $scope.covidCasesData[i].yesterday_recovered;
+                                $scope.yesterdayTotalDeceasedCases = $scope.yesterdayTotalDeceasedCases + $scope.covidCasesData[i].yesterday_deceased;
                             }
 
                         }

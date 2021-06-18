@@ -21,10 +21,16 @@ angular.module('machadaloPages').filter('replace', [function () {
                 AuthService.getAllCategory()
                     .then(function onSuccess(response) {
                         $scope.categorysArray = response.data.data;
-                        $scope.categorysArray.push({
+                        $scope.categorysArray.push(
+                            {
                             "category_code": "",
                             "keyword": "MDCovidcases",
                             "name": "Covid Cases",
+                        },
+                        {
+                            "category_code": "",
+                            "keyword": "MDConsulation",
+                            "name": "Free Online Doctor Consulation",
                         });
                 
 
@@ -57,6 +63,29 @@ angular.module('machadaloPages').filter('replace', [function () {
                     $location.path("/medicines/covidhelpdesk/");
                 } else if ($scope.selectedCategory == 'Covid Cases' || $scope.selectedCategory == 'Covidcases') {
                     $location.path("/covidcases/covidhelpdesk/");
+                }
+                $scope.cylinderDetailData = [];
+            }
+
+            $scope.changeWeb = function () {
+                if ($scope.selectedCategory == 'Hospital Beds' || $scope.selectedCategory == 'Beds') {
+                    $location.path("/hospitalbeds/");
+                } else if ($scope.selectedCategory == 'Refills') {
+                    $location.path("/refills/");
+                } else if ($scope.selectedCategory == 'Concentrators') {
+                    $location.path("/concentrators/");
+                } else if ($scope.selectedCategory == 'Cylinders') {
+                    $location.path("/cylinders/");
+                } else if ($scope.selectedCategory == 'Medicines') {
+                    $location.path("/medicines/");
+                } else if ($scope.selectedCategory == 'Ambulance') {
+                    $location.path("/ambulance/");
+                } else if ($scope.selectedCategory == 'Plasma') {
+                    $location.path("/plasma/");
+                } else if ($scope.selectedCategory == 'Free Online Doctor Consulation') {
+                    $location.path("/doctors/");
+                } else if ($scope.selectedCategory == 'Covid Cases' || $scope.selectedCategory == 'Covidcases') {
+                    $location.path("/covidcases/");
                 }
                 $scope.cylinderDetailData = [];
             }

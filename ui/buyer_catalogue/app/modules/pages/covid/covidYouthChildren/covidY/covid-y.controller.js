@@ -7,7 +7,7 @@ angular.module('machadaloPages').filter('replace', [function () {
         var regex = new RegExp(from, 'g');
         return input.replace(regex, to);
     };
-}]).controller('covidConsulationCtrl',
+}]).controller('covidYouthCtrl',
     ['$scope', '$rootScope', '$window', '$location', 'AuthService', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService',
         function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $state, userService, constants, AuthService, vcRecaptchaService) {
             AuthService.Clear();
@@ -15,29 +15,22 @@ angular.module('machadaloPages').filter('replace', [function () {
             var url = $location.url().split("/");
             // $scope.categorys = ['Hospital Beds', 'Cylinders','Refills', 'Concentrators'];
             let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
-            $scope.selectedCategory = cat;
-            if ($scope.selectedCategory == 'Doctors') {
-                $scope.selectedCategory = 'Free Online Doctor Consulation';
-            }
-            if ($scope.selectedCategory == 'Ambulance') {
-                $scope.newSelectedCategory = 'Ambulance';
-            } else if ($scope.selectedCategory == 'Plasma') {
-                $scope.newSelectedCategory = 'Plasma';
-            } else {
-                $scope.newSelectedCategory = $scope.selectedCategory.slice(0, -1);
-            }
-
+            // $scope.selectedCategory = cat;
+            $scope.selectedCategory = "";
+          
             $scope.loading = true;
 
             $scope.getCategory = function () {
                 AuthService.getAllCategory()
                     .then(function onSuccess(response) {
                         $scope.categorysArray = response.data.data;
-                        $scope.categorysArray.push({
-                            "category_code": "",
-                            "keyword": "MDCovidcases",
-                            "name": "Covid Cases",
-                        }, {
+                        $scope.categorysArray.push(
+                        //     {
+                        //     "category_code": "",
+                        //     "keyword": "MDCovidcases",
+                        //     "name": "Covid Cases",
+                        // },
+                         {
                             "category_code": "",
                             "keyword": "MDConsulation",
                             "name": "Free Online Doctor Consulation",

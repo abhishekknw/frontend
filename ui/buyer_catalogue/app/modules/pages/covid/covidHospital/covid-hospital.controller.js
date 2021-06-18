@@ -82,11 +82,13 @@ angular.module('machadaloPages').filter('replace', [function () {
                 AuthService.getAllCategory()
                     .then(function onSuccess(response) {
                         $scope.categorysArray = response.data.data;
-                        $scope.categorysArray.push({
+                        $scope.categorysArray.push(
+                            {
                             "category_code": "",
                             "keyword": "MDCovidcases",
                             "name": "Covid Cases",
-                        }, {
+                        },
+                         {
                             "category_code": "",
                             "keyword": "MDConsulation",
                             "name": "Free Online Doctor Consulation",

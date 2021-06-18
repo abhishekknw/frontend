@@ -181,7 +181,7 @@ angular
       .state('covidHospital', {
         url: '/hospitalbeds/',
         controller: 'covidHospitalCtrl',
-        templateUrl: 'modules/pages/covidHospital/covid-hospital.tmpl.html',
+        templateUrl: 'modules/pages/covid/covidHospital/covid-hospital.tmpl.html',
         // data :{
         //   permission : 'loginAccess'
         // }
@@ -190,56 +190,62 @@ angular
       .state('covidCylinder', {
         url: '/cylinders/',
         controller: 'covidCylinderCtrl',
-        templateUrl: 'modules/pages/covidCylinder/covid-cylinder.tmpl.html',
+        templateUrl: 'modules/pages/covid/covidCylinder/covid-cylinder.tmpl.html',
 
       })
 
       .state('covidRefill', {
         url: '/refills/',
         controller: 'covidCylinderCtrl',
-        templateUrl: 'modules/pages/covidCylinder/covid-cylinder.tmpl.html',
+        templateUrl: 'modules/pages/covid/covidCylinder/covid-cylinder.tmpl.html',
       })
 
       .state('covidConcentrators', {
         url: '/concentrators/',
         controller: 'covidCylinderCtrl',
-        templateUrl: 'modules/pages/covidCylinder/covid-cylinder.tmpl.html',
+        templateUrl: 'modules/pages/covid/covidCylinder/covid-cylinder.tmpl.html',
       })
 
       .state('covidMedicines', {
         url: '/medicines/',
         controller: 'covidCylinderCtrl',
-        templateUrl: 'modules/pages/covidCylinder/covid-cylinder.tmpl.html',
+        templateUrl: 'modules/pages/covid/covidCylinder/covid-cylinder.tmpl.html',
       })
 
       .state('covidAmbulance', {
         url: '/ambulance/',
         controller: 'covidCylinderCtrl',
-        templateUrl: 'modules/pages/covidCylinder/covid-cylinder.tmpl.html',
+        templateUrl: 'modules/pages/covid/covidCylinder/covid-cylinder.tmpl.html',
       })
 
       .state('covidPlasma', {
         url: '/plasma/',
         controller: 'covidCylinderCtrl',
-        templateUrl: 'modules/pages/covidCylinder/covid-cylinder.tmpl.html',
+        templateUrl: 'modules/pages/covid/covidCylinder/covid-cylinder.tmpl.html',
       })
 
       .state('covidConsulation', {
         url: '/doctors/',
         controller: 'covidConsulationCtrl',
-        templateUrl: 'modules/pages/covidConsulation/covid-consulation.tmpl.html',
+        templateUrl: 'modules/pages/covid/covidConsulation/covid-consulation.tmpl.html',
       })
       
       .state('covidCases', {
         url: '/covidcases/',
         controller: 'covidCasesCtrl',
-        templateUrl: 'modules/pages/covidCases/covid-cases.tmpl.html',
+        templateUrl: 'modules/pages/covid/covidCases/covid-cases.tmpl.html',
       })
 
       .state('covidLanding', {
         url: '/covidLanding/',
         controller: 'covidLandingCtrl',
-        templateUrl: 'modules/pages/covidLanding/covid-landing.tmpl.html',
+        templateUrl: 'modules/pages/covid/covidLanding/covid-landing.tmpl.html',
+      })
+
+      .state('covidYouth', {
+        url: '/covidYouth/',
+        controller: 'covidYouthCtrl',
+        templateUrl: 'modules/pages/covid/covidYouthChildren/covidY/covid-y.tmpl.html',
       })
 
   
@@ -704,6 +710,8 @@ angular
             $location.path("/plasma/");
           } else if (url[1] == "doctors") {
             $location.path("/doctors/");
+          } else if (url[1] == "covidYouth") {
+            $location.path("/covidYouth/");
           } else {
             $location.path("/login");
           }
@@ -735,6 +743,8 @@ angular
             $location.path("/plasma/");
           } else if (url[1] == "doctors") {
             $location.path("/doctors/");
+          } else if (url[1] == "covidYouth") {
+            $location.path("/covidYouth/");
           } else {
             $location.path("/login");
           }

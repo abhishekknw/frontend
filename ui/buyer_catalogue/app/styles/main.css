@@ -838,6 +838,50 @@ td.valenteer-name {
     display: block;
 }
 
+/*new-css*/
+.hospital-card-wrapper.covid-case-card{
+ display: block;
+ width:60%;
+}
+.hospital-card-wrapper.covid-case-card .hospital-card{
+ display: block !important;
+}
+.hospital-card-wrapper.covid-case-card .hospital-card h4{
+ display: flex;
+}
+.info-row span {
+    text-transform: capitalize;
+}
+.yest-case{
+ font-weight: 700;
+ font-size: 18px;
+}
+.info-table-covidhelp:last-child {
+    border-top: 1px solid #d6d6d6;
+}
+.info-table-covidhelp .info-row {
+    border-bottom: 0;
+}
+.info-table-covidhelp:last-child .yest-case {
+    margin-top: 10px;
+}
+.covid-card{
+ min-height: 350px;
+}
+.info-table-covidhelp .infolable{
+ min-width: 280px;
+}
+.info-table-covidhelp .info-row{
+ margin-bottom: 0;
+ padding-bottom: 0;
+}
+.hospital-card-wrapper.covid-case-card .hospital-card h4 label {
+    font-weight: normal;
+}
+.hospital-card h4 label {
+    width: 218px;
+    text-align: left;
+}
 
 @media only screen and (min-width:992px){
  .info-row.info-feedback{
@@ -974,11 +1018,17 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	.specialize-option#specialisation_id{
      width:50%;
 	}
+	.hospital-card-wrapper.covid-case-card{
+     width:100%;
+	}
 }
 
 @media only screen and (max-width:375px){
  .hosptal-table.volanteer label{
  line-height: 15px;
+ }
+ .info-table-covidhelp .infolable{
+ min-width: 150px;
  }
 }
 @media (max-width: 340px) {
