@@ -841,14 +841,13 @@ td.valenteer-name {
 /*new-css*/
 .hospital-card-wrapper.covid-case-card{
  display: block;
- width:100%;
+ width:60%;
 }
 .hospital-card-wrapper.covid-case-card .hospital-card{
  display: block !important;
 }
 .hospital-card-wrapper.covid-case-card .hospital-card h4{
  display: flex;
- justify-content: space-around;
 }
 .info-row span {
     text-transform: capitalize;
@@ -875,6 +874,13 @@ td.valenteer-name {
 .info-table-covidhelp .info-row{
  margin-bottom: 0;
  padding-bottom: 0;
+}
+.hospital-card-wrapper.covid-case-card .hospital-card h4 label {
+    font-weight: normal;
+}
+.hospital-card h4 label {
+    width: 218px;
+    text-align: left;
 }
 
 @media only screen and (min-width:992px){
@@ -1011,6 +1017,9 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	}
 	.specialize-option#specialisation_id{
      width:50%;
+	}
+	.hospital-card-wrapper.covid-case-card{
+     width:100%;
 	}
 }
 

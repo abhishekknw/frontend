@@ -78,19 +78,19 @@
                     <h4>Total Recovered Cases : {{totalRecoveredCases}}</h4>
                     <h4>Total Deceased Cases : {{totalDeceasedCases}}</h4> -->
                     <div class="hospital-card"> 
-                      <h4>Total Confirmed Cases : 
+                      <h4><label>Total Confirmed Cases :</label> 
                         <span ng-if="totalConfirmedCases != 0">{{totalConfirmedCases}}</span>
                         <span ng-if="totalConfirmedCases == 0">N/A</span>
                         </h4>
                     </div>
                     <div class="hospital-card" style="display: inline-block;">
-                      <h4>Total Active Cases : 
+                      <h4><label>Total Active Cases : </label>
                         <span ng-if="totalConfirmedCases != 0"> {{totalActiveCases}}</span>
                         <span ng-if="totalConfirmedCases == 0"> N/A </span>
                       </h4>
                     </div>
                     <div class="hospital-card">
-                      <h4>Total Recovered Cases : 
+                      <h4><label>Total Recovered Cases : </label>
                         
                         <span ng-if="totalRecoveredCases != 0"> {{totalRecoveredCases}}</span>
                         <span ng-if="totalRecoveredCases == 0"> N/A </span>
@@ -98,7 +98,7 @@
                       </h4>
                     </div>
                     <div class="hospital-card" style="display: inline-block;">
-                      <h4>Total Deceased Cases : 
+                      <h4><label>Total Deceased Cases : </label>
                         <span ng-if="totalDeceasedCases != 0"> {{totalDeceasedCases}}</span>
                         <span ng-if="totalDeceasedCases == 0"> N/A </span>
                         </h4>
@@ -116,7 +116,7 @@
                   <div>
  
                     <div class="hospital-card">
-                      <h4>Confirmed Cases : 
+                      <h4><label>Confirmed Cases : </label>
                        <span ng-if="yesterdayTotalConfirmedCases != 0"> {{yesterdayTotalConfirmedCases}} </span>
                        <span ng-if="yesterdayTotalConfirmedCases == 0"> N/A </span>
                       </h4>
@@ -127,13 +127,13 @@
                       <h4>Total Active Cases : {{totalActiveCases}}</h4>
                     </div> -->
                     <div class="hospital-card">
-                      <h4>Recovered Cases : 
+                      <h4><label>Recovered Cases : </label>
                         <span ng-if="yesterdayTotalRecoveredCases != 0">{{yesterdayTotalRecoveredCases}}</span>
                         <span ng-if="yesterdayTotalRecoveredCases == 0">N/A</span>
                       </h4>
                     </div>
                     <div class="hospital-card" style="display: inline-block;">
-                      <h4>Deceased Cases : 
+                      <h4><label>Deceased Cases :</label> 
                         <span ng-if="yesterdayTotalRecoveredCases != 0">{{yesterdayTotalDeceasedCases}}</span>
                         <span ng-if="yesterdayTotalRecoveredCases == 0">N/A</span>
                         </h4>
