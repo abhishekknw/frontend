@@ -62,7 +62,8 @@
         </div>
         <div class="summery">
           <h4 class="title" ng-if="selectedCityName || selectedStateName">Summary of Covid Cases in
-            {{selectedCityName}} <span ng-if="selectedCityName && selectedStateName">,</span> {{selectedStateName}}
+           <span ng-if="selectedCityName !='all'"> {{selectedCityName}} </span>
+            <span ng-if="selectedCityName && selectedStateName"> <span ng-if="selectedCityName !='all'">,</span></span> {{selectedStateName}}
           </h4>
           <h4 class="title" ng-if="!selectedCityName && !selectedStateName">Summary </h4>
           <div class="row">
@@ -77,16 +78,30 @@
                     <h4>Total Recovered Cases : {{totalRecoveredCases}}</h4>
                     <h4>Total Deceased Cases : {{totalDeceasedCases}}</h4> -->
                     <div class="hospital-card"> 
-                      <h4>Total Confirmed Cases : {{totalConfirmedCases}}</h4>
+                      <h4>Total Confirmed Cases : 
+                        <span ng-if="totalConfirmedCases != 0">{{totalConfirmedCases}}</span>
+                        <span ng-if="totalConfirmedCases == 0">N/A</span>
+                        </h4>
                     </div>
                     <div class="hospital-card" style="display: inline-block;">
-                      <h4>Total Active Cases : {{totalActiveCases}}</h4>
+                      <h4>Total Active Cases : 
+                        <span ng-if="totalConfirmedCases != 0"> {{totalActiveCases}}</span>
+                        <span ng-if="totalConfirmedCases == 0"> N/A </span>
+                      </h4>
                     </div>
                     <div class="hospital-card">
-                      <h4>Total Recovered Cases : {{totalRecoveredCases}}</h4>
+                      <h4>Total Recovered Cases : 
+                        
+                        <span ng-if="totalRecoveredCases != 0"> {{totalRecoveredCases}}</span>
+                        <span ng-if="totalRecoveredCases == 0"> N/A </span>
+                        
+                      </h4>
                     </div>
                     <div class="hospital-card" style="display: inline-block;">
-                      <h4>Total Deceased Cases : {{totalDeceasedCases}}</h4>
+                      <h4>Total Deceased Cases : 
+                        <span ng-if="totalDeceasedCases != 0"> {{totalDeceasedCases}}</span>
+                        <span ng-if="totalDeceasedCases == 0"> N/A </span>
+                        </h4>
                     </div>
                   </div>
                 </div>
@@ -101,7 +116,10 @@
                   <div>
  
                     <div class="hospital-card">
-                      <h4>Total Confirmed Cases : {{totalConfirmedCases}}</h4>
+                      <h4>Confirmed Cases : 
+                       <span ng-if="yesterdayTotalConfirmedCases != 0"> {{yesterdayTotalConfirmedCases}} </span>
+                       <span ng-if="yesterdayTotalConfirmedCases == 0"> N/A </span>
+                      </h4>
                     </div>
                     <!-- <div class="hospital-card">
                     </div> -->
@@ -109,10 +127,16 @@
                       <h4>Total Active Cases : {{totalActiveCases}}</h4>
                     </div> -->
                     <div class="hospital-card">
-                      <h4>Total Recovered Cases : {{totalRecoveredCases}}</h4>
+                      <h4>Recovered Cases : 
+                        <span ng-if="yesterdayTotalRecoveredCases != 0">{{yesterdayTotalRecoveredCases}}</span>
+                        <span ng-if="yesterdayTotalRecoveredCases == 0">N/A</span>
+                      </h4>
                     </div>
                     <div class="hospital-card" style="display: inline-block;">
-                      <h4>Total Deceased Cases : {{totalDeceasedCases}}</h4>
+                      <h4>Deceased Cases : 
+                        <span ng-if="yesterdayTotalRecoveredCases != 0">{{yesterdayTotalDeceasedCases}}</span>
+                        <span ng-if="yesterdayTotalRecoveredCases == 0">N/A</span>
+                        </h4>
                     </div>
                   </div>
                 </div>
@@ -137,24 +161,47 @@
                     <span>{{cases.district_name}}</span> -->
                     <h3>District Name: <span> {{cases.district_name}}</span>
                   </div>
+                   <div>Yesterday's Cases</div>
+                   <div class="info-row">
+                    <label class="infolable">Active Cases:</label>
+                    <span ng-if="cases.yesterday_active !=0"> {{cases.yesterday_active}}</span>
+                    <span ng-if="cases.yesterday_active  ==0"> N/A </span>
+                  </div>
 
                   <div class="info-row">
+                    <label class="infolable">Recovered Cases:</label>
+                    <span ng-if="cases.yesterday_recovered !=0"> {{cases.yesterday_recovered}}</span>
+                    <span ng-if="cases.yesterday_recovered ==0"> N/A </span>
+                  </div>
+
+                  <div class="info-row">
+                    <label class="infolable">Deceased Cases:</label>
+                    <span ng-if="cases.yesterday_deceased !=0"> {{cases.yesterday_deceased}}</span>
+                    <span ng-if="cases.yesterday_deceased ==0"> N/A </span>
+
+                  </div>
+                   <div>Total Cases</div>
+                  <div class="info-row">
                     <label class="infolable">Total Confirmed Cases:</label>
-                    <span> {{cases.confirmed}}</span>
+                    <span ng-if="cases.confirmed !=0"> {{cases.confirmed}}</span>
+                    <span ng-if="cases.confirmed ==0"> N/A </span>
                   </div>
                   <div class="info-row">
                     <label class="infolable">Total Active Cases:</label>
-                    <span> {{cases.active}}</span>
+                    <span ng-if="cases.active !=0"> {{cases.active}}</span>
+                    <span ng-if="cases.active ==0"> N/A </span>
                   </div>
 
                   <div class="info-row">
                     <label class="infolable">Total Recovered Cases:</label>
-                    <span> {{cases.recovered}}</span>
+                    <span ng-if="cases.recovered !=0" > {{cases.recovered}}</span>
+                    <span ng-if="cases.recovered ==0" > N/A </span>
                   </div>
 
                   <div class="info-row">
                     <label class="infolable">Total Deceased Cases:</label>
-                    <span> {{cases.deceased}}</span>
+                    <span ng-if="cases.deceased !=0"> {{cases.deceased}}</span>
+                    <span ng-if="cases.deceased ==0"> N/A </span>
 
                   </div>
                 </div>
