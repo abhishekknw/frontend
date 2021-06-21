@@ -30,7 +30,6 @@ angular.module('machadaloPages').filter('replace', [function () {
                         //     "keyword": "MDCovidcases",
                         //     "name": "Covid Cases",
                         // },
-                        
                          {
                             "category_code": "",
                             "keyword": "MDConsulation",
