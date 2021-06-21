@@ -7,7 +7,7 @@
   <div class="page-wrapper">
     <div class="logo-sec">
       <img src="images/machadalo-logo.png" alt="logo">
-      <h1><span class="img_hospital"><img src="images/plus_icon.png" alt="logo"></span> COVID19 HELPDESK, AVAILABLE
+      <h1><span class="img_hospital"><img src="images/plus_icon.png" alt="logo"></span> COVID19 HELPDESK
         {{selectedCategory}}</h1>
     </div>
 
@@ -118,7 +118,7 @@
                     <div class="hospital-card">
                       <h4><label>Confirmed Cases : </label>
                        <span ng-if="yesterdayTotalConfirmedCases != 0"> {{yesterdayTotalConfirmedCases}} </span>
-                       <span ng-if="yesterdayTotalConfirmedCases == 0"> N/A </span>
+                       <span ng-if="yesterdayTotalConfirmedCases == 0"> 0 </span>
                       </h4>
                     </div>
                     <!-- <div class="hospital-card">
@@ -129,13 +129,13 @@
                     <div class="hospital-card">
                       <h4><label>Recovered Cases : </label>
                         <span ng-if="yesterdayTotalRecoveredCases != 0">{{yesterdayTotalRecoveredCases}}</span>
-                        <span ng-if="yesterdayTotalRecoveredCases == 0">N/A</span>
+                        <span ng-if="yesterdayTotalRecoveredCases == 0">0</span>
                       </h4>
                     </div>
                     <div class="hospital-card" style="display: inline-block;">
                       <h4><label>Deceased Cases :</label> 
                         <span ng-if="yesterdayTotalRecoveredCases != 0">{{yesterdayTotalDeceasedCases}}</span>
-                        <span ng-if="yesterdayTotalRecoveredCases == 0">N/A</span>
+                        <span ng-if="yesterdayTotalRecoveredCases == 0">0</span>
                         </h4>
                     </div>
                   </div>
@@ -164,21 +164,25 @@
                   <div class="info-table-covidhelp">
                    <div class="yest-case">Yesterday's Cases</div>
                    <div class="info-row">
-                    <label class="infolable">Active Cases:</label>
-                    <span ng-if="cases.yesterday_active !=0"> {{cases.yesterday_active}}</span>
-                    <span ng-if="cases.yesterday_active  ==0"> N/A </span>
+                    <label class="infolable">Confirmed Cases:</label>
+                    <span> {{cases.yesterday_confirmed}}</span>
+                  
+                    <!-- <span ng-if="cases.yesterday_confirmed !=0"> {{cases.yesterday_confirmed}}</span>
+                    <span ng-if="cases.yesterday_confirmed  ==0"> N/A </span> -->
                   </div>
 
                   <div class="info-row">
                     <label class="infolable">Recovered Cases:</label>
-                    <span ng-if="cases.yesterday_recovered !=0"> {{cases.yesterday_recovered}}</span>
-                    <span ng-if="cases.yesterday_recovered ==0"> N/A </span>
+                    <span> {{cases.yesterday_recovered}}</span>
+                    <!-- <span ng-if="cases.yesterday_recovered !=0"> {{cases.yesterday_recovered}}</span>
+                    <span ng-if="cases.yesterday_recovered ==0"> N/A </span> -->
                   </div>
 
                   <div class="info-row">
                     <label class="infolable">Deceased Cases:</label>
-                    <span ng-if="cases.yesterday_deceased !=0"> {{cases.yesterday_deceased}}</span>
-                    <span ng-if="cases.yesterday_deceased ==0"> N/A </span>
+                    <span> {{cases.yesterday_deceased}}</span>
+                    <!-- <span ng-if="cases.yesterday_deceased !=0"> {{cases.yesterday_deceased}}</span>
+                    <span ng-if="cases.yesterday_deceased ==0"> N/A </span> -->
 
                   </div>
                   </div>

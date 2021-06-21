@@ -1021,6 +1021,9 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	.hospital-card-wrapper.covid-case-card{
      width:100%;
 	}
+	.info-table-covidhelp .infolable{
+     min-width: 200px;
+	}
 }
 
 @media only screen and (max-width:375px){
