@@ -883,6 +883,29 @@ td.valenteer-name {
     text-align: left;
 }
 
+/*covidyouth-css*/
+/*.info-time-row label.infolable, .info-table-wrap.covidyouth-table .infolable{
+ min-width: 95px;
+}*/
+.info-time-row .info-row .infolable {
+    min-width: 95px;
+}
+.info-row.youtube-video {
+    justify-content: center;
+}
+.info-time-row {
+    display: flex;
+}
+.info-time-row.second .info-row {
+    justify-content: center;
+}
+.info-time-row.second .info-row.level .infolable {
+    min-width: 70px;
+}
+.info-row.covid-table-heading label.infolable{
+ min-width: 145px;
+}
+
 @media only screen and (min-width:992px){
  .info-row.info-feedback{
  height: 95px;
@@ -1024,6 +1047,18 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	.info-table-covidhelp .infolable{
      min-width: 200px;
 	}
+	.info-time-row{
+     display: block;
+	}
+	.info-time-row.second .info-row{
+     justify-content: inherit;
+	}
+	.info-time-row.second .info-row.level .infolable{
+	min-width: 95px;
+	}
+	.info-row.youtube-video iframe {
+    width: 100%;
+  }
 }
 
 @media only screen and (max-width:375px){

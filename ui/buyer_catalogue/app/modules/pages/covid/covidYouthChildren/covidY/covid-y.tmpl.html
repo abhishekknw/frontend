@@ -114,13 +114,13 @@
           </div>
           <div class="col-md-6" ng-if="youthData.length > 0" ng-repeat="youth in youthData ">
           <!-- <div class="col-md-6"> -->
-            <div class="info-table-wrap">
-              <div class="info-row">
+            <div class="info-table-wrap covidyouth-table">
+              <div class="info-row covid-table-heading">
                 <label class="infolable">Theme:</label>
                 <span ng-show="youth.Theme">{{youth.Theme}}</span>
                 <span ng-show="!youth.Theme || youth.Theme == ' '">N/A</span>
               </div>
-              <div class="info-row">
+              <div class="info-row youtube-video">
                 <!-- <label class="infolable"> Link:</label> -->
                 <!-- <video width="400" controls>
                   <source src="https://www.youtube.com/embed/{{youth.link}}" type="video/mp4">
@@ -132,7 +132,7 @@
                 <!-- <span ng-show="youth.link"> {{youth.link}} </span>
                 <span ng-show="youth.link == ' ' || !youth.link"> N/A </span> -->
               </div>
-
+              <div class="info-time-row">
               <div class="info-row">
                 <label class="infolable">Start Time:</label>
                 <span ng-show="youth.start"><strong>{{youth.start |replace: ',':' ' | date:'medium'}} </strong></span>
@@ -144,15 +144,16 @@
                 <span ng-show="youth.end"><strong>{{youth.end |replace: ',':' ' | date:'medium'}} </strong></span>
                 <span ng-show="youth.end == ' ' || !youth.end"> N/A </span>
               </div>
-
-
+             </div>
+             
+             <div class="info-time-row second">
               <div class="info-row">
                 <label class="infolable">Duration:</label>
                 <span ng-show="youth.duration">{{youth.duration}} </span>
                 <span ng-show="youth.duration == ' ' || !youth.duration"> N/A </span>
               </div>
 
-              <div class="info-row">
+              <div class="info-row level">
                 <label class="infolable">Level:</label>
                 <span ng-show="youth.level">{{youth.level}} </span>
                 <span ng-show="youth.level == ' ' || !youth.level"> N/A </span>
@@ -163,6 +164,7 @@
                 <span ng-show="youth.imp">{{youth.imp}} </span>
                 <span ng-show="youth.imp == ' ' || !youth.imp"> N/A </span>
               </div>
+             </div>
 
 
 
