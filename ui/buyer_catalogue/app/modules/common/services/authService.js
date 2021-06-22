@@ -446,8 +446,19 @@ angular.module('Authentication')
                      return response
                   });
             };
+
             authService.getAllConsulationVolunteer = function (stateName) {
                let url = "v0/ui/covid-bot/volunteer-doctor/?state=" + stateName
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+            authService.youthChildrenList = function (param) {
+               let url = "v0/ui/b2c-bot/meadata/?age_group=" + param.age + '&category=' + param.category;
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
