@@ -21,36 +21,55 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.loading = true;
 
             $scope.getCategory = function () {
-                AuthService.getAllCategory()
-                    .then(function onSuccess(response) {
-                        $scope.categorysArray = response.data.data;
-                        $scope.categorysArray.push(
-                        //     {
-                        //     "category_code": "",
-                        //     "keyword": "MDCovidcases",
-                        //     "name": "Covid Cases",
-                        // },
-                         {
-                            "category_code": "",
-                            "keyword": "MDConsulation",
-                            "name": "Free Online Doctor Consulation",
-                        });
+                // AuthService.getAllCategory()
+                //     .then(function onSuccess(response) {
+                //         $scope.categorysArray = response.data.data;
+                //         $scope.categorysArray.push(
+
+                //          {
+                //             "category_code": "",
+                //             "keyword": "MDConsulation",
+                //             "name": "Free Online Doctor Consulation",
+                //         });
 
 
-                        if ($scope.selectedCategory && $scope.categorysArray.length > 0) {
-                            let selectedCategoryname = $scope.selectedCategory;
-                            var localindex_index = $scope.categorysArray.map(function (el) {
-                                return el.name;
-                            }).indexOf(selectedCategoryname);
-                            if (localindex_index != -1) {
-                                $scope.selectedCategoryCode = $scope.categorysArray[localindex_index].category_code;
-                                $scope.selectedCategoryKeyword = $scope.categorysArray[localindex_index].keyword;
-                                $scope.getState();
-                            }
-                        }
-                    }).catch(function onError(response) {
-                        console.log(response);
-                    })
+                //         if ($scope.selectedCategory && $scope.categorysArray.length > 0) {
+                //             let selectedCategoryname = $scope.selectedCategory;
+                //             var localindex_index = $scope.categorysArray.map(function (el) {
+                //                 return el.name;
+                //             }).indexOf(selectedCategoryname);
+                //             if (localindex_index != -1) {
+                //                 $scope.selectedCategoryCode = $scope.categorysArray[localindex_index].category_code;
+                //                 $scope.selectedCategoryKeyword = $scope.categorysArray[localindex_index].keyword;
+                //                 $scope.getState();
+                //             }
+                //         }
+                //     }).catch(function onError(response) {
+                //         console.log(response);
+                //     })
+                $scope.categorysArray = [{
+                    "category_code": "",
+                    "keyword": "Social and Emotional Quotient",
+                    "name": "Social and Emotional Quotient ",
+                },{
+                    "category_code": "",
+                    "keyword": "Covid Prevention",
+                    "name": "Covid Prevention",  
+                },{
+                    "category_code": "",
+                    "keyword": "Healthy Eating and Exercise",
+                    "name": "Healthy Eating and Exercise",
+                },{
+                    "category_code": "",
+                    "keyword": "Yoga and Mindfulness",
+                    "name": "Yoga and Mindfulness",
+                }]
+                $scope.ageArray = [
+                    {'age':'Toddlers (<3yrs)'},
+                    {'age':'Kindergarten (3 to 6 yrs)'},
+                    {'age':'Primary (7 to 12 yrs)'},
+                    {'age':'Secondary (13 to 18 yrs)'},
+                    {'age':'College/Professional (>18 yrs)'}]
             }
 
             $scope.changeWeb = function () {
@@ -109,9 +128,25 @@ angular.module('machadaloPages').filter('replace', [function () {
             //         })
             // }
 
+            $scope.youthChildrenList = function(){
+                let param = {
+                    category : $scope.selectedCategory,
+                    age : $scope.selectedAge,
+                }
+                AuthService.youthChildrenList(param)
+                .then(function onSuccess(response) {
+                    $scope.youthData = response.data.data.result;
+                     if($scope.youthData.length > 0){
+                        for(let i in $scope.youthData){
+                            $scope.youthData[i].link = 'https://www.youtube.com/embed/' + $scope.youthData[i].link;
+                        }
+                     }
+                }).catch(function onError(response) {
+                    console.log(response);
+                })
 
+            }
             $scope.getConsulationList = function () {
-
                 $scope.loading = null;
                 let param = {
                     state: $scope.selectedStateName,

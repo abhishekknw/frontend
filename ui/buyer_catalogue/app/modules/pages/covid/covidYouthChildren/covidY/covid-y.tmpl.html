@@ -28,10 +28,10 @@
               <option value="" disabled>
                 Select Category
               </option>
-              <!-- <option ng-repeat="cat in categorysArray track by $index" value="{{cat.name}}"
+              <option ng-repeat="cat in categorysArray track by $index" value="{{cat.name}}"
                 style="text-transform: capitalize;">
                 {{cat.name}} 
-              </option> -->
+              </option>
             </select>
           </div>
 
@@ -39,14 +39,14 @@
           <p style="text-align: center;">
           </p>
           <div class="form-group">
-            <select class="form-control" ng-change="getConsulationList()" name="state" id="consulation_state"
-              ng-model="selectedStateName">
+            <select class="form-control" ng-change="youthChildrenList()" name="age" id="consulation_state"
+              ng-model="selectedAge">
               <option value="" disabled>
                 Select Age Group
               </option>
-              <option ng-repeat="state in stateData track by $index" value="{{state.state}}"
+              <option ng-repeat="age in ageArray track by $index" value="{{age.age}}"
                 style="text-transform: capitalize;">
-                {{state.state}}
+                {{age.age}}
               </option>
             </select>
           </div>
@@ -112,126 +112,75 @@
               </option>
             </select> -->
           </div>
-          <!-- <div class="col-md-6" ng-if="consulationDetailData.length > 0" ng-repeat="consulation in consulationDetailData  | filter : sort"> -->
-          <div class="col-md-6">
+          <div class="col-md-6" ng-if="youthData.length > 0" ng-repeat="youth in youthData ">
+          <!-- <div class="col-md-6"> -->
             <div class="info-table-wrap">
               <div class="info-row">
                 <label class="infolable">Theme:</label>
-                <span ng-show="consulation.contact_name">{{consulation.contact_name}}</span>
-                <span ng-show="!consulation.contact_name || consulation.contact_name == ' '">N/A</span>
+                <span ng-show="youth.Theme">{{youth.Theme}}</span>
+                <span ng-show="!youth.Theme || youth.Theme == ' '">N/A</span>
               </div>
               <div class="info-row">
-                <label class="infolable"> Link:</label>
-                <span ng-show="consulation.source"> {{consulation.source}} </span>
-                <span ng-show="consulation.source == ' ' || !consulation.source"> N/A </span>
+                <!-- <label class="infolable"> Link:</label> -->
+                <!-- <video width="400" controls>
+                  <source src="https://www.youtube.com/embed/{{youth.link}}" type="video/mp4">
+                  <source src="https://www.youtube.com/embed/{{youth.link}}" type="video/ogg">
+                  Your browser does not support HTML video.
+                </video> -->
+                <iframe width="420"  src="https://www.youtube.com/embed/bit.ly/3wwwtlw">
+                </iframe>
+                <!-- <span ng-show="youth.link"> {{youth.link}} </span>
+                <span ng-show="youth.link == ' ' || !youth.link"> N/A </span> -->
               </div>
 
               <div class="info-row">
-                <label class="infolable">start Time:</label>
-                <span ng-show="consulation.timings"><strong>{{consulation.timings |replace: ',':' ' | date:'medium'}} </strong></span>
-                <span ng-show="consulation.timings == ' ' || !consulation.timings"> N/A </span>
+                <label class="infolable">Start Time:</label>
+                <span ng-show="youth.start"><strong>{{youth.start |replace: ',':' ' | date:'medium'}} </strong></span>
+                <span ng-show="youth.start == ' ' || !youth.start"> N/A </span>
               </div>
 
               <div class="info-row">
-                <label class="infolable">start Time:</label>
-                <span ng-show="consulation.timings"><strong>{{consulation.timings |replace: ',':' ' | date:'medium'}} </strong></span>
-                <span ng-show="consulation.timings == ' ' || !consulation.timings"> N/A </span>
+                <label class="infolable">End Time:</label>
+                <span ng-show="youth.end"><strong>{{youth.end |replace: ',':' ' | date:'medium'}} </strong></span>
+                <span ng-show="youth.end == ' ' || !youth.end"> N/A </span>
               </div>
 
 
               <div class="info-row">
                 <label class="infolable">Duration:</label>
-                <span ng-show="consulation.languages">{{consulation.languages}} </span>
-                <span ng-show="consulation.languages == ' ' || !consulation.languages"> N/A </span>
+                <span ng-show="youth.duration">{{youth.duration}} </span>
+                <span ng-show="youth.duration == ' ' || !youth.duration"> N/A </span>
               </div>
 
               <div class="info-row">
                 <label class="infolable">Level:</label>
-                <span ng-show="consulation.languages">{{consulation.languages}} </span>
-                <span ng-show="consulation.languages == ' ' || !consulation.languages"> N/A </span>
+                <span ng-show="youth.level">{{youth.level}} </span>
+                <span ng-show="youth.level == ' ' || !youth.level"> N/A </span>
               </div>
 
               <div class="info-row">
                 <label class="infolable">Imp:</label>
-                <span ng-show="consulation.languages">{{consulation.languages}} </span>
-                <span ng-show="consulation.languages == ' ' || !consulation.languages"> N/A </span>
+                <span ng-show="youth.imp">{{youth.imp}} </span>
+                <span ng-show="youth.imp == ' ' || !youth.imp"> N/A </span>
               </div>
 
 
 
               <div class="info-row">
                 <label class="infolable">Key Learnings:</label>
-                <span ng-show="consulation.specialization">{{consulation.specialization}}</span>
-                <span ng-show="consulation.specialization == ' ' || !consulation.specialization"> N/A </span>
+                <span ng-show="youth.key_learnings">{{youth.key_learnings}}</span>
+                <span ng-show="youth.key_learnings == ' ' || !youth.key_learnings"> N/A </span>
               </div>
 
               <div class="info-row">
                 <label class="infolable">Source:</label>
-                <span ng-show="consulation.specialization">{{consulation.specialization}}</span>
-                <span ng-show="consulation.specialization == ' ' || !consulation.specialization"> N/A </span>
+                <span ng-show="youth.source">{{youth.source}}</span>
+                <span ng-show="youth.source == ' ' || !youth.source"> N/A </span>
               </div>
             </div>
           </div>
 
-          <div class="col-md-6">
-            <div class="info-table-wrap">
-              <div class="info-row">
-                <label class="infolable">Theme:</label>
-                <span ng-show="consulation.contact_name">{{consulation.contact_name}}</span>
-                <span ng-show="!consulation.contact_name || consulation.contact_name == ' '">N/A</span>
-              </div>
-              <div class="info-row">
-                <label class="infolable"> Link:</label>
-                <span ng-show="consulation.source"> {{consulation.source}} </span>
-                <span ng-show="consulation.source == ' ' || !consulation.source"> N/A </span>
-              </div>
-
-              <div class="info-row">
-                <label class="infolable">Start Time:</label>
-                <span ng-show="consulation.timings"><strong>{{consulation.timings |replace: ',':' ' | date:'medium'}} </strong></span>
-                <span ng-show="consulation.timings == ' ' || !consulation.timings"> N/A </span>
-              </div>
-
-              <div class="info-row">
-                <label class="infolable">Start Time:</label>
-                <span ng-show="consulation.timings"><strong>{{consulation.timings |replace: ',':' ' | date:'medium'}} </strong></span>
-                <span ng-show="consulation.timings == ' ' || !consulation.timings"> N/A </span>
-              </div>
-
-
-              <div class="info-row">
-                <label class="infolable">Duration:</label>
-                <span ng-show="consulation.languages">{{consulation.languages}} </span>
-                <span ng-show="consulation.languages == ' ' || !consulation.languages"> N/A </span>
-              </div>
-
-              <div class="info-row">
-                <label class="infolable">Level:</label>
-                <span ng-show="consulation.languages">{{consulation.languages}} </span>
-                <span ng-show="consulation.languages == ' ' || !consulation.languages"> N/A </span>
-              </div>
-
-              <div class="info-row">
-                <label class="infolable">Imp:</label>
-                <span ng-show="consulation.languages">{{consulation.languages}} </span>
-                <span ng-show="consulation.languages == ' ' || !consulation.languages"> N/A </span>
-              </div>
-
-
-
-              <div class="info-row">
-                <label class="infolable">Key Learnings:</label>
-                <span ng-show="consulation.specialization">{{consulation.specialization}}</span>
-                <span ng-show="consulation.specialization == ' ' || !consulation.specialization"> N/A </span>
-              </div>
-
-              <div class="info-row">
-                <label class="infolable">Source:</label>
-                <span ng-show="consulation.specialization">{{consulation.specialization}}</span>
-                <span ng-show="consulation.specialization == ' ' || !consulation.specialization"> N/A </span>
-              </div>
-            </div>
-          </div>
+          
         </div>
         <div ng-if="errorMsg">
           <h4 style="color:red;text-align: center">{{errorMsg}}</h4>
