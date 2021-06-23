@@ -7,7 +7,7 @@
   <div class="page-wrapper">
     <div class="logo-sec">
       <img src="images/machadalo-logo.png" alt="logo">
-      <h1><span class="img_hospital"><img src="images/plus_icon.png" alt="logo"></span> COVID19 HELPDESK FOR YOUTH AND CHILDREN
+      <h1><span class="img_hospital"></span> Machadalo Education Assistant
         </h1>
     </div>
 
@@ -94,7 +94,9 @@
         <div ng-if="!loading" ng-loadings="loading"></div>
         <div class="row info-table-row" ng-if="loading">
           
-            <div class="info-table-heading"  ><h2 style="text-align: center;">Category for age group <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
+            <div class="info-table-heading" ng-if="!selectedCategory && !selectedAge" ><h2 style="text-align: center;">Category for age group <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
+            <div class="info-table-heading" ng-if="selectedCategory && selectedAge" ><h2 style="text-align: center;">{{selectedCategory}} for {{selectedAge}} group <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
+           
             
             
           <!-- <div class="natext">
@@ -184,8 +186,8 @@
 
           
         </div>
-        <div ng-if="errorMsg">
-          <h4 style="color:red;text-align: center">{{errorMsg}}</h4>
+        <div ng-if="youthData.length == 0">
+          <h4 style="color:red;text-align: center">Record not found.</h4>
         </div>
 
 

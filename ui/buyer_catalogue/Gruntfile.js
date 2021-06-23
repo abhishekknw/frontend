@@ -70,13 +70,13 @@ module.exports = function (grunt) {
     // The actual grunt server settings
     connect: {
       options: {
-        port: 9000,  
+        port: 9003,  
         // local == 9000 and 35729
         //https://hospitalbeds.covidhelpdesk.machadalo.com/ == 9002 and 35730
         //covidhelpdesk.machadalo.com == 9003 and 35731
         // Change this to '0.0.0.0' to access the server from outside.
         hostname: '0.0.0.0',
-        livereload: 35729
+        livereload: 35730
       },
       livereload: {
         options: {

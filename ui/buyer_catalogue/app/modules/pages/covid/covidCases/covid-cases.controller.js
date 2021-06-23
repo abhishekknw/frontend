@@ -50,11 +50,11 @@ angular.module('machadaloPages').filter('replace', [function () {
                     .then(function onSuccess(response) {
                         $scope.categorysArray = response.data.data;
                         $scope.categorysArray.push(
-                            {
-                                "category_code": "",
-                                "keyword": "MDCovidcases",
-                                "name": "Covid Cases",
-                            },
+                            // {
+                            //     "category_code": "",
+                            //     "keyword": "MDCovidcases",
+                            //     "name": "Covid Cases",
+                            // },
                             {
                                 "category_code": "",
                                 "keyword": "MDConsulation",
@@ -74,6 +74,13 @@ angular.module('machadaloPages').filter('replace', [function () {
                         //         $scope.categorysArray = $scope.categorysArrayNew;
                         //     }
                         // }
+                        $scope.categorysArrayNew = $scope.categorysArray;
+                        for (let j in $scope.categorysArrayNew) {
+                            if ($scope.categorysArrayNew[j].name == 'PuffCans') {
+                                $scope.categorysArrayNew.splice(j, 1);
+                                $scope.categorysArray = $scope.categorysArrayNew;
+                            }
+                        }
                         if ($scope.selectedCategory && $scope.categorysArray.length > 0) {
 
                             let selectedCategoryname = $scope.selectedCategory;
