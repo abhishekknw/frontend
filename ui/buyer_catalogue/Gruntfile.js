@@ -76,7 +76,7 @@ module.exports = function (grunt) {
         //covidhelpdesk.machadalo.com == 9003 and 35731
         // Change this to '0.0.0.0' to access the server from outside.
         hostname: '0.0.0.0',
-        livereload: 35731
+        livereload: 35730
       },
       livereload: {
         options: {
