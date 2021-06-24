@@ -133,7 +133,7 @@ angular
         templateUrl: 'modules/pages/covid/covidYouthChildren/covidY/covid-y.tmpl.html',
       })
       .state('covidLanding', {
-        url: '/covidLanding/',
+        url: '',
         controller: 'covidLandingCtrl',
         templateUrl: 'modules/pages/covid/covidLanding/covid-landing.tmpl.html',
       });
@@ -200,7 +200,9 @@ angular
             $location.path("/doctors/");
           } else if (url[1] == "mea") {
             $location.path("/mea/");
-          } 
+          } else {
+            $location.path("");
+          }
         }
         var category = $rootScope.globals.userInfo.profile.organisation.category;
         // $location.path("/hospitalbeds/covidhelpdesk/");
@@ -227,7 +229,9 @@ angular
             $location.path("/doctors/");
           } else if (url[1] == "mea") {
             $location.path("/mea/");
-          } 
+          } else {
+            $location.path("");
+          }
         } 
       });
 
