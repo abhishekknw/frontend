@@ -47,8 +47,6 @@
                   </option>
                 </select>
               </div>
-            </div>
-            <div class="col-md-6">
               <div class="form-group">
                 <select class="form-control" name="city" ng-change="getCylinderList()" id="city_id" ng-model="city_code">
                   <option value="" disabled>
@@ -60,12 +58,13 @@
                 </select>
               </div>
             </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
+            <div class="col-md-6">
+              <div class="form-group pincode">
               <input class="form-control" type='text' name="pincode" id='pinId' ng-model="pinCode" placeholder="Enter Pincode">
         </div>
-        </div>
+            </div>
+          </div>
+          
       </div>
         <div ng-if="!loading" ng-loadings="loading"></div>
         <div class="row info-table-row" ng-if="loading">
@@ -118,10 +117,10 @@
             <div class="col-md-6" >
               <div class="info-table-wrap">
 
-                <div class="info-row">
+                <div class="info-row vaccine-row">
                   <!-- <h3>Center Name: <span> {{cases.district_name}}</span>
                     <h3>Address: <span> {{cases.district_name}}</span> -->
-                      <p>Center Name: <span> {{cases.district_name}}</span></p><br>
+                      <p>Center Name: <span> {{cases.district_name}}</span></p>
                        <p>Address: <span> {{cases.district_name}}</span></p>
                 </div>
                 <div class="info-table-covidhelp">

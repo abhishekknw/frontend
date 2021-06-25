@@ -905,6 +905,32 @@ td.valenteer-name {
 .info-row.covid-table-heading label.infolable{
  min-width: 145px;
 }
+.form-group.pincode {
+    margin-top: 25px;
+}
+.info-row.vaccine-row {
+    display: block;
+}
+.card.header.covid-card.av-cases-wrap {
+    padding: 0;
+}
+.card-header-inn, .av-cases-wrap {
+    background: linear-gradient(to bottom, #ffefc0, #ffeaab, #ffe596, #ffdf81, #ffda6b);
+    padding: 15px 20px 0 20px;
+    color:#000;
+}
+.av-cases-inn {
+    padding: 20px;
+}
+.covid-table-wrap .info-table-covidhelp {
+    border-bottom: 1px solid #d6d6d6;
+}
+.covid-table-wrap .info-table-covidhelp:last-child{
+   border-top:0;
+}
+.covid-table-wrap .info-table-covidhelp:last-child{
+  border-bottom:0;
+}
 
 @media only screen and (min-width:992px){
  .info-row.info-feedback{

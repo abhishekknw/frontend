@@ -86,11 +86,11 @@ angular.module('machadaloPages').filter('replace', [function () {
                     .then(function onSuccess(response) {
                         $scope.categorysArray = response.data.data;
                         $scope.categorysArray.push(
-                            {
-                            "category_code": "",
-                            "keyword": "MDCovidcases",
-                            "name": "Covid Cases",
-                        },
+                        //     {
+                        //     "category_code": "",
+                        //     "keyword": "MDCovidcases",
+                        //     "name": "Covid Cases",
+                        // },
                          {
                             "category_code": "",
                             "keyword": "MDConsulation",

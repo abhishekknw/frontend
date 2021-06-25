@@ -143,10 +143,53 @@
 
           <div class="row">
             <div class="col-md-6">
-              <div class="card header covid-card" style="background-color: rgb(97 101 33);">
+              <div class="card header covid-card av-cases-wrap" style="background-color: rgb(97 101 33);">
+                <div class="card-header-inn">
                 <h3>Last 7 day Average Cases :
                 </h3>
+                </div>
                 <div ng-if="!loading" ng-loadings="loading"></div>
+                <div class="av-cases-inn">
+                <div class="hospital-card-wrapper covid-case-card" ng-if="loading">
+                  <div>
+
+                    <div class="hospital-card">
+                      <h4><label>Confirmed Cases : </label>
+                        <span ng-if="yesterdayTotalConfirmedCases != 0"> {{yesterdayTotalConfirmedCases}} </span>
+                        <span ng-if="yesterdayTotalConfirmedCases == 0"> 0 </span>
+                      </h4>
+                    </div>
+                    <!-- <div class="hospital-card">
+                  </div> -->
+                    <!-- <div class="hospital-card">
+                    <h4>Total Active Cases : {{totalActiveCases}}</h4>
+                  </div> -->
+                    <div class="hospital-card">
+                      <h4><label>Recovered Cases : </label>
+                        <span ng-if="yesterdayTotalRecoveredCases != 0">{{yesterdayTotalRecoveredCases}}</span>
+                        <span ng-if="yesterdayTotalRecoveredCases == 0">0</span>
+                      </h4>
+                    </div>
+                    <div class="hospital-card" style="display: inline-block;">
+                      <h4><label>Deceased Cases :</label>
+                        <span ng-if="yesterdayTotalRecoveredCases != 0">{{yesterdayTotalDeceasedCases}}</span>
+                        <span ng-if="yesterdayTotalRecoveredCases == 0">0</span>
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="card header covid-card av-cases-wrap" style="background-color: rgb(97 101 33);">
+                <div class="card-header-inn">
+                <h3>Last 14 day Average Cases :
+                </h3>
+                </div>
+                <div ng-if="!loading" ng-loadings="loading"></div>
+                <div class="av-cases-inn">
                 <div class="hospital-card-wrapper covid-case-card" ng-if="loading">
                   <div>
 
@@ -176,41 +219,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="card header covid-card" style="background-color: rgb(97 101 33);">
-                <h3>Last 14 day Average Cases :
-                </h3>
-                <div ng-if="!loading" ng-loadings="loading"></div>
-                <div class="hospital-card-wrapper covid-case-card" ng-if="loading">
-                  <div>
-
-                    <div class="hospital-card">
-                      <h4><label>Confirmed Cases : </label>
-                        <span ng-if="yesterdayTotalConfirmedCases != 0"> {{yesterdayTotalConfirmedCases}} </span>
-                        <span ng-if="yesterdayTotalConfirmedCases == 0"> 0 </span>
-                      </h4>
-                    </div>
-                    <!-- <div class="hospital-card">
-                  </div> -->
-                    <!-- <div class="hospital-card">
-                    <h4>Total Active Cases : {{totalActiveCases}}</h4>
-                  </div> -->
-                    <div class="hospital-card">
-                      <h4><label>Recovered Cases : </label>
-                        <span ng-if="yesterdayTotalRecoveredCases != 0">{{yesterdayTotalRecoveredCases}}</span>
-                        <span ng-if="yesterdayTotalRecoveredCases == 0">0</span>
-                      </h4>
-                    </div>
-                    <div class="hospital-card" style="display: inline-block;">
-                      <h4><label>Deceased Cases :</label>
-                        <span ng-if="yesterdayTotalRecoveredCases != 0">{{yesterdayTotalDeceasedCases}}</span>
-                        <span ng-if="yesterdayTotalRecoveredCases == 0">0</span>
-                      </h4>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -227,7 +235,7 @@
 
               <div class="col-md-6" ng-if="covidCasesData.length > 0"
                 ng-repeat="cases in covidCasesData track by $index">
-                <div class="info-table-wrap">
+                <div class="info-table-wrap covid-table-wrap">
 
                   <div class="info-row">
                     <h3>District Name: <span> {{cases.district_name}}</span>
@@ -251,7 +259,7 @@
 
                     </div>
                   </div>
-                  <hr>
+                
                   <div class="info-table-covidhelp">
                     <div class="yest-case">Last 7-day Average Cases</div>
                     <div class="info-row">
@@ -271,7 +279,7 @@
 
                     </div>
                   </div>
-                  <hr>
+             
                   <div class="info-table-covidhelp">
                     <div class="yest-case">Last 14-day Average Cases</div>
                     <div class="info-row">
