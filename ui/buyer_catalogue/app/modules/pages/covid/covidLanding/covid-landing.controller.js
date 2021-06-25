@@ -32,6 +32,14 @@ angular.module('machadaloPages').filter('replace', [function () {
                             "keyword": "MDConsulation",
                             "name": "Free Online Doctor Consulation",
                         });
+
+                        $scope.categorysArrayNew = $scope.categorysArray;
+                        for (let j in $scope.categorysArrayNew) {
+                            if ($scope.categorysArrayNew[j].name == 'PuffCans') {
+                                $scope.categorysArrayNew.splice(j, 1);
+                                $scope.categorysArray = $scope.categorysArrayNew;
+                            }
+                        }
                 
 
                         if ($scope.selectedCategory && $scope.categorysArray.length > 0) {

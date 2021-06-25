@@ -238,7 +238,7 @@ angular.module('Authentication')
                   });
             };
 
-            authService.getAllBeds = function (param) {
+            authService.getAllBeds = function (param,api) {
                // let url = "v0/ui/covid-bot/get-hospital-data"
                // if (param.state) {
                //    url = "v0/ui/covid-bot/get-hospital-data/?state=" + param.state;
@@ -267,7 +267,7 @@ angular.module('Authentication')
                }
 
 
-               return $http.get(apiHost + url)
+               return $http.get(api + url)
                   .then(function onSuccess(response) {
                      return response
                   })
@@ -355,8 +355,8 @@ angular.module('Authentication')
                   });
             };
 
-            authService.getAllBedsState = function (param) {
-               return $http.get(apiHost + 'v0/ui/covid-bot/state/')
+            authService.getAllBedsState = function (api) {
+               return $http.get(api + 'v0/ui/covid-bot/state/')
                   .then(function onSuccess(response) {
                      return response
                   })
@@ -365,8 +365,8 @@ angular.module('Authentication')
                   });
             };
 
-            authService.getAllBedsCity = function () {
-               return $http.get(apiHost + 'v0/ui/covid-bot/district/')
+            authService.getAllBedsCity = function (api) {
+               return $http.get(api + 'v0/ui/covid-bot/district/')
                   .then(function onSuccess(response) {
                      return response
                   })
@@ -446,8 +446,19 @@ angular.module('Authentication')
                      return response
                   });
             };
+
             authService.getAllConsulationVolunteer = function (stateName) {
                let url = "v0/ui/covid-bot/volunteer-doctor/?state=" + stateName
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+            authService.youthChildrenList = function (param) {
+               let url = "v0/ui/b2c-bot/meadata/?age_group=" + param.age + '&category=' + param.category;
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
