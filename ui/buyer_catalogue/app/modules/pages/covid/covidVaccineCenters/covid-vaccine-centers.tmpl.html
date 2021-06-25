@@ -1,0 +1,182 @@
+<link rel="stylesheet" href="modules/pages/login/login.tmpl.css" />
+<link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css" />
+<script src='https://www.google.com/recaptcha/api.js' async defer></script>
+<link href="css/smallscreen.css" rel="stylesheet" media="screen">
+
+<div class="covid-hospital" ng-init="getCategory()">
+  <div class="page-wrapper">
+    <div class="logo-sec">
+      <img src="images/machadalo-logo.png" alt="logo">
+      <h1><span class="img_hospital"><img src="images/plus_icon.png" alt="logo"></span> COVID19 HELPDESK,<span> {{selectedCategory}}</span></h1>
+    </div>
+
+    <div class="container">
+      <div class="page-inner">
+        <div class="top-select-option">
+          <!-- <div class="form-group">
+            <select class="form-control" name="category" id="Category_id" ng-change="changeWeb()" ng-model="selectedCategory">
+              <option ng-repeat="cat in categorys track by $index" value="{{cat}}" style="text-transform: capitalize;">
+                {{cat}}
+              </option>
+            </select>
+          </div> -->
+
+          <div class="form-group">
+            <select class="form-control" name="category" id="Category_id"  ng-change="changeWeb()" ng-model="selectedCategory">
+              <option ng-repeat="cat in categorysArray track by $index" value="{{cat.name}}"  style="text-transform: capitalize;">
+               {{cat.name}} 
+              </option>
+            </select>
+          </div>
+
+
+          <p style="text-align: center;">
+            <!-- <h4 style="text-align: center;"> Data currently available for {{stateData.length}} States/UT and 410 Districts as per all
+              available Online Government and Volunteer Sources</h4> -->
+          </p>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <select class="form-control" ng-change="getCity()" name="state" id="state_id" ng-model="state_code">
+                  <option value="" disabled>
+                    Select State/UT
+                  </option>
+                  <option ng-repeat="state in stateData track by $index" value="{{state.state_code}}"
+                    style="text-transform: capitalize;">
+                    {{state.state}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <select class="form-control" name="city" ng-change="getCylinderList()" id="city_id" ng-model="city_code">
+                  <option value="" disabled>
+                    Select District/City
+                  </option>
+                  <option ng-repeat="city in cityData track by $index" value="{{city.city_code}}">
+                   <p style="text-transform: capitalize !important"> {{city.city_name}} </p>
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <input class="form-control" type='text' name="pincode" id='pinId' ng-model="pinCode" placeholder="Enter Pincode">
+        </div>
+        </div>
+      </div>
+        <div ng-if="!loading" ng-loadings="loading"></div>
+        <div class="row info-table-row" ng-if="loading">
+          <div>
+          <div class="info-table-heading" ng-if="!selectedCityName" ><h2 style="text-align: center;">Vaccine Centers <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
+          <div class="info-table-heading"  ng-if="selectedStateName && selectedCityName" ><h2 style="text-align: center;">Vaccine Centers in {{selectedCityName}}, {{selectedStateName}}  <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
+          </div>
+         
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <select class="form-control" ng-change="getCity()" name="state" id="state_id" ng-model="state_code">
+                  <option value="" disabled>
+                    Select Age Group
+                  </option>
+                  <option value="18+">18+</option>
+                  <option value="45+">45+</option>
+                 
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <select class="form-control" name="city" ng-change="getCylinderList()" id="city_id" ng-model="city_code">
+                  <option value="" disabled>
+                    Select Vaccine
+                  </option>
+                  <option value="Covaxin">Covaxin</option>
+                  <option value="Covishield">Covishield</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <select class="form-control" name="city" ng-change="getCylinderList()" id="city_id" ng-model="city_code">
+                  <option value="" disabled>
+                    Select Dose
+                  </option>
+                  <option value="Covaxin">Dose 1</option>
+                  <option value="Covishield">Dose 2</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <div class="natext" ng-if="cylinderDetailData.length > 0">
+            N/A means Data Not Available
+          </div>
+          <!-- <div class="col-md-6" ng-if="cylinderDetailData.length > 0" ng-repeat="cylinder in cylinderDetailData track by $index"> -->
+            <div class="col-md-6" >
+              <div class="info-table-wrap">
+
+                <div class="info-row">
+                  <!-- <h3>Center Name: <span> {{cases.district_name}}</span>
+                    <h3>Address: <span> {{cases.district_name}}</span> -->
+                      <p>Center Name: <span> {{cases.district_name}}</span></p><br>
+                       <p>Address: <span> {{cases.district_name}}</span></p>
+                </div>
+                <div class="info-table-covidhelp">
+                  
+                  <div class="info-row">
+                    <label class="infolable"> Vaccine Name:</label>
+                    <span> {{cases.yesterday_confirmed}}</span>
+                  </div>
+
+                  <div class="info-row">
+                    <label class="infolable">Min Age Limit:</label>
+                    <span> {{cases.yesterday_confirmed}}</span>
+                  </div>
+
+                  <div class="info-row">
+                    <label class="infolable">Date of Availability:</label>
+                    <span> {{cases.yesterday_confirmed}}</span>
+                  </div>
+
+                  <div class="info-row">
+                    <label class="infolable">Available Capacity -Dose 1:</label>
+                    <span> {{cases.yesterday_confirmed}}</span>
+                  </div>
+
+                  <div class="info-row">
+                    <label class="infolable">Available Capacity -Dose 2:</label>
+                    <span> {{cases.yesterday_confirmed}}</span>
+                  </div>
+
+                  <div class="info-row">
+                    <label class="infolable">Fees:</label>
+                    <span> {{cases.yesterday_confirmed}}</span>
+                  </div>
+
+                  <div class="info-row">
+                    <label class="infolable">Timings:</label>
+                    <span> {{cases.yesterday_confirmed}}</span>
+                  </div>
+                </div>
+                <hr>
+           
+               
+               
+
+
+               
+              </div>
+            </div>
+      </div>
+          <div ng-if="errorMsg">
+            <h4 style="color:red;text-align: center">{{errorMsg}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- machadalo-login -->

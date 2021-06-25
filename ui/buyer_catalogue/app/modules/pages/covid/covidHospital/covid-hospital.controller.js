@@ -13,12 +13,15 @@ angular.module('machadaloPages').filter('replace', [function () {
             AuthService.Clear();
 
             var url = $location.url().split("/");
-        
+             let apiUrl = 'https://liveapi.societybasket.in/';
+             //let apiUrl = ' https://stagingapi.machadalo.com/';
+            
             let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
-            $scope.selectedCategory = cat;
+            $rootScope.selectedCategory = cat;
             if($scope.selectedCategory == 'Hospitalbeds'){
                 $scope.selectedCategory = 'Beds';
             }
+            $rootScope.cat = $scope.selectedCategory
             // $scope.categorys = ['Hospital Beds', 'Cylinders'];
             // $scope.selectedCategory = 'Hospital Beds';
             $scope.loading = true;
@@ -49,7 +52,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.Phone = 1234567892;
             $scope.totalCity = 0;
             setInterval(function () {
-                AuthService.getAllBedsState()
+                AuthService.getAllBedsState(apiUrl)
                     .then(function onSuccess(response) {
                         if (response && response.data && response.data.data) {
                             $scope.stateData = response.data.data;
@@ -61,7 +64,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                         console.log(response);
                     })
 
-                AuthService.getAllBedsCity()
+                AuthService.getAllBedsCity(apiUrl)
                     .then(function onSuccess(response) {
                         if (response && response.data && response.data.data) {
                             $scope.cityData = response.data.data;
@@ -83,11 +86,11 @@ angular.module('machadaloPages').filter('replace', [function () {
                     .then(function onSuccess(response) {
                         $scope.categorysArray = response.data.data;
                         $scope.categorysArray.push(
-                        //     {
-                        //     "category_code": "",
-                        //     "keyword": "MDCovidcases",
-                        //     "name": "Covid Cases",
-                        // },
+                            {
+                            "category_code": "",
+                            "keyword": "MDCovidcases",
+                            "name": "Covid Cases",
+                        },
                          {
                             "category_code": "",
                             "keyword": "MDConsulation",
@@ -126,7 +129,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                 if (localState && localState != 'undefined' && localState.length !=0) {
                     $scope.stateData = JSON.parse(localState);
                 } else {
-                    AuthService.getAllBedsState()
+                    AuthService.getAllBedsState(apiUrl)
                         .then(function onSuccess(response) {
                             if (response && response.data && response.data.data) {
                                 $scope.stateData = response.data.data;
@@ -146,7 +149,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                         $scope.totalCity = $scope.totalCity + value.length;
                     });
                 } else {
-                    AuthService.getAllBedsCity()
+                    AuthService.getAllBedsCity(apiUrl)
                         .then(function onSuccess(response) {
                             if (response && response.data && response.data.data) {
                                 $scope.cityData = response.data.data;
@@ -275,7 +278,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                 //     console.log(response);
                 // })
                 $scope.notAvailableCount = 0;
-                AuthService.getAllBeds(param)
+                AuthService.getAllBeds(param,apiUrl)
                     .then(function onSuccess(response) {
                         $scope.loading = response;
                         $scope.hospitalDetailData = response.data.data;
