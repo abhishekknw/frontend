@@ -252,7 +252,10 @@ angular.module('machadaloPages').filter('replace', [function () {
                     // sortingParam:$scope.sortingParam,
                     // sortingType: $scope.sortingType
                 }
-
+                $scope.createdDate = false;
+               if($scope.state_code == '002' || $scope.state_code == '016' || $scope.state_code == '029' || $scope.state_code == '021'){
+                $scope.createdDate = true;
+               }
                 if ($scope.categoryFilter == 'FACILITY NAME - ASCENDING') {
                     param.otherFiler = 'ASC';
                     param.categoryFilter = undefined;
@@ -306,6 +309,18 @@ angular.module('machadaloPages').filter('replace', [function () {
                                         $scope.hospitalDetailData[i].hospital_data[j].isDateShow = true;
                                         if (dateDifference > 6) {
                                             $scope.hospitalDetailData[i].hospital_data[j].isDateShow = false;
+                                        }
+
+                                        if(hospitalData[j].created_at){
+                                            let date3 = moment(hospitalData[j].created_at)
+                                            let date4 = moment();
+                                            let dateDifferenceNew = date4.diff(date3, 'days');
+                                            $scope.hospitalDetailData[i].hospital_data[j].isCreatedDateShow = true;
+                                            if (dateDifferenceNew > 6) {
+                                                $scope.hospitalDetailData[i].hospital_data[j].isCreatedDateShow = false;
+                                            }
+                                        } else {
+                                            $scope.hospitalDetailData[i].hospital_data[j].isCreatedDateShow = false;
                                         }
 
                                         let resourcesData = hospitalData[j].resources;

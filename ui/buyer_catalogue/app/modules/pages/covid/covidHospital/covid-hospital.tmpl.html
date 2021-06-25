@@ -268,12 +268,22 @@
                         <td ng-if="!resources.totalQuantity">N/A</td>
 
                       </tr>
-                      <tr>
+
+                      <tr ng-if="!createdDate">
                         <th colspan="2">Last Updated by Hospital:</th>
                         <td colspan="2"><span class="ng-binding"
                             ng-if="hospital.hospital_data[0].isDateShow">{{hospital.hospital_data[0].last_updated_time |
                             date:'medium'}}</span>
                           <span class="ng-binding" ng-if="!hospital.hospital_data[0].isDateShow">As Per The Latest
+                            Records</span>
+                        </td>
+                      </tr>
+                      <tr ng-if="createdDate">
+                        <th colspan="2">Last Updated by Hospital:</th>
+                        <td colspan="2"><span class="ng-binding"
+                            ng-if="hospital.hospital_data[0].isCreatedDateShow">{{hospital.hospital_data[0].created_at |
+                            date:'medium'}}</span>
+                          <span class="ng-binding" ng-if="!hospital.hospital_data[0].isCreatedDateShow">As Per The Latest
                             Records</span>
                         </td>
                       </tr>
