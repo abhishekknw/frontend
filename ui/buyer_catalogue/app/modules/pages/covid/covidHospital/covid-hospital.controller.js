@@ -13,8 +13,8 @@ angular.module('machadaloPages').filter('replace', [function () {
             AuthService.Clear();
 
             var url = $location.url().split("/");
-             let apiUrl = 'https://liveapi.societybasket.in/';
-             //let apiUrl = ' https://stagingapi.machadalo.com/';
+             //let apiUrl = 'https://liveapi.societybasket.in/';
+             let apiUrl = ' https://stagingapi.machadalo.com/';
             
             let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
             $rootScope.selectedCategory = cat;
