@@ -197,7 +197,6 @@ angular.module('machadaloPages').filter('replace', [function () {
                                 $scope._14dayTotalRecoveredCases = $scope._14dayTotalRecoveredCases + $scope.covidCasesData[i]['14_days_avg'].recovered;
                                 $scope._14dayTotalDeceasedCases = $scope._14dayTotalDeceasedCases + $scope.covidCasesData[i]['14_days_avg'].deceased;
                             }
-
                         }
                     }).catch(function onError(response) {
                         console.log(response);
