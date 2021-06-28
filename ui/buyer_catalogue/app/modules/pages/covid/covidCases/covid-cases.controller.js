@@ -158,6 +158,16 @@ angular.module('machadaloPages').filter('replace', [function () {
                 $scope.yesterdayTotalActiveCases = 0;
                 $scope.yesterdayTotalRecoveredCases = 0;
                 $scope.yesterdayTotalDeceasedCases = 0;
+
+                $scope._7dayTotalConfirmedCases = 0;
+                $scope._7dayTotalActiveCases = 0;
+                $scope._7dayTotalRecoveredCases = 0;
+                $scope._7dayTotalDeceasedCases = 0;
+
+                $scope._14dayTotalConfirmedCases = 0;
+                $scope._14dayTotalActiveCases = 0;
+                $scope._14dayTotalRecoveredCases = 0;
+                $scope._14dayTotalDeceasedCases = 0;
                 let param = {
                     state_code: $scope.state_code,
                     district_code: $scope.district_code
@@ -176,8 +186,17 @@ angular.module('machadaloPages').filter('replace', [function () {
                                 $scope.yesterdayTotalActiveCases = $scope.yesterdayTotalActiveCases + $scope.covidCasesData[i].yesterday_active;
                                 $scope.yesterdayTotalRecoveredCases = $scope.yesterdayTotalRecoveredCases + $scope.covidCasesData[i].yesterday_recovered;
                                 $scope.yesterdayTotalDeceasedCases = $scope.yesterdayTotalDeceasedCases + $scope.covidCasesData[i].yesterday_deceased;
-                            }
+                                 
+                                $scope._7dayTotalConfirmedCases = $scope._7dayTotalConfirmedCases + $scope.covidCasesData[i]['7_days_avg'].confirmed;
+                                $scope._7dayTotalActiveCases = $scope._7dayTotalActiveCases + $scope.covidCasesData[i]['7_days_avg'].active;
+                                $scope._7dayTotalRecoveredCases = $scope._7dayTotalRecoveredCases + $scope.covidCasesData[i]['7_days_avg'].recovered;
+                                $scope._7dayTotalDeceasedCases = $scope._7dayTotalDeceasedCases + $scope.covidCasesData[i]['7_days_avg'].deceased;
 
+                                $scope._14dayTotalConfirmedCases = $scope._14dayTotalConfirmedCases + $scope.covidCasesData[i]['14_days_avg'].confirmed;
+                                $scope._14dayTotalActiveCases = $scope._14dayTotalActiveCases + $scope.covidCasesData[i]['14_days_avg'].active;
+                                $scope._14dayTotalRecoveredCases = $scope._14dayTotalRecoveredCases + $scope.covidCasesData[i]['14_days_avg'].recovered;
+                                $scope._14dayTotalDeceasedCases = $scope._14dayTotalDeceasedCases + $scope.covidCasesData[i]['14_days_avg'].deceased;
+                            }
                         }
                     }).catch(function onError(response) {
                         console.log(response);
