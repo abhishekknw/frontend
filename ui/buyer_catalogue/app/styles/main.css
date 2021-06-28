@@ -918,6 +918,7 @@ td.valenteer-name {
     background: linear-gradient(to bottom, #ffefc0, #ffeaab, #ffe596, #ffdf81, #ffda6b);
     padding: 15px 20px 0 20px;
     color:#000;
+    min-height: auto;
 }
 .av-cases-inn {
     padding: 20px;
