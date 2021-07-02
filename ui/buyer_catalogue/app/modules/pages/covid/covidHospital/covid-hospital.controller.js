@@ -18,9 +18,13 @@ angular.module('machadaloPages').filter('replace', [function () {
             if (url.length > 1) {
                 let stateCityString = url[1].split("&");
                 stateString = stateCityString[0].split("=");
+                stateString[1] = stateString[1].substring(0, 1).toUpperCase() + stateString[1].substring(1);
                 cityString = stateCityString[1].split("=");
                 cityString[1] = cityString[1].substring(0, 1).toLowerCase() + cityString[1].substring(1);
             }
+
+            console.log('111111111111111111',stateString);
+            console.log('222222222222222222',cityString);
 
 
 
@@ -187,12 +191,32 @@ angular.module('machadaloPages').filter('replace', [function () {
                 // if (localStorage.getItem("stateData") && localStorage.getItem("stateData") != undefined) {
                 if (localState && localState != 'undefined' && localState.length != 0) {
                     $scope.stateData = JSON.parse(localState);
+                    if (url.length > 1 && $scope.stateData) {
+                        var localindex_index = $scope.stateData.map(function (el) {
+                            return el.name;
+                        }).indexOf(stateString[1].replace("%20", " "));
+                        if (localindex_index != -1) {
+                            $scope.selectedStateName = $scope.stateData[localindex_index].name;
+                            $scope.state_code = $scope.stateData[localindex_index].state_code;
+                        }
+                    }
+    
                 } else {
                     AuthService.getAllBedsState(apiUrl)
                         .then(function onSuccess(response) {
                             if (response && response.data && response.data.data) {
                                 $scope.stateData = response.data.data;
                                 localStorage.setItem("stateData", JSON.stringify($scope.stateData));
+                                if (url.length > 1 && $scope.stateData) {
+                                    var localindex_index = $scope.stateData.map(function (el) {
+                                        return el.name;
+                                    }).indexOf(stateString[1].replace("%20", " "));
+                                    if (localindex_index != -1) {
+                                        $scope.selectedStateName = $scope.stateData[localindex_index].name;
+                                        $scope.state_code = $scope.stateData[localindex_index].state_code;
+                                    }
+                                }
+                
                             } else {
                                 console.log('error', response);
                             }
@@ -200,16 +224,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                             console.log(response);
                         })
                 }
-                if (url.length > 1 && $scope.stateData) {
-                    var localindex_index = $scope.stateData.map(function (el) {
-                        return el.name;
-                    }).indexOf(stateString[1].replace("%20", " "));
-                    if (localindex_index != -1) {
-                        $scope.selectedStateName = $scope.stateData[localindex_index].name;
-                        $scope.state_code = $scope.stateData[localindex_index].state_code;
-                    }
-                }
-
+               
                 let localCity = localStorage.getItem("cityData");
                 // if (localStorage.getItem("cityData") && localStorage.getItem("cityData") != undefined) {
                 if (localCity && localCity != 'undefined' && localCity != 0) {
