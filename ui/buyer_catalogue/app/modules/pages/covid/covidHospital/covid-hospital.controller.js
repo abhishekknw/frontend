@@ -200,7 +200,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                             console.log(response);
                         })
                 }
-                if (url.length > 1) {
+                if (url.length > 1 && $scope.stateData) {
                     var localindex_index = $scope.stateData.map(function (el) {
                         return el.name;
                     }).indexOf(stateString[1].replace("%20", " "));
