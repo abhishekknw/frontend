@@ -676,9 +676,15 @@ angular
       var whence = $location.path();
 
       $rootScope.$on('$stateChangeSuccess', function (e, toState, toParams, fromState, fromParams) {
-
-        var permissions = $rootScope.globals.userInfo.profile.permissions;
-        var page = toState.data.permission;
+        var permissions = "";
+        if($rootScope.globals && $rootScope.globals.userInfo && $rootScope.globals.userInfo.profile && $rootScope.globals.userInfo.profile.permissions){
+          var permissions = $rootScope.globals.userInfo.profile.permissions;
+        }
+        var page = "";
+       if(toState && toState.data && toState.data.permission){
+         page = toState.data.permission;
+       }
+        
         if ($rootScope.globals.currentUser && !(permissions.hasOwnProperty(page.toLowerCase()) && permissions[page.toLowerCase()]) && $location.path() != '/logout') {
           e.preventDefault();
           console.log(permissions.hasOwnProperty(page.toLowerCase()));
@@ -736,7 +742,11 @@ angular
             $location.path("/login");
           }
         }
-        var category = $rootScope.globals.userInfo.profile.organisation.category;
+        var category = ""
+        if($rootScope.globals && $rootScope.globals.userInfo && $rootScope.globals.userInfo.profile && $rootScope.globals.userInfo.profile.organisation && $rootScope.globals.userInfo.profile.organisation.category){
+           category = $rootScope.globals.userInfo.profile.organisation.category;
+        }
+       
         // $location.path("/hospitalbeds/covidhelpdesk/");
         if (!$rootScope.globals.currentUser) {
           if ($location.path() == "/forgot-password") {
