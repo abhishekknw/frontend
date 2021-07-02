@@ -23,8 +23,8 @@ angular.module('machadaloPages').filter('replace', [function () {
                 cityString[1] = cityString[1].substring(0, 1).toLowerCase() + cityString[1].substring(1);
             }
 
-            console.log('111111111111111111',stateString);
-            console.log('222222222222222222',cityString);
+            // console.log('111111111111111111',stateString);
+            // console.log('222222222222222222',cityString);
 
 
 
@@ -296,7 +296,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                 $scope.totalAvailableBeds = 0;
                 $scope.selectedCityName = null;
                 $scope.district_code = null;
-                console.log('333333333333333',$scope.stateData);
+                // console.log('333333333333333',$scope.stateData);
                 if($scope.stateData){
                     var localindex_index = $scope.stateData.map(function (el) {
                         return el.state_code;
