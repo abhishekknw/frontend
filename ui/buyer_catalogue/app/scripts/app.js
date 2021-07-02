@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc overview
- * @name catalogueApp
+ * @name catalogueAppospios
  * @description
  * # catalogueApp
  *
@@ -179,7 +179,7 @@ angular
       //   // }
       // })
       .state('covidHospital', {
-        url: '/hospitalbeds/',
+        url: '/hospitalbeds',
         controller: 'covidHospitalCtrl',
         templateUrl: 'modules/pages/covid/covidHospital/covid-hospital.tmpl.html',
         // data :{
@@ -691,6 +691,7 @@ angular
         $rootScope.globals.currentUser = AuthService.UserInfo();
         if (!$rootScope.globals.hasOwnProperty('userInfo') || !$rootScope.globals.userInfo.hasOwnProperty('profile')) {
           var url = $location.url().split("/");
+
         // $location.path("/hospitalbeds/covidhelpdesk/");
           if ($location.path() == "/forgot-password") {
             $location.path("/forgot-password");
@@ -698,11 +699,22 @@ angular
             $location.path($location.url());
           } else if (url[1] == "beds") {
             $location.path("/beds/covid/machadalo");
-          } else if (url[1] == "hospitalbeds") {
-            $location.path("/hospitalbeds/");
-          } else if (url[1] == "cylinders") {
+          } 
+          // else if (url[1] == "hospitalbeds") {
+          //   $location.path("/hospitalbeds/");
+          // }
+          else if (url && url[1] && url[1].indexOf("hospitalbeds") != -1) {
+            console.log(1111, url[1].replace("%253F", "?"));
+            // $location.path(url[1].replace("%253F", "?"));
+          }
+          // else if (url[1].indexOf("cylinders") != -1) {
+          //   console.log(1111, url[1].replace("%253F", "?"));
+          //   // $location.path(url[1].replace("%253F", "?"));
+          // }
+           else if (url[1] == "cylinders") {
             $location.path("/cylinders/");
-          } else if (url[1] == "refills") {
+          } 
+          else if (url[1] == "refills") {
             $location.path("/refills/");
           } else if (url[1] == "concentrators") {
             $location.path("/concentrators/");
@@ -733,9 +745,14 @@ angular
             $location.path($location.url());
           } else if (url[1] == "beds") {
             $location.path("/beds/covid/machadalo");
-          } else if (url[1] == "hospitalbeds") {
-            $location.path("/hospitalbeds/");
-          } else if (url[1] == "cylinders") {
+          } 
+          // else if (url[1] == "hospitalbeds") {
+          //   $location.path("/hospitalbeds/");
+          // }
+          else if (url && url[1] && url[1].indexOf("hospitalbeds") != -1) {
+            console.log(1111, url[1].replace("%253F", "?"));
+          }
+           else if (url[1] == "cylinders") {
             $location.path("/cylinders/");
           } else if (url[1] == "refills") {
             $location.path("/refills/");
