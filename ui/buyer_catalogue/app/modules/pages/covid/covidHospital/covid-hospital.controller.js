@@ -13,18 +13,34 @@ angular.module('machadaloPages').filter('replace', [function () {
             AuthService.Clear();
 
             var url = $location.url().split("?");
-            let stateString = "";
-            let cityString = "";
-            if (url.length > 1) {
-                let stateCityString = url[1].split("&");
-                stateString = stateCityString[0].split("=");
-                stateString[1] = stateString[1].substring(0, 1).toUpperCase() + stateString[1].substring(1);
-                cityString = stateCityString[1].split("=");
-                cityString[1] = cityString[1].substring(0, 1).toLowerCase() + cityString[1].substring(1);
-            }
+        //     let stateString = "";
+        //     let cityString = "";
+        //     if (url.length > 1) {
+        //         let stateCityString = url[1].split("&");
+        //         stateString = stateCityString[0].split("=");
+        //         stateString[1] = stateString[1].substring(0, 1).toUpperCase() + stateString[1].substring(1);
+        //         cityString = stateCityString[1].split("=");
+        //         cityString[1] = cityString[1].substring(0, 1).toLowerCase() + cityString[1].substring(1);
+        //     }
+        //  console.log('11111111111111111',$location.search());
+        //  console.log('22222222222222222222222222',$location.search().state);
+        
+         if($location.search().state){
+             $scope.stateParam = $location.search().state;
+             $scope.stateParam = $scope.stateParam.split(" ");
+             for(let i in $scope.stateParam){
+                $scope.stateParam[i] = $scope.stateParam[i].charAt(0).toUpperCase() + $scope.stateParam[i].slice(1);
+             }
+             $scope.stateParam = $scope.stateParam.toString();
+             $scope.stateParam = $scope.stateParam.replace(','," ");
+         }
+         if($location.search().city){
+            $scope.cityParam = $location.search().city;
+            $scope.cityParam = $scope.cityParam.substring(0, 1).toLowerCase() + $scope.cityParam.substring(1);
+        }
+        
+         
 
-            // console.log('111111111111111111',stateString);
-            // console.log('222222222222222222',cityString);
 
 
 
@@ -46,8 +62,8 @@ angular.module('machadaloPages').filter('replace', [function () {
                     $location.path("/hospitalbeds");
                     //$location.path("/hospitalbeds?statename=mp&cityname=indore");
                 } else if ($scope.selectedCategory == 'Refills') {
-                    //$location.path("/refills/");
-                    $location.url('/refills/');
+                    $location.path("/refills/");
+                  //  $location.url('/refills/');
                 } else if ($scope.selectedCategory == 'Concentrators') {
                     $location.url("/concentrators/");
                 } else if ($scope.selectedCategory == 'Cylinders') {
@@ -194,7 +210,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                     if (url.length > 1 && $scope.stateData) {
                         var localindex_index = $scope.stateData.map(function (el) {
                             return el.name;
-                        }).indexOf(stateString[1].replace("%20", " "));
+                        }).indexOf($scope.stateParam);
                         if (localindex_index != -1) {
                             $scope.selectedStateName = $scope.stateData[localindex_index].name;
                             $scope.state_code = $scope.stateData[localindex_index].state_code;
@@ -210,7 +226,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                                 if (url.length > 1 && $scope.stateData) {
                                     var localindex_index = $scope.stateData.map(function (el) {
                                         return el.name;
-                                    }).indexOf(stateString[1].replace("%20", " "));
+                                    }).indexOf($scope.stateParam);
                                     if (localindex_index != -1) {
                                         $scope.selectedStateName = $scope.stateData[localindex_index].name;
                                         $scope.state_code = $scope.stateData[localindex_index].state_code;
@@ -303,6 +319,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                     }).indexOf($scope.state_code);
                     if (localindex_index != -1) {
                         $scope.selectedStateName = $scope.stateData[localindex_index].name;
+                        $location.search('state', $scope.selectedStateName).replace();
                     }
                 }
                
@@ -310,7 +327,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                 if (url.length > 1 && $scope.state_code) {
                     var localindex_index_city = $scope.cityList.map(function (el) {
                         return el.district_name;
-                    }).indexOf(cityString[1].replace("%20", " "));
+                    }).indexOf($scope.cityParam);
                     if (localindex_index_city != -1) {
                         $scope.selectedCityName = $scope.cityList[localindex_index_city].district_name;
                         $scope.district_code = $scope.cityList[localindex_index_city].district_code;
@@ -349,6 +366,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                 }).indexOf($scope.district_code);
                 if (localindex_index != -1) {
                     $scope.selectedCityName = $scope.cityList[localindex_index].district_name;
+                    $location.search('city', $scope.selectedCityName).replace()
                 }
                 $scope.loading = null;
                 let param = {
