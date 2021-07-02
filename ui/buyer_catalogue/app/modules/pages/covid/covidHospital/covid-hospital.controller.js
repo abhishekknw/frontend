@@ -229,7 +229,9 @@ angular.module('machadaloPages').filter('replace', [function () {
                 // if (localStorage.getItem("cityData") && localStorage.getItem("cityData") != undefined) {
                 if (localCity && localCity != 'undefined' && localCity != 0) {
                     $scope.cityData = JSON.parse(localCity);
-                    $scope.getCity();
+                    if($scope.stateData){
+                        $scope.getCity();
+                    }
                     angular.forEach($scope.cityData, function (value, key) {
                         $scope.totalCity = $scope.totalCity + value.length;
                     });
@@ -238,7 +240,10 @@ angular.module('machadaloPages').filter('replace', [function () {
                         .then(function onSuccess(response) {
                             if (response && response.data && response.data.data) {
                                 $scope.cityData = response.data.data;
-                                $scope.getCity();
+                                if($scope.stateData){
+                                    $scope.getCity();
+                                }
+                                
                                 angular.forEach($scope.cityData, function (value, key) {
                                     $scope.totalCity = $scope.totalCity + value.length;
                                 });
@@ -291,12 +296,16 @@ angular.module('machadaloPages').filter('replace', [function () {
                 $scope.totalAvailableBeds = 0;
                 $scope.selectedCityName = null;
                 $scope.district_code = null;
-                var localindex_index = $scope.stateData.map(function (el) {
-                    return el.state_code;
-                }).indexOf($scope.state_code);
-                if (localindex_index != -1) {
-                    $scope.selectedStateName = $scope.stateData[localindex_index].name;
+                console.log('333333333333333',$scope.stateData);
+                if($scope.stateData){
+                    var localindex_index = $scope.stateData.map(function (el) {
+                        return el.state_code;
+                    }).indexOf($scope.state_code);
+                    if (localindex_index != -1) {
+                        $scope.selectedStateName = $scope.stateData[localindex_index].name;
+                    }
                 }
+               
                 $scope.cityList = $scope.cityData[$scope.state_code];
                 if (url.length > 1 && $scope.state_code) {
                     var localindex_index_city = $scope.cityList.map(function (el) {
