@@ -710,7 +710,8 @@ angular
           //   $location.path("/hospitalbeds/");
           // }
           else if (url && url[1] && url[1].indexOf("hospitalbeds") != -1) {
-            console.log(1111, url[1].replace("%253F", "?"));
+            console.log(1111, url[1]);
+            $location.path("/hospitalbeds");
             // $location.path(url[1].replace("%253F", "?"));
           }
           // else if (url[1].indexOf("cylinders") != -1) {
@@ -760,7 +761,8 @@ angular
           //   $location.path("/hospitalbeds/");
           // }
           else if (url && url[1] && url[1].indexOf("hospitalbeds") != -1) {
-            console.log(1111, url[1].replace("%253F", "?"));
+            $location.path("/hospitalbeds");
+            console.log(1111, url[1]);
           }
            else if (url[1] == "cylinders") {
             $location.path("/cylinders/");
