@@ -12,10 +12,36 @@ angular.module('machadaloPages').filter('replace', [function () {
         function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $state, userService, constants, AuthService, vcRecaptchaService) {
             AuthService.Clear();
 
-            var url = $location.url().split("/");
-            let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
+            // var url = $location.url().split("/");
+            // let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
+            var url = $location.url().split("?");
+            if ($location.search().state) {
+                $scope.stateParam = $location.search().state;
+                $scope.stateParam = $scope.stateParam.split(" ");
+                for (let i in $scope.stateParam) {
+                    $scope.stateParam[i] = $scope.stateParam[i].charAt(0).toLowerCase() + $scope.stateParam[i].slice(1);
+                }
+                $scope.stateParam = $scope.stateParam.toString();
+                $scope.stateParam = $scope.stateParam.replace(',', " ");
+            }
+            if ($location.search().city) {
+                // $scope.cityParam = $location.search().city;
+                // $scope.cityParam = $scope.cityParam.substring(0, 1).toLowerCase() + $scope.cityParam.substring(1);
+                $scope.cityParam = $location.search().city;
+                $scope.cityParam = $scope.cityParam.split(" ");
+                for (let i in $scope.cityParam) {
+                    $scope.cityParam[i] = $scope.cityParam[i].charAt(0).toLowerCase() + $scope.cityParam[i].slice(1);
+                }
+                $scope.cityParam = $scope.cityParam.toString();
+                $scope.cityParam = $scope.cityParam.replace(',', " ");
+        
+            }
+            url[0] = url[0].substring(1);
+            let cat = url[0].substring(0, 1).toUpperCase() + url[0].substring(1);
             $scope.selectedCategory = cat;
-
+            $scope.todayDate = new Date();
+            $scope.yesterdayDate = new Date($scope.todayDate)
+            $scope.yesterdayDate = $scope.yesterdayDate.setDate($scope.yesterdayDate.getDate() - 1)
             if ($scope.selectedCategory == 'Covidcases') {
                 $scope.selectedCategory = 'Covid Cases';
             }
@@ -102,32 +128,32 @@ angular.module('machadaloPages').filter('replace', [function () {
                         }
 
                         let newArray = [];
-                        for(let i in $scope.categorysArray){
-                            if($scope.categorysArray[i].name == 'Beds'){
+                        for (let i in $scope.categorysArray) {
+                            if ($scope.categorysArray[i].name == 'Beds') {
                                 newArray[0] = $scope.categorysArray[i];
                             }
-                            if($scope.categorysArray[i].name == 'Free Online Doctor Consulation'){
+                            if ($scope.categorysArray[i].name == 'Free Online Doctor Consulation') {
                                 newArray[1] = $scope.categorysArray[i];
                             }
-                            if($scope.categorysArray[i].name == 'Medicines'){
+                            if ($scope.categorysArray[i].name == 'Medicines') {
                                 newArray[2] = $scope.categorysArray[i];
                             }
-                            if($scope.categorysArray[i].name == 'Ambulance'){
+                            if ($scope.categorysArray[i].name == 'Ambulance') {
                                 newArray[3] = $scope.categorysArray[i];
                             }
-                            if($scope.categorysArray[i].name == 'Plasma'){
+                            if ($scope.categorysArray[i].name == 'Plasma') {
                                 newArray[4] = $scope.categorysArray[i];
                             }
-                            if($scope.categorysArray[i].name == 'Concentrators'){
+                            if ($scope.categorysArray[i].name == 'Concentrators') {
                                 newArray[5] = $scope.categorysArray[i];
                             }
-                            if($scope.categorysArray[i].name == 'Cylinders'){
+                            if ($scope.categorysArray[i].name == 'Cylinders') {
                                 newArray[6] = $scope.categorysArray[i];
                             }
-                            if($scope.categorysArray[i].name == 'Refills'){
+                            if ($scope.categorysArray[i].name == 'Refills') {
                                 newArray[7] = $scope.categorysArray[i];
                             }
-                            if($scope.categorysArray[i].name == 'Covid Cases'){
+                            if ($scope.categorysArray[i].name == 'Covid Cases') {
                                 newArray[8] = $scope.categorysArray[i];
                             }
                         }
@@ -143,18 +169,35 @@ angular.module('machadaloPages').filter('replace', [function () {
                 AuthService.getCovidCasesState($scope.selectedCategoryCode)
                     .then(function onSuccess(response) {
                         $scope.stateData = response.data.data;
+                        if (url.length > 1 && $scope.stateData) {
+                            var localindex_index = $scope.stateData.map(function (el) {
+                                return el.state;
+                            }).indexOf($scope.stateParam);
+                            if (localindex_index != -1) {
+                                $scope.selectedStateName = $scope.stateData[localindex_index].state;
+                                $scope.state_code = $scope.stateData[localindex_index].state_code;
+                                 $scope.getCity('setDynamic');
+                                 if(!$scope.cityParam){
+                                    $scope.getCovidCases('setDynamic');
+                                 }
+                                 
+                            }
+                        }
                     }).catch(function onError(response) {
                         console.log(response);
                     })
             }
 
-            $scope.getCity = function () {
-                var localindex_index = $scope.stateData.map(function (el) {
-                    return el.state_code;
-                }).indexOf($scope.state_code);
-                if (localindex_index != -1) {
-                    $scope.selectedStateName = $scope.stateData[localindex_index].state;
+            $scope.getCity = function (value) {
+                if(value != 'setDynamic'){
+                    var localindex_index = $scope.stateData.map(function (el) {
+                        return el.state_code;
+                    }).indexOf($scope.state_code);
+                    if (localindex_index != -1) {
+                        $scope.selectedStateName = $scope.stateData[localindex_index].state;
+                    }
                 }
+                
                 $scope.district_code = null;
                 $scope.selectedCityName = null;
                 let param = {
@@ -165,6 +208,17 @@ angular.module('machadaloPages').filter('replace', [function () {
                         $scope.cityData = response.data.data;
                         $scope.cityData.splice(0, 0, { 'district_code': 'all', 'district_name': 'all' });
                         $scope.district_code = 'all';
+
+                        if(value == 'setDynamic' && (url.length > 1 && $scope.state_code) && $scope.cityParam){
+                            var localindex_index_city = $scope.cityData.map(function (el) {
+                                return el.district_name;
+                            }).indexOf($scope.cityParam);
+                            if (localindex_index_city != -1) {
+                                $scope.selectedCityName = $scope.cityData[localindex_index_city].district_name;
+                                $scope.district_code = $scope.cityData[localindex_index_city].district_code;
+                                $scope.getCovidCases('setDynamic');
+                            }
+                        }
                     }).catch(function onError(response) {
                         console.log(response);
                     })
@@ -179,8 +233,9 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.yesterdayTotalActiveCases = 0;
             $scope.yesterdayTotalRecoveredCases = 0;
             $scope.yesterdayTotalDeceasedCases = 0;
-            $scope.getCovidCases = function () {
-                if ($scope.district_code) {
+            $scope.getCovidCases = function (value) {
+                
+                if ($scope.district_code && value != 'setDynamic') {
                     var localindex_index = $scope.cityData.map(function (el) {
                         return el.district_code;
                     }).indexOf($scope.district_code);
@@ -226,7 +281,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                                 $scope.yesterdayTotalActiveCases = $scope.yesterdayTotalActiveCases + $scope.covidCasesData[i].yesterday_active;
                                 $scope.yesterdayTotalRecoveredCases = $scope.yesterdayTotalRecoveredCases + $scope.covidCasesData[i].yesterday_recovered;
                                 $scope.yesterdayTotalDeceasedCases = $scope.yesterdayTotalDeceasedCases + $scope.covidCasesData[i].yesterday_deceased;
-                                 
+
                                 $scope._7dayTotalConfirmedCases = $scope._7dayTotalConfirmedCases + $scope.covidCasesData[i]['7_days_avg'].confirmed;
                                 $scope._7dayTotalActiveCases = $scope._7dayTotalActiveCases + $scope.covidCasesData[i]['7_days_avg'].active;
                                 $scope._7dayTotalRecoveredCases = $scope._7dayTotalRecoveredCases + $scope.covidCasesData[i]['7_days_avg'].recovered;

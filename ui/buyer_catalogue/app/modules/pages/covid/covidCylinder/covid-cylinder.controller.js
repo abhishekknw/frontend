@@ -31,8 +31,6 @@ angular.module('machadaloPages').filter('replace', [function () {
             }
             url[0] = url[0].substring(1);
             let cat = url[0].substring(0, 1).toUpperCase() + url[0].substring(1);
-console.log('11111111111111111',$scope.stateParam);
-console.log('22222222222222222',$scope.cityParam);
             $scope.selectedCategory = cat;
             if($scope.selectedCategory =='Doctors'){
                 $scope.selectedCategory = 'Free Online Doctor Consulation';
@@ -153,13 +151,10 @@ console.log('22222222222222222',$scope.cityParam);
             }
 
             $scope.getState = function () {
-                console.log('AAAAAAAa');
                 AuthService.getAllState($scope.selectedCategoryCode)
                     .then(function onSuccess(response) {
                         $scope.stateData = response.data.data;
-                        console.log('urlurlurlurl',url);
                         if (url.length > 1 && $scope.stateData) {
-                            console.log('233333333333333333333');
                             var localindex_index = $scope.stateData.map(function (el) {
                                 return el.state;
                             }).indexOf($scope.stateParam);
@@ -175,7 +170,6 @@ console.log('22222222222222222',$scope.cityParam);
             }
 
             $scope.getCity = function (value) {
-                console.log('dddddddddddddddddd',value);
                 if(value != 'setDynamic'){
                     var localindex_index = $scope.stateData.map(function (el) {
                         return el.state_code;

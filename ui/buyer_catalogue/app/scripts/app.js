@@ -195,43 +195,43 @@ angular
       })
 
       .state('covidRefill', {
-        url: '/refills/',
+        url: '/refills',
         controller: 'covidCylinderCtrl',
         templateUrl: 'modules/pages/covid/covidCylinder/covid-cylinder.tmpl.html',
       })
 
       .state('covidConcentrators', {
-        url: '/concentrators/',
+        url: '/concentrators',
         controller: 'covidCylinderCtrl',
         templateUrl: 'modules/pages/covid/covidCylinder/covid-cylinder.tmpl.html',
       })
 
       .state('covidMedicines', {
-        url: '/medicines/',
+        url: '/medicines',
         controller: 'covidCylinderCtrl',
         templateUrl: 'modules/pages/covid/covidCylinder/covid-cylinder.tmpl.html',
       })
 
       .state('covidAmbulance', {
-        url: '/ambulance/',
+        url: '/ambulance',
         controller: 'covidCylinderCtrl',
         templateUrl: 'modules/pages/covid/covidCylinder/covid-cylinder.tmpl.html',
       })
 
       .state('covidPlasma', {
-        url: '/plasma/',
+        url: '/plasma',
         controller: 'covidCylinderCtrl',
         templateUrl: 'modules/pages/covid/covidCylinder/covid-cylinder.tmpl.html',
       })
 
       .state('covidConsulation', {
-        url: '/doctors/',
+        url: '/doctors',
         controller: 'covidConsulationCtrl',
         templateUrl: 'modules/pages/covid/covidConsulation/covid-consulation.tmpl.html',
       })
       
       .state('covidCases', {
-        url: '/covidcases/',
+        url: '/covidcases',
         controller: 'covidCasesCtrl',
         templateUrl: 'modules/pages/covid/covidCases/covid-cases.tmpl.html',
       })
@@ -706,36 +706,48 @@ angular
           } else if (url[1] == "beds") {
             $location.path("/beds/covid/machadalo");
           } 
+         
+          else if (url && url[1] && url[1].indexOf("hospitalbeds") != -1) {
+            $location.path("/hospitalbeds");
+          } else if (url && url[1] && url[1].indexOf("cylinders") != -1) {
+            $location.path("/cylinders");
+          } else if (url && url[1] && url[1].indexOf("refills") != -1) {
+            $location.path("/refills");
+          } else if (url && url[1] && url[1].indexOf("concentrators") != -1) {
+            $location.path("/concentrators");
+          } else if (url && url[1] && url[1].indexOf("medicines") != -1) {
+            $location.path("/medicines");
+          } else if (url && url[1] && url[1].indexOf("covidcases") != -1) {
+            $location.path("/covidcases");
+          } else if (url && url[1] && url[1].indexOf("ambulance") != -1) {
+            $location.path("/ambulance");
+          } else if (url && url[1] && url[1].indexOf("plasma") != -1) {
+            $location.path("/plasma");
+          } else if (url && url[1] && url[1].indexOf("doctors") != -1) {
+            $location.path("/doctors");
+          } 
+
           // else if (url[1] == "hospitalbeds") {
           //   $location.path("/hospitalbeds/");
-          // }
-          else if (url && url[1] && url[1].indexOf("hospitalbeds") != -1) {
-            console.log(1111, url[1]);
-            $location.path("/hospitalbeds");
-          }
-          else if (url && url[1] && url[1].indexOf("cylinders") != -1) {
-           
-            $location.path("/cylinders");
-          }
-      
-          //  else if (url[1] == "cylinders") {
+          // } else if (url[1] == "cylinders") {
           //   $location.path("/cylinders/");
-          // } 
-          else if (url[1] == "refills") {
-            $location.path("/refills/");
-          } else if (url[1] == "concentrators") {
-            $location.path("/concentrators/");
-          } else if (url[1] == "medicines") {
-            $location.path("/medicines/");
-          } else if (url[1] == "covidcases") {
-            $location.path("/covidcases/");
-          } else if (url[1] == "ambulance") {
-            $location.path("/ambulance/");
-          } else if (url[1] == "plasma") {
-            $location.path("/plasma/");
-          } else if (url[1] == "doctors") {
-            $location.path("/doctors/");
-          } else if (url[1] == "mea") {
+          // } else if (url[1] == "refills") {
+          //   $location.path("/refills/");
+          // } else if (url[1] == "concentrators") {
+          //   $location.path("/concentrators/");
+          // } else if (url[1] == "medicines") {
+          //   $location.path("/medicines/");
+          // } else if (url[1] == "covidcases") {
+          //   $location.path("/covidcases/");
+          // } else if (url[1] == "ambulance") {
+          //   $location.path("/ambulance/");
+          // } else if (url[1] == "plasma") {
+          //   $location.path("/plasma/");
+         // } else if (url[1] == "doctors") {
+          //   $location.path("/doctors/");
+          // }
+          
+           else if (url[1] == "mea") {
             $location.path("/mea/");
           }  else if (url[1] == "vaccinecenters") {
             $location.path("/vaccinecenters/");
@@ -757,35 +769,49 @@ angular
           } else if (url[1] == "beds") {
             $location.path("/beds/covid/machadalo");
           } 
-          // else if (url[1] == "hospitalbeds") {
-          //   $location.path("/hospitalbeds/");
-          // }
+        
           else if (url && url[1] && url[1].indexOf("hospitalbeds") != -1) {
             $location.path("/hospitalbeds");
-            console.log(1111, url[1]);
-          }
-          //  else if (url[1] == "cylinders") {
-          //   $location.path("/cylinders/");
-          // }
-          else if (url && url[1] && url[1].indexOf("cylinders") != -1) {
-           
+          } else if (url && url[1] && url[1].indexOf("cylinders") != -1) {
             $location.path("/cylinders");
-          }
-           else if (url[1] == "refills") {
-            $location.path("/refills/");
-          } else if (url[1] == "concentrators") {
-            $location.path("/concentrators/");
-          } else if (url[1] == "medicines") {
-            $location.path("/medicines/");
-          } else if (url[1] == "covidcases") {
-            $location.path("/covidcases/");
-          } else if (url[1] == "ambulance") {
-            $location.path("/ambulance/");
-          } else if (url[1] == "plasma") {
-            $location.path("/plasma/");
-          } else if (url[1] == "doctors") {
-            $location.path("/doctors/");
-          } else if (url[1] == "mea") {
+          } else if (url && url[1] && url[1].indexOf("refills") != -1) {
+            $location.path("/refills");
+          } else if (url && url[1] && url[1].indexOf("concentrators") != -1) {
+            $location.path("/concentrators");
+          } else if (url && url[1] && url[1].indexOf("medicines") != -1) {
+            $location.path("/medicines");
+          } else if (url && url[1] && url[1].indexOf("covidcases") != -1) {
+            $location.path("/covidcases");
+          } else if (url && url[1] && url[1].indexOf("ambulance") != -1) {
+            $location.path("/ambulance");
+          } else if (url && url[1] && url[1].indexOf("plasma") != -1) {
+            $location.path("/plasma");
+          } else if (url && url[1] && url[1].indexOf("doctors") != -1) {
+            $location.path("/doctors");
+          } 
+
+          //  else if (url[1] == "hospitalbeds") {
+          //   $location.path("/hospitalbeds/");
+          // } else if (url[1] == "cylinders") {
+          //   $location.path("/cylinders/");
+          // } else if (url[1] == "refills") {
+          //   $location.path("/refills/");
+          // } else if (url[1] == "concentrators") {
+          //   $location.path("/concentrators/");
+          // } else if (url[1] == "medicines") {
+          //   $location.path("/medicines/");
+          // } else if (url[1] == "covidcases") {
+          //   $location.path("/covidcases/");
+          // } else if (url[1] == "ambulance") {
+          //   $location.path("/ambulance/");
+          // } else if (url[1] == "plasma") {
+          //   $location.path("/plasma/");
+          // }  else if (url[1] == "doctors") {
+          //   $location.path("/doctors/");
+          // } 
+
+          
+           else if (url[1] == "mea") {
             $location.path("/mea/");
           } else if (url[1] == "vaccinecenters") {
             $location.path("/vaccinecenters/");
