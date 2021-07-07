@@ -12,9 +12,25 @@ angular.module('machadaloPages').filter('replace', [function () {
         function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $state, userService, constants, AuthService, vcRecaptchaService) {
             AuthService.Clear();
 
-            var url = $location.url().split("/");
-            // $scope.categorys = ['Hospital Beds', 'Cylinders','Refills', 'Concentrators'];
-            let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
+            // var url = $location.url().split("/");
+            // let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
+
+            var url = $location.url().split("?");       
+             if($location.search().state){
+                 $scope.stateParam = $location.search().state;
+                 $scope.stateParam = $scope.stateParam.split(" ");
+                 for(let i in $scope.stateParam){
+                    $scope.stateParam[i] = $scope.stateParam[i].charAt(0).toLowerCase() + $scope.stateParam[i].slice(1);
+                 }
+                 $scope.stateParam = $scope.stateParam.toString();
+                 $scope.stateParam = $scope.stateParam.replace(','," ");
+             }
+             if($location.search().city){
+                $scope.cityParam = $location.search().city;
+                $scope.cityParam = $scope.cityParam.substring(0, 1).toLowerCase() + $scope.cityParam.substring(1);
+            }
+            url[0] = url[0].substring(1);
+            let cat = url[0].substring(0, 1).toUpperCase() + url[0].substring(1);
             $scope.selectedCategory = cat;
             if($scope.selectedCategory =='Doctors'){
                 $scope.selectedCategory = 'Free Online Doctor Consulation';
@@ -138,18 +154,31 @@ angular.module('machadaloPages').filter('replace', [function () {
                 AuthService.getAllState($scope.selectedCategoryCode)
                     .then(function onSuccess(response) {
                         $scope.stateData = response.data.data;
+                        if (url.length > 1 && $scope.stateData) {
+                            var localindex_index = $scope.stateData.map(function (el) {
+                                return el.state;
+                            }).indexOf($scope.stateParam);
+                            if (localindex_index != -1) {
+                                $scope.selectedStateName = $scope.stateData[localindex_index].state;
+                                $scope.state_code = $scope.stateData[localindex_index].state_code;
+                                $scope.getCity('setDynamic');
+                            }
+                        }
                     }).catch(function onError(response) {
                         console.log(response);
                     })
             }
 
-            $scope.getCity = function () {
-                var localindex_index = $scope.stateData.map(function (el) {
-                    return el.state_code;
-                }).indexOf($scope.state_code);
-                if (localindex_index != -1) {
-                    $scope.selectedStateName = $scope.stateData[localindex_index].state;
+            $scope.getCity = function (value) {
+                if(value != 'setDynamic'){
+                    var localindex_index = $scope.stateData.map(function (el) {
+                        return el.state_code;
+                    }).indexOf($scope.state_code);
+                    if (localindex_index != -1) {
+                        $scope.selectedStateName = $scope.stateData[localindex_index].state;
+                    }
                 }
+                
                 $scope.city_code = null;
                 $scope.selectedCityName = null;
                 $scope.cylinderDetailData = [];
@@ -160,19 +189,33 @@ angular.module('machadaloPages').filter('replace', [function () {
                 AuthService.getAllCity(param)
                     .then(function onSuccess(response) {
                         $scope.cityData = response.data.data;
+                        if (url.length > 1 && $scope.state_code) {
+                            var localindex_index_city = $scope.cityData.map(function (el) {
+                                return el.city_name;
+                            }).indexOf($scope.cityParam);
+                            if (localindex_index_city != -1) {
+                                $scope.selectedCityName = $scope.cityData[localindex_index_city].city_name;
+                                $scope.city_code = $scope.cityData[localindex_index_city].city_code;
+                                $scope.getCylinderList('setDynamic');
+                            }
+                           
+                        }
                     }).catch(function onError(response) {
                         console.log(response);
                     })
             }
 
 
-            $scope.getCylinderList = function () {
-                var localindex_index = $scope.cityData.map(function (el) {
-                    return el.city_code;
-                }).indexOf($scope.city_code);
-                if (localindex_index != -1) {
-                    $scope.selectedCityName = $scope.cityData[localindex_index].city_name;
+            $scope.getCylinderList = function (value) {
+                if(value != 'setDynamic'){
+                    var localindex_index = $scope.cityData.map(function (el) {
+                        return el.city_code;
+                    }).indexOf($scope.city_code);
+                    if (localindex_index != -1) {
+                        $scope.selectedCityName = $scope.cityData[localindex_index].city_name;
+                    }
                 }
+                
                 $scope.loading = null;
                 let param = {
                     city: $scope.selectedCityName,

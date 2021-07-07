@@ -39,6 +39,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.cityParam = $scope.cityParam.substring(0, 1).toLowerCase() + $scope.cityParam.substring(1);
         }
         
+        
          
 
 
