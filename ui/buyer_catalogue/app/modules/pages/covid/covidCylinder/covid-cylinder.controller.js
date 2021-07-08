@@ -22,12 +22,23 @@ angular.module('machadaloPages').filter('replace', [function () {
                  for(let i in $scope.stateParam){
                     $scope.stateParam[i] = $scope.stateParam[i].charAt(0).toLowerCase() + $scope.stateParam[i].slice(1);
                  }
-                 $scope.stateParam = $scope.stateParam.toString();
-                 $scope.stateParam = $scope.stateParam.replace(','," ");
+                // $scope.stateParam = $scope.stateParam.toString();
+                //  $scope.stateParam = $scope.stateParam.replace(','," ");
+                $scope.stateParam = $scope.stateParam.join(" ");
              }
-             if($location.search().city){
+            //  if($location.search().city){
+            //     $scope.cityParam = $location.search().city;
+            //     $scope.cityParam = $scope.cityParam.substring(0, 1).toLowerCase() + $scope.cityParam.substring(1);
+            // }
+
+            if ($location.search().city) {
                 $scope.cityParam = $location.search().city;
-                $scope.cityParam = $scope.cityParam.substring(0, 1).toLowerCase() + $scope.cityParam.substring(1);
+                $scope.cityParam = $scope.cityParam.split(" ");
+                for (let i in $scope.cityParam) {
+                    $scope.cityParam[i] = $scope.cityParam[i].charAt(0).toLowerCase() + $scope.cityParam[i].slice(1);
+                }
+                $scope.cityParam = $scope.cityParam.join(" ");
+        
             }
             url[0] = url[0].substring(1);
             let cat = url[0].substring(0, 1).toUpperCase() + url[0].substring(1);
@@ -129,21 +140,21 @@ angular.module('machadaloPages').filter('replace', [function () {
                     // $location.search('statename', 'mp');
                     // $location.search('cityname', 'indore');
                 } else if ($scope.selectedCategory == 'Refills') {
-                    $location.path("/refills/");
+                    $location.path("/refills");
                 } else if ($scope.selectedCategory == 'Concentrators') {
-                    $location.path("/concentrators/");
+                    $location.path("/concentrators");
                 } else if ($scope.selectedCategory == 'Cylinders') {
-                    $location.path("/cylinders/");
+                    $location.path("/cylinders");
                 } else if ($scope.selectedCategory == 'Medicines') {
-                    $location.path("/medicines/");
+                    $location.path("/medicines");
                 } else if ($scope.selectedCategory == 'Ambulance') {
-                    $location.path("/ambulance/");
+                    $location.path("/ambulance");
                 } else if ($scope.selectedCategory == 'Plasma') {
-                    $location.path("/plasma/");
+                    $location.path("/plasma");
                 } else if ($scope.selectedCategory == 'Free Online Doctor Consulation') {
-                    $location.path("/doctors/");
+                    $location.path("/doctors");
                 } else if ($scope.selectedCategory == 'Covid Cases' || $scope.selectedCategory == 'Covidcases') {
-                    $location.path("/covidcases/");
+                    $location.path("/covidcases");
                 } else if ($scope.selectedCategory == 'Vaccine Centers') {
                     $location.path("/vaccinecenters/");
                 }
@@ -176,6 +187,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                     }).indexOf($scope.state_code);
                     if (localindex_index != -1) {
                         $scope.selectedStateName = $scope.stateData[localindex_index].state;
+                        $location.search('state', $scope.selectedStateName).replace();
                     }
                 }
                 
@@ -213,6 +225,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                     }).indexOf($scope.city_code);
                     if (localindex_index != -1) {
                         $scope.selectedCityName = $scope.cityData[localindex_index].city_name;
+                        $location.search('city', $scope.selectedCityName).replace();
                     }
                 }
                 

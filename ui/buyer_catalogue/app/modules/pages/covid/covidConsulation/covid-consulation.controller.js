@@ -20,10 +20,14 @@ angular.module('machadaloPages').filter('replace', [function () {
                 $scope.stateParam = $location.search().state;
                 $scope.stateParam = $scope.stateParam.split(" ");
                 for (let i in $scope.stateParam) {
-                    $scope.stateParam[i] = $scope.stateParam[i].charAt(0).toUpperCase() + $scope.stateParam[i].slice(1);
+                    if($scope.stateParam[i] != 'and'){
+                        $scope.stateParam[i] = $scope.stateParam[i].charAt(0).toUpperCase() + $scope.stateParam[i].slice(1);
+                    }
+                    
                 }
-                $scope.stateParam = $scope.stateParam.toString();
-                $scope.stateParam = $scope.stateParam.replace(',', " ");
+                // $scope.stateParam = $scope.stateParam.toString();
+                // $scope.stateParam = $scope.stateParam.replace(',', " ");
+                $scope.stateParam = $scope.stateParam.join(" ");
             }
 
             url[0] = url[0].substring(1);
@@ -125,21 +129,21 @@ angular.module('machadaloPages').filter('replace', [function () {
                 if ($scope.selectedCategory == 'Hospital Beds' || $scope.selectedCategory == 'Beds') {
                     $location.path("/hospitalbeds");
                 } else if ($scope.selectedCategory == 'Refills') {
-                    $location.path("/refills/");
+                    $location.path("/refills");
                 } else if ($scope.selectedCategory == 'Concentrators') {
-                    $location.path("/concentrators/");
+                    $location.path("/concentrators");
                 } else if ($scope.selectedCategory == 'Cylinders') {
-                    $location.path("/cylinders/");
+                    $location.path("/cylinders");
                 } else if ($scope.selectedCategory == 'Medicines') {
-                    $location.path("/medicines/");
+                    $location.path("/medicines");
                 } else if ($scope.selectedCategory == 'Ambulance') {
-                    $location.path("/ambulance/");
+                    $location.path("/ambulance");
                 } else if ($scope.selectedCategory == 'Plasma') {
-                    $location.path("/plasma/");
+                    $location.path("/plasma");
                 } else if ($scope.selectedCategory == 'Free Online Doctor Consulation') {
-                    $location.path("/doctors/");
+                    $location.path("/doctors");
                 } else if ($scope.selectedCategory == 'Covid Cases' || $scope.selectedCategory == 'Covidcases') {
-                    $location.path("/covidcases/");
+                    $location.path("/covidcases");
                 } else if ($scope.selectedCategory == 'Vaccine Centers') {
                     $location.path("/vaccinecenters/");
                 }
@@ -191,7 +195,7 @@ angular.module('machadaloPages').filter('replace', [function () {
 
 
             $scope.getConsulationList = function () {
-
+                $location.search('state', $scope.selectedStateName).replace();
                 $scope.loading = null;
                 let param = {
                     state: $scope.selectedStateName,
