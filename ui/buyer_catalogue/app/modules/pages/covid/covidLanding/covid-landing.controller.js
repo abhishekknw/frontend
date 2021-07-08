@@ -113,21 +113,21 @@ angular.module('machadaloPages').filter('replace', [function () {
                 if ($scope.selectedCategory == 'Hospital Beds' || $scope.selectedCategory == 'Beds') {
                     $location.path("/hospitalbeds");
                 } else if ($scope.selectedCategory == 'Refills') {
-                    $location.path("/refills/");
+                    $location.path("/refills");
                 } else if ($scope.selectedCategory == 'Concentrators') {
-                    $location.path("/concentrators/");
+                    $location.path("/concentrators");
                 } else if ($scope.selectedCategory == 'Cylinders') {
-                    $location.path("/cylinders/");
+                    $location.path("/cylinders");
                 } else if ($scope.selectedCategory == 'Medicines') {
-                    $location.path("/medicines/");
+                    $location.path("/medicines");
                 } else if ($scope.selectedCategory == 'Ambulance') {
-                    $location.path("/ambulance/");
+                    $location.path("/ambulance");
                 } else if ($scope.selectedCategory == 'Plasma') {
-                    $location.path("/plasma/");
+                    $location.path("/plasma");
                 }  else if ($scope.selectedCategory == 'Free Online Doctor Consulation') {
-                    $location.path("/doctors/");
+                    $location.path("/doctors");
                 } else if ($scope.selectedCategory == 'Covid Cases' || $scope.selectedCategory == 'Covidcases') {
-                    $location.path("/covidcases/");
+                    $location.path("/covidcases");
                 } else if ($scope.selectedCategory == 'Vaccine Centers') {
                     $location.path("/vaccinecenters/");
                 }
@@ -136,23 +136,23 @@ angular.module('machadaloPages').filter('replace', [function () {
 
             $scope.changeWeb = function () {
                 if ($scope.selectedCategory == 'Hospital Beds' || $scope.selectedCategory == 'Beds') {
-                    $location.path("/hospitalbeds/");
+                    $location.path("/hospitalbeds");
                 } else if ($scope.selectedCategory == 'Refills') {
-                    $location.path("/refills/");
+                    $location.path("/refills");
                 } else if ($scope.selectedCategory == 'Concentrators') {
-                    $location.path("/concentrators/");
+                    $location.path("/concentrators");
                 } else if ($scope.selectedCategory == 'Cylinders') {
-                    $location.path("/cylinders/");
+                    $location.path("/cylinders");
                 } else if ($scope.selectedCategory == 'Medicines') {
-                    $location.path("/medicines/");
+                    $location.path("/medicines");
                 } else if ($scope.selectedCategory == 'Ambulance') {
-                    $location.path("/ambulance/");
+                    $location.path("/ambulance");
                 } else if ($scope.selectedCategory == 'Plasma') {
-                    $location.path("/plasma/");
+                    $location.path("/plasma");
                 } else if ($scope.selectedCategory == 'Free Online Doctor Consulation') {
-                    $location.path("/doctors/");
+                    $location.path("/doctors");
                 } else if ($scope.selectedCategory == 'Covid Cases' || $scope.selectedCategory == 'Covidcases') {
-                    $location.path("/covidcases/");
+                    $location.path("/covidcases");
                 }
                 $scope.cylinderDetailData = [];
             }
