@@ -8,8 +8,8 @@ angular.module('machadaloPages').filter('replace', [function () {
         return input.replace(regex, to);
     };
 }]).controller('covidYouthCtrl',
-    ['$scope', '$rootScope', '$window', '$location', 'AuthService', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService',
-        function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $state, userService, constants, AuthService, vcRecaptchaService) {
+    ['$scope', '$rootScope', '$window', '$location', 'AuthService','$sce', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService',
+        function ($scope, $rootScope, $window, $location, AuthService,$sce, suspenseLeadService, $state, userService, constants, AuthService, vcRecaptchaService) {
             AuthService.Clear();
 
             var url = $location.url().split("/");
@@ -138,7 +138,17 @@ angular.module('machadaloPages').filter('replace', [function () {
                     $scope.youthData = response.data.data.result;
                      if($scope.youthData.length > 0){
                         for(let i in $scope.youthData){
-                            $scope.youthData[i].link = 'https://www.youtube.com/embed/' + $scope.youthData[i].link;
+                          if(i == 0){
+                            $scope.youthData[i].demolink = $sce.trustAsResourceUrl('https://www.youtube.com/embed/yubzJw0uiE4');
+                          } else if(i == 1){
+                            $scope.youthData[i].demolink = $sce.trustAsResourceUrl('https://www.youtube.com/embed/bDtxF7qSofg?start=290&&end=437');
+                          } else if(i == 2){
+                            $scope.youthData[i].demolink = $sce.trustAsResourceUrl('https://www.youtube.com/embed/zIfo3vdlWq4');
+                          } else {
+                            $scope.youthData[i].demolink = $sce.trustAsResourceUrl('https://www.youtube.com/embed/3kGFBBy3Lyg');
+                          }
+                                
+                            //$scope.youthData[i].link = 'https://www.youtube.com/embed/' + $scope.youthData[i].link;
                         }
                      }
                 }).catch(function onError(response) {
