@@ -70,8 +70,7 @@
           <div class="row">
             <div class="col-md-6">
               <div class="card covid-card">
-                <h3>Total Cases :</h3>
-                <h3>{{todayDate | date : mediumDate}}</h3>
+                <h3>Total Cases ({{todayDate | date : mediumDate}}) :</h3>
                 <div ng-if="!loading" ng-loadings="loading"></div>
                 <div class="hospital-card-wrapper covid-case-card" ng-if="loading">
                   <div>
@@ -107,9 +106,8 @@
             </div>
             <div class="col-md-6">
               <div class="card header covid-card" style="background-color: seagreen;">
-                <h3>Yesterday's Cases :
+                <h3>Yesterday's Cases ({{yesterdayDate | date : mediumDate}}) :
                 </h3>
-                <h3>{{yesterdayDate | date : mediumDate}}</h3>
                 <div ng-if="!loading" ng-loadings="loading"></div>
                 <div class="hospital-card-wrapper covid-case-card" ng-if="loading">
                   <div>

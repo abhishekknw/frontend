@@ -169,6 +169,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                 AuthService.getCovidCasesState($scope.selectedCategoryCode)
                     .then(function onSuccess(response) {
                         $scope.stateData = response.data.data;
+                        $scope.stateData.splice(0, 0, { 'state_code': 'all', 'state': 'All State' });
                         if (url.length > 1 && $scope.stateData) {
                             var localindex_index = $scope.stateData.map(function (el) {
                                 return el.state;
@@ -207,8 +208,14 @@ angular.module('machadaloPages').filter('replace', [function () {
                 AuthService.getCovidCasesCity(param)
                     .then(function onSuccess(response) {
                         $scope.cityData = response.data.data;
-                        $scope.cityData.splice(0, 0, { 'district_code': 'all', 'district_name': 'all' });
-                        $scope.district_code = 'all';
+                        // if(value != 'setDynamic'){
+                        //     $scope.cityData.splice(0, 0, { 'district_code': 'all', 'district_name': 'all' });
+                        //     $scope.district_code = 'all';
+                        // } else {
+                            $scope.cityData.splice(0, 0, { 'district_code': 'all', 'district_name': 'All Districts' });
+                            $scope.district_code = 'all';
+                       // }
+                        
 
                         if(value == 'setDynamic' && (url.length > 1 && $scope.state_code) && $scope.cityParam){
                             var localindex_index_city = $scope.cityData.map(function (el) {
