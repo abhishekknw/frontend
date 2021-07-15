@@ -169,6 +169,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                 AuthService.getCovidCasesState($scope.selectedCategoryCode)
                     .then(function onSuccess(response) {
                         $scope.stateData = response.data.data;
+                        $scope.stateData.splice(0, 0, { 'state_code': 'all', 'state': 'All State' });
                         if (url.length > 1 && $scope.stateData) {
                             var localindex_index = $scope.stateData.map(function (el) {
                                 return el.state;
