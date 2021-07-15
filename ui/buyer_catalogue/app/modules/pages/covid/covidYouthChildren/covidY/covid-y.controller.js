@@ -17,7 +17,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             let cat = url[1].substring(0, 1).toUpperCase() + url[1].substring(1);
             // $scope.selectedCategory = cat;
             $scope.selectedCategory = "";
-          
+            $scope.selectedSubCategory = "";
             $scope.loading = true;
 
             $scope.getCategory = function () {
@@ -70,6 +70,23 @@ angular.module('machadaloPages').filter('replace', [function () {
                     {'age':'Primary (7 to 12 yrs)'},
                     {'age':'Secondary (13 to 18 yrs)'},
                     {'age':'College/Professional (>18 yrs)'}]
+                $scope.SubcategoryArray = [
+                        {"subcategory_code": "",
+                        "keyword": "Math",
+                        "name": "Math",
+                    },{
+                        "subcategory_code": "",
+                        "keyword": "Science",
+                        "name": "Science",  
+                    },{
+                        "subcategory_code": "",
+                        "keyword": "English",
+                        "name": "English",
+                    },{
+                        "subcategory_code": "",
+                        "keyword": "History",
+                        "name": "History",
+                    }]
             }
 
             $scope.changeWeb = function () {
@@ -132,6 +149,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                 let param = {
                     category : $scope.selectedCategory,
                     age : $scope.selectedAge,
+                    subcategory : $scope.selectedSubCategory,
                 }
                 AuthService.youthChildrenList(param)
                 .then(function onSuccess(response) {
