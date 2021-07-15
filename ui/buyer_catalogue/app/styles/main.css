@@ -932,6 +932,13 @@ td.valenteer-name {
 .covid-table-wrap .info-table-covidhelp:last-child{
   border-bottom:0;
 }
+.greencl{
+	color:green
+}
+
+.redcl{
+	color:red
+}
 
 @media only screen and (min-width:992px){
  .info-row.info-feedback{

@@ -261,6 +261,42 @@
 
                     </div>
                   </div>
+
+                  <div class="info-table-covidhelp">
+                    <div class="yest-case">Growth/Decline Rate</div>
+                    <div class="info-row">
+                      <label class="infolable">Confirmed Cases:</label>
+                      <span ng-if="cases.gd_rate.confirmed != 0" ng-class="cases.gd_rate.confirmed > 0  ? 'greencl' : 'redcl' ">
+                      <span> {{cases.gd_rate.confirmed}}</span>
+                      <span ng-if="cases.gd_rate.confirmed > 0 || cases.gd_rate.confirmed < 0">  %</span>
+                        <span ng-if="cases.gd_rate.confirmed < 0"><i class="fa fa-arrow-down" aria-hidden="true"></i></span>
+                        <span ng-if="cases.gd_rate.confirmed > 0"><i class="fa fa-arrow-up" aria-hidden="true"></i></span>
+                     </span>
+                     <span ng-if="cases.gd_rate.confirmed == 0"> {{cases.gd_rate.confirmed}}</span>
+                    </div>
+
+                    <div class="info-row">
+                      <label class="infolable">Recovered Cases:</label>
+                      <span ng-if="cases.gd_rate.recovered != 0" ng-class=" cases.gd_rate.recovered > 0  ? 'greencl' : 'redcl' ">
+                        <span> {{cases.gd_rate.recovered}}</span>
+                        <span ng-if="cases.gd_rate.recovered > 0 || cases.gd_rate.recovered < 0">  %</span>
+                        <span ng-if="cases.gd_rate.recovered < 0"><i class="fa fa-arrow-down" aria-hidden="true"></i></span>
+                        <span ng-if="cases.gd_rate.recovered > 0"><i class="fa fa-arrow-up" aria-hidden="true"></i></span>
+                     </span>
+                     <span ng-if="cases.gd_rate.recovered == 0"> {{cases.gd_rate.confirmed}}</span>
+                    </div>
+
+                    <div class="info-row">
+                      <label class="infolable">Deceased Cases:</label>
+                      <span ng-if="cases.gd_rate.deceased != 0" ng-class=" cases.gd_rate.deceased > 0  ? 'greencl' : 'redcl' ">
+                      <span> {{cases.gd_rate.deceased}}</span>
+                      <span ng-if="cases.gd_rate.deceased > 0 || cases.gd_rate.deceased < 0">  %</span>
+                      <span ng-if="cases.gd_rate.deceased < 0"><i class="fa fa-arrow-down" aria-hidden="true"></i></span>
+                      <span ng-if="cases.gd_rate.deceased > 0"><i class="fa fa-arrow-up" aria-hidden="true"></i></span>
+                   </span>
+                   <span ng-if="cases.gd_rate.deceased == 0"> {{cases.gd_rate.confirmed}}</span>
+                    </div>
+                  </div>
                 
                   <div class="info-table-covidhelp">
                     <div class="yest-case">Last 7-day Average Cases</div>
