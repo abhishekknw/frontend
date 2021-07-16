@@ -131,12 +131,26 @@
               <h2 style="text-align: center;">Category for age group <i class="fa fa-arrow-down" aria-hidden="true"></i>
               </h2>
             </div>
-            <div class="info-table-heading" ng-if="selectedCategory && selectedAge">
-              <h2 style="text-align: center;">{{selectedCategory}} for {{selectedAge}} group <i class="fa fa-arrow-down"
+
+            <div class="info-table-heading" ng-if="!selectedCategory && selectedAge">
+              <h2 style="text-align: center;">Category for {{selectedAge}} <i class="fa fa-arrow-down" aria-hidden="true"></i>
+              </h2>
+            </div>
+
+            <div class="info-table-heading" ng-if="selectedCategory && selectedAge && !selectedSubCategory && !selectedSubSubCategory ">
+              <h2 style="text-align: center;">{{selectedCategory}} for {{selectedAge}} <i class="fa fa-arrow-down"
                   aria-hidden="true"></i></h2>
             </div>
 
+            <div class="info-table-heading" ng-if="selectedSubCategory && selectedCategory && selectedAge && !selectedSubSubCategory">
+              <h2 style="text-align: center;">{{selectedSubCategory}} for {{selectedAge}} <i class="fa fa-arrow-down"
+                  aria-hidden="true"></i></h2>
+            </div>
 
+            <div class="info-table-heading" ng-if="selectedSubCategory && selectedCategory && selectedAge && selectedSubSubCategory">
+              <h2 style="text-align: center;">{{selectedSubSubCategory}} for {{selectedAge}} <i class="fa fa-arrow-down"
+                  aria-hidden="true"></i></h2>
+            </div>
 
             <!-- <div class="natext">
             N/A means Data Not Available
@@ -315,7 +329,7 @@
         </div>
 
 
-        <div class="hospital-card">
+        <!--<div class="hospital-card">
           <div class="card text-center" style="text-align: center;">
             <label>
               <h4>TOP TRENDING ARTICLES</h4>
@@ -324,11 +338,11 @@
         </div>
 
         <div class="col-md-6">
-          <!-- <div class="col-md-6"> -->
+          <div class="col-md-6"> 
           <div class="info-table-wrap covidyouth-table">
-            <!-- <iframe width="400" height="300" src="https://wiki.pathmind.com/ai-vs-machine-learning-vs-deep-learning"
+           <iframe width="400" height="300" src="https://wiki.pathmind.com/ai-vs-machine-learning-vs-deep-learning"
               allowfullscreen>
-            </iframe> -->
+            </iframe> 
             <div class="info-row">
               <strong><label class="infolable">Link:</label></strong>
               <strong><a href="https://bit.ly/3k9sU1x">https://bit.ly/3k9sU1x</a></strong>
@@ -341,12 +355,12 @@
         </div>
 
         <div class="col-md-6">
-          <!-- <div class="col-md-6"> -->
+         <div class="col-md-6"> 
           <div class="info-table-wrap covidyouth-table">
-            <!-- <iframe width="400" height="300"
+            <iframe width="400" height="300"
               src="https://www.javatpoint.com/difference-between-artificial-intelligence-and-machine-learning"
               allowfullscreen>
-            </iframe> -->
+            </iframe> 
             <div class="info-row">
               <strong><label class="infolable">Link:</label></strong>
               <strong><a href="https://bit.ly/36vKLHQ">https://bit.ly/36vKLHQ</a></strong>
@@ -356,7 +370,7 @@
               <p>Difference between Artificial intelligence and Machine learning</p>
             </div>
           </div>
-        </div>
+        </div>-->
 
 
 

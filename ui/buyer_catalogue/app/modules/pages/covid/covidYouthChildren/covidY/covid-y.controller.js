@@ -65,12 +65,7 @@ angular.module('machadaloPages').filter('replace', [function () {
                     "name": "Yoga and Mindfulness",
                 }]
                 $scope.ageArray = [
-                    { 'age': 'Toddlers (<3yrs)' },
-                    { 'age': 'Kindergarten (3 to 6 yrs)' },
-                    { 'age': 'Primary (7 to 12 yrs)' },
-                    { 'age': 'Secondary (13 to 18 yrs)' },
-                    { 'age': 'College/Professional (>18 yrs)' },
-
+                    { 'age': 'Toddlers (<4yrs)' },
                     { 'age': 'Class KG' },
                     { 'age': 'Class 1' },
                     { 'age': 'Class 2' },
