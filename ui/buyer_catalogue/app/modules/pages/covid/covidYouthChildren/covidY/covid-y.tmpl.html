@@ -24,7 +24,7 @@
 
           <p style="text-align: center;"></p>
           <div class="form-group">
-            <select class="form-control" ng-change="youthChildrenList()" name="age" id="consulation_state"
+            <select class="form-control" ng-change="getCategoryList();" name="age" id="consulation_state"
               ng-model="selectedAge">
               <option value="" disabled>
                 Select Age Group
@@ -38,9 +38,9 @@
 
         
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group">
-                  <select class="form-control" name="category" id="Category_id" ng-change="changeWeb()"
+                  <select class="form-control" ng-change="getSubCategoryList()" name="category" id="CategoryId" ng-change="changeWeb()"
                   ng-model="selectedCategory">
                   <option value="" disabled>
                     Select Category
@@ -52,16 +52,31 @@
                 </select>
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group">
-                  <select class="form-control" ng-change="youthChildrenList()" name="SubCategory" id="consulation_state"
+                  <select class="form-control" ng-change="getSubSubCategoryList()" name="SubCategory" id="subCategoryId"
                   ng-model="selectedSubCategory">
                   <option value="" disabled>
                     Select SubCategory
                   </option>
-                  <option ng-repeat="Subcategory in SubcategoryArray track by $index" value="{{Subcategory.name}}"
+                  <option ng-repeat="Subcategory in subCategoryArray track by $index" value="{{Subcategory.name}}"
                     style="text-transform: capitalize;">
                     {{Subcategory.name}}
+                  </option>
+                </select>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <select class="form-control" ng-change="getList()" name="subSubCategory" id="subSubCategoryId"
+                  ng-model="selectedSubSubCategory">
+                  <option value="" disabled>
+                    Select SubSubCategory
+                  </option>
+                  <option ng-repeat="subCategory in subSubCategoryArray track by $index" value="{{subCategory.name}}"
+                    style="text-transform: capitalize;">
+                    {{subCategory.name}}
                   </option>
                 </select>
                 </div>
@@ -145,8 +160,7 @@
                 </label>
               </div>
             </div>
-            <div class="col-md-6" ng-if="youthData.length > 0" ng-repeat="youth in youthData ">
-              <!-- <div class="col-md-6"> -->
+            <!-- <div class="col-md-6" ng-if="youthData.length > 0" ng-repeat="youth in youthData ">
               <div class="info-table-wrap covidyouth-table">
                 <div class="info-row covid-table-heading">
                   <label class="infolable">Theme:</label>
@@ -155,16 +169,8 @@
                 </div>
 
                 <div class="info-row youtube-video">
-                  <!-- <label class="infolable"> Link:</label> -->
-                  <!-- <video width="400" controls>
-                  <source src="https://www.youtube.com/embed/yubzJw0uiE4" type="video/mp4">
-                  <source src="https://www.youtube.com/embed/yubzJw0uiE4" type="video/ogg">
-                  Your browser does not support HTML video.
-                </video> -->
                   <iframe width="420" ng-src={{youth.demolink}} allowfullscreen>
                   </iframe>
-                  <!-- <span ng-show="youth.link"> {{youth.link}} </span>
-                <span ng-show="youth.link == ' ' || !youth.link"> N/A </span> -->
                 </div>
                 <div class="info-time-row">
                   <div class="info-row">
@@ -223,6 +229,83 @@
                   </div>
                 </div>
               </div>
+            </div> -->
+
+              <div class="col-md-6" ng-if="youthData.length > 0" ng-repeat="youth in youthData track by $index">
+              <div class="info-table-wrap covidyouth-table">
+                <div class="info-row covid-table-heading">
+                  <label class="infolable">Theme:</label>
+                  <span ng-show="youth.Theme">{{youth.Theme}}</span>
+                  <span ng-show="!youth.Theme || youth.Theme == ' '">N/A</span>
+                </div>
+
+                <div class="info-row youtube-video">
+                  <iframe width="420" ng-src={{youth.EmbedUrl}} allowfullscreen>
+                  </iframe>
+                </div>
+                <div class="info-time-row">
+                  <div class="info-row">
+                    <label class="infolable">Start Time:</label>
+                    <span ng-show="youth.Start_Time"><strong>{{youth.Start_Time}}
+                      </strong></span>
+                    <span ng-show="youth.Start_Time == ' ' || !youth.Start_Time"> N/A </span>
+                  </div>
+
+                  <div class="info-row">
+                    <label class="infolable">End Time:</label>
+                    <span ng-show="youth.End_Time"><strong>{{youth.End_Time}} </strong></span>
+                    <span ng-show="youth.End_Time == ' ' || !youth.End_Time"> N/A </span>
+                  </div>
+                </div>
+
+                <div class="info-time-row second">
+                  <div class="info-row">
+                    <label class="infolable">Duration:</label>
+                    <span ng-show="youth.Duration">{{youth.Duration}} </span>
+                    <span ng-show="youth.Duration == ' ' || !youth.Duration"> N/A </span>
+                  </div>
+
+                  <div class="info-row level">
+                    <label class="infolable">Level:</label>
+                    <span ng-show="youth.Level">{{youth.Level}} </span>
+                    <span ng-show="youth.Level == ' ' || !youth.Level"> N/A </span>
+                  </div>
+
+                  <div class="info-row">
+                    <label class="infolable">Imp:</label>
+                    <span ng-show="youth.Importance">{{youth.Importance}} </span>
+                    <span ng-show="youth.Importance == ' ' || !youth.Importance"> N/A </span>
+                  </div>
+                </div>
+
+                <div class="info-row">
+                  <label class="infolable">Key Learnings:</label>
+                  <span ng-show="youth.Key_Learnings">{{youth.Key_Learnings}}</span>
+                  <span ng-show="youth.Key_Learnings == ' ' || !youth.Key_Learnings"> N/A </span>
+                </div>
+
+                <div class="info-row">
+                  <label class="infolable">Source:</label>
+                  <span ng-show="youth.Source">{{youth.Source}}</span>
+                  <span ng-show="youth.Source == ' ' || !youth.Source"> N/A </span>
+                </div>
+
+                <div class="info-row info-feedback desktop">
+                  <label class="infolable">Provide Feedback</label>
+                  <div class="feedback-btns">
+                  <button type="button" name="button"  class="btn btn-success res-btn" >Like</button>
+                  <button type="button" name="button"  class="btn btn-danger res-btn" >DisLike</button>
+                    </div>
+                </div>
+
+                <div class="info-row info-feedback mobile">
+                  <label class="infolable">Provide Feedback</label>
+                  <div class="feedback-btns">
+                  <button type="button" name="button"  class="btn btn-success res-btn" >Like</button>
+                  <button type="button" name="button"  class="btn btn-danger res-btn" >DisLike</button>
+                    </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -243,9 +326,9 @@
         <div class="col-md-6">
           <!-- <div class="col-md-6"> -->
           <div class="info-table-wrap covidyouth-table">
-            <iframe width="400" height="300" src="https://wiki.pathmind.com/ai-vs-machine-learning-vs-deep-learning"
+            <!-- <iframe width="400" height="300" src="https://wiki.pathmind.com/ai-vs-machine-learning-vs-deep-learning"
               allowfullscreen>
-            </iframe>
+            </iframe> -->
             <div class="info-row">
               <strong><label class="infolable">Link:</label></strong>
               <strong><a href="https://bit.ly/3k9sU1x">https://bit.ly/3k9sU1x</a></strong>
@@ -260,10 +343,10 @@
         <div class="col-md-6">
           <!-- <div class="col-md-6"> -->
           <div class="info-table-wrap covidyouth-table">
-            <iframe width="400" height="300"
+            <!-- <iframe width="400" height="300"
               src="https://www.javatpoint.com/difference-between-artificial-intelligence-and-machine-learning"
               allowfullscreen>
-            </iframe>
+            </iframe> -->
             <div class="info-row">
               <strong><label class="infolable">Link:</label></strong>
               <strong><a href="https://bit.ly/36vKLHQ">https://bit.ly/36vKLHQ</a></strong>
