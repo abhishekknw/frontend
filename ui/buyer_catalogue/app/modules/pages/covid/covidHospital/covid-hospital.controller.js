@@ -48,8 +48,9 @@ angular.module('machadaloPages').filter('replace', [function () {
             $scope.cityParam = $scope.cityParam.join(" ");
     
         }
-        
-        
+
+
+         
          
 
 
@@ -59,7 +60,6 @@ angular.module('machadaloPages').filter('replace', [function () {
             let apiUrl = ' https://stagingapi.machadalo.com/';
             url[0] = url[0].substring(1);
             let cat = url[0].substring(0, 1).toUpperCase() + url[0].substring(1);
-
             $rootScope.selectedCategory = cat;
             if ($scope.selectedCategory == 'Hospitalbeds') {
                 $scope.selectedCategory = 'Beds';
@@ -323,7 +323,6 @@ angular.module('machadaloPages').filter('replace', [function () {
                 $scope.totalAvailableBeds = 0;
                 $scope.selectedCityName = null;
                 $scope.district_code = null;
-                // console.log('333333333333333',$scope.stateData);
                 if($scope.stateData){
                     var localindex_index = $scope.stateData.map(function (el) {
                         return el.state_code;
@@ -345,6 +344,29 @@ angular.module('machadaloPages').filter('replace', [function () {
                         $scope.getBeds();
                     }
                    
+                } 
+                //this code is city to state selected
+                 else if(url.length > 1 && !$scope.state_code){
+                     for(let i in $scope.cityData){
+                        if($scope.cityData[i].length > 0){
+                            for(let j in $scope.cityData[i]){
+                                if($scope.cityData[i][j].district_name == $scope.cityParam){
+                                    $scope.cityList = $scope.cityData[i];
+                                    $scope.selectedCityName = $scope.cityData[i][j].district_name;
+                                    $scope.district_code = $scope.cityData[i][j].district_code;
+                                    $scope.state_code = $scope.cityData[i][j].state_code;
+                                    var localindex_index_ = $scope.stateData.map(function (el) {
+                                            return el.state_code;
+                                        }).indexOf($scope.state_code);
+                                        if (localindex_index_ != -1) {
+                                            $scope.selectedStateName = $scope.stateData[localindex_index_].name;
+                                        }
+                                    // $location.search('city', $scope.selectedCityName).replace();
+                                     $scope.getBeds();
+                                }
+                            }
+                        }
+                     }
                 }
             }
             // $scope.totalOxyzenBeds = 0;
