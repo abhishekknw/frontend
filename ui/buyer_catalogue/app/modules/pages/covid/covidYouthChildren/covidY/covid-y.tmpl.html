@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="modules/pages/login/login.tmpl.css" />
-<link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css" />
+<link rel="stylesheet" href="modules/common/loadingicon/loadincag-spinner.tmpl.css" />
 <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 <link href="css/smallscreen.css" rel="stylesheet" media="screen">
 
@@ -8,7 +8,7 @@
     <div class="logo-sec">
       <img src="images/machadalo-logo.png" alt="logo">
       <h1><span class="img_hospital"></span> Machadalo Education Assistant
-        </h1>
+      </h1>
     </div>
 
     <div class="container">
@@ -22,24 +22,9 @@
             </select>
           </div> -->
 
+          <p style="text-align: center;"></p>
           <div class="form-group">
-            <select class="form-control" name="category" id="Category_id" ng-change="changeWeb()"
-              ng-model="selectedCategory">
-              <option value="" disabled>
-                Select Category
-              </option>
-              <option ng-repeat="cat in categorysArray track by $index" value="{{cat.name}}"
-                style="text-transform: capitalize;">
-                {{cat.name}} 
-              </option>
-            </select>
-          </div>
-
-
-          <p style="text-align: center;">
-          </p>
-          <div class="form-group">
-            <select class="form-control" ng-change="youthChildrenList()" name="age" id="consulation_state"
+            <select class="form-control" ng-change="getCategoryList();" name="age" id="consulation_state"
               ng-model="selectedAge">
               <option value="" disabled>
                 Select Age Group
@@ -51,7 +36,55 @@
             </select>
           </div>
 
-          <!-- <div class="form-group">
+        
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <select class="form-control" ng-change="getSubCategoryList()" name="category" id="CategoryId" ng-change="changeWeb()"
+                  ng-model="selectedCategory">
+                  <option value="" disabled>
+                    Select Category
+                  </option>
+                  <option ng-repeat="cat in categorysArray track by $index" value="{{cat.name}}"
+                    style="text-transform: capitalize;">
+                    {{cat.name}}
+                  </option>
+                </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <select class="form-control" ng-change="getSubSubCategoryList()" name="SubCategory" id="subCategoryId"
+                  ng-model="selectedSubCategory">
+                  <option value="" disabled>
+                    Select SubCategory
+                  </option>
+                  <option ng-repeat="Subcategory in subCategoryArray track by $index" value="{{Subcategory.name}}"
+                    style="text-transform: capitalize;">
+                    {{Subcategory.name}}
+                  </option>
+                </select>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <select class="form-control" ng-change="getList()" name="subSubCategory" id="subSubCategoryId"
+                  ng-model="selectedSubSubCategory">
+                  <option value="" disabled>
+                    Select SubSubCategory
+                  </option>
+                  <option ng-repeat="subCategory in subSubCategoryArray track by $index" value="{{subCategory.name}}"
+                    style="text-transform: capitalize;">
+                    {{subCategory.name}}
+                  </option>
+                </select>
+                </div>
+              </div>
+            </div>
+        
+
+            <!-- <div class="form-group">
             <select class="form-control" ng-change="getCity()" name="state" id="specialisation_id"
               ng-model="state_code">
               <option value="" disabled>
@@ -63,7 +96,7 @@
               </option>
             </select>
           </div> -->
-          <!-- <div class="row">
+            <!-- <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <select class="form-control" ng-change="getCity()" name="state" id="state_id" ng-model="state_code">
@@ -90,20 +123,40 @@
               </div>
             </div>
           </div> -->
-        </div>
-        <div ng-if="!loading" ng-loadings="loading"></div>
-        <div class="row info-table-row" ng-if="loading">
-          
-            <div class="info-table-heading" ng-if="!selectedCategory && !selectedAge" ><h2 style="text-align: center;">Category for age group <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
-            <div class="info-table-heading" ng-if="selectedCategory && selectedAge" ><h2 style="text-align: center;">{{selectedCategory}} for {{selectedAge}} group <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
-           
-            
-            
-          <!-- <div class="natext">
+          </div>
+          <div ng-if="!loading" ng-loadings="loading"></div>
+          <div class="row info-table-row" ng-if="loading">
+
+            <div class="info-table-heading" ng-if="!selectedCategory && !selectedAge">
+              <h2 style="text-align: center;">Category for age group <i class="fa fa-arrow-down" aria-hidden="true"></i>
+              </h2>
+            </div>
+
+            <div class="info-table-heading" ng-if="!selectedCategory && selectedAge">
+              <h2 style="text-align: center;">Category for {{selectedAge}} <i class="fa fa-arrow-down" aria-hidden="true"></i>
+              </h2>
+            </div>
+
+            <div class="info-table-heading" ng-if="selectedCategory && selectedAge && !selectedSubCategory && !selectedSubSubCategory ">
+              <h2 style="text-align: center;">{{selectedCategory}} for {{selectedAge}} <i class="fa fa-arrow-down"
+                  aria-hidden="true"></i></h2>
+            </div>
+
+            <div class="info-table-heading" ng-if="selectedSubCategory && selectedCategory && selectedAge && !selectedSubSubCategory">
+              <h2 style="text-align: center;">{{selectedSubCategory}} for {{selectedAge}} <i class="fa fa-arrow-down"
+                  aria-hidden="true"></i></h2>
+            </div>
+
+            <div class="info-table-heading" ng-if="selectedSubCategory && selectedCategory && selectedAge && selectedSubSubCategory">
+              <h2 style="text-align: center;">{{selectedSubSubCategory}} for {{selectedAge}} <i class="fa fa-arrow-down"
+                  aria-hidden="true"></i></h2>
+            </div>
+
+            <!-- <div class="natext">
             N/A means Data Not Available
           </div> -->
-          <div class="form-group">
-            <!-- <select class="form-control specialize-option" value="" ng-click="shorting(selectedSpecialization)" name="state" id="specialisation_id"
+            <div class="form-group">
+              <!-- <select class="form-control specialize-option" value="" ng-click="shorting(selectedSpecialization)" name="state" id="specialisation_id"
               ng-model="selectedSpecialization">
               <option value="" disabled>
                 Select Specialization
@@ -113,82 +166,224 @@
                 {{specialization.name}}
               </option>
             </select> -->
-          </div>
-          <div class="col-md-6" ng-if="youthData.length > 0" ng-repeat="youth in youthData ">
-          <!-- <div class="col-md-6"> -->
-            <div class="info-table-wrap covidyouth-table">
-              <div class="info-row covid-table-heading">
-                <label class="infolable">Theme:</label>
-                <span ng-show="youth.Theme">{{youth.Theme}}</span>
-                <span ng-show="!youth.Theme || youth.Theme == ' '">N/A</span>
+            </div>
+            <div class="hospital-card">
+              <div class="card text-center" style="text-align: center;">
+                <label>
+                  <h4>TOP TRENDING VIDEOS</h4>
+                </label>
               </div>
-              <div class="info-row youtube-video">
-                <!-- <label class="infolable"> Link:</label> -->
-                <!-- <video width="400" controls>
-                  <source src="https://www.youtube.com/embed/yubzJw0uiE4" type="video/mp4">
-                  <source src="https://www.youtube.com/embed/yubzJw0uiE4" type="video/ogg">
-                  Your browser does not support HTML video.
-                </video> -->
-                <iframe width="420"  ng-src={{youth.demolink}} allowfullscreen>
-                </iframe>
-                <!-- <span ng-show="youth.link"> {{youth.link}} </span>
-                <span ng-show="youth.link == ' ' || !youth.link"> N/A </span> -->
-              </div>
-              <div class="info-time-row">
-              <div class="info-row">
-                <label class="infolable">Start Time:</label>
-                <span ng-show="youth.start"><strong>{{youth.start |replace: ',':' ' | date:'medium'}} </strong></span>
-                <span ng-show="youth.start == ' ' || !youth.start"> N/A </span>
-              </div>
+            </div>
+            <!-- <div class="col-md-6" ng-if="youthData.length > 0" ng-repeat="youth in youthData ">
+              <div class="info-table-wrap covidyouth-table">
+                <div class="info-row covid-table-heading">
+                  <label class="infolable">Theme:</label>
+                  <span ng-show="youth.Theme">{{youth.Theme}}</span>
+                  <span ng-show="!youth.Theme || youth.Theme == ' '">N/A</span>
+                </div>
 
-              <div class="info-row">
-                <label class="infolable">End Time:</label>
-                <span ng-show="youth.end"><strong>{{youth.end |replace: ',':' ' | date:'medium'}} </strong></span>
-                <span ng-show="youth.end == ' ' || !youth.end"> N/A </span>
+                <div class="info-row youtube-video">
+                  <iframe width="420" ng-src={{youth.demolink}} allowfullscreen>
+                  </iframe>
+                </div>
+                <div class="info-time-row">
+                  <div class="info-row">
+                    <label class="infolable">Start Time:</label>
+                    <span ng-show="youth.start"><strong>{{youth.start |replace: ',':' ' | date:'medium'}}
+                      </strong></span>
+                    <span ng-show="youth.start == ' ' || !youth.start"> N/A </span>
+                  </div>
+
+                  <div class="info-row">
+                    <label class="infolable">End Time:</label>
+                    <span ng-show="youth.end"><strong>{{youth.end |replace: ',':' ' | date:'medium'}} </strong></span>
+                    <span ng-show="youth.end == ' ' || !youth.end"> N/A </span>
+                  </div>
+                </div>
+
+                <div class="info-time-row second">
+                  <div class="info-row">
+                    <label class="infolable">Duration:</label>
+                    <span ng-show="youth.duration">{{youth.duration}} </span>
+                    <span ng-show="youth.duration == ' ' || !youth.duration"> N/A </span>
+                  </div>
+
+                  <div class="info-row level">
+                    <label class="infolable">Level:</label>
+                    <span ng-show="youth.level">{{youth.level}} </span>
+                    <span ng-show="youth.level == ' ' || !youth.level"> N/A </span>
+                  </div>
+
+                  <div class="info-row">
+                    <label class="infolable">Imp:</label>
+                    <span ng-show="youth.imp">{{youth.imp}} </span>
+                    <span ng-show="youth.imp == ' ' || !youth.imp"> N/A </span>
+                  </div>
+                </div>
+
+                <div class="info-row">
+                  <label class="infolable">Key Learnings:</label>
+                  <span ng-show="youth.key_learnings">{{youth.key_learnings}}</span>
+                  <span ng-show="youth.key_learnings == ' ' || !youth.key_learnings"> N/A </span>
+                </div>
+
+                <div class="info-row">
+                  <label class="infolable">Source:</label>
+                  <span ng-show="youth.source">{{youth.source}}</span>
+                  <span ng-show="youth.source == ' ' || !youth.source"> N/A </span>
+                </div>
+
+                <div class="info-row level">
+                  <div class="info-row info-feedback desktop">
+                    <label class="infolable">Provide Feedback:</label>
+                    <div class="feedback-btns">
+                      <button type="button" name="button" class="btn btn-success">Like</button>
+                      <button type="button" name="button" class="btn btn-danger">DisLike</button>
+                    </div>
+                  </div>
+                </div>
               </div>
-             </div>
-             
-             <div class="info-time-row second">
-              <div class="info-row">
-                <label class="infolable">Duration:</label>
-                <span ng-show="youth.duration">{{youth.duration}} </span>
-                <span ng-show="youth.duration == ' ' || !youth.duration"> N/A </span>
-              </div>
+            </div> -->
 
-              <div class="info-row level">
-                <label class="infolable">Level:</label>
-                <span ng-show="youth.level">{{youth.level}} </span>
-                <span ng-show="youth.level == ' ' || !youth.level"> N/A </span>
-              </div>
+              <div class="col-md-6" ng-if="youthData.length > 0" ng-repeat="youth in youthData track by $index">
+              <div class="info-table-wrap covidyouth-table">
+                <div class="info-row covid-table-heading">
+                  <label class="infolable">Theme:</label>
+                  <span ng-show="youth.Theme">{{youth.Theme}}</span>
+                  <span ng-show="!youth.Theme || youth.Theme == ' '">N/A</span>
+                </div>
 
-              <div class="info-row">
-                <label class="infolable">Imp:</label>
-                <span ng-show="youth.imp">{{youth.imp}} </span>
-                <span ng-show="youth.imp == ' ' || !youth.imp"> N/A </span>
-              </div>
-             </div>
+                <div class="info-row youtube-video">
+                  <iframe width="420" ng-src={{youth.EmbedUrl}} allowfullscreen>
+                  </iframe>
+                </div>
+                <div class="info-time-row">
+                  <div class="info-row">
+                    <label class="infolable">Start Time:</label>
+                    <span ng-show="youth.Start_Time"><strong>{{youth.Start_Time}}
+                      </strong></span>
+                    <span ng-show="youth.Start_Time == ' ' || !youth.Start_Time"> N/A </span>
+                  </div>
 
+                  <div class="info-row">
+                    <label class="infolable">End Time:</label>
+                    <span ng-show="youth.End_Time"><strong>{{youth.End_Time}} </strong></span>
+                    <span ng-show="youth.End_Time == ' ' || !youth.End_Time"> N/A </span>
+                  </div>
+                </div>
 
+                <div class="info-time-row second">
+                  <div class="info-row">
+                    <label class="infolable">Duration:</label>
+                    <span ng-show="youth.Duration">{{youth.Duration}} </span>
+                    <span ng-show="youth.Duration == ' ' || !youth.Duration"> N/A </span>
+                  </div>
 
-              <div class="info-row">
-                <label class="infolable">Key Learnings:</label>
-                <span ng-show="youth.key_learnings">{{youth.key_learnings}}</span>
-                <span ng-show="youth.key_learnings == ' ' || !youth.key_learnings"> N/A </span>
-              </div>
+                  <div class="info-row level">
+                    <label class="infolable">Level:</label>
+                    <span ng-show="youth.Level">{{youth.Level}} </span>
+                    <span ng-show="youth.Level == ' ' || !youth.Level"> N/A </span>
+                  </div>
 
-              <div class="info-row">
-                <label class="infolable">Source:</label>
-                <span ng-show="youth.source">{{youth.source}}</span>
-                <span ng-show="youth.source == ' ' || !youth.source"> N/A </span>
+                  <div class="info-row">
+                    <label class="infolable">Imp:</label>
+                    <span ng-show="youth.Importance">{{youth.Importance}} </span>
+                    <span ng-show="youth.Importance == ' ' || !youth.Importance"> N/A </span>
+                  </div>
+                </div>
+
+                <div class="info-row">
+                  <label class="infolable">Key Learnings:</label>
+                  <span ng-show="youth.Key_Learnings">{{youth.Key_Learnings}}</span>
+                  <span ng-show="youth.Key_Learnings == ' ' || !youth.Key_Learnings"> N/A </span>
+                </div>
+
+                <div class="info-row">
+                  <label class="infolable">Source:</label>
+                  <span ng-show="youth.Source">{{youth.Source}}</span>
+                  <span ng-show="youth.Source == ' ' || !youth.Source"> N/A </span>
+                </div>
+
+                <div class="info-row info-feedback desktop">
+                  <label class="infolable">Provide Feedback</label>
+                  <div class="feedback-btns">
+                  <button type="button" name="button"  class="btn btn-success res-btn" >Like</button>
+                  <button type="button" name="button"  class="btn btn-danger res-btn" >DisLike</button>
+                    </div>
+                </div>
+
+                <div class="info-row info-feedback mobile">
+                  <label class="infolable">Provide Feedback</label>
+                  <div class="feedback-btns">
+                  <button type="button" name="button"  class="btn btn-success res-btn" >Like</button>
+                  <button type="button" name="button"  class="btn btn-danger res-btn" >DisLike</button>
+                    </div>
+                </div>
               </div>
             </div>
           </div>
 
-          
         </div>
         <div ng-if="youthData.length == 0">
           <h4 style="color:red;text-align: center">Record not found.</h4>
         </div>
+
+
+        <!--<div class="hospital-card">
+          <div class="card text-center" style="text-align: center;">
+            <label>
+              <h4>TOP TRENDING ARTICLES</h4>
+            </label>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="col-md-6"> 
+          <div class="info-table-wrap covidyouth-table">
+           <iframe width="400" height="300" src="https://wiki.pathmind.com/ai-vs-machine-learning-vs-deep-learning"
+              allowfullscreen>
+            </iframe> 
+            <div class="info-row">
+              <strong><label class="infolable">Link:</label></strong>
+              <strong><a href="https://bit.ly/3k9sU1x">https://bit.ly/3k9sU1x</a></strong>
+            </div>
+            <div class="info-row">
+              <strong><label class="infolable">Description:</label></strong>
+              <p> A Beginner’s Guide to Important Topics in AI, Machine Learning, and Deep Learning.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+         <div class="col-md-6"> 
+          <div class="info-table-wrap covidyouth-table">
+            <iframe width="400" height="300"
+              src="https://www.javatpoint.com/difference-between-artificial-intelligence-and-machine-learning"
+              allowfullscreen>
+            </iframe> 
+            <div class="info-row">
+              <strong><label class="infolable">Link:</label></strong>
+              <strong><a href="https://bit.ly/36vKLHQ">https://bit.ly/36vKLHQ</a></strong>
+            </div>
+            <div class="info-row">
+              <strong><label class="infolable">Description:</label></strong>
+              <p>Difference between Artificial intelligence and Machine learning</p>
+            </div>
+          </div>
+        </div>-->
+
+
+
+
+        <!--<div class="col-md-6">
+          <div class="form-group">
+            <div class="info-row Articles">
+              <img src="..." class="img-thumbnail">
+
+            </div>
+          </div>
+        </div>-->
+
 
 
         <!-- <div class="col-md-6" ng-if="cylinderDetailData.length == 0 || !cylinderDetailData">
