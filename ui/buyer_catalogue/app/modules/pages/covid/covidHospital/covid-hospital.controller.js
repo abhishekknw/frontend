@@ -56,8 +56,8 @@ angular.module('machadaloPages').filter('replace', [function () {
 
           
 
-            let apiUrl = 'https://liveapi.societybasket.in/';
-            //let apiUrl = ' https://stagingapi.machadalo.com/';
+            //let apiUrl = 'https://liveapi.societybasket.in/';
+            let apiUrl = ' https://stagingapi.machadalo.com/';
             url[0] = url[0].substring(1);
             let cat = url[0].substring(0, 1).toUpperCase() + url[0].substring(1);
             $rootScope.selectedCategory = cat;
