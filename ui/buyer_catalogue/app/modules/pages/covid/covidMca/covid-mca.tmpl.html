@@ -2,180 +2,326 @@
 <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css" />
 <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 <link href="css/smallscreen.css" rel="stylesheet" media="screen">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<div class="covid-hospital" ng-init="getCategory()">
-  <div class="page-wrapper">
-    <div class="logo-sec">
-      <img src="images/machadalo-logo.png" alt="logo">
-      <h1><span class="img_hospital"><img src="images/plus_icon.png" alt="logo"></span> COVID19 HELPDESK,<span> {{selectedCategory}}</span></h1>
-    </div>
+<div class="page-wrapper-mca">
+  <div class="logo-sec-mca">
+    <img src="images/machadalo-logo.png" alt="logo">
 
-    <div class="container">
-      <div class="page-inner">
-        <div class="top-select-option">
-          <!-- <div class="form-group">
-            <select class="form-control" name="category" id="Category_id" ng-change="changeWeb()" ng-model="selectedCategory">
-              <option ng-repeat="cat in categorys track by $index" value="{{cat}}" style="text-transform: capitalize;">
-                {{cat}}
-              </option>
-            </select>
-          </div> -->
-
-          <div class="form-group">
-            <select class="form-control" name="category" id="Category_id"  ng-change="changeWeb()" ng-model="selectedCategory">
-              <option ng-repeat="cat in categorysArray track by $index" value="{{cat.name}}"  style="text-transform: capitalize;">
-               {{cat.name}} 
-              </option>
-            </select>
-          </div>
-
-
-          <p style="text-align: center;">
-            <!-- <h4 style="text-align: center;"> Data currently available for {{stateData.length}} States/UT and 410 Districts as per all
-              available Online Government and Volunteer Sources</h4> -->
-          </p>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <select class="form-control" ng-change="getCity()" name="state" id="state_id" ng-model="state_code">
-                  <option value="" disabled>
-                    Select State/UT
-                  </option>
-                  <option ng-repeat="state in stateData track by $index" value="{{state.state_code}}"
-                    style="text-transform: capitalize;">
-                    {{state.state}}
-                  </option>
-                </select>
-              </div>
-              <div class="form-group">
-                <select class="form-control" name="city" ng-change="getCylinderList()" id="city_id" ng-model="city_code">
-                  <option value="" disabled>
-                    Select District/City
-                  </option>
-                  <option ng-repeat="city in cityData track by $index" value="{{city.city_code}}">
-                   <p style="text-transform: capitalize !important"> {{city.city_name}} </p>
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group pincode">
-              <input class="form-control" type='text' name="pincode" id='pinId' ng-model="pinCode" placeholder="Enter Pincode">
-        </div>
-            </div>
-          </div>
-          
-      </div>
-        <div ng-if="!loading" ng-loadings="loading"></div>
-        <div class="row info-table-row" ng-if="loading">
-          <div>
-          <div class="info-table-heading" ng-if="!selectedCityName" ><h2 style="text-align: center;">Vaccine Centers <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
-          <div class="info-table-heading"  ng-if="selectedStateName && selectedCityName" ><h2 style="text-align: center;">Vaccine Centers in {{selectedCityName}}, {{selectedStateName}}  <i class="fa fa-arrow-down" aria-hidden="true"></i></h2></div>
-          </div>
-         
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group">
-                <select class="form-control" ng-change="getCity()" name="state" id="state_id" ng-model="state_code">
-                  <option value="" disabled>
-                    Select Age Group
-                  </option>
-                  <option value="18+">18+</option>
-                  <option value="45+">45+</option>
-                 
-                </select>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <select class="form-control" name="city" ng-change="getCylinderList()" id="city_id" ng-model="city_code">
-                  <option value="" disabled>
-                    Select Vaccine
-                  </option>
-                  <option value="Covaxin">Covaxin</option>
-                  <option value="Covishield">Covishield</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <select class="form-control" name="city" ng-change="getCylinderList()" id="city_id" ng-model="city_code">
-                  <option value="" disabled>
-                    Select Dose
-                  </option>
-                  <option value="Covaxin">Dose 1</option>
-                  <option value="Covishield">Dose 2</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          
-          <div class="natext" ng-if="cylinderDetailData.length > 0">
-            N/A means Data Not Available
-          </div>
-          <!-- <div class="col-md-6" ng-if="cylinderDetailData.length > 0" ng-repeat="cylinder in cylinderDetailData track by $index"> -->
-            <div class="col-md-6" >
-              <div class="info-table-wrap">
-
-                <div class="info-row vaccine-row">
-                  <!-- <h3>Center Name: <span> {{cases.district_name}}</span>
-                    <h3>Address: <span> {{cases.district_name}}</span> -->
-                      <p>Center Name: <span> {{cases.district_name}}</span></p>
-                       <p>Address: <span> {{cases.district_name}}</span></p>
-                </div>
-                <div class="info-table-covidhelp">
-                  
-                  <div class="info-row">
-                    <label class="infolable"> Vaccine Name:</label>
-                    <span> {{cases.yesterday_confirmed}}</span>
-                  </div>
-
-                  <div class="info-row">
-                    <label class="infolable">Min Age Limit:</label>
-                    <span> {{cases.yesterday_confirmed}}</span>
-                  </div>
-
-                  <div class="info-row">
-                    <label class="infolable">Date of Availability:</label>
-                    <span> {{cases.yesterday_confirmed}}</span>
-                  </div>
-
-                  <div class="info-row">
-                    <label class="infolable">Available Capacity -Dose 1:</label>
-                    <span> {{cases.yesterday_confirmed}}</span>
-                  </div>
-
-                  <div class="info-row">
-                    <label class="infolable">Available Capacity -Dose 2:</label>
-                    <span> {{cases.yesterday_confirmed}}</span>
-                  </div>
-
-                  <div class="info-row">
-                    <label class="infolable">Fees:</label>
-                    <span> {{cases.yesterday_confirmed}}</span>
-                  </div>
-
-                  <div class="info-row">
-                    <label class="infolable">Timings:</label>
-                    <span> {{cases.yesterday_confirmed}}</span>
-                  </div>
-                </div>
-                <hr>
-           
-               
-               
-
-
-               
-              </div>
-            </div>
-      </div>
-          <div ng-if="errorMsg">
-            <h4 style="color:red;text-align: center">{{errorMsg}}</h4>
-          </div>
-        </div>
-      </div>
-    </div>
+    <a href="index.html"><img src="logo.png" alt="" title=""><span> Customer</span> Assistant</a>
   </div>
 
-</div><!-- machadalo-login -->
+
+  <div class="container">
+    <div class="page-inner">
+      <div class="top-select-option-mca">
+        <div class="form-group">
+          <!--For sector dropdown-->
+          <select class="form-control" name="sector" id="sector" ng-change="changeWeb()" ng-model="selectedsector">
+            <option ng-repeat="sec in sectorArray track by $index" value="{{sec.name}}"
+              style="text-transform: capitalize;">
+              {{cat.name}}
+            </option>
+          </select>
+        </div>
+
+        <div class="second dropdown">
+          <div class="row">
+            <div class="col-xs-4">
+              <div class="form-group">
+                <!--category dropdown-->
+                <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                  <option value="" disabled>
+                    Select category
+                  </option>
+                  <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                    style="text-transform: capitalize;">
+                    {{}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-xs-4">
+              <div class="form-group">
+                <!--category dropdown-->
+                <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                  <option value="" disabled>
+                    Select category
+                  </option>
+                  <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                    style="text-transform: capitalize;">
+                    {{}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-xs-4">
+              <div class="form-group">
+                <!--category dropdown-->
+                <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                  <option value="" disabled>
+                    Select category
+                  </option>
+                  <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                    style="text-transform: capitalize;">
+                    {{}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="top-select-option-mca">
+      <div class="form-group">
+        <div class="tabs">
+          <input id="tab1" type="radio" name="tabs">
+          <label for="tab1">Search By Area</label>
+          <input id="tab2" type="radio" name="tabs" checked>
+          <label for="tab2">Search by Pincode</label>
+
+          <div class="content">
+            <div id="content1">
+              <div class="second dropdown">
+                <div class="row">
+                  <div class="col-xs-4">
+                    <div class="form-group">
+                      <!--category dropdown-->
+                      <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                        <option value="" disabled>
+                          Select category
+                        </option>
+                        <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                          style="text-transform: capitalize;">
+                          {{}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-4">
+                    <div class="form-group">
+                      <!--category dropdown-->
+                      <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                        <option value="" disabled>
+                          Select category
+                        </option>
+                        <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                          style="text-transform: capitalize;">
+                          {{}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-4">
+                    <div class="form-group">
+                      <!--category dropdown-->
+                      <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                        <option value="" disabled>
+                          Select category
+                        </option>
+                        <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                          style="text-transform: capitalize;">
+                          {{}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div id="content2">
+              <!--For Pincode search-->
+              <!--<div class="wrap">
+                <div class="search">
+                   <input type="text" class="searchTerm" placeholder="Enter Pincode">
+                   <button type="submit" class="searchButton">
+                     <i class="fa fa-search"></i>
+                  </button>
+                </div>
+             </div>-->
+              <!--<div class="search-hopital">
+                <div class="search-form">
+                  <form class="d-flex">
+                    <input class="form-control" type="search" ng-model="searchQuery" placeholder="Search Hospital"
+                      aria-label="Search">
+                    <span class="search-ic"><i class="fas fa-search"></i></span>
+                  </form>
+                </div>
+
+              </div>-->
+
+            </div>
+
+          </div>
+          <!--Search button-->
+        </div>
+      </div>
+    </div>
+
+    <!--Filter-->
+    <div class="filteration">
+      <div class="drop-down-list facility-name">
+        Availability By <i class="fa fa-filter" aria-hidden="true"></i>
+      </div>
+      <div class="col-md-1">
+        <div class="form-group">
+          <select class="form-control" name="" ng-change="" id="filter_id" ng-model="">
+            <option value="" disabled>
+              Select Filter/Category
+            </option>
+            <option ng-repeat="" value="{{}}" style="text-transform: capitalize;">
+              {{availableBeds.resourceType |replace: '_':' '}}
+            </option>
+          </select>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="natext" ng-show="(hospitalDetailData|filter:searchQuery).length > 0">
+      N/A means Data Not Available
+    </div>
+
+    <div ng-if="!loading" ng-loadings="loading"></div>
+    <div class="row" ng-if="loading">
+      <div class="col-md-4" ng-repeat="hospital in hospitalDetailData | filter : searchQuery | orderBy:sort">
+        <div class="card">
+          <h3>Facility Name: <span>{{hospital.vendor_name}}</span>
+            <span ng-if="hospital.address">,</span>
+
+          </h3>
+          <ul>
+            <li>Beds Available:<span style="color:green" ng-if="hospital.AvailableofBedsinHospital > 0">Yes
+                ({{hospital.AvailableofBedsinHospital}})</span>
+              <span style="color:red" ng-if="hospital.AvailableofBedsinHospital == 0">No</span>
+            </li>
+          </ul>
+          <table class="table covid-hospital-table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <td scope="col">Total</td>
+                <td scope="col">Available</td>
+                <td scope="col">Occupied</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="resources in hospital.hospital_data[0].resources | orderBy:'-totalQuantity'">
+                <th scope="row">{{resources.resourceType |replace: '_':' '}}:</th>
+                <td ng-if="resources.totalQuantity">{{resources.totalQuantity}}</td>
+                <td ng-if="!resources.totalQuantity">N/A</td>
+                <td ng-if="resources.quantity">{{resources.quantity}}</td>
+                <td ng-if="!resources.quantity">N/A</td>
+                <td ng-if="resources.totalQuantity">{{resources.totalQuantity - resources.quantity}}</td>
+                <td ng-if="!resources.totalQuantity">N/A</td>
+
+              </tr>
+
+              <tr ng-if="!createdDate">
+                <th colspan="2">Last Updated by Hospital:</th>
+                <td colspan="2"><span class="ng-binding">{{hospital.hospital_data[0].last_updated_time |
+                    date:'medium'}}</span>
+
+                </td>
+              </tr>
+              <tr ng-if="createdDate">
+                <th colspan="2">Last Updated by Hospital:</th>
+                <td colspan="2"><span class="ng-binding"
+                    ng-if="hospital.hospital_data[0].isCreatedDateShow">{{hospital.hospital_data[0].created_at |
+                    date:'medium'}}</span>
+                  <span class="ng-binding" ng-if="!hospital.hospital_data[0].isCreatedDateShow">As Per The Latest
+                    Records</span>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+          <div class="info-name-btn">
+            <div class="hospital hosptal-table info-row volanteer">
+              <label class="infolable">Volunteer Name: &nbsp;
+              </label>
+              <strong> {{hospital.Volunteer_Name}}</strong>
+
+            </div>
+            <div class="hosptal-table volanteer-btn desktop text-center">
+              <a ng-if="hospital.BitLink" href="{{hospital.BitLink}}" data-action="share/whatsapp/share"
+                target="_blank">
+                <img src="images/whatsapp-icon.png">
+                <span>Chat with Volunteer</span>
+              </a>
+              <a ng-if="!hospital.BitLink" href="">
+                <img src="images/whatsapp-icon.png">
+                <span>Chat with Volunteer</span>
+              </a>
+            </div>
+            <div class="hosptal-table volanteer-btn mobile text-center">
+              <a ng-if="hospital.BitLink" href="{{hospital.BitLink}}" data-action="share/whatsapp/share"
+                target="_blank">
+                <img src="images/whatsapp-icon.png">
+                <span>Chat with<br> Volunteer</span>
+              </a>
+              <a ng-if="!hospital.BitLink" href="">
+                <img src="images/whatsapp-icon.png">
+                <span>Chat with<br> Volunteer</span>
+              </a>
+            </div>
+          </div>
+          <div class="hospital info-row info-feedback desktop">
+            <label class="infolable">Provide Feedback</label>
+            <div class="feedback-btns">
+              <button type="button" name="button"
+                ng-disabled="hospital.notAvailableButton || hospital.wrongNumberButton"
+                ng-click="resourcesAvailable(hospital.vendor_name)" class="btn btn-success res-btn"
+                ng-class="{'btn-focus':hospital.resourcesAvailableButton}">Resources Available</button>
+              <button type="button" name="button"
+                ng-disabled="hospital.resourcesAvailableButton || hospital.wrongNumberButton"
+                ng-click="notAvailable(hospital.vendor_name)" class="btn btn-warning not-av-btn"
+                ng-class="{'btn-focus':hospital.notAvailableButton}">Not Available</button>
+              <button type="button" name="button"
+                ng-disabled="hospital.resourcesAvailableButton || hospital.notAvailableButton"
+                ng-click="wrongNumber(hospital.vendor_name)" class="btn btn-danger wr-btn"
+                ng-class="{'btn-focus':hospital.wrongNumberButton}">Wrong Number</button>
+            </div>
+          </div>
+          <div class="hospital info-row info-feedback mobile">
+            <label class="infolable">Provide Feedback</label>
+            <div class="feedback-btns">
+              <button type="button" name="button"
+                ng-disabled="hospital.notAvailableButton || hospital.wrongNumberButton"
+                ng-click="resourcesAvailable(hospital.vendor_name)" class="btn btn-success res-btn"
+                ng-class="{'btn-focus':hospital.resourcesAvailableButton}">Resources<br> Available</button>
+              <button type="button" name="button"
+                ng-disabled="hospital.resourcesAvailableButton || hospital.wrongNumberButton"
+                ng-click="notAvailable(hospital.vendor_name)" class="btn btn-warning not-av-btn"
+                ng-class="{'btn-focus':hospital.notAvailableButton}">Not<br> Available</button>
+              <button type="button" name="button"
+                ng-disabled="hospital.resourcesAvailableButton || hospital.notAvailableButton"
+                ng-click="wrongNumber(hospital.vendor_name)" class="btn btn-danger wr-btn"
+                ng-class="{'btn-focus':hospital.wrongNumberButton}">Wrong<br> Number</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h4 style="color:red;text-align: center" ng-show="(hospitalDetailData|filter:searchQuery).length==0">No
+        Hospital Found.</h4>
+    </div>
+
+
+
+
+
+
+
+
+  </div>
+</div>
