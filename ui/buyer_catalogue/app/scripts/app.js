@@ -254,6 +254,12 @@ angular
         templateUrl: 'modules/pages/covid/covidMea/covid-mea.tmpl.html',
       })
 
+      .state('covidMca', {
+        url: '/mca',
+        controller: 'covidMcaCtrl',
+        templateUrl: 'modules/pages/covid/covidMca/covid-mca.tmpl.html',
+      })
+
       .state('covidVaccineCenter', {
         url: '/vaccinecenters/',
         controller: 'covidVaccineCentersCtrl',
@@ -733,6 +739,8 @@ angular
             $location.path("/doctors");
           }  else if (url && url[1] && url[1].indexOf("mea") != -1) {
             $location.path("/mea");
+          }  else if (url && url[1] && url[1].indexOf("mca") != -1) {
+            $location.path("/mca");
           } 
 
           // else if (url[1] == "hospitalbeds") {
@@ -799,6 +807,8 @@ angular
             $location.path("/doctors");
           } else if (url && url[1] && url[1].indexOf("mea") != -1) {
             $location.path("/mea");
+          }  else if (url && url[1] && url[1].indexOf("mca") != -1) {
+            $location.path("/mca");
           } 
 
           //  else if (url[1] == "hospitalbeds") {
