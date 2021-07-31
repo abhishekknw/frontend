@@ -248,6 +248,12 @@ angular
         templateUrl: 'modules/pages/covid/covidYouthChildren/covidY/covid-y.tmpl.html',
       })
 
+      .state('covidMea', {
+        url: '/mea',
+        controller: 'covidMeaCtrl',
+        templateUrl: 'modules/pages/covid/covidMea/covid-mea.tmpl.html',
+      })
+
       .state('covidVaccineCenter', {
         url: '/vaccinecenters/',
         controller: 'covidVaccineCentersCtrl',
@@ -725,6 +731,8 @@ angular
             $location.path("/plasma");
           } else if (url && url[1] && url[1].indexOf("doctors") != -1) {
             $location.path("/doctors");
+          }  else if (url && url[1] && url[1].indexOf("mea") != -1) {
+            $location.path("/mea");
           } 
 
           // else if (url[1] == "hospitalbeds") {
@@ -747,9 +755,10 @@ angular
           //   $location.path("/doctors/");
           // }
           
-           else if (url[1] == "mea") {
-            $location.path("/mea/");
-          }  else if (url[1] == "vaccinecenters") {
+          //  else if (url[1] == "mea") {
+          //   $location.path("/mea");
+          // } 
+           else if (url[1] == "vaccinecenters") {
             $location.path("/vaccinecenters/");
           } else {
             $location.path("/login");
@@ -788,6 +797,8 @@ angular
             $location.path("/plasma");
           } else if (url && url[1] && url[1].indexOf("doctors") != -1) {
             $location.path("/doctors");
+          } else if (url && url[1] && url[1].indexOf("mea") != -1) {
+            $location.path("/mea");
           } 
 
           //  else if (url[1] == "hospitalbeds") {

@@ -54,7 +54,7 @@ angular.module('machadaloPages').filter('replace', [function () {
          
 
 
-
+          
 
             //let apiUrl = 'https://liveapi.societybasket.in/';
             let apiUrl = ' https://stagingapi.machadalo.com/';
