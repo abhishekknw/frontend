@@ -12,12 +12,12 @@
   </div>
 
 
-  <div class="container">
+  <div class="container dropdown">
     <div class="page-inner">
       <div class="top-select-option-mca">
         <div class="form-group">
           <!--For sector dropdown-->
-          <select class="form-control" name="sector" id="sector" ng-change="changeWeb()" ng-model="selectedsector">
+          <select class="form-control" name="sector" id="sector-mca" ng-change="changeWeb()" ng-model="selectedsector">
             <option ng-repeat="sec in sectorArray track by $index" value="{{sec.name}}"
               style="text-transform: capitalize;">
               {{cat.name}}
@@ -137,8 +137,14 @@
                 </div>
               </div>
             </div>
+ 
 
             <div id="content2">
+              <div class="col-md-6">
+                <div class="form-group pincode">
+                <input class="form-control" type='text' name="pincode" id='pinId' ng-model="pinCode" placeholder="Enter Pincode">
+                </div>
+              </div>
               <!--For Pincode search-->
               <!--<div class="wrap">
                 <div class="search">
@@ -164,6 +170,9 @@
           </div>
           <!--Search button-->
         </div>
+        <form class="form">
+          <button class="form_submit" type="button">Submit</button>
+        </form>
       </div>
     </div>
 
@@ -188,139 +197,123 @@
 
     </div>
 
-    <div class="natext" ng-show="(hospitalDetailData|filter:searchQuery).length > 0">
+    <div class="natext" ng-if="cylinderDetailData.length > 0">
       N/A means Data Not Available
     </div>
 
     <div ng-if="!loading" ng-loadings="loading"></div>
-    <div class="row" ng-if="loading">
-      <div class="col-md-4" ng-repeat="hospital in hospitalDetailData | filter : searchQuery | orderBy:sort">
-        <div class="card">
-          <h3>Facility Name: <span>{{hospital.vendor_name}}</span>
-            <span ng-if="hospital.address">,</span>
+    <div class="col-md-6" >
+      <div class="info-table-wrap">
 
-          </h3>
-          <ul>
-            <li>Beds Available:<span style="color:green" ng-if="hospital.AvailableofBedsinHospital > 0">Yes
-                ({{hospital.AvailableofBedsinHospital}})</span>
-              <span style="color:red" ng-if="hospital.AvailableofBedsinHospital == 0">No</span>
-            </li>
-          </ul>
-          <table class="table covid-hospital-table">
-            <thead>
-              <tr>
-                <th scope="col"></th>
-                <td scope="col">Total</td>
-                <td scope="col">Available</td>
-                <td scope="col">Occupied</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat="resources in hospital.hospital_data[0].resources | orderBy:'-totalQuantity'">
-                <th scope="row">{{resources.resourceType |replace: '_':' '}}:</th>
-                <td ng-if="resources.totalQuantity">{{resources.totalQuantity}}</td>
-                <td ng-if="!resources.totalQuantity">N/A</td>
-                <td ng-if="resources.quantity">{{resources.quantity}}</td>
-                <td ng-if="!resources.quantity">N/A</td>
-                <td ng-if="resources.totalQuantity">{{resources.totalQuantity - resources.quantity}}</td>
-                <td ng-if="!resources.totalQuantity">N/A</td>
-
-              </tr>
-
-              <tr ng-if="!createdDate">
-                <th colspan="2">Last Updated by Hospital:</th>
-                <td colspan="2"><span class="ng-binding">{{hospital.hospital_data[0].last_updated_time |
-                    date:'medium'}}</span>
-
-                </td>
-              </tr>
-              <tr ng-if="createdDate">
-                <th colspan="2">Last Updated by Hospital:</th>
-                <td colspan="2"><span class="ng-binding"
-                    ng-if="hospital.hospital_data[0].isCreatedDateShow">{{hospital.hospital_data[0].created_at |
-                    date:'medium'}}</span>
-                  <span class="ng-binding" ng-if="!hospital.hospital_data[0].isCreatedDateShow">As Per The Latest
-                    Records</span>
-                </td>
-              </tr>
-
-            </tbody>
-          </table>
-          <div class="info-name-btn">
-            <div class="hospital hosptal-table info-row volanteer">
-              <label class="infolable">Volunteer Name: &nbsp;
-              </label>
-              <strong> {{hospital.Volunteer_Name}}</strong>
-
-            </div>
-            <div class="hosptal-table volanteer-btn desktop text-center">
-              <a ng-if="hospital.BitLink" href="{{hospital.BitLink}}" data-action="share/whatsapp/share"
-                target="_blank">
-                <img src="images/whatsapp-icon.png">
-                <span>Chat with Volunteer</span>
-              </a>
-              <a ng-if="!hospital.BitLink" href="">
-                <img src="images/whatsapp-icon.png">
-                <span>Chat with Volunteer</span>
-              </a>
-            </div>
-            <div class="hosptal-table volanteer-btn mobile text-center">
-              <a ng-if="hospital.BitLink" href="{{hospital.BitLink}}" data-action="share/whatsapp/share"
-                target="_blank">
-                <img src="images/whatsapp-icon.png">
-                <span>Chat with<br> Volunteer</span>
-              </a>
-              <a ng-if="!hospital.BitLink" href="">
-                <img src="images/whatsapp-icon.png">
-                <span>Chat with<br> Volunteer</span>
-              </a>
-            </div>
+        <div class="info-row vaccine-row">
+          <!-- <h3>Center Name: <span> {{cases.district_name}}</span>
+            <h3>Address: <span> {{cases.district_name}}</span> -->
+              <p>Center Name: <span> {{cases.district_name}}</span></p>
+               <p>Address: <span> {{cases.district_name}}</span></p>
+        </div>
+        <div class="info-table-covidhelp">
+          
+          <div class="info-row">
+            <label class="infolable"> Vaccine Name:</label>
+            <span> {{cases.yesterday_confirmed}}</span>
           </div>
-          <div class="hospital info-row info-feedback desktop">
-            <label class="infolable">Provide Feedback</label>
-            <div class="feedback-btns">
-              <button type="button" name="button"
-                ng-disabled="hospital.notAvailableButton || hospital.wrongNumberButton"
-                ng-click="resourcesAvailable(hospital.vendor_name)" class="btn btn-success res-btn"
-                ng-class="{'btn-focus':hospital.resourcesAvailableButton}">Resources Available</button>
-              <button type="button" name="button"
-                ng-disabled="hospital.resourcesAvailableButton || hospital.wrongNumberButton"
-                ng-click="notAvailable(hospital.vendor_name)" class="btn btn-warning not-av-btn"
-                ng-class="{'btn-focus':hospital.notAvailableButton}">Not Available</button>
-              <button type="button" name="button"
-                ng-disabled="hospital.resourcesAvailableButton || hospital.notAvailableButton"
-                ng-click="wrongNumber(hospital.vendor_name)" class="btn btn-danger wr-btn"
-                ng-class="{'btn-focus':hospital.wrongNumberButton}">Wrong Number</button>
-            </div>
+
+          <div class="info-row">
+            <label class="infolable">Min Age Limit:</label>
+            <span> {{cases.yesterday_confirmed}}</span>
           </div>
-          <div class="hospital info-row info-feedback mobile">
-            <label class="infolable">Provide Feedback</label>
-            <div class="feedback-btns">
-              <button type="button" name="button"
-                ng-disabled="hospital.notAvailableButton || hospital.wrongNumberButton"
-                ng-click="resourcesAvailable(hospital.vendor_name)" class="btn btn-success res-btn"
-                ng-class="{'btn-focus':hospital.resourcesAvailableButton}">Resources<br> Available</button>
-              <button type="button" name="button"
-                ng-disabled="hospital.resourcesAvailableButton || hospital.wrongNumberButton"
-                ng-click="notAvailable(hospital.vendor_name)" class="btn btn-warning not-av-btn"
-                ng-class="{'btn-focus':hospital.notAvailableButton}">Not<br> Available</button>
-              <button type="button" name="button"
-                ng-disabled="hospital.resourcesAvailableButton || hospital.notAvailableButton"
-                ng-click="wrongNumber(hospital.vendor_name)" class="btn btn-danger wr-btn"
-                ng-class="{'btn-focus':hospital.wrongNumberButton}">Wrong<br> Number</button>
-            </div>
+
+          <div class="info-row">
+            <label class="infolable">Date of Availability:</label>
+            <span> {{cases.yesterday_confirmed}}</span>
+          </div>
+
+          <div class="info-row">
+            <label class="infolable">Available Capacity -Dose 1:</label>
+            <span> {{cases.yesterday_confirmed}}</span>
+          </div>
+
+          <div class="info-row">
+            <label class="infolable">Available Capacity -Dose 2:</label>
+            <span> {{cases.yesterday_confirmed}}</span>
+          </div>
+
+          <div class="info-row">
+            <label class="infolable">Fees:</label>
+            <span> {{cases.yesterday_confirmed}}</span>
+          </div>
+
+          <div class="info-row">
+            <label class="infolable">Timings:</label>
+            <span> {{cases.yesterday_confirmed}}</span>
           </div>
         </div>
+        <hr>
+        
+         
+           
+    
+
+
       </div>
-      <h4 style="color:red;text-align: center" ng-show="(hospitalDetailData|filter:searchQuery).length==0">No
-        Hospital Found.</h4>
     </div>
 
+    <div ng-if="!loading" ng-loadings="loading"></div>
+    <div class="col-md-6" >
+      <div class="info-table-wrap">
+
+        <div class="info-row vaccine-row">
+          <!-- <h3>Center Name: <span> {{cases.district_name}}</span>
+            <h3>Address: <span> {{cases.district_name}}</span> -->
+              <p>Center Name: <span> {{cases.district_name}}</span></p>
+               <p>Address: <span> {{cases.district_name}}</span></p>
+        </div>
+        <div class="info-table-covidhelp">
+          
+          <div class="info-row">
+            <label class="infolable"> Vaccine Name:</label>
+            <span> {{cases.yesterday_confirmed}}</span>
+          </div>
+
+          <div class="info-row">
+            <label class="infolable">Min Age Limit:</label>
+            <span> {{cases.yesterday_confirmed}}</span>
+          </div>
+
+          <div class="info-row">
+            <label class="infolable">Date of Availability:</label>
+            <span> {{cases.yesterday_confirmed}}</span>
+          </div>
+
+          <div class="info-row">
+            <label class="infolable">Available Capacity -Dose 1:</label>
+            <span> {{cases.yesterday_confirmed}}</span>
+          </div>
+
+          <div class="info-row">
+            <label class="infolable">Available Capacity -Dose 2:</label>
+            <span> {{cases.yesterday_confirmed}}</span>
+          </div>
+
+          <div class="info-row">
+            <label class="infolable">Fees:</label>
+            <span> {{cases.yesterday_confirmed}}</span>
+          </div>
+
+          <div class="info-row">
+            <label class="infolable">Timings:</label>
+            <span> {{cases.yesterday_confirmed}}</span>
+          </div>
+        </div>
+        <hr>
+        
+         
+           
+    
 
 
-
-
-
+      </div>
+    </div>
 
 
   </div>
