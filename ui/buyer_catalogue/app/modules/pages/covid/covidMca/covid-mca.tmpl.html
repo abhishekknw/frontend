@@ -7,14 +7,28 @@
 <link href="css/smallscreen.css" rel="stylesheet" media="screen" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<div class="page-wrapper-mca">
+<!--<div class="page-wrapper-mca">
   <div class="logo-sec-mca">
     <img src="images/machadalo-logo.png" alt="logo" />
 
     <a href="index.html"
       ><img src="logo.png" alt="" title="" /><span> Customer</span> Assistant</a
     >
-  </div>
+  </div>-->
+  <div class="page-wrapper-mca">
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand">
+          <div class="logo-sec-mca">
+            <img src="images/machadalo-logo.png" alt="" title=""><span> Customer</span> Assistant
+          </div>
+        </a>
+      </div>
+  
+    </div>
+  </nav>
+</div>
 
   <div class="container dropdown">
     <div class="page-inner">
@@ -187,8 +201,13 @@
                       </select>
                     </div>
                   </div>
+                  
                 </div>
               </div>
+
+              <form>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
             </div>
 
             <div id="content2">
@@ -203,21 +222,28 @@
                     placeholder="Enter Pincode"
                   />
                 </div>
+                <!--<div contenteditable="true">
+                  Enter Pincode
+                </div>
+                <br>-->
+                <input type="text" id="username" name="username"><br>
+                <form>
+              <!--Input -->
+              
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
               </div>
             </div>
             <!--Search button-->
+            
           </div>
+          
         </div>
       </div>
-      <div>
-        <form class="form">
-          <button class="form_submit" type="button">Submit</button>
-        </form>
-      </div>
+     
     </div>
 
     <!--Filter-->
-    <div class="row">
     <div class="filteration">
       <div class="drop-down-list facility-name">
         Availability By <i class="fa fa-filter" aria-hidden="true"></i>
@@ -243,8 +269,7 @@
         </div>
       </div>
     </div>
-  </div>
-    <div class="row">
+
     <div class="">N/A means Data Not Available</div>
 
     <div ng-if="!loading" ng-loadings="loading"></div>
@@ -252,84 +277,83 @@
       <div class="info-table-wrap-mca">
         <div class="info-table-covidhelp">
           <div class="info-row-mca">
-            <label class="infolable-mca"> Vaccine Name:</label>
+            <label class="infolable-mca"> Supplier Name:</label>
             <span> {{cases.yesterday_confirmed}}</span>
           </div>
 
           <div class="info-row-mca">
-            <label class="infolable-mca">Min Age Limit:</label>
+            <label class="infolable-mca">Address:</label>
             <span> {{cases.yesterday_confirmed}}</span>
           </div>
 
           <div class="info-row-mca">
-            <label class="infolable-mca">Date of Availability:</label>
+            <label class="infolable-mca">Last Updated Time:</label>
             <span> {{cases.yesterday_confirmed}}</span>
           </div>
 
           <div class="info-row-mca">
-            <label class="infolable-mca">Available Capacity -Dose 1:</label>
+            <label class="infolable-mca">Source:</label>
             <span> {{cases.yesterday_confirmed}}</span>
           </div>
 
           <div class="info-row-mca">
-            <label class="infolable-mca">Available Capacity -Dose 2:</label>
+            <label class="infolable-mca">Contact Number:</label>
             <span> {{cases.yesterday_confirmed}}</span>
           </div>
 
           <div class="info-row-mca">
-            <label class="infolable-mca">Fees:</label>
+            <label class="infolable-mca">Email:</label>
             <span> {{cases.yesterday_confirmed}}</span>
           </div>
 
           <div class="info-row-mca">
-            <label class="infolable-mca">Timings:</label>
+            <label class="infolable-mca">Feedback:</label>
             <span> {{cases.yesterday_confirmed}}</span>
           </div>
         </div>
       </div>
     </div>
+
+    <div ng-if="!loading" ng-loadings="loading"></div>
     <div class="col-xs-6">
       <div class="info-table-wrap-mca">
         <div class="info-table-covidhelp">
           <div class="info-row-mca">
-            <label class="infolable-mca"> Vaccine Name:</label>
+            <label class="infolable-mca"> Supplier Name:</label>
             <span> {{cases.yesterday_confirmed}}</span>
           </div>
 
           <div class="info-row-mca">
-            <label class="infolable-mca">Min Age Limit:</label>
+            <label class="infolable-mca">Address:</label>
             <span> {{cases.yesterday_confirmed}}</span>
           </div>
 
           <div class="info-row-mca">
-            <label class="infolable-mca">Date of Availability:</label>
+            <label class="infolable-mca">Last Updated Time:</label>
             <span> {{cases.yesterday_confirmed}}</span>
           </div>
 
           <div class="info-row-mca">
-            <label class="infolable-mca">Available Capacity -Dose 1:</label>
+            <label class="infolable-mca">Source:</label>
             <span> {{cases.yesterday_confirmed}}</span>
           </div>
 
           <div class="info-row-mca">
-            <label class="infolable-mca">Available Capacity -Dose 2:</label>
+            <label class="infolable-mca">Contact Number:</label>
             <span> {{cases.yesterday_confirmed}}</span>
           </div>
 
           <div class="info-row-mca">
-            <label class="infolable-mca">Fees:</label>
+            <label class="infolable-mca">Email:</label>
             <span> {{cases.yesterday_confirmed}}</span>
           </div>
 
           <div class="info-row-mca">
-            <label class="infolable-mca">Timings:</label>
+            <label class="infolable-mca">Feedback:</label>
             <span> {{cases.yesterday_confirmed}}</span>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-   
   </div>
 </div>
