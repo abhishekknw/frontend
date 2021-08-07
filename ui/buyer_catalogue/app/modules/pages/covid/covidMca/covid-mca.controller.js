@@ -17,7 +17,33 @@ angular.module('machadaloPages').filter('replace', [function () {
 
 
 
+            let temp = "0";
+            let sum = 0;
+            let str = "1abc2yz60";
+            // read each character in input string
+            for (let i = 0; i < str.length; i++) {
+                let ch = str[i];
+                console.log('2222222',ch);
+                // if current character is a digit
+                console.log('33333333',ch);
+                if (!isNaN(String(ch) * 1)){
+                    temp += ch;
+                    console.log('333333330000000000',temp);
+                // if current character is an alphabet
+                }else {
+                    // increment sum by number found earlier
+                    console.log('4444444444',temp);
 
+                    // (if any)
+                    sum += parseInt(temp);
+                    console.log('5555555555',sum);
+       
+                    // reset temporary string to empty
+                    temp = "0";
+                }
+            }
+
+         console.log('1111111111111',sum + parseInt(temp));
 
 
 
