@@ -15,7 +15,7 @@
       ><img src="logo.png" alt="" title="" /><span> Customer</span> Assistant</a
     >
   </div>-->
-  <div class="page-wrapper-mca">
+  <div class="page-wrapper-mca ">
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -30,7 +30,7 @@
   </nav>
 </div>
 
-  <div class="container dropdown">
+  <div class="container dropdown mca-page">
     <div class="page-inner">
       <div class="top-select-option-mca">
         <div class="form-group">
@@ -248,7 +248,7 @@
       <div class="drop-down-list facility-name">
         Availability By <i class="fa fa-filter" aria-hidden="true"></i>
       </div>
-      <div class="col-md-1">
+      <div class="col-md-4 col-md-12">
         <div class="form-group">
           <select
             class="form-control"
@@ -270,90 +270,95 @@
       </div>
     </div>
 
-    <div class="">N/A means Data Not Available</div>
+    <div class="mca-subtitle">N/A means Data Not Available</div>
 
     <div ng-if="!loading" ng-loadings="loading"></div>
-    <div class="col-xs-6">
-      <div class="info-table-wrap-mca">
-        <div class="info-table-covidhelp">
-          <div class="info-row-mca">
-            <label class="infolable-mca"> Supplier Name:</label>
-            <span> {{cases.yesterday_confirmed}}</span>
-          </div>
 
-          <div class="info-row-mca">
-            <label class="infolable-mca">Address:</label>
-            <span> {{cases.yesterday_confirmed}}</span>
+    <div class="filter-card">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="info-table-wrap-mca">
+            <div class="info-table-covidhelp">
+              <div class="info-row-mca">
+                <label class="infolable-mca"> Supplier Name:</label>
+                <span> {{cases.yesterday_confirmed}}</span>
+              </div>
+    
+              <div class="info-row-mca">
+                <label class="infolable-mca">Address:</label>
+                <span> {{cases.yesterday_confirmed}}</span>
+              </div>
+    
+              <div class="info-row-mca">
+                <label class="infolable-mca">Last Updated Time:</label>
+                <span> {{cases.yesterday_confirmed}}</span>
+              </div>
+    
+              <div class="info-row-mca">
+                <label class="infolable-mca">Source:</label>
+                <span> {{cases.yesterday_confirmed}}</span>
+              </div>
+    
+              <div class="info-row-mca">
+                <label class="infolable-mca">Contact Number:</label>
+                <span> {{cases.yesterday_confirmed}}</span>
+              </div>
+    
+              <div class="info-row-mca">
+                <label class="infolable-mca">Email:</label>
+                <span> {{cases.yesterday_confirmed}}</span>
+              </div>
+    
+              <div class="info-row-mca">
+                <label class="infolable-mca">Feedback:</label>
+                <span> {{cases.yesterday_confirmed}}</span>
+              </div>
+            </div>
           </div>
-
-          <div class="info-row-mca">
-            <label class="infolable-mca">Last Updated Time:</label>
-            <span> {{cases.yesterday_confirmed}}</span>
-          </div>
-
-          <div class="info-row-mca">
-            <label class="infolable-mca">Source:</label>
-            <span> {{cases.yesterday_confirmed}}</span>
-          </div>
-
-          <div class="info-row-mca">
-            <label class="infolable-mca">Contact Number:</label>
-            <span> {{cases.yesterday_confirmed}}</span>
-          </div>
-
-          <div class="info-row-mca">
-            <label class="infolable-mca">Email:</label>
-            <span> {{cases.yesterday_confirmed}}</span>
-          </div>
-
-          <div class="info-row-mca">
-            <label class="infolable-mca">Feedback:</label>
-            <span> {{cases.yesterday_confirmed}}</span>
+        </div>
+        
+        <div class="col-sm-6">
+          <div class="info-table-wrap-mca">
+            <div class="info-table-covidhelp">
+              <div class="info-row-mca">
+                <label class="infolable-mca"> Supplier Name:</label>
+                <span> {{cases.yesterday_confirmed}}</span>
+              </div>
+    
+              <div class="info-row-mca">
+                <label class="infolable-mca">Address:</label>
+                <span> {{cases.yesterday_confirmed}}</span>
+              </div>
+    
+              <div class="info-row-mca">
+                <label class="infolable-mca">Last Updated Time:</label>
+                <span> {{cases.yesterday_confirmed}}</span>
+              </div>
+    
+              <div class="info-row-mca">
+                <label class="infolable-mca">Source:</label>
+                <span> {{cases.yesterday_confirmed}}</span>
+              </div>
+    
+              <div class="info-row-mca">
+                <label class="infolable-mca">Contact Number:</label>
+                <span> {{cases.yesterday_confirmed}}</span>
+              </div>
+    
+              <div class="info-row-mca">
+                <label class="infolable-mca">Email:</label>
+                <span> {{cases.yesterday_confirmed}}</span>
+              </div>
+    
+              <div class="info-row-mca">
+                <label class="infolable-mca">Feedback:</label>
+                <span> {{cases.yesterday_confirmed}}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div ng-if="!loading" ng-loadings="loading"></div>
-    <div class="col-xs-6">
-      <div class="info-table-wrap-mca">
-        <div class="info-table-covidhelp">
-          <div class="info-row-mca">
-            <label class="infolable-mca"> Supplier Name:</label>
-            <span> {{cases.yesterday_confirmed}}</span>
-          </div>
-
-          <div class="info-row-mca">
-            <label class="infolable-mca">Address:</label>
-            <span> {{cases.yesterday_confirmed}}</span>
-          </div>
-
-          <div class="info-row-mca">
-            <label class="infolable-mca">Last Updated Time:</label>
-            <span> {{cases.yesterday_confirmed}}</span>
-          </div>
-
-          <div class="info-row-mca">
-            <label class="infolable-mca">Source:</label>
-            <span> {{cases.yesterday_confirmed}}</span>
-          </div>
-
-          <div class="info-row-mca">
-            <label class="infolable-mca">Contact Number:</label>
-            <span> {{cases.yesterday_confirmed}}</span>
-          </div>
-
-          <div class="info-row-mca">
-            <label class="infolable-mca">Email:</label>
-            <span> {{cases.yesterday_confirmed}}</span>
-          </div>
-
-          <div class="info-row-mca">
-            <label class="infolable-mca">Feedback:</label>
-            <span> {{cases.yesterday_confirmed}}</span>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>

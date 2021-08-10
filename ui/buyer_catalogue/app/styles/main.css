@@ -1147,6 +1147,9 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	letter-spacing: 4px;
 	text-transform: uppercase;
 }
+.info-table-wrap-mca .info-table-covidhelp:last-child{
+	border: none;
+}
 .logo-sec-mca img{
 width: 80px;
 }
@@ -2286,6 +2289,23 @@ td.valenteer-name {
 	color:red
 }
 
+/* MCA Page*/
+.filteration .drop-down-list {
+    margin: 0;
+}
+.filteration {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+.mca-subtitle {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.mca-page{
+	margin-top: 60px;
+}
+
 @media only screen and (min-width:992px){
  .info-row.info-feedback{
  height: 95px;
@@ -2308,6 +2328,9 @@ td.valenteer-name {
  }
 }
 @media only screen and (max-width:767px){
+	.mca-page #sector-mca{
+		width: 100%;
+	}
 	#Category_id {
     width: 100%;
     margin: 0 auto;
@@ -2477,10 +2500,14 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	padding: 14px;
 	box-shadow: 2px 2px 20px rgba(0,0,0,0.1);
 	border-radius: 6px;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 .page-wrapper-mca {
 	padding: 5px;
+}
+.filter-card .col-xs-6 {
+    padding-right: 15px;
+    padding-left: 15px;
 }
 .logo-sec-mca{
 	text-align: left;
@@ -2523,6 +2550,9 @@ width: 80px;
 	margin: 0 auto;
 	margin-bottom: 15px;
 	margin-top:50px;
+}
+.top-select-option-mca #sector-mca{
+	margin-top: 15px;
 }
 .top-select-option .form-control{
 	height: 30px;
@@ -2658,7 +2688,7 @@ label.infolable-mca {
 .info-table-wrap-mca {
     box-shadow: 0 0 12px #ddd;
     border: 1px solid #ddd;
-	padding: 8px;
+	padding: 20px;
 	margin-bottom: 30px;
 	height: 100%;
 	width: 100%;
