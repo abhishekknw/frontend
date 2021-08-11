@@ -18,170 +18,52 @@
   }
 </style>-->
 <style>
-  @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,800");
+ 
+ #container {
+  display: flex;
+  flex-direction: column;
+}
 
-  @media (min-width: 500px) {
-    .col-sm-6 {
-      width: 50%;
-    }
-  }
-  html,
-  body {
-    height: 100%;
-    min-height: 18em;
-  }
+#sidebar {
+  flex: 0 0 auto;
+}
 
-  .frontend-side {
-    background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/74452/website-code.png");
-  }
+#content {
+  flex: 1 1 auto;
+  overflow: auto;
+}
 
-  .uiux-side {
-    background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/74452/website-post-its.png");
+@media (min-width: 49rem) {
+  #container {
+    margin-top: 55px;
+    flex-direction: row;
+    height: 100vh;
+    margin-left: 40px;
   }
+  #sidebar {
+    width: 44%;
+  }
+}
 
-  .split-pane {
-    padding-top: 1em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    height: 50%;
-    min-height: 9em;
-    font-size: 2em;
-    color: white;
-    font-family: "Open Sans", sans-serif;
-    font-weight: 300;
-  }
-  @media (min-width: 500px) {
-    .split-pane {
-      padding-top: 2em;
-      height: 100%;
-    }
-  }
-  .split-pane > div {
-    position: relative;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    text-align: center;
-  }
-  .split-pane > div .text-content {
-    line-height: 1.6em;
-    margin-bottom: 1em;
-  }
-  .split-pane > div .text-content .big {
-    font-size: 2em;
-  }
-  .split-pane > div img {
-    height: 1.3em;
-  }
-  @media (max-width: 500px) {
-    .split-pane > div img {
-      display: none;
-    }
-  }
-  .split-pane button,
-  .split-pane a.button {
-    font-family: "Open Sans", sans-serif;
-    font-weight: 800;
-    background: none;
-    border: 1px solid white;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    width: 15em;
-    padding: 0.7em;
-    font-size: 0.5em;
-    -moz-transition: all 0.2s ease-out;
-    -o-transition: all 0.2s ease-out;
-    -webkit-transition: all 0.2s ease-out;
-    transition: all 0.2s ease-out;
-    text-decoration: none;
-    color: white;
-    display: inline-block;
-    cursor: pointer;
-  }
-  .split-pane button:hover,
-  .split-pane a.button:hover {
-    text-decoration: none;
-    background-color: white;
-    border-color: white;
-    cursor: pointer;
-  }
-  .uiux-side.split-pane button:hover,
-  .split-pane a.button:hover {
-    color: violet;
-  }
-  .frontend-side.split-pane button:hover,
-  .split-pane a.button:hover {
-    color: blue;
-  }
+/* not important styles */
+* {
+  box-sizing: border-box;
+}
 
-  #split-pane-or {
-    font-size: 2em;
-    color: white;
-    font-family: "Open Sans", sans-serif;
-    text-align: center;
-    width: 100%;
-    position: absolute;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-  }
-  @media (max-width: 925px) {
-    #split-pane-or {
-      top: 15%;
-    }
-  }
-  #split-pane-or > div img {
-    height: 2.5em;
-  }
-  @media (max-width: 500px) {
-    #split-pane-or {
-      position: absolute;
-      top: 50px;
-    }
-    #split-pane-or > div img {
-      height: 2em;
-    }
-  }
-  @media (min-width: 500px) {
-    #split-pane-or {
-      font-size: 3em;
-    }
-  }
-  .big {
-    font-size: 2em;
-  }
 
-  #slogan {
-    position: absolute;
-    width: 100%;
-    z-index: 100;
-    text-align: center;
-    vertical-align: baseline;
-    top: 0.5em;
-    color: white;
-    font-family: "Open Sans", sans-serif;
-    font-size: 1.4em;
-  }
-  @media (min-width: 500px) {
-    #slogan {
-      top: 5%;
-      font-size: 1.8em;
-    }
-  }
-  #slogan img {
-    height: 0.7em;
-  }
-  .bold {
-    text-transform: uppercase;
-  }
-  .big {
-    font-weight: 800;
-  }
 
+main > * {
+  padding: 1rem;
+}
+
+#sidebar {
+  background-color: rgb(221, 180, 180);
+}
+
+#content {
+  background-color: rgb(205, 218, 223);
+  font-size: 1.25rem;
+}
   /*Dual Navbar Partition*/
   /*
 	Creating a flexbox navbar.
@@ -213,10 +95,10 @@
     display: flex;
     flex-flow: row nowrap;
     width: 100%;
-    max-width: 1500px;
+   
     justify-content: space-around;
-    align-items: center;
-    padding-right: 1100px ;
+    
+    padding-right: 900px;
   }
 
   /*
@@ -265,72 +147,87 @@
   <a class="navbar-brand-aisensy" href="#"></a>
   <div id="logo" class="me-auto" style="text-align: left">
     <!-- Uncomment below if you prefer to use a text logo -->
-    <img src="images/machadalo-logo.png" alt="" title="" />
+    <img src="images/machadalo-logo.png" alt="" title="Machadalo" />
     <!--<a href="index.html" class="scrollto"><img src="Machadalo_logo.jpeg" alt="" title=""></a>-->
   </div>
 
   <!--Dual Navbar Partition-->
+ 
   <div class="navbar">
     <div class="container-aisensy">
       <div class="left-container">
-        <ul class="nav-left">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
+        
       </div>
     </div>
   </div>
+
 </nav>
+
 <!--Vertical partition-->
 
 <div id="wrapper">
   <!-- Sidebar -->
   <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
+      <br />
+      <br />
+      
+      
       <li>
         <a href="#">
           <i
             class="fa fa-comments"
             aria-hidden="true"
-            style="font-size: x-large"
-          ></i>
-          <span>Live Chat</span>
+            style="font-size: large"
+            title="Live Chat"></i>
+          <span >Live Chat</span>
         </a>
       </li>
-      <br />
       <br />
       <li>
         <a href="#">
           <i
             class="fa fa-filter"
             aria-hidden="true"
-            style="font-size: x-large"
+            style="font-size: large"
+            title="Filter"
           ></i>
           <span>Filter</span>
         </a>
       </li>
       <br />
-      <br />
-
+     
       <li>
         <a href="#">
           <i
             class="fa fa-user-circle"
             aria-hidden="true"
-            style="font-size: x-large"
+            style="font-size: large"
+            title="Contacts"
           ></i>
           <span></span>
         </a>
       </li>
       <br />
+     
+      <li>
+        <a href="#">
+          <i
+          class="fa fa-file-text" aria-hidden="true"
+            style="font-size: large"
+            title="Template Messages"
+          ></i>
+        </a>
+      </li>
       <br />
+    
       <li>
         <a href="#">
           <i
             class="fa fa-history"
             aria-hidden="true"
-            style="font-size: x-large"
+            style="font-size: large"
+            title="History"
           ></i>
         </a>
       </li>
@@ -341,13 +238,7 @@
       <br />
       <br />
       <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-
+     
       <li>
         <a href="#">
           <i
@@ -362,31 +253,45 @@
   <!-- /#sidebar-wrapper -->
 
   <!--Partition-->
-  <div class="split-pane col-xs-12 col-sm-6 uiux-side">
-    <div>
-      <img src="https://bit.ly/BCR-design" />
-      <div class="text-content">
-        <div class="bold">You want</div>
-        <div class="big">UI/UX?</div>
+  <main id="container">
+    <div id="sidebar"><!-- Nav tabs -->
+      <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-8 col-lg-6">
+              <ul class="nav nav-tabs nav-justified" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#duck2" role="tab" aria-controls="duck2" aria-selected="true">Active</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" data-toggle="tab" href="#chicken2" role="tab" aria-controls="chicken2" aria-selected="false">Requested</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#kiwi2" role="tab" aria-controls="kiwi2" aria-selected="false">Intervened</a>
+                </li>
+                
+              </ul>
+              
+              <div class="tab-content mt-3">
+                <div class="tab-pane" id="duck2" role="tabpanel" aria-labelledby="duck-tab">
+                  Duck is the common name for a large number of species in the waterfowl family Anatidae which also includes swans and geese. Ducks are mostly aquatic birds, mostly smaller than the swans and geese, and may be found in both fresh water and sea water.             
+                </div>
+                <div class="tab-pane active" id="chicken2" role="tabpanel" aria-labelledby="chicken-tab">
+                  The chicken (Gallus gallus domesticus) is a type of domesticated fowl,The chicken (Gallus gallus domesticus) is a type of domesticated fowl,The chicken (Gallus gallus domesticus) is a type of domesticated fowl,The chicken (Gallus gallus domesticus) is a type of domesticated fowl,The chicken (Gallus gallus domesticus) is a type of domesticated fowl,The chicken (Gallus gallus domesticus) is a type of domesticated fowl, a subspecies of the red junglefhere are more chickens in the world than any other bird or domesticated fowl.     
+                </div>
+                <div class="tab-pane" id="kiwi2" role="tabpanel" aria-labelledby="kiwi-tab">
+                  Kiwi or kiwis are flightless birds native to New Zealand, in the genus Apteryx and family Apterygidae. Approximately the size of a domestic chicken, kiwi are by far the smallest living ratites (which also consist of ostriches, emus, rheas, and cassowaries), and lay the largest egg in relation to their body size of any species of bird in the world.            
+                </div>
+               
+              </div>
+              
+            </div>
+        </div>
       </div>
-      <button>SHOW ME THE DESIGN</button>
-    </div>
-  </div>
-  <div class="split-pane col-xs-12 col-sm-6 frontend-side">
-    <div>
-      <img src="https://bit.ly/bcr-dev" />
-      <div class="text-content">
-        <div class="bold">You want</div>
-        <div class="big">FRONT-END?</div>
-      </div>
-      <a class="button"> SHOW ME THE CODE </a>
-    </div>
-  </div>
-  <div id="split-pane-or">
-    <div>
-      <img
-        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/74452/bcr-white.png"
-      />
-    </div>
-  </div>
+
+
 </div>
+    
+      <div id="content">
+       
+</div>
+</main>
