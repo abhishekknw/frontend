@@ -42,6 +42,7 @@
             ng-change="changeWeb()"
             ng-model="selectedsector"
           >
+          <option value="" disabled>Select Sector</option>
             <option
               ng-repeat="sec in sectorArray track by $index"
               value="{{sec.name}}"
@@ -64,7 +65,7 @@
                   id="category"
                   ng-model="category_code"
                 >
-                  <option value="" disabled>Select category</option>
+                  <option value="" disabled> category</option>
                   <option
                     ng-repeat="category in categoryData track by $index"
                     value="{{category.category_code}}"
@@ -86,7 +87,7 @@
                   id="category"
                   ng-model="category_code"
                 >
-                  <option value="" disabled>Select category</option>
+                  <option value="" disabled>Subcategory</option>
                   <option
                     ng-repeat="category in categoryData track by $index"
                     value="{{category.category_code}}"
@@ -108,7 +109,7 @@
                   id="category"
                   ng-model="category_code"
                 >
-                  <option value="" disabled>Select category</option>
+                  <option value="" disabled>Subsub-category</option>
                   <option
                     ng-repeat="category in categoryData track by $index"
                     value="{{category.category_code}}"
@@ -127,13 +128,13 @@
     <div class="top-select-option-mca">
       <div class="form-group">
         <div class="tabs">
-          <input id="tab1" type="radio" name="tabs" />
+          <input id="tab1" type="radio" name="tabs" checked />
           <label for="tab1">Search By Area</label>
-          <input id="tab2" type="radio" name="tabs" checked />
+          <input id="tab2" type="radio" name="tabs" />
           <label for="tab2">Search by Pincode</label>
 
           <div class="content">
-            <div id="content1">
+            <div id="content1" style="padding-top: 20px;">
               <div class="second dropdown">
                 <div class="row">
                   <div class="col-xs-4">
@@ -146,7 +147,7 @@
                         id="category"
                         ng-model="category_code"
                       >
-                        <option value="" disabled>Select category</option>
+                        <option value="" disabled>State</option>
                         <option
                           ng-repeat="category in categoryData track by $index"
                           value="{{category.category_code}}"
@@ -168,7 +169,7 @@
                         id="category"
                         ng-model="category_code"
                       >
-                        <option value="" disabled>Select category</option>
+                        <option value="" disabled>City</option>
                         <option
                           ng-repeat="category in categoryData track by $index"
                           value="{{category.category_code}}"
@@ -190,7 +191,7 @@
                         id="category"
                         ng-model="category_code"
                       >
-                        <option value="" disabled>Select category</option>
+                        <option value="" disabled>Area</option>
                         <option
                           ng-repeat="category in categoryData track by $index"
                           value="{{category.category_code}}"
@@ -211,7 +212,7 @@
             </div>
 
             <div id="content2">
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <div class="form-group pincode">
                   <input
                     class="form-control"
@@ -226,7 +227,7 @@
                   Enter Pincode
                 </div>
                 <br>-->
-                <input type="text" id="username" name="username"><br>
+                <br>
                 <form>
               <!--Input -->
               
