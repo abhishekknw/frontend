@@ -2499,144 +2499,176 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 
 
 /*aisensy*/
-#menuToggle
-{
-  display: block;
-  position: relative;
-  top: 30px;
-  left: 30px;
-  
-  z-index: 1;
-  
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-#menuToggle a
-{
-  text-decoration: none;
-  color: #232323;
-  
-  transition: color 0.3s ease;
-}
-
-#menuToggle a:hover
-{
-  color: tomato;
-}
 
 
-#menuToggle input
-{
-  display: block;
-  width: 40px;
-  height: 32px;
-  position: absolute;
-  top: -7px;
-  left: -5px;
-  
-  cursor: pointer;
-  
-  opacity: 0; /* hide this */
-  z-index: 2; /* and place it over the hamburger */
-  
-  -webkit-touch-callout: none;
+.navbar-right{
+	padding:  0px 10px;
+	position:relative;
+	display:inline-block;
+	top:15px;
+}
+.navbar-right li{
+	margin-right: 30px;
+	color: rgba(20, 1, 1, 0.904);
+}
+.navbar-right li:hover{
+	color: rgb(201, 67, 67);
+}
+@media screen and (max-width: 560px) {
+	.navbar-right li{
+		float: left;
+	
+		position: relative;
+		height:100%;
+        width:100%;
+        z-index :-1;
+		padding: 10px;
+        display: block;
+	}
+
+	.navbar-right li:hover{
+		color: rgb(201, 67, 67);
+	}
+
 }
 
-/*
- * Just a quick hamburger
- */
-#menuToggle span
-{
-  display: block;
-  width: 33px;
-  height: 4px;
-  margin-bottom: 5px;
-  position: relative;
+/*tabs-aisensy*/
+
+.tab {
+	margin-top: 20px;
+	padding: 0 20px;
+  }
+ /* #content1 input {
+	display:none;
+  }*/
+  .tab input[type="radio"]{
+	display: none; 
+  }
+  .tab label {
+	display: inline-block;
+	padding: 6px 0 6px 0;
+	margin: 0 -2px;
+	width: 33%; 
+	border: 1px solid #000;
+	text-align: center;
+	margin-bottom: 10px;;
+  }
+  .tab label:hover {
+	cursor: pointer;
+	/*background-color: #8a130f;*/
+  }
+
+  .tab input:checked + label {
+	border: 1px solid #000;
+	border-width: 1px 1px 1px 1px;
+	background-color: #8a130f;
+  }
+  .tab #tab-1:checked ~ .content #content-1,
+  .tab #tab-2:checked ~ .content #content-2,
+  .tab #tab-3:checked ~ .content #content-3
+ {
+	display:block;
+  }
+  .tab .content > div {
+	display: none;
+	text-align:center;
+	/*height: 192px;*/
+	overflow: auto;
+  }
+/*active chat list*/
+.profile-image {
+	width: 50px;
+	height: 50px;
+	border-radius: 40px;
+  }
   
-  background: #cdcdcd;
-  border-radius: 3px;
   
-  z-index: 1;
+  .search-box {
+	background: gray;
+    padding: 20px 13px;
+  }
+	
+	.search-box	.input-wrapper {
+		background: white;
+	  border-radius: 40px;
+	}
+	.search-box i {
+		color: blue;
+		 
+		vertical-align: middle;
+	  }
+
   
-  transform-origin: 4px 0px;
+  input {
+	border: none;
+	border-radius: 30px;
+	width: 80%; 
+	height: 25px;
+}
   
-  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-              opacity 0.55s ease;
-}
-
-#menuToggle span:first-child
-{
-  transform-origin: 0% 0%;
-}
-
-#menuToggle span:nth-last-child(2)
-{
-  transform-origin: 0% 100%;
-}
-
-/* 
- * Transform all the slices of hamburger
- * into a crossmark.
- */
-#menuToggle input:checked ~ span
-{
-  opacity: 1;
-  transform: rotate(45deg) translate(-2px, -1px);
-  background: #232323;
-}
-
-/*
- * But let's hide the middle one.
- */
-#menuToggle input:checked ~ span:nth-last-child(3)
-{
-  opacity: 0;
-  transform: rotate(0deg) scale(0.2, 0.2);
-}
-
-/*
- * Ohyeah and the last one should go the other direction
- */
-#menuToggle input:checked ~ span:nth-last-child(2)
-{
-  transform: rotate(-45deg) translate(0, -1px);
-}
-
-/*
- * Make this absolute positioned
- * at the top left of the screen
- */
-#menu
-{
-  position: absolute;
-  width: 300px;
-  margin: -100px 0 0 -50px;
-  padding: 50px;
-  padding-top: 125px;
+	input ::placeholder {
+	  color: #e3e3e3;
+	  font-weight: 300;
+	  margin-left: 20px;
+	}
   
-  background: #ededed;
-  list-style-type: none;
-  -webkit-font-smoothing: antialiased;
-  /* to stop flickering of text in safari */
+	input:focus {
+	  outline: none;
+	}
   
-  transform-origin: 0% 0%;
-  transform: translate(-100%, 0);
+  .friend-drawer {
+	padding: 10px 15px;
+	display: flex;
+	vertical-align: baseline;
+	background: #fff;
+	transition: .3s ease;
+	background: #eee;
+  }
+	
+	/*&--grey {
+	  background: #eee;
+	}*/
+	
+	.friend-drawer.text {
+	  margin-left: 12px;
+	  width: 70%;
+	}
+	  
+	  .friend-drawer  h6 {
+		margin-top: 6px;
+		margin-bottom: 0;
+		margin-left: 15px;
+		font-weight: 800;
+		font-size: 15px;
+	  }
+	  
+	  .friend-drawer  p {
+		margin: 0;
+		margin-left: 15px;
+		font-weight: 800;
+		font-size: 15px;
+	  }
+
+	
+	.time {
+	  color: black;
+	  text-align: right;
+	  font-weight: 300;
+	}
+	
+	.friend-drawer--onhover:hover {
+	  background: blue;
+	  cursor: pointer;
+	}
+	  
+	  .friend-drawer--onhover  p,
+	  h6,time
+	   {
+		color: black !important;
+		font-weight: 300;
+  }
   
-  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
-}
-
-#menu li
-{
-  padding: 10px 0;
-  font-size: 22px;
-}
-
-/*
- * And let's slide it in from the left
- */
-#menuToggle input:checked ~ ul
-{
-  transform: none;
-}
+  hr {
+	margin: 5px auto;
+	width: 100%;
+  }

@@ -5,34 +5,168 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-<!--NAVBAR START-->
-<nav role="navigation">
-  <div id="menuToggle">
-
-
-    <input type="checkbox" />
-
-
-
-    <span></span>
-    <span></span>
-    <span></span>
-
-
-    <ul id="menu">
-      <a href="#">
-        <li class="fa fa-user-circle" aria-hidden="true" style="font-size: large"> Contact</li>
+<!-- navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+        aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand">
+        <div class="logo-sec-mca">
+          <img src="images/machadalo-logo.png" alt="" title="">
+        </div>
       </a>
-      <a href="#">
-        <li class="fa fa-history" aria-hidden="true" style="font-size: large"> History</li>
-      </a>
-      <a href="#">
-        <li class="fa fa-file-text" aria-hidden="true" style="font-size: large"> Templates</li>
-      </a>
-      <a href="#">
-        <li class="fa fa-filter" aria-hidden="true" style="font-size: large">Filter</li>
-      </a>
+    </div>
 
-    </ul>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <a href="#">
+          <li class="fa fa-user-circle" aria-hidden="true" style="font-size: large"> Contact</li>
+        </a>
+        <a href="#">
+          <li class="fa fa-history" aria-hidden="true" style="font-size: large"> History</li>
+        </a>
+        <a href="#">
+          <li class="fa fa-file-text" aria-hidden="true" style="font-size: large"> Templates</li>
+        </a>
+        <a href="#">
+          <li class="fa fa-filter" aria-hidden="true" style="font-size: large"> Filter</li>
+        </a>
+      </ul>
+    </div>
+    <!--/.nav-collapse -->
   </div>
-</nav>
+</nav><!-- /navbar -->
+
+<div class="container dropdown mca-page">
+  <!--tabs-->
+  <div class="top-select-option-mca">
+    <div class="form-group">
+      <div class="tab">
+        <input id="tab-1" type="radio" name="tab" checked />
+        <label for="tab-1">Active</label>
+        <input id="tab-2" type="radio" name="tab" />
+        <label for="tab-2">Requested</label>
+        <input id="tab-3" type="radio" name="tab" />
+        <label for="tab-3">Intervened</label>
+
+
+        <div class="content">
+          <div id="content-1" style="padding-top: 20px;">
+            <div class="second dropdown">
+              <div class="row">
+                <div class="col-xs-4">
+                  <div class="form-group">
+                    <!--category dropdown-->
+                    <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                      <option value="" disabled>State</option>
+                      <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                        style="text-transform: capitalize">
+                        {{}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-xs-4">
+                  <div class="form-group">
+                    <!--category dropdown-->
+                    <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                      <option value="" disabled>City</option>
+                      <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                        style="text-transform: capitalize">
+                        {{}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-xs-4">
+                  <div class="form-group">
+                    <!--category dropdown-->
+                    <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                      <option value="" disabled>Area</option>
+                      <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                        style="text-transform: capitalize">
+                        {{}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+          <!--end of first tab content-->
+
+
+          <div id="content-2">
+            <div class="row no-gutters">
+              <div class="col-md-12 col-xs-12 border-right">
+
+                <div class="search-box">
+                  <div class="input-wrapper">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <input placeholder="Search here" type="text">
+                  </div>
+                </div>
+                <div class="friend-drawer friend-drawer--onhover">
+                  <img class="profile-image"
+                    src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg" alt="">
+                  <div class="text">
+                    <h6>Aathira</h6>&nbsp;&nbsp;<span class="time text-muted small">13:21</span>
+                    <p class="text-muted">Hoooo</p>
+                  </div>
+                  
+                </div>
+                <hr>
+                <div class="friend-drawer friend-drawer--onhover">
+                  <img class="profile-image"
+                    src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg" alt="">
+                  <div class="text">
+                    <h6>Divya</h6>
+                    <p class="text-muted">Wow...</p> &nbsp;&nbsp;<span class="time text-muted small">00:32</span>
+                  </div>
+                 
+                </div>
+                <hr>
+                <div class="friend-drawer friend-drawer--onhover ">
+                  <img class="profile-image"
+                    src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png" alt="">
+                  <div class="text">
+                    <h6>Priyanka</h6>
+                    <p class="text-muted">Hoooo</p>
+                  </div>
+                  <span class="time text-muted small">13:21</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--end of second tab content-->
+          <div id="content-3">
+            <div class="col-md-12">
+              <div class="form-group pincode">
+                <input class="form-control" type="text" name="pincode" id="pinId" ng-model="pinCode"
+                  placeholder="Enter Pincode" />
+              </div>
+              <br>
+            </div>
+          </div>
+
+
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <!--/tabs-->
+
+</div>
