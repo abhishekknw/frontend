@@ -60,7 +60,7 @@
           <div id="content-1" style="padding-top: 20px;">
             <div class="second dropdown">
               <div class="row">
-                <div class="col-xs-4">
+                <div class="col-xs-12">
                   <div class="form-group">
                     <!--category dropdown-->
                     <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
@@ -73,31 +73,6 @@
                   </div>
                 </div>
 
-                <div class="col-xs-4">
-                  <div class="form-group">
-                    <!--category dropdown-->
-                    <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
-                      <option value="" disabled>City</option>
-                      <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
-                        style="text-transform: capitalize">
-                        {{}}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="col-xs-4">
-                  <div class="form-group">
-                    <!--category dropdown-->
-                    <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
-                      <option value="" disabled>Area</option>
-                      <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
-                        style="text-transform: capitalize">
-                        {{}}
-                      </option>
-                    </select>
-                  </div>
-                </div>
 
               </div>
             </div>
@@ -116,34 +91,46 @@
                     <input placeholder="Search here" type="text">
                   </div>
                 </div>
-                <div class="friend-drawer friend-drawer--onhover">
-                  <img class="profile-image"
-                    src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg" alt="">
-                  <div class="text">
-                    <h6>Aathira</h6>&nbsp;&nbsp;<span class="time text-muted small">13:21</span>
-                    <p class="text-muted">Hoooo</p>
+                <div class="fields-box">
+                  <div class="friend-drawer friend-drawer--onhover">
+                    <img class="profile-image"
+                      src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg" alt="">
+                    <div class="text">
+                      <h6>Aathira</h6>&nbsp;&nbsp;<span class="time text-muted small">13:21</span>
+                      <p class="text-muted">Hoooo</p>
+                    </div>
+
                   </div>
-                  
-                </div>
-                <hr>
-                <div class="friend-drawer friend-drawer--onhover">
-                  <img class="profile-image"
-                    src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg" alt="">
-                  <div class="text">
-                    <h6>Divya</h6>
-                    <p class="text-muted">Wow...</p> &nbsp;&nbsp;<span class="time text-muted small">00:32</span>
+                  <hr>
+                  <div class="friend-drawer friend-drawer--onhover">
+                    <img class="profile-image"
+                      src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg" alt="">
+                    <div class="text">
+                      <h6>Divya</h6>
+                      <p class="text-muted">Wow...</p> &nbsp;&nbsp;<span class="time text-muted small">00:32</span>
+                    </div>
+
                   </div>
-                 
-                </div>
-                <hr>
-                <div class="friend-drawer friend-drawer--onhover ">
-                  <img class="profile-image"
-                    src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png" alt="">
-                  <div class="text">
-                    <h6>Priyanka</h6>
-                    <p class="text-muted">Hoooo</p>
+                  <hr>
+                  <div class="friend-drawer friend-drawer--onhover ">
+                    <img class="profile-image"
+                      src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png" alt="">
+                    <div class="text">
+                      <h6>Priyanka</h6>
+                      <p class="text-muted">Hoooo</p>
+                    </div>
+                    <span class="time text-muted small">13:21</span>
                   </div>
-                  <span class="time text-muted small">13:21</span>
+                  <hr>
+                  <div class="friend-drawer friend-drawer--onhover ">
+                    <img class="profile-image"
+                      src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png" alt="">
+                    <div class="text">
+                      <h6>Priyanka</h6>
+                      <p class="text-muted">Hoooo</p>
+                    </div>
+                    <span class="time text-muted small">13:21</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -169,4 +156,23 @@
   </div>
   <!--/tabs-->
 
+</div>
+
+<div class="container dropdown mca-page">
+  <div class="top-select-option-mca">
+    <div class="form-group">
+      <div class="profile">
+        <div class="friend-drawer-status friend-drawer--onhover">
+          <img class="status-image center" src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
+            alt=""><br>
+            <div class="text">
+              <h6>Aathira</h6>
+              <p class="text-muted">9426861887</p>
+        </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </div>

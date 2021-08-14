@@ -2548,10 +2548,10 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	display: inline-block;
 	padding: 6px 0 6px 0;
 	margin: 0 -2px;
-	width: 33%; 
+	width: 33.33%; 
 	border: 1px solid #000;
 	text-align: center;
-	margin-bottom: 10px;;
+	margin-bottom: 10px;
   }
   .tab label:hover {
 	cursor: pointer;
@@ -2603,7 +2603,7 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	border: none;
 	border-radius: 30px;
 	width: 80%; 
-	height: 25px;
+	height: 35px;
 }
   
 	input ::placeholder {
@@ -2672,3 +2672,62 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	margin: 5px auto;
 	width: 100%;
   }
+
+ .fields-box{
+	 margin: 0;
+	 padding: 0;
+	 height:200px;
+	 overflow-y: scroll;
+	 overflow-x: hidden;
+ }
+ /*status*/
+ .status-image {
+	width: 50px;
+	height: 50px;
+	border-radius: 40px;
+
+  }
+  @media screen {
+	.status-image {
+		width: 50px;
+		height: 50px;
+		border-radius: 40px;
+		align-items: center;
+		transform: translate(300%,-50%);
+	  }
+	  .friend-drawer-status  h6 {
+		margin-bottom: 0;
+		margin-left: 150px;
+		font-weight: 800;
+		font-size: 15px;
+		margin-top: -10px;
+	  }
+	  
+	  .friend-drawer-status  p {
+		margin-bottom: 0;
+		margin-left: 135px;
+		font-weight: 800;
+		font-size: 15px;
+
+	  }
+  }
+
+
+  .friend-drawer-status.text {
+	margin-left: 12px;
+	width: 70%;
+  }
+	
+	.friend-drawer-status  h6 {
+	  margin-top: 6px;
+	  margin-bottom: 0;
+	  margin-left: 15px;
+	  font-weight: 800;
+	  font-size: 15px;
+	}
+	
+	.friend-drawer-status  p {
+	  margin-left: 15px;
+	  font-weight: 800;
+	  font-size: 15px;
+	}
