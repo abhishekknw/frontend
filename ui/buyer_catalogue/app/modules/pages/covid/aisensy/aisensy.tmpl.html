@@ -45,9 +45,9 @@
 
 <div class="container dropdown mca-page">
   <!--tabs-->
-  <div class="top-select-option-mca">
+  <div class="top-select-option-aisensy">
     <div class="form-group">
-      <div class="tab">
+      <div class="tab-aisensy">
         <input id="tab-1" type="radio" name="tab" checked />
         <label for="tab-1">Active</label>
         <input id="tab-2" type="radio" name="tab" />
@@ -57,32 +57,8 @@
 
 
         <div class="content">
-          <div id="content-1" style="padding-top: 20px;">
-            <div class="second dropdown">
-              <div class="row">
-                <div class="col-xs-12">
-                  <div class="form-group">
-                    <!--category dropdown-->
-                    <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
-                      <option value="" disabled>State</option>
-                      <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
-                        style="text-transform: capitalize">
-                        {{}}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-
-              </div>
-            </div>
-
-          </div>
-          <!--end of first tab content-->
-
-
-          <div id="content-2">
-            <div class="row no-gutters">
+          <div id="content-1">
+            <div class="row-aisensy no-gutters">
               <div class="col-md-12 col-xs-12 border-right">
 
                 <div class="search-box">
@@ -96,9 +72,11 @@
                     <img class="profile-image"
                       src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg" alt="">
                     <div class="text">
-                      <h6>Aathira</h6>&nbsp;&nbsp;<span class="time text-muted small">13:21</span>
-                      <p class="text-muted">Hoooo</p>
+                      <h6>Aathira</h6>
+                      <p class="text-muted">HI! What's Up?</p>
                     </div>
+                      <span class="time text-muted small">13:21</span>
+                     
 
                   </div>
                   <hr>
@@ -106,9 +84,10 @@
                     <img class="profile-image"
                       src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg" alt="">
                     <div class="text">
-                      <h6>Divya</h6>
-                      <p class="text-muted">Wow...</p> &nbsp;&nbsp;<span class="time text-muted small">00:32</span>
+                      <h6>Divyaaa</h6>
+                      <p class="text-muted">HI! What's Up?</p> 
                     </div>
+                      <span class="time text-muted small">00:32</span>
 
                   </div>
                   <hr>
@@ -116,8 +95,8 @@
                     <img class="profile-image"
                       src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png" alt="">
                     <div class="text">
-                      <h6>Priyanka</h6>
-                      <p class="text-muted">Hoooo</p>
+                      <h6>Priyank</h6>
+                      <p class="text-muted">HI! What's Up?</p>
                     </div>
                     <span class="time text-muted small">13:21</span>
                   </div>
@@ -126,24 +105,135 @@
                     <img class="profile-image"
                       src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png" alt="">
                     <div class="text">
-                      <h6>Priyanka</h6>
-                      <p class="text-muted">Hoooo</p>
+                      <h6>Samyaak</h6>
+                      <p class="text-muted">HI! What's Up?</p>
                     </div>
                     <span class="time text-muted small">13:21</span>
                   </div>
                 </div>
               </div>
             </div>
+
+          </div>
+          <!--end of first tab content-->
+
+
+          <div id="content-2">
+            <div class="row-aisensy no-gutters">
+              <div class="col-md-12 col-xs-12 border-right">
+
+                <div class="search-box">
+                  <div class="input-wrapper">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <input placeholder="Search here" type="text">
+                  </div>
+                </div>
+                <div class="fields-box">
+                  <div class="friend-drawer friend-drawer--onhover">
+                    <img class="profile-image"
+                      src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg" alt="">
+                    <div class="text">
+                      <h6>Aathira</h6>
+                      <p class="text-muted">HI! What's Up?</p>
+                    </div>
+                      <span class="time text-muted small">13:21</span>
+                     
+
+                  </div>
+                  <hr>
+                  <div class="friend-drawer friend-drawer--onhover">
+                    <img class="profile-image"
+                      src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg" alt="">
+                    <div class="text">
+                      <h6>Divyaaa</h6>
+                      <p class="text-muted">HI! What's Up?</p> 
+                    </div>
+                      <span class="time text-muted small">00:32</span>
+
+                  </div>
+                  <hr>
+                  <div class="friend-drawer friend-drawer--onhover ">
+                    <img class="profile-image"
+                      src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png" alt="">
+                    <div class="text">
+                      <h6>Priyank</h6>
+                      <p class="text-muted">HI! What's Up?</p>
+                    </div>
+                    <span class="time text-muted small">13:21</span>
+                  </div>
+                  <hr>
+                  <div class="friend-drawer friend-drawer--onhover ">
+                    <img class="profile-image"
+                      src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png" alt="">
+                    <div class="text">
+                      <h6>Samyaak</h6>
+                      <p class="text-muted">HI! What's Up?</p>
+                    </div>
+                    <span class="time text-muted small">13:21</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
           <!--end of second tab content-->
           <div id="content-3">
-            <div class="col-md-12">
-              <div class="form-group pincode">
-                <input class="form-control" type="text" name="pincode" id="pinId" ng-model="pinCode"
-                  placeholder="Enter Pincode" />
+            <div class="row-aisensy no-gutters">
+              <div class="col-md-12 col-xs-12 border-right">
+
+                <div class="search-box">
+                  <div class="input-wrapper">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <input placeholder="Search here" type="text">
+                  </div>
+                </div>
+                <div class="fields-box">
+                  <div class="friend-drawer friend-drawer--onhover">
+                    <img class="profile-image"
+                      src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg" alt="">
+                    <div class="text">
+                      <h6>Aathira</h6>
+                      <p class="text-muted">HI! What's Up?</p>
+                    </div>
+                      <span class="time text-muted small">13:21</span>
+                     
+
+                  </div>
+                  <hr>
+                  <div class="friend-drawer friend-drawer--onhover">
+                    <img class="profile-image"
+                      src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg" alt="">
+                    <div class="text">
+                      <h6>Divyaaa</h6>
+                      <p class="text-muted">HI! What's Up?</p> 
+                    </div>
+                      <span class="time text-muted small">00:32</span>
+
+                  </div>
+                  <hr>
+                  <div class="friend-drawer friend-drawer--onhover ">
+                    <img class="profile-image"
+                      src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png" alt="">
+                    <div class="text">
+                      <h6>Priyank</h6>
+                      <p class="text-muted">HI! What's Up?</p>
+                    </div>
+                    <span class="time text-muted small">13:21</span>
+                  </div>
+                  <hr>
+                  <div class="friend-drawer friend-drawer--onhover ">
+                    <img class="profile-image"
+                      src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png" alt="">
+                    <div class="text">
+                      <h6>Samyaak</h6>
+                      <p class="text-muted">HI! What's Up?</p>
+                    </div>
+                    <span class="time text-muted small">13:21</span>
+                  </div>
+                </div>
               </div>
-              <br>
             </div>
+
           </div>
 
 
@@ -158,7 +248,7 @@
 
 </div>
 
-<div class="container dropdown mca-page">
+<div class="container dropdown aisensy-page">
   <div class="top-select-option-mca">
     <div class="form-group">
       <div class="profile">
@@ -169,7 +259,70 @@
               <h6>Aathira</h6>
               <p class="text-muted">9426861887</p>
         </div>
+        <hr>
+        <div class="filter-card">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="info-table-wrap-mca">
+                <div class="info-table-covidhelp">
+                  <div class="info-row-mca">
+                    <label class="infolable-mca"> Status:</label>
+                    <span> {{cases.yesterday_confirmed}}</span>
+                  </div>
+      
+                  <div class="info-row-mca">
+                    <label class="infolable-mca">Last Active:</label>
+                    <span> {{cases.yesterday_confirmed}}</span>
+                  </div>
+      
+                  <div class="info-row-mca">
+                    <label class="infolable-mca">Template Messages:</label>
+                    <span> {{cases.yesterday_confirmed}}</span>
+                  </div>
+      
+                  <div class="info-row-mca">
+                    <label class="infolable-mca">Session Messages:</label>
+                    <span> {{cases.yesterday_confirmed}}</span>
+                  </div>
+      
+                  <div class="info-row-mca">
+                    <label class="infolable-mca">Unsolved Queries:</label>
+                    <span> {{cases.yesterday_confirmed}}</span>
+                  </div>
+      
+                  <div class="info-row-mca">
+                    <label class="infolable-mca">Source:</label>
+                    <span> {{cases.yesterday_confirmed}}</span>
+                  </div>
+      
+                  <div class="info-row-mca">
+                    <label class="infolable-mca">Lead State:</label>
+                    <span> {{cases.yesterday_confirmed}}</span>
+                  </div>
 
+                  <div class="info-row-mca">
+                    <label class="infolable-mca">First Message:</label>
+                    <span> {{cases.yesterday_confirmed}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <select class="form-control" name="sector" id="sector-aisensy" ng-change="changeWeb()" ng-model="selectedsector">
+          <option value="" disabled>Template Messages</option>
+          <option ng-repeat="sec in sectorArray track by $index" value="{{sec.name}}"
+            style="text-transform: capitalize">
+            {{cat.name}}
+          </option>
+        </select>
+        <select class="form-control" name="sector" id="sector-aisensy" ng-change="changeWeb()" ng-model="selectedsector">
+          <option value="" disabled>Customer Journey</option>
+          <option ng-repeat="sec in sectorArray track by $index" value="{{sec.name}}"
+            style="text-transform: capitalize">
+            {{cat.name}}
+          </option>
+        </select>
         </div>
       </div>
     </div>
