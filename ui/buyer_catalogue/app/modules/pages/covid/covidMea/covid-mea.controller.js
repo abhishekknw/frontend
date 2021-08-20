@@ -398,6 +398,14 @@ $scope.selectedToc=value;
             }
 
 
+            $scope.selectedLink = function(value){
+              console.log('1111111111111111111111111111',value);
+              $scope.youtubeEmbedUrl = value['Embed URL'];
+              console.log('222222222222222222222', $scope.youtubeEmbedUrl);
+
+            }
+
+
 
 
 
