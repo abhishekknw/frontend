@@ -24,5 +24,43 @@ let hoverEnter = index =>{
   nowVisible.classList.add('visible');
 }
 
+
+// AIsensy controller
+$scope.getActiveUser = function () {
+           alert("API call");
+    AuthService.getAllActiveUserData()
+    
+        .then(function onSuccess(response) {
+            console.log(response)
+            
+            $scope.activeUserData=response.data.data ; 
+            console.log($scope.activeUserData)
+        }).catch(function onError(response) {
+            console.log(response);
+        })
+}
+
+$scope.userDetail = function (phone_number) {
+    alert(phone_number);
+//     let param = {
+//         phoneNumber=""
+//     }
+//      AuthService.getAllUserDetailData(param)
+
+//  .then(function onSuccess(response) {
+//      console.log(response)
+     
+//      $scope.phoneNumber=response.data.data.phone_number; 
+//     //  console.log($scope.activeUserData)
+//  }).catch(function onError(response) {
+//      console.log(response);
+//  })
+}
+
+
+
+
         }]);
+
+
 

@@ -468,7 +468,27 @@ angular.module('Authentication')
                   });
             };
 
-            
+            authService.getAllActiveUserData = function () {
+               let url = "v0/ui/b2c-bot/active_chats/" 
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+
+            authService.getAllUserDetailData = function (param) {
+               let url = "v0/ui/b2c-bot/get-user-details/?phone_number="+param.phone_number 
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
 
             
 

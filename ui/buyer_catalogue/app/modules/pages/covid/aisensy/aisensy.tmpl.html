@@ -6,6 +6,8 @@
 
 
 <!-- navbar -->
+<div ng-init="getActiveUser()">
+
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -67,19 +69,26 @@
                     <input placeholder="Search here" type="text">
                   </div>
                 </div>
+
+
                 <div class="fields-box">
-                  <div class="friend-drawer friend-drawer--onhover">
+                  <div ng-repeat="user in activeUserData track by $index">
+                  <div class="friend-drawer friend-drawer--onhover" ng-click="userDetail(user.phone_number)">
                     <img class="profile-image"
                       src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg" alt="">
                     <div class="text">
-                      <h6>Aathira</h6>
-                      <p class="text-muted">HI! What's Up?</p>
+                      <h6>{{user.whatsapp_name}}</h6>
+                      <p class="text-muted">{{user.country_code}}{{user.phone_number}}</p>
                     </div>
-                    <span class="time text-muted small">13:21</span>
+                    <span class="time text-muted small">{{user.last_message_timestamp}}</span>
 
 
                   </div>
+                
                   <hr>
+                </div>
+
+                <!--
                   <div class="friend-drawer friend-drawer--onhover">
                     <img class="profile-image"
                       src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg" alt="">
@@ -109,7 +118,7 @@
                       <p class="text-muted">HI! What's Up?</p>
                     </div>
                     <span class="time text-muted small">13:21</span>
-                  </div>
+                  </div>-->
                 </div>
               </div>
             </div>
@@ -437,3 +446,5 @@
       </div>
     </div>
   </div>
+  
+</div>
