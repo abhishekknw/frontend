@@ -2657,7 +2657,7 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	  color: black;
 	  text-align: right;
 	  font-weight: 300;
-	  margin-left:10pc;
+	  float: right;
 	}
 	
 	.friend-drawer--onhover:hover {
@@ -2809,7 +2809,7 @@ ul.timeline > li:before {
 .phone-chat {
  
   border-radius: 10px;
-  width: 340px;
+  width: auto;
   height: 500px;
   left: 0;
   right: 0;
@@ -2850,13 +2850,23 @@ ul.timeline > li:before {
   overflow: auto;
   padding: 10px;
 }
-.message {
+.message-1 {
+	border-radius: 7px;
+	background-color: #e0e0e0;
+	padding: 5px;
+	font: 15px "Roboto", Segoe UI, sans-serif;
+	width: calc(100% + -50px);
+	margin-bottom: 10px;
+	float: left;
+  }
+.message-2 {
   border-radius: 7px;
   background-color: #aede2e;
   padding: 5px;
   font: 15px "Roboto", Segoe UI, sans-serif;
   width: calc(100% + -50px);
   margin-bottom: 10px;
+  float: right;
 }
 .icon-back {
   width: 40px;
@@ -2876,20 +2886,28 @@ ul.timeline > li:before {
 .icon-back:active {
   background-color: #ffffff94;
 }
-.message:nth-child(odd) {
+/* .message:nth-child(odd) {
   float: left;
   background-color: #e0e0e0;
 }
 .message:nth-child(even) {
   float: right;
-}
-.message span {
+  background-color: #aede2e;
+} */
+.message-1 span {
   color: #000000cc;
   font-size: 11.5px;
   font-weight: 600;
   float: right;
   margin-top: 5px;
 }
+.message-2 span {
+	color: #000000cc;
+	font-size: 11.5px;
+	font-weight: 600;
+	float: right;
+	margin-top: 5px;
+  }
 .chat::-webkit-scrollbar {
   width: 10px;
   height: 10px;

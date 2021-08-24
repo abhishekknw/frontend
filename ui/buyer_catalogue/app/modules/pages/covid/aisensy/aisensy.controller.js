@@ -43,7 +43,9 @@ $scope.getActiveUser = function () {
 $scope.userDetail = function (value) {
     alert("Phone Number");
     let param = {
-        phoneNumber:value
+        phoneNumber:value,
+        start:0,
+        end:10
     }
      AuthService.getAllUserDetailData(param)
 
@@ -54,8 +56,36 @@ $scope.userDetail = function (value) {
  }).catch(function onError(response) {
      console.log(response);
  })
+ AuthService.getAllUserChatData(param)
+
+ .then(function onSuccess(response) {
+     console.log(response)
+     
+     $scope.userChatData=response.data.data; 
+     console.log("1234", $scope.userChatData) 
+ }).catch(function onError(response) {
+     console.log(response);
+ })
 }
 
+$scope.userChat = function (value) {
+    alert("Chat");
+    let param = {
+        phoneNumber:value,
+        start:value,
+        end:value
+    }
+     AuthService.getAllUserChatData(param)
+
+ .then(function onSuccess(response) {
+     console.log(response)
+     
+     $scope.userChatData=response.data.data;
+     
+ }).catch(function onError(response) {
+     console.log(response);
+ })
+}
 
 
 

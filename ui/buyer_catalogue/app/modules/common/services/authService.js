@@ -490,6 +490,17 @@ angular.module('Authentication')
                   });
             };
 
+            authService.getAllUserChatData = function (param) {
+               let url = "v0/ui/b2c-bot/get-user-conversation/?phone_number="+param. phoneNumber+ "&start=" + param.start + "&end=" + param.end;
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+
             
 
             return authService;
