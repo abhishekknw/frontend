@@ -480,7 +480,7 @@ angular.module('Authentication')
             };
 
             authService.getAllUserDetailData = function (param) {
-               let url = "v0/ui/b2c-bot/get-user-details/?phone_number="+param.phone_number 
+               let url = "v0/ui/b2c-bot/get-user-details/?phone_number="+param.phoneNumber 
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response

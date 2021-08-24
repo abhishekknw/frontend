@@ -257,7 +257,7 @@
 
 </div>
 
-<div class="container dropdown aisensy-page">
+<div class="container dropdown aisensy-page" ng-if="userDetailData">
   <div class="top-select-option-mca">
     <div class="form-group">
       <div class="profile">
@@ -265,41 +265,55 @@
           <img class="status-image center" src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
             alt=""><br>
           <div class="text">
-            <h6>Aathira</h6>
-            <p class="text-muted">9426861887</p>
+            <h6>{{userDetailData.whatsapp_name}}</h6>
+            <p class="text-muted">{{userDetailData.country_code}}{{userDetailData.phone_number}}</p>
           </div>
           <hr>
-          <div class="filter-card">
+
+
+          <!-- Status -->
+          <div class="filter-card" >
             <div class="row">
               <div class="col-sm-12">
                 <div class="info-table-wrap-mca">
                   <div class="info-table-covidhelp">
                     <div class="info-row-mca">
-                      <label class="infolable-mca"> Status:</label>
-                      <span> {{cases.yesterday_confirmed}}</span>
+                      <label class="infolable-mca"> Session ID:</label>
+                      <span> {{userDetailData.session_id}}</span>
+                    </div>
+
+                    <div class="info-row-mca">
+                      <label class="infolable-mca">User Type:</label>
+                      <span> {{userDetailData.user_type}}</span>
+                    </div>
+
+                    <div class="info-row-mca">
+                      <label class="infolable-mca">Created At:</label>
+                      <span> {{userDetailData.created_at}}</span>
                     </div>
 
                     <div class="info-row-mca">
                       <label class="infolable-mca">Last Active:</label>
-                      <span> {{cases.yesterday_confirmed}}</span>
+                      <span> {{userDetailData.updated_at}}</span>
                     </div>
 
+<!-- 
                     <div class="info-row-mca">
                       <label class="infolable-mca">Template Messages:</label>
                       <span> {{cases.yesterday_confirmed}}</span>
-                    </div>
+                    </div> -->
 
-                    <div class="info-row-mca">
+                    <!-- <div class="info-row-mca">
                       <label class="infolable-mca">Session Messages:</label>
                       <span> {{cases.yesterday_confirmed}}</span>
-                    </div>
+                    </div> -->
 
-                    <div class="info-row-mca">
+                    <!-- <div class="info-row-mca">
                       <label class="infolable-mca">Unsolved Queries:</label>
                       <span> {{cases.yesterday_confirmed}}</span>
-                    </div>
+                    </div> -->
 
-                    <div class="info-row-mca">
+                    <!-- <div class="info-row-mca">
                       <label class="infolable-mca">Source:</label>
                       <span> {{cases.yesterday_confirmed}}</span>
                     </div>
@@ -312,7 +326,7 @@
                     <div class="info-row-mca">
                       <label class="infolable-mca">First Message:</label>
                       <span> {{cases.yesterday_confirmed}}</span>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -320,6 +334,8 @@
 
 
           </div>
+          <!-- Status End -->
+
           <!-- <select class="form-control" name="sector" id="sector-aisensy" ng-change="changeWeb()" ng-model="selectedsector">
           <option value="" disabled>Template Messages</option>
           <option ng-repeat="sec in sectorArray track by $index" value="{{sec.name}}"

@@ -40,21 +40,20 @@ $scope.getActiveUser = function () {
         })
 }
 
-$scope.userDetail = function (phone_number) {
-    alert(phone_number);
-//     let param = {
-//         phoneNumber=""
-//     }
-//      AuthService.getAllUserDetailData(param)
+$scope.userDetail = function (value) {
+    alert("Phone Number");
+    let param = {
+        phoneNumber:value
+    }
+     AuthService.getAllUserDetailData(param)
 
-//  .then(function onSuccess(response) {
-//      console.log(response)
+ .then(function onSuccess(response) {
+     console.log(response)
      
-//      $scope.phoneNumber=response.data.data.phone_number; 
-//     //  console.log($scope.activeUserData)
-//  }).catch(function onError(response) {
-//      console.log(response);
-//  })
+     $scope.userDetailData=response.data.data; 
+ }).catch(function onError(response) {
+     console.log(response);
+ })
 }
 
 
