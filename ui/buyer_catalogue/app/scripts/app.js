@@ -66,7 +66,8 @@ angular
     'angularMoment',
     'daterangepicker',
     'ui.select',
-    'ngSanitize'
+    'ngSanitize',
+  
   ])
   .config(function ($routeProvider, $stateProvider, $urlRouterProvider, $httpProvider, $qProvider, $locationProvider, cfpLoadingBarProvider) {
     $stateProvider

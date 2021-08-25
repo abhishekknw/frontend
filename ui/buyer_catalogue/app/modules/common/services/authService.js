@@ -238,7 +238,7 @@ angular.module('Authentication')
                   });
             };
 
-            authService.getAllBeds = function (param,api) {
+            authService.getAllBeds = function (param, api) {
                // let url = "v0/ui/covid-bot/get-hospital-data"
                // if (param.state) {
                //    url = "v0/ui/covid-bot/get-hospital-data/?state=" + param.state;
@@ -416,8 +416,8 @@ angular.module('Authentication')
 
             authService.getCovidCases = function (param) {
                let url = 'v0/ui/covid-bot/get-covid-cases/?state_code=' + param.state_code;
-               if(param.district_code && param.district_code !='all'){
-                 url = 'v0/ui/covid-bot/get-covid-cases/?state_code=' + param.state_code + '&district_code=' + param.district_code
+               if (param.district_code && param.district_code != 'all') {
+                  url = 'v0/ui/covid-bot/get-covid-cases/?state_code=' + param.state_code + '&district_code=' + param.district_code
                }
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
@@ -438,7 +438,7 @@ angular.module('Authentication')
             };
 
             authService.getAllConsulation = function (param) {
-               return $http.get(apiHost + 'v0/ui/covid-bot/doctor-data/?state=' + param.state )
+               return $http.get(apiHost + 'v0/ui/covid-bot/doctor-data/?state=' + param.state)
                   .then(function onSuccess(response) {
                      return response
                   })
@@ -468,8 +468,13 @@ angular.module('Authentication')
                   });
             };
 
-            authService.getAllActiveUserData = function () {
-               let url = "v0/ui/b2c-bot/active_chats/" 
+         
+        
+
+            authService.getAllMeaData = function (param) {
+               console.log(param);
+               let url = "v0/ui/b2c-bot/Mea_data/?type_of_customer=" + param.type_of_customer + "&category=" + param.category + "&subcategory=" + param.subcategory + "&subsubcategory=" + param.subsubcategory;
+
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -478,6 +483,17 @@ angular.module('Authentication')
                      return response
                   });
             };
+
+            authService.getAllActiveUserData = function () {
+               let url = "v0/ui/b2c-bot/active_chats/"
+               return $http.get(apiHost + url)
+               .then(function onSuccess(response) {
+               return response
+               })
+               .catch(function onError(response) {
+               return response
+               });
+               };
 
             authService.getAllUserDetailData = function (param) {
                let url = "v0/ui/b2c-bot/get-user-details/?phone_number="+param.phoneNumber 
@@ -501,7 +517,18 @@ angular.module('Authentication')
                   });
             };
 
-            
+            authService.getAllMeaData = function (param) {
+               console.log(param);
+               let url = "v0/ui/b2c-bot/Mea_data/?type_of_customer=" + param.type_of_customer + "&category=" + param.category + "&subcategory=" + param.subcategory + "&subsubcategory=" + param.subsubcategory;
+               return $http.get(apiHost + url)
+               .then(function onSuccess(response) {
+               return response
+               })
+               .catch(function onError(response) {
+               return response
+               });
+               };
+
 
             return authService;
          }])
