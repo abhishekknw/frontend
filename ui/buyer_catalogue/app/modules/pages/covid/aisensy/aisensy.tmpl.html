@@ -106,12 +106,12 @@
                         class="friend-drawer friend-drawer--onhover"
                         ng-click="userDetail(user.phone_number)"
                       >
-                        <img
+                        <!-- <img
                           class="profile-image"
                           src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
                           alt=""
-                        />
-                          <!-- <div class="profile-image">{{user.whatsapp_name |firstlater}}</div> -->
+                        /> -->
+                        <div class="profile-image">{{user.whatsapp_name |firstlater}}</div>
                         <div class="text">
                           <h6>{{user.whatsapp_name}}</h6>
                           <p class="text-muted">
@@ -308,11 +308,12 @@
         <div class="form-group">
           <div class="profile">
             <div class="friend-drawer-status friend-drawer--onhover">
-              <img
+              <!-- <img
                 class="status-image center"
                 src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
                 alt=""
-              /><br />
+              /><br /> -->
+              <div class="status-image">{{userDetailData.whatsapp_name |firstlater}}</div>
               <div class="text">
                 <h6>{{userDetailData.whatsapp_name}}</h6>
                 <p class="text-muted">

@@ -2580,6 +2580,9 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	width: 50px;
 	height: 50px;
 	border-radius: 40px;
+	background-color: white;
+	font-weight: normal;
+	font-size: xx-large;
   }
   
   
@@ -2630,16 +2633,18 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	}*/
 	
 	.friend-drawer.text {
-	  margin-left: 12px;
+	  /* margin-left: 12px; */
 	  width: 70%;
 	}
 	  
 	  .friend-drawer  h6 {
-		margin-top: 6px;
+		/* margin-top: 6px; */
 		margin-bottom: 0;
 		margin-left: 15px;
 		font-weight: 800;
 		font-size: 15px;
+		text-align: left;
+
 	  }
 	  .text-muted p{
 		  margin-left:20px;
@@ -2650,6 +2655,7 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 		margin-left: 15px;
 		font-weight: 800;
 		font-size: 15px;
+		text-align: left;
 	  }
 
 	
@@ -2695,10 +2701,13 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
   @media screen {
 	.status-image {
 		width: 50px;
-		height: 50px;
-		border-radius: 40px;
-		align-items: center;
-		transform: translate(300%,-50%);
+    	height: 50px;
+    	border-radius: 40px;
+    	/* align-items: center; */
+    	background-color: lightgrey;
+    	/* transform: translate(280%,-20%); */
+    	font-size: xx-large;
+    	text-align: center;
 	  }
 	  .friend-drawer-status  h6 {
 		margin-bottom: 0;
@@ -2724,14 +2733,14 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	.friend-drawer-status  h6 {
 	  margin-top: 6px;
 	  margin-bottom: 0;
-	  margin-left: 150px;
+	  margin-left: 13px;
 	  font-weight: 800;
 	  font-size: 15px;
 	}
 	
 	.friend-drawer-status  p {
 	  font-weight: 800;
-	  margin-left: 135px;
+	  margin-left: 13px;
 	  font-size: 15px;
 	}
 
@@ -3017,6 +3026,13 @@ position: relative;
 }
 .navbar {
 	padding: 0;
+  }
+  .navbar-collapse.in
+  {
+	overflow-y: hidden;
+	/* overflow-x: hidden; */
+	margin-bottom: 10px;
+	/* display: block; */
   }
   
   .navbar ul {
