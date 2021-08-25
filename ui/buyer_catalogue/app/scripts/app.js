@@ -66,7 +66,8 @@ angular
     'angularMoment',
     'daterangepicker',
     'ui.select',
-    'ngSanitize'
+    'ngSanitize',
+  
   ])
   .config(function ($routeProvider, $stateProvider, $urlRouterProvider, $httpProvider, $qProvider, $locationProvider, cfpLoadingBarProvider) {
     $stateProvider
@@ -254,6 +255,18 @@ angular
         templateUrl: 'modules/pages/covid/covidMea/covid-mea.tmpl.html',
       })
 
+      .state('covidMca', {
+        url: '/mca',
+        controller: 'covidMcaCtrl',
+        templateUrl: 'modules/pages/covid/covidMca/covid-mca.tmpl.html',
+      })
+      
+      .state('aisensy', {
+        url: '/aisensy',
+        controller: 'aisensyCtrl',
+        templateUrl: 'modules/pages/covid/aisensy/aisensy.tmpl.html',
+      })
+      
       .state('covidVaccineCenter', {
         url: '/vaccinecenters/',
         controller: 'covidVaccineCentersCtrl',
@@ -733,8 +746,12 @@ angular
             $location.path("/doctors");
           }  else if (url && url[1] && url[1].indexOf("mea") != -1) {
             $location.path("/mea");
+          }  else if (url && url[1] && url[1].indexOf("mca") != -1) {
+            $location.path("/mca");
+          }  else if (url && url[1] && url[1].indexOf("aisensy") != -1) {
+            $location.path("/aisensy");
           } 
-
+          
           // else if (url[1] == "hospitalbeds") {
           //   $location.path("/hospitalbeds/");
           // } else if (url[1] == "cylinders") {
@@ -799,6 +816,10 @@ angular
             $location.path("/doctors");
           } else if (url && url[1] && url[1].indexOf("mea") != -1) {
             $location.path("/mea");
+          }  else if (url && url[1] && url[1].indexOf("mca") != -1) {
+            $location.path("/mca");
+          } else if (url && url[1] && url[1].indexOf("aisensy") != -1) {
+            $location.path("/aisensy");
           } 
 
           //  else if (url[1] == "hospitalbeds") {

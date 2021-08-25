@@ -1,0 +1,283 @@
+<link rel="stylesheet" href="modules/pages/login/login.tmpl.css" />
+<link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css" />
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<link href="css/smallscreen.css" rel="stylesheet" media="screen" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!--<div class="page-wrapper-mca">
+  <div class="logo-sec-mca">
+    <img src="images/machadalo-logo.png" alt="logo" />
+
+    <a href="index.html"
+      ><img src="logo.png" alt="" title="" /><span> Customer</span> Assistant</a
+    >
+  </div>-->
+<div class="page-wrapper-mca ">
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand">
+          <div class="logo-sec-mca">
+            <img src="images/machadalo-logo.png" alt="" title=""><span> Customer</span> Assistant
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </nav>
+</div>
+
+<div class="container dropdown mca-page">
+  <div class="page-inner">
+    <div class="top-select-option-mca">
+      <div class="form-group">
+        <!--For sector dropdown-->
+        <select class="form-control" name="sector" id="sector-mca" ng-change="changeWeb()" ng-model="selectedsector">
+          <option value="" disabled>Select Sector</option>
+          <option ng-repeat="sec in sectorArray track by $index" value="{{sec.name}}"
+            style="text-transform: capitalize">
+            {{cat.name}}
+          </option>
+        </select>
+      </div>
+
+      <div class="second dropdown">
+        <div class="row">
+          <div class="col-xs-4">
+            <div class="form-group">
+              <!--category dropdown-->
+              <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                <option value="" disabled> category</option>
+                <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                  style="text-transform: capitalize">
+                  {{}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-xs-4">
+            <div class="form-group">
+              <!--category dropdown-->
+              <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                <option value="" disabled>Subcategory</option>
+                <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                  style="text-transform: capitalize">
+                  {{}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-xs-4">
+            <div class="form-group">
+              <!--category dropdown-->
+              <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                <option value="" disabled>Subsub-category</option>
+                <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                  style="text-transform: capitalize">
+                  {{}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="top-select-option-mca">
+    <div class="form-group">
+      <div class="tabs">
+        <input id="tab1" type="radio" name="tabs" checked />
+        <label for="tab1">Search By Area</label>
+        <input id="tab2" type="radio" name="tabs" />
+        <label for="tab2">Search by Pincode</label>
+
+        <div class="content">
+          <div id="content1" style="padding-top: 20px;">
+            <div class="second dropdown">
+              <div class="row">
+                <div class="col-xs-4">
+                  <div class="form-group">
+                    <!--category dropdown-->
+                    <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                      <option value="" disabled>State</option>
+                      <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                        style="text-transform: capitalize">
+                        {{}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-xs-4">
+                  <div class="form-group">
+                    <!--category dropdown-->
+                    <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                      <option value="" disabled>City</option>
+                      <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                        style="text-transform: capitalize">
+                        {{}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-xs-4">
+                  <div class="form-group">
+                    <!--category dropdown-->
+                    <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                      <option value="" disabled>Area</option>
+                      <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                        style="text-transform: capitalize">
+                        {{}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <form>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+
+          <div id="content2">
+            <div class="col-md-12">
+              <div class="form-group pincode">
+                <input class="form-control" type="text" name="pincode" id="pinId" ng-model="pinCode"
+                  placeholder="Enter Pincode" />
+              </div>
+              <!--<div contenteditable="true">
+                  Enter Pincode
+                </div>
+                <br>-->
+              <br>
+              <form>
+                <!--Input -->
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
+          <!--Search button-->
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!--Filter-->
+  <div class="filteration">
+    <div class="drop-down-list facility-name">
+      Availability By <i class="fa fa-filter" aria-hidden="true"></i>
+    </div>
+    <div class="col-md-4 col-md-12">
+      <div class="form-group">
+        <select class="form-control" name="" ng-change="" id="filter_id" ng-model="">
+          <option value="" disabled>Select Filter/Category</option>
+          <option ng-repeat="" value="{{}}" style="text-transform: capitalize">
+            {{availableBeds.resourceType |replace: '_':' '}}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="mca-subtitle">N/A means Data Not Available</div>
+
+  <div ng-if="!loading" ng-loadings="loading"></div>
+
+  <div class="filter-card">
+    <div class="row">
+      <div class="col-sm-6 col-xs-6">
+        <div class="info-table-wrap-mca">
+          <div class="info-table-covidhelp">
+            <div class="info-row-mca">
+              <label class="infolable-mca"> Supplier Name:</label>
+              <span> {{cases.yesterday_confirmed}}</span>
+            </div>
+
+            <div class="info-row-mca">
+              <label class="infolable-mca">Address:</label>
+              <span> {{cases.yesterday_confirmed}}</span>
+            </div>
+
+            <div class="info-row-mca">
+              <label class="infolable-mca">Last Updated Time:</label>
+              <span> {{cases.yesterday_confirmed}}</span>
+            </div>
+
+            <div class="info-row-mca">
+              <label class="infolable-mca">Source:</label>
+              <span> {{cases.yesterday_confirmed}}</span>
+            </div>
+
+            <div class="info-row-mca">
+              <label class="infolable-mca">Contact Number:</label>
+              <span> {{cases.yesterday_confirmed}}</span>
+            </div>
+
+            <div class="info-row-mca">
+              <label class="infolable-mca">Email:</label>
+              <span> {{cases.yesterday_confirmed}}</span>
+            </div>
+
+            <div class="info-row-mca">
+              <label class="infolable-mca">Feedback:</label>
+              <span> {{cases.yesterday_confirmed}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xs-6">
+        <div class="info-table-wrap-mca">
+          <div class="info-table-covidhelp">
+            <div class="info-row-mca">
+              <label class="infolable-mca"> Supplier Name:</label>
+              <span> {{cases.yesterday_confirmed}}</span>
+            </div>
+
+            <div class="info-row-mca">
+              <label class="infolable-mca">Address:</label>
+              <span> {{cases.yesterday_confirmed}}</span>
+            </div>
+
+            <div class="info-row-mca">
+              <label class="infolable-mca">Last Updated Time:</label>
+              <span> {{cases.yesterday_confirmed}}</span>
+            </div>
+
+            <div class="info-row-mca">
+              <label class="infolable-mca">Source:</label>
+              <span> {{cases.yesterday_confirmed}}</span>
+            </div>
+
+            <div class="info-row-mca">
+              <label class="infolable-mca">Contact Number:</label>
+              <span> {{cases.yesterday_confirmed}}</span>
+            </div>
+
+            <div class="info-row-mca">
+              <label class="infolable-mca">Email:</label>
+              <span> {{cases.yesterday_confirmed}}</span>
+            </div>
+
+            <div class="info-row-mca">
+              <label class="infolable-mca">Feedback:</label>
+              <span> {{cases.yesterday_confirmed}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>

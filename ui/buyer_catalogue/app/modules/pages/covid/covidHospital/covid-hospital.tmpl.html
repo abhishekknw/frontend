@@ -227,6 +227,8 @@
             <div class="natext" ng-show="(hospitalDetailData|filter:searchQuery).length > 0">
               N/A means Data Not Available
             </div>
+
+            
             <div ng-if="!loading" ng-loadings="loading"></div>
             <div class="row" ng-if="loading">
               <!-- <div class="col-md-6" ng-repeat="hospital in hospitalDetailData | filter : searchQuery | orderBy:'-vendor_name'"> -->
