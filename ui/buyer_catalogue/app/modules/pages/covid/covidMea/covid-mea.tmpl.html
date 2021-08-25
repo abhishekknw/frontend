@@ -3,92 +3,84 @@
 <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 <link href="css/smallscreen.css" rel="stylesheet" media="screen">
 
-<!--Navigation bar-->
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-        aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand">
-        <div class="logo-sec-mea">
-          <img src="images/machadalo-logo.png" alt="" title=""><span> Education</span> Assistant
-        </div>
-      </a>
-    </div>
-    
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-            aria-expanded="false">Type of Customer <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Toddler</a></li>
-            <li><a href="#">Class 1</a></li>
-            <li><a href="#">Class 2</a></li>
-            <li><a href="#">Class 3</a></li>
-            <li><a href="#">Class 4</a></li>
-            <li><a href="#">Class 5</a></li>
-            <li><a href="#">Class 6</a></li>
-            <li><a href="#">Class 7</a></li>
-            <li><a href="#">Class 8</a></li>
-            <li><a href="#">Class 9</a></li>
-            <li><a href="#">Class 10</a></li>
-            <li><a href="#">Class 11</a></li>
-            <li><a href="#">Class 12</a></li>
-            <li><a href="#">Professional</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-            aria-expanded="false">Category <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li class="dropdown-header">Nav header</li>
-            <li><a href="#">Separated link</a></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
+<div ng-init="getToc()">
 
-  </div>
-</nav>
+  <!--Navigation bar-->
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+          aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand">
+          <div class="logo-sec-mea">
+            <img src="images/machadalo-logo.png" alt="" title=""><span> Education</span> Assistant
+          </div>
+        </a>
+      </div>
+
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+              aria-expanded="false">Type of Customer <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <!--<li><a href="#">Toddler</a></li>
+              <li><a href="#">Class 1</a></li>
+              <li><a href="#">Class 2</a></li>
+              <li><a href="#">Class 3</a></li>
+              <li><a href="#">Class 4</a></li>
+              <li><a href="#">Class 5</a></li>
+              <li><a href="#">Class 6</a></li>
+              <li><a href="#">Class 7</a></li>
+              <li><a href="#">Class 8</a></li>
+              <li><a href="#">Class 9</a></li>
+              <li><a href="#">Class 10</a></li>
+              <li><a href="#">Class 11</a></li>
+              <li><a href="#">Class 12</a></li>
+              <li><a href="#">Professional</a></li>-->
+
+              <!-- <select class="form-control" ng-change="getHeaderCategory(selectedTocHeader)"
+                name="Type_of_Customer_Header" id="headertoc_mea" ng-model="selectedTocHeader">
+                <option ng-repeat="toc in typeofCustomer track by $index" value="{{toc.type_of_customer}}"
+                  style="text-transform: capitalize;">
+                  {{toc.type_of_customer}}
+                </option>
+              </select> -->
+
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+              aria-expanded="false">Category <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <!--<li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li role="separator" class="divider"></li>
+              <li class="dropdown-header">Nav header</li>
+              <li><a href="#">Separated link</a></li>
+              <li><a href="#">One more separated link</a></li>-->
+
+              <!-- <select class="form-control" ng-change="getHeaderSubCategory(selectedcategoryHeader)" name="CategoryHeader"
+                id="headercategory_mea" ng-model="selectedcategoryHeader">
+                <option ng-repeat="category in categoryArrayHeader track by $index" value="{{category.category_name}}"
+                  style="text-transform: capitalize;">
+                  {{category.category_name}}
+                </option>
+              </select> -->
 
 
-</div>
-
-
-<!--end navigation -->
-<div class="container">
-  <div class="container_mea">
-    <div class="page-inner">
-      <div class="top-select-option">
-        <div class="second dropdown">
-          <div class="row">
-            <div class="col-xs-4">
-              <div class="form-group">
-                <!--category dropdown-->
-                <select class="form-control" ng-change="" name="category" id="toc_mea" ng-model="category_code">
-                  <option value="" disabled>
-                    Type of Customer
-                  </option>
-                  <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
-                    style="text-transform: capitalize;">
-                    {{}}
-                  </option>
-                </select>
-              </div>
-            </div>
+            </ul>
+          </li>
+        </ul>
+      </div>
 
     </div>
   </nav>
