@@ -76,8 +76,8 @@
                   </div>
 
                   <div class="fields-box">
-                    <div ng-repeat="user in activeUserData track by $index">
-                      <div ng-if="!showChatModule" class="friend-drawer friend-drawer--onhover"
+                    <div ng-if="!showChatModule" ng-repeat="user in activeUserData track by $index">
+                      <div  class="friend-drawer friend-drawer--onhover"
                         ng-click="userDetail(user.phone_number)">
                         <!-- <img
                           class="profile-image"
@@ -95,47 +95,49 @@
                       </div>
 
 
-                      <!-- Start Phone Chat-->
-                      <div class="phone-chat" ng-if="showChatModule">
-                        <div class="screen-phone">
-                          <div class="nav-phone">
-                            <div class="icon-back">
-                              <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
-                                ng-click="hideChatModule()">
-                                <path fill="#fff"
-                                  d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
-                              </svg>
-                            </div>
-                            <span class="username">{{userChatData.whatsapp_name}}</span><br />
-                            <span class="tel-number">{{userChatData.country_code}}{{userChatData.phone_number}}</span>
-                          </div>
-                          <div class="chat">
-                            <div ng-repeat="chat in userChatData.payload track by $index">
-                              <div class="message-1" ng-if="chat.sender=='user'">
-                                {{chat.content.text}}
-                                <span>{{chat.timestamp | date : format : timezone}}</span>
-                              </div>
+                      
 
-                              <div class="message-2" ng-if="chat.sender=='bot'">
-                                {{chat.content.text}}
-                                <span>{{chat.timestamp | date : format : timezone}}</span>
-                              </div>
+                      <hr />
+                    </div>
+
+                    <!-- Start Phone Chat-->
+                    <div class="phone-chat" ng-if="showChatModule">
+                      <div class="screen-phone">
+                        <div class="nav-phone">
+                          <div class="icon-back">
+                            <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
+                              ng-click="hideChatModule()">
+                              <path fill="#fff"
+                                d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
+                            </svg>
+                          </div>
+                          <span class="username">{{userChatData.whatsapp_name}}</span><br />
+                          <span class="tel-number">{{userChatData.country_code}}{{userChatData.phone_number}}</span>
+                        </div>
+                        <div class="chat">
+                          <div ng-repeat="chat in userChatData.payload track by $index">
+                            <div class="message-1" ng-if="chat.sender=='user'">
+                              {{chat.content.text}}
+                              <span>{{chat.timestamp | date : format : timezone}}</span>
                             </div>
-                            <div class="input">
-                              <input type="text" placeholder="Write message" />
+
+                            <div class="message-2" ng-if="chat.sender=='bot'">
+                              {{chat.content.text}}
+                              <span>{{chat.timestamp | date : format : timezone}}</span>
                             </div>
-                            <div class="btn-send">
-                              <svg viewBox="0 0 74.433 60.908" width="25" height="25"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill="#fff"
-                                  d="M 0 0 L 74.22 26.562 L 0.246 60.712 L 7.608 34.535 L 27.831 28.259 L 6.91 25.469 L 0 0 Z" />
-                              </svg>
-                            </div>
+                          </div>
+                          <div class="input">
+                            <input type="text" placeholder="Write message" />
+                          </div>
+                          <div class="btn-send">
+                            <svg viewBox="0 0 74.433 60.908" width="25" height="25"
+                              xmlns="http://www.w3.org/2000/svg">
+                              <path fill="#fff"
+                                d="M 0 0 L 74.22 26.562 L 0.246 60.712 L 7.608 34.535 L 27.831 28.259 L 6.91 25.469 L 0 0 Z" />
+                            </svg>
                           </div>
                         </div>
                       </div>
-
-                      <hr />
                     </div>
 
                     <!--
