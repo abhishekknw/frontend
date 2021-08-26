@@ -529,6 +529,18 @@ angular.module('Authentication')
                });
                };
 
+               authService.getAllUserHistory = function (param) {
+                  console.log(param);
+                  let url = " https://stagingapi.machadalo.com/v0/ui/b2c-bot/get-all-users-paginate/?next_page="+param.next_page;
+                  return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                  return response
+                  })
+                  .catch(function onError(response) {
+                  return response
+                  });
+                  };
+   
 
             return authService;
          }])

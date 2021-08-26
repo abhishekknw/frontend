@@ -89,6 +89,25 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
 
 
+            $scope.historyDetail = function () {
+                alert("history")
+                let param = {
+                    next_page:1
+                }
+                AuthService.getAllUserHistory(param)
+
+                    .then(function onSuccess(response) {
+                        console.log(response)
+                    console.log("111111111111111111111111111111111111111")
+                        $scope.historyDetailData = response.data.data;
+                        console.log($scope.historyDetailData)
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+            }
+
+
+
         }]);
 
 
