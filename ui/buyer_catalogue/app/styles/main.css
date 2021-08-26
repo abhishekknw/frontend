@@ -2554,11 +2554,23 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	display: inline-block;
 	padding: 6px 0 6px 0;
 	margin: 0 -1px;
-	width: 33.33%; 
+	width: 10.5%; 
 	border: 1px solid #000;
 	text-align: center;
 	margin-bottom: 10px;
   }
+@media screen and (max-width: 450px) {
+	.tab-aisensy label {
+		display: inline-block;
+		padding: 6px 0 6px 0;
+		margin: 0 -1px;
+		width: 33.33%; 
+		border: 1px solid #000;
+		text-align: center;
+		margin-bottom: 10px;
+	  }
+	
+}
   .tab-aisensy label:hover {
 	cursor: pointer;
 	/*background-color: #8a130f;*/
@@ -2981,7 +2993,7 @@ ul.timeline > li:before {
 	text-align: left;
 	margin-bottom: 2px;
 	text-transform: uppercase;
-	font-family: "Trirong", serif;;
+	font-family: "Trirong", serif;
 	font-size: 14px;
 	text-shadow: 1px 1px 2px #ababab;
 	font-weight: bold;
@@ -3144,20 +3156,65 @@ position: relative;
 }
 
 @media screen and (max-width: 600px){
-#menu{position:relative}
-#menu ul{background:#838383;position:absolute;top:100%;right:0;left:0;z-index:3;height:auto;display:none;}
-#menu ul.menus{width:100%;position:static;border:none}
-#menu li{display:block;float:none;width:auto;text-align:left}
-#menu li a{color:#fff}
-#menu li a:hover{color:#333}
-#menu li:hover{background:#BABABA;color:#333;}
-#menu li:hover > a.prett,#menu a.prett:hover{background:#BABABA;color:#333;}
-#menu ul.menus a{background:#BABABA;}
-#menu ul.menus a:hover{background:#fff;}
-#menu input,#menu label{position:absolute;top:0;right:0;display:block}
-#menu input{z-index:4}
-#menu input:checked + label{color:black}
-#menu input:checked ~ ul{display:block}
+#menu{
+	position:relative;
+}
+#menu ul{
+	background:#838383;
+	position:absolute;
+	top:100%;
+	right:0;
+	left:0;
+	z-index:3;
+	height:auto;
+	display:none;
+}
+#menu ul.menus{
+	width:100%;
+	position:static;
+	border:none
+}
+#menu li{
+	display:block;
+	float:none;
+	width:auto;
+	text-align:left;
+}
+#menu li a{
+	color:#fff;
+}
+#menu li a:hover{
+	color:#333;
+}
+#menu li:hover{
+	background:#BABABA;
+	color:#333;
+}
+#menu li:hover > a.prett,#menu a.prett:hover{
+	background:#BABABA;
+	color:#333;
+}
+#menu ul.menus a{
+	background:#BABABA;
+}
+#menu ul.menus a:hover{
+	background:#fff;
+}
+#menu input,#menu label{
+	position:absolute;
+	top:0;
+	right:0;
+	display:block;
+}
+#menu input{
+	z-index:4;
+}
+#menu input:checked + label{
+	color:black;
+}
+#menu input:checked ~ ul{
+	display:block;
+}
 }
 
 

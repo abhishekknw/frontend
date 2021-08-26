@@ -382,8 +382,7 @@ $scope.selectedToc=value;
                     })
             }
 
-
-            
+    
 
             $scope.getHeaderCategory = function(value){
                 console.log($scope.selectedTocHeader)

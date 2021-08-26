@@ -30,11 +30,11 @@
               Contact
             </li>
           </a>
-          <a href="#">
-            <li class="fa fa-history" aria-hidden="true" style="font-size: large">
+          
+            <li class="fa fa-history" aria-hidden="true" style="font-size: large" ng-click="historyDetail()">
               History
             </li>
-          </a>
+          
           <a href="#">
             <li class="fa fa-file-text" aria-hidden="true" style="font-size: large">
               Templates
@@ -51,7 +51,7 @@
     </div>
   </nav>
   <!-- /navbar -->
-
+<div ng-if="!historyDetailData">
   <div class="container dropdown mca-page">
     <!--tabs-->
     <div class="top-select-option-aisensy">
@@ -67,7 +67,8 @@
           <div class="content">
             <div id="content-1">
               <div class="row-aisensy no-gutters">
-                <div class="col-md-12 col-xs-12 border-right">
+                <div class="col-md-4 col-xs-12 border-right">
+
                   <div class="search-box">
                     <div class="input-wrapper">
                       <i class="fa fa-search" aria-hidden="true"></i>
@@ -179,7 +180,7 @@
 
             <div id="content-2">
               <div class="row-aisensy no-gutters">
-                <div class="col-md-12 col-xs-12 border-right">
+                <div class="col-md-4 col-xs-12 border-right">
                   <div class="search-box">
                     <div class="input-wrapper">
                       <i class="fa fa-search" aria-hidden="true"></i>
@@ -233,7 +234,7 @@
             <!--end of second tab content-->
             <div id="content-3">
               <div class="row-aisensy no-gutters">
-                <div class="col-md-12 col-xs-12 border-right">
+                <div class="col-md-4 col-xs-12 border-right">
                   <div class="search-box">
                     <div class="input-wrapper">
                       <i class="fa fa-search" aria-hidden="true"></i>
@@ -289,6 +290,7 @@
       </div>
     </div>
     <!--/tabs-->
+  </div>
   </div>
   <!-- Status -->
 
@@ -397,7 +399,7 @@
       <div class="bs-example col-md-12 col-xs-12">
         <label class="radio-inline">
           <input name="group1" value="1" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne"
-            type="radio" checked />
+            type="radio"/>
           Template message
         </label>
 
@@ -506,4 +508,16 @@
     </div> -->
   </div>
   <!-- End Phone Chat-->
+
+  <div class="container dropdown mca-page">
+    <div class="top-select-option-aisensy">
+      <div class="form-group">
+        <div ng-if="historyDetailData">
+          <h3>hii</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 </div>
