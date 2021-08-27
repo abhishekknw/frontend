@@ -1,5 +1,10 @@
 <link rel="stylesheet" href="modules/pages/login/login.tmpl.css" />
-<link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css" />
+<link
+  rel="stylesheet"
+  href="modules/common/loadingicon/loading-spinner.tmpl.css"
+/>
+
+
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <link href="css/smallscreen.css" rel="stylesheet" media="screen" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,8 +14,14 @@
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-          aria-expanded="false" aria-controls="navbar">
+        <button
+          type="button"
+          class="navbar-toggle collapsed"
+          data-toggle="collapse"
+          data-target="#navbar"
+          aria-expanded="false"
+          aria-controls="navbar"
+        >
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -25,23 +36,39 @@
 
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
+          <li
+            class="fa fa-user-circle"
+            aria-hidden="true"
+            style="font-size: large"
+            ng-click="contactDetail()"
+          >
+            Contact
+          </li>
+
+          <li
+            class="fa fa-history"
+            aria-hidden="true"
+            style="font-size: large"
+            ng-click="historyDetail()"
+          >
+            History
+          </li>
+
           <a href="#">
-            <li class="fa fa-user-circle" aria-hidden="true" style="font-size: large">
-              Contact
-            </li>
-          </a>
-          
-            <li class="fa fa-history" aria-hidden="true" style="font-size: large" ng-click="historyDetail()">
-              History
-            </li>
-          
-          <a href="#">
-            <li class="fa fa-file-text" aria-hidden="true" style="font-size: large">
+            <li
+              class="fa fa-file-text"
+              aria-hidden="true"
+              style="font-size: large"
+            >
               Templates
             </li>
           </a>
           <a href="#">
-            <li class="fa fa-filter" aria-hidden="true" style="font-size: large">
+            <li
+              class="fa fa-filter"
+              aria-hidden="true"
+              style="font-size: large"
+            >
               Filter
             </li>
           </a>
@@ -51,97 +78,143 @@
     </div>
   </nav>
   <!-- /navbar -->
-<div ng-if="!historyDetailData">
-  <div class="container dropdown mca-page">
-    <!--tabs-->
-    <div class="top-select-option-aisensy">
-      <div class="form-group">
-        <div class="tab-aisensy">
-          <input id="tab-1" type="radio" name="tab" checked />
-          <label for="tab-1">Active</label>
-          <input id="tab-2" type="radio" name="tab" />
-          <label for="tab-2">Requested</label>
-          <input id="tab-3" type="radio" name="tab" />
-          <label for="tab-3">Intervened</label>
+  <div ng-if="!contactDetailData">
+    <div ng-if="!historyDetailData">
+      <div class="container dropdown mca-page">
+        <!--tabs-->
+        <div class="top-select-option-aisensy">
+          <div class="form-group">
+            <div class="tab-aisensy">
+              <input id="tab-1" type="radio" name="tab" checked />
+              <label for="tab-1">Active</label>
+              <input id="tab-2" type="radio" name="tab" />
+              <label for="tab-2">Requested</label>
+              <input id="tab-3" type="radio" name="tab" />
+              <label for="tab-3">Intervened</label>
 
-          <div class="content">
-            <div id="content-1">
-              <div class="row-aisensy no-gutters">
-                <div class="col-md-4 col-xs-12 border-right">
+              <div class="content">
+                <div id="content-1">
+                  <div class="row-aisensy no-gutters">
+                    <div class="col-md-4 col-xs-12 border-right">
+                      <div class="search-box" ng-if="!showChatModule">
+                        <div class="input-wrapper">
+                          <i class="fa fa-search" aria-hidden="true"></i>
+                          <input
+                            placeholder="Search here"
+                            ng-change="searchChat()"
+                            ng-model="search"
+                            type="text"
+                          />
+                        </div>
+                      </div>
 
-                  <div class="search-box" ng-if="!showChatModule">
-                    <div class="input-wrapper">
-                      <i class="fa fa-search" aria-hidden="true"></i>
-                      <input placeholder="Search here" ng-change="searchChat()" ng-model="search" type="text" />
-                    </div>
-                  </div>
-
-                  <div class="fields-box">
-                    <div ng-if="!showChatModule" ng-repeat="user in activeUserData track by $index">
-                      <div  class="friend-drawer friend-drawer--onhover"
-                        ng-click="userDetail(user.phone_number)">
-                        <!-- <img
+                      <div class="fields-box">
+                        <div
+                          ng-if="!showChatModule"
+                          ng-repeat="user in activeUserData track by $index"
+                        >
+                          <div
+                            class="friend-drawer friend-drawer--onhover"
+                            ng-click="userDetail(user.phone_number)"
+                          >
+                            <!-- <img
                           class="profile-image"
                           src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
                           alt=""
                         /> -->
-                        <div class="profile-image">{{user.whatsapp_name |firstlater}}</div>
-                        <div class="text">
-                          <h6>{{user.whatsapp_name}}</h6>
-                          <p class="text-muted">
-                            {{user.country_code}}{{user.phone_number}}
-                          </p>
-                        </div>
-                        <span class="time text-muted small">{{user.last_message_timestamp | date : 'medium'}}</span>
-                      </div>
-
-
-                      
-
-                      <hr />
-                    </div>
-
-                    <!-- Start Phone Chat-->
-                    <div class="phone-chat" ng-if="showChatModule">
-                      <div class="screen-phone">
-                        <div class="nav-phone">
-                          <div class="icon-back">
-                            <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
-                              ng-click="hideChatModule()">
-                              <path fill="#fff"
-                                d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
-                            </svg>
-                          </div>
-                          <span class="username">{{userChatData.whatsapp_name}}</span><br />
-                          <span class="tel-number">{{userChatData.country_code}}{{userChatData.phone_number}}</span>
-                        </div>
-                        <div class="chat">
-                          <div ng-repeat="chat in userChatData.payload track by $index">
-                            <div class="message-1" ng-if="chat.sender=='user'">
-                              {{chat.content.text}}
-                              <span>{{chat.timestamp | date : format : timezone}}</span>
+                            <div class="profile-image">
+                              {{user.whatsapp_name |firstlater}}
                             </div>
+                            <div class="text">
+                              <h6>{{user.whatsapp_name}}</h6>
+                              <p class="text-muted">
+                                {{user.country_code}}{{user.phone_number}}
+                              </p>
+                            </div>
+                            <span class="time text-muted small"
+                              >{{user.last_message_timestamp | date :
+                              'medium'}}</span
+                            >
+                          </div>
 
-                            <div class="message-2" ng-if="chat.sender=='bot'">
-                              {{chat.content.text}}
-                              <span>{{chat.timestamp | date : format : timezone}}</span>
+                          <hr />
+                        </div>
+
+                        <!-- Start Phone Chat-->
+                        <div class="phone-chat" ng-if="showChatModule">
+                          <div class="screen-phone">
+                            <div class="nav-phone">
+                              <div class="icon-back">
+                                <svg
+                                  viewBox="0 0 57.653 64.11"
+                                  width="25"
+                                  height="25"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  ng-click="hideChatModule()"
+                                >
+                                  <path
+                                    fill="#fff"
+                                    d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z"
+                                  />
+                                </svg>
+                              </div>
+                              <span class="username"
+                                >{{userChatData.whatsapp_name}}</span
+                              ><br />
+                              <span class="tel-number"
+                                >{{userChatData.country_code}}{{userChatData.phone_number}}</span
+                              >
+                            </div>
+                            <div class="chat">
+                              <div
+                                ng-repeat="chat in userChatData.payload track by $index"
+                              >
+                                <div
+                                  class="message-1"
+                                  ng-if="chat.sender=='user'"
+                                >
+                                  {{chat.content.text}}
+                                  <span
+                                    >{{chat.timestamp | date : format :
+                                    timezone}}</span
+                                  >
+                                </div>
+
+                                <div
+                                  class="message-2"
+                                  ng-if="chat.sender=='bot'"
+                                >
+                                  {{chat.content.text}}
+                                  <span
+                                    >{{chat.timestamp | date : format :
+                                    timezone}}</span
+                                  >
+                                </div>
+                              </div>
+                              <div class="input">
+                                <input
+                                  type="text"
+                                  placeholder="Write message"
+                                />
+                              </div>
+                              <div class="btn-send">
+                                <svg
+                                  viewBox="0 0 74.433 60.908"
+                                  width="25"
+                                  height="25"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    fill="#fff"
+                                    d="M 0 0 L 74.22 26.562 L 0.246 60.712 L 7.608 34.535 L 27.831 28.259 L 6.91 25.469 L 0 0 Z"
+                                  />
+                                </svg>
+                              </div>
                             </div>
                           </div>
-                          <div class="input">
-                            <input type="text" placeholder="Write message" />
-                          </div>
-                          <div class="btn-send">
-                            <svg viewBox="0 0 74.433 60.908" width="25" height="25"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <path fill="#fff"
-                                d="M 0 0 L 74.22 26.562 L 0.246 60.712 L 7.608 34.535 L 27.831 28.259 L 6.91 25.469 L 0 0 Z" />
-                            </svg>
-                          </div>
                         </div>
-                      </div>
-                    </div>
 
-                    <!--
+                        <!--
                   <div class="friend-drawer friend-drawer--onhover">
                     <img class="profile-image"
                       src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg" alt="">
@@ -172,114 +245,140 @@
                     </div>
                     <span class="time text-muted small">13:21</span>
                   </div>-->
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <!--end of first tab content-->
+                <!--end of first tab content-->
 
-            <div id="content-2">
-              <div class="row-aisensy no-gutters">
-                <div class="col-md-4 col-xs-12 border-right">
-                  <div class="search-box">
-                    <div class="input-wrapper">
-                      <i class="fa fa-search" aria-hidden="true"></i>
-                      <input placeholder="Search here" type="text" />
-                    </div>
-                  </div>
-                  <div class="fields-box">
-                    <div class="friend-drawer friend-drawer--onhover">
-                      <img class="profile-image"
-                        src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg" alt="" />
-                      <div class="text">
-                        <h6>Aathira</h6>
-                        <p class="text-muted">HI! What's Up?</p>
+                <div id="content-2">
+                  <div class="row-aisensy no-gutters">
+                    <div class="col-md-4 col-xs-12 border-right">
+                      <div class="search-box">
+                        <div class="input-wrapper">
+                          <i class="fa fa-search" aria-hidden="true"></i>
+                          <input placeholder="Search here" type="text" />
+                        </div>
                       </div>
-                      <span class="time text-muted small">13:21</span>
-                    </div>
-                    <hr />
-                    <div class="friend-drawer friend-drawer--onhover">
-                      <img class="profile-image"
-                        src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg" alt="" />
-                      <div class="text">
-                        <h6>Divyaaa</h6>
-                        <p class="text-muted">HI! What's Up?</p>
+                      <div class="fields-box">
+                        <div class="friend-drawer friend-drawer--onhover">
+                          <img
+                            class="profile-image"
+                            src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
+                            alt=""
+                          />
+                          <div class="text">
+                            <h6>Aathira</h6>
+                            <p class="text-muted">HI! What's Up?</p>
+                          </div>
+                          <span class="time text-muted small">13:21</span>
+                        </div>
+                        <hr />
+                        <div class="friend-drawer friend-drawer--onhover">
+                          <img
+                            class="profile-image"
+                            src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg"
+                            alt=""
+                          />
+                          <div class="text">
+                            <h6>Divyaaa</h6>
+                            <p class="text-muted">HI! What's Up?</p>
+                          </div>
+                          <span class="time text-muted small">00:32</span>
+                        </div>
+                        <hr />
+                        <div class="friend-drawer friend-drawer--onhover">
+                          <img
+                            class="profile-image"
+                            src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png"
+                            alt=""
+                          />
+                          <div class="text">
+                            <h6>Priyank</h6>
+                            <p class="text-muted">HI! What's Up?</p>
+                          </div>
+                          <span class="time text-muted small">13:21</span>
+                        </div>
+                        <hr />
+                        <div class="friend-drawer friend-drawer--onhover">
+                          <img
+                            class="profile-image"
+                            src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png"
+                            alt=""
+                          />
+                          <div class="text">
+                            <h6>Samyaak</h6>
+                            <p class="text-muted">HI! What's Up?</p>
+                          </div>
+                          <span class="time text-muted small">13:21</span>
+                        </div>
                       </div>
-                      <span class="time text-muted small">00:32</span>
-                    </div>
-                    <hr />
-                    <div class="friend-drawer friend-drawer--onhover">
-                      <img class="profile-image"
-                        src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png" alt="" />
-                      <div class="text">
-                        <h6>Priyank</h6>
-                        <p class="text-muted">HI! What's Up?</p>
-                      </div>
-                      <span class="time text-muted small">13:21</span>
-                    </div>
-                    <hr />
-                    <div class="friend-drawer friend-drawer--onhover">
-                      <img class="profile-image"
-                        src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png" alt="" />
-                      <div class="text">
-                        <h6>Samyaak</h6>
-                        <p class="text-muted">HI! What's Up?</p>
-                      </div>
-                      <span class="time text-muted small">13:21</span>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <!--end of second tab content-->
-            <div id="content-3">
-              <div class="row-aisensy no-gutters">
-                <div class="col-md-4 col-xs-12 border-right">
-                  <div class="search-box">
-                    <div class="input-wrapper">
-                      <i class="fa fa-search" aria-hidden="true"></i>
-                      <input placeholder="Search here" type="text" />
-                    </div>
-                  </div>
-                  <div class="fields-box">
-                    <div class="friend-drawer friend-drawer--onhover">
-                      <img class="profile-image"
-                        src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg" alt="" />
-                      <div class="text">
-                        <h6>Aathira</h6>
-                        <p class="text-muted">HI! What's Up?</p>
+                <!--end of second tab content-->
+                <div id="content-3">
+                  <div class="row-aisensy no-gutters">
+                    <div class="col-md-4 col-xs-12 border-right">
+                      <div class="search-box">
+                        <div class="input-wrapper">
+                          <i class="fa fa-search" aria-hidden="true"></i>
+                          <input placeholder="Search here" type="text" />
+                        </div>
                       </div>
-                      <span class="time text-muted small">13:21</span>
-                    </div>
-                    <hr />
-                    <div class="friend-drawer friend-drawer--onhover">
-                      <img class="profile-image"
-                        src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg" alt="" />
-                      <div class="text">
-                        <h6>Divyaaa</h6>
-                        <p class="text-muted">HI! What's Up?</p>
+                      <div class="fields-box">
+                        <div class="friend-drawer friend-drawer--onhover">
+                          <img
+                            class="profile-image"
+                            src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
+                            alt=""
+                          />
+                          <div class="text">
+                            <h6>Aathira</h6>
+                            <p class="text-muted">HI! What's Up?</p>
+                          </div>
+                          <span class="time text-muted small">13:21</span>
+                        </div>
+                        <hr />
+                        <div class="friend-drawer friend-drawer--onhover">
+                          <img
+                            class="profile-image"
+                            src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg"
+                            alt=""
+                          />
+                          <div class="text">
+                            <h6>Divyaaa</h6>
+                            <p class="text-muted">HI! What's Up?</p>
+                          </div>
+                          <span class="time text-muted small">00:32</span>
+                        </div>
+                        <hr />
+                        <div class="friend-drawer friend-drawer--onhover">
+                          <img
+                            class="profile-image"
+                            src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png"
+                            alt=""
+                          />
+                          <div class="text">
+                            <h6>Priyank</h6>
+                            <p class="text-muted">HI! What's Up?</p>
+                          </div>
+                          <span class="time text-muted small">13:21</span>
+                        </div>
+                        <hr />
+                        <div class="friend-drawer friend-drawer--onhover">
+                          <img
+                            class="profile-image"
+                            src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png"
+                            alt=""
+                          />
+                          <div class="text">
+                            <h6>Samyaak</h6>
+                            <p class="text-muted">HI! What's Up?</p>
+                          </div>
+                          <span class="time text-muted small">13:21</span>
+                        </div>
                       </div>
-                      <span class="time text-muted small">00:32</span>
-                    </div>
-                    <hr />
-                    <div class="friend-drawer friend-drawer--onhover">
-                      <img class="profile-image"
-                        src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png" alt="" />
-                      <div class="text">
-                        <h6>Priyank</h6>
-                        <p class="text-muted">HI! What's Up?</p>
-                      </div>
-                      <span class="time text-muted small">13:21</span>
-                    </div>
-                    <hr />
-                    <div class="friend-drawer friend-drawer--onhover">
-                      <img class="profile-image"
-                        src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png" alt="" />
-                      <div class="text">
-                        <h6>Samyaak</h6>
-                        <p class="text-muted">HI! What's Up?</p>
-                      </div>
-                      <span class="time text-muted small">13:21</span>
                     </div>
                   </div>
                 </div>
@@ -287,11 +386,9 @@
             </div>
           </div>
         </div>
+        <!--/tabs-->
       </div>
-    </div>
-    <!--/tabs-->
-  </div>
-  </div>
+    
   <!-- Status -->
 
   <div class="container dropdown aisensy-page">
@@ -305,7 +402,9 @@
                 src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
                 alt=""
               /><br /> -->
-              <div class="status-image">{{userDetailData.whatsapp_name |firstlater}}</div>
+              <div class="status-image">
+                {{userDetailData.whatsapp_name |firstlater}}
+              </div>
               <div class="text">
                 <h6>{{userDetailData.whatsapp_name}}</h6>
                 <p class="text-muted">
@@ -331,12 +430,18 @@
 
                         <div class="info-row-mca">
                           <label class="infolable-mca">Created At:</label>
-                          <span> {{userDetailData.created_at | date : 'medium'}}</span>
+                          <span>
+                            {{userDetailData.created_at | date :
+                            'medium'}}</span
+                          >
                         </div>
 
                         <div class="info-row-mca">
                           <label class="infolable-mca">Last Active:</label>
-                          <span> {{userDetailData.updated_at | date : 'medium'}}</span>
+                          <span>
+                            {{userDetailData.updated_at | date :
+                            'medium'}}</span
+                          >
                         </div>
 
                         <!-- 
@@ -398,8 +503,14 @@
       <!-- Start Template and Customer Journey-->
       <div class="bs-example col-md-12 col-xs-12">
         <label class="radio-inline">
-          <input name="group1" value="1" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne"
-            type="radio"/>
+          <input
+            name="group1"
+            value="1"
+            data-toggle="collapse"
+            data-parent="#accordion"
+            data-target="#collapseOne"
+            type="radio"
+          />
           Template message
         </label>
 
@@ -413,8 +524,14 @@
           </div>
 
           <label class="radio-inline">
-            <input name="group1" value="2" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"
-              type="radio" />
+            <input
+              name="group1"
+              value="2"
+              data-toggle="collapse"
+              data-parent="#accordion"
+              data-target="#collapseTwo"
+              type="radio"
+            />
             Customer Journey
           </label>
 
@@ -508,54 +625,101 @@
     </div> -->
   </div>
   <!-- End Phone Chat-->
-
+</div>
+</div>
+  <!--Start History-->
   <div class="container dropdown mca-page">
     <div class="top-select-option-aisensy">
       <div class="form-group">
         <div ng-if="historyDetailData">
           <div class="col-md-12 col-xs-12 border-right">
-
-            <div class="search-box" >
+            <h3
+              style="
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                top: 10px;
+              "
+            >
+              <center>CHAT HISTORY</center>
+            </h3>
+            <div class="search-box">
               <div class="input-wrapper">
-                <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px;"></i>
-                <input placeholder="Search here" ng-change="searchChat()" ng-model="search" type="text" />
+                <i
+                  class="fa fa-search"
+                  aria-hidden="true"
+                  style="margin-left: 10px"
+                ></i>
+                <input
+                  placeholder="Search here"
+                  ng-change="searchChat()"
+                  ng-model="search"
+                  type="text"
+                />
               </div>
             </div>
 
-            <div class="fields-box" style="height:400px">
-              <div  ng-repeat="details in historyDetailData track by $index">
-                <div  class="friend-drawer friend-drawer--onhover"
-                >
+            <div class="fields-box" style="height: 400px">
+              <div ng-repeat="details in historyDetailData track by $index">
+                <div class="friend-drawer friend-drawer--onhover">
                   <!-- <img
                     class="profile-image"
                     src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
                     alt=""
                   /> -->
-                  <div class="profile-image">{{details.whatsapp_name |firstlater}}</div>
+                  <div class="profile-image">
+                    {{details.whatsapp_name |firstlater}}
+                  </div>
                   <div class="text">
                     <h6>{{details.whatsapp_name}}</h6>
                     <p class="text-muted">
                       {{details.country_code}}{{details.phone_number}}
                     </p>
                   </div>
-                  <span class="time text-muted small">{{details.payload_timestamp}}</span>
+                  <span class="time text-muted small"
+                    >{{details.payload_timestamp}}</span
+                  >
                 </div>
-
-
-                
 
                 <hr />
               </div>
-
-            
-
-           
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <!--End History-->
 
+  <!--Start Contact-->
+  <div class="container dropdown mca-page" ng-if="contactDetailData">
+    <h3>Contact</h3>
 
+    <div class="container table-responsive py-5">
+      <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Sr. No.</th>
+            <th scope="col">Name</th>
+            <th scope="col">Mobile Number</th>
+            <th scope="col">Status</th>
+            <th scope="col">Last Active</th>
+            <th scope="col">Created At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="contact in contactDetailData track by $index">
+            <th scope="row">1</th>
+            <td>{{contact.whatsapp_name}}</td>
+            <td>{{contact.country_code}}{{contact.phone_number}}</td>
+            <td>{{contact.user_type}}</td>
+            <td>{{contact.updated_at | date : 'medium'}}</td>
+            <td>{{contact.created_at | date : 'medium'}}</td>
+          </tr>
+        </tbody>
+      </table>
+ 
+      
+    </div>
+  </div>
+
+  <!--End Contact-->
 </div>
