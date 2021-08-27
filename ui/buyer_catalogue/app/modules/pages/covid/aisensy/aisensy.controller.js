@@ -105,7 +105,23 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         console.log(response);
                     })
             }
+            $scope.searchChat= function () {
+                console.log("search",$scope.search)
 
+                let param = {
+                    search:$scope.search
+                }
+                AuthService.getSearch(param)
+
+                    .then(function onSuccess(response) {
+                        console.log(response)
+                    console.log("31")
+                        $scope.search = response.data.data;
+                     
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+            }
 
 
         }]);
