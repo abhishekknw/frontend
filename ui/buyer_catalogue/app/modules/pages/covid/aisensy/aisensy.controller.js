@@ -139,6 +139,22 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
             }
 
+            $scope.curPage = 1,
+            $scope.itemsPerPage = 3,
+            $scope.maxSize = 5;
+                
+            
+            $scope.numOfPages = function () {
+              return Math.ceil(contactDetailData.length / $scope.itemsPerPage);
+                
+            };
+              
+              $scope.$watch('curPage + numPerPage', function() {
+              var begin = (($scope.curPage - 1) * $scope.itemsPerPage),
+              end = begin + $scope.itemsPerPage;
+                
+              $scope.filteredItems = contactDetailData.slice(begin, end);
+            });
             
 
         }]);
