@@ -89,7 +89,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
             $scope.contactDetail = function (value)
             {
-                alert("qwshbskj")
+                $scope.showcontactDetail=true;
+                $scope.showhistoryDetail=false;
                 let param={
                     next_page: 1
                 }
@@ -106,6 +107,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.historyDetail = function () {
+                $scope.showcontactDetail=false;
+                $scope.showhistoryDetail=true;
                 let param = {
                     next_page:1
                 }
@@ -121,7 +124,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         console.log(response);
                     })
             }
-            $scope.searchChat= function () {
+            $scope.searchChat= function (value) {
+                console.log(value)
+                $scope.search=value;
                 console.log("search",$scope.search)
 
                 let param = {
@@ -132,7 +137,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     .then(function onSuccess(response) {
                         console.log(response)
                     console.log("31")
-                        $scope.search = response.data.data;
+                        $scope.activeUserData= response.data.data;
                      
                     }).catch(function onError(response) {
                         console.log(response);
