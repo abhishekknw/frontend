@@ -1,13 +1,13 @@
 <link rel="stylesheet" href="modules/pages/login/login.tmpl.css" />
 <link rel="stylesheet" href="modules/common/loadingicon/loading-spinner.tmpl.css" />
 
-
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <link href="css/smallscreen.css" rel="stylesheet" media="screen" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<!-- navbar -->
 <div ng-init="getActiveUser()">
+  
+  <!-- navbar -->
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -27,6 +27,10 @@
 
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
+          <li class="fa fa-comments" id="active-nav" aria-hidden="true" style="font-size: large" ng-click="getActiveUser()">
+            Live chat
+          </li>
+
           <li class="fa fa-user-circle" aria-hidden="true" style="font-size: large" ng-click="contactDetail()">
             Contact
           </li>
@@ -51,6 +55,8 @@
     </div>
   </nav>
   <!-- /navbar -->
+
+  <!--Active chat list+status+chat details-->
   <div>
     <div  ng-if="!showhistoryDetail && !showcontactDetail">
       <div class="container dropdown mca-page">
@@ -68,7 +74,7 @@
               <div class="content">
                 <div id="content-1">
                   <div class="row-aisensy no-gutters">
-                    <div class="col-md-4 col-xs-12 border-right">
+                    <div class="col-md-12 col-xs-12 border-right">
                       <div class="search-box" ng-if="!showChatModule">
                         <div class="input-wrapper">
                           <i class="fa fa-search" aria-hidden="true"></i>
@@ -194,7 +200,7 @@
 
                 <div id="content-2">
                   <div class="row-aisensy no-gutters">
-                    <div class="col-md-4 col-xs-12 border-right">
+                    <div class="col-md-12 col-xs-12 border-right">
                       <div class="search-box">
                         <div class="input-wrapper">
                           <i class="fa fa-search" aria-hidden="true"></i>
@@ -251,7 +257,7 @@
                 <!--end of second tab content-->
                 <div id="content-3">
                   <div class="row-aisensy no-gutters">
-                    <div class="col-md-4 col-xs-12 border-right">
+                    <div class="col-md-12 col-xs-12 border-right">
                       <div class="search-box">
                         <div class="input-wrapper">
                           <i class="fa fa-search" aria-hidden="true"></i>
@@ -536,7 +542,9 @@
       <!-- End Phone Chat-->
     </div>
   </div>
-  <!--Start History-->
+  <!--/Active chat list+status+chat details-->
+
+  <!--History-->
   <div class="container dropdown mca-page"  ng-if="showhistoryDetail">
     <div class="top-select-option-aisensy">
       <div class="form-group">
@@ -582,9 +590,9 @@
       </div>
     </div>
   </div>
-  <!--End History-->
+  <!--/History-->
 
-  <!--Start Contact-->
+  <!--Contact-->
   <div class="container dropdown mca-page" ng-if="showcontactDetail">
     <h3>Contact</h3>
 
@@ -617,6 +625,5 @@
       </div>
     </div>
   </div>
-
-  <!--End Contact-->
+  <!--/Contact-->
 </div>
