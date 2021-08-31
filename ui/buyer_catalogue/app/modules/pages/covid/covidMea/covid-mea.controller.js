@@ -382,8 +382,7 @@ $scope.selectedToc=value;
                     })
             }
 
-
-            
+    
 
             $scope.getHeaderCategory = function(value){
                 console.log($scope.selectedTocHeader)
@@ -399,16 +398,33 @@ $scope.selectedToc=value;
 
 
 
+            $scope.getTocNav= function(){
+                alert("TOC dropdown")
+                AuthService.getAllTOCNavData()
+                
+                    .then(function onSuccess(response) {
+                        console.log(response)
+                        $scope.tocNavDataArray=response.data.data ; 
+                        console.log('1111111111111',$scope.tocNavDataArray)
 
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+            }
 
+            $scope.getCategoryNav= function(){
+                alert("Category dropdown")
+                AuthService.getAllCategoryNavData()
+                
+                    .then(function onSuccess(response) {
+                        console.log(response)
+                        $scope.categoryNavDataArray=response.data.data ; 
+                        console.log('22222222',$scope.categoryNavDataArray)
 
-
-
-
-
-
-
-
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+            }
 
 
 
