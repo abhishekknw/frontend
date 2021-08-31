@@ -13,6 +13,7 @@ angular
       mapOrGridViewButton     : 'can_view_map_or_gridview_button_on_homepage',
       uploadProposalButton    : 'can_upload_proposal_from_homepage',
       viewImagesButton        : 'can_view_images_of_campaigns_from_homepage',
+      intervene : 'can_view_intervene'
     },
 
     proposalSummaryPage : {
@@ -78,6 +79,7 @@ angular
       menuDashboard       :   'can_view_dashboard_button_on_menu',
       menuChangePassword  :   'can_view_changepassword_button_on_menu',
       menuChecklist       :   'can_view_checklist_button_on_menu',
+    
     },
     pagePermissions : {
       homepage                : 'homePage',
@@ -94,7 +96,8 @@ angular
       showProposalHistoryPage : 'showProposalHistoryPage',
       dashboardPage            : 'dashboard',
       enter_leads_from_application_access : 'enter_leads_from_application_access',
-      editProposalDetailsPage     : 'editProposalDetailsPage'
+      editProposalDetailsPage     : 'editProposalDetailsPage',
+      intervene : 'can_view_intervene'
     },
 
     dashboard : {
