@@ -20,19 +20,19 @@
         <input type='checkbox' />
         <label>&#8801;<span></span></label>
         <ul>
-          <li><a class='prett'>Type of Customer</a>
-            <ul class='menus'>
-              <li><a href='#'>Drop Menu 1</a></li>
-              <li><a href='#'>Drop Menu 2</a></li>
-              <li><a href='#'>Drop Menu 3</a></li>
+          <li ng-click="getTocNav()"><a class='prett'>Type of Customer</a>
+            <ul class='menus' >
+              <li ng-repeat="tnav in tocNavDataArray " value="{{tnav}}"><a>{{tnav}}</a></li>
+              <!-- <li><a href='#'>Drop Menu 2</a></li>
+              <li><a href='#'>Drop Menu 3</a></li> -->
             </ul>
           </li>
 
-          <li><a class='prett'>Category</a>
-            <ul class='menus'>
-              <li><a href='#'>Drop Menu 1</a></li>
-              <li><a href='#'>Drop Menu 2</a></li>
-              <li><a href='#'>Drop Menu 3</a></li>
+          <li ng-click="getCategoryNav()"><a class='prett'>Category</a>
+            <ul class='menus' >
+              <li ng-repeat="cnav in categoryNavDataArray " value="{{cnav}}"><a>{{cnav}}</a></li>
+              <!-- <li><a href='#'>Drop Menu 2</a></li>
+              <li><a href='#'>Drop Menu 3</a></li>  -->
             </ul>
           </li>
 

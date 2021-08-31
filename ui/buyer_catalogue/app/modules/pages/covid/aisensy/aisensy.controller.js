@@ -87,26 +87,80 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showChatModule = false;
             }
 
-
-
-            $scope.historyDetail = function () {
-                alert("history")
-                let param = {
-                    next_page:1
+            $scope.contactDetail = function (value)
+            {
+                $scope.showcontactDetail=true;
+                $scope.showhistoryDetail=false;
+                let param={
+                    next_page: 1
                 }
-                AuthService.getAllUserHistory(param)
+                AuthService.getAllUserContact(param)
+                
 
                     .then(function onSuccess(response) {
                         console.log(response)
-                    console.log("111111111111111111111111111111111111111")
+                        $scope.contactDetailData = response.data.data;
+                        console.log($scope.contactDetailData)
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+            }
+
+            $scope.historyDetail = function () {
+                $scope.showcontactDetail=false;
+                $scope.showhistoryDetail=true;
+                let param = {
+                    next_page:1
+                }
+                
+                AuthService.getAllUserHistory(param)
+                
+
+                    .then(function onSuccess(response) {
+                        console.log(response)
                         $scope.historyDetailData = response.data.data;
                         console.log($scope.historyDetailData)
                     }).catch(function onError(response) {
                         console.log(response);
                     })
             }
+            $scope.searchChat= function (value) {
+                console.log(value)
+                $scope.search=value;
+                console.log("search",$scope.search)
 
+                let param = {
+                    search:$scope.search
+                }
+                AuthService.getSearch(param)
 
+                    .then(function onSuccess(response) {
+                        console.log(response)
+                    console.log("31")
+                        $scope.activeUserData= response.data.data;
+                     
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+            }
+
+            $scope.curPage = 1,
+            $scope.itemsPerPage = 3,
+            $scope.maxSize = 5;
+                
+            
+            $scope.numOfPages = function () {
+              return Math.ceil(contactDetailData.length / $scope.itemsPerPage);
+                
+            };
+              
+              $scope.$watch('curPage + numPerPage', function() {
+              var begin = (($scope.curPage - 1) * $scope.itemsPerPage),
+              end = begin + $scope.itemsPerPage;
+                
+              $scope.filteredItems = contactDetailData.slice(begin, end);
+            });
+            
 
         }]);
 
