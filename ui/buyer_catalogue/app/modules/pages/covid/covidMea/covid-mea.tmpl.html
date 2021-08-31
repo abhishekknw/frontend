@@ -14,14 +14,14 @@
             <img src="images/machadalo-logo.png" alt="" title=""><span> Education</span> Assistant
           </div>
         </a>
-      </div>
+      
       <!--new nav bar-->
       <nav id='menu'>
         <input type='checkbox' />
         <label>&#8801;<span></span></label>
         <ul>
           <li ng-click="getTocNav()"><a class='prett'>Type of Customer</a>
-            <ul class='menus' >
+            <ul class='menus'>
               <li ng-repeat="tnav in tocNavDataArray " value="{{tnav}}"><a>{{tnav}}</a></li>
               <!-- <li><a href='#'>Drop Menu 2</a></li>
               <li><a href='#'>Drop Menu 3</a></li> -->
@@ -29,7 +29,7 @@
           </li>
 
           <li ng-click="getCategoryNav()"><a class='prett'>Category</a>
-            <ul class='menus' >
+            <ul class='menus'>
               <li ng-repeat="cnav in categoryNavDataArray " value="{{cnav}}"><a>{{cnav}}</a></li>
               <!-- <li><a href='#'>Drop Menu 2</a></li>
               <li><a href='#'>Drop Menu 3</a></li>  -->
@@ -37,12 +37,14 @@
           </li>
 
         </ul>
+      </div>
       </nav>
-
+     
       <!--End new nav bar-->
 
     </div>
   </nav>
+  
 
   <!--end navigation -->
   <div ng-if="!selectedTocHeader">
@@ -104,287 +106,118 @@
             </div>
           </div>
         </div>
+        <!--new thumbnail-->
 
-        <div class="carousal" ng-repeat="(key,item) in contentArray track by $index">
-          <div class="section-header">
-            <div>
-              <h4 style=" color: #172d86"><b>Total {{item.length}} Videos for {{key}}</b></h4>
-            </div>
-            <p>{{key}}</p>
-          </div>
-          <!--1st carousal-->
-          <div class="product-slider">
-            <div id="carousel" class="carousel slide" data-ride="carousel">
-              <div class="carousel-inner">
-                <div class="item active"> <img src="http://placehold.it/1600x700?text=Product+01">
-                  <!--ratings-->
+        <div >
 
+        
+        <div>
+          <h4 style=" color: #172d86"><center><b>Total {{item.length}} Videos for {{key}}</b></center></h4>
+        </div>
 
-                  <div class="rating">
-                    <input type="radio" id="star5" name="rating" value="5" />
-                    <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                    <input type="radio" id="star4" name="rating" value="4" />
-                    <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                    <input type="radio" id="star3" name="rating" value="3" />
-                    <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                    <input type="radio" id="star2" name="rating" value="2" />
-                    <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                    <input type="radio" id="star1" name="rating" value="1" />
-                    <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
-                  </div>
-                </div>
-                <div class="item"> <img src="http://placehold.it/1600x700?text=Product+02">
-                  <!--ratings-->
-
-
-                  <div class="rating">
-                    <input type="radio" id="star5" name="rating" value="5" />
-                    <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                    <input type="radio" id="star4" name="rating" value="4" />
-                    <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                    <input type="radio" id="star3" name="rating" value="3" />
-                    <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                    <input type="radio" id="star2" name="rating" value="2" />
-                    <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                    <input type="radio" id="star1" name="rating" value="1" />
-                    <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
-                  </div>
-                </div>
-                <div class="item"> <img src="http://placehold.it/1600x700?text=Product+03">
-                  <!--ratings-->
-
-
-                  <div class="rating">
-                    <input type="radio" id="star5" name="rating" value="5" />
-                    <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                    <input type="radio" id="star4" name="rating" value="4" />
-                    <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                    <input type="radio" id="star3" name="rating" value="3" />
-                    <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                    <input type="radio" id="star2" name="rating" value="2" />
-                    <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                    <input type="radio" id="star1" name="rating" value="1" />
-                    <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
-                  </div>
-                </div>
-                <div class="item"> <img src="http://placehold.it/1600x700?text=Product+04">
-                  <!--ratings-->
-
-
-                  <div class="rating">
-                    <input type="radio" id="star5" name="rating" value="5" />
-                    <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                    <input type="radio" id="star4" name="rating" value="4" />
-                    <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                    <input type="radio" id="star3" name="rating" value="3" />
-                    <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                    <input type="radio" id="star2" name="rating" value="2" />
-                    <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                    <input type="radio" id="star1" name="rating" value="1" />
-                    <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
-                  </div>
-                </div>
-                <div class="item"> <img src="http://placehold.it/1600x700?text=Product+05">
-                  <!--ratings-->
-
-
-                  <div class="rating">
-                    <input type="radio" id="star5" name="rating" value="5" />
-                    <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                    <input type="radio" id="star4" name="rating" value="4" />
-                    <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                    <input type="radio" id="star3" name="rating" value="3" />
-                    <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                    <input type="radio" id="star2" name="rating" value="2" />
-                    <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                    <input type="radio" id="star1" name="rating" value="1" />
-                    <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
-                  </div>
-                </div>
-                <div class="item"> <img src="http://placehold.it/1600x700?text=Product+06">
-                  <!--ratings-->
-
-
-                  <div class="rating">
-                    <input type="radio" id="star5" name="rating" value="5" />
-                    <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                    <input type="radio" id="star4" name="rating" value="4" />
-                    <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                    <input type="radio" id="star3" name="rating" value="3" />
-                    <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                    <input type="radio" id="star2" name="rating" value="2" />
-                    <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                    <input type="radio" id="star1" name="rating" value="1" />
-                    <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
-                  </div>
-                </div>
-                <div class="item"> <img src="http://placehold.it/1600x700?text=Product+07">
-                  <!--ratings-->
-
-
-                  <div class="rating">
-                    <input type="radio" id="star5" name="rating" value="5" />
-                    <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                    <input type="radio" id="star4" name="rating" value="4" />
-                    <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                    <input type="radio" id="star3" name="rating" value="3" />
-                    <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                    <input type="radio" id="star2" name="rating" value="2" />
-                    <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                    <input type="radio" id="star1" name="rating" value="1" />
-                    <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
-                  </div>
-                </div>
-                <div class="item"> <img src="http://placehold.it/1600x700?text=Product+08">
-                  <!--ratings-->
-
-
-                  <div class="rating">
-                    <input type="radio" id="star5" name="rating" value="5" />
-                    <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                    <input type="radio" id="star4" name="rating" value="4" />
-                    <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                    <input type="radio" id="star3" name="rating" value="3" />
-                    <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                    <input type="radio" id="star2" name="rating" value="2" />
-                    <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                    <input type="radio" id="star1" name="rating" value="1" />
-                    <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
-                  </div>
+        <!--MDB Video-->
+        <div class="container-mea">
+          <!-- Grid row -->
+          <div class="row">
+            <div class="col-md-6 col-xs-6">
+              <div class="card-block">
+                <div class="embed-responsive embed-responsive-16by9">
+                  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v64KOxKVLVg" allowfullscreen>
+                  </iframe>
                 </div>
               </div>
+              <h6 class="text-center font-up font-bold indigo-text py-2 mb-3"><strong>YouTube Iframe</strong></h6>
+
             </div>
+            <div class="col-md-6 col-xs-6">
 
-
-            <div class="clearfix">
-              <div id="thumbcarousel" class="carousel slide" data-interval="false">
-                <div class="carousel-inner">
-                  <div class="item active">
-
-                    <div data-target="#carousel" data-slide-to="{{$index+1}}" class="thumb" ng-repeat="videos in item">
-                      <img src="http://placehold.it/100x80?text=Thumb+01">
-                      <div class="desc"><b>{{videos.Comment}}</b><br> Very Imp | Medium &nbsp;
-                        <i class="fa fa-info-circle"></i>
-                      </div>
-                    </div>
-
-                    <!-- <div data-target="#carousel" data-slide-to="1" class="thumb"><img
-                        src="http://placehold.it/100x80?text=Thumb+02">
-                      <div class="desc"><b>Blockchain in just 7 minutes</b><br> Very Imp | Medium &nbsp;
-                        <i class="fa fa-info-circle"></i>
-                      </div>
-                    </div>
-                    <div data-target="#carousel" data-slide-to="2" class="thumb"><img
-                        src="http://placehold.it/100x80?text=Thumb+03">
-                      <div class="desc"><b>Blockchain in just 7 minutes</b><br> Very Imp | Medium &nbsp;
-                        <i class="fa fa-info-circle"></i>
-                      </div>
-                    </div>
-                    <div data-target="#carousel" data-slide-to="3" class="thumb"><img
-                        src="http://placehold.it/100x80?text=Thumb+04">
-                      <div class="desc"><b>Blockchain in just 7 minutes</b><br> Very Imp | Medium &nbsp;
-                        <i class="fa fa-info-circle"></i>
-                      </div>
-                    </div> -->
-                  </div>
-                  <!-- <div class="item">
-                    <div data-target="#carousel" data-slide-to="4" class="thumb"><img
-                        src="http://placehold.it/100x80?text=Thumb+05">
-                      <div class="desc"><b>Blockchain in just 7 minutes</b><br> Very Imp | Medium &nbsp;
-                        <i class="fa fa-info-circle"></i>
-                      </div>
-                    </div>
-                    <div data-target="#carousel" data-slide-to="5" class="thumb"><img
-                        src="http://placehold.it/100x80?text=Thumb+06">
-                      <div class="desc"><b>Blockchain in just 7 minutes</b><br> Very Imp | Medium &nbsp;
-                        <i class="fa fa-info-circle"></i>
-                      </div>
-                    </div>
-                    <div data-target="#carousel" data-slide-to="6" class="thumb"><img
-                        src="http://placehold.it/100x80?text=Thumb+07">
-                      <div class="desc"><b>Blockchain in just 7 minutes</b><br> Very Imp | Medium &nbsp;
-                        <i class="fa fa-info-circle"></i>
-                      </div>
-                    </div>
-                    <div data-target="#carousel" data-slide-to="7" class="thumb"><img
-                        src="http://placehold.it/100x80?text=Thumb+08">
-                      <div class="desc"><b>Blockchain in just 7 minutes</b><br> Very Imp | Medium &nbsp;
-                        <i class="fa fa-info-circle"></i>
-                      </div>
-                    </div>
-                  </div> -->
+              <div class="card-block">
+                <div class="embed-responsive embed-responsive-16by9">
+                  <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/137857207"
+                    allowfullscreen></iframe>
                 </div>
-                <!-- /carousel-inner -->
-                <a class="left carousel-control" href="#thumbcarousel" role="button" data-slide="prev"> <i
-                    class="fa fa-angle-left" aria-hidden="true"></i> </a> <a class="right carousel-control"
-                  href="#thumbcarousel" role="button" data-slide="next"><i class="fa fa-angle-right"
-                    aria-hidden="true"></i>
-                </a>
               </div>
-              <!-- /thumbcarousel -->
+              <h6 class="text-center font-up font-bold indigo-text py-2 mb-3"><strong>Vimeo Iframe</strong></h6>
 
             </div>
-          </div>
-          <!--1st Carousal end -->
+            <!-- Grid column -->
 
-          <!--view more button-->
-          <div class="moreview">
-            <button type="button" class="btn btn-light"><b>View More</b></button>
           </div>
-          <!--end of button-->
+          <!-- Grid row -->
 
-          <!--goggle add-->
-          <div class="row no-gutters supporters-wrap clearfix">
-            <div class="col-xs-12">
-              <div class="google-add">
+          <hr class="my-4">
+          <!-- Grid row -->
+          <div class="row">
+            <div class="col-md-6 col-xs-6">
+              <div class="card-block">
+                <div class="embed-responsive embed-responsive-16by9">
+                  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v64KOxKVLVg" allowfullscreen>
+                  </iframe>
+                </div>
               </div>
+              <h6 class="text-center font-up font-bold indigo-text py-2 mb-3"><strong>YouTube Iframe</strong></h6>
+
             </div>
+            <div class="col-md-6 col-xs-6">
+
+              <div class="card-block">
+                <div class="embed-responsive embed-responsive-16by9">
+                  <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/137857207"
+                    allowfullscreen></iframe>
+                </div>
+              </div>
+              <h6 class="text-center font-up font-bold indigo-text py-2 mb-3"><strong>Vimeo Iframe</strong></h6>
+
+            </div>
+            <!-- Grid column -->
+
           </div>
-          <!--end of add-->
+          <!-- Grid row -->
+
         </div>
       </div>
+        <!-- ======= Advertisement Section ======= -->
 
-    </div>
-    <!-- ======= Advertisement Section ======= -->
-
-    <section id="supporters" class="section-with-bg">
-      <div class="container" data-aos="fade-up">
-        <div class="section-header">
-          <h2>Sponsors</h2>
-        </div>
-
-        <div class="row no-gutters supporters-wrap clearfix" data-aos="zoom-in" data-aos-delay="100">
-
-          <div class="col-lg-3 col-md-4 col-xs-12">
-            <div class="supporter-logo">
+        <!-- <section id="supporters" class="section-with-bg">
+          <div class="container" data-aos="fade-up">
+            <div class="section-header">
+              <h2>Sponsors</h2>
             </div>
+
+            <div class="row no-gutters supporters-wrap clearfix" data-aos="zoom-in" data-aos-delay="100">
+
+              <div class="col-lg-3 col-md-4 col-xs-12">
+                <div class="supporter-logo">
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-4 col-xs-12">
+                <div class="supporter-logo">
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-4 col-xs-12">
+                <div class="supporter-logo">
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-4 col-xs-12">
+                <div class="supporter-logo">
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          <div class="col-lg-3 col-md-4 col-xs-12">
-            <div class="supporter-logo">
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-4 col-xs-12">
-            <div class="supporter-logo">
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-4 col-xs-12">
-            <div class="supporter-logo">
-            </div>
-          </div>
-        </div>
-
+        </section>End Sponsors Section -->
       </div>
-
-    </section><!-- End Sponsors Section -->
-  </div>
-  <div class="container">
-    <div class="container_mea">
-      <div class="page-inner">
-        <div ng-if="selectedTocHeader">
-          <h3>{{selectedTocHeader}}</h3>
+      <div class="container">
+        <div class="container_mea">
+          <div class="page-inner">
+            <div ng-if="selectedTocHeader">
+              <h3>{{selectedTocHeader}}</h3>
+            </div>
+          </div>
         </div>
       </div>
     </div>

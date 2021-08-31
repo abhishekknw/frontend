@@ -283,7 +283,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             /*new mea controller code** */
 
             $scope.getToc = function () {
-           
+
                 let param = {
                     type_of_customer: "", 
                     category: "", 
@@ -301,6 +301,10 @@ angular.module('machadaloPages').filter('replace', [function () {
             }
 
             $scope.getCategory= function (value) {
+                alert("toc")
+           console.log( $scope.categoryArray)
+
+
                 console.log(value)
 $scope.selectedToc=value;
                 console.log($scope.selectedToc)
@@ -325,12 +329,12 @@ $scope.selectedToc=value;
             }
 
             $scope.getSubCategory= function (value) {
+                alert("category")
+            
                 console.log(value)
                 $scope.selectedcategory=value;
                 console.log($scope.selectedcategory)
-               
 
-                console.log($scope.selectedcategory)
 
 
                 let param = {
@@ -343,44 +347,44 @@ $scope.selectedToc=value;
                 
                     .then(function onSuccess(response) {
                         console.log(response)
-                        $scope.subcategoryArray=response.data.data.subcategory ; 
-                        console.log('1111111111111',$scope.subcategoryArray)
+                        $scope.contentArray=response.data.data.content ; 
+                        console.log('1111111111111',$scope.contentArray)
 
                     }).catch(function onError(response) {
                         console.log(response);
                     })
             }
 
-            $scope.getSubSubCategory= function (value) {
-                console.log(value)
-                $scope.selectedsubcategory=value;
-                console.log($scope.selectedsubcategory)
+            // $scope.getSubSubCategory= function (value) {
+            //     console.log(value)
+            //     $scope.selectedsubcategory=value;
+            //     console.log($scope.selectedsubcategory)
 
-                console.log($scope.selectedsubcategory)
+            //     console.log($scope.selectedsubcategory)
 
              
-                let param = {
-                    type_of_customer: $scope.selectedToc, 
-                    category: $scope.selectedcategory, 
-                    subcategory: $scope.selectedsubcategory,
-                    subsubcategory: ""
-                }
-                AuthService.getAllMeaData(param)
+            //     let param = {
+            //         type_of_customer: $scope.selectedToc, 
+            //         category: $scope.selectedcategory, 
+            //         subcategory: $scope.selectedsubcategory,
+            //         subsubcategory: ""
+            //     }
+            //     AuthService.getAllMeaData(param)
                 
-                    .then(function onSuccess(response) {
-                        console.log(response)
-                        $scope.subsubcategoryArray=response.data.data.subsubcategory ; 
-                        $scope.contentArray=response.data.data.content ; 
-                        $scope.contentArray['compairing numbers'].push({ Comment: "Adding two digits on a number line"});
-                        $scope.contentArray['compairing numbers'].push({ Comment: "Adding1 two digits on a number line"});
-                        $scope.contentArray['compairing numbers'].push({ Comment: "Adding22 two digits on a number line"});
-                        $scope.contentArray['compairing numbers'].push({ Comment: "Adding333 two digits on a number line"});
-                        console.log('1111111111111',$scope.subsubcategoryArray)
+            //         .then(function onSuccess(response) {
+            //             console.log(response)
+            //             $scope.subsubcategoryArray=response.data.data.subsubcategory ; 
+            //             $scope.contentArray=response.data.data.content ; 
+            //             $scope.contentArray['compairing numbers'].push({ Comment: "Adding two digits on a number line"});
+            //             $scope.contentArray['compairing numbers'].push({ Comment: "Adding1 two digits on a number line"});
+            //             $scope.contentArray['compairing numbers'].push({ Comment: "Adding22 two digits on a number line"});
+            //             $scope.contentArray['compairing numbers'].push({ Comment: "Adding333 two digits on a number line"});
+            //             console.log('1111111111111',$scope.subsubcategoryArray)
 
-                    }).catch(function onError(response) {
-                        console.log(response);
-                    })
-            }
+            //         }).catch(function onError(response) {
+            //             console.log(response);
+            //         })
+            // }
 
     
 
@@ -399,7 +403,7 @@ $scope.selectedToc=value;
 
 
             $scope.getTocNav= function(){
-                alert("TOC dropdown")
+                // alert("TOC dropdown")
                 AuthService.getAllTOCNavData()
                 
                     .then(function onSuccess(response) {
@@ -413,7 +417,7 @@ $scope.selectedToc=value;
             }
 
             $scope.getCategoryNav= function(){
-                alert("Category dropdown")
+                // alert("Category dropdown")
                 AuthService.getAllCategoryNavData()
                 
                     .then(function onSuccess(response) {
