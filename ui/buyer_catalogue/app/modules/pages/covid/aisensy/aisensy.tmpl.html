@@ -11,22 +11,22 @@
   <!-- navbar -->
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+      <!-- <div class="navbar-header"> -->
+        <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
           aria-expanded="false" aria-controls="navbar">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
-        </button>
+        </button> -->
         <a class="navbar-brand">
           <div class="logo-sec-mca">
             <img src="images/machadalo-logo.png" alt="" title="" />
           </div>
         </a>
-      </div>
+      
 
-      <div id="navbar" class="navbar-collapse collapse">
+      <!-- <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           <li class="fa fa-comments" id="active-nav" aria-hidden="true" style="font-size: large" ng-click="getActiveUser()">
             Live chat
@@ -51,7 +51,31 @@
             </li>
           </a>
         </ul>
+      </div> -->
+      <div class="nav-aisensy">
+        <input type="checkbox" id="nav-aisensy-check">
+        <div class="nav-aisensy-btn">
+          <label for="nav-aisensy-check">
+            <span></span>
+            <span></span>
+            <span></span>
+          </label>
+        </div>
+        
+        <div class="nav-aisensy-links">
+          <a target="_blank"class="fa fa-comments" id="active-nav" aria-hidden="true" style="font-size: large" ng-click="getActiveUser()">
+            Live chat</a>
+          <a target="_blank" class="fa fa-user-circle" aria-hidden="true" style="font-size: large" ng-click="contactDetail()">
+            Contact</a>
+          <a target="_blank"class="fa fa-history" aria-hidden="true" style="font-size: large" ng-click="historyDetail()">
+            History</a>
+          <a target="_blank"class="fa fa-file-text" aria-hidden="true" style="font-size: large">
+            Templates</a>
+          <a target="_blank"class="fa fa-filter" aria-hidden="true" style="font-size: large">
+            Filter</a>
+        <!-- </div> -->
       </div>
+    </div>
       <!--/.nav-collapse -->
     </div>
   </nav>

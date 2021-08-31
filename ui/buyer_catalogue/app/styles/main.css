@@ -3523,3 +3523,94 @@ a.tooltip{
 	width: auto;
     background-color: #0284b8;
 }
+
+
+/* new navbar check*/
+
+.nav-aisensy {
+	height: 50px;
+	width: 100%;
+	position: relative;
+  }
+  
+  .nav-aisensy > .nav-aisensy-header {
+	display: inline;
+  }
+  
+  .nav-aisensy > .nav-aisensy-header > .nav-aisensy-title {
+	display: inline-block;
+	font-size: 22px;
+	color: #fff;
+	padding: 10px 10px 10px 10px;
+  }
+  
+  .nav-aisensy > .nav-aisensy-btn {
+	display: none;
+  }
+  
+  .nav-aisensy > .nav-aisensy-links {
+	display: inline;
+	float: right;
+	font-size: 18px;
+  }
+  
+  .nav-aisensy > .nav-aisensy-links > a {
+	display: inline-block;
+	padding: 13px 10px 13px 10px;
+	text-decoration: none;
+	color: black;
+  }
+  
+  .nav-aisensy > .nav-aisensy-links > a:hover {
+	background-color: rgba(0, 0, 0, 0.3);
+  }
+  
+  .nav-aisensy > #nav-aisensy-check {
+	display: none;
+  }
+  
+  @media (max-width:600px) {
+	.nav-aisensy > .nav-aisensy-btn {
+	  display: inline-block;
+	  position: absolute;
+	  right: 0px;
+	  top: 0px;
+	}
+	.nav-aisensy > .nav-aisensy-btn > label {
+	  display: inline-block;
+	  width: 50px;
+	  height: 50px;
+	  padding: 13px;
+	}
+	/* .nav-aisensy > .nav-aisensy-btn > label:hover,.nav-aisensy  #nav-aisensy-check:checked ~ .nav-aisensy-btn > label {
+	  background-color: rgba(0, 0, 0, 0.3);
+	} */
+	.nav-aisensy > .nav-aisensy-btn > label > span {
+	  display: block;
+	  width: 25px;
+	  height: 10px;
+	  border-top: 2px solid grey;
+	}
+	.nav-aisensy > .nav-aisensy-links {
+	  position: absolute;
+	  display: block;
+	  width: 100%;
+	  background-color: lightgrey;
+	  height: 0px;
+	  transition: all 0.3s ease-in;
+	  overflow-y: hidden;
+	  top: 50px;
+	  left: 0px;
+	}
+	.nav-aisensy > .nav-aisensy-links > a {
+	  display: block;
+	  width: 100%;
+	}
+	.nav-aisensy > #nav-aisensy-check:not(:checked) ~ .nav-aisensy-links {
+	  height: 0px;
+	}
+	.nav-aisensy > #nav-aisensy-check:checked ~ .nav-aisensy-links {
+	  height: calc(100vh - 50px);
+	  overflow-y: auto;
+	}
+  }
