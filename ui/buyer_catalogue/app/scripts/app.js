@@ -268,6 +268,7 @@ angular
           data :{
           permission : 'can_view_intervene'
         }
+        
       })
       
       .state('covidVaccineCenter', {
