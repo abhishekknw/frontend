@@ -24,7 +24,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
             // AIsensy controller
             $scope.getActiveUser = function () {
-
+                $scope.showcontactDetail=false;
+                $scope.showhistoryDetail=false;
+                $scope.showgetActiveUser=true;
+                
                 AuthService.getAllActiveUserData()
 
                     .then(function onSuccess(response) {
@@ -91,6 +94,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             {
                 $scope.showcontactDetail=true;
                 $scope.showhistoryDetail=false;
+                $scope.showgetActiveUser=false;
                 let param={
                     next_page: 1
                 }
@@ -109,6 +113,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.historyDetail = function () {
                 $scope.showcontactDetail=false;
                 $scope.showhistoryDetail=true;
+                $scope.showgetActiveUser=false;
                 let param = {
                     next_page:1
                 }
