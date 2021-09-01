@@ -10,6 +10,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             // AuthService.Clear();
 
             console.log('ppppppppppppppppppppppppp',$rootScope.globals.currentUser);
+            
             let gooIndex = document.getElementById('goo-index');
             let hoverEnter = index => {
                 gooIndex.style.top = 100 * index + 'px';
