@@ -2507,11 +2507,13 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
   margin-bottom: 10px;
   /* display: block; */
 }
-.navbar-right{
+/* .navbar-right{
 	padding:  0px 10px;
 	position:relative;
 	display:inline-block;
 	top:15px;
+	background-color: white;
+	border-color: white;
 }
 .navbar-right li{
 	margin-right: 30px;
@@ -2536,12 +2538,12 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 		color: rgb(201, 67, 67);
 	}
 
-}
+} */
 
 /*tabs-aisensy*/
 
 .tab-aisensy {
-	margin-top: 0px;
+	margin-top: 75px;
 	padding: 0px;
   }
  /* #content1 input {
@@ -3068,6 +3070,8 @@ position: relative;
 }
 .navbar {
 	padding: 0;
+	background-color: white;
+	top: 70px;
   }
 /*new navbar*/
 #menu{
@@ -3689,6 +3693,7 @@ a.tooltip{
   
   .nav-aisensy > #nav-aisensy-check {
 	display: none;
+	background-color: brown;
   }
   
   @media (max-width:600px) {
