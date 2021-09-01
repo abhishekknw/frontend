@@ -6,10 +6,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
     }
 }]).controller('aisensyCtrl',
     ['$scope', '$rootScope', '$window', '$location', 'AuthService', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService',
-        function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $state, userService, constants, AuthService, vcRecaptchaService) {
-            AuthService.Clear();
+        function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $state, userService, constants, AuthService, vcRecaptchaService,permissions) {
+            // AuthService.Clear();
 
-
+            console.log('ppppppppppppppppppppppppp',$rootScope.globals.currentUser);
+            
             let gooIndex = document.getElementById('goo-index');
             let hoverEnter = index => {
                 gooIndex.style.top = 100 * index + 'px';
@@ -163,7 +164,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
               var begin = (($scope.curPage - 1) * $scope.itemsPerPage),
               end = begin + $scope.itemsPerPage;
                 
-              $scope.filteredItems = contactDetailData.slice(begin, end);
+            //   $scope.filteredItems = contactDetailData.slice(begin, end);
             });
             
 

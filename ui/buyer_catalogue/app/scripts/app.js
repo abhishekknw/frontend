@@ -265,6 +265,10 @@ angular
         url: '/intervene',
         controller: 'aisensyCtrl',
         templateUrl: 'modules/pages/covid/aisensy/aisensy.tmpl.html',
+          data :{
+          permission : 'can_view_intervene'
+        }
+        
       })
       
       .state('covidVaccineCenter', {
@@ -786,7 +790,7 @@ angular
         if($rootScope.globals && $rootScope.globals.userInfo && $rootScope.globals.userInfo.profile && $rootScope.globals.userInfo.profile.organisation && $rootScope.globals.userInfo.profile.organisation.category){
            category = $rootScope.globals.userInfo.profile.organisation.category;
         }
-       
+        var url = $location.url().split("/");
         // $location.path("/hospitalbeds/covidhelpdesk/");
         if (!$rootScope.globals.currentUser) {
           if ($location.path() == "/forgot-password") {
