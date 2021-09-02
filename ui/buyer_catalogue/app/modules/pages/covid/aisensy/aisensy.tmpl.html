@@ -606,15 +606,39 @@
                 <input placeholder="Search here" ng-change="searchChat()" ng-model="search" type="text" />
               </div>
             </div>
-
-            <div class="fields-box" style="height: auto">
+            <table class="table table-bordered table-hover">
+            
+              <tbody>
+                <tr  dir-paginate="details in historyDetailData | itemsPerPage:itemsPerPage"
+              total-items="totalCount" current-page="pagination.current" track by "$index">
+              <td>
+              <div class="friend-drawer friend-drawer--onhover">
+                <!-- <img
+                  class="profile-image"
+                  src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
+                  alt=""
+                /> -->
+                <div class="profile-image">
+                  {{details.whatsapp_name |firstlater}}
+                </div>
+                <div class="text">
+                  <h6>{{details.whatsapp_name}}</h6>
+                  <p class="text-muted">
+                    {{details.country_code}}{{details.phone_number}}
+                  </p>
+                </div>
+                <span class="time text-muted small">{{details.payload.timestamp}}</span>
+              </div>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+      <dir-pagination-controls  max-size="10" on-page-change="historyPageChanged(newPageNumber)" 
+      boundary-links="true">
+    </dir-pagination-controls>
+            <!-- <div class="fields-box" style="height: auto">
               <div ng-repeat="details in historyDetailData track by $index">
                 <div class="friend-drawer friend-drawer--onhover">
-                  <!-- <img
-                    class="profile-image"
-                    src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
-                    alt=""
-                  /> -->
                   <div class="profile-image">
                     {{details.whatsapp_name |firstlater}}
                   </div>
@@ -629,7 +653,7 @@
 
                 <hr />
               </div>
-            </div>
+            </div> -->
           </div>
         
       </div>
@@ -654,8 +678,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="contact in contactDetailData track by $index">
-            <th scope="row">1</th>
+          <!-- <tr ng-repeat="contact in contactDetailData track by $index"> -->
+            <tr  dir-paginate="contact in contactDetailData | itemsPerPage:itemsPerPage"
+              total-items="totalCount" current-page="pagination.current" track by "$index">
+              <td>{{$index+serial}}</td>
             <td>{{contact.whatsapp_name}}</td>
             <td>{{contact.country_code}}{{contact.phone_number}}</td>
             <td>{{contact.user_type}}</td>
@@ -664,9 +690,11 @@
           </tr>
         </tbody>
       </table>
-
-      <div data-pagination="" data-num-pages="numOfPages()" data-current-page="curPage" data-max-size="maxSize"
-        data-boundary-links="true">
+      <dir-pagination-controls  max-size="10" on-page-change="pageChanged(newPageNumber)" 
+        boundary-links="true">
+      </dir-pagination-controls>
+      <!-- <div data-pagination="" data-num-pages="numOfPages()" data-current-page="curPage" data-max-size="maxSize"
+        data-boundary-links="true"> -->
       </div>
     </div>
   </div>
