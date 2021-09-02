@@ -100,6 +100,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.messageBox=true;
             }
             $scope.messageBox=false;
+            $scope.resolveButton=false;
+            $scope.interveneButton=function (){
+                $scope.messageBox=false;
+                $scope.resolveButton=true;
+            }
 
             $scope.contactDetail = function (value)
             {
