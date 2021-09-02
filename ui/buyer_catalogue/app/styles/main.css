@@ -2711,9 +2711,18 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
  .fields-box{
 	 margin: 0;
 	 padding: 0;
-	 height:350px;
+	 height:600px;
 	 overflow-y: scroll;
 	 overflow-x: hidden;
+ }
+ .profile-image-chat{
+	text-align: center;
+	font-size: 25px;
+	background-color: aliceblue; 
+	border-radius: 50px; 
+	margin-left:87%; 
+	width:30px; 
+	margin-top: -38px;
  }
  /*status*/
  .status-image {
@@ -2844,11 +2853,7 @@ ul.timeline > li:before {
  
   border-radius: 10px;
   width: auto;
-  height: 500px;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  height: 530px;
   margin: auto;
   
   padding: 16px 5px;
@@ -2892,6 +2897,7 @@ ul.timeline > li:before {
 	width: calc(100% + -50px);
 	margin-bottom: 10px;
 	float: left;
+	text-align: left;
   }
 .message-2 {
   border-radius: 7px;
@@ -2901,6 +2907,7 @@ ul.timeline > li:before {
   width: calc(100% + -50px);
   margin-bottom: 10px;
   float: right;
+  text-align: left;
 }
 .icon-back {
   width: 40px;

@@ -134,7 +134,7 @@
                         <!-- Start Phone Chat-->
                         <div class="phone-chat" ng-if="showChatModule">
                           <div class="screen-phone">
-                            <div class="nav-phone">
+                            <div class="nav-phone navbar-fixed">
 
                               <div class="icon-back">
                                 <svg viewBox="0 0 57.653 64.11" width="25" height="25"
@@ -147,15 +147,16 @@
 
                               </div>
                               <div>
-                                <!-- <span class="profile-image-chat" style="text-align: center;font-size: large;background-color: aliceblue;">
-                                {{userChatData.whatsapp_name |firstlater}}
-                               </span>&nbsp;&nbsp; -->
+                              
                                 <span class="username">{{userChatData.whatsapp_name}}</span><br />
                                 <span
                                   class="tel-number">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
-
+                                  
+                                  <div class="profile-image-chat">
+                                    {{userChatData.whatsapp_name |firstlater}}
+                                  </div> 
                               </div>
-
+                             
                             </div>
 
                             <div class="chat">
@@ -172,7 +173,7 @@
                                     timezone}}</span>
                                 </div>
                               </div>
-                              <div class="input">
+                              <!--<div class="input">
                                 <input type="text" placeholder="Write message" />
                               </div>
                               <div class="btn-send">
@@ -182,6 +183,14 @@
                                     d="M 0 0 L 74.22 26.562 L 0.246 60.712 L 7.608 34.535 L 27.831 28.259 L 6.91 25.469 L 0 0 Z" />
                                 </svg>
                               </div>
+                            -->
+                            
+                            </div>
+                            <div class="aisensy-intervene-btn" >
+                              <br>
+                              <button type="button" class="btn btn-primary">
+                                Intervene
+                              </button>
                             </div>
                           </div>
                         </div>
