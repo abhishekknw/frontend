@@ -152,7 +152,7 @@
                                 <span
                                   class="tel-number">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
                                   
-                                  <div class="profile-image-chat">
+                                  <div class="profile-image-chat" ng-click="userProfileIcon()">
                                     {{userChatData.whatsapp_name |firstlater}}
                                   </div> 
                               </div>
@@ -173,7 +173,9 @@
                                     timezone}}</span>
                                 </div>
                               </div>
-                              <!--<div class="input">
+
+
+                              <div class="input" ng-if="messageBox">
                                 <input type="text" placeholder="Write message" />
                               </div>
                               <div class="btn-send">
@@ -183,11 +185,10 @@
                                     d="M 0 0 L 74.22 26.562 L 0.246 60.712 L 7.608 34.535 L 27.831 28.259 L 6.91 25.469 L 0 0 Z" />
                                 </svg>
                               </div>
-                            -->
+                           
                             
                             </div>
-                            <div class="aisensy-intervene-btn" >
-                              <br>
+                            <div class="aisensy-intervene-btn" ng-click="writeMessage()" ng-if="!messageBox" style= "margin-top:5px" >
                               <button type="button" class="btn btn-primary">
                                 Intervene
                               </button>
@@ -355,7 +356,7 @@
       <!-- Status -->
 
       <div class="container dropdown aisensy-page">
-        <div ng-if="userDetailData">
+        <div ng-if="userDetailData && isUserProfile" >
           <div class="top-select-option-mca">
             <div class="form-group">
               <div class="profile">
@@ -366,7 +367,7 @@
                 alt=""
               /><br /> -->
                   <div class="status-image">
-                    {{userDetailData.whatsapp_name |firstlater}}
+                    {{userDetailData.whatsapp_name |firstlater}} 
                   </div>
                   <div class="text">
                     <h6>{{userDetailData.whatsapp_name}}</h6>
@@ -613,7 +614,7 @@
                       {{details.country_code}}{{details.phone_number}}
                     </p>
                   </div>
-                  <span class="time text-muted small">{{details.payload_timestamp}}</span>
+                  <span class="time text-muted small">{{details.payload.timestamp}}</span>
                 </div>
 
                 <hr />

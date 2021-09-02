@@ -69,6 +69,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
             }
 
+            $scope.userProfileIcon= function(){
+                $scope.isUserProfile=true;
+            }
+
+            $scope.isUserProfile=false;
             $scope.userChat = function (value) {
 
                 let param = {
@@ -89,7 +94,12 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
             $scope.hideChatModule = function (value) {
                 $scope.showChatModule = false;
+                $scope.isUserProfile= false;
             }
+            $scope.writeMessage=function (){
+                $scope.messageBox=true;
+            }
+            $scope.messageBox=false;
 
             $scope.contactDetail = function (value)
             {
