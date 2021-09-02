@@ -301,7 +301,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             }
 
             $scope.getCategory= function (value) {
-                alert("toc")
+                // alert("toc")
            console.log( $scope.categoryArray)
 
 
@@ -329,7 +329,7 @@ $scope.selectedToc=value;
             }
 
             $scope.getSubCategory= function (value) {
-                alert("category")
+                // alert("category")
             
                 console.log(value)
                 $scope.selectedcategory=value;
