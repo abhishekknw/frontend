@@ -119,17 +119,17 @@
           <div class="row">
 
             <!--vdo1.1-->
-            <div class="col-md-6 col-xs-6">
+            <div class="col-md-6 col-xs-6" ng-repeat="content in contentArray">
               <div class="card-block">
                 <div class="embed-responsive embed-responsive-16by9">
-                  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/v64KOxKVLVg" allowfullscreen>
+                  <iframe class="embed-responsive-item" src="content.url" allowfullscreen>
                   </iframe>
                 </div>
               </div>
-              <h6 class="text-center font-up font-bold indigo-text py-2 mb-3"><strong>YouTube Iframe</strong></h6>
+              <h6 class="text-center font-up font-bold indigo-text py-2 mb-3"><strong>{{content.url}}</strong></h6>
             </div>
             <!--vdo1.2-->
-            <div class="col-md-6 col-xs-6">
+            <!-- <div class="col-md-6 col-xs-6">
               <div class="card-block">
                 <div class="embed-responsive embed-responsive-16by9">
                   <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/137857207"
@@ -137,7 +137,7 @@
                 </div>
               </div>
               <h6 class="text-center font-up font-bold indigo-text py-2 mb-3"><strong>Vimeo Iframe</strong></h6>
-            </div>
+            </div> -->
 
           </div>
           <!--end of first line vdo-->

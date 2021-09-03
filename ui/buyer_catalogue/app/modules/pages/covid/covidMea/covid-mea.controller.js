@@ -322,12 +322,18 @@ $scope.selectedToc=value;
                     .then(function onSuccess(response) {
                         console.log(response)
                         $scope.categoryArray=response.data.data.category ; 
+                        if($scope.categoryArray.length > 0){
+                            for(let i in $scope.categoryArray){
+                                $scope.categoryArray[i].url = 'https://www.youtube.com/embed/' + $scope.categoryArray[i].url;
+                            }
+                         }
                         console.log('1111111111111',$scope.categoryArray)
 
                     }).catch(function onError(response) {
                         console.log(response);
                     })
             }
+            
 
             $scope.getSubCategory= function (value) {
                 // alert("category")
