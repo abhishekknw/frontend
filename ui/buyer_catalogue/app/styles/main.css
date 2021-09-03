@@ -3094,6 +3094,7 @@ position: relative;
 
 #menu ul{
 	height:35px
+	
 }
 #menu li{
 	float:right;
@@ -3137,8 +3138,9 @@ position: relative;
 	left:35px
 }
 #menu ul.menus{
-	height:auto;
-	overflow:hidden;
+	height:400px;
+	overflow-y:scroll;
+	overflow-x:hidden;
 	width:180px;
 	background:#fff;
 	position:absolute;

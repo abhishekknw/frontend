@@ -283,6 +283,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             /*new mea controller code** */
 
             $scope.getToc = function () {
+                
 
                 let param = {
                     type_of_customer: "", 
