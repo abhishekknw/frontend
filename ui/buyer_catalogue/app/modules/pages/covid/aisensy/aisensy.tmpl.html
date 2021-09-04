@@ -436,6 +436,27 @@ ul.timeline > li:before {
 .icon-back:active {
   background-color: #ffffff94;
 }
+
+.icon-cross{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color:#ababab;
+  padding: 7px;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 200ms ease-in-out;
+  float: right;
+  margin-right: 7px;
+  top:-90px;
+}
+.icon-cross:hover {
+  background-color: rgb(145, 43, 43);
+}
+.icon-cross:active {
+  background-color: #08080894;
+}
+
 /* .message:nth-child(odd) {
   float: left;
   background-color: #e0e0e0;
@@ -652,7 +673,7 @@ ul.timeline > li:before {
                                 <span
                                   class="tel-number">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
                                   
-                                  <div class="profile-image-chat" ng-click="userProfileIcon()">
+                                  <div class="profile-image-chat" ng-click="userProfileIcon() ">
                                     {{userChatData.whatsapp_name |firstlater}}
                                   </div> 
                               </div>
@@ -875,6 +896,8 @@ ul.timeline > li:before {
                 src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
                 alt=""
               /><br /> -->
+
+
                   <div class="status-image">
                     {{userDetailData.whatsapp_name |firstlater}} 
                   </div>
@@ -883,8 +906,13 @@ ul.timeline > li:before {
                     <p class="text-muted">
                       {{userDetailData.country_code}}{{userDetailData.phone_number}}
                     </p>
+                    <div class="icon-cross">
+                      <svg class="svg-icon" viewBox="0 0 20 20">
+                        <path fill="#fff" d="M15.898,4.045c-0.271-0.272-0.713-0.272-0.986,0l-4.71,4.711L5.493,4.045c-0.272-0.272-0.714-0.272-0.986,0s-0.272,0.714,0,0.986l4.709,4.711l-4.71,4.711c-0.272,0.271-0.272,0.713,0,0.986c0.136,0.136,0.314,0.203,0.492,0.203c0.179,0,0.357-0.067,0.493-0.203l4.711-4.711l4.71,4.711c0.137,0.136,0.314,0.203,0.494,0.203c0.178,0,0.355-0.067,0.492-0.203c0.273-0.273,0.273-0.715,0-0.986l-4.711-4.711l4.711-4.711C16.172,4.759,16.172,4.317,15.898,4.045z"></path>
+                      </svg>
+                    </div>
                   </div>
-                  <hr />
+                  <hr/>
 
                   <div class="filter-card">
                     <div class="row">

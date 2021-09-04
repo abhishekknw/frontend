@@ -96,6 +96,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showChatModule = false;
                 $scope.isUserProfile= false;
             }
+
             $scope.writeMessage=function (){
                 $scope.messageBox=true;
             }
