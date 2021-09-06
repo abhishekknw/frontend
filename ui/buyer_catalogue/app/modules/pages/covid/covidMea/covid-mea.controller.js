@@ -8,8 +8,8 @@ angular.module('machadaloPages').filter('replace', [function () {
         return input.replace(regex, to);
     };
 }]).controller('covidMeaCtrl',
-    ['$scope', '$rootScope', '$window', '$location', 'AuthService', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService',
-        function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $state, userService, constants, AuthService, vcRecaptchaService) {
+    ['$scope','$sce', '$rootScope', '$window', '$location', 'AuthService', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService',
+        function ($scope,$sce, $rootScope, $window, $location, AuthService, suspenseLeadService, $state, userService, constants, AuthService, vcRecaptchaService) {
             AuthService.Clear();
             var url = $location.url().split("/");
             // $scope.categorys = ['Hospital Beds', 'Cylinders','Refills', 'Concentrators'];
@@ -356,7 +356,11 @@ $scope.selectedToc=value;
                         console.log(response)
                         $scope.contentArray=response.data.data.content ; 
                         console.log('1111111111111',$scope.contentArray)
-
+                       for(let i in $scope.contentArray){
+                           let url = $scope.contentArray[i].url;
+                           $scope.contentArray[i].url = $sce.trustAsResourceUrl('https://player.vimeo.com/video/137857207');
+                           //$scope.contentArray[i].url = url;
+                       }
                     }).catch(function onError(response) {
                         console.log(response);
                     })
