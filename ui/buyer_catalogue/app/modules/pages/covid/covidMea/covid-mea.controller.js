@@ -355,10 +355,18 @@ $scope.selectedToc=value;
                     .then(function onSuccess(response) {
                         console.log(response)
                         $scope.contentArray=response.data.data.content ; 
-                        console.log('1111111111111',$scope.contentArray)
+                        console.log('1111111111111+++++++++++++++++++++++++++',$scope.contentArray)
                        for(let i in $scope.contentArray){
-                           let url = $scope.contentArray[i].url;
-                           $scope.contentArray[i].url = $sce.trustAsResourceUrl('https://player.vimeo.com/video/137857207');
+                        let emdUrl = $scope.contentArray[i].url
+                        if (emdUrl.indexOf('watch?v=') != -1) {
+                            emdUrl = emdUrl.replace("watch?v=", "embed/");
+                        }
+                        $scope.contentArray[i].EmbedUrl = $sce.trustAsResourceUrl(emdUrl);
+                        //    let url = $scope.contentArray[i].url;
+                        // $scope.contentArray[i].url = $sce.trustAsResourceUrl('https://player.vimeo.com/video/137857207');
+                       // $scope.contentArray[i].url = $sce.trustAsResourceUrl('https://youtu.be/embed/Y3A3bPmMNcg');
+                      
+                           
                            //$scope.contentArray[i].url = url;
                        }
                     }).catch(function onError(response) {
