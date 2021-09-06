@@ -72,6 +72,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.userProfileIcon= function(){
                 $scope.isUserProfile=true;
             }
+            $scope.userChatIcon= function(){
+                $scope.isUserProfile=false;
+            }
 
             $scope.isUserProfile=false;
             $scope.userChat = function (value) {
