@@ -423,6 +423,7 @@ $scope.selectedToc=value;
 
             $scope.getTocNav= function(){
                 // alert("TOC dropdown")
+             
                 AuthService.getAllTOCNavData()
                 
                     .then(function onSuccess(response) {
