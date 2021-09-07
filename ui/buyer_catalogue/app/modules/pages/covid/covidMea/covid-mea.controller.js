@@ -292,10 +292,28 @@ angular.module('machadaloPages').filter('replace', [function () {
                     subsubcategory: ""
                 }
                 AuthService.getAllMeaData(param)
-                
                     .then(function onSuccess(response) {
                         console.log(response)
                         $scope.typeofCustomer=response.data.data.Toc ; 
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+
+                    AuthService.getAllTOCNavData()
+                    .then(function onSuccess(response) {
+                        console.log(response)
+                        $scope.tocNavDataArray=response.data.data ; 
+                        console.log('1111111111111',$scope.tocNavDataArray)
+
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+                AuthService.getAllCategoryNavData()
+                    .then(function onSuccess(response) {
+                        console.log(response)
+                        $scope.categoryNavDataArray=response.data.data ; 
+                        console.log('22222222',$scope.categoryNavDataArray)
+
                     }).catch(function onError(response) {
                         console.log(response);
                     })
@@ -421,30 +439,30 @@ $scope.selectedToc=value;
 
 
 
-            $scope.getTocNav= function(){
-                // alert("TOC dropdown")
-             
-                AuthService.getAllTOCNavData()
-                
+            $scope.getTocNav= function(value){
+                $scope.categoryNavSelected = false;
+                $scope.tocNavSelected = value;
+                let param = {
+                    type_of_customer:value
+                }
+                AuthService.getTOCNavDetailData(param)
                     .then(function onSuccess(response) {
-                        console.log(response)
-                        $scope.tocNavDataArray=response.data.data ; 
-                        console.log('1111111111111',$scope.tocNavDataArray)
-
+                        $scope.tocNavDetailData=response.data.data ;
                     }).catch(function onError(response) {
                         console.log(response);
                     })
             }
 
-            $scope.getCategoryNav= function(){
-                // alert("Category dropdown")
-                AuthService.getAllCategoryNavData()
-                
+            $scope.getCategoryNav= function(value){
+                $scope.categoryNavSelected = value;
+                $scope.tocNavSelected = false;
+                let param = {
+                    category:value
+                }
+                AuthService.getCategoryNavDetailData(param)
                     .then(function onSuccess(response) {
                         console.log(response)
-                        $scope.categoryNavDataArray=response.data.data ; 
-                        console.log('22222222',$scope.categoryNavDataArray)
-
+                        $scope.categoryNavDetailData=response.data.data ; 
                     }).catch(function onError(response) {
                         console.log(response);
                     })
