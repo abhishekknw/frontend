@@ -20,32 +20,51 @@
           <input type='checkbox' />
           <label>&#8801;<span></span></label>
           <ul>
-            <li ng-click="getTocNav()"><a class='prett'>Type of Customer</a>
+            <li><a class='prett'>Type of Customer</a>
               <ul class='menus'>
-                <li ng-repeat="tnav in tocNavDataArray " value="{{tnav}}" ><a>{{tnav}}
-                  
-                </a></li>
+                <li ng-repeat="tnav in tocNavDataArray " value="{{tnav}}" ng-click="getTocNav(tnav)"><a>{{tnav}}
+
+                  </a></li>
               </ul>
             </li>
 
-            <li ng-click="getCategoryNav()"><a class='prett'>Category</a>
+            <li><a class='prett'>Category</a>
               <ul class='menus'>
-                <li ng-repeat="cnav in categoryNavDataArray " value="{{cnav}}"><a>{{cnav}}</a></li>
+                <li ng-repeat="cnav in categoryNavDataArray " value="{{cnav}}" ng-click="getCategoryNav(cnav)">
+                  <a>{{cnav}}</a></li>
               </ul>
             </li>
 
           </ul>
       </div>
+    </div>
   </nav>
 
   <!--End new nav bar-->
 
 </div>
 </nav>
-
+<div class="container" ng-if="categoryNavSelected">
+  <div class="container_mea">
+    <div class="page-inner">
+      <div class="top-select-option">
+        <h3>Category Section</h3>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" ng-if="tocNavSelected">
+  <div class="container_mea">
+    <div class="page-inner">
+      <div class="top-select-option">
+        <h3>Type of Customer Section</h3>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!--end navigation -->
-<div ng-if="!selectedTocHeader">
+<div ng-if="!selectedTocHeader && !categoryNavSelected && !tocNavSelected">
 
   <div class="container">
     <div class="container_mea">
@@ -118,14 +137,15 @@
 
             <!--vdo1.1-->
             <div class="col-md-6 col-xs-6" ng-repeat="content in contentArray ">
-              <div class="card-block" >
+              <div class="card-block">
                 <div class="embed-responsive embed-responsive-16by9">
                   <iframe class="embed-responsive-item" ng-src="{{content.EmbedUrl}}" allowfullscreen>
                   </iframe>
                 </div>
               </div>
               <div>
-                <h6 class="text-center font-up font-bold indigo-text py-2 mb-3"><strong>{{content.EmbedUrl}}</strong></h6>
+                <h6 class="text-center font-up font-bold indigo-text py-2 mb-3"><strong>Theme: {{content.phrase_theme}} <br> ST: {{content.Start_Time}} ET: {{content.End_Time}}</strong>
+                </h6>
               </div>
             </div>
             <!--vdo1.2-->

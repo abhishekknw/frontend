@@ -586,5 +586,28 @@ angular.module('Authentication')
                      });
                      };
 
+                     authService.getTOCNavDetailData = function (param) {
+                        let url = "v0/ui/b2c-bot/mea_toc_navbar/?type_of_customer=" + param.type_of_customer
+                        return $http.get(apiHost + url)
+                        .then(function onSuccess(response) {
+                        return response
+                        })
+                        .catch(function onError(response) {
+                        return response
+                        });
+                        };
+
+
+                        authService.getCategoryNavDetailData = function (param) {
+                           let url = "v0/ui/b2c-bot/mea_category_navbar/?category=" + param.category
+                           return $http.get(apiHost + url)
+                           .then(function onSuccess(response) {
+                           return response
+                           })
+                           .catch(function onError(response) {
+                           return response
+                           });
+                           };
+
             return authService;
          }])
