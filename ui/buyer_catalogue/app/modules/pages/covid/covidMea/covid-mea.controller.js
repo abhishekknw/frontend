@@ -447,7 +447,7 @@ $scope.selectedToc=value;
                 }
                 AuthService.getTOCNavDetailData(param)
                     .then(function onSuccess(response) {
-                        $scope.tocNavDetailData=response.data.data ;
+                        $scope.tocNavDetailData=response.data.data;
                     }).catch(function onError(response) {
                         console.log(response);
                     })
