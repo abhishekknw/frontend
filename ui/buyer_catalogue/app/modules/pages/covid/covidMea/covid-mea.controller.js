@@ -8,8 +8,8 @@ angular.module('machadaloPages').filter('replace', [function () {
         return input.replace(regex, to);
     };
 }]).controller('covidMeaCtrl',
-    ['$scope', '$rootScope', '$window', '$location', 'AuthService', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService',
-        function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $state, userService, constants, AuthService, vcRecaptchaService) {
+    ['$scope','$sce', '$rootScope', '$window', '$location', 'AuthService', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService',
+        function ($scope,$sce, $rootScope, $window, $location, AuthService, suspenseLeadService, $state, userService, constants, AuthService, vcRecaptchaService) {
             AuthService.Clear();
             var url = $location.url().split("/");
             // $scope.categorys = ['Hospital Beds', 'Cylinders','Refills', 'Concentrators'];
@@ -283,6 +283,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             /*new mea controller code** */
 
             $scope.getToc = function () {
+                
 
                 let param = {
                     type_of_customer: "", 
@@ -301,7 +302,7 @@ angular.module('machadaloPages').filter('replace', [function () {
             }
 
             $scope.getCategory= function (value) {
-                alert("toc")
+                // alert("toc")
            console.log( $scope.categoryArray)
 
 
@@ -321,15 +322,21 @@ $scope.selectedToc=value;
                     .then(function onSuccess(response) {
                         console.log(response)
                         $scope.categoryArray=response.data.data.category ; 
+                        if($scope.categoryArray.length > 0){
+                            for(let i in $scope.categoryArray){
+                                $scope.categoryArray[i].url = 'https://www.youtube.com/embed/' + $scope.categoryArray[i].url;
+                            }
+                         }
                         console.log('1111111111111',$scope.categoryArray)
 
                     }).catch(function onError(response) {
                         console.log(response);
                     })
             }
+            
 
             $scope.getSubCategory= function (value) {
-                alert("category")
+                // alert("category")
             
                 console.log(value)
                 $scope.selectedcategory=value;
@@ -348,8 +355,20 @@ $scope.selectedToc=value;
                     .then(function onSuccess(response) {
                         console.log(response)
                         $scope.contentArray=response.data.data.content ; 
-                        console.log('1111111111111',$scope.contentArray)
-
+                        console.log('1111111111111+++++++++++++++++++++++++++',$scope.contentArray)
+                       for(let i in $scope.contentArray){
+                        let emdUrl = $scope.contentArray[i].url
+                        if (emdUrl.indexOf('watch?v=') != -1) {
+                            emdUrl = emdUrl.replace("watch?v=", "embed/");
+                        }
+                        $scope.contentArray[i].EmbedUrl = $sce.trustAsResourceUrl(emdUrl);
+                        //    let url = $scope.contentArray[i].url;
+                        // $scope.contentArray[i].url = $sce.trustAsResourceUrl('https://player.vimeo.com/video/137857207');
+                       // $scope.contentArray[i].url = $sce.trustAsResourceUrl('https://youtu.be/embed/Y3A3bPmMNcg');
+                      
+                           
+                           //$scope.contentArray[i].url = url;
+                       }
                     }).catch(function onError(response) {
                         console.log(response);
                     })
@@ -404,6 +423,7 @@ $scope.selectedToc=value;
 
             $scope.getTocNav= function(){
                 // alert("TOC dropdown")
+             
                 AuthService.getAllTOCNavData()
                 
                     .then(function onSuccess(response) {

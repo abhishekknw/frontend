@@ -69,6 +69,14 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
             }
 
+            $scope.userProfileIcon= function(){
+                $scope.isUserProfile=true;
+            }
+            $scope.userChatIcon= function(){
+                $scope.isUserProfile=false;
+            }
+
+            $scope.isUserProfile=false;
             $scope.userChat = function (value) {
 
                 let param = {
@@ -89,35 +97,70 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
             $scope.hideChatModule = function (value) {
                 $scope.showChatModule = false;
+                $scope.isUserProfile= false;
+                $scope.messageBox=false;
             }
 
-            $scope.contactDetail = function (value)
+            $scope.writeMessage=function (){
+                $scope.messageBox=true;
+            }
+            $scope.messageBox=false;
+            $scope.resolveButton=false;
+            $scope.interveneButton=function (){
+                $scope.messageBox=false;
+                $scope.resolveButton=true;
+            }
+
+            $scope.contactDetail = function (page)
             {
                 $scope.showcontactDetail=true;
                 $scope.showhistoryDetail=false;
+                $scope.totalCount = 0;
                 $scope.showgetActiveUser=false;
                 let param={
                     next_page: 1
                 }
+                if(page){
+                    param.next_page = page;
+                  } else {
+                    $scope.totalCount = 0;
+                    $scope.currentPage = 1;
+                    $scope.itemsPerPage = 10;
+                    $scope.serial = 1
+                    $scope.pagination = {
+                      current: 1
+                    };
+                  }
                 AuthService.getAllUserContact(param)
-                
-
                     .then(function onSuccess(response) {
                         console.log(response)
                         $scope.contactDetailData = response.data.data;
+                        $scope.totalCount = response.data.data.length
                         console.log($scope.contactDetailData)
                     }).catch(function onError(response) {
                         console.log(response);
                     })
             }
 
-            $scope.historyDetail = function () {
+            $scope.historyDetail = function (page) {
                 $scope.showcontactDetail=false;
                 $scope.showhistoryDetail=true;
                 $scope.showgetActiveUser=false;
-                let param = {
-                    next_page:1
+                $scope.totalCount = 0;
+                let param={
+                    next_page: 1
                 }
+                if(page){
+                    param.next_page = page;
+                  } else {
+                    $scope.totalCount = 0;
+                    $scope.currentPage = 1;
+                    $scope.itemsPerPage = 10;
+                    $scope.serial = 1
+                    $scope.pagination = {
+                      current: 1
+                    };
+                  }
                 
                 AuthService.getAllUserHistory(param)
                 
@@ -125,6 +168,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     .then(function onSuccess(response) {
                         console.log(response)
                         $scope.historyDetailData = response.data.data;
+                        $scope.totalCount = response.data.data.length
                         console.log($scope.historyDetailData)
                     }).catch(function onError(response) {
                         console.log(response);
@@ -150,24 +194,50 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
             }
 
-            $scope.curPage = 1,
-            $scope.itemsPerPage = 3,
-            $scope.maxSize = 5;
+            // $scope.curPage = 1,
+            // $scope.itemsPerPage = 3,
+            // $scope.maxSize = 5;
                 
             
-            $scope.numOfPages = function () {
-              return Math.ceil(contactDetailData.length / $scope.itemsPerPage);
+            // $scope.numOfPages = function () {
+            //   return Math.ceil(contactDetailData.length / $scope.itemsPerPage);
                 
-            };
+            // };
               
-              $scope.$watch('curPage + numPerPage', function() {
-              var begin = (($scope.curPage - 1) * $scope.itemsPerPage),
-              end = begin + $scope.itemsPerPage;
+            //   $scope.$watch('curPage + numPerPage', function() {
+            //   var begin = (($scope.curPage - 1) * $scope.itemsPerPage),
+            //   end = begin + $scope.itemsPerPage;
                 
-            //   $scope.filteredItems = contactDetailData.slice(begin, end);
-            });
-            
+            // //   $scope.filteredItems = contactDetailData.slice(begin, end);
+            // });
 
+
+            $scope.pageChanged = function (newPageNumber,tab) {
+                $scope.serial = newPageNumber * 10 - 9;
+                $scope.contactDetail(newPageNumber);    
+              };
+              $scope.historyPageChanged = function (newPageNumber,tab) {
+                $scope.serial = newPageNumber * 10 - 9;
+                $scope.historyDetail(newPageNumber);    
+              };
+
+            //   $scope.setCurrentPage =  function(){
+            //    $scope.pagination = {
+            //      current: 1
+            //    };
+            //    $scope.serial = 1
+            //   }
+
+              $scope.pagination = {
+                current: 1
+              };
+              $scope.totalCount = 0;
+              $scope.currentPage = 1;
+              $scope.itemsPerPage = 10;
+              $scope.serial = 1
+              $scope.pagination = {
+                current: 1
+              };
         }]);
 
 
