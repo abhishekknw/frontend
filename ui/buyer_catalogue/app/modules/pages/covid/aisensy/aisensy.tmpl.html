@@ -772,38 +772,7 @@
                             </div>
                           </div>
                         </div>
-
-                        <!--
-                  <div class="friend-drawer friend-drawer--onhover">
-                    <img class="profile-image"
-                      src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg" alt="">
-                    <div class="text">
-                      <h6>Divyaaa</h6>
-                      <p class="text-muted">HI! What's Up?</p>
-                    </div>
-                    <span class="time text-muted small">00:32</span>
-
-                  </div>
-                  <hr>
-                  <div class="friend-drawer friend-drawer--onhover ">
-                    <img class="profile-image"
-                      src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png" alt="">
-                    <div class="text">
-                      <h6>Priyank</h6>
-                      <p class="text-muted">HI! What's Up?</p>
-                    </div>
-                    <span class="time text-muted small">13:21</span>
-                  </div>
-                  <hr>
-                  <div class="friend-drawer friend-drawer--onhover ">
-                    <img class="profile-image"
-                      src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png" alt="">
-                    <div class="text">
-                      <h6>Samyaak</h6>
-                      <p class="text-muted">HI! What's Up?</p>
-                    </div>
-                    <span class="time text-muted small">13:21</span>
-                  </div>-->
+                        <!--End Phone Chat-->
                       </div>
                     </div>
                   </div>
@@ -923,6 +892,7 @@
                     </div>
                   </div>
                 </div>
+                <!--end of third tab content-->
               </div>
             </div>
           </div>
@@ -1160,12 +1130,12 @@
       </div>
     </div> -->
       </div>
-      <!-- End Phone Chat-->
+
     </div>
   </div>
-  <!--/Active chat list+status+chat details-->
+  <!--/Active chat list + status + chat details-->
 
-  <!--History-->
+  <!--History Tab-->
   <div class="container dropdown mca-page" ng-if="showhistoryDetail">
     <div class="top-select-option-aisensy">
       <div class="form-group">
@@ -1232,9 +1202,9 @@
       </div>
     </div>
   </div>
-  <!--/History-->
+  <!--/History Tab-->
 
-  <!--Contact-->
+  <!--Contact Tab-->
   <div class="container dropdown mca-page" ng-if="showcontactDetail">
     <h3><b>CONTACT</b></h3>
 
@@ -1269,6 +1239,56 @@
         data-boundary-links="true"> -->
     </div>
   </div>
-</div>
-<!--/Contact-->
+  <!--/Contact Tab-->
+
+  <!--Template Tab-->
+  <div class="container dropdown mca-page" ng-if="">
+    <h3><b>TEMPLATE</b></h3>
+
+    <div class="search-box" ng-if="">
+      <div class="input-wrapper">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        <input placeholder="Search here" ng-change="searchChat(search)" ng-model="search" id="search" name="search"
+          type="text" />
+      </div>
+    </div>
+
+    <div class="container table-responsive py-5">
+      <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Message ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Template Message</th>
+            <th scope="col">Status</th>
+            <th scope="col">Created At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- <tr ng-repeat="contact in contactDetailData track by $index"> -->
+          <!-- <tr dir-paginate="contact in contactDetailData | itemsPerPage:itemsPerPage" total-items="totalCount"
+            current-page="pagination.current" track by "$index">
+            <td>{{$index+serial}}</td>
+            <td>{{contact.whatsapp_name}}</td>
+            <td>{{contact.country_code}}{{contact.phone_number}}</td>
+            <td>{{contact.user_type}}</td>
+            <td>{{contact.updated_at | date : 'medium'}}</td>
+            <td>{{contact.created_at | date : 'medium'}}</td>
+          </tr> -->
+        </tbody>
+      </table>
+      <!-- <dir-pagination-controls max-size="10" on-page-change="pageChanged(newPageNumber)" boundary-links="true">
+      </dir-pagination-controls> -->
+      <!-- <div data-pagination="" data-num-pages="numOfPages()" data-current-page="curPage" data-max-size="maxSize"
+        data-boundary-links="true"> -->
+    </div>
+  </div>
+  <!--/Template-->
+
+  <!--Filter Tab-->
+  <div class="container dropdown mca-page" ng-if="">
+    <h3><b>FILTER</b></h3>
+  </div>
+  <!--/Filter Tab-->
+
 </div>
