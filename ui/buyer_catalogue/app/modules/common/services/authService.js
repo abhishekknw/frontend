@@ -485,7 +485,7 @@ angular.module('Authentication')
             };
 
             authService.getAllActiveUserData = function () {
-               let url = "v0/ui/b2c-bot/active_chats/"
+               let url = "v0/ui/b2c-bot/active-users/"
                return $http.get(apiHost + url)
                .then(function onSuccess(response) {
                return response
