@@ -24,17 +24,30 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
 
             // AIsensy controller
-            $scope.getActiveUser = function () {
+            $scope.getActiveUser = function (page) {
                 $scope.showcontactDetail=false;
                 $scope.showhistoryDetail=false;
                 $scope.showgetActiveUser=true;
-                
-                AuthService.getAllActiveUserData()
+                let param={
+                    next_page: 1
+                }
+                if(page){
+                    param.next_page = page;
+                  } else {
+                    $scope.totalCount = 0;
+                    $scope.currentPage = 1;
+                    $scope.itemsPerPage = 10;
+                    $scope.serial = 1
+                    $scope.pagination = {
+                      current: 1
+                    };
+                  }
+                AuthService.getAllActiveUserData(param)
 
                     .then(function onSuccess(response) {
                         console.log(response)
-
                         $scope.activeUserData = response.data.data;
+                        $scope.totalCount = response.data.data.length
                         console.log($scope.activeUserData)
                     }).catch(function onError(response) {
                         console.log(response);
@@ -220,6 +233,13 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.serial = newPageNumber * 10 - 9;
                 $scope.historyDetail(newPageNumber);    
               };
+
+              $scope.liveChatPageChanged = function (newPageNumber,tab) {
+                $scope.serial = newPageNumber * 10 - 9;
+                $scope.getActiveUser(newPageNumber);    
+              };
+
+
 
             //   $scope.setCurrentPage =  function(){
             //    $scope.pagination = {

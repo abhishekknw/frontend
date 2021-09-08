@@ -484,8 +484,8 @@ angular.module('Authentication')
                   });
             };
 
-            authService.getAllActiveUserData = function () {
-               let url = "v0/ui/b2c-bot/active-users/"
+            authService.getAllActiveUserData = function (param) {
+               let url = "v0/ui/b2c-bot/active-users/?next_page="+param.next_page
                return $http.get(apiHost + url)
                .then(function onSuccess(response) {
                return response
