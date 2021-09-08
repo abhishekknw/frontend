@@ -686,23 +686,24 @@
                             <tr dir-paginate="user in activeUserData | itemsPerPage:itemsPerPage"
                               total-items="totalCount" current-page="pagination.current" track by "$index">
                               <td>
-                                <div class="friend-drawer friend-drawer--onhover">
+                                <div class="friend-drawer friend-drawer--onhover"  ng-click="userDetail(user.phone_number)">
 
                                   <div class="profile-image">
                                     {{user.whatsapp_name |firstlater}}
                                   </div>
                                   <div class="text">
                                     <h6>{{user.whatsapp_name}}</h6>
-                                    <p class="text-muted">
+                                    <p class="text-muted"><b>
                                       {{user.country_code}}{{user.phone_number}}
+                                    </b></p>
+                                    <p>
+                                      {{user.last_message | limitTo: 50 }} {{user.last_message.length > 50 ? '...' :
+                                      ''}}
                                     </p>
                                   </div>
-                                  <div>
-                                    {{user.last_message | limitTo: 50 }} {{user.last_message.length > 50 ? '...' :
-                                    ''}}
-                                  </div>
-                                  <span class="time text-muted small">{{user.updated_at | date :
-                                    'medium'}}</span>
+                                  
+                                  <span class="time text-muted small"><b>{{user.updated_at | date :
+                                    'medium'}}</b></span>
 
                                 </div>
                               </td>

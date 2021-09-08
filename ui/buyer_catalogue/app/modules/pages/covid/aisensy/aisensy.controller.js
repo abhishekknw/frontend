@@ -31,7 +31,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showtemplateDetail = false;
 
                 let param = {
-                    next_page: 1
+                    next_page: 0
                 }
                 if (page) {
                     param.next_page = page;
@@ -60,8 +60,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showChatModule = true;
                 let param = {
                     phoneNumber: value,
-                    start: 0,
-                    end: 10
+                    nextPage: 1
                 }
                 AuthService.getAllUserDetailData(param)
 
@@ -191,7 +190,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.templateDetail = function () {
-                alert("template")
+                // alert("template")
                 console.log("111111111", $scope.templateDetailData)
                     $scope.showcontactDetail = false;
                     $scope.showhistoryDetail = false;
