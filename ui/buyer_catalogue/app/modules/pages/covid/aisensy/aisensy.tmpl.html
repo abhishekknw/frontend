@@ -564,6 +564,11 @@
   * {
     box-sizing: border-box;
   }
+
+  .add-button{
+    float: right;
+
+  }
 </style>
 
 
@@ -635,7 +640,7 @@
             History</a>
           <a target="_blank" class="fa fa-file-text" aria-hidden="true" style="font-size: large"
             ng-click=templateDetail()>
-            Templates</a>
+            Template</a>
           <a target="_blank" class="fa fa-filter" aria-hidden="true" style="font-size: large">
             Filter</a>
           <!-- </div> -->
@@ -1271,13 +1276,17 @@
 
   <!--Template Tab-->
   <div class="container dropdown mca-page" ng-if="showtemplateDetail">
-    <h3><b>TEMPLATE</b></h3>
+    
+    <div class="add-button">
+      <button type="button" class="btn btn-info">Add+</button>
+  </div>
 
-    <div class="search-box" ng-if="">
+    <h3 style="padding: 5px; margin-bottom: 20px;"><b>TEMPLATE</b></h3>
+
+    <div class="search-box">
       <div class="input-wrapper">
-        <i class="fa fa-search" aria-hidden="true"></i>
-        <input placeholder="Search here" ng-change="searchChat(search)" ng-model="search" id="search" name="search"
-          type="text" />
+        <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
+        <input placeholder="Search here" ng-change="searchChat()" ng-model="search" type="text" />
       </div>
     </div>
 
