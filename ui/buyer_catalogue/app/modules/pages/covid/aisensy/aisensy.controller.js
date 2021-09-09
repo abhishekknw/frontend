@@ -131,7 +131,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showgetActiveUser = false;
                 $scope.showtemplateDetail = false;
                 let param = {
-                    next_page: 1
+                    next_page: 0
                 }
                 if (page) {
                     param.next_page = page;
@@ -162,7 +162,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showtemplateDetail = false;
                 $scope.totalCount = 0;
                 let param = {
-                    next_page: 1
+                    next_page: 0
                 }
                 if (page) {
                     param.next_page = page;
@@ -191,10 +191,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.templateDetail = function () {
                 // alert("template")
                 console.log("111111111", $scope.templateDetailData)
-                    $scope.showcontactDetail = false;
-                    $scope.showhistoryDetail = false;
-                    $scope.showgetActiveUser = false;
-                    $scope.showtemplateDetail = true;
+                $scope.showcontactDetail = false;
+                $scope.showhistoryDetail = false;
+                $scope.showgetActiveUser = false;
+                $scope.showtemplateDetail = true;
 
                 AuthService.getTemplateTabData()
 
@@ -213,19 +213,72 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.search = value;
                 console.log("search", $scope.search)
 
-                let param = {
-                    search: $scope.search
+                if (value != "") {
+                    let param = {
+                        search: $scope.search
+                    }
+                    AuthService.getSearch(param)
+
+                        .then(function onSuccess(response) {
+                            console.log(response)
+                            console.log("31")
+                            $scope.activeUserData = response.data.data;
+
+                        }).catch(function onError(response) {
+                            console.log(response);
+                        })
+                } else {
+                    $scope.getActiveUser(1)
                 }
-                AuthService.getSearch(param)
+            }
 
-                    .then(function onSuccess(response) {
-                        console.log(response)
-                        console.log("31")
-                        $scope.activeUserData = response.data.data;
+            $scope.searchChatHistory = function (value) {
+                console.log(value)
+                $scope.search = value;
+                console.log("search", $scope.search)
 
-                    }).catch(function onError(response) {
-                        console.log(response);
-                    })
+                if (value != "") {
+                    let param = {
+                        search: $scope.search
+                    }
+                    AuthService.getSearch(param)
+
+                        .then(function onSuccess(response) {
+                            console.log(response)
+                            console.log("31")
+                            $scope.historyDetailData = response.data.data;
+
+                        }).catch(function onError(response) {
+                            console.log(response);
+                        })
+                } else {
+                    $scope.historyDetail(1)
+                }
+            }
+
+
+            $scope.searchChatTemplate = function (value) {
+                console.log(value)
+                $scope.search = value;
+                console.log("search", $scope.search)
+
+                if (value != "") {
+                    let param = {
+                        search: $scope.search
+                    }
+                    AuthService.getSearch(param)
+
+                        .then(function onSuccess(response) {
+                            console.log(response)
+                            console.log("31")
+                            $scope.templateDetailData = response.data.data;
+
+                        }).catch(function onError(response) {
+                            console.log(response);
+                        })
+                } else {
+                    $scope.templateDetail(1)
+                }
             }
 
 

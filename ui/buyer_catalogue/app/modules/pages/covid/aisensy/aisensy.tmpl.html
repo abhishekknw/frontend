@@ -1181,7 +1181,7 @@
           <div class="search-box">
             <div class="input-wrapper">
               <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
-              <input placeholder="Search here" ng-change="searchChat()" ng-model="search" type="text" />
+              <input placeholder="Search here" ng-change="searchChatHistory(historySearch)" ng-model="historySearch" type="text" />
             </div>
           </div>
           <table class="table table-bordered table-hover">
@@ -1287,7 +1287,7 @@
     <div class="search-box">
       <div class="input-wrapper">
         <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
-        <input placeholder="Search here" ng-change="searchChat()" ng-model="search" type="text" />
+        <input placeholder="Search here" ng-change="searchChatTemplate(templateSearch)" ng-model="templateSearch" type="text" />
       </div>
     </div>
 
@@ -1296,7 +1296,7 @@
         <thead class="thead-dark">
           <tr>
             <th scope="col">Sr. No.</th>
-            <th scope="col">Message ID</th>
+            <th scope="col">Template ID</th>
             <th scope="col">Name</th>
             <th scope="col">Template Message</th>
             <th scope="col">Status</th>
