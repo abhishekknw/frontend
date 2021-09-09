@@ -6,11 +6,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
     }
 }]).controller('aisensyCtrl',
     ['$scope', '$rootScope', '$window', '$location', 'AuthService', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService',
-        function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $state, userService, constants, AuthService, vcRecaptchaService,permissions) {
+        function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $state, userService, constants, AuthService, vcRecaptchaService, permissions) {
             // AuthService.Clear();
 
-            console.log('ppppppppppppppppppppppppp',$rootScope.globals.currentUser);
-            
+            console.log('ppppppppppppppppppppppppp', $rootScope.globals.currentUser);
+
             let gooIndex = document.getElementById('goo-index');
             let hoverEnter = index => {
                 gooIndex.style.top = 100 * index + 'px';
@@ -25,23 +25,25 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
             // AIsensy controller
             $scope.getActiveUser = function (page) {
-                $scope.showcontactDetail=false;
-                $scope.showhistoryDetail=false;
-                $scope.showgetActiveUser=true;
-                let param={
-                    next_page: 1
+                $scope.showcontactDetail = false;
+                $scope.showhistoryDetail = false;
+                $scope.showgetActiveUser = true;
+                $scope.showtemplateDetail = false;
+
+                let param = {
+                    next_page: 0
                 }
-                if(page){
+                if (page) {
                     param.next_page = page;
-                  } else {
+                } else {
                     $scope.totalCount = 0;
                     $scope.currentPage = 1;
                     $scope.itemsPerPage = 10;
                     $scope.serial = 1
                     $scope.pagination = {
-                      current: 1
+                        current: 1
                     };
-                  }
+                }
                 AuthService.getAllActiveUserData(param)
 
                     .then(function onSuccess(response) {
@@ -57,8 +59,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showChatModule = true;
                 let param = {
                     phoneNumber: value,
-                    start: 0,
-                    end: 10
+                    nextPage: 1
                 }
                 AuthService.getAllUserDetailData(param)
 
@@ -81,14 +82,14 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
             }
 
-            $scope.userProfileIcon= function(){
-                $scope.isUserProfile=true;
+            $scope.userProfileIcon = function () {
+                $scope.isUserProfile = true;
             }
-            $scope.userChatIcon= function(){
-                $scope.isUserProfile=false;
+            $scope.userChatIcon = function () {
+                $scope.isUserProfile = false;
             }
 
-            $scope.isUserProfile=false;
+            $scope.isUserProfile = false;
             $scope.userChat = function (value) {
 
                 let param = {
@@ -109,40 +110,40 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
             $scope.hideChatModule = function (value) {
                 $scope.showChatModule = false;
-                $scope.isUserProfile= false;
-                $scope.messageBox=false;
+                $scope.isUserProfile = false;
+                $scope.messageBox = false;
             }
 
-            $scope.writeMessage=function (){
-                $scope.messageBox=true;
+            $scope.writeMessage = function () {
+                $scope.messageBox = true;
             }
-            $scope.messageBox=false;
-            $scope.resolveButton=false;
-            $scope.interveneButton=function (){
-                $scope.messageBox=false;
-                $scope.resolveButton=true;
+            $scope.messageBox = false;
+            $scope.resolveButton = false;
+            $scope.interveneButton = function () {
+                $scope.messageBox = false;
+                $scope.resolveButton = true;
             }
 
-            $scope.contactDetail = function (page)
-            {
-                $scope.showcontactDetail=true;
-                $scope.showhistoryDetail=false;
+            $scope.contactDetail = function (page) {
+                $scope.showcontactDetail = true;
+                $scope.showhistoryDetail = false;
                 $scope.totalCount = 0;
-                $scope.showgetActiveUser=false;
-                let param={
+                $scope.showgetActiveUser = false;
+                $scope.showtemplateDetail = false;
+                let param = {
                     next_page: 1
                 }
-                if(page){
+                if (page) {
                     param.next_page = page;
-                  } else {
+                } else {
                     $scope.totalCount = 0;
                     $scope.currentPage = 1;
                     $scope.itemsPerPage = 10;
                     $scope.serial = 1
                     $scope.pagination = {
-                      current: 1
+                        current: 1
                     };
-                  }
+                }
                 AuthService.getAllUserContact(param)
                     .then(function onSuccess(response) {
                         console.log(response)
@@ -155,27 +156,27 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.historyDetail = function (page) {
-                $scope.showcontactDetail=false;
-                $scope.showhistoryDetail=true;
-                $scope.showgetActiveUser=false;
+                $scope.showcontactDetail = false;
+                $scope.showhistoryDetail = true;
+                $scope.showgetActiveUser = false;
+                $scope.showtemplateDetail = false;
                 $scope.totalCount = 0;
-                let param={
+                let param = {
                     next_page: 1
                 }
-                if(page){
+                if (page) {
                     param.next_page = page;
-                  } else {
+                } else {
                     $scope.totalCount = 0;
                     $scope.currentPage = 1;
                     $scope.itemsPerPage = 10;
                     $scope.serial = 1
                     $scope.pagination = {
-                      current: 1
+                        current: 1
                     };
-                  }
-                
+                }
                 AuthService.getAllUserHistory(param)
-                
+
 
                     .then(function onSuccess(response) {
                         console.log(response)
@@ -186,56 +187,85 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         console.log(response);
                     })
             }
-            $scope.searchChat= function (value) {
-                console.log(value)
-                $scope.search=value;
-                console.log("search",$scope.search)
 
-                let param = {
-                    search:$scope.search
-                }
-                AuthService.getSearch(param)
+            $scope.templateDetail = function () {
+                // alert("template")
+                console.log("111111111", $scope.templateDetailData)
+                    $scope.showcontactDetail = false;
+                    $scope.showhistoryDetail = false;
+                    $scope.showgetActiveUser = false;
+                    $scope.showtemplateDetail = true;
+
+                AuthService.getTemplateTabData()
 
                     .then(function onSuccess(response) {
                         console.log(response)
-                    console.log("31")
-                        $scope.activeUserData= response.data.data;
+                        $scope.templateDetailData = response.data.data;
+
                     }).catch(function onError(response) {
                         console.log(response);
                     })
             }
 
+
+            $scope.searchChat = function (value) {
+                console.log(value)
+                $scope.search = value;
+                console.log("search", $scope.search)
+
+                let param = {
+                    search: $scope.search
+                }
+                AuthService.getSearch(param)
+
+                    .then(function onSuccess(response) {
+                        console.log(response)
+                        console.log("31")
+                        $scope.activeUserData = response.data.data;
+
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+            }
+
+
+
             // $scope.curPage = 1,
             // $scope.itemsPerPage = 3,
             // $scope.maxSize = 5;
-                
-            
+
+
             // $scope.numOfPages = function () {
             //   return Math.ceil(contactDetailData.length / $scope.itemsPerPage);
-                
+
             // };
-              
+
             //   $scope.$watch('curPage + numPerPage', function() {
             //   var begin = (($scope.curPage - 1) * $scope.itemsPerPage),
             //   end = begin + $scope.itemsPerPage;
-                
+
             // //   $scope.filteredItems = contactDetailData.slice(begin, end);
             // });
 
 
-            $scope.pageChanged = function (newPageNumber,tab) {
+            $scope.pageChanged = function (newPageNumber, tab) {
                 $scope.serial = newPageNumber * 10 - 9;
-                $scope.contactDetail(newPageNumber);    
-              };
-              $scope.historyPageChanged = function (newPageNumber,tab) {
+                $scope.contactDetail(newPageNumber);
+            };
+            $scope.historyPageChanged = function (newPageNumber, tab) {
                 $scope.serial = newPageNumber * 10 - 9;
-                $scope.historyDetail(newPageNumber);    
-              };
+                $scope.historyDetail(newPageNumber);
+            };
 
-              $scope.liveChatPageChanged = function (newPageNumber,tab) {
+            $scope.liveChatPageChanged = function (newPageNumber, tab) {
                 $scope.serial = newPageNumber * 10 - 9;
-                $scope.getActiveUser(newPageNumber);    
-              };
+                $scope.getActiveUser(newPageNumber);
+            };
+            $scope.templatePageChanged = function (newPageNumber, tab) {
+                $scope.serial = newPageNumber * 10 - 9;
+                $scope.templateDetail(newPageNumber);
+            };
+
 
 
 
@@ -246,16 +276,16 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             //    $scope.serial = 1
             //   }
 
-              $scope.pagination = {
+            $scope.pagination = {
                 current: 1
-              };
-              $scope.totalCount = 0;
-              $scope.currentPage = 1;
-              $scope.itemsPerPage = 10;
-              $scope.serial = 1
-              $scope.pagination = {
+            };
+            $scope.totalCount = 0;
+            $scope.currentPage = 1;
+            $scope.itemsPerPage = 10;
+            $scope.serial = 1
+            $scope.pagination = {
                 current: 1
-              };
+            };
         }]);
 
 
