@@ -444,7 +444,7 @@ $scope.selectedToc=value;
                 $scope.tocNavSelected = value;
                 let param = {
                     type_of_customer:value
-                }
+                } 
                 AuthService.getTOCNavDetailData(param)
                     .then(function onSuccess(response) {
                         $scope.tocNavDetailData=response.data.data;

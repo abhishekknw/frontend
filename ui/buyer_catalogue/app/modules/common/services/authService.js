@@ -468,8 +468,8 @@ angular.module('Authentication')
                   });
             };
 
-         
-        
+
+
 
             authService.getAllMeaData = function (param) {
                console.log(param);
@@ -484,19 +484,19 @@ angular.module('Authentication')
                   });
             };
 
-            authService.getAllActiveUserData = function () {
-               let url = "v0/ui/b2c-bot/active_chats/"
+            authService.getAllActiveUserData = function (param) {
+               let url = "v0/ui/b2c-bot/active-users/?next_page=" + param.next_page
                return $http.get(apiHost + url)
-               .then(function onSuccess(response) {
-               return response
-               })
-               .catch(function onError(response) {
-               return response
-               });
-               };
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
 
             authService.getAllUserDetailData = function (param) {
-               let url = "v0/ui/b2c-bot/get-user-details/?phone_number="+param.phoneNumber 
+               let url = "v0/ui/b2c-bot/get-user-details/?phone_number=" + param.phoneNumber
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -507,7 +507,7 @@ angular.module('Authentication')
             };
 
             authService.getAllUserChatData = function (param) {
-               let url = "v0/ui/b2c-bot/get-user-conversation/?phone_number="+param. phoneNumber+ "&start=" + param.start + "&end=" + param.end;
+               let url = "v0/ui/b2c-bot/get-user-conversation/?phone_number=" + param.phoneNumber + "&next_page=" + param.nextPage;
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -521,93 +521,104 @@ angular.module('Authentication')
                console.log(param);
                let url = "v0/ui/b2c-bot/Mea_data/?type_of_customer=" + param.type_of_customer + "&category=" + param.category + "&subcategory=" + param.subcategory + "&subsubcategory=" + param.subsubcategory;
                return $http.get(apiHost + url)
-               .then(function onSuccess(response) {
-               return response
-               })
-               .catch(function onError(response) {
-               return response
-               });
-               };
-
-               authService.getAllTOCNavData = function () {
-                  let url = "v0/ui/b2c-bot/mea_toc_dropdown/"
-                  return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
-                  return response
+                     return response
                   })
                   .catch(function onError(response) {
-                  return response
+                     return response
                   });
-                  };
-               
-                  authService.getAllCategoryNavData = function () {
-                     let url = "v0/ui/b2c-bot/mea_category_dropdown/"
-                     return $http.get(apiHost + url)
-                     .then(function onSuccess(response) {
-                     return response
-                     })
-                     .catch(function onError(response) {
-                     return response
-                     });
-                     };
+            };
 
-               authService.getAllUserHistory = function (param) {
-                  console.log(param);
-                  let url = "v0/ui/b2c-bot/get-all-users-paginate/?next_page="+param.next_page;
-                  return $http.get(apiHost + url)
+            authService.getAllTOCNavData = function () {
+               let url = "v0/ui/b2c-bot/mea_toc_dropdown/"
+               return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
-                  return response
+                     return response
                   })
                   .catch(function onError(response) {
-                  return response
+                     return response
                   });
-                  };
+            };
 
-                  authService.getSearch = function (param) {
-                     console.log(param);
-                     let url = "v0/ui/b2c-bot/search-user/?search="+param.search;
-                     return $http.get(apiHost + url)
-                     .then(function onSuccess(response) {
+            authService.getAllCategoryNavData = function () {
+               let url = "v0/ui/b2c-bot/mea_category_dropdown/"
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
                      return response
-                     })
-                     .catch(function onError(response) {
+                  })
+                  .catch(function onError(response) {
                      return response
-                     });
-                     };
-                  authService.getAllUserContact = function (param) {
-                     console.log(param);
-                     let url = "v0/ui/b2c-bot/get-all-users-paginate/?next_page="+param.next_page;
-                     return $http.get(apiHost + url)
-                     .then(function onSuccess(response) {
-                     return response
-                     })
-                     .catch(function onError(response) {
-                     return response
-                     });
-                     };
+                  });
+            };
 
-                     authService.getTOCNavDetailData = function (param) {
-                        let url = "v0/ui/b2c-bot/mea_toc_navbar/?type_of_customer=" + param.type_of_customer
-                        return $http.get(apiHost + url)
-                        .then(function onSuccess(response) {
-                        return response
-                        })
-                        .catch(function onError(response) {
-                        return response
-                        });
-                        };
+            authService.getAllUserHistory = function (param) {
+               console.log(param);
+               let url = "v0/ui/b2c-bot/get-all-users-paginate/?next_page=" + param.next_page;
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+
+            authService.getSearch = function (param) {
+               console.log(param);
+               let url = "v0/ui/b2c-bot/search-user/?search=" + param.search;
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+            authService.getAllUserContact = function (param) {
+               console.log(param);
+               let url = "v0/ui/b2c-bot/get-all-users-paginate/?next_page=" + param.next_page;
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+
+            authService.getTOCNavDetailData = function (param) {
+               let url = "v0/ui/b2c-bot/mea_toc_navbar/?type_of_customer=" + param.type_of_customer
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
 
 
-                        authService.getCategoryNavDetailData = function (param) {
-                           let url = "v0/ui/b2c-bot/mea_category_navbar/?category=" + param.category
-                           return $http.get(apiHost + url)
-                           .then(function onSuccess(response) {
-                           return response
-                           })
-                           .catch(function onError(response) {
-                           return response
-                           });
-                           };
+            authService.getCategoryNavDetailData = function (param) {
+               let url = "v0/ui/b2c-bot/mea_category_navbar/?category=" + param.category
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+
+            authService.getTemplateTabData = function (param) {
+               let url = "v0/ui/b2c-bot/get-mca-master-templates/"
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
 
             return authService;
          }])
