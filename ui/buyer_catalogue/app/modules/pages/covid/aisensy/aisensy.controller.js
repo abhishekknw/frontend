@@ -45,9 +45,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 AuthService.getAllActiveUserData(param)
 
                     .then(function onSuccess(response) {
-                        console.log(response)
-                        $scope.activeUserData = response.data.data;
-                        $scope.totalCount = response.data.data.length
+                        $scope.activeUserData = response.data.data.users;
+                        $scope.totalCount = response.data.data.total_count
                         console.log($scope.activeUserData)
                     }).catch(function onError(response) {
                         console.log(response);
@@ -147,8 +146,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 AuthService.getAllUserContact(param)
                     .then(function onSuccess(response) {
                         console.log(response)
-                        $scope.contactDetailData = response.data.data;
-                        $scope.totalCount = response.data.data.length
+                        $scope.contactDetailData = response.data.data.users;
+                        $scope.totalCount = response.data.data.total_count;
                         console.log($scope.contactDetailData)
                     }).catch(function onError(response) {
                         console.log(response);
@@ -180,8 +179,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
                     .then(function onSuccess(response) {
                         console.log(response)
-                        $scope.historyDetailData = response.data.data;
-                        $scope.totalCount = response.data.data.length
+                        $scope.historyDetailData = response.data.data.users;
+                        $scope.totalCount = response.data.data.total_count
                         console.log($scope.historyDetailData)
                     }).catch(function onError(response) {
                         console.log(response);
@@ -201,7 +200,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         console.log(response)
                     console.log("31")
                         $scope.activeUserData= response.data.data;
-                     
                     }).catch(function onError(response) {
                         console.log(response);
                     })
