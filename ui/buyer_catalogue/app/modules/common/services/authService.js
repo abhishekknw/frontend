@@ -610,7 +610,7 @@ angular.module('Authentication')
             };
 
             authService.getTemplateTabData = function (param) {
-               let url = "v0/ui/b2c-bot/get-mca-master-templates/"
+               let url = "v0/ui/b2c-bot/get-mca-master-templates/?search="+param.search
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -619,6 +619,8 @@ angular.module('Authentication')
                      return response
                   });
             };
+
+
 
             return authService;
          }])
