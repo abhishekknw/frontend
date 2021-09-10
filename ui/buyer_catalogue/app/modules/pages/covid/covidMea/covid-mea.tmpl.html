@@ -149,8 +149,10 @@
               </div>
               <div>
                 <h6 class="text-center font-up font-bold indigo-text py-2 mb-3">
-                  <strong>Theme: {{content.phrase_theme}}
-                  <br> ST: {{content.Start_Time}} ET: {{content.End_Time}}</strong>
+                  <strong ng-if="content.phrase_theme != ''">Theme: {{content.phrase_theme}}</strong>
+                  <strong ng-if="content.phrase_theme == ''">Theme: {{content.video_theme}}</strong>
+                  <br>
+                  <strong ng-if="content.Start_Time != '' && content.End_Time !=''"> ST: {{content.Start_Time}} ET: {{content.End_Time}}</strong>
                 </h6>
 
                 <center>
