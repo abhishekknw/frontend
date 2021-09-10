@@ -355,13 +355,10 @@ $scope.selectedToc=value;
 
             $scope.getSubCategory= function (value) {
                 // alert("category")
-            
+                $scope.contentArray=[]
                 console.log(value)
                 $scope.selectedcategory=value;
                 console.log($scope.selectedcategory)
-
-
-
                 let param = {
                     type_of_customer: $scope.selectedToc, 
                     category: $scope.selectedcategory, 
@@ -375,11 +372,8 @@ $scope.selectedToc=value;
                         $scope.contentArray=response.data.data.content ; 
                         console.log('1111111111111+++++++++++++++++++++++++++',$scope.contentArray)
                        for(let i in $scope.contentArray){
-                        let emdUrl = $scope.contentArray[i].url
-                        if (emdUrl.indexOf('watch?v=') != -1) {
-                            emdUrl = emdUrl.replace("watch?v=", "embed/");
-                        }
-                        $scope.contentArray[i].EmbedUrl = $sce.trustAsResourceUrl(emdUrl);
+                        let emdUrl = $scope.contentArray[i].embededurl
+                        $scope.contentArray[i].youtubeurl = $sce.trustAsResourceUrl(emdUrl);
                         //    let url = $scope.contentArray[i].url;
                         // $scope.contentArray[i].url = $sce.trustAsResourceUrl('https://player.vimeo.com/video/137857207');
                        // $scope.contentArray[i].url = $sce.trustAsResourceUrl('https://youtu.be/embed/Y3A3bPmMNcg');

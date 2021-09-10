@@ -31,7 +31,8 @@
             <li><a class='prett'>Category</a>
               <ul class='menus'>
                 <li ng-repeat="cnav in categoryNavDataArray " value="{{cnav}}" ng-click="getCategoryNav(cnav)">
-                  <a>{{cnav}}</a></li>
+                  <a>{{cnav}}</a>
+                </li>
               </ul>
             </li>
 
@@ -128,7 +129,7 @@
       <div>
         <div>
           <h4 style=" color: #172d86">
-            <center><b>Total {{item.length}} Videos for {{selectedToc}} {{selectedcategory}}</b></center>
+            <center><b>Total {{contentArray.length}} Videos for {{selectedToc}} {{selectedcategory}}</b></center>
           </h4>
         </div>
 
@@ -137,13 +138,19 @@
             <!--vdo1.1-->
             <div class="col-md-6 col-xs-6" ng-repeat="content in contentArray ">
               <div class="card-block">
-                <div class="embed-responsive embed-responsive-16by9">
-                  <iframe class="embed-responsive-item" ng-src="{{content.EmbedUrl}}" allowfullscreen>
-                  </iframe>
+                <div class="embed-responsive embed-responsive-16by9" ng-show="content.contenttype =='youtubelink'">
+                  <iframe
+                    ng-src={{content.youtubeurl}}
+                    allowfullscreen>
+                  </iframe>           
+                </div>
+                <div class="embed-responsive embed-responsive-16by9" ng-show="content.contenttype =='article'">
+                  <a href={{content.embededurl}} target="_blank"><img src="images/machadalo-logo.png"></a>
                 </div>
               </div>
               <div>
-                <h6 class="text-center font-up font-bold indigo-text py-2 mb-3"><strong>Theme: {{content.phrase_theme}} <br> ST: {{content.Start_Time}} ET: {{content.End_Time}}</strong>
+                <h6 class="text-center font-up font-bold indigo-text py-2 mb-3"><strong>Theme: {{content.phrase_theme}}
+                    <br> ST: {{content.Start_Time}} ET: {{content.End_Time}}</strong>
                 </h6>
               </div>
             </div>
