@@ -2555,6 +2555,30 @@ width: 80px;
 .logo-sec-mea span{
 	color: #f82249;
 }
+
+
+@media screen and (max-width: 400px){
+
+	.logo-sec-mea-article{
+		text-align: center;	
+	}
+	.logo-sec-mea-article img{
+		width: 100px;
+		height: 80px;
+	}
+}
+
+.logo-sec-mea-article{
+	text-align: center;	
+}
+.logo-sec-mea-article img{
+    width: 300px;
+	height: 200px;
+}
+
+
+
+
 .container_mea{
 	margin-top: 80px;
 	width: 100%;
@@ -2711,6 +2735,13 @@ position: relative;
 		font-weight: bold;
 		letter-spacing: 4px;
 		text-transform: uppercase;
+}
+.logo-sec-mea-article{
+	text-align: center;	
+}
+.logo-sec-mea-article img{
+    width: 100px;
+	height: 80px;
 }
 
 
@@ -3108,41 +3139,39 @@ a.tooltip{
 	display:block;
 	}
 	/*ratings*/
-	.rating {
-		
-		border: none;
-		transform: translate(-25%, -25%);
+
+	.star-rating {
+		display:flex;
+		flex-direction: row-reverse;
+		font-size:1.5em;
+		justify-content:space-around;
+		padding:0 .2em;
+		text-align:center;
+		width:5em;
+		margin-bottom: 5px;
+		margin-top: -10px;
 	  }
 	  
-	  .rating > label {
-		color: #90A0A3;
-		float: right;
+	  .star-rating input {
+		display:none;
 	  }
 	  
-	  .rating > label:before {
-		margin: 5px;
-		font-size: 1.5em;
-		font-family: FontAwesome;
-		content: "\f005";
-		display: inline-block;
+	  .star-rating label {
+		color:#ccc;
+		cursor:pointer;
 	  }
 	  
-	  .rating > input {
-		display: none;
+	  .star-rating :checked ~ label {
+		color:#f90;
 	  }
 	  
-	  .rating > input:checked ~ label,
-	  .rating:not(:checked) > label:hover,
-	  .rating:not(:checked) > label:hover ~ label {
-		color: #F79426;
+	  .star-rating label:hover,
+	  .star-rating label:hover ~ label {
+		color:#fc0;
 	  }
-	  
-	  .rating > input:checked + label:hover,
-	  .rating > input:checked ~ label:hover,
-	  .rating > label:hover  input:checked  label,
-	  .rating > input:checked  label:hover  label {
-		color: #FECE31;
-	  }
+
+
+
 
 	  .view-more{
 		  padding-left: 115px;

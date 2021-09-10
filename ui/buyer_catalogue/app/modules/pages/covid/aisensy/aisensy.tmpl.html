@@ -382,7 +382,7 @@
     width: auto;
     height: auto;
     margin: auto;
-
+  
     padding: 16px 5px;
   }
 
@@ -392,6 +392,7 @@
     height: 100%;
     border-radius: 10px;
     overflow: hidden;
+ 
   }
 
   .nav-phone {
@@ -417,9 +418,10 @@
 
   .chat {
     width: 100%;
-    height: calc(100% + -97px);
+    height: 400px;
     overflow: auto;
     padding: 10px;
+    transform: rotate(180deg);
   }
 
   .message-1 {
@@ -429,8 +431,9 @@
     font: 15px "Roboto", Segoe UI, sans-serif;
     width: calc(100% + -50px);
     margin-bottom: 10px;
-    float: left;
+    float: right;
     text-align: left;
+    transform: rotate(-180deg);
   }
 
   .message-2 {
@@ -440,8 +443,9 @@
     font: 15px "Roboto", Segoe UI, sans-serif;
     width: calc(100% + -50px);
     margin-bottom: 10px;
-    float: right;
+    float: left;
     text-align: left;
+    transform: rotate(-180deg);
   }
 
   .icon-back {
@@ -514,6 +518,7 @@
   .chat::-webkit-scrollbar {
     width: 10px;
     height: 10px;
+    
   }
 
   .chat::-webkit-scrollbar-thumb {
@@ -763,6 +768,7 @@
 
                           <div class="chat">
                             <div ng-repeat="chat in userChatData.payload track by $index">
+                              
                               <div class="message-1" ng-if="chat.sender=='user'">
                                 {{chat.content.text}}
                                 <span>{{chat.timestamp | date : format :
@@ -1287,7 +1293,10 @@
     <div class="search-box">
       <div class="input-wrapper">
         <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
-        <input placeholder="Search here" ng-change="searchChatTemplate(templateSearch)" ng-model="templateSearch" type="text" />
+
+        <input placeholder="Search here" 
+        ng-change="templateDetail(templateSearch)" ng-model="templateSearch"type="text" />
+
       </div>
     </div>
 

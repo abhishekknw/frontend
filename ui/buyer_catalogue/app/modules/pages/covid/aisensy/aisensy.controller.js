@@ -36,7 +36,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 if (page) {
                     param.next_page = page;
                 } else {
-                    $scope.totalCount = 0;
+                    $scope.totalCount = 1;
                     $scope.currentPage = 1;
                     $scope.itemsPerPage = 10;
                     $scope.serial = 1
@@ -188,7 +188,15 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
             }
 
-            $scope.templateDetail = function () {
+            $scope.templateDetail = function (value) {
+                // console.log(value)
+                // console.log( $scope.templateSearch)
+                let param = {
+                    search: value,                  
+                }
+                if(!value){
+                    param.search=""
+                }
                 // alert("template")
                 console.log("111111111", $scope.templateDetailData)
                 $scope.showcontactDetail = false;
@@ -196,7 +204,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showgetActiveUser = false;
                 $scope.showtemplateDetail = true;
 
-                AuthService.getTemplateTabData()
+                AuthService.getTemplateTabData(param)
 
                     .then(function onSuccess(response) {
                         console.log(response)
@@ -257,29 +265,29 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
 
-            $scope.searchChatTemplate = function (value) {
-                console.log(value)
-                $scope.search = value;
-                console.log("search", $scope.search)
+            // $scope.searchChatTemplate = function (value) {
+            //     console.log(value)
+            //     $scope.search = value;
+            //     console.log("search", $scope.search)
 
-                if (value != "") {
-                    let param = {
-                        search: $scope.search
-                    }
-                    AuthService.getSearch(param)
+            //     if (value != "") {
+            //         let param = {
+            //             search: $scope.search
+            //         }
+            //         AuthService.getSearch(param)
 
-                        .then(function onSuccess(response) {
-                            console.log(response)
-                            console.log("31")
-                            $scope.templateDetailData = response.data.data;
+            //             .then(function onSuccess(response) {
+            //                 console.log(response)
+            //                 console.log("31")
+            //                 $scope.templateDetailData = response.data.data;
 
-                        }).catch(function onError(response) {
-                            console.log(response);
-                        })
-                } else {
-                    $scope.templateDetail(1)
-                }
-            }
+            //             }).catch(function onError(response) {
+            //                 console.log(response);
+            //             })
+            //     } else {
+            //         $scope.templateDetail(1)
+            //     }
+            // }
 
 
 
