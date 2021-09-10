@@ -9,6 +9,11 @@
 <style>
   /*aisensy*/
 
+
+  div.white-space-pre-line {
+    white-space: pre-line;
+}
+
   .navbar-collapse.in {
     overflow-y: hidden;
     /* overflow-x: hidden; */
@@ -430,22 +435,25 @@
     padding: 5px;
     font: 15px "Roboto", Segoe UI, sans-serif;
     /* width: calc(100% + -50px); */
-    max-width:50%;
-   min-width:100px;
+ max-width:calc(100% + -50px);
+    min-width:150px;
     margin-bottom: 10px;
     float: right;
     text-align: left;
+
+   
     /* transform: rotate(-180deg); */
   }
 
   .message-2 {
+
     border-radius: 7px;
     background-color: #aede2e;
     padding: 5px;
     font: 15px "Roboto", Segoe UI, sans-serif;
     /* width: calc(100% + -50px); */
     max-width:calc(100% + -50px);
-   min-width:180px;
+    min-width:250px;
     margin-bottom: 10px;
     float: left;
     text-align: left;
@@ -773,17 +781,19 @@
                           <div class="chat">
                             <div ng-repeat="chat in userChatData.payload track by $index">
                               <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
+                              <div style="width: 100%; float:right;">
                               <div class="message-1" ng-if="chat.sender=='user'">
                                 {{chat.content.text}}
                                 <span>{{chat.timestamp | date :'h:mma'}}</span>
                               </div>
-
-                              <div class="message-2" ng-if="chat.sender=='bot'">
+                              </div>
+                                
+                              <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
                                 {{chat.content.text}}
                                 <span>{{chat.timestamp | date : 'h:mma'}}</span>
                               </div>
                             </div>
-
+                            
                           </div>
                           <div ng-if="messageBox">
                             <div class="input">
