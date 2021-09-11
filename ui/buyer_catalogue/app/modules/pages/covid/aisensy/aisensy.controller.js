@@ -31,7 +31,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showtemplateDetail = false;
 
                 let param = {
-                    next_page: 0
+                    next_page: 1
                 }
                 if (page) {
                     param.next_page = page;
