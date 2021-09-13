@@ -12,7 +12,7 @@
 
   div.white-space-pre-line {
     white-space: pre-line;
-}
+  }
 
   .navbar-collapse.in {
     overflow-y: hidden;
@@ -70,15 +70,15 @@
 
   .tab-aisensy label {
 
-  display: inline-block;
-  padding: 3px;
-/* margin: 0 -1px; */
-width: 32.5%;
-border: 1px solid #000;
-text-align: center;
-margin-bottom: 10px;
-border-radius: 15px; 
-}
+    display: inline-block;
+    padding: 3px;
+    /* margin: 0 -1px; */
+    width: 32.5%;
+    border: 1px solid #000;
+    text-align: center;
+    margin-bottom: 10px;
+    border-radius: 15px;
+  }
 
   /* @media screen and (max-width: 450px) {
 	.tab-aisensy label {
@@ -105,7 +105,7 @@ border-radius: 15px;
     border: 1px solid #000;
     border-width: 1px 1px 1px 1px;
     background-color: #8a130f;
-    border-radius: 15px; 
+    border-radius: 15px;
   }
 
   .tab-aisensy #tab-1:checked~.content #content-1,
@@ -389,7 +389,7 @@ border-radius: 15px;
     width: auto;
     height: auto;
     margin: auto;
-  
+
     padding: 16px 5px;
   }
 
@@ -399,7 +399,7 @@ border-radius: 15px;
     height: 100%;
     border-radius: 10px;
     overflow: hidden;
- 
+
   }
 
   .nav-phone {
@@ -437,13 +437,13 @@ border-radius: 15px;
     padding: 5px;
     font: 15px "Roboto", Segoe UI, sans-serif;
     /* width: calc(100% + -50px); */
- max-width:calc(100% + -50px);
-    min-width:150px;
+    max-width: calc(100% + -50px);
+    min-width: 150px;
     margin-bottom: 10px;
     float: right;
     text-align: left;
 
-   
+
     /* transform: rotate(-180deg); */
   }
 
@@ -454,8 +454,8 @@ border-radius: 15px;
     padding: 5px;
     font: 15px "Roboto", Segoe UI, sans-serif;
     /* width: calc(100% + -50px); */
-    max-width:calc(100% + -50px);
-    min-width:250px;
+    max-width: calc(100% + -50px);
+    min-width: 250px;
     margin-bottom: 10px;
     float: left;
     text-align: left;
@@ -532,7 +532,7 @@ border-radius: 15px;
   .chat::-webkit-scrollbar {
     width: 10px;
     height: 10px;
-    
+
   }
 
   .chat::-webkit-scrollbar-thumb {
@@ -584,59 +584,24 @@ border-radius: 15px;
     box-sizing: border-box;
   }
 
-  .add-button{
+  .add-button {
     float: right;
 
   }
 </style>
 
 
-<div ng-init="getActiveUser()">
+<div ng-init="getActiveUser()  ">
 
   <!-- navbar -->
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-      <!-- <div class="navbar-header"> -->
-      <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-          aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button> -->
       <a class="navbar-brand">
         <div class="logo-sec-mca">
           <img src="images/machadalo-logo.png" alt="" title="" />
         </div>
       </a>
 
-
-      <!-- <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <li class="fa fa-comments" id="active-nav" aria-hidden="true" style="font-size: large" ng-click="getActiveUser()">
-            Live chat
-          </li>
-
-          <li class="fa fa-user-circle" aria-hidden="true" style="font-size: large" ng-click="contactDetail()">
-            Contact
-          </li>
-
-          <li class="fa fa-history" aria-hidden="true" style="font-size: large" ng-click="historyDetail()">
-            History
-          </li>
-
-          <a href="#">
-            <li class="fa fa-file-text" aria-hidden="true" style="font-size: large">
-              Templates
-            </li>
-          </a>
-          <a href="#">
-            <li class="fa fa-filter" aria-hidden="true" style="font-size: large">
-              Filter
-            </li>
-          </a>
-        </ul>
-      </div> -->
       <div class="nav-aisensy">
         <input type="checkbox" id="nav-aisensy-check">
         <div class="nav-aisensy-btn">
@@ -681,9 +646,9 @@ border-radius: 15px;
             <input id="tab-1" type="radio" name="tab" checked />
             <label for="tab-1">Active</label>
             <input id="tab-2" type="radio" name="tab" />
-            <label for="tab-2">Action Required</label>
+            <label for="tab-2" ng-click="getActionRequiredUser()">Action Required</label>
             <input id="tab-3" type="radio" name="tab" />
-            <label for="tab-3">Intervened</label>
+            <label for="tab-3" ng-click="getInterveneUser()">Intervened</label>
 
             <div class="content">
               <div id="content-1">
@@ -705,7 +670,8 @@ border-radius: 15px;
                             <tr dir-paginate="user in activeUserData | itemsPerPage:itemsPerPage"
                               total-items="totalCount" current-page="pagination.current" track by "$index">
                               <td>
-                                <div class="friend-drawer friend-drawer--onhover"  ng-click="userDetail(user.phone_number)">
+                                <div class="friend-drawer friend-drawer--onhover"
+                                  ng-click="userDetail(user.phone_number)">
 
                                   <div class="profile-image">
                                     {{user.whatsapp_name |firstlater}}
@@ -713,16 +679,16 @@ border-radius: 15px;
                                   <div class="text">
                                     <h6>{{user.whatsapp_name}}</h6>
                                     <p class="text-muted"><b>
-                                      {{user.country_code}}{{user.phone_number}}
-                                    </b></p>
+                                        {{user.country_code}}{{user.phone_number}}
+                                      </b></p>
                                     <p>
                                       {{user.last_message | limitTo: 50 }} {{user.last_message.length > 50 ? '...' :
                                       ''}}
                                     </p>
                                   </div>
-                                  
+
                                   <span class="time text-muted small"><b>{{user.updated_at | date :
-                                    'medium'}}</b></span>
+                                      'medium'}}</b></span>
 
                                 </div>
                               </td>
@@ -752,10 +718,10 @@ border-radius: 15px;
                           <hr />
                         </div> -->
 
-                      <!-- Start Phone Chat-->
+                      <!-- Start Phone Chat for tab1-->
                       <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
                         <div class="screen-phone">
-                          <div class="nav-phone navbar-fixed" >
+                          <div class="nav-phone navbar-fixed">
 
                             <div class="icon-back">
                               <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
@@ -774,7 +740,10 @@ border-radius: 15px;
                                 class="tel-number">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
 
                               <div class="profile-image-chat" ng-click="userProfileIcon()">
-                                {{userChatData.whatsapp_name |firstlater}}
+                                <span ng-if="userChatData.whatsapp_name!=''">
+                                  {{userChatData.whatsapp_name |firstlater}}
+                                </span>
+                                <span ng-if="userChatData.whatsapp_name==''">#</span>
                               </div>
                             </div>
 
@@ -784,18 +753,18 @@ border-radius: 15px;
                             <div ng-repeat="chat in userChatData.payload track by $index">
                               <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                               <div style="width: 100%; float:right;">
-                              <div class="message-1" ng-if="chat.sender=='user'">
-                                {{chat.content.text}}
-                                <span>{{chat.timestamp | date :'h:mma'}}</span>
+                                <div class="message-1" ng-if="chat.sender=='user'">
+                                  {{chat.content.text}}
+                                  <span>{{chat.timestamp | date :'h:mma'}}</span>
+                                </div>
                               </div>
-                              </div>
-                                
+
                               <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
                                 {{chat.content.text}}
                                 <span>{{chat.timestamp | date : 'h:mma'}}</span>
                               </div>
                             </div>
-                            
+
                           </div>
                           <div ng-if="messageBox">
                             <div class="input">
@@ -826,7 +795,7 @@ border-radius: 15px;
                           </div>
                         </div>
                       </div>
-                      <!--End Phone Chat-->
+                      <!--End Phone Chat  for tab1-->
                     </div>
                   </div>
                 </div>
@@ -836,11 +805,11 @@ border-radius: 15px;
               <div id="content-2">
                 <div class="row-aisensy no-gutters">
                   <div class="col-md-12 col-xs-12 border-right">
-                    <div class="search-box">
+                    <div class="search-box" ng-if="!showChatModule">
                       <div class="input-wrapper">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                        <input placeholder="Search here" ng-change="searchActionRequest(searchReUser)"
-                          ng-model="searchReUser" id="searchRe" name="search" type="text" />
+                        <input placeholder="Search here" ng-change="searchActionRequest(search)" ng-model="search"
+                          id="search" name="search" type="text" />
                       </div>
                     </div>
                     <div class="fields-box">
@@ -848,10 +817,11 @@ border-radius: 15px;
                         <table class="table table-bordered table-hover">
 
                           <tbody>
-                            <tr dir-paginate="user in activeUserData | itemsPerPage:itemsPerPage"
+                            <tr dir-paginate="user in actionRequiredUserData | itemsPerPage:itemsPerPage"
                               total-items="totalCount" current-page="pagination.current" track by "$index">
                               <td>
-                                <div class="friend-drawer friend-drawer--onhover"  ng-click="userDetail(user.phone_number)">
+                                <div class="friend-drawer friend-drawer--onhover"
+                                  ng-click="userDetail(user.phone_number)">
 
                                   <div class="profile-image">
                                     {{user.whatsapp_name |firstlater}}
@@ -859,16 +829,16 @@ border-radius: 15px;
                                   <div class="text">
                                     <h6>{{user.whatsapp_name}}</h6>
                                     <p class="text-muted"><b>
-                                      {{user.country_code}}{{user.phone_number}}
-                                    </b></p>
+                                        {{user.country_code}}{{user.phone_number}}
+                                      </b></p>
                                     <p>
                                       {{user.last_message | limitTo: 50 }} {{user.last_message.length > 50 ? '...' :
                                       ''}}
                                     </p>
                                   </div>
-                                  
+
                                   <span class="time text-muted small"><b>{{user.updated_at | date :
-                                    'medium'}}</b></span>
+                                      'medium'}}</b></span>
 
                                 </div>
                               </td>
@@ -879,26 +849,7 @@ border-radius: 15px;
                           boundary-links="true">
                         </dir-pagination-controls>
                       </div>
-
-                      <!-- <div ng-if="!showChatModule" ng-repeat="user in activeUserData track by $index">
-                          <div class="friend-drawer friend-drawer--onhover" ng-click="userDetail(user.phone_number)">
-                            <div class="profile-image">
-                              {{user.whatsapp_name |firstlater}}
-                            </div>
-                            <div class="text">
-                              <h6>{{user.whatsapp_name}}</h6>
-                              <p class="text-muted">
-                                {{user.country_code}}{{user.phone_number}}
-                              </p>
-                            </div>
-                            <span class="time text-muted small">{{user.updated_at | date :
-                              'medium'}}</span>
-                          </div>
-
-                          <hr />
-                        </div> -->
-
-                      <!-- Start Phone Chat-->
+                      <!-- Start Phone Chat  for tab2-->
                       <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
                         <div class="screen-phone">
                           <div class="nav-phone navbar-fixed" ng-click="userProfileIcon()">
@@ -930,18 +881,18 @@ border-radius: 15px;
                             <div ng-repeat="chat in userChatData.payload track by $index">
                               <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                               <div style="width: 100%; float:right;">
-                              <div class="message-1" ng-if="chat.sender=='user'">
-                                {{chat.content.text}}
-                                <span>{{chat.timestamp | date :'h:mma'}}</span>
+                                <div class="message-1" ng-if="chat.sender=='user'">
+                                  {{chat.content.text}}
+                                  <span>{{chat.timestamp | date :'h:mma'}}</span>
+                                </div>
                               </div>
-                              </div>
-                                
+
                               <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
                                 {{chat.content.text}}
                                 <span>{{chat.timestamp | date : 'h:mma'}}</span>
                               </div>
                             </div>
-                            
+
                           </div>
                           <div ng-if="messageBox">
                             <div class="input">
@@ -972,12 +923,13 @@ border-radius: 15px;
                           </div>
                         </div>
                       </div>
-                      <!--End Phone Chat-->
+                      <!--End Phone Chat  for tab2-->
                     </div>
                   </div>
                 </div>
               </div>
               <!--end of second tab content-->
+
               <div id="content-3">
                 <div class="row-aisensy no-gutters">
                   <div class="col-md-12 col-xs-12 border-right">
@@ -985,7 +937,7 @@ border-radius: 15px;
                       <div class="input-wrapper">
                         <i class="fa fa-search" aria-hidden="true"></i>
                         <input placeholder="Search here" ng-change="searchIntervene(searchInUser)"
-                        ng-model="searchInUser" id="searchIn" name="search" type="text" />
+                          ng-model="searchInUser" id="searchIn" name="search" type="text" />
                       </div>
                     </div>
                     <div class="fields-box">
@@ -993,10 +945,11 @@ border-radius: 15px;
                         <table class="table table-bordered table-hover">
 
                           <tbody>
-                            <tr dir-paginate="user in activeUserData | itemsPerPage:itemsPerPage"
+                            <tr dir-paginate="user in interveneUserData | itemsPerPage:itemsPerPage"
                               total-items="totalCount" current-page="pagination.current" track by "$index">
                               <td>
-                                <div class="friend-drawer friend-drawer--onhover"  ng-click="userDetail(user.phone_number)">
+                                <div class="friend-drawer friend-drawer--onhover"
+                                  ng-click="userDetail(user.phone_number)">
 
                                   <div class="profile-image">
                                     {{user.whatsapp_name |firstlater}}
@@ -1004,16 +957,16 @@ border-radius: 15px;
                                   <div class="text">
                                     <h6>{{user.whatsapp_name}}</h6>
                                     <p class="text-muted"><b>
-                                      {{user.country_code}}{{user.phone_number}}
-                                    </b></p>
+                                        {{user.country_code}}{{user.phone_number}}
+                                      </b></p>
                                     <p>
                                       {{user.last_message | limitTo: 50 }} {{user.last_message.length > 50 ? '...' :
                                       ''}}
                                     </p>
                                   </div>
-                                  
+
                                   <span class="time text-muted small"><b>{{user.updated_at | date :
-                                    'medium'}}</b></span>
+                                      'medium'}}</b></span>
 
                                 </div>
                               </td>
@@ -1025,25 +978,7 @@ border-radius: 15px;
                         </dir-pagination-controls>
                       </div>
 
-                      <!-- <div ng-if="!showChatModule" ng-repeat="user in activeUserData track by $index">
-                          <div class="friend-drawer friend-drawer--onhover" ng-click="userDetail(user.phone_number)">
-                            <div class="profile-image">
-                              {{user.whatsapp_name |firstlater}}
-                            </div>
-                            <div class="text">
-                              <h6>{{user.whatsapp_name}}</h6>
-                              <p class="text-muted">
-                                {{user.country_code}}{{user.phone_number}}
-                              </p>
-                            </div>
-                            <span class="time text-muted small">{{user.updated_at | date :
-                              'medium'}}</span>
-                          </div>
-
-                          <hr />
-                        </div> -->
-
-                      <!-- Start Phone Chat-->
+                      <!-- Start Phone Chat  for tab3-->
                       <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
                         <div class="screen-phone">
                           <div class="nav-phone navbar-fixed" ng-click="userProfileIcon()">
@@ -1055,8 +990,6 @@ border-radius: 15px;
                                 <path fill="#fff"
                                   d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
                               </svg>
-
-
                             </div>
                             <div>
 
@@ -1075,18 +1008,18 @@ border-radius: 15px;
                             <div ng-repeat="chat in userChatData.payload track by $index">
                               <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                               <div style="width: 100%; float:right;">
-                              <div class="message-1" ng-if="chat.sender=='user'">
-                                {{chat.content.text}}
-                                <span>{{chat.timestamp | date :'h:mma'}}</span>
+                                <div class="message-1" ng-if="chat.sender=='user'">
+                                  {{chat.content.text}}
+                                  <span>{{chat.timestamp | date :'h:mma'}}</span>
+                                </div>
                               </div>
-                              </div>
-                                
+
                               <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
                                 {{chat.content.text}}
                                 <span>{{chat.timestamp | date : 'h:mma'}}</span>
                               </div>
                             </div>
-                            
+
                           </div>
                           <div ng-if="messageBox">
                             <div class="input">
@@ -1117,7 +1050,7 @@ border-radius: 15px;
                           </div>
                         </div>
                       </div>
-                      <!--End Phone Chat-->
+                      <!--End Phone Chat  for tab3-->
                     </div>
                   </div>
                 </div>
@@ -1373,61 +1306,105 @@ border-radius: 15px;
               <center>CHAT HISTORY</center>
             </b>
           </h3>
-          <div class="search-box">
-            <div class="input-wrapper">
-              <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
-              <input placeholder="Search here" ng-change="searchChatHistory(historySearch)" ng-model="historySearch" type="text" />
+          <div ng-if="!showChatModule">
+            <div class="search-box">
+              <div class="input-wrapper">
+                <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
+                <input placeholder="Search here" ng-change="searchChatHistory(historySearch)" ng-model="historySearch"
+                  type="text" />
+              </div>
             </div>
-          </div>
-          <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover">
 
-            <tbody>
-              <tr dir-paginate="details in historyDetailData | itemsPerPage:itemsPerPage" total-items="totalCount"
-                current-page="pagination.current" track by "$index">
-                <td>
-                  <div class="friend-drawer friend-drawer--onhover">
-                    <!-- <img
+              <tbody>
+                <tr dir-paginate="details in historyDetailData | itemsPerPage:itemsPerPage" total-items="totalCount"
+                  current-page="pagination.current" track by "$index">
+                  <td>
+                    <div class="friend-drawer friend-drawer--onhover" ng-click="userDetail(details.phone_number)">
+                      <!-- <img
                   class="profile-image"
                   src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
                   alt=""
                 /> -->
-                    <div class="profile-image">
-                      {{details.whatsapp_name |firstlater}}
+                      <div class="profile-image">
+                        {{details.whatsapp_name |firstlater}}
+                      </div>
+                      <div class="text">
+                        <h6>{{details.whatsapp_name}}</h6>
+                        <p class="text-muted">
+                          {{details.country_code}}{{details.phone_number}}
+                        </p>
+                      </div>
+                      <span class="time text-muted small">{{details.payload.timestamp}}</span>
                     </div>
-                    <div class="text">
-                      <h6>{{details.whatsapp_name}}</h6>
-                      <p class="text-muted">
-                        {{details.country_code}}{{details.phone_number}}
-                      </p>
-                    </div>
-                    <span class="time text-muted small">{{details.payload.timestamp}}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <dir-pagination-controls max-size="10" on-page-change="historyPageChanged(newPageNumber)"
+              boundary-links="true">
+            </dir-pagination-controls>
+          </div>
+          <!-- Start Phone Chat for history tab-->
+          <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
+            <div class="screen-phone">
+              <div class="nav-phone navbar-fixed">
+
+                <div class="icon-back">
+                  <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
+                    ng-click="hideChatModule()">
+
+                    <path fill="#fff"
+                      d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
+                  </svg>
+
+
+                </div>
+                <div>
+
+                  <span class="username">{{userChatData.whatsapp_name}}</span><br />
+                  <span class="tel-number">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+
+                  <div class="profile-image-chat" ng-click="userProfileIcon()">
+                    {{userChatData.whatsapp_name |firstlater}}
                   </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <dir-pagination-controls max-size="10" on-page-change="historyPageChanged(newPageNumber)"
-            boundary-links="true">
-          </dir-pagination-controls>
-          <!-- <div class="fields-box" style="height: auto">
-              <div ng-repeat="details in historyDetailData track by $index">
-                <div class="friend-drawer friend-drawer--onhover">
-                  <div class="profile-image">
-                    {{details.whatsapp_name |firstlater}}
-                  </div>
-                  <div class="text">
-                    <h6>{{details.whatsapp_name}}</h6>
-                    <p class="text-muted">
-                      {{details.country_code}}{{details.phone_number}}
-                    </p>
-                  </div>
-                  <span class="time text-muted small">{{details.payload.timestamp}}</span>
                 </div>
 
-                <hr />
               </div>
-            </div> -->
+
+              <div class="chat">
+                <div ng-repeat="chat in userChatData.payload track by $index">
+                  <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
+                  <div style="width: 100%; float:right;">
+                    <div class="message-1" ng-if="chat.sender=='user'">
+                      {{chat.content.text}}
+                      <span>{{chat.timestamp | date :'h:mma'}}</span>
+                    </div>
+                  </div>
+
+                  <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
+                    {{chat.content.text}}
+                    <span>{{chat.timestamp | date : 'h:mma'}}</span>
+                  </div>
+                </div>
+
+              </div>
+              <div ng-if="messageBox">
+                <div class="input">
+                  <input type="text" placeholder="Write message" />
+                </div>
+                <div class="btn-send">
+                  <svg viewBox="0 0 74.433 60.908" width="25" height="25" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#fff"
+                      d="M 0 0 L 74.22 26.562 L 0.246 60.712 L 7.608 34.535 L 27.831 28.259 L 6.91 25.469 L 0 0 Z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--End Phone Chat  for history tab-->
         </div>
+
       </div>
     </div>
   </div>
@@ -1472,10 +1449,10 @@ border-radius: 15px;
 
   <!--Template Tab-->
   <div class="container dropdown mca-page" ng-if="showtemplateDetail">
-    
+
     <div class="add-button">
       <button type="button" class="btn btn-info">Add+</button>
-  </div>
+    </div>
 
     <h3 style="padding: 5px; margin-bottom: 20px;"><b>TEMPLATE</b></h3>
 
@@ -1483,8 +1460,8 @@ border-radius: 15px;
       <div class="input-wrapper">
         <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
 
-        <input placeholder="Search here" 
-        ng-change="templateDetail(templateSearch)" ng-model="templateSearch"type="text" />
+        <input placeholder="Search here" ng-change="templateDetail(templateSearch)" ng-model="templateSearch"
+          type="text" />
 
       </div>
     </div>

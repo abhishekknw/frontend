@@ -28,8 +28,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showcontactDetail = false;
                 $scope.showhistoryDetail = false;
                 $scope.showgetActiveUser = true;
-                $scope.showgetActionRequiredUser = false;
-                $scope.showgetInterveneUser = false;
                 $scope.showtemplateDetail = false;
 
                 let param = {
@@ -58,13 +56,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.getActionRequiredUser = function (page) {
-                $scope.showcontactDetail = false;
-                $scope.showhistoryDetail = false;
-                $scope.showgetActiveUser = false;
-                $scope.showgetActionRequiredUser = true;
-                $scope.showgetInterveneUser = false;
-                $scope.showtemplateDetail = false;
-
                 let param = {
                     next_page: 1
                 }
@@ -91,13 +82,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.getInterveneUser = function (page) {
-                $scope.showcontactDetail = false;
-                $scope.showhistoryDetail = false;
-                $scope.showgetActiveUser = false;
-                $scope.showgetActionRequiredUser = false;
-                $scope.showgetInterveneUser = true;
-                $scope.showtemplateDetail = false;
-
                 let param = {
                     next_page: 1
                 }
@@ -124,6 +108,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.userDetail = function (value) {
+                console.log("1232",value)
                 $scope.showChatModule = true;
                 let param = {
                     phoneNumber: value,
@@ -323,12 +308,12 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     let param = {
                         search: $scope.search
                     }
-                    AuthService.getRequestSearch(param)
+                    AuthService.getActionRequestSearch(param)
 
                         .then(function onSuccess(response) {
                             console.log(response)
                             console.log("211")
-                            $scope.activeUserData = response.data.data;
+                            $scope.actionRequiredUserData = response.data.data;
 
                         }).catch(function onError(response) {
                             console.log(response);
@@ -352,7 +337,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         .then(function onSuccess(response) {
                             console.log(response)
                             console.log("111")
-                            $scope.activeUserData = response.data.data;
+                            $scope.interveneUserData = response.data.data;
 
                         }).catch(function onError(response) {
                             console.log(response);
