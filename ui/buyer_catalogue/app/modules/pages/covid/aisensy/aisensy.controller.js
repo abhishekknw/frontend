@@ -303,7 +303,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
                         .then(function onSuccess(response) {
                             console.log(response)
-                            console.log("311")
+                            console.log("31")
                             $scope.activeUserData = response.data.data;
 
                         }).catch(function onError(response) {
@@ -361,10 +361,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     $scope.getInterveneUser(1)
                 }
             }
-
-
-
-
 
             $scope.searchChatHistory = function (value) {
                 console.log(value)
