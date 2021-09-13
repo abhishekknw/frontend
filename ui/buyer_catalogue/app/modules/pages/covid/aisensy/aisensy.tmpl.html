@@ -755,7 +755,7 @@ border-radius: 15px;
                       <!-- Start Phone Chat-->
                       <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
                         <div class="screen-phone">
-                          <div class="nav-phone navbar-fixed" ng-click="userProfileIcon()">
+                          <div class="nav-phone navbar-fixed" >
 
                             <div class="icon-back">
                               <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
@@ -773,7 +773,7 @@ border-radius: 15px;
                               <span
                                 class="tel-number">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
 
-                              <div class="profile-image-chat">
+                              <div class="profile-image-chat" ng-click="userProfileIcon()">
                                 {{userChatData.whatsapp_name |firstlater}}
                               </div>
                             </div>
