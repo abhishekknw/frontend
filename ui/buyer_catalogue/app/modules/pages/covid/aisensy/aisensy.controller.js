@@ -225,11 +225,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     let param = {
                         search: $scope.search
                     }
-                    AuthService.getSearch(param)
+                    AuthService.getActiveSearch(param)
 
                         .then(function onSuccess(response) {
                             console.log(response)
-                            console.log("31")
+                            console.log("311")
                             $scope.activeUserData = response.data.data;
 
                         }).catch(function onError(response) {
@@ -239,6 +239,58 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     $scope.getActiveUser(1)
                 }
             }
+
+            $scope.searchActionRequest = function (value) {
+                console.log(value)
+                $scope.search = value;
+                console.log("search", $scope.search)
+
+                if (value != "") {
+                    let param = {
+                        search: $scope.search
+                    }
+                    AuthService.getRequestSearch(param)
+
+                        .then(function onSuccess(response) {
+                            console.log(response)
+                            console.log("211")
+                            $scope.activeUserData = response.data.data;
+
+                        }).catch(function onError(response) {
+                            console.log(response);
+                        })
+                } else {
+                    $scope.getActionRequiredUser(1)
+                }
+            }
+
+            $scope.searchIntervene = function (value) {
+                console.log(value)
+                $scope.search = value;
+                console.log("search", $scope.search)
+
+                if (value != "") {
+                    let param = {
+                        search: $scope.search
+                    }
+                    AuthService.getInterveneSearch(param)
+
+                        .then(function onSuccess(response) {
+                            console.log(response)
+                            console.log("111")
+                            $scope.activeUserData = response.data.data;
+
+                        }).catch(function onError(response) {
+                            console.log(response);
+                        })
+                } else {
+                    $scope.getInterveneUser(1)
+                }
+            }
+
+
+
+
 
             $scope.searchChatHistory = function (value) {
                 console.log(value)

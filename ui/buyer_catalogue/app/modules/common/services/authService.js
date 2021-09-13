@@ -563,7 +563,7 @@ angular.module('Authentication')
                   });
             };
 
-            authService.getSearch = function (param) {
+            authService.getActiveSearch = function (param) {
                console.log(param);
                let url = "v0/ui/b2c-bot/search-user/?search=" + param.search;
                return $http.get(apiHost + url)
@@ -574,6 +574,31 @@ angular.module('Authentication')
                      return response
                   });
             };
+
+            authService.getRequestSearch = function (param) {
+               console.log(param);
+               let url = "v0/ui/b2c-bot/search-user/?search=" + param.search;
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+
+            authService.getInterveneSearch = function (param) {
+               console.log(param);
+               let url = "v0/ui/b2c-bot/search-user/?search=" + param.search;
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+
             authService.getAllUserContact = function (param) {
                console.log(param);
                let url = "v0/ui/b2c-bot/get-all-users-paginate/?next_page=" + param.next_page;
