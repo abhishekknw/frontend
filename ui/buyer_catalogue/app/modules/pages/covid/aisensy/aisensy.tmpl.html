@@ -70,14 +70,15 @@
 
   .tab-aisensy label {
 
-    display: inline-block;
-    padding: 6px 0 6px 0;
-    margin: 0 -1px;
-    width: 33.33%;
-    border: 1px solid #000;
-    text-align: center;
-    margin-bottom: 10px;
-  }
+  display: inline-block;
+  padding: 3px;
+/* margin: 0 -1px; */
+width: 32.5%;
+border: 1px solid #000;
+text-align: center;
+margin-bottom: 10px;
+border-radius: 15px; 
+}
 
   /* @media screen and (max-width: 450px) {
 	.tab-aisensy label {
@@ -104,6 +105,7 @@
     border: 1px solid #000;
     border-width: 1px 1px 1px 1px;
     background-color: #8a130f;
+    border-radius: 15px; 
   }
 
   .tab-aisensy #tab-1:checked~.content #content-1,
@@ -837,51 +839,140 @@
                     <div class="search-box">
                       <div class="input-wrapper">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                        <input placeholder="Search here" type="text" />
+                        <input placeholder="Search here" ng-change="searchActionRequest(searchReUser)"
+                          ng-model="searchReUser" id="searchRe" name="search" type="text" />
                       </div>
                     </div>
                     <div class="fields-box">
-                      <div class="friend-drawer friend-drawer--onhover">
-                        <img class="profile-image"
-                          src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg" alt="" />
-                        <div class="text">
-                          <h6>Aathira</h6>
-                          <p class="text-muted">HI! What's Up?</p>
-                        </div>
-                        <span class="time text-muted small">13:21</span>
+                      <div ng-if="!showChatModule">
+                        <table class="table table-bordered table-hover">
+
+                          <tbody>
+                            <tr dir-paginate="user in activeUserData | itemsPerPage:itemsPerPage"
+                              total-items="totalCount" current-page="pagination.current" track by "$index">
+                              <td>
+                                <div class="friend-drawer friend-drawer--onhover"  ng-click="userDetail(user.phone_number)">
+
+                                  <div class="profile-image">
+                                    {{user.whatsapp_name |firstlater}}
+                                  </div>
+                                  <div class="text">
+                                    <h6>{{user.whatsapp_name}}</h6>
+                                    <p class="text-muted"><b>
+                                      {{user.country_code}}{{user.phone_number}}
+                                    </b></p>
+                                    <p>
+                                      {{user.last_message | limitTo: 50 }} {{user.last_message.length > 50 ? '...' :
+                                      ''}}
+                                    </p>
+                                  </div>
+                                  
+                                  <span class="time text-muted small"><b>{{user.updated_at | date :
+                                    'medium'}}</b></span>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <dir-pagination-controls max-size="10" on-page-change="liveChatPageChanged(newPageNumber)"
+                          boundary-links="true">
+                        </dir-pagination-controls>
                       </div>
-                      <hr />
-                      <div class="friend-drawer friend-drawer--onhover">
-                        <img class="profile-image"
-                          src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg" alt="" />
-                        <div class="text">
-                          <h6>Divyaaa</h6>
-                          <p class="text-muted">HI! What's Up?</p>
+
+                      <!-- <div ng-if="!showChatModule" ng-repeat="user in activeUserData track by $index">
+                          <div class="friend-drawer friend-drawer--onhover" ng-click="userDetail(user.phone_number)">
+                            <div class="profile-image">
+                              {{user.whatsapp_name |firstlater}}
+                            </div>
+                            <div class="text">
+                              <h6>{{user.whatsapp_name}}</h6>
+                              <p class="text-muted">
+                                {{user.country_code}}{{user.phone_number}}
+                              </p>
+                            </div>
+                            <span class="time text-muted small">{{user.updated_at | date :
+                              'medium'}}</span>
+                          </div>
+
+                          <hr />
+                        </div> -->
+
+                      <!-- Start Phone Chat-->
+                      <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
+                        <div class="screen-phone">
+                          <div class="nav-phone navbar-fixed" ng-click="userProfileIcon()">
+
+                            <div class="icon-back">
+                              <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
+                                ng-click="hideChatModule()">
+
+                                <path fill="#fff"
+                                  d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
+                              </svg>
+
+
+                            </div>
+                            <div>
+
+                              <span class="username">{{userChatData.whatsapp_name}}</span><br />
+                              <span
+                                class="tel-number">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+
+                              <div class="profile-image-chat">
+                                {{userChatData.whatsapp_name |firstlater}}
+                              </div>
+                            </div>
+
+                          </div>
+
+                          <div class="chat">
+                            <div ng-repeat="chat in userChatData.payload track by $index">
+                              <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
+                              <div style="width: 100%; float:right;">
+                              <div class="message-1" ng-if="chat.sender=='user'">
+                                {{chat.content.text}}
+                                <span>{{chat.timestamp | date :'h:mma'}}</span>
+                              </div>
+                              </div>
+                                
+                              <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
+                                {{chat.content.text}}
+                                <span>{{chat.timestamp | date : 'h:mma'}}</span>
+                              </div>
+                            </div>
+                            
+                          </div>
+                          <div ng-if="messageBox">
+                            <div class="input">
+                              <input type="text" placeholder="Write message" />
+                            </div>
+                            <div class="btn-send">
+                              <svg viewBox="0 0 74.433 60.908" width="25" height="25"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill="#fff"
+                                  d="M 0 0 L 74.22 26.562 L 0.246 60.712 L 7.608 34.535 L 27.831 28.259 L 6.91 25.469 L 0 0 Z" />
+                              </svg>
+                            </div>
+
+                            <div class="aisensy-resolve-btn">
+                              <button type="button" class="btn btn-success" style="margin-top:20px"
+                                ng-click="interveneButton()">
+                                Resolve
+                              </button>
+                            </div>
+                          </div>
+
+
+                          <div class="aisensy-intervene-btn" ng-click="writeMessage()" ng-if="!messageBox"
+                            style="margin-top:5px">
+                            <button type="button" class="btn btn-primary">
+                              Intervene
+                            </button>
+                          </div>
                         </div>
-                        <span class="time text-muted small">00:32</span>
                       </div>
-                      <hr />
-                      <div class="friend-drawer friend-drawer--onhover">
-                        <img class="profile-image"
-                          src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png"
-                          alt="" />
-                        <div class="text">
-                          <h6>Priyank</h6>
-                          <p class="text-muted">HI! What's Up?</p>
-                        </div>
-                        <span class="time text-muted small">13:21</span>
-                      </div>
-                      <hr />
-                      <div class="friend-drawer friend-drawer--onhover">
-                        <img class="profile-image"
-                          src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png"
-                          alt="" />
-                        <div class="text">
-                          <h6>Samyaak</h6>
-                          <p class="text-muted">HI! What's Up?</p>
-                        </div>
-                        <span class="time text-muted small">13:21</span>
-                      </div>
+                      <!--End Phone Chat-->
                     </div>
                   </div>
                 </div>
@@ -893,51 +984,140 @@
                     <div class="search-box">
                       <div class="input-wrapper">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                        <input placeholder="Search here" type="text" />
+                        <input placeholder="Search here" ng-change="searchIntervene(searchInUser)"
+                        ng-model="searchInUser" id="searchIn" name="search" type="text" />
                       </div>
                     </div>
                     <div class="fields-box">
-                      <div class="friend-drawer friend-drawer--onhover">
-                        <img class="profile-image"
-                          src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg" alt="" />
-                        <div class="text">
-                          <h6>Aathira</h6>
-                          <p class="text-muted">HI! What's Up?</p>
-                        </div>
-                        <span class="time text-muted small">13:21</span>
+                      <div ng-if="!showChatModule">
+                        <table class="table table-bordered table-hover">
+
+                          <tbody>
+                            <tr dir-paginate="user in activeUserData | itemsPerPage:itemsPerPage"
+                              total-items="totalCount" current-page="pagination.current" track by "$index">
+                              <td>
+                                <div class="friend-drawer friend-drawer--onhover"  ng-click="userDetail(user.phone_number)">
+
+                                  <div class="profile-image">
+                                    {{user.whatsapp_name |firstlater}}
+                                  </div>
+                                  <div class="text">
+                                    <h6>{{user.whatsapp_name}}</h6>
+                                    <p class="text-muted"><b>
+                                      {{user.country_code}}{{user.phone_number}}
+                                    </b></p>
+                                    <p>
+                                      {{user.last_message | limitTo: 50 }} {{user.last_message.length > 50 ? '...' :
+                                      ''}}
+                                    </p>
+                                  </div>
+                                  
+                                  <span class="time text-muted small"><b>{{user.updated_at | date :
+                                    'medium'}}</b></span>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <dir-pagination-controls max-size="10" on-page-change="liveChatPageChanged(newPageNumber)"
+                          boundary-links="true">
+                        </dir-pagination-controls>
                       </div>
-                      <hr />
-                      <div class="friend-drawer friend-drawer--onhover">
-                        <img class="profile-image"
-                          src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg" alt="" />
-                        <div class="text">
-                          <h6>Divyaaa</h6>
-                          <p class="text-muted">HI! What's Up?</p>
+
+                      <!-- <div ng-if="!showChatModule" ng-repeat="user in activeUserData track by $index">
+                          <div class="friend-drawer friend-drawer--onhover" ng-click="userDetail(user.phone_number)">
+                            <div class="profile-image">
+                              {{user.whatsapp_name |firstlater}}
+                            </div>
+                            <div class="text">
+                              <h6>{{user.whatsapp_name}}</h6>
+                              <p class="text-muted">
+                                {{user.country_code}}{{user.phone_number}}
+                              </p>
+                            </div>
+                            <span class="time text-muted small">{{user.updated_at | date :
+                              'medium'}}</span>
+                          </div>
+
+                          <hr />
+                        </div> -->
+
+                      <!-- Start Phone Chat-->
+                      <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
+                        <div class="screen-phone">
+                          <div class="nav-phone navbar-fixed" ng-click="userProfileIcon()">
+
+                            <div class="icon-back">
+                              <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
+                                ng-click="hideChatModule()">
+
+                                <path fill="#fff"
+                                  d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
+                              </svg>
+
+
+                            </div>
+                            <div>
+
+                              <span class="username">{{userChatData.whatsapp_name}}</span><br />
+                              <span
+                                class="tel-number">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+
+                              <div class="profile-image-chat">
+                                {{userChatData.whatsapp_name |firstlater}}
+                              </div>
+                            </div>
+
+                          </div>
+
+                          <div class="chat">
+                            <div ng-repeat="chat in userChatData.payload track by $index">
+                              <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
+                              <div style="width: 100%; float:right;">
+                              <div class="message-1" ng-if="chat.sender=='user'">
+                                {{chat.content.text}}
+                                <span>{{chat.timestamp | date :'h:mma'}}</span>
+                              </div>
+                              </div>
+                                
+                              <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
+                                {{chat.content.text}}
+                                <span>{{chat.timestamp | date : 'h:mma'}}</span>
+                              </div>
+                            </div>
+                            
+                          </div>
+                          <div ng-if="messageBox">
+                            <div class="input">
+                              <input type="text" placeholder="Write message" />
+                            </div>
+                            <div class="btn-send">
+                              <svg viewBox="0 0 74.433 60.908" width="25" height="25"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill="#fff"
+                                  d="M 0 0 L 74.22 26.562 L 0.246 60.712 L 7.608 34.535 L 27.831 28.259 L 6.91 25.469 L 0 0 Z" />
+                              </svg>
+                            </div>
+
+                            <div class="aisensy-resolve-btn">
+                              <button type="button" class="btn btn-success" style="margin-top:20px"
+                                ng-click="interveneButton()">
+                                Resolve
+                              </button>
+                            </div>
+                          </div>
+
+
+                          <div class="aisensy-intervene-btn" ng-click="writeMessage()" ng-if="!messageBox"
+                            style="margin-top:5px">
+                            <button type="button" class="btn btn-primary">
+                              Intervene
+                            </button>
+                          </div>
                         </div>
-                        <span class="time text-muted small">00:32</span>
                       </div>
-                      <hr />
-                      <div class="friend-drawer friend-drawer--onhover">
-                        <img class="profile-image"
-                          src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png"
-                          alt="" />
-                        <div class="text">
-                          <h6>Priyank</h6>
-                          <p class="text-muted">HI! What's Up?</p>
-                        </div>
-                        <span class="time text-muted small">13:21</span>
-                      </div>
-                      <hr />
-                      <div class="friend-drawer friend-drawer--onhover">
-                        <img class="profile-image"
-                          src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/real-terminator.png"
-                          alt="" />
-                        <div class="text">
-                          <h6>Samyaak</h6>
-                          <p class="text-muted">HI! What's Up?</p>
-                        </div>
-                        <span class="time text-muted small">13:21</span>
-                      </div>
+                      <!--End Phone Chat-->
                     </div>
                   </div>
                 </div>
