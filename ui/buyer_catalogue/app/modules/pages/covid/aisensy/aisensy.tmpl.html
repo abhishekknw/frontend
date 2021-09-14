@@ -686,10 +686,11 @@
                                       ''}}
                                     </p>
                                   </div>
-
-                                  <span class="time text-muted small"><b>{{user.updated_at | date :
-                                      'medium'}}</b></span>
-
+                                  <div style="text-align: right;">
+                                    <span class="time text-muted small">
+                                      <b>{{user.updated_at | date :'medium'}}</b>
+                                    </span>
+                                  </div>
                                 </div>
                               </td>
                             </tr>
@@ -733,13 +734,13 @@
 
 
                             </div>
-                            <div>
+                            <div ng-click="userProfileIcon()">
 
                               <span class="username">{{userChatData.whatsapp_name}}</span><br />
-                              <span
-                                class="tel-number">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+                              <span class="tel-number">({{userChatData.country_code}}{{userChatData.phone_number}})
+                              </span>
 
-                              <div class="profile-image-chat" ng-click="userProfileIcon()">
+                              <div class="profile-image-chat">
                                 <span ng-if="userChatData.whatsapp_name!=''">
                                   {{userChatData.whatsapp_name |firstlater}}
                                 </span>
@@ -808,8 +809,8 @@
                     <div class="search-box" ng-if="!showChatModule">
                       <div class="input-wrapper">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                        <input placeholder="Search here" ng-change="searchActionRequest()" ng-model="actionsearch"
-                          id="search" name="search" type="text" />
+                        <input placeholder="Search here" ng-change="getActionRequiredUser(actionsearch)"
+                          ng-model="actionsearch" id="search" name="search" type="text" />
                       </div>
                     </div>
                     <div class="fields-box">
@@ -852,7 +853,7 @@
                       <!-- Start Phone Chat  for tab2-->
                       <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
                         <div class="screen-phone">
-                          <div class="nav-phone navbar-fixed" ng-click="userProfileIcon()">
+                          <div class="nav-phone navbar-fixed">
 
                             <div class="icon-back">
                               <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
@@ -864,7 +865,7 @@
 
 
                             </div>
-                            <div>
+                            <div ng-click="userProfileIcon()">
 
                               <span class="username">{{userChatData.whatsapp_name}}</span><br />
                               <span
@@ -936,8 +937,8 @@
                     <div class="search-box" ng-if="!showChatModule">
                       <div class="input-wrapper">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                        <input placeholder="Search here" ng-change="searchIntervene()"
-                          ng-model="intervenesearch" id="searchIn" name="search" type="text" />
+                        <input placeholder="Search here" ng-change="searchIntervene()" ng-model="intervenesearch"
+                          id="searchIn" name="search" type="text" />
                       </div>
                     </div>
                     <div class="fields-box">
@@ -981,7 +982,7 @@
                       <!-- Start Phone Chat  for tab3-->
                       <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
                         <div class="screen-phone">
-                          <div class="nav-phone navbar-fixed" ng-click="userProfileIcon()">
+                          <div class="nav-phone navbar-fixed">
 
                             <div class="icon-back">
                               <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
@@ -991,7 +992,7 @@
                                   d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
                               </svg>
                             </div>
-                            <div>
+                            <div ng-click="userProfileIcon()">
 
                               <span class="username">{{userChatData.whatsapp_name}}</span><br />
                               <span
@@ -1555,7 +1556,7 @@
         </div>
       </div>
     </div>
-    
+
   </div>
   <!--/Filter Tab-->
-  </div>
+</div>

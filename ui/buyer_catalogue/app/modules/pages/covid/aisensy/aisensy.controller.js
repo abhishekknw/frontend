@@ -57,13 +57,18 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
             }
 
-            $scope.actionsearch=''
+            getActionRequiredUser=''
             $scope.getActionRequiredUser = function (page) {
                 console.log("1111111",$scope.actionsearch)
+                // console.log("1111111",$scope.getActionRequiredUser)
+                console.log("222222222",$scope.search)
                 $scope.showChatModule = false;
                 let param = {
-                    next_page: 1
+                    next_page: 1,
+                    search:$scope.search
                 }
+                if(search=='')
+                {
                 if (page) {
                     param.next_page = page;
                 } else {
@@ -84,6 +89,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     }).catch(function onError(response) {
                         console.log(response);
                     })
+                }
+                // else{
+                //     $scope.getActionRequiredUser (1)
+                // }
             }
 
             $scope.getInterveneUser = function (page) {
@@ -295,7 +304,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 console.log("111111111", $scope.filterDetailData)
                 $scope.showcontactDetail = false;
                 $scope.showhistoryDetail = false;
-                $scope.showgetInterveneUser = false;
+                $scope.showgetActiveUser = false;
                 $scope.showtemplateDetail = false;
                 $scope.showfilterDetail = true;
 
