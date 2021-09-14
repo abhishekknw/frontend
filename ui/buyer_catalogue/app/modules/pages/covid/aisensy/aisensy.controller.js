@@ -27,6 +27,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.getActiveUser = function (page) {
                 $scope.showcontactDetail = false;
                 $scope.showhistoryDetail = false;
+                $scope.showChatModule = false;
                 $scope.showgetActiveUser = true;
                 $scope.showtemplateDetail = false;
 
@@ -56,6 +57,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.getActionRequiredUser = function (page) {
+                $scope.showChatModule = false;
                 let param = {
                     next_page: 1
                 }
@@ -82,6 +84,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.getInterveneUser = function (page) {
+                $scope.showChatModule = false;
                 let param = {
                     next_page: 1
                 }
