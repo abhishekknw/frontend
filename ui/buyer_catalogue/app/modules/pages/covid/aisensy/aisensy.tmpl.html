@@ -625,7 +625,7 @@
           <a target="_blank" class="fa fa-file-text" aria-hidden="true" style="font-size: large"
             ng-click=templateDetail()>
             Template</a>
-          <a target="_blank" class="fa fa-filter" aria-hidden="true" style="font-size: large">
+          <a target="_blank" class="fa fa-filter" aria-hidden="true" style="font-size: large" ng-click=filterDetail()>
             Filter</a>
           <!-- </div> -->
         </div>
@@ -808,7 +808,7 @@
                     <div class="search-box" ng-if="!showChatModule">
                       <div class="input-wrapper">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                        <input placeholder="Search here" ng-change="searchActionRequest(search)" ng-model="search"
+                        <input placeholder="Search here" ng-change="searchActionRequest()" ng-model="actionsearch"
                           id="search" name="search" type="text" />
                       </div>
                     </div>
@@ -936,8 +936,8 @@
                     <div class="search-box" ng-if="!showChatModule">
                       <div class="input-wrapper">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                        <input placeholder="Search here" ng-change="searchIntervene(searchInUser)"
-                          ng-model="searchInUser" id="searchIn" name="search" type="text" />
+                        <input placeholder="Search here" ng-change="searchIntervene()"
+                          ng-model="intervenesearch" id="searchIn" name="search" type="text" />
                       </div>
                     </div>
                     <div class="fields-box">
@@ -1497,9 +1497,65 @@
   <!--/Template-->
 
   <!--Filter Tab-->
-  <div class="container dropdown mca-page" ng-if="">
+  <div class="container dropdown mca-page" ng-if="showfilterDetail">
     <h3><b>FILTER</b></h3>
+
+
+
+    <div class="page-inner">
+      <div class="top-select-option-mca">
+        <div class="form-group">
+          <!--For sector dropdown-->
+
+          <input class="form-control" type="date" id="date" name="date">
+
+        </div>
+
+        <div class="second dropdown">
+          <div class="row">
+            <div class="col-xs-4">
+              <div class="form-group">
+                <!--category dropdown-->
+                <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                  <option value="" disabled> Select Attribute</option>
+                  <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                    style="text-transform: capitalize">
+                    {{}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-xs-4">
+              <div class="form-group">
+                <!--category dropdown-->
+                <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                  <option value="" disabled> is</option>
+                  <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                    style="text-transform: capitalize">
+                    {{}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-xs-4">
+              <div class="form-group">
+                <!--category dropdown-->
+                <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                  <option value="" disabled>Attribute Value</option>
+                  <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                    style="text-transform: capitalize">
+                    {{}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
   </div>
   <!--/Filter Tab-->
-
-</div>
+  </div>
