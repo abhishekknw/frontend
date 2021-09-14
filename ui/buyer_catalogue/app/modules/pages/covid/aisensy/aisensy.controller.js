@@ -4,12 +4,30 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             input = input.charAt(0).toUpperCase();
         return input;
     }
-}]).controller('aisensyCtrl',
-    ['$scope', '$rootScope', '$window', '$location', 'AuthService', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService',
-        function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $state, userService, constants, AuthService, vcRecaptchaService, permissions) {
+}]).directive("whenScrolled", function(){
+    return{
+      
+      restrict: 'A',
+      link: function(scope, elem, attrs){
+      
+        // we get a list of elements of size 1 and need the first element
+        raw = elem[0];
+      
+        // we load more elements when scrolled past a limit
+        elem.bind("scroll", function(){
+          if(raw.scrollTop+raw.offsetHeight+5 >= raw.scrollHeight){
+            scope.loading = true;
+            
+          // we can give any function which loads more elements into the list
+            scope.$apply(attrs.whenScrolled);
+          }
+        });
+      }
+    }
+  }).controller('aisensyCtrl',
+    ['$scope', '$rootScope', '$window', '$location', 'AuthService','$anchorScroll', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService',
+        function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService,$anchorScroll, $state, userService, constants, AuthService, vcRecaptchaService, permissions) {
             // AuthService.Clear();
-
-            console.log('ppppppppppppppppppppppppp', $rootScope.globals.currentUser);
 
             let gooIndex = document.getElementById('goo-index');
             let hoverEnter = index => {
@@ -21,6 +39,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 let nowVisible = document.getElementById('screen_' + index);
                 nowVisible.classList.add('visible');
             }
+
+      
+    
+
 
 
             // AIsensy controller
@@ -192,10 +214,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 // console.log(value)
                 // console.log( $scope.templateSearch)
                 let param = {
-                    search: value,                  
+                    search: value,
                 }
-                if(!value){
-                    param.search=""
+                if (!value) {
+                    param.search = ""
                 }
                 // alert("template")
                 console.log("111111111", $scope.templateDetailData)

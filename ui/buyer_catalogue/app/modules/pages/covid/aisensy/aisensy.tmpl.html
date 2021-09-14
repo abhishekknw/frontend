@@ -578,6 +578,13 @@
     float: right;
 
   }
+
+      [scroll-glue]{
+        height: 20.1pc;
+        overflow-y: scroll;
+        border: 1px solid gray;
+      }
+    
 </style>
 
 
@@ -670,7 +677,7 @@
           <div class="tab-aisensy">
             <input id="tab-1" type="radio" name="tab" checked />
             <label for="tab-1">Active</label>
-            <input id="tab-2" type="radio" name="tab" />
+            <input id="tab-2" type="radio" name="tab"  />
             <label for="tab-2">Action Required</label>
             <input id="tab-3" type="radio" name="tab" />
             <label for="tab-3">Intervened</label>
@@ -744,7 +751,7 @@
 
                       <!-- Start Phone Chat-->
                       <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
-                        <div class="screen-phone">
+                        <div class="screen-phone" id="flux"  scroll-glue="glued">
                           <div class="nav-phone navbar-fixed" ng-click="userProfileIcon()">
 
                             <div class="icon-back">
