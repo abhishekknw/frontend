@@ -40,8 +40,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 nowVisible.classList.add('visible');
             }
 
-      
-    
+           $scope.tab = {name:'tabB'};
 
 
 
@@ -79,8 +78,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
             }
 
-            getActionRequiredUser=''
+        
             $scope.getActionRequiredUser = function (page) {
+                $scope.tab = {
+                    name:'tabA'
+                }
                 console.log("1111111",$scope.actionsearch)
                 // console.log("1111111",$scope.getActionRequiredUser)
                 console.log("222222222",$scope.search)

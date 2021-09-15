@@ -650,11 +650,11 @@
       <div class="top-select-option-aisensy">
         <div class="form-group">
           <div class="tab-aisensy">
-            <input id="tab-1" type="radio" name="tab" checked />
+            <input id="tab-1" type="radio" name="tab" ng-model="tab.name" value="tabA">
             <label for="tab-1">Active</label>
-            <input id="tab-2" type="radio" name="tab" />
+            <input id="tab-2" type="radio" name="tab" ng-model="tab.name" value="tabB">
             <label for="tab-2" ng-click="getActionRequiredUser()">Action Required</label>
-            <input id="tab-3" type="radio" name="tab" />
+            <input id="tab-3" type="radio" name="tab" ng-model="tab.name" value="tabC">
             <label for="tab-3" ng-click="getInterveneUser()">Intervened</label>
 
             <div class="content">
