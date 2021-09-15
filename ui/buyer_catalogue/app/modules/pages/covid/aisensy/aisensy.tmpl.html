@@ -803,7 +803,7 @@
                             <div ng-repeat="chat in userChatData.payload track by $index">
                               <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                               <div style="width: 100%; float:right;">
-                                <div class="message-1" ng-if="chat.sender=='user'">
+                                <div class="message-1 white-space-pre-line" ng-if="chat.sender=='user'">
                                   {{chat.content.text}}<br>
                                   <span>{{chat.timestamp | date :'h:mma'}}</span>
                                 </div>
@@ -937,15 +937,16 @@
                             <div ng-repeat="chat in userChatData.payload track by $index">
                               <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                               <div style="width: 100%; float:right;">
-                                <div class="message-1" ng-if="chat.sender=='user'">
-                                  {{chat.content.text}}
+                                <div class="message-1 white-space-pre-line" ng-if="chat.sender=='user'">
+                                  {{chat.content.text}}<br>
                                   <span>{{chat.timestamp | date :'h:mma'}}</span>
                                 </div>
                               </div>
-
-                              <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
-                                {{chat.content.text}}
-                                <span>{{chat.timestamp | date : 'h:mma'}}</span>
+                              <div style="width: 100%; float:left;">
+                                <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
+                                  {{chat.content.text}}
+                                  <span>{{chat.timestamp | date : 'h:mma'}}</span>
+                                </div>
                               </div>
                             </div>
 
@@ -1069,15 +1070,16 @@
                             <div ng-repeat="chat in userChatData.payload track by $index">
                               <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                               <div style="width: 100%; float:right;">
-                                <div class="message-1" ng-if="chat.sender=='user'">
-                                  {{chat.content.text}}
+                                <div class="message-1 white-space-pre-line" ng-if="chat.sender=='user'">
+                                  {{chat.content.text}}<br>
                                   <span>{{chat.timestamp | date :'h:mma'}}</span>
                                 </div>
                               </div>
-
-                              <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
-                                {{chat.content.text}}
-                                <span>{{chat.timestamp | date : 'h:mma'}}</span>
+                              <div style="width: 100%; float:left;">
+                                <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
+                                  {{chat.content.text}}
+                                  <span>{{chat.timestamp | date : 'h:mma'}}</span>
+                                </div>
                               </div>
                             </div>
 
