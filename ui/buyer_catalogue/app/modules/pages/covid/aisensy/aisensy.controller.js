@@ -253,8 +253,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showcontactDetail = false;
                 $scope.showhistoryDetail = true;
                 $scope.showgetActiveUser = false;
-                $scope.showgetActionRequiredUser = false;
-                $scope.showgetInterveneUser = false;
                 $scope.showtemplateDetail = false;
                 $scope.showfilterDetail = false;
                 $scope.totalCount = 0;
