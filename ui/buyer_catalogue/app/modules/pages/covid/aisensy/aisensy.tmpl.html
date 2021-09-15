@@ -1553,23 +1553,36 @@
   <div class="container dropdown mca-page" ng-if="showfilterDetail">
     <h3><b>FILTER</b></h3>
 
-
-
     <div class="page-inner">
       <div class="top-select-option-mca">
+       <h4><b> Created at:</b></h4>
         <div class="row">
-        <div class="form-group col-xs-6 col-md-6">
-          <input class="form-control" type="date" id="date" name="date" aria-label="From" placeholder="From">
-        </div>
-        <div class="form-group col-xs-6 col-md-6"> 
-          <input class="form-control" type="date" id="date" name="date"  placeholder="To">
-        </div>
-      </div>
-
-        <div class="second dropdown">
-          <div class="row">
-            <div class="col-xs-6 col-md-6">
+          <div class="col-xs-6">
+            <div class="form-group">
               <div class="form-group">
+                <label for="birthday">From:</label>
+                <input class="form-control" type="date" id="date" name="date">
+  
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="col-xs-6">
+            <div class="form-group">
+              <label for="birthday">To:</label>
+              <input class="form-control" type="date" id="date" name="date">
+
+            </div>
+            </div>
+          </div>
+        
+        <div class="second dropdown">
+         <h4><b>Attributes:</b></h4> 
+          <div class="row">
+            <div class="col-xs-6">
+              <div class="form-group">
+                <!--category dropdown-->
                 <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
                   <option value="" disabled> Select Attribute</option>
                   <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
@@ -1580,7 +1593,8 @@
               </div>
             </div>
 
-            <div class="col-xs-6 col-md-6">
+            
+            <div class="col-xs-6">
               <div class="form-group">
                 <!--category dropdown-->
                 <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
