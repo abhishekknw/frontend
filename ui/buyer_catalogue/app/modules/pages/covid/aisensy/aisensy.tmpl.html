@@ -715,7 +715,7 @@
                                 <div class="friend-drawer friend-drawer--onhover"
                                   ng-click="userDetail(user.phone_number)">
 
-                                  <div class="profile-image" style="float: left;">
+                                  <div class="profile-image"  style="float: left;">
                                     {{user.whatsapp_name |firstlater}}
                                   </div>
                                   <div class="text" style="float: left;">
@@ -874,10 +874,10 @@
                                 <div class="friend-drawer friend-drawer--onhover"
                                   ng-click="userDetail(user.phone_number)">
 
-                                  <div class="profile-image">
+                                  <div class="profile-image"  style="float: left;">
                                     {{user.whatsapp_name |firstlater}}
                                   </div>
-                                  <div class="text">
+                                  <div class="text"  style="float: left;">
                                     <h6>{{user.whatsapp_name}}</h6>
                                     <p class="text-muted"><b>
                                         {{user.country_code}}{{user.phone_number}}
@@ -887,9 +887,11 @@
                                       ''}}
                                     </p>
                                   </div>
-
-                                  <span class="time text-muted small"><b>{{user.updated_at | date :
-                                      'medium'}}</b></span>
+                                  <div style="position: absolute; right: 35px;">
+                                    <span class="time text-muted small">
+                                      <b>{{user.updated_at | date :'medium'}}</b>
+                                    </span>
+                                  </div>
 
                                 </div>
                               </td>
@@ -1008,10 +1010,10 @@
                                 <div class="friend-drawer friend-drawer--onhover"
                                   ng-click="userDetail(user.phone_number)">
 
-                                  <div class="profile-image">
+                                  <div class="profile-image"  style="float: left;">
                                     {{user.whatsapp_name |firstlater}}
                                   </div>
-                                  <div class="text">
+                                  <div class="text"  style="float: left;">
                                     <h6>{{user.whatsapp_name}}</h6>
                                     <p class="text-muted"><b>
                                         {{user.country_code}}{{user.phone_number}}
@@ -1022,8 +1024,11 @@
                                     </p>
                                   </div>
 
-                                  <span class="time text-muted small"><b>{{user.updated_at | date :
-                                      'medium'}}</b></span>
+                                  <div style="position: absolute; right: 35px;">
+                                    <span class="time text-muted small">
+                                      <b>{{user.updated_at | date :'medium'}}</b>
+                                    </span>
+                                  </div>
 
                                 </div>
                               </td>
