@@ -12,6 +12,7 @@
 
   div.white-space-pre-line {
     white-space: pre-line;
+    word-wrap: break-word;
   }
 
   .navbar-collapse.in {
@@ -108,6 +109,7 @@
     border-radius: 15px;
   }
 
+
   .tab-aisensy #tab-1:checked~.content #content-1,
   .tab-aisensy #tab-2:checked~.content #content-2,
   .tab-aisensy #tab-3:checked~.content #content-3 {
@@ -132,6 +134,10 @@
     text-align: center;
   }
 
+  .profile-heading {
+    position: relative;
+    left: -30px;
+  }
 
   .search-box {
     background: #e3e3e3;
@@ -207,12 +213,42 @@
     text-align: left;
   }
 
-
-  .time {
+  /* @media only screen and (max-width: 450px){
+    .time {
     color: black;
-    text-align: right;
+    text-align: end;
     font-weight: 300;
     float: right;
+    }
+  } */
+
+  /*   
+  @media only screen and (min-width: 450px) and (max-width: 1000px)
+  {
+    .time {
+    color: black;
+    
+    padding-left: 250px;
+    font-weight: 300;
+    
+    }
+  } */
+  /* @media only screen and (min-width: 1000px)
+  {
+  .time {
+    color: black;
+  
+    padding-left: 650px;
+    font-weight: 300;
+    
+    }
+  } */
+  .time {
+    color: black;
+    text-align: end;
+    /* padding-left: 650px; */
+    font-weight: 300;
+
   }
 
   .friend-drawer--onhover:hover {
@@ -237,7 +273,7 @@
     margin: 0;
     padding: 0;
     height: auto;
-    overflow-y: scroll;
+    overflow-y: hidden;
     overflow-x: hidden;
   }
 
@@ -434,8 +470,8 @@
   .message-1 {
     border-radius: 7px;
     background-color: #e0e0e0;
-    padding: 5px;
-    font: 15px "Roboto", Segoe UI, sans-serif;
+    padding: 5px 15px ;
+      font: 15px "Roboto", Segoe UI, sans-serif;
     /* width: calc(100% + -50px); */
     max-width: calc(100% + -50px);
     min-width: 150px;
@@ -451,7 +487,7 @@
 
     border-radius: 7px;
     background-color: #aede2e;
-    padding: 5px;
+    padding: 5px 20px;
     font: 15px "Roboto", Segoe UI, sans-serif;
     /* width: calc(100% + -50px); */
     max-width: calc(100% + -50px);
@@ -588,6 +624,12 @@
     float: right;
 
   }
+
+  [scroll-glue] {
+    height: 20.1pc;
+    overflow-y: scroll;
+    border: 1px solid gray;
+  }
 </style>
 
 
@@ -625,7 +667,7 @@
           <a target="_blank" class="fa fa-file-text" aria-hidden="true" style="font-size: large"
             ng-click=templateDetail()>
             Template</a>
-          <a target="_blank" class="fa fa-filter" aria-hidden="true" style="font-size: large">
+          <a target="_blank" class="fa fa-filter" aria-hidden="true" style="font-size: large" ng-click=filterDetail()>
             Filter</a>
           <!-- </div> -->
         </div>
@@ -643,11 +685,11 @@
       <div class="top-select-option-aisensy">
         <div class="form-group">
           <div class="tab-aisensy">
-            <input id="tab-1" type="radio" name="tab" checked />
+            <input id="tab-1" type="radio" name="tab" ng-model="tab.name" value="tabA">
             <label for="tab-1">Active</label>
-            <input id="tab-2" type="radio" name="tab" />
+            <input id="tab-2" type="radio" name="tab" ng-model="tab.name" value="tabB">
             <label for="tab-2" ng-click="getActionRequiredUser()">Action Required</label>
-            <input id="tab-3" type="radio" name="tab" />
+            <input id="tab-3" type="radio" name="tab" ng-model="tab.name" value="tabC">
             <label for="tab-3" ng-click="getInterveneUser()">Intervened</label>
 
             <div class="content">
@@ -663,8 +705,8 @@
                     </div>
 
                     <div class="fields-box">
-                      <div ng-if="!showChatModule">
-                        <table class="table table-bordered table-hover">
+                      <div ng-if="!showChatModule && activeUserData.length > 0">
+                        <table class="table table-bordered table-hover" >
 
                           <tbody>
                             <tr dir-paginate="user in activeUserData | itemsPerPage:itemsPerPage"
@@ -673,10 +715,10 @@
                                 <div class="friend-drawer friend-drawer--onhover"
                                   ng-click="userDetail(user.phone_number)">
 
-                                  <div class="profile-image">
+                                  <div class="profile-image"  style="float: left;">
                                     {{user.whatsapp_name |firstlater}}
                                   </div>
-                                  <div class="text">
+                                  <div class="text" style="float: left;">
                                     <h6>{{user.whatsapp_name}}</h6>
                                     <p class="text-muted"><b>
                                         {{user.country_code}}{{user.phone_number}}
@@ -686,10 +728,11 @@
                                       ''}}
                                     </p>
                                   </div>
-
-                                  <span class="time text-muted small"><b>{{user.updated_at | date :
-                                      'medium'}}</b></span>
-
+                                  <div style="position: absolute; right: 35px;">
+                                    <span class="time text-muted small">
+                                      <b>{{user.updated_at | date :'medium'}}</b>
+                                    </span>
+                                  </div>
                                 </div>
                               </td>
                             </tr>
@@ -698,6 +741,12 @@
                         <dir-pagination-controls max-size="10" on-page-change="liveChatPageChanged(newPageNumber)"
                           boundary-links="true">
                         </dir-pagination-controls>
+                      </div>
+
+                      <div ng-if="activeUserData.length == 0">
+                        <h4 style="text-align: center; color: red;">
+                          Record Not Found.
+                        </h4>
                       </div>
 
                       <!-- <div ng-if="!showChatModule" ng-repeat="user in activeUserData track by $index">
@@ -733,35 +782,37 @@
 
 
                             </div>
-                            <div>
 
-                              <span class="username">{{userChatData.whatsapp_name}}</span><br />
+                            <div ng-click="userProfileIcon()">
+
+                              <span class="username profile-heading">{{userChatData.whatsapp_name}}</span><br />
                               <span
-                                class="tel-number">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+                                class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
 
-                              <div class="profile-image-chat" ng-click="userProfileIcon()">
+
+                              <div class="profile-image-chat">
                                 <span ng-if="userChatData.whatsapp_name!=''">
                                   {{userChatData.whatsapp_name |firstlater}}
                                 </span>
                                 <span ng-if="userChatData.whatsapp_name==''">#</span>
                               </div>
                             </div>
-
                           </div>
 
                           <div class="chat">
                             <div ng-repeat="chat in userChatData.payload track by $index">
                               <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                               <div style="width: 100%; float:right;">
-                                <div class="message-1" ng-if="chat.sender=='user'">
-                                  {{chat.content.text}}
+                                <div class="message-1 white-space-pre-line" ng-if="chat.sender=='user'">
+                                  {{chat.content.text}}<br>
                                   <span>{{chat.timestamp | date :'h:mma'}}</span>
                                 </div>
                               </div>
-
-                              <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
-                                {{chat.content.text}}
-                                <span>{{chat.timestamp | date : 'h:mma'}}</span>
+                              <div style="width: 100%; float:left;">
+                                <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
+                                  {{chat.content.text}}
+                                  <span>{{chat.timestamp | date : 'h:mma'}}</span>
+                                </div>
                               </div>
                             </div>
 
@@ -808,12 +859,12 @@
                     <div class="search-box" ng-if="!showChatModule">
                       <div class="input-wrapper">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                        <input placeholder="Search here" ng-change="searchActionRequest(search)" ng-model="search"
-                          id="search" name="search" type="text" />
+                        <input placeholder="Search here" ng-change="getActionRequiredUser()"
+                          ng-model="formData.actionSearch" id="search" name="search" type="text" />
                       </div>
                     </div>
                     <div class="fields-box">
-                      <div ng-if="!showChatModule">
+                      <div ng-if="!showChatModule && actionRequiredUserData.length > 0">
                         <table class="table table-bordered table-hover">
 
                           <tbody>
@@ -823,10 +874,10 @@
                                 <div class="friend-drawer friend-drawer--onhover"
                                   ng-click="userDetail(user.phone_number)">
 
-                                  <div class="profile-image">
+                                  <div class="profile-image"  style="float: left;">
                                     {{user.whatsapp_name |firstlater}}
                                   </div>
-                                  <div class="text">
+                                  <div class="text"  style="float: left;">
                                     <h6>{{user.whatsapp_name}}</h6>
                                     <p class="text-muted"><b>
                                         {{user.country_code}}{{user.phone_number}}
@@ -836,9 +887,11 @@
                                       ''}}
                                     </p>
                                   </div>
-
-                                  <span class="time text-muted small"><b>{{user.updated_at | date :
-                                      'medium'}}</b></span>
+                                  <div style="position: absolute; right: 35px;">
+                                    <span class="time text-muted small">
+                                      <b>{{user.updated_at | date :'medium'}}</b>
+                                    </span>
+                                  </div>
 
                                 </div>
                               </td>
@@ -849,10 +902,15 @@
                           boundary-links="true">
                         </dir-pagination-controls>
                       </div>
+                      <div ng-if="actionRequiredUserData.length == 0">
+                        <h4 style="text-align: center; color: red;">
+                          Record Not Found.
+                        </h4>
+                      </div>
                       <!-- Start Phone Chat  for tab2-->
                       <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
                         <div class="screen-phone">
-                          <div class="nav-phone navbar-fixed" ng-click="userProfileIcon()">
+                          <div class="nav-phone navbar-fixed">
 
                             <div class="icon-back">
                               <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
@@ -864,7 +922,7 @@
 
 
                             </div>
-                            <div>
+                            <div ng-click="userProfileIcon()">
 
                               <span class="username">{{userChatData.whatsapp_name}}</span><br />
                               <span
@@ -881,15 +939,16 @@
                             <div ng-repeat="chat in userChatData.payload track by $index">
                               <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                               <div style="width: 100%; float:right;">
-                                <div class="message-1" ng-if="chat.sender=='user'">
-                                  {{chat.content.text}}
+                                <div class="message-1 white-space-pre-line" ng-if="chat.sender=='user'">
+                                  {{chat.content.text}}<br>
                                   <span>{{chat.timestamp | date :'h:mma'}}</span>
                                 </div>
                               </div>
-
-                              <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
-                                {{chat.content.text}}
-                                <span>{{chat.timestamp | date : 'h:mma'}}</span>
+                              <div style="width: 100%; float:left;">
+                                <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
+                                  {{chat.content.text}}
+                                  <span>{{chat.timestamp | date : 'h:mma'}}</span>
+                                </div>
                               </div>
                             </div>
 
@@ -933,15 +992,15 @@
               <div id="content-3">
                 <div class="row-aisensy no-gutters">
                   <div class="col-md-12 col-xs-12 border-right">
-                    <div class="search-box">
+                    <div class="search-box" ng-if="!showChatModule">
                       <div class="input-wrapper">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                        <input placeholder="Search here" ng-change="searchIntervene(searchInUser)"
-                          ng-model="searchInUser" id="searchIn" name="search" type="text" />
+                        <input placeholder="Search here" ng-change="getInterveneUser()"  ng-model="formData.interveneSearch"
+                          id="searchIn" name="search" type="text" />
                       </div>
                     </div>
                     <div class="fields-box">
-                      <div ng-if="!showChatModule">
+                      <div ng-if="!showChatModule && interveneUserData.length > 0">
                         <table class="table table-bordered table-hover">
 
                           <tbody>
@@ -951,10 +1010,10 @@
                                 <div class="friend-drawer friend-drawer--onhover"
                                   ng-click="userDetail(user.phone_number)">
 
-                                  <div class="profile-image">
+                                  <div class="profile-image"  style="float: left;">
                                     {{user.whatsapp_name |firstlater}}
                                   </div>
-                                  <div class="text">
+                                  <div class="text"  style="float: left;">
                                     <h6>{{user.whatsapp_name}}</h6>
                                     <p class="text-muted"><b>
                                         {{user.country_code}}{{user.phone_number}}
@@ -965,8 +1024,11 @@
                                     </p>
                                   </div>
 
-                                  <span class="time text-muted small"><b>{{user.updated_at | date :
-                                      'medium'}}</b></span>
+                                  <div style="position: absolute; right: 35px;">
+                                    <span class="time text-muted small">
+                                      <b>{{user.updated_at | date :'medium'}}</b>
+                                    </span>
+                                  </div>
 
                                 </div>
                               </td>
@@ -977,11 +1039,16 @@
                           boundary-links="true">
                         </dir-pagination-controls>
                       </div>
+                      <div ng-if="interveneUserData.length == 0">
+                        <h4 style="text-align: center; color: red;">
+                          Record Not Found.
+                        </h4>
+                      </div>
 
                       <!-- Start Phone Chat  for tab3-->
                       <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
                         <div class="screen-phone">
-                          <div class="nav-phone navbar-fixed" ng-click="userProfileIcon()">
+                          <div class="nav-phone navbar-fixed">
 
                             <div class="icon-back">
                               <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
@@ -991,7 +1058,7 @@
                                   d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
                               </svg>
                             </div>
-                            <div>
+                            <div ng-click="userProfileIcon()">
 
                               <span class="username">{{userChatData.whatsapp_name}}</span><br />
                               <span
@@ -1008,15 +1075,16 @@
                             <div ng-repeat="chat in userChatData.payload track by $index">
                               <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                               <div style="width: 100%; float:right;">
-                                <div class="message-1" ng-if="chat.sender=='user'">
-                                  {{chat.content.text}}
+                                <div class="message-1 white-space-pre-line" ng-if="chat.sender=='user'">
+                                  {{chat.content.text}}<br>
                                   <span>{{chat.timestamp | date :'h:mma'}}</span>
                                 </div>
                               </div>
-
-                              <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
-                                {{chat.content.text}}
-                                <span>{{chat.timestamp | date : 'h:mma'}}</span>
+                              <div style="width: 100%; float:left;">
+                                <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
+                                  {{chat.content.text}}
+                                  <span>{{chat.timestamp | date : 'h:mma'}}</span>
+                                </div>
                               </div>
                             </div>
 
@@ -1414,7 +1482,15 @@
   <div class="container dropdown mca-page" ng-if="showcontactDetail">
     <h3><b>CONTACT</b></h3>
 
+    <div class="search-box">
+      <div class="input-wrapper">
+        <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
+        <input placeholder="Search here" type="text" />
+      </div>
+    </div>
+
     <div class="container table-responsive py-5">
+
       <table class="table table-bordered table-hover">
         <thead class="thead-dark">
           <tr>
@@ -1477,6 +1553,7 @@
             <th scope="col">Status</th>
             <th scope="col">Created At</th>
             <th scope="col">Bot Name</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -1489,6 +1566,7 @@
             <td>{{template.status}}</td>
             <td>{{template.date}}</td>
             <td>{{template.bot_name}}</td>
+            <td><button type="button" class="btn btn-success" style="align-items: center;" >View More</button></td>
           </tr>
         </tbody>
       </table>
@@ -1497,9 +1575,67 @@
   <!--/Template-->
 
   <!--Filter Tab-->
-  <div class="container dropdown mca-page" ng-if="">
+  <div class="container dropdown mca-page" ng-if="showfilterDetail">
     <h3><b>FILTER</b></h3>
+
+    <div class="page-inner">
+      <div class="top-select-option-mca">
+       <h4><b> Created at:</b></h4>
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="form-group">
+              <div class="form-group">
+                <label for="birthday">From:</label>
+                <input class="form-control" type="date" id="date" name="date">
+  
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="col-xs-6">
+            <div class="form-group">
+              <label for="birthday">To:</label>
+              <input class="form-control" type="date" id="date" name="date">
+
+            </div>
+            </div>
+          </div>
+        
+        <div class="second dropdown">
+         <h4><b>Attributes:</b></h4> 
+          <div class="row">
+            <div class="col-xs-6">
+              <div class="form-group">
+                <!--category dropdown-->
+                <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                  <option value="" disabled> Select Attribute</option>
+                  <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                    style="text-transform: capitalize">
+                    {{}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            
+            <div class="col-xs-6">
+              <div class="form-group">
+                <!--category dropdown-->
+                <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                  <option value="" disabled>Attribute Value</option>
+                  <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
+                    style="text-transform: capitalize">
+                    {{}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
   <!--/Filter Tab-->
-
 </div>

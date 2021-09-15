@@ -4,12 +4,30 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             input = input.charAt(0).toUpperCase();
         return input;
     }
-}]).controller('aisensyCtrl',
-    ['$scope', '$rootScope', '$window', '$location', 'AuthService', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService',
-        function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $state, userService, constants, AuthService, vcRecaptchaService, permissions) {
-            // AuthService.Clear();
+}]).directive("whenScrolled", function () {
+    return {
 
-            console.log('ppppppppppppppppppppppppp', $rootScope.globals.currentUser);
+        restrict: 'A',
+        link: function (scope, elem, attrs) {
+
+            // we get a list of elements of size 1 and need the first element
+            raw = elem[0];
+
+            // we load more elements when scrolled past a limit
+            elem.bind("scroll", function () {
+                if (raw.scrollTop + raw.offsetHeight + 5 >= raw.scrollHeight) {
+                    scope.loading = true;
+
+                    // we can give any function which loads more elements into the list
+                    scope.$apply(attrs.whenScrolled);
+                }
+            });
+        }
+    }
+}).controller('aisensyCtrl',
+    ['$scope', '$rootScope', '$window', '$location', 'AuthService', '$anchorScroll', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService',
+        function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $anchorScroll, $state, userService, constants, AuthService, vcRecaptchaService, permissions) {
+            // AuthService.Clear();
 
             let gooIndex = document.getElementById('goo-index');
             let hoverEnter = index => {
@@ -22,13 +40,18 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 nowVisible.classList.add('visible');
             }
 
+            $scope.tab = { name: 'tabA' };
+
+
 
             // AIsensy controller
             $scope.getActiveUser = function (page) {
                 $scope.showcontactDetail = false;
                 $scope.showhistoryDetail = false;
+                $scope.showChatModule = false;
                 $scope.showgetActiveUser = true;
                 $scope.showtemplateDetail = false;
+                //$scope.showfilterDetail = false;
 
                 let param = {
                     next_page: 1
@@ -54,10 +77,13 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         console.log(response);
                     })
             }
-
+            $scope.formData = {};
+            
             $scope.getActionRequiredUser = function (page) {
+                $scope.formData.interveneSearch = '';
+                $scope.showChatModule = false;
                 let param = {
-                    next_page: 1
+                    next_page: 1,
                 }
                 if (page) {
                     param.next_page = page;
@@ -69,19 +95,23 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     $scope.pagination = {
                         current: 1
                     };
+                }
+                if($scope.formData.actionSearch){
+                    param.search = $scope.formData.actionSearch;
                 }
                 AuthService.getAllActionRequiredData(param)
 
                     .then(function onSuccess(response) {
                         $scope.actionRequiredUserData = response.data.data.users;
                         $scope.totalCount = response.data.data.total_count
-                        console.log($scope.actionRequiredUserData)
                     }).catch(function onError(response) {
                         console.log(response);
                     })
             }
 
             $scope.getInterveneUser = function (page) {
+                $scope.formData.actionSearch = '';
+                $scope.showChatModule = false;
                 let param = {
                     next_page: 1
                 }
@@ -95,6 +125,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     $scope.pagination = {
                         current: 1
                     };
+                }
+                if($scope.formData.interveneSearch){
+                    param.search = $scope.formData.interveneSearch;
                 }
                 AuthService.getAllInterveneUserData(param)
 
@@ -107,8 +140,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
             }
 
+
             $scope.userDetail = function (value) {
-                console.log("1232",value)
+                console.log("1232", value)
                 $scope.showChatModule = true;
                 let param = {
                     phoneNumber: value,
@@ -169,12 +203,19 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
             $scope.writeMessage = function () {
                 $scope.messageBox = true;
+                $scope.tab = { name: 'tabC' };
+                // $scope.getInterveneUser();
             }
             $scope.messageBox = false;
             $scope.resolveButton = false;
+
             $scope.interveneButton = function () {
                 $scope.messageBox = false;
                 $scope.resolveButton = true;
+                $scope.hideChatModule();
+                $scope.tab = { name: 'tabA' };
+
+
             }
 
             $scope.contactDetail = function (page) {
@@ -185,6 +226,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showgetActionRequiredUser = false;
                 $scope.showgetInterveneUser = false;
                 $scope.showtemplateDetail = false;
+                $scope.showfilterDetail = false;
                 let param = {
                     next_page: 0
                 }
@@ -214,9 +256,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showcontactDetail = false;
                 $scope.showhistoryDetail = true;
                 $scope.showgetActiveUser = false;
-                $scope.showgetActionRequiredUser = false;
-                $scope.showgetInterveneUser = false;
                 $scope.showtemplateDetail = false;
+                $scope.showfilterDetail = false;
+                $scope.isUserProfile = false;
+                $scope.showChatModule = false;
+                
                 $scope.totalCount = 0;
                 let param = {
                     next_page: 0
@@ -249,10 +293,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 // console.log(value)
                 // console.log( $scope.templateSearch)
                 let param = {
-                    search: value,                  
+                    search: value,
                 }
-                if(!value){
-                    param.search=""
+                if (!value) {
+                    param.search = ""
                 }
                 // alert("template")
                 console.log("111111111", $scope.templateDetailData)
@@ -262,12 +306,40 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showgetActionRequiredUser = false;
                 $scope.showgetInterveneUser = false;
                 $scope.showtemplateDetail = true;
+                $scope.showfilterDetail = false;
+
 
                 AuthService.getTemplateTabData(param)
 
                     .then(function onSuccess(response) {
                         console.log(response)
                         $scope.templateDetailData = response.data.data;
+
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+            }
+            $scope.filterDetail = function (value) {
+                // console.log(value)
+                // console.log( $scope.templateSearch)
+                let param = {
+
+                }
+
+                // alert("template")
+                console.log("111111111", $scope.filterDetailData)
+                $scope.showcontactDetail = false;
+                $scope.showhistoryDetail = false;
+                $scope.showgetActiveUser = false;
+                $scope.showtemplateDetail = false;
+                $scope.showfilterDetail = true;
+
+
+                AuthService.getFilterTabData(param)
+
+                    .then(function onSuccess(response) {
+                        console.log(response)
+                        $scope.filterDetailData = response.data.data;
 
                     }).catch(function onError(response) {
                         console.log(response);
@@ -299,53 +371,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 }
             }
 
-            $scope.searchActionRequest = function (value) {
-                console.log(value)
-                $scope.search = value;
-                console.log("search", $scope.search)
 
-                if (value != "") {
-                    let param = {
-                        search: $scope.search
-                    }
-                    AuthService.getActionRequestSearch(param)
-
-                        .then(function onSuccess(response) {
-                            console.log(response)
-                            console.log("211")
-                            $scope.actionRequiredUserData = response.data.data;
-
-                        }).catch(function onError(response) {
-                            console.log(response);
-                        })
-                } else {
-                    $scope.getActionRequiredUser(1)
-                }
-            }
-
-            $scope.searchIntervene = function (value) {
-                console.log(value)
-                $scope.search = value;
-                console.log("search", $scope.search)
-
-                if (value != "") {
-                    let param = {
-                        search: $scope.search
-                    }
-                    AuthService.getInterveneSearch(param)
-
-                        .then(function onSuccess(response) {
-                            console.log(response)
-                            console.log("111")
-                            $scope.interveneUserData = response.data.data;
-
-                        }).catch(function onError(response) {
-                            console.log(response);
-                        })
-                } else {
-                    $scope.getInterveneUser(1)
-                }
-            }
 
             $scope.searchChatHistory = function (value) {
                 console.log(value)
