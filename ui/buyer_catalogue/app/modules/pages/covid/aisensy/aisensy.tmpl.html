@@ -108,6 +108,7 @@
     border-radius: 15px;
   }
 
+ 
   .tab-aisensy #tab-1:checked~.content #content-1,
   .tab-aisensy #tab-2:checked~.content #content-2,
   .tab-aisensy #tab-3:checked~.content #content-3 {
@@ -132,6 +133,10 @@
     text-align: center;
   }
 
+  .profile-heading {
+    position: relative;
+    left: -30px;
+  }
 
   .search-box {
     background: #e3e3e3;
@@ -207,12 +212,35 @@
     text-align: left;
   }
 
-
-  .time {
+  @media only screen and (max-width: 450px){
+    .time {
     color: black;
-    text-align: right;
+    text-align: end;
     font-weight: 300;
     float: right;
+    }
+  }
+
+  
+  @media only screen and (min-width: 450px) and (max-width: 1000px)
+  {
+    .time {
+    color: black;
+    /*text-align: end; */
+    padding-left: 250px;
+    font-weight: 300;
+    
+    }
+  }
+  @media only screen and (min-width: 1000px)
+  {
+  .time {
+    color: black;
+    /*text-align: end; */
+    padding-left: 650px;
+    font-weight: 300;
+    
+    }
   }
 
   .friend-drawer--onhover:hover {
@@ -589,12 +617,11 @@
 
   }
 
-      [scroll-glue]{
-        height: 20.1pc;
-        overflow-y: scroll;
-        border: 1px solid gray;
-      }
-    
+  [scroll-glue] {
+    height: 20.1pc;
+    overflow-y: scroll;
+    border: 1px solid gray;
+  }
 </style>
 
 
@@ -741,20 +768,21 @@
 
 
                             </div>
+
                             <div ng-click="userProfileIcon()">
+                              
+                                <span class="username profile-heading">{{userChatData.whatsapp_name}}</span><br />
+                                <span
+                                  class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+                                
 
-                              <span class="username">{{userChatData.whatsapp_name}}</span><br />
-                              <span class="tel-number">({{userChatData.country_code}}{{userChatData.phone_number}})
-                              </span>
-
-                              <div class="profile-image-chat">
-                                <span ng-if="userChatData.whatsapp_name!=''">
-                                  {{userChatData.whatsapp_name |firstlater}}
-                                </span>
-                                <span ng-if="userChatData.whatsapp_name==''">#</span>
+                                <div class="profile-image-chat">
+                                  <span ng-if="userChatData.whatsapp_name!=''">
+                                    {{userChatData.whatsapp_name |firstlater}}
+                                  </span>
+                                  <span ng-if="userChatData.whatsapp_name==''">#</span>
+                                </div>
                               </div>
-                            </div>
-
                           </div>
 
                           <div class="chat">
@@ -1423,6 +1451,12 @@
     <h3><b>CONTACT</b></h3>
 
     <div class="container table-responsive py-5">
+      <div class="search-box">
+        <div class="input-wrapper">
+          <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
+          <input placeholder="Search here" type="text" />
+        </div>
+      </div>
       <table class="table table-bordered table-hover">
         <thead class="thead-dark">
           <tr>
