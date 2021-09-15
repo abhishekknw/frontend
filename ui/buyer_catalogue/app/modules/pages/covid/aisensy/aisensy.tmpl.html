@@ -685,11 +685,11 @@
       <div class="top-select-option-aisensy">
         <div class="form-group">
           <div class="tab-aisensy">
-            <input id="tab-1" type="radio" name="tab" checked />
+            <input id="tab-1" type="radio" name="tab" ng-model="tab.name" value="tabA">
             <label for="tab-1">Active</label>
-            <input id="tab-2" type="radio" name="tab" />
+            <input id="tab-2" type="radio" name="tab" ng-model="tab.name" value="tabB">
             <label for="tab-2" ng-click="getActionRequiredUser()">Action Required</label>
-            <input id="tab-3" type="radio" name="tab" />
+            <input id="tab-3" type="radio" name="tab" ng-model="tab.name" value="tabC">
             <label for="tab-3" ng-click="getInterveneUser()">Intervened</label>
 
             <div class="content">
@@ -705,8 +705,8 @@
                     </div>
 
                     <div class="fields-box">
-                      <div ng-if="!showChatModule">
-                        <table class="table table-bordered table-hover">
+                      <div ng-if="!showChatModule && activeUserData.length > 0">
+                        <table class="table table-bordered table-hover" >
 
                           <tbody>
                             <tr dir-paginate="user in activeUserData | itemsPerPage:itemsPerPage"
@@ -741,6 +741,12 @@
                         <dir-pagination-controls max-size="10" on-page-change="liveChatPageChanged(newPageNumber)"
                           boundary-links="true">
                         </dir-pagination-controls>
+                      </div>
+
+                      <div ng-if="activeUserData.length == 0">
+                        <h4 style="text-align: center; color: red;">
+                          Record Not Found.
+                        </h4>
                       </div>
 
                       <!-- <div ng-if="!showChatModule" ng-repeat="user in activeUserData track by $index">
@@ -853,12 +859,12 @@
                     <div class="search-box" ng-if="!showChatModule">
                       <div class="input-wrapper">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                        <input placeholder="Search here" ng-change="getActionRequiredUser(actionsearch)"
-                          ng-model="actionsearch" id="search" name="search" type="text" />
+                        <input placeholder="Search here" ng-change="getActionRequiredUser()"
+                          ng-model="formData.actionSearch" id="search" name="search" type="text" />
                       </div>
                     </div>
                     <div class="fields-box">
-                      <div ng-if="!showChatModule">
+                      <div ng-if="!showChatModule && actionRequiredUserData.length > 0">
                         <table class="table table-bordered table-hover">
 
                           <tbody>
@@ -893,6 +899,11 @@
                         <dir-pagination-controls max-size="10" on-page-change="liveChatPageChanged(newPageNumber)"
                           boundary-links="true">
                         </dir-pagination-controls>
+                      </div>
+                      <div ng-if="actionRequiredUserData.length == 0">
+                        <h4 style="text-align: center; color: red;">
+                          Record Not Found.
+                        </h4>
                       </div>
                       <!-- Start Phone Chat  for tab2-->
                       <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
@@ -981,12 +992,12 @@
                     <div class="search-box" ng-if="!showChatModule">
                       <div class="input-wrapper">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                        <input placeholder="Search here" ng-change="searchIntervene()" ng-model="intervenesearch"
+                        <input placeholder="Search here" ng-change="getInterveneUser()"  ng-model="formData.interveneSearch"
                           id="searchIn" name="search" type="text" />
                       </div>
                     </div>
                     <div class="fields-box">
-                      <div ng-if="!showChatModule">
+                      <div ng-if="!showChatModule && interveneUserData.length > 0">
                         <table class="table table-bordered table-hover">
 
                           <tbody>
@@ -1021,6 +1032,11 @@
                         <dir-pagination-controls max-size="10" on-page-change="liveChatPageChanged(newPageNumber)"
                           boundary-links="true">
                         </dir-pagination-controls>
+                      </div>
+                      <div ng-if="interveneUserData.length == 0">
+                        <h4 style="text-align: center; color: red;">
+                          Record Not Found.
+                        </h4>
                       </div>
 
                       <!-- Start Phone Chat  for tab3-->

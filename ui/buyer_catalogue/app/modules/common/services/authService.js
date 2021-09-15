@@ -495,7 +495,11 @@ angular.module('Authentication')
                   });
             };
             authService.getAllActionRequiredData = function (param) {
-               let url = "v0/ui/b2c-bot/action_required/?next_page=" + param.next_page + "&search=" +param.search
+               let url = "v0/ui/b2c-bot/action_required/?next_page=" + param.next_page;
+               if(param.search){
+                  url += '&search=' + param.search
+               }
+
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -505,7 +509,10 @@ angular.module('Authentication')
                   });
             };
             authService.getAllInterveneUserData = function (param) {
-               let url = "/v0/ui/b2c-bot/intervene/?next_page=" + param.next_page + "&search=" +param.search
+               let url = "/v0/ui/b2c-bot/intervene/?next_page=" + param.next_page;
+               if(param.search){
+                  url += '&search=' + param.search
+               }
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
