@@ -685,7 +685,7 @@
       <div class="top-select-option-aisensy">
         <div class="form-group">
           <div class="tab-aisensy">
-            <input id="tab-1" type="radio" name="tab" ng-model="tab.name" value="tabA">
+            <input id="tab-1" type="radio" name="tab" ng-click="hideChatModule()" ng-model="tab.name" value="tabA">
             <label for="tab-1">Active</label>
             <input id="tab-2" type="radio" name="tab" ng-model="tab.name" value="tabB">
             <label for="tab-2" ng-click="getActionRequiredUser()">Action Required</label>
@@ -831,14 +831,14 @@
 
                             <div class="aisensy-resolve-btn">
                               <button type="button" class="btn btn-success" style="margin-top:20px"
-                                ng-click="interveneButton(userChatData.phone_number)">
+                                ng-click="interveneButton(userChatData)">
                                 Resolve
                               </button>
                             </div>
                           </div>
 
 
-                          <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData.phone_number)" ng-if="!messageBox"
+                          <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData,'active')" ng-if="!messageBox"
                             style="margin-top:5px">
                             <button type="button" class="btn btn-primary">
                               Intervene
@@ -967,14 +967,14 @@
 
                             <div class="aisensy-resolve-btn">
                               <button type="button" class="btn btn-success" style="margin-top:20px"
-                                ng-click="interveneButton(userChatData.phone_number)">
+                                ng-click="interveneButton(userChatData)">
                                 Resolve
                               </button>
                             </div>
                           </div>
 
 
-                          <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData.phone_number)" ng-if="!messageBox"
+                          <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData)" ng-if="!messageBox"
                             style="margin-top:5px">
                             <button type="button" class="btn btn-primary">
                               Intervene
@@ -1103,14 +1103,14 @@
 
                             <div class="aisensy-resolve-btn">
                               <button type="button" class="btn btn-success" style="margin-top:20px"
-                                ng-click="interveneButton(userChatData.phone_number)">
+                                ng-click="interveneButton(userChatData)">
                                 Resolve
                               </button>
                             </div>
                           </div>
 
 
-                          <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData.phone_number)" ng-if="!messageBox"
+                          <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData)" ng-if="!messageBox"
                             style="margin-top:5px">
                             <button type="button" class="btn btn-primary">
                               Intervene
