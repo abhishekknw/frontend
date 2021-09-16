@@ -25,8 +25,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
     }
 }).controller('aisensyCtrl',
-    ['$scope', '$rootScope', '$window', '$location', 'AuthService', '$anchorScroll', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService',
-        function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $anchorScroll, $state, userService, constants, AuthService, vcRecaptchaService, permissions) {
+    ['$scope', '$rootScope', '$window', '$location', 'AuthService', '$anchorScroll', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService', 'commonDataShare',
+        function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $anchorScroll, $state, userService, constants, AuthService, vcRecaptchaService, permissions, commonDataShare) {
             // AuthService.Clear();
 
             let gooIndex = document.getElementById('goo-index');
@@ -78,7 +78,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
             }
             $scope.formData = {};
-            
+
             $scope.getActionRequiredUser = function (page) {
                 $scope.formData.interveneSearch = '';
                 $scope.showChatModule = false;
@@ -96,7 +96,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         current: 1
                     };
                 }
-                if($scope.formData.actionSearch){
+                if ($scope.formData.actionSearch) {
                     param.search = $scope.formData.actionSearch;
                 }
                 AuthService.getAllActionRequiredData(param)
@@ -126,7 +126,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         current: 1
                     };
                 }
-                if($scope.formData.interveneSearch){
+                if ($scope.formData.interveneSearch) {
                     param.search = $scope.formData.interveneSearch;
                 }
                 AuthService.getAllInterveneUserData(param)
@@ -201,38 +201,78 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.messageBox = false;
             }
 
-            $scope.writeMessage = function (phone) {
+            $scope.writeMessage = function (data, tabValue) {
                 $scope.messageBox = true;
                 $scope.tab = { name: 'tabC' };
                 let param = {
-                    phone:phone
+                    phone: data.phone_number
                 }
                 AuthService.addUserToIntervene(param)
-                .then(function onSuccess(response) {
-                }).catch(function onError(response) {
-                    console.log(response);
-                })
+                    .then(function onSuccess(response) {
+                        if (response.data.status) {
+                            if (tabValue == 'active') {
+                                var localindex_index = $scope.activeUserData.map(function (el) {
+                                    return el.phone_number;
+                                }).indexOf(data.phone_number);
+                                if (localindex_index != -1) {
+                                    $scope.activeUserData.splice(localindex_index, 1);
+                                    if ($scope.interveneUserData.length > 0) {
+                                        $scope.interveneUserData.unshift(data)
+                                    } else {
+                                        $scope.interveneUserData.push(data)
+                                    }
+                                }
+                            } else {
+                                var localindex_index = $scope.actionRequiredUserData.map(function (el) {
+                                    return el.phone_number;
+                                }).indexOf(data.phone_number);
+                                if (localindex_index != -1) {
+                                    $scope.actionRequiredUserData.splice(localindex_index, 1);
+                                    if ($scope.interveneUserData.length > 0) {
+                                        $scope.interveneUserData.unshift(data)
+                                    } else {
+                                        $scope.interveneUserData.push(data)
+                                    }
+                                }
+                            }
+                        }
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
 
             }
             $scope.messageBox = false;
             $scope.resolveButton = false;
 
-            $scope.interveneButton = function (phone) {
+            $scope.interveneButton = function (data) {
                 $scope.messageBox = false;
                 $scope.resolveButton = true;
                 let param = {
-                    phone:phone
+                    phone: data.phone_number
                 }
                 AuthService.addUserToActive(param)
-                .then(function onSuccess(response) {
-              
-                    // $scope.activeUserData
-                }).catch(function onError(response) {
-                    console.log(response);
-                })
+                    .then(function onSuccess(response) {
+                        if (response.data.status) {
+                            var localindex_index = $scope.interveneUserData.map(function (el) {
+                                return el.phone_number;
+                            }).indexOf(data.phone_number);
+                            if (localindex_index != -1) {
+                                $scope.interveneUserData.splice(localindex_index, 1);
+                                if ($scope.activeUserData.length > 0) {
+                                    $scope.activeUserData.unshift(data)
+                                } else {
+                                    $scope.activeUserData.push(data)
+                                }
+                            }
+
+                        }
+
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
                 $scope.hideChatModule();
                 $scope.tab = { name: 'tabA' };
-                
+
 
 
             }
@@ -279,7 +319,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showfilterDetail = false;
                 $scope.isUserProfile = false;
                 $scope.showChatModule = false;
-                
+
                 $scope.totalCount = 0;
                 let param = {
                     next_page: 0
@@ -523,6 +563,51 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.pagination = {
                 current: 1
             };
+            $scope.options = {};
+            $scope.dateRangeModel = {};
+            $scope.changeStartDate = function () {
+                $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
+                $scope.options.minDate = $scope.dateRangeModel.start_date;
+            }
+
+            $scope.changeEndDate = function () {
+                $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
+            }
+            
+            $scope.getFilterData = function () {
+                $scope.showcontactDetail = false;
+                $scope.showhistoryDetail = false;
+                $scope.showgetActiveUser = false;
+                $scope.showtemplateDetail = false;
+                $scope.showfilterDetail = true;
+                $scope.dateRangeModel.start_date = $scope.dateFormat($scope.dateRangeModel.start_dates);
+                $scope.dateRangeModel.end_date = $scope.dateFormat($scope.dateRangeModel.end_dates);
+                AuthService.getFilterTabData($scope.dateRangeModel)
+                    .then(function onSuccess(response) {
+                        $scope.filterData = response.data.data.users;
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+
+            }
+
+            $scope.dateFormat = function (date) {
+                var d = new Date(date),
+                    month = '' + (d.getMonth() + 1),
+                    day = '' + d.getDate(),
+                    year = d.getFullYear();
+                if (month.length < 2) month = '0' + month;
+                if (day.length < 2) day = '0' + day;
+                return [year, month, day].join('-');
+
+            }
+
+            // $scope.filterPageChanged = function (newPageNumber, tab) {
+            //     $scope.serial = newPageNumber * 10 - 9;
+            //     $scope.getFilterData(newPageNumber);
+            // };
+
+
         }]);
 
 

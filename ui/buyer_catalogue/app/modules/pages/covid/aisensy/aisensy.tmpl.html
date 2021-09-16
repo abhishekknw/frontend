@@ -692,7 +692,7 @@
       <div class="top-select-option-aisensy">
         <div class="form-group">
           <div class="tab-aisensy">
-            <input id="tab-1" type="radio" name="tab" ng-model="tab.name" value="tabA">
+            <input id="tab-1" type="radio" name="tab" ng-click="hideChatModule()" ng-model="tab.name" value="tabA">
             <label for="tab-1">Active</label>
             <input id="tab-2" type="radio" name="tab" ng-model="tab.name" value="tabB">
             <label for="tab-2" ng-click="getActionRequiredUser()">Action Required</label>
@@ -838,14 +838,14 @@
 
                             <div class="aisensy-resolve-btn">
                               <button type="button" class="btn btn-success" style="margin-top:20px"
-                                ng-click="interveneButton(userChatData.phone_number)">
+                                ng-click="interveneButton(userChatData)">
                                 Resolve
                               </button>
                             </div>
                           </div>
 
 
-                          <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData.phone_number)" ng-if="!messageBox"
+                          <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData,'active')" ng-if="!messageBox"
                             style="margin-top:5px">
                             <button type="button" class="btn btn-primary">
                               Intervene
@@ -974,14 +974,14 @@
 
                             <div class="aisensy-resolve-btn">
                               <button type="button" class="btn btn-success" style="margin-top:20px"
-                                ng-click="interveneButton(userChatData.phone_number)">
+                                ng-click="interveneButton(userChatData)">
                                 Resolve
                               </button>
                             </div>
                           </div>
 
 
-                          <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData.phone_number)" ng-if="!messageBox"
+                          <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData)" ng-if="!messageBox"
                             style="margin-top:5px">
                             <button type="button" class="btn btn-primary">
                               Intervene
@@ -1110,14 +1110,14 @@
 
                             <div class="aisensy-resolve-btn">
                               <button type="button" class="btn btn-success" style="margin-top:20px"
-                                ng-click="interveneButton(userChatData.phone_number)">
+                                ng-click="interveneButton(userChatData)">
                                 Resolve
                               </button>
                             </div>
                           </div>
 
 
-                          <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData.phone_number)" ng-if="!messageBox"
+                          <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData)" ng-if="!messageBox"
                             style="margin-top:5px">
                             <button type="button" class="btn btn-primary">
                               Intervene
@@ -1592,7 +1592,7 @@
       <div class="top-select-option-mca">
        <h4><b> Created at:</b></h4>
         <div class="row">
-          <div class="col-xs-6">
+          <!-- <div class="col-xs-6">
             <div class="form-group">
               <div class="form-group">
                 <label for="birthday">From:</label>
@@ -1600,17 +1600,34 @@
   
               </div>
             </div>
-          </div>
+          </div> -->
 
           
-          <div class="col-xs-6">
+          <!-- <div class="col-xs-6">
             <div class="form-group">
               <label for="birthday">To:</label>
               <input class="form-control" type="date" id="date" name="date">
 
             </div>
+            </div> -->
+
+
+            <div class="col-md-6">
+              <input type="text"  style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates" is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats">
+              <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
+                <i class="glyphicon glyphicon-calendar"></i>
+              </button>
             </div>
-          </div>
+            <div class="col-md-6">
+                <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"  ng-change="changeEndDate()"  ng-model="dateRangeModel.end_dates" is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats">
+                <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates" ng-click="isEndDateOpen = !isEndDateOpen">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </div>
+              <button class="btn btn-danger" ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates" ng-click="getFilterData()">Submit</button>
+
+            <!-- </div>
+          </div> -->
         
         <div class="second dropdown">
          <h4><b>Attributes:</b></h4> 
@@ -1618,12 +1635,11 @@
             <div class="col-xs-6">
               <div class="form-group">
                 <!--category dropdown-->
-                <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                <select class="form-control" ng-change="getFilterData()" name="attribute_name" id="attribute_nameId" ng-model="dateRangeModel.attribute_name">
                   <option value="" disabled> Select Attribute</option>
-                  <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
-                    style="text-transform: capitalize">
-                    {{}}
-                  </option>
+                  <option value="active">Active</option>
+                  <option value="action_required">Action Required</option>
+                  <option value="intervene">Intervene</option>
                 </select>
               </div>
             </div>
@@ -1632,12 +1648,11 @@
             <div class="col-xs-6">
               <div class="form-group">
                 <!--category dropdown-->
-                <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                <select class="form-control" ng-change="getFilterData()" name="attribute" id="attributeId" ng-model="dateRangeModel.date_type">
                   <option value="" disabled>Attribute Value</option>
-                  <option ng-repeat="category in categoryData track by $index" value="{{category.category_code}}"
-                    style="text-transform: capitalize">
-                    {{}}
-                  </option>
+                  <option value="created_at">Created At</option>
+                  <option value="updated_at">Updated At</option>
+                 
                 </select>
               </div>
             </div>
@@ -1645,7 +1660,49 @@
         </div>
       </div>
     </div>
+  </div>
 
+
+  <div ng-if="filterData.length > 0">
+    <!-- <div class="search-box">
+      <div class="input-wrapper">
+        <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
+        <input placeholder="Search here" ng-change="searchChatHistory(historySearch)" ng-model="historySearch"
+          type="text" />
+      </div>
+    </div> -->
+    <table class="table table-bordered table-hover">
+      <tbody>
+        <tr dir-paginate="details in filterData | itemsPerPage:itemsPerPage" total-items="totalCount"
+          current-page="pagination.current" track by "$index">
+          <td>
+            <div class="friend-drawer friend-drawer--onhover" ng-click="userDetail(details.phone_number)">
+              <div class="profile-image">
+                {{details.whatsapp_name |firstlater}}
+              </div>
+              <div class="text">
+                <h6>{{details.whatsapp_name}}</h6>
+                <p class="text-muted">
+                  {{details.country_code}}{{details.phone_number}}
+                </p>
+              </div>
+              <span class="time text-muted small">{{details.payload.timestamp}}</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <dir-pagination-controls max-size="10" on-page-change="historyPageChanged(newPageNumber)"
+      boundary-links="true">
+    </dir-pagination-controls> -->
+  </div>
+  <div ng-if="filterData.length == 0">
+    <h4 style="text-align: center; color: red;">
+      Record Not Found.
+    </h4>
+  </div>
+
+</div>
   </div>
   <!--/Filter Tab-->
 </div>

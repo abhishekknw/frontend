@@ -496,7 +496,7 @@ angular.module('Authentication')
             };
             authService.getAllActionRequiredData = function (param) {
                let url = "v0/ui/b2c-bot/action_required/?next_page=" + param.next_page;
-               if(param.search){
+               if (param.search) {
                   url += '&search=' + param.search
                }
 
@@ -510,7 +510,7 @@ angular.module('Authentication')
             };
             authService.getAllInterveneUserData = function (param) {
                let url = "/v0/ui/b2c-bot/intervene/?next_page=" + param.next_page;
-               if(param.search){
+               if (param.search) {
                   url += '&search=' + param.search
                }
                return $http.get(apiHost + url)
@@ -601,8 +601,8 @@ angular.module('Authentication')
                   });
             };
 
-          
-            
+
+
             authService.getAllUserContact = function (param) {
                console.log(param);
                let url = "v0/ui/b2c-bot/get-all-users-paginate/?next_page=" + param.next_page;
@@ -639,7 +639,7 @@ angular.module('Authentication')
             };
 
             authService.getTemplateTabData = function (param) {
-               let url = "v0/ui/b2c-bot/get-mca-master-templates/?search="+param.search
+               let url = "v0/ui/b2c-bot/get-mca-master-templates/?search=" + param.search
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -650,7 +650,29 @@ angular.module('Authentication')
             };
 
             authService.getFilterTabData = function (param) {
-               let url = ""
+               let url = "v0/ui/b2c-bot/filter-user/";
+               if (param.attribute_name) {
+                  url += '?attribute_name=' + param.attribute_name
+               }
+
+               if (param.start_date) {
+                  if (param.attribute_name) {
+                     url += '&start_date=' + param.start_date
+                  } else {
+                     url += '?start_date=' + param.start_date
+                  }
+               }
+
+               if (param.end_date) {
+                  url += '&end_date=' + param.end_date
+               }
+
+               if (param.date_type) {
+                  url += '&date_type=' + param.date_type
+               }
+
+
+
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -682,7 +704,7 @@ angular.module('Authentication')
                   });
             };
 
-            
+
 
             return authService;
          }])
