@@ -416,6 +416,30 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 }
             }
 
+            $scope.searchChatContact = function (value) {
+                console.log(value)
+                $scope.search = value;
+                console.log("search", $scope.search)
+
+                if (value != "") {
+                    let param = {
+                        search: $scope.search
+                    }
+                    AuthService.getActiveSearch(param)
+
+                        .then(function onSuccess(response) {
+                            console.log(response)
+                            console.log("31")
+                            $scope.contactDetailData = response.data.data;
+
+                        }).catch(function onError(response) {
+                            console.log(response);
+                        })
+                } else {
+                    $scope.contactDetail(1)
+                }
+            }
+
 
             // $scope.searchChatTemplate = function (value) {
             //     console.log(value)

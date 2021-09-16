@@ -139,6 +139,14 @@
     left: -30px;
   }
 
+  .profile-heading-1 {
+    position: relative;
+    right:-30px;
+  }
+  .profile-heading-2 {
+    position: relative;
+    right:-40px;
+  }
   .search-box {
     background: #e3e3e3;
     padding: 10px 13px;
@@ -290,14 +298,6 @@
   /*status*/
   .status-image {
     width: 50px;
-    height: 50px;
-    border-radius: 40px;
-
-  }
-
-  @media screen and (max-width:500px){
-    .status-image {
-      width: 50px;
       height: 50px;
       border-radius: 40px;
       /* align-items: center; */
@@ -305,8 +305,10 @@
       /* transform: translate(280%,-20%); */
       font-size: xx-large;
       text-align: center;
-    }
 
+  }
+
+  @media screen and (max-width:500px){
     .friend-drawer h6{
       width: 100px;
     }
@@ -929,9 +931,9 @@
                             </div>
                             <div ng-click="userProfileIcon()">
 
-                              <span class="username">{{userChatData.whatsapp_name}}</span><br />
+                              <span class="username profile-heading">{{userChatData.whatsapp_name}}</span><br />
                               <span
-                                class="tel-number">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+                                class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
 
                               <div class="profile-image-chat">
                                 {{userChatData.whatsapp_name |firstlater}}
@@ -1065,9 +1067,9 @@
                             </div>
                             <div ng-click="userProfileIcon()">
 
-                              <span class="username">{{userChatData.whatsapp_name}}</span><br />
+                              <span class="username profile-heading">{{userChatData.whatsapp_name}}</span><br />
                               <span
-                                class="tel-number">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+                                class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
 
                               <div class="profile-image-chat">
                                 {{userChatData.whatsapp_name |firstlater}}
@@ -1433,14 +1435,17 @@
 
 
                 </div>
-                <div>
+                <div  ng-click="userProfileIcon()">
 
-                  <span class="username">{{userChatData.whatsapp_name}}</span><br />
-                  <span class="tel-number">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+                  <span class="username profile-heading-1">{{userChatData.whatsapp_name}}</span><br />
+                  <span class="tel-number profile-heading-2">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
 
-                  <div class="profile-image-chat" ng-click="userProfileIcon()">
-                    {{userChatData.whatsapp_name |firstlater}}
-                  </div>
+                  <div class="profile-image-chat">
+                    <span ng-if="userChatData.whatsapp_name!=''">
+                      {{userChatData.whatsapp_name |firstlater}}
+                    </span>
+                    <span ng-if="userChatData.whatsapp_name==''">#</span>
+                  </div>>
                 </div>
 
               </div>
@@ -1490,7 +1495,7 @@
     <div class="search-box">
       <div class="input-wrapper">
         <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
-        <input placeholder="Search here" type="text" />
+        <input placeholder="Search here" ng-change="searchChatContact(contactSearch)" ng-model="contactSearch"type="text" />
       </div>
     </div>
 
