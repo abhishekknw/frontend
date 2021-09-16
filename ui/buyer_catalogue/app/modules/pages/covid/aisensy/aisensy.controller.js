@@ -201,19 +201,38 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.messageBox = false;
             }
 
-            $scope.writeMessage = function () {
+            $scope.writeMessage = function (phone) {
                 $scope.messageBox = true;
                 $scope.tab = { name: 'tabC' };
-                // $scope.getInterveneUser();
+                let param = {
+                    phone:phone
+                }
+                AuthService.addUserToIntervene(param)
+                .then(function onSuccess(response) {
+                }).catch(function onError(response) {
+                    console.log(response);
+                })
+
             }
             $scope.messageBox = false;
             $scope.resolveButton = false;
 
-            $scope.interveneButton = function () {
+            $scope.interveneButton = function (phone) {
                 $scope.messageBox = false;
                 $scope.resolveButton = true;
+                let param = {
+                    phone:phone
+                }
+                AuthService.addUserToActive(param)
+                .then(function onSuccess(response) {
+              
+                    // $scope.activeUserData
+                }).catch(function onError(response) {
+                    console.log(response);
+                })
                 $scope.hideChatModule();
                 $scope.tab = { name: 'tabA' };
+                
 
 
             }
