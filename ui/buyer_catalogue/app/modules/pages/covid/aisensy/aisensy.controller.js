@@ -25,8 +25,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
     }
 }).controller('aisensyCtrl',
-    ['$scope', '$rootScope', '$window', '$location', 'AuthService', '$anchorScroll', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService',
-        function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $anchorScroll, $state, userService, constants, AuthService, vcRecaptchaService, permissions) {
+    ['$scope', '$rootScope', '$window', '$location', 'AuthService', '$anchorScroll', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService', 'commonDataShare',
+        function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $anchorScroll, $state, userService, constants, AuthService, vcRecaptchaService, permissions, commonDataShare) {
             // AuthService.Clear();
 
             let gooIndex = document.getElementById('goo-index');
@@ -539,6 +539,51 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.pagination = {
                 current: 1
             };
+            $scope.options = {};
+            $scope.dateRangeModel = {};
+            $scope.changeStartDate = function () {
+                $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
+                $scope.options.minDate = $scope.dateRangeModel.start_date;
+            }
+
+            $scope.changeEndDate = function () {
+                $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
+            }
+            
+            $scope.getFilterData = function () {
+                $scope.showcontactDetail = false;
+                $scope.showhistoryDetail = false;
+                $scope.showgetActiveUser = false;
+                $scope.showtemplateDetail = false;
+                $scope.showfilterDetail = true;
+                $scope.dateRangeModel.start_date = $scope.dateFormat($scope.dateRangeModel.start_dates);
+                $scope.dateRangeModel.end_date = $scope.dateFormat($scope.dateRangeModel.end_dates);
+                AuthService.getFilterTabData($scope.dateRangeModel)
+                    .then(function onSuccess(response) {
+                        $scope.filterData = response.data.data.users;
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+
+            }
+
+            $scope.dateFormat = function (date) {
+                var d = new Date(date),
+                    month = '' + (d.getMonth() + 1),
+                    day = '' + d.getDate(),
+                    year = d.getFullYear();
+                if (month.length < 2) month = '0' + month;
+                if (day.length < 2) day = '0' + day;
+                return [year, month, day].join('-');
+
+            }
+
+            // $scope.filterPageChanged = function (newPageNumber, tab) {
+            //     $scope.serial = newPageNumber * 10 - 9;
+            //     $scope.getFilterData(newPageNumber);
+            // };
+
+
         }]);
 
 
