@@ -120,7 +120,7 @@
     display: none;
     text-align: center;
     /*height: 192px;*/
-    overflow: auto;
+    /* overflow: auto; */
   }
 
   /*active chat list*/
@@ -141,12 +141,14 @@
 
   .profile-heading-1 {
     position: relative;
-    right:-30px;
+    right: -30px;
   }
+
   .profile-heading-2 {
     position: relative;
-    right:-40px;
+    right: -40px;
   }
+
   .search-box {
     background: #e3e3e3;
     padding: 10px 13px;
@@ -298,18 +300,18 @@
   /*status*/
   .status-image {
     width: 50px;
-      height: 50px;
-      border-radius: 40px;
-      /* align-items: center; */
-      background-color: lightgrey;
-      /* transform: translate(280%,-20%); */
-      font-size: xx-large;
-      text-align: center;
+    height: 50px;
+    border-radius: 40px;
+    /* align-items: center; */
+    background-color: lightgrey;
+    /* transform: translate(280%,-20%); */
+    font-size: xx-large;
+    text-align: center;
 
   }
 
-  @media screen and (max-width:500px){
-    .friend-drawer h6{
+  @media screen and (max-width:500px) {
+    .friend-drawer h6 {
       width: 100px;
     }
 
@@ -318,7 +320,7 @@
       font-weight: 800;
       font-size: 15px;
       margin-top: -10px;
-  
+
     }
 
     .friend-drawer-status p {
@@ -477,8 +479,8 @@
   .message-1 {
     border-radius: 7px;
     background-color: #e0e0e0;
-    padding: 5px 15px ;
-      font: 15px "Roboto", Segoe UI, sans-serif;
+    padding: 5px 15px;
+    font: 15px "Roboto", Segoe UI, sans-serif;
     /* width: calc(100% + -50px); */
     max-width: calc(100% + -50px);
     min-width: 150px;
@@ -713,7 +715,7 @@
 
                     <div class="fields-box">
                       <div ng-if="!showChatModule && activeUserData.length > 0">
-                        <table class="table table-bordered table-hover" >
+                        <table class="table table-bordered table-hover">
 
                           <tbody>
                             <tr dir-paginate="user in activeUserData | itemsPerPage:itemsPerPage"
@@ -722,7 +724,7 @@
                                 <div class="friend-drawer friend-drawer--onhover"
                                   ng-click="userDetail(user.phone_number)">
 
-                                  <div class="profile-image"  style="float: left;">
+                                  <div class="profile-image" style="float: left;">
                                     {{user.whatsapp_name |firstlater}}
                                   </div>
                                   <div class="text" style="float: left;">
@@ -845,8 +847,8 @@
                           </div>
 
 
-                          <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData,'active')" ng-if="!messageBox"
-                            style="margin-top:5px">
+                          <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData,'active')"
+                            ng-if="!messageBox" style="margin-top:5px">
                             <button type="button" class="btn btn-primary">
                               Intervene
                             </button>
@@ -881,10 +883,10 @@
                                 <div class="friend-drawer friend-drawer--onhover"
                                   ng-click="userDetail(user.phone_number)">
 
-                                  <div class="profile-image"  style="float: left;">
+                                  <div class="profile-image" style="float: left;">
                                     {{user.whatsapp_name |firstlater}}
                                   </div>
-                                  <div class="text"  style="float: left;">
+                                  <div class="text" style="float: left;">
                                     <h6>{{user.whatsapp_name}}</h6>
                                     <p class="text-muted"><b>
                                         {{user.country_code}}{{user.phone_number}}
@@ -1002,8 +1004,8 @@
                     <div class="search-box" ng-if="!showChatModule">
                       <div class="input-wrapper">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                        <input placeholder="Search here" ng-change="getInterveneUser()"  ng-model="formData.interveneSearch"
-                          id="searchIn" name="search" type="text" />
+                        <input placeholder="Search here" ng-change="getInterveneUser()"
+                          ng-model="formData.interveneSearch" id="searchIn" name="search" type="text" />
                       </div>
                     </div>
                     <div class="fields-box">
@@ -1017,10 +1019,10 @@
                                 <div class="friend-drawer friend-drawer--onhover"
                                   ng-click="userDetail(user.phone_number)">
 
-                                  <div class="profile-image"  style="float: left;">
+                                  <div class="profile-image" style="float: left;">
                                     {{user.whatsapp_name |firstlater}}
                                   </div>
-                                  <div class="text"  style="float: left;">
+                                  <div class="text" style="float: left;">
                                     <h6>{{user.whatsapp_name}}</h6>
                                     <p class="text-muted"><b>
                                         {{user.country_code}}{{user.phone_number}}
@@ -1144,13 +1146,6 @@
           <div class="form-group">
             <div class="profile">
               <div class="friend-drawer-status friend-drawer--onhover">
-                <!-- <img
-                class="status-image center"
-                src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
-                alt=""
-              /><br /> -->
-
-
                 <div class="status-image">
                   {{userDetailData.whatsapp_name |firstlater}}
                 </div>
@@ -1253,8 +1248,6 @@
             </div>
           </div>
         </div>
-        <!--end status-->
-
         <!-- Start Template and Customer Journey-->
         <div class="bs-example col-md-12 col-xs-12">
           <label class="radio-inline">
@@ -1312,60 +1305,6 @@
         </div>
         <!-- End Template and Customer Journey-->
       </div>
-
-      <!-- Start Phone Chat-->
-      <!-- <div class="phone-chat" ng-if="showChatModule">
-      <div class="screen-phone">
-        <div class="nav-phone">
-          <div class="icon-back">
-            <svg
-              viewBox="0 0 57.653 64.11"
-              width="25"
-              height="25"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill="#fff"
-                d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z"
-              />
-            </svg>
-          </div>
-          <span class="username">{{userChatData.whatsapp_name}}</span><br />
-          <span class="tel-number"
-            >{{userChatData.country_code}}{{userChatData.phone_number}}</span
-          >
-        </div>
-        <div class="chat">
-          <div ng-repeat="chat in userChatData.payload track by $index">
-            <div class="message-1" ng-if="chat.sender=='user'">
-              {{chat.content.text}}
-              <span>{{chat.timestamp | date : format : timezone}}</span>
-            </div>
-
-            <div class="message-2" ng-if="chat.sender=='bot'">
-              {{chat.content.text}}
-              <span>{{chat.timestamp | date : format : timezone}}</span>
-            </div>
-          </div>
-          <div class="input">
-            <input type="text" placeholder="Write message" />
-          </div>
-          <div class="btn-send">
-            <svg
-              viewBox="0 0 74.433 60.908"
-              width="25"
-              height="25"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill="#fff"
-                d="M 0 0 L 74.22 26.562 L 0.246 60.712 L 7.608 34.535 L 27.831 28.259 L 6.91 25.469 L 0 0 Z"
-              />
-            </svg>
-          </div>
-        </div>
-      </div>
-    </div> -->
     </div>
     <!--/ Status-->
   </div>
@@ -1435,10 +1374,11 @@
 
 
                 </div>
-                <div  ng-click="userProfileIcon()">
+                <div ng-click="userProfileIcon()">
 
                   <span class="username profile-heading-1">{{userChatData.whatsapp_name}}</span><br />
-                  <span class="tel-number profile-heading-2">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+                  <span
+                    class="tel-number profile-heading-2">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
 
                   <div class="profile-image-chat">
                     <span ng-if="userChatData.whatsapp_name!=''">
@@ -1495,7 +1435,8 @@
     <div class="search-box">
       <div class="input-wrapper">
         <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
-        <input placeholder="Search here" ng-change="searchChatContact(contactSearch)" ng-model="contactSearch"type="text" />
+        <input placeholder="Search here" ng-change="searchChatContact(contactSearch)" ng-model="contactSearch"
+          type="text" />
       </div>
     </div>
 
@@ -1576,7 +1517,7 @@
             <td>{{template.status}}</td>
             <td>{{template.date}}</td>
             <td>{{template.bot_name}}</td>
-            <td><button type="button" class="btn btn-success" style="align-items: center;" >View More</button></td>
+            <td><button type="button" class="btn btn-success" style="align-items: center;">View More</button></td>
           </tr>
         </tbody>
       </table>
@@ -1590,7 +1531,7 @@
 
     <div class="page-inner">
       <div class="top-select-option-mca">
-       <h4><b> Created at:</b></h4>
+        <h4><b> Created at:</b></h4>
         <div class="row">
           <!-- <div class="col-xs-6">
             <div class="form-group">
@@ -1602,7 +1543,7 @@
             </div>
           </div> -->
 
-          
+
           <!-- <div class="col-xs-6">
             <div class="form-group">
               <label for="birthday">To:</label>
@@ -1612,97 +1553,107 @@
             </div> -->
 
 
-            <div class="col-md-6">
-              <input type="text"  style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates" is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats">
-              <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
-                <i class="glyphicon glyphicon-calendar"></i>
-              </button>
-            </div>
-            <div class="col-md-6">
-                <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy" placeholder="DD/MM/YYYY"  ng-change="changeEndDate()"  ng-model="dateRangeModel.end_dates" is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"  alt-input-formats="altInputFormats">
-                <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates" ng-click="isEndDateOpen = !isEndDateOpen">
-                  <i class="glyphicon glyphicon-calendar"></i>
-                </button>
-              </div>
-              <button class="btn btn-danger" ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates" ng-click="getFilterData()">Submit</button>
+          <div class="col-md-6">
+            <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+              placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates"
+              is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true" close-text="Close"
+              alt-input-formats="altInputFormats">
+            <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
+          </div>
+          <div class="col-md-6">
+            <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+              placeholder="DD/MM/YYYY" ng-change="changeEndDate()" ng-model="dateRangeModel.end_dates"
+              is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"
+              alt-input-formats="altInputFormats">
+            <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
+              ng-click="isEndDateOpen = !isEndDateOpen">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
+          </div>
+          <button class="btn btn-danger" ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates"
+            ng-click="getFilterData()">Submit</button>
 
-            <!-- </div>
+          <!-- </div>
           </div> -->
-        
-        <div class="second dropdown">
-         <h4><b>Attributes:</b></h4> 
-          <div class="row">
-            <div class="col-xs-6">
-              <div class="form-group">
-                <!--category dropdown-->
-                <select class="form-control" ng-change="getFilterData()" name="attribute_name" id="attribute_nameId" ng-model="dateRangeModel.attribute_name">
-                  <option value="" disabled> Select Attribute</option>
-                  <option value="active">Active</option>
-                  <option value="action_required">Action Required</option>
-                  <option value="intervene">Intervene</option>
-                </select>
-              </div>
-            </div>
 
-            
-            <div class="col-xs-6">
-              <div class="form-group">
-                <!--category dropdown-->
-                <select class="form-control" ng-change="getFilterData()" name="attribute" id="attributeId" ng-model="dateRangeModel.date_type">
-                  <option value="" disabled>Attribute Value</option>
-                  <option value="created_at">Created At</option>
-                  <option value="updated_at">Updated At</option>
-                 
-                </select>
+          <div class="second dropdown">
+            <h4><b>Attributes:</b></h4>
+            <div class="row">
+              <div class="col-xs-6">
+                <div class="form-group">
+                  <!--category dropdown-->
+                  <select class="form-control" ng-change="getFilterData()" name="attribute_name" id="attribute_nameId"
+                    ng-model="dateRangeModel.attribute_name">
+                    <option value="" disabled> Select Attribute</option>
+                    <option value="active">Active</option>
+                    <option value="action_required">Action Required</option>
+                    <option value="intervene">Intervene</option>
+                  </select>
+                </div>
+              </div>
+
+
+              <div class="col-xs-6">
+                <div class="form-group">
+                  <!--category dropdown-->
+                  <select class="form-control" ng-change="getFilterData()" name="attribute" id="attributeId"
+                    ng-model="dateRangeModel.date_type">
+                    <option value="" disabled>Attribute Value</option>
+                    <option value="created_at">Created At</option>
+                    <option value="updated_at">Updated At</option>
+
+                  </select>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
 
-  <div ng-if="filterData.length > 0">
-    <!-- <div class="search-box">
+    <div ng-if="filterData.length > 0">
+      <!-- <div class="search-box">
       <div class="input-wrapper">
         <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
         <input placeholder="Search here" ng-change="searchChatHistory(historySearch)" ng-model="historySearch"
           type="text" />
       </div>
     </div> -->
-    <table class="table table-bordered table-hover">
-      <tbody>
-        <tr dir-paginate="details in filterData | itemsPerPage:itemsPerPage" total-items="totalCount"
-          current-page="pagination.current" track by "$index">
-          <td>
-            <div class="friend-drawer friend-drawer--onhover" ng-click="userDetail(details.phone_number)">
-              <div class="profile-image">
-                {{details.whatsapp_name |firstlater}}
+      <table class="table table-bordered table-hover">
+        <tbody>
+          <tr dir-paginate="details in filterData | itemsPerPage:itemsPerPage" total-items="totalCount"
+            current-page="pagination.current" track by "$index">
+            <td>
+              <div class="friend-drawer friend-drawer--onhover" ng-click="userDetail(details.phone_number)">
+                <div class="profile-image">
+                  {{details.whatsapp_name |firstlater}}
+                </div>
+                <div class="text">
+                  <h6>{{details.whatsapp_name}}</h6>
+                  <p class="text-muted">
+                    {{details.country_code}}{{details.phone_number}}
+                  </p>
+                </div>
+                <span class="time text-muted small">{{details.payload.timestamp}}</span>
               </div>
-              <div class="text">
-                <h6>{{details.whatsapp_name}}</h6>
-                <p class="text-muted">
-                  {{details.country_code}}{{details.phone_number}}
-                </p>
-              </div>
-              <span class="time text-muted small">{{details.payload.timestamp}}</span>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <!-- <dir-pagination-controls max-size="10" on-page-change="historyPageChanged(newPageNumber)"
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <dir-pagination-controls max-size="10" on-page-change="historyPageChanged(newPageNumber)"
       boundary-links="true">
     </dir-pagination-controls> -->
+    </div>
+    <div ng-if="filterData.length == 0">
+      <h4 style="text-align: center; color: red;">
+        Record Not Found.
+      </h4>
+    </div>
+   
   </div>
-  <div ng-if="filterData.length == 0">
-    <h4 style="text-align: center; color: red;">
-      Record Not Found.
-    </h4>
-  </div>
+   <!--/Filter Tab-->
+</div>
 
-</div>
-  </div>
-  <!--/Filter Tab-->
-</div>
