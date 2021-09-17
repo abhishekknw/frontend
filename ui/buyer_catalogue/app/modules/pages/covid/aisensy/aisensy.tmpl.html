@@ -1190,6 +1190,7 @@
     </div>
     <!-- Status -->
     <div class="container dropdown aisensy-page">
+     
       <div ng-if="userDetailData && isUserProfile">
         <div class="top-select-option-mca">
           <div class="form-group">
@@ -1434,7 +1435,7 @@
                       {{userChatData.whatsapp_name |firstlater}}
                     </span>
                     <span ng-if="userChatData.whatsapp_name==''">#</span>
-                  </div>>
+                  </div>
                 </div>
 
               </div>
@@ -1470,10 +1471,178 @@
             </div>
           </div>
           <!--End Phone Chat  for history tab-->
+          <div class="container dropdown aisensy-page">
+     
+            <div ng-if="userDetailData && isUserProfile">
+              <div class="top-select-option-mca">
+                <div class="form-group">
+                  <div class="profile">
+                    <div class="friend-drawer-status friend-drawer--onhover">
+                      <div class="status-image">
+                        {{userDetailData.whatsapp_name |firstlater}}
+                      </div>
+                      <div class="text">
+                        <h6>{{userDetailData.whatsapp_name}}</h6>
+                        <p class="text-muted">
+                          {{userDetailData.country_code}}{{userDetailData.phone_number}}
+                        </p>
+                        <div class="icon-cross" ng-click="userChatIcon()">
+                          <svg class="svg-icon" viewBox="0 0 20 20">
+                            <path fill="#fff"
+                              d="M15.898,4.045c-0.271-0.272-0.713-0.272-0.986,0l-4.71,4.711L5.493,4.045c-0.272-0.272-0.714-0.272-0.986,0s-0.272,0.714,0,0.986l4.709,4.711l-4.71,4.711c-0.272,0.271-0.272,0.713,0,0.986c0.136,0.136,0.314,0.203,0.492,0.203c0.179,0,0.357-0.067,0.493-0.203l4.711-4.711l4.71,4.711c0.137,0.136,0.314,0.203,0.494,0.203c0.178,0,0.355-0.067,0.492-0.203c0.273-0.273,0.273-0.715,0-0.986l-4.711-4.711l4.711-4.711C16.172,4.759,16.172,4.317,15.898,4.045z">
+                            </path>
+                          </svg>
+                        </div>
+                      </div>
+                      <hr />
+      
+                      <div class="filter-card">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <div class="info-table-wrap-mca">
+                              <div class="info-table-covidhelp">
+                                <div class="info-row-mca">
+                                  <label class="infolable-mca"> Session ID:</label>
+                                  <span> {{userDetailData.session_id}}</span>
+                                </div>
+      
+                                <div class="info-row-mca">
+                                  <label class="infolable-mca">User Type:</label>
+                                  <span> {{userDetailData.user_type}}</span>
+                                </div>
+      
+                                <div class="info-row-mca">
+                                  <label class="infolable-mca">Created At:</label>
+                                  <span>
+                                    {{userDetailData.created_at | date :
+                                    'medium'}}</span>
+                                </div>
+      
+                                <div class="info-row-mca">
+                                  <label class="infolable-mca">Last Active:</label>
+                                  <span>
+                                    {{userDetailData.updated_at | date :
+                                    'medium'}}</span>
+                                </div>
+      
+                                <!-- 
+                          <div class="info-row-mca">
+                            <label class="infolable-mca">Template Messages:</label>
+                            <span> {{cases.yesterday_confirmed}}</span>
+                          </div> -->
+      
+                                <!-- <div class="info-row-mca">
+                            <label class="infolable-mca">Session Messages:</label>
+                            <span> {{cases.yesterday_confirmed}}</span>
+                          </div> -->
+      
+                                <!-- <div class="info-row-mca">
+                            <label class="infolable-mca">Unsolved Queries:</label>
+                            <span> {{cases.yesterday_confirmed}}</span>
+                          </div> -->
+      
+                                <!-- <div class="info-row-mca">
+                            <label class="infolable-mca">Source:</label>
+                            <span> {{cases.yesterday_confirmed}}</span>
+                          </div>
+      
+                          <div class="info-row-mca">
+                            <label class="infolable-mca">Lead State:</label>
+                            <span> {{cases.yesterday_confirmed}}</span>
+                          </div>
+      
+                          <div class="info-row-mca">
+                            <label class="infolable-mca">First Message:</label>
+                            <span> {{cases.yesterday_confirmed}}</span>
+                          </div> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Status End -->
+      
+                      <!-- <select class="form-control" name="sector" id="sector-aisensy" ng-change="changeWeb()" ng-model="selectedsector">
+                <option value="" disabled>Template Messages</option>
+                <option ng-repeat="sec in sectorArray track by $index" value="{{sec.name}}"
+                  style="text-transform: capitalize">
+                  {{cat.name}}
+                </option>
+              </select>
+              <select class="form-control" name="sector" id="sector-aisensy" ng-change="changeWeb()" ng-model="selectedsector">
+                <option value="" disabled>Customer Journey</option>
+                <option ng-repeat="sec in sectorArray track by $index" value="{{sec.name}}"
+                  style="text-transform: capitalize">
+                  {{cat.name}}
+                </option>
+              </select>-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Start Template and Customer Journey-->
+              <div class="bs-example col-md-12 col-xs-12">
+                <label class="radio-inline">
+                  <input name="group1" value="1" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne"
+                    type="radio" />
+                  Template message
+                </label>
+      
+                <div class="panel-group" id="accordion">
+                  <div class="panel panel-default">
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                      <div class="panel-body">
+                        <h4>These are some Template message given to this user</h4>
+                      </div>
+                    </div>
+                  </div>
+      
+                  <label class="radio-inline">
+                    <input name="group1" value="2" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"
+                      type="radio" />
+                    Customer Journey
+                  </label>
+      
+                  <div class="panel panel-default">
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        <div class="container mt-5 mb-5">
+                          <div class="row">
+                            <div class="col-md-6 offset-md-3">
+                              <ul class="timeline">
+                                <li>
+                                  <h5>User requested intervention</h5>
+                                  <h6>18:45, 19 Aug 2021</h6>
+                                </li>
+                                <li>
+                                  <h5>Chat closed by XYZ</h5>
+                                  <h6>15:15, 17 Aug 2021</h6>
+                                </li>
+                                <li>
+                                  <h5>Chat intervened by XYZ</h5>
+                                  <h6>14:43, 17 Aug 2021</h6>
+                                </li>
+                                <li>
+                                  <h5>User requested intervention</h5>
+                                  <h6>09:03, 15 Aug 2021</h6>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Template and Customer Journey-->
+            </div>
+          </div>
         </div>
 
       </div>
     </div>
+    
   </div>
   <!--/History Tab-->
 

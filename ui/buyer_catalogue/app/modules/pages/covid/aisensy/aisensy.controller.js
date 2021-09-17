@@ -145,6 +145,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
 
             $scope.userDetail = function (value) {
+               
                 console.log("1232", value)
                 $scope.showChatModule = true;
                 let param = {
@@ -157,6 +158,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         console.log(response)
 
                         $scope.userDetailData = response.data.data;
+                        console.log('ooooooooooo',$scope.userDetailData);
                     }).catch(function onError(response) {
                         console.log(response);
                     })
