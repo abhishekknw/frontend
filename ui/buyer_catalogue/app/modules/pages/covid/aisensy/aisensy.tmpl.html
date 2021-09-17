@@ -886,13 +886,15 @@
                               <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                               <div style="width: 100%; float:right;">
                                 <div class="message-1 white-space-pre-line" ng-if="chat.sender=='user'">
-                                  {{chat.content.text}}<br>
+                                  <span ng-if="chat.content.text"> {{chat.content.text}}</span>
+                                 <span ng-if="chat.content.url"> <img ng-src="{{chat.content.url}}"></span><br>
                                   <span>{{chat.timestamp | date :'h:mma'}}</span>
                                 </div>
                               </div>
                               <div style="width: 100%; float:left;">
                                 <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
-                                  {{chat.content.text}}
+                                 <span ng-if="chat.content.text"> {{chat.content.text}}</span>
+                                 <span ng-if="chat.content.url"> <img ng-src="{{chat.content.url}}"></span>
                                   <span>{{chat.timestamp | date : 'h:mma'}}</span>
                                 </div>
                               </div>
