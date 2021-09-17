@@ -9,6 +9,29 @@
 <style>
   /*aisensy*/
 
+  .scrolling-area {
+    /* max-width: 250px;
+  max-height: 250px; */
+    /* max-height: max-content; */
+    overflow: auto;
+    padding: 1rem;
+    background: white;
+    transform: rotate(180deg);
+  }
+
+  .scrolling-element-inside {
+    transform: rotate(-180deg);
+  }
+
+  #footer {
+    position: fixed;
+    padding: 10px 10px 0px 10px;
+    bottom: 0;
+    width: 100%;
+    /* Height of the footer*/
+    height: 40px;
+    background: grey;
+  }
 
   div.white-space-pre-line {
     white-space: pre-line;
@@ -470,7 +493,8 @@
 
   .chat {
     width: 100%;
-    height: 400px;
+    /* height: 400px; */
+    height: max-content;
     overflow: auto;
     padding: 10px;
     transform: rotate(180deg);
@@ -808,7 +832,9 @@
                             </div>
                           </div>
 
+
                           <div class="chat">
+
                             <div ng-repeat="chat in userChatData.payload track by $index">
                               <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                               <div style="width: 100%; float:right;">
@@ -824,8 +850,8 @@
                                 </div>
                               </div>
                             </div>
-
                           </div>
+
                           <div ng-if="messageBox">
                             <div class="input">
                               <input type="text" placeholder="Write message" />
@@ -847,12 +873,14 @@
                           </div>
 
 
-                          <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData,'active')"
+                          <div class="aisensy-intervene-btn"  ng-click="writeMessage(userChatData,'active')"
                             ng-if="!messageBox" style="margin-top:5px">
                             <button type="button" class="btn btn-primary">
                               Intervene
                             </button>
                           </div>
+
+                          
                         </div>
                       </div>
                       <!--End Phone Chat  for tab1-->
@@ -1652,8 +1680,7 @@
         Record Not Found.
       </h4>
     </div>
-   
-  </div>
-   <!--/Filter Tab-->
-</div>
 
+  </div>
+  <!--/Filter Tab-->
+</div>
