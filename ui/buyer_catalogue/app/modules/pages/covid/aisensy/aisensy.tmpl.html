@@ -492,14 +492,14 @@
     color: #fff;
   }
 
-  /* .chat {
+  .chat {
     width: 100%;
     /* height: 400px; */
     height: max-content;
     overflow: auto;
     padding: 10px;
     transform: rotate(180deg);
-  } */
+  }
   @media only screen and (max-height: 650px)
   {
     .chat {
@@ -886,15 +886,13 @@
                               <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                               <div style="width: 100%; float:right;">
                                 <div class="message-1 white-space-pre-line" ng-if="chat.sender=='user'">
-                                  <span ng-if="chat.content.text"> {{chat.content.text}}</span>
-                                 <span ng-if="chat.content.url"> <img ng-src="{{chat.content.url}}"></span><br>
+                                  {{chat.content.text}}<br>
                                   <span>{{chat.timestamp | date :'h:mma'}}</span>
                                 </div>
                               </div>
                               <div style="width: 100%; float:left;">
                                 <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
-                                 <span ng-if="chat.content.text"> {{chat.content.text}}</span>
-                                 <span ng-if="chat.content.url"> <img ng-src="{{chat.content.url}}"></span>
+                                  {{chat.content.text}}
                                   <span>{{chat.timestamp | date : 'h:mma'}}</span>
                                 </div>
                               </div>
