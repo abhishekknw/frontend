@@ -43,7 +43,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.tab = { name: 'tabA' };
 
 
-
             // AIsensy controller
             $scope.getActiveUser = function (page) {
                 $scope.showcontactDetail = false;
@@ -52,6 +51,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showgetActiveUser = true;
                 $scope.showtemplateDetail = false;
                 $scope.isUserProfile = false;
+                $scope.showfilterDetail = false;
                 //$scope.showfilterDetail = false;
 
                 let param = {
@@ -84,6 +84,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.isUserProfile = false;
                 $scope.formData.interveneSearch = '';
                 $scope.showChatModule = false;
+                $scope.showfilterDetail = false;
                 let param = {
                     next_page: 1,
                 }
@@ -115,6 +116,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.isUserProfile = false;
                 $scope.formData.actionSearch = '';
                 $scope.showChatModule = false;
+                $scope.showfilterDetail = false;
                 let param = {
                     next_page: 1
                 }
@@ -145,7 +147,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
 
             $scope.userDetail = function (value) {
-               
+
                 console.log("1232", value)
                 $scope.showChatModule = true;
                 let param = {
@@ -158,7 +160,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         console.log(response)
 
                         $scope.userDetailData = response.data.data;
-                        console.log('ooooooooooo',$scope.userDetailData);
+                        console.log('ooooooooooo', $scope.userDetailData);
                     }).catch(function onError(response) {
                         console.log(response);
                     })
@@ -207,10 +209,12 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.writeMessage = function (data, tabValue) {
+                console.log('1111111111111111111',data);
                 $scope.messageBox = true;
                 $scope.tab = { name: 'tabC' };
                 let param = {
-                    phone: data.phone_number
+                    phone: data.phone_number,
+                    username:data.whatsapp_name
                 }
                 AuthService.addUserToIntervene(param)
                     .then(function onSuccess(response) {
@@ -253,7 +257,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.messageBox = false;
                 $scope.resolveButton = true;
                 let param = {
-                    phone: data.phone_number
+                    phone: data.phone_number,
+                    username:data.whatsapp_name
                 }
                 AuthService.addUserToActive(param)
                     .then(function onSuccess(response) {
@@ -543,6 +548,16 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.serial = newPageNumber * 10 - 9;
                 $scope.getActiveUser(newPageNumber);
             };
+            $scope.actionRequiredPageChanged = function (newPageNumber, tab) {
+                $scope.serial = newPageNumber * 10 - 9;
+                $scope.getActionRequiredUser(newPageNumber);
+            };
+
+            $scope.interveneDataPageChanged = function (newPageNumber, tab) {
+                $scope.serial = newPageNumber * 10 - 9;
+                $scope.getInterveneUser(newPageNumber);
+            };
+
             $scope.templatePageChanged = function (newPageNumber, tab) {
                 $scope.serial = newPageNumber * 10 - 9;
                 $scope.templateDetail(newPageNumber);
@@ -578,7 +593,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.changeEndDate = function () {
                 $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
             }
-            
+
             $scope.getFilterData = function () {
                 $scope.showcontactDetail = false;
                 $scope.showhistoryDetail = false;
@@ -595,6 +610,31 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
 
             }
+
+            $scope.customerJourney = function (data) {
+                alert("customer jouner")
+                console.log(data)
+                
+               
+                let param = {
+                    phone_number:data.phone_number
+                }
+
+                AuthService.getCustomerJourney(param)
+
+                    .then(function onSuccess(response) {
+                        console.log(response)
+                        console.log("1234567889")
+                        $scope.customerJourneyData = response.data.data;
+                        console.log($scope.customerJourneyData)
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+            }
+
+
+
+
 
             $scope.dateFormat = function (date) {
                 var d = new Date(date),
