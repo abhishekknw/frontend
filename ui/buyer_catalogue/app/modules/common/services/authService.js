@@ -695,7 +695,7 @@ angular.module('Authentication')
             };
 
             authService.addUserToIntervene = function (param) {
-               let url = "v0/ui/b2c-bot/action-status-intervene/?intervene=True&phone_number=" + param.phone;
+               let url = "v0/ui/b2c-bot/action-status-intervene/?intervene=True&phone_number=" + param.phone + "&username=" + param.username;
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -706,7 +706,7 @@ angular.module('Authentication')
             };
 
             authService.addUserToActive = function (param) {
-               let url = "v0/ui/b2c-bot/action-status-intervene/?resolved=True&phone_number=" + param.phone;
+               let url = "v0/ui/b2c-bot/action-status-intervene/?resolved=True&phone_number=" + param.phone + "&username=" + param.username;
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
