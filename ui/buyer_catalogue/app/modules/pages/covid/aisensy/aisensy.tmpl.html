@@ -882,17 +882,42 @@
 
                             <div ng-click="userProfileIcon()">
 
-                              <span class="username profile-heading">{{userChatData.whatsapp_name}}</span><br />
-                              <span
-                                class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
-
-
+                              <!-- <center><span class="username profile-heading">{{userChatData.whatsapp_name}}</span><br />
+                                <span
+                                  class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+                              </center>
+            
                               <div class="profile-image-chat">
                                 <span ng-if="userChatData.whatsapp_name!=''">
                                   {{userChatData.whatsapp_name |firstlater}}
                                 </span>
                                 <span ng-if="userChatData.whatsapp_name==''">#</span>
+                              </div> -->
+            
+                              <div ng-if="userChatData.whatsapp_name!=''">
+                                <center>
+                                  <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}  {{userChatData.whatsapp_name.length > 15 ? '...' :
+                                    ''}}</span><br />
+                                  <span
+                                    class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+                                </center>
+                                <div class="profile-image-chat">
+                                  <span>
+                                    {{userChatData.whatsapp_name |firstlater}}
+                                  </span>
+                                </div>
                               </div>
+            
+                              <div ng-if="userChatData.whatsapp_name ==''">
+                                <center>
+                                  <span
+                                    class="tel-number profile-heading-1">{{userChatData.country_code}}{{userChatData.phone_number}}</span>
+                                </center>
+                                <div class="profile-image-chat-1">
+                                  <span ng-if="userChatData.whatsapp_name==''">#</span>
+                                </div>
+                              </div>
+            
                             </div>
                           </div>
 
@@ -1033,17 +1058,42 @@
                             </div>
                             <div ng-click="userProfileIcon()">
 
-                              <span class="username profile-heading">{{userChatData.whatsapp_name}}</span><br />
-                              <span
-                                class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
-
-
+                              <!-- <center><span class="username profile-heading">{{userChatData.whatsapp_name}}</span><br />
+                                <span
+                                  class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+                              </center>
+            
                               <div class="profile-image-chat">
                                 <span ng-if="userChatData.whatsapp_name!=''">
                                   {{userChatData.whatsapp_name |firstlater}}
                                 </span>
                                 <span ng-if="userChatData.whatsapp_name==''">#</span>
+                              </div> -->
+            
+                              <div ng-if="userChatData.whatsapp_name!=''">
+                                <center>
+                                  <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}  {{userChatData.whatsapp_name.length > 15 ? '...' :
+                                    ''}}</span><br />
+                                  <span
+                                    class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+                                </center>
+                                <div class="profile-image-chat">
+                                  <span>
+                                    {{userChatData.whatsapp_name |firstlater}}
+                                  </span>
+                                </div>
                               </div>
+            
+                              <div ng-if="userChatData.whatsapp_name ==''">
+                                <center>
+                                  <span
+                                    class="tel-number profile-heading-1">{{userChatData.country_code}}{{userChatData.phone_number}}</span>
+                                </center>
+                                <div class="profile-image-chat-1">
+                                  <span ng-if="userChatData.whatsapp_name==''">#</span>
+                                </div>
+                              </div>
+            
                             </div>
 
                           </div>
@@ -1181,16 +1231,42 @@
                             </div>
                             <div ng-click="userProfileIcon()">
 
-                              <span class="username profile-heading">{{userChatData.whatsapp_name}}</span><br />
-                              <span
-                                class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
-
+                              <!-- <center><span class="username profile-heading">{{userChatData.whatsapp_name}}</span><br />
+                                <span
+                                  class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+                              </center>
+            
                               <div class="profile-image-chat">
                                 <span ng-if="userChatData.whatsapp_name!=''">
                                   {{userChatData.whatsapp_name |firstlater}}
                                 </span>
                                 <span ng-if="userChatData.whatsapp_name==''">#</span>
+                              </div> -->
+            
+                              <div ng-if="userChatData.whatsapp_name!=''">
+                                <center>
+                                  <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}  {{userChatData.whatsapp_name.length > 15 ? '...' :
+                                    ''}}</span><br />
+                                  <span
+                                    class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+                                </center>
+                                <div class="profile-image-chat">
+                                  <span>
+                                    {{userChatData.whatsapp_name |firstlater}}
+                                  </span>
+                                </div>
                               </div>
+            
+                              <div ng-if="userChatData.whatsapp_name ==''">
+                                <center>
+                                  <span
+                                    class="tel-number profile-heading-1">{{userChatData.country_code}}{{userChatData.phone_number}}</span>
+                                </center>
+                                <div class="profile-image-chat-1">
+                                  <span ng-if="userChatData.whatsapp_name==''">#</span>
+                                </div>
+                              </div>
+            
                             </div>
 
 
@@ -1512,7 +1588,8 @@
 
                   <div ng-if="userChatData.whatsapp_name!=''">
                     <center>
-                      <span class="username profile-heading">{{userChatData.whatsapp_name}}</span><br />
+                      <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}  {{userChatData.whatsapp_name.length > 15 ? '...' :
+                        ''}}</span><br />
                       <span
                         class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
                     </center>
