@@ -1460,13 +1460,14 @@
               </div>
             </div>
 
-            <label class="radio-inline">
+            <label class="radio-inline" ng-click="customerJourney(userDetailData)">
               <input name="group1" value="2" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"
                 type="radio" />
               Customer Journey
             </label>
+            <!-- <button type="button" class="btn btn-info" ng-click="customerJourney(userDetailData)">Customer Journey</button> -->
 
-            <div class="panel panel-default">
+            <div class="panel panel-default" ng-repeat="datas in customerJourneyData track by $index">
               <div id="collapseTwo" class="panel-collapse collapse">
                 <div class="panel-body">
                   <div class="container mt-5 mb-5">
@@ -1474,10 +1475,10 @@
                       <div class="col-md-6 offset-md-3">
                         <ul class="timeline">
                           <li>
-                            <h5>User requested intervention</h5>
-                            <h6>18:45, 19 Aug 2021</h6>
+                            <h5>{{datas.username}} requested {{datas.status}}</h5>
+                            <h6>{{datas.timestamp}}</h6>
                           </li>
-                          <li>
+                          <!-- <li>
                             <h5>Chat closed by XYZ</h5>
                             <h6>15:15, 17 Aug 2021</h6>
                           </li>
@@ -1488,7 +1489,7 @@
                           <li>
                             <h5>User requested intervention</h5>
                             <h6>09:03, 15 Aug 2021</h6>
-                          </li>
+                          </li> -->
                         </ul>
                       </div>
                     </div>

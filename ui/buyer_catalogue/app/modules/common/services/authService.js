@@ -604,7 +604,7 @@ angular.module('Authentication')
 
             authService.getCustomerJourney = function (param) {
                console.log(param);
-               let url = "v0/ui/b2c-botaction-status-intervene/?intervene=" +param.intervene +"&phone_number="+param.phone_number+"&username="+ param.username;
+               let url = "v0/ui/b2c-bot/user-journey/?phone_number=" +param.phone_number ;
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response

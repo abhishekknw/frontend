@@ -609,9 +609,14 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
             }
 
-            $scope.customerJourney = function (param) {
+            $scope.customerJourney = function (data) {
                 alert("customer jouner")
-                console.log($scope.customerJourneyData)
+                console.log(data)
+                
+               
+                let param = {
+                    phone_number:data.phone_number
+                }
 
                 AuthService.getCustomerJourney(param)
 
@@ -619,7 +624,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         console.log(response)
                         console.log("1234567889")
                         $scope.customerJourneyData = response.data.data;
-
+                        console.log($scope.customerJourneyData)
                     }).catch(function onError(response) {
                         console.log(response);
                     })
