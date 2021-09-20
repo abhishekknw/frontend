@@ -164,13 +164,12 @@
 
   .profile-heading-1 {
     position: relative;
-    right: -30px;
+    left: -30px;
+    top: 10px;
+    font-weight: bold;
+    font-size: medium;
   }
 
-  .profile-heading-2 {
-    position: relative;
-    right: -40px;
-  }
 
   .search-box {
     background: #e3e3e3;
@@ -320,6 +319,16 @@
     margin-top: -38px;
   }
 
+  .profile-image-chat-1 {
+    text-align: center;
+    font-size: 25px;
+    background-color: aliceblue;
+    border-radius: 50px;
+    margin-left: 87%;
+    width: 30px;
+    margin-top: -18px;
+  }
+
   /*status*/
   .status-image {
     width: 50px;
@@ -451,7 +460,7 @@
   /*chat window*/
   @import url(https://fonts.googleapis.com/css?family=Roboto:400,600);
 
-  
+
   .phone-chat {
 
     border-radius: 10px;
@@ -500,46 +509,46 @@
     padding: 10px;
     transform: rotate(180deg);
   }
-  @media only screen and (max-height: 650px)
-  {
+
+  @media only screen and (max-height: 650px) {
     .chat {
-    width: 100%;
-    height: 480px;
-    overflow: auto;
-    padding: 10px;
-    transform: rotate(180deg);
+      width: 100%;
+      height: 480px;
+      overflow: auto;
+      padding: 10px;
+      transform: rotate(180deg);
+    }
   }
-  }
-  @media only screen and (min-height: 650px) and (max-height: 750px)
-  {
+
+  @media only screen and (min-height: 650px) and (max-height: 750px) {
     .chat {
-    width: 100%;
-    height: 530px;
-    overflow: auto;
-    padding: 10px;
-    transform: rotate(180deg);
+      width: 100%;
+      height: 530px;
+      overflow: auto;
+      padding: 10px;
+      transform: rotate(180deg);
+    }
   }
-  }
-  @media only screen and (min-height: 750px) and (max-height: 850px)
-  {
+
+  @media only screen and (min-height: 750px) and (max-height: 850px) {
     .chat {
-    width: 100%;
-    height: 580px;
-    overflow: auto;
-    padding: 10px;
-    transform: rotate(180deg);
+      width: 100%;
+      height: 580px;
+      overflow: auto;
+      padding: 10px;
+      transform: rotate(180deg);
+    }
   }
-  }
-  @media only screen and (min-height: 850px) and (max-height: 1500px)
-  {
+
+  @media only screen and (min-height: 850px) and (max-height: 1500px) {
     .chat {
-    width: 100%;
-    height: 850px;
-    overflow: auto;
-    padding: 10px;
-    transform: rotate(180deg);
+      width: 100%;
+      height: 850px;
+      overflow: auto;
+      padding: 10px;
+      transform: rotate(180deg);
+    }
   }
-}
 
 
 
@@ -707,7 +716,7 @@
     border: 1px solid gray;
   }
 
-  .filter-button{
+  .filter-button {
     margin: 5px;
   }
 </style>
@@ -795,9 +804,17 @@
                                 <div class="friend-drawer friend-drawer--onhover"
                                   ng-click="userDetail(user.phone_number)">
 
-                                  <div class="profile-image" style="float: left;">
+                                  <!-- <div class="profile-image" style="float: left;">
                                     {{user.whatsapp_name |firstlater}}
+                                  </div> -->
+
+                                  <div class="profile-image">
+                                    <span ng-if="user.whatsapp_name!=''">
+                                      {{user.whatsapp_name |firstlater}}</span>
+                                    <span ng-if="user.whatsapp_name==''">
+                                      #</span>
                                   </div>
+
                                   <div class="text" style="float: left;">
                                     <h6>{{user.whatsapp_name}}</h6>
                                     <p class="text-muted"><b>
@@ -920,14 +937,14 @@
                           </div>
 
 
-                          <div class="aisensy-intervene-btn"  ng-click="writeMessage(userChatData,'active')"
+                          <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData,'active')"
                             ng-if="!messageBox" style="margin-top:5px">
                             <button type="button" class="btn btn-primary">
                               Intervene
                             </button>
                           </div>
 
-                          
+
                         </div>
                       </div>
                       <!--End Phone Chat  for tab1-->
@@ -958,9 +975,17 @@
                                 <div class="friend-drawer friend-drawer--onhover"
                                   ng-click="userDetail(user.phone_number)">
 
-                                  <div class="profile-image" style="float: left;">
+                                  <!-- <div class="profile-image" style="float: left;">
                                     {{user.whatsapp_name |firstlater}}
+                                  </div> -->
+
+                                  <div class="profile-image">
+                                    <span ng-if="user.whatsapp_name!=''">
+                                      {{user.whatsapp_name |firstlater}}</span>
+                                    <span ng-if="user.whatsapp_name==''">
+                                      #</span>
                                   </div>
+
                                   <div class="text" style="float: left;">
                                     <h6>{{user.whatsapp_name}}</h6>
                                     <p class="text-muted"><b>
@@ -1012,8 +1037,12 @@
                               <span
                                 class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
 
+
                               <div class="profile-image-chat">
-                                {{userChatData.whatsapp_name |firstlater}}
+                                <span ng-if="userChatData.whatsapp_name!=''">
+                                  {{userChatData.whatsapp_name |firstlater}}
+                                </span>
+                                <span ng-if="userChatData.whatsapp_name==''">#</span>
                               </div>
                             </div>
 
@@ -1094,9 +1123,17 @@
                                 <div class="friend-drawer friend-drawer--onhover"
                                   ng-click="userDetail(user.phone_number)">
 
-                                  <div class="profile-image" style="float: left;">
+                                  <!-- <div class="profile-image" style="float: left;">
                                     {{user.whatsapp_name |firstlater}}
+                                  </div> -->
+
+                                  <div class="profile-image">
+                                    <span ng-if="user.whatsapp_name!=''">
+                                      {{user.whatsapp_name |firstlater}}</span>
+                                    <span ng-if="user.whatsapp_name==''">
+                                      #</span>
                                   </div>
+
                                   <div class="text" style="float: left;">
                                     <h6>{{user.whatsapp_name}}</h6>
                                     <p class="text-muted"><b>
@@ -1149,9 +1186,13 @@
                                 class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
 
                               <div class="profile-image-chat">
-                                {{userChatData.whatsapp_name |firstlater}}
+                                <span ng-if="userChatData.whatsapp_name!=''">
+                                  {{userChatData.whatsapp_name |firstlater}}
+                                </span>
+                                <span ng-if="userChatData.whatsapp_name==''">#</span>
                               </div>
                             </div>
+
 
                           </div>
 
@@ -1216,14 +1257,16 @@
     </div>
     <!-- Status -->
     <div class="container dropdown aisensy-page">
-     
+
       <div ng-if="userDetailData && isUserProfile">
         <div class="top-select-option-mca">
           <div class="form-group">
             <div class="profile">
               <div class="friend-drawer-status friend-drawer--onhover">
                 <div class="status-image">
-                  {{userDetailData.whatsapp_name |firstlater}}
+                  <span ng-if="userDetailData.whatsapp_name!=''">
+                    {{userDetailData.whatsapp_name |firstlater}}</span>
+                  <span ng-if="userDetailData.whatsapp_name==''">#</span>
                 </div>
                 <div class="text">
                   <h6>{{userDetailData.whatsapp_name}}</h6>
@@ -1417,7 +1460,10 @@
                   alt=""
                 /> -->
                       <div class="profile-image">
-                        {{details.whatsapp_name |firstlater}}
+                        <span ng-if="details.whatsapp_name!=''">
+                          {{details.whatsapp_name |firstlater}}</span>
+                        <span ng-if="details.whatsapp_name==''">
+                          #</span>
                       </div>
                       <div class="text">
                         <h6>{{details.whatsapp_name}}</h6>
@@ -1452,26 +1498,49 @@
                 </div>
                 <div ng-click="userProfileIcon()">
 
-                  <span class="username profile-heading-1">{{userChatData.whatsapp_name}}</span><br />
-                  <span
-                    class="tel-number profile-heading-2">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+                  <!-- <center><span class="username profile-heading">{{userChatData.whatsapp_name}}</span><br />
+                    <span
+                      class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+                  </center>
 
                   <div class="profile-image-chat">
                     <span ng-if="userChatData.whatsapp_name!=''">
                       {{userChatData.whatsapp_name |firstlater}}
                     </span>
                     <span ng-if="userChatData.whatsapp_name==''">#</span>
+                  </div> -->
+
+                  <div ng-if="userChatData.whatsapp_name!=''">
+                    <center>
+                      <span class="username profile-heading">{{userChatData.whatsapp_name}}</span><br />
+                      <span
+                        class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+                    </center>
+                    <div class="profile-image-chat">
+                      <span>
+                        {{userChatData.whatsapp_name |firstlater}}
+                      </span>
+                    </div>
                   </div>
+
+                  <div ng-if="userChatData.whatsapp_name ==''">
+                    <center>
+                      <span
+                        class="tel-number profile-heading-1">{{userChatData.country_code}}{{userChatData.phone_number}}</span>
+                    </center>
+                    <div class="profile-image-chat-1">
+                      <span ng-if="userChatData.whatsapp_name==''">#</span>
+                    </div>
+                  </div>
+
                 </div>
-
               </div>
-
               <div class="chat">
                 <div ng-repeat="chat in userChatData.payload track by $index">
                   <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                   <div style="width: 100%; float:right;">
                     <div class="message-1" ng-if="chat.sender=='user'">
-                      {{chat.content.text}}
+                      {{chat.content.text}}<br>
                       <span>{{chat.timestamp | date :'medium'}}</span>
                     </div>
                   </div>
@@ -1497,15 +1566,18 @@
             </div>
           </div>
           <!--End Phone Chat  for history tab-->
+
+          <!--status for history tab-->
           <div class="container dropdown aisensy-page">
-     
             <div ng-if="userDetailData && isUserProfile">
               <div class="top-select-option-mca">
                 <div class="form-group">
                   <div class="profile">
                     <div class="friend-drawer-status friend-drawer--onhover">
                       <div class="status-image">
-                        {{userDetailData.whatsapp_name |firstlater}}
+                        <span ng-if="userDetailData.whatsapp_name!=''">
+                          {{userDetailData.whatsapp_name |firstlater}}</span>
+                        <span ng-if="userDetailData.whatsapp_name==''">#</span>
                       </div>
                       <div class="text">
                         <h6>{{userDetailData.whatsapp_name}}</h6>
@@ -1521,7 +1593,7 @@
                         </div>
                       </div>
                       <hr />
-      
+
                       <div class="filter-card">
                         <div class="row">
                           <div class="col-sm-12">
@@ -1531,77 +1603,33 @@
                                   <label class="infolable-mca"> Session ID:</label>
                                   <span> {{userDetailData.session_id}}</span>
                                 </div>
-      
+
                                 <div class="info-row-mca">
                                   <label class="infolable-mca">User Type:</label>
                                   <span> {{userDetailData.user_type}}</span>
                                 </div>
-      
+
                                 <div class="info-row-mca">
                                   <label class="infolable-mca">Created At:</label>
                                   <span>
                                     {{userDetailData.created_at | date :
                                     'medium'}}</span>
                                 </div>
-      
+
                                 <div class="info-row-mca">
                                   <label class="infolable-mca">Last Active:</label>
                                   <span>
                                     {{userDetailData.updated_at | date :
                                     'medium'}}</span>
                                 </div>
-      
-                                <!-- 
-                          <div class="info-row-mca">
-                            <label class="infolable-mca">Template Messages:</label>
-                            <span> {{cases.yesterday_confirmed}}</span>
-                          </div> -->
-      
-                                <!-- <div class="info-row-mca">
-                            <label class="infolable-mca">Session Messages:</label>
-                            <span> {{cases.yesterday_confirmed}}</span>
-                          </div> -->
-      
-                                <!-- <div class="info-row-mca">
-                            <label class="infolable-mca">Unsolved Queries:</label>
-                            <span> {{cases.yesterday_confirmed}}</span>
-                          </div> -->
-      
-                                <!-- <div class="info-row-mca">
-                            <label class="infolable-mca">Source:</label>
-                            <span> {{cases.yesterday_confirmed}}</span>
-                          </div>
-      
-                          <div class="info-row-mca">
-                            <label class="infolable-mca">Lead State:</label>
-                            <span> {{cases.yesterday_confirmed}}</span>
-                          </div>
-      
-                          <div class="info-row-mca">
-                            <label class="infolable-mca">First Message:</label>
-                            <span> {{cases.yesterday_confirmed}}</span>
-                          </div> -->
+
+
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <!-- Status End -->
-      
-                      <!-- <select class="form-control" name="sector" id="sector-aisensy" ng-change="changeWeb()" ng-model="selectedsector">
-                <option value="" disabled>Template Messages</option>
-                <option ng-repeat="sec in sectorArray track by $index" value="{{sec.name}}"
-                  style="text-transform: capitalize">
-                  {{cat.name}}
-                </option>
-              </select>
-              <select class="form-control" name="sector" id="sector-aisensy" ng-change="changeWeb()" ng-model="selectedsector">
-                <option value="" disabled>Customer Journey</option>
-                <option ng-repeat="sec in sectorArray track by $index" value="{{sec.name}}"
-                  style="text-transform: capitalize">
-                  {{cat.name}}
-                </option>
-              </select>-->
+
                     </div>
                   </div>
                 </div>
@@ -1609,11 +1637,11 @@
               <!-- Start Template and Customer Journey-->
               <div class="bs-example col-md-12 col-xs-12">
                 <label class="radio-inline">
-                  <input name="group1" value="1" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne"
-                    type="radio" />
+                  <input name="group1" value="1" data-toggle="collapse" data-parent="#accordion"
+                    data-target="#collapseOne" type="radio" />
                   Template message
                 </label>
-      
+
                 <div class="panel-group" id="accordion">
                   <div class="panel panel-default">
                     <div id="collapseOne" class="panel-collapse collapse in">
@@ -1622,13 +1650,13 @@
                       </div>
                     </div>
                   </div>
-      
+
                   <label class="radio-inline">
-                    <input name="group1" value="2" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"
-                      type="radio" />
+                    <input name="group1" value="2" data-toggle="collapse" data-parent="#accordion"
+                      data-target="#collapseTwo" type="radio" />
                     Customer Journey
                   </label>
-      
+
                   <div class="panel panel-default">
                     <div id="collapseTwo" class="panel-collapse collapse">
                       <div class="panel-body">
@@ -1664,11 +1692,10 @@
               <!-- End Template and Customer Journey-->
             </div>
           </div>
+          <!-- Status End for history tab -->
         </div>
-
       </div>
     </div>
-    
   </div>
   <!--/History Tab-->
 
@@ -1775,7 +1802,7 @@
 
     <div class="page-inner">
       <div class="top-select-option-mca">
-        
+
         <div class="row">
 
           <div class="second dropdown">
@@ -1810,7 +1837,7 @@
             </div>
           </div>
 
-          
+
           <div class="col-md-6 col-xs-6">
             <h4><b> From:</b></h4>
             <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
@@ -1821,7 +1848,7 @@
               <i class="glyphicon glyphicon-calendar"></i>
             </button>
           </div>
-          
+
           <div class="col-md-6 col-xs-6">
             <h4><b> To:</b></h4>
             <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
@@ -1833,8 +1860,9 @@
               <i class="glyphicon glyphicon-calendar"></i>
             </button>
           </div>
-          <center><button class="btn btn-danger filter-button" ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates"
-            ng-click="getFilterData()">Submit</button></center>
+          <center><button class="btn btn-danger filter-button"
+              ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates"
+              ng-click="getFilterData()">Submit</button></center>
         </div>
       </div>
     </div>

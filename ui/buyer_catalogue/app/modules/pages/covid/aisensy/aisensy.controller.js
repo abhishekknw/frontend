@@ -148,7 +148,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
 
             $scope.userDetail = function (value) {
-               
+
                 console.log("1232", value)
                 $scope.showChatModule = true;
                 let param = {
@@ -161,7 +161,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         console.log(response)
 
                         $scope.userDetailData = response.data.data;
-                        console.log('ooooooooooo',$scope.userDetailData);
+                        console.log('ooooooooooo', $scope.userDetailData);
                     }).catch(function onError(response) {
                         console.log(response);
                     })
@@ -581,7 +581,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.changeEndDate = function () {
                 $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
             }
-            
+
             $scope.getFilterData = function () {
                 $scope.showcontactDetail = false;
                 $scope.showhistoryDetail = false;
@@ -598,6 +598,26 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
 
             }
+
+            $scope.customerJourney = function (param) {
+                alert("customer jouner")
+                console.log($scope.customerJourneyData)
+
+                AuthService.getCustomerJourney(param)
+
+                    .then(function onSuccess(response) {
+                        console.log(response)
+                        console.log("1234567889")
+                        $scope.customerJourneyData = response.data.data;
+
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+            }
+
+
+
+
 
             $scope.dateFormat = function (date) {
                 var d = new Date(date),
