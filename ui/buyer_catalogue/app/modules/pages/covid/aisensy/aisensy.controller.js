@@ -43,7 +43,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.tab = { name: 'tabA' };
 
 
-
             // AIsensy controller
             $scope.getActiveUser = function (page) {
                 $scope.showcontactDetail = false;
