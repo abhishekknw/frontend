@@ -543,6 +543,16 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.serial = newPageNumber * 10 - 9;
                 $scope.getActiveUser(newPageNumber);
             };
+            $scope.actionRequiredPageChanged = function (newPageNumber, tab) {
+                $scope.serial = newPageNumber * 10 - 9;
+                $scope.getActionRequiredUser(newPageNumber);
+            };
+
+            $scope.interveneDataPageChanged = function (newPageNumber, tab) {
+                $scope.serial = newPageNumber * 10 - 9;
+                $scope.getInterveneUser(newPageNumber);
+            };
+
             $scope.templatePageChanged = function (newPageNumber, tab) {
                 $scope.serial = newPageNumber * 10 - 9;
                 $scope.templateDetail(newPageNumber);
