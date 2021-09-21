@@ -52,6 +52,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showtemplateDetail = false;
                 $scope.isUserProfile = false;
                 $scope.showfilterDetail = false;
+                $scope.historySearch = "";
+                $scope.search = "";
                 //$scope.showfilterDetail = false;
 
                 let param = {
