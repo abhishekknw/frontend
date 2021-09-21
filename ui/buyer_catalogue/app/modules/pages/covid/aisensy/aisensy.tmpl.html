@@ -1446,7 +1446,7 @@
         </div>
         <!-- Start Template and Customer Journey-->
         <div class="bs-example col-md-12 col-xs-12">
-          <label class="radio-inline">
+          <label class="radio-inline" ng-click="templateInStatus(userDetailData)">
             <input name="group1" value="1" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne"
               type="radio" />
             Template message
@@ -1455,27 +1455,26 @@
           <div class="panel-group" id="accordion">
             <div class="panel panel-default">
               <div id="collapseOne" class="panel-collapse collapse in">
-                <div class="panel-body">
-                  <h4>These are some Template message given to this user</h4>
-
+                <!-- <div class="panel-body" >
+                  
                   <div class="info-row-mca">
                     <label class="infolable-mca">Template Messages Id:</label>
-                    <span> {{}}</span>
+                    <span>{{templateInStatusData.template_id}}</span>
                   </div>
                   <div class="info-row-mca">
                     <label class="infolable-mca">Send At:</label>
-                    <span> {{}}</span>
+                    <span> {{templateInStatusData.template_send_timestamp}}</span>
                   </div>
                   <div class="info-row-mca">
                     <label class="infolable-mca">Response Message:</label>
-                    <span> {{}}</span>
+                    <span> {{templateInStatusData.template_responce}}</span>
                   </div>
                   <div class="info-row-mca">
                     <label class="infolable-mca">Response At:</label>
-                    <span> {{}}</span>
+                    <span> {{templateInStatusData.template_responce_timestamp}}</span>
                   </div>
 
-                </div>
+                </div> -->
               </div>
             </div>
 
@@ -1744,7 +1743,24 @@
                   <div class="panel panel-default">
                     <div id="collapseOne" class="panel-collapse collapse in">
                       <div class="panel-body">
-                        <h4>These are some Template message given to this user</h4>
+                  
+                        <div class="info-row-mca">
+                          <label class="infolable-mca">Template Messages Id:</label>
+                          <span> {{}}</span>
+                        </div>
+                        <div class="info-row-mca">
+                          <label class="infolable-mca">Send At:</label>
+                          <span> {{}}</span>
+                        </div>
+                        <div class="info-row-mca">
+                          <label class="infolable-mca">Response Message:</label>
+                          <span> {{}}</span>
+                        </div>
+                        <div class="info-row-mca">
+                          <label class="infolable-mca">Response At:</label>
+                          <span> {{}}</span>
+                        </div>
+      
                       </div>
                     </div>
                   </div>

@@ -620,6 +620,17 @@ angular.module('Authentication')
                   });
             };
 
+            authService.gettemplateInStatus = function (param) {
+               console.log(param);
+               let url = "v0/ui/b2c-bot/get-user-templates1/?phone_number=" +param.phone_number ;
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
 
             authService.getAllUserContact = function (param) {
                console.log(param);
