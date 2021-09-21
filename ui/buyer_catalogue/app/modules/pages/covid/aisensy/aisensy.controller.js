@@ -296,6 +296,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.contactDetail = function (page) {
+                $scope.formData.historySearch = "";
                 $scope.showcontactDetail = true;
                 $scope.showhistoryDetail = false;
                 $scope.totalCount = 0;
@@ -333,6 +334,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.historyDetail = function (page) {
+                $scope.formData.contactSearch = "";
                 $scope.showcontactDetail = false;
                 $scope.showhistoryDetail = true;
                 $scope.showgetActiveUser = false;
