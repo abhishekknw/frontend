@@ -790,8 +790,8 @@
                         <i class="fa fa-search" aria-hidden="true"></i>
                         <!-- <input placeholder="Search here" ng-change="searchChat(search)" ng-model="search" id="search"
                           name="search" type="text" /> -->
-                          <input placeholder="Search here" ng-change="getActiveUser()" ng-model="formData.activesearch" id="tab1search"
-                          name="search" type="text" />
+                        <input placeholder="Search here" ng-change="getActiveUser()" ng-model="formData.activesearch"
+                          id="tab1search" name="search" type="text" />
                       </div>
                     </div>
 
@@ -895,10 +895,11 @@
                                 </span>
                                 <span ng-if="userChatData.whatsapp_name==''">#</span>
                               </div> -->
-            
+
                               <div ng-if="userChatData.whatsapp_name!=''">
                                 <center>
-                                  <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}  {{userChatData.whatsapp_name.length > 15 ? '...' :
+                                  <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
+                                    {{userChatData.whatsapp_name.length > 15 ? '...' :
                                     ''}}</span><br />
                                   <span
                                     class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
@@ -909,7 +910,7 @@
                                   </span>
                                 </div>
                               </div>
-            
+
                               <div ng-if="userChatData.whatsapp_name ==''">
                                 <center>
                                   <span
@@ -919,7 +920,7 @@
                                   <span ng-if="userChatData.whatsapp_name==''">#</span>
                                 </div>
                               </div>
-            
+
                             </div>
                           </div>
 
@@ -1071,10 +1072,11 @@
                                 </span>
                                 <span ng-if="userChatData.whatsapp_name==''">#</span>
                               </div> -->
-            
+
                               <div ng-if="userChatData.whatsapp_name!=''">
                                 <center>
-                                  <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}  {{userChatData.whatsapp_name.length > 15 ? '...' :
+                                  <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
+                                    {{userChatData.whatsapp_name.length > 15 ? '...' :
                                     ''}}</span><br />
                                   <span
                                     class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
@@ -1085,7 +1087,7 @@
                                   </span>
                                 </div>
                               </div>
-            
+
                               <div ng-if="userChatData.whatsapp_name ==''">
                                 <center>
                                   <span
@@ -1095,7 +1097,7 @@
                                   <span ng-if="userChatData.whatsapp_name==''">#</span>
                                 </div>
                               </div>
-            
+
                             </div>
 
                           </div>
@@ -1244,10 +1246,11 @@
                                 </span>
                                 <span ng-if="userChatData.whatsapp_name==''">#</span>
                               </div> -->
-            
+
                               <div ng-if="userChatData.whatsapp_name!=''">
                                 <center>
-                                  <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}  {{userChatData.whatsapp_name.length > 15 ? '...' :
+                                  <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
+                                    {{userChatData.whatsapp_name.length > 15 ? '...' :
                                     ''}}</span><br />
                                   <span
                                     class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
@@ -1258,7 +1261,7 @@
                                   </span>
                                 </div>
                               </div>
-            
+
                               <div ng-if="userChatData.whatsapp_name ==''">
                                 <center>
                                   <span
@@ -1268,7 +1271,7 @@
                                   <span ng-if="userChatData.whatsapp_name==''">#</span>
                                 </div>
                               </div>
-            
+
                             </div>
 
 
@@ -1390,11 +1393,7 @@
                               'medium'}}</span>
                           </div>
 
-                          <!-- 
-                    <div class="info-row-mca">
-                      <label class="infolable-mca">Template Messages:</label>
-                      <span> {{cases.yesterday_confirmed}}</span>
-                    </div> -->
+
 
                           <!-- <div class="info-row-mca">
                       <label class="infolable-mca">Session Messages:</label>
@@ -1458,6 +1457,24 @@
               <div id="collapseOne" class="panel-collapse collapse in">
                 <div class="panel-body">
                   <h4>These are some Template message given to this user</h4>
+
+                  <div class="info-row-mca">
+                    <label class="infolable-mca">Template Messages Id:</label>
+                    <span> {{}}</span>
+                  </div>
+                  <div class="info-row-mca">
+                    <label class="infolable-mca">Send At:</label>
+                    <span> {{}}</span>
+                  </div>
+                  <div class="info-row-mca">
+                    <label class="infolable-mca">Response Message:</label>
+                    <span> {{}}</span>
+                  </div>
+                  <div class="info-row-mca">
+                    <label class="infolable-mca">Response At:</label>
+                    <span> {{}}</span>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -1591,7 +1608,8 @@
 
                   <div ng-if="userChatData.whatsapp_name!=''">
                     <center>
-                      <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}  {{userChatData.whatsapp_name.length > 15 ? '...' :
+                      <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
+                        {{userChatData.whatsapp_name.length > 15 ? '...' :
                         ''}}</span><br />
                       <span
                         class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
@@ -1786,8 +1804,7 @@
     <div class="search-box">
       <div class="input-wrapper">
         <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
-        <input placeholder="Search here" ng-change="contactDetail()" ng-model="formData.contactSearch"
-          type="text" />
+        <input placeholder="Search here" ng-change="contactDetail()" ng-model="formData.contactSearch" type="text" />
       </div>
     </div>
 
