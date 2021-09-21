@@ -629,19 +629,12 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.customerJourney = function (data) {
-                alert("customer jouner")
-                console.log(data)
-                
-               
+                console.log(data)          
                 let param = {
                     phone_number:data.phone_number
                 }
-
                 AuthService.getCustomerJourney(param)
-
                     .then(function onSuccess(response) {
-                        console.log(response)
-                        console.log("1234567889")
                         $scope.customerJourneyData = response.data.data;
                         console.log($scope.customerJourneyData)
                     }).catch(function onError(response) {

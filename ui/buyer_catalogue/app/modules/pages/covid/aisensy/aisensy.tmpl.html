@@ -1486,14 +1486,14 @@
             </label>
             <!-- <button type="button" class="btn btn-info" ng-click="customerJourney(userDetailData)">Customer Journey</button> -->
 
-            <div class="panel panel-default" ng-repeat="datas in customerJourneyData track by $index">
+            <div class="panel panel-default" >
               <div id="collapseTwo" class="panel-collapse collapse">
                 <div class="panel-body">
                   <div class="container mt-5 mb-5">
                     <div class="row">
                       <div class="col-md-6 offset-md-3">
                         <ul class="timeline">
-                          <li>
+                          <li ng-repeat="datas in customerJourneyData track by $index">
                             <h5>{{datas.username}} requested {{datas.status}}</h5>
                             <h6>{{datas.timestamp}}</h6>
                           </li>
