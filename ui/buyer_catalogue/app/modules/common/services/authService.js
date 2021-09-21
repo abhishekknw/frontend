@@ -486,6 +486,9 @@ angular.module('Authentication')
 
             authService.getAllActiveUserData = function (param) {
                let url = "v0/ui/b2c-bot/active-users/?next_page=" + param.next_page
+               if (param.search) {
+                  url += '&search=' + param.search
+               }
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -580,6 +583,9 @@ angular.module('Authentication')
             authService.getAllUserHistory = function (param) {
                console.log(param);
                let url = "v0/ui/b2c-bot/get-all-users-paginate/?next_page=" + param.next_page;
+               if (param.search) {
+                  url += '&search=' + param.search
+               }
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -618,6 +624,9 @@ angular.module('Authentication')
             authService.getAllUserContact = function (param) {
                console.log(param);
                let url = "v0/ui/b2c-bot/get-all-users-paginate/?next_page=" + param.next_page;
+               if (param.search) {
+                  url += '&search=' + param.search
+               }
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response

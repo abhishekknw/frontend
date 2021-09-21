@@ -70,6 +70,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         current: 1
                     };
                 }
+                if ($scope.formData.activesearch) {
+                    param.search = $scope.formData.activesearch;
+                }
+
                 AuthService.getAllActiveUserData(param)
 
                     .then(function onSuccess(response) {
@@ -85,6 +89,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.getActionRequiredUser = function (page) {
                 $scope.isUserProfile = false;
                 $scope.formData.interveneSearch = '';
+                $scope.formData.activesearch = '';
                 $scope.showChatModule = false;
                 $scope.showfilterDetail = false;
                 let param = {
@@ -117,6 +122,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.getInterveneUser = function (page) {
                 $scope.isUserProfile = false;
                 $scope.formData.actionSearch = '';
+                $scope.formData.activesearch = '';
                 $scope.showChatModule = false;
                 $scope.showfilterDetail = false;
                 let param = {
@@ -312,6 +318,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         current: 1
                     };
                 }
+                if ($scope.formData.contactSearch) {
+                    param.search = $scope.formData.contactSearch;
+                }
                 AuthService.getAllUserContact(param)
                     .then(function onSuccess(response) {
                         console.log(response)
@@ -347,6 +356,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         current: 1
                     };
                 }
+                if ($scope.formData.historySearch) {
+                    param.search = $scope.formData.historySearch;
+                }
                 AuthService.getAllUserHistory(param)
 
 
@@ -359,6 +371,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         console.log(response);
                     })
             }
+
 
             $scope.templateDetail = function (value) {
                 // console.log(value)
@@ -448,6 +461,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 console.log(value)
                 $scope.search = value;
                 console.log("search", $scope.search)
+                
 
                 if (value != "") {
                     let param = {
@@ -463,8 +477,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         }).catch(function onError(response) {
                             console.log(response);
                         })
-                } else {
-                    $scope.historyDetail(1)
+                }
+                 else {
+                    $scope.historyDetail()
                 }
             }
 
@@ -488,7 +503,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                             console.log(response);
                         })
                 } else {
-                    $scope.contactDetail(1)
+                    $scope.contactDetail()
                 }
             }
 

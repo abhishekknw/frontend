@@ -788,7 +788,9 @@
                     <div class="search-box" ng-if="!showChatModule">
                       <div class="input-wrapper">
                         <i class="fa fa-search" aria-hidden="true"></i>
-                        <input placeholder="Search here" ng-change="searchChat(search)" ng-model="search" id="search"
+                        <!-- <input placeholder="Search here" ng-change="searchChat(search)" ng-model="search" id="search"
+                          name="search" type="text" /> -->
+                          <input placeholder="Search here" ng-change="getActiveUser()" ng-model="formData.activesearch" id="tab1search"
                           name="search" type="text" />
                       </div>
                     </div>
@@ -986,7 +988,7 @@
                       <div class="input-wrapper">
                         <i class="fa fa-search" aria-hidden="true"></i>
                         <input placeholder="Search here" ng-change="getActionRequiredUser()"
-                          ng-model="formData.actionSearch" id="search" name="search" type="text" />
+                          ng-model="formData.actionSearch" id="tab2search" name="search" type="text" />
                       </div>
                     </div>
                     <div class="fields-box">
@@ -1520,7 +1522,7 @@
             <div class="search-box">
               <div class="input-wrapper">
                 <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
-                <input placeholder="Search here" ng-change="searchChatHistory(historySearch)" ng-model="historySearch"
+                <input placeholder="Search here" ng-change="historyDetail()" ng-model="formData.historySearch"
                   type="text" />
               </div>
             </div>
@@ -1784,7 +1786,7 @@
     <div class="search-box">
       <div class="input-wrapper">
         <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
-        <input placeholder="Search here" ng-change="searchChatContact(contactSearch)" ng-model="contactSearch"
+        <input placeholder="Search here" ng-change="contactDetail()" ng-model="formData.contactSearch"
           type="text" />
       </div>
     </div>
