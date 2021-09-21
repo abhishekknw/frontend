@@ -644,7 +644,19 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
             }
 
-
+            $scope.templateInStatus = function (data) {
+                console.log(data)          
+                let param = {
+                    phone_number:data.phone_number
+                }
+                AuthService.gettemplateInStatus(param)
+                    .then(function onSuccess(response) {
+                        $scope.templateInStatusData = response.data.data;
+                        console.log($scope.templateInStatusData)
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+            }
 
 
 
