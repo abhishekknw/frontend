@@ -296,6 +296,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.contactDetail = function (page) {
+                $scope.formData.historySearch = "";
                 $scope.showcontactDetail = true;
                 $scope.showhistoryDetail = false;
                 $scope.totalCount = 0;
@@ -333,6 +334,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.historyDetail = function (page) {
+                $scope.formData.contactSearch = "";
                 $scope.showcontactDetail = false;
                 $scope.showhistoryDetail = true;
                 $scope.showgetActiveUser = false;
@@ -629,19 +631,12 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.customerJourney = function (data) {
-                alert("customer jouner")
-                console.log(data)
-                
-               
+                console.log(data)          
                 let param = {
                     phone_number:data.phone_number
                 }
-
                 AuthService.getCustomerJourney(param)
-
                     .then(function onSuccess(response) {
-                        console.log(response)
-                        console.log("1234567889")
                         $scope.customerJourneyData = response.data.data;
                         console.log($scope.customerJourneyData)
                     }).catch(function onError(response) {
@@ -649,7 +644,19 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
             }
 
-
+            $scope.templateInStatus = function (data) {
+                console.log(data)          
+                let param = {
+                    phone_number:data.phone_number
+                }
+                AuthService.gettemplateInStatus(param)
+                    .then(function onSuccess(response) {
+                        $scope.templateInStatusData = response.data.data;
+                        console.log($scope.templateInStatusData)
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+            }
 
 
 
