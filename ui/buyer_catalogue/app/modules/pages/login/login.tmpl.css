@@ -82,3 +82,16 @@
   .machadalo-login .rightBox h1 { font-size: 40px; line-height: 50px; }
 }
 
+
+
+@media only screen and (max-width: 767px) {
+  .machadalo-login { width: 100%;   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); grid-template-rows: auto; align-items: center; height: auto;  }
+
+.machadalo-login .leftBox .loginForm { width: 100%; padding: 15px; }
+.machadalo-login .rightBox .mcrb { padding: 0px; }
+.machadalo-login .leftBox h2{ text-align: center; margin:15px 0; }  
+.machadalo-login .rightBox img.logo { max-width: 120px;  margin: 0 auto;  display: inherit; }
+.machadalo-login .rightBox { padding: 15px; }
+.machadalo-login .rightBox h1 { font-size: 25px; margin:10px 0; line-height: 25px; }
+}

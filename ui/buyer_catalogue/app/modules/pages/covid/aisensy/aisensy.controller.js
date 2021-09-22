@@ -711,7 +711,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             // };
 
 
-        }]);
+        }
+    ]
+);
 
 
 
