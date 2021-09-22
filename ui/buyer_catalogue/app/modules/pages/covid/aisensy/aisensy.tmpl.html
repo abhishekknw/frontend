@@ -946,7 +946,7 @@
 
                           <div ng-if="messageBox">
                             <div class="input">
-                              <input type="text" ng-model="message.activeMessage"  placeholder="Write message" />
+                              <input type="text" ng-model="message.activeMessage" placeholder="Write message" />
                             </div>
                             <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
                               <svg viewBox="0 0 74.433 60.908" width="25" height="25"
@@ -1235,18 +1235,6 @@
                             </div>
                             <div ng-click="userProfileIcon()">
 
-                              <!-- <center><span class="username profile-heading">{{userChatData.whatsapp_name}}</span><br />
-                                <span
-                                  class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
-                              </center>
-            
-                              <div class="profile-image-chat">
-                                <span ng-if="userChatData.whatsapp_name!=''">
-                                  {{userChatData.whatsapp_name |firstlater}}
-                                </span>
-                                <span ng-if="userChatData.whatsapp_name==''">#</span>
-                              </div> -->
-
                               <div ng-if="userChatData.whatsapp_name!=''">
                                 <center>
                                   <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
@@ -1463,28 +1451,26 @@
                         <div class="info-table-covidhelp">
                           <table class="table table-striped">
                             <tbody>
-                              <tr>
+                              <tr ng-if="templateInStatusData.length != 0">
                                 <th class="col-md-3">Template Name</th>
                                 <th class="col-md-3">Send At</th>
                                 <th class="col-md-3">Response Message</th>
                                 <th class="col-md-3">Response At</th>
                               </tr>
-                              <tr ng-repeat="tmp in templateInStatusData">
+                              <tr ng-repeat="tmp in templateInStatusData" >
                                 <td class="col-md-3" style="text-align: center;">{{tmp.template_id}}</td>
                                 <td class="col-md-3" style="text-align: center;">{{tmp.template_send_timestamp}}</td>
                                 <td class="col-md-3" style="text-align: center;">{{tmp.template_responce}}</td>
-                                <td class="col-md-3" style="text-align: center;">{{tmp.template_responce_timestamp}}</td>
-                              </tr>
-                              <!-- <tr>
-                                <td class="col-md-3" style="text-align: center;">Elevator Template</td>
-                                <td class="col-md-3" style="text-align: center;">Date</td>
-                                <td class="col-md-3" style="text-align: center;">Upgrade</td>
-
-                                <td class="col-md-3" style="text-align: center;">Date</td>
-                              </tr> -->
+                                <td class="col-md-3" style="text-align: center;">{{tmp.template_responce_timestamp}}
+                                </td>
+                              </tr>                            
                             </tbody>
-
                           </table>
+                          <div ng-if="templateInStatusData.length == 0">
+                            <h4 style="text-align: center; color: red;">
+                              No  Template Message Send
+                            </h4>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1765,28 +1751,27 @@
                               <div class="info-table-covidhelp">
                                 <table class="table table-striped">
                                   <tbody>
-                                    <tr>
+                                    <tr ng-if="templateInStatusData.length != 0">
                                       <th class="col-md-3">Template Name</th>
                                       <th class="col-md-3">Send At</th>
                                       <th class="col-md-3">Response Message</th>
                                       <th class="col-md-3">Response At</th>
                                     </tr>
-                                    <tr>
-                                      <td class="col-md-3" style="text-align: center;">Painting Template</td>
-                                      <td class="col-md-3" style="text-align: center;">Date</td>
-                                      <td class="col-md-3" style="text-align: center;">Completed</td>
-                                      <td class="col-md-3" style="text-align: center;">Date</td>
-                                    </tr>
-                                    <tr>
-                                      <td class="col-md-3" style="text-align: center;">Elevator Template</td>
-                                      <td class="col-md-3" style="text-align: center;">Date</td>
-                                      <td class="col-md-3" style="text-align: center;">Upgrade</td>
-
-                                      <td class="col-md-3" style="text-align: center;">Date</td>
+                                    <tr ng-repeat="tmp in templateInStatusData" >
+                                      <td class="col-md-3" style="text-align: center;">{{tmp.template_id}}</td>
+                                      <td class="col-md-3" style="text-align: center;">{{tmp.template_send_timestamp}}
+                                      </td>
+                                      <td class="col-md-3" style="text-align: center;">{{tmp.template_responce}}</td>
+                                      <td class="col-md-3" style="text-align: center;">
+                                        {{tmp.template_responce_timestamp}}</td>
                                     </tr>
                                   </tbody>
-
                                 </table>
+                                <div ng-if="templateInStatusData.length == 0">
+                                  <h4 style="text-align: center; color: red;">
+                                    No  Template Message Send
+                                  </h4>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -1946,15 +1931,11 @@
 
     <div class="page-inner">
       <div class="top-select-option-mca">
-
         <div class="row">
-
           <div class="second dropdown">
             <h4><b>Attributes:</b></h4>
-            <div class="row">
               <div class="col-xs-6 col-md-6">
-                <div class="form-group">
-                  <!--category dropdown-->
+                <div class="form-group">               
                   <select class="form-control" ng-change="getFilterData()" name="attribute_name" id="attribute_nameId"
                     ng-model="dateRangeModel.attribute_name">
                     <option value="" disabled> Select Attribute</option>
@@ -1965,20 +1946,17 @@
                 </div>
               </div>
 
-
               <div class="col-md-6 col-xs-6">
-                <div class="form-group">
-                  <!--category dropdown-->
+                <div class="form-group">                 
                   <select class="form-control" ng-change="getFilterData()" name="attribute" id="attributeId"
                     ng-model="dateRangeModel.date_type">
                     <option value="" disabled>Attribute Value</option>
                     <option value="created_at">Created At</option>
                     <option value="updated_at">Updated At</option>
-
                   </select>
                 </div>
               </div>
-            </div>
+                        
           </div>
 
 
@@ -2027,7 +2005,10 @@
             <td>
               <div class="friend-drawer friend-drawer--onhover" ng-click="userDetail(details.phone_number)">
                 <div class="profile-image">
-                  {{details.whatsapp_name |firstlater}}
+                  <span ng-if="details.whatsapp_name!=''">
+                    {{details.whatsapp_name |firstlater}}</span>
+                  <span ng-if="details.whatsapp_name==''">
+                    #</span>
                 </div>
                 <div class="text">
                   <h6>{{details.whatsapp_name}}</h6>
@@ -2145,6 +2126,7 @@
 
     <!--status for filter tab-->
     <div class="container dropdown aisensy-page">
+
       <div ng-if="userDetailData && isUserProfile">
         <div class="top-select-option-mca">
           <div class="form-group">
@@ -2200,19 +2182,59 @@
                           </div>
 
 
+
+                          <!-- <div class="info-row-mca">
+                      <label class="infolable-mca">Session Messages:</label>
+                      <span> {{cases.yesterday_confirmed}}</span>
+                    </div> -->
+
+                          <!-- <div class="info-row-mca">
+                      <label class="infolable-mca">Unsolved Queries:</label>
+                      <span> {{cases.yesterday_confirmed}}</span>
+                    </div> -->
+
+                          <!-- <div class="info-row-mca">
+                      <label class="infolable-mca">Source:</label>
+                      <span> {{cases.yesterday_confirmed}}</span>
+                    </div>
+
+                    <div class="info-row-mca">
+                      <label class="infolable-mca">Lead State:</label>
+                      <span> {{cases.yesterday_confirmed}}</span>
+                    </div>
+
+                    <div class="info-row-mca">
+                      <label class="infolable-mca">First Message:</label>
+                      <span> {{cases.yesterday_confirmed}}</span>
+                    </div> -->
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                <!-- Status End -->
 
+                <!-- <select class="form-control" name="sector" id="sector-aisensy" ng-change="changeWeb()" ng-model="selectedsector">
+          <option value="" disabled>Template Messages</option>
+          <option ng-repeat="sec in sectorArray track by $index" value="{{sec.name}}"
+            style="text-transform: capitalize">
+            {{cat.name}}
+          </option>
+        </select>
+        <select class="form-control" name="sector" id="sector-aisensy" ng-change="changeWeb()" ng-model="selectedsector">
+          <option value="" disabled>Customer Journey</option>
+          <option ng-repeat="sec in sectorArray track by $index" value="{{sec.name}}"
+            style="text-transform: capitalize">
+            {{cat.name}}
+          </option>
+        </select>-->
               </div>
             </div>
           </div>
         </div>
         <!-- Start Template and Customer Journey-->
         <div class="bs-example col-md-12 col-xs-12">
-          <label class="radio-inline">
+          <label class="radio-inline" ng-click="templateInStatus(userDetailData)">
             <input name="group1" value="1" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne"
               type="radio" />
             Template message
@@ -2229,28 +2251,29 @@
                         <div class="info-table-covidhelp">
                           <table class="table table-striped">
                             <tbody>
-                              <tr>
+                              <tr ng-if="templateInStatusData.length != 0">
                                 <th class="col-md-3">Template Name</th>
                                 <th class="col-md-3">Send At</th>
                                 <th class="col-md-3">Response Message</th>
                                 <th class="col-md-3">Response At</th>
                               </tr>
-                              <tr>
-                                <td class="col-md-3" style="text-align: center;">Painting Template</td>
-                                <td class="col-md-3" style="text-align: center;">Date</td>
-                                <td class="col-md-3" style="text-align: center;">Completed</td>
-                                <td class="col-md-3" style="text-align: center;">Date</td>
+                              <tr ng-repeat="tmp in templateInStatusData" >
+                                <td class="col-md-3" style="text-align: center;">{{tmp.template_id}}</td>
+                                <td class="col-md-3" style="text-align: center;">{{tmp.template_send_timestamp}}</td>
+                                <td class="col-md-3" style="text-align: center;">{{tmp.template_responce}}</td>
+                                <td class="col-md-3" style="text-align: center;">{{tmp.template_responce_timestamp}}
+                                </td>
                               </tr>
-                              <tr>
-                                <td class="col-md-3" style="text-align: center;">Elevator Template</td>
-                                <td class="col-md-3" style="text-align: center;">Date</td>
-                                <td class="col-md-3" style="text-align: center;">Upgrade</td>
-
-                                <td class="col-md-3" style="text-align: center;">Date</td>
-                              </tr>
+                             
+                              
                             </tbody>
 
                           </table>
+                          <div ng-if="templateInStatusData.length == 0">
+                            <h4 style="text-align: center; color: red;">
+                              No  Template Message Send
+                            </h4>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -2278,17 +2301,17 @@
                             <h6>{{datas.timestamp}}</h6>
                           </li>
                           <!-- <li>
-                        <h5>Chat closed by XYZ</h5>
-                        <h6>15:15, 17 Aug 2021</h6>
-                      </li>
-                      <li>
-                        <h5>Chat intervened by XYZ</h5>
-                        <h6>14:43, 17 Aug 2021</h6>
-                      </li>
-                      <li>
-                        <h5>User requested intervention</h5>
-                        <h6>09:03, 15 Aug 2021</h6>
-                      </li> -->
+                            <h5>Chat closed by XYZ</h5>
+                            <h6>15:15, 17 Aug 2021</h6>
+                          </li>
+                          <li>
+                            <h5>Chat intervened by XYZ</h5>
+                            <h6>14:43, 17 Aug 2021</h6>
+                          </li>
+                          <li>
+                            <h5>User requested intervention</h5>
+                            <h6>09:03, 15 Aug 2021</h6>
+                          </li> -->
                         </ul>
                       </div>
                     </div>
