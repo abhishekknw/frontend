@@ -419,6 +419,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showgetActiveUser = false;
                 $scope.showtemplateDetail = false;
                 $scope.showfilterDetail = true;
+                $scope.isUserProfile = false;
+                $scope.showChatModule = false;
 
 
                 AuthService.getFilterTabData(param)

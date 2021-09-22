@@ -1469,19 +1469,19 @@
                                 <th class="col-md-3">Response Message</th>
                                 <th class="col-md-3">Response At</th>
                               </tr>
-                              <tr>
-                                <td class="col-md-3" style="text-align: center;">Painting Template</td>
-                                <td class="col-md-3" style="text-align: center;">Date</td>
-                                <td class="col-md-3" style="text-align: center;">Completed</td>
-                                <td class="col-md-3" style="text-align: center;">Date</td>
+                              <tr ng-repeat="tmp in templateInStatusData">
+                                <td class="col-md-3" style="text-align: center;">{{tmp.template_id}}</td>
+                                <td class="col-md-3" style="text-align: center;">{{tmp.template_send_timestamp}}</td>
+                                <td class="col-md-3" style="text-align: center;">{{tmp.template_responce}}</td>
+                                <td class="col-md-3" style="text-align: center;">{{tmp.template_responce_timestamp}}</td>
                               </tr>
-                              <tr>
+                              <!-- <tr>
                                 <td class="col-md-3" style="text-align: center;">Elevator Template</td>
                                 <td class="col-md-3" style="text-align: center;">Date</td>
                                 <td class="col-md-3" style="text-align: center;">Upgrade</td>
 
                                 <td class="col-md-3" style="text-align: center;">Date</td>
-                              </tr>
+                              </tr> -->
                             </tbody>
 
                           </table>
@@ -1756,35 +1756,51 @@
 
                 <div class="panel-group" id="accordion">
                   <div class="panel panel-default">
-                    <div id="collapseOne" class="panel-collapse collapse in">
-                      <div class="panel-body">
+                    <div id="collapseOne" class="panel-collapse collapse ">
 
-                        <div class="info-row-mca">
-                          <label class="infolable-mca">Template Messages Id:</label>
-                          <span> {{}}</span>
-                        </div>
-                        <div class="info-row-mca">
-                          <label class="infolable-mca">Send At:</label>
-                          <span> {{}}</span>
-                        </div>
-                        <div class="info-row-mca">
-                          <label class="infolable-mca">Response Message:</label>
-                          <span> {{}}</span>
-                        </div>
-                        <div class="info-row-mca">
-                          <label class="infolable-mca">Response At:</label>
-                          <span> {{}}</span>
-                        </div>
+                      <div class="filter-card">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <div class="info-table-wrap-mca">
+                              <div class="info-table-covidhelp">
+                                <table class="table table-striped">
+                                  <tbody>
+                                    <tr>
+                                      <th class="col-md-3">Template Name</th>
+                                      <th class="col-md-3">Send At</th>
+                                      <th class="col-md-3">Response Message</th>
+                                      <th class="col-md-3">Response At</th>
+                                    </tr>
+                                    <tr>
+                                      <td class="col-md-3" style="text-align: center;">Painting Template</td>
+                                      <td class="col-md-3" style="text-align: center;">Date</td>
+                                      <td class="col-md-3" style="text-align: center;">Completed</td>
+                                      <td class="col-md-3" style="text-align: center;">Date</td>
+                                    </tr>
+                                    <tr>
+                                      <td class="col-md-3" style="text-align: center;">Elevator Template</td>
+                                      <td class="col-md-3" style="text-align: center;">Date</td>
+                                      <td class="col-md-3" style="text-align: center;">Upgrade</td>
 
+                                      <td class="col-md-3" style="text-align: center;">Date</td>
+                                    </tr>
+                                  </tbody>
+
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <label class="radio-inline">
+                  <label class="radio-inline" ng-click="customerJourney(userDetailData)">
                     <input name="group1" value="2" data-toggle="collapse" data-parent="#accordion"
                       data-target="#collapseTwo" type="radio" />
                     Customer Journey
                   </label>
+                  <!-- <button type="button" class="btn btn-info" ng-click="customerJourney(userDetailData)">Customer Journey</button> -->
 
                   <div class="panel panel-default">
                     <div id="collapseTwo" class="panel-collapse collapse">
@@ -1793,11 +1809,11 @@
                           <div class="row">
                             <div class="col-md-6 offset-md-3">
                               <ul class="timeline">
-                                <li>
-                                  <h5>User requested intervention</h5>
-                                  <h6>18:45, 19 Aug 2021</h6>
+                                <li ng-repeat="datas in customerJourneyData track by $index">
+                                  <h5>{{datas.username}} requested {{datas.status}}</h5>
+                                  <h6>{{datas.timestamp}}</h6>
                                 </li>
-                                <li>
+                                <!-- <li>
                                   <h5>Chat closed by XYZ</h5>
                                   <h6>15:15, 17 Aug 2021</h6>
                                 </li>
@@ -1808,7 +1824,7 @@
                                 <li>
                                   <h5>User requested intervention</h5>
                                   <h6>09:03, 15 Aug 2021</h6>
-                                </li>
+                                </li> -->
                               </ul>
                             </div>
                           </div>
@@ -1996,7 +2012,7 @@
     </div>
 
 
-    <div ng-if="filterData.length > 0">
+    <div ng-if="!showChatModule && filterData.length > 0">
       <!-- <div class="search-box">
       <div class="input-wrapper">
         <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px"></i>
@@ -2039,6 +2055,254 @@
       boundary-links="true">
     </dir-pagination-controls> -->
     </div>
+    <!-- Start Phone Chat for filter tab-->
+    <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
+      <div class="screen-phone">
+        <div class="nav-phone navbar-fixed">
+
+          <div class="icon-back">
+            <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
+              ng-click="hideChatModule()">
+
+              <path fill="#fff"
+                d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
+            </svg>
+
+
+          </div>
+          <div ng-click="userProfileIcon()">
+
+            <!-- <center><span class="username profile-heading">{{userChatData.whatsapp_name}}</span><br />
+          <span
+            class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+        </center>
+
+        <div class="profile-image-chat">
+          <span ng-if="userChatData.whatsapp_name!=''">
+            {{userChatData.whatsapp_name |firstlater}}
+          </span>
+          <span ng-if="userChatData.whatsapp_name==''">#</span>
+        </div> -->
+
+            <div ng-if="userChatData.whatsapp_name!=''">
+              <center>
+                <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
+                  {{userChatData.whatsapp_name.length > 15 ? '...' :
+                  ''}}</span><br />
+                <span
+                  class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+              </center>
+              <div class="profile-image-chat">
+                <span>
+                  {{userChatData.whatsapp_name |firstlater}}
+                </span>
+              </div>
+            </div>
+
+            <div ng-if="userChatData.whatsapp_name ==''">
+              <center>
+                <span
+                  class="tel-number profile-heading-1">{{userChatData.country_code}}{{userChatData.phone_number}}</span>
+              </center>
+              <div class="profile-image-chat-1">
+                <span ng-if="userChatData.whatsapp_name==''">#</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="chat">
+          <div ng-repeat="chat in userChatData.payload track by $index">
+            <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
+            <div style="width: 100%; float:right;">
+              <div class="message-1" ng-if="chat.sender=='user'">
+                {{chat.content.text}}<br>
+                <span>{{chat.timestamp | date :'medium'}}</span>
+              </div>
+            </div>
+
+            <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
+              {{chat.content.text}}
+              <span>{{chat.timestamp | date : 'medium'}}</span>
+            </div>
+          </div>
+
+        </div>
+        <div ng-if="messageBox">
+          <div class="input">
+            <input type="text" placeholder="Write message" />
+          </div>
+          <div class="btn-send">
+            <svg viewBox="0 0 74.433 60.908" width="25" height="25" xmlns="http://www.w3.org/2000/svg">
+              <path fill="#fff"
+                d="M 0 0 L 74.22 26.562 L 0.246 60.712 L 7.608 34.535 L 27.831 28.259 L 6.91 25.469 L 0 0 Z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--End Phone Chat  for filter tab-->
+
+    <!--status for filter tab-->
+    <div class="container dropdown aisensy-page">
+      <div ng-if="userDetailData && isUserProfile">
+        <div class="top-select-option-mca">
+          <div class="form-group">
+            <div class="profile">
+              <div class="friend-drawer-status friend-drawer--onhover">
+                <div class="status-image">
+                  <span ng-if="userDetailData.whatsapp_name!=''">
+                    {{userDetailData.whatsapp_name |firstlater}}</span>
+                  <span ng-if="userDetailData.whatsapp_name==''">#</span>
+                </div>
+                <div class="text">
+                  <h6>{{userDetailData.whatsapp_name}}</h6>
+                  <p class="text-muted">
+                    {{userDetailData.country_code}}{{userDetailData.phone_number}}
+                  </p>
+                  <div class="icon-cross" ng-click="userChatIcon()">
+                    <svg class="svg-icon" viewBox="0 0 20 20">
+                      <path fill="#fff"
+                        d="M15.898,4.045c-0.271-0.272-0.713-0.272-0.986,0l-4.71,4.711L5.493,4.045c-0.272-0.272-0.714-0.272-0.986,0s-0.272,0.714,0,0.986l4.709,4.711l-4.71,4.711c-0.272,0.271-0.272,0.713,0,0.986c0.136,0.136,0.314,0.203,0.492,0.203c0.179,0,0.357-0.067,0.493-0.203l4.711-4.711l4.71,4.711c0.137,0.136,0.314,0.203,0.494,0.203c0.178,0,0.355-0.067,0.492-0.203c0.273-0.273,0.273-0.715,0-0.986l-4.711-4.711l4.711-4.711C16.172,4.759,16.172,4.317,15.898,4.045z">
+                      </path>
+                    </svg>
+                  </div>
+                </div>
+                <hr />
+
+                <div class="filter-card">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="info-table-wrap-mca">
+                        <div class="info-table-covidhelp">
+                          <div class="info-row-mca">
+                            <label class="infolable-mca"> Session ID:</label>
+                            <span> {{userDetailData.session_id}}</span>
+                          </div>
+
+                          <div class="info-row-mca">
+                            <label class="infolable-mca">User Type:</label>
+                            <span> {{userDetailData.user_type}}</span>
+                          </div>
+
+                          <div class="info-row-mca">
+                            <label class="infolable-mca">Created At:</label>
+                            <span>
+                              {{userDetailData.created_at | date :
+                              'medium'}}</span>
+                          </div>
+
+                          <div class="info-row-mca">
+                            <label class="infolable-mca">Last Active:</label>
+                            <span>
+                              {{userDetailData.updated_at | date :
+                              'medium'}}</span>
+                          </div>
+
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Start Template and Customer Journey-->
+        <div class="bs-example col-md-12 col-xs-12">
+          <label class="radio-inline">
+            <input name="group1" value="1" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne"
+              type="radio" />
+            Template message
+          </label>
+
+          <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+              <div id="collapseOne" class="panel-collapse collapse ">
+
+                <div class="filter-card">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="info-table-wrap-mca">
+                        <div class="info-table-covidhelp">
+                          <table class="table table-striped">
+                            <tbody>
+                              <tr>
+                                <th class="col-md-3">Template Name</th>
+                                <th class="col-md-3">Send At</th>
+                                <th class="col-md-3">Response Message</th>
+                                <th class="col-md-3">Response At</th>
+                              </tr>
+                              <tr>
+                                <td class="col-md-3" style="text-align: center;">Painting Template</td>
+                                <td class="col-md-3" style="text-align: center;">Date</td>
+                                <td class="col-md-3" style="text-align: center;">Completed</td>
+                                <td class="col-md-3" style="text-align: center;">Date</td>
+                              </tr>
+                              <tr>
+                                <td class="col-md-3" style="text-align: center;">Elevator Template</td>
+                                <td class="col-md-3" style="text-align: center;">Date</td>
+                                <td class="col-md-3" style="text-align: center;">Upgrade</td>
+
+                                <td class="col-md-3" style="text-align: center;">Date</td>
+                              </tr>
+                            </tbody>
+
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <label class="radio-inline" ng-click="customerJourney(userDetailData)">
+              <input name="group1" value="2" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo"
+                type="radio" />
+              Customer Journey
+            </label>
+            <!-- <button type="button" class="btn btn-info" ng-click="customerJourney(userDetailData)">Customer Journey</button> -->
+
+            <div class="panel panel-default">
+              <div id="collapseTwo" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="container mt-5 mb-5">
+                    <div class="row">
+                      <div class="col-md-6 offset-md-3">
+                        <ul class="timeline">
+                          <li ng-repeat="datas in customerJourneyData track by $index">
+                            <h5>{{datas.username}} requested {{datas.status}}</h5>
+                            <h6>{{datas.timestamp}}</h6>
+                          </li>
+                          <!-- <li>
+                        <h5>Chat closed by XYZ</h5>
+                        <h6>15:15, 17 Aug 2021</h6>
+                      </li>
+                      <li>
+                        <h5>Chat intervened by XYZ</h5>
+                        <h6>14:43, 17 Aug 2021</h6>
+                      </li>
+                      <li>
+                        <h5>User requested intervention</h5>
+                        <h6>09:03, 15 Aug 2021</h6>
+                      </li> -->
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Template and Customer Journey-->
+      </div>
+    </div>
+    <!-- Status End for filter tab -->
+
     <div ng-if="filterData.length == 0">
       <h4 style="text-align: center; color: red;">
         Record Not Found.
