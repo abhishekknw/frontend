@@ -672,6 +672,40 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 return [year, month, day].join('-');
 
             }
+            $scope.message = {};
+            $scope.sendMessage = function (phone) {
+                console.log('8888888888888888', $scope.message);
+                console.log('9999999999999999999999', phone);
+                let param = {
+                    phone: phone
+                }
+                if ($scope.message.interveneMessage) {
+                    param.text = $scope.message.interveneMessage;
+
+                }
+                AuthService.sendMessage(param)
+                    .then(function onSuccess(response) {
+                        if (response.data.status) {
+                            let data = {
+                                content: { text: $scope.message.interveneMessage },
+                                sender: "bot",
+                                timestamp:new Date()
+                            }
+                            if ($scope.userChatData) {
+                                if ($scope.userChatData.payload && $scope.userChatData.payload.length > 0) {
+                                    $scope.userChatData.payload.unshift(data);
+                                } else {
+                                    $scope.userChatData.payload.push(data);
+                                }
+                            }
+                            $scope.message = {};
+
+
+                        }
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+            }
 
             // $scope.filterPageChanged = function (newPageNumber, tab) {
             //     $scope.serial = newPageNumber * 10 - 9;
