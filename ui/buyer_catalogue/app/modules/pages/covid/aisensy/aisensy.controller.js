@@ -210,12 +210,10 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         console.log(response);
                     })
             }
-            $scope.hideChatModule = function (value) {
-                $scope.showChatModule = false;
-                $scope.isUserProfile = false;
-                $scope.messageBox = false;
+            $scope.sendMessage = function (value) {
+            console.log($scope.message)
             }
-
+     
             $scope.writeMessage = function (data, tabValue) {
                 console.log('1111111111111111111',data);
                 $scope.messageBox = true;

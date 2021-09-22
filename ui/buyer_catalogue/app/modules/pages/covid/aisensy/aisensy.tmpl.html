@@ -38,6 +38,10 @@
     word-wrap: break-word;
   }
 
+  td th.white-space-pre-line{
+    white-space: pre-line;
+    word-wrap: break-word;
+  }
   .navbar-collapse.in {
     overflow-y: hidden;
     /* overflow-x: hidden; */
@@ -945,15 +949,16 @@
                           </div>
 
                           <div ng-if="messageBox">
-                            <div class="input">
-                              <input type="text" placeholder="Write message" />
+                            <div class="input" >
+                              <input ng-model ="message" type="text" placeholder="Write message" />
                             </div>
-                            <div class="btn-send">
+                            <div class="btn-send"  ng-click="sendMessage()">
                               <svg viewBox="0 0 74.433 60.908" width="25" height="25"
                                 xmlns="http://www.w3.org/2000/svg">
-                                <path fill="#fff"
+                                <path fill="#fff" 
                                   d="M 0 0 L 74.22 26.562 L 0.246 60.712 L 7.608 34.535 L 27.831 28.259 L 6.91 25.469 L 0 0 Z" />
                               </svg>
+                            
                             </div>
 
                             <div class="aisensy-resolve-btn">
@@ -1455,26 +1460,33 @@
           <div class="panel-group" id="accordion">
             <div class="panel panel-default">
               <div id="collapseOne" class="panel-collapse collapse in">
-                <!-- <div class="panel-body" >
-                  
-                  <div class="info-row-mca">
-                    <label class="infolable-mca">Template Messages Id:</label>
-                    <span>{{templateInStatusData.template_id}}</span>
-                  </div>
-                  <div class="info-row-mca">
-                    <label class="infolable-mca">Send At:</label>
-                    <span> {{templateInStatusData.template_send_timestamp}}</span>
-                  </div>
-                  <div class="info-row-mca">
-                    <label class="infolable-mca">Response Message:</label>
-                    <span> {{templateInStatusData.template_responce}}</span>
-                  </div>
-                  <div class="info-row-mca">
-                    <label class="infolable-mca">Response At:</label>
-                    <span> {{templateInStatusData.template_responce_timestamp}}</span>
-                  </div>
+                <div class="filter-card">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="info-table-wrap-mca">
+                        <div class="info-table-covidhelp">
+                          <div class="info-row-mca">
+                            <label class="infolable-mca"> Template Message Id:</label>
+                            <span> {{}}</span>
+                          </div>
 
-                </div> -->
+                          <div class="info-row-mca">
+                            <label class="infolable-mca">Send Time:</label>
+                            <span> {{}}</span>
+                          </div>
+
+                          <div class="info-row-mca">
+                            <label class="infolable-mca">Response Message:</label>
+                            <span>
+                              {{}}</span>
+                          </div>
+
+                                                  
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -1877,7 +1889,7 @@
       </div>
     </div>
 
-    <div class="container table-responsive py-5">
+    <div class="container table-responsive py-5 white-space-pre-line">
       <table class="table table-bordered table-hover">
         <thead class="thead-dark">
           <tr>
@@ -1897,7 +1909,7 @@
             <td>{{$index+serial}}</td>
             <td>{{template.template_code}}</td>
             <td>{{template.template_name}}</td>
-            <td>{{template.Template_message}}</td>
+            <td style="white-space: pre-line; word-wrap: break-word;">{{template.Template_message}}</td>
             <td>{{template.status}}</td>
             <td>{{template.date}}</td>
             <td>{{template.bot_name}}</td>
