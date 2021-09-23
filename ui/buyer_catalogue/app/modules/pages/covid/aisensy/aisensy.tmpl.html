@@ -719,13 +719,61 @@
   .filter-button {
     margin: 5px;
   }
+  .navbar-collapse.in { height: auto !important; }
 </style>
 
-
+<script>
+        $('.navbar-collapse a').click(function(){
+            $(".navbar-collapse").collapse('hide');
+        });
+    </script>
 <div ng-init="getActiveUser()  ">
 
+
+  <nav  class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" ng-click="isCollapsed = !isCollapsed">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><div class="logo-sec-mca">
+          <img src="images/machadalo-logo.png" alt="" title="" />
+        </div></a>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->    
+      <div class="navbar-collapse" ng-class="isCollapsed ? 'collapse' : 'in'">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a target="_blank" class="fa fa-comments" id="active-nav" aria-hidden="true" style="font-size: large"
+            ng-click="getActiveUser()">
+            Live chat</a> </li>
+          <li><a target="_blank" class="fa fa-user-circle" aria-hidden="true" style="font-size: large"
+            ng-click="contactDetail()">
+            Contact</a></li>
+         <li> <a target="_blank" class="fa fa-history" aria-hidden="true" style="font-size: large"
+            ng-click="historyDetail()">
+            History</a> </li>
+         <li> <a target="_blank" class="fa fa-file-text" aria-hidden="true" style="font-size: large"
+            ng-click=templateDetail()>
+            Template</a> </li>
+          <li> <a target="_blank" class="fa fa-filter" aria-hidden="true" style="font-size: large" ng-click=filterDetail()>
+            Filter</a></li>
+     
+      </ul>
+     
+   
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+
+
   <!-- navbar -->
-  <nav class="navbar navbar-default navbar-fixed-top">
+ <!--  <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <a class="navbar-brand">
         <div class="logo-sec-mca">
@@ -763,7 +811,7 @@
       </div>
 
     </div>
-  </nav>
+  </nav> -->
   <!-- /navbar -->
 
   <!--Active chat list + status + chat details-->
