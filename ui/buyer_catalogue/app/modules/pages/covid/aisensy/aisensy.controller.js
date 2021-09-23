@@ -25,9 +25,17 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         }
     }
 }).controller('aisensyCtrl',
-    ['$scope', '$rootScope', '$window', '$location', 'AuthService', '$anchorScroll', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService', 'commonDataShare',
-        function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $anchorScroll, $state, userService, constants, AuthService, vcRecaptchaService, permissions, commonDataShare) {
+    ['$scope', '$rootScope', '$window','$sce', '$location', 'AuthService', '$anchorScroll', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService', 'commonDataShare',
+        function ($scope, $rootScope, $window,$sce, $location, AuthService, suspenseLeadService, $anchorScroll, $state, userService, constants, AuthService, vcRecaptchaService, permissions, commonDataShare) {
             // AuthService.Clear();
+
+
+
+    $scope.isCollapsed = true;
+    $scope.$on('$routeChangeSuccess', function () {
+        $scope.isCollapsed = true;
+    });
+
 
             let gooIndex = document.getElementById('goo-index');
             let hoverEnter = index => {
@@ -45,6 +53,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
             // AIsensy controller
             $scope.getActiveUser = function (page) {
+                $scope.hideChatModule();
+                $scope.formData.historySearch = "";
                 $scope.showcontactDetail = false;
                 $scope.showhistoryDetail = false;
                 $scope.showChatModule = false;
@@ -52,8 +62,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showtemplateDetail = false;
                 $scope.isUserProfile = false;
                 $scope.showfilterDetail = false;
-                $scope.historySearch = "";
-                $scope.search = "";
+                $scope.formData.contactSearch = "";
+                // $scope.historySearch = "";
+                // $scope.search = "";
                 //$scope.showfilterDetail = false;
 
                 let param = {
@@ -178,6 +189,27 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         console.log(response)
 
                         $scope.userChatData = response.data.data;
+                        if($scope.userChatData && $scope.userChatData.payload && $scope.userChatData.payload.length > 0){
+                            for(let i in $scope.userChatData.payload){
+                                //console.log('oppppppppppppppppppp',$scope.userChatData.payload[i].content.contentType);
+                                
+                                if($scope.userChatData.payload[i].content && $scope.userChatData.payload[i].content.url){
+                                    let typesArray = $scope.userChatData.payload[i].content.contentType.split("/");
+                                    $scope.userChatData.payload[i].content.types = typesArray;
+                                   // $scope.userChatData.payload[i].content.url = $scope.userChatData.payload[i].content.url + typesArray[1];
+                                    if(typesArray[0] == 'image'){
+                                        $scope.userChatData.payload[i].content.url = $scope.userChatData.payload[i].content.url + typesArray[1]
+                                    } else {
+                                       // $scope.userChatData.payload[i].content.url = $scope.userChatData.payload[i].content.url + typesArray[1]
+                                        let emdUrl = $scope.userChatData.payload[i].content.url + typesArray[1]
+                                        $scope.userChatData.payload[i].content.url = $sce.trustAsResourceUrl(emdUrl);
+                                    }
+
+            
+                                }
+                            }
+                            
+                        }
                         console.log("1234", $scope.userChatData)
                     }).catch(function onError(response) {
                         console.log(response);
@@ -262,12 +294,14 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.resolveButton = false;
 
             $scope.interveneButton = function (data) {
+                console.log('+++++++++++++++++++++++++++',data);
                 $scope.messageBox = false;
                 $scope.resolveButton = true;
                 let param = {
                     phone: data.phone_number,
                     username: data.whatsapp_name
                 }
+                
                 AuthService.addUserToActive(param)
                     .then(function onSuccess(response) {
                         if (response.data.status) {
@@ -276,11 +310,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                             }).indexOf(data.phone_number);
                             if (localindex_index != -1) {
                                 $scope.interveneUserData.splice(localindex_index, 1);
-                                if ($scope.activeUserData.length > 0) {
-                                    $scope.activeUserData.unshift(data)
-                                } else {
-                                    $scope.activeUserData.push(data)
-                                }
+                                // if ($scope.activeUserData.length > 0) {
+                                //     $scope.activeUserData.unshift(data)
+                                // } else {
+                                //     $scope.activeUserData.push(data)
+                                // }
                             }
 
                         }
@@ -289,6 +323,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         console.log(response);
                     })
                 $scope.hideChatModule();
+                $scope.getActiveUser();
                 $scope.tab = { name: 'tabA' };
 
 
@@ -334,6 +369,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.historyDetail = function (page) {
+                
                 $scope.formData.contactSearch = "";
                 $scope.showcontactDetail = false;
                 $scope.showhistoryDetail = true;
@@ -385,6 +421,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     param.search = ""
                 }
                 // alert("template")
+                
                 console.log("111111111", $scope.templateDetailData)
                 $scope.showcontactDetail = false;
                 $scope.showhistoryDetail = false;
@@ -393,8 +430,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showgetInterveneUser = false;
                 $scope.showtemplateDetail = true;
                 $scope.showfilterDetail = false;
-
-
+                $scope.formData.historySearch = "";
+                $scope.formData.contactSearch = "";
                 AuthService.getTemplateTabData(param)
 
                     .then(function onSuccess(response) {
@@ -421,7 +458,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showfilterDetail = true;
                 $scope.isUserProfile = false;
                 $scope.showChatModule = false;
-
+                $scope.formData.historySearch = "";
+                $scope.formData.contactSearch = "";
 
                 AuthService.getFilterTabData(param)
 
@@ -613,6 +651,12 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
             $scope.changeEndDate = function () {
                 $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
+            }
+
+            $scope.filterTab = function(){
+                $scope.hideChatModule();
+                $scope.dateRangeModel = {};
+                $scope.getFilterData();
             }
 
             $scope.getFilterData = function () {
