@@ -54,6 +54,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             // AIsensy controller
             $scope.getActiveUser = function (page) {
                 $scope.hideChatModule();
+                $scope.formData.historySearch = "";
                 $scope.showcontactDetail = false;
                 $scope.showhistoryDetail = false;
                 $scope.showChatModule = false;
@@ -61,8 +62,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showtemplateDetail = false;
                 $scope.isUserProfile = false;
                 $scope.showfilterDetail = false;
-                $scope.historySearch = "";
-                $scope.search = "";
+                $scope.formData.contactSearch = "";
+                // $scope.historySearch = "";
+                // $scope.search = "";
                 //$scope.showfilterDetail = false;
 
                 let param = {
@@ -367,6 +369,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.historyDetail = function (page) {
+                
                 $scope.formData.contactSearch = "";
                 $scope.showcontactDetail = false;
                 $scope.showhistoryDetail = true;
@@ -418,6 +421,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     param.search = ""
                 }
                 // alert("template")
+                
                 console.log("111111111", $scope.templateDetailData)
                 $scope.showcontactDetail = false;
                 $scope.showhistoryDetail = false;
@@ -426,8 +430,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showgetInterveneUser = false;
                 $scope.showtemplateDetail = true;
                 $scope.showfilterDetail = false;
-
-
+                $scope.formData.historySearch = "";
+                $scope.formData.contactSearch = "";
                 AuthService.getTemplateTabData(param)
 
                     .then(function onSuccess(response) {
@@ -454,7 +458,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showfilterDetail = true;
                 $scope.isUserProfile = false;
                 $scope.showChatModule = false;
-
+                $scope.formData.historySearch = "";
+                $scope.formData.contactSearch = "";
 
                 AuthService.getFilterTabData(param)
 
