@@ -634,7 +634,7 @@
   float: right;
   background-color: #aede2e;
 } */
-  .message-1 span {
+  .message-1 .chat-time {
     color: #000000cc;
     font-size: 11.5px;
     font-weight: 600;
@@ -642,7 +642,7 @@
     margin-top: 5px;
   }
 
-  .message-2 span {
+  .message-2 .chat-time {
     color: #000000cc;
     font-size: 11.5px;
     font-weight: 600;
@@ -994,7 +994,7 @@
                                   </span>
 
                                   <br>
-                                  <span>{{chat.timestamp | date :'medium'}}</span>
+                                  <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
                                 </div>
                               </div>
                               <div style="width: 100%; float:left;">
@@ -1007,7 +1007,7 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
-                                  <span>{{chat.timestamp | date : 'medium'}}</span>
+                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}}</span>
                                 </div>
                               </div>
                             </div>
@@ -1186,7 +1186,7 @@
                                   </span>
 
                                   <br>
-                                  <span>{{chat.timestamp | date :'medium'}}</span>
+                                  <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
                                 </div>
                               </div>
                               <div style="width: 100%; float:left;">
@@ -1199,7 +1199,7 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
-                                  <span>{{chat.timestamp | date : 'medium'}}</span>
+                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}}</span>
                                 </div>
                               </div>
                             </div>
@@ -1365,7 +1365,7 @@
                                   </span>
 
                                   <br>
-                                  <span>{{chat.timestamp | date :'medium'}}</span>
+                                  <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
                                 </div>
                               </div>
                               <div style="width: 100%; float:left;">
@@ -1378,7 +1378,7 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
-                                  <span>{{chat.timestamp | date : 'medium'}}</span>
+                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}}</span>
                                 </div>
                               </div>
                             </div>
@@ -1749,7 +1749,7 @@
                       </span>
 
                       <br>
-                      <span>{{chat.timestamp | date :'medium'}}</span>
+                      <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
                     </div>
                   </div>
 
@@ -1762,7 +1762,7 @@
                         <source ng-src="{{chat.content.url}}" type="video/mp4">
                       </video>
                     </span>
-                    <span>{{chat.timestamp | date : 'medium'}}</span>
+                    <span class="chat-time"{{chat.timestamp | date : 'medium'}}</span>
                   </div>
                 </div>
 
@@ -2224,7 +2224,7 @@
                 </span>
 
                 <br>
-                <span>{{chat.timestamp | date :'medium'}}</span>
+                <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
               </div>
             </div>
 
@@ -2237,7 +2237,7 @@
                   <source ng-src="{{chat.content.url}}" type="video/mp4">
                 </video>
               </span>
-              <span>{{chat.timestamp | date : 'medium'}}</span>
+              <span class="chat-time">{{chat.timestamp | date : 'medium'}}</span>
             </div>
           </div>
 
