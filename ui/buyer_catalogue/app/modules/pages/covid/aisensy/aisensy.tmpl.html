@@ -756,7 +756,7 @@
           <a target="_blank" class="fa fa-file-text" aria-hidden="true" style="font-size: large"
             ng-click=templateDetail()>
             Template</a>
-          <a target="_blank" class="fa fa-filter" aria-hidden="true" style="font-size: large" ng-click=filterDetail()>
+          <a target="_blank" class="fa fa-filter" aria-hidden="true" style="font-size: large" ng-click=filterTab()>
             Filter</a>
 
         </div>
@@ -774,7 +774,7 @@
       <div class="top-select-option-aisensy">
         <div class="form-group">
           <div class="tab-aisensy">
-            <input id="tab-1" type="radio" name="tab" ng-click="hideChatModule()" ng-model="tab.name" value="tabA">
+            <input id="tab-1" type="radio" name="tab" ng-click="getActiveUser()" ng-model="tab.name" value="tabA">
             <label for="tab-1">Active</label>
             <input id="tab-2" type="radio" name="tab" ng-model="tab.name" value="tabB">
             <label for="tab-2" ng-click="getActionRequiredUser()">Action Required</label>
@@ -931,13 +931,27 @@
                               <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                               <div style="width: 100%; float:right;">
                                 <div class="message-1 white-space-pre-line" ng-if="chat.sender=='user'">
-                                  {{chat.content.text}}<br>
+                                  <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+                                  <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}" alt="Girl in a jacket" width="200" height="200"></span>
+                                  <span ng-if="chat.content.types[0] == 'video'">
+                                    <video width="200" height="250"  controls>
+                                      <source ng-src="{{chat.content.url}}" type="video/mp4">
+                                    </video>
+                                    </span>
+                            
+                                  <br>
                                   <span>{{chat.timestamp | date :'medium'}}</span>
                                 </div>
                               </div>
                               <div style="width: 100%; float:left;">
                                 <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
-                                  {{chat.content.text}}
+                                  <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+                                  <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}" alt="Girl in a jacket" width="200" height="200"></span>
+                                  <span ng-if="chat.content.types[0] == 'video'">
+                                    <video width="200" height="250"  controls>
+                                      <source ng-src="{{chat.content.url}}" type="video/mp4">
+                                    </video>
+                                    </span>
                                   <span>{{chat.timestamp | date : 'medium'}}</span>
                                 </div>
                               </div>
@@ -1107,13 +1121,25 @@
                               <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                               <div style="width: 100%; float:right;">
                                 <div class="message-1 white-space-pre-line" ng-if="chat.sender=='user'">
-                                  {{chat.content.text}}<br>
+                                  <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+                                  <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}" alt="Girl in a jacket" width="200" height="200"></span>
+                                  <span ng-if="chat.content.types[0] == 'video'">
+                                    <video width="200" height="250"  controls>
+                                      <source ng-src="{{chat.content.url}}" type="video/mp4">
+                                    </video>
+                                    </span><br>
                                   <span>{{chat.timestamp | date :'medium'}}</span>
                                 </div>
                               </div>
                               <div style="width: 100%; float:left;">
                                 <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
-                                  {{chat.content.text}}
+                                  <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+                                  <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}" alt="Girl in a jacket" width="200" height="200"></span>
+                                  <span ng-if="chat.content.types[0] == 'video'">
+                                    <video width="200" height="250"  controls>
+                                      <source ng-src="{{chat.content.url}}" type="video/mp4">
+                                    </video>
+                                    </span>
                                   <span>{{chat.timestamp | date : 'medium'}}</span>
                                 </div>
                               </div>
@@ -1270,13 +1296,25 @@
                               <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                               <div style="width: 100%; float:right;">
                                 <div class="message-1 white-space-pre-line" ng-if="chat.sender=='user'">
-                                  {{chat.content.text}}<br>
+                                  <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+                                  <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}" alt="Girl in a jacket" width="200" height="200"></span>
+                                  <span ng-if="chat.content.types[0] == 'video'">
+                                    <video width="200" height="250"  controls>
+                                      <source ng-src="{{chat.content.url}}" type="video/mp4">
+                                    </video>
+                                    </span><br>
                                   <span>{{chat.timestamp | date :'medium'}}</span>
                                 </div>
                               </div>
                               <div style="width: 100%; float:left;">
                                 <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
-                                  {{chat.content.text}}
+                                  <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+                                  <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}" alt="Girl in a jacket" width="200" height="200"></span>
+                                  <span ng-if="chat.content.types[0] == 'video'">
+                                    <video width="200" height="250"  controls>
+                                      <source ng-src="{{chat.content.url}}" type="video/mp4">
+                                    </video>
+                                    </span>
                                   <span>{{chat.timestamp | date : 'medium'}}</span>
                                 </div>
                               </div>
@@ -1638,13 +1676,25 @@
                   <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                   <div style="width: 100%; float:right;">
                     <div class="message-1" ng-if="chat.sender=='user'">
-                      {{chat.content.text}}<br>
+                      <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+                      <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}" alt="Girl in a jacket" width="200" height="200"></span>
+                      <span ng-if="chat.content.types[0] == 'video'">
+                        <video width="200" height="250"  controls>
+                          <source ng-src="{{chat.content.url}}" type="video/mp4">
+                        </video>
+                        </span><br>
                       <span>{{chat.timestamp | date :'medium'}}</span>
                     </div>
                   </div>
 
                   <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
-                    {{chat.content.text}}
+                    <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+                    <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}" alt="Girl in a jacket" width="200" height="200"></span>
+                    <span ng-if="chat.content.types[0] == 'video'">
+                      <video width="200" height="250"  controls>
+                        <source ng-src="{{chat.content.url}}" type="video/mp4">
+                      </video>
+                      </span>
                     <span>{{chat.timestamp | date : 'medium'}}</span>
                   </div>
                 </div>
@@ -2097,13 +2147,25 @@
             <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
             <div style="width: 100%; float:right;">
               <div class="message-1" ng-if="chat.sender=='user'">
-                {{chat.content.text}}<br>
+                <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+                <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}" alt="Girl in a jacket" width="200" height="200"></span>
+                <span ng-if="chat.content.types[0] == 'video'">
+                  <video width="200" height="250"  controls>
+                    <source ng-src="{{chat.content.url}}" type="video/mp4">
+                  </video>
+                  </span><br>
                 <span>{{chat.timestamp | date :'medium'}}</span>
               </div>
             </div>
 
             <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
-              {{chat.content.text}}
+              <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+              <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}" alt="Girl in a jacket" width="200" height="200"></span>
+              <span ng-if="chat.content.types[0] == 'video'">
+                <video width="200" height="250"  controls>
+                  <source ng-src="{{chat.content.url}}" type="video/mp4">
+                </video>
+                </span>
               <span>{{chat.timestamp | date : 'medium'}}</span>
             </div>
           </div>
