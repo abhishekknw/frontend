@@ -29,6 +29,14 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         function ($scope, $rootScope, $window, $location, AuthService, suspenseLeadService, $anchorScroll, $state, userService, constants, AuthService, vcRecaptchaService, permissions, commonDataShare) {
             // AuthService.Clear();
 
+
+
+    $scope.isCollapsed = true;
+    $scope.$on('$routeChangeSuccess', function () {
+        $scope.isCollapsed = true;
+    });
+
+
             let gooIndex = document.getElementById('goo-index');
             let hoverEnter = index => {
                 gooIndex.style.top = 100 * index + 'px';
