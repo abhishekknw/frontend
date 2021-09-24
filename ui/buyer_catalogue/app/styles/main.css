@@ -2511,20 +2511,7 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	padding: 5px;
 }
 
-/* @media screen (max-width:600px) {
-	.logo-sec-mea{
-		text-align: left;
-		margin-bottom: 2px;
-		text-transform: uppercase;
-		font-family: "Trirong", serif;
-		font-size: 12px;
-		text-shadow: 1px 1px 2px #ababab;
-		font-weight: bold;
-		letter-spacing: 4px;
-		text-transform: uppercase;
-	}
-} */
-
+ 
 
 
 
@@ -2534,14 +2521,14 @@ table.covid-hospital-table th:last-child, .covid-hospital-table td:last-child{
 	margin-bottom: 2px;
 	text-transform: uppercase;
 	font-family: "Trirong", serif;
-	font-size: 25px;
+	font-size: 15px;
 	text-shadow: 1px 1px 2px #ababab;
 	font-weight: bold;
 	letter-spacing: 4px;
 	text-transform: uppercase;
 }
 .logo-sec-mea img{
-width: 80px;
+width: 70px;
 }
 .logo-sec-mea a{
 	margin-bottom: 3px;
@@ -2580,7 +2567,7 @@ width: 80px;
 
 
 .container_mea{
-	margin-top: 80px;
+	
 	width: 100%;
     padding-right: 15px;
     padding-left: 15px;
@@ -2730,7 +2717,7 @@ position: relative;
 		margin-bottom: 2px;
 		text-transform: uppercase;
 		font-family: "Trirong", serif;
-		font-size: 12px;
+		font-size: 9px;
 		text-shadow: 1px 1px 2px #ababab;
 		font-weight: bold;
 		letter-spacing: 4px;
