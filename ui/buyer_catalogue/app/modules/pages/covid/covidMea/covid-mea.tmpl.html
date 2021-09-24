@@ -34,15 +34,19 @@
 
 <script>
   $('.navbar-collapse .dropdown-menu li').click(function () {
-    $(".navbar-collapse").collapse('hide');
+    $(".nav navbar-nav").collapse('hide');
   });
 </script>
 <style>
-  .navbar-collapse.collapse {
+  @media screen and (width:500px) {
+    .navbar-collapse.collapse {
   display: none!important;
 }
 
-.navbar-collapse.collapse.in{
+
+  }
+
+  .navbar-collapse.collapse.in{
   display:block !important;
   position: absolute;
     z-index: 100;
@@ -74,7 +78,7 @@
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div collapse="isCollapsed" class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
+      <div  class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
 
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown" uib-dropdown>

@@ -1,3 +1,33 @@
+<style>
+  .nav-tabs > li a h5 { margin: 0;}
+  .middle-section {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 80px;
+    min-height: calc(100vh - 85px);
+}
+.al-content{
+  overflow: hidden;
+  padding: 0 !important;
+}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div ng-cloak>
   <div ng-loading="loading"></div>
   <!--For displaying loading icon-->
@@ -14,15 +44,13 @@
 
 
 
-        <div class="al-main">
+       
           <div class="al-content">
             <uib-tabset class="dashboard-tab" active="selectTabIndex.value">
               <!-- <uib-tab index="0">
               </uib-tab> -->
 
-
-
-              <uib-tab id="uib-tabs-width" ng-click="getCampaigns()" index="2">
+              <uib-tab  ng-click="getCampaigns()" index="2">
                 <uib-tab-heading>
                   <h5>Master Template</h5>
                 </uib-tab-heading>
@@ -1048,7 +1076,7 @@
 
 
               <!-- <uib-tab id="uib-tabs-width"  ng-click="viewCampaignLeads()" index="1"> -->
-              <uib-tab id="uib-tabs-width" ng-click="getTransactionalTemplate()" index="1">
+              <uib-tab  ng-click="getTransactionalTemplate()" index="1">
                 <uib-tab-heading>
                 <h5>Transactional Template</h5>
                 </uib-tab-heading>
@@ -1266,7 +1294,7 @@
               </uib-tab>
 
               <!-- START : BOOKING ENGINE -->
-              <uib-tab id="uib-tabs-width" ng-click="getCampaigns()" index="3">
+              <uib-tab  ng-click="getCampaigns()" index="3">
                 <uib-tab-heading>
                   <h5>End User</h5>
                 </uib-tab-heading>
@@ -2423,7 +2451,7 @@
               </uib-tab>
 
               <!--START : Performance Metrics -->
-              <uib-tab id="uib-tabs-width" ng-click="getCampaigns()" index="4">
+              <uib-tab ng-click="getCampaigns()" index="4">
                 <uib-tab-heading>
                   <h5 style="margin-left:-10px;">Personal Info</h5>
 
@@ -5602,7 +5630,7 @@
                     </div>
                   </div>
                 </div>
-          </div>
+          
 
           </uib-tab>
           <!--END : Performance Metrics  -->

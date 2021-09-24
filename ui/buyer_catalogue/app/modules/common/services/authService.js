@@ -658,7 +658,7 @@ angular.module('Authentication')
                   });
             };
 
-
+           
             authService.getCategoryNavDetailData = function (param) {
                let url = "v0/ui/b2c-bot/mea_category_navbar/?category=" + param.category
                return $http.get(apiHost + url)

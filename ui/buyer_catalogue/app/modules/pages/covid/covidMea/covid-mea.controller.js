@@ -445,6 +445,8 @@ $scope.selectedToc=value;
                     }).catch(function onError(response) {
                         console.log(response);
                     })
+
+
             }
 
             $scope.getCategoryNav= function(value){
@@ -488,7 +490,7 @@ $scope.selectedToc=value;
             //     $scope.isCollapsed = true;
             // });
 
-            
+
 
         }]);
 
