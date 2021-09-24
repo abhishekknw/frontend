@@ -596,6 +596,21 @@
     margin-right: 7px;
   }
 
+
+  .icon-home{
+    top:10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    
+    padding: 7px;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 200ms ease-in-out;
+    float: left;
+    margin-right: 7px;
+  }
+
   .icon-back:hover {
     background-color: #ffffff47;
   }
@@ -737,6 +752,20 @@
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+        <!--<div class="icon-home-home">
+          <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg">
+
+            <path fill="#fff"
+              d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
+          </svg>
+        </div>-->
+        <div class="icon-home">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+          <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+        </svg>
+        </div>
+      </a>
         <button type="button" class="navbar-toggle" ng-click="isCollapsed = !isCollapsed">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
@@ -890,7 +919,7 @@
                             </tr>
                           </tbody>
                         </table>
-                        <dir-pagination-controls max-size="5" on-page-change="liveChatPageChanged(newPageNumber)"
+                        <dir-pagination-controls max-size="4" on-page-change="liveChatPageChanged(newPageNumber)"
                           boundary-links="true">
                         </dir-pagination-controls>
                       </div>
@@ -1104,7 +1133,7 @@
                             </tr>
                           </tbody>
                         </table>
-                        <dir-pagination-controls max-size="5" on-page-change="actionRequiredPageChanged(newPageNumber)"
+                        <dir-pagination-controls max-size="4" on-page-change="actionRequiredPageChanged(newPageNumber)"
                           boundary-links="true">
                         </dir-pagination-controls>
                       </div>
@@ -1295,7 +1324,7 @@
                             </tr>
                           </tbody>
                         </table>
-                        <dir-pagination-controls max-size="5" on-page-change="interveneDataPageChanged(newPageNumber)"
+                        <dir-pagination-controls max-size="4" on-page-change="interveneDataPageChanged(newPageNumber)"
                           boundary-links="true">
                         </dir-pagination-controls>
                       </div>
@@ -1674,7 +1703,7 @@
                 </tr>
               </tbody>
             </table>
-            <dir-pagination-controls max-size="5" on-page-change="historyPageChanged(newPageNumber)"
+            <dir-pagination-controls max-size="4" on-page-change="historyPageChanged(newPageNumber)"
               boundary-links="true">
             </dir-pagination-controls>
           </div>
@@ -1869,13 +1898,13 @@
                                 <table class="table table-striped">
                                   <tbody>
                                     <tr ng-if="templateInStatusData.length != 0">
-                                      <th class="col-md-3">Template Name</th>
+                                      <th class="col-md-3">Template ID</th>
                                       <th class="col-md-3">Send At</th>
                                       <th class="col-md-3">Response Message</th>
                                       <th class="col-md-3">Response At</th>
                                     </tr>
                                     <tr ng-repeat="tmp in templateInStatusData">
-                                      <td class="col-md-3" style="text-align: center;">{{tmp.template_name}}</td>
+                                      <td class="col-md-3" style="text-align: center;">{{tmp.template_id}}</td>
                                       <td class="col-md-3" style="text-align: center;">{{tmp.template_send_timestamp}}
                                       </td>
                                       <td class="col-md-3" style="text-align: center;">{{tmp.template_responce}}</td>
@@ -1983,12 +2012,11 @@
           </tr>
         </tbody>
       </table>
-
+      <dir-pagination-controls max-size="4" on-page-change="pageChanged(newPageNumber)" boundary-links="true">
+      </dir-pagination-controls>
       <!-- <div data-pagination="" data-num-pages="numOfPages()" data-current-page="curPage" data-max-size="maxSize"
         data-boundary-links="true"> -->
     </div>
-    <dir-pagination-controls max-size="5" on-page-change="pageChanged(newPageNumber)" boundary-links="true">
-    </dir-pagination-controls>
   </div>
   <!--/Contact Tab-->
 
@@ -2386,7 +2414,7 @@
                           <table class="table table-striped">
                             <tbody>
                               <tr ng-if="templateInStatusData.length != 0">
-                                <th class="col-md-3">Template Name</th>
+                                <th class="col-md-3">Template ID</th>
                                 <th class="col-md-3">Send At</th>
                                 <th class="col-md-3">Response Message</th>
                                 <th class="col-md-3">Response At</th>
