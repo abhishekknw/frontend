@@ -890,7 +890,7 @@
                             </tr>
                           </tbody>
                         </table>
-                        <dir-pagination-controls max-size="10" on-page-change="liveChatPageChanged(newPageNumber)"
+                        <dir-pagination-controls max-size="5" on-page-change="liveChatPageChanged(newPageNumber)"
                           boundary-links="true">
                         </dir-pagination-controls>
                       </div>
@@ -1104,7 +1104,7 @@
                             </tr>
                           </tbody>
                         </table>
-                        <dir-pagination-controls max-size="10" on-page-change="actionRequiredPageChanged(newPageNumber)"
+                        <dir-pagination-controls max-size="5" on-page-change="actionRequiredPageChanged(newPageNumber)"
                           boundary-links="true">
                         </dir-pagination-controls>
                       </div>
@@ -1295,7 +1295,7 @@
                             </tr>
                           </tbody>
                         </table>
-                        <dir-pagination-controls max-size="10" on-page-change="interveneDataPageChanged(newPageNumber)"
+                        <dir-pagination-controls max-size="5" on-page-change="interveneDataPageChanged(newPageNumber)"
                           boundary-links="true">
                         </dir-pagination-controls>
                       </div>
@@ -1674,7 +1674,7 @@
                 </tr>
               </tbody>
             </table>
-            <dir-pagination-controls max-size="10" on-page-change="historyPageChanged(newPageNumber)"
+            <dir-pagination-controls max-size="5" on-page-change="historyPageChanged(newPageNumber)"
               boundary-links="true">
             </dir-pagination-controls>
           </div>
@@ -1875,7 +1875,7 @@
                                       <th class="col-md-3">Response At</th>
                                     </tr>
                                     <tr ng-repeat="tmp in templateInStatusData">
-                                      <td class="col-md-3" style="text-align: center;">{{tmp.template_id}}</td>
+                                      <td class="col-md-3" style="text-align: center;">{{tmp.template_name}}</td>
                                       <td class="col-md-3" style="text-align: center;">{{tmp.template_send_timestamp}}
                                       </td>
                                       <td class="col-md-3" style="text-align: center;">{{tmp.template_responce}}</td>
@@ -1983,7 +1983,7 @@
           </tr>
         </tbody>
       </table>
-      <dir-pagination-controls max-size="10" on-page-change="pageChanged(newPageNumber)" boundary-links="true">
+      <dir-pagination-controls max-size="5" on-page-change="pageChanged(newPageNumber)" boundary-links="true">
       </dir-pagination-controls>
       <!-- <div data-pagination="" data-num-pages="numOfPages()" data-current-page="curPage" data-max-size="maxSize"
         data-boundary-links="true"> -->
