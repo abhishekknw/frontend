@@ -596,6 +596,19 @@
     margin-right: 7px;
   }
 
+  .icon-back-home{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: black;
+    padding: 7px;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 200ms ease-in-out;
+    float: left;
+    margin-right: 7px;
+  }
+
   .icon-back:hover {
     background-color: #ffffff47;
   }
@@ -737,6 +750,15 @@
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+        <div class="icon-back-home">
+          <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg">
+
+            <path fill="#fff"
+              d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
+          </svg>
+        </div>
+      </a>
         <button type="button" class="navbar-toggle" ng-click="isCollapsed = !isCollapsed">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
@@ -890,7 +912,7 @@
                             </tr>
                           </tbody>
                         </table>
-                        <dir-pagination-controls max-size="5" on-page-change="liveChatPageChanged(newPageNumber)"
+                        <dir-pagination-controls max-size="4" on-page-change="liveChatPageChanged(newPageNumber)"
                           boundary-links="true">
                         </dir-pagination-controls>
                       </div>
@@ -1104,7 +1126,7 @@
                             </tr>
                           </tbody>
                         </table>
-                        <dir-pagination-controls max-size="5" on-page-change="actionRequiredPageChanged(newPageNumber)"
+                        <dir-pagination-controls max-size="4" on-page-change="actionRequiredPageChanged(newPageNumber)"
                           boundary-links="true">
                         </dir-pagination-controls>
                       </div>
@@ -1295,7 +1317,7 @@
                             </tr>
                           </tbody>
                         </table>
-                        <dir-pagination-controls max-size="5" on-page-change="interveneDataPageChanged(newPageNumber)"
+                        <dir-pagination-controls max-size="4" on-page-change="interveneDataPageChanged(newPageNumber)"
                           boundary-links="true">
                         </dir-pagination-controls>
                       </div>
@@ -1674,7 +1696,7 @@
                 </tr>
               </tbody>
             </table>
-            <dir-pagination-controls max-size="5" on-page-change="historyPageChanged(newPageNumber)"
+            <dir-pagination-controls max-size="4" on-page-change="historyPageChanged(newPageNumber)"
               boundary-links="true">
             </dir-pagination-controls>
           </div>
@@ -1983,7 +2005,7 @@
           </tr>
         </tbody>
       </table>
-      <dir-pagination-controls max-size="5" on-page-change="pageChanged(newPageNumber)" boundary-links="true">
+      <dir-pagination-controls max-size="4" on-page-change="pageChanged(newPageNumber)" boundary-links="true">
       </dir-pagination-controls>
       <!-- <div data-pagination="" data-num-pages="numOfPages()" data-current-page="curPage" data-max-size="maxSize"
         data-boundary-links="true"> -->
