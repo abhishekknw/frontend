@@ -462,28 +462,33 @@ $scope.selectedToc=value;
                     })
             }
 
-            (function() {
-                'use strict';
+            // (function() {
+            //     'use strict';
               
-                angular
-                  .module('ui.bootstrap.demo', ['ngAnimate', 'ui.bootstrap']);
+            //     angular
+            //       .module('ui.bootstrap.demo', ['ngAnimate', 'ui.bootstrap']);
               
-                angular
-                  .module('ui.bootstrap.demo')
-                  .controller('DropdownController', DropdownController);
+            //     angular
+            //       .module('ui.bootstrap.demo')
+            //       .controller('DropdownController', DropdownController);
               
-                function DropdownController() {
-                  var vm = this;
+            //     function DropdownController() {
+            //       var vm = this;
               
-                  vm.isCollapsed = true;
-                  vm.status = {
-                    isopen: false
-                  }
-                }
+            //       vm.isCollapsed = true;
+            //       vm.status = {
+            //         isopen: false
+            //       }
+            //     }
               
-              }());
+            //   }());
 
+            // $scope.isCollapsed = true;
+            // $scope.$on('$routeChangeSuccess', function () {
+            //     $scope.isCollapsed = true;
+            // });
 
+            
 
         }]);
 
