@@ -445,6 +445,8 @@ $scope.selectedToc=value;
                     }).catch(function onError(response) {
                         console.log(response);
                     })
+
+
             }
 
             $scope.getCategoryNav= function(value){
@@ -462,7 +464,31 @@ $scope.selectedToc=value;
                     })
             }
 
+            // (function() {
+            //     'use strict';
+              
+            //     angular
+            //       .module('ui.bootstrap.demo', ['ngAnimate', 'ui.bootstrap']);
+              
+            //     angular
+            //       .module('ui.bootstrap.demo')
+            //       .controller('DropdownController', DropdownController);
+              
+            //     function DropdownController() {
+            //       var vm = this;
+              
+            //       vm.isCollapsed = true;
+            //       vm.status = {
+            //         isopen: false
+            //       }
+            //     }
+              
+            //   }());
 
+            // $scope.isCollapsed = true;
+            // $scope.$on('$routeChangeSuccess', function () {
+            //     $scope.isCollapsed = true;
+            // });
 
 
 

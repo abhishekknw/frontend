@@ -13,7 +13,8 @@ angular
       mapOrGridViewButton     : 'can_view_map_or_gridview_button_on_homepage',
       uploadProposalButton    : 'can_upload_proposal_from_homepage',
       viewImagesButton        : 'can_view_images_of_campaigns_from_homepage',
-      intervene : 'can_view_intervene'
+      intervene : 'can_view_intervene',
+      templateDashboard : 'can_view_template_dashboard'
     },
 
     proposalSummaryPage : {
@@ -97,7 +98,8 @@ angular
       dashboardPage            : 'dashboard',
       enter_leads_from_application_access : 'enter_leads_from_application_access',
       editProposalDetailsPage     : 'editProposalDetailsPage',
-      intervene : 'can_view_intervene'
+      intervene : 'can_view_intervene',
+      templateDashboard : 'can_view_template_dashboard'
     },
 
     dashboard : {
