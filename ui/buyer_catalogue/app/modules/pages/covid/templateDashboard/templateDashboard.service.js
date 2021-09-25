@@ -21,4 +21,6 @@ angular.module('catalogueApp')
 
       return DashboardService;
 
+
+
     }]);

@@ -6632,6 +6632,10 @@
           })
           
      }
+     $scope.transactionalTemplateDropdown = {}
+     $scope.setBotType = function(){
+       console.log($scope.transactionalTemplateDropdown.bot)
+     }
      // Template Dashboard end
 
     })
