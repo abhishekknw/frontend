@@ -164,15 +164,36 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
             }
 
+            $scope.nextPageChat = function(phone){
+                $scope.userDetail(phone,$scope.pageCount+1);
 
-            $scope.userDetail = function (value) {
+            }
 
-                console.log("1232", value)
+            $scope.prvPageChat = function(phone){
+                $scope.userDetail(phone,$scope.pageCount-1);
+
+            }
+
+
+            $scope.userDetail = function (value,page) {
                 $scope.showChatModule = true;
+                // let param = {
+                //     phoneNumber: value,
+                //     nextPage: 1
+                // }
+                
                 let param = {
+                    nextPage: 1,
                     phoneNumber: value,
-                    nextPage: 1
                 }
+                if (page) {
+                    param.nextPage = page;
+                } else {
+                    $scope.totalCount = 0;
+                }
+
+                $scope.pageCount = param.nextPage;
+                $scope.disableNextPagebutton = false;
                 AuthService.getAllUserDetailData(param)
 
                     .then(function onSuccess(response) {
@@ -184,11 +205,18 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         console.log(response);
                     })
                 AuthService.getAllUserChatData(param)
-
                     .then(function onSuccess(response) {
                         console.log(response)
-
                         $scope.userChatData = response.data.data;
+                        $scope.totalCount = $scope.userChatData.total_count;
+                         if($scope.totalCount > 20){
+                           let count = $scope.totalCount/20;
+                           console.log('AAAAAAAAAAAAAAAAAAa',);
+                           if($scope.pageCount < count ){
+                               $scope.disableNextPagebutton = true;
+                           }
+                         }
+
                         if($scope.userChatData && $scope.userChatData.payload && $scope.userChatData.payload.length > 0){
                             for(let i in $scope.userChatData.payload){
                                 //console.log('oppppppppppppppppppp',$scope.userChatData.payload[i].content.contentType);
