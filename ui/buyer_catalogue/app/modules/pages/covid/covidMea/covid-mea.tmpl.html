@@ -4,7 +4,7 @@
 <link href="css/smallscreen.css" rel="stylesheet" media="screen">
 <style>
   .icon-back {
-   
+
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -13,7 +13,7 @@
     position: relative;
     overflow: hidden;
     transition: background-color 200ms ease-in-out;
-    
+
   }
 
   .icon-back:hover {
@@ -39,19 +39,19 @@
 <style>
   @media screen and (width:500px) {
     .navbar-collapse.collapse {
-  display: none!important;
-}
+      display: none !important;
+    }
 
 
   }
 
-  .navbar-collapse.collapse.in{
-  display:block !important;
-  position: absolute;
+  .navbar-collapse.collapse.in {
+    display: block !important;
+    position: absolute;
     z-index: 100;
     background: #EDEDED;
     width: 100%;
-}
+  }
 </style>
 
 
@@ -77,11 +77,11 @@
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div  class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
+      <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
 
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown" uib-dropdown>
-            <a class="dropdown-toggle" uib-dropdown-toggle data-toggle="dropdown" role="button" 
+            <a class="dropdown-toggle" uib-dropdown-toggle data-toggle="dropdown" role="button"
               aria-expanded="false">Type of Customer <span class="caret"></span></a>
             <ul class="dropdown-menu" uib-dropdown-menu>
               <li ng-repeat="tnav in tocNavDataArray " value="{{tnav}}" ng-click="getTocNav(tnav)"><a>{{tnav}}
@@ -105,79 +105,82 @@
     <!-- /.container-fluid -->
   </nav>
   <div class="container" ng-if="categoryNavSelected">
-    <div class="icon-back">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
-        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
-      </svg>
-
-    </div>
     <div class="container_mea">
-
       <div class="page-inner">
         <div class="top-select-option">
           <h3>Category Section</h3>
+          <div class="row">
+
+            <div ng-repeat="ncat in categoryNavDetailData" class=" col-md-12 col-xs-12">
+              <div ng-repeat="(key,data) in ncat">
+                <span ng-click="">{{key}}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="container" ng-if="tocNavSelected">
-    <div class="icon-back">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16" ng-click="getToc()">
-        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
-      </svg>
-
+</div>
+<div class="container" ng-if="tocNavSelected">
+  <div class="container_mea">
+    <div class="page-inner">
+      <div class="top-select-option">
+        <h3>{{tocNavSelected}}</h3>
+        <div class="row">
+          <div ng-repeat="ntoc in tocNavDetailData" class=" col-md-12 col-xs-12">
+            <div ng-repeat="(key,data) in ntoc">
+              <span ng-click="">{{key}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
+
+<!--end navigation -->
+<div ng-if="!selectedTocHeader && !categoryNavSelected && !tocNavSelected">
+
+  <div class="container">
     <div class="container_mea">
       <div class="page-inner">
         <div class="top-select-option">
-          <h3>Type of Customer Section</h3>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!--end navigation -->
-  <div ng-if="!selectedTocHeader && !categoryNavSelected && !tocNavSelected">
-
-    <div class="container">
-      <div class="container_mea">
-        <div class="page-inner">
-          <div class="top-select-option">
-            <div class="second dropdown">
-              <div class="row">
-                <div class="col-xs-6">
-                  <div class="form-group">
-                    <!--category dropdown-->
-                    <select class="form-control" ng-change="getCategory(selectedToc)" name="Type_of_Customer"
-                      id="toc_mea" ng-model="selectedToc">
-                      <option value="" disabled>
-                        Type of Customer
-                      </option>
-                      <option ng-repeat="toc in typeofCustomer track by $index" value="{{toc.type_of_customer}}"
-                        style="text-transform: capitalize;">
-                        {{toc.type_of_customer}}
-                      </option>
-                    </select>
-                  </div>
+          <div class="second dropdown">
+            <div class="row">
+              <div class="col-xs-6">
+                <div class="form-group">
+                  <!--category dropdown-->
+                  <select class="form-control" ng-change="getCategory(selectedToc)" name="Type_of_Customer" id="toc_mea"
+                    ng-model="selectedToc">
+                    <option value="" disabled>
+                      Type of Customer
+                    </option>
+                    <option ng-repeat="toc in typeofCustomer track by $index" value="{{toc.type_of_customer}}"
+                      style="text-transform: capitalize;">
+                      {{toc.type_of_customer}}
+                    </option>
+                  </select>
                 </div>
+              </div>
 
-                <div class="col-xs-6">
-                  <div class="form-group">
-                    <!--category dropdown-->
-                    <select class="form-control" ng-change="getSubCategory(selectedcategory)" name="Category"
-                      id="category_mea" ng-model="selectedcategory">
-                      <option value="" disabled>
-                        Category
-                      </option>
-                      <option ng-repeat="category in categoryArray track by $index" value="{{category.category_name}}"
-                        style="text-transform: capitalize;">
-                        {{category.category_name}}
-                      </option>
-                    </select>
-                  </div>
+              <div class="col-xs-6">
+                <div class="form-group">
+                  <!--category dropdown-->
+                  <select class="form-control" ng-change="getSubCategory(selectedcategory)" name="Category"
+                    id="category_mea" ng-model="selectedcategory">
+                    <option value="" disabled>
+                      Category
+                    </option>
+                    <option ng-repeat="category in categoryArray track by $index" value="{{category.category_name}}"
+                      style="text-transform: capitalize;">
+                      {{category.category_name}}
+                    </option>
+                  </select>
                 </div>
+              </div>
 
-                <!-- <div class="col-xs-4">
+              <!-- <div class="col-xs-4">
                   <div class="form-group">
                  
                     <select class="form-control" ng-change="getSubSubCategory(selectedsubcategory)" name="SubCategory"
@@ -192,61 +195,61 @@
                     </select>
                   </div>
                 </div> -->
-              </div>
             </div>
           </div>
         </div>
-        <!--new thumbnail-->
-        <!--videoes-->
+      </div>
+      <!--new thumbnail-->
+      <!--videoes-->
+      <div>
         <div>
-          <div>
-            <h4 style=" color: #172d86">
-              <center><b>Total {{contentArray.length}} Contents for {{selectedToc}} {{selectedcategory}}</b></center>
-            </h4>
-          </div>
+          <h4 style=" color: #172d86">
+            <center><b>Total {{contentArray.length}} Contents for {{selectedToc}} {{selectedcategory}}</b></center>
+          </h4>
+        </div>
 
-          <div class="container-mea">
-            <div class="row">
-              <!--vdo1.1-->
-              <div class="col-md-6 col-xs-6" ng-repeat="content in contentArray ">
-                <div class="card-block">
-                  <div class="embed-responsive embed-responsive-16by9" ng-show="content.contenttype =='youtubelink'">
-                    <iframe ng-src={{content.youtubeurl}} allowfullscreen>
-                    </iframe>
-                  </div>
-                  <div class="embed-responsive embed-responsive-16by9 logo-sec-mea-article"
-                    ng-show="content.contenttype =='article'">
-                    <a href={{content.embededurl}} target="_blank"><img src="images/machadalo-logo.png"></a>
-                  </div>
+        <div class="container-mea">
+          <div class="row">
+            <!--vdo1.1-->
+            <div class="col-md-6 col-xs-6" ng-repeat="content in contentArray ">
+              <div class="card-block">
+                <div class="embed-responsive embed-responsive-16by9" ng-show="content.contenttype =='youtubelink'">
+                  <iframe ng-src={{content.youtubeurl}} allowfullscreen>
+                  </iframe>
                 </div>
-                <div>
-                  <h6 class="text-center font-up font-bold indigo-text py-2 mb-3">
-                    <strong ng-if="content.phrase_theme != ''">Theme: {{content.phrase_theme}}</strong>
-                    <strong ng-if="content.phrase_theme == ''">Theme: {{content.video_theme}}</strong>
-                    <br>
-                    <strong ng-if="content.Start_Time != '' && content.End_Time !=''"> ST: {{content.Start_Time}} ET:
-                      {{content.End_Time}}</strong>
-                  </h6>
-
-                  <center>
-                    <div class="star-rating">
-                      <input type="radio" id="5-stars" name="rating" value="5" />
-                      <label for="5-stars" class="star">&#9733;</label>
-                      <input type="radio" id="4-stars" name="rating" value="4" />
-                      <label for="4-stars" class="star">&#9733;</label>
-                      <input type="radio" id="3-stars" name="rating" value="3" />
-                      <label for="3-stars" class="star">&#9733;</label>
-                      <input type="radio" id="2-stars" name="rating" value="2" />
-                      <label for="2-stars" class="star">&#9733;</label>
-                      <input type="radio" id="1-star" name="rating" value="1" />
-                      <label for="1-star" class="star">&#9733;</label>
-                    </div>
-                  </center>
+                <div class="embed-responsive embed-responsive-16by9 logo-sec-mea-article"
+                  ng-show="content.contenttype =='article'">
+                  <a href={{content.embededurl}} target="_blank"><img src="images/machadalo-logo.png"></a>
                 </div>
-
               </div>
-              <!--vdo1.2-->
-              <!-- <div class="col-md-6 col-xs-6">
+              <div>
+                <h6 class="text-center font-up font-bold indigo-text py-2 mb-3">
+                  <strong ng-if="content.phrase_theme != ''">Theme: {{content.phrase_theme}}</strong>
+                  <strong ng-if="content.phrase_theme == ''">Theme: {{content.video_theme}}</strong>
+                  <br>
+                  <strong ng-if="content.Start_Time != '' && content.End_Time !=''"> ST: {{content.Start_Time}} ET:
+                    {{content.End_Time}}</strong>
+                </h6>
+
+                <center>
+                  <div class="star-rating">
+                    <input type="radio" id="5-stars" name="rating" value="5" />
+                    <label for="5-stars" class="star">&#9733;</label>
+                    <input type="radio" id="4-stars" name="rating" value="4" />
+                    <label for="4-stars" class="star">&#9733;</label>
+                    <input type="radio" id="3-stars" name="rating" value="3" />
+                    <label for="3-stars" class="star">&#9733;</label>
+                    <input type="radio" id="2-stars" name="rating" value="2" />
+                    <label for="2-stars" class="star">&#9733;</label>
+                    <input type="radio" id="1-star" name="rating" value="1" />
+                    <label for="1-star" class="star">&#9733;</label>
+                  </div>
+                </center>
+              </div>
+
+            </div>
+            <!--vdo1.2-->
+            <!-- <div class="col-md-6 col-xs-6">
               <div class="card-block">
                 <div class="embed-responsive embed-responsive-16by9">
                   <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/137857207"
@@ -258,12 +261,12 @@
               </div>
             </div> -->
 
-            </div>
-            <!--end of first line vdo-->
+          </div>
+          <!--end of first line vdo-->
 
-            <hr class="my-4">
+          <hr class="my-4">
 
-            <!-- <div class="row">
+          <!-- <div class="row">
 
            
             <div class="col-md-6 col-xs-6">
@@ -291,14 +294,14 @@
             </div>
 
           </div> -->
-            <!--end of second line vdo-->
+          <!--end of second line vdo-->
 
-          </div>
         </div>
-        <!--End videoes-->
-        <!-- ======= Advertisement Section ======= -->
+      </div>
+      <!--End videoes-->
+      <!-- ======= Advertisement Section ======= -->
 
-        <!-- <section id="supporters" class="section-with-bg">
+      <!-- <section id="supporters" class="section-with-bg">
           <div class="container" data-aos="fade-up">
             <div class="section-header">
               <h2>Sponsors</h2>
@@ -330,16 +333,16 @@
           </div>
 
         </section>End Sponsors Section -->
-      </div>
-      <div class="container">
-        <div class="container_mea">
-          <div class="page-inner">
-            <div ng-if="selectedTocHeader">
-              <h3>{{selectedTocHeader}}</h3>
-            </div>
+    </div>
+    <div class="container">
+      <div class="container_mea">
+        <div class="page-inner">
+          <div ng-if="selectedTocHeader">
+            <h3>{{selectedTocHeader}}</h3>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 </div>
