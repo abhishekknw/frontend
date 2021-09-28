@@ -6134,11 +6134,30 @@ background: white;
                 <table class="table table-bordered table-align">
                   <tbody>
                     <div class="">
-                      Select Form :
-                      <select class="form-control" ng-model="emailCampaignLeadsModel.leads_form_id">
+                      Select Attribute :
+                      <!-- <select class="form-control" ng-model="emailCampaignLeadsModel.leads_form_id">
                         <option ng-repeat="form_name in formDetails" value="{{form_name.leads_form_id}}">
                           {{form_name.leads_form_name}}</option>
-                      </select>
+                      </select> -->
+                      <div class="top-select-option-mca">
+                          <div class="row">
+                            <div class="col-xs-12">
+                              <div class="form-group">
+                                <!--category dropdown-->
+                                <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
+                                  <option value="" disabled> Select Attribute</option>
+                                  <option>Updated At</option>
+                                  <option>Created At</option>
+                                     
+                                     
+                                  
+                                </select>
+                              </div>
+                            </div>
+                  
+                            
+                       
+                      </div>
                     </div>
                     <br />
                     <tr>
@@ -6154,12 +6173,12 @@ background: white;
                             ng-model="emailCampaignLeadsModel.end_date" required>
                         </p>
                       </td>
-                      <td>
+                      <td style="text-align: center; padding-top: 20px;">
                         <p><button type="button" name="button" class="btn btn-danger" ng-click="sendMeEmail()"
                             ng-disabled="!emailCampaignLeadsModel.leads_form_id" ng-if="submitLeadType">Email</button>
                           <button type="button" name="button" class="btn btn-danger" ng-click="downloadSheet()"
                             ng-disabled="!emailCampaignLeadsModel.leads_form_id"
-                            ng-if="!submitLeadType">Download</button>
+                            ng-if="!submitLeadType" >Download</button>
                       </td>
                     </tr>
                   </tbody>
