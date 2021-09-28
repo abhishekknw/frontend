@@ -1040,7 +1040,16 @@
                                 </div>
                               </div>
                             </div>
+                            
                           </div>
+                          <button ng-disabled="pageCount == 1" type="button" class="btn btn-success" 
+                          ng-click="prvPageChat(userChatData.phone_number)">
+                          prv
+                        </button>
+                          <button ng-disabled="!disableNextPagebutton" type="button" class="btn btn-success" 
+                            ng-click="nextPageChat(userChatData.phone_number)">
+                            Next
+                          </button>
 
                           <div ng-if="messageBox">
                             <div class="input">
@@ -1234,6 +1243,14 @@
                             </div>
 
                           </div>
+                          <button ng-disabled="pageCount == 1" type="button" class="btn btn-success" 
+                          ng-click="prvPageChat(userChatData.phone_number)">
+                          prv
+                        </button>
+                          <button ng-disabled="!disableNextPagebutton" type="button" class="btn btn-success" 
+                            ng-click="nextPageChat(userChatData.phone_number)">
+                            Next
+                          </button>
                           <div ng-if="messageBox">
                             <div class="input">
                               <input type="text" ng-model="message.actionRequiredMessage" placeholder="Write message" />
@@ -1413,6 +1430,14 @@
                             </div>
 
                           </div>
+                          <button ng-disabled="pageCount == 1" type="button" class="btn btn-success" 
+                          ng-click="prvPageChat(userChatData.phone_number)">
+                          prv
+                        </button>
+                          <button ng-disabled="!disableNextPagebutton" type="button" class="btn btn-success" 
+                            ng-click="nextPageChat(userChatData.phone_number)">
+                            Next
+                          </button>
                           <div ng-if="messageBox">
                             <div class="input">
                               <input type="text" ng-model="message.interveneMessage" placeholder="Write message" />
@@ -1796,6 +1821,14 @@
                 </div>
 
               </div>
+              <button ng-disabled="pageCount == 1" type="button" class="btn btn-success" 
+              ng-click="prvPageChat(userChatData.phone_number)">
+              prv
+            </button>
+              <button ng-disabled="!disableNextPagebutton" type="button" class="btn btn-success" 
+                ng-click="nextPageChat(userChatData.phone_number)">
+                Next
+              </button>
               <div ng-if="messageBox">
                 <div class="input">
                   <input type="text" ng-model="message.historyMessage" placeholder="Write message" />
@@ -2273,6 +2306,14 @@
           </div>
 
         </div>
+        <button ng-disabled="pageCount == 1" type="button" class="btn btn-success" 
+        ng-click="prvPageChat(userChatData.phone_number)">
+        prv
+      </button>
+        <button ng-disabled="disableNextPagebutton" type="button" class="btn btn-success" 
+          ng-click="nextPageChat(userChatData.phone_number)">
+          Next
+        </button>
         <div ng-if="messageBox">
           <div class="input">
             <input type="text" placeholder="Write message" />
