@@ -19,7 +19,33 @@
     margin-bottom: 10px !important;
   }
 
-  
+  .table-responsive{
+    height: 500px;
+  }
+ /* .table.temp-table th{
+position: sticky;
+top:0;
+
+  } */
+ .table-responsive th{
+position: sticky;
+top:0;
+z-index: 100;
+  } 
+
+  .table-responsive thead th:nth-child(2){
+    position: sticky;
+left:0;
+z-index: 101;
+background: #8e1921;
+  }
+
+ .table-responsive tbody td:nth-child(2){
+    position: sticky;
+left:0;
+z-index: 100;
+background: white;
+  }
 </style>
 
 
@@ -1078,7 +1104,7 @@
               </uib-tab-heading>
               <div class="container-fluid">
                 <div class="panel panel-default">
-                  <div class="col-md-12 " ng-if="viewTemplateSummaryTable" style="text-align:right;margin-bottom:10px;">
+                  <div class="col-md-12 " ng-if="viewTemplateSummaryTable" style="text-align:right;margin-bottom:10px; ">
                     <button class="btn btn-danger" ng-click="backToTemplateData()">Back To Template</button>
                   </div>
                   <!-- <div class="col-md-6">
@@ -1100,7 +1126,7 @@
                           </div>
                         </div> -->
 
-                  <div class="col-md-12">
+                  <div class="col-md-12 " style="padding-top: 15px;">
                     <h4 class="panel-title">
                       <select class="form-control" name="botType" ng-model="transactionalTemplateDropdown.bot"
                         ng-change="setBotType()">
@@ -1113,7 +1139,7 @@
                     </h4>
                   </div>
 
-                  <div class="col-md-6" ng-if="transactionalTemplateDropdown.bot=='mca'" style="margin-top: 10px;">
+                  <div class="col-md-6 col-xs-6" ng-if="transactionalTemplateDropdown.bot=='mca'" style="margin-top: 10px;">
                     <h4 class="panel-title">
                       <select class="form-control" name="supplierType" ng-model="code"
                         ng-change="setSupplierType('viewLeads')">
@@ -1124,7 +1150,7 @@
                   </div>
                   <div id="content2">
 
-                    <div class="col-md-6" ng-if="transactionalTemplateDropdown.bot=='mca'" style="margin-top: -10px;">
+                    <div class="col-md-6 col-xs-6" ng-if="transactionalTemplateDropdown.bot=='mca'" style="margin-top: -10px;">
 
                       <div class="form-group pincode">
                         <h4 class="panel-title">
@@ -1148,7 +1174,7 @@
 
 
 
-                  <div class="col-md-6" ng-if="transactionalTemplateDropdown.bot=='mea'" style="margin-top: 10px;">
+                  <div class="col-md-6 col-xs-6" ng-if="transactionalTemplateDropdown.bot=='mea'" style="margin-top: 10px;">
                     <h4 class="panel-title">
                       <select class="form-control" name="supplierType" ng-model="code"
                         ng-change="setSupplierType('viewLeads')">
@@ -1158,7 +1184,7 @@
                     </h4>
                   </div>
 
-                  <div class="col-md-6" ng-if="transactionalTemplateDropdown.bot=='mea'" style="margin-top: 10px;">
+                  <div class="col-md-6 col-xs-6" ng-if="transactionalTemplateDropdown.bot=='mea'" style="margin-top: 10px;">
                     <h4 class="panel-title">
                       <select class="form-control" name="supplierType" ng-model="code"
                         ng-change="setSupplierType('viewLeads')">
@@ -1171,7 +1197,7 @@
                   <!-- <div class="col-md-6" style="margin-top: 10px;"> -->
                   <div class="col-md-12" print-remove style="margin-top: 10px;">
                     <!-- <label for="" style="color:#000000;">Select Date Range</label> -->
-                    <div class="col-md-6">
+                    <div class="col-md-6 " style=" margin-top: 10px;">
                       <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
                         placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates"
                         is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true"
@@ -1180,7 +1206,7 @@
                         <i class="glyphicon glyphicon-calendar"></i>
                       </button>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 " style=" margin-top: 10px;">
                       <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
                         placeholder="DD/MM/YYYY" ng-change="changeEndDate()" ng-model="dateRangeModel.end_dates"
                         is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"
@@ -1197,221 +1223,235 @@
 
 
                 </div><br /><br />
-                <div  ng-if="showCampaigns">
+                <div ng-if="showCampaigns">
 
                   <input type="text" class="form-control " ng-model="searchQuery" placeholder="search">
                   <div ng-if="!viewTemplateSummaryTable">
                     <br>
+                    <div class="table-responsive">
+                      <table class="table temp-table">
 
-                    <table class="table temp-table">
+                        <thead>
+                          <tr>
+                            <th style="padding:10px">Index</th>
+                            <th style="padding:10px">Template Name</th>
+                            <th style="padding:10px" ng-click="Sort('start_date')">No. of Template Days Send</th>
+                            <th style="padding:10px">Total user count send</th>
 
-                      <thead >
-                        <tr>
-                          <th style="padding:10px">Index</th>
-                          <th  style="padding:10px">Template Name</th>
-                          <th  style="padding:10px" ng-click="Sort('start_date')">No. of Template Days Send</th>
-                          <th  style="padding:10px">Total user count send</th>
+                            <th style="padding:10px">Positive Response</th>
+                            <th style="padding:10px"> Negative Response</th>
+                            <th style="padding:10px">Neutral Response</th>
+                            <th style="padding:10px">View Template Summary</th>
+                            <th style="padding:10px">Download Summary</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td style="text-align: center;">1</td>
+                            <td style="text-align: center;">Elevator Template</td>
+                            <td style="text-align: center;">5</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()"
+                                class="btn btn-danger">View </button>
+                            </td>
+                            <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
+                                data-target="#sendEmailModal" data-toggle="modal" type="button"
+                                class="btn btn-danger">Download
+                              </button></td>
+                          </tr>
 
-                          <th  style="padding:10px">Positive Response</th>
-                          <th style="padding:10px" > Negative Response</th>
-                          <th  style="padding:10px">Neutral Response</th>
-                          <th  style="padding:10px">View Template Summary</th>
-                          <th  style="padding:10px">Download Summary</th>
-                        </tr>
-                      </thead>
-                      <tbody>                      
-                        <tr>
-                        <td style="text-align: center;">1</td>
-                        <td style="text-align: center;">Elevator Template</td>
-                        <td style="text-align: center;">5</td>
-                        <td style="text-align: center;">100</td>
-                        <td style="text-align: center;">200</td>
-                        <td style="text-align: center;">200</td>
-                        <td style="text-align: center;">100</td>
-                        <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()" class="btn btn-danger">View </button>
-                        </td>
-                        <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
-                          </button></td>
+                          <tr>
+                            <td style="text-align: center;">2</td>
+                            <td style="text-align: center;">Elevator Template</td>
+                            <td style="text-align: center;">5</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()"
+                                class="btn btn-danger">View </button>
+                            </td>
+                            <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
+                                data-target="#sendEmailModal" data-toggle="modal" type="button"
+                                class="btn btn-danger">Download
+                              </button></td>
+                          </tr>
+                          <tr>
+                            <td style="text-align: center;">2</td>
+                            <td style="text-align: center;">Elevator Template</td>
+                            <td style="text-align: center;">5</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()"
+                                class="btn btn-danger">View </button>
+                            </td>
+                            <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
+                                data-target="#sendEmailModal" data-toggle="modal" type="button"
+                                class="btn btn-danger">Download
+                              </button></td>
+                          </tr>
+                          <tr>
+                            <td style="text-align: center;">2</td>
+                            <td style="text-align: center;">Elevator Template</td>
+                            <td style="text-align: center;">5</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()"
+                                class="btn btn-danger">View </button>
+                            </td>
+                            <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
+                                data-target="#sendEmailModal" data-toggle="modal" type="button"
+                                class="btn btn-danger">Download
+                              </button></td>
+                          </tr>
+                          <tr>
+                            <td style="text-align: center;">2</td>
+                            <td style="text-align: center;">Elevator Template</td>
+                            <td style="text-align: center;">5</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()"
+                                class="btn btn-danger">View </button>
+                            </td>
+                            <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
+                                data-target="#sendEmailModal" data-toggle="modal" type="button"
+                                class="btn btn-danger">Download
+                              </button></td>
+                          </tr>
+                          <tr>
+                            <td style="text-align: center;">2</td>
+                            <td style="text-align: center;">Elevator Template</td>
+                            <td style="text-align: center;">5</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()"
+                                class="btn btn-danger">View </button>
+                            </td>
+                            <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
+                                data-target="#sendEmailModal" data-toggle="modal" type="button"
+                                class="btn btn-danger">Download
+                              </button></td>
+                          </tr>
+                          <tr>
+                            <td style="text-align: center;">3</td>
+                            <td style="text-align: center;">Painting Template</td>
+                            <td style="text-align: center;">5</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
+                            </td>
+                            <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
+                                data-target="#sendEmailModal" data-toggle="modal" type="button"
+                                class="btn btn-danger">Download
+                              </button></td>
+                          </tr>
+                          <tr>
+                            <td style="text-align: center;">4</td>
+                            <td style="text-align: center;">Solar Template</td>
+                            <td style="text-align: center;">5</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
+                            </td>
+                            <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
+                              </button></td>
+                          </tr>
+                          <tr>
+                            <td style="text-align: center;">5</td>
+                            <td style="text-align: center;">VMS/ERP</td>
+                            <td style="text-align: center;">5</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
+                            </td>
+                            <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
+                              </button></td>
+                          </tr>
+                          <tr>
+                            <td style="text-align: center;">6</td>
+                            <td style="text-align: center;">Sugarfit</td>
+                            <td style="text-align: center;">5</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
+                            </td>
+                            <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
+                              </button></td>
+                          </tr>
+                          <tr>
+                            <td style="text-align: center;">7</td>
+                            <td style="text-align: center;">Vaccine Drive</td>
+                            <td style="text-align: center;">5</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
+                            </td>
+                            <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
+                              </button></td>
+                          </tr>
+                          <tr>
+                            <td style="text-align: center;">8</td>
+                            <td style="text-align: center;">VMS/ERP</td>
+                            <td style="text-align: center;">5</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
+                            </td>
+                            <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
+                              </button></td>
+                          </tr>
+                          <tr>
+                            <td style="text-align: center;">9</td>
+                            <td style="text-align: center;">Sugarfit</td>
+                            <td style="text-align: center;">5</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
+                            </td>
+                            <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
+                              </button></td>
+                          </tr>
+                          <tr>
+                            <td style="text-align: center;">10</td>
+                            <td style="text-align: center;">Vaccine Drive</td>
+                            <td style="text-align: center;">5</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">200</td>
+                            <td style="text-align: center;">100</td>
+                            <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()"
+                                class="btn btn-danger">View </button>
+                            </td>
+                            <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
+                              </button></td>
+                          </tr>
 
-                      </tr> 
-                    
-                        <tr>
-                          <td style="text-align: center;">2</td>
-                          <td style="text-align: center;">Elevator Template</td>
-                          <td style="text-align: center;">5</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()" class="btn btn-danger">View </button>
-                          </td>
-                          <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
-                            data-target="#sendEmailModal" data-toggle="modal" type="button" class="btn btn-danger">Download
-                            </button></td>
-                        </tr>
-                        <tr>
-                          <td style="text-align: center;">2</td>
-                          <td style="text-align: center;">Elevator Template</td>
-                          <td style="text-align: center;">5</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()" class="btn btn-danger">View </button>
-                          </td>
-                          <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
-                            data-target="#sendEmailModal" data-toggle="modal" type="button" class="btn btn-danger">Download
-                            </button></td>
-                        </tr>
-                        <tr>
-                          <td style="text-align: center;">2</td>
-                          <td style="text-align: center;">Elevator Template</td>
-                          <td style="text-align: center;">5</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()" class="btn btn-danger">View </button>
-                          </td>
-                          <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
-                            data-target="#sendEmailModal" data-toggle="modal" type="button" class="btn btn-danger">Download
-                            </button></td>
-                        </tr>
-                        <tr>
-                          <td style="text-align: center;">2</td>
-                          <td style="text-align: center;">Elevator Template</td>
-                          <td style="text-align: center;">5</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()" class="btn btn-danger">View </button>
-                          </td>
-                          <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
-                            data-target="#sendEmailModal" data-toggle="modal" type="button" class="btn btn-danger">Download
-                            </button></td>
-                        </tr>
-                        <tr>
-                          <td style="text-align: center;">2</td>
-                          <td style="text-align: center;">Elevator Template</td>
-                          <td style="text-align: center;">5</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()" class="btn btn-danger">View </button>
-                          </td>
-                          <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
-                            data-target="#sendEmailModal" data-toggle="modal" type="button" class="btn btn-danger">Download
-                            </button></td>
-                        </tr>
-                        <tr>
-                          <td style="text-align: center;">3</td>
-                          <td style="text-align: center;">Painting Template</td>
-                          <td style="text-align: center;">5</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
-                          </td>
-                          <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
-                            data-target="#sendEmailModal" data-toggle="modal" type="button" class="btn btn-danger">Download
-                            </button></td>
-                        </tr>
-                        <tr>
-                          <td style="text-align: center;">4</td>
-                          <td style="text-align: center;">Solar Template</td>
-                          <td style="text-align: center;">5</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
-                          </td>
-                          <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
-                            </button></td>
-                        </tr>
-                        <tr>
-                          <td style="text-align: center;">5</td>
-                          <td style="text-align: center;">VMS/ERP</td>
-                          <td style="text-align: center;">5</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
-                          </td>
-                          <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
-                            </button></td>
-                        </tr>
-                        <tr>
-                          <td style="text-align: center;">6</td>
-                          <td style="text-align: center;">Sugarfit</td>
-                          <td style="text-align: center;">5</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
-                          </td>
-                          <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
-                            </button></td>
-                        </tr>
-                        <tr>
-                          <td style="text-align: center;">7</td>
-                          <td style="text-align: center;">Vaccine Drive</td>
-                          <td style="text-align: center;">5</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
-                          </td>
-                          <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
-                            </button></td>
-                        </tr>
-                        <tr>
-                          <td style="text-align: center;">8</td>
-                          <td style="text-align: center;">VMS/ERP</td>
-                          <td style="text-align: center;">5</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
-                          </td>
-                          <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
-                            </button></td>
-                        </tr>
-                        <tr>
-                          <td style="text-align: center;">9</td>
-                          <td style="text-align: center;">Sugarfit</td>
-                          <td style="text-align: center;">5</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
-                          </td>
-                          <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
-                            </button></td>
-                        </tr>
-                        <tr>
-                          <td style="text-align: center;">10</td>
-                          <td style="text-align: center;">Vaccine Drive</td>
-                          <td style="text-align: center;">5</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()" class="btn btn-danger">View </button>
-                          </td>
-                          <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
-                            </button></td>
-                        </tr>
-                    
-                      <!-- <tr colspan="9">
+                          <!-- <tr colspan="9">
                             <td></td>
                             <td><input ng-model="f.name" class="form-control" placeholder="Search">
                               <hr>
@@ -1424,8 +1464,8 @@
 
                           </tr> -->
 
-                      <!-- <tbody> -->
-                      <!-- <tr
+                          <!-- <tbody> -->
+                          <!-- <tr
                             dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index ">
                             <td>{{$index + 1}}</td>
                             <td style="width:200px;" class="col-md-2">{{campaign.name}}</td>
@@ -1457,9 +1497,9 @@
                             </td>
                           </tr> -->
 
-                      <!-- </tbody> -->
-                    </table>
-
+                          <!-- </tbody> -->
+                      </table>
+                    </div>
                   </div>
 
                   <div class="table-responsive" ng-if="viewTemplateSummaryTable">
@@ -6087,7 +6127,7 @@
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               <h4 class="modal-title" ng-if="submitLeadType">{{campaignNameOnImageModal}} Send Leads To Email</h4>
-              <h4 class="modal-title" ng-if="!submitLeadType">{{campaignNameOnImageModal}} Download Leads</h4>
+              <h4 class="modal-title" ng-if="!submitLeadType">{{campaignNameOnImageModal}} Download Template</h4>
               <hr />
               <div class="modal-body">
 
