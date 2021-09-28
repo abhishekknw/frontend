@@ -18,12 +18,8 @@
   .smallBtn {
     margin-bottom: 10px !important;
   }
-  .temp-table { table-layout: fixed;}
-.temp-table  th{
-  position: sticky;
-		z-index: 100;
-    top:-300px  !important;
-}
+
+  
 </style>
 
 
@@ -1201,40 +1197,44 @@
 
 
                 </div><br /><br />
-                <div class="viewLeadstable" ng-if="showCampaigns">
-                  <br /><br /><br /><br />
+                <div  ng-if="showCampaigns">
+
                   <input type="text" class="form-control " ng-model="searchQuery" placeholder="search">
-                  <div class="table-responsive" ng-if="!viewTemplateSummaryTable">
-                    <table class="table temp-table" >
-                      <thead>
+                  <div ng-if="!viewTemplateSummaryTable">
+                    <br>
+
+                    <table class="table temp-table">
+
+                      <thead >
                         <tr>
-                          <th>Index</th>
-                          <th style="width:200px;" class="col-md-2">Template Name</th>
-                          <th ng-click="Sort('start_date')">No. of Template Days Send</th>
-                          <th>Total user count send</th>
-                          <!-- <th>Phase</br>Completed</th> -->
-                          <th>Positive Response</th>
-                          <th>Negative Response</th>
-                          <th>Neutral Response</th>
-                          <th>View Template Summary</th>
-                          <th>Download Summary</th>
+                          <th style="padding:10px">Index</th>
+                          <th  style="padding:10px">Template Name</th>
+                          <th  style="padding:10px" ng-click="Sort('start_date')">No. of Template Days Send</th>
+                          <th  style="padding:10px">Total user count send</th>
+
+                          <th  style="padding:10px">Positive Response</th>
+                          <th style="padding:10px" > Negative Response</th>
+                          <th  style="padding:10px">Neutral Response</th>
+                          <th  style="padding:10px">View Template Summary</th>
+                          <th  style="padding:10px">Download Summary</th>
                         </tr>
-                        <tbody>
+                      </thead>
+                      <tbody>                      
                         <tr>
-                          <td style="text-align: center;">1</td>
-                          <td style="text-align: center;">Doctor's Template</td>
-                          <td style="text-align: center;">5</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()" class="btn btn-danger">View </button>
-                          </td>
-                          <td style="text-align: center;"><button type="button" class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id)"
-                            data-target="#sendEmailModal" data-toggle="modal">Download
-                            </button>
-                          </td>
-                        </tr>
+                        <td style="text-align: center;">1</td>
+                        <td style="text-align: center;">Elevator Template</td>
+                        <td style="text-align: center;">5</td>
+                        <td style="text-align: center;">100</td>
+                        <td style="text-align: center;">200</td>
+                        <td style="text-align: center;">200</td>
+                        <td style="text-align: center;">100</td>
+                        <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()" class="btn btn-danger">View </button>
+                        </td>
+                        <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
+                          </button></td>
+
+                      </tr> 
+                    
                         <tr>
                           <td style="text-align: center;">2</td>
                           <td style="text-align: center;">Elevator Template</td>
@@ -1410,8 +1410,8 @@
                           <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
                             </button></td>
                         </tr>
-                      </tbody>
-                        <!-- <tr colspan="9">
+                    
+                      <!-- <tr colspan="9">
                             <td></td>
                             <td><input ng-model="f.name" class="form-control" placeholder="Search">
                               <hr>
@@ -1423,9 +1423,9 @@
                             </td>
 
                           </tr> -->
-                      </thead>
+
                       <!-- <tbody> -->
-                        <!-- <tr
+                      <!-- <tr
                             dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index ">
                             <td>{{$index + 1}}</td>
                             <td style="width:200px;" class="col-md-2">{{campaign.name}}</td>
@@ -1474,7 +1474,7 @@
                           <th>Positive Response</th>
                           <th>Negative Response</th>
                           <th>Neutral Response</th>
-                
+
                         </tr>
                         <tr>
                           <td style="text-align: center;">1</td>
@@ -1484,7 +1484,7 @@
                           <td style="text-align: center;">200</td>
                           <td style="text-align: center;">200</td>
                           <td style="text-align: center;">100</td>
-                         
+
                         </tr>
                         <tr>
                           <td style="text-align: center;">2</td>
@@ -1494,7 +1494,7 @@
                           <td style="text-align: center;">200</td>
                           <td style="text-align: center;">200</td>
                           <td style="text-align: center;">100</td>
-                        
+
                         </tr>
                         <tr>
                           <td style="text-align: center;">3</td>
@@ -1504,9 +1504,9 @@
                           <td style="text-align: center;">200</td>
                           <td style="text-align: center;">200</td>
                           <td style="text-align: center;">100</td>
-                         
+
                         </tr>
-                      
+
                       </thead>
                       <tbody>
                       </tbody>
