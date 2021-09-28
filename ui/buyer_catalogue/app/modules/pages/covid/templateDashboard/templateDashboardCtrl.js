@@ -6636,6 +6636,19 @@
      $scope.setBotType = function(){
        console.log($scope.transactionalTemplateDropdown.bot)
      }
+     $scope.viewTemplateSummaryTable = false;
+     $scope.viewTemplateSummary = function(){
+      $scope.viewTemplateSummaryTable = true;
+    }
+
+    $scope.backToTemplateData = function(){
+     $scope.viewTemplateSummaryTable = false;
+   }
+
+    
+
+
+     
      // Template Dashboard end
 
     })
