@@ -920,8 +920,8 @@
                           </tbody>
                         </table>
                          <div ng-if="tab.name == 'tabA'">
-                        <dir-pagination-controls max-size="2" ng-click="liveChatPageChanged(pagination.current)" boundary-links="true">
-                        </dir-pagination-controls>
+                        <center><dir-pagination-controls max-size="2" ng-click="liveChatPageChanged(pagination.current)" boundary-links="true">
+                        </dir-pagination-controls></center>
                         
                       </div>
                     </div>
@@ -1145,9 +1145,9 @@
                           </tbody>
                         </table>
                         <div ng-if="tab.name == 'tabB'">
-                        <dir-pagination-controls   max-size="2" ng-click="actionRequiredPageChanged(pagination.current)"
+                        <center><dir-pagination-controls   max-size="2" ng-click="actionRequiredPageChanged(pagination.current)"
                           boundary-links="true">
-                        </dir-pagination-controls>
+                        </dir-pagination-controls></center>
                       </div>
                     </div>
                       <div ng-if="actionRequiredUserData.length == 0">
@@ -1345,9 +1345,9 @@
                             </tr>
                           </tbody>
                         </table>
-                        <dir-pagination-controls max-size="2" ng-click="interveneDataPageChanged(pagination.current)"
+                      <center> <dir-pagination-controls max-size="2" ng-click="interveneDataPageChanged(pagination.current)"
                           boundary-links="true">
-                        </dir-pagination-controls>
+                        </dir-pagination-controls></center>
                       </div>
                       <div ng-if="interveneUserData.length == 0">
                         <h4 style="text-align: center; color: red;">
@@ -1732,9 +1732,9 @@
                 </tr>
               </tbody>
             </table>
-            <dir-pagination-controls max-size="2" on-page-change="historyPageChanged(newPageNumber)"
+          <center><dir-pagination-controls max-size="2" on-page-change="historyPageChanged(newPageNumber)"
               boundary-links="true">
-            </dir-pagination-controls>
+            </dir-pagination-controls></center>
           </div>
           <!-- Start Phone Chat for history tab-->
           <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
@@ -2054,8 +2054,8 @@
       <!-- <div data-pagination="" data-num-pages="numOfPages()" data-current-page="curPage" data-max-size="maxSize"
         data-boundary-links="true"> -->
     </div>
-    <dir-pagination-controls max-size="2" on-page-change="pageChanged(newPageNumber)"  boundary-links="true">
-    </dir-pagination-controls>
+    <center><dir-pagination-controls max-size="2" on-page-change="pageChanged(newPageNumber)"  boundary-links="true">
+    </dir-pagination-controls></center>
   </div>
   <!--/Contact Tab-->
 
