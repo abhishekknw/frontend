@@ -919,11 +919,13 @@
                             </tr>
                           </tbody>
                         </table>
-                        <dir-pagination-controls max-size="3" on-page-change="liveChatPageChanged(newPageNumber)"
-                          boundary-links="true">
+                         <div ng-if="tab.name == 'tabA'">
+                        <dir-pagination-controls max-size="2" ng-click="liveChatPageChanged(pagination.current)" boundary-links="true">
                         </dir-pagination-controls>
+                        
                       </div>
-
+                    </div>
+                      
                       <div ng-if="activeUserData.length == 0">
                         <h4 style="text-align: center; color: red;">
                           Record Not Found.
@@ -1142,10 +1144,12 @@
                             </tr>
                           </tbody>
                         </table>
-                        <dir-pagination-controls max-size="3" on-page-change="actionRequiredPageChanged(newPageNumber)"
+                        <div ng-if="tab.name == 'tabB'">
+                        <dir-pagination-controls   max-size="2" ng-click="actionRequiredPageChanged(pagination.current)"
                           boundary-links="true">
                         </dir-pagination-controls>
                       </div>
+                    </div>
                       <div ng-if="actionRequiredUserData.length == 0">
                         <h4 style="text-align: center; color: red;">
                           Record Not Found.
@@ -1341,7 +1345,7 @@
                             </tr>
                           </tbody>
                         </table>
-                        <dir-pagination-controls max-size="3" on-page-change="interveneDataPageChanged(newPageNumber)"
+                        <dir-pagination-controls max-size="2" ng-click="interveneDataPageChanged(pagination.current)"
                           boundary-links="true">
                         </dir-pagination-controls>
                       </div>
@@ -1728,7 +1732,7 @@
                 </tr>
               </tbody>
             </table>
-            <dir-pagination-controls max-size="3" on-page-change="historyPageChanged(newPageNumber)"
+            <dir-pagination-controls max-size="2" on-page-change="historyPageChanged(newPageNumber)"
               boundary-links="true">
             </dir-pagination-controls>
           </div>
@@ -2050,7 +2054,7 @@
       <!-- <div data-pagination="" data-num-pages="numOfPages()" data-current-page="curPage" data-max-size="maxSize"
         data-boundary-links="true"> -->
     </div>
-    <dir-pagination-controls max-size="2" on-page-change="pageChanged(newPageNumber)" boundary-links="true">
+    <dir-pagination-controls max-size="2" on-page-change="pageChanged(newPageNumber)"  boundary-links="true">
     </dir-pagination-controls>
   </div>
   <!--/Contact Tab-->

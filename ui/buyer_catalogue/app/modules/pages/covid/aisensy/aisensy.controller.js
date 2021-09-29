@@ -53,6 +53,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
             // AIsensy controller
             $scope.getActiveUser = function (page) {
+                $scope.tab.name = 'tabA';
                 $scope.hideChatModule();
                 $scope.formData.historySearch = "";
                 $scope.showcontactDetail = false;
@@ -98,6 +99,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.formData = {};
 
             $scope.getActionRequiredUser = function (page) {
+          
+                $scope.tab.name = 'tabB';
                 $scope.isUserProfile = false;
                 $scope.formData.interveneSearch = '';
                 $scope.formData.activesearch = '';
@@ -131,6 +134,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.getInterveneUser = function (page) {
+                $scope.tab.name = 'tabC';
                 $scope.isUserProfile = false;
                 $scope.formData.actionSearch = '';
                 $scope.formData.activesearch = '';
@@ -630,17 +634,22 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.serial = newPageNumber * 10 - 9;
                 $scope.historyDetail(newPageNumber);
             };
+              
+          
 
             $scope.liveChatPageChanged = function (newPageNumber, tab) {
                 $scope.serial = newPageNumber * 10 - 9;
                 $scope.getActiveUser(newPageNumber);
             };
+            
+            
             $scope.actionRequiredPageChanged = function (newPageNumber, tab) {
                 $scope.serial = newPageNumber * 10 - 9;
                 $scope.getActionRequiredUser(newPageNumber);
             };
 
             $scope.interveneDataPageChanged = function (newPageNumber, tab) {
+       
                 $scope.serial = newPageNumber * 10 - 9;
                 $scope.getInterveneUser(newPageNumber);
             };
