@@ -29,6 +29,12 @@
     overflow-y: scroll;
 
   }
+
+ .cat-names{
+   text-align: center;
+   font-weight: 600;
+   font-size: medium;
+ } 
 </style>
 
 <script>
@@ -108,12 +114,11 @@
     <div class="container_mea">
       <div class="page-inner">
         <div class="top-select-option">
-          <h3>Category Section</h3>
+          <h3>{{categoryNavSelected}}</h3>
           <div class="row">
-
             <div ng-repeat="ncat in categoryNavDetailData" class=" col-md-12 col-xs-12">
               <div ng-repeat="(key,data) in ncat">
-                <span ng-click="">{{key}}</span>
+                <span class="cat-names" ng-click="">{{key}}</span>
               </div>
             </div>
           </div>
@@ -130,7 +135,9 @@
         <div class="row">
           <div ng-repeat="ntoc in tocNavDetailData" class=" col-md-12 col-xs-12">
             <div ng-repeat="(key,data) in ntoc">
-              <span ng-click="">{{key}}</span>
+              <div class="top-select-option">
+              <span class="cat-names"ng-click="">{{key }}</span>
+              </div>
             </div>
           </div>
         </div>
