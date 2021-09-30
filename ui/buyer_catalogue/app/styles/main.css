@@ -1233,7 +1233,7 @@ position: relative;
 	display: none;
 	text-align:center;
 	/*height: 192px;*/
-	overflow: auto;
+	/* overflow: auto; */
   }
 
   /*2nd tab*/
