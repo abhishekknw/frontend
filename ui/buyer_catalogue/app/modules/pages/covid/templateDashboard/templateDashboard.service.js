@@ -15,9 +15,12 @@ angular.module('catalogueApp')
      
 
       DashboardService.getTransactionalTemplate = function () {
+        alert("2222222222")
         console.log('22222222222222222222222222222');
        return true
       }
+
+      
 
       return DashboardService;
 

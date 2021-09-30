@@ -9,7 +9,7 @@
 <style>
   /*aisensy*/
 
-  .scrolling-area {
+   .scrolling-area {
     /* max-width: 250px;
   max-height: 250px; */
     /* max-height: max-content; */
@@ -597,12 +597,12 @@
   }
 
 
-  .icon-home{
-    top:10px;
+  .icon-home {
+    top: 10px;
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    
+
     padding: 7px;
     position: relative;
     overflow: hidden;
@@ -753,19 +753,21 @@
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
         <a class="navbar-brand" href="#">
-        <!--<div class="icon-home-home">
+          <!--<div class="icon-home-home">
           <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg">
 
             <path fill="#fff"
               d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
           </svg>
         </div>-->
-        <div class="icon-home">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
-          <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
-        </svg>
-        </div>
-      </a>
+          <div class="icon-home">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-house-door-fill" viewBox="0 0 16 16">
+              <path
+                d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z" />
+            </svg>
+          </div>
+        </a>
         <button type="button" class="navbar-toggle" ng-click="isCollapsed = !isCollapsed">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
@@ -785,23 +787,24 @@
               ng-click="getActiveUser()">
               Live chat</a> </li>
           <li><a target="_blank" class="fa fa-user-circle" aria-hidden="true" style="font-size: large"
-            ng-click="contactDetail()">
-            Contact</a></li>
-         <li> <a target="_blank" class="fa fa-history" aria-hidden="true" style="font-size: large"
-            ng-click="historyDetail()">
-            History</a> </li>
-         <li> <a target="_blank" class="fa fa-file-text" aria-hidden="true" style="font-size: large"
-            ng-click="templateDetail()">
-            Template</a> </li>
-          <li> <a target="_blank" class="fa fa-filter" aria-hidden="true" style="font-size: large" ng-click="filterTab()">
-            Filter</a></li>
-     
-      </ul>
-     
-   
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+              ng-click="contactDetail()">
+              Contact</a></li>
+          <li> <a target="_blank" class="fa fa-history" aria-hidden="true" style="font-size: large"
+              ng-click="historyDetail()">
+              History</a> </li>
+          <li> <a target="_blank" class="fa fa-file-text" aria-hidden="true" style="font-size: large"
+              ng-click="templateDetail()">
+              Template</a> </li>
+          <li> <a target="_blank" class="fa fa-filter" aria-hidden="true" style="font-size: large"
+              ng-click="filterTab()">
+              Filter</a></li>
+
+        </ul>
+
+
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
 
 
 
@@ -919,13 +922,16 @@
                             </tr>
                           </tbody>
                         </table>
-                         <div ng-if="tab.name == 'tabA'">
-                        <center><dir-pagination-controls max-size="2" ng-click="liveChatPageChanged(pagination.current)" boundary-links="true">
-                        </dir-pagination-controls></center>
-                        
+                        <div ng-if="tab.name == 'tabA'">
+                          <center>
+                            <dir-pagination-controls max-size="2" ng-click="liveChatPageChanged(pagination.current)"
+                              boundary-links="true">
+                            </dir-pagination-controls>
+                          </center>
+
+                        </div>
                       </div>
-                    </div>
-                      
+
                       <div ng-if="activeUserData.length == 0">
                         <h4 style="text-align: center; color: red;">
                           Record Not Found.
@@ -1042,14 +1048,16 @@
                                 </div>
                               </div>
                             </div>
-                            
+
                           </div>
-                          <button ng-disabled="pageCount == 1" type="button" class="btn btn-outline-primary" 
-                          ng-click="prvPageChat(userChatData.phone_number)"style="background-color: rgb(70, 70, 70);  float:left; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
-                          <i class="fa fa-angle-double-down" aria-hidden="true"></i>
-                        </button>
-                          <button ng-disabled="!disableNextPagebutton" type="button" class="btn btn-primary" 
-                            ng-click="nextPageChat(userChatData.phone_number)" style="background-color: rgb(70, 70, 70);float:right; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
+                          <button ng-disabled="pageCount == 1" type="button" class="btn btn-outline-primary"
+                            ng-click="prvPageChat(userChatData.phone_number)"
+                            style="background-color: rgb(70, 70, 70);  float:left; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
+                            <i class="fa fa-angle-double-down" aria-hidden="true"></i>
+                          </button>
+                          <button ng-disabled="!disableNextPagebutton" type="button" class="btn btn-primary"
+                            ng-click="nextPageChat(userChatData.phone_number)"
+                            style="background-color: rgb(70, 70, 70);float:right; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
                             <i class="fa fa-angle-double-up" aria-hidden="true"></i>
                           </button>
 
@@ -1076,7 +1084,7 @@
 
                           <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData,'active')"
                             ng-if="!messageBox" style="margin-top:5px">
-                            <button type="button" class="btn btn-primary"style="margin-top:30px">
+                            <button type="button" class="btn btn-primary" style="margin-top:30px">
                               Intervene
                             </button>
                           </div>
@@ -1145,11 +1153,13 @@
                           </tbody>
                         </table>
                         <div ng-if="tab.name == 'tabB'">
-                        <center><dir-pagination-controls   max-size="2" ng-click="actionRequiredPageChanged(pagination.current)"
-                          boundary-links="true">
-                        </dir-pagination-controls></center>
+                          <center>
+                            <dir-pagination-controls max-size="2"
+                              ng-click="actionRequiredPageChanged(pagination.current)" boundary-links="true">
+                            </dir-pagination-controls>
+                          </center>
+                        </div>
                       </div>
-                    </div>
                       <div ng-if="actionRequiredUserData.length == 0">
                         <h4 style="text-align: center; color: red;">
                           Record Not Found.
@@ -1247,12 +1257,14 @@
                             </div>
 
                           </div>
-                          <button ng-disabled="pageCount == 1" type="button" class="btn btn-outline-primary" 
-                          ng-click="prvPageChat(userChatData.phone_number)"style="background-color: rgb(70, 70, 70);  float:left; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
-                          <i class="fa fa-angle-double-down" aria-hidden="true"></i>
-                        </button>
-                          <button ng-disabled="!disableNextPagebutton" type="button" class="btn btn-primary" 
-                            ng-click="nextPageChat(userChatData.phone_number)" style="background-color: rgb(70, 70, 70);float:right; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
+                          <button ng-disabled="pageCount == 1" type="button" class="btn btn-outline-primary"
+                            ng-click="prvPageChat(userChatData.phone_number)"
+                            style="background-color: rgb(70, 70, 70);  float:left; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
+                            <i class="fa fa-angle-double-down" aria-hidden="true"></i>
+                          </button>
+                          <button ng-disabled="!disableNextPagebutton" type="button" class="btn btn-primary"
+                            ng-click="nextPageChat(userChatData.phone_number)"
+                            style="background-color: rgb(70, 70, 70);float:right; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
                             <i class="fa fa-angle-double-up" aria-hidden="true"></i>
                           </button>
                           <div ng-if="messageBox">
@@ -1345,9 +1357,11 @@
                             </tr>
                           </tbody>
                         </table>
-                      <center> <dir-pagination-controls max-size="2" ng-click="interveneDataPageChanged(pagination.current)"
-                          boundary-links="true">
-                        </dir-pagination-controls></center>
+                        <center>
+                          <dir-pagination-controls max-size="2" ng-click="interveneDataPageChanged(pagination.current)"
+                            boundary-links="true">
+                          </dir-pagination-controls>
+                        </center>
                       </div>
                       <div ng-if="interveneUserData.length == 0">
                         <h4 style="text-align: center; color: red;">
@@ -1434,12 +1448,14 @@
                             </div>
 
                           </div>
-                          <button ng-disabled="pageCount == 1" type="button" class="btn btn-outline-primary" 
-                          ng-click="prvPageChat(userChatData.phone_number)"style="background-color: rgb(70, 70, 70);  float:left; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
-                          <i class="fa fa-angle-double-down" aria-hidden="true"></i>
-                        </button>
-                          <button ng-disabled="!disableNextPagebutton" type="button" class="btn btn-primary" 
-                            ng-click="nextPageChat(userChatData.phone_number)" style="background-color: rgb(70, 70, 70);float:right; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
+                          <button ng-disabled="pageCount == 1" type="button" class="btn btn-outline-primary"
+                            ng-click="prvPageChat(userChatData.phone_number)"
+                            style="background-color: rgb(70, 70, 70);  float:left; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
+                            <i class="fa fa-angle-double-down" aria-hidden="true"></i>
+                          </button>
+                          <button ng-disabled="!disableNextPagebutton" type="button" class="btn btn-primary"
+                            ng-click="nextPageChat(userChatData.phone_number)"
+                            style="background-color: rgb(70, 70, 70);float:right; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
                             <i class="fa fa-angle-double-up" aria-hidden="true"></i>
                           </button>
                           <div ng-if="messageBox">
@@ -1732,9 +1748,11 @@
                 </tr>
               </tbody>
             </table>
-          <center><dir-pagination-controls max-size="2" on-page-change="historyPageChanged(newPageNumber)"
-              boundary-links="true">
-            </dir-pagination-controls></center>
+            <center>
+              <dir-pagination-controls max-size="2" on-page-change="historyPageChanged(newPageNumber)"
+                boundary-links="true">
+              </dir-pagination-controls>
+            </center>
           </div>
           <!-- Start Phone Chat for history tab-->
           <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
@@ -1820,17 +1838,19 @@
                         <source ng-src="{{chat.content.url}}" type="video/mp4">
                       </video>
                     </span>
-                    <span class="chat-time"{{chat.timestamp | date : 'medium'}}</span>
+                    <span class="chat-time" {{chat.timestamp | date : 'medium' }}</span>
                   </div>
                 </div>
 
               </div>
-              <button ng-disabled="pageCount == 1" type="button" class="btn btn-outline-primary" 
-              ng-click="prvPageChat(userChatData.phone_number)"style="background-color: rgb(70, 70, 70);  float:left; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
-              <i class="fa fa-angle-double-down" aria-hidden="true"></i>
-            </button>
-              <button ng-disabled="!disableNextPagebutton" type="button" class="btn btn-primary" 
-                ng-click="nextPageChat(userChatData.phone_number)" style="background-color: rgb(70, 70, 70);float:right; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
+              <button ng-disabled="pageCount == 1" type="button" class="btn btn-outline-primary"
+                ng-click="prvPageChat(userChatData.phone_number)"
+                style="background-color: rgb(70, 70, 70);  float:left; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
+                <i class="fa fa-angle-double-down" aria-hidden="true"></i>
+              </button>
+              <button ng-disabled="!disableNextPagebutton" type="button" class="btn btn-primary"
+                ng-click="nextPageChat(userChatData.phone_number)"
+                style="background-color: rgb(70, 70, 70);float:right; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
                 <i class="fa fa-angle-double-up" aria-hidden="true"></i>
               </button>
               <div ng-if="messageBox">
@@ -2054,8 +2074,10 @@
       <!-- <div data-pagination="" data-num-pages="numOfPages()" data-current-page="curPage" data-max-size="maxSize"
         data-boundary-links="true"> -->
     </div>
-    <center><dir-pagination-controls max-size="2" on-page-change="pageChanged(newPageNumber)"  boundary-links="true">
-    </dir-pagination-controls></center>
+    <center>
+      <dir-pagination-controls max-size="2" on-page-change="pageChanged(newPageNumber)" boundary-links="true">
+      </dir-pagination-controls>
+    </center>
   </div>
   <!--/Contact Tab-->
 
@@ -2283,8 +2305,8 @@
             <div style="width: 100%; float:right;">
               <div class="message-1 " ng-if="chat.sender=='user'">
                 <span ng-if='chat.content.text'>{{chat.content.text}}</span>
-                <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}"
-                    alt="Girl in a jacket" width="200" height="auto"></span>
+                <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}" alt="Girl in a jacket"
+                    width="200" height="auto"></span>
                 <span ng-if="chat.content.types[0] == 'video'">
                   <video width="200" height="auto" controls>
                     <source ng-src="{{chat.content.url}}" type="video/mp4">
@@ -2310,14 +2332,16 @@
           </div>
 
         </div>
-        <button ng-disabled="pageCount == 1" type="button" class="btn btn-outline-primary" 
-                          ng-click="prvPageChat(userChatData.phone_number)"style="background-color: rgb(70, 70, 70);  float:left; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
-                          <i class="fa fa-angle-double-down" aria-hidden="true"></i>
-                        </button>
-                          <button ng-disabled="!disableNextPagebutton" type="button" class="btn btn-primary" 
-                            ng-click="nextPageChat(userChatData.phone_number)" style="background-color: rgb(70, 70, 70);float:right; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
-                            <i class="fa fa-angle-double-up" aria-hidden="true"></i>
-                          </button>
+        <button ng-disabled="pageCount == 1" type="button" class="btn btn-outline-primary"
+          ng-click="prvPageChat(userChatData.phone_number)"
+          style="background-color: rgb(70, 70, 70);  float:left; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
+          <i class="fa fa-angle-double-down" aria-hidden="true"></i>
+        </button>
+        <button ng-disabled="!disableNextPagebutton" type="button" class="btn btn-primary"
+          ng-click="nextPageChat(userChatData.phone_number)"
+          style="background-color: rgb(70, 70, 70);float:right; margin-top: 5px; margin-bottom: 5px; border-radius:50%; border: 1px solid white">
+          <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+        </button>
         <div ng-if="messageBox">
           <div class="input">
             <input type="text" placeholder="Write message" />
