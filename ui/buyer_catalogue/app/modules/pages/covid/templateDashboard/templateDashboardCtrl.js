@@ -6624,17 +6624,8 @@
 
       // Template Dashboard start
       $scope.getTransactionalTemplate = function () {
-        alert("templatedashboard")
-        let param = {
-          search: value,
-      }
-      if (!value) {
-          param.search = ""
-      }
-        templateDashboardService.transactionalTemplate()
 
-          .then(function onSuccess(response) {
-            
+        templateDashboardService.transactionalTemplate().then(function onSuccess(response) {
             console.log('11111111111111111111111111111', response);
           }).catch(function onError(response) {
             console.log(response);

@@ -137,8 +137,8 @@
           <div class="row">
             <div ng-repeat="ntoc in tocNavDetailData" class=" col-md-12 col-xs-12">
               <div ng-repeat="(key,data) in ntoc">
-                <div class="top-select-option"  style="text-align: center;">
-                  <span class="option-names" ng-click="">{{key }}</span>
+                <div class="top-select-option" ng-click="navCat(key)" style="text-align: center; text-transform: capitalize;">
+                  <span class="option-names" >{{key }}</span>
                 </div>
               </div>
             </div>
