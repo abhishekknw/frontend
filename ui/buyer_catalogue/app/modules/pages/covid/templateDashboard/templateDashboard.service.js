@@ -11,13 +11,15 @@ angular.module('catalogueApp')
       var url_root = 'v0/ui/';
       var url_base_user = 'v0/';
       var DashboardService = {};
+      var apiHost = 'https://liveapi.societybasket.in/';
 
-     
 
-      DashboardService.getTransactionalTemplate = function () {
-        console.log('22222222222222222222222222222');
-       return true
+      DashboardService.transactionalTemplate = function () {
+        let url = apiHost +  "v0/ui/mca-bot/mca-template-summary/";
+        return machadaloHttp.get(url);
       }
+
+
 
       return DashboardService;
 

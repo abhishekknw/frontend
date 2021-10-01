@@ -4,7 +4,7 @@
 <link href="css/smallscreen.css" rel="stylesheet" media="screen">
 <style>
   .icon-back {
-   
+
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -13,7 +13,7 @@
     position: relative;
     overflow: hidden;
     transition: background-color 200ms ease-in-out;
-    
+
   }
 
   .icon-back:hover {
@@ -29,6 +29,12 @@
     overflow-y: scroll;
 
   }
+
+  .option-names {
+    text-align: center;
+    font-weight: 600;
+    font-size: medium;
+  }
 </style>
 
 <script>
@@ -39,19 +45,19 @@
 <style>
   @media screen and (width:500px) {
     .navbar-collapse.collapse {
-  display: none!important;
-}
+      display: none !important;
+    }
 
 
   }
 
-  .navbar-collapse.collapse.in{
-  display:block !important;
-  position: absolute;
+  .navbar-collapse.collapse.in {
+    display: block !important;
+    position: absolute;
     z-index: 100;
     background: #EDEDED;
     width: 100%;
-}
+  }
 </style>
 
 
@@ -77,11 +83,11 @@
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div  class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
+      <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
 
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown" uib-dropdown>
-            <a class="dropdown-toggle" uib-dropdown-toggle data-toggle="dropdown" role="button" 
+            <a class="dropdown-toggle" uib-dropdown-toggle data-toggle="dropdown" role="button"
               aria-expanded="false">Type of Customer <span class="caret"></span></a>
             <ul class="dropdown-menu" uib-dropdown-menu>
               <li ng-repeat="tnav in tocNavDataArray " value="{{tnav}}" ng-click="getTocNav(tnav)"><a>{{tnav}}
@@ -105,32 +111,38 @@
     <!-- /.container-fluid -->
   </nav>
   <div class="container" ng-if="categoryNavSelected">
-    <div class="icon-back">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
-        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
-      </svg>
-
-    </div>
     <div class="container_mea">
-
       <div class="page-inner">
         <div class="top-select-option">
-          <h3>Category Section</h3>
+          <h3>{{categoryNavSelected}}</h3>
+          <div class="row">
+            <div ng-repeat="ncat in categoryNavDetailData" class=" col-md-12 col-xs-12">
+              <div ng-repeat="(key,data) in ncat">
+                <div class="top-select-option" style="text-align: center;">
+                  <span class="option-names" ng-click="">{{key}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="container" ng-if="tocNavSelected">
-    <div class="icon-back">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16" ng-click="getToc()">
-        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
-      </svg>
 
-    </div>
+  <div class="container" ng-if="tocNavSelected">
     <div class="container_mea">
       <div class="page-inner">
         <div class="top-select-option">
-          <h3>Type of Customer Section</h3>
+          <h3>{{tocNavSelected}}</h3>
+          <div class="row">
+            <div ng-repeat="ntoc in tocNavDetailData" class=" col-md-12 col-xs-12">
+              <div ng-repeat="(key,data) in ntoc">
+                <div class="top-select-option" ng-click="navCat(key)" style="text-align: center; text-transform: capitalize;">
+                  <span class="option-names" >{{key }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

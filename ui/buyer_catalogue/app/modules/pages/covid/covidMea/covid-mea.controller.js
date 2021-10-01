@@ -8,8 +8,8 @@ angular.module('machadaloPages').filter('replace', [function () {
         return input.replace(regex, to);
     };
 }]).controller('covidMeaCtrl',
-    ['$scope','$sce', '$rootScope', '$window', '$location', 'AuthService', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService',
-        function ($scope,$sce, $rootScope, $window, $location, AuthService, suspenseLeadService, $state, userService, constants, AuthService, vcRecaptchaService) {
+    ['$scope', '$sce', '$rootScope', '$window', '$location', 'AuthService', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService',
+        function ($scope, $sce, $rootScope, $window, $location, AuthService, suspenseLeadService, $state, userService, constants, AuthService, vcRecaptchaService) {
             AuthService.Clear();
             var url = $location.url().split("/");
             // $scope.categorys = ['Hospital Beds', 'Cylinders','Refills', 'Concentrators'];
@@ -283,27 +283,27 @@ angular.module('machadaloPages').filter('replace', [function () {
             /*new mea controller code** */
 
             $scope.getToc = function () {
-                
+
 
                 let param = {
-                    type_of_customer: "", 
-                    category: "", 
+                    type_of_customer: "",
+                    category: "",
                     subcategory: "",
                     subsubcategory: ""
                 }
                 AuthService.getAllMeaData(param)
                     .then(function onSuccess(response) {
                         console.log(response)
-                        $scope.typeofCustomer=response.data.data.Toc ; 
+                        $scope.typeofCustomer = response.data.data.Toc;
                     }).catch(function onError(response) {
                         console.log(response);
                     })
 
-                    AuthService.getAllTOCNavData()
+                AuthService.getAllTOCNavData()
                     .then(function onSuccess(response) {
                         console.log(response)
-                        $scope.tocNavDataArray=response.data.data ; 
-                        console.log('1111111111111',$scope.tocNavDataArray)
+                        $scope.tocNavDataArray = response.data.data;
+                        console.log('1111111111111', $scope.tocNavDataArray)
 
                     }).catch(function onError(response) {
                         console.log(response);
@@ -311,76 +311,84 @@ angular.module('machadaloPages').filter('replace', [function () {
                 AuthService.getAllCategoryNavData()
                     .then(function onSuccess(response) {
                         console.log(response)
-                        $scope.categoryNavDataArray=response.data.data ; 
-                        console.log('22222222',$scope.categoryNavDataArray)
+                        $scope.categoryNavDataArray = response.data.data;
+                        console.log('22222222', $scope.categoryNavDataArray)
 
                     }).catch(function onError(response) {
                         console.log(response);
                     })
             }
 
-            $scope.getCategory= function (value) {
+            $scope.getCategory = function (value) {
                 // alert("toc")
-           console.log( $scope.categoryArray)
+                console.log($scope.categoryArray)
 
 
                 console.log(value)
-$scope.selectedToc=value;
+                $scope.selectedToc = value;
                 console.log($scope.selectedToc)
 
-             
+
                 let param = {
-                    type_of_customer: $scope.selectedToc, 
-                    category: "", 
+                    type_of_customer: $scope.selectedToc,
+                    category: "",
                     subcategory: "",
                     subsubcategory: ""
                 }
                 AuthService.getAllMeaData(param)
-                
+
                     .then(function onSuccess(response) {
                         console.log(response)
-                        $scope.categoryArray=response.data.data.category ; 
-                        if($scope.categoryArray.length > 0){
-                            for(let i in $scope.categoryArray){
+                        $scope.categoryArray = response.data.data.category;
+                        if ($scope.categoryArray.length > 0) {
+                            for (let i in $scope.categoryArray) {
                                 $scope.categoryArray[i].url = 'https://www.youtube.com/embed/' + $scope.categoryArray[i].url;
                             }
-                         }
-                        console.log('1111111111111',$scope.categoryArray)
+                        }
+                        console.log('1111111111111', $scope.categoryArray)
 
                     }).catch(function onError(response) {
                         console.log(response);
                     })
             }
-            
 
-            $scope.getSubCategory= function (value) {
+            $scope.navCat = function (value) {
+                $scope.selectedToc = $scope.tocNavSelected;
+                $scope.selectedTocHeader = undefined;
+                $scope.categoryNavSelected = undefined;
+                $scope.tocNavSelected = undefined;
+                $scope.getCategory($scope.selectedToc); 
+                $scope.getSubCategory(value);
+                
+            }
+            $scope.getSubCategory = function (value) {
                 // alert("category")
-                $scope.contentArray=[]
+                $scope.contentArray = []
                 console.log(value)
-                $scope.selectedcategory=value;
+                $scope.selectedcategory = value;
                 console.log($scope.selectedcategory)
                 let param = {
-                    type_of_customer: $scope.selectedToc, 
-                    category: $scope.selectedcategory, 
+                    type_of_customer: $scope.selectedToc,
+                    category: $scope.selectedcategory,
                     subcategory: "",
                     subsubcategory: ""
                 }
                 AuthService.getAllMeaData(param)
-                
+
                     .then(function onSuccess(response) {
                         console.log(response)
-                        $scope.contentArray=response.data.data.content ; 
-                        console.log('1111111111111+++++++++++++++++++++++++++',$scope.contentArray)
-                       for(let i in $scope.contentArray){
-                        let emdUrl = $scope.contentArray[i].embededurl
-                        $scope.contentArray[i].youtubeurl = $sce.trustAsResourceUrl(emdUrl);
-                        //    let url = $scope.contentArray[i].url;
-                        // $scope.contentArray[i].url = $sce.trustAsResourceUrl('https://player.vimeo.com/video/137857207');
-                       // $scope.contentArray[i].url = $sce.trustAsResourceUrl('https://youtu.be/embed/Y3A3bPmMNcg');
-                      
-                           
-                           //$scope.contentArray[i].url = url;
-                       }
+                        $scope.contentArray = response.data.data.content;
+                        console.log('1111111111111+++++++++++++++++++++++++++', $scope.contentArray)
+                        for (let i in $scope.contentArray) {
+                            let emdUrl = $scope.contentArray[i].embededurl
+                            $scope.contentArray[i].youtubeurl = $sce.trustAsResourceUrl(emdUrl);
+                            //    let url = $scope.contentArray[i].url;
+                            // $scope.contentArray[i].url = $sce.trustAsResourceUrl('https://player.vimeo.com/video/137857207');
+                            // $scope.contentArray[i].url = $sce.trustAsResourceUrl('https://youtu.be/embed/Y3A3bPmMNcg');
+
+
+                            //$scope.contentArray[i].url = url;
+                        }
                     }).catch(function onError(response) {
                         console.log(response);
                     })
@@ -393,7 +401,7 @@ $scope.selectedToc=value;
 
             //     console.log($scope.selectedsubcategory)
 
-             
+
             //     let param = {
             //         type_of_customer: $scope.selectedToc, 
             //         category: $scope.selectedcategory, 
@@ -401,7 +409,7 @@ $scope.selectedToc=value;
             //         subsubcategory: ""
             //     }
             //     AuthService.getAllMeaData(param)
-                
+
             //         .then(function onSuccess(response) {
             //             console.log(response)
             //             $scope.subsubcategoryArray=response.data.data.subsubcategory ; 
@@ -417,31 +425,31 @@ $scope.selectedToc=value;
             //         })
             // }
 
-    
 
-            $scope.getHeaderCategory = function(value){
+
+            $scope.getHeaderCategory = function (value) {
                 console.log($scope.selectedTocHeader)
                 console.log(value)
-                $scope.selectedTocHeader=value
+                $scope.selectedTocHeader = value
             }
 
-            $scope.getHeaderSubCategory = function(value){
+            $scope.getHeaderSubCategory = function (value) {
                 console.log($scope.selectedcategoryHeader)
                 console.log(value)
-                $scope.selectedcategoryHeader=value
+                $scope.selectedcategoryHeader = value
             }
 
 
 
-            $scope.getTocNav= function(value){
+            $scope.getTocNav = function (value) {
                 $scope.categoryNavSelected = false;
                 $scope.tocNavSelected = value;
                 let param = {
-                    type_of_customer:value
-                } 
+                    type_of_customer: value
+                }
                 AuthService.getTOCNavDetailData(param)
                     .then(function onSuccess(response) {
-                        $scope.tocNavDetailData=response.data.data;
+                        $scope.tocNavDetailData = response.data.data;
                     }).catch(function onError(response) {
                         console.log(response);
                     })
@@ -449,16 +457,16 @@ $scope.selectedToc=value;
 
             }
 
-            $scope.getCategoryNav= function(value){
+            $scope.getCategoryNav = function (value) {
                 $scope.categoryNavSelected = value;
                 $scope.tocNavSelected = false;
                 let param = {
-                    category:value
+                    category: value
                 }
                 AuthService.getCategoryNavDetailData(param)
                     .then(function onSuccess(response) {
                         console.log(response)
-                        $scope.categoryNavDetailData=response.data.data ; 
+                        $scope.categoryNavDetailData = response.data.data;
                     }).catch(function onError(response) {
                         console.log(response);
                     })
@@ -466,23 +474,23 @@ $scope.selectedToc=value;
 
             // (function() {
             //     'use strict';
-              
+
             //     angular
             //       .module('ui.bootstrap.demo', ['ngAnimate', 'ui.bootstrap']);
-              
+
             //     angular
             //       .module('ui.bootstrap.demo')
             //       .controller('DropdownController', DropdownController);
-              
+
             //     function DropdownController() {
             //       var vm = this;
-              
+
             //       vm.isCollapsed = true;
             //       vm.status = {
             //         isopen: false
             //       }
             //     }
-              
+
             //   }());
 
             // $scope.isCollapsed = true;

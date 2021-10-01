@@ -29,8 +29,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         function ($scope, $rootScope, $window,$sce, $location, AuthService, suspenseLeadService, $anchorScroll, $state, userService, constants, AuthService, vcRecaptchaService, permissions, commonDataShare) {
             // AuthService.Clear();
 
-
-
     $scope.isCollapsed = true;
     $scope.$on('$routeChangeSuccess', function () {
         $scope.isCollapsed = true;
@@ -53,6 +51,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
             // AIsensy controller
             $scope.getActiveUser = function (page) {
+                $scope.tab.name = 'tabA';
                 $scope.hideChatModule();
                 $scope.formData.historySearch = "";
                 $scope.showcontactDetail = false;
@@ -98,6 +97,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.formData = {};
 
             $scope.getActionRequiredUser = function (page) {
+          
+                $scope.tab.name = 'tabB';
                 $scope.isUserProfile = false;
                 $scope.formData.interveneSearch = '';
                 $scope.formData.activesearch = '';
@@ -131,6 +132,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.getInterveneUser = function (page) {
+                $scope.tab.name = 'tabC';
                 $scope.isUserProfile = false;
                 $scope.formData.actionSearch = '';
                 $scope.formData.activesearch = '';
@@ -164,15 +166,36 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
             }
 
+            $scope.nextPageChat = function(phone){
+                $scope.userDetail(phone,$scope.pageCount+1);
 
-            $scope.userDetail = function (value) {
+            }
 
-                console.log("1232", value)
+            $scope.prvPageChat = function(phone){
+                $scope.userDetail(phone,$scope.pageCount-1);
+
+            }
+
+
+            $scope.userDetail = function (value,page) {
                 $scope.showChatModule = true;
+                // let param = {
+                //     phoneNumber: value,
+                //     nextPage: 1
+                // }
+                
                 let param = {
+                    nextPage: 1,
                     phoneNumber: value,
-                    nextPage: 1
                 }
+                if (page) {
+                    param.nextPage = page;
+                } else {
+                    $scope.totalCount = 0;
+                }
+
+                $scope.pageCount = param.nextPage;
+                $scope.disableNextPagebutton = false;
                 AuthService.getAllUserDetailData(param)
 
                     .then(function onSuccess(response) {
@@ -184,11 +207,18 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         console.log(response);
                     })
                 AuthService.getAllUserChatData(param)
-
                     .then(function onSuccess(response) {
                         console.log(response)
-
                         $scope.userChatData = response.data.data;
+                        $scope.totalCount = $scope.userChatData.total_count;
+                         if($scope.totalCount > 20){
+                           let count = $scope.totalCount/20;
+                           console.log('AAAAAAAAAAAAAAAAAAa',);
+                           if($scope.pageCount < count ){
+                               $scope.disableNextPagebutton = true;
+                           }
+                         }
+
                         if($scope.userChatData && $scope.userChatData.payload && $scope.userChatData.payload.length > 0){
                             for(let i in $scope.userChatData.payload){
                                 //console.log('oppppppppppppppppppp',$scope.userChatData.payload[i].content.contentType);
@@ -602,17 +632,22 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.serial = newPageNumber * 10 - 9;
                 $scope.historyDetail(newPageNumber);
             };
+              
+          
 
             $scope.liveChatPageChanged = function (newPageNumber, tab) {
                 $scope.serial = newPageNumber * 10 - 9;
                 $scope.getActiveUser(newPageNumber);
             };
+            
+            
             $scope.actionRequiredPageChanged = function (newPageNumber, tab) {
                 $scope.serial = newPageNumber * 10 - 9;
                 $scope.getActionRequiredUser(newPageNumber);
             };
 
             $scope.interveneDataPageChanged = function (newPageNumber, tab) {
+       
                 $scope.serial = newPageNumber * 10 - 9;
                 $scope.getInterveneUser(newPageNumber);
             };
