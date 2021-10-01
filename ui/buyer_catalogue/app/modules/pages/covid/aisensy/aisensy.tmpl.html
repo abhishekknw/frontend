@@ -465,7 +465,7 @@
 
     border-radius: 10px;
     width: auto;
-    height: auto;
+    height: calc(100vh - 130px) !important;
     margin: auto;
 
     padding: 16px 5px;
@@ -503,14 +503,16 @@
 
   .chat {
     width: 100%;
-    /* height: 400px; */
-    height: max-content;
-    overflow: auto;
+     height: calc(100vh - 242px); 
+  /*  height: max-content;*/
+    overflow-y: scroll;
     padding: 10px;
     transform: rotate(180deg);
   }
 
-  @media only screen and (max-height: 650px) {
+  .aisensy-intervene-btn { position: absolute; width: 100%; bottom: 0px; }
+.msg-box { position: absolute; width: 100%; z-index: 10 }
+ /* @media only screen and (max-height: 650px) {
     .chat {
       width: 100%;
       height: 480px;
@@ -549,7 +551,7 @@
       transform: rotate(180deg);
     }
   }
-
+*/
 
 
   .message-1 {
@@ -1042,7 +1044,7 @@
                             </div>
                           </div>
 
-                          <div ng-if="messageBox">
+                          <div ng-if="messageBox" class="msg-box">
                             <div class="input">
                               <input type="text" ng-model="message.activeMessage" placeholder="Write message" />
                             </div>
@@ -1234,7 +1236,7 @@
                             </div>
 
                           </div>
-                          <div ng-if="messageBox">
+                          <div ng-if="messageBox" class="msg-box">
                             <div class="input">
                               <input type="text" ng-model="message.actionRequiredMessage" placeholder="Write message" />
                             </div>
@@ -1413,7 +1415,7 @@
                             </div>
 
                           </div>
-                          <div ng-if="messageBox">
+                          <div ng-if="messageBox" class="msg-box">
                             <div class="input">
                               <input type="text" ng-model="message.interveneMessage" placeholder="Write message" />
                             </div>
@@ -1796,7 +1798,7 @@
                 </div>
 
               </div>
-              <div ng-if="messageBox">
+              <div ng-if="messageBox" class="msg-box">
                 <div class="input">
                   <input type="text" ng-model="message.historyMessage" placeholder="Write message" />
                 </div>
@@ -2273,7 +2275,7 @@
           </div>
 
         </div>
-        <div ng-if="messageBox">
+        <div ng-if="messageBox" class="msg-box">
           <div class="input">
             <input type="text" placeholder="Write message" />
           </div>
