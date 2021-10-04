@@ -19,32 +19,33 @@
     margin-bottom: 10px !important;
   }
 
-  .table-responsive{
+  .table-responsive {
     height: 500px;
   }
- /* .table.temp-table th{
+
+  /* .table.temp-table th{
 position: sticky;
 top:0;
 
   } */
- .table-responsive th{
-position: sticky;
-top:0;
-z-index: 100;
-  } 
-
-  .table-responsive thead th:nth-child(2){
+  .table-responsive th {
     position: sticky;
-left:0;
-z-index: 101;
-background: #8e1921;
+    top: 0;
+    z-index: 100;
   }
 
- .table-responsive tbody td:nth-child(2){
+  .table-responsive thead th:nth-child(2) {
     position: sticky;
-left:0;
-z-index: 100;
-background: white;
+    left: 0;
+    z-index: 101;
+    background: #8e1921;
+  }
+
+  .table-responsive tbody td:nth-child(2) {
+    position: sticky;
+    left: 0;
+    z-index: 100;
+    background: white;
   }
 </style>
 
@@ -1104,7 +1105,8 @@ background: white;
               </uib-tab-heading>
               <div class="container-fluid">
                 <div class="panel panel-default">
-                  <div class="col-md-12 " ng-if="viewTemplateSummaryTable" style="text-align:right;margin-bottom:10px; ">
+                  <div class="col-md-12 " ng-if="viewTemplateSummaryTable"
+                    style="text-align:right;margin-bottom:10px; ">
                     <button class="btn btn-danger" ng-click="backToTemplateData()">Back To Template</button>
                   </div>
                   <!-- <div class="col-md-6">
@@ -1125,74 +1127,80 @@ background: white;
                               </table>
                           </div>
                         </div> -->
-
-                  <div class="col-md-12 " style="padding-top: 15px;">
-                    <h4 class="panel-title">
-                      <select class="form-control" name="botType" ng-model="transactionalTemplateDropdown.bot"
-                        ng-change="setBotType()">
-                        <option value="" disabled>Select BOT</option>
-                        <option value="mea">MEA</option>
-                        <option value="mca">MCA</option>
-                        <!-- <option value="b2b" >B2B</option>
+                  <div ng-if="!viewTemplateSummaryTable">
+                    <div class="col-md-12 " style="padding-top: 15px;">
+                      <h4 class="panel-title">
+                        <select class="form-control" name="botType" ng-model="transactionalTemplateDropdown.bot"
+                          ng-change="setBotType()">
+                          <option value="" disabled>Select BOT</option>
+                          <option value="mea">MEA</option>
+                          <option value="mca">MCA</option>
+                          <!-- <option value="b2b" >B2B</option>
                                   <option value="b2c" >B2C</option> -->
-                      </select>
-                    </h4>
-                  </div>
+                        </select>
+                      </h4>
+                    </div>
 
-                  <div class="col-md-6 col-xs-6" ng-if="transactionalTemplateDropdown.bot=='mca'" style="margin-top: 10px;">
-                    <h4 class="panel-title">
-                      <select class="form-control" name="supplierType" ng-model="code"
-                        ng-change="setSupplierType('viewLeads')">
-                        <option value="" disabled>Select Location</option>
-                        <option value="delhi">Delhi</option>
-                      </select>
-                    </h4>
-                  </div>
-                  <div id="content2">
+                    <div class="col-md-6 col-xs-6" ng-if="transactionalTemplateDropdown.bot=='mca'"
+                      style="margin-top: 10px;">
+                      <h4 class="panel-title">
+                        <select class="form-control" name="supplierType" ng-model="transactionalTemplateDropdown.location"
+                          ng-change="setSupplierType('viewLeads')">
+                          <option value="" disabled>Select Location</option>
+                          <option value="delhi">Delhi</option>
+                        </select>
+                      </h4>
+                    </div>
+                    <div id="content2">
 
-                    <div class="col-md-6 col-xs-6" ng-if="transactionalTemplateDropdown.bot=='mca'" style="margin-top: -10px;">
+                      <div class="col-md-6 col-xs-6" ng-if="transactionalTemplateDropdown.bot=='mca'"
+                        style="margin-top: -10px;">
 
-                      <div class="form-group pincode">
-                        <h4 class="panel-title">
-                          <input class="form-control" type="text" name="pincode" id="pinId" ng-model="pinCode"
-                            placeholder="Enter Pincode" />
-                        </h4>
-                      </div>
+                        <div class="form-group pincode">
+                          <h4 class="panel-title">
+                            <input class="form-control" type="text" name="pincode" id="pinId" ng-model="transactionalTemplateDropdown.pinCode"
+                              placeholder="Enter Pincode" />
+                          </h4>
+                        </div>
 
-                      <!-- <div contenteditable="true">
+                        <!-- <div contenteditable="true">
                         Enter Pincode
                       </div> -->
 
-                      <!-- <form>
+                        <!-- <form>
 
 
                         <button type="submit" class="btn btn-primary">Submit</button>
                       </form> -->
+                      </div>
                     </div>
-                  </div>
 
 
 
 
-                  <div class="col-md-6 col-xs-6" ng-if="transactionalTemplateDropdown.bot=='mea'" style="margin-top: 10px;">
-                    <h4 class="panel-title">
-                      <select class="form-control" name="supplierType" ng-model="code"
-                        ng-change="setSupplierType('viewLeads')">
-                        <option value="" disabled>Select Type of Customer</option>
-                        <option value="class1">Class 1</option>
-                      </select>
-                    </h4>
-                  </div>
+                    <div class="col-md-6 col-xs-6" ng-if="transactionalTemplateDropdown.bot=='mea'"
+                      style="margin-top: 10px;">
+                      <h4 class="panel-title">
+                        <select class="form-control" name="supplierType" ng-model="transactionalTemplateDropdown.typeofCustomer"
+                          >
+                          <option value="" disabled>Select Type of Customer</option>
+                          <option value="class1">Class 1</option>
+                        </select>
+                      </h4>
+                    </div>
 
-                  <div class="col-md-6 col-xs-6" ng-if="transactionalTemplateDropdown.bot=='mea'" style="margin-top: 10px;">
-                    <h4 class="panel-title">
-                      <select class="form-control" name="supplierType" ng-model="code"
-                        ng-change="setSupplierType('viewLeads')">
-                        <option value="" disabled>Select Category</option>
-                        <option value="english">English</option>
-                      </select>
-                    </h4>
-                  </div>
+                    <div class="col-md-6 col-xs-6" ng-if="transactionalTemplateDropdown.bot=='mea'"
+                      style="margin-top: 10px;">
+                      <h4 class="panel-title">
+                        <select class="form-control" name="supplierType" ng-model="transactionalTemplateDropdown.category"
+                         >
+                          <option value="" disabled>Select Category</option>
+                          <option value="english">English</option>
+                        </select>
+                      </h4>
+                    </div>
+                 
+
 
                   <!-- <div class="col-md-6" style="margin-top: 10px;"> -->
                   <div class="col-md-12" print-remove style="margin-top: 10px;">
@@ -1221,12 +1229,13 @@ background: white;
                   </div>
                   <!-- </div> -->
 
-
+                </div>
                 </div><br /><br />
                 <div ng-if="showCampaigns">
 
-                  <input type="text" class="form-control " ng-model="searchQuery" placeholder="search">
+                 
                   <div ng-if="!viewTemplateSummaryTable">
+                    <input type="text" class="form-control " ng-model="searchQuery" placeholder="search">
                     <br>
                     <div class="table-responsive">
                       <table class="table temp-table">
@@ -1235,14 +1244,22 @@ background: white;
                           <tr>
                             <th style="padding:10px">Index</th>
                             <th style="padding:10px">Template Name</th>
-                            <th style="padding:10px" ng-click="Sort('start_date')">No. of Template Days Send</th>
+                            <!-- <th style="padding:10px" ng-click="Sort('start_date')">No. of Template Days Send</th>
                             <th style="padding:10px">Total user count send</th>
 
                             <th style="padding:10px">Positive Response</th>
                             <th style="padding:10px"> Negative Response</th>
                             <th style="padding:10px">Neutral Response</th>
                             <th style="padding:10px">View Template Summary</th>
-                            <th style="padding:10px">Download Summary</th>
+                            <th style="padding:10px">Download Summary</th> -->
+                            <th style="padding:10px" ng-click="Sort('start_date')">Days sent</th>
+                            <th style="padding:10px">User count</th>
+
+                            <th>Positive</th>
+                            <th>Neutral</th>
+                            <th>Negative</th>
+                            <th style="padding:10px">Details</th>
+                            <!-- <th style="padding:10px">Download Summary</th> -->
                           </tr>
                         </thead>
                         <tbody>
@@ -1257,10 +1274,10 @@ background: white;
                             <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()"
                                 class="btn btn-danger">View </button>
                             </td>
-                            <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
+                            <!-- <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
                                 data-target="#sendEmailModal" data-toggle="modal" type="button"
                                 class="btn btn-danger">Download
-                              </button></td>
+                              </button></td> -->
                           </tr>
 
                           <tr>
@@ -1274,10 +1291,10 @@ background: white;
                             <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()"
                                 class="btn btn-danger">View </button>
                             </td>
-                            <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
+                            <!-- <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
                                 data-target="#sendEmailModal" data-toggle="modal" type="button"
                                 class="btn btn-danger">Download
-                              </button></td>
+                              </button></td> -->
                           </tr>
                           <tr>
                             <td style="text-align: center;">2</td>
@@ -1290,10 +1307,10 @@ background: white;
                             <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()"
                                 class="btn btn-danger">View </button>
                             </td>
-                            <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
+                            <!-- <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
                                 data-target="#sendEmailModal" data-toggle="modal" type="button"
                                 class="btn btn-danger">Download
-                              </button></td>
+                              </button></td> -->
                           </tr>
                           <tr>
                             <td style="text-align: center;">2</td>
@@ -1306,10 +1323,10 @@ background: white;
                             <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()"
                                 class="btn btn-danger">View </button>
                             </td>
-                            <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
+                            <!-- <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
                                 data-target="#sendEmailModal" data-toggle="modal" type="button"
                                 class="btn btn-danger">Download
-                              </button></td>
+                              </button></td> -->
                           </tr>
                           <tr>
                             <td style="text-align: center;">2</td>
@@ -1322,10 +1339,10 @@ background: white;
                             <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()"
                                 class="btn btn-danger">View </button>
                             </td>
-                            <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
+                            <!-- <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
                                 data-target="#sendEmailModal" data-toggle="modal" type="button"
                                 class="btn btn-danger">Download
-                              </button></td>
+                              </button></td> -->
                           </tr>
                           <tr>
                             <td style="text-align: center;">2</td>
@@ -1338,10 +1355,10 @@ background: white;
                             <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()"
                                 class="btn btn-danger">View </button>
                             </td>
-                            <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
+                            <!-- <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
                                 data-target="#sendEmailModal" data-toggle="modal" type="button"
                                 class="btn btn-danger">Download
-                              </button></td>
+                              </button></td> -->
                           </tr>
                           <tr>
                             <td style="text-align: center;">3</td>
@@ -1353,10 +1370,10 @@ background: white;
                             <td style="text-align: center;">100</td>
                             <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
                             </td>
-                            <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
+                            <!-- <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
                                 data-target="#sendEmailModal" data-toggle="modal" type="button"
                                 class="btn btn-danger">Download
-                              </button></td>
+                              </button></td> -->
                           </tr>
                           <tr>
                             <td style="text-align: center;">4</td>
@@ -1368,8 +1385,8 @@ background: white;
                             <td style="text-align: center;">100</td>
                             <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
                             </td>
-                            <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
-                              </button></td>
+                            <!-- <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
+                              </button></td> -->
                           </tr>
                           <tr>
                             <td style="text-align: center;">5</td>
@@ -1381,8 +1398,8 @@ background: white;
                             <td style="text-align: center;">100</td>
                             <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
                             </td>
-                            <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
-                              </button></td>
+                            <!-- <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
+                              </button></td> -->
                           </tr>
                           <tr>
                             <td style="text-align: center;">6</td>
@@ -1394,8 +1411,8 @@ background: white;
                             <td style="text-align: center;">100</td>
                             <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
                             </td>
-                            <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
-                              </button></td>
+                            <!-- <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
+                              </button></td> -->
                           </tr>
                           <tr>
                             <td style="text-align: center;">7</td>
@@ -1407,8 +1424,8 @@ background: white;
                             <td style="text-align: center;">100</td>
                             <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
                             </td>
-                            <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
-                              </button></td>
+                            <!-- <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
+                              </button></td> -->
                           </tr>
                           <tr>
                             <td style="text-align: center;">8</td>
@@ -1420,8 +1437,8 @@ background: white;
                             <td style="text-align: center;">100</td>
                             <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
                             </td>
-                            <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
-                              </button></td>
+                            <!-- <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
+                              </button></td> -->
                           </tr>
                           <tr>
                             <td style="text-align: center;">9</td>
@@ -1433,8 +1450,8 @@ background: white;
                             <td style="text-align: center;">100</td>
                             <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
                             </td>
-                            <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
-                              </button></td>
+                            <!-- <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
+                              </button></td> -->
                           </tr>
                           <tr>
                             <td style="text-align: center;">10</td>
@@ -1447,8 +1464,8 @@ background: white;
                             <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()"
                                 class="btn btn-danger">View </button>
                             </td>
-                            <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
-                              </button></td>
+                            <!-- <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
+                              </button></td> -->
                           </tr>
 
                           <!-- <tr colspan="9">
@@ -1503,30 +1520,44 @@ background: white;
                   </div>
 
                   <div class="table-responsive" ng-if="viewTemplateSummaryTable">
+                    <div>
+                      <span ng-show="transactionalTemplateDropdown.bot" style="color:black"><h4>BOT:{{transactionalTemplateDropdown.bot}}</h4></span><br>
+                      <span ng-show="transactionalTemplateDropdown.location" style="color:black"><h4>Location:{{transactionalTemplateDropdown.location}}</h4></span><br>
+                      <span ng-show="transactionalTemplateDropdown.pinCode" style="color:black"><h4>PinCode:{{transactionalTemplateDropdown.pinCode}}</h4></span><br>
+                      <span ng-show="transactionalTemplateDropdown.typeofCustomer" style="color:black"><h4>Type of Customer:{{transactionalTemplateDropdown.typeofCustomer}}</h4></span><br>
+                      <span ng-show="transactionalTemplateDropdown.category" style="color:black"><h4>Category:{{transactionalTemplateDropdown.category}}</h4></span><br>
+                     
+                     
+                    </div>
                     <table class="table">
                       <thead>
                         <tr>
-                          <th>Index</th>
+                          <!-- <th>Index</th>
                           <th style="width:200px;" class="col-md-2">Template Name</th>
                           <th ng-click="Sort('start_date')">No. of Template Days Send</th>
                           <th>Total user count send</th>
-                          <!-- <th>Phase</br>Completed</th> -->
                           <th>Positive Response</th>
                           <th>Negative Response</th>
-                          <th>Neutral Response</th>
+                          <th>Neutral Response</th> -->
+
+                          <th>Index</th>
+                          <th>User count</th>
+                          <th>Positive</th>
+                          <th>Neutral</th>
+                          <th>Negative</th>
+                          
+
 
                         </tr>
                         <tr>
                           <td style="text-align: center;">1</td>
-                          <td style="text-align: center;">Doctor's Template</td>
                           <td style="text-align: center;">5</td>
                           <td style="text-align: center;">100</td>
                           <td style="text-align: center;">200</td>
                           <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">100</td>
 
                         </tr>
-                        <tr>
+                        <!-- <tr>
                           <td style="text-align: center;">2</td>
                           <td style="text-align: center;">Elevator Template</td>
                           <td style="text-align: center;">5</td>
@@ -1545,7 +1576,7 @@ background: white;
                           <td style="text-align: center;">200</td>
                           <td style="text-align: center;">100</td>
 
-                        </tr>
+                        </tr> -->
 
                       </thead>
                       <tbody>
@@ -6140,47 +6171,48 @@ background: white;
                           {{form_name.leads_form_name}}</option>
                       </select> -->
                       <div class="top-select-option-mca">
-                          <div class="row">
-                            <div class="col-xs-12">
-                              <div class="form-group">
-                                <!--category dropdown-->
-                                <select class="form-control" ng-change="" name="category" id="category" ng-model="category_code">
-                                  <option value="" disabled> Select Attribute</option>
-                                  <option>Updated At</option>
-                                  <option>Created At</option>
-                                     
-                                     
-                                  
-                                </select>
-                              </div>
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div class="form-group">
+                              <!--category dropdown-->
+                              <select class="form-control" ng-change="" name="category" id="category"
+                                ng-model="category_code">
+                                <option value="" disabled> Select Attribute</option>
+                                <option>Updated At</option>
+                                <option>Created At</option>
+
+
+
+                              </select>
                             </div>
-                  
-                            
-                       
+                          </div>
+
+
+
+                        </div>
                       </div>
-                    </div>
-                    <br />
-                    <tr>
-                      <td class="col-md-2">
-                        <p class="input-group">
-                          Select Start Date(Optional): <input type="date" class="form-control"
-                            ng-model="emailCampaignLeadsModel.start_date" required>
-                        </p>
-                      </td>
-                      <td class="col-md-2">
-                        <p class="input-group">
-                          Select End Date(Optional) : <input type="date" class="form-control"
-                            ng-model="emailCampaignLeadsModel.end_date" required>
-                        </p>
-                      </td>
-                      <td style="text-align: center; padding-top: 20px;">
-                        <p><button type="button" name="button" class="btn btn-danger" ng-click="sendMeEmail()"
-                            ng-disabled="!emailCampaignLeadsModel.leads_form_id" ng-if="submitLeadType">Email</button>
-                          <button type="button" name="button" class="btn btn-danger" ng-click="downloadSheet()"
-                            ng-disabled="!emailCampaignLeadsModel.leads_form_id"
-                            ng-if="!submitLeadType" >Download</button>
-                      </td>
-                    </tr>
+                      <br />
+                      <tr>
+                        <td class="col-md-2">
+                          <p class="input-group">
+                            Select Start Date(Optional): <input type="date" class="form-control"
+                              ng-model="emailCampaignLeadsModel.start_date" required>
+                          </p>
+                        </td>
+                        <td class="col-md-2">
+                          <p class="input-group">
+                            Select End Date(Optional) : <input type="date" class="form-control"
+                              ng-model="emailCampaignLeadsModel.end_date" required>
+                          </p>
+                        </td>
+                        <td style="text-align: center; padding-top: 20px;">
+                          <p><button type="button" name="button" class="btn btn-danger" ng-click="sendMeEmail()"
+                              ng-disabled="!emailCampaignLeadsModel.leads_form_id" ng-if="submitLeadType">Email</button>
+                            <button type="button" name="button" class="btn btn-danger" ng-click="downloadSheet()"
+                              ng-disabled="!emailCampaignLeadsModel.leads_form_id"
+                              ng-if="!submitLeadType">Download</button>
+                        </td>
+                      </tr>
                   </tbody>
                 </table>
               </div>

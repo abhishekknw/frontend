@@ -29,8 +29,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         function ($scope, $rootScope, $window,$sce, $location, AuthService, suspenseLeadService, $anchorScroll, $state, userService, constants, AuthService, vcRecaptchaService, permissions, commonDataShare) {
             // AuthService.Clear();
 
-
-
     $scope.isCollapsed = true;
     $scope.$on('$routeChangeSuccess', function () {
         $scope.isCollapsed = true;
