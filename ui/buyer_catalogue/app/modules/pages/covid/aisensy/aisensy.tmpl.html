@@ -1068,7 +1068,8 @@
                           </button>
 
                           <div ng-if="messageBox" class="msg-box">
-                            <div class="input">
+                            <div class="input-wrapper input ">
+                              <i style="margin-right: 20px;" class="fa fa-paperclip fa-lg" aria-hidden="true"></i>
                               <input type="text" ng-model="message.activeMessage" placeholder="Write message" />
                             </div>
                             <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
@@ -1274,8 +1275,9 @@
                             <i class="fa fa-angle-double-up" aria-hidden="true"></i>
                           </button>
                           <div ng-if="messageBox" class="msg-box">
-                            <div class="input">
-                              <input type="text" ng-model="message.actionRequiredMessage" placeholder="Write message" />
+                            <div class="input-wrapper input ">
+                              <i style="margin-right: 20px;" class="fa fa-paperclip fa-lg" aria-hidden="true"></i>
+                              <input type="text" ng-model="message.activeMessage" placeholder="Write message" />
                             </div>
                             <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
                               <svg viewBox="0 0 74.433 60.908" width="25" height="25"
@@ -1466,8 +1468,9 @@
                             <i class="fa fa-angle-double-up" aria-hidden="true"></i>
                           </button>
                           <div ng-if="messageBox" class="msg-box">
-                            <div class="input">
-                              <input type="text" ng-model="message.interveneMessage" placeholder="Write message" />
+                            <div class="input-wrapper input ">
+                              <i style="margin-right: 20px;" class="fa fa-paperclip fa-lg" aria-hidden="true"></i>
+                              <input type="text" ng-model="message.activeMessage" placeholder="Write message" />
                             </div>
                             <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
                               <svg viewBox="0 0 74.433 60.908" width="25" height="25"
@@ -1862,8 +1865,9 @@
                 <i class="fa fa-angle-double-up" aria-hidden="true"></i>
               </button>
               <div ng-if="messageBox" class="msg-box">
-                <div class="input">
-                  <input type="text" ng-model="message.historyMessage" placeholder="Write message" />
+                <div class="input-wrapper input ">
+                  <i style="margin-right: 20px;" class="fa fa-paperclip fa-lg" aria-hidden="true"></i>
+                  <input type="text" ng-model="message.activeMessage" placeholder="Write message" />
                 </div>
                 <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
                   <svg viewBox="0 0 74.433 60.908" width="25" height="25" xmlns="http://www.w3.org/2000/svg">
@@ -2353,8 +2357,9 @@
         </button>
         <div ng-if="messageBox" class="msg-box">
 
-          <div class="input">
-            <input type="text" placeholder="Write message" />
+          <div class="input-wrapper input ">
+            <i style="margin-right: 20px;"class="fa fa-paperclip fa-lg" aria-hidden="true"></i>
+            <input type="text" ng-model="message.activeMessage" placeholder="Write message" />
           </div>
           <div class="btn-send">
             <svg viewBox="0 0 74.433 60.908" width="25" height="25" xmlns="http://www.w3.org/2000/svg">
