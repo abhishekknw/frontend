@@ -4,26 +4,18 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             input = input.charAt(0).toUpperCase();
         return input;
     }
-}]).directive("whenScrolled", function () {
-    return {
+}]).directive('myEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 13) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.myEnter);
+                });
 
-        restrict: 'A',
-        link: function (scope, elem, attrs) {
-
-            // we get a list of elements of size 1 and need the first element
-            raw = elem[0];
-
-            // we load more elements when scrolled past a limit
-            elem.bind("scroll", function () {
-                if (raw.scrollTop + raw.offsetHeight + 5 >= raw.scrollHeight) {
-                    scope.loading = true;
-
-                    // we can give any function which loads more elements into the list
-                    scope.$apply(attrs.whenScrolled);
-                }
-            });
-        }
-    }
+                event.preventDefault();
+            }
+        });
+    };
 }).controller('aisensyCtrl',
     ['$scope', '$rootScope', '$window','$sce', '$location', 'AuthService', '$anchorScroll', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService', 'commonDataShare',
         function ($scope, $rootScope, $window,$sce, $location, AuthService, suspenseLeadService, $anchorScroll, $state, userService, constants, AuthService, vcRecaptchaService, permissions, commonDataShare) {
@@ -753,8 +745,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
             $scope.message = {};
             $scope.sendMessage = function (phone) {
-                console.log('8888888888888888', $scope.message);
-                console.log('9999999999999999999999', phone);
+        
                 let param = {
                     phone: phone
                 }
