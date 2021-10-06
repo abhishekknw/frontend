@@ -749,15 +749,16 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 let param = {
                     phone: phone
                 }
-                if ($scope.message.interveneMessage) {
-                    param.text = $scope.message.interveneMessage;
+                if ($scope.message.activeMessage) {
+                    param.text = $scope.message.activeMessage;
 
                 }
+                console.log('11111111111112222222222222222222',$scope.message);
                 AuthService.sendMessage(param)
                     .then(function onSuccess(response) {
                         if (response.data.status) {
                             let data = {
-                                content: { text: $scope.message.interveneMessage },
+                                content: { text: $scope.message.activeMessage },
                                 sender: "bot",
                                 timestamp:new Date()
                             }
