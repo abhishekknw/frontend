@@ -1144,8 +1144,8 @@ top:0;
                     <div class="col-md-6 col-xs-6" ng-if="transactionalTemplateDropdown.bot=='mca'"
                       style="margin-top: 10px;">
                       <h4 class="panel-title">
-                        <select class="form-control" name="supplierType" ng-model="transactionalTemplateDropdown.location"
-                          ng-change="setSupplierType('viewLeads')">
+                        <select class="form-control" name="supplierType"
+                          ng-model="transactionalTemplateDropdown.location" ng-change="setSupplierType('viewLeads')">
                           <option value="" disabled>Select Location</option>
                           <option value="delhi">Delhi</option>
                         </select>
@@ -1158,8 +1158,8 @@ top:0;
 
                         <div class="form-group pincode">
                           <h4 class="panel-title">
-                            <input class="form-control" type="text" name="pincode" id="pinId" ng-model="transactionalTemplateDropdown.pinCode"
-                              placeholder="Enter Pincode" />
+                            <input class="form-control" type="text" name="pincode" id="pinId"
+                              ng-model="transactionalTemplateDropdown.pinCode" placeholder="Enter Pincode" />
                           </h4>
                         </div>
 
@@ -1181,8 +1181,8 @@ top:0;
                     <div class="col-md-6 col-xs-6" ng-if="transactionalTemplateDropdown.bot=='mea'"
                       style="margin-top: 10px;">
                       <h4 class="panel-title">
-                        <select class="form-control" name="supplierType" ng-model="transactionalTemplateDropdown.typeofCustomer"
-                          >
+                        <select class="form-control" name="supplierType"
+                          ng-model="transactionalTemplateDropdown.typeofCustomer">
                           <option value="" disabled>Select Type of Customer</option>
                           <option value="class1">Class 1</option>
                         </select>
@@ -1192,48 +1192,48 @@ top:0;
                     <div class="col-md-6 col-xs-6" ng-if="transactionalTemplateDropdown.bot=='mea'"
                       style="margin-top: 10px;">
                       <h4 class="panel-title">
-                        <select class="form-control" name="supplierType" ng-model="transactionalTemplateDropdown.category"
-                         >
+                        <select class="form-control" name="supplierType"
+                          ng-model="transactionalTemplateDropdown.category">
                           <option value="" disabled>Select Category</option>
                           <option value="english">English</option>
                         </select>
                       </h4>
                     </div>
-                 
 
 
-                  <!-- <div class="col-md-6" style="margin-top: 10px;"> -->
-                  <div class="col-md-12" print-remove style="margin-top: 10px;">
-                    <!-- <label for="" style="color:#000000;">Select Date Range</label> -->
-                    <div class="col-md-6 " style=" margin-top: 10px;">
-                      <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
-                        placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates"
-                        is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true"
-                        close-text="Close" alt-input-formats="altInputFormats">
-                      <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
-                        <i class="glyphicon glyphicon-calendar"></i>
-                      </button>
+
+                    <!-- <div class="col-md-6" style="margin-top: 10px;"> -->
+                    <div class="col-md-12" print-remove style="margin-top: 10px;">
+                      <!-- <label for="" style="color:#000000;">Select Date Range</label> -->
+                      <div class="col-md-6 " style=" margin-top: 10px;">
+                        <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                          placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates"
+                          is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true"
+                          close-text="Close" alt-input-formats="altInputFormats">
+                        <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
+                          <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                      </div>
+                      <div class="col-md-6 " style=" margin-top: 10px;">
+                        <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                          placeholder="DD/MM/YYYY" ng-change="changeEndDate()" ng-model="dateRangeModel.end_dates"
+                          is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"
+                          alt-input-formats="altInputFormats">
+                        <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
+                          ng-click="isEndDateOpen = !isEndDateOpen">
+                          <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                      </div>
+                      <!-- <button class="btn btn-danger" ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates" ng-click="getCampaignDateWiseSummary()">Submit</button> -->
+
                     </div>
-                    <div class="col-md-6 " style=" margin-top: 10px;">
-                      <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
-                        placeholder="DD/MM/YYYY" ng-change="changeEndDate()" ng-model="dateRangeModel.end_dates"
-                        is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"
-                        alt-input-formats="altInputFormats">
-                      <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
-                        ng-click="isEndDateOpen = !isEndDateOpen">
-                        <i class="glyphicon glyphicon-calendar"></i>
-                      </button>
-                    </div>
-                    <!-- <button class="btn btn-danger" ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates" ng-click="getCampaignDateWiseSummary()">Submit</button> -->
+                    <!-- </div> -->
 
                   </div>
-                  <!-- </div> -->
-
                 </div>
-                </div><br /><br />
                 <div ng-if="showCampaigns">
 
-                 
+
                   <div ng-if="!viewTemplateSummaryTable">
                     <input type="text" class="form-control " ng-model="searchQuery" placeholder="search">
                     <br>
@@ -1274,13 +1274,13 @@ top:0;
                             <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()"
                                 class="btn btn-danger">View </button>
                             </td>
-                            <td style="text-align: center;"><button type="button" ng-click=""
+                            <!-- <td style="text-align: center;"><button type="button" ng-click=""
                               class="btn btn-danger">Download</button>
-                          </td>
-                            <!-- <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
+                          </td> -->
+                            <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
                                 data-target="#sendEmailModal" data-toggle="modal" type="button"
                                 class="btn btn-danger">Download
-                              </button></td> -->
+                              </button></td>
                           </tr>
 
                           <tr>
@@ -1295,8 +1295,8 @@ top:0;
                                 class="btn btn-danger">View </button>
                             </td>
                             <td style="text-align: center;"><button type="button" ng-click=""
-                              class="btn btn-danger">Download</button>
-                          </td>
+                                class="btn btn-danger">Download</button>
+                            </td>
                             <!-- <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
                                 data-target="#sendEmailModal" data-toggle="modal" type="button"
                                 class="btn btn-danger">Download
@@ -1314,8 +1314,8 @@ top:0;
                                 class="btn btn-danger">View </button>
                             </td>
                             <td style="text-align: center;"><button type="button" ng-click=""
-                              class="btn btn-danger">Download</button>
-                          </td>
+                                class="btn btn-danger">Download</button>
+                            </td>
                             <!-- <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
                                 data-target="#sendEmailModal" data-toggle="modal" type="button"
                                 class="btn btn-danger">Download
@@ -1333,8 +1333,8 @@ top:0;
                                 class="btn btn-danger">View </button>
                             </td>
                             <td style="text-align: center;"><button type="button" ng-click=""
-                              class="btn btn-danger">Download</button>
-                          </td>
+                                class="btn btn-danger">Download</button>
+                            </td>
                             <!-- <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
                                 data-target="#sendEmailModal" data-toggle="modal" type="button"
                                 class="btn btn-danger">Download
@@ -1352,8 +1352,8 @@ top:0;
                                 class="btn btn-danger">View </button>
                             </td>
                             <td style="text-align: center;"><button type="button" ng-click=""
-                              class="btn btn-danger">Download</button>
-                          </td>
+                                class="btn btn-danger">Download</button>
+                            </td>
                             <!-- <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
                                 data-target="#sendEmailModal" data-toggle="modal" type="button"
                                 class="btn btn-danger">Download
@@ -1371,8 +1371,8 @@ top:0;
                                 class="btn btn-danger">View </button>
                             </td>
                             <td style="text-align: center;"><button type="button" ng-click=""
-                              class="btn btn-danger">Download</button>
-                          </td>
+                                class="btn btn-danger">Download</button>
+                            </td>
                             <!-- <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
                                 data-target="#sendEmailModal" data-toggle="modal" type="button"
                                 class="btn btn-danger">Download
@@ -1389,8 +1389,8 @@ top:0;
                             <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
                             </td>
                             <td style="text-align: center;"><button type="button" ng-click=""
-                              class="btn btn-danger">Download</button>
-                          </td>
+                                class="btn btn-danger">Download</button>
+                            </td>
                             <!-- <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
                                 data-target="#sendEmailModal" data-toggle="modal" type="button"
                                 class="btn btn-danger">Download
@@ -1407,8 +1407,8 @@ top:0;
                             <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
                             </td>
                             <td style="text-align: center;"><button type="button" ng-click=""
-                              class="btn btn-danger">Download</button>
-                          </td>
+                                class="btn btn-danger">Download</button>
+                            </td>
                             <!-- <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
                               </button></td> -->
                           </tr>
@@ -1423,8 +1423,8 @@ top:0;
                             <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
                             </td>
                             <td style="text-align: center;"><button type="button" ng-click=""
-                              class="btn btn-danger">Download</button>
-                          </td>
+                                class="btn btn-danger">Download</button>
+                            </td>
                             <!-- <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
                               </button></td> -->
                           </tr>
@@ -1439,8 +1439,8 @@ top:0;
                             <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
                             </td>
                             <td style="text-align: center;"><button type="button" ng-click=""
-                              class="btn btn-danger">Download</button>
-                          </td>
+                                class="btn btn-danger">Download</button>
+                            </td>
                             <!-- <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
                               </button></td> -->
                           </tr>
@@ -1455,8 +1455,8 @@ top:0;
                             <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
                             </td>
                             <td style="text-align: center;"><button type="button" ng-click=""
-                              class="btn btn-danger">Download</button>
-                          </td>
+                                class="btn btn-danger">Download</button>
+                            </td>
                             <!-- <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
                               </button></td> -->
                           </tr>
@@ -1471,8 +1471,8 @@ top:0;
                             <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
                             </td>
                             <td style="text-align: center;"><button type="button" ng-click=""
-                              class="btn btn-danger">Download</button>
-                          </td>
+                                class="btn btn-danger">Download</button>
+                            </td>
                             <!-- <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
                               </button></td> -->
                           </tr>
@@ -1487,8 +1487,8 @@ top:0;
                             <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
                             </td>
                             <td style="text-align: center;"><button type="button" ng-click=""
-                              class="btn btn-danger">Download</button>
-                          </td>
+                                class="btn btn-danger">Download</button>
+                            </td>
                             <!-- <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
                               </button></td> -->
                           </tr>
@@ -1504,8 +1504,8 @@ top:0;
                                 class="btn btn-danger">View </button>
                             </td>
                             <td style="text-align: center;"><button type="button" ng-click=""
-                              class="btn btn-danger">Download</button>
-                          </td>
+                                class="btn btn-danger">Download</button>
+                            </td>
                             <!-- <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
                               </button></td> -->
                           </tr>
@@ -1563,13 +1563,23 @@ top:0;
 
                   <div class="table-responsive" ng-if="viewTemplateSummaryTable">
                     <div>
-                      <span ng-show="transactionalTemplateDropdown.bot" style="color:black"><h4>BOT:{{transactionalTemplateDropdown.bot}}</h4></span><br>
-                      <span ng-show="transactionalTemplateDropdown.location" style="color:black"><h4>Location:{{transactionalTemplateDropdown.location}}</h4></span><br>
-                      <span ng-show="transactionalTemplateDropdown.pinCode" style="color:black"><h4>PinCode:{{transactionalTemplateDropdown.pinCode}}</h4></span><br>
-                      <span ng-show="transactionalTemplateDropdown.typeofCustomer" style="color:black"><h4>Type of Customer:{{transactionalTemplateDropdown.typeofCustomer}}</h4></span><br>
-                      <span ng-show="transactionalTemplateDropdown.category" style="color:black"><h4>Category:{{transactionalTemplateDropdown.category}}</h4></span><br>
-                     
-                     
+                      <span ng-show="transactionalTemplateDropdown.bot" style="color:black">
+                        <h4>BOT:{{transactionalTemplateDropdown.bot}}</h4>
+                      </span><br>
+                      <span ng-show="transactionalTemplateDropdown.location" style="color:black">
+                        <h4>Location:{{transactionalTemplateDropdown.location}}</h4>
+                      </span><br>
+                      <span ng-show="transactionalTemplateDropdown.pinCode" style="color:black">
+                        <h4>PinCode:{{transactionalTemplateDropdown.pinCode}}</h4>
+                      </span><br>
+                      <span ng-show="transactionalTemplateDropdown.typeofCustomer" style="color:black">
+                        <h4>Type of Customer:{{transactionalTemplateDropdown.typeofCustomer}}</h4>
+                      </span><br>
+                      <span ng-show="transactionalTemplateDropdown.category" style="color:black">
+                        <h4>Category:{{transactionalTemplateDropdown.category}}</h4>
+                      </span><br>
+
+
                     </div>
                     <table class="table">
                       <thead>
@@ -1587,7 +1597,7 @@ top:0;
                           <th>Positive</th>
                           <th>Neutral</th>
                           <th>Negative</th>
-                          
+
 
 
                         </tr>
@@ -6073,7 +6083,7 @@ top:0;
           <div ui-view autoscroll="true" autoscroll-body-top></div>
         </div>
       </div>
-      <back-top></back-top>
+      <!-- <back-top></back-top> -->
 
 
       <!--Start: Code for showing image Modal Window -->
