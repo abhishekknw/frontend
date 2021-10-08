@@ -3,6 +3,7 @@ angular
   constant('constants',{
     //amazon keys
     // base_url : 'http://coreapi-test.3j6wudg4pu.ap-southeast-1.elasticbeanstalk.com/',
+    base_url: Config.interveneMeaAPIBaseUrl,
     base_url: Config.APIBaseUrl,
     url_base : 'v0/ui/website/',
     url_base_leads : 'v0/ui/leads/',

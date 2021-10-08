@@ -270,6 +270,16 @@ angular
         }
         
       })
+
+      .state('aisensyMea', {
+        url: '/intervene/mea',
+        controller: 'aisensyMeaCtrl',
+        templateUrl: 'modules/pages/covid/aisensyMea/aisensyMea.tmpl.html',
+          data :{
+          permission : 'can_view_intervene'
+        }
+        
+      })
       
       .state('covidVaccineCenter', {
         url: '/vaccinecenters/',

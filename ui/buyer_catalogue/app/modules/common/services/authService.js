@@ -11,6 +11,7 @@ angular.module('Authentication')
             var storageCredentials = 'machadalo-credentials';
             var storagePermissions = 'machadalo-permissions';
             var apiHost = APIBaseUrl;
+           var interveneApiHost = Config.interveneMeaAPIBaseUrl;
             var permissions = {};
             var userData = {};
             var user_codes = {
@@ -483,7 +484,7 @@ angular.module('Authentication')
                      return response
                   });
             };
-
+            
             authService.getAllActiveUserData = function (param) {
                let url = "v0/ui/b2c-bot/active-users/?next_page=" + param.next_page
                if (param.search) {
