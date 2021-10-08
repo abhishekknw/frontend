@@ -1271,16 +1271,17 @@ top:0;
                             <td style="text-align: center;">200</td>
                             <td style="text-align: center;">200</td>
                             <td style="text-align: center;">100</td>
-                            <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()"
-                                class="btn btn-danger">View </button>
+                            <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
+                            data-target="#viewModal" data-toggle="modal" type="button"
+                            class="btn btn-danger">View </button>
                             </td>
-                            <td style="text-align: center;"><button type="button" ng-click=""
+                            <!-- <td style="text-align: center;"><button type="button" ng-click=""
                               class="btn btn-danger">Download</button>
-                          </td>
-                            <!-- <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
+                          </td> -->
+                            <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
                                 data-target="#sendEmailModal" data-toggle="modal" type="button"
                                 class="btn btn-danger">Download
-                              </button></td> -->
+                              </button></td>
                           </tr>
 
                           <tr>
@@ -1291,8 +1292,9 @@ top:0;
                             <td style="text-align: center;">200</td>
                             <td style="text-align: center;">200</td>
                             <td style="text-align: center;">100</td>
-                            <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()"
-                                class="btn btn-danger">View </button>
+                            <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
+                              data-target="#sendEmailModal" data-toggle="modal" type="button"
+                              class="btn btn-danger">View </button>
                             </td>
                             <td style="text-align: center;"><button type="button" ng-click=""
                               class="btn btn-danger">Download</button>
@@ -1310,7 +1312,7 @@ top:0;
                             <td style="text-align: center;">200</td>
                             <td style="text-align: center;">200</td>
                             <td style="text-align: center;">100</td>
-                            <td style="text-align: center;"><button type="button" ng-click="viewTemplateSummary()"
+                            <td style="text-align: center;"><button type="button" data-target="viewModal" 
                                 class="btn btn-danger">View </button>
                             </td>
                             <td style="text-align: center;"><button type="button" ng-click=""
@@ -1486,11 +1488,11 @@ top:0;
                             <td style="text-align: center;">100</td>
                             <td style="text-align: center;"><button type="button" class="btn btn-danger">View </button>
                             </td>
-                            <td style="text-align: center;"><button type="button" ng-click=""
+                            <!-- <td style="text-align: center;"><button type="button" ng-click=""
                               class="btn btn-danger">Download</button>
-                          </td>
-                            <!-- <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
-                              </button></td> -->
+                          </td> -->
+                             <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
+                              </button></td> 
                           </tr>
                           <tr>
                             <td style="text-align: center;">10</td>
@@ -1561,7 +1563,7 @@ top:0;
                     </div>
                   </div>
 
-                  <div class="table-responsive" ng-if="viewTemplateSummaryTable">
+                  <!-- <div class="table-responsive" ng-if="viewTemplateSummaryTable">
                     <div>
                       <span ng-show="transactionalTemplateDropdown.bot" style="color:black"><h4>BOT:{{transactionalTemplateDropdown.bot}}</h4></span><br>
                       <span ng-show="transactionalTemplateDropdown.location" style="color:black"><h4>Location:{{transactionalTemplateDropdown.location}}</h4></span><br>
@@ -1574,13 +1576,13 @@ top:0;
                     <table class="table">
                       <thead>
                         <tr>
-                          <!-- <th>Index</th>
+                         
                           <th style="width:200px;" class="col-md-2">Template Name</th>
                           <th ng-click="Sort('start_date')">No. of Template Days Send</th>
                           <th>Total user count send</th>
                           <th>Positive Response</th>
                           <th>Negative Response</th>
-                          <th>Neutral Response</th> -->
+                          <th>Neutral Response</th> 
 
                           <th>Index</th>
                           <th>User count</th>
@@ -1599,7 +1601,7 @@ top:0;
                           <td style="text-align: center;">200</td>
 
                         </tr>
-                        <!-- <tr>
+                       <tr>
                           <td style="text-align: center;">2</td>
                           <td style="text-align: center;">Elevator Template</td>
                           <td style="text-align: center;">5</td>
@@ -1618,14 +1620,14 @@ top:0;
                           <td style="text-align: center;">200</td>
                           <td style="text-align: center;">100</td>
 
-                        </tr> -->
+                        </tr> 
 
                       </thead>
                       <tbody>
                       </tbody>
                     </table>
 
-                  </div>
+                  </div> -->
                 </div>
                 <div class="viewLeadstable" ng-if="!showCampaigns">
                   <!-- <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button> -->
@@ -6262,6 +6264,141 @@ top:0;
           </div>
         </div>
       </div>
+      <div id="viewModal" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" ng-if="submitLeadType">{{campaignNameOnImageModal}} Send Leads To Email</h4>
+              <h4 class="modal-title" ng-if="!submitLeadType">{{campaignNameOnImageModal}} Template name</h4>
+              <hr />
+              <div class="modal-body">
+
+               
+                    <div class="">
+                      BOT name : MEA/MCA
+                      <!-- <div>
+                        <span ng-show="transactionalTemplateDropdown.bot" style="color:black"><h4>BOT:{{transactionalTemplateDropdown.bot}}</h4></span><br>
+                        <span ng-show="transactionalTemplateDropdown.location" style="color:black"><h4>Location:{{transactionalTemplateDropdown.location}}</h4></span><br>
+                        <span ng-show="transactionalTemplateDropdown.pinCode" style="color:black"><h4>PinCode:{{transactionalTemplateDropdown.pinCode}}</h4></span><br>
+                        <span ng-show="transactionalTemplateDropdown.typeofCustomer" style="color:black"><h4>Type of Customer:{{transactionalTemplateDropdown.typeofCustomer}}</h4></span><br>
+                        <span ng-show="transactionalTemplateDropdown.category" style="color:black"><h4>Category:{{transactionalTemplateDropdown.category}}</h4></span><br>
+                       
+                       
+                      </div> -->
+                      <br>
+                      Date Range : 
+                      <!-- <select class="form-control" ng-model="emailCampaignLeadsModel.leads_form_id">
+                        <option ng-repeat="form_name in formDetails" value="{{form_name.leads_form_id}}">
+                          {{form_name.leads_form_name}}</option>
+                      </select> -->
+                      <!-- <div class="top-select-option-mca">
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div class="form-group">
+                             
+                              <select class="form-control" ng-change="" name="category" id="category"
+                                ng-model="category_code">
+                                <option value="" disabled> Select Attribute</option>
+                                <option>Updated At</option>
+                                <option>Created At</option>
+
+
+
+                              </select>
+                            </div>
+                          </div>
+
+
+
+                        </div>
+                      </div> -->
+                      <br />
+                      <div class="table" style="margin-top: 10px; margin-bottom: 10px;">
+                       
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <!-- <th>Index</th>
+                              <th style="width:200px;" class="col-md-2">Template Name</th>
+                              <th ng-click="Sort('start_date')">No. of Template Days Send</th>
+                              <th>Total user count send</th>
+                              <th>Positive Response</th>
+                              <th>Negative Response</th>
+                              <th>Neutral Response</th> -->
+    
+                              <th>Index</th>
+                              <th>User count</th>
+                              <th>Positive</th>
+                              <th>Neutral</th>
+                              <th>Negative</th>
+                              
+    
+    
+                            </tr>
+                            <tr>
+                              <td style="text-align: center;">1</td>
+                              <td style="text-align: center;">5</td>
+                              <td style="text-align: center;">100</td>
+                              <td style="text-align: center;">200</td>
+                              <td style="text-align: center;">200</td>
+    
+                            
+                            <!-- <tr>
+                              <td style="text-align: center;">2</td>
+                              <td style="text-align: center;">Elevator Template</td>
+                              <td style="text-align: center;">5</td>
+                              <td style="text-align: center;">100</td>
+                              <td style="text-align: center;">200</td>
+                              <td style="text-align: center;">200</td>
+                              <td style="text-align: center;">100</td>
+    
+                            </tr>
+                            <tr>
+                              <td style="text-align: center;">3</td>
+                              <td style="text-align: center;">Painting Template</td>
+                              <td style="text-align: center;">5</td>
+                              <td style="text-align: center;">100</td>
+                              <td style="text-align: center;">200</td>
+                              <td style="text-align: center;">200</td>
+                              <td style="text-align: center;">100</td>
+    
+                            </tr> -->
+    
+                          </thead>
+                          <tbody>
+                          </tbody>
+                        </table>
+    
+                      </div>
+                      <!-- <tr>
+                        <td class="col-md-2">
+                          <p class="input-group">
+                            Select Start Date(Optional): <input type="date" class="form-control"
+                              ng-model="emailCampaignLeadsModel.start_date" required>
+                          </p>
+                        </td>
+                        <td class="col-md-2">
+                          <p class="input-group">
+                            Select End Date(Optional) : <input type="date" class="form-control"
+                              ng-model="emailCampaignLeadsModel.end_date" required>
+                          </p>
+                        </td>
+                        <td style="text-align: center; padding-top: 20px;">
+                          <p><button type="button" name="button" class="btn btn-danger" ng-click="sendMeEmail()"
+                              ng-disabled="!emailCampaignLeadsModel.leads_form_id" ng-if="submitLeadType">Email</button>
+                            <button type="button" name="button" class="btn btn-danger" ng-click="downloadSheet()"
+                              ng-disabled="!emailCampaignLeadsModel.leads_form_id"
+                              ng-if="!submitLeadType">Download</button>
+                        </td>
+                      </tr> -->
+                      <center><button type="button" name="button" class="btn btn-danger" ng-click="downloadSheet()"
+                     >Download</button></center>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
 
@@ -6641,3 +6778,36 @@ top:0;
 </body>
 
 </html>
+<!-- column names:-
+
+1.Days sent ---- After pagination Days sent = Total templates (Days sent)
+2.User count ---     '' = Total Template user count
+3.Positive ----      '' = Total positive Response
+4.Neutral ----       '' = Total neutral Response
+5.Negetive ----      '' = Total negetive Response
+6.Details(view action button)
+  day wise detail
+    Template name--header
+	 Date Range
+	 Filter applied names
+	 
+	6.1.index
+	6.2.User count      
+	6.3.Positive       
+	6.4.Neutral       
+	6.5.Negetive  
+
+  On footer	Download button
+	
+7. Download User ----- '' = Download user response
+
+   7.1 user phone number -fx
+   7.2 what's app name -fx
+   7.3 User name-fx
+   7.4 Addional fiels (designation, societ,class etc..)
+   7.5 template id(unic tmp id)-fx
+   7.6 response date -fx
+   7.7 Positive -fx      
+   7.8.Neutral -fx      
+   7.9.Negetive -fx
+   7.10 user chat --- after the button(click on tmp msg) for that day -->
