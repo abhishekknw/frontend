@@ -11,6 +11,7 @@ angular.module('Authentication')
             var storageCredentials = 'machadalo-credentials';
             var storagePermissions = 'machadalo-permissions';
             var apiHost = APIBaseUrl;
+           var interveneApiHost = Config.interveneMeaAPIBaseUrl;
             var permissions = {};
             var userData = {};
             var user_codes = {
@@ -483,9 +484,13 @@ angular.module('Authentication')
                      return response
                   });
             };
-
-            authService.getAllActiveUserData = function (param) {
+            
+            authService.getAllActiveUserData = function (param,meaType) {
                let url = "v0/ui/b2c-bot/active-users/?next_page=" + param.next_page
+               if(meaType){
+                  url = "v0/ui/mea-bot/active-users/?next_page=" + param.next_page
+                  apiHost = interveneApiHost;
+               }
                if (param.search) {
                   url += '&search=' + param.search
                }
@@ -497,8 +502,12 @@ angular.module('Authentication')
                      return response
                   });
             };
-            authService.getAllActionRequiredData = function (param) {
+            authService.getAllActionRequiredData = function (param,meaType) {
                let url = "v0/ui/b2c-bot/action_required/?next_page=" + param.next_page;
+               if(meaType){
+                  url = "v0/ui/mea-bot/action_required/?next_page=" + param.next_page;
+                  apiHost = interveneApiHost;
+               }
                if (param.search) {
                   url += '&search=' + param.search
                }
@@ -511,8 +520,12 @@ angular.module('Authentication')
                      return response
                   });
             };
-            authService.getAllInterveneUserData = function (param) {
+            authService.getAllInterveneUserData = function (param,meaType) {
                let url = "/v0/ui/b2c-bot/intervene/?next_page=" + param.next_page;
+               if(meaType){
+                  url = "/v0/ui/mea-bot/intervene/?next_page=" + param.next_page;
+                  apiHost = interveneApiHost;
+               }
                if (param.search) {
                   url += '&search=' + param.search
                }
@@ -524,8 +537,12 @@ angular.module('Authentication')
                      return response
                   });
             };
-            authService.getAllUserDetailData = function (param) {
+            authService.getAllUserDetailData = function (param,meaType) {
                let url = "v0/ui/b2c-bot/get-user-details/?phone_number=" + param.phoneNumber
+               if(meaType){
+                  url = "v0/ui/mea-bot/get-user-details/?phone_number=" + param.phoneNumber
+                  apiHost = interveneApiHost;
+               }
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -535,8 +552,12 @@ angular.module('Authentication')
                   });
             };
 
-            authService.getAllUserChatData = function (param) {
+            authService.getAllUserChatData = function (param,meaType) {
                let url = "v0/ui/b2c-bot/get-user-conversation/?phone_number=" + param.phoneNumber + "&next_page=" + param.nextPage;
+               if(meaType){
+                  url = "v0/ui/mea-bot/get-user-conversation/?phone_number=" + param.phoneNumber + "&next_page=" + param.nextPage;
+                  apiHost = interveneApiHost;
+               }
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -580,9 +601,13 @@ angular.module('Authentication')
                   });
             };
 
-            authService.getAllUserHistory = function (param) {
+            authService.getAllUserHistory = function (param,meaType) {
                console.log(param);
                let url = "v0/ui/b2c-bot/get-all-users-paginate/?next_page=" + param.next_page;
+               if(meaType){
+                  url = "v0/ui/mea-bot/get-all-users-paginate/?next_page=" + param.next_page;
+                  apiHost = interveneApiHost;
+               }
                if (param.search) {
                   url += '&search=' + param.search
                }
@@ -595,9 +620,13 @@ angular.module('Authentication')
                   });
             };
 
-            authService.getActiveSearch = function (param) {
+            authService.getActiveSearch = function (param,meaType) {
                console.log(param);
                let url = "v0/ui/b2c-bot/search-user/?search=" + param.search;
+               if(meaType){
+                   url = "v0/ui/mea-bot/search-user/?search=" + param.search;
+                  apiHost = interveneApiHost;
+               }
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -608,9 +637,13 @@ angular.module('Authentication')
             };
 
 
-            authService.getCustomerJourney = function (param) {
+            authService.getCustomerJourney = function (param,meaType) {
                console.log(param);
                let url = "v0/ui/b2c-bot/user-journey/?phone_number=" +param.phone_number ;
+               if(meaType){
+                url = "v0/ui/mea-bot/user-journey/?phone_number=" +param.phone_number ;
+                 apiHost = interveneApiHost;
+              }
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -620,9 +653,13 @@ angular.module('Authentication')
                   });
             };
 
-            authService.gettemplateInStatus = function (param) {
+            authService.gettemplateInStatus = function (param,meaType) {
                console.log(param);
                let url = "v0/ui/b2c-bot/get-user-templates1/?phone_number=" +param.phone_number ;
+               if(meaType){
+                  url = "v0/ui/mea-bot/get-user-templates1/?phone_number=" +param.phone_number ;
+                   apiHost = interveneApiHost;
+                }
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -632,9 +669,13 @@ angular.module('Authentication')
                   });
             };
 
-            authService.getAllUserContact = function (param) {
+            authService.getAllUserContact = function (param,meaType) {
                console.log(param);
                let url = "v0/ui/b2c-bot/get-all-users-paginate/?next_page=" + param.next_page;
+               if(meaType){
+                  url = "v0/ui/mea-bot/get-all-users-paginate/?next_page=" + param.next_page;
+                  apiHost = interveneApiHost;
+               }
                if (param.search) {
                   url += '&search=' + param.search
                }
@@ -670,8 +711,12 @@ angular.module('Authentication')
                   });
             };
 
-            authService.getTemplateTabData = function (param) {
+            authService.getTemplateTabData = function (param,meaType) {
                let url = "v0/ui/b2c-bot/get-mca-master-templates/?search=" + param.search
+               if(meaType){
+                   url = "v0/ui/mea-bot/get-mca-master-templates/?search=" + param.search
+                  apiHost = interveneApiHost;
+               }
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -681,8 +726,12 @@ angular.module('Authentication')
                   });
             };
 
-            authService.getFilterTabData = function (param) {
+            authService.getFilterTabData = function (param,meaType) {
                let url = "v0/ui/b2c-bot/filter-user/";
+               if(meaType){
+                  url = "v0/ui/mea-bot/filter-user/";
+                 apiHost = interveneApiHost;
+              }
                if (param.attribute_name) {
                   url += '?attribute_name=' + param.attribute_name
                }
@@ -714,8 +763,12 @@ angular.module('Authentication')
                   });
             };
 
-            authService.addUserToIntervene = function (param) {
+            authService.addUserToIntervene = function (param,meaType) {
                let url = "v0/ui/b2c-bot/action-status-intervene/?intervene=True&phone_number=" + param.phone + "&username=" + param.username;
+               if(meaType){
+                  url = "v0/ui/mea-bot/action-status-intervene/?intervene=True&phone_number=" + param.phone + "&username=" + param.username;
+                  apiHost = interveneApiHost;
+               }
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -725,8 +778,12 @@ angular.module('Authentication')
                   });
             };
 
-            authService.addUserToActive = function (param) {
+            authService.addUserToActive = function (param,meaType) {
                let url = "v0/ui/b2c-bot/action-status-intervene/?resolved=True&phone_number=" + param.phone + "&username=" + param.username;
+               if(meaType){
+                  url = "v0/ui/mea-bot/action-status-intervene/?resolved=True&phone_number=" + param.phone + "&username=" + param.username;
+                  apiHost = interveneApiHost;
+               }
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
@@ -736,8 +793,12 @@ angular.module('Authentication')
                   });
             };
 
-            authService.sendMessage = function (param) {
+            authService.sendMessage = function (param,meaType) {
                let url = "v0/ui/b2c-bot/send-intrup-message/?phone_number=" + param.phone + "&text=" + param.text;
+               if(meaType){
+                   url = "v0/ui/mea-bot/send-intrup-message/?phone_number=" + param.phone + "&text=" + param.text;
+                   apiHost = interveneApiHost;
+                }
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response
