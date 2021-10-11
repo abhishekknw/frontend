@@ -1,6 +1,4 @@
 <style>
-
-
   .nav-tabs>li a h5 {
     margin: 0;
   }
@@ -49,6 +47,7 @@ top:0;
     z-index: 10;
     background: white;
   }
+<<<<<<< HEAD
   .dropdowns{
     padding-bottom: 10px;
     position: relative;
@@ -65,9 +64,36 @@ top:0;
     padding-right: 8px;
     padding-left: 8px;
     margin-top: 10px;
-  }
-}
+=======
 
+  @media screen and (min-width :500px) {
+    .col-xs-6 .dropdowns {
+      padding-bottom: 10px;
+      position: relative;
+      min-height: 1px;
+      padding-right: 8px;
+      padding-left: 8px;
+    }
+  }
+
+  footer {
+    position: relative;
+    background: #abab;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+  
+
+>>>>>>> 2adf59ed2ed22f4305876e927c18b68418aba05e
+  }
+
+  footer .content {
+    max-width: 1250px;
+    margin: auto;
+    /* padding: 30px 40px 40px 40px; */
+    color:#B20000;
+  
+  }
 </style>
 
 
@@ -1288,8 +1314,8 @@ top:0;
                             <td style="text-align: center;">200</td>
                             <td style="text-align: center;">100</td>
                             <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
-                            data-target="#viewModal" data-toggle="modal" type="button"
-                            class="btn btn-danger">View </button>
+                                data-target="#viewModal" data-toggle="modal" type="button" class="btn btn-danger">View
+                              </button>
                             </td>
                             <!-- <td style="text-align: center;"><button type="button" ng-click=""
                               class="btn btn-danger">Download</button>
@@ -1309,8 +1335,8 @@ top:0;
                             <td style="text-align: center;">200</td>
                             <td style="text-align: center;">100</td>
                             <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
-                              data-target="#sendEmailModal" data-toggle="modal" type="button"
-                              class="btn btn-danger">View </button>
+                                data-target="#sendEmailModal" data-toggle="modal" type="button"
+                                class="btn btn-danger">View </button>
                             </td>
                             <td style="text-align: center;"><button type="button" ng-click=""
                                 class="btn btn-danger">Download</button>
@@ -1328,7 +1354,7 @@ top:0;
                             <td style="text-align: center;">200</td>
                             <td style="text-align: center;">200</td>
                             <td style="text-align: center;">100</td>
-                            <td style="text-align: center;"><button type="button" data-target="viewModal" 
+                            <td style="text-align: center;"><button type="button" data-target="viewModal"
                                 class="btn btn-danger">View </button>
                             </td>
                             <td style="text-align: center;"><button type="button" ng-click=""
@@ -1507,8 +1533,8 @@ top:0;
                             <!-- <td style="text-align: center;"><button type="button" ng-click=""
                               class="btn btn-danger">Download</button>
                           </td> -->
-                             <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
-                              </button></td> 
+                            <td style="text-align: center;"><button type="button" class="btn btn-danger">Download
+                              </button></td>
                           </tr>
                           <tr>
                             <td style="text-align: center;">10</td>
@@ -1579,7 +1605,7 @@ top:0;
                     </div>
                   </div>
 
-                  
+
 
                   <!-- <div class="table-responsive" ng-if="viewTemplateSummaryTable">
                     <div>
@@ -6302,10 +6328,10 @@ top:0;
               <hr />
               <div class="modal-body">
 
-               
-                    <div class="">
-                      BOT name : MEA/MCA
-                      <!-- <div>
+
+                <div class="">
+                  BOT name : MEA/MCA
+                  <!-- <div>
                         <span ng-show="transactionalTemplateDropdown.bot" style="color:black"><h4>BOT:{{transactionalTemplateDropdown.bot}}</h4></span><br>
                         <span ng-show="transactionalTemplateDropdown.location" style="color:black"><h4>Location:{{transactionalTemplateDropdown.location}}</h4></span><br>
                         <span ng-show="transactionalTemplateDropdown.pinCode" style="color:black"><h4>PinCode:{{transactionalTemplateDropdown.pinCode}}</h4></span><br>
@@ -6314,13 +6340,13 @@ top:0;
                        
                        
                       </div> -->
-                      <br>
-                      Date Range : 
-                      <!-- <select class="form-control" ng-model="emailCampaignLeadsModel.leads_form_id">
+                  <br>
+                  Date Range :
+                  <!-- <select class="form-control" ng-model="emailCampaignLeadsModel.leads_form_id">
                         <option ng-repeat="form_name in formDetails" value="{{form_name.leads_form_id}}">
                           {{form_name.leads_form_name}}</option>
                       </select> -->
-                      <!-- <div class="top-select-option-mca">
+                  <!-- <div class="top-select-option-mca">
                         <div class="row">
                           <div class="col-xs-12">
                             <div class="form-group">
@@ -6341,38 +6367,38 @@ top:0;
 
                         </div>
                       </div> -->
-                      <br />
-                      <div class="table" style="margin-top: 10px; margin-bottom: 10px;">
-                       
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <!-- <th>Index</th>
+                  <br />
+                  <div class="table" style="margin-top: 10px; margin-bottom: 10px;">
+
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <!-- <th>Index</th>
                               <th style="width:200px;" class="col-md-2">Template Name</th>
                               <th ng-click="Sort('start_date')">No. of Template Days Send</th>
                               <th>Total user count send</th>
                               <th>Positive Response</th>
                               <th>Negative Response</th>
                               <th>Neutral Response</th> -->
-    
-                              <th>Index</th>
-                              <th>User count</th>
-                              <th>Positive</th>
-                              <th>Neutral</th>
-                              <th>Negative</th>
-                              
-    
-    
-                            </tr>
-                            <tr>
-                              <td style="text-align: center;">1</td>
-                              <td style="text-align: center;">5</td>
-                              <td style="text-align: center;">100</td>
-                              <td style="text-align: center;">200</td>
-                              <td style="text-align: center;">200</td>
-    
-                            
-                            <!-- <tr>
+
+                          <th>Index</th>
+                          <th>User count</th>
+                          <th>Positive</th>
+                          <th>Neutral</th>
+                          <th>Negative</th>
+
+
+
+                        </tr>
+                        <tr>
+                          <td style="text-align: center;">1</td>
+                          <td style="text-align: center;">5</td>
+                          <td style="text-align: center;">100</td>
+                          <td style="text-align: center;">200</td>
+                          <td style="text-align: center;">200</td>
+
+
+                          <!-- <tr>
                               <td style="text-align: center;">2</td>
                               <td style="text-align: center;">Elevator Template</td>
                               <td style="text-align: center;">5</td>
@@ -6392,14 +6418,14 @@ top:0;
                               <td style="text-align: center;">100</td>
     
                             </tr> -->
-    
-                          </thead>
-                          <tbody>
-                          </tbody>
-                        </table>
-    
-                      </div>
-                      <!-- <tr>
+
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+
+                  </div>
+                  <!-- <tr>
                         <td class="col-md-2">
                           <p class="input-group">
                             Select Start Date(Optional): <input type="date" class="form-control"
@@ -6420,49 +6446,49 @@ top:0;
                               ng-if="!submitLeadType">Download</button>
                         </td>
                       </tr> -->
-                      <center><button type="button" name="button" class="btn btn-danger" ng-click="downloadSheet()"
-                     >Download</button></center>
+                  <center><button type="button" name="button" class="btn btn-danger"
+                      ng-click="downloadSheet()">Download</button></center>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
 
-    <!--End: Code for showing image Modal  Window -->
-    <!--START: INVENTORY INFO MODAL  -->
-    <div class="modal fade" id="inventoryInfoModal" role="dialog">
-      <div class="modal-dialog">
+      <!--End: Code for showing image Modal  Window -->
+      <!--START: INVENTORY INFO MODAL  -->
+      <div class="modal fade" id="inventoryInfoModal" role="dialog">
+        <div class="modal-dialog">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Modal Header</h4>
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+              <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
           </div>
-          <div class="modal-body">
-            <p>Some text in the modal.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+
         </div>
-
       </div>
-    </div>
-    <!--END: INVENTORY INFO MODAL  -->
-    <!--START : view comments modal  -->
-    <div id="viewComments" class="modal fade">
+      <!--END: INVENTORY INFO MODAL  -->
+      <!--START : view comments modal  -->
+      <div id="viewComments" class="modal fade">
 
-      <!-- <div class="">
+        <!-- <div class="">
               Selected Inventory :
               <select class="form-control" ng-model="selectedInvForView">
                   <option ng-repeat="inv in viewInvForComments" value="{{inv}}">{{inv}}</option>
               </select>
             </div>
             <br> -->
-      <!-- <div class="modal-dialog">
+        <!-- <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-body">
                   <div class="modal-header">
@@ -6491,228 +6517,228 @@ top:0;
           </div>
             </div> -->
 
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            View Comments For {{supplierNameForComment}}
-          </div>
-          <div class="modal-body">
-            <table class="table-bordered table-striped">
-              <tbody>
-                <tr ng-repeat="item in commentsData[selectedInvForView]">
-                  <td class="col-md-8">
-                    <div style="margin-top:10px;margin-bottom:10px">
-                      <img ng-src="{{userIcon}}">
-                      <b>{{item.user_name}} :</b> <br>
-                    </div>
-
-                    <div style="padding-left:30px">
-                      Comment : {{item.comment}}</br>
-                      <span> <small>{{item.timestamp|date:'medium'}}</small></span>
-                    </div><br>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <!--  Add comment-->
-            <div style="width:100%">
-              <br>
-              <!-- <label>Comments :</label> -->
-              <textarea class="form-control col-md-10" rows="8" cols="200" ng-model="commentModal.comment"
-                placeholder="Write here.."></textarea>
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              View Comments For {{supplierNameForComment}}
             </div>
-            <br>
-          </div><br>
-          <br>
-          <!-- <button class="btn btn-success" type="button" ng-click="addComment(commentType)" style="margin:3%">Add
-                  Comment</button> -->
-          <button class="btn btn-success" type="button" ng-click="addPipelineComment()" style="margin:3%">Add
-            Comment</button>
-        </div>
-      </div><br>
-
-
-
-
-
-
-
-
-
-      <br>
-      <!-- <div> -->
-      <br>
-      <!-- </div> -->
-      </br></br>
-
-    </div>
-    <div id="addComments" class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            Add Comment For {{supplierDataForComment.name}}
-          </div>
-          <div class="col-md-12">
-            <div style="width:100%">
-              <br>
-              <label>Comments :</label>
-              <textarea class="form-control col-md-10" rows="8" cols="200" ng-model="commentModal.comment"
-                placeholder="Write here.."></textarea>
-            </div>
-            <br>
-          </div><br>
-          <!-- <div> -->
-          <br>
-          <button class="btn btn-success" type="button" ng-click="addComment()">Add Comment</button>
-          <!-- </div> -->
-          </br></br>
-
-        </div>
-      </div>
-    </div>
-
-    <!--END : view comments modal  -->
-    <!--START: Change password modal  -->
-    <div id="changePassword" class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3>Change Password</h3>
-          </div>
-          <form class="form-horizontal">
-            <br>
-            <small style="margin:20px;"> Note : Minimum 8 characters, at least one uppercase letter, one lowercase
-              letter, one number and one special character:</small>
-            <div class="form-group">
-              <label class="control-label col-sm-4" for="email">Old Password:</label>
-              <div class="col-sm-6">
-                <input type="password" class="form-control" placeholder="Enter old password"
-                  ng-model="passwordModel.old_password">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-sm-4" for="email">New Password:</label>
-              <div class="col-sm-6">
-                <input type="password" class="form-control" placeholder="Enter new password"
-                  ng-model="passwordModel.password">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-sm-4" for="email">Confirm Password:</label>
-              <div class="col-sm-6">
-                <input type="password" class="form-control" placeholder="confirm password"
-                  ng-model="passwordModel.confirm_password" ng-change="validatePassword()">
-                <br>
-                <span ng-show="!isValid && passwordModel.confirm_password"><small>{{passwordError}}</small></span>
-              </div>
-
-            </div>
-
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10" style="text-align:left;margin-bottom:20px;">
-                <button class="btn btn-danger" ng-click="changeUserPassword()">Submit</button>
-              </div>
-            </div>
-          </form>
-
-        </div>
-      </div>
-    </div>
-
-    <div id="sendBookingEngineEmailModal" class="modal fade">
-      <div class="modal-dialog" style="width:800px">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Send Emails</h4>
-            <hr />
             <div class="modal-body">
-
-              <div class="col-md-12">
-                Select Email Type :
-                <select class="form-control" name="" ng-model="emailModel.selected">
-                  <option disabled>Please Select</option>
-                  <option value="listOfSupplier">List Of Society Email</option>
-                  <option value="activationOfSupplier">Activation Of Society,Branding and Permission Email</option>
-                  <option value="pipelineOfSupplier">Pipelined Societies Email</option>
-                </select>
-                </br>
-                </br></br>
-                </br>
-              </div>
-              </br>
-              </br>
-              <div class="col-md-12">
-                <div class="col-md-6 emailModal" style="background-color:#12edcc">
-                  <div class="panel-heading">
-                    <h5>You can Test Your Email HERE</h5>
-                  </div>
-                  </br>
-                  </br>
-                  <div class="row">
-                    <input type="email" class="form-control" placeholder="Enter Your Own Email Id"
-                      ng-model="emailModel.email" style="text-align:center;">
-                    <button type="button" name="button" ng-Click="sendBookingEmails()" class="btn btn-danger"
-                      ng-disabled="emailBtnDisabled">Submit</button>
-                  </div>
-                </div>
-                <div class="col-md-6 emailModal" style="background-color:#eda234">
-                  <div class="panel-heading">
-                    <h5>To Send Confirmed Email Click HERE</h5>
-                  </div>
-                  </br>
-                  </br>
-                  <button type="button" name="button" class="btn btn-danger" style="text-align:center"
-                    ng-click="sendConfirmBookingEmails()" ng-disabled="emailBtnDisabled">Send Confirm Mail</button>
-                </div>
-              </div>
-
-              </br>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--END: Change password modal  -->
-    <!--START: Print Leads In Excel Modal  -->
-    <div id="printLeadsInExcelModal" class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">{{campaignNameOnImageModal}} Send Email Details</h4>
-            <hr />
-            <div class="modal-body">
-
-              <table class="table table-bordered table-align">
+              <table class="table-bordered table-striped">
                 <tbody>
-                  <div class="">
-                    Select Form :
-                    <select class="form-control" ng-model="printLeadsInExcelData.leads_form_id">
-                      <option ng-repeat="form_name in formDetails" value="{{form_name.leads_form_id}}">
-                        {{form_name.leads_form_name}}</option>
-                    </select>
-                  </div>
-                  <br />
-                  <tr>
-                    <td class="col-md-2">
-                      <p class="input-group">
-                        Select Start Date(Optional): <input type="date" class="form-control"
-                          ng-model="printLeadsInExcelData.start_date" required>
-                      </p>
-                    </td>
-                    <td class="col-md-2">
-                      <p class="input-group">
-                        Select End Date(Optional) : <input type="date" class="form-control"
-                          ng-model="printLeadsInExcelData.end_date" required>
-                      </p>
-                    </td>
+                  <tr ng-repeat="item in commentsData[selectedInvForView]">
+                    <td class="col-md-8">
+                      <div style="margin-top:10px;margin-bottom:10px">
+                        <img ng-src="{{userIcon}}">
+                        <b>{{item.user_name}} :</b> <br>
+                      </div>
 
+                      <div style="padding-left:30px">
+                        Comment : {{item.comment}}</br>
+                        <span> <small>{{item.timestamp|date:'medium'}}</small></span>
+                      </div><br>
                     </td>
                   </tr>
-                  <!--<tr>
+                </tbody>
+              </table>
+              <!--  Add comment-->
+              <div style="width:100%">
+                <br>
+                <!-- <label>Comments :</label> -->
+                <textarea class="form-control col-md-10" rows="8" cols="200" ng-model="commentModal.comment"
+                  placeholder="Write here.."></textarea>
+              </div>
+              <br>
+            </div><br>
+            <br>
+            <!-- <button class="btn btn-success" type="button" ng-click="addComment(commentType)" style="margin:3%">Add
+                  Comment</button> -->
+            <button class="btn btn-success" type="button" ng-click="addPipelineComment()" style="margin:3%">Add
+              Comment</button>
+          </div>
+        </div><br>
+
+
+
+
+
+
+
+
+
+        <br>
+        <!-- <div> -->
+        <br>
+        <!-- </div> -->
+        </br></br>
+
+      </div>
+      <div id="addComments" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              Add Comment For {{supplierDataForComment.name}}
+            </div>
+            <div class="col-md-12">
+              <div style="width:100%">
+                <br>
+                <label>Comments :</label>
+                <textarea class="form-control col-md-10" rows="8" cols="200" ng-model="commentModal.comment"
+                  placeholder="Write here.."></textarea>
+              </div>
+              <br>
+            </div><br>
+            <!-- <div> -->
+            <br>
+            <button class="btn btn-success" type="button" ng-click="addComment()">Add Comment</button>
+            <!-- </div> -->
+            </br></br>
+
+          </div>
+        </div>
+      </div>
+
+      <!--END : view comments modal  -->
+      <!--START: Change password modal  -->
+      <div id="changePassword" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3>Change Password</h3>
+            </div>
+            <form class="form-horizontal">
+              <br>
+              <small style="margin:20px;"> Note : Minimum 8 characters, at least one uppercase letter, one lowercase
+                letter, one number and one special character:</small>
+              <div class="form-group">
+                <label class="control-label col-sm-4" for="email">Old Password:</label>
+                <div class="col-sm-6">
+                  <input type="password" class="form-control" placeholder="Enter old password"
+                    ng-model="passwordModel.old_password">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-4" for="email">New Password:</label>
+                <div class="col-sm-6">
+                  <input type="password" class="form-control" placeholder="Enter new password"
+                    ng-model="passwordModel.password">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-4" for="email">Confirm Password:</label>
+                <div class="col-sm-6">
+                  <input type="password" class="form-control" placeholder="confirm password"
+                    ng-model="passwordModel.confirm_password" ng-change="validatePassword()">
+                  <br>
+                  <span ng-show="!isValid && passwordModel.confirm_password"><small>{{passwordError}}</small></span>
+                </div>
+
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10" style="text-align:left;margin-bottom:20px;">
+                  <button class="btn btn-danger" ng-click="changeUserPassword()">Submit</button>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+      <div id="sendBookingEngineEmailModal" class="modal fade">
+        <div class="modal-dialog" style="width:800px">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">Send Emails</h4>
+              <hr />
+              <div class="modal-body">
+
+                <div class="col-md-12">
+                  Select Email Type :
+                  <select class="form-control" name="" ng-model="emailModel.selected">
+                    <option disabled>Please Select</option>
+                    <option value="listOfSupplier">List Of Society Email</option>
+                    <option value="activationOfSupplier">Activation Of Society,Branding and Permission Email</option>
+                    <option value="pipelineOfSupplier">Pipelined Societies Email</option>
+                  </select>
+                  </br>
+                  </br></br>
+                  </br>
+                </div>
+                </br>
+                </br>
+                <div class="col-md-12">
+                  <div class="col-md-6 emailModal" style="background-color:#12edcc">
+                    <div class="panel-heading">
+                      <h5>You can Test Your Email HERE</h5>
+                    </div>
+                    </br>
+                    </br>
+                    <div class="row">
+                      <input type="email" class="form-control" placeholder="Enter Your Own Email Id"
+                        ng-model="emailModel.email" style="text-align:center;">
+                      <button type="button" name="button" ng-Click="sendBookingEmails()" class="btn btn-danger"
+                        ng-disabled="emailBtnDisabled">Submit</button>
+                    </div>
+                  </div>
+                  <div class="col-md-6 emailModal" style="background-color:#eda234">
+                    <div class="panel-heading">
+                      <h5>To Send Confirmed Email Click HERE</h5>
+                    </div>
+                    </br>
+                    </br>
+                    <button type="button" name="button" class="btn btn-danger" style="text-align:center"
+                      ng-click="sendConfirmBookingEmails()" ng-disabled="emailBtnDisabled">Send Confirm Mail</button>
+                  </div>
+                </div>
+
+                </br>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--END: Change password modal  -->
+      <!--START: Print Leads In Excel Modal  -->
+      <div id="printLeadsInExcelModal" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">{{campaignNameOnImageModal}} Send Email Details</h4>
+              <hr />
+              <div class="modal-body">
+
+                <table class="table table-bordered table-align">
+                  <tbody>
+                    <div class="">
+                      Select Form :
+                      <select class="form-control" ng-model="printLeadsInExcelData.leads_form_id">
+                        <option ng-repeat="form_name in formDetails" value="{{form_name.leads_form_id}}">
+                          {{form_name.leads_form_name}}</option>
+                      </select>
+                    </div>
+                    <br />
+                    <tr>
+                      <td class="col-md-2">
+                        <p class="input-group">
+                          Select Start Date(Optional): <input type="date" class="form-control"
+                            ng-model="printLeadsInExcelData.start_date" required>
+                        </p>
+                      </td>
+                      <td class="col-md-2">
+                        <p class="input-group">
+                          Select End Date(Optional) : <input type="date" class="form-control"
+                            ng-model="printLeadsInExcelData.end_date" required>
+                        </p>
+                      </td>
+
+                      </td>
+                    </tr>
+                    <!--<tr>
                     <td class="col-md-2">
                       <p class="input-group">
                         Select By Supplier (Optional):
@@ -6723,23 +6749,44 @@ top:0;
                       </p>
                     </td>
                   </tr>-->
-                </tbody>
-              </table>
-              </br>
-              <td><button type="button" name="button" class="btn btn-danger"
-                  ng-click="printLeadsInExcel()">Submit</button>
+                  </tbody>
+                </table>
+                </br>
+                <td><button type="button" name="button" class="btn btn-danger"
+                    ng-click="printLeadsInExcel()">Submit</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <!--START: Print Leads In Excel Modal  -->
+      <!--START: Print Leads In Excel Modal  -->
 
 
 
-</div><!-- middle-section -->
+    </div><!-- middle-section -->
 </div><!-- wrapperBox -->
 </main>
+<footer>
+ <center><div class="content">
+
+
+    <p style="margin-top:10px;">
+     <b style="font-size:x-large;  text-decoration: underline; ">NOTE:</b> 
+  <ol>
+     <b>1. Days sent</b> : Total templates (Days sent)<br>
+      <b>2. User count</b> : Total Template user count<br>
+      <b>3. Positive</b> : Total positive Response<br>
+      <b>4. Neutral </b>: Total Neutral Response<br>
+      <b>5. Negative </b>:Total Negative Response<br>
+      <b> 6. Details </b>: View Template Details<br>
+      <b>7. Download User </b>: Download User Response<br>
+    </ol>
+    </p>
+  </div>
+</center> 
+
+
+</footer>
 </div>
 
 
@@ -6805,37 +6852,5 @@ top:0;
   </main>
 </body>
 
+
 </html>
-<!-- column names:-
-
-1.Days sent ---- After pagination Days sent = Total templates (Days sent)
-2.User count ---     '' = Total Template user count
-3.Positive ----      '' = Total positive Response
-4.Neutral ----       '' = Total neutral Response
-5.Negetive ----      '' = Total negetive Response
-6.Details(view action button)
-  day wise detail
-    Template name--header
-	 Date Range
-	 Filter applied names
-	 
-	6.1.index
-	6.2.User count      
-	6.3.Positive       
-	6.4.Neutral       
-	6.5.Negetive  
-
-  On footer	Download button
-	
-7. Download User ----- '' = Download user response
-
-   7.1 user phone number -fx
-   7.2 what's app name -fx
-   7.3 User name-fx
-   7.4 Addional fiels (designation, societ,class etc..)
-   7.5 template id(unic tmp id)-fx
-   7.6 response date -fx
-   7.7 Positive -fx      
-   7.8.Neutral -fx      
-   7.9.Negetive -fx
-   7.10 user chat --- after the button(click on tmp msg) for that day -->
