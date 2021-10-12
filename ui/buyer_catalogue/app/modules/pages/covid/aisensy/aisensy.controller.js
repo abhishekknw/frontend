@@ -361,11 +361,13 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showgetActionRequiredUser = false;
                 $scope.showgetInterveneUser = false;
                 $scope.showtemplateDetail = false;
+                //$scope.contactDetailData = [];
                 $scope.showfilterDetail = false;
                 let param = {
                     next_page: 0
                 }
                 if (page) {
+                    page = page - 1;
                     param.next_page = page;
                 } else {
                     $scope.totalCount = 0;
@@ -400,12 +402,13 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 $scope.showfilterDetail = false;
                 $scope.isUserProfile = false;
                 $scope.showChatModule = false;
-
+                //$scope.historyDetailData = [];
                 $scope.totalCount = 0;
                 let param = {
                     next_page: 0
                 }
                 if (page) {
+                    page = page - 1;
                     param.next_page = page;
                 } else {
                     $scope.totalCount = 0;

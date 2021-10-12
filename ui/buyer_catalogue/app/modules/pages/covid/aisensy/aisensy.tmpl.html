@@ -1060,7 +1060,7 @@ margin-left: 50px;
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="navbar-collapse" ng-class="isCollapsed ? 'collapse' : 'in'">
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right" style="cursor: pointer;">
           <li><a target="_blank" class="fa fa-comments" id="active-nav" aria-hidden="true" style="font-size: large"
               ng-click="getActiveUser()">
               Live chat</a> </li>
@@ -2067,6 +2067,11 @@ margin-left: 50px;
               </dir-pagination-controls>
             </center>
           </div>
+          <div ng-if="historyDetailData.length == 0">
+            <h4 style="text-align: center; color: red;">
+              Record Not Found.
+            </h4>
+          </div>
           <!-- Start Phone Chat for history tab-->
           <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
             <div class="screen-phone">
@@ -2381,6 +2386,11 @@ margin-left: 50px;
       <dir-pagination-controls max-size="2" on-page-change="pageChanged(newPageNumber)" boundary-links="true">
       </dir-pagination-controls>
     </center>
+    <div ng-if="contactDetailData.length == 0">
+      <h4 style="text-align: center; color: red;">
+        Record Not Found.
+      </h4>
+    </div>
   </div>
   <!--/Contact Tab-->
 
