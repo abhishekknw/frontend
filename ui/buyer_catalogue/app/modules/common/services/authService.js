@@ -486,7 +486,8 @@ angular.module('Authentication')
             };
             
             authService.getAllActiveUserData = function (param,meaType) {
-               let url = "v0/ui/b2c-bot/active-users/?next_page=" + param.next_page
+               let url = "v0/ui/b2c-bot/active-users/?next_page=" + param.next_page;
+               apiHost = APIBaseUrl;
                if(meaType){
                   url = "v0/ui/mea-bot/active-users/?next_page=" + param.next_page
                   apiHost = interveneApiHost;
@@ -503,6 +504,7 @@ angular.module('Authentication')
                   });
             };
             authService.getAllActionRequiredData = function (param,meaType) {
+               apiHost = APIBaseUrl;
                let url = "v0/ui/b2c-bot/action_required/?next_page=" + param.next_page;
                if(meaType){
                   url = "v0/ui/mea-bot/action_required/?next_page=" + param.next_page;
@@ -522,6 +524,7 @@ angular.module('Authentication')
             };
             authService.getAllInterveneUserData = function (param,meaType) {
                let url = "/v0/ui/b2c-bot/intervene/?next_page=" + param.next_page;
+               apiHost = APIBaseUrl;
                if(meaType){
                   url = "/v0/ui/mea-bot/intervene/?next_page=" + param.next_page;
                   apiHost = interveneApiHost;
@@ -539,6 +542,7 @@ angular.module('Authentication')
             };
             authService.getAllUserDetailData = function (param,meaType) {
                let url = "v0/ui/b2c-bot/get-user-details/?phone_number=" + param.phoneNumber
+               apiHost = APIBaseUrl;
                if(meaType){
                   url = "v0/ui/mea-bot/get-user-details/?phone_number=" + param.phoneNumber
                   apiHost = interveneApiHost;
@@ -554,6 +558,7 @@ angular.module('Authentication')
 
             authService.getAllUserChatData = function (param,meaType) {
                let url = "v0/ui/b2c-bot/get-user-conversation/?phone_number=" + param.phoneNumber + "&next_page=" + param.nextPage;
+               apiHost = APIBaseUrl;
                if(meaType){
                   url = "v0/ui/mea-bot/get-user-conversation/?phone_number=" + param.phoneNumber + "&next_page=" + param.nextPage;
                   apiHost = interveneApiHost;
@@ -604,6 +609,7 @@ angular.module('Authentication')
             authService.getAllUserHistory = function (param,meaType) {
                console.log(param);
                let url = "v0/ui/b2c-bot/get-all-users-paginate/?next_page=" + param.next_page;
+               apiHost = APIBaseUrl;
                if(meaType){
                   url = "v0/ui/mea-bot/get-all-users-paginate/?next_page=" + param.next_page;
                   apiHost = interveneApiHost;
@@ -623,6 +629,7 @@ angular.module('Authentication')
             authService.getActiveSearch = function (param,meaType) {
                console.log(param);
                let url = "v0/ui/b2c-bot/search-user/?search=" + param.search;
+               apiHost = APIBaseUrl;
                if(meaType){
                    url = "v0/ui/mea-bot/search-user/?search=" + param.search;
                   apiHost = interveneApiHost;
@@ -639,7 +646,8 @@ angular.module('Authentication')
 
             authService.getCustomerJourney = function (param,meaType) {
                console.log(param);
-               let url = "v0/ui/b2c-bot/user-journey/?phone_number=" +param.phone_number ;
+               let url = "v0/ui/b2c-bot/user-journey/?phone_number=" +param.phone_number;
+               apiHost = APIBaseUrl;
                if(meaType){
                 url = "v0/ui/mea-bot/user-journey/?phone_number=" +param.phone_number ;
                  apiHost = interveneApiHost;
@@ -656,6 +664,7 @@ angular.module('Authentication')
             authService.gettemplateInStatus = function (param,meaType) {
                console.log(param);
                let url = "v0/ui/b2c-bot/get-user-templates1/?phone_number=" +param.phone_number ;
+               apiHost = APIBaseUrl;
                if(meaType){
                   url = "v0/ui/mea-bot/get-user-templates1/?phone_number=" +param.phone_number ;
                    apiHost = interveneApiHost;
@@ -672,6 +681,7 @@ angular.module('Authentication')
             authService.getAllUserContact = function (param,meaType) {
                console.log(param);
                let url = "v0/ui/b2c-bot/get-all-users-paginate/?next_page=" + param.next_page;
+               apiHost = APIBaseUrl;
                if(meaType){
                   url = "v0/ui/mea-bot/get-all-users-paginate/?next_page=" + param.next_page;
                   apiHost = interveneApiHost;
@@ -712,6 +722,7 @@ angular.module('Authentication')
             };
 
             authService.getTemplateTabData = function (param,meaType) {
+               apiHost = APIBaseUrl;
                let url = "v0/ui/b2c-bot/get-mca-master-templates/?search=" + param.search
                if(meaType){
                    url = "v0/ui/mea-bot/get-mca-master-templates/?search=" + param.search
@@ -728,6 +739,7 @@ angular.module('Authentication')
 
             authService.getFilterTabData = function (param,meaType) {
                let url = "v0/ui/b2c-bot/filter-user/";
+               apiHost = APIBaseUrl;
                if(meaType){
                   url = "v0/ui/mea-bot/filter-user/";
                  apiHost = interveneApiHost;
@@ -765,6 +777,7 @@ angular.module('Authentication')
 
             authService.addUserToIntervene = function (param,meaType) {
                let url = "v0/ui/b2c-bot/action-status-intervene/?intervene=True&phone_number=" + param.phone + "&username=" + param.username;
+               apiHost = APIBaseUrl;
                if(meaType){
                   url = "v0/ui/mea-bot/action-status-intervene/?intervene=True&phone_number=" + param.phone + "&username=" + param.username;
                   apiHost = interveneApiHost;
@@ -780,6 +793,7 @@ angular.module('Authentication')
 
             authService.addUserToActive = function (param,meaType) {
                let url = "v0/ui/b2c-bot/action-status-intervene/?resolved=True&phone_number=" + param.phone + "&username=" + param.username;
+               apiHost = APIBaseUrl;
                if(meaType){
                   url = "v0/ui/mea-bot/action-status-intervene/?resolved=True&phone_number=" + param.phone + "&username=" + param.username;
                   apiHost = interveneApiHost;
@@ -795,6 +809,7 @@ angular.module('Authentication')
 
             authService.sendMessage = function (param,meaType) {
                let url = "v0/ui/b2c-bot/send-intrup-message/?phone_number=" + param.phone + "&text=" + param.text;
+               apiHost = APIBaseUrl;
                if(meaType){
                    url = "v0/ui/mea-bot/send-intrup-message/?phone_number=" + param.phone + "&text=" + param.text;
                    apiHost = interveneApiHost;

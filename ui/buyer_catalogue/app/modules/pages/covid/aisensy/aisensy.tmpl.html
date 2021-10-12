@@ -1864,6 +1864,11 @@
               </dir-pagination-controls>
             </center>
           </div>
+          <div ng-if="historyDetailData.length == 0">
+            <h4 style="text-align: center; color: red;">
+              Record Not Found.
+            </h4>
+          </div>
           <!-- Start Phone Chat for history tab-->
           <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
             <div class="screen-phone">
@@ -2178,6 +2183,11 @@
       <dir-pagination-controls max-size="2" on-page-change="pageChanged(newPageNumber)" boundary-links="true">
       </dir-pagination-controls>
     </center>
+    <div ng-if="contactDetailData.length == 0">
+      <h4 style="text-align: center; color: red;">
+        Record Not Found.
+      </h4>
+    </div>
   </div>
   <!--/Contact Tab-->
 
