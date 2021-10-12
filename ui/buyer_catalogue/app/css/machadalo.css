@@ -170,37 +170,7 @@ label span {
   z-index: 1;
 }
 
-/* For media screen*/
 
-@media only screen and (min-width :300px) and (max-width :700px) {
-  .hamburger {
-    width: 30px;
-    height: 30px;
-    position: fixed;
-    top: 25px;
-    left: 15px;
-    z-index: 6;
-    border: 0;
-    background: none;
-    display: block;
-  }
-.header{
-    width: 100%;
-    padding: 20px 10px 0px 0px;
-    display: block;
-    background: #fff;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 2;
-    border-bottom: 1px solid #d6d6d6;
-}
-header a.logo img {
-  width: 100%;
-  height: auto;
-  margin-left: 45px;
-}
-}
 /*Header*/
 header {
   width: 100%;
@@ -315,7 +285,7 @@ header .topRight .top-menu li:hover ul {
   position: fixed;
   top: 18px;
   left: 20px;
-  z-index: 6;
+  z-index: 16;
   border: 0;
   background: none;
   display: block;
@@ -398,7 +368,7 @@ aside {
   left: -100%;
   top: 0;
   bottom: 0;
-  z-index: 5;
+  z-index: 15;
   background: linear-gradient(-85deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
@@ -728,3 +698,57 @@ aside ul li ul.child li ul.subchild li:hover ul.subchildsub {
 .table-suppliers td:nth-child(3), .table-suppliers th:nth-child(3){
   margin-left: 170px;
 }*/
+
+/* For media screen*/
+
+@media only screen and (max-width :767px)  {
+  .hamburger {
+    width: 30px;
+    height: 30px;
+    position: fixed;
+    top: 25px;
+    left: 15px;
+    z-index: 16;
+    border: 0;
+    background: none;
+    display: block;
+  }
+header{
+    width: 100%;
+    padding: 20px 10px 0px 0px;
+    display: block;
+    background: #fff;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 12;
+    border-bottom: 1px solid #d6d6d6;
+}
+header a.logo img {
+  width: 100%;
+  height: auto;
+  margin-left: 45px;
+}
+
+header .topRight .top-menu li {
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0px;
+}
+
+header .topRight ul {
+    margin: 0;
+    padding: 4px 0 0 0px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+header .topRight .top-menu {
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+}

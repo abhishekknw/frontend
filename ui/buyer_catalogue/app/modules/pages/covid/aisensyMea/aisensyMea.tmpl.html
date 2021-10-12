@@ -8,7 +8,50 @@
 
 <style>
   /*aisensy*/
+  .logo-sec-mca img{
+width: 80px;
+margin-left: 50px;
+}
+   .file-upload {
 
+    left: 70px;
+    height: 20px;
+    width: 20px;
+    border-radius: 100px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid #FFFFFF;
+    overflow: hidden;
+    background-image: linear-gradient(to bottom, #2a8f27 50%, #ababab 50%);
+    background-size: 100% 200%;
+    transition: all 1s;
+    color: #fff;
+    font-size: 10px;
+    top: 20px;
+  }
+
+  .file-upload input[type='file'] {
+
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+
+  }
+
+
+  .file-upload:hover {
+
+    background-position: 0 -100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    
+  }
    .scrolling-area {
     /* max-width: 250px;
   max-height: 250px; */
@@ -743,6 +786,53 @@
   .navbar-collapse.in {
     height: auto !important;
   }
+
+  .hamburger {
+  width: 30px;
+  height: 30px;
+  position: fixed;
+  top: 10px;
+  left: 20px;
+  z-index: 16;
+  border: 0;
+  background: none;
+  display: block;
+}
+.hamburger span {
+  width: 30px;
+  height: 2px;
+  display: block;
+  background: #000;
+  margin: 8px 0;
+  transition: all 0.3s ease-in-out;
+}
+.hamburger:focus {
+  outline: 0;
+  border: 0;
+}
+
+.hamburger span:first-child {
+  transform-origin: 0% 0%;
+}
+
+.hamburger span:nth-last-child(2) {
+  transform-origin: 0% 100%;
+}
+
+.hamburger.is-visible span {
+  opacity: 1;
+  transform: rotate(45deg) translate(-8px, -2px);
+  background: #36383F;
+}
+.hamburger.is-visible span:nth-last-child(3) {
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+.hamburger.is-visible span:nth-last-child(2) {
+  transform: rotate(-45deg) translate(-9px, 10px);
+}
+
 </style>
 
 <script>
@@ -752,19 +842,18 @@
 </script>
 <div ng-init="getActiveUser()  ">
 
-
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">
-          <!--<div class="icon-home-home">
+        <!-- <a class="navbar-brand" href="#">
+         <div class="icon-home-home">
           <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg">
 
             <path fill="#fff"
               d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
           </svg>
-        </div>-->
+        </div>
           <div class="icon-home">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
               class="bi bi-house-door-fill" viewBox="0 0 16 16">
@@ -772,7 +861,161 @@
                 d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z" />
             </svg>
           </div>
-        </a>
+        </a> -->
+        <button class="hamburger" ng-class="{'is-visible':visible}" ng-click="visible=!visible;" ng-hide="custom_user_hide" aria-hidden="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <aside ng-class="{'is-visible':visible}">
+          <div class="sidemenu">
+            <ul id="menu-content">
+              <li class="parent arrow" ng-class="{active: isActive('/dashboard')}" permission="[perm.menuDashboard]">
+                <a href="javascript:void(0);">DashBoard</a>
+                <ul class="child">
+                  <li><a ng-href="/#/dashboard">Business</a></li>
+                  <li><a ng-href="/#/b2b/dashboard">B2B Client DashBoard</a></li>
+                  <li class="arrow">
+                    <a href="javascript:void(0);">Operational</a>
+                    <ul class="subchild">
+                      <li><a href="/r/operations-dashboard">Campaign Report</a></li>
+                      <li><a href="/r/operations-dashboard/entity">Entity Report</a></li>
+                      <li><a href="/r/operations-dashboard/user">User Performance</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li><!-- li -->
+              <li class="parent arrow" ng-class="{active: isActive('/CampaignList')}">
+                <a href="javascript:void(0);">Campaign Planning </a>
+                <ul class="child">
+                  <li class="arrow">
+                    <a href="javascript:void(0);" permission="[perm.menuCampaignList,perm.menuOpsDashBoard]">Static</a>
+                    <ul class="subchild">
+                      <li><a href="/#/campaignDecisionBoard" permission="[perm.menuOpsDashBoard]">Campaign Decision Board</a></li>
+                      <li><a href="/#/CampaignList" permission="[perm.menuCampaignList]">List of Campaign</a></li>
+                      <li><a href="/#/HDFHDF0789/releasePlan" permission="[perm.menuCampaignList]">Booking Plan</a></li>
+                      <li><a href="/#/SuspenseLeadSheet" permission="[perm.menuCampaignList]">Suspense Lead Sheet</a></li>
+                    </ul>
+                  </li>
+                  <li class="arrow">
+                    <a href="javascript:void(0);">Dynamic</a>
+                    <ul class="subchild">
+                      <li class="arrow">
+                        <a href="javascript:void(0);">Supplier</a>
+                        <ul class="subchildsub">
+                          <li><a href="/r/supplier/base-type/list">Standard Templates</a></li>
+                          <li><a href="/r/supplier/type/list">Manage Supplier Type</a></li>
+                          <li><a href="/r/supplier/list">Manage Supplier</a></li>
+                        </ul>
+                      </li>
+                      <li class="arrow">
+                        <a href="javascript:void(0);">Inventory</a>
+                        <ul class="subchildsub">
+                          <li><a href="/r/inventory/base/list">Standard Template</a></li>
+                          <li><a href="/r/inventory/list">Manage Inventory</a></li>
+                        </ul>
+                      </li>
+                      
+                      <li class="arrow">
+                        <a href="javascript:void(0);">Booking Engine</a>
+                        <ul class="subchildsub">
+                          <li><a href="/r/booking/base/list">Standard Templates</a></li>
+                          <li><a href="/r/booking/template/list">Booking Templates</a></li>
+                          <li><a href="/r/booking/campaigns">Manage Bookings</a></li>
+                        </ul>
+                      </li>
+                      <li class="arrow">
+                        <a href="javascript:void(0);">Campaign Release</a>
+                        <ul class="subchildsub">
+                          <li><a href="/#/HDFHDF0789/auditReleasePlan">Release and Audit Plan </a></li>
+                          <li><a href="#">Manage Phases</a></li>
+                        </ul>
+                      </li>
+        
+                     
+                    </ul>
+                  </li>
+                </ul>
+              </li><!-- li -->
+              <li class="parent arrow">
+                <a href="javascript:void(0);">Campaign Execution</a>
+                <ul class="child">
+                  <li permission="[perm.menuChecklist]">
+                    <a href="/r/checklist/campaigns">Campaign Checklist</a>
+                  </li>
+                  <li class="arrow">
+                    <a href="javascript:void(0);">Leads</a>
+                    <ul class="subchild">
+                      <li permission="[perm.menuCampaignLeads]"><a href="/#/campaignLeads">Capture Leads</a></li>
+                      <li><a href="/r/leads/settings">Assign Permission</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li><!-- li -->
+              <li class="parent arrow" permission="[perm.menuCampaignLeads]">
+                <a href="javascript:void(0);">Static Form</a>
+                <ul class="child">
+                  <li><a href="https://forms.machadalo.com/#/dashboard">Manage Supplier</a></li>
+                </ul>
+              </li><!-- li -->
+              <li class="parent arrow">
+                <a href="javascript:void(0);">Management</a>
+                <ul class="child">
+                  <li>
+                    <a href="/#/manageMent/aboutYou">My Profile</a>
+                  </li>
+                  <li class="arrow" permission="[perm.viewManagement]">
+                    <a >Organization</a>
+                    <ul class="subchild">
+                      <li><a href="/#/manageMent/organisationView">View</a></li>
+                      <li><a href="/#/manageMent/organisationOnBoard">On-Boarding</a></li>
+                      <li><a href="/#/manageMent/mapOrganisations">Organizations Mapping</a></li>
+                    </ul>
+                  </li>
+                  <li permission="[perm.viewManagement]">
+                    <a href="/#/manageMent/profileView">Manage Profile</a>
+                  </li>
+                  <!-- <li class="arrow">
+                    <a href="javascript:void(0);">Manage Profile</a>
+                    <ul class="subchild">
+                      <li><a href="/#/manageUser">Create Profile </a></li>
+                      <li><a href="/#/manageUser">Update</a></li>
+                    </ul>
+                  </li> -->
+                  <li class="arrow" permission="[perm.viewManagement]">
+                    <a href="javascript:void(0);">Roles</a>
+                    <ul class="subchild">
+                      <li><a href="/#/manageMent/createRoles">Create</a></li>
+                      <li><a href="/#/manageMent/assignRole">Assign</a></li>
+                      <li><a href="/#/manageMent/viewRole">View</a></li>
+                    </ul>
+                  </li>
+                  <li class="arrow" permission="[perm.viewManagement]">
+                    <a href="javascript:void(0);">Users</a>
+                    <ul class="subchild">
+                      <li><a href="/#/manageMent/createUser">Create User</a></li>
+                      <li><a href="/#/manageMent/viewUsers">Update</a></li>
+                    </ul>
+                  </li>
+                </ul>
+        
+        
+              </li><!-- li -->
+              <li >
+                <a href="/#/lead-data">Leads Data</a>
+              </li>
+        
+              <li >
+                <a href="/#/intervene" >Intervene MCA</a>
+              </li>
+        
+              <li >
+                <a href="/#/intervene/mea" >Intervene MEA</a>
+              </li>
+        
+            </ul>
+          </div> 
+        </aside>
         <button type="button" class="navbar-toggle" ng-click="isCollapsed = !isCollapsed">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
@@ -787,7 +1030,7 @@
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="navbar-collapse" ng-class="isCollapsed ? 'collapse' : 'in'">
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right" style="cursor: pointer;">
           <li><a target="_blank" class="fa fa-comments" id="active-nav" aria-hidden="true" style="font-size: large"
               ng-click="getActiveUser()">
               Live chat</a> </li>
@@ -810,51 +1053,6 @@
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
-
-
-
-
-  <!-- navbar -->
-  <!--  <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-      <a class="navbar-brand">
-        <div class="logo-sec-mca">
-          <img src="images/machadalo-logo.png" alt="" title="" />
-        </div>
-      </a>
-
-      <div class="nav-aisensy">
-        <input type="checkbox" id="nav-aisensy-check">
-        <div class="nav-aisensy-btn">
-          <label for="nav-aisensy-check">
-            <span></span>
-            <span></span>
-            <span></span>
-          </label>
-        </div>
-
-        <div class="nav-aisensy-links">
-          <a target="_blank" class="fa fa-comments" id="active-nav" aria-hidden="true" style="font-size: large"
-            ng-click="getActiveUser()">
-            Live chat</a>
-          <a target="_blank" class="fa fa-user-circle" aria-hidden="true" style="font-size: large"
-            ng-click="contactDetail()">
-            Contact</a>
-          <a target="_blank" class="fa fa-history" aria-hidden="true" style="font-size: large"
-            ng-click="historyDetail()">
-            History</a>
-          <a target="_blank" class="fa fa-file-text" aria-hidden="true" style="font-size: large"
-            ng-click=templateDetail()>
-            Template</a>
-          <a target="_blank" class="fa fa-filter" aria-hidden="true" style="font-size: large" ng-click=filterTab()>
-            Filter</a>
-
-        </div>
-      </div>
-
-    </div>
-  </nav> -->
-  <!-- /navbar -->
 
   <!--Active chat list + status + chat details-->
 
@@ -1066,12 +1264,20 @@
                             style="background-color: rgb(70, 70, 70);float:right; margin-bottom: 5px; border-radius:50%; border: 1px solid white;  margin-top: -20px; position: relative; z-index: 10;">
                             <i class="fa fa-angle-double-up" aria-hidden="true"></i>
                           </button>
-
                           <div ng-if="messageBox" class="msg-box">
                             <div class="input-wrapper input ">
-                              <i style="margin-right: 20px;" class="fa fa-paperclip fa-lg" aria-hidden="true"></i>
-                              <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message" /> -->
-                              <input type="text" ng-model="message.activeMessage" placeholder="Write message"  my-enter="sendMessage(userChatData.phone_number)">
+                              <div class="wrapper">
+                                <div class="file-upload">
+                                  <input type="file" />
+                                  <i class="fa fa-arrow-up"></i>
+                                </div>
+
+
+                                <!-- <i style="margin-right: 20px;" class="fa fa-paperclip fa-lg" aria-hidden="true"></i> -->
+                                <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message" /> -->
+                                <input type="text" ng-model="message.activeMessage" placeholder="Write message"
+                                  my-enter="sendMessage(userChatData.phone_number)">
+                              </div>
                             </div>
                             <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
                               <svg viewBox="0 0 74.433 60.908" width="25" height="25"
@@ -1082,7 +1288,7 @@
                             </div>
 
                             <div class="aisensy-resolve-btn">
-                              <button type="button" class="btn btn-success" style="margin-top:20px"
+                              <button type="button" class="btn btn-success" style="margin-top:10px"
                                 ng-click="interveneButton(userChatData)">
                                 Resolve
                               </button>
@@ -1277,9 +1483,18 @@
                           </button>
                           <div ng-if="messageBox" class="msg-box">
                             <div class="input-wrapper input ">
-                              <i style="margin-right: 20px;" class="fa fa-paperclip fa-lg" aria-hidden="true"></i>
-                              <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message" /> -->
-                              <input type="text" ng-model="message.activeMessage" placeholder="Write message"  my-enter="sendMessage(userChatData.phone_number)">
+                              <div class="wrapper">
+                                <div class="file-upload">
+                                  <input type="file" />
+                                  <i class="fa fa-arrow-up"></i>
+                                </div>
+
+
+                                <!-- <i style="margin-right: 20px;" class="fa fa-paperclip fa-lg" aria-hidden="true"></i> -->
+                                <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message" /> -->
+                                <input type="text" ng-model="message.activeMessage" placeholder="Write message"
+                                  my-enter="sendMessage(userChatData.phone_number)">
+                              </div>
                             </div>
                             <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
                               <svg viewBox="0 0 74.433 60.908" width="25" height="25"
@@ -1290,13 +1505,12 @@
                             </div>
 
                             <div class="aisensy-resolve-btn">
-                              <button type="button" class="btn btn-success" style="margin-top:20px"
+                              <button type="button" class="btn btn-success" style="margin-top:10px"
                                 ng-click="interveneButton(userChatData)">
                                 Resolve
                               </button>
                             </div>
                           </div>
-
 
                           <div class="aisensy-intervene-btn" ng-click="writeMessage(userChatData)" ng-if="!messageBox"
                             style="margin-top:5px">
@@ -1471,9 +1685,18 @@
                           </button>
                           <div ng-if="messageBox" class="msg-box">
                             <div class="input-wrapper input ">
-                              <i style="margin-right: 20px;" class="fa fa-paperclip fa-lg" aria-hidden="true"></i>
-                              <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message" /> -->
-                              <input type="text" ng-model="message.activeMessage" placeholder="Write message ffff"  my-enter="sendMessage(userChatData.phone_number)">   
+                              <div class="wrapper">
+                                <div class="file-upload">
+                                  <input type="file" />
+                                  <i class="fa fa-arrow-up"></i>
+                                </div>
+
+
+                                <!-- <i style="margin-right: 20px;" class="fa fa-paperclip fa-lg" aria-hidden="true"></i> -->
+                                <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message" /> -->
+                                <input type="text" ng-model="message.activeMessage" placeholder="Write message"
+                                  my-enter="sendMessage(userChatData.phone_number)">
+                              </div>
                             </div>
                             <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
                               <svg viewBox="0 0 74.433 60.908" width="25" height="25"
@@ -1484,7 +1707,7 @@
                             </div>
 
                             <div class="aisensy-resolve-btn">
-                              <button type="button" class="btn btn-success" style="margin-top:20px"
+                              <button type="button" class="btn btn-success" style="margin-top:10px"
                                 ng-click="interveneButton(userChatData)">
                                 Resolve
                               </button>
@@ -1867,19 +2090,6 @@
                 style="background-color: rgb(70, 70, 70);float:right; margin-bottom: 5px; border-radius:50%; border: 1px solid white; margin-top: -20px; position: relative; z-index: 10;">
                 <i class="fa fa-angle-double-up" aria-hidden="true"></i>
               </button>
-              <div ng-if="messageBox" class="msg-box">
-                <div class="input-wrapper input ">
-                  <i style="margin-right: 20px;" class="fa fa-paperclip fa-lg" aria-hidden="true"></i>
-                  <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message" /> -->
-                  <input type="text" ng-model="message.activeMessage" placeholder="Write message"  my-enter="sendMessage(userChatData.phone_number)">
-                </div>
-                <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
-                  <svg viewBox="0 0 74.433 60.908" width="25" height="25" xmlns="http://www.w3.org/2000/svg">
-                    <path fill="#fff"
-                      d="M 0 0 L 74.22 26.562 L 0.246 60.712 L 7.608 34.535 L 27.831 28.259 L 6.91 25.469 L 0 0 Z" />
-                  </svg>
-                </div>
-              </div>
             </div>
           </div>
           <!--End Phone Chat  for history tab-->
@@ -2359,20 +2569,6 @@
           style="background-color: rgb(70, 70, 70);float:right; margin-bottom: 5px; border-radius:50%; border: 1px solid white; margin-top: -20px; position: relative; z-index: 10;">
           <i class="fa fa-angle-double-up" aria-hidden="true"></i>
         </button>
-        <div ng-if="messageBox" class="msg-box">
-
-          <div class="input-wrapper input ">
-            <i style="margin-right: 20px;"class="fa fa-paperclip fa-lg" aria-hidden="true"></i>
-            <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message" /> -->
-            <input type="text" ng-model="message.activeMessage" placeholder="Write message"  my-enter="sendMessage(userChatData.phone_number)">
-          </div>
-          <div class="btn-send">
-            <svg viewBox="0 0 74.433 60.908" width="25" height="25" xmlns="http://www.w3.org/2000/svg">
-              <path fill="#fff"
-                d="M 0 0 L 74.22 26.562 L 0.246 60.712 L 7.608 34.535 L 27.831 28.259 L 6.91 25.469 L 0 0 Z" />
-            </svg>
-          </div>
-        </div>
       </div>
     </div>
     <!--End Phone Chat  for filter tab-->
