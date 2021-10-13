@@ -6624,14 +6624,34 @@
 
       // Template Dashboard start
       $scope.getTransactionalTemplate = function () {
+        alert("tab call")
 
-        templateDashboardService.transactionalTemplate().then(function onSuccess(response) {
-            console.log('11111111111111111111111111111', response);
+        // templateDashboardService.transactionalTemplate().then(function onSuccess(response) {
+        //     console.log('11111111111111111111111111111', response);
+        //   }).catch(function onError(response) {
+        //     console.log(response);
+        //   })
+        templateDashboardService.TransactionalTemplate()
+          .then(function onSuccess(response) {
+
+            console.log('11111111111', response);
+
           }).catch(function onError(response) {
             console.log(response);
           })
-       
       }
+
+      $scope.gettransactionalTemplateSummaryDownload = function () {
+
+        templateDashboardService.transactionalTemplate().then(function onSuccess(response) {
+          console.log('2222222222', response);
+        }).catch(function onError(response) {
+          console.log(response);
+        })
+
+      }
+
+
       $scope.transactionalTemplateDropdown = {}
       $scope.setBotType = function () {
         console.log($scope.transactionalTemplateDropdown.bot)
@@ -6644,7 +6664,7 @@
 
       $scope.backToTemplateData = function () {
         $scope.viewTemplateSummaryTable = false;
-        $scope.transactionalTemplateDropdown ={};
+        $scope.transactionalTemplateDropdown = {};
       }
 
 

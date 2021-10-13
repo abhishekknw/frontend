@@ -15,11 +15,14 @@ angular.module('catalogueApp')
 
 
       DashboardService.transactionalTemplate = function () {
-        let url = apiHost +  "v0/ui/mca-bot/mca-template-summary/";
+        let url = apiHost +  "v0/ui/mca-bot/template-summary-list/";
         return machadaloHttp.get(url);
       }
 
-
+      DashboardService.transactionalTemplateSummaryDownload = function () {
+        let url = apiHost +  "v0/ui/mca-bot/download-template-summary/";
+        return machadaloHttp.get(url);
+      }
 
       return DashboardService;
 
