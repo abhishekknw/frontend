@@ -11,16 +11,17 @@ angular.module('catalogueApp')
       var url_root = 'v0/ui/';
       var url_base_user = 'v0/';
       var DashboardService = {};
-      var apiHost = 'https://liveapi.societybasket.in/';
+      var apiHost = APIBaseUrl;
 
 
       DashboardService.transactionalTemplate = function () {
-        let url = apiHost +  "v0/ui/mca-bot/template-summary-list/";
-        return machadaloHttp.get(url);
+        let url =   "v0/ui/mca-bot/template-summary-list/";
+        return machadaloHttp.get( url);
       }
 
       DashboardService.transactionalTemplateSummaryDownload = function () {
-        let url = apiHost +  "v0/ui/mca-bot/download-template-summary/";
+        // let url = apiHost +  "v0/ui/mca-bot/download-template-summary/";
+        let url =  "v0/ui/mca-bot/download-template-summary/";
         return machadaloHttp.get(url);
       }
 
