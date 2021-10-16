@@ -4,19 +4,24 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             input = input.charAt(0).toUpperCase();
         return input;
     }
-}]).directive('myEnter', function () {
-    return function (scope, element, attrs) {
-        element.bind("keydown keypress", function (event) {
-            if(event.which === 13) {
-                scope.$apply(function (){
-                    scope.$eval(attrs.myEnter);
-                });
+}])
+// .directive('myEnter', function () {
+//     return function (scope, element, attrs) {
+        
+//         element.bind("keydown keypress", function (event) {
+//             if (event.key !== undefined){
+//             if(event.which === 13) {
+//                 scope.$apply(function (){
+//                     scope.$eval(attrs.myEnter);
+//                 });
+//             }
 
-                event.preventDefault();
-            }
-        });
-    };
-}).controller('aisensyCtrl',
+//                 event.preventDefault();
+//             }
+//         });
+//     };
+// })
+.controller('aisensyCtrl',
     ['$scope', '$rootScope', '$window','$sce', '$location', 'AuthService', '$anchorScroll', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService', 'commonDataShare',
         function ($scope, $rootScope, $window,$sce, $location, AuthService, suspenseLeadService, $anchorScroll, $state, userService, constants, AuthService, vcRecaptchaService, permissions, commonDataShare) {
             // AuthService.Clear();
