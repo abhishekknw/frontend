@@ -6624,14 +6624,40 @@
 
       // Template Dashboard start
       $scope.getTransactionalTemplate = function () {
+ 
+      //   if ($scope.formData.getTransactionalTemplatetSearch) {
+      //     param.search = $scope.formData.getTransactionalTemplateSearch;
+      // }
 
-        templateDashboardService.transactionalTemplate().then(function onSuccess(response) {
-            console.log('11111111111111111111111111111', response);
+        // templateDashboardService.transactionalTemplate().then(function onSuccess(response) {
+        //     console.log('11111111111111111111111111111', response);
+        //   }).catch(function onError(response) {
+        //     console.log(response);
+        //   })
+        templateDashboardService.transactionalTemplate()
+          .then(function onSuccess(response) {
+            $scope.transactionalTemplateData = response.data.data;
+            console.log('11111111111',  $scope.transactionalTemplateData);
+
           }).catch(function onError(response) {
             console.log(response);
           })
-       
       }
+
+      $scope.gettransactionalTemplateSummaryDownload = function () {
+      alert("download summry")
+        templateDashboardService.transactionalTemplateSummaryDownload().
+        then(function onSuccess(response) {
+          $scope.transactionalTemplateSummaryDownloadData=(APIBaseUrl +' v0/ui/mca-bot/download-template-summary/' + response.data.data);
+          // $scope.transactionalTemplateSummaryDownloadData = "v0/ui/mca-bot/download-template-summary/";
+          console.log('2222222222',  $scope.transactionalTemplateSummaryDownloadData);
+        }).catch(function onError(response) {
+          console.log(response);
+        })
+
+      }
+
+
       $scope.transactionalTemplateDropdown = {}
       $scope.setBotType = function () {
         console.log($scope.transactionalTemplateDropdown.bot)
@@ -6644,7 +6670,7 @@
 
       $scope.backToTemplateData = function () {
         $scope.viewTemplateSummaryTable = false;
-        $scope.transactionalTemplateDropdown ={};
+        $scope.transactionalTemplateDropdown = {};
       }
 
 

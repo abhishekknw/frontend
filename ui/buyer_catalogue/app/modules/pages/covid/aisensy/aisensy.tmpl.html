@@ -79,7 +79,7 @@ margin-left: 50px;
   }
 
   div.white-space-pre-line {
-    white-space: pre-line;
+ /*   white-space: pre-line;*/
     word-wrap: break-word;
   }
 
@@ -727,12 +727,18 @@ margin-left: 50px;
   float: right;
   background-color: #aede2e;
 } */
+
+.message-1 .chat-text, .message-2 .chat-text {
+    white-space: pre-line;
+    display: block;}
+
   .message-1 .chat-time {
     color: #000000cc;
     font-size: 11.5px;
     font-weight: 600;
     float: right;
     margin-top: 5px;
+    display: block;
   }
 
   .message-2 .chat-time {
@@ -741,6 +747,7 @@ margin-left: 50px;
     font-weight: 600;
     float: right;
     margin-top: 5px;
+    display: block;
   }
 
   .chat::-webkit-scrollbar {
@@ -1300,7 +1307,7 @@ margin-left: 50px;
                               <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                               <div style="width: 100%; float:right;">
                                 <div class="message-1 " ng-if="chat.sender=='user'">
-                                  <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+                                  <span class="chat-text" ng-if='chat.content.text'>{{chat.content.text}}</span>
                                   <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}"
                                       alt="Girl in a jacket" width="200" height="auto"></span>
                                   <span ng-if="chat.content.types[0] == 'video'">
@@ -1315,7 +1322,7 @@ margin-left: 50px;
                               </div>
                               <div style="width: 100%; float:left;">
                                 <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
-                                  <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+                                  <span class="chat-text" ng-if='chat.content.text'>{{chat.content.text}}</span>
                                   <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}"
                                       alt="Girl in a jacket" width="200" height="200"></span>
                                   <span ng-if="chat.content.types[0] == 'video'">
@@ -1352,7 +1359,7 @@ margin-left: 50px;
                                 <!-- <i style="margin-right: 20px;" class="fa fa-paperclip fa-lg" aria-hidden="true"></i> -->
                                 <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message" /> -->
                                 <input type="text" ng-model="message.activeMessage" placeholder="Write message"
-                                  my-enter="sendMessage(userChatData.phone_number)">
+                                 >
                               </div>
                             </div>
                             <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
@@ -1518,7 +1525,7 @@ margin-left: 50px;
                               <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                               <div style="width: 100%; float:right;">
                                 <div class="message-1 " ng-if="chat.sender=='user'">
-                                  <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+                                  <span class="chat-text" ng-if='chat.content.text'>{{chat.content.text}}</span>
                                   <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}"
                                       alt="Girl in a jacket" width="200" height="auto"></span>
                                   <span ng-if="chat.content.types[0] == 'video'">
@@ -1533,7 +1540,7 @@ margin-left: 50px;
                               </div>
                               <div style="width: 100%; float:left;">
                                 <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
-                                  <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+                                  <span class="chat-text" ng-if='chat.content.text'>{{chat.content.text}}</span>
                                   <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}"
                                       alt="Girl in a jacket" width="200" height="200"></span>
                                   <span ng-if="chat.content.types[0] == 'video'">
@@ -1569,7 +1576,7 @@ margin-left: 50px;
                                 <!-- <i style="margin-right: 20px;" class="fa fa-paperclip fa-lg" aria-hidden="true"></i> -->
                                 <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message" /> -->
                                 <input type="text" ng-model="message.activeMessage" placeholder="Write message"
-                                  my-enter="sendMessage(userChatData.phone_number)">
+                                  >
                               </div>
                             </div>
                             <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
@@ -1720,7 +1727,7 @@ margin-left: 50px;
                               <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                               <div style="width: 100%; float:right;">
                                 <div class="message-1 " ng-if="chat.sender=='user'">
-                                  <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+                                  <span class="chat-text" ng-if='chat.content.text'>{{chat.content.text}}</span>
                                   <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}"
                                       alt="Girl in a jacket" width="200" height="auto"></span>
                                   <span ng-if="chat.content.types[0] == 'video'">
@@ -1735,7 +1742,7 @@ margin-left: 50px;
                               </div>
                               <div style="width: 100%; float:left;">
                                 <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
-                                  <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+                                  <span class="chat-text" ng-if='chat.content.text'>{{chat.content.text}}</span>
                                   <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}"
                                       alt="Girl in a jacket" width="200" height="200"></span>
                                   <span ng-if="chat.content.types[0] == 'video'">
@@ -1772,7 +1779,7 @@ margin-left: 50px;
                                 <!-- <i style="margin-right: 20px;" class="fa fa-paperclip fa-lg" aria-hidden="true"></i> -->
                                 <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message" /> -->
                                 <input type="text" ng-model="message.activeMessage" placeholder="Write message"
-                                  my-enter="sendMessage(userChatData.phone_number)">
+                                  >
                               </div>
                             </div>
                             <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
@@ -2133,7 +2140,7 @@ margin-left: 50px;
                   <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
                   <div style="width: 100%; float:right;">
                     <div class="message-1 " ng-if="chat.sender=='user'">
-                      <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+                      <span class="chat-text" ng-if='chat.content.text'>{{chat.content.text}}</span>
                       <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}"
                           alt="Girl in a jacket" width="200" height="auto"></span>
                       <span ng-if="chat.content.types[0] == 'video'">
@@ -2148,7 +2155,7 @@ margin-left: 50px;
                   </div>
 
                   <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
-                    <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+                    <span class="chat-text" ng-if='chat.content.text'>{{chat.content.text}}</span>
                     <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}"
                         alt="Girl in a jacket" width="200" height="200"></span>
                     <span ng-if="chat.content.types[0] == 'video'">
@@ -2617,7 +2624,7 @@ margin-left: 50px;
             <!-- <div > {{chat.timestamp | date : format : timezone}}</div> -->
             <div style="width: 100%; float:right;">
               <div class="message-1 " ng-if="chat.sender=='user'">
-                <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+                <span class="chat-text" ng-if='chat.content.text'>{{chat.content.text}}</span>
                 <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}" alt="Girl in a jacket"
                     width="200" height="auto"></span>
                 <span ng-if="chat.content.types[0] == 'video'">
@@ -2632,7 +2639,7 @@ margin-left: 50px;
             </div>
 
             <div class="message-2 white-space-pre-line" ng-if="chat.sender=='bot'">
-              <span ng-if='chat.content.text'>{{chat.content.text}}</span>
+              <span class="chat-text" ng-if='chat.content.text'>{{chat.content.text}}</span>
               <span ng-if="chat.content.types[0] == 'image'"><img src="{{chat.content.url}}" alt="Girl in a jacket"
                   width="200" height="200"></span>
               <span ng-if="chat.content.types[0] == 'video'">
