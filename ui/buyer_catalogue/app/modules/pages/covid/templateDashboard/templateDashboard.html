@@ -1261,9 +1261,10 @@ top:0;
                 <div ng-if="showCampaigns">
                   <div ng-if="!viewTemplateSummaryTable">
                     <input type="text" class="form-control " 
-                      placeholder="search">
+                      placeholder="search" ng-change="getTransactionalTemplate(TransactionalTemplateSearch)" ng-model="TransactionalTemplateSearch">
                     <br>
-                    <div class="table-responsive"  ng-change="getTransactionalTemplate()">
+                    <!-- <div class="table-responsive"  ng-change="getTransactionalTemplate()"> -->
+                      <div class="table-responsive" >
                       <table class="table temp-table">
 
                         <thead>
@@ -1303,7 +1304,6 @@ top:0;
                                 class="btn btn-danger">Download
                               </button></td>
                           </tr>
-
 
 
 
@@ -1355,7 +1355,14 @@ top:0;
 
                           <!-- </tbody> -->
                         </tbody>
+                        
+
                       </table>
+                      <div ng-if="transactionalTemplateData.length == 0">
+                        <h4 style="text-align: center; color: red; margin-top: 10px;">
+                          Record Not Found.
+                        </h4>
+                      </div>
                     </div>
 
                   </div>
@@ -1440,6 +1447,8 @@ top:0;
 
                   </div> -->
                 </div>
+
+
                 <!-- <div class="viewLeadstable" ng-if="!showCampaigns"> -->
                 <!-- <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button> -->
                 <!-- </br><br>

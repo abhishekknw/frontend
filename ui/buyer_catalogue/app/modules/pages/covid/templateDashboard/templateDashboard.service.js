@@ -14,8 +14,8 @@ angular.module('catalogueApp')
       var apiHost = APIBaseUrl;
 
 
-      DashboardService.transactionalTemplate = function () {
-        let url =   "v0/ui/mca-bot/template-summary-list/";
+      DashboardService.transactionalTemplate = function (param) {
+        let url =   "v0/ui/mca-bot/template-summary-list/?search=" +param.search
         return machadaloHttp.get( url);
       }
 
