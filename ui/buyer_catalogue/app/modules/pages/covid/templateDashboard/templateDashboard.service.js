@@ -19,11 +19,11 @@ angular.module('catalogueApp')
         return machadaloHttp.get( url);
       }
 
-      DashboardService.transactionalTemplateSummaryDownload = function () {
-        // let url = apiHost +  "v0/ui/mca-bot/download-template-summary/";
-        let url =  "v0/ui/mca-bot/download-template-summary/";
-        return machadaloHttp.get(url);
-      }
+      // DashboardService.transactionalTemplateSummaryDownload = function () {
+      //   // let url = apiHost +  "v0/ui/mca-bot/download-template-summary/";
+      //   let url =  "v0/ui/mca-bot/download-template-summary/";
+      //   return machadaloHttp.get(url);
+      // }
 
       return DashboardService;
 
