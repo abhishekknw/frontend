@@ -6644,18 +6644,18 @@
           })
       }
 
-      $scope.gettransactionalTemplateSummaryDownload = function () {
-      alert("download summry")
-        templateDashboardService.transactionalTemplateSummaryDownload().
-        then(function onSuccess(response) {
-          $scope.transactionalTemplateSummaryDownloadData=(APIBaseUrl +' v0/ui/mca-bot/download-template-summary/' + response.data.data);
-          // $scope.transactionalTemplateSummaryDownloadData = "v0/ui/mca-bot/download-template-summary/";
-          console.log('2222222222',  $scope.transactionalTemplateSummaryDownloadData);
-        }).catch(function onError(response) {
-          console.log(response);
-        })
+      // $scope.gettransactionalTemplateSummaryDownload = function () {
+      // alert("download summry")
+      //   templateDashboardService.transactionalTemplateSummaryDownload().
+      //   then(function onSuccess(response) {
+      //     $scope.transactionalTemplateSummaryDownloadData=(APIBaseUrl +' v0/ui/mca-bot/download-template-summary/' + response.data.data);
+      //     // $scope.transactionalTemplateSummaryDownloadData = "v0/ui/mca-bot/download-template-summary/";
+      //     console.log('2222222222',  $scope.transactionalTemplateSummaryDownloadData);
+      //   }).catch(function onError(response) {
+      //     console.log(response);
+      //   })
 
-      }
+      // }
 
 
       $scope.transactionalTemplateDropdown = {}
