@@ -752,6 +752,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     param.text = $scope.message.activeMessage;
 
                 }
+                if($scope.message.activeMessage=="") {
+                    return false;
+                }
                 console.log('11111111111112222222222222222222', $scope.message);
                 AuthService.sendMessage(param,true)
                     .then(function onSuccess(response) {

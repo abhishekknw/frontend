@@ -1220,7 +1220,7 @@ margin-left: 50px;
 
                       <div ng-if="activeUserData.length == 0">
                         <h4 style="text-align: center; color: red;">
-                          Record Not Found.
+                           No Record.
                         </h4>
                       </div>
 
@@ -1358,26 +1358,25 @@ margin-left: 50px;
 
                                 <!-- <i style="margin-right: 20px;" class="fa fa-paperclip fa-lg" aria-hidden="true"></i> -->
                                 <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message" /> -->
-                                <input type="text" ng-model="message.activeMessage" placeholder="Write message"
-                               >
-                                <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message"
+                                 <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message"
                                 ui-keypress="{13:'sendMessage(userChatData.phone_number)'}"> -->
                               </div>
                             </div>
-                            <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
+                            <!-- <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
                               <svg viewBox="0 0 74.433 60.908" width="25" height="25"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path fill="#fff"
                                   d="M 0 0 L 74.22 26.562 L 0.246 60.712 L 7.608 34.535 L 27.831 28.259 L 6.91 25.469 L 0 0 Z" />
                               </svg>
-                            </div>
+                            </div> -->
 
-                            <div class="aisensy-resolve-btn">
+                            <!-- <div class="aisensy-resolve-btn">
                               <button type="button" class="btn btn-success" style="margin-top:10px"
                                 ng-click="interveneButton(userChatData)">
                                 Resolve
                               </button>
-                            </div>
+                            </div> -->
+
                           </div>
 
 
@@ -1461,7 +1460,7 @@ margin-left: 50px;
                       </div>
                       <div ng-if="actionRequiredUserData.length == 0">
                         <h4 style="text-align: center; color: red;">
-                          Record Not Found.
+                           No Record.
                         </h4>
                       </div>
                       <!-- Start Phone Chat  for tab2-->
@@ -1577,26 +1576,25 @@ margin-left: 50px;
 
                                 <!-- <i style="margin-right: 20px;" class="fa fa-paperclip fa-lg" aria-hidden="true"></i> -->
                                 <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message" /> -->
-                                <input type="text" ng-model="message.activeMessage" placeholder="Write message"
-                               >
                                 <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message"
                                 ui-keypress="{13:'sendMessage(userChatData.phone_number)'}" > -->
                               </div>
                             </div>
-                            <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
+                            <!-- <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
                               <svg viewBox="0 0 74.433 60.908" width="25" height="25"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path fill="#fff"
                                   d="M 0 0 L 74.22 26.562 L 0.246 60.712 L 7.608 34.535 L 27.831 28.259 L 6.91 25.469 L 0 0 Z" />
                               </svg>
-                            </div>
+                            </div> -->
 
-                            <div class="aisensy-resolve-btn">
+                            <!-- <div class="aisensy-resolve-btn">
                               <button type="button" class="btn btn-success" style="margin-top:10px"
                                 ng-click="interveneButton(userChatData)">
                                 Resolve
                               </button>
-                            </div>
+                            </div> -->
+
                           </div>
 
 
@@ -1677,7 +1675,7 @@ margin-left: 50px;
                       </div>
                       <div ng-if="interveneUserData.length == 0">
                         <h4 style="text-align: center; color: red;">
-                          Record Not Found.
+                           No Record.
                         </h4>
                       </div>
 
@@ -1778,14 +1776,8 @@ margin-left: 50px;
                                   <input type="file" />
                                   <i class="fa fa-arrow-up"></i>
                                 </div>
-
-
-                                <!-- <i style="margin-right: 20px;" class="fa fa-paperclip fa-lg" aria-hidden="true"></i> -->
-                                <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message" /> -->
                                 <input type="text" ng-model="message.activeMessage" placeholder="Write message"
-                               >
-                                <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message"
-                                ng-keydown="$event.keyCode === 13 && sendMessage(userChatData.phone_number)"> -->
+                                ng-keydown="$event.keyCode === 13  && sendMessage(userChatData.phone_number)">
                               </div>
                             </div>
                             <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
@@ -2082,7 +2074,7 @@ margin-left: 50px;
           </div>
           <div ng-if="historyDetailData.length == 0">
             <h4 style="text-align: center; color: red;">
-              Record Not Found.
+             No Record.
             </h4>
           </div>
           <!-- Start Phone Chat for history tab-->
@@ -2401,7 +2393,7 @@ margin-left: 50px;
     </center>
     <div ng-if="contactDetailData.length == 0">
       <h4 style="text-align: center; color: red;">
-        Record Not Found.
+       No Record.
       </h4>
     </div>
   </div>
@@ -2877,7 +2869,7 @@ margin-left: 50px;
 
     <div ng-if="filterData.length == 0">
       <h4 style="text-align: center; color: red;">
-        Record Not Found.
+         No Record.
       </h4>
     </div>
 

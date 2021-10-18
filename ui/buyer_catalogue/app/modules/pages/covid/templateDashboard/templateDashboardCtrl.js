@@ -6623,7 +6623,13 @@
 
 
       // Template Dashboard start
-      $scope.getTransactionalTemplate = function () {
+      $scope.getTransactionalTemplate = function (value) {
+        let param = {
+          search: value,
+      }
+      if (!value) {
+          param.search = ""
+      }
  
       //   if ($scope.formData.getTransactionalTemplatetSearch) {
       //     param.search = $scope.formData.getTransactionalTemplateSearch;
@@ -6634,7 +6640,7 @@
         //   }).catch(function onError(response) {
         //     console.log(response);
         //   })
-        templateDashboardService.transactionalTemplate()
+        templateDashboardService.transactionalTemplate(param)
           .then(function onSuccess(response) {
             $scope.transactionalTemplateData = response.data.data;
             console.log('11111111111',  $scope.transactionalTemplateData);

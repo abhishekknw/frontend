@@ -9,15 +9,15 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 //     return function (scope, element, attrs) {
         
 //         element.bind("keydown keypress", function (event) {
-//             if (event.key !== undefined){
-//             if(event.which === 13) {
+//             if(event.which === 13 && event.which !== 00) {
 //                 scope.$apply(function (){
 //                     scope.$eval(attrs.myEnter);
 //                 });
 //             }
 
+    
 //                 event.preventDefault();
-//             }
+      
 //         });
 //     };
 // })
@@ -759,7 +759,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 }
                 if ($scope.message.activeMessage) {
                     param.text = $scope.message.activeMessage;
-
+                }
+                if($scope.message.activeMessage=="") {
+                    return false;
                 }
                 console.log('11111111111112222222222222222222',$scope.message);
                 AuthService.sendMessage(param)
@@ -773,7 +775,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                             if ($scope.userChatData) {
                                 if ($scope.userChatData.payload && $scope.userChatData.payload.length > 0) {
                                     $scope.userChatData.payload.unshift(data);
-                                } else {
+                                } 
+                                else {
                                     $scope.userChatData.payload.push(data);
                                 }
                             }
