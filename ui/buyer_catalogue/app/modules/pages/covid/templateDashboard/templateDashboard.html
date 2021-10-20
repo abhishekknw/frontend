@@ -1260,11 +1260,12 @@ top:0;
                 </div>
                 <div ng-if="showCampaigns">
                   <div ng-if="!viewTemplateSummaryTable">
-                    <input type="text" class="form-control " 
-                      placeholder="search" ng-change="getTransactionalTemplate(TransactionalTemplateSearch)" ng-model="TransactionalTemplateSearch">
+                    <input type="text" class="form-control " placeholder="search"
+                      ng-change="getTransactionalTemplate(TransactionalTemplateSearch)"
+                      ng-model="TransactionalTemplateSearch">
                     <br>
                     <!-- <div class="table-responsive"  ng-change="getTransactionalTemplate()"> -->
-                      <div class="table-responsive" >
+                    <div class="table-responsive">
                       <table class="table temp-table">
 
                         <thead>
@@ -1287,7 +1288,7 @@ top:0;
                             <td>{{$index+serial+1}}</td>
                             <td style="text-align: center;">{{ttemplate.template_id}}</td>
                             <td style="text-align: center;">{{ttemplate.template_name}}</td>
-                            <td style="text-align: center;">{{ttemplate.total_no_template}}</td>
+                            <td style="text-align: center;">{{ttemplate.days_count}}</td>
                             <td style="text-align: center;">{{ttemplate.total_users}}</td>
                             <td style="text-align: center;">{{ttemplate.total_positive}}</td>
                             <td style="text-align: center;">{{ttemplate.total_neutral}}</td>
@@ -1299,10 +1300,11 @@ top:0;
                             <!-- <td style="text-align: center;"><button type="button" ng-click=""
                               class="btn btn-danger">Download</button>
                           </td> -->
-                            <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
-                                data-target="#sendEmailModal" data-toggle="modal" type="button"
-                                class="btn btn-danger">Download
-                              </button></td>
+                            <td style="text-align: center;">
+                              <a href="https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-user-summary/"><button
+                               
+                                data-toggle="modal" type="button" class="btn btn-danger">Download
+                              </button></a></td>
                           </tr>
 
 
@@ -1355,7 +1357,7 @@ top:0;
 
                           <!-- </tbody> -->
                         </tbody>
-                        
+
 
                       </table>
                       <div ng-if="transactionalTemplateData.length == 0">
@@ -1367,10 +1369,11 @@ top:0;
 
                   </div>
 
-                
-                      <center> <a href=" https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-summary/"><button style="margin: 10px;" data-toggle="modal"
-                        type="button" class="btn btn-danger">Download Summary </button></a></center>
-                   
+
+                  <center> <a href=" https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-summary/"><button
+                        style="margin: 10px;" data-toggle="modal" type="button" class="btn btn-danger">Download Summary
+                      </button></a></center>
+
                   <!-- <div class="table-responsive" ng-if="viewTemplateSummaryTable">
                     <div>
                       <span ng-show="transactionalTemplateDropdown.bot" style="color:black">
@@ -6193,8 +6196,11 @@ top:0;
                               <th>Negative Response</th>
                               <th>Neutral Response</th> -->
 
+
+
                           <th>Index</th>
-                          <th>User count</th>
+                          <th></th>
+                          <th>User Name</th>
                           <th>Positive</th>
                           <th>Neutral</th>
                           <th>Negative</th>
