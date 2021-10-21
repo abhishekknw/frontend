@@ -22,6 +22,7 @@
   .table-responsive {
     max-height: 360px;
     min-height: 50px;
+    width: 100%;
   }
 
   /* .table.temp-table th{
@@ -40,6 +41,7 @@ top:0;
     left: 0;
     z-index: 11;
     background: #8e1921;
+    max-width: 200px;
   }
 
   .table-responsive tbody td:nth-child(2) {
@@ -47,6 +49,7 @@ top:0;
     left: 0;
     z-index: 10;
     background: white;
+    max-width: 200px;
   }
 
   .dropdowns {
@@ -1136,9 +1139,10 @@ top:0;
               </uib-tab-heading>
               <div class="container-fluid">
                 <div class="panel panel-default">
-                  <div class="col-md-12 " ng-if="viewTemplateSummaryTable" style="text-align: center;" >
-                   
-                    <button class="btn btn-danger" ng-click="backToTemplateData()" style="margin: 10px;" >Back To Template</button>
+                  <div class="col-md-12 " ng-if="viewTemplateSummaryTable" style="text-align: center;">
+
+                    <button class="btn btn-danger" ng-click="backToTemplateData()" style="margin: 10px;">Back To
+                      Template</button>
                   </div>
                   <!-- <div class="col-md-6">
                             <h4 class="panel-title">
@@ -1266,7 +1270,7 @@ top:0;
                       ng-model="TransactionalTemplateSearch">
                     <br>
                     <!-- <div class="table-responsive"  ng-change="getTransactionalTemplate()"> -->
-                    <div class="table-responsive" >
+                    <div class="table-responsive">
                       <table class="table">
 
                         <thead>
@@ -1371,14 +1375,17 @@ top:0;
                         </h4>
                       </div>
                     </div>
-                    <center> <a
-                        href=" https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-summary/"><button
+                    <center>
+                       <a href=" https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-summary/"><button
                           style="margin: 10px;" data-toggle="modal" type="button" class="btn btn-danger">Download
                           Summary
-                        </button></a></center>
+                        </button>
+                      </a>
+                    </center>
                   </div>
 
-                  <div class="table-responsive" ng-if="viewTemplateSummaryTable" ng-show="transactionalTemplateDropdown" >
+                  <div class="table-responsive" ng-if="viewTemplateSummaryTable" ng-show="transactionalTemplateDropdown"
+                    style="width: 100%;">
                     <!-- <div>
                       <span ng-show="transactionalTemplateDropdown.bot" style="color:black">
                         <h4>BOT:{{transactionalTemplateDropdown.bot}}</h4>
@@ -1415,9 +1422,9 @@ top:0;
                           <th style="padding:10px">Created At</th>
                           <th style="padding:10px">Updated At</th>
                         </tr>
-                        </thead>
-                       <tbody>
-                          <tr dir-paginate="tdtemplate in transactionalTemplateDataDetail | itemsPerPage:itemsPerPage"
+                      </thead>
+                      <tbody>
+                        <tr dir-paginate="tdtemplate in transactionalTemplateDataDetail | itemsPerPage:itemsPerPage"
                           total-items="totalCount" current-page="pagination.current" track by "$index">
                           <td style="text-align: center;">{{$index+serial+1}}</td>
                           <td style="text-align: center;">{{tdtemplate.user_name}}</td>
