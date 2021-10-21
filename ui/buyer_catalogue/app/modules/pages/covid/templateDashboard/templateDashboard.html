@@ -1415,7 +1415,8 @@ top:0;
                           <th style="padding:10px">Created At</th>
                           <th style="padding:10px">Updated At</th>
                         </tr>
-                       
+                        </thead>
+                       <tbody>
                           <tr dir-paginate="tdtemplate in transactionalTemplateDataDetail | itemsPerPage:itemsPerPage"
                           total-items="totalCount" current-page="pagination.current" track by "$index">
                           <td style="text-align: center;">{{$index+serial+1}}</td>
@@ -1430,9 +1431,6 @@ top:0;
 
                         </tr>
 
-
-                      </thead>
-                      <tbody>
                       </tbody>
                     </table>
 
