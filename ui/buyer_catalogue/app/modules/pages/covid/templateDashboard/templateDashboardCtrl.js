@@ -6648,7 +6648,22 @@
           }).catch(function onError(response) {
             console.log(response);
           })
+
+
+          templateDashboardService.transactionalTemplateDetail(param)
+          .then(function onSuccess(response) {
+            $scope.transactionalTemplateDataDetail = response.data.data;
+            console.log('222222',  $scope.transactionalTemplateDataDetail);
+    
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+
       }
+
+      
+  
+
 
       // $scope.gettransactionalTemplateSummaryDownload = function () {
       // alert("download summry")
@@ -6667,7 +6682,6 @@
       $scope.transactionalTemplateDropdown = {}
       $scope.setBotType = function () {
         console.log($scope.transactionalTemplateDropdown.bot)
-
       }
       $scope.viewTemplateSummaryTable = false;
       $scope.viewTemplateSummary = function () {
@@ -6675,7 +6689,7 @@
       }
 
       $scope.backToTemplateData = function () {
-        $scope.viewTemplateSummaryTable = false;
+        $scope.viewTemplateSummaryTable =false;
         $scope.transactionalTemplateDropdown = {};
       }
 
