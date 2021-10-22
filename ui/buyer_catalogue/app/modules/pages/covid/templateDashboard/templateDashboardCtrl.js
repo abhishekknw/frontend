@@ -6640,7 +6640,7 @@
         //   }).catch(function onError(response) {
         //     console.log(response);
         //   })
-        templateDashboardService.transactionalTemplate(param)
+        templateDashboardService.transactionalTemplate(param,$scope.transactionalTemplateDropdown.bot)
           .then(function onSuccess(response) {
             $scope.transactionalTemplateData = response.data.data;
             console.log('11111111111',  $scope.transactionalTemplateData);
@@ -6650,7 +6650,7 @@
           })
 
 
-          templateDashboardService.transactionalTemplateDetail(param)
+          templateDashboardService.transactionalTemplateDetail($scope.transactionalTemplateDropdown.bot)
           .then(function onSuccess(response) {
             $scope.transactionalTemplateDataDetail = response.data.data;
             console.log('222222',  $scope.transactionalTemplateDataDetail);
@@ -6662,9 +6662,6 @@
       }
 
       
-  
-
-
       // $scope.gettransactionalTemplateSummaryDownload = function () {
       // alert("download summry")
       //   templateDashboardService.transactionalTemplateSummaryDownload().
