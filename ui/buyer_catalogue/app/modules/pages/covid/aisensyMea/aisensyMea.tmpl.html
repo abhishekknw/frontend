@@ -1451,6 +1451,146 @@
                                 ui-keypress="{13:'sendMessage(userChatData.phone_number)'}"> -->
                               </div>
                             </div>
+                            <div id="viewModal" class="modal fade">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" ng-if="submitLeadType">{{campaignNameOnImageModal}} Send Leads To Email</h4>
+                                    <h4 class="modal-title" ng-if="!submitLeadType">{{campaignNameOnImageModal}} Template name</h4>
+                                    <hr />
+                                    <div class="modal-body">
+                      
+                      
+                                      <div class="">
+                                        BOT name : MEA/MCA
+                                        <!-- <div>
+                                              <span ng-show="transactionalTemplateDropdown.bot" style="color:black"><h4>BOT:{{transactionalTemplateDropdown.bot}}</h4></span><br>
+                                              <span ng-show="transactionalTemplateDropdown.location" style="color:black"><h4>Location:{{transactionalTemplateDropdown.location}}</h4></span><br>
+                                              <span ng-show="transactionalTemplateDropdown.pinCode" style="color:black"><h4>PinCode:{{transactionalTemplateDropdown.pinCode}}</h4></span><br>
+                                              <span ng-show="transactionalTemplateDropdown.typeofCustomer" style="color:black"><h4>Type of Customer:{{transactionalTemplateDropdown.typeofCustomer}}</h4></span><br>
+                                              <span ng-show="transactionalTemplateDropdown.category" style="color:black"><h4>Category:{{transactionalTemplateDropdown.category}}</h4></span><br>
+                                             
+                                             
+                                            </div> -->
+                                        <br>
+                                        Date Range :
+                                        <!-- <select class="form-control" ng-model="emailCampaignLeadsModel.leads_form_id">
+                                              <option ng-repeat="form_name in formDetails" value="{{form_name.leads_form_id}}">
+                                                {{form_name.leads_form_name}}</option>
+                                            </select> -->
+                                        <!-- <div class="top-select-option-mca">
+                                              <div class="row">
+                                                <div class="col-xs-12">
+                                                  <div class="form-group">
+                                                   
+                                                    <select class="form-control" ng-change="" name="category" id="category"
+                                                      ng-model="category_code">
+                                                      <option value="" disabled> Select Attribute</option>
+                                                      <option>Updated At</option>
+                                                      <option>Created At</option>
+                      
+                      
+                      
+                                                    </select>
+                                                  </div>
+                                                </div>
+                      
+                      
+                      
+                                              </div>
+                                            </div> -->
+                                        <br />
+                                        <div class="table" style="margin-top: 10px; margin-bottom: 10px;">
+                      
+                                          <table class="table">
+                                            <thead>
+                                              <tr>
+                                                <!-- <th>Index</th>
+                                                    <th style="width:200px;" class="col-md-2">Template Name</th>
+                                                    <th ng-click="Sort('start_date')">No. of Template Days Send</th>
+                                                    <th>Total user count send</th>
+                                                    <th>Positive Response</th>
+                                                    <th>Negative Response</th>
+                                                    <th>Neutral Response</th> -->
+                      
+                      
+                      
+                                                <th>Index</th>
+                                                <th></th>
+                                                <th>User Name</th>
+                                                <th>Positive</th>
+                                                <th>Neutral</th>
+                                                <th>Negative</th>
+                      
+                      
+                      
+                                              </tr>
+                                              <tr>
+                                                <td style="text-align: center;">1</td>
+                                                <td style="text-align: center;">5</td>
+                                                <td style="text-align: center;">100</td>
+                                                <td style="text-align: center;">200</td>
+                                                <td style="text-align: center;">200</td>
+                      
+                      
+                                                <!-- <tr>
+                                                    <td style="text-align: center;">2</td>
+                                                    <td style="text-align: center;">Elevator Template</td>
+                                                    <td style="text-align: center;">5</td>
+                                                    <td style="text-align: center;">100</td>
+                                                    <td style="text-align: center;">200</td>
+                                                    <td style="text-align: center;">200</td>
+                                                    <td style="text-align: center;">100</td>
+                          
+                                                  </tr>
+                                                  <tr>
+                                                    <td style="text-align: center;">3</td>
+                                                    <td style="text-align: center;">Painting Template</td>
+                                                    <td style="text-align: center;">5</td>
+                                                    <td style="text-align: center;">100</td>
+                                                    <td style="text-align: center;">200</td>
+                                                    <td style="text-align: center;">200</td>
+                                                    <td style="text-align: center;">100</td>
+                          
+                                                  </tr> -->
+                      
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                          </table>
+                      
+                                        </div>
+                                        <!-- <tr>
+                                              <td class="col-md-2">
+                                                <p class="input-group">
+                                                  Select Start Date(Optional): <input type="date" class="form-control"
+                                                    ng-model="emailCampaignLeadsModel.start_date" required>
+                                                </p>
+                                              </td>
+                                              <td class="col-md-2">
+                                                <p class="input-group">
+                                                  Select End Date(Optional) : <input type="date" class="form-control"
+                                                    ng-model="emailCampaignLeadsModel.end_date" required>
+                                                </p>
+                                              </td>
+                                              <td style="text-align: center; padding-top: 20px;">
+                                                <p><button type="button" name="button" class="btn btn-danger" ng-click="sendMeEmail()"
+                                                    ng-disabled="!emailCampaignLeadsModel.leads_form_id" ng-if="submitLeadType">Email</button>
+                                                  <button type="button" name="button" class="btn btn-danger" ng-click="downloadSheet()"
+                                                    ng-disabled="!emailCampaignLeadsModel.leads_form_id"
+                                                    ng-if="!submitLeadType">Download</button>
+                                              </td>
+                                            </tr> -->
+                                        <center><button type="button" name="button" class="btn btn-danger"
+                                            ng-click="downloadSheet()">Download</button></center>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                      
                             <!-- <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
                               <svg viewBox="0 0 74.433 60.908" width="25" height="25"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -1868,6 +2008,7 @@
                                   <input type="file" />
                                   <i class="fa fa-arrow-up"></i>
                                 </div>
+<<<<<<< HEAD
                                 <div class="file-upload-1">
 
                                   <i class="fa fa-address-card-o" data-target="#contactModal" data-toggle="modal"
@@ -1993,6 +2134,9 @@
                                   </div>
 
                                 </div>
+=======
+                                
+>>>>>>> 5946bc9eaa79d9f1c00d54d6ba5d6a79ca910ce2
                                 <input type="text" ng-model="message.activeMessage" placeholder="Write message"
                                   ng-keydown="$event.keyCode === 13  && sendMessage(userChatData.phone_number)">
                               </div>
