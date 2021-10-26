@@ -35,7 +35,6 @@
 
   .file-upload input[type='file'] {
 
-
     position: absolute;
     top: 0;
     left: 0;
@@ -93,6 +92,46 @@
     color: #fff;
 
   }
+  .file-upload-1 {
+
+left: 70px;
+height: 25px;
+width: 25px;
+border-radius: 100px;
+position: absolute;
+display: flex;
+justify-content: center;
+align-items: center;
+border: 4px solid #FFFFFF;
+overflow: hidden;
+background-image: linear-gradient(to bottom, #2a8f27 50%, #ababab 50%);
+background-size: 100% 200%;
+transition: all 1s;
+color: #fff;
+font-size: 10px;
+top: 18px;
+}
+
+.file-upload-1 input[type='file'] {
+
+height: 250px;
+width: 250px;
+position: absolute;
+top: 0;
+left: 0;
+opacity: 0;
+cursor: pointer;
+
+}
+
+
+.file-upload-1:hover {
+
+background-position: 0 -100%;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+color: #fff;
+
+}
 
 
   .scrolling-area {
@@ -1451,146 +1490,6 @@
                                 ui-keypress="{13:'sendMessage(userChatData.phone_number)'}"> -->
                               </div>
                             </div>
-                            <div id="viewModal" class="modal fade">
-                              <div class="modal-dialog">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    <h4 class="modal-title" ng-if="submitLeadType">{{campaignNameOnImageModal}} Send Leads To Email</h4>
-                                    <h4 class="modal-title" ng-if="!submitLeadType">{{campaignNameOnImageModal}} Template name</h4>
-                                    <hr />
-                                    <div class="modal-body">
-                      
-                      
-                                      <div class="">
-                                        BOT name : MEA/MCA
-                                        <!-- <div>
-                                              <span ng-show="transactionalTemplateDropdown.bot" style="color:black"><h4>BOT:{{transactionalTemplateDropdown.bot}}</h4></span><br>
-                                              <span ng-show="transactionalTemplateDropdown.location" style="color:black"><h4>Location:{{transactionalTemplateDropdown.location}}</h4></span><br>
-                                              <span ng-show="transactionalTemplateDropdown.pinCode" style="color:black"><h4>PinCode:{{transactionalTemplateDropdown.pinCode}}</h4></span><br>
-                                              <span ng-show="transactionalTemplateDropdown.typeofCustomer" style="color:black"><h4>Type of Customer:{{transactionalTemplateDropdown.typeofCustomer}}</h4></span><br>
-                                              <span ng-show="transactionalTemplateDropdown.category" style="color:black"><h4>Category:{{transactionalTemplateDropdown.category}}</h4></span><br>
-                                             
-                                             
-                                            </div> -->
-                                        <br>
-                                        Date Range :
-                                        <!-- <select class="form-control" ng-model="emailCampaignLeadsModel.leads_form_id">
-                                              <option ng-repeat="form_name in formDetails" value="{{form_name.leads_form_id}}">
-                                                {{form_name.leads_form_name}}</option>
-                                            </select> -->
-                                        <!-- <div class="top-select-option-mca">
-                                              <div class="row">
-                                                <div class="col-xs-12">
-                                                  <div class="form-group">
-                                                   
-                                                    <select class="form-control" ng-change="" name="category" id="category"
-                                                      ng-model="category_code">
-                                                      <option value="" disabled> Select Attribute</option>
-                                                      <option>Updated At</option>
-                                                      <option>Created At</option>
-                      
-                      
-                      
-                                                    </select>
-                                                  </div>
-                                                </div>
-                      
-                      
-                      
-                                              </div>
-                                            </div> -->
-                                        <br />
-                                        <div class="table" style="margin-top: 10px; margin-bottom: 10px;">
-                      
-                                          <table class="table">
-                                            <thead>
-                                              <tr>
-                                                <!-- <th>Index</th>
-                                                    <th style="width:200px;" class="col-md-2">Template Name</th>
-                                                    <th ng-click="Sort('start_date')">No. of Template Days Send</th>
-                                                    <th>Total user count send</th>
-                                                    <th>Positive Response</th>
-                                                    <th>Negative Response</th>
-                                                    <th>Neutral Response</th> -->
-                      
-                      
-                      
-                                                <th>Index</th>
-                                                <th></th>
-                                                <th>User Name</th>
-                                                <th>Positive</th>
-                                                <th>Neutral</th>
-                                                <th>Negative</th>
-                      
-                      
-                      
-                                              </tr>
-                                              <tr>
-                                                <td style="text-align: center;">1</td>
-                                                <td style="text-align: center;">5</td>
-                                                <td style="text-align: center;">100</td>
-                                                <td style="text-align: center;">200</td>
-                                                <td style="text-align: center;">200</td>
-                      
-                      
-                                                <!-- <tr>
-                                                    <td style="text-align: center;">2</td>
-                                                    <td style="text-align: center;">Elevator Template</td>
-                                                    <td style="text-align: center;">5</td>
-                                                    <td style="text-align: center;">100</td>
-                                                    <td style="text-align: center;">200</td>
-                                                    <td style="text-align: center;">200</td>
-                                                    <td style="text-align: center;">100</td>
-                          
-                                                  </tr>
-                                                  <tr>
-                                                    <td style="text-align: center;">3</td>
-                                                    <td style="text-align: center;">Painting Template</td>
-                                                    <td style="text-align: center;">5</td>
-                                                    <td style="text-align: center;">100</td>
-                                                    <td style="text-align: center;">200</td>
-                                                    <td style="text-align: center;">200</td>
-                                                    <td style="text-align: center;">100</td>
-                          
-                                                  </tr> -->
-                      
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                          </table>
-                      
-                                        </div>
-                                        <!-- <tr>
-                                              <td class="col-md-2">
-                                                <p class="input-group">
-                                                  Select Start Date(Optional): <input type="date" class="form-control"
-                                                    ng-model="emailCampaignLeadsModel.start_date" required>
-                                                </p>
-                                              </td>
-                                              <td class="col-md-2">
-                                                <p class="input-group">
-                                                  Select End Date(Optional) : <input type="date" class="form-control"
-                                                    ng-model="emailCampaignLeadsModel.end_date" required>
-                                                </p>
-                                              </td>
-                                              <td style="text-align: center; padding-top: 20px;">
-                                                <p><button type="button" name="button" class="btn btn-danger" ng-click="sendMeEmail()"
-                                                    ng-disabled="!emailCampaignLeadsModel.leads_form_id" ng-if="submitLeadType">Email</button>
-                                                  <button type="button" name="button" class="btn btn-danger" ng-click="downloadSheet()"
-                                                    ng-disabled="!emailCampaignLeadsModel.leads_form_id"
-                                                    ng-if="!submitLeadType">Download</button>
-                                              </td>
-                                            </tr> -->
-                                        <center><button type="button" name="button" class="btn btn-danger"
-                                            ng-click="downloadSheet()">Download</button></center>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                      
                             <!-- <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
                               <svg viewBox="0 0 74.433 60.908" width="25" height="25"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -2023,6 +1922,11 @@
                                         <h4 class="modal-title" ng-if="!submitLeadType" style="font-weight: bolder; font-size: 21px;">
                                           {{campaignNameOnImageModal}} Select Contact you want to share</h4>
                                         <hr>
+                                        <div class="input-wrapper" style=" margin: 10px; background-color: #575758;">
+                                          <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px;" ></i>
+                                        <input placeholder="Search here" ng-change="" ng-model=""
+                                                    id="tab1search" name="searchcontact" type="text" style="background-color: #ababab;margin: 5px;" />
+</div>
                                         <div class="modal-body">
 
                                           <!-- <form action="/action_page.php">
@@ -2072,11 +1976,7 @@
                                                       {{user.whatsapp_name |firstlater}}
                                                     </div> -->
 
-
-
-
-
-
+                                                    
                                                   <div class="text" style="float: left;">
                                                     <h6>Divya</h6>
                                                     <p class="text-muted"><b>
