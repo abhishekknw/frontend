@@ -1131,7 +1131,7 @@ top:0;
               </div>
             </uib-tab>
 
-
+            <!--Transactional template tab-->
             <!-- <uib-tab id="uib-tabs-width"  ng-click="viewCampaignLeads()" index="1"> -->
             <uib-tab ng-click="getTransactionalTemplate()" index="1">
               <uib-tab-heading>
@@ -1140,7 +1140,6 @@ top:0;
               <div class="container-fluid">
                 <div class="panel panel-default">
                   <div class="col-md-12 " ng-if="viewTemplateSummaryTable" style="text-align: right;">
-
                     <button class="btn btn-danger" ng-click="backToTemplateData()" style="margin: 10px;">Back To
                       Template</button>
                   </div>
@@ -1263,7 +1262,7 @@ top:0;
                   </div>
                 </div>
                 <!-- <div ng-if="showCampaigns"> -->
-                <div>
+                <div ng-if ="transactionalTemplateDropdown.bot">
                   <div ng-if="!viewTemplateSummaryTable">
                     <input type="text" class="form-control " placeholder="search"
                       ng-change="getTransactionalTemplate(TransactionalTemplateSearch)"
@@ -1376,7 +1375,7 @@ top:0;
                       </div>
                     </div>
                     <center>
-                       <a href=" https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-summary/"><button
+                      <a href=" https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-summary/"><button
                           style="margin: 10px;" data-toggle="modal" type="button" class="btn btn-danger">Download
                           Summary
                         </button>
@@ -1385,7 +1384,7 @@ top:0;
                   </div>
 
                   <div class="table-responsive" ng-if="viewTemplateSummaryTable" ng-show="transactionalTemplateDropdown"
-                    style="width: 100%;">
+                    style="width: 100%;" >
                     <!-- <div>
                       <span ng-show="transactionalTemplateDropdown.bot" style="color:black">
                         <h4>BOT:{{transactionalTemplateDropdown.bot}}</h4>
@@ -1540,6 +1539,7 @@ top:0;
 
 
             </uib-tab>
+            <!--/Transactional template tab-->
 
             <!-- START : BOOKING ENGINE -->
             <uib-tab ng-click="getCampaigns()" index="3">

@@ -685,6 +685,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.changeEndDate = function () {
+                if ($scope.changeEndDate> $scope.changeStartDate)
                 $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
             }
 

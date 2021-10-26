@@ -8,15 +8,16 @@
 
 <style>
   /*aisensy*/
-  .logo-sec-mca img{
-width: 80px;
-margin-left: 50px;
-}
-   .file-upload {
+  .logo-sec-mca img {
+    width: 80px;
+    margin-left: 50px;
+  }
 
-    left: 70px;
-    height: 20px;
-    width: 20px;
+  .file-upload {
+
+    left: 40px;
+    height: 25px;
+    width: 25px;
     border-radius: 100px;
     position: absolute;
     display: flex;
@@ -29,13 +30,11 @@ margin-left: 50px;
     transition: all 1s;
     color: #fff;
     font-size: 10px;
-    top: 20px;
+    top: 18px;
   }
 
   .file-upload input[type='file'] {
 
-    height: 200px;
-    width: 200px;
     position: absolute;
     top: 0;
     left: 0;
@@ -48,10 +47,91 @@ margin-left: 50px;
   .file-upload:hover {
 
     background-position: 0 -100%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     color: #fff;
-    
+
   }
+
+  .file-upload-1 {
+
+    left: 70px;
+    height: 25px;
+    width: 25px;
+    border-radius: 100px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid #FFFFFF;
+    overflow: hidden;
+    background-image: linear-gradient(to bottom, #2a8f27 50%, #ababab 50%);
+    background-size: 100% 200%;
+    transition: all 1s;
+    color: #fff;
+    font-size: 10px;
+    top: 18px;
+  }
+
+  .file-upload-1 input[type='file'] {
+
+    height: 250px;
+    width: 250px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+
+  }
+
+
+  .file-upload-1:hover {
+
+    background-position: 0 -100%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    color: #fff;
+
+  }
+  .file-upload-1 {
+
+left: 70px;
+height: 25px;
+width: 25px;
+border-radius: 100px;
+position: absolute;
+display: flex;
+justify-content: center;
+align-items: center;
+border: 4px solid #FFFFFF;
+overflow: hidden;
+background-image: linear-gradient(to bottom, #2a8f27 50%, #ababab 50%);
+background-size: 100% 200%;
+transition: all 1s;
+color: #fff;
+font-size: 10px;
+top: 18px;
+}
+
+.file-upload-1 input[type='file'] {
+
+height: 250px;
+width: 250px;
+position: absolute;
+top: 0;
+left: 0;
+opacity: 0;
+cursor: pointer;
+
+}
+
+
+.file-upload-1:hover {
+
+background-position: 0 -100%;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+color: #fff;
+
+}
 
 
   .scrolling-area {
@@ -79,7 +159,7 @@ margin-left: 50px;
   }
 
   div.white-space-pre-line {
- /*   white-space: pre-line;*/
+    /*   white-space: pre-line;*/
     word-wrap: break-word;
   }
 
@@ -406,9 +486,29 @@ margin-left: 50px;
       transition: all 1s;
       color: #FFFFFF;
       font-size: 10px;
-      top: 20px;
-      left: 40px;
+      top: 22px;
+      left: -30px;
     }
+
+    .file-upload-1 {
+      height: 20px;
+      width: 20px;
+      border-radius: 100px;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 4px solid #FFFFFF;
+      overflow: hidden;
+      background-image: linear-gradient(to bottom, #2a8f27 50%, #ababab 50%);
+      background-size: 100% 200%;
+      transition: all 1s;
+      color: #FFFFFF;
+      font-size: 10px;
+      top: 22px;
+      left: -5px;
+    }
+
     .friend-drawer h6 {
       width: 100px;
     }
@@ -728,9 +828,11 @@ margin-left: 50px;
   background-color: #aede2e;
 } */
 
-.message-1 .chat-text, .message-2 .chat-text {
+  .message-1 .chat-text,
+  .message-2 .chat-text {
     white-space: pre-line;
-    display: block;}
+    display: block;
+  }
 
   .message-1 .chat-time {
     color: #000000cc;
@@ -823,52 +925,72 @@ margin-left: 50px;
   .navbar-collapse.in {
     height: auto !important;
   }
+
   .hamburger {
-  width: 30px;
-  height: 30px;
-  position: fixed;
-  top: 10px;
-  left: 20px;
-  z-index: 16;
-  border: 0;
-  background: none;
-  display: block;
-}
-.hamburger span {
-  width: 30px;
-  height: 2px;
-  display: block;
-  background: #000;
-  margin: 8px 0;
-  transition: all 0.3s ease-in-out;
-}
-.hamburger:focus {
-  outline: 0;
-  border: 0;
-}
+    width: 30px;
+    height: 30px;
+    position: fixed;
+    top: 10px;
+    left: 20px;
+    z-index: 16;
+    border: 0;
+    background: none;
+    display: block;
+  }
 
-.hamburger span:first-child {
-  transform-origin: 0% 0%;
-}
+  .hamburger span {
+    width: 30px;
+    height: 2px;
+    display: block;
+    background: #000;
+    margin: 8px 0;
+    transition: all 0.3s ease-in-out;
+  }
 
-.hamburger span:nth-last-child(2) {
-  transform-origin: 0% 100%;
-}
+  .hamburger:focus {
+    outline: 0;
+    border: 0;
+  }
 
-.hamburger.is-visible span {
-  opacity: 1;
-  transform: rotate(45deg) translate(-8px, -2px);
-  background: #36383F;
-}
-.hamburger.is-visible span:nth-last-child(3) {
-  opacity: 0;
-  transform: rotate(0deg) scale(0.2, 0.2);
-}
+  .hamburger span:first-child {
+    transform-origin: 0% 0%;
+  }
 
-.hamburger.is-visible span:nth-last-child(2) {
-  transform: rotate(-45deg) translate(-9px, 10px);
-}
+  .hamburger span:nth-last-child(2) {
+    transform-origin: 0% 100%;
+  }
 
+  .hamburger.is-visible span {
+    opacity: 1;
+    transform: rotate(45deg) translate(-8px, -2px);
+    background: #36383F;
+  }
+
+  .hamburger.is-visible span:nth-last-child(3) {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.2, 0.2);
+  }
+
+  .hamburger.is-visible span:nth-last-child(2) {
+    transform: rotate(-45deg) translate(-9px, 10px);
+  }
+
+  .modal {
+    position: fixed;
+    top: 200px;
+
+  }
+
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    /* background-color: #000; */
+    visibility: hidden;
+  }
 </style>
 
 <script>
@@ -899,7 +1021,8 @@ margin-left: 50px;
             </svg>
           </div>
         </a> -->
-        <button class="hamburger" ng-class="{'is-visible':visible}" ng-click="visible=!visible;" ng-hide="custom_user_hide" aria-hidden="false">
+        <button class="hamburger" ng-class="{'is-visible':visible}" ng-click="visible=!visible;"
+          ng-hide="custom_user_hide" aria-hidden="false">
           <span></span>
           <span></span>
           <span></span>
@@ -928,10 +1051,12 @@ margin-left: 50px;
                   <li class="arrow">
                     <a href="javascript:void(0);" permission="[perm.menuCampaignList,perm.menuOpsDashBoard]">Static</a>
                     <ul class="subchild">
-                      <li><a href="/#/campaignDecisionBoard" permission="[perm.menuOpsDashBoard]">Campaign Decision Board</a></li>
+                      <li><a href="/#/campaignDecisionBoard" permission="[perm.menuOpsDashBoard]">Campaign Decision
+                          Board</a></li>
                       <li><a href="/#/CampaignList" permission="[perm.menuCampaignList]">List of Campaign</a></li>
                       <li><a href="/#/HDFHDF0789/releasePlan" permission="[perm.menuCampaignList]">Booking Plan</a></li>
-                      <li><a href="/#/SuspenseLeadSheet" permission="[perm.menuCampaignList]">Suspense Lead Sheet</a></li>
+                      <li><a href="/#/SuspenseLeadSheet" permission="[perm.menuCampaignList]">Suspense Lead Sheet</a>
+                      </li>
                     </ul>
                   </li>
                   <li class="arrow">
@@ -952,7 +1077,7 @@ margin-left: 50px;
                           <li><a href="/r/inventory/list">Manage Inventory</a></li>
                         </ul>
                       </li>
-                      
+
                       <li class="arrow">
                         <a href="javascript:void(0);">Booking Engine</a>
                         <ul class="subchildsub">
@@ -968,8 +1093,8 @@ margin-left: 50px;
                           <li><a href="#">Manage Phases</a></li>
                         </ul>
                       </li>
-        
-                     
+
+
                     </ul>
                   </li>
                 </ul>
@@ -1002,7 +1127,7 @@ margin-left: 50px;
                     <a href="/#/manageMent/aboutYou">My Profile</a>
                   </li>
                   <li class="arrow" permission="[perm.viewManagement]">
-                    <a >Organization</a>
+                    <a>Organization</a>
                     <ul class="subchild">
                       <li><a href="/#/manageMent/organisationView">View</a></li>
                       <li><a href="/#/manageMent/organisationOnBoard">On-Boarding</a></li>
@@ -1035,23 +1160,23 @@ margin-left: 50px;
                     </ul>
                   </li>
                 </ul>
-        
-        
+
+
               </li><!-- li -->
-              <li >
+              <li>
                 <a href="/#/lead-data">Leads Data</a>
               </li>
-        
-              <li >
-                <a href="/#/intervene" >Intervene MCA</a>
+
+              <li>
+                <a href="/#/intervene">Intervene MCA</a>
               </li>
-        
-              <li >
-                <a href="/#/intervene/mea" >Intervene MEA</a>
+
+              <li>
+                <a href="/#/intervene/mea">Intervene MEA</a>
               </li>
-        
+
             </ul>
-          </div> 
+          </div>
         </aside>
         <button type="button" class="navbar-toggle" ng-click="isCollapsed = !isCollapsed">
           <span class="sr-only">Toggle navigation</span>
@@ -1220,7 +1345,7 @@ margin-left: 50px;
 
                       <div ng-if="activeUserData.length == 0">
                         <h4 style="text-align: center; color: red;">
-                           No Record.
+                          No Record.
                         </h4>
                       </div>
 
@@ -1354,11 +1479,14 @@ margin-left: 50px;
                                   <input type="file" />
                                   <i class="fa fa-arrow-up"></i>
                                 </div>
-
+                                <div class="file-upload">
+                                  <input type="file" />
+                                  <i class="fa fa-arrow-up"></i>
+                                </div>
 
                                 <!-- <i style="margin-right: 20px;" class="fa fa-paperclip fa-lg" aria-hidden="true"></i> -->
                                 <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message" /> -->
-                                 <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message"
+                                <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message"
                                 ui-keypress="{13:'sendMessage(userChatData.phone_number)'}"> -->
                               </div>
                             </div>
@@ -1460,7 +1588,7 @@ margin-left: 50px;
                       </div>
                       <div ng-if="actionRequiredUserData.length == 0">
                         <h4 style="text-align: center; color: red;">
-                           No Record.
+                          No Record.
                         </h4>
                       </div>
                       <!-- Start Phone Chat  for tab2-->
@@ -1572,7 +1700,10 @@ margin-left: 50px;
                                   <input type="file" />
                                   <i class="fa fa-arrow-up"></i>
                                 </div>
-
+                                <div class="file-upload">
+                                  <input type="file" />
+                                  <i class="fa fa-arrow-up"></i>
+                                </div>
 
                                 <!-- <i style="margin-right: 20px;" class="fa fa-paperclip fa-lg" aria-hidden="true"></i> -->
                                 <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message" /> -->
@@ -1675,7 +1806,7 @@ margin-left: 50px;
                       </div>
                       <div ng-if="interveneUserData.length == 0">
                         <h4 style="text-align: center; color: red;">
-                           No Record.
+                          No Record.
                         </h4>
                       </div>
 
@@ -1776,8 +1907,134 @@ margin-left: 50px;
                                   <input type="file" />
                                   <i class="fa fa-arrow-up"></i>
                                 </div>
+                                <div class="file-upload-1">
+
+                                  <i class="fa fa-address-card-o" data-target="#contactModal" data-toggle="modal"
+                                    type="button"></i>
+                                </div>
+                                <div id="contactModal" class="modal fade">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                          aria-hidden="true" style="opacity: 1; font-weight:bolder;"> &times;</button>
+                                        <!-- <h4 class="modal-title" ng-if="submitLeadType">{{campaignNameOnImageModal}} Send Leads To Email</h4> -->
+                                        <h4 class="modal-title" ng-if="!submitLeadType" style="font-weight: bolder; font-size: 21px;">
+                                          {{campaignNameOnImageModal}} Select Contact you want to share</h4>
+                                        <hr>
+                                        <div class="input-wrapper" style=" margin: 10px; background-color: #575758;">
+                                          <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px;" ></i>
+                                        <input placeholder="Search here" ng-change="" ng-model=""
+                                                    id="tab1search" name="searchcontact" type="text" style="background-color: #ababab;margin: 5px;" />
+</div>
+                                        <div class="modal-body">
+
+                                          <!-- <form action="/action_page.php">
+                                            <div class="text" style="float: left;">
+                                              <h6>Divya</h6>
+                                              <p class="text-muted"><b>
+                                                  9876543210
+                                                </b></p>
+                                               
+                                            </div> 
+                                            <div class="custom-control custom-checkbox" >
+
+                                             
+                                              <input type="checkbox" class="custom-control-input" id="customCheck"
+                                                name="example1" style="float: right; width: 20px">
+                                            
+                                            </div>
+
+                                           <br>
+                                            <div class="text" style="float: left;">
+                                              <h6>Divya</h6>
+                                              <p class="text-muted"><b>
+                                                  9876543210
+                                                </b></p>
+                                               
+                                            </div> 
+                                            <div class="custom-control custom-checkbox" >
+
+                                             
+                                              <input type="checkbox" class="custom-control-input" id="customCheck"
+                                                name="example1" style="float: right; width: 20px">
+                                            
+                                            </div>
+                                            
+                                          </form>
+                                          <button type="submit" class="btn btn-primary">Submit</button> -->
+
+                                          <table class="table table-bordered table-hover">
+
+                                            <tbody>
+                                              <!-- <tr dir-paginate="user in activeUserData | itemsPerPage:itemsPerPage"
+                                                total-items="totalCount" current-page="pagination.current" track by "$index"> -->
+                                              <td>
+                                                <div class="friend-drawer friend-drawer--onhover">
+
+                                                  <!-- <div class="profile-image" style="float: left;">
+                                                      {{user.whatsapp_name |firstlater}}
+                                                    </div> -->
+
+                                                    
+                                                  <div class="text" style="float: left;">
+                                                    <h6>Divya</h6>
+                                                    <p class="text-muted"><b>
+                                                        9876543210
+                                                      </b></p>
+
+                                                  </div>
+                                                  <div class="custom-control custom-checkbox">
+
+
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck"
+                                                      name="example1" style="position: absolute; right: 35px; width: 20px">
+
+                                                  </div>
+
+                                                </div>
+                                              </td>
+                                              </tr>
+                                              <td>
+                                                <div class="friend-drawer friend-drawer--onhover">
+
+                                                  <!-- <div class="profile-image" style="float: left;">
+                                                      {{user.whatsapp_name |firstlater}}
+                                                    </div> -->
+
+
+
+
+
+
+                                                  <div class="text" style="float: left;">
+                                                    <h6>Divya</h6>
+                                                    <p class="text-muted"><b>
+                                                        9876543210
+                                                      </b></p>
+
+                                                  </div>
+                                                  <div class="custom-control custom-checkbox">
+
+
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck"
+                                                      name="example1" style="position: absolute; right: 35px; width: 20px">
+
+                                                  </div>
+
+                                                </div>
+                                              </td>
+                                            </tbody>
+                                          </table>
+                                          <button type="submit" class="btn btn-primary" value="submit">Submit</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
                                 <input type="text" ng-model="message.activeMessage" placeholder="Write message"
-                                ng-keydown="$event.keyCode === 13  && sendMessage(userChatData.phone_number)">
+                                  ng-keydown="$event.keyCode === 13  && sendMessage(userChatData.phone_number)">
                               </div>
                             </div>
                             <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
@@ -2074,7 +2331,7 @@ margin-left: 50px;
           </div>
           <div ng-if="historyDetailData.length == 0">
             <h4 style="text-align: center; color: red;">
-             No Record.
+              No Record.
             </h4>
           </div>
           <!-- Start Phone Chat for history tab-->
@@ -2393,7 +2650,7 @@ margin-left: 50px;
     </center>
     <div ng-if="contactDetailData.length == 0">
       <h4 style="text-align: center; color: red;">
-       No Record.
+        No Record.
       </h4>
     </div>
   </div>
@@ -2869,7 +3126,7 @@ margin-left: 50px;
 
     <div ng-if="filterData.length == 0">
       <h4 style="text-align: center; color: red;">
-         No Record.
+        No Record.
       </h4>
     </div>
 

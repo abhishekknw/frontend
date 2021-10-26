@@ -6625,44 +6625,64 @@
       // Template Dashboard start
       $scope.getTransactionalTemplate = function (value) {
         let param = {
-          search: value,
-      }
-      if (!value) {
+          search: value
+        }
+        if (!value) {
           param.search = ""
+        }
+        // this.setBotType = function (){}
+        
+        // if($scope.transactionalTemplateDropdown.bot=='mca'){
+        //   console.log($scope.transactionalTemplateDropdown.bot)
+        templateDashboardService.transactionalTemplateMca(param)
+          .then(function onSuccess(response) {
+            $scope.transactionalTemplateData = response.data.data;
+            
+            console.log('11111111111', $scope.transactionalTemplateData);
+        
+          }).catch(function onError(response) {
+        
+          })
+        // }
+        // if($scope.transactionalTemplateDropdown.bot=='mea'){
+        //   console.log($scope.transactionalTemplateDropdown.bot)
+        //   templateDashboardService.transactionalTemplateMea(param)
+        //   .then(function onSuccess(response) {
+         
+        //     $scope.transactionalTemplateData = response.data.data;
+        //     console.log('11111111111', $scope.transactionalTemplateData);
+        
+        //   }).catch(function onError(response) {
+        
+        //   })
+        // }
       }
- 
-      //   if ($scope.formData.getTransactionalTemplatetSearch) {
-      //     param.search = $scope.formData.getTransactionalTemplateSearch;
-      // }
+        // $scope.transactionalTemplateDropdown = {}
+        // $scope.setBotType = function () {
+        //   console.log($scope.transactionalTemplateDropdown.bot)
+        // }
+        // console.log('111111111112',  $scope.transactionalTemplateData);
+
+        //   if ($scope.formData.getTransactionalTemplatetSearch) {
+        //     param.search = $scope.formData.getTransactionalTemplateSearch;
+        // }
 
         // templateDashboardService.transactionalTemplate().then(function onSuccess(response) {
         //     console.log('11111111111111111111111111111', response);
         //   }).catch(function onError(response) {
         //     console.log(response);
         //   })
-        templateDashboardService.transactionalTemplate(param)
-          .then(function onSuccess(response) {
-            $scope.transactionalTemplateData = response.data.data;
-            console.log('11111111111',  $scope.transactionalTemplateData);
 
-          }).catch(function onError(response) {
-            console.log(response);
-          })
-
-
-          templateDashboardService.transactionalTemplateDetail(param)
+        templateDashboardService.transactionalTemplateDetail(true)
           .then(function onSuccess(response) {
             $scope.transactionalTemplateDataDetail = response.data.data;
-            console.log('222222',  $scope.transactionalTemplateDataDetail);
-    
+            console.log('222222', $scope.transactionalTemplateDataDetail);
+
           }).catch(function onError(response) {
             console.log(response);
           })
 
-      }
-
-      
-  
+   
 
 
       // $scope.gettransactionalTemplateSummaryDownload = function () {
@@ -6682,6 +6702,8 @@
       $scope.transactionalTemplateDropdown = {}
       $scope.setBotType = function () {
         console.log($scope.transactionalTemplateDropdown.bot)
+
+             
       }
       $scope.viewTemplateSummaryTable = false;
       $scope.viewTemplateSummary = function () {
@@ -6689,7 +6711,7 @@
       }
 
       $scope.backToTemplateData = function () {
-        $scope.viewTemplateSummaryTable =false;
+        $scope.viewTemplateSummaryTable = false;
         $scope.transactionalTemplateDropdown = {};
       }
 
