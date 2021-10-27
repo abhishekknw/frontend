@@ -6634,6 +6634,7 @@
         
         // if($scope.transactionalTemplateDropdown.bot=='mca'){
         //   console.log($scope.transactionalTemplateDropdown.bot)
+
         templateDashboardService.transactionalTemplateSummaryMca(param)
           .then(function onSuccess(response) {
             $scope.transactionalTemplateData = response.data.data;
@@ -6672,16 +6673,46 @@
         //   }).catch(function onError(response) {
         //     console.log(response);
         //   })
+        $scope.getTransactionalTemplateViewDetail = function (value,page) {
+          
+         
+        
+          let param = {
+          search: value,
+          next_page:1,
+          template_id:value
+        }
+        if (page) {
+          param.next_page = page;
+      } else {
+        $scope.totalCount = 1;
+        $scope.currentPage = 1;
+        $scope.itemsPerPage = 10;
+        $scope.serial = 1
+        $scope.pagination = {
+            current: 1
+        };
+      }
+      if (!value) {
+        param.search = ""
+      }
 
-        templateDashboardService.transactionalTemplateDetail(true)
+    //   if ($scope.formData.viewSearch) {
+    //     param.search = $scope.formData.viewSearch;
+    // }
+
+        templateDashboardService.transactionalTemplateDetail(param)
           .then(function onSuccess(response) {
+            
+          alert("view")
             $scope.transactionalTemplateDataDetail = response.data.data;
+            $scope.total_count = response.data.data.total_count
             console.log('222222', $scope.transactionalTemplateDataDetail);
 
           }).catch(function onError(response) {
             console.log(response);
           })
-
+        }
    
 
 
