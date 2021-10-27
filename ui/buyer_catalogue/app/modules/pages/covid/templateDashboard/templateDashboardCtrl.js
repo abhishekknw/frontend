@@ -6634,7 +6634,7 @@
         
         // if($scope.transactionalTemplateDropdown.bot=='mca'){
         //   console.log($scope.transactionalTemplateDropdown.bot)
-        templateDashboardService.transactionalTemplateMca(param)
+        templateDashboardService.transactionalTemplateSummaryMca(param)
           .then(function onSuccess(response) {
             $scope.transactionalTemplateData = response.data.data;
             
