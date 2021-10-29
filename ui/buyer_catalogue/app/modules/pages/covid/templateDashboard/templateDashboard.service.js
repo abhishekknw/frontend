@@ -54,7 +54,7 @@ angular.module('catalogueApp')
       //   return $http.get(url);
       // }
       DashboardService.transactionalTemplateDetail = function (param){
-        let url="v0/ui/mca-bot/template-user-summary-list/?template_id="+ param.template_id+ "&next_page=" + param.next_page
+        let url="v0/ui/mca-bot/template-user-summary-list/?template_id="+ param.template_id+ "&next_page=" + param.next_page;
         alert("template")
         if (param.search) {
           url += '&search=' + param.search

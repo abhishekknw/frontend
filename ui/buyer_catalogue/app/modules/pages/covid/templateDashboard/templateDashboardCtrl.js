@@ -6674,11 +6674,9 @@
         //     console.log(response);
         //   })
         $scope.getTransactionalTemplateViewDetail = function (value,page) {
-          
-         
-        
+                  
           let param = {
-          search: value,
+         search: value,
           next_page:1,
           template_id:value
         }
@@ -6700,13 +6698,13 @@
     //   if ($scope.formData.viewSearch) {
     //     param.search = $scope.formData.viewSearch;
     // }
+     $scope.pageCount = param.nextPage;
+     $scope.disableNextPagebutton = false;
 
         templateDashboardService.transactionalTemplateDetail(param)
           .then(function onSuccess(response) {
-            
           alert("view")
             $scope.transactionalTemplateDataDetail = response.data.data;
-            $scope.total_count = response.data.data.total_count
             console.log('222222', $scope.transactionalTemplateDataDetail);
 
           }).catch(function onError(response) {
