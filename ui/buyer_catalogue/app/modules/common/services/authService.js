@@ -824,7 +824,29 @@ angular.module('Authentication')
             };
 
 
-     
+            authService.attachmentContact = function (param,meaType) {
+               let url = "";
+               apiHost = APIBaseUrl;
+               if(meaType){
+                   url = "";
+                   apiHost = interveneApiHost;
+                }
+               return $http.get(apiHost + url,param)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+
+               // return $http.post(apiHost + 'v0/ui/covid-bot/feedback-from-bot/', param)
+               //    .then(function onSuccess(response) {
+               //       return response
+               //    })
+               //    .catch(function onError(response) {
+               //       return response
+               //    });
+            };
 
  
 

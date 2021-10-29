@@ -1385,6 +1385,10 @@ top:0;
 
                   <div class="table-responsive" ng-if="viewTemplateSummaryTable" ng-show="transactionalTemplateDropdown"
                     style="width: 100%;" >
+                    <input type="text" class="form-control " placeholder="search"
+                      ng-change="getTransactionalTemplateViewDetail(viewSearch)" ng-model="viewSearch"
+                      >
+                      <br>
                     <!-- <div>
                       <span ng-show="transactionalTemplateDropdown.bot" style="color:black">
                         <h4>BOT:{{transactionalTemplateDropdown.bot}}</h4>
@@ -1425,7 +1429,7 @@ top:0;
                       <tbody>
                         <tr dir-paginate="tdtemplate in transactionalTemplateDataDetail | itemsPerPage:itemsPerPage"
                           total-items="totalCount" current-page="pagination.current" track by "$index">
-                          <td style="text-align: center;">{{$index+serial+1}}</td>
+                          <td style="text-align: center;">{{$index+serial}}</td>
                           <td style="text-align: center;">{{tdtemplate.user_name}}</td>
                           <td style="text-align: center;">{{tdtemplate.whatsapp_name}}</td>
                           <td style="text-align: center;">{{tdtemplate.phone_number}}</td>
