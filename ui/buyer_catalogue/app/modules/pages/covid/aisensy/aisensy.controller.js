@@ -790,6 +790,28 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
             }
 
+            $scope.getAttachment = function (phone) {
+        
+                let param = {
+                    "type":"contact",
+                    "firstName":"",
+                    "lastName":"",
+                    "phone":"",
+                    "company": "",
+                    "department": "",
+                    "title": "",
+                    "email": "",
+                }
+                
+                console.log();
+                AuthService.attachmentContact (param)
+                .then(function onSuccess(response) {
+                    $scope.filterData = response.data.data.users;
+                }).catch(function onError(response) {
+                    console.log(response);
+                })
+            }
+
             // $scope.filterPageChanged = function (newPageNumber, tab) {
             //     $scope.serial = newPageNumber * 10 - 9;
             //     $scope.getFilterData(newPageNumber);
