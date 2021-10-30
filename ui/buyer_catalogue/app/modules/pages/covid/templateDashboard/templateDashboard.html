@@ -1301,16 +1301,16 @@ top:0;
                                 data-target="#viewModal" data-toggle="modal" type="button" class="btn btn-danger">View
                               </button>
                             </td> -->
-                            <td style="text-align: center;"><button ng-click="viewTemplateSummary(campaign.campaign_id)"
+                            <td style="text-align: center;"><button ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id)"
                                 data-toggle="modal" type="button" class="btn btn-danger">View
                               </button>
                             </td>
-                            <!-- <td style="text-align: center;"><button type="button" ng-click=""
+                            <!-- <td style="text-align: center;"><button type="button" ng-click="gettransactionalTemplateSummaryDownload(ttemplate.template_id)"
                               class="btn btn-danger">Download</button>
                           </td> -->
                             <td style="text-align: center;">
-                              <a href="https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-user-summary/"><button
-                                  data-toggle="modal" type="button" class="btn btn-danger">Download
+                              <a href="https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-user-summary/?template_id=" ng-click="gettransactionalTemplateSummaryDownload(ttemplate.template_id)"><button
+                                  data-toggle="modal" type="button" class="btn btn-danger" >Download
                                 </button></a>
                             </td>
                           </tr>
