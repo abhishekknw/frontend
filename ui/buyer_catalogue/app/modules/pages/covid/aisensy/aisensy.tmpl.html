@@ -2765,7 +2765,7 @@ color: #fff;
             </button>
           </div>
           <center><button class="btn btn-danger filter-button"
-              ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates"
+              ng-disabled="!dateRangeModel.start_dates || !dateRangeModel.end_dates||!dateRangeModel.attribute_name||!dateRangeModel.date_type"
               ng-click="getFilterData()">Submit</button></center>
         </div>
       </div>
@@ -3124,12 +3124,16 @@ color: #fff;
     </div>
     <!-- Status End for filter tab -->
 
-    <div ng-if="filterData.length == 0">
+    <div ng-if="filterData.length == 0 && (dateRangeModel.start_dates && dateRangeModel.end_dates && dateRangeModel.attribute_name && dateRangeModel.date_type)">
       <h4 style="text-align: center; color: red;">
         No Record.
       </h4>
     </div>
-
+    <div ng-if="!dateRangeModel.start_dates || !dateRangeModel.end_dates||!dateRangeModel.attribute_name||!dateRangeModel.date_type">
+      <h4 style="text-align: center; color: red;">
+Select all the Fields
+      </h4>
+    </div>
   </div>
   <!--/Filter Tab-->
 </div>
