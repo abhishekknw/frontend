@@ -1262,7 +1262,7 @@ top:0;
                   </div>
                 </div>
                 <!-- <div ng-if="showCampaigns"> -->
-                <div ng-if ="transactionalTemplateDropdown.bot">
+                <div ng-if="transactionalTemplateDropdown.bot">
                   <div ng-if="!viewTemplateSummaryTable">
                     <input type="text" class="form-control " placeholder="search"
                       ng-change="getTransactionalTemplate(TransactionalTemplateSearch)"
@@ -1301,16 +1301,18 @@ top:0;
                                 data-target="#viewModal" data-toggle="modal" type="button" class="btn btn-danger">View
                               </button>
                             </td> -->
-                            <td style="text-align: center;"><button ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id)"
-                                data-toggle="modal" type="button" class="btn btn-danger">View
+                            <td style="text-align: center;"><button
+                                ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id)" data-toggle="modal"
+                                type="button" class="btn btn-danger">View
                               </button>
                             </td>
                             <!-- <td style="text-align: center;"><button type="button" ng-click="gettransactionalTemplateSummaryDownload(ttemplate.template_id)"
                               class="btn btn-danger">Download</button>
                           </td> -->
                             <td style="text-align: center;">
-                              <a href="https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-user-summary/?template_id=" ng-click="gettransactionalTemplateSummaryDownload(ttemplate.template_id)"><button
-                                  data-toggle="modal" type="button" class="btn btn-danger" >Download
+                              <a href="https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-user-summary/?template_id="
+                                ng-click="gettransactionalTemplateSummaryDownload(ttemplate.template_id)"><button
+                                  data-toggle="modal" type="button" class="btn btn-danger">Download
                                 </button></a>
                             </td>
                           </tr>
@@ -1370,7 +1372,7 @@ top:0;
                       </table>
                       <div ng-if="transactionalTemplateData.length == 0">
                         <h4 style="text-align: center; color: red; margin-top: 10px;">
-                          Record Not Found.
+                          No Record.
                         </h4>
                       </div>
                     </div>
@@ -1383,16 +1385,18 @@ top:0;
                     </center>
                   </div>
 
-                  <div class="table-responsive" ng-if="viewTemplateSummaryTable" ng-show="transactionalTemplateDropdown"
-                    style="width: 100%;" >
+                  <div ng-if="viewTemplateSummaryTable">
+
                     <input type="text" class="form-control " placeholder="search"
-                      ng-change="getTransactionalTemplateViewDetail(viewSearch)" ng-model="viewSearch"
-                      >
+                      ng-change="getTransactionalTemplateViewDetail(viewSearch)" ng-model="viewSearch">
+
+                    <div class="table-responsive" ng-show="transactionalTemplateDropdown" style="width: 100%;">
+
                       <!-- <input type="text" class="form-control " placeholder="search"
                       ng-change="getTransactionalTemplateViewDetail()" ng-model="formData.activesearch"
                       > -->
                       <br>
-                    <!-- <div>
+                      <!-- <div>
                       <span ng-show="transactionalTemplateDropdown.bot" style="color:black">
                         <h4>BOT:{{transactionalTemplateDropdown.bot}}</h4>
                       </span><br>
@@ -1410,51 +1414,67 @@ top:0;
                       </span><br>
 
                     </div> -->
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <!-- "template_id": "14",
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <!-- "template_id": "14",
                           "template_name": "real estate",
                           "template_date": "2021-10-20 01:33 PM", -->
 
-                          <th style="padding:10px">Index</th>
-                          <th style="padding:10px">Name</th>
-                          <!-- <th style="width:200px;" class="col-md-2">User Name</th> -->
-                          <th style="padding:10px">whatsapp Name</th>
-                          <th style="padding:10px">Phone Number</th>
-                          <th style="padding:10px">Positive</th>
-                          <th style="padding:10px">Neutral</th>
-                          <th style="padding:10px">Negative</th>
-                          <th style="padding:10px">Created At</th>
-                          <th style="padding:10px">Updated At</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr dir-paginate="tdtemplate in transactionalTemplateDataDetail | itemsPerPage:itemsPerPage"
-                          total-items="totalCount" current-page="pagination.current" track by "$index">
-                          <td style="text-align: center;">{{$index+serial}}</td>
-                          <td style="text-align: center;">{{tdtemplate.user_name}}</td>
-                          <td style="text-align: center;">{{tdtemplate.whatsapp_name}}</td>
-                          <td style="text-align: center;">{{tdtemplate.phone_number}}</td>
-                          <td style="text-align: center;">{{tdtemplate.total_positive}}</td>
-                          <td style="text-align: center;">{{tdtemplate.total_neutral}}</td>
-                          <td style="text-align: center;">{{tdtemplate.total_negative}}</td>
-                          <td style="text-align: center;">{{tdtemplate.created_at}}</td>
-                          <td style="text-align: center;">{{tdtemplate.updated_at}}</td>
+                            <th style="padding:10px">Index</th>
+                            <th style="padding:10px">Name</th>
+                            <!-- <th style="width:200px;" class="col-md-2">User Name</th> -->
+                            <th style="padding:10px">whatsapp Name</th>
+                            <th style="padding:10px">Phone Number</th>
+                            <th style="padding:10px">Positive</th>
+                            <th style="padding:10px">Neutral</th>
+                            <th style="padding:10px">Negative</th>
+                            <th style="padding:10px">Created At</th>
+                            <th style="padding:10px">Updated At</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr dir-paginate="tdtemplate in transactionalTemplateDataDetail | itemsPerPage:itemsPerPage"
+                            total-items="totalCount" current-page="pagination.current" track by "$index">
+                            <td style="text-align: center;">{{$index+serial}}</td>
+                            <td style="text-align: center;">{{tdtemplate.user_name}}</td>
+                            <td style="text-align: center;">{{tdtemplate.whatsapp_name}}</td>
+                            <td style="text-align: center;">{{tdtemplate.phone_number}}</td>
+                            <td style="text-align: center;">{{tdtemplate.total_positive}}</td>
+                            <td style="text-align: center;">{{tdtemplate.total_neutral}}</td>
+                            <td style="text-align: center;">{{tdtemplate.total_negative}}</td>
+                            <td style="text-align: center;">{{tdtemplate.created_at}}</td>
+                            <td style="text-align: center;">{{tdtemplate.updated_at}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
 
-                        </tr>
+                      <div ng-if="transactionalTemplateDataDetail.length == 0">
+                        <h4 style="text-align: center; color: red;">
+                          No Record.
+                        </h4>
+                      </div>
 
-                      </tbody>
-                    </table>
+                    </div>
+
+                    <center>
+                      <dir-pagination-controls max-size="2" on-page-change="pageChanged(newPageNumber)"
+                        boundary-links="true">
+                      </dir-pagination-controls>
+                    </center>
+
+                    <div ng-if="transactionalTemplateDataDetail.length > 0"
+                      style="text-align: center;">
+                      <a href="https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-user-summary/"><button
+                          style="margin: 10px;" data-toggle="modal" type="button" class="btn btn-danger">Download
+                          Details
+                        </button></a>
+                    </div>
 
                   </div>
-                  <div ng-if=" viewTemplateSummaryTable" style="text-align: center;">
-                    <a href="https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-user-summary/"><button
-                        style="margin: 10px;" data-toggle="modal" type="button" class="btn btn-danger">Download Details
-                      </button></a>
-                  </div>
+
+
                 </div>
-
 
                 <!-- <div class="viewLeadstable" ng-if="!showCampaigns"> -->
                 <!-- <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button> -->
@@ -1499,6 +1519,7 @@ top:0;
                   data-toggle="modal">Print Leads In Excel</button> -->
 
               </div>
+
 
               <div class="page-end">
                 <center>

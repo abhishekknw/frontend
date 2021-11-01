@@ -6673,25 +6673,20 @@
         //   }).catch(function onError(response) {
         //     console.log(response);
         //   })
-        $scope.getTransactionalTemplateViewDetail = function (template_id,page,value) {
-          $scope.viewTemplateSummaryTable = true;
+        $scope.getTransactionalTemplateViewDetail = function (value,searchitem,page) {
+          $scope.viewTemplateSummary();
           let param = {
-         search: value,
+         search: searchitem,
           next_page:1,
-          template_id:template_id
+          template_id:value
         }
         if (page) {
           param.next_page = page;
       } else {
-        $scope.totalCount = 1;
-        $scope.currentPage = 1;
-        $scope.itemsPerPage = 10;
-        $scope.serial = 1
-        $scope.pagination = {
-            current: 1
-        };
+        $scope.totalCount = 0;
       }
-      if (!value) {
+      $scope.pageCount = param. next_page;
+      if (!searchitem) {
         param.search = ""
       }
 
@@ -6703,8 +6698,8 @@
      
         templateDashboardService.transactionalTemplateDetail(param)
           .then(function onSuccess(response) {
-          alert("view")
-            $scope.transactionalTemplateDataDetail = response.data.data;
+          // alert("view")
+            $scope.transactionalTemplateDataDetail = response.data.data.users;
             $scope.totalCount = response.data.data.total_count;
             console.log('222222', $scope.transactionalTemplateDataDetail);
 
@@ -6716,7 +6711,9 @@
 
 
       $scope.gettransactionalTemplateSummaryDownload = function (value) {
-        let param = {template_id : value}
+        let param = {
+          template_id : value
+        }
       alert("download summry")
         templateDashboardService.transactionalTemplateSummaryDownload(param).
         then(function onSuccess(response) {
@@ -6747,9 +6744,21 @@
         $scope.transactionalTemplateDropdown = {};
       }
 
+      $scope.pageChanged = function (newPageNumber, tab) {
+        $scope.serial = newPageNumber * 10 - 9;
+        $scope.getTransactionalTemplateViewDetail(newPageNumber);
+    };
 
-
-
+    $scope.pagination = {
+      current: 1
+  };
+  $scope.totalCount = 0;
+  $scope.currentPage = 1;
+  $scope.itemsPerPage = 10;
+  $scope.serial = 1
+  $scope.pagination = {
+      current: 1
+  };
 
       // Template Dashboard end
 
