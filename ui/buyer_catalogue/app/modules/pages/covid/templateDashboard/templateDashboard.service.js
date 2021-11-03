@@ -96,7 +96,7 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
-      return DashboardService;
+        return DashboardService;
 
 
 

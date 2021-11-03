@@ -1390,12 +1390,12 @@ top:0;
                     <input type="text" class="form-control " placeholder="search"
                       ng-change="getTransactionalTemplateViewDetail(viewSearch)" ng-model="viewSearch">
 
-                    <div class="table-responsive" ng-show="transactionalTemplateDropdown" style="width: 100%;" >
+                    <div class="table-responsive" style="width: 100%;">
 
                       <!-- <input type="text" class="form-control " placeholder="search"
                       ng-change="getTransactionalTemplateViewDetail()" ng-model="formData.activesearch"
                       > -->
-                 
+
                       <!-- <div>
                       <span ng-show="transactionalTemplateDropdown.bot" style="color:black">
                         <h4>BOT:{{transactionalTemplateDropdown.bot}}</h4>
@@ -1416,8 +1416,8 @@ top:0;
                     </div> -->
                       <table class="table">
                         <thead>
-                          <tr >
-                           
+                          <tr>
+
                             <th style="padding:10px">Index</th>
                             <th style="padding:10px">Name</th>
                             <!-- <th style="width:200px;" class="col-md-2">User Name</th> -->
@@ -1432,8 +1432,8 @@ top:0;
                         </thead>
                         <tbody>
                           <tr dir-paginate="tdtemplate in transactionalTemplateDataDetail | itemsPerPage:itemsPerPage"
-                          total-items="totalCount" current-page="pagination.current" track by "$index" >
-                         
+                            total-items="totalCount" current-page="pagination.current" track by "$index">
+
                             <td style="text-align: center;">{{$index+serial}}</td>
                             <td style="text-align: center;">{{tdtemplate.user_name}}</td>
                             <td style="text-align: center;">{{tdtemplate.whatsapp_name}}</td>
@@ -1461,11 +1461,10 @@ top:0;
                       </dir-pagination-controls>
                     </center>
 
-                    <div ng-if="transactionalTemplateDataDetail.length > 0"
-                      style="text-align: center;">
-                      <a href="https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-user-summary/"><button
-                          style="margin: 10px;" data-toggle="modal" type="button" class="btn btn-danger">Download
-                          Details
+                    <div ng-if="transactionalTemplateDataDetail.length > 0" style="text-align: center;">
+                      <a href="https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-user-summary/?template_id="
+                        ng-click="gettransactionalTemplateSummaryDownload(ttemplate.template_id)"><button
+                          data-toggle="modal" type="button" class="btn btn-danger">Download Details
                         </button></a>
                     </div>
 

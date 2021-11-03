@@ -6675,6 +6675,7 @@
         //   })
         $scope.getTransactionalTemplateViewDetail = function (value,searchitem,page) {
           $scope.viewTemplateSummary();
+          
           let param = {
          search: searchitem,
           next_page:1,
@@ -6720,6 +6721,11 @@
           // $scope.transactionalTemplateSummaryDownloadData=response;
           // $scope.transactionalTemplateSummaryDownloadData = "v0/ui/mca-bot/download-template-summary/";
           // console.log('2222222222535',  $scope.transactionalTemplateSummaryDownloadData);
+console.log(response)
+          if (response.data.data.one_time_hash) {
+            $window.open(Config.APIBaseUrl + 'v0/ui/mca-bot/download-template-user-summary/?template_id=' + response.data.data.one_time_hash)
+          }
+
           console.log('5467577');
         }).catch(function onError(response) {
           console.log(response);
@@ -6727,7 +6733,7 @@
 
       }
 
-
+      
       $scope.transactionalTemplateDropdown = {}
       $scope.setBotType = function () {
         console.log($scope.transactionalTemplateDropdown.bot)
