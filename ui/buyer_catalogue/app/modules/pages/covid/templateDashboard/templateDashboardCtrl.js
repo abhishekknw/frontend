@@ -6634,7 +6634,8 @@
         
         // if($scope.transactionalTemplateDropdown.bot=='mca'){
         //   console.log($scope.transactionalTemplateDropdown.bot)
-        templateDashboardService.transactionalTemplateMca(param)
+
+        templateDashboardService.transactionalTemplateSummaryMca(param)
           .then(function onSuccess(response) {
             $scope.transactionalTemplateData = response.data.data;
             
@@ -6672,33 +6673,67 @@
         //   }).catch(function onError(response) {
         //     console.log(response);
         //   })
+        $scope.getTransactionalTemplateViewDetail = function (value,searchitem,page) {
+          $scope.viewTemplateSummary();
+          
+          let param = {
+         search: searchitem,
+          next_page:1,
+          template_id:value
+        }
+        if (page) {
+          param.next_page = page;
+      } else {
+        $scope.totalCount = 0;
+      }
+      $scope.pageCount = param. next_page;
+      if (!searchitem) {
+        param.search = ""
+      }
 
-        templateDashboardService.transactionalTemplateDetail(true)
+    //   if ($scope.formData.viewSearch) {
+    //     param.search = $scope.formData.viewSearch;
+    // }
+     $scope.pageCount = param.nextPage;
+     $scope.disableNextPagebutton = false;
+     
+        templateDashboardService.transactionalTemplateDetail(param)
           .then(function onSuccess(response) {
-            $scope.transactionalTemplateDataDetail = response.data.data;
+          // alert("view")
+            $scope.transactionalTemplateDataDetail = response.data.data.users;
+            $scope.totalCount = response.data.data.total_count;
             console.log('222222', $scope.transactionalTemplateDataDetail);
 
           }).catch(function onError(response) {
             console.log(response);
           })
-
+        }
    
 
 
-      // $scope.gettransactionalTemplateSummaryDownload = function () {
-      // alert("download summry")
-      //   templateDashboardService.transactionalTemplateSummaryDownload().
-      //   then(function onSuccess(response) {
-      //     $scope.transactionalTemplateSummaryDownloadData=(APIBaseUrl +' v0/ui/mca-bot/download-template-summary/' + response.data.data);
-      //     // $scope.transactionalTemplateSummaryDownloadData = "v0/ui/mca-bot/download-template-summary/";
-      //     console.log('2222222222',  $scope.transactionalTemplateSummaryDownloadData);
-      //   }).catch(function onError(response) {
-      //     console.log(response);
-      //   })
+      $scope.gettransactionalTemplateSummaryDownload = function (value) {
+        let param = {
+          template_id : value
+        }
+      alert("download summry")
+        templateDashboardService.transactionalTemplateSummaryDownload(param).
+        then(function onSuccess(response) {
+          // $scope.transactionalTemplateSummaryDownloadData=response;
+          // $scope.transactionalTemplateSummaryDownloadData = "v0/ui/mca-bot/download-template-summary/";
+          // console.log('2222222222535',  $scope.transactionalTemplateSummaryDownloadData);
+console.log(response)
+          if (response.data.data.one_time_hash) {
+            $window.open(Config.APIBaseUrl + 'v0/ui/mca-bot/download-template-user-summary/?template_id=' + response.data.data.one_time_hash)
+          }
 
-      // }
+          console.log('5467577');
+        }).catch(function onError(response) {
+          console.log(response);
+        })
 
+      }
 
+      
       $scope.transactionalTemplateDropdown = {}
       $scope.setBotType = function () {
         console.log($scope.transactionalTemplateDropdown.bot)
@@ -6715,9 +6750,21 @@
         $scope.transactionalTemplateDropdown = {};
       }
 
+      $scope.pageChanged = function (newPageNumber, tab) {
+        $scope.serial = newPageNumber * 10 - 9;
+        $scope.getTransactionalTemplateViewDetail(newPageNumber);
+    };
 
-
-
+    $scope.pagination = {
+      current: 1
+  };
+  $scope.totalCount = 0;
+  $scope.currentPage = 1;
+  $scope.itemsPerPage = 10;
+  $scope.serial = 1
+  $scope.pagination = {
+      current: 1
+  };
 
       // Template Dashboard end
 

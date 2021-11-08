@@ -1286,7 +1286,7 @@ color: #fff;
                         <i class="fa fa-search" aria-hidden="true"></i>
                         <!-- <input placeholder="Search here" ng-change="searchChat(search)" ng-model="search" id="search"
                           name="search" type="text" /> -->
-                        <input placeholder="Search here" ng-change="getActiveUser()" ng-model="formData.activesearch"
+                        <input placeholder="Search here" ng-change="getActiveUser(formData.activesearch)" ng-model="formData.activesearch"
                           id="tab1search" name="search" type="text" />
                       </div>
                     </div>
@@ -2765,7 +2765,7 @@ color: #fff;
             </button>
           </div>
           <center><button class="btn btn-danger filter-button"
-              ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates"
+              ng-disabled="!dateRangeModel.start_dates || !dateRangeModel.end_dates||!dateRangeModel.attribute_name||!dateRangeModel.date_type"
               ng-click="getFilterData()">Submit</button></center>
         </div>
       </div>
@@ -3124,12 +3124,16 @@ color: #fff;
     </div>
     <!-- Status End for filter tab -->
 
-    <div ng-if="filterData.length == 0">
+    <div ng-if="filterData.length == 0 && (dateRangeModel.start_dates && dateRangeModel.end_dates && dateRangeModel.attribute_name && dateRangeModel.date_type)">
       <h4 style="text-align: center; color: red;">
         No Record.
       </h4>
     </div>
-
+    <div ng-if="!dateRangeModel.start_dates || !dateRangeModel.end_dates||!dateRangeModel.attribute_name||!dateRangeModel.date_type">
+      <h4 style="text-align: center; color: red;">
+Select all the Fields
+      </h4>
+    </div>
   </div>
   <!--/Filter Tab-->
 </div>
