@@ -185,6 +185,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     nextPage: 1,
                     phoneNumber: value,
                 }
+                console.log(value,page)
                 if (page) {
                     param.nextPage = page;
                 } else {

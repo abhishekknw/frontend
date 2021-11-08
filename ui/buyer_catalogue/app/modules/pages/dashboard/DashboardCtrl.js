@@ -4626,6 +4626,7 @@
 
         DashboardService.printLeadsInExcel($scope.printLeadsInExcelData)
           .then(function onSuccess(response) {
+            console(response,'878787')
             if (response.data.data.one_time_hash && $scope.emailCampaignLeadsModel.start_date &&
               $scope.emailCampaignLeadsModel.end_date) {
               $window.open(Config.APIBaseUrl + 'v0/ui/leads/download_lead_data_excel/' + response.data.data.one_time_hash +
