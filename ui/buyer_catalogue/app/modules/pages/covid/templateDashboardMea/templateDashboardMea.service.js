@@ -2,8 +2,8 @@
 
 
 angular.module('catalogueApp')
-  .factory('templateDashboardService', ['machadaloHttp', '$stateParams', '$rootScope', '$routeParams', '$location', 
-    function (machadaloHttp, $stateParams, $scope, $rootScope, $routeParams, $location) {
+  .factory('templateDashboardMeaService', ['$http','machadaloHttp', '$stateParams', '$rootScope', '$routeParams', '$location', 
+    function ($http,machadaloHttp, $stateParams, $scope, $rootScope, $routeParams, $location) {
 
       var url_base = 'v0/ui/website/';
       var url_base_proposal = 'v0/ui/proposal/';
@@ -45,11 +45,17 @@ angular.module('catalogueApp')
       //   .catch(function onError(response) {
       //      return response
       //   });
-      DashboardService.transactionalTemplateSummaryMca = function (param) {
-        let url="v0/ui/mca-bot/template-summary-list/?search=" +param.search
-        return machadaloHttp.get( url);
+      // DashboardService.transactionalTemplateSummaryMca = function (param) {
+      //   let url="v0/ui/mca-bot/template-summary-list/?search=" +param.search
+      //   return machadaloHttp.get( url);
+      // }
+      DashboardService.transactionalTemplateSummaryMea = function (param) {
+        let url="v0/ui/mea-bot/template-summary-list/?search=" +param.search
+        apiHost = interveneApiHost;
+        // return $http.get(url);
+        console.log("service")
+        return $http.get(interveneApiHost + url);
       }
-     
       DashboardService.transactionalTemplateDetail = function (param){
         let url="v0/ui/mca-bot/template-user-summary-list/?template_id="+ param.template_id+ "&next_page=" + param.next_page+'&search=' + param.search;
         // alert("template")

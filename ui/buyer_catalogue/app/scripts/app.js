@@ -605,6 +605,18 @@ angular
           permission: 'can_view_template_dashboard'
         }
       })
+      .state('templateDashboardMea', {
+        url: '/templateDashboardMea',
+        controller: 'TemplateDashboardMeaCtrl',
+        templateUrl: 'modules/pages/covid/templateDashboardMea/templateDashboardMea.html',
+        // sidebarMeta: {
+        //   icon: 'ion-android-home',
+        //   order: 0,
+        // },
+        data: {
+          permission: 'can_view_template_dashboard'
+        }
+      })
       .state('b2bdashboard', {
         url: '/b2b/dashboard',
         controller: 'B2BDashboardCtrl',
@@ -776,7 +788,9 @@ angular
              $location.path("/mca");
           }   else if (url && url[1] && url[1].indexOf("templateDashboard") != -1) {
             $location.path("/templateDashboard");
-          } 
+          }  else if (url && url[1] && url[1].indexOf("templateDashboardMea") != -1) {
+            $location.path("/templateDashboardMea");
+          }
           //  else if (url && url[1] && url[1].indexOf("aisensy") != -1) {
           //   $location.path("/aisensy");
           // } 
@@ -850,6 +864,9 @@ angular
           }  else if (url && url[1] && url[1].indexOf("templateDashboard") != -1) {
             $location.path("/templateDashboard");
           } 
+          else if (url && url[1] && url[1].indexOf("templateDashboardMea") != -1) {
+            $location.path("/templateDashboardMea");
+          }
           //  else if (url && url[1] && url[1].indexOf("aisensy") != -1) {
           //   $location.path("/aisensy");
           // } 
