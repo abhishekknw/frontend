@@ -92,46 +92,47 @@
     color: #fff;
 
   }
+
   .file-upload-1 {
 
-left: 70px;
-height: 25px;
-width: 25px;
-border-radius: 100px;
-position: absolute;
-display: flex;
-justify-content: center;
-align-items: center;
-border: 4px solid #FFFFFF;
-overflow: hidden;
-background-image: linear-gradient(to bottom, #2a8f27 50%, #ababab 50%);
-background-size: 100% 200%;
-transition: all 1s;
-color: #fff;
-font-size: 10px;
-top: 18px;
-}
+    left: 70px;
+    height: 25px;
+    width: 25px;
+    border-radius: 100px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid #FFFFFF;
+    overflow: hidden;
+    background-image: linear-gradient(to bottom, #2a8f27 50%, #ababab 50%);
+    background-size: 100% 200%;
+    transition: all 1s;
+    color: #fff;
+    font-size: 10px;
+    top: 18px;
+  }
 
-.file-upload-1 input[type='file'] {
+  .file-upload-1 input[type='file'] {
 
-height: 250px;
-width: 250px;
-position: absolute;
-top: 0;
-left: 0;
-opacity: 0;
-cursor: pointer;
+    height: 250px;
+    width: 250px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
 
-}
+  }
 
 
-.file-upload-1:hover {
+  .file-upload-1:hover {
 
-background-position: 0 -100%;
-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-color: #fff;
+    background-position: 0 -100%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    color: #fff;
 
-}
+  }
 
 
   .scrolling-area {
@@ -1286,8 +1287,8 @@ color: #fff;
                         <i class="fa fa-search" aria-hidden="true"></i>
                         <!-- <input placeholder="Search here" ng-change="searchChat(search)" ng-model="search" id="search"
                           name="search" type="text" /> -->
-                        <input placeholder="Search here" ng-change="getActiveUser(formData.activesearch)" ng-model="formData.activesearch"
-                          id="tab1search" name="search" type="text" />
+                        <input placeholder="Search here" ng-change="getActiveUser(formData.activesearch)"
+                          ng-model="formData.activesearch" id="tab1search" name="search" type="text" />
                       </div>
                     </div>
 
@@ -1907,132 +1908,84 @@ color: #fff;
                                   <input type="file" />
                                   <i class="fa fa-arrow-up"></i>
                                 </div>
-                                <div class="file-upload-1">
 
-                                  <i class="fa fa-address-card-o" data-target="#contactModal" data-toggle="modal"
-                                    type="button"></i>
-                                </div>
-                                <div id="contactModal" class="modal fade">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal"
-                                          aria-hidden="true" style="opacity: 1; font-weight:bolder;"> &times;</button>
-                                        <!-- <h4 class="modal-title" ng-if="submitLeadType">{{campaignNameOnImageModal}} Send Leads To Email</h4> -->
-                                        <h4 class="modal-title" ng-if="!submitLeadType" style="font-weight: bolder; font-size: 21px;">
-                                          {{campaignNameOnImageModal}} Select Contact you want to share</h4>
-                                        <hr>
-                                        <div class="input-wrapper" style=" margin: 10px; background-color: #575758;">
-                                          <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px;" ></i>
-                                        <input placeholder="Search here" ng-change="" ng-model=""
-                                                    id="tab1search" name="searchcontact" type="text" style="background-color: #ababab;margin: 5px;" />
-</div>
-                                        <div class="modal-body">
+                                <!--contct attachment-->
 
-                                          <!-- <form action="/action_page.php">
-                                            <div class="text" style="float: left;">
-                                              <h6>Divya</h6>
-                                              <p class="text-muted"><b>
-                                                  9876543210
-                                                </b></p>
-                                               
-                                            </div> 
-                                            <div class="custom-control custom-checkbox" >
+                                <div>
+                                  <div class="file-upload-1" ng-click="getContactList()">
+                                    <i class="fa fa-address-card-o" data-target="#contactModal" data-toggle="modal"
+                                      type="button"></i>
+                                  </div>
+                                  <div id="contactModal" class="modal fade">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                            style="opacity: 1; font-weight:bolder;"> &times;</button>
 
-                                             
-                                              <input type="checkbox" class="custom-control-input" id="customCheck"
-                                                name="example1" style="float: right; width: 20px">
-                                            
-                                            </div>
+                                          <h4 class="modal-title" ng-if="!submitLeadType"
+                                            style="font-weight: bolder; font-size: 21px;">
+                                            Select Contact you want to share</h4>
+                                          <hr>
 
-                                           <br>
-                                            <div class="text" style="float: left;">
-                                              <h6>Divya</h6>
-                                              <p class="text-muted"><b>
-                                                  9876543210
-                                                </b></p>
-                                               
-                                            </div> 
-                                            <div class="custom-control custom-checkbox" >
+                                          <div class="input-wrapper" style=" margin: 10px; background-color: #575758;">
+                                            <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px;"></i>
+                                            <input placeholder="Search here" ng-change="getContactList(contactName)"
+                                              ng-model="contactName" id="tab1search" name="searchcontact" type="text"
+                                              style="background-color: #ababab;margin: 5px;" />
+                                          </div>
 
-                                             
-                                              <input type="checkbox" class="custom-control-input" id="customCheck"
-                                                name="example1" style="float: right; width: 20px">
-                                            
-                                            </div>
-                                            
-                                          </form>
-                                          <button type="submit" class="btn btn-primary">Submit</button> -->
-
-                                          <table class="table table-bordered table-hover">
-
-                                            <tbody>
-                                              <!-- <tr dir-paginate="user in activeUserData | itemsPerPage:itemsPerPage"
-                                                total-items="totalCount" current-page="pagination.current" track by "$index"> -->
-                                              <td>
+                                          <div class="modal-body">
+                                            <table class="table table-bordered table-hover">
+                                              <tbody ng-repeat="list in contactListData">
+                                                <td>
+                                                  <div class="friend-drawer friend-drawer--onhover">
+                                                    <div class="text" style="float: left;">
+                                                      <h6>{{list.contact_name}}</h6>
+                                                      <p class="text-muted"><b>
+                                                          {{list.phone_number}}
+                                                        </b></p>
+                                                    </div>
+                                                    <div class="custom-control custom-checkbox">
+                                                      <input type="checkbox" class="custom-control-input"
+                                                        id="customCheck" name="example1"
+                                                        style="position: absolute; right: 35px; width: 20px">
+                                                    </div>
+                                                  </div>
+                                                </td>
+                                                </tr>
+                                                <!-- <td>
                                                 <div class="friend-drawer friend-drawer--onhover">
-
-                                                  <!-- <div class="profile-image" style="float: left;">
-                                                      {{user.whatsapp_name |firstlater}}
-                                                    </div> -->
-
-                                                    
                                                   <div class="text" style="float: left;">
                                                     <h6>Divya</h6>
                                                     <p class="text-muted"><b>
                                                         9876543210
                                                       </b></p>
-
                                                   </div>
                                                   <div class="custom-control custom-checkbox">
 
 
                                                     <input type="checkbox" class="custom-control-input" id="customCheck"
-                                                      name="example1" style="position: absolute; right: 35px; width: 20px">
+                                                      name="example1"
+                                                      style="position: absolute; right: 35px; width: 20px">
 
                                                   </div>
 
                                                 </div>
-                                              </td>
-                                              </tr>
-                                              <td>
-                                                <div class="friend-drawer friend-drawer--onhover">
+                                              </td> -->
+                                              </tbody>
+                                            </table>
+                                            <button type="submit" class="btn btn-primary" value="submit">Submit</button>
+                                          </div>
 
-                                                  <!-- <div class="profile-image" style="float: left;">
-                                                      {{user.whatsapp_name |firstlater}}
-                                                    </div> -->
-
-
-
-
-
-
-                                                  <div class="text" style="float: left;">
-                                                    <h6>Divya</h6>
-                                                    <p class="text-muted"><b>
-                                                        9876543210
-                                                      </b></p>
-
-                                                  </div>
-                                                  <div class="custom-control custom-checkbox">
-
-
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck"
-                                                      name="example1" style="position: absolute; right: 35px; width: 20px">
-
-                                                  </div>
-
-                                                </div>
-                                              </td>
-                                            </tbody>
-                                          </table>
-                                          <button type="submit" class="btn btn-primary" value="submit">Submit</button>
                                         </div>
                                       </div>
                                     </div>
-                                  </div>
 
+                                  </div>
                                 </div>
+                                <!--end contct attachment-->
+
                                 <input type="text" ng-model="message.activeMessage" placeholder="Write message"
                                   ng-keydown="$event.keyCode === 13  && sendMessage(userChatData.phone_number)">
                               </div>
@@ -3124,14 +3077,16 @@ color: #fff;
     </div>
     <!-- Status End for filter tab -->
 
-    <div ng-if="filterData.length == 0 && (dateRangeModel.start_dates && dateRangeModel.end_dates && dateRangeModel.attribute_name && dateRangeModel.date_type)">
+    <div
+      ng-if="filterData.length == 0 && (dateRangeModel.start_dates && dateRangeModel.end_dates && dateRangeModel.attribute_name && dateRangeModel.date_type)">
       <h4 style="text-align: center; color: red;">
         No Record.
       </h4>
     </div>
-    <div ng-if="!dateRangeModel.start_dates || !dateRangeModel.end_dates||!dateRangeModel.attribute_name||!dateRangeModel.date_type">
+    <div
+      ng-if="!dateRangeModel.start_dates || !dateRangeModel.end_dates||!dateRangeModel.attribute_name||!dateRangeModel.date_type">
       <h4 style="text-align: center; color: red;">
-Select all the Fields
+        Select all the Fields
       </h4>
     </div>
   </div>

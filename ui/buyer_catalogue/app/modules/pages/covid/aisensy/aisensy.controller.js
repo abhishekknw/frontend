@@ -791,6 +791,28 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
             }
 
+
+
+            $scope.getContactList= function (value) {
+                alert("contactlist")
+                let param = {
+                    search: value
+                }
+                if (!value) {
+                    param.search = ""
+                }
+                
+                console.log("1contct1");
+                console.log(param)
+                AuthService.contactList (param)
+                .then(function onSuccess(response) {
+                    $scope.contactListData = response.data.data;
+                }).catch(function onError(response) {
+                    console.log(response);
+                })
+            }
+
+
             $scope.getAttachment = function (phone) {
         
                 let param = {
