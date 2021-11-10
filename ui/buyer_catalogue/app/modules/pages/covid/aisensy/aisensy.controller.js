@@ -794,14 +794,13 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
 
             $scope.getContactList= function (value) {
-                alert("contactlist")
-                let param = {
+            
+              let param = {
                     search: value
                 }
                 if (!value) {
                     param.search = ""
                 }
-                
                 console.log("1contct1");
                 console.log(param)
                 AuthService.contactList (param)

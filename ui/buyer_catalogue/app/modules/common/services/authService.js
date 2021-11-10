@@ -825,11 +825,10 @@ angular.module('Authentication')
 
 
             authService.contactList = function (param,meaType) {
-               alert("contactlist")
-               let url = "v0/ui/mca-bot/intervene-contact-list/?search="+param.search;
+             let url = "v0/ui/mca-bot/intervene-contact-list/?search="+param.search;
                apiHost = APIBaseUrl;
                if(meaType){
-                   url = "v0/ui/mea-bot/intervene-contact-list/?search="+param.search;;
+                   url = "v0/ui/mea-bot/intervene-contact-list/?search="+param.search;
                    apiHost = interveneApiHost;
                 }
                return $http.get(apiHost + url,param)
