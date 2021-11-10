@@ -1300,7 +1300,7 @@ top:0;
                               </button>
                             </td> -->
                             <td style="text-align: center;"><button
-                                ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id)" data-toggle="modal"
+                                ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,viewSearch,1)" data-toggle="modal"
                                 type="button" class="btn btn-danger">View
                               </button>
                             </td>
@@ -1385,9 +1385,8 @@ top:0;
 
                   <div ng-if="viewTemplateSummaryTable">
 
-                    <input type="text" class="form-control " placeholder="search"
-                      ng-change="getTransactionalTemplateViewDetail(viewSearch)" ng-model="viewSearch">
-
+                    <input type="text" class="form-control " placeholder="search" ng-
+                      ng-change="getTransactionalTemplateViewDetail(template_id,viewSearch,1)" ng-model="viewSearch" ng-if="template_id">
                     <div class="table-responsive" style="width: 100%;">
 
                       <!-- <input type="text" class="form-control " placeholder="search"
@@ -1454,9 +1453,13 @@ top:0;
                     </div>
 
                     <center>
-                      <dir-pagination-controls max-size="2" on-page-change="pageChanged(newPageNumber)"
+                      <!-- <dir-pagination-controls max-size="2" on-page-change="pageChanged(newPageNumber)"
                         boundary-links="true">
-                      </dir-pagination-controls>
+                      </dir-pagination-controls> -->
+
+                      <dir-pagination-controls max-size="2"
+                      ng-click="viewSummryPageChanged(pagination.current)" boundary-links="true">
+                    </dir-pagination-controls>
                     </center>
 
                     <div ng-if="transactionalTemplateDataDetail.length > 0" style="text-align: center;">

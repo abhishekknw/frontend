@@ -56,6 +56,7 @@ angular.module('catalogueApp')
       //   if (param.search) {
       //     url += '&search=' + param.search
       //  }
+      console.log(param.template_id,'777')
         return machadaloHttp.get( url);
 
       }

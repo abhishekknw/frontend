@@ -185,6 +185,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     nextPage: 1,
                     phoneNumber: value,
                 }
+                console.log(value,page)
                 if (page) {
                     param.nextPage = page;
                 } else {
@@ -789,6 +790,28 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         console.log(response);
                     })
             }
+
+
+
+            $scope.getContactList= function (value) {
+                alert("contactlist")
+                let param = {
+                    search: value
+                }
+                if (!value) {
+                    param.search = ""
+                }
+                
+                console.log("1contct1");
+                console.log(param)
+                AuthService.contactList (param)
+                .then(function onSuccess(response) {
+                    $scope.contactListData = response.data.data;
+                }).catch(function onError(response) {
+                    console.log(response);
+                })
+            }
+
 
             $scope.getAttachment = function (phone) {
         
