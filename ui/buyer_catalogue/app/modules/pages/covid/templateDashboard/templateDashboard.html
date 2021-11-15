@@ -1285,9 +1285,8 @@ top:0;
                           </tr>
                         </thead>
                         <tbody>
-                          <tr dir-paginate="ttemplate in transactionalTemplateData | itemsPerPage:itemsPerPage"
-                            total-items="totalCount" current-page="pagination.current" track by "$index">
-                            <td>{{$index+serial+1}}</td>
+                          <tr ng-repeat="ttemplate in transactionalTemplateData " track by "$index">
+                            <td>{{$index+serial}}</td>
                             <td style="text-align: center;">{{ttemplate.template_id}}</td>
                             <td style="text-align: center;">{{ttemplate.template_name}}</td>
                             <td style="text-align: center;">{{ttemplate.days_count}}</td>
@@ -1300,7 +1299,7 @@ top:0;
                               </button>
                             </td> -->
                             <td style="text-align: center;"><button
-                                ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,viewSearch,1)" data-toggle="modal"
+                                ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,viewSearch,pagination.current)" data-toggle="modal"
                                 type="button" class="btn btn-danger">View
                               </button>
                             </td>
@@ -1308,10 +1307,11 @@ top:0;
                               class="btn btn-danger">Download</button>
                           </td> -->
                             <td style="text-align: center;">
-                              <a href="https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-user-summary/?template_id="
-                                ng-click="gettransactionalTemplateSummaryDownload(ttemplate.template_id)"><button
+                              <a ng-href="https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-user-summary/?template_id={{ttemplate.template_id}}">       
+                                <button  
                                   data-toggle="modal" type="button" class="btn btn-danger">Download
-                                </button></a>
+                                </button>
+                              </a>
                             </td>
                           </tr>
 
@@ -1385,8 +1385,8 @@ top:0;
 
                   <div ng-if="viewTemplateSummaryTable">
 
-                    <input type="text" class="form-control " placeholder="search" ng-
-                      ng-change="getTransactionalTemplateViewDetail(template_id,viewSearch,1)" ng-model="viewSearch" ng-if="template_id">
+                    <input type="text" class="form-control " placeholder="search"
+                      ng-change="getTransactionalTemplateViewDetail(template_id,viewSearch,pagination.current)" ng-model="viewSearch" ng-if="template_id">
                     <div class="table-responsive" style="width: 100%;">
 
                       <!-- <input type="text" class="form-control " placeholder="search"
@@ -1458,7 +1458,7 @@ top:0;
                       </dir-pagination-controls> -->
 
                       <dir-pagination-controls max-size="2"
-                      ng-click="viewSummryPageChanged(pagination.current)" boundary-links="true">
+                      ng-click="viewSummryPageChanged(template_id,viewSearch,pagination.current)" boundary-links="true">
                     </dir-pagination-controls>
                     </center>
 
@@ -1547,7 +1547,7 @@ top:0;
                           <b>5. Negative </b>:Total Negative Response
                         </div>
                         <div class="col-xs-4">
-                          <b> 6. Details </b>: View Template Details
+                          <b> 6. Details </b>: View Template Details(Date Wise)
                         </div>
 
                       </div>

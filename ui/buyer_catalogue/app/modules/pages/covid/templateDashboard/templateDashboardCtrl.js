@@ -6678,10 +6678,10 @@
          $scope.template_id=value 
           let param = {
           search: searchitem,
-          next_page:1,
-          template_id:value
+          template_id:value,
+          next_page:1
         }
-        console.log(searchitem,page,value,'qws')
+        console.log(value,searchitem,page,'qws')
         if (page) {
           param.next_page = page;
       } else {
@@ -6717,27 +6717,29 @@
         let param = {
           template_id : value
         }
-      alert("download summry")
+        console.log(value,'111122334')
+      // alert("download summry")
         templateDashboardService.transactionalTemplateSummaryDownload(param).
         then(function onSuccess(response) {
           // $scope.transactionalTemplateSummaryDownloadData=response;
           // $scope.transactionalTemplateSummaryDownloadData = "v0/ui/mca-bot/download-template-summary/";
           // console.log('2222222222535',  $scope.transactionalTemplateSummaryDownloadData);
           console.log(response,"1111111")
-          if (response.data.data.one_time_hash) {
-            $window.open(Config.APIBaseUrl + 'v0/ui/mca-bot/download-template-user-summary/?template_id=' + response.data.data.one_time_hash)
-          }
+          // if (response.data.data.one_time_hash) {
+          //   $window.open(Config.APIBaseUrl + 'v0/ui/mca-bot/download-template-user-summary/?template_id=' + response.data.data.one_time_hash)
+          // }
 
-          console.log('5467577');
+          // console.log('5467577');
         }).catch(function onError(response) {
           console.log(response);
         })
 
       }
 
-      $scope.viewSummryPageChanged = function (page) {
+      $scope.viewSummryPageChanged = function (template_id,viewSearch,newPageNumber) {
+
         $scope.serial = newPageNumber * 10 - 9;
-        $scope.getTransactionalTemplateViewDetail(page);
+        $scope.getTransactionalTemplateViewDetail(template_id,viewSearch,newPageNumber);
     };
 
       $scope.transactionalTemplateDropdown = {}

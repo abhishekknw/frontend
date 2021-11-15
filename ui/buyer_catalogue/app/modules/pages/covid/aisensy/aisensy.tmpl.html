@@ -5,6 +5,7 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <link href="css/smallscreen.css" rel="stylesheet" media="screen" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<script src='checklist-model.js'></script>
 
 <style>
   /*aisensy*/
@@ -978,7 +979,7 @@
 
   .modal {
     position: fixed;
-    top: 200px;
+    top: 30px;
 
   }
 
@@ -1928,32 +1929,43 @@
                                             Select Contact you want to share</h4>
                                           <hr>
 
-                                          <div class="input-wrapper" style=" margin: 10px; background-color: #575758;">
+                                          <div class="input-wrapper" style=" margin: 10px; background-color: #575758;position: sticky;top:21px;z-index: 10;">
                                             <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px;"></i>
                                             <input placeholder="Search here" ng-change="getContactList(contactNames)"
                                               ng-model="contactNames" id="tab1search" name="searchcontact" type="text"
-                                              style="background-color: #ababab;margin: 5px;" />
+                                              style="background-color: #ababab;margin: 5px; " />
                                           </div>
 
                                           <div class="modal-body">
                                             <table class="table table-bordered table-hover">
                                               <tbody ng-repeat="list in contactListData">
-                                                <td>
-                                                  <div class="friend-drawer friend-drawer--onhover">
-                                                    <div class="text" style="float: left;">
-                                                      <h6>{{list.contact_name}}</h6>
-                                                      <p class="text-muted"><b>
-                                                          {{list.phone_number}}
-                                                        </b></p>
-                                                    </div>
-                                                    <div class="custom-control custom-checkbox">
-                                                      <input type="checkbox" class="custom-control-input"
+                                                   <td>
+                                                    <div class="friend-drawer friend-drawer--onhover" >
+                                                      <!-- <div class="text" style="float: left;">
+                                                        <h6>{{list.contact_name}}</h6>
+                                                        <p class="text-muted"><b>
+                                                            {{list.phone_number}}
+                                                          </b></p>
+                                                      </div> -->
+                                                      <div class="custom-control custom-checkbox" 
+                                                      ng-click="getselectedContact(list.contact_name,list.phone_number)">
+                                                        <input type="checkbox" 
+                                                        class="custom-control-input"
                                                         id="customCheck" name="example1"
-                                                        style="position: absolute; right: 35px; width: 20px">
+                                                        checklist-value="list"  checklist-model="list.selected"
+                                                        style="position: absolute; right: 35px; width: 20px;" 
+                                                        >
+                                                        <span class="text" style="float: left;">
+                                                          <h6>{{list.contact_name}}</h6>
+                                                          <p class="text-muted"><b>
+                                                            {{list.phone_number}}
+                                                          </b></p>
+                                                        </span>
+                                                      </div>
                                                     </div>
-                                                  </div>
-                                                </td>
-                                                </tr>
+                                                  </td>
+                                                
+
                                                 <!-- <td>
                                                 <div class="friend-drawer friend-drawer--onhover">
                                                   <div class="text" style="float: left;">
@@ -1975,9 +1987,9 @@
                                               </td> -->
                                               </tbody>
                                             </table>
-                                            <button type="submit" class="btn btn-primary" value="submit">Submit</button>
+                                            <button type="submit" class="btn btn-primary" value="submit"
+                                             ng-click="sendContact()">Submit</button>
                                           </div>
-
                                         </div>
                                       </div>
                                     </div>

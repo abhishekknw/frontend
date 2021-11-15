@@ -847,7 +847,7 @@ angular.module('Authentication')
                    url = "";
                    apiHost = interveneApiHost;
                 }
-               return $http.get(apiHost + url,param)
+               return $http.post(apiHost + url,param)
                   .then(function onSuccess(response) {
                      return response
                   })
