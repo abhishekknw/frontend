@@ -979,7 +979,7 @@
 
   .modal {
     position: fixed;
-    top: 200px;
+    top: 30px;
 
   }
 
@@ -1929,11 +1929,11 @@
                                             Select Contact you want to share</h4>
                                           <hr>
 
-                                          <div class="input-wrapper" style=" margin: 10px; background-color: #575758;">
+                                          <div class="input-wrapper" style=" margin: 10px; background-color: #575758;position: sticky;top:21px;z-index: 10;">
                                             <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px;"></i>
                                             <input placeholder="Search here" ng-change="getContactList(contactNames)"
                                               ng-model="contactNames" id="tab1search" name="searchcontact" type="text"
-                                              style="background-color: #ababab;margin: 5px;" />
+                                              style="background-color: #ababab;margin: 5px; " />
                                           </div>
 
                                           <div class="modal-body">
@@ -1947,11 +1947,12 @@
                                                             {{list.phone_number}}
                                                           </b></p>
                                                       </div> -->
-                                                      <div class="custom-control custom-checkbox">
+                                                      <div class="custom-control custom-checkbox" 
+                                                      ng-click="getselectedContact(list.contact_name,list.phone_number)">
                                                         <input type="checkbox" 
                                                         class="custom-control-input"
                                                         id="customCheck" name="example1"
-                                                        value='{{list.contact_name}}'  checklist-modell="list.selected"
+                                                        checklist-value="list"  checklist-model="list.selected"
                                                         style="position: absolute; right: 35px; width: 20px;" 
                                                         >
                                                         <span class="text" style="float: left;">
@@ -1986,9 +1987,9 @@
                                               </td> -->
                                               </tbody>
                                             </table>
-                                            <button type="submit" class="btn btn-primary" value="submit">Submit</button>
+                                            <button type="submit" class="btn btn-primary" value="submit"
+                                             ng-click="sendContact()">Submit</button>
                                           </div>
-
                                         </div>
                                       </div>
                                     </div>
