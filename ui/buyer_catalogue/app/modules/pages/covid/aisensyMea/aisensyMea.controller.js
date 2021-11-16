@@ -43,6 +43,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
             // AIsensy controller
             $scope.getActiveUser = function (page) {
+          
                 $scope.tab.name = 'tabA';
                 $scope.hideChatModule();
                 $scope.formData.historySearch = "";
@@ -88,7 +89,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.formData = {};
 
             $scope.getActionRequiredUser = function (page) {
-
                 $scope.tab.name = 'tabB';
                 $scope.isUserProfile = false;
                 $scope.formData.interveneSearch = '';
