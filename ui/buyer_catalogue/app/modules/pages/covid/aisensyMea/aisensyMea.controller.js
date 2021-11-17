@@ -76,7 +76,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 if ($scope.formData.activesearch) {
                     param.search = $scope.formData.activesearch;
                 }
-
+// console.log(param,'119090')
                 AuthService.getAllActiveUserData(param, true)
                     .then(function onSuccess(response) {
                         $scope.activeUserData = response.data.data.users;

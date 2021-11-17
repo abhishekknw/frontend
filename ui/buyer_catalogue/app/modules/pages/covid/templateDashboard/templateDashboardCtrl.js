@@ -6736,6 +6736,27 @@
 
       }
 
+
+      $scope.getFormUpload= function (value,name) {
+        $scope.current_template = {
+          template_id:value,
+          template_name:name
+        }
+        let param = {
+        template_id:value,
+        template_name:name
+        }
+        templateDashboardService.formUpload(param)
+          .then(function onSuccess(response) {
+            $scope.formUploadData = response.data.data;
+            
+            console.log('1133311', $scope.formUploadData);
+        
+          }).catch(function onError(response) {
+        
+          })
+      }
+
       $scope.viewSummryPageChanged = function (template_id,viewSearch,newPageNumber) {
 
         $scope.serial = newPageNumber * 10 - 9;

@@ -79,12 +79,7 @@ angular.module('catalogueApp')
       //   })
       //   .catch(function onError(response) {
       //      return response
-      //   });
-      
-
-
-
-        
+      //   }); 
       // }
 
 
@@ -92,6 +87,11 @@ angular.module('catalogueApp')
         // let url = apiHost +  "v0/ui/mca-bot/download-template-summary/";
         let url =  "v0/ui/mca-bot/download-template-user-summary/?template_id="+param.template_id;
         return machadaloHttp.get(url);
+      }
+
+      DashboardService.formUpload= function (param) {
+        let url="" +param.template_id
+        return machadaloHttp.get( url);
       }
 
         return DashboardService;
