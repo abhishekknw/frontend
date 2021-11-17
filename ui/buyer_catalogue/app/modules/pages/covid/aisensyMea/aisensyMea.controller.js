@@ -39,10 +39,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.tab = { name: 'tabA' };
-
+            $scope.ckeckdUserAisensy=[];
 
             // AIsensy controller
             $scope.getActiveUser = function (page) {
+          
                 $scope.tab.name = 'tabA';
                 $scope.hideChatModule();
                 $scope.formData.historySearch = "";
@@ -88,7 +89,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.formData = {};
 
             $scope.getActionRequiredUser = function (page) {
-
                 $scope.tab.name = 'tabB';
                 $scope.isUserProfile = false;
                 $scope.formData.interveneSearch = '';
@@ -780,6 +780,41 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
             }
 
+            $scope.getContactList = function (value) {
+                let param = {
+                    search: value
+                }
+                if (!value) {
+                    param.search = ""
+                }
+                console.log("1contct1");
+                console.log(param)
+                AuthService.contactList(param,true)
+                    .then(function onSuccess(response) {
+                        $scope.contactListData = response.data.data;
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+                
+            }
+         
+
+            $scope.getselectedContact = function (name, number,email) {
+                var data = {}
+                var data = {
+                    type: "contact",
+                    firstName: name,
+                    lastName: name,
+                    phone: number,
+                    company: "",
+                    department: "",
+                    title: "",
+                    email: email
+                }
+                $scope.ckeckdUserAisensy.push(data);
+
+            console.log($scope.ckeckdUserAisensy)
+            }
             // $scope.filterPageChanged = function (newPageNumber, tab) {
             //     $scope.serial = newPageNumber * 10 - 9;
             //     $scope.getFilterData(newPageNumber);

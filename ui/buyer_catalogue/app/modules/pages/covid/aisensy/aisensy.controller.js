@@ -31,6 +31,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     $scope.isCollapsed = true;
                 });
 
+                $scope.ckeckdUserAisensy=[];
 
                 let gooIndex = document.getElementById('goo-index');
                 let hoverEnter = index => {
@@ -794,7 +795,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
 
                 $scope.getContactList = function (value) {
-
                     let param = {
                         search: value
                     }
@@ -803,19 +803,18 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     }
                     console.log("1contct1");
                     console.log(param)
-                    AuthService.contactList(param)
+                    AuthService.contactList(param,true)
                         .then(function onSuccess(response) {
                             $scope.contactListData = response.data.data;
                         }).catch(function onError(response) {
                             console.log(response);
                         })
+                  
                 }
+             
 
-
-                $scope.getselectedContact = function (name, number) {
-                    $scope.getContactList()
-                    var checkedUsers = '';
-                    var data = []
+                $scope.getselectedContact = function (name, number,email) {
+                    var data = {}
                     var data = {
                         type: "contact",
                         firstName: name,
@@ -824,25 +823,18 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         company: "",
                         department: "",
                         title: "",
-                        email: "$scope.contactListData.email_id"
+                        email: email
                     }
-                console.log(data)
-                    // $scope.contactListData.forEach(function (list) {
-                    //     if (list.selected) {
-                    //         if (checkedUsers != '') {
-                    //             checkedUsers += " , ";
-                    //         }
-                    //         $scope.checkedUsers.push(data);
-                    //     }
-                    // });
-                    // console.log(checkedUsers)
+                    $scope.ckeckdUserAisensy.push(data);
+
+                console.log($scope.ckeckdUserAisensy)
                 }
-                // $scope.sendContact = function (value) {
+                // $scope.sendContact = function (ckeckdUserAisensy) {
                 //     $scope.getselectedContact()
                 //     let param = {
-                //         checkedUsers: value
+                //         checkedContact = ckeckdUserAisensy
                 //     }
-                //     console.log();
+                //     console.log(param);
                 //     AuthService.attachmentContact(param)
                 //         .then(function onSuccess(response) {
                 //         }).catch(function onError(response) {
@@ -850,11 +842,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 //         })
                 // }
 
-                // $scope.filterPageChanged = function (newPageNumber, tab) {
-                //     $scope.serial = newPageNumber * 10 - 9;
-                //     $scope.getFilterData(newPageNumber);
-                // };
-
+              
 
             }
         ]
