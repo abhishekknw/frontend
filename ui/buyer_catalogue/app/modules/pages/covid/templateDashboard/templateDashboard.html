@@ -3,13 +3,6 @@
     margin: 0;
   }
 
-  .middle-section {
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 80px;
-    min-height: calc(100vh - 85px);
-  }
-
   .al-content {
     overflow: hidden;
     padding: 0 !important;
@@ -1282,6 +1275,7 @@ top:0;
                             <th>Negative</th>
                             <th style="padding:10px">Details</th>
                             <th style="padding:10px">Download User</th>
+                            <th style="padding:10px; padding-right: 25px;">Send Template</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -1294,10 +1288,6 @@ top:0;
                             <td style="text-align: center;">{{ttemplate.total_positive}}</td>
                             <td style="text-align: center;">{{ttemplate.total_neutral}}</td>
                             <td style="text-align: center;">{{ttemplate.total_negative}}</td>
-                            <!-- <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
-                                data-target="#viewModal" data-toggle="modal" type="button" class="btn btn-danger">View
-                              </button>
-                            </td> -->
                             <td style="text-align: center;"><button
                                 ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,viewSearch,pagination.current)" data-toggle="modal"
                                 type="button" class="btn btn-danger">View
@@ -1312,6 +1302,11 @@ top:0;
                                   data-toggle="modal" type="button" class="btn btn-danger">Download
                                 </button>
                               </a>
+                            </td>
+                            <td style="text-align: center;"><button 
+                              ng-click="getFormUpload(ttemplate.template_id)"
+                                data-target="#viewModal" data-toggle="modal" type="button" class="btn btn-danger">Send
+                              </button>
                             </td>
                           </tr>
 
@@ -1553,8 +1548,11 @@ top:0;
                       </div>
                       <br>
                       <div class="row">
-                        <div class="col-xs-12">
+                        <div class="col-xs-6">
                           <b>7. Download User </b>: Download User Response
+                        </div>
+                        <div class="col-xs-6">
+                          <b>8.Send Template</b>: Upload User Sheet
                         </div>
                       </div>
                     </ol>
@@ -6169,7 +6167,7 @@ top:0;
 
 
                 <div class="">
-                  BOT name : MEA/MCA
+                  BOT name : MCA
                   <!-- <div>
                         <span ng-show="transactionalTemplateDropdown.bot" style="color:black"><h4>BOT:{{transactionalTemplateDropdown.bot}}</h4></span><br>
                         <span ng-show="transactionalTemplateDropdown.location" style="color:black"><h4>Location:{{transactionalTemplateDropdown.location}}</h4></span><br>
@@ -6180,7 +6178,6 @@ top:0;
                        
                       </div> -->
                   <br>
-                  Date Range :
                   <!-- <select class="form-control" ng-model="emailCampaignLeadsModel.leads_form_id">
                         <option ng-repeat="form_name in formDetails" value="{{form_name.leads_form_id}}">
                           {{form_name.leads_form_name}}</option>
@@ -6207,20 +6204,11 @@ top:0;
                         </div>
                       </div> -->
                   <br />
-                  <div class="table" style="margin-top: 10px; margin-bottom: 10px;">
+                  <!-- <div class="table" style="margin-top: 10px; margin-bottom: 10px;">
 
                     <table class="table">
                       <thead>
                         <tr>
-                          <!-- <th>Index</th>
-                              <th style="width:200px;" class="col-md-2">Template Name</th>
-                              <th ng-click="Sort('start_date')">No. of Template Days Send</th>
-                              <th>Total user count send</th>
-                              <th>Positive Response</th>
-                              <th>Negative Response</th>
-                              <th>Neutral Response</th> -->
-
-
 
                           <th>Index</th>
                           <th></th>
@@ -6238,36 +6226,14 @@ top:0;
                           <td style="text-align: center;">100</td>
                           <td style="text-align: center;">200</td>
                           <td style="text-align: center;">200</td>
-
-
-                          <!-- <tr>
-                              <td style="text-align: center;">2</td>
-                              <td style="text-align: center;">Elevator Template</td>
-                              <td style="text-align: center;">5</td>
-                              <td style="text-align: center;">100</td>
-                              <td style="text-align: center;">200</td>
-                              <td style="text-align: center;">200</td>
-                              <td style="text-align: center;">100</td>
-    
-                            </tr>
-                            <tr>
-                              <td style="text-align: center;">3</td>
-                              <td style="text-align: center;">Painting Template</td>
-                              <td style="text-align: center;">5</td>
-                              <td style="text-align: center;">100</td>
-                              <td style="text-align: center;">200</td>
-                              <td style="text-align: center;">200</td>
-                              <td style="text-align: center;">100</td>
-    
-                            </tr> -->
-
                       </thead>
                       <tbody>
                       </tbody>
                     </table>
 
-                  </div>
+                  </div> -->
                   <!-- <tr>
+                    
                         <td class="col-md-2">
                           <p class="input-group">
                             Select Start Date(Optional): <input type="date" class="form-control"
