@@ -1304,13 +1304,11 @@ top:0;
                               </a>
                             </td>
                             <td style="text-align: center;"><button 
-                              ng-click="getFormUpload(ttemplate.template_id)"
+                              ng-click="getFormUpload(ttemplate.template_id,ttemplate.template_name)"
                                 data-target="#viewModal" data-toggle="modal" type="button" class="btn btn-danger">Send
                               </button>
                             </td>
                           </tr>
-
-
 
                           <!-- <tr colspan="9">
                             <td></td>
@@ -1360,8 +1358,6 @@ top:0;
 
                           <!-- </tbody> -->
                         </tbody>
-
-
                       </table>
                       <div ng-if="transactionalTemplateData.length == 0">
                         <h4 style="text-align: center; color: red; margin-top: 10px;">
@@ -1468,6 +1464,116 @@ top:0;
 
 
                 <!-- </div> -->
+
+
+
+                <div id="viewModal" class="modal fade">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" ng-if="submitLeadType">{{campaignNameOnImageModal}} Send Leads To Email</h4> -->
+                        <h4>  BOT Name : MCA</h4>
+                        <hr />
+                        <div class="modal-body">
+                          <div>
+                          
+                            <h5 class="modal-title" ng-change="getFormUpload()" >Template name : {{current_template.template_name}}</h5>
+                            <!-- <div>
+                                  <span ng-show="transactionalTemplateDropdown.bot" style="color:black"><h4>BOT:{{transactionalTemplateDropdown.bot}}</h4></span><br>
+                                  <span ng-show="transactionalTemplateDropdown.location" style="color:black"><h4>Location:{{transactionalTemplateDropdown.location}}</h4></span><br>
+                                  <span ng-show="transactionalTemplateDropdown.pinCode" style="color:black"><h4>PinCode:{{transactionalTemplateDropdown.pinCode}}</h4></span><br>
+                                  <span ng-show="transactionalTemplateDropdown.typeofCustomer" style="color:black"><h4>Type of Customer:{{transactionalTemplateDropdown.typeofCustomer}}</h4></span><br>
+                                  <span ng-show="transactionalTemplateDropdown.category" style="color:black"><h4>Category:{{transactionalTemplateDropdown.category}}</h4></span><br>
+                                 
+                                 
+                                </div> -->
+                            <br>
+                            <!-- <select class="form-control" ng-model="emailCampaignLeadsModel.leads_form_id">
+                                  <option ng-repeat="form_name in formDetails" value="{{form_name.leads_form_id}}">
+                                    {{form_name.leads_form_name}}</option>
+                                </select> -->
+                            <!-- <div class="top-select-option-mca">
+                                  <div class="row">
+                                    <div class="col-xs-12">
+                                      <div class="form-group">
+                                       
+                                        <select class="form-control" ng-change="" name="category" id="category"
+                                          ng-model="category_code">
+                                          <option value="" disabled> Select Attribute</option>
+                                          <option>Updated At</option>
+                                          <option>Created At</option>
+          
+          
+          
+                                        </select>
+                                      </div>
+                                    </div>
+          
+          
+          
+                                  </div>
+                                </div> -->
+                            <br />
+                            <!-- <div class="table" style="margin-top: 10px; margin-bottom: 10px;">
+          
+                              <table class="table">
+                                <thead>
+                                  <tr>
+          
+                                    <th>Index</th>
+                                    <th></th>
+                                    <th>User Name</th>
+                                    <th>Positive</th>
+                                    <th>Neutral</th>
+                                    <th>Negative</th>
+          
+          
+          
+                                  </tr>
+                                  <tr>
+                                    <td style="text-align: center;">1</td>
+                                    <td style="text-align: center;">5</td>
+                                    <td style="text-align: center;">100</td>
+                                    <td style="text-align: center;">200</td>
+                                    <td style="text-align: center;">200</td>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                              </table>
+          
+                            </div> -->
+                            <!-- <tr>
+                              
+                                  <td class="col-md-2">
+                                    <p class="input-group">
+                                      Select Start Date(Optional): <input type="date" class="form-control"
+                                        ng-model="emailCampaignLeadsModel.start_date" required>
+                                    </p>
+                                  </td>
+                                  <td class="col-md-2">
+                                    <p class="input-group">
+                                      Select End Date(Optional) : <input type="date" class="form-control"
+                                        ng-model="emailCampaignLeadsModel.end_date" required>
+                                    </p>
+                                  </td>
+                                  <td style="text-align: center; padding-top: 20px;">
+                                    <p><button type="button" name="button" class="btn btn-danger" ng-click="sendMeEmail()"
+                                        ng-disabled="!emailCampaignLeadsModel.leads_form_id" ng-if="submitLeadType">Email</button>
+                                      <button type="button" name="button" class="btn btn-danger" ng-click="downloadSheet()"
+                                        ng-disabled="!emailCampaignLeadsModel.leads_form_id"
+                                        ng-if="!submitLeadType">Download</button>
+                                  </td>
+                                </tr> -->
+                            <center><button type="button" name="button" class="btn btn-danger"
+                                ng-click="getFormUpload(current_template.template_id)">Upload CSV</button></center>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
 
                 <!-- <div class="viewLeadstable" ng-if="!showCampaigns"> -->
                 <!-- <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button> -->
@@ -6155,113 +6261,7 @@ top:0;
           </div>
         </div>
       </div>
-      <div id="viewModal" class="modal fade">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" ng-if="submitLeadType">{{campaignNameOnImageModal}} Send Leads To Email</h4>
-              <h4 class="modal-title" ng-if="!submitLeadType">{{campaignNameOnImageModal}} Template name</h4>
-              <hr />
-              <div class="modal-body">
 
-
-                <div class="">
-                  BOT name : MCA
-                  <!-- <div>
-                        <span ng-show="transactionalTemplateDropdown.bot" style="color:black"><h4>BOT:{{transactionalTemplateDropdown.bot}}</h4></span><br>
-                        <span ng-show="transactionalTemplateDropdown.location" style="color:black"><h4>Location:{{transactionalTemplateDropdown.location}}</h4></span><br>
-                        <span ng-show="transactionalTemplateDropdown.pinCode" style="color:black"><h4>PinCode:{{transactionalTemplateDropdown.pinCode}}</h4></span><br>
-                        <span ng-show="transactionalTemplateDropdown.typeofCustomer" style="color:black"><h4>Type of Customer:{{transactionalTemplateDropdown.typeofCustomer}}</h4></span><br>
-                        <span ng-show="transactionalTemplateDropdown.category" style="color:black"><h4>Category:{{transactionalTemplateDropdown.category}}</h4></span><br>
-                       
-                       
-                      </div> -->
-                  <br>
-                  <!-- <select class="form-control" ng-model="emailCampaignLeadsModel.leads_form_id">
-                        <option ng-repeat="form_name in formDetails" value="{{form_name.leads_form_id}}">
-                          {{form_name.leads_form_name}}</option>
-                      </select> -->
-                  <!-- <div class="top-select-option-mca">
-                        <div class="row">
-                          <div class="col-xs-12">
-                            <div class="form-group">
-                             
-                              <select class="form-control" ng-change="" name="category" id="category"
-                                ng-model="category_code">
-                                <option value="" disabled> Select Attribute</option>
-                                <option>Updated At</option>
-                                <option>Created At</option>
-
-
-
-                              </select>
-                            </div>
-                          </div>
-
-
-
-                        </div>
-                      </div> -->
-                  <br />
-                  <!-- <div class="table" style="margin-top: 10px; margin-bottom: 10px;">
-
-                    <table class="table">
-                      <thead>
-                        <tr>
-
-                          <th>Index</th>
-                          <th></th>
-                          <th>User Name</th>
-                          <th>Positive</th>
-                          <th>Neutral</th>
-                          <th>Negative</th>
-
-
-
-                        </tr>
-                        <tr>
-                          <td style="text-align: center;">1</td>
-                          <td style="text-align: center;">5</td>
-                          <td style="text-align: center;">100</td>
-                          <td style="text-align: center;">200</td>
-                          <td style="text-align: center;">200</td>
-                      </thead>
-                      <tbody>
-                      </tbody>
-                    </table>
-
-                  </div> -->
-                  <!-- <tr>
-                    
-                        <td class="col-md-2">
-                          <p class="input-group">
-                            Select Start Date(Optional): <input type="date" class="form-control"
-                              ng-model="emailCampaignLeadsModel.start_date" required>
-                          </p>
-                        </td>
-                        <td class="col-md-2">
-                          <p class="input-group">
-                            Select End Date(Optional) : <input type="date" class="form-control"
-                              ng-model="emailCampaignLeadsModel.end_date" required>
-                          </p>
-                        </td>
-                        <td style="text-align: center; padding-top: 20px;">
-                          <p><button type="button" name="button" class="btn btn-danger" ng-click="sendMeEmail()"
-                              ng-disabled="!emailCampaignLeadsModel.leads_form_id" ng-if="submitLeadType">Email</button>
-                            <button type="button" name="button" class="btn btn-danger" ng-click="downloadSheet()"
-                              ng-disabled="!emailCampaignLeadsModel.leads_form_id"
-                              ng-if="!submitLeadType">Download</button>
-                        </td>
-                      </tr> -->
-                  <center><button type="button" name="button" class="btn btn-danger"
-                      ng-click="downloadSheet()">Download</button></center>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
 
       <!--End: Code for showing image Modal  Window -->
