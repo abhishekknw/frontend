@@ -755,6 +755,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 if($scope.message.activeMessage=="") {
                     return false;
                 }
+                if($scope.message==''){
+                    return false;
+                }
                 console.log('11111111111112222222222222222222', $scope.message);
                 AuthService.sendMessage(param,true)
                     .then(function onSuccess(response) {
@@ -767,6 +770,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                             if ($scope.userChatData) {
                                 if ($scope.userChatData.payload && $scope.userChatData.payload.length > 0) {
                                     $scope.userChatData.payload.unshift(data);
+                                    console.log($scope.userChatData)
                                 } else {
                                     $scope.userChatData.payload.push(data);
                                 }
