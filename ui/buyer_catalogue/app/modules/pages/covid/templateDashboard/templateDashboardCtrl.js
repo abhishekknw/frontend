@@ -6735,7 +6735,10 @@
         })
 
       }
-
+      
+      $scope.uploadFiles = function(file){
+        $scope.file = file;
+      }
 
       $scope.getFormUpload= function (value,name) {
         $scope.current_template = {

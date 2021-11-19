@@ -743,34 +743,43 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
             }
             $scope.message = {};
-            $scope.sendMessage = function (phone) {
+            $scope.sendMessage = function (phone,msg) {
 
                 let param = {
-                    phone: phone
+                    phone: phone,
+                    text:msg
                 }
+                console.log('67676',param.text)
+                if(param.text!=null){
                 if ($scope.message.activeMessage) {
                     param.text = $scope.message.activeMessage;
 
                 }
-                if($scope.message.activeMessage=="") {
-                    return false;
-                }
-                if($scope.message==''){
-                    return false;
-                }
+            }
+            else{
+                return false
+            }
+                // if($scope.message.activeMessage=="") {
+                //     return false;
+                // }
+                // if($scope.message==''){
+                //     return false;
+                // }
                 console.log('11111111111112222222222222222222', $scope.message);
                 AuthService.sendMessage(param,true)
                     .then(function onSuccess(response) {
+                        
                         if (response.data.status) {
                             let data = {
                                 content: { text: $scope.message.activeMessage },
                                 sender: "bot",
                                 timestamp: new Date()
                             }
+                            console.log('0000',$scope.userChatData)
                             if ($scope.userChatData) {
                                 if ($scope.userChatData.payload && $scope.userChatData.payload.length > 0) {
                                     $scope.userChatData.payload.unshift(data);
-                                    console.log($scope.userChatData)
+                                    console.log('9999',$scope.userChatData)
                                 } else {
                                     $scope.userChatData.payload.push(data);
                                 }
@@ -779,6 +788,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
 
                         }
+                   
                     }).catch(function onError(response) {
                         console.log(response);
                     })

@@ -760,15 +760,20 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     let param = {
                         phone: phone
                     }
+                    if(param.text!=null){
                     if ($scope.message.activeMessage) {
                         param.text = $scope.message.activeMessage;
                     }
-                    if ($scope.message.activeMessage == "") {
-                        return false;
-                    }
-                    if($scope.message==''){
-                        return false;
-                    }
+                }
+                else{
+                    return false;
+                }
+                    // if ($scope.message.activeMessage == "") {
+                    //     return false;
+                    // }
+                    // if($scope.message==''){
+                    //     return false;
+                    // }
                     console.log('11111111111112222222222222222222', $scope.message);
                     AuthService.sendMessage(param)
                         .then(function onSuccess(response) {
