@@ -725,7 +725,7 @@ angular.module('Authentication')
                apiHost = APIBaseUrl;
                let url = "v0/ui/b2c-bot/get-mca-master-templates/?search=" + param.search
                if(meaType){
-                   url = "v0/ui/mea-bot/get-mca-master-templates/?search=" + param.search
+                   url = "v0/ui/mea-bot/get-mea-master-templates/?search=" + param.search
                   apiHost = interveneApiHost;
                }
                return $http.get(apiHost + url)
@@ -814,6 +814,7 @@ angular.module('Authentication')
                    url = "v0/ui/mea-bot/send-intrup-message/?phone_number=" + param.phone + "&text=" + param.text;
                    apiHost = interveneApiHost;
                 }
+                
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response

@@ -157,7 +157,8 @@
                 <button class="linkBtn" ng-click="goToMapView(proposal)" permission="[permList.mapOrGridViewButton]">View on Map/Grid</button>
               </td>
               <td>
-                <button ng-hide="hideData" class="linkBtn" ngf-select="upload($file,proposal.proposal_id,$index)" ng-loading="uploadfile" permission="[permList.uploadProposalButton]">Upload</button>
+                <button ng-hide="hideData" class="linkBtn" ngf-select="upload($file,proposal.proposal_id,$index)" 
+                ng-loading="uploadfile" permission="[permList.uploadProposalButton]">Upload</button>
               </td>
               <td ng-if="proposal.campaign_state == proposalConverted">
                 <button class="linkBtn" ng-click="showCampaignImages(proposal)" permission="[permList.viewImagesButton]">
