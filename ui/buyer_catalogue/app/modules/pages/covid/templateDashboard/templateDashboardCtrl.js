@@ -6673,11 +6673,11 @@
         //   }).catch(function onError(response) {
         //     console.log(response);
         //   })
-        $scope.getTransactionalTemplateViewDetail = function (value,searchitem,page) {
+        $scope.getTransactionalTemplateViewDetail = function (value,page) {
           $scope.viewTemplateSummary();
          $scope.template_id=value 
           let param = {
-          search: searchitem,
+          // search: searchitem,
           template_id:value,
           next_page:1
         }
@@ -6688,9 +6688,9 @@
         $scope.totalCount = 0;
       }
       $scope.pageCount = param. next_page;
-      if (!searchitem) {
-        param.search = ""
-      }
+      // if (!searchitem) {
+      //   param.search = ""
+      // }
 
     //   if ($scope.formData.viewSearch) {
     //     param.search = $scope.formData.viewSearch;
@@ -6699,7 +6699,7 @@
      $scope.disableNextPagebutton = false;
 
      console.log(param,'6666')
-        templateDashboardService.transactionalTemplateDetail(param)
+        templateDashboardService.transactionalTemplateDatewiseDetail(param)
           .then(function onSuccess(response) {
           // alert("view")
             $scope.transactionalTemplateDataDetail = response.data.data.users;

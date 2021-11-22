@@ -1282,7 +1282,7 @@ top:0;
                         <tr ng-repeat="ttemplate in transactionalTemplateData " track by "$index">
                           <td>{{$index+serial}}</td>
                           <td style="text-align: center;">{{ttemplate.template_id}}</td>
-                          <td style="text-align: center;">{{ttemplate.template_name}}</td>
+                          <td style="text-align: center; text-transform: capitalize;">{{ttemplate.template_name}}</td>
                           <td style="text-align: center;">{{ttemplate.days_count}}</td>
                           <td style="text-align: center;">{{ttemplate.total_users}}</td>
                           <td style="text-align: center;">{{ttemplate.total_positive}}</td>
@@ -1376,9 +1376,9 @@ top:0;
 
                 <div ng-if="viewTemplateSummaryTable">
 
-                  <input type="text" class="form-control " placeholder="search"
+                  <!-- <input type="text" class="form-control " placeholder="search"
                     ng-change="getTransactionalTemplateViewDetail(template_id,viewSearch,pagination.current)"
-                    ng-model="viewSearch" ng-if="template_id">
+                    ng-model="viewSearch" ng-if="template_id"> -->
                   <div class="table-responsive" style="width: 100%;">
 
                     <!-- <input type="text" class="form-control " placeholder="search"
@@ -1406,17 +1406,13 @@ top:0;
                     <table class="table">
                       <thead>
                         <tr>
-
                           <th style="padding:10px">Index</th>
-                          <th style="padding:10px">Name</th>
-                          <!-- <th style="width:200px;" class="col-md-2">User Name</th> -->
-                          <th style="padding:10px">whatsapp Name</th>
-                          <th style="padding:10px">Phone Number</th>
+                          <th style="padding:10px">Sent Date</th>
+                          <th style="padding:10px">User Count</th>
                           <th style="padding:10px">Positive</th>
                           <th style="padding:10px">Neutral</th>
                           <th style="padding:10px">Negative</th>
-                          <th style="padding:10px">Created At</th>
-                          <th style="padding:10px">Updated At</th>
+                          <th style="padding:10px">View</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1424,14 +1420,16 @@ top:0;
                           total-items="totalCount" current-page="pagination.current" track by "$index">
 
                           <td style="text-align: center;">{{$index+serial}}</td>
-                          <td style="text-align: center;">{{tdtemplate.user_name}}</td>
-                          <td style="text-align: center;">{{tdtemplate.whatsapp_name}}</td>
-                          <td style="text-align: center;">{{tdtemplate.phone_number}}</td>
+                          <td style="text-align: center;">{{tdtemplate.sent_date}}</td>
+                          <td style="text-align: center;">{{tdtemplate.total_user}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_positive}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_neutral}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_negative}}</td>
-                          <td style="text-align: center;">{{tdtemplate.created_at}}</td>
-                          <td style="text-align: center;">{{tdtemplate.updated_at}}</td>
+                          <td style="text-align: center;"><button
+                            ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,pagination.current)"
+                            data-toggle="modal" type="button" class="btn btn-danger">View
+                          </button>
+                        </td>
                         </tr>
                       </tbody>
                     </table>
@@ -1478,7 +1476,12 @@ top:0;
                         <h5 style="width: 70%;"><b>BOT Name : </b>MCA </h5><br>
                         <h5 class="modal-title" ng-change="getFormUpload()" style="text-transform: capitalize;"><b>Template Name :
                           </b>{{current_template.template_name}}</h5><br>
-                         <span><button type="button" name="button" class="btn btn-primary">View Message</button></span>
+                         <span>
+                          <button
+                          ng-click=""
+                          data-target="#messageViewModal" data-toggle="modal" type="button" name="button" class="btn btn-primary">View Message
+                        </button>
+                          </span>
                         </div>
                         <div class="modal-body">
                           <div>
@@ -1668,6 +1671,21 @@ top:0;
                 <button ng-if="!showCampaigns" class="btn btn-danger"
                   ng-click="getPrintLeadsInExcelData(campaignIdForLeads)" data-target="#printLeadsInExcelModal"
                   data-toggle="modal">Print Leads In Excel</button> -->
+
+                  <div id="messageViewModal" class="modal fade">
+                    <div class="modal-dialog">
+                      <div class="modal-content" style="top:30px; margin: 5px 15px;">
+                        <div class="modal-header">
+                          <center> <h5 style="width: 70%;"><b>BOT Name : </b>MCA </h5><br></center>
+                          <div class="modal-body">
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+  
+
 
               </div>
 
