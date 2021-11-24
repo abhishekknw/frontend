@@ -1275,6 +1275,7 @@ top:0;
                           <th>Negative</th>
                           <th style="padding:10px">Details</th>
                           <th style="padding:10px">Download User</th>
+                          <th style="padding:10px; padding-right: 25px;">Send Template</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1288,12 +1289,13 @@ top:0;
                           <td style="text-align: center;">{{ttemplate.total_positive}}</td>
                           <td style="text-align: center;">{{ttemplate.total_neutral}}</td>
                           <td style="text-align: center;">{{ttemplate.total_negative}}</td>
+                   
                           <!-- <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
                                 data-target="#viewModal" data-toggle="modal" type="button" class="btn btn-danger">View
                               </button>
                             </td> -->
                           <td style="text-align: center;"><button
-                              ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id)" data-toggle="modal"
+                              ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,viewSearch,pagination.current)" data-toggle="modal"
                               type="button" class="btn btn-danger">View
                             </button>
                           </td>
@@ -1301,65 +1303,18 @@ top:0;
                               class="btn btn-danger">Download</button>
                           </td> -->
                           <td style="text-align: center;">
-                            <a href="https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-user-summary/?template_id="
-                              ng-click="gettransactionalTemplateSummaryDownload(ttemplate.template_id)"><button
-                                data-toggle="modal" type="button" class="btn btn-danger">Download
-                              </button></a>
+                            <a
+                            ng-href="https://api.machadalo.com/v0/ui/mea-bot/download-template-user-summary/?template_id={{ttemplate.template_id}}">
+                            <button data-toggle="modal" type="button" class="btn btn-danger">Download
+                            </button>
                           </td>
+                          <td style="text-align: center;"><button
+                            ng-click="getFormUpload(ttemplate.template_id,ttemplate.template_name)"
+                            data-target="#viewModal" data-toggle="modal" type="button" class="btn btn-danger">Send
+                          </button>
+                        </td>
                         </tr>
-
-
-
-                        <!-- <tr colspan="9">
-                            <td></td>
-                            <td><input ng-model="f.name" class="form-control" placeholder="Search">
-                              <hr>
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td><input ng-model="f.campaign_status" class="form-control" placeholder="Search">
-                              <hr>
-                            </td>
-
-                          </tr> -->
-
-                        <!-- <tbody> -->
-                        <!-- <tr
-                            dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index ">
-                            <td>{{$index + 1}}</td>
-                            <td style="width:200px;" class="col-md-2">{{campaign.name}}</td>
-                            <td>{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
-                            <td ng-if="campaign.campaign_status == 'completed'" style="text-transform:capitalize">
-                              {{campaign.end_date|limitTo:10|date:mediumDate}}</td>
-                            <td ng-if="campaign.campaign_status != 'completed'">NA</td>
-                            
-                            <td ng-if="campaign.campaign_status == 'on_hold'" style="text-transform:capitalize">OnHold
-                            </td>
-                            <td ng-if="campaign.campaign_status != 'on_hold'" style="text-transform:capitalize">
-                              {{campaign.campaign_status}}</td>
-                            <td style="width:100px;" class="col-md-2">{{campaign.supplier_count}}</td>
-                            <td style="width:100px;" class="col-md-2">{{campaign.flat_count}}</td>
-                            <td style="width:100px;" class="col-md-2">{{campaign.total_leads}}</td>
-                            <td style="width:100px;" class="col-md-2">{{campaign.hot_leads}}</td>
-                            <td>
-                              <button class="btn btn-danger"
-                                ng-click="viewLeadsForSelectedCampaign(campaign,campaign.campaign_id)">View
-                                Leads</button>
-                            </td>
-                            <td>
-                              <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id, 'email')"
-                                data-target="#sendEmailModal" data-toggle="modal">Email Leads</button>
-                            </td>
-                            <td>
-                              <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id)"
-                                data-target="#sendEmailModal" data-toggle="modal">Download Leads</button>
-                            </td>
-                          </tr> -->
-
-                        <!-- </tbody> -->
                       </tbody>
-
-
                     </table>
                     <div ng-if="transactionalTemplateData.length == 0">
                       <h4 style="text-align: center; color: red; margin-top: 10px;">
@@ -1368,7 +1323,7 @@ top:0;
                     </div>
                   </div>
                   <center>
-                    <a href=" https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-summary/"><button
+                    <a href=" https://api.machadalo.com/v0/ui/mea-bot/download-template-summary/"><button
                         style="margin: 10px;" data-toggle="modal" type="button" class="btn btn-danger">Download
                         Summary
                       </button>
@@ -1377,63 +1332,33 @@ top:0;
                 </div>
 
                 <div ng-if="viewTemplateSummaryTable">
-
-                  <input type="text" class="form-control " placeholder="search"
-                    ng-change="getTransactionalTemplateViewDetail(viewSearch)" ng-model="viewSearch">
-
                   <div class="table-responsive" style="width: 100%;">
-
-                    <!-- <input type="text" class="form-control " placeholder="search"
-                      ng-change="getTransactionalTemplateViewDetail()" ng-model="formData.activesearch"
-                      > -->
-
-                    <!-- <div>
-                      <span ng-show="transactionalTemplateDropdown.bot" style="color:black">
-                        <h4>BOT:{{transactionalTemplateDropdown.bot}}</h4>
-                      </span><br>
-                      <span ng-show="transactionalTemplateDropdown.location" style="color:black">
-                        <h4>Location:{{transactionalTemplateDropdown.location}}</h4>
-                      </span><br>
-                      <span ng-show="transactionalTemplateDropdown.pinCode" style="color:black">
-                        <h4>PinCode:{{transactionalTemplateDropdown.pinCode}}</h4>
-                      </span><br>
-                      <span ng-show="transactionalTemplateDropdown.typeofCustomer" style="color:black">
-                        <h4>Type of Customer:{{transactionalTemplateDropdown.typeofCustomer}}</h4>
-                      </span><br>
-                      <span ng-show="transactionalTemplateDropdown.category" style="color:black">
-                        <h4>Category:{{transactionalTemplateDropdown.category}}</h4>
-                      </span><br>
-
-                    </div> -->
                     <table class="table">
                       <thead>
                         <tr>
-
                           <th style="padding:10px">Index</th>
-                          <th style="padding:10px">Name</th>
-                          <!-- <th style="width:200px;" class="col-md-2">User Name</th> -->
-                          <th style="padding:10px">whatsapp Name</th>
-                          <th style="padding:10px">Phone Number</th>
+                          <th style="padding:10px">Sent Date</th>
+                          <th style="padding:10px">User Count</th>
                           <th style="padding:10px">Positive</th>
                           <th style="padding:10px">Neutral</th>
                           <th style="padding:10px">Negative</th>
-                          <th style="padding:10px">Created At</th>
-                          <th style="padding:10px">Updated At</th>
+                          <th style="padding:10px">View</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr dir-paginate="tdtemplate in transactionalTemplateDataDetail | itemsPerPage:itemsPerPage"
                           total-items="totalCount" current-page="pagination.current" track by "$index">
-
                           <td style="text-align: center;">{{$index+serial}}</td>
-                          <td style="text-align: center;">{{tdtemplate.user_name}}</td>
-                          <td style="text-align: center;">{{tdtemplate.whatsapp_name}}</td>
-                          <td style="text-align: center;">{{tdtemplate.phone_number}}</td>
+                          <td style="text-align: center;">{{tdtemplate.sent_date}}</td>
+                          <td style="text-align: center;">{{tdtemplate.total_user}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_positive}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_neutral}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_negative}}</td>
-                          <td style="text-align: center;">{{tdtemplate.created_at}}</td>
-                          <td style="text-align: center;">{{tdtemplate.updated_at}}</td>
+                          <td style="text-align: center;"><button
+                            ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,pagination.current)"
+                            data-toggle="modal" type="button" class="btn btn-danger">View
+                          </button>
+                        </td>
                         </tr>
                       </tbody>
                     </table>
@@ -1451,13 +1376,13 @@ top:0;
                       boundary-links="true">
                     </dir-pagination-controls>
                   </center>
-
+<!-- 
                   <div ng-if="transactionalTemplateDataDetail.length > 0" style="text-align: center;">
                     <a href="https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-user-summary/?template_id="
                       ng-click="gettransactionalTemplateSummaryDownload(ttemplate.template_id)"><button
                         data-toggle="modal" type="button" class="btn btn-danger">Download Details
                       </button></a>
-                  </div>
+                  </div> -->
 
                 </div>
 
