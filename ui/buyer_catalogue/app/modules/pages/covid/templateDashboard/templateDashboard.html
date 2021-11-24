@@ -1132,9 +1132,16 @@ top:0;
               </uib-tab-heading>
               <div class="container-fluid">
                 <div class="panel panel-default">
-                  <div class="col-md-12 " ng-if="viewTemplateSummaryTable" style="text-align: right;">
-                    <button class="btn btn-danger" ng-click="backToTemplateData()" style="margin: 10px;">Back To
-                      Template</button>
+                  <div class="col-md-12 " ng-if="viewTemplateSummaryTable">
+                    <div style="margin: 10px;text-align: right;">
+                      <button class="btn btn-danger" ng-click="backToTemplateData()">Back To Template</button>
+                    </div>
+                    <div ng-model="viewDaywise" ng-change="getTransactionalTemplateViewDetail()"
+                      style="color: #8e1921; text-align: center; margin: 10px; text-transform:capitalize">
+                      <h4><b>Template Name:{{view_template.template_name}}</b></h4>
+                      <h5><b>Template ID:{{view_template.template_id}}</b></h5>
+                    </div>
+
                   </div>
                   <!-- <div class="col-md-6">
                             <h4 class="panel-title">
@@ -1289,7 +1296,7 @@ top:0;
                           <td style="text-align: center;">{{ttemplate.total_neutral}}</td>
                           <td style="text-align: center;">{{ttemplate.total_negative}}</td>
                           <td style="text-align: center;"><button
-                              ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,viewSearch,pagination.current)"
+                              ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,pagination.current,ttemplate.template_name)"
                               data-toggle="modal" type="button" class="btn btn-danger">View
                             </button>
                           </td>
@@ -1379,8 +1386,12 @@ top:0;
                   <!-- <input type="text" class="form-control " placeholder="search"
                     ng-change="getTransactionalTemplateViewDetail(template_id,viewSearch,pagination.current)"
                     ng-model="viewSearch" ng-if="template_id"> -->
-                  <div class="table-responsive" style="width: 100%;">
-
+                  <div class="table-responsive" style="width: 100%;" ng-model="viewDaywise"
+                    ng-change="getTransactionalTemplateViewDetail()">
+                    <!-- <div  ng-model="viewDaywise" ng-change="getTransactionalTemplateViewDetail()" style="color: #8e1921; text-align: center; margin: 10px;" >
+                    <h2>Template Name:{{view_template.template_name}}</h2>
+                    <h3 ><b>Template ID:{{view_template.template_id}}</b></h3>
+                  </div> -->
                     <!-- <input type="text" class="form-control " placeholder="search"
                       ng-change="getTransactionalTemplateViewDetail()" ng-model="formData.activesearch"
                       > -->
@@ -1426,10 +1437,10 @@ top:0;
                           <td style="text-align: center;">{{tdtemplate.total_neutral}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_negative}}</td>
                           <td style="text-align: center;"><button
-                            ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,pagination.current)"
-                            data-toggle="modal" type="button" class="btn btn-danger">View
-                          </button>
-                        </td>
+                              ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,pagination.current)"
+                              data-toggle="modal" type="button" class="btn btn-danger">View
+                            </button>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -1473,14 +1484,14 @@ top:0;
                         <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" ng-if="submitLeadType">{{campaignNameOnImageModal}} Send Leads To Email</h4> -->
                         <div style="display: flex; padding: 10px 0px; ">
-                        <h5 style="width: 70%;"><b>BOT Name : </b>MCA </h5><br>
-                        <h5 class="modal-title" ng-change="getFormUpload()" style="text-transform: capitalize;"><b>Template Name :
-                          </b>{{current_template.template_name}}</h5><br>
-                         <span>
-                          <button
-                          ng-click=""
-                          data-target="#messageViewModal" data-toggle="modal" type="button" name="button" class="btn btn-primary">View Message
-                        </button>
+                          <h5 style="width: 70%;"><b>BOT Name : </b>MCA </h5><br>
+                          <h5 class="modal-title" ng-change="getFormUpload()" style="text-transform: capitalize;">
+                            <b>Template Name :
+                            </b>{{current_template.template_name}}</h5><br>
+                          <span>
+                            <button ng-click="" data-target="#messageViewModal" data-toggle="modal" type="button"
+                              name="button" class="btn btn-primary">View Message
+                            </button>
                           </span>
                         </div>
                         <div class="modal-body">
@@ -1583,44 +1594,47 @@ top:0;
                                     <td style="text-align: center;">1</td>
                                     <td style="text-align: center;">1</td>
                                     <td style="text-align: center;">Name</td>
-                                    </tr>
-                                    <tr>
-                                      <td style="text-align: center;">2</td>
-                                      <td style="text-align: center;">2</td>
-                                      <td style="text-align: center;">Designation</td>
-                                      </tr>
-                                      <tr>
-                                        <td style="text-align: center;">3</td>
-                                        <td style="text-align: center;">3</td>
-                                        <td style="text-align: center;">City</td>
-                                        </tr>
+                                  </tr>
+                                  <tr>
+                                    <td style="text-align: center;">2</td>
+                                    <td style="text-align: center;">2</td>
+                                    <td style="text-align: center;">Designation</td>
+                                  </tr>
+                                  <tr>
+                                    <td style="text-align: center;">3</td>
+                                    <td style="text-align: center;">3</td>
+                                    <td style="text-align: center;">City</td>
+                                  </tr>
                                 </tbody>
                               </table>
-          
-                            </div> 
-                              <br>
+
+                            </div>
+                            <br>
                             <center>
                               <!-- <button type="button" name="button" class="btn btn-danger"
                                 ng-click="getFormUpload(current_template.template_id)">Upload CSV</button> -->
                               <form method="post">
                                 <input type="file" id="myFile" name="filename" accept=".csv"
                                   ngf-select="uploadFiles($file)">
-<div  style="padding-top: 15px;">
-                                <button type="button" name="button" class="btn btn-danger"
-                                  ng-click="getFormUpload(current_template.template_id, )">Send
-                                  <!-- <input type="submit"> -->
-                                </button></div>
+                                <div style="padding-top: 15px;">
+                                  <button type="button" name="button" class="btn btn-danger"
+                                    ng-click="getFormUpload(current_template.template_id, )">Send
+                                    <!-- <input type="submit"> -->
+                                  </button>
+                                </div>
                               </form>
                             </center>
                             <br>
                             <center>
                               <h5 style="color: #8e1921;"><b><u>-:Note:-</u> </b></h5>
-                                <div style="text-align: center;">
-                                  <h6><b> 1.Please Upload CSV File.</b></h6>
-                                <b><h6> 2.Upload opted in CSV file using above format.</b></h6>
-                                </div>
-                                
-                             
+                              <div style="text-align: center;">
+                                <h6><b> 1.Please Upload CSV File.</b></h6>
+                                <b>
+                                  <h6> 2.Upload opted in CSV file using above format.
+                                </b></h6>
+                              </div>
+
+
                             </center>
                           </div>
                         </div>
@@ -1672,19 +1686,21 @@ top:0;
                   ng-click="getPrintLeadsInExcelData(campaignIdForLeads)" data-target="#printLeadsInExcelModal"
                   data-toggle="modal">Print Leads In Excel</button> -->
 
-                  <div id="messageViewModal" class="modal fade">
-                    <div class="modal-dialog">
-                      <div class="modal-content" style="top:30px; margin: 5px 15px;">
-                        <div class="modal-header">
-                          <center> <h5 style="width: 70%;"><b>BOT Name : </b>MCA </h5><br></center>
-                          <div class="modal-body">
+                <div id="messageViewModal" class="modal fade">
+                  <div class="modal-dialog">
+                    <div class="modal-content" style="top:30px; margin: 5px 15px;">
+                      <div class="modal-header">
+                        <center>
+                          <h5 style="width: 70%;"><b>BOT Name : </b>MCA </h5><br>
+                        </center>
+                        <div class="modal-body">
 
-                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-  
+                </div>
+
 
 
               </div>

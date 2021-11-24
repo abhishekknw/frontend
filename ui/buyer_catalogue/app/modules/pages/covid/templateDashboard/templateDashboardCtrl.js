@@ -6630,11 +6630,6 @@
         if (!value) {
           param.search = ""
         }
-        // this.setBotType = function (){}
-        
-        // if($scope.transactionalTemplateDropdown.bot=='mca'){
-        //   console.log($scope.transactionalTemplateDropdown.bot)
-
         templateDashboardService.transactionalTemplateSummaryMca(param)
           .then(function onSuccess(response) {
             $scope.transactionalTemplateData = response.data.data;
@@ -6644,44 +6639,21 @@
           }).catch(function onError(response) {
         
           })
-        // }
-        // if($scope.transactionalTemplateDropdown.bot=='mea'){
-        //   console.log($scope.transactionalTemplateDropdown.bot)
-        //   templateDashboardService.transactionalTemplateMea(param)
-        //   .then(function onSuccess(response) {
-         
-        //     $scope.transactionalTemplateData = response.data.data;
-        //     console.log('11111111111', $scope.transactionalTemplateData);
-        
-        //   }).catch(function onError(response) {
-        
-        //   })
-        // }
       }
-        // $scope.transactionalTemplateDropdown = {}
-        // $scope.setBotType = function () {
-        //   console.log($scope.transactionalTemplateDropdown.bot)
-        // }
-        // console.log('111111111112',  $scope.transactionalTemplateData);
-
-        //   if ($scope.formData.getTransactionalTemplatetSearch) {
-        //     param.search = $scope.formData.getTransactionalTemplateSearch;
-        // }
-
-        // templateDashboardService.transactionalTemplate().then(function onSuccess(response) {
-        //     console.log('11111111111111111111111111111', response);
-        //   }).catch(function onError(response) {
-        //     console.log(response);
-        //   })
-        $scope.getTransactionalTemplateViewDetail = function (value,page) {
+        
+        $scope.getTransactionalTemplateViewDetail = function (value,page,name) {
           $scope.viewTemplateSummary();
-         $scope.template_id=value 
+          $scope.view_template = {
+            template_id:value,
+            template_name:name
+          }
+          console.log("12345",$scope.view_template.template_id,$scope.view_template.template_name)
           let param = {
           // search: searchitem,
           template_id:value,
           next_page:1
         }
-        console.log(value,searchitem,page,'qws')
+        console.log(value,page,'qws')
         if (page) {
           param.next_page = page;
       } else {
