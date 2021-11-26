@@ -750,11 +750,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     text:msg
                 }
                 console.log('67676',param.text)
-                if(param.text!=null){
+                // if(param.text!=null){
                 if ($scope.message.activeMessage) {
                     param.text = $scope.message.activeMessage;
 
-                }
+                // }
             }
             else{
                 return false

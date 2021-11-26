@@ -755,18 +755,21 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
                 }
                 $scope.message = {};
-                $scope.sendMessage = function (phone) {
+                $scope.sendMessage = function (phone,msg) {
 
                     let param = {
-                        phone: phone
+                        phone: phone,
+                        text:msg
                     }
-                    if(param.text!=null){
+                    console.log('67676',param.text)
+                    // if(param.text!=null){
                     if ($scope.message.activeMessage) {
                         param.text = $scope.message.activeMessage;
-                    }
+    
+                    // }
                 }
                 else{
-                    return false;
+                    return false
                 }
                     // if ($scope.message.activeMessage == "") {
                     //     return false;
