@@ -1133,16 +1133,44 @@ top:0;
               <div class="container-fluid">
                 <div class="panel panel-default">
                   <div class="col-md-12 " ng-if="viewTemplateSummaryTable">
-                    <div style="margin: 10px;text-align: right;">
-                      <button class="btn btn-danger" ng-click="backToTemplateData()">Back To Template</button>
+                  <!--clender-->
+                  <div class="col-md-12" print-remove style="margin-top: 10px;">
+                    <div class="col-md-5 col-sm-5">
+                      <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                        placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates"
+                        is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true"
+                        close-text="Close" alt-input-formats="altInputFormats">
+                      <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                      </button>
                     </div>
+                    <div class="col-md-5 col-sm-5">
+                      <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                        placeholder="DD/MM/YYYY" ng-change="changeEndDate()" ng-model="dateRangeModel.end_dates"
+                        is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"
+                        alt-input-formats="altInputFormats">
+                      <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
+                        ng-click="isEndDateOpen = !isEndDateOpen">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                      </button>
+                    </div>
+                   <center> <div col-md-2 col-sm-2>
+                    <button class="btn btn-danger"  ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates" 
+                    ng-click="getTransactionalTemplateViewDetail(view_template.template_id,next_page,view_template.template_name,dateRangeModel.start_dates,dateRangeModel.end_dates)">
+                    Submit</button>
+                  </div></center>
+                </div>
+                  <!--end of clender-->
                     <div ng-model="viewDaywise" ng-change="getTransactionalTemplateViewDetail()"
                       style="color: #8e1921; text-align: center; margin: 10px; text-transform:capitalize">
                       <h4><b>Template Name:{{view_template.template_name}}</b></h4>
                       <h5><b>Template ID:{{view_template.template_id}}</b></h5>
                     </div>
-
+                    <div style="margin: 10px;text-align: right;">
+                      <button class="btn btn-danger" ng-click="backToTemplateData()">Back To Template</button>
+                    </div>
                   </div>
+
                   <!-- <div class="col-md-6">
                             <h4 class="panel-title">
                               <select class="form-control" ng-model="selectedVendor.name" ng-change="getCampaignsByVendor()">
@@ -1174,7 +1202,9 @@ top:0;
                     </div> -->
 
                     <!-- <div class="col-md-6 col-xs-6 dropdowns" ng-if="transactionalTemplateDropdown.bot=='mca'"> -->
-                    <div class="col-md-6 col-xs-6 dropdowns">
+
+                    <!--Future dropdowns-->
+                    <!-- <div class="col-md-6 col-xs-6 dropdowns">
                       <h4 class="panel-title">
                         <select class="form-control" name="supplierType"
                           ng-model="transactionalTemplateDropdown.location" ng-change="setSupplierType('viewLeads')">
@@ -1184,27 +1214,25 @@ top:0;
                       </h4>
                     </div>
                     <div id="content2">
-
-                      <!-- <div class="col-md-6 col-xs-6 dropdowns" ng-if="transactionalTemplateDropdown.bot=='mca'" style="margin-top: -10px;"> -->
                       <div class="col-md-6 col-xs-6 dropdowns" style="margin-top: -10px;">
                         <div class="form-group pincode">
                           <h4 class="panel-title">
                             <input class="form-control" type="text" name="pincode" id="pinId"
                               ng-model="transactionalTemplateDropdown.pinCode" placeholder="Enter Pincode" />
                           </h4>
-                        </div>
-
-                        <!-- <div contenteditable="true">
+                        </div> -->
+                    <!-- end Future dropdowns-->
+                    <!-- <div contenteditable="true">
                         Enter Pincode
                       </div> -->
 
-                        <!-- <form>
+                    <!-- <form>
 
 
                         <button type="submit" class="btn btn-primary">Submit</button>
                       </form> -->
-                      </div>
-                    </div>
+                    <!-- </div> -->
+                    <!-- </div> -->
 
 
                     <!--for mea dropdown option-->
@@ -1232,30 +1260,30 @@ top:0;
                     <!-- end for mea dropdown option-->
 
                     <!-- <div class="col-md-6" style="margin-top: 10px;"> -->
-                    <div class="col-md-12" print-remove style="margin-top: 10px;">
-                      <!-- <label for="" style="color:#000000;">Select Date Range</label> -->
-                      <div class="col-md-6 ">
-                        <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
-                          placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates"
-                          is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true"
-                          close-text="Close" alt-input-formats="altInputFormats">
-                        <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
-                          <i class="glyphicon glyphicon-calendar"></i>
-                        </button>
+                      <!-- <div class="col-md-12" print-remove style="margin-top: 10px;">
+                        <div class="col-md-6 col-sm-6">
+                          <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                            placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates"
+                            is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true"
+                            close-text="Close" alt-input-formats="altInputFormats">
+                          <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                          </button>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                          <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                            placeholder="DD/MM/YYYY" ng-change="changeEndDate()" ng-model="dateRangeModel.end_dates"
+                            is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"
+                            alt-input-formats="altInputFormats">
+                          <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
+                            ng-click="isEndDateOpen = !isEndDateOpen">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                          </button>
+                        </div>
+                        <div col-md-2 col-sm-2>
+                        <button class="btn btn-danger" ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates" ng-click="getTransactionalTemplateViewDetail()">Submit</button>
                       </div>
-                      <div class="col-md-6 ">
-                        <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
-                          placeholder="DD/MM/YYYY" ng-change="changeEndDate()" ng-model="dateRangeModel.end_dates"
-                          is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"
-                          alt-input-formats="altInputFormats">
-                        <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
-                          ng-click="isEndDateOpen = !isEndDateOpen">
-                          <i class="glyphicon glyphicon-calendar"></i>
-                        </button>
-                      </div>
-                      <!-- <button class="btn btn-danger" ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates" ng-click="getCampaignDateWiseSummary()">Submit</button> -->
-
-                    </div>
+                    </div> -->
                     <!-- </div> -->
                   </div>
                 </div>
@@ -1276,7 +1304,7 @@ top:0;
                           <th style="padding:10px">Template ID</th>
                           <th style="padding:10px">Template Name</th>
                           <th style="padding:10px" ng-click="Sort('start_date')">Days sent</th>
-                          <th style="padding:10px">User count</th>
+                          <th style="padding:10px">Template Sent</th>
                           <th>Positive</th>
                           <th>Neutral</th>
                           <th>Negative</th>
@@ -1296,7 +1324,7 @@ top:0;
                           <td style="text-align: center;">{{ttemplate.total_neutral}}</td>
                           <td style="text-align: center;">{{ttemplate.total_negative}}</td>
                           <td style="text-align: center;"><button
-                              ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,pagination.current,ttemplate.template_name)"
+                              ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,pagination.current,ttemplate.template_name,dateRangeModel.start_dates=' ',dateRangeModel.end_dates=' ')"
                               data-toggle="modal" type="button" class="btn btn-danger">View
                             </button>
                           </td>
@@ -1305,7 +1333,7 @@ top:0;
                           </td> -->
                           <td style="text-align: center;">
                             <a
-                              ng-href="https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-user-summary/?template_id={{ttemplate.template_id}}">
+                              ng-href="https://stagingapi.machadalo.com/v0/ui/mca-bot/template-date-wise-template-summary/?template_id={{ttemplate.template_id}}">
                               <button data-toggle="modal" type="button" class="btn btn-danger">Download
                               </button>
                             </a>
@@ -1419,11 +1447,12 @@ top:0;
                         <tr>
                           <th style="padding:10px">Index</th>
                           <th style="padding:10px">Sent Date</th>
-                          <th style="padding:10px">User Count</th>
+                          <th style="padding:10px">Template Sent</th>
                           <th style="padding:10px">Positive</th>
                           <th style="padding:10px">Neutral</th>
                           <th style="padding:10px">Negative</th>
                           <th style="padding:10px">View</th>
+                          <th style="padding:10px">Download</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1432,7 +1461,7 @@ top:0;
 
                           <td style="text-align: center;">{{$index+serial}}</td>
                           <td style="text-align: center;">{{tdtemplate.sent_date}}</td>
-                          <td style="text-align: center;">{{tdtemplate.total_user}}</td>
+                          <td style="text-align: center;">{{tdtemplate.total_users}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_positive}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_neutral}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_negative}}</td>
@@ -1440,6 +1469,13 @@ top:0;
                               ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,pagination.current)"
                               data-toggle="modal" type="button" class="btn btn-danger">View
                             </button>
+                          </td>
+                          <td style="text-align: center;">
+                            <a
+                              ng-href="https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-user-summary/?template_id={{tdtemplate.template_id}}&date={{tdtemplate.sent_date}}">
+                              <button data-toggle="modal" type="button" class="btn btn-danger">Download
+                              </button>
+                            </a>
                           </td>
                         </tr>
                       </tbody>
@@ -1487,7 +1523,8 @@ top:0;
                           <h5 style="width: 70%;"><b>BOT Name : </b>MCA </h5><br>
                           <h5 class="modal-title" ng-change="getFormUpload()" style="text-transform: capitalize;">
                             <b>Template Name :
-                            </b>{{current_template.template_name}}</h5><br>
+                            </b>{{current_template.template_name}}
+                          </h5><br>
                           <span>
                             <button ng-click="" data-target="#messageViewModal" data-toggle="modal" type="button"
                               name="button" class="btn btn-primary">View Message
@@ -1716,10 +1753,10 @@ top:0;
 
                       <div class="row">
                         <div class="col-xs-4">
-                          <b>1. Days sent</b> : Total Templates (Days sent)
+                          <b>1.Template Sent</b> : Total Template Sent
                         </div>
                         <div class="col-xs-4">
-                          <b>2. User count</b> : Total Template user count
+                          <b>2. User count </b>: Total Template user count
                         </div>
                         <div class="col-xs-4">
                           <b>3. Positive</b> : Total positive Response
@@ -1740,11 +1777,14 @@ top:0;
                       </div>
                       <br>
                       <div class="row">
-                        <div class="col-xs-6">
+                        <div class="col-xs-4">
                           <b>7. Download User </b>: Download User Response
                         </div>
-                        <div class="col-xs-6">
+                        <div class="col-xs-4">
                           <b>8.Send Template</b>: Upload User Sheet
+                        </div>
+                        <div class="col-xs-4">
+                          <b>9. Days sent </b>: Total Templates (Days sent)
                         </div>
                       </div>
                     </ol>
