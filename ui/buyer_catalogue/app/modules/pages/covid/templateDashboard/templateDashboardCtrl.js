@@ -6625,6 +6625,7 @@
 
       // Template Dashboard start
       $scope.getTransactionalTemplate = function (value) {
+        $scope.TemplateListSummary()
         let param = {
           search: value
         }
@@ -6654,7 +6655,7 @@
           $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
       }
 
-      $scope.getTransactionalTemplateViewDetail = function (value,page, name, s_date, e_date) {
+      $scope.getTransactionalTemplateViewDetail = function (value, page, name, s_date, e_date) {
         $scope.viewTemplateSummary();
         $scope.changeStartDate();
         $scope.changeEndDate();
@@ -6698,6 +6699,57 @@
             $scope.transactionalTemplateDataDetail = response.data.data;
             $scope.totalCount = response.data.data.total_count;
             console.log('222222', $scope.transactionalTemplateDataDetail);
+
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+      }
+
+
+
+      $scope.getTransactionalTemplateUserDetail = function (value, date, page, name, search) {
+        $scope.viewUserSummary()
+        $scope.user_view = {
+          template_id: value,
+          template_name: name,
+          sent_date: date,
+        }
+
+        let param = {
+          template_id: value,
+          date: date,
+          next_page: 1,
+          search: search
+        }
+        if (!search) {
+          param.search = ""
+        }
+        if (page) {
+          param.next_page = page;
+          // } else {
+          //   $scope.totalCount = 0;
+          // }
+          // $scope.pageCount = param.next_page;
+        } else {
+          $scope.totalCount = 1;
+          $scope.currentPage = 1;
+          $scope.itemsPerPage = 25;
+          $scope.serial = 1
+          $scope.pagination = {
+            current: 1
+          };
+        }
+
+        $scope.pageCount = param.next_page;
+        $scope.disableNextPagebutton = false;
+        console.log("78", name, search)
+        console.log("0000", param)
+        templateDashboardService.transactionalTemplateUserDetail(param)
+          .then(function onSuccess(response) {
+            // alert("view")
+            $scope.transactionalTemplateUserData = response.data.data.users;
+            $scope.totalCount = response.data.data.total_count;
+            console.log('11111', $scope.transactionalTemplateUserData);
 
           }).catch(function onError(response) {
             console.log(response);
@@ -6753,30 +6805,64 @@
           })
       }
 
-      $scope.viewSummryPageChanged = function (template_id, viewSearch, newPageNumber) {
+      $scope.viewUserPageChanged = function (template_id, date, newPageNumber, template_name, search) {
 
-        $scope.serial = newPageNumber * 10 - 9;
-        $scope.getTransactionalTemplateViewDetail(template_id, viewSearch, newPageNumber);
+        // console.log(template_id,date,newPageNumber,template_name,search,'ooo')
+        $scope.serial = newPageNumber * 25 - 24;
+        $scope.getTransactionalTemplateUserDetail(template_id, date, newPageNumber, template_name, search);
+        // console.log("vvvv", template_id, date, newPageNumber, template_name, search)
       };
 
       $scope.transactionalTemplateDropdown = {}
       $scope.setBotType = function () {
         console.log($scope.transactionalTemplateDropdown.bot)
-
-
       }
-      $scope.viewTemplateSummaryTable = false;
+
+
+
+      // viewAllTemplateSummaryTable=true;
+      // $scope.viewTemplateSummaryTable = false;
+      // viewUserSummaryTable=false;
+
+      $scope.TemplateListSummary = function () {
+        $scope.viewTemplateSummaryTable = false;
+        $scope.viewAllTemplateSummaryTable = true;
+        $scope.viewUserSummaryTable = false;
+        console.log("1st page", $scope.viewTemplateSummaryTable, $scope.viewAllTemplateSummaryTable, $scope.viewUserSummaryTable)
+      }
+
       $scope.viewTemplateSummary = function () {
         $scope.viewTemplateSummaryTable = true;
+        $scope.viewAllTemplateSummaryTable = false;
+        $scope.viewUserSummaryTable = false;
+        console.log("second page", $scope.viewTemplateSummaryTable, $scope.viewAllTemplateSummaryTable, $scope.viewUserSummaryTable)
+      }
+
+      $scope.viewUserSummary = function () {
+        $scope.viewTemplateSummaryTable = false;
+        $scope.viewAllTemplateSummaryTable = false;
+        $scope.viewUserSummaryTable = true;
+        console.log("3rd page", $scope.viewTemplateSummaryTable, $scope.viewAllTemplateSummaryTable, $scope.viewUserSummaryTable)
       }
 
       $scope.backToTemplateData = function () {
         $scope.viewTemplateSummaryTable = false;
+        $scope.viewAllTemplateSummaryTable = true;
+        $scope.viewUserSummaryTable = false;
+        $scope.transactionalTemplateDropdown = {};
+        console.log("hiiiiiiiiiiiiiiiiiiii")
+      }
+
+      $scope.backToDatewiseData = function () {
+        $scope.viewTemplateSummaryTable = true;
+        $scope.viewAllTemplateSummaryTable = false;
+        $scope.viewUserSummaryTable = false;
         $scope.transactionalTemplateDropdown = {};
       }
 
+
       $scope.pageChanged = function (newPageNumber, tab) {
-        $scope.serial = newPageNumber * 10 - 9;
+        $scope.serial = newPageNumber * 25 - 24;
         $scope.getTransactionalTemplateViewDetail(newPageNumber);
       };
 
@@ -6785,7 +6871,7 @@
       };
       $scope.totalCount = 0;
       $scope.currentPage = 1;
-      $scope.itemsPerPage = 10;
+      $scope.itemsPerPage = 25;
       $scope.serial = 1
       $scope.pagination = {
         current: 1

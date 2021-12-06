@@ -1999,6 +1999,8 @@
 
                                 <input type="text" ng-model="message.activeMessage" placeholder="Write message"
                                   ng-keydown="$event.keyCode === 13  && sendMessage(userChatData.phone_number)">
+                                  <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message"
+                                  ui-keypress="{13:'sendMessage(userChatData.phone_number)'}" > -->
                               </div>
                             </div>
                             <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">

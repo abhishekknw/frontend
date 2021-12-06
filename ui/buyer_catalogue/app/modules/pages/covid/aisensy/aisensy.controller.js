@@ -9,14 +9,20 @@ angular.module('machadaloPages').filter('firstlater', [function () {
     //     return function (scope, element, attrs) {
 
     //         element.bind("keydown keypress", function (event) {
-    //             if(event.which === 13 && event.which !== 00) {
+    //             if(event.which === 13  && event.shiftKey) {
     //                 scope.$apply(function (){
     //                     scope.$eval(attrs.myEnter);
     //                 });
+    // // if(!event.shiftKey){
+    // //     event.preventDefault();
+    // //     scope.$apply(attrs.myEnter);
+    // // }
     //             }
+    //             event.preventDefault();
+    //             // if(event.which == 13) {
 
-
-    //                 event.preventDefault();
+    //             //     event.preventDefault();
+    //             // }
 
     //         });
     //     };
