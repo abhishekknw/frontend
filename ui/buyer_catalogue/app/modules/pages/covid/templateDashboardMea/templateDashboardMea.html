@@ -1137,124 +1137,11 @@ top:0;
               <uib-tab-heading>
                 <h5>Transactional Template</h5>
               </uib-tab-heading>
+              <!--Content-->
               <div class="container-fluid">
-                <div class="panel panel-default">
-                  <div class="col-md-12 " ng-if="viewTemplateSummaryTable" style="text-align: right;">
-                    <button class="btn btn-danger" ng-click="backToTemplateData()" style="margin: 10px;">Back To
-                      Template</button>
-                  </div>
-                  <!-- <div class="col-md-6">
-                            <h4 class="panel-title">
-                              <select class="form-control" ng-model="selectedVendor.name" ng-change="getCampaignsByVendor()">
-                                <option value="">Select Vendor</option>
-                                <option value="{{vendor.vendor_id}}">All</option>
-                                <option value="{{vendor.vendor_id}}" ng-repeat="vendor in vendorsData">{{vendor.principal_vendor}}</option>
-                              </select>
-                            </h4>
-                        </div>
-                        <div class="animate-show">
-                          <div class="panel-bodyDashboard camp-menu-content">
-                              <table class="table">
-                                  <tr ng-repeat="vendors in vendorsData">
-                                  {{vendors}}
-                                  </tr>
-                              </table>
-                          </div>
-                        </div> -->
-                  <div ng-if="!viewTemplateSummaryTable">
-                    <!-- <div class="col-md-12 " style="padding-top: 15px;">
-                      <h4 class="panel-title">
-                        <select class="form-control" name="botType" ng-model="transactionalTemplateDropdown.bot"
-                          ng-change="setBotType()">
-                          <option value="" disabled>Select BOT</option>
-                          <option value="mea">MEA</option>
-                          <option value="mca">MCA</option>
-                        </select>
-                      </h4>
-                    </div> -->
-                    <!--For mca option dropdown-->
-                    <!-- <div class="col-md-6 col-xs-6 dropdowns" ng-if="transactionalTemplateDropdown.bot=='mca'">
-                      <h4 class="panel-title">
-                        <select class="form-control" name="supplierType"
-                          ng-model="transactionalTemplateDropdown.location" ng-change="setSupplierType('viewLeads')">
-                          <option value="" disabled>Select Location</option>
-                          <option value="delhi">Delhi</option>
-                        </select>
-                      </h4>
-                    </div> -->
-                    <!-- <div id="content2">
 
-                      <div class="col-md-6 col-xs-6 dropdowns" ng-if="transactionalTemplateDropdown.bot=='mca'"
-                        style="margin-top: -10px;">
-
-                        <div class="form-group pincode">
-                          <h4 class="panel-title">
-                            <input class="form-control" type="text" name="pincode" id="pinId"
-                              ng-model="transactionalTemplateDropdown.pinCode" placeholder="Enter Pincode" />
-                          </h4>
-                        </div>
-
-                        
-                      </div>
-                    </div> -->
-                    <!-- end of mca option dropdown-->
-
-
-                    <!-- <div class="col-md-6 col-xs-6 dropdowns" ng-if="transactionalTemplateDropdown.bot=='mea'"> -->
-                      <div class="col-md-6 col-xs-6 dropdowns">
-                      <h4 class="panel-title">
-                        <select class="form-control" name="supplierType"
-                          ng-model="transactionalTemplateDropdown.typeofCustomer">
-                          <option value="" disabled>Select Type of Customer</option>
-                          <option value="class1">Class 1</option>
-                        </select>
-                      </h4>
-                    </div>
-
-                   <!-- <div class="col-md-6 col-xs-6 dropdowns" ng-if="transactionalTemplateDropdown.bot=='mea'"> -->
-                    <div class="col-md-6 col-xs-6 dropdowns">
-                      <h4 class="panel-title">
-                        <select class="form-control" name="supplierType"
-                          ng-model="transactionalTemplateDropdown.category">
-                          <option value="" disabled>Select Category</option>
-                          <option value="english">English</option>
-                        </select>
-                      </h4>
-                    </div>
-
-
-
-                    <!-- <div class="col-md-6" style="margin-top: 10px;"> -->
-                    <div class="col-md-12" print-remove style="margin-top: 10px;">
-                      <!-- <label for="" style="color:#000000;">Select Date Range</label> -->
-                      <div class="col-md-6 ">
-                        <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
-                          placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates"
-                          is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true"
-                          close-text="Close" alt-input-formats="altInputFormats">
-                        <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
-                          <i class="glyphicon glyphicon-calendar"></i>
-                        </button>
-                      </div>
-                      <div class="col-md-6 ">
-                        <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
-                          placeholder="DD/MM/YYYY" ng-change="changeEndDate()" ng-model="dateRangeModel.end_dates"
-                          is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"
-                          alt-input-formats="altInputFormats">
-                        <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
-                          ng-click="isEndDateOpen = !isEndDateOpen">
-                          <i class="glyphicon glyphicon-calendar"></i>
-                        </button>
-                      </div>
-                      <!-- <button class="btn btn-danger" ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates" ng-click="getCampaignDateWiseSummary()">Submit</button> -->
-
-                    </div>
-                    <!-- </div> -->
-                  </div>
-                </div>
-                <!-- <div ng-if="showCampaigns"> -->
-                <!-- <div ng-if="transactionalTemplateDropdown.bot"> -->
-                <div ng-if="!viewTemplateSummaryTable">
+                <!--First Page-->
+                <div ng-if="viewAllTemplateSummaryTable">
                   <input type="text" class="form-control " placeholder="search"
                     ng-change="getTransactionalTemplate(TransactionalTemplateSearch)"
                     ng-model="TransactionalTemplateSearch">
@@ -1281,7 +1168,7 @@ top:0;
                       <tbody>
                         <tr dir-paginate="ttemplate in transactionalTemplateData | itemsPerPage:itemsPerPage"
                           total-items="totalCount" current-page="pagination.current" track by "$index">
-                          <td>{{$index+serial+1}}</td>
+                          <td>{{$index+serial}}</td>
                           <td style="text-align: center;">{{ttemplate.template_id}}</td>
                           <td style="text-align: center;">{{ttemplate.template_name}}</td>
                           <td style="text-align: center;">{{ttemplate.days_count}}</td>
@@ -1289,30 +1176,25 @@ top:0;
                           <td style="text-align: center;">{{ttemplate.total_positive}}</td>
                           <td style="text-align: center;">{{ttemplate.total_neutral}}</td>
                           <td style="text-align: center;">{{ttemplate.total_negative}}</td>
-                   
-                          <!-- <td style="text-align: center;"><button ng-click="getFormDetails(campaign.campaign_id)"
-                                data-target="#viewModal" data-toggle="modal" type="button" class="btn btn-danger">View
-                              </button>
-                            </td> -->
+
+
                           <td style="text-align: center;"><button
-                              ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,viewSearch,pagination.current)" data-toggle="modal"
-                              type="button" class="btn btn-danger">View
+                            ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,pagination.current,ttemplate.template_name,dateRangeModel.start_dates=' ',dateRangeModel.end_dates=' ')"
+                              data-toggle="modal" type="button" class="btn btn-danger">View
                             </button>
                           </td>
-                          <!-- <td style="text-align: center;"><button type="button" ng-click="gettransactionalTemplateSummaryDownload(ttemplate.template_id)"
-                              class="btn btn-danger">Download</button>
-                          </td> -->
+
                           <td style="text-align: center;">
                             <a
-                            ng-href="https://api.machadalo.com/v0/ui/mea-bot/download-template-user-summary/?template_id={{ttemplate.template_id}}">
-                            <button data-toggle="modal" type="button" class="btn btn-danger">Download
-                            </button>
+                              ng-href="https://api.machadalo.com/v0/ui/mea-bot/download-template-user-summary/?template_id={{ttemplate.template_id}}">
+                              <button data-toggle="modal" type="button" class="btn btn-danger">Download
+                              </button>
                           </td>
                           <td style="text-align: center;"><button
-                            ng-click="getFormUpload(ttemplate.template_id,ttemplate.template_name)"
-                            data-target="#viewModal" data-toggle="modal" type="button" class="btn btn-danger">Send
-                          </button>
-                        </td>
+                              ng-click="getFormUpload(ttemplate.template_id,ttemplate.template_name)"
+                              data-target="#viewModal" data-toggle="modal" type="button" class="btn btn-danger">Send
+                            </button>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -1330,35 +1212,93 @@ top:0;
                     </a>
                   </center>
                 </div>
+                <!--/First Page-->
 
+                <!--Second Page-->
                 <div ng-if="viewTemplateSummaryTable">
-                  <div class="table-responsive" style="width: 100%;">
+                  <div class="panel panel-default">
+                    <div class="col-md-12 ">
+                      <!--clender-->
+                      <div class="col-md-12" print-remove style="margin-top: 10px;">
+                        <div class="col-md-5 col-sm-5">
+                          <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                            placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates"
+                            is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true"
+                            close-text="Close" alt-input-formats="altInputFormats">
+                          <button type="button" class="smallBtn calendar"
+                            ng-click="isDatepickerOpen = !isDatepickerOpen">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                          </button>
+                        </div>
+                        <div class="col-md-5 col-sm-5">
+                          <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                            placeholder="DD/MM/YYYY" ng-change="changeEndDate()" ng-model="dateRangeModel.end_dates"
+                            is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"
+                            alt-input-formats="altInputFormats">
+                          <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
+                            ng-click="isEndDateOpen = !isEndDateOpen">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                          </button>
+                        </div>
+                        <center>
+                          <div col-md-2 col-sm-2>
+                            <button class="btn btn-danger"
+                              ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates"
+                              ng-click="getTransactionalTemplateViewDetail(view_template.template_id,next_page,view_template.template_name,dateRangeModel.start_dates,dateRangeModel.end_dates)">
+                              Submit</button>
+                          </div>
+                        </center>
+                      </div>
+                      <!--end of clender-->
+                      <div ng-model="viewDaywise" ng-change="getTransactionalTemplateViewDetail()"
+                        style="color: #8e1921; text-align: center; margin: 10px; text-transform:capitalize">
+                        <h4><b>Template Name:{{view_template.template_name}}</b></h4>
+                        <h5><b>Template ID:{{view_template.template_id}}</b></h5>
+                      </div>
+                      <div style="margin: 10px;text-align: right;">
+                        <button class="btn btn-danger" ng-click="backToTemplateData()">Back To Template</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="table-responsive" style="width: 100%;" ng-model="viewDaywise"
+                    ng-change="getTransactionalTemplateViewDetail()">
+
                     <table class="table">
                       <thead>
                         <tr>
                           <th style="padding:10px">Index</th>
                           <th style="padding:10px">Sent Date</th>
-                          <th style="padding:10px">User Count</th>
+                          <th style="padding:10px">Template Sent</th>
                           <th style="padding:10px">Positive</th>
                           <th style="padding:10px">Neutral</th>
                           <th style="padding:10px">Negative</th>
                           <th style="padding:10px">View</th>
+                          <th style="padding:10px">Download</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr dir-paginate="tdtemplate in transactionalTemplateDataDetail | itemsPerPage:itemsPerPage"
                           total-items="totalCount" current-page="pagination.current" track by "$index">
+
                           <td style="text-align: center;">{{$index+serial}}</td>
                           <td style="text-align: center;">{{tdtemplate.sent_date}}</td>
-                          <td style="text-align: center;">{{tdtemplate.total_user}}</td>
+                          <td style="text-align: center;">{{tdtemplate.total_users}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_positive}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_neutral}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_negative}}</td>
                           <td style="text-align: center;"><button
-                            ng-click="getTransactionalTemplateViewDetail(ttemplate.template_id,pagination.current)"
-                            data-toggle="modal" type="button" class="btn btn-danger">View
-                          </button>
-                        </td>
+                              ng-click="getTransactionalTemplateUserDetail(view_template.template_id,tdtemplate.sent_date,1)"
+                              data-toggle="modal" type="button" class="btn btn-danger">View
+                            </button>
+                          </td>
+                          <td style="text-align: center;">
+                            <a
+                              ng-href="https://api.machadalo.com/v0/ui/mea-bot/download-template-user-summary/?template_id={{tdtemplate.template_id}}&date={{tdtemplate.sent_date}}">
+                              <button data-toggle="modal" type="button" class="btn btn-danger">Download
+                              </button>
+                            </a>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -1372,68 +1312,186 @@ top:0;
                   </div>
 
                   <center>
-                    <dir-pagination-controls max-size="2" on-page-change="pageChanged(newPageNumber)"
-                      boundary-links="true">
+                    <dir-pagination-controls max-size="2"
+                      ng-click="viewSummryPageChanged(template_id,viewSearch,pagination.current)" boundary-links="true">
                     </dir-pagination-controls>
                   </center>
-<!-- 
-                  <div ng-if="transactionalTemplateDataDetail.length > 0" style="text-align: center;">
-                    <a href="https://stagingapi.machadalo.com/v0/ui/mca-bot/download-template-user-summary/?template_id="
-                      ng-click="gettransactionalTemplateSummaryDownload(ttemplate.template_id)"><button
-                        data-toggle="modal" type="button" class="btn btn-danger">Download Details
-                      </button></a>
-                  </div> -->
 
                 </div>
+                <!--/Second page-->
 
-
-                <!-- </div> -->
-
-                <!-- <div class="viewLeadstable" ng-if="!showCampaigns"> -->
-                <!-- <button class="btn btn-danger" ng-click="backToCampaign()">Back To Campaigns</button> -->
-                <!-- </br><br>
-                  <input type="text" class="form-control" ng-model="searchData" placeholder="search">
-                  <div class="table-responsive">
-                    <div class="panel-heading content-title" style="height:70px">
-                      <h3 style="background:'red'">Leads of {{CampaignNameofLeads}}</h3>
-                      <div class="row">
-                        <span class="pull-left"><label for="heading"><small>Campaign Owner :
-                            </small><span><small>{{campaignOwner}}</small> </span></label></span>
-                        <span class="pull-right"><label for="heading"><small>Principal Vendor :
-                            </small><span><small>{{principalVendor}}</small></span></label></span>
-                      </div>
+                <!--Third Page-->
+                <!-- <div ng-if="!viewTemplateSummaryTable"> -->
+                <div ng-if="viewUserSummaryTable">
+                  <div class="panel panel-default">
+                    <div ng-model="userSearch" ng-change="getTransactionalTemplateUserDetail()"
+                      style="color: #8e1921; text-align: center; margin: 10px;">
+                      <h2>Template Name:{{user_view.template_name}}</h2>
+                      <h3><b>Sent Date:{{user_view.sent_date}}</b></h3>
                     </div>
-                    <br />
+                    <div style="margin: 10px;text-align: right;">
+                      <button class="btn btn-danger" ng-click="backToDatewiseData()">Back To Previous</button>
+                    </div>
+                  </div>
+
+                  <input type="text" class="form-control " placeholder="search"
+                    ng-change="getTransactionalTemplateUserDetail()" ng-model="userSearch" ng-if="">
+                  <div class="table-responsive" style="width: 100%;" ng-model="viewDaywise"
+                    ng-change="getTransactionalTemplateViewDetail()">
+
                     <table class="table">
                       <thead>
                         <tr>
-                          <th>Index</th>
-                          <th ng-repeat="header in selectedCampaignLeads.headers">{{header.key_name}}</th>
+                          <th style="padding:10px">Index</th>
+                          <th style="padding:10px">User Name</th>
+                          <th style="padding:10px">What's app Name</th>
+                          <th style="padding:10px">Phone Number</th>
+                          <th style="padding:10px">Response</th>
+                          <th style="padding:10px">Positive</th>
+                          <th style="padding:10px">Neutral</th>
+                          <th style="padding:10px">Negative</th>
+                          <th style="padding:10px">Created At</th>
+                          <th style="padding:10px">Updated At</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr
-                          dir-paginate="lead in selectedCampaignLeads.values | filter : searchData | filter : Code | itemsPerPage:20 track by $index">
-                          <td>{{$index + 1}}</td>
-                          <td ng-repeat="alias in lead">{{alias.value}}</td>
+                        <tr dir-paginate=" tmp in transactionalTemplateUserData| itemsPerPage:itemsPerPage"
+                          total-items="totalCount" current-page="pagination.current" track by "$index">
+
+                          <td style="text-align: center;">{{$index+serial}}</td>
+                          <td style="text-align: center;">{{tmp.user_name}}</td>
+                          <td style="text-align: center;">{{tmp.whatsapp_name}}</td>
+                          <td style="text-align: center;">{{tmp.phone_numbe}}</td>
+                          <td style="text-align: center;">{{tmp.total_no_template}}</td>
+                          <td style="text-align: center;">{{tmp.total_positive}}</td>
+                          <td style="text-align: center;">{{tmp.total_neutral}}</td>
+                          <td style="text-align: center;">{{tmp.total_negative}}</td>
+                          <td style="text-align: center;">{{tmp.created_at}}</td>
+                          <td style="text-align: center;">{{tmp.updated_at}}</td>
+
                         </tr>
                       </tbody>
                     </table>
+
+                    <div ng-if="transactionalTemplateDataDetail.length == 0">
+                      <h4 style="text-align: center; color: red;">
+                        No Record.
+                      </h4>
+                    </div>
+
                   </div>
-                </div> -->
-                <!-- <br /><br />
-                <div style="text-align:center">
-                  <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true">
-                  </dir-pagination-controls>
+
+                  <center>
+
+                    <dir-pagination-controls max-size="2" ng-click="viewUserPageChanged(pagination.current)"
+                      boundary-links="true">
+                    </dir-pagination-controls>
+                  </center>
                 </div>
-                <br /> <br />
-                <button ng-if="!showCampaigns" class="btn btn-danger"
-                  ng-click="getPrintLeadsInExcelData(campaignIdForLeads)" data-target="#printLeadsInExcelModal"
-                  data-toggle="modal">Print Leads In Excel</button> -->
+                <!--/Third Page-->
+
+                <!--First Pop up-->
+                <div id="viewModal" class="modal fade">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <div style="display: flex; padding: 10px 0px; ">
+                          <h5 style="width: 70%;"><b>BOT Name : </b>MEA </h5><br>
+                          <h5 class="modal-title" ng-change="getFormUpload()" style="text-transform: capitalize;">
+                            <b>Template Name :
+                            </b>{{current_template.template_name}}
+                          </h5><br>
+                          <span>
+                            <button ng-click="" data-target="#messageViewModal" data-toggle="modal" type="button"
+                              name="button" class="btn btn-primary">View Message
+                            </button>
+                          </span>
+                        </div>
+                        <div class="modal-body">
+                          <div>
+                            <div class="check-field" style="padding: 10px;">
+                              <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th>Sr. No.</th>
+                                    <th>Column No.</th>
+                                    <th>Column Name</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td style="text-align: center;">1</td>
+                                    <td style="text-align: center;">1</td>
+                                    <td style="text-align: center;">Name</td>
+                                  </tr>
+                                  <tr>
+                                    <td style="text-align: center;">2</td>
+                                    <td style="text-align: center;">2</td>
+                                    <td style="text-align: center;">Designation</td>
+                                  </tr>
+                                  <tr>
+                                    <td style="text-align: center;">3</td>
+                                    <td style="text-align: center;">3</td>
+                                    <td style="text-align: center;">City</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+
+                            </div>
+                            <br>
+                            <center>
+                              <form method="post">
+                                <input type="file" id="myFile" name="filename" accept=".csv"
+                                  ngf-select="uploadFiles($file)">
+                                <div style="padding-top: 15px;">
+                                  <button type="button" name="button" class="btn btn-danger"
+                                    ng-click="getFormUpload(current_template.template_id, )">Send
+                                    <!-- <input type="submit"> -->
+                                  </button>
+                                </div>
+                              </form>
+                            </center>
+                            <br>
+                            <center>
+                              <h5 style="color: #8e1921;"><b><u>-:Note:-</u> </b></h5>
+                              <div style="text-align: center;">
+                                <h6><b> 1.Please Upload CSV File.</b></h6>
+                                <b>
+                                  <h6> 2.Upload opted in CSV file using above format.
+                                </b></h6>
+                              </div>
+
+
+                            </center>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--/First Pop up-->
+
+                <!--Second Pop up-->
+                <div id="messageViewModal" class="modal fade">
+                  <div class="modal-dialog">
+                    <div class="modal-content" style="top:30px; margin: 5px 15px;">
+                      <div class="modal-header">
+                        <center>
+                          <h5 style="width: 70%;"><b>BOT Name : </b>MEA </h5><br>
+                        </center>
+                        <div class="modal-body">
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--/Second Pop up-->
 
               </div>
+              <!--/Content-->
 
-
+              <!--Footer-->
               <div class="page-end">
                 <center>
                   <div class="content">
@@ -1444,10 +1502,10 @@ top:0;
 
                       <div class="row">
                         <div class="col-xs-4">
-                          <b>1. Days sent</b> : Total Templates (Days sent)
+                          <b>1.Template Sent</b> : Total Template Sent
                         </div>
                         <div class="col-xs-4">
-                          <b>2. User count</b> : Total Template user count
+                          <b>2. User count </b>: Total Template user count
                         </div>
                         <div class="col-xs-4">
                           <b>3. Positive</b> : Total positive Response
@@ -1462,14 +1520,20 @@ top:0;
                           <b>5. Negative </b>:Total Negative Response
                         </div>
                         <div class="col-xs-4">
-                          <b> 6. Details </b>: View Template Details
+                          <b> 6. Details </b>: View Template Details(Date Wise)
                         </div>
 
                       </div>
                       <br>
                       <div class="row">
-                        <div class="col-xs-12">
+                        <div class="col-xs-4">
                           <b>7. Download User </b>: Download User Response
+                        </div>
+                        <div class="col-xs-4">
+                          <b>8.Send Template</b>: Upload User Sheet
+                        </div>
+                        <div class="col-xs-4">
+                          <b>9. Days sent </b>: Total Templates (Days sent)
                         </div>
                       </div>
                     </ol>
@@ -1477,7 +1541,7 @@ top:0;
                   </div>
                 </center>
               </div>
-
+              <!--/Footer-->
 
             </uib-tab>
             <!--/Transactional template tab-->

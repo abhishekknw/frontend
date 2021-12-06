@@ -57,47 +57,38 @@ angular.module('catalogueApp')
         return $http.get(interveneApiHost + url);
       }
       DashboardService.transactionalTemplateDetail = function (param){
-        let url="v0/ui/mca-bot/template-user-summary-list/?template_id="+ param.template_id+ "&next_page=" + param.next_page+'&search=' + param.search;
-        // alert("template")
-      //   if (param.search) {
-      //     url += '&search=' + param.search
-      //  }
+        let url="v0/ui/mea-bot/template-user-summary-list/?template_id="+ param.template_id+ "&next_page=" + param.next_page+'&search=' + param.search;
+        return machadaloHttp.get( url);
+
+      }     
+
+      DashboardService.transactionalTemplateSummaryDownload = function (param) {
+        let url =  "v0/ui/mea-bot/download-template-user-summary/?template_id="+param.template_id;
+        return machadaloHttp.get(url);
+      }
+
+      DashboardService.transactionalTemplateDatewiseDetail = function (param){
+        let url="v0/ui/mea-bot/template-date-wise-summary/?template_id="+ param.template_id+ "&start_date="+param.start_date+"&end_date="+param.end_date+"&next_page=" + param.next_page;
+         alert("hi")
+      console.log(param.template_id,'777')
+        // return machadaloHttp.get( url);
+
+      }
+
+      DashboardService.transactionalTemplateUserDetail = function (param){
+        let url="v0/ui/mea-bot/template-user-summary-list/?template_id="+ param.template_id+ 
+                "&date="+param.date+"&next_page="+param.next_page;
+       alert("hi")
         return machadaloHttp.get( url);
 
       }
 
-      // DashboardService.transactionalTemplateDetail = function (botType) {
-      //   // let url =   "v0/ui/mca-bot/template-user-summary-list/" 
-      //   // return machadaloHttp.get( url);
-      //   let url =""
-      //   if(botType=='mca'){
-      //    url =   "v0/ui/mca-bot/template-user-summary-list/" 
-      //   apiHost = APIBaseUrl;
-      //   }
-      //  if(botType=='mea'){
-      //     url =   "v0/ui/mea-bot/template-user-summary-list/"
-      //     apiHost =  interveneApiHost; 
-      //   }
-      //   return  $http.get(url)
-      //   .then(function onSuccess(response) {
-      //      return response
-      //   })
-      //   .catch(function onError(response) {
-      //      return response
-      //   });
-      
-
-
-
-        
-      // }
-
-
-      DashboardService.transactionalTemplateSummaryDownload = function (param) {
-        // let url = apiHost +  "v0/ui/mca-bot/download-template-summary/";
-        let url =  "v0/ui/mca-bot/download-template-user-summary/?template_id="+param.template_id;
-        return machadaloHttp.get(url);
+      DashboardService.formUpload= function (param) {
+        let url="" +param.template_id
+        return machadaloHttp.get( url);
       }
+
+
 
         return DashboardService;
 
