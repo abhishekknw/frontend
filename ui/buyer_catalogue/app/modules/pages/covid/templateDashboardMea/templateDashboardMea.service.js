@@ -58,34 +58,36 @@ angular.module('catalogueApp')
       }
       DashboardService.transactionalTemplateDetail = function (param){
         let url="v0/ui/mea-bot/template-user-summary-list/?template_id="+ param.template_id+ "&next_page=" + param.next_page+'&search=' + param.search;
-        return machadaloHttp.get( url);
+        apiHost = interveneApiHost;
+        return $http.get(interveneApiHost + url);
 
       }     
 
       DashboardService.transactionalTemplateSummaryDownload = function (param) {
-        let url =  "v0/ui/mea-bot/download-template-user-summary/?template_id="+param.template_id;
-        return machadaloHttp.get(url);
+        let url ="v0/ui/mea-bot/download-template-user-summary/?template_id="+param.template_id;
+        apiHost = interveneApiHost;
+        return $http.get(interveneApiHost + url);
       }
 
       DashboardService.transactionalTemplateDatewiseDetail = function (param){
         let url="v0/ui/mea-bot/template-date-wise-summary/?template_id="+ param.template_id+ "&start_date="+param.start_date+"&end_date="+param.end_date+"&next_page=" + param.next_page;
-         alert("hi")
-      console.log(param.template_id,'777')
-        // return machadaloHttp.get( url);
+        apiHost = interveneApiHost;
+        return $http.get(interveneApiHost + url);
 
       }
 
       DashboardService.transactionalTemplateUserDetail = function (param){
         let url="v0/ui/mea-bot/template-user-summary-list/?template_id="+ param.template_id+ 
                 "&date="+param.date+"&next_page="+param.next_page;
-       alert("hi")
-        return machadaloHttp.get( url);
+                apiHost = interveneApiHost;
+                return $http.get(interveneApiHost + url);
 
       }
 
       DashboardService.formUpload= function (param) {
         let url="" +param.template_id
-        return machadaloHttp.get( url);
+        apiHost = interveneApiHost;
+        return $http.get(interveneApiHost + url);
       }
 
 

@@ -6707,37 +6707,43 @@
           })
       }
 
-      $scope.getTransactionalTemplateUserDetail = function (value,date,page,search) {
+      $scope.getTransactionalTemplateUserDetail = function (value, date, page, name, search) {
         $scope.viewUserSummary()
         $scope.user_view = {
-          // template_name: name,
-          sent_date:date
-        }
-        let param = {
-          // search: searchitem,
           template_id: value,
-          date:date,
-          next_page: 1,
-          // search:search
+          template_name: name,
+          sent_date: date,
         }
 
-      
+        let param = {
+          template_id: value,
+          date: date,
+          next_page: 1,
+          search: search
+        }
+        if (!search) {
+          param.search = ""
+        }
         if (page) {
           param.next_page = page;
+          // } else {
+          //   $scope.totalCount = 0;
+          // }
+          // $scope.pageCount = param.next_page;
         } else {
-          $scope.totalCount = 0;
+          $scope.totalCount = 1;
+          $scope.currentPage = 1;
+          $scope.itemsPerPage = 25;
+          $scope.serial = 1
+          $scope.pagination = {
+            current: 1
+          };
         }
+
         $scope.pageCount = param.next_page;
-        // if (!searchitem) {
-        //   param.search = ""
-        // }
-
-        //   if ($scope.formData.viewSearch) {
-        //     param.search = $scope.formData.viewSearch;
-        // }
-        $scope.pageCount = param.nextPage;
         $scope.disableNextPagebutton = false;
-
+        console.log("78", name, search)
+        console.log("0000", param)
         templateDashboardMeaService.transactionalTemplateUserDetail(param)
           .then(function onSuccess(response) {
             // alert("view")
@@ -6755,7 +6761,6 @@
         let param = {
           template_id : value
         }
-      alert("download summry")
       templateDashboardMeaService.transactionalTemplateSummaryDownload(param).
         then(function onSuccess(response) {
 
@@ -6794,10 +6799,12 @@
           })
       }
       
-      $scope.viewUserPageChanged = function (template_id, viewSearch, newPageNumber) {
+      $scope.viewUserPageChanged = function (template_id, date, newPageNumber, template_name, search) {
 
-        $scope.serial = newPageNumber * 10 - 9;
-        $scope.getTransactionalTemplateUserDetail(template_id, viewSearch, newPageNumber);
+        // console.log(template_id,date,newPageNumber,template_name,search,'ooo')
+        $scope.serial = newPageNumber * 25 - 24;
+        $scope.getTransactionalTemplateUserDetail(template_id, date, newPageNumber, template_name, search);
+        // console.log("vvvv", template_id, date, newPageNumber, template_name, search)
       };
 
       $scope.transactionalTemplateDropdown = {}
