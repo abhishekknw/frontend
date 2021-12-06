@@ -1252,8 +1252,8 @@ top:0;
                       <!--end of clender-->
                       <div ng-model="viewDaywise" ng-change="getTransactionalTemplateViewDetail()"
                         style="color: #8e1921; text-align: center; margin: 10px; text-transform:capitalize">
-                        <h4><b>Template Name:{{view_template.template_name}}</b></h4>
-                        <h5><b>Template ID:{{view_template.template_id}}</b></h5>
+                        <h4><b>Template Name:</b>{{view_template.template_name}}</h4>
+                        <h5><b>Template ID:</b>{{view_template.template_id}}</h5>
                       </div>
                       <div style="margin: 10px;text-align: right;">
                         <button class="btn btn-danger" ng-click="backToTemplateData()">Back To Template</button>
@@ -1391,77 +1391,7 @@ top:0;
                     </center>
                   </div>
                   <!--/Third Page-->
-                <!--Third Page-->
-                <!-- <div ng-if="!viewTemplateSummaryTable"> -->
-                <div ng-if="viewUserSummaryTable">
-                  <div class="panel panel-default">
-                    <div ng-model="userSearch" ng-change="getTransactionalTemplateUserDetail()"
-                      style="color: #8e1921; text-align: center; margin: 10px; text-transform: capitalize; ">
-                      <h4><b>Template Name:</b>{{user_view.template_name}}</h4>
-                      <h5><b>Sent Date:{{user_view.sent_date}}</b></h5>
-                    </div>
-                    <div style="margin: 10px;text-align: right;">
-                      <button class="btn btn-danger" ng-click="backToDatewiseData()">Back To Previous</button>
-                    </div>
-                  </div>
-
-                  <input type="text" class="form-control " placeholder="search" ng-model="userSearch"
-                    ng-change="getTransactionalTemplateUserDetail(user_view.template_id,user_view.sent_date,pagination.current,user_view.template_name,userSearch)">
-                  <br>
-                  <div class="table-responsive" style="width: 100%;" ng-model="userSearch"
-                    ng-change="getTransactionalTemplateViewDetail()">
-
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th style="padding:10px">Index</th>
-                          <th style="padding:10px">User Name</th>
-                          <th style="padding:10px">What's app Name</th>
-                          <th style="padding:10px">Phone Number</th>
-                          <th style="padding:10px">Response</th>
-                          <th style="padding:10px">Positive</th>
-                          <th style="padding:10px">Neutral</th>
-                          <th style="padding:10px">Negative</th>
-                          <th style="padding:10px">Created At</th>
-                          <th style="padding:10px">Updated At</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr dir-paginate=" tmp in transactionalTemplateUserData| itemsPerPage:itemsPerPage"
-                          total-items="totalCount" current-page="pagination.current" track by "$index">
-
-                          <td style="text-align: center;">{{$index+serial}}</td>
-                          <td style="text-align: center;">{{tmp.user_name}}</td>
-                          <td style="text-align: center;">{{tmp.whatsapp_name}}</td>
-                          <td style="text-align: center;">{{tmp.phone_number}}</td>
-                          <td style="text-align: center;">{{tmp.total_no_template}}</td>
-                          <td style="text-align: center;">{{tmp.total_positive}}</td>
-                          <td style="text-align: center;">{{tmp.total_neutral}}</td>
-                          <td style="text-align: center;">{{tmp.total_negative}}</td>
-                          <td style="text-align: center;">{{tmp.created_at}}</td>
-                          <td style="text-align: center;">{{tmp.updated_at}}</td>
-
-                        </tr>
-                      </tbody>
-                    </table>
-
-                    <div ng-if="transactionalTemplateUserData.length == 0">
-                      <h4 style="text-align: center; color: red;">
-                        No Record.
-                      </h4>
-                    </div>
-
-                  </div>
-
-                  <center>
-
-                    <dir-pagination-controls max-size="2" ng-model="userSearch"
-                      on-page-change="viewUserPageChanged(user_view.template_id,user_view.sent_date,pagination.current,user_view.template_name,userSearch)"
-                      boundary-links="true">
-                    </dir-pagination-controls>
-                  </center>
-                </div>
-                <!--/Third Page-->
+                
   
 
                 <!--First Pop up-->
