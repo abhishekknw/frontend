@@ -9,6 +9,13 @@
 
 <style>
   /*aisensy*/
+
+  /* .message{
+    white-space:pre-line;
+    overflow: hidden;
+    height: 5px;
+    width: 100%;
+  } */
   .logo-sec-mca img {
     width: 80px;
     margin-left: 50px;
@@ -749,7 +756,7 @@
   }
 
   .message-2 {
-
+    /* white-space:pre-line; */
     border-radius: 7px;
     background-color: #aede2e;
     padding: 5px 20px;
@@ -1997,11 +2004,15 @@
                                 </div>
                                 <!--end contct attachment-->
 
-                                <input type="text" ng-model="message.activeMessage" placeholder="Write message"
-                                  ng-keydown="$event.keyCode === 13  && sendMessage(userChatData.phone_number)">
-                                  <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message"
-                                  ui-keypress="{13:'sendMessage(userChatData.phone_number)'}" > -->
-                              </div>
+                                <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message"
+                                  ng-keydown="$event.keyCode === 13  && sendMessage(userChatData.phone_number)"> -->
+                                  <textarea id="message" ng-model="message.activeMessage" placeholder="Write message" style="width: 90%;
+                                  height: 15px;
+                                  overflow: hidden;margin: 5px; padding-left: 15px;"
+                                  ui-keypress="{13:'sendMessage(userChatData.phone_number)'}" 
+                                    >
+                              </textarea>
+                                  </div>
                             </div>
                             <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
                               <svg viewBox="0 0 74.433 60.908" width="25" height="25"
