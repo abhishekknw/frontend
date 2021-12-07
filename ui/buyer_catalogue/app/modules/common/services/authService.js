@@ -808,15 +808,15 @@ angular.module('Authentication')
             };
             
             authService.sendMessage = function (param,meaType) {
-               console.log('vvvv',param)
+               // console.log('vvvv',param)
                let url = "v0/ui/b2c-bot/send-intrup-message/?phone_number=" + param.phone + "&text=" + param.text;
                apiHost = APIBaseUrl;
                if(meaType){
                    url = "v0/ui/mea-bot/send-intrup-message/?phone_number=" + param.phone + "&text=" + param.text;
                    apiHost = interveneApiHost;
                 }
-                console.log(url,'09090')
-                console.log('hhh',param.text)
+               //  console.log(url,'09090')
+               //  console.log('hhh',param.text)
                return $http.get(apiHost + url)
                   .then(function onSuccess(response) {
                      return response

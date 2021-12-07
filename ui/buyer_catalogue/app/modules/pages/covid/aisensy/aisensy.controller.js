@@ -12,7 +12,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 if (event.which === 13 && !event.shiftKey)
                 {
                     scope.$apply(function () {
-                        pasteIntoInput(this, "%0a");
+                        // pasteIntoInput(this, "%0a");
                         scope.$eval(attrs.myEnter);
                        
                     }
@@ -778,7 +778,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     // if(param.text!=null){
                     if ($scope.message.activeMessage) {
                         $scope.oldString = $scope.message.activeMessage;
-                        param.text  =$scope.oldString.replace('\n','%0a');
+                        param.text  = $scope.oldString.split("\n").join("%0a");
                         // }
                     }
                     else {

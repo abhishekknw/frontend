@@ -743,52 +743,52 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
             }
             $scope.message = {};
-            $scope.sendMessage = function (phone,msg) {
+            $scope.sendMessage = function (phone) {
 
                 let param = {
                     phone: phone,
-                    text:msg
+                    
                 }
-                console.log('67676',param.text)
+                
                 // if(param.text!=null){
                 if ($scope.message.activeMessage) {
-                    param.text = $scope.message.activeMessage;
-
-                // }
-            }
-            else{
-                return false
-            }
-                // if($scope.message.activeMessage=="") {
+                    $scope.oldString = $scope.message.activeMessage;
+                    param.text  = $scope.oldString.split("\n").join("%0a");
+                    // }
+                }
+                else {
+                    return false
+                }
+                // if ($scope.message.activeMessage == "") {
                 //     return false;
                 // }
                 // if($scope.message==''){
                 //     return false;
                 // }
-                console.log('11111111111112222222222222222222', $scope.message);
+                console.log('11111111111112222222222222222222', param.text);
                 AuthService.sendMessage(param,true)
                     .then(function onSuccess(response) {
-                        
+                        console.log(param)
                         if (response.data.status) {
                             let data = {
                                 content: { text: $scope.message.activeMessage },
                                 sender: "bot",
                                 timestamp: new Date()
                             }
-                            console.log('0000',$scope.userChatData)
                             if ($scope.userChatData) {
                                 if ($scope.userChatData.payload && $scope.userChatData.payload.length > 0) {
                                     $scope.userChatData.payload.unshift(data);
-                                    console.log('9999',$scope.userChatData)
-                                } else {
+                                   
+                                }
+                                else {
                                     $scope.userChatData.payload.push(data);
+                                   
                                 }
                             }
                             $scope.message = {};
 
 
                         }
-                   
                     }).catch(function onError(response) {
                         console.log(response);
                     })
