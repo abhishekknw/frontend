@@ -5,28 +5,35 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         return input;
     }
 }])
-    // .directive('myEnter', function () {
-    //     return function (scope, element, attrs) {
+    .directive('myEnter', function () {
+        return function (scope, element, attrs) {
 
-    //         element.bind("keydown keypress", function (event) {
-    //             if(event.which === 13  && event.shiftKey) {
-    //                 scope.$apply(function (){
-    //                     scope.$eval(attrs.myEnter);
-    //                 });
-    // // if(!event.shiftKey){
-    // //     event.preventDefault();
-    // //     scope.$apply(attrs.myEnter);
-    // // }
-    //             }
-    //             event.preventDefault();
-    //             // if(event.which == 13) {
+            element.bind("keydown keypress", function (event) {
+                if (event.which === 13 && !event.shiftKey)
+                {
+                    scope.$apply(function () {
+                        pasteIntoInput(this, "%0a");
+                        scope.$eval(attrs.myEnter);
+                       
+                    }
+                    );
+                    event.preventDefault();
 
-    //             //     event.preventDefault();
-    //             // }
-
-    //         });
-    //     };
-    // })
+                    // if(!event.shiftKey){
+                    //     event.preventDefault();
+                    //     scope.$apply(attrs.myEnter);
+                    // }
+                }
+                //     event.preventDefault();
+                //     if(event.which == 13) {
+                //         if (!event.shiftKey) {
+                //             scope.$eval(attrs.myEnter);
+                //         event.preventDefault();
+                //     }
+                // }
+            });
+        };
+    })
     .controller('aisensyCtrl',
         ['$scope', '$rootScope', '$window', '$sce', '$location', 'AuthService', '$anchorScroll', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService', 'commonDataShare',
             function ($scope, $rootScope, $window, $sce, $location, AuthService, suspenseLeadService, $anchorScroll, $state, userService, constants, AuthService, vcRecaptchaService, permissions, commonDataShare) {
@@ -37,7 +44,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     $scope.isCollapsed = true;
                 });
 
-                $scope.ckeckdUserAisensy=[];
+                $scope.ckeckdUserAisensy = [];
 
                 let gooIndex = document.getElementById('goo-index');
                 let hoverEnter = index => {
@@ -761,31 +768,32 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
                 }
                 $scope.message = {};
-                $scope.sendMessage = function (phone,msg) {
+                $scope.sendMessage = function (phone) {
 
                     let param = {
                         phone: phone,
-                        text:msg
+                        
                     }
-                    console.log('67676',param.text)
+                    
                     // if(param.text!=null){
                     if ($scope.message.activeMessage) {
-                        param.text = $scope.message.activeMessage;
-    
-                    // }
-                }
-                else{
-                    return false
-                }
+                        $scope.oldString = $scope.message.activeMessage;
+                        param.text  =$scope.oldString.replace('\n','%0a');
+                        // }
+                    }
+                    else {
+                        return false
+                    }
                     // if ($scope.message.activeMessage == "") {
                     //     return false;
                     // }
                     // if($scope.message==''){
                     //     return false;
                     // }
-                    console.log('11111111111112222222222222222222', $scope.message);
+                    console.log('11111111111112222222222222222222', param.text);
                     AuthService.sendMessage(param)
                         .then(function onSuccess(response) {
+                            console.log(param)
                             if (response.data.status) {
                                 let data = {
                                     content: { text: $scope.message.activeMessage },
@@ -795,9 +803,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                                 if ($scope.userChatData) {
                                     if ($scope.userChatData.payload && $scope.userChatData.payload.length > 0) {
                                         $scope.userChatData.payload.unshift(data);
+                                       
                                     }
                                     else {
                                         $scope.userChatData.payload.push(data);
+                                       
                                     }
                                 }
                                 $scope.message = {};
@@ -820,17 +830,17 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     }
                     console.log("1contct1");
                     console.log(param)
-                    AuthService.contactList(param,true)
+                    AuthService.contactList(param, true)
                         .then(function onSuccess(response) {
                             $scope.contactListData = response.data.data;
                         }).catch(function onError(response) {
                             console.log(response);
                         })
-                  
-                }
-             
 
-                $scope.getselectedContact = function (name, number,email) {
+                }
+
+
+                $scope.getselectedContact = function (name, number, email) {
                     var data = {}
                     var data = {
                         type: "contact",
@@ -844,7 +854,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     }
                     $scope.ckeckdUserAisensy.push(data);
 
-                console.log($scope.ckeckdUserAisensy)
+                    console.log($scope.ckeckdUserAisensy)
                 }
                 // $scope.sendContact = function (ckeckdUserAisensy) {
                 //     $scope.getselectedContact()
@@ -859,7 +869,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 //         })
                 // }
 
-              
+
 
             }
         ]
