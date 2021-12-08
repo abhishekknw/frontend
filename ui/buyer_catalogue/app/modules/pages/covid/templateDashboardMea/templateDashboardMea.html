@@ -1161,7 +1161,7 @@ top:0;
                           <th>Neutral</th>
                           <th>Negative</th>
                           <th style="padding:10px">Details</th>
-                          <th style="padding:10px">Download User</th>
+                          <th style="padding:10px">Download</th>
                           <th style="padding:10px; padding-right: 25px;">Send Template</th>
                         </tr>
                       </thead>
@@ -1274,7 +1274,7 @@ top:0;
                           <th style="padding:10px">Neutral</th>
                           <th style="padding:10px">Negative</th>
                           <th style="padding:10px">View</th>
-                          <th style="padding:10px">Download</th>
+                          <th style="padding:10px">Download User</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1288,10 +1288,10 @@ top:0;
                           <td style="text-align: center;">{{tdtemplate.total_neutral}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_negative}}</td>
                           <td style="text-align: center;"><button
-                              ng-click="getTransactionalTemplateUserDetail(view_template.template_id,tdtemplate.sent_date,1)"
-                              data-toggle="modal" type="button" class="btn btn-danger">View
-                            </button>
-                          </td>
+                            ng-click="getTransactionalTemplateUserDetail(view_template.template_id,tdtemplate.sent_date,1,view_template.template_name)"
+                            data-toggle="modal" type="button" class="btn btn-danger">View
+                          </button>
+                        </td>
                           <td style="text-align: center;">
                             <a
                               ng-href="https://api.machadalo.com/v0/ui/mea-bot/download-template-user-summary/?template_id={{tdtemplate.template_id}}&date={{tdtemplate.sent_date}}">
@@ -1346,8 +1346,7 @@ top:0;
                             <th style="padding:10px">Index</th>
                             <th style="padding:10px">User Name</th>
                             <th style="padding:10px">What's app Name</th>
-                            <th style="padding:10px">Phone Number</th>
-                            <th style="padding:10px">Response</th>
+                            <th style="padding:10px">Phone Number</th> 
                             <th style="padding:10px">Positive</th>
                             <th style="padding:10px">Neutral</th>
                             <th style="padding:10px">Negative</th>
@@ -1363,7 +1362,6 @@ top:0;
                             <td style="text-align: center;">{{tmp.user_name}}</td>
                             <td style="text-align: center;">{{tmp.whatsapp_name}}</td>
                             <td style="text-align: center;">{{tmp.phone_number}}</td>
-                            <td style="text-align: center;">{{tmp.total_no_template}}</td>
                             <td style="text-align: center;">{{tmp.total_positive}}</td>
                             <td style="text-align: center;">{{tmp.total_neutral}}</td>
                             <td style="text-align: center;">{{tmp.total_negative}}</td>
@@ -1506,38 +1504,38 @@ top:0;
 
                       <div class="row">
                         <div class="col-xs-4">
-                          <b>1.Template Sent</b> : Total Template Sent
+                          <b>1. Days Sent</b>: Total Templates (Days sent)
                         </div>
                         <div class="col-xs-4">
-                          <b>2. User count </b>: Total Template user count
+                          <b>2.Template Sent</b> : Total Template Sent
                         </div>
                         <div class="col-xs-4">
-                          <b>3. Positive</b> : Total positive Response
+                          <b>3. Send Template</b>: Upload User Sheet
                         </div>
                       </div>
                       <br>
                       <div class="row">
                         <div class="col-xs-4">
-                          <b>4. Neutral </b>: Total Neutral Response
+                          <b>4. Positive</b> : Total positive Response
                         </div>
                         <div class="col-xs-4">
-                          <b>5. Negative </b>:Total Negative Response
+                          <b> 5. Neutral </b>: Total Neutral Response
                         </div>
                         <div class="col-xs-4">
-                          <b> 6. Details </b>: View Template Details(Date Wise)
+                          
                         </div>
-
+                        <b>6. Negative </b>:Total Negative Response
                       </div>
                       <br>
                       <div class="row">
                         <div class="col-xs-4">
-                          <b>7. Download User </b>: Download User Response
+                          <b>7. Details </b>: View Template Details(Date Wise)
                         </div>
                         <div class="col-xs-4">
-                          <b>8.Send Template</b>: Upload User Sheet
+                          <b>8. Download </b>: Download Response(Date Wise)
                         </div>
                         <div class="col-xs-4">
-                          <b>9. Days sent </b>: Total Templates (Days sent)
+                          <b>9. Download User </b>: Download User Response
                         </div>
                       </div>
                     </ol>

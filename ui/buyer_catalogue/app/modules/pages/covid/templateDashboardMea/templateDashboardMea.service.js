@@ -78,7 +78,7 @@ angular.module('catalogueApp')
 
       DashboardService.transactionalTemplateUserDetail = function (param){
         let url="v0/ui/mea-bot/template-user-summary-list/?template_id="+ param.template_id+ 
-                "&date="+param.date+"&next_page="+param.next_page;
+                "&date="+param.date+"&next_page="+param.next_page+"&search="+param.search;
                 apiHost = interveneApiHost;
                 return $http.get(interveneApiHost + url);
 
