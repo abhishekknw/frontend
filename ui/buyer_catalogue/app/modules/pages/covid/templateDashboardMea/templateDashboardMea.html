@@ -1282,7 +1282,7 @@ top:0;
                           total-items="totalCount" current-page="pagination.current" track by "$index">
 
                           <td style="text-align: center;">{{$index+serial}}</td>
-                          <td style="text-align: center;">{{tdtemplate.sent_date}}</td>
+                          <td style="text-align: center;">{{tdtemplate.sent_date | date : "dd-MM-yyyy"}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_users}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_positive}}</td>
                           <td style="text-align: center;">{{tdtemplate.total_neutral}}</td>
@@ -1327,7 +1327,7 @@ top:0;
                       <div ng-model="userSearch" ng-change="getTransactionalTemplateUserDetail()"
                         style="color: #8e1921; text-align: center; margin: 10px; text-transform: capitalize; ">
                         <h4><b>Template Name:</b>{{user_view.template_name}}</h4>
-                        <h5><b>Sent Date:{{user_view.sent_date}}</b></h5>
+                        <h5><b>Sent Date:{{user_view.sent_date | date : "dd-MM-yyyy"}}</b></h5>
                       </div>
                       <div style="margin: 10px;text-align: right;">
                         <button class="btn btn-danger" ng-click="backToDatewiseData()">Back To Previous</button>
