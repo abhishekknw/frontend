@@ -1218,7 +1218,12 @@ top:0;
                 <div ng-if="viewTemplateSummaryTable">
                   <div class="panel panel-default">
                     <div class="col-md-12 ">
-                      <!--clender-->
+                      <div ng-model="viewDaywise" ng-change="getTransactionalTemplateViewDetail()"
+                      style="color: #8e1921; text-align: center; margin: 10px; text-transform:capitalize">
+                      <h4><b>Template Name:</b>{{view_template.template_name}}</h4>
+                      <h5><b>Template ID:</b>{{view_template.template_id}}</h5>
+                    </div>
+                      <!--clender + back button-->
                       <div class="col-md-12" print-remove style="margin-top: 10px;">
                         <div class="col-md-5 col-sm-5">
                           <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
@@ -1240,24 +1245,19 @@ top:0;
                             <i class="glyphicon glyphicon-calendar"></i>
                           </button>
                         </div>
-                        <center>
-                          <div col-md-2 col-sm-2>
+                          <div col-md-1 col-sm-1>
                             <button class="btn btn-danger"
                               ng-disabled="!dateRangeModel.start_dates && !dateRangeModel.end_dates"
                               ng-click="getTransactionalTemplateViewDetail(view_template.template_id,next_page,view_template.template_name,dateRangeModel.start_dates,dateRangeModel.end_dates)">
                               Submit</button>
                           </div>
-                        </center>
+                          <div col-md-1 col-sm-1>
+                            <div style="margin: 10px;text-align: right;">
+                              <button class="btn btn-danger" ng-click="backToTemplateData()">Back To Template</button>
+                            </div>
+                          </div>
                       </div>
-                      <!--end of clender-->
-                      <div ng-model="viewDaywise" ng-change="getTransactionalTemplateViewDetail()"
-                        style="color: #8e1921; text-align: center; margin: 10px; text-transform:capitalize">
-                        <h4><b>Template Name:</b>{{view_template.template_name}}</h4>
-                        <h5><b>Template ID:</b>{{view_template.template_id}}</h5>
-                      </div>
-                      <div style="margin: 10px;text-align: right;">
-                        <button class="btn btn-danger" ng-click="backToTemplateData()">Back To Template</button>
-                      </div>
+                      <!--end of clender + back button-->
                     </div>
                   </div>
 
@@ -1350,6 +1350,7 @@ top:0;
                             <th style="padding:10px">Positive</th>
                             <th style="padding:10px">Neutral</th>
                             <th style="padding:10px">Negative</th>
+                            <th style="padding:10px">Status</th>
                             <th style="padding:10px">Created At</th>
                             <th style="padding:10px">Updated At</th>
                           </tr>
@@ -1365,6 +1366,7 @@ top:0;
                             <td style="text-align: center;">{{tmp.total_positive}}</td>
                             <td style="text-align: center;">{{tmp.total_neutral}}</td>
                             <td style="text-align: center;">{{tmp.total_negative}}</td>
+                            <td style="text-align: center;">{{tmp.status}}</td>
                             <td style="text-align: center;">{{tmp.created_at}}</td>
                             <td style="text-align: center;">{{tmp.updated_at}}</td>
   
