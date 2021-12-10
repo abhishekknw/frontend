@@ -1330,7 +1330,7 @@ top:0;
                         <h5><b>Sent Date:{{user_view.sent_date | date : "dd-MM-yyyy"}}</b></h5>
                       </div>
                       <div style="margin: 10px;text-align: right;">
-                        <button class="btn btn-danger" ng-click="backToDatewiseData()">Back To Previous</button>
+                        <button class="btn btn-danger" ng-click="backToDatewiseData(user_view.template_id,1,user_view.template_name,s_date='', e_date='')">Back To Previous</button>
                       </div>
                     </div>
   
@@ -1351,8 +1351,8 @@ top:0;
                             <th style="padding:10px">Neutral</th>
                             <th style="padding:10px">Negative</th>
                             <th style="padding:10px">Status</th>
-                            <th style="padding:10px">Created At</th>
-                            <th style="padding:10px">Updated At</th>
+                            <!-- <th style="padding:10px">Created At</th> -->
+                            <th style="padding:10px">Responsed At</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -1367,7 +1367,7 @@ top:0;
                             <td style="text-align: center;">{{tmp.total_neutral}}</td>
                             <td style="text-align: center;">{{tmp.total_negative}}</td>
                             <td style="text-align: center;">{{tmp.status}}</td>
-                            <td style="text-align: center;">{{tmp.created_at}}</td>
+                            <!-- <td style="text-align: center;">{{tmp.created_at}}</td> -->
                             <td style="text-align: center;">{{tmp.updated_at}}</td>
   
                           </tr>
@@ -2761,7 +2761,7 @@ top:0;
             <!--START : Performance Metrics -->
             <uib-tab ng-click="getCampaigns()" index="4">
               <uib-tab-heading>
-                <h5 style="margin-left:-10px;">Personal Info</h5>
+                <h5 style="margin-left:-10px;">Template Info</h5>
 
               </uib-tab-heading>
 

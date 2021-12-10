@@ -6680,9 +6680,19 @@
         console.log(value, s_date, e_date, 'qws')
         if (page) {
           param.next_page = page;
+          $scope.pagination = {
+            current: 1
+          }
         } else {
           $scope.totalCount = 0;
+          $scope.currentPage = 1;
+          $scope.itemsPerPage = 25;
+          $scope.serial = 1
+          $scope.pagination = {
+            current: 1
+          };
         }
+        console.log("zszszs",$scope.serial)
         $scope.pageCount = param.next_page;
         // if (!searchitem) {
         //   param.search = ""
@@ -6836,17 +6846,23 @@
 
       $scope.backToTemplateData = function () {
         $scope.viewTemplateSummaryTable = false;
-        $scope.viewAllTemplateSummaryTable=true;
-        $scope.viewUserSummaryTable=false;
+        $scope.viewAllTemplateSummaryTable = true;
+        $scope.viewUserSummaryTable = false;
+        // $scope.getTransactionalTemplate(search)
         $scope.transactionalTemplateDropdown = {};
         console.log("hiiiiiiiiiiiiiiiiiiii")
       }
 
-      $scope.backToDatewiseData = function () {
+      $scope.backToDatewiseData = function (template_id,page,name,s_date='', e_date='') {
         $scope.viewTemplateSummaryTable = true;
-        $scope.viewAllTemplateSummaryTable=false;
-        $scope.viewUserSummaryTable=false;
+        $scope.viewAllTemplateSummaryTable = false;
+        $scope.viewUserSummaryTable = false;
+        $scope.serial = 1
+        $scope.getTransactionalTemplateViewDetail(template_id,page, name, s_date='', e_date='')
+        // ttemplate.template_id,pagination.current,ttemplate.template_name,dateRangeModel.start_dates=' ',dateRangeModel.end_dates=' '
         $scope.transactionalTemplateDropdown = {};
+        console.log("qqgdq",$scope.backToDatewiseData)
+
       }
 
       $scope.pageChanged = function (newPageNumber, tab) {
@@ -6854,16 +6870,16 @@
         $scope.getTransactionalTemplateViewDetail(newPageNumber);
       };
 
-      $scope.pagination = {
-        current: 1
-      };
-      $scope.totalCount = 0;
-      $scope.currentPage = 1;
-      $scope.itemsPerPage = 25;
-      $scope.serial = 1
-      $scope.pagination = {
-        current: 1
-      };
+      // $scope.pagination = {
+      //   current: 1
+      // };
+      // $scope.totalCount = 0;
+      // $scope.currentPage = 1;
+      // $scope.itemsPerPage = 25;
+      // $scope.serial = 1
+      // $scope.pagination = {
+      //   current: 1
+      // };
 
       // Template Dashboard end
 
