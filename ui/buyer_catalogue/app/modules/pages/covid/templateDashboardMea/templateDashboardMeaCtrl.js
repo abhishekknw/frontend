@@ -6680,9 +6680,9 @@
         console.log(value, s_date, e_date, 'qws')
         if (page) {
           param.next_page = page;
-          $scope.pagination = {
-            current: 1
-          }
+          // $scope.pagination = {
+          //   current: 1
+          // }
         } else {
           $scope.totalCount = 0;
           $scope.currentPage = 1;
@@ -6858,6 +6858,9 @@
         $scope.viewAllTemplateSummaryTable = false;
         $scope.viewUserSummaryTable = false;
         $scope.serial = 1
+        $scope.pagination = {
+          current: 1
+        };
         $scope.getTransactionalTemplateViewDetail(template_id,page, name, s_date='', e_date='')
         // ttemplate.template_id,pagination.current,ttemplate.template_name,dateRangeModel.start_dates=' ',dateRangeModel.end_dates=' '
         $scope.transactionalTemplateDropdown = {};
