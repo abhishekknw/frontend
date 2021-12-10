@@ -6624,24 +6624,27 @@
 
 
       // Template Dashboard start
-      $scope.getTransactionalTemplate = function (value) {
+      $scope.getTransactionalTemplate = function (value,s_date='',e_date='') {
         $scope.TemplateListSummary()
+        $scope.changeStartDate();
+        $scope.changeEndDate();
         let param = {
           search: value
         }
         if (!value) {
           param.search = ""
         }
-        $scope.pagination = {
-          current: 1
-        };
-        $scope.totalCount = 0;
-        $scope.currentPage = 1;
-        $scope.itemsPerPage = 25;
-        $scope.serial = 1
-        $scope.pagination = {
-          current: 1
-        };
+        if (s_date || e_date) {
+          param.start_date = ''
+          param.end_date = ''
+        }
+        // $scope.totalCount = 0;
+        // $scope.currentPage = 1;
+        // $scope.itemsPerPage = 25;
+        // $scope.serial = 1
+        // $scope.pagination = {
+        //   current: 1
+        // };
         templateDashboardService.transactionalTemplateSummaryMca(param)
           .then(function onSuccess(response) {
             $scope.transactionalTemplateData = response.data.data;
