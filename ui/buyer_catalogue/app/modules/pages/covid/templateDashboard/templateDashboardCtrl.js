@@ -6688,9 +6688,9 @@
         console.log(value, s_date, e_date, 'qws')
         if (page) {
           param.next_page = page;
-          $scope.pagination = {
-            current: 1
-          }
+          // $scope.pagination = {
+          //   current: 1
+          // }
         } else {
           $scope.totalCount = 0;
           $scope.currentPage = 1;
@@ -6727,6 +6727,7 @@
 
       $scope.getTransactionalTemplateUserDetail = function (value, date, page, name, search) {
         $scope.viewUserSummary()
+        // $scope.currentPage = 1;
         $scope.user_view = {
           template_id: value,
           template_name: name,
@@ -6739,20 +6740,21 @@
           next_page: 1,
           search: search
         }
+
         if (!search) {
           param.search = ""
         }
         if (page) {
           param.next_page = page;
-          $scope.pagination = {
-            current: 1
-          };
+          // $scope.pagination = {
+          //   current: 1
+          // };
           // } else {
           //   $scope.totalCount = 0;
           // }
           // $scope.pageCount = param.next_page;
         } else {
-          $scope.totalCount = 1;
+          $scope.totalCount = 0;
           $scope.currentPage = 1;
           $scope.itemsPerPage = 25;
           $scope.serial = 1
@@ -6760,7 +6762,8 @@
             current: 1
           };
         }
-console.log('lll',$scope.pagination .current)
+        console.log('lll',$scope.pagination.current)
+        console.log('fff',$scope.currentPage)
         $scope.pageCount = param.next_page;
         $scope.disableNextPagebutton = false;
         console.log("78", name, search)
@@ -6771,7 +6774,7 @@ console.log('lll',$scope.pagination .current)
             $scope.transactionalTemplateUserData = response.data.data.users;
             $scope.totalCount = response.data.data.total_count;
             console.log('11111', $scope.transactionalTemplateUserData);
-
+            console.log('6666666', $scope.totalCount);
           }).catch(function onError(response) {
             console.log(response);
           })
@@ -6878,6 +6881,9 @@ console.log('lll',$scope.pagination .current)
         $scope.viewAllTemplateSummaryTable = false;
         $scope.viewUserSummaryTable = false;
         $scope.serial = 1
+        $scope.pagination = {
+          current: 1
+        };
         $scope.getTransactionalTemplateViewDetail(template_id,page, name, s_date='', e_date='')
         // ttemplate.template_id,pagination.current,ttemplate.template_name,dateRangeModel.start_dates=' ',dateRangeModel.end_dates=' '
         $scope.transactionalTemplateDropdown = {};
@@ -6891,16 +6897,16 @@ console.log('lll',$scope.pagination .current)
         $scope.getTransactionalTemplateViewDetail(newPageNumber);
       };
 
-      // $scope.pagination = {
-      //   current: 1
-      // };
-      // $scope.totalCount = 0;
-      // $scope.currentPage = 1;
-      // $scope.itemsPerPage = 25;
-      // $scope.serial = 1
-      // $scope.pagination = {
-      //   current: 1
-      // };
+      $scope.pagination = {
+        current: 1
+      };
+      $scope.totalCount = 0;
+      $scope.currentPage = 1;
+      $scope.itemsPerPage = 25;
+      $scope.serial = 1
+      $scope.pagination = {
+        current: 1
+      };
 
       // Template Dashboard end
 

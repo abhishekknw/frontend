@@ -1168,7 +1168,7 @@ top:0;
                       <tbody>
                         <tr dir-paginate="ttemplate in transactionalTemplateData | itemsPerPage:itemsPerPage"
                           total-items="totalCount" current-page="pagination.current" track by "$index">
-                          <td>{{$index+serial}}</td>
+                          <td>{{$index+serial+1}}</td>
                           <td style="text-align: center;">{{ttemplate.template_id}}</td>
                           <td style="text-align: center;">{{ttemplate.template_name}}</td>
                           <td style="text-align: center;">{{ttemplate.days_count}}</td>
