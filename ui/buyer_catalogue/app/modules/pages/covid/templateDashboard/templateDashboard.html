@@ -1424,8 +1424,8 @@ top:0;
                     <div class="col-md-12 ">
                       <div ng-model="viewDaywise" ng-change="getTransactionalTemplateViewDetail()"
                       style="color: #8e1921; text-align: center; margin: 10px; text-transform:capitalize">
-                      <h4><b>Template Name:</b>{{view_template.template_name}}</h4>
-                      <h5><b>Template ID:</b>{{view_template.template_id}}</h5>
+                      <h4><b>Template Name: </b>{{view_template.template_name}}</h4>
+                      <h5><b>Template ID: </b>{{view_template.template_id}}</h5>
                     </div>
                       <!--clender + back button-->
                       <div class="col-md-12" print-remove style="margin-top: 10px;">
@@ -1563,8 +1563,8 @@ top:0;
                   <div class="panel panel-default">
                     <div ng-model="userSearch" ng-change="getTransactionalTemplateUserDetail()"
                       style="color: #8e1921; text-align: center; margin: 10px; text-transform: capitalize; ">
-                      <h4><b>Template Name:</b>{{user_view.template_name}}</h4>
-                      <h5><b>Sent Date:{{user_view.sent_date | date : "dd-MM-yyyy"}}</b></h5>
+                      <h4><b>Template Name: </b>{{user_view.template_name}}</h4>
+                      <h5><b>Sent Date: </b>{{user_view.sent_date | date : "dd-MM-yyyy"}}</h5>
                     </div>
                     <div style="margin: 10px;text-align: right;">
                       <button class="btn btn-danger" ng-click="backToDatewiseData(user_view.template_id,1,user_view.template_name,s_date='', e_date='')">Back To Previous</button>
