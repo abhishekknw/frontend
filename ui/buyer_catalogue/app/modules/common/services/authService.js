@@ -844,28 +844,21 @@ angular.module('Authentication')
                   });
             };
 
-            authService.attachmentContact = function (param,meaType) {
-               let url = "";
+            authService.attachmentContact = function (param,data,meaType) {
+               console.log('mnmnm',param,data)
+               let url = "v0/ui/mca-bot/send-contact-intervene/?phone_number="+param.phone_number;
                apiHost = APIBaseUrl;
                if(meaType){
                    url = "";
                    apiHost = interveneApiHost;
                 }
-               return $http.post(apiHost + url,param)
+               return $http.post(apiHost + url,data)
                   .then(function onSuccess(response) {
                      return response
                   })
                   .catch(function onError(response) {
                      return response
                   });
-
-               // return $http.post(apiHost + 'v0/ui/covid-bot/feedback-from-bot/', param)
-               //    .then(function onSuccess(response) {
-               //       return response
-               //    })
-               //    .catch(function onError(response) {
-               //       return response
-               //    });
             };
 
  

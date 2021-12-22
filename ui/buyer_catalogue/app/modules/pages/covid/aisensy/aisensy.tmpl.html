@@ -1954,7 +1954,7 @@
                                                           </b></p>
                                                       </div> -->
                                                       <div class="custom-control custom-checkbox" 
-                                                      ng-click="getselectedContact(list.contact_name,list.phone_number,list.email_id)">
+                                                      ng-click="getselectedContact(list.email_id,list.contact_name,list.phone_number,list.organisation_name)">
                                                         <input type="checkbox" 
                                                         class="custom-control-input"
                                                         id="customCheck" name="example1"
@@ -1970,31 +1970,10 @@
                                                       </div>
                                                     </div>
                                                   </td>
-                                                
-
-                                                <!-- <td>
-                                                <div class="friend-drawer friend-drawer--onhover">
-                                                  <div class="text" style="float: left;">
-                                                    <h6>Divya</h6>
-                                                    <p class="text-muted"><b>
-                                                        9876543210
-                                                      </b></p>
-                                                  </div>
-                                                  <div class="custom-control custom-checkbox">
-
-
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck"
-                                                      name="example1"
-                                                      style="position: absolute; right: 35px; width: 20px">
-
-                                                  </div>
-
-                                                </div>
-                                              </td> -->
                                               </tbody>
                                             </table>
                                             <button type="submit" class="btn btn-primary" value="submit"
-                                             ng-click="sendContact()">Submit</button>
+                                             ng-click="sendContact('91'+userChatData.phone_number)">Submit</button>
                                           </div>
                                         </div>
                                       </div>
