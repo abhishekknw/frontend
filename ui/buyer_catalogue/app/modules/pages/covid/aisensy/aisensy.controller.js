@@ -45,6 +45,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 });
 
                 $scope.ckeckdUserAisensy = [];
+                $scope.ckeckdUserAisensy = [];
 
                 let gooIndex = document.getElementById('goo-index');
                 let hoverEnter = index => {
@@ -58,10 +59,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 }
 
                 $scope.tab = { name: 'tabA' };
-
+                // console.log("start 78787")
 
                 // AIsensy controller
                 $scope.getActiveUser = function (page) {
+                    // alert("first api call")
                     $scope.tab.name = 'tabA';
                     $scope.hideChatModule();
                     $scope.formData.historySearch = "";
@@ -839,35 +841,36 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
                 }
 
-
-                $scope.getselectedContact = function (name, number, email) {
-                    var data = {}
+                $scope.getselectedContact = function (email,name, number,c_name) {
+                    
+                    // var data = {}
                     var data = {
-                        type: "contact",
-                        firstName: name,
-                        lastName: name,
-                        phone: number,
-                        company: "",
-                        department: "",
-                        title: "",
-                        email: email
+                        gmail:"shahid.dar@machadalo.com",
+                        name: name,                       
+                        contact_number: number,
+                        company_name: c_name,
                     }
                     $scope.ckeckdUserAisensy.push(data);
-
-                    console.log($scope.ckeckdUserAisensy)
+                    console.log($scope.ckeckdUserAisensy) 
+                    // $scope.sendContact(phone)
                 }
-                // $scope.sendContact = function (ckeckdUserAisensy) {
-                //     $scope.getselectedContact()
-                //     let param = {
-                //         checkedContact = ckeckdUserAisensy
-                //     }
-                //     console.log(param);
-                //     AuthService.attachmentContact(param)
-                //         .then(function onSuccess(response) {
-                //         }).catch(function onError(response) {
-                //             console.log(response);
-                //         })
-                // }
+
+                console.log($scope.ckeckdUserAisensy)                 
+                $scope.sendContact = function (phone) {
+                    alert("wrong")                   
+                    let param = {
+                        phone_number:phone,
+                    }
+                    var data=$scope.ckeckdUserAisensy
+                    console.log('90909',param.phone_number,data)
+                    AuthService.attachmentContact(param,data)
+                .then(function onSuccess(response) {
+                    // $scope.selectedContact = response.data.data;
+                }).catch(function onError(response) {
+                    console.log(response);
+                })
+
+                }
 
 
 
