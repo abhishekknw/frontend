@@ -857,7 +857,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
                 console.log($scope.ckeckdUserAisensy)                 
                 $scope.sendContact = function (phone) {
-                    alert("wrong")                   
+                                  
                     let param = {
                         phone_number:phone,
                     }
