@@ -697,6 +697,83 @@
     z-index: 10
   }
 
+
+
+  .contact-info{
+    width: 250px;
+    /* height: 140px; */
+    display: flex;
+    /* justify-content: center; */
+    flex-wrap: wrap;
+}
+
+.card{
+    position: relative;
+    flex: 1;
+    max-width: 300px;
+    /* height: 140px; */
+    background-color: #444;
+    margin: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 85px;
+}
+
+.icon{
+    font-size: 32px;
+    color: #ea8685;
+    transition: .3s linear;
+}
+
+.card:hover .icon{
+    transform: scale(4);
+    opacity: 0;
+}
+
+.card-content h3,
+.card-content span{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    opacity: 0;
+}
+
+.card-content h3{
+    top: 20px;
+    /* text-transform: capitalize; */
+    color: #ea8685;
+}
+
+.card-content span{
+    bottom: 20px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.card:hover h3{
+    opacity: 1;
+    top: 26px;
+    transition: .3s linear .3s;
+}
+
+.card:hover span{
+    opacity: 1;
+    bottom: 46px;
+    transition: .3s linear .3s;
+}
+
+
+@media screen and (max-width:900px){
+    .card{
+        flex: 100%;
+        max-width: 500px;
+    }
+}
+
+
   /* @media only screen and (max-height: 650px) {
     .chat {
       width: 100%;
@@ -1448,7 +1525,17 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
-
+                                  <span ng-if="chat.type == 'contact'">
+                                      <div class="contact-info">
+                                        <div class="card">
+                                          <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.first_name}}</h5></i></center>
+                                          <div class="card-content">
+                                            <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                                            <h3>{{chat.content.contacts[0].name.first_name}}</h3>
+                                          </div>
+                                        </div>
+                                      </div>
+                                  </span>
                                   <br>
                                   <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
                                 </div>
@@ -1463,6 +1550,17 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
+                                  <span ng-if="chat.type == 'contact'">
+                                    <div class="contact-info">
+                                      <div class="card">
+                                        <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.firstName}}</h5></i></center>
+                                        <div class="card-content">
+                                          <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                                          <h3>{{chat.content.contacts[0].name.firstName}}</h3>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </span>
                                   <span class="chat-time">{{chat.timestamp | date : 'medium'}}</span>
                                 </div>
                               </div>
@@ -1670,7 +1768,17 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
-
+                                  <span ng-if="chat.type == 'contact'">
+                                    <div class="contact-info">
+                                      <div class="card">
+                                        <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.first_name}}</h5></i></center>
+                                        <div class="card-content">
+                                          <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                                          <h3>{{chat.content.contacts[0].name.first_name}}</h3>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </span>
                                   <br>
                                   <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
                                 </div>
@@ -1685,6 +1793,17 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
+                                  <span ng-if="chat.type == 'contact'">
+                                    <div class="contact-info">
+                                      <div class="card">
+                                        <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.firstName}}</h5></i></center>
+                                        <div class="card-content">
+                                          <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                                          <h3>{{chat.content.contacts[0].name.firstName}}</h3>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </span>
                                   <span class="chat-time">{{chat.timestamp | date : 'medium'}}</span>
                                 </div>
                               </div>
@@ -1876,7 +1995,17 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
-
+                                  <span ng-if="chat.type == 'contact'">
+                                    <div class="contact-info">
+                                      <div class="card">
+                                        <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.first_name}}</h5></i></center>
+                                        <div class="card-content">
+                                          <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                                          <h3>{{chat.content.contacts[0].name.first_name}}</h3>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </span>
                                   <br>
                                   <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
                                 </div>
@@ -1891,6 +2020,17 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
+                                  <span ng-if="chat.type == 'contact'">
+                                    <div class="contact-info">
+                                      <div class="card">
+                                        <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.firstName}}</h5></i></center>
+                                        <div class="card-content">
+                                          <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                                          <h3>{{chat.content.contacts[0].name.firstName}}</h3>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </span>
                                   <span class="chat-time">{{chat.timestamp | date : 'medium'}}</span>
                                 </div>
                               </div>
@@ -2359,7 +2499,17 @@
                           <source ng-src="{{chat.content.url}}" type="video/mp4">
                         </video>
                       </span>
-
+                      <span ng-if="chat.type == 'contact'">
+                        <div class="contact-info">
+                          <div class="card">
+                            <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.first_name}}</h5></i></center>
+                            <div class="card-content">
+                              <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                              <h3>{{chat.content.contacts[0].name.first_name}}</h3>
+                            </div>
+                          </div>
+                        </div>
+                    </span>
                       <br>
                       <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
                     </div>
@@ -2374,6 +2524,17 @@
                         <source ng-src="{{chat.content.url}}" type="video/mp4">
                       </video>
                     </span>
+                    <span ng-if="chat.type == 'contact'">
+                      <div class="contact-info">
+                        <div class="card">
+                          <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.firstName}}</h5></i></center>
+                          <div class="card-content">
+                            <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                            <h3>{{chat.content.contacts[0].name.firstName}}</h3>
+                          </div>
+                        </div>
+                      </div>
+                  </span>
                     <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
                   </div>
                 </div>
@@ -2843,7 +3004,17 @@
                     <source ng-src="{{chat.content.url}}" type="video/mp4">
                   </video>
                 </span>
-
+                <span ng-if="chat.type == 'contact'">
+                  <div class="contact-info">
+                    <div class="card">
+                      <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.first_name}}</h5></i></center>
+                      <div class="card-content">
+                        <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                        <h3>{{chat.content.contacts[0].name.first_name}}</h3>
+                      </div>
+                    </div>
+                  </div>
+              </span>
                 <br>
                 <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
               </div>
@@ -2858,6 +3029,17 @@
                   <source ng-src="{{chat.content.url}}" type="video/mp4">
                 </video>
               </span>
+              <span ng-if="chat.type == 'contact'">
+                <div class="contact-info">
+                  <div class="card">
+                    <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.firstName}}</h5></i></center>
+                    <div class="card-content">
+                      <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                      <h3>{{chat.content.contacts[0].name.firstName}}</h3>
+                    </div>
+                  </div>
+                </div>
+            </span>
               <span class="chat-time">{{chat.timestamp | date : 'medium'}}</span>
             </div>
           </div>
