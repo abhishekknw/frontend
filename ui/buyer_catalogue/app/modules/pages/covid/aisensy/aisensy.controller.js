@@ -45,7 +45,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 });
 
                 $scope.ckeckdUserAisensy = [];
-                $scope.ckeckdUserAisensy = [];
+                $scope.ckeckdUserAisensy1 = [];
 
                 let gooIndex = document.getElementById('goo-index');
                 let hoverEnter = index => {
@@ -841,34 +841,76 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
                 }
 
-                $scope.getselectedContact = function (email,name, number,c_name) {
-                    
+                $scope.getselectedContact = function (email, name, number, c_name) {
+
                     // var data = {}
                     var data = {
-                        gmail:"shahid.dar@machadalo.com",
-                        name: name,                       
+                        gmail: "shahid.dar@machadalo.com",
+                        name: name,
                         contact_number: number,
                         company_name: c_name,
                     }
-                    $scope.ckeckdUserAisensy.push(data);
-                    console.log($scope.ckeckdUserAisensy) 
-                    // $scope.sendContact(phone)
+                    var data11 = {
+                        0:{
+                        name: { firstName: name },
+                        phones: [{ phone: number }],
+                    }
                 }
 
-                console.log($scope.ckeckdUserAisensy)                 
+                    $scope.ckeckdUserAisensy.push(data);
+                    $scope.ckeckdUserAisensy1.push(data11);
+                    console.log($scope.ckeckdUserAisensy)
+                    console.log(',,,,', $scope.ckeckdUserAisensy1)
+                    // $scope.sendContact(phone)
+                }
+                console.log($scope.ckeckdUserAisensy)
+                
                 $scope.sendContact = function (phone) {
-                                  
+
                     let param = {
-                        phone_number:phone,
+                        phone_number: phone,
                     }
-                    var data=$scope.ckeckdUserAisensy
-                    console.log('90909',param.phone_number,data)
-                    AuthService.attachmentContact(param,data)
-                .then(function onSuccess(response) {
-                    // $scope.selectedContact = response.data.data;
-                }).catch(function onError(response) {
-                    console.log(response);
-                })
+                    var data = $scope.ckeckdUserAisensy
+                    var data22 = $scope.ckeckdUserAisensy1
+                    // console.log("--------",typeof(data))
+                    // $scope.ckeckdUserAisensy = {};
+                    console.log('90909', param.phone_number, data)
+                    console.log('90====', data22)
+                    AuthService.attachmentContact(param, data)
+                        .then(function onSuccess(response) {
+                            if (response.data.status) {
+                                for (const i in data22) {
+                                    let datas = {
+                                        content: { contacts: data22[i] },
+                                        sender: "bot",
+                                        timestamp: new Date()
+                                    }
+                                    console.log(i,"=-=-=")
+                                    console.log("-0-00", datas)
+                                    if ($scope.userChatData) {
+                                        if ($scope.userChatData.payload && $scope.userChatData.payload.length > 0) {
+                                            $scope.userChatData.payload.unshift(datas);
+                                            console.log(datas, "0000")
+                                        }
+                                        else {
+                                            $scope.userChatData.payload.push(datas);
+                                            console.log(datas, "1111")
+                                        }
+                                    }
+                                                                       
+                                }
+                                // $scope.data22 = null;
+                                // console.log(data22,"33")
+
+                            }
+                            // $scope.data22 = null;
+                            // console.log(data22,"33")
+                            // $scope.data = {};
+                            // $scope.selectedContact = response.data.data;
+
+                        }).catch(function onError(response) {
+                            console.log(response);
+                        })
 
                 }
 
