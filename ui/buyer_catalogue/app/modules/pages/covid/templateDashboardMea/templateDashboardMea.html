@@ -509,7 +509,7 @@ top:0;
                           <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
 
                           <br />
-                          <div class="table-responsive">
+                          <div class="table-responsive" >
                             <table class="table" cellSpacing="0" cellPadding="0">
                               <thead>
                                 <tr>
@@ -1147,7 +1147,7 @@ top:0;
                     ng-model="TransactionalTemplateSearch">
                   <br>
                   <!-- <div class="table-responsive"  ng-change="getTransactionalTemplate()"> -->
-                  <div class="table-responsive">
+                  <div class="table-responsive" style="overflow-y: scroll;">
                     <table class="table">
 
                       <thead>
@@ -1261,7 +1261,7 @@ top:0;
                     </div>
                   </div>
 
-                  <div class="table-responsive" style="width: 100%;" ng-model="viewDaywise"
+                  <div class="table-responsive" style="width: 100%; overflow-y: scroll;" ng-model="viewDaywise"
                     ng-change="getTransactionalTemplateViewDetail()">
 
                     <table class="table">
@@ -1337,7 +1337,7 @@ top:0;
                     <input type="text" class="form-control " placeholder="search" ng-model="userSearch"
                       ng-change="getTransactionalTemplateUserDetail(user_view.template_id,user_view.sent_date,pagination.current,user_view.template_name,userSearch)">
                     <br>
-                    <div class="table-responsive" style="width: 100%;" ng-model="userSearch"
+                    <div class="table-responsive" style="width: 100%; overflow-y: scroll;" ng-model="userSearch"
                       ng-change="getTransactionalTemplateViewDetail()">
   
                       <table class="table">
