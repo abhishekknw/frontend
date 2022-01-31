@@ -1048,7 +1048,7 @@ top:0;
                       <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
 
                       <br />
-                      <div class="table-responsive">
+                      <div class="table-responsive" style="overflow-y: scroll;">
                         <table class="table">
                           <thead>
                             <tr>
@@ -1303,7 +1303,7 @@ top:0;
                     ng-model="TransactionalTemplateSearch">
                   <br> -->
                   <!-- <div class="table-responsive"  ng-change="getTransactionalTemplate()"> -->
-                  <div class="table-responsive">
+                  <div class="table-responsive" style="overflow-y: scroll;">
                     <table class="table">
 
                       <thead>
@@ -1467,7 +1467,7 @@ top:0;
                   <!-- <input type="text" class="form-control " placeholder="search"
                     ng-change="getTransactionalTemplateViewDetail(template_id,viewSearch,pagination.current)"
                     ng-model="viewSearch" ng-if="template_id"> -->
-                  <div class="table-responsive" style="width: 100%;" ng-model="viewDaywise"
+                  <div class="table-responsive" style="width: 100%; overflow-y: scroll;" ng-model="viewDaywise"
                     ng-change="getTransactionalTemplateViewDetail()">
                     <!-- <div  ng-model="viewDaywise" ng-change="getTransactionalTemplateViewDetail()" style="color: #8e1921; text-align: center; margin: 10px;" >
                     <h2>Template Name:{{view_template.template_name}}</h2>
@@ -1574,7 +1574,7 @@ top:0;
                   <input type="text" class="form-control " placeholder="search" ng-model="userSearch"
                     ng-change="getTransactionalTemplateUserDetail(user_view.template_id,user_view.sent_date,pagination.current,user_view.template_name,userSearch)">
                   <br>
-                  <div class="table-responsive" style="width: 100%;" ng-model="userSearch"
+                  <div class="table-responsive" style="width: 100%;overflow-y: scroll;" ng-model="userSearch"
                     ng-change="getTransactionalTemplateViewDetail()">
 
                     <table class="table">

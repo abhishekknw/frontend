@@ -2050,7 +2050,8 @@
                                       <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
                                   </audio>
                                 </span>
-                                  <span ng-if="chat.type == 'contact'">
+                                
+                                  <span ng-if="chat.content.contacts">
                                     <div class="contact-info">
                                       <div class="card">
                                         <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.firstName}}</h5></i></center>
@@ -2060,6 +2061,7 @@
                                         </div>
                                       </div>
                                     </div>
+                                  
                                 </span>
                                   <span class="chat-time">{{chat.timestamp | date : 'medium'}}</span>
                                 </div>
@@ -2142,7 +2144,7 @@
                                                   </td>
                                               </tbody>
                                             </table>
-                                            <button type="submit" class="btn btn-primary" value="submit"
+                                            <button type="submit" class="btn btn-primary" value="submit" id="#myModal"
                                              ng-click="sendContact('91'+userChatData.phone_number)">Submit</button>
                                           </div>
                                         </div>
