@@ -899,14 +899,9 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                                     }
                                                                        
                                 }
-                                // $scope.data22 = null;
-                                // console.log(data22,"33")
 
                             }
-                            // $scope.data22 = null;
-                            // console.log(data22,"33")
-                            // $scope.data = {};
-                            // $scope.selectedContact = response.data.data;
+
 
                         }).catch(function onError(response) {
                             console.log(response);
