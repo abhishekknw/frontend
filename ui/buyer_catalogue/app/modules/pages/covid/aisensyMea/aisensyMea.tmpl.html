@@ -9,6 +9,13 @@
 
 <style>
   /*aisensy*/
+
+  /* .message{
+    white-space:pre-line;
+    overflow: hidden;
+    height: 5px;
+    width: 100%;
+  } */
   .logo-sec-mca img {
     width: 80px;
     margin-left: 50px;
@@ -690,6 +697,83 @@
     z-index: 10
   }
 
+
+
+  .contact-info{
+    width: 250px;
+    /* height: 140px; */
+    display: flex;
+    /* justify-content: center; */
+    flex-wrap: wrap;
+}
+
+.card{
+    position: relative;
+    flex: 1;
+    max-width: 300px;
+    /* height: 140px; */
+    background-color: #444;
+    margin: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 85px;
+}
+
+.icon{
+    font-size: 32px;
+    color: #ea8685;
+    transition: .3s linear;
+}
+
+.card:hover .icon{
+    transform: scale(4);
+    opacity: 0;
+}
+
+.card-content h3,
+.card-content span{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    opacity: 0;
+}
+
+.card-content h3{
+    top: 20px;
+    /* text-transform: capitalize; */
+    color: #ea8685;
+}
+
+.card-content span{
+    bottom: 20px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.card:hover h3{
+    opacity: 1;
+    top: 26px;
+    transition: .3s linear .3s;
+}
+
+.card:hover span{
+    opacity: 1;
+    bottom: 46px;
+    transition: .3s linear .3s;
+}
+
+
+@media screen and (max-width:900px){
+    .card{
+        flex: 100%;
+        max-width: 500px;
+    }
+}
+
+
   /* @media only screen and (max-height: 650px) {
     .chat {
       width: 100%;
@@ -749,7 +833,7 @@
   }
 
   .message-2 {
-
+    /* white-space:pre-line; */
     border-radius: 7px;
     background-color: #aede2e;
     padding: 5px 20px;
@@ -1376,7 +1460,7 @@
 
                             <div class="icon-back" >
                               <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
-                                ng-click="getActiveUser()">
+                                ng-click="getActiveUser(pagination.current)">
 
                                 <path fill="#fff"
                                   d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
@@ -1441,7 +1525,22 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
-
+                                  <span ng-if="chat.content.types[0] == 'audio'">
+                                    <audio width="200" height="auto" controls>
+                                      <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
+                                  </audio>
+                                </span>
+                                  <span ng-if="chat.type == 'contact'">
+                                      <div class="contact-info">
+                                        <div class="card">
+                                          <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.first_name}}</h5></i></center>
+                                          <div class="card-content">
+                                            <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                                            <h3>{{chat.content.contacts[0].name.first_name}}</h3>
+                                          </div>
+                                        </div>
+                                      </div>
+                                  </span>
                                   <br>
                                   <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
                                 </div>
@@ -1456,6 +1555,22 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
+                                  <span ng-if="chat.content.types[0] == 'audio'">
+                                    <audio width="200" height="auto" controls>
+                                      <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
+                                  </audio>
+                                </span>
+                                  <span ng-if="chat.type == 'contact'">
+                                    <div class="contact-info">
+                                      <div class="card">
+                                        <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.firstName}}</h5></i></center>
+                                        <div class="card-content">
+                                          <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                                          <h3>{{chat.content.contacts[0].name.firstName}}</h3>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </span>
                                   <span class="chat-time">{{chat.timestamp | date : 'medium'}}</span>
                                 </div>
                               </div>
@@ -1599,7 +1714,7 @@
 
                             <div class="icon-back">
                               <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
-                                ng-click="getActionRequiredUser()">
+                                ng-click="getActionRequiredUser(pagination.current)">
 
                                 <path fill="#fff"
                                   d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
@@ -1663,7 +1778,22 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
-
+                                  <span ng-if="chat.content.types[0] == 'audio'">
+                                    <audio width="200" height="auto" controls>
+                                      <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
+                                  </audio>
+                                </span>
+                                  <span ng-if="chat.type == 'contact'">
+                                    <div class="contact-info">
+                                      <div class="card">
+                                        <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.first_name}}</h5></i></center>
+                                        <div class="card-content">
+                                          <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                                          <h3>{{chat.content.contacts[0].name.first_name}}</h3>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </span>
                                   <br>
                                   <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
                                 </div>
@@ -1678,6 +1808,22 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
+                                  <span ng-if="chat.content.types[0] == 'audio'">
+                                    <audio width="200" height="auto" controls>
+                                      <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
+                                  </audio>
+                                </span>
+                                  <span ng-if="chat.type == 'contact'">
+                                    <div class="contact-info">
+                                      <div class="card">
+                                        <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.firstName}}</h5></i></center>
+                                        <div class="card-content">
+                                          <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                                          <h3>{{chat.content.contacts[0].name.firstName}}</h3>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </span>
                                   <span class="chat-time">{{chat.timestamp | date : 'medium'}}</span>
                                 </div>
                               </div>
@@ -1818,7 +1964,7 @@
 
                             <div class="icon-back">
                               <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
-                                ng-click="getInterveneUser()">
+                                ng-click="getInterveneUser(pagination.current)">
 
                                 <path fill="#fff"
                                   d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
@@ -1869,7 +2015,22 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
-
+                                  <span ng-if="chat.content.types[0] == 'audio'">
+                                    <audio width="200" height="auto" controls>
+                                      <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
+                                  </audio>
+                                </span>
+                                  <span ng-if="chat.type == 'contact'">
+                                    <div class="contact-info">
+                                      <div class="card">
+                                        <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.first_name}}</h5></i></center>
+                                        <div class="card-content">
+                                          <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                                          <h3>{{chat.content.contacts[0].name.first_name}}</h3>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </span>
                                   <br>
                                   <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
                                 </div>
@@ -1884,6 +2045,24 @@
                                       <source ng-src="{{chat.content.url}}" type="video/mp4">
                                     </video>
                                   </span>
+                                  <span ng-if="chat.content.types[0] == 'audio'">
+                                    <audio width="200" height="auto" controls>
+                                      <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
+                                  </audio>
+                                </span>
+                                
+                                  <span ng-if="chat.content.contacts">
+                                    <div class="contact-info">
+                                      <div class="card">
+                                        <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.firstName}}</h5></i></center>
+                                        <div class="card-content">
+                                          <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                                          <h3>{{chat.content.contacts[0].name.firstName}}</h3>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  
+                                </span>
                                   <span class="chat-time">{{chat.timestamp | date : 'medium'}}</span>
                                 </div>
                               </div>
@@ -1947,7 +2126,7 @@
                                                           </b></p>
                                                       </div> -->
                                                       <div class="custom-control custom-checkbox" 
-                                                      ng-click="getselectedContact(list.contact_name,list.phone_number,list.email_id)">
+                                                      ng-click="getselectedContact(list.email_id,list.contact_name,list.phone_number,list.organisation_name)">
                                                         <input type="checkbox" 
                                                         class="custom-control-input"
                                                         id="customCheck" name="example1"
@@ -1963,31 +2142,10 @@
                                                       </div>
                                                     </div>
                                                   </td>
-                                                
-
-                                                <!-- <td>
-                                                <div class="friend-drawer friend-drawer--onhover">
-                                                  <div class="text" style="float: left;">
-                                                    <h6>Divya</h6>
-                                                    <p class="text-muted"><b>
-                                                        9876543210
-                                                      </b></p>
-                                                  </div>
-                                                  <div class="custom-control custom-checkbox">
-
-
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck"
-                                                      name="example1"
-                                                      style="position: absolute; right: 35px; width: 20px">
-
-                                                  </div>
-
-                                                </div>
-                                              </td> -->
                                               </tbody>
                                             </table>
-                                            <button type="submit" class="btn btn-primary" value="submit"
-                                             ng-click="sendContact()">Submit</button>
+                                            <button type="submit" class="btn btn-primary" value="submit" id="#myModal"
+                                             ng-click="sendContact('91'+userChatData.phone_number)">Submit</button>
                                           </div>
                                         </div>
                                       </div>
@@ -1997,14 +2155,15 @@
                                 </div>
                                 <!--end contct attachment-->
 
-                                <textarea id="message" ng-model="message.activeMessage" placeholder="Write message" style="width: 90%;
-                                height: 15px;
-                                overflow: hidden;
-                                margin: 5px; 
-                                padding-left: 15px;"
-                                ui-keypress="{13:'sendMessage(userChatData.phone_number)'}" >
-                            </textarea>
-                              </div>
+                                <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message"
+                                  ng-keydown="$event.keyCode === 13  && sendMessage(userChatData.phone_number)"> -->
+                                  <textarea id="message" ng-model="message.activeMessage" placeholder="Write message" style="width: 90%;
+                                  height: 15px;
+                                  overflow: hidden;margin: 5px; padding-left: 15px;"
+                                  ui-keypress="{13:'sendMessage(userChatData.phone_number)'}" 
+                                    >
+                              </textarea>
+                                  </div>
                             </div>
                             <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
                               <svg viewBox="0 0 74.433 60.908" width="25" height="25"
@@ -2310,7 +2469,7 @@
 
                 <div class="icon-back">
                   <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
-                    ng-click="historyDetail()">
+                    ng-click="historyDetail(pagination.current)">
 
                     <path fill="#fff"
                       d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
@@ -2372,7 +2531,22 @@
                           <source ng-src="{{chat.content.url}}" type="video/mp4">
                         </video>
                       </span>
-
+                      <span ng-if="chat.content.types[0] == 'audio'">
+                        <audio width="200" height="auto" controls>
+                          <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
+                      </audio>
+                    </span>
+                      <span ng-if="chat.type == 'contact'">
+                        <div class="contact-info">
+                          <div class="card">
+                            <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.first_name}}</h5></i></center>
+                            <div class="card-content">
+                              <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                              <h3>{{chat.content.contacts[0].name.first_name}}</h3>
+                            </div>
+                          </div>
+                        </div>
+                    </span>
                       <br>
                       <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
                     </div>
@@ -2387,6 +2561,22 @@
                         <source ng-src="{{chat.content.url}}" type="video/mp4">
                       </video>
                     </span>
+                    <span ng-if="chat.content.types[0] == 'audio'">
+                      <audio width="200" height="auto" controls>
+                        <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
+                    </audio>
+                  </span>
+                    <span ng-if="chat.type == 'contact'">
+                      <div class="contact-info">
+                        <div class="card">
+                          <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.firstName}}</h5></i></center>
+                          <div class="card-content">
+                            <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                            <h3>{{chat.content.contacts[0].name.firstName}}</h3>
+                          </div>
+                        </div>
+                      </div>
+                  </span>
                     <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
                   </div>
                 </div>
@@ -2794,7 +2984,7 @@
 
           <div class="icon-back">
             <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
-              ng-click="filterDetail()">
+              ng-click="filterDetail(pagination.current)">
 
               <path fill="#fff"
                 d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
@@ -2856,7 +3046,22 @@
                     <source ng-src="{{chat.content.url}}" type="video/mp4">
                   </video>
                 </span>
-
+                <span ng-if="chat.content.types[0] == 'audio'">
+                  <audio width="200" height="auto" controls>
+                    <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
+                </audio>
+              </span>
+                <span ng-if="chat.type == 'contact'">
+                  <div class="contact-info">
+                    <div class="card">
+                      <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.first_name}}</h5></i></center>
+                      <div class="card-content">
+                        <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                        <h3>{{chat.content.contacts[0].name.first_name}}</h3>
+                      </div>
+                    </div>
+                  </div>
+              </span>
                 <br>
                 <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
               </div>
@@ -2871,6 +3076,22 @@
                   <source ng-src="{{chat.content.url}}" type="video/mp4">
                 </video>
               </span>
+              <span ng-if="chat.content.types[0] == 'audio'">
+                <audio width="200" height="auto" controls>
+                  <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
+              </audio>
+            </span>
+              <span ng-if="chat.type == 'contact'">
+                <div class="contact-info">
+                  <div class="card">
+                    <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.firstName}}</h5></i></center>
+                    <div class="card-content">
+                      <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                      <h3>{{chat.content.contacts[0].name.firstName}}</h3>
+                    </div>
+                  </div>
+                </div>
+            </span>
               <span class="chat-time">{{chat.timestamp | date : 'medium'}}</span>
             </div>
           </div>

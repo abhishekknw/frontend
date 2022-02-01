@@ -725,7 +725,7 @@ angular.module('Authentication')
                apiHost = APIBaseUrl;
                let url = "v0/ui/b2c-bot/get-mca-master-templates/?search=" + param.search
                if(meaType){
-                   url = "v0/ui/mea-bot/get-mea-master-templates/?search=" + param.search
+                   url = "" + param.search
                   apiHost = interveneApiHost;
                }
                return $http.get(apiHost + url)
