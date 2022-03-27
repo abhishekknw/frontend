@@ -4093,81 +4093,82 @@
 
       };
       // start_date, end_date
-      $scope.changeStartDate = function () {
-        $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
-        $scope.options.minDate = $scope.dateRangeModel.start_date;
-      }
 
-      $scope.changeEndDate = function () {
-        $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
+      // $scope.changeStartDate = function () {
+      //   $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
+      //   $scope.options.minDate = $scope.dateRangeModel.start_date;
+      // }
 
-      }
+      // $scope.changeEndDate = function () {
+      //   $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
 
-      $scope.changeFilterStartDate = function () {
-        $scope.options.minDate = $scope.graphSelection.dateRange.startDate;
-      }
+      // }
 
-
-
-
-      $scope.getCampaignDateWiseSummary = function () {
-        var dateRange = {}
-        if ($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date') &&
-          !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
-
-          dateRange.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
-          dateRange.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
-          $scope.selectedSupplierType.code = "RS";
-          $scope.flat_count_header = "Flat Count";
-        }
-        $scope.getVendorWiseSummary();
-        $scope.getDynamicGraphsStatics();
-        cfpLoadingBar.start();
+      // $scope.changeFilterStartDate = function () {
+      //   $scope.options.minDate = $scope.graphSelection.dateRange.startDate;
+      // }
 
 
 
 
-        DashboardService.getCampaignDateWiseData(dateRange, $scope.selectedSupplierType.code)
-          .then(function onSuccess(response) {
-            // $scope.dateRangeModel.start_date = new Date($scope.dateRangeModel.start_date);
-            // $scope.dateRangeModel.end_date = new Date($scope.dateRangeModel.end_date);
-            $scope.showPerfMetrics = $scope.perfMetrics.overall;
-            $scope.selectAllCampaignLeads = true;
-            $scope.dynamicGraphsUI = true;
-            $scope.showReportBtn = true;
-            $scope.lineChartForLeadsDistributedGraphs = false;
-            $scope.lineChartForHotLeadsDistributedGraphs = false;
-            $scope.campaignSummary = response.data.data;
-            $scope.WeeklyMISOverallSummary = response.data.data.overall;
-            $scope.WeeklyMISLastWeekSummary = response.data.data.last_week;
-            $scope.WeeklyMISLast2WeekSummary = response.data.data.last_two_weeks;
-            $scope.WeeklyMISLast3WeekSummary = response.data.data.last_three_weeks;
-            $scope.overallCampaignSummary = response.data.data.overall.campaign_wise;
-            $scope.lastWeekCampaignSummary = response.data.data.last_week.campaign_wise;
-            $scope.last2WeeksCampaignSummary = response.data.data.last_two_weeks.campaign_wise;
-            $scope.last3WeeksCampaignSummary = response.data.data.last_three_weeks.campaign_wise;
+      // $scope.getCampaignDateWiseSummary = function () {
+      //   var dateRange = {}
+      //   if ($scope.dateRangeModel.hasOwnProperty('start_date') && $scope.dateRangeModel.hasOwnProperty('end_date') &&
+      //     !isNaN($scope.dateRangeModel.start_date.getDate()) && !isNaN($scope.dateRangeModel.end_date.getDate())) {
 
-            $scope.stackedBarChartLocationWise = angular.copy(locationSummaryBarChart);
-            $scope.OverallSummaryStackedBarChart = angular.copy(overallSummaryStackedBar);
-            $scope.thisWeekSummaryStackedBarChart = angular.copy(thisWeekSummaryStackedBar);
-            $scope.last2WeekSummaryStackedBarChart = angular.copy(last2WeekSummaryStackedBar);
-            $scope.last3WeekSummaryStackedBarChart = angular.copy(last3WeekSummaryStackedBar);
+      //     dateRange.start_date = commonDataShare.formatDateToString($scope.dateRangeModel.start_date);
+      //     dateRange.end_date = commonDataShare.formatDateToString($scope.dateRangeModel.end_date);
+      //     $scope.selectedSupplierType.code = "RS";
+      //     $scope.flat_count_header = "Flat Count";
+      //   }
+      //   $scope.getVendorWiseSummary();
+      //   $scope.getDynamicGraphsStatics();
+      //   cfpLoadingBar.start();
 
-            $scope.OverallSummaryStackedBarChart.chart['width'] = 500
-            if (Object.keys($scope.overallCampaignSummary).length > 1) {
-              $scope.OverallSummaryStackedBarChart.chart['width'] = Object.keys($scope.overallCampaignSummary).length * 150;
-            }
 
-            $scope.stackedBarAllCampaignWiseChart = formatAllCampaignWiseChart($scope.overallCampaignSummary);
-            $scope.stackedBarLastWeekChart = formatLastWeekWiseChart($scope.lastWeekCampaignSummary);
-            $scope.stackedBarLast2WeeksChart = formatLastWeekWiseChart($scope.last2WeeksCampaignSummary);
-            $scope.stackedBarLast3WeeksChart = formatLastWeekWiseChart($scope.last3WeeksCampaignSummary);
 
-            cfpLoadingBar.complete();
-          }).catch(function onError(response) {
-            console.log(response);
-          })
-      }
+
+      //   DashboardService.getCampaignDateWiseData(dateRange, $scope.selectedSupplierType.code)
+      //     .then(function onSuccess(response) {
+      //       // $scope.dateRangeModel.start_date = new Date($scope.dateRangeModel.start_date);
+      //       // $scope.dateRangeModel.end_date = new Date($scope.dateRangeModel.end_date);
+      //       $scope.showPerfMetrics = $scope.perfMetrics.overall;
+      //       $scope.selectAllCampaignLeads = true;
+      //       $scope.dynamicGraphsUI = true;
+      //       $scope.showReportBtn = true;
+      //       $scope.lineChartForLeadsDistributedGraphs = false;
+      //       $scope.lineChartForHotLeadsDistributedGraphs = false;
+      //       $scope.campaignSummary = response.data.data;
+      //       $scope.WeeklyMISOverallSummary = response.data.data.overall;
+      //       $scope.WeeklyMISLastWeekSummary = response.data.data.last_week;
+      //       $scope.WeeklyMISLast2WeekSummary = response.data.data.last_two_weeks;
+      //       $scope.WeeklyMISLast3WeekSummary = response.data.data.last_three_weeks;
+      //       $scope.overallCampaignSummary = response.data.data.overall.campaign_wise;
+      //       $scope.lastWeekCampaignSummary = response.data.data.last_week.campaign_wise;
+      //       $scope.last2WeeksCampaignSummary = response.data.data.last_two_weeks.campaign_wise;
+      //       $scope.last3WeeksCampaignSummary = response.data.data.last_three_weeks.campaign_wise;
+
+      //       $scope.stackedBarChartLocationWise = angular.copy(locationSummaryBarChart);
+      //       $scope.OverallSummaryStackedBarChart = angular.copy(overallSummaryStackedBar);
+      //       $scope.thisWeekSummaryStackedBarChart = angular.copy(thisWeekSummaryStackedBar);
+      //       $scope.last2WeekSummaryStackedBarChart = angular.copy(last2WeekSummaryStackedBar);
+      //       $scope.last3WeekSummaryStackedBarChart = angular.copy(last3WeekSummaryStackedBar);
+
+      //       $scope.OverallSummaryStackedBarChart.chart['width'] = 500
+      //       if (Object.keys($scope.overallCampaignSummary).length > 1) {
+      //         $scope.OverallSummaryStackedBarChart.chart['width'] = Object.keys($scope.overallCampaignSummary).length * 150;
+      //       }
+
+      //       $scope.stackedBarAllCampaignWiseChart = formatAllCampaignWiseChart($scope.overallCampaignSummary);
+      //       $scope.stackedBarLastWeekChart = formatLastWeekWiseChart($scope.lastWeekCampaignSummary);
+      //       $scope.stackedBarLast2WeeksChart = formatLastWeekWiseChart($scope.last2WeeksCampaignSummary);
+      //       $scope.stackedBarLast3WeeksChart = formatLastWeekWiseChart($scope.last3WeeksCampaignSummary);
+
+      //       cfpLoadingBar.complete();
+      //     }).catch(function onError(response) {
+      //       console.log(response);
+      //     })
+      // }
 
 
 
@@ -6623,132 +6624,292 @@
 
 
       // Template Dashboard start
-      $scope.getTransactionalTemplate = function (value) {
+      $scope.getTransactionalTemplate = function (value,s_date='',e_date='') {
+        $scope.TemplateListSummary()
+        $scope.changeStartDate();
+        $scope.changeEndDate();
         let param = {
           search: value
         }
         if (!value) {
           param.search = ""
         }
-        // this.setBotType = function (){}
-        
-        // if($scope.transactionalTemplateDropdown.bot=='mca'){
-        //   console.log($scope.transactionalTemplateDropdown.bot)
-
+        if (s_date || e_date) {
+          param.start_date = ''
+          param.end_date = ''
+        }
+        // $scope.totalCount = 0;
+        // $scope.currentPage = 1;
+        // $scope.itemsPerPage = 25;
+        // $scope.serial = 1
+        // $scope.pagination = {
+        //   current: 1
+        // };
         templateDashboardService.transactionalTemplateSummaryMca(param)
           .then(function onSuccess(response) {
             $scope.transactionalTemplateData = response.data.data;
-            
+
             console.log('11111111111', $scope.transactionalTemplateData);
-        
+
           }).catch(function onError(response) {
-        
+
           })
-        // }
-        // if($scope.transactionalTemplateDropdown.bot=='mea'){
-        //   console.log($scope.transactionalTemplateDropdown.bot)
-        //   templateDashboardService.transactionalTemplateMea(param)
-        //   .then(function onSuccess(response) {
-         
-        //     $scope.transactionalTemplateData = response.data.data;
-        //     console.log('11111111111', $scope.transactionalTemplateData);
-        
-        //   }).catch(function onError(response) {
-        
-        //   })
-        // }
       }
-        // $scope.transactionalTemplateDropdown = {}
-        // $scope.setBotType = function () {
-        //   console.log($scope.transactionalTemplateDropdown.bot)
-        // }
-        // console.log('111111111112',  $scope.transactionalTemplateData);
 
-        //   if ($scope.formData.getTransactionalTemplatetSearch) {
-        //     param.search = $scope.formData.getTransactionalTemplateSearch;
-        // }
+      $scope.options = {};
+      $scope.dateRangeModel = {};
+      $scope.changeStartDate = function () {
+        $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
+        $scope.options.minDate = $scope.dateRangeModel.start_date;
+      }
 
-        // templateDashboardService.transactionalTemplate().then(function onSuccess(response) {
-        //     console.log('11111111111111111111111111111', response);
-        //   }).catch(function onError(response) {
-        //     console.log(response);
-        //   })
-        $scope.getTransactionalTemplateViewDetail = function (value,page) {
-          
-         
-        
-          let param = {
-          search: value,
-          next_page:1,
-          template_id:value
+      $scope.changeEndDate = function () {
+        if ($scope.changeEndDate > $scope.changeStartDate)
+          $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
+      }
+
+      $scope.getTransactionalTemplateViewDetail = function (value, page, name, s_date, e_date) {
+        $scope.viewTemplateSummary();
+        $scope.changeStartDate();
+        $scope.changeEndDate();
+        $scope.view_template = {
+          template_id: value,
+          template_name: name
         }
+        console.log("12345", $scope.view_template.template_id, $scope.view_template.template_name)
+        let param = {
+          // search: searchitem,
+          template_id: value,
+          start_date: s_date,
+          end_date: e_date,
+          next_page: 1
+        }
+        if (s_date || e_date) {
+          param.start_date = ''
+          param.end_date = ''
+        }
+        console.log(value, s_date, e_date, 'qws')
         if (page) {
           param.next_page = page;
-      } else {
-        $scope.totalCount = 1;
-        $scope.currentPage = 1;
-        $scope.itemsPerPage = 10;
-        $scope.serial = 1
-        $scope.pagination = {
+          // $scope.pagination = {
+          //   current: 1
+          // }
+        } else {
+          $scope.totalCount = 0;
+          $scope.currentPage = 1;
+          $scope.itemsPerPage = 25;
+          $scope.serial = 1
+          $scope.pagination = {
             current: 1
-        };
-      }
-      if (!value) {
-        param.search = ""
-      }
+          };
+        }
+        console.log("zszszs",$scope.serial)
+        $scope.pageCount = param.next_page;
+        // if (!searchitem) {
+        //   param.search = ""
+        // }
 
-    //   if ($scope.formData.viewSearch) {
-    //     param.search = $scope.formData.viewSearch;
-    // }
+        //   if ($scope.formData.viewSearch) {
+        //     param.search = $scope.formData.viewSearch;
+        // }
+        $scope.pageCount = param.nextPage;
+        $scope.disableNextPagebutton = false;
 
-        templateDashboardService.transactionalTemplateDetail(param)
+        console.log(param, '6666')
+        templateDashboardService.transactionalTemplateDatewiseDetail(param)
           .then(function onSuccess(response) {
-            
-          alert("view")
+            // alert("view")
             $scope.transactionalTemplateDataDetail = response.data.data;
-            $scope.total_count = response.data.data.total_count
+            $scope.totalCount = response.data.data.total_count;
             console.log('222222', $scope.transactionalTemplateDataDetail);
 
           }).catch(function onError(response) {
             console.log(response);
           })
+      }
+
+      $scope.getTransactionalTemplateUserDetail = function (value, date, page, name, search) {
+        $scope.viewUserSummary()
+        // $scope.currentPage = 1;
+        $scope.user_view = {
+          template_id: value,
+          template_name: name,
+          sent_date: date,
         }
-   
 
+        let param = {
+          template_id: value,
+          date: date,
+          next_page: 1,
+          search: search
+        }
 
-      // $scope.gettransactionalTemplateSummaryDownload = function () {
-      // alert("download summry")
-      //   templateDashboardService.transactionalTemplateSummaryDownload().
-      //   then(function onSuccess(response) {
-      //     $scope.transactionalTemplateSummaryDownloadData=(APIBaseUrl +' v0/ui/mca-bot/download-template-summary/' + response.data.data);
-      //     // $scope.transactionalTemplateSummaryDownloadData = "v0/ui/mca-bot/download-template-summary/";
-      //     console.log('2222222222',  $scope.transactionalTemplateSummaryDownloadData);
-      //   }).catch(function onError(response) {
-      //     console.log(response);
-      //   })
+        if (!search) {
+          param.search = ""
+        }
+        if (page) {
+          param.next_page = page;
+          // $scope.pagination = {
+          //   current: 1
+          // };
+          // } else {
+          //   $scope.totalCount = 0;
+          // }
+          // $scope.pageCount = param.next_page;
+        } else {
+          $scope.totalCount = 0;
+          $scope.currentPage = 1;
+          $scope.itemsPerPage = 25;
+          $scope.serial = 1
+          $scope.pagination = {
+            current: 1
+          };
+        }
+        console.log('lll',$scope.pagination.current)
+        console.log('fff',$scope.currentPage)
+        $scope.pageCount = param.next_page;
+        $scope.disableNextPagebutton = false;
+        console.log("78", name, search)
+        console.log("0000", param)
+        templateDashboardService.transactionalTemplateUserDetail(param)
+          .then(function onSuccess(response) {
+            // alert("view")
+            $scope.transactionalTemplateUserData = response.data.data.users;
+            $scope.totalCount = response.data.data.total_count;
+            console.log('11111', $scope.transactionalTemplateUserData);
+            console.log('6666666', $scope.totalCount);
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+      }
 
-      // }
+      $scope.gettransactionalTemplateSummaryDownload = function (value) {
+        let param = {
+          template_id: value
+        }
+        console.log(value, '111122334')
+        // alert("download summry")
+        templateDashboardService.transactionalTemplateSummaryDownload(param).
+          then(function onSuccess(response) {
+            // $scope.transactionalTemplateSummaryDownloadData=response;
+            // $scope.transactionalTemplateSummaryDownloadData = "v0/ui/mca-bot/download-template-summary/";
+            // console.log('2222222222535',  $scope.transactionalTemplateSummaryDownloadData);
+            console.log(response, "1111111")
+            // if (response.data.data.one_time_hash) {
+            //   $window.open(Config.APIBaseUrl + 'v0/ui/mca-bot/download-template-user-summary/?template_id=' + response.data.data.one_time_hash)
+            // }
 
+            // console.log('5467577');
+          }).catch(function onError(response) {
+            console.log(response);
+          })
+
+      }
+
+      $scope.uploadFiles = function (file) {
+        $scope.file = file;
+      }
+
+      $scope.getFormUpload = function (value, name) {
+        $scope.current_template = {
+          template_id: value,
+          template_name: name
+        }
+        let param = {
+          template_id: value,
+          template_name: name
+        }
+        templateDashboardService.formUpload(param)
+          .then(function onSuccess(response) {
+            $scope.formUploadData = response.data.data;
+
+            console.log('1133311', $scope.formUploadData);
+
+          }).catch(function onError(response) {
+
+          })
+      }
+
+      $scope.viewUserPageChanged = function (template_id, date, newPageNumber, template_name, search) {
+
+        // console.log(template_id,date,newPageNumber,template_name,search,'ooo')
+        $scope.serial = newPageNumber * 25 - 24;
+        $scope.getTransactionalTemplateUserDetail(template_id, date, newPageNumber, template_name, search);
+        // console.log("vvvv", template_id, date, newPageNumber, template_name, search)
+      };
 
       $scope.transactionalTemplateDropdown = {}
       $scope.setBotType = function () {
         console.log($scope.transactionalTemplateDropdown.bot)
-
-             
       }
-      $scope.viewTemplateSummaryTable = false;
+
+
+
+      // viewAllTemplateSummaryTable=true;
+      // $scope.viewTemplateSummaryTable = false;
+      // viewUserSummaryTable=false;
+
+      $scope.TemplateListSummary = function () {
+        $scope.viewTemplateSummaryTable = false;
+        $scope.viewAllTemplateSummaryTable = true;
+        $scope.viewUserSummaryTable = false;
+        console.log("1st page", $scope.viewTemplateSummaryTable, $scope.viewAllTemplateSummaryTable, $scope.viewUserSummaryTable)
+      }
+
       $scope.viewTemplateSummary = function () {
         $scope.viewTemplateSummaryTable = true;
+        $scope.viewAllTemplateSummaryTable = false;
+        $scope.viewUserSummaryTable = false;
+        console.log("second page", $scope.viewTemplateSummaryTable, $scope.viewAllTemplateSummaryTable, $scope.viewUserSummaryTable)
+      }
+
+      $scope.viewUserSummary = function () {
+        $scope.viewTemplateSummaryTable = false;
+        $scope.viewAllTemplateSummaryTable = false;
+        $scope.viewUserSummaryTable = true;
+        console.log("3rd page", $scope.viewTemplateSummaryTable, $scope.viewAllTemplateSummaryTable, $scope.viewUserSummaryTable)
       }
 
       $scope.backToTemplateData = function () {
         $scope.viewTemplateSummaryTable = false;
+        $scope.viewAllTemplateSummaryTable = true;
+        $scope.viewUserSummaryTable = false;
+        // $scope.getTransactionalTemplate(search)
         $scope.transactionalTemplateDropdown = {};
+        console.log("hiiiiiiiiiiiiiiiiiiii")
+      }
+
+      $scope.backToDatewiseData = function (template_id,page,name,s_date='', e_date='') {
+        $scope.viewTemplateSummaryTable = true;
+        $scope.viewAllTemplateSummaryTable = false;
+        $scope.viewUserSummaryTable = false;
+        $scope.serial = 1
+        $scope.pagination = {
+          current: 1
+        };
+        $scope.getTransactionalTemplateViewDetail(template_id,page, name, s_date='', e_date='')
+        // ttemplate.template_id,pagination.current,ttemplate.template_name,dateRangeModel.start_dates=' ',dateRangeModel.end_dates=' '
+        $scope.transactionalTemplateDropdown = {};
+        console.log("qqgdq",$scope.backToDatewiseData)
+
       }
 
 
+      $scope.pageChanged = function (newPageNumber, tab) {
+        $scope.serial = newPageNumber * 25 - 24;
+        $scope.getTransactionalTemplateViewDetail(newPageNumber);
+      };
 
-
+      $scope.pagination = {
+        current: 1
+      };
+      $scope.totalCount = 0;
+      $scope.currentPage = 1;
+      $scope.itemsPerPage = 25;
+      $scope.serial = 1
+      $scope.pagination = {
+        current: 1
+      };
 
       // Template Dashboard end
 

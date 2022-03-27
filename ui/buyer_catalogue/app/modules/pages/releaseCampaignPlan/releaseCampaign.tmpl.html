@@ -1566,7 +1566,8 @@
         Sheet</button>
     </span>
     <span class="col-md-3 pull-right">
-    <button type="button" name="button" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g' || releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'" class="btn btn-danger active notify" ng-click="downloadSheet(releaseDetails.campaign.proposal_id)" >Download Leads</button>
+    <button type="button" name="button" ng-if="releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_r_g' || releaseDetails.campaign.type_of_end_customer_formatted_name == 'b_to_b_l_d'" 
+    class="btn btn-danger active notify" ng-click="downloadSheet(releaseDetails.campaign.proposal_id)" >Download Leads</button>
   </span>
     <span class="col-md-3 pull-right">
       <button class="btn btn-danger active notify" style="text-align:right" ng-click="changeLocation()">Campaign

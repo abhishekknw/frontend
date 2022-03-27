@@ -39,10 +39,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             }
 
             $scope.tab = { name: 'tabA' };
-
-
+            $scope.ckeckdUserAisensy=[];
+            $scope.ckeckdUserAisensy1=[];
             // AIsensy controller
             $scope.getActiveUser = function (page) {
+          
                 $scope.tab.name = 'tabA';
                 $scope.hideChatModule();
                 $scope.formData.historySearch = "";
@@ -75,7 +76,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                 if ($scope.formData.activesearch) {
                     param.search = $scope.formData.activesearch;
                 }
-
+// console.log(param,'119090')
                 AuthService.getAllActiveUserData(param, true)
                     .then(function onSuccess(response) {
                         $scope.activeUserData = response.data.data.users;
@@ -88,7 +89,6 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.formData = {};
 
             $scope.getActionRequiredUser = function (page) {
-
                 $scope.tab.name = 'tabB';
                 $scope.isUserProfile = false;
                 $scope.formData.interveneSearch = '';
@@ -746,18 +746,29 @@ angular.module('machadaloPages').filter('firstlater', [function () {
             $scope.sendMessage = function (phone) {
 
                 let param = {
-                    phone: phone
+                    phone: phone,
+                    
                 }
+                
+                // if(param.text!=null){
                 if ($scope.message.activeMessage) {
-                    param.text = $scope.message.activeMessage;
-
+                    $scope.oldString = $scope.message.activeMessage;
+                    param.text  = $scope.oldString.split("\n").join("%0a");
+                    // }
                 }
-                if($scope.message.activeMessage=="") {
-                    return false;
+                else {
+                    return false
                 }
-                console.log('11111111111112222222222222222222', $scope.message);
+                // if ($scope.message.activeMessage == "") {
+                //     return false;
+                // }
+                // if($scope.message==''){
+                //     return false;
+                // }
+                console.log('11111111111112222222222222222222', param.text);
                 AuthService.sendMessage(param,true)
                     .then(function onSuccess(response) {
+                        console.log(param)
                         if (response.data.status) {
                             let data = {
                                 content: { text: $scope.message.activeMessage },
@@ -767,8 +778,11 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                             if ($scope.userChatData) {
                                 if ($scope.userChatData.payload && $scope.userChatData.payload.length > 0) {
                                     $scope.userChatData.payload.unshift(data);
-                                } else {
+                                   
+                                }
+                                else {
                                     $scope.userChatData.payload.push(data);
+                                   
                                 }
                             }
                             $scope.message = {};
@@ -780,10 +794,91 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     })
             }
 
-            // $scope.filterPageChanged = function (newPageNumber, tab) {
-            //     $scope.serial = newPageNumber * 10 - 9;
-            //     $scope.getFilterData(newPageNumber);
-            // };
+            $scope.getContactList = function (value) {
+                let param = {
+                    search: value
+                }
+                if (!value) {
+                    param.search = ""
+                }
+                console.log("1contct1");
+                console.log(param)
+                AuthService.contactList(param, true)
+                    .then(function onSuccess(response) {
+                        $scope.contactListData = response.data.data;
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+
+            }
+
+            $scope.getselectedContact = function (email, name, number, c_name) {
+
+                // var data = {}
+                var data = {
+                    gmail: "shahid.dar@machadalo.com",
+                    name: name,
+                    contact_number: number,
+                    company_name: c_name,
+                }
+                var data11 = {
+                    0:{
+                    name: { firstName: name },
+                    phones: [{ phone: number }],
+                }
+            }
+
+                $scope.ckeckdUserAisensy.push(data);
+                $scope.ckeckdUserAisensy1.push(data11);
+                console.log($scope.ckeckdUserAisensy)
+                console.log(',,,,', $scope.ckeckdUserAisensy1)
+                // $scope.sendContact(phone)
+            }
+            console.log($scope.ckeckdUserAisensy)
+            
+            $scope.sendContact = function (phone) {
+
+                let param = {
+                    phone_number: phone,
+                }
+                var data = $scope.ckeckdUserAisensy
+                var data22 = $scope.ckeckdUserAisensy1
+                // console.log("--------",typeof(data))
+                // $scope.ckeckdUserAisensy = {};
+                console.log('90909', param.phone_number, data)
+                console.log('90====', data22)
+                AuthService.attachmentContact(param, data, true)
+                    .then(function onSuccess(response) {
+                        if (response.data.status) {
+                            for (const i in data22) {
+                                let datas = {
+                                    content: { contacts: data22[i] },
+                                    sender: "bot",
+                                    timestamp: new Date()
+                                }
+                                console.log(i,"=-=-=")
+                                console.log("-0-00", datas)
+                                if ($scope.userChatData) {
+                                    if ($scope.userChatData.payload && $scope.userChatData.payload.length > 0) {
+                                        $scope.userChatData.payload.unshift(datas);
+                                        console.log(datas, "0000")
+                                    }
+                                    else {
+                                        $scope.userChatData.payload.push(datas);
+                                        console.log(datas, "1111")
+                                    }
+                                }
+                                                                   
+                            }
+
+                        }
+
+
+                    }).catch(function onError(response) {
+                        console.log(response);
+                    })
+
+            }
 
 
         }

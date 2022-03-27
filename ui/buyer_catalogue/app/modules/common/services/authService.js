@@ -725,7 +725,7 @@ angular.module('Authentication')
                apiHost = APIBaseUrl;
                let url = "v0/ui/b2c-bot/get-mca-master-templates/?search=" + param.search
                if(meaType){
-                   url = "v0/ui/mea-bot/get-mca-master-templates/?search=" + param.search
+                   url = "" + param.search
                   apiHost = interveneApiHost;
                }
                return $http.get(apiHost + url)
@@ -806,12 +806,33 @@ angular.module('Authentication')
                      return response
                   });
             };
-
+            
             authService.sendMessage = function (param,meaType) {
+               // console.log('vvvv',param)
                let url = "v0/ui/b2c-bot/send-intrup-message/?phone_number=" + param.phone + "&text=" + param.text;
                apiHost = APIBaseUrl;
                if(meaType){
                    url = "v0/ui/mea-bot/send-intrup-message/?phone_number=" + param.phone + "&text=" + param.text;
+                   apiHost = interveneApiHost;
+                }
+               //  console.log(url,'09090')
+               //  console.log('hhh',param.text)
+               return $http.get(apiHost + url)
+                  .then(function onSuccess(response) {
+                     return response
+                  })
+                  .catch(function onError(response) {
+                     return response
+                  });
+            };
+
+
+            authService.contactList = function (param,meaType) {
+               console.log(apiHost,meaType)
+             let url = "v0/ui/mca-bot/intervene-contact-list/?search="+param.search;
+               apiHost = APIBaseUrl;
+               if(meaType){
+                   url = "v0/ui/mea-bot/intervene-contact-list/?search="+param.search;
                    apiHost = interveneApiHost;
                 }
                return $http.get(apiHost + url)
@@ -823,29 +844,21 @@ angular.module('Authentication')
                   });
             };
 
-
-            authService.attachmentContact = function (param,meaType) {
-               let url = "";
+            authService.attachmentContact = function (param,data,meaType) {
+               console.log('mnmnm',param,data)
+               let url = "v0/ui/mca-bot/send-contact-intervene/?phone_number="+param.phone_number;
                apiHost = APIBaseUrl;
                if(meaType){
                    url = "";
                    apiHost = interveneApiHost;
                 }
-               return $http.get(apiHost + url,param)
+               return $http.post(apiHost + url,data)
                   .then(function onSuccess(response) {
                      return response
                   })
                   .catch(function onError(response) {
                      return response
                   });
-
-               // return $http.post(apiHost + 'v0/ui/covid-bot/feedback-from-bot/', param)
-               //    .then(function onSuccess(response) {
-               //       return response
-               //    })
-               //    .catch(function onError(response) {
-               //       return response
-               //    });
             };
 
  

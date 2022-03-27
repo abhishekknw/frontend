@@ -49,16 +49,23 @@ angular.module('catalogueApp')
         let url="v0/ui/mca-bot/template-summary-list/?search=" +param.search
         return machadaloHttp.get( url);
       }
-      // DashboardService.transactionalTemplateMea = function (param) {
-      //   let url="v0/ui/mea-bot/template-summary-list/?search" +param.search
-      //   return $http.get(url);
-      // }
-      DashboardService.transactionalTemplateDetail = function (param){
-        let url="v0/ui/mca-bot/template-user-summary-list/?template_id="+ param.template_id+ "&next_page=" + param.next_page
-        alert("template")
-        if (param.search) {
-          url += '&search=' + param.search
-       }
+     
+      DashboardService.transactionalTemplateDatewiseDetail = function (param){
+        let url="v0/ui/mca-bot/template-date-wise-summary/?template_id="+ param.template_id+ "&start_date="+param.start_date+"&end_date="+param.end_date+"&next_page=" + param.next_page;
+        // alert("template")
+      //   if (param.search) {
+      //     url += '&search=' + param.search
+      //  }
+      console.log(param.template_id,'777')
+      return machadaloHttp.get( url);
+
+      }
+
+      DashboardService.transactionalTemplateUserDetail = function (param){
+        let url="v0/ui/mca-bot/template-user-summary-list/?template_id="+ param.template_id+ 
+                "&date="+param.date+"&next_page="+param.next_page+"&search="+param.search;
+ 
+
         return machadaloHttp.get( url);
 
       }
@@ -81,22 +88,22 @@ angular.module('catalogueApp')
       //   })
       //   .catch(function onError(response) {
       //      return response
-      //   });
-      
-
-
-
-        
+      //   }); 
       // }
 
 
-      DashboardService.transactionalTemplateSummaryDownload = function () {
+      DashboardService.transactionalTemplateSummaryDownload = function (param) {
         // let url = apiHost +  "v0/ui/mca-bot/download-template-summary/";
-        let url =  "v0/ui/mca-bot/download-template-summary/";
+        let url =  "v0/ui/mca-bot/download-template-user-summary/?template_id="+param.template_id;
         return machadaloHttp.get(url);
       }
 
-      return DashboardService;
+      DashboardService.formUpload= function (param) {
+        let url="" +param.template_id
+        return machadaloHttp.get( url);
+      }
+
+        return DashboardService;
 
 
 
