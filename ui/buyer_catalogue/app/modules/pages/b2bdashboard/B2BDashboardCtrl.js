@@ -22,7 +22,17 @@
     $scope.passwordError = constants.password_error;
     $scope.userInfo = $rootScope.globals.userInfo;
 
-    $scope.supplierTypeCode = constants.supplierTypeCode;
+    // $scope.supplierTypeCode = constants.supplierTypeCode;
+    $scope.supplierTypeCode = [
+      {
+        "name": "ALL",
+        "value": "all"
+      },
+      {
+          "name": "Residential Society",
+          "value": "RS"
+      },
+    ];
     $scope.entityTypes = constants.entityType;
     $scope.entityType = { value: 'all', name: 'ALL' };
     $scope.selectedEntityType = { value: 'all', name: 'ALL' }
@@ -687,7 +697,13 @@
       B2BDashboardService.acceptDeclineDecisionPanding({ 'data': data })
         .then(function onSuccess(response) {
           if (response) {
-            $scope.leadDecisionPandingData.splice(index, 1);
+            if(value == "Decline"){
+              $scope.leadDecisionPandingData[index].client_status = "Decline";
+            }
+            else{
+              $scope.leadDecisionPandingData.splice(index, 1);
+            }
+            
             if(value == 'Decline'){
               value = 'Declined';
             }
@@ -1171,9 +1187,10 @@
       }
       return values;
     }
-     $scope.aa = 'Select Leads,Surveyed Clients';
-     $scope.supplierType = 'Select Leads,Surveyed Clients';
-    $scope.surveyLeadArray = ['Select Leads,Surveyed Clients','Leads', 'Survey'];
+     $scope.aa = 'Leads';
+     $scope.supplierType = 'Leads';
+    $scope.surveyLeadArray = ['Leads'];
+    
     $scope.surveyLeadFilter = function (filter) {
       if(filter == 'Leads' || filter == 'Survey'){
         $scope.filterType = filter;
@@ -1183,6 +1200,8 @@
       
 
     }
+
+    $scope.surveyLeadFilter('Leads');
 
     $scope.setButtonIndex = function (index,campaign_id,campaign_name) {
       $scope.buttonIndex = index;

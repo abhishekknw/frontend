@@ -20,7 +20,7 @@
               <uib-tab index="0">
                 <uib-tab-heading>
                   <!-- <h5>New Leads</h5> -->
-                  <h5>Today's Leads</h5>
+                  <h5>Leads (Basic)</h5>
                 </uib-tab-heading>
                 <div class="col-md-12">
                   <ul class="licence_detail_bx">
@@ -373,7 +373,7 @@
                         value="entityType.value" ng-change="setEntityType(entityType.value)">
                         <option value="">Select Supplier Type</option>
                         <option value="{{entityType.value}}" ng-selected="selectedEntityType == entityType.value"
-                          ng-repeat="entityType in entityTypes">{{entityType.name}}</option>
+                          ng-repeat="entityType in supplierTypeCode">{{entityType.name}}</option>
                       </select>
                     </h4>
                   </div>
@@ -422,8 +422,13 @@
                             <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
                               ng-click="acceptDeclineDecisionPanding($index,'Accepted')">Accept</button>
                             <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                              ng-click="acceptDeclineDecisionPanding($index,'Decline')">Decline</button>
+                              ng-click="acceptDeclineDecisionPanding($index,'Decline')" ng-if="decisionPanding.client_status!='Decline'">Decline</button>
+                            
+                            <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger" disabled
+                              ng-if="decisionPanding.client_status=='Decline'">Currently Declined</button>
+
                           </td>
+                          
                         </tr>
 
                       </tbody>
@@ -447,7 +452,7 @@
 
 
 
-              <uib-tab id="uib-tabs-width" ng-click="getCampaignsList()" index="2">
+              <uib-tab id="uib-tabs-width" ng-click="getCampaignsList()" index="2" ng-hide="true">
                 <uib-tab-heading>
                   <h5> Summary</h5>
                 </uib-tab-heading>
@@ -982,7 +987,7 @@
               <!-- view leads start -->
               <uib-tab id="uib-tabs-width" ng-click="viewCampaignLeads()" index="3">
                 <uib-tab-heading>
-                  <h5>View Leads</h5>
+                  <h5>Leads (Details)</h5>
                 </uib-tab-heading>
                 <div class="container-fluid">
                   <div class="panel panel-default">
@@ -1030,6 +1035,7 @@
                     <br /><br /><br /><br />
                     <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
                     <div class="table-responsive">
+                      <div><center><h2 style="color: black;">Current Campaigns</h2></center></div>
                       <table class="table">
                         <thead>
                           <tr>
@@ -1137,6 +1143,7 @@
                     <input type="text" class="form-control" ng-model="searchData" ng-if="purchasedTable"
                       placeholder="search">
                     <div class="table-responsive">
+                      <div><center><h2 style="color: black;">Leads</h2></center></div>
                       <div class="panel-heading content-title" ng-if="purchasedTable || notPurchasedTable"
                         style="height:70px">
                         <h3 style="background:'red'">Leads of {{CampaignNameofLeads}}</h3>
@@ -1887,7 +1894,7 @@
           </uib-tab>
           <!--Payment end -->
           <!--START : Analysis -->
-          <uib-tab id="uib-tabs-width" ng-click="getCampaigns()" index="5">
+          <uib-tab id="uib-tabs-width" ng-click="getCampaigns()" index="5"  ng-hide="true">
             <uib-tab-heading>
               <h5 style="margin-left:-10px;"> Analysis</h5>
             </uib-tab-heading>
