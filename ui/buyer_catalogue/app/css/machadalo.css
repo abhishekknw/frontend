@@ -752,3 +752,6 @@ header .topRight .top-menu {
     margin-top: 5px;
 }
 }
+.hide-menu{
+  display: none;
+}
