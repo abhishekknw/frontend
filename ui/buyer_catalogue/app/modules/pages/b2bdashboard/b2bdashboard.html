@@ -1,4 +1,4 @@
-<div ng-cloak ng-init="leadDecisionPanding()">
+<div>
   <div ng-loading="loading"></div>
   <!--For displaying loading icon-->
   <main ng-show="!isEmpty" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }" ng-if="loading">
@@ -20,7 +20,7 @@
               <uib-tab index="0">
                 <uib-tab-heading>
                   <!-- <h5>New Leads</h5> -->
-                  <h5>Leads (Basic)</h5>
+                  <h5 ng-click="changeLeadTab('sync')">Leads (Basic)</h5>
                 </uib-tab-heading>
                 <div class="col-md-12">
                   <ul class="licence_detail_bx">
@@ -406,9 +406,8 @@
   
                             </tr> -->
                       </thead>
-                      <tbody>
-                        <tr
-                          dir-paginate="decisionPanding in leadDecisionPandingData |filter:searchQuery | orderBy:sort:reversesort | itemsPerPage:10 track by $index ">
+                      <tbody dir-paginate="decisionPanding in leadDecisionPandingData |filter:searchQuery | orderBy:sort:reversesort | itemsPerPage:itemsPerPageRecord" total-items="totalrecord" current-page="currentPage" track by "$index">
+                        <tr>                        
                           <!-- <tr ng-repeat = "decisionPanding in leadDecisionPandingData track by $index"> -->
                           <td class="alignment"> <input type="checkbox" name="checkBox" id="checkBox_id"
                               ng-click="checkboxCheck($index)" ng-model="decisionPanding.checkStatus"></td>
@@ -433,9 +432,8 @@
 
                       </tbody>
                     </table>
-                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                    <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" on-page-change="pageChanged(newPageNumber-1)" >
                     </dir-pagination-controls>
-
                   </div>
                   <div class="" ng-if="leadDecisionPandingData.length  != 0">
                     <button class="btn btn-danger" ng-click="acceptDeclineMultiple('Accepted')"
@@ -1361,81 +1359,6 @@
                               >
                               <span ng-if="lead[24].value">{{lead[24].value}}</span>
                               <span ng-if="!lead[24].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[25].value">{{lead[25].value}}</span>
-                              <span ng-if="!lead[25].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[26].value">{{lead[26].value}}</span>
-                              <span ng-if="!lead[26].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[27].value">{{lead[27].value}}</span>
-                              <span ng-if="!lead[27].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[28].value">{{lead[28].value}}</span>
-                              <span ng-if="!lead[28].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[29].value">{{lead[29].value}}</span>
-                              <span ng-if="!lead[29].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[30].value">{{lead[30].value}}</span>
-                              <span ng-if="!lead[30].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[31].value">{{lead[31].value}}</span>
-                              <span ng-if="!lead[31].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[32].value">{{lead[32].value}}</span>
-                              <span ng-if="!lead[32].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[33].value">{{lead[33].value}}</span>
-                              <span ng-if="!lead[33].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[34].value">{{lead[34].value}}</span>
-                              <span ng-if="!lead[34].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[35].value">{{lead[35].value}}</span>
-                              <span ng-if="!lead[35].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[36].value">{{lead[36].value}}</span>
-                              <span ng-if="!lead[36].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[37].value">{{lead[37].value}}</span>
-                              <span ng-if="!lead[37].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[38].value">{{lead[38].value}}</span>
-                              <span ng-if="!lead[38].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[39].value">{{lead[39].value}}</span>
-                              <span ng-if="!lead[39].value">NA</span>
                             </td>
 
                     </div>

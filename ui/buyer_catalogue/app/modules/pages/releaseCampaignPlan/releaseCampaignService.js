@@ -18,7 +18,6 @@
       }else{
         var url = url_base + proposal_id + "/campaign-inventories/?page=" + page;
       }
-
     	return machadaloHttp.get(url);
     }
 

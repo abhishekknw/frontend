@@ -44,3 +44,15 @@
   border: 1px #000000;
 
 }
+
+.pagination ul li{
+  list-style: none;
+  float: left;
+  width: 32px;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  margin-right: 4px;
+  padding: 16px 4px;
+  text-align: center;
+  cursor: pointer;
+}

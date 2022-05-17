@@ -500,10 +500,10 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
-      DashboardService.leadDecisionPanding = function (type) {
+      DashboardService.leadDecisionPanding = function (type,page) {        
         var url = url_root + "b2b/lead-decision-panding/";
         if(type){
-          url = url_root + "b2b/lead-decision-panding/?type_of_entity=" + type ;
+          url = url_root + "b2b/lead-decision-panding/?type_of_entity=" + type +"&next_page="+page;
         }
         return machadaloHttp.get(url);
       }

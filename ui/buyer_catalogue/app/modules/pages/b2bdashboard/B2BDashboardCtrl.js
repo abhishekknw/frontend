@@ -504,7 +504,6 @@
       $scope.campaignStatusName = label;
       var campaignStatus = _.findKey($scope.campaignStatus, { 'campaignLabel': label });
       getCountOfSupplierTypesByCampaignStatus(campaignStatus);
-
     }
 
     var getCountOfSupplierTypesByCampaignStatus = function (campaignStatus) {
@@ -620,19 +619,25 @@
       }
     }
 
+
     $scope.decisionPendingTab = true;
     $scope.changeLeadTab = function (value) {
       if (value == 'decisionPending') {
         $scope.decisionPendingTab = true;
         $scope.newLeadsTab = false;
         $scope.leadDecisionPanding();
+      }
+      else if(value=='sync'){
+        $scope.decisionPendingTab = false;
+        setTimeout(()=>{                          
+          $scope.changeLeadTab('decisionPending');
+        }, 1000);        
       } else {
         $scope.decisionPendingTab = false;
         $scope.newLeadsTab = true;
         $scope.leadCountByDate();
       }
     }
-
 
     $scope.updateCompanyDetails = function () {
       var Request = $scope.viewLicenceDetailData.companydetail;
@@ -667,13 +672,29 @@
         });
     }
 
-    $scope.leadDecisionPanding = function (value) {
+    $scope.loadedData=true;
+    $scope.pageChanged = function(newPage) {
+      if($scope.loadedData==true){
+        $scope.leadDecisionPanding('all',newPage);  
+      }
+    };
+
+    $scope.leadDecisionPanding = function (value,page) {
       if (!value) {
         value = 'all'
       }
-      B2BDashboardService.leadDecisionPanding(value)
+
+      if(!page){
+        page=0;
+      }
+
+      B2BDashboardService.leadDecisionPanding(value,page)
         .then(function onSuccess(response) {
           $scope.leadDecisionPandingData = response.data.data.lead;
+          $scope.totalrecord = response.data.data.length;
+          $scope.itemsPerPageRecord = 20;
+          $scope.currentPage = page; 
+          
         });
     }
     $scope.isCheck = false;
@@ -684,11 +705,11 @@
         }
       }
     }
-
+    $scope.changeLeadTab('sync')
     $scope.setEntityType = function (value) {
       $scope.leadDecisionPanding(value)
     }
-
+    
     $scope.acceptDeclineDecisionPanding = function (index, value) {
       let data = [{
         "requirement_id": $scope.leadDecisionPandingData[index].requirement_id,
