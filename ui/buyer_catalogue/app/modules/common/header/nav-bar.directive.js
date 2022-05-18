@@ -15,8 +15,7 @@ angular.module('machadaloCommon')
                 $('.forScroll').slimScroll({
                     height: '100%'
                });
-              
-              $rootScope.category = "";
+               $rootScope.category = "";
               if($rootScope.globals && $rootScope.globals.userInfo && $rootScope.globals.userInfo.profile && $rootScope.globals.userInfo.profile.organisation && $rootScope.globals.userInfo.profile.organisation.category){
                 $rootScope.category = $rootScope.globals.userInfo.profile.organisation.category;
               }

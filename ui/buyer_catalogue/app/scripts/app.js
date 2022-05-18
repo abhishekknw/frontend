@@ -915,6 +915,7 @@ angular
           // e.preventDefault();
           $location.path("/manageCampaign/create");
         } else if (category == 'BUSINESS') {
+          // $location.path("/dashboard");
           $location.path("/b2b/dashboard");
         } else if (category != 'BUSINESS') {
           $location.path(whence);
