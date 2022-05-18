@@ -470,9 +470,9 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
-      DashboardService.purchasedNotPurchasedLead = function (campaignId,filterType,supplierCode) {
+      DashboardService.purchasedNotPurchasedLead = function (campaignId,filterType,supplierCode,page) {
         //var url = url_root + "b2b/lead-form-headers/?campaign_id=" + campaignId + "&lead_type=" + filterType;
-        var url = url_root + "b2b/lead-form-headers/?campaign_id=" + campaignId + "&supplier_type=" + supplierCode;
+        var url = url_root + "b2b/lead-form-headers/?campaign_id=" + campaignId + "&supplier_type=" + supplierCode+"&next_page="+page;
         if(filterType){
           url += "&lead_type=" + filterType;
         }

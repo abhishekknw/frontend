@@ -568,14 +568,25 @@
         });
     }
 
-    $scope.getPurchasedNotPurchasedLead = function (CampaignId, campaignName, leadStatus) {
+    $scope.pageChangedPurchage= function(page,leadPurchasedStatus,campaignId,campaignName){
+      $scope.getPurchasedNotPurchasedLead(campaignId, campaignName, leadPurchasedStatus, page)
+    }
+
+    $scope.getPurchasedNotPurchasedLead = function (CampaignId, campaignName, leadStatus,page) {
+      if(!page){
+        page=0;
+      }
       $scope.leadPurchasedStatus = leadStatus;
+      $scope.campaignId = CampaignId;
+      $scope.campaignName = campaignName;
       $scope.CampaignNameofLeads = campaignName;
-      B2BDashboardService.purchasedNotPurchasedLead(CampaignId, $scope.filterType,$scope.selectedSupplierType.code)
+      B2BDashboardService.purchasedNotPurchasedLead(CampaignId, $scope.filterType,$scope.selectedSupplierType.code,page)
         .then(function onSuccess(response) {
           $scope.isTableHide = false;
           $scope.purchasedNotPurchasedLead = response.data.data;
-          let values = response.data.data.values;
+          $scope.purchasedNotPurchasedLeadTotal = response.data.data.length;
+          $scope.purchasedNotPurchasedLeadCurrent = page;
+          $scope.purchasedNotPurchasedLeadPerPage = 20;
           // $scope.all_values = [];
           // for (let i in values) {
           //     let row = {};

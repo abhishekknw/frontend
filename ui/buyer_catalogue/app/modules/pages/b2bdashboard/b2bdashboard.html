@@ -406,7 +406,7 @@
   
                             </tr> -->
                       </thead>
-                      <tbody dir-paginate="decisionPanding in leadDecisionPandingData |filter:searchQuery | orderBy:sort:reversesort | itemsPerPage:itemsPerPageRecord" total-items="totalrecord" current-page="currentPage" track by "$index">
+                      <tbody pagination-id="paginate1" dir-paginate="decisionPanding in leadDecisionPandingData |filter:searchQuery | orderBy:sort:reversesort | itemsPerPage:itemsPerPageRecord" total-items="totalrecord" current-page="currentPage" track by "$index">
                         <tr>                        
                           <!-- <tr ng-repeat = "decisionPanding in leadDecisionPandingData track by $index"> -->
                           <td class="alignment"> <input type="checkbox" name="checkBox" id="checkBox_id"
@@ -432,7 +432,7 @@
 
                       </tbody>
                     </table>
-                    <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" on-page-change="pageChanged(newPageNumber-1)" >
+                    <dir-pagination-controls  max-size="7" direction-links="true" boundary-links="true" on-page-change="pageChanged(newPageNumber-1)" pagination-id="paginate1" >
                     </dir-pagination-controls>
                   </div>
                   <div class="" ng-if="leadDecisionPandingData.length  != 0">
@@ -1236,8 +1236,8 @@
                             </th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr ng-repeat="lead in purchasedNotPurchasedLead.values">
+                        <tbody pagination-id="paginate2" dir-paginate="lead in purchasedNotPurchasedLead.values | itemsPerPage:purchasedNotPurchasedLeadPerPage" total-items="purchasedNotPurchasedLeadTotal" current-page="purchasedNotPurchasedLeadCurrent" track by "$index">
+                          <tr>
                             <td  >{{$index + 1}}</td>
                             <td  class="col-md-2"
                               >
@@ -1369,8 +1369,8 @@
                   </div>
                 </div>
                 <br /><br />
-                <div style="text-align:center">
-                  <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true">
+                <div>
+                  <dir-pagination-controls pagination-id="paginate2" max-size="7" direction-links="true" boundary-links="true" on-page-change="pageChangedPurchage(newPageNumber-1,leadPurchasedStatus,campaignId,campaignName)">
                   </dir-pagination-controls>
                 </div>
                 <br /> <br />
@@ -1396,9 +1396,8 @@
 
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr
-                          ng-repeat="leaddata in notPurchasedLeadData | filter : searchData | filter : Code | itemsPerPage:20 track by $index">
+                      <tbody pagination-id="paginate3" dir-paginate="leaddata in notPurchasedLeadData | filter : searchData | filter : Code | itemsPerPage:20"  total-items="100" current-page="0" track by "$index">
+                        <tr>
                           <td><input type="checkbox"></td>
                           <td><button class="btn btn-danger">Buy</button></td>
                           <td style="width:200px;" class="col-md-2">{{$index + 1}}</td>
@@ -1420,7 +1419,7 @@
                 </div>
                 <br /><br />
                 <div style="text-align:center">
-                  <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true">
+                  <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" pagination-id="paginate3">
                   </dir-pagination-controls>
                 </div>
                 <br /> <br />
