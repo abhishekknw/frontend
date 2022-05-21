@@ -558,6 +558,38 @@
         });
     }
 
+    $scope.selectFlag=true;
+    $scope.clientStatus="";
+    $scope.clientComment="";
+    $scope.setValue = function (value) {
+      $scope.clientStatus=value;
+      $scope.selectFlag=false;
+    }
+    $scope.valuechange=function(value1){
+      $scope.clientComment=value1;
+    }
+    $scope.updateMessage="";
+    $scope.updateClientStatus = function (clentId) {
+      B2BDashboardService.updateClientStatus(clentId, $scope.clientStatus, $scope.clientComment)
+        .then(function onSuccess(response) {
+          swal(constants.name, response.data.data, constants.success);
+          $scope.leadDecisionPanding($scope.currentTypeForLeadDecisionPanding,$scope.currentPageForLeadDecisionPanding);
+        });
+    }
+
+    $scope.clientStatusList = function (data) {      
+      B2BDashboardService.clientStatusList(data)
+        .then(function onSuccess(response) {
+          var list = response.data.data.client_status;           
+          for (var k in list){
+            for(var i in  list[k]){
+              $scope.clientStausListData.push(list[k][i]);              
+            }
+          }            
+        });
+    }
+    
+
     $scope.getNotPurchasedLead = function (CampaignId, campaignName) {
       $scope.purchasedTable = false;
       $scope.notPurchasedTable = true;
@@ -690,15 +722,21 @@
       }
     };
 
+    $scope.currentPageForLeadDecisionPanding=0;
+    $scope.currentTypeForLeadDecisionPanding="";
+    $scope.clientStausListData=[];
     $scope.leadDecisionPanding = function (value,page) {
       if (!value) {
         value = 'all'
       }
-
+      $scope.currentTypeForLeadDecisionPanding=value;
       if(!page){
         page=0;
       }
-
+      $scope.currentPageForLeadDecisionPanding=page;
+      if($scope.clientStausListData.length==0){
+        $scope.clientStatusList();
+      }
       B2BDashboardService.leadDecisionPanding(value,page)
         .then(function onSuccess(response) {
           $scope.leadDecisionPandingData = response.data.data.lead;

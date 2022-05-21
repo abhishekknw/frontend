@@ -391,6 +391,8 @@
                             Count <a><i class="icon-sort" style="color:white;"></i></a></th>
                           <th>Area</th>
                           <th>City</th>
+                          <th>Client Status</th>
+                          <th>Comment</th>
                           <th>Action</th>
                         </tr>
                         <!-- <tr colspan="9">
@@ -416,7 +418,13 @@
                           <td class="alignment">{{decisionPanding.primary_count}}</td>
                           <td class="alignment">{{decisionPanding.area}}</td>
                           <td class="alignment">{{decisionPanding.city}}</td>
-
+                          <td class="alignment">
+                            <select ng-change="setValue(value8,Text)" class="form-control client-status" ng-model="value8">                           
+                              <option ng-repeat="option in clientStausListData" track by "$index">{{option}}</option>
+                            </select>
+                            <span style="display: none;">{{value8=value8?value8:decisionPanding.client_status}}</span>
+                          </td>
+                          <td class="alignment"><textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{decisionPanding.client_status}}</textarea></td>
                           <td class="alignment">
                             <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
                               ng-click="acceptDeclineDecisionPanding($index,'Accepted')">Accept</button>
@@ -425,14 +433,15 @@
                             
                             <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger" disabled
                               ng-if="decisionPanding.client_status=='Decline'">Currently Declined</button>
-
+                            <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                              ng-click="updateClientStatus(decisionPanding.requirement_id)">Update</button>
                           </td>
                           
                         </tr>
 
                       </tbody>
                     </table>
-                    <dir-pagination-controls  max-size="7" direction-links="true" boundary-links="true" on-page-change="pageChanged(newPageNumber-1)" pagination-id="paginate1" >
+                    <dir-pagination-controls  max-size="7" directionlinks="true" boundary-links="true" on-page-change="pageChanged(newPageNumber-1)" pagination-id="paginate1" >
                     </dir-pagination-controls>
                   </div>
                   <div class="" ng-if="leadDecisionPandingData.length  != 0">
@@ -1234,6 +1243,7 @@
                               ng-repeat="(key,filter) in purchasedNotPurchasedLead.header track by $index">
                               <span> {{key}} </span>
                             </th>
+                            <th>Action</th>
                           </tr>
                         </thead>
                         <tbody pagination-id="paginate2" dir-paginate="lead in purchasedNotPurchasedLead.values | itemsPerPage:purchasedNotPurchasedLeadPerPage" total-items="purchasedNotPurchasedLeadTotal" current-page="purchasedNotPurchasedLeadCurrent" track by "$index">
@@ -1321,9 +1331,7 @@
                               <span ng-if="!lead[16].value">NA</span>
                             </td>
                             <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[17].value">{{lead[17].value}}</span>
-                              <span ng-if="!lead[17].value">NA</span>
+                              ><textarea style="margin-bottom: 8px;" rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{lead[19].value}}</textarea>
                             </td>
                             <td  class="col-md-2"
                               >
@@ -1355,12 +1363,19 @@
                               <span ng-if="lead[23].value">{{lead[23].value}}</span>
                               <span ng-if="!lead[23].value">NA</span>
                             </td>
-                            <td  class="col-md-2"
+                            <!-- <td  class="col-md-2"
                               >
                               <span ng-if="lead[24].value">{{lead[24].value}}</span>
                               <span ng-if="!lead[24].value">NA</span>
+                            </td> -->
+                            <td class="col-md-2">
+                              <select ng-change="setValue(value8,Text)" class="form-control client-status" ng-model="value8">                           
+                                <option ng-repeat="option in clientStausListData" track by "$index">{{option}}</option>
+                              </select>
+                              <span style="display: none;">{{value8=value8?value8:lead[24].value}}</span>
                             </td>
-
+                            <td><button style="margin-top:8px" type="button" name="button" class="btn btn-danger"
+                              ng-click="updateClientStatus(lead[25].value)">Update</button></td>
                     </div>
                     </tr>
 

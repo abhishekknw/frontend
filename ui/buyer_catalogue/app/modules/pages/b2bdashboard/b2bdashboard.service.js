@@ -470,6 +470,33 @@ angular.module('catalogueApp')
         return machadaloHttp.get(url);
       }
 
+      DashboardService.updateClientStatus = function (clientId, status, comment) {
+        // var url = url_root + "b2b/not-purchased-lead-data/";
+        // if (campaignId) {
+          var param={};
+          var payload=[];
+          var payload_param={};
+          payload_param['requirement_id']=clientId;
+          payload_param['client_status']=status;
+          payload_param['client_comment']=comment;
+          payload.push(payload_param);
+          param['data']=payload;
+          var url = url_root + "b2b/update-client-decision-status/";
+     //   } 
+        return machadaloHttp.post(url,param);
+      }
+
+      DashboardService.clientStatusList = function () {
+        var url = url_root + "b2b/client-status-list/";
+        return machadaloHttp.get(url);
+      }
+      
+      DashboardService.updateCompanyDetails = function (data) {
+        var url = url_root + "b2b/licence-details/";
+        return machadaloHttp.put(url,data);
+      }
+
+
       DashboardService.purchasedNotPurchasedLead = function (campaignId,filterType,supplierCode,page) {
         //var url = url_root + "b2b/lead-form-headers/?campaign_id=" + campaignId + "&lead_type=" + filterType;
         var url = url_root + "b2b/lead-form-headers/?campaign_id=" + campaignId + "&supplier_type=" + supplierCode+"&next_page="+page;
