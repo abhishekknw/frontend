@@ -569,11 +569,13 @@
       $scope.clientComment=value1;
     }
     $scope.updateMessage="";
-    $scope.updateClientStatus = function (clentId) {
+    $scope.updateClientStatus = function (clentId,type) {
       B2BDashboardService.updateClientStatus(clentId, $scope.clientStatus, $scope.clientComment)
         .then(function onSuccess(response) {
           swal(constants.name, response.data.data, constants.success);
-          $scope.leadDecisionPanding($scope.currentTypeForLeadDecisionPanding,$scope.currentPageForLeadDecisionPanding);
+          if(type!='Lead'){
+            $scope.leadDecisionPanding($scope.currentTypeForLeadDecisionPanding,$scope.currentPageForLeadDecisionPanding);
+          }          
         });
     }
 
