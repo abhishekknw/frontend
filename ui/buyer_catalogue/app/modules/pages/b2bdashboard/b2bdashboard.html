@@ -424,7 +424,7 @@
                             </select>
                             <span style="display: none;">{{value8=value8?value8:decisionPanding.client_status}}</span>
                           </td>
-                          <td class="alignment"><textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{mymodel=mymodel?mymodel:decisionPanding.client_status}}</textarea></td>
+                          <td class="alignment"><textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{mymodel=mymodel?mymodel:decisionPanding.client_comment}}</textarea></td>
                           <td class="alignment">
                             <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
                               ng-click="acceptDeclineDecisionPanding($index,'Accepted')">Accept</button>
@@ -434,7 +434,7 @@
                             <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger" disabled
                               ng-if="decisionPanding.client_status=='Decline'">Currently Declined</button>
                             <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                              ng-click="updateClientStatus(decisionPanding.requirement_id)">Update</button>
+                              ng-click="updateClientStatus(decisionPanding.requirement_id,decisionPanding._id,decisionPanding.client_status,decisionPanding.client_comment)">Update</button>
                           </td>
                           
                         </tr>
@@ -1331,7 +1331,7 @@
                               <span ng-if="!lead[16].value">NA</span>
                             </td>
                             <td  class="col-md-2"
-                              ><textarea style="margin-bottom: 8px;" rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{mymodel=mymodel?mymodel:lead[19].value}}</textarea>
+                              ><textarea style="margin-bottom: 8px;" rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{mymodel=mymodel?mymodel:lead[17].value}}</textarea>
                             </td>
                             <td  class="col-md-2"
                               >
@@ -1375,7 +1375,7 @@
                               <span style="display: none;">{{value8=value8?value8:lead[24].value}}</span>
                             </td>
                             <td><button style="margin-top:8px" type="button" name="button" class="btn btn-danger"
-                              ng-click="updateClientStatus(lead[0].requirement_id,'Lead')">Update</button></td>
+                              ng-click="updateClientStatus(lead[0].requirement_id,lead[0]._id,lead[24].value,lead[17].value,'Lead')">Update</button></td>
                     </div>
                     </tr>
 

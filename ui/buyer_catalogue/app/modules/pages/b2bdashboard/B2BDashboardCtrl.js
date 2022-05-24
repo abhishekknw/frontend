@@ -569,10 +569,18 @@
       $scope.clientComment=value1;
     }
     $scope.updateMessage="";
-    $scope.updateClientStatus = function (clentId,type) {
-      B2BDashboardService.updateClientStatus(clentId, $scope.clientStatus, $scope.clientComment)
+    $scope.updateClientStatus = function (clentId,id,status,comment,type) {
+      if($scope.clientStatus==""){
+        $scope.clientStatus=status;
+      }
+      if($scope.clientComment==""){
+        $scope.clientComment=comment;
+      }
+      B2BDashboardService.updateClientStatus(clentId, $scope.clientStatus, $scope.clientComment,id)
         .then(function onSuccess(response) {
           swal(constants.name, response.data.data, constants.success);
+          $scope.clientStatus="";
+          $scope.clientComment="";
           if(type!='Lead'){
             $scope.leadDecisionPanding($scope.currentTypeForLeadDecisionPanding,$scope.currentPageForLeadDecisionPanding);
           }          
