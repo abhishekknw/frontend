@@ -502,7 +502,9 @@ angular
           ncyBreadcrumb: {
             label:'Suspense Lead Sheet',
           },
-          
+          data :{
+            permission : 'campaign_list_page_access'
+          }
       })
 
       // .state('manageUsers', {

@@ -391,8 +391,9 @@
                             Count <a><i class="icon-sort" style="color:white;"></i></a></th>
                           <th>Area</th>
                           <th>City</th>
-                          <th>Client Status</th>
-                          <th>Comment</th>
+                          <th>Machadalo Status</th>
+                          <th>Machadalo Comment</th>
+                          <th>Machadalo Status Last updated</th>
                           <th>Action</th>
                         </tr>
                         <!-- <tr colspan="9">
@@ -409,8 +410,7 @@
                             </tr> -->
                       </thead>
                       <tbody pagination-id="paginate1" dir-paginate="decisionPanding in leadDecisionPandingData |filter:searchQuery | orderBy:sort:reversesort | itemsPerPage:itemsPerPageRecord" total-items="totalrecord" current-page="currentPage" track by "$index">
-                        <tr>                        
-                          <!-- <tr ng-repeat = "decisionPanding in leadDecisionPandingData track by $index"> -->
+                        <tr>
                           <td class="alignment"> <input type="checkbox" name="checkBox" id="checkBox_id"
                               ng-click="checkboxCheck($index)" ng-model="decisionPanding.checkStatus"></td>
                           <td class="alignment">{{decisionPanding.entity_name}}</td>
@@ -425,6 +425,9 @@
                             <span style="display: none;">{{value8=value8?value8:decisionPanding.client_status}}</span>
                           </td>
                           <td class="alignment"><textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{mymodel=mymodel?mymodel:decisionPanding.client_comment}}</textarea></td>
+                          <td class="alignment">
+                            {{decisionPanding.updated_at?decisionPanding.updated_at:"NA"}}
+                          </td>
                           <td class="alignment">
                             <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
                               ng-click="acceptDeclineDecisionPanding($index,'Accepted')">Accept</button>
@@ -584,17 +587,6 @@
                                   Upcoming Campaigns
                                 </h4>
                               </div>
-                              <!-- <div id="upcoming" class="animate-show" ng-show="campaignStatus.upcoming.value">
-                                          <div class="panel-bodyDashboard camp-menu-content">
-                                              <table class="table">
-                                                  <tr ng-repeat="campaign in campaignData.upcoming_campaigns">
-                                                    <td ng-click="getSuppliersOfCampaignWithStatus(campaign)">
-                                                      {{campaign.name}}
-                                                    </td>
-                                                  </tr>
-                                              </table>
-                                          </div>
-                                      </div> -->
                             </div>
                             <div class="panel panel-default">
                               <div class="panel-heading" ng-click="getCampaignsMenu(campaignStatus.onhold.status)">
@@ -1243,6 +1235,8 @@
                               ng-repeat="(key,filter) in purchasedNotPurchasedLead.header track by $index">
                               <span> {{key}} </span>
                             </th>
+                            <th>Machadalo Client Status</th>
+                            <th>Machadalo Client Comment</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -1257,7 +1251,7 @@
                             <td  class="col-md-2"
                               >
                               <span ng-if="lead[2].value">{{lead[2].value}}</span>
-                              <span ng-if="!lead[3].value">NA</span>
+                              <span ng-if="!lead[2].value">NA</span>
                             </td>
                             <td  class="col-md-2"
                               >
@@ -1279,90 +1273,6 @@
                               <span ng-if="lead[6].value">{{lead[6].value}}</span>
                               <span ng-if="!lead[6].value">NA</span>
                             </td>
-
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[7].value">{{lead[7].value}}</span>
-                              <span ng-if="!lead[7].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[8].value">{{lead[8].value}}</span>
-                              <span ng-if="!lead[8].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[9].value">{{lead[9].value}}</span>
-                              <span ng-if="!lead[9].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[10].value">{{lead[10].value}}</span>
-                              <span ng-if="!lead[10].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[11].value">{{lead[11].value}}</span>
-                              <span ng-if="!lead[11].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[12].value">{{lead[12].value}}</span>
-                              <span ng-if="!lead[12].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[13].value">{{lead[13].value}}</span>
-                              <span ng-if="!lead[13].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[14].value">{{lead[14].value}}</span>
-                              <span ng-if="!lead[14].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[15].value">{{lead[15].value}}</span>
-                              <span ng-if="!lead[15].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[16].value">{{lead[16].value}}</span>
-                              <span ng-if="!lead[16].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              ><textarea style="margin-bottom: 8px;" rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{mymodel=mymodel?mymodel:lead[17].value}}</textarea>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[18].value">{{lead[18].value}}</span>
-                              <span ng-if="!lead[18].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[19].value">{{lead[19].value}}</span>
-                              <span ng-if="!lead[19].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[20].value">{{lead[20].value}}</span>
-                              <span ng-if="!lead[20].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[21].value">{{lead[21].value}}</span>
-                              <span ng-if="!lead[21].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[22].value">{{lead[22].value}}</span>
-                              <span ng-if="!lead[22].value">NA</span>
-                            </td>
-                            <td  class="col-md-2"
-                              >
-                              <span ng-if="lead[23].value">{{lead[23].value}}</span>
-                              <span ng-if="!lead[23].value">NA</span>
-                            </td>
                             <!-- <td  class="col-md-2"
                               >
                               <span ng-if="lead[24].value">{{lead[24].value}}</span>
@@ -1370,12 +1280,15 @@
                             </td> -->
                             <td class="col-md-2">
                               <select ng-change="setValue(value8,Text)" class="form-control client-status" ng-model="value8">                           
-                                <option ng-repeat="option in clientStausListData" track by "$index">{{option}}</option>
+                                <option ng-repeat="option in listClientStatus" track by "$index">{{option}}</option>
                               </select>
-                              <span style="display: none;">{{value8=value8?value8:lead[24].value}}</span>
+                              <span style="display: none;">{{value8=value8?value8:lead[0].macchadalo_client_status}}
+                            </td>
+                            <td class="alignment">
+                              <textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{mymodel=mymodel?mymodel:lead[0].macchadalo_client_comment}}</textarea>
                             </td>
                             <td><button style="margin-top:8px" type="button" name="button" class="btn btn-danger"
-                              ng-click="updateClientStatus(lead[0].requirement_id,lead[0]._id,lead[24].value,lead[17].value,'Lead')">Update</button></td>
+                              ng-click="updateLeadClientStatus(lead[0].macchadalo_client_status,lead[0].macchadalo_client_comment,lead[0]._id)">Update</button></td>
                     </div>
                     </tr>
 

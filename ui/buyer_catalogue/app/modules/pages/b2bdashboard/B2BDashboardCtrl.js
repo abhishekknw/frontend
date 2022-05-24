@@ -532,10 +532,16 @@
 
     $scope.purchasedTable = false;
     $scope.notPurchasedTable = false;
+    $scope.listClientStatus=[];
     $scope.viewCampaignLeads = function () {
-      // if(!$scope.filterType){
-      //   $scope.filterType = 'Leads';
-      // }
+      if($scope.listClientStatus.length==0){
+        B2BDashboardService.listClientStatus().then(function onSuccess(response) {
+          var listData  = response.data.data.client_status;
+          for(var k in listData){
+            $scope.listClientStatus.push(listData[k].status_name)
+          }
+        });
+      }
       $scope.purchasedTable = false;
       $scope.notPurchasedTable = false;
       B2BDashboardService.viewCampaignLeads($scope.filterType, $scope.selectedSupplierType.code)
@@ -568,7 +574,22 @@
     $scope.valuechange=function(value1){
       $scope.clientComment=value1;
     }
-    $scope.updateMessage="";
+    
+    $scope.updateLeadClientStatus = function (status,comment,id) {
+      if($scope.clientStatus==""){
+        $scope.clientStatus=status;
+      }
+      if($scope.clientComment==""){
+        $scope.clientComment=comment;
+      }
+      B2BDashboardService.updateLeadClientStatus( $scope.clientStatus, $scope.clientComment,id)
+        .then(function onSuccess(response) {
+          swal(constants.name, response.data.data, constants.success);
+          $scope.clientStatus="";
+          $scope.clientComment="";
+        });
+    }
+
     $scope.updateClientStatus = function (clentId,id,status,comment,type) {
       if($scope.clientStatus==""){
         $scope.clientStatus=status;
@@ -1282,7 +1303,6 @@
     }
 
     $scope.surveyLeadFilter('Leads');
-
     $scope.setButtonIndex = function (index,campaign_id,campaign_name) {
       $scope.buttonIndex = index;
       $scope.getPurchasedNotPurchasedLead(campaign_id,campaign_name) 

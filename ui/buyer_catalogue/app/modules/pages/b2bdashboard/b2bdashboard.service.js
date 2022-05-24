@@ -487,8 +487,29 @@ angular.module('catalogueApp')
         return machadaloHttp.post(url,param);
       }
 
+      DashboardService.updateLeadClientStatus = function (status, comment, id) {
+        // var url = url_root + "b2b/not-purchased-lead-data/";
+        // if (campaignId) {
+          var param={};
+          var payload=[];
+          var payload_param={};
+          payload_param['macchadalo_client_status']=status;
+          payload_param['macchadalo_client_comment']=comment;
+          payload_param['_id']=id;
+          payload.push(payload_param);
+          param['data']=payload;
+          var url = url_root + "b2b/update-machadalo-client-status/";
+     //   } 
+        return machadaloHttp.post(url,param);
+      }
+
       DashboardService.clientStatusList = function () {
         var url = url_root + "b2b/client-status-list/";
+        return machadaloHttp.get(url);
+      }
+      
+      DashboardService.listClientStatus = function () {
+        var url = url_root + "b2b/machadalo-client-status-list/";
         return machadaloHttp.get(url);
       }
       
