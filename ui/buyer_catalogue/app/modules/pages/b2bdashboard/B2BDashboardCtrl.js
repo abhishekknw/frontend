@@ -572,7 +572,7 @@
       $scope.selectFlag=false;
     }
     $scope.valuechange=function(value1){
-      $scope.clientComment=value1;
+      //$scope.clientComment=value1;
     }
     
     $scope.updateLeadClientStatus = function (status,comment,id) {

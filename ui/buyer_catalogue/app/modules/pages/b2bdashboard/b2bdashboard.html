@@ -386,14 +386,14 @@
                         <tr>
                           <th>Select Multiple</th>
                           <th>Entity Name</th>
-                          <th>Type of Entity</th>
-                          <th style="width:120px;" class="col-md-2" ng-click="Sort('entity_type')">Flat Count / Primary
+                          <th>TOE</th>
+                          <th style="width:120px;" class="col-md-2" ng-click="Sort('entity_type')">Primary
                             Count <a><i class="icon-sort" style="color:white;"></i></a></th>
                           <th>Area</th>
                           <th>City</th>
-                          <th>Machadalo Status</th>
-                          <th>Machadalo Comment</th>
-                          <th>Machadalo Status Last updated</th>
+                          <th>Int Status</th>
+                          <th>Int Comment</th>
+                          <th>Phone Number</th>
                           <th>Action</th>
                         </tr>
                         <!-- <tr colspan="9">
@@ -409,7 +409,7 @@
   
                             </tr> -->
                       </thead>
-                      <tbody pagination-id="paginate1" dir-paginate="decisionPanding in leadDecisionPandingData |filter:searchQuery | orderBy:sort:reversesort | itemsPerPage:itemsPerPageRecord" total-items="totalrecord" current-page="currentPage" track by "$index">
+                      <tbody class="data-list" pagination-id="paginate1" dir-paginate="decisionPanding in leadDecisionPandingData |filter:searchQuery | orderBy:sort:reversesort | itemsPerPage:itemsPerPageRecord" total-items="totalrecord" current-page="currentPage" track by "$index">
                         <tr>
                           <td class="alignment"> <input type="checkbox" name="checkBox" id="checkBox_id"
                               ng-click="checkboxCheck($index)" ng-model="decisionPanding.checkStatus"></td>
@@ -420,14 +420,18 @@
                           <td class="alignment">{{decisionPanding.city}}</td>
                           <td class="alignment">
                             <select ng-change="setValue(value8,Text)" class="form-control client-status" ng-model="value8">                           
-                              <option ng-repeat="option in clientStausListData" track by "$index">{{option}}</option>
+                              <option ng-repeat="option in listClientStatus" track by "$index">{{option}}</option>
                             </select>
                             <span style="display: none;">{{value8=value8?value8:decisionPanding.client_status}}</span>
+                            <span>{{decisionPanding.updated_at?decisionPanding.updated_at:"NA"}}</span>
                           </td>
-                          <td class="alignment"><textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{mymodel=mymodel?mymodel:decisionPanding.client_comment}}</textarea></td>
                           <td class="alignment">
-                            {{decisionPanding.updated_at?decisionPanding.updated_at:"NA"}}
+                            {{decisionPanding.client_comment?decisionPanding.client_comment:"NA"}}
                           </td>
+                          <td class="alignment">
+                            {{decisionPanding.phone_number?decisionPanding.phone_number:"NA"}}
+                          </td>
+                          <!-- <td class="alignment"><textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{mymodel=mymodel?mymodel:decisionPanding.client_comment}}</textarea></td>                           -->
                           <td class="alignment">
                             <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
                               ng-click="acceptDeclineDecisionPanding($index,'Accepted')">Accept</button>
@@ -435,15 +439,18 @@
                               ng-click="acceptDeclineDecisionPanding($index,'Decline')" ng-if="decisionPanding.client_status!='Decline'">Decline</button>
                             
                             <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger" disabled
-                              ng-if="decisionPanding.client_status=='Decline'">Currently Declined</button>
-                            <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
-                              ng-click="updateClientStatus(decisionPanding.requirement_id,decisionPanding._id,decisionPanding.client_status,decisionPanding.client_comment)">Update</button>
+                              ng-if="decisionPanding.client_status=='Decline'">Currently Declined</button>                            
                           </td>
                           
                         </tr>
 
                       </tbody>
                     </table>
+                    <div style="padding: 8px 0px;color:#000000;">
+                      <b>*TOE = Type of Entity </b><br>
+                      <b>Int Comment = Internal Comment </b><br>
+                      <b>Int Status = Internal Status</b>
+                    </div>
                     <dir-pagination-controls  max-size="7" directionlinks="true" boundary-links="true" on-page-change="pageChanged(newPageNumber-1)" pagination-id="paginate1" >
                     </dir-pagination-controls>
                   </div>
@@ -1031,10 +1038,8 @@
                   </div><br /><br />
                   <!-- <div class="viewLeadstable" ng-if="showCampaigns"> -->
                   <div class="viewLeadstable">
-                    <br /><br /><br /><br />
-                    <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
                     <div class="table-responsive">
-                      <div><center><h2 style="color: black;">Current Campaigns</h2></center></div>
+                      <div style="padding: 4px 0px;"><center><h2 style="color: black;">Current Campaigns</h2></center></div>
                       <table class="table">
                         <thead>
                           <tr>
@@ -1042,15 +1047,15 @@
                             <th style="width:200px;" class="col-md-2">Campaign Name</th>
                             <th ng-click="Sort('start_date')">Start Date <a><i class="icon-sort"
                                   style="color:white;"></i></a></th>
-                            <th>End Date</th>
+                            <!-- <th>End Date</th> -->
                             <!-- <th>Phase</br>Completed</th> -->
-                            <th>Campaign Status</th>
+                            <!-- <th>Campaign Status</th> -->
                             <th style="width:100px;" class="col-md-2" ng-click="Sort('supplier_count')">Supplier</br>
                               Count <a><i class="icon-sort" style="color:white;"></i></a></th>
-                            <th style="width:100px;" class="col-md-2" ng-click="Sort('flat_count')">Unit primary
+                            <!-- <th style="width:100px;" class="col-md-2" ng-click="Sort('flat_count')">Unit primary
                               Count<a><i class="icon-sort" style="color:white;"></i></a></th>
                             <th style="width:120px;" class="col-md-2" ng-click="Sort('total_leads')">Purchased Survey
-                              <a><i class="icon-sort" style="color:white;"></i></a>
+                              <a><i class="icon-sort" style="color:white;"></i></a> -->
                             </th>
                             <!-- <th style="width:100px;" class="col-md-2" ng-click="Sort('hot_leads')">Hot Leads <a><i class="icon-sort" style="color:white;"></i></a></th> -->
                             <th class="btn_box_lead_survey_th">View Leads</th>
@@ -1058,7 +1063,7 @@
                             <th class="btn_box_lead_survey_th">Download Leads</th>
 
                           </tr>
-                          <tr colspan="9">
+                          <!-- <tr colspan="9">
                             <td></td>
                             <td><input ng-model="f.name" class="form-control" placeholder="Search">
                               <hr>
@@ -1069,25 +1074,24 @@
                               <hr>
                             </td>
 
-                          </tr>
+                          </tr> -->
                         </thead>
                         <tbody ng-if="leadsDataCampaigns.length > 0 ">
-                          <tr
+                          <tr style="margin:4px 0px;"
                             dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index ">
                             <td>{{$index + 1}}</td>
                             <td style="width:200px;" class="col-md-2">{{campaign.name}}</td>
                             <td>{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
-                            <td ng-if="campaign.campaign_status == 'completed'" style="text-transform:capitalize">
+                            <!-- <td ng-if="campaign.campaign_status == 'completed'" style="text-transform:capitalize">
                               {{campaign.end_date|limitTo:10|date:mediumDate}}</td>
-                            <td ng-if="campaign.campaign_status != 'completed'">NA</td>
-                            <!-- <td>{{campaign.phase_complete}}</td> -->
-                            <td ng-if="campaign.campaign_status == 'on_hold'" style="text-transform:capitalize">OnHold
+                            <td ng-if="campaign.camyse_complete}}</td> -->
+                            <!-- <td ng-if="campaign.campaign_status == 'on_hold'" style="text-transform:capitalize">OnHold
                             </td>
                             <td ng-if="campaign.campaign_status != 'on_hold'" style="text-transform:capitalize">
-                              {{campaign.campaign_status}}</td>
+                              {{campaign.campaign_status}}</td> -->
                             <td style="width:100px;" class="col-md-2">{{campaign.supplier_count}}</td>
-                            <td style="width:100px;" class="col-md-2">{{campaign.flat_count}}</td>
-                            <td style="width:100px;" class="col-md-2">{{campaign.purchased_survey}}</td>
+                            <!-- <td style="width:100px;" class="col-md-2">{{campaign.flat_count}}</td>
+                            <td style="width:100px;" class="col-md-2">{{campaign.purchased_survey}}</td> -->
                             <!-- <td style="width:100px;" class="col-md-2" >{{campaign.hot_leads}}</td> -->
                             <td class="btn_box_lead_survey">
                               <button class="btn btn-danger"  id="viewLeads_{{$index}}"
@@ -1235,9 +1239,9 @@
                               ng-repeat="(key,filter) in purchasedNotPurchasedLead.header track by $index">
                               <span> {{key}} </span>
                             </th>
-                            <th>Machadalo Client Status</th>
-                            <th>Machadalo Client Comment</th>
-                            <th>Action</th>
+                            <th style="width:200px;">Client Status</th>
+                            <th style="width:200px;">Client Comment</th>
+                            <!-- <th>Action</th> -->
                           </tr>
                         </thead>
                         <tbody pagination-id="paginate2" dir-paginate="lead in purchasedNotPurchasedLead.values | itemsPerPage:purchasedNotPurchasedLeadPerPage" total-items="purchasedNotPurchasedLeadTotal" current-page="purchasedNotPurchasedLeadCurrent" track by "$index">
@@ -1284,11 +1288,14 @@
                               </select>
                               <span style="display: none;">{{value8=value8?value8:lead[0].macchadalo_client_status}}
                             </td>
-                            <td class="alignment">
+                            <!-- <td class="alignment">
                               <textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{mymodel=mymodel?mymodel:lead[0].macchadalo_client_comment}}</textarea>
+                            </td> -->
+                            <td class="col-md-2" style="max-width:fit-content;text-align: center; width: 227px;">
+                              <span>{{macchadalo_client_comment?macchadalo_client_comment:"NA"}}</span>                              
                             </td>
-                            <td><button style="margin-top:8px" type="button" name="button" class="btn btn-danger"
-                              ng-click="updateLeadClientStatus(lead[0].macchadalo_client_status,lead[0].macchadalo_client_comment,lead[0]._id)">Update</button></td>
+                            <!-- <td><button style="margin-top:8px" type="button" name="button" class="btn btn-danger"
+                              ng-click="updateLeadClientStatus(lead[0].macchadalo_client_status,lead[0].macchadalo_client_comment,lead[0]._id)">Update</button></td> -->
                     </div>
                     </tr>
 
@@ -2302,6 +2309,23 @@
 
 
   </main>
+
+  <style type="text/css">
+    .viewLeadstable td {
+      vertical-align: middle !important;
+      height: 62px;
+    }
+
+    .table-responsive{
+      overflow-x: hidden !important;
+    }
+
+    .viewLeadstable .btn{
+      width: 122px !important;
+      margin-right: -50px !important;
+    }
+
+  </style>
 </body>
 
 </html>
