@@ -752,6 +752,20 @@ header .topRight .top-menu {
     margin-top: 5px;
 }
 }
+
 .hide-menu{
   display: none;
+}
+
+.hide_new_leadtab{
+  display: none;
+}
+
+.client-status{
+  margin-top: 8px;
+}
+
+.client-comment{
+  height: 78px !important;
+  margin-top: 8px;
 }

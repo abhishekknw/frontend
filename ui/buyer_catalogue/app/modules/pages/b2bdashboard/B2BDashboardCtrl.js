@@ -504,7 +504,6 @@
       $scope.campaignStatusName = label;
       var campaignStatus = _.findKey($scope.campaignStatus, { 'campaignLabel': label });
       getCountOfSupplierTypesByCampaignStatus(campaignStatus);
-
     }
 
     var getCountOfSupplierTypesByCampaignStatus = function (campaignStatus) {
@@ -533,10 +532,16 @@
 
     $scope.purchasedTable = false;
     $scope.notPurchasedTable = false;
+    $scope.listClientStatus=[];
     $scope.viewCampaignLeads = function () {
-      // if(!$scope.filterType){
-      //   $scope.filterType = 'Leads';
-      // }
+      if($scope.listClientStatus.length==0){
+        B2BDashboardService.listClientStatus().then(function onSuccess(response) {
+          var listData  = response.data.data.client_status;
+          for(var k in listData){
+            $scope.listClientStatus.push(listData[k].status_name)
+          }
+        });
+      }
       $scope.purchasedTable = false;
       $scope.notPurchasedTable = false;
       B2BDashboardService.viewCampaignLeads($scope.filterType, $scope.selectedSupplierType.code)
@@ -559,6 +564,63 @@
         });
     }
 
+    $scope.selectFlag=true;
+    $scope.clientStatus="";
+    $scope.clientComment="";
+    $scope.setValue = function (value) {
+      $scope.clientStatus=value;
+      $scope.selectFlag=false;
+    }
+    $scope.valuechange=function(value1){
+      //$scope.clientComment=value1;
+    }
+    
+    $scope.updateLeadClientStatus = function (status,comment,id) {
+      if($scope.clientStatus==""){
+        $scope.clientStatus=status;
+      }
+      if($scope.clientComment==""){
+        $scope.clientComment=comment;
+      }
+      B2BDashboardService.updateLeadClientStatus( $scope.clientStatus, $scope.clientComment,id)
+        .then(function onSuccess(response) {
+          swal(constants.name, response.data.data, constants.success);
+          $scope.clientStatus="";
+          $scope.clientComment="";
+        });
+    }
+
+    $scope.updateClientStatus = function (clentId,id,status,comment,type) {
+      if($scope.clientStatus==""){
+        $scope.clientStatus=status;
+      }
+      if($scope.clientComment==""){
+        $scope.clientComment=comment;
+      }
+      B2BDashboardService.updateClientStatus(clentId, $scope.clientStatus, $scope.clientComment,id)
+        .then(function onSuccess(response) {
+          swal(constants.name, response.data.data, constants.success);
+          $scope.clientStatus="";
+          $scope.clientComment="";
+          if(type!='Lead'){
+            $scope.leadDecisionPanding($scope.currentTypeForLeadDecisionPanding,$scope.currentPageForLeadDecisionPanding);
+          }          
+        });
+    }
+
+    $scope.clientStatusList = function (data) {      
+      B2BDashboardService.clientStatusList(data)
+        .then(function onSuccess(response) {
+          var list = response.data.data.client_status;           
+          for (var k in list){
+            for(var i in  list[k]){
+              $scope.clientStausListData.push(list[k][i]);              
+            }
+          }            
+        });
+    }
+    
+
     $scope.getNotPurchasedLead = function (CampaignId, campaignName) {
       $scope.purchasedTable = false;
       $scope.notPurchasedTable = true;
@@ -569,14 +631,25 @@
         });
     }
 
-    $scope.getPurchasedNotPurchasedLead = function (CampaignId, campaignName, leadStatus) {
+    $scope.pageChangedPurchage= function(page,leadPurchasedStatus,campaignId,campaignName){
+      $scope.getPurchasedNotPurchasedLead(campaignId, campaignName, leadPurchasedStatus, page)
+    }
+
+    $scope.getPurchasedNotPurchasedLead = function (CampaignId, campaignName, leadStatus,page) {
+      if(!page){
+        page=0;
+      }
       $scope.leadPurchasedStatus = leadStatus;
+      $scope.campaignId = CampaignId;
+      $scope.campaignName = campaignName;
       $scope.CampaignNameofLeads = campaignName;
-      B2BDashboardService.purchasedNotPurchasedLead(CampaignId, $scope.filterType,$scope.selectedSupplierType.code)
+      B2BDashboardService.purchasedNotPurchasedLead(CampaignId, $scope.filterType,$scope.selectedSupplierType.code,page)
         .then(function onSuccess(response) {
           $scope.isTableHide = false;
           $scope.purchasedNotPurchasedLead = response.data.data;
-          let values = response.data.data.values;
+          $scope.purchasedNotPurchasedLeadTotal = response.data.data.length;
+          $scope.purchasedNotPurchasedLeadCurrent = page;
+          $scope.purchasedNotPurchasedLeadPerPage = 20;
           // $scope.all_values = [];
           // for (let i in values) {
           //     let row = {};
@@ -620,19 +693,25 @@
       }
     }
 
+
     $scope.decisionPendingTab = true;
     $scope.changeLeadTab = function (value) {
       if (value == 'decisionPending') {
         $scope.decisionPendingTab = true;
         $scope.newLeadsTab = false;
         $scope.leadDecisionPanding();
+      }
+      else if(value=='sync'){
+        $scope.decisionPendingTab = false;
+        setTimeout(()=>{                          
+          $scope.changeLeadTab('decisionPending');
+        }, 1000);        
       } else {
         $scope.decisionPendingTab = false;
         $scope.newLeadsTab = true;
         $scope.leadCountByDate();
       }
     }
-
 
     $scope.updateCompanyDetails = function () {
       var Request = $scope.viewLicenceDetailData.companydetail;
@@ -667,13 +746,35 @@
         });
     }
 
-    $scope.leadDecisionPanding = function (value) {
+    $scope.loadedData=true;
+    $scope.pageChanged = function(newPage) {
+      if($scope.loadedData==true){
+        $scope.leadDecisionPanding('all',newPage);  
+      }
+    };
+
+    $scope.currentPageForLeadDecisionPanding=0;
+    $scope.currentTypeForLeadDecisionPanding="";
+    $scope.clientStausListData=[];
+    $scope.leadDecisionPanding = function (value,page) {
       if (!value) {
         value = 'all'
       }
-      B2BDashboardService.leadDecisionPanding(value)
+      $scope.currentTypeForLeadDecisionPanding=value;
+      if(!page){
+        page=0;
+      }
+      $scope.currentPageForLeadDecisionPanding=page;
+      if($scope.clientStausListData.length==0){
+        $scope.clientStatusList();
+      }
+      B2BDashboardService.leadDecisionPanding(value,page)
         .then(function onSuccess(response) {
           $scope.leadDecisionPandingData = response.data.data.lead;
+          $scope.totalrecord = response.data.data.length;
+          $scope.itemsPerPageRecord = 20;
+          $scope.currentPage = page; 
+          
         });
     }
     $scope.isCheck = false;
@@ -684,11 +785,11 @@
         }
       }
     }
-
+    $scope.changeLeadTab('sync')
     $scope.setEntityType = function (value) {
       $scope.leadDecisionPanding(value)
     }
-
+    
     $scope.acceptDeclineDecisionPanding = function (index, value) {
       let data = [{
         "requirement_id": $scope.leadDecisionPandingData[index].requirement_id,
@@ -1202,7 +1303,6 @@
     }
 
     $scope.surveyLeadFilter('Leads');
-
     $scope.setButtonIndex = function (index,campaign_id,campaign_name) {
       $scope.buttonIndex = index;
       $scope.getPurchasedNotPurchasedLead(campaign_id,campaign_name) 
