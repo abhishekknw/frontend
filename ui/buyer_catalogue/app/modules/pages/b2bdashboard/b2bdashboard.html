@@ -419,7 +419,7 @@
                           <td class="alignment">{{decisionPanding.area}}</td>
                           <td class="alignment">{{decisionPanding.city}}</td>
                           <td class="alignment">
-                            <select ng-change="setValue(value8,Text)" class="form-control client-status" ng-model="value8">                           
+                            <select ng-change="setValue(value8,decisionPanding.client_comment,decisionPanding._id)" class="form-control client-status" ng-model="value8">                           
                               <option ng-repeat="option in listClientStatus" track by "$index">{{option}}</option>
                             </select>
                             <span style="display: none;">{{value8=value8?value8:decisionPanding.client_status}}</span>
@@ -1241,7 +1241,7 @@
                             </th>
                             <th style="width:200px;">Client Status</th>
                             <th style="width:200px;">Client Comment</th>
-                            <!-- <th>Action</th> -->
+                            <th>Action</th>
                           </tr>
                         </thead>
                         <tbody pagination-id="paginate2" dir-paginate="lead in purchasedNotPurchasedLead.values | itemsPerPage:purchasedNotPurchasedLeadPerPage" total-items="purchasedNotPurchasedLeadTotal" current-page="purchasedNotPurchasedLeadCurrent" track by "$index">
@@ -1283,7 +1283,7 @@
                               <span ng-if="!lead[24].value">NA</span>
                             </td> -->
                             <td class="col-md-2">
-                              <select ng-change="setValue(value8,Text)" class="form-control client-status" ng-model="value8">                           
+                              <select ng-change="setValue(value8,lead[0].macchadalo_client_comment,lead[0]._id)" class="form-control client-status" ng-model="value8">                           
                                 <option ng-repeat="option in listClientStatus" track by "$index">{{option}}</option>
                               </select>
                               <span style="display: none;">{{value8=value8?value8:lead[0].macchadalo_client_status}}
@@ -1296,6 +1296,8 @@
                             </td>
                             <!-- <td><button style="margin-top:8px" type="button" name="button" class="btn btn-danger"
                               ng-click="updateLeadClientStatus(lead[0].macchadalo_client_status,lead[0].macchadalo_client_comment,lead[0]._id)">Update</button></td> -->
+                              <td><button style="margin-top:8px; width: 92px !important; margin-right: -16px !important;" type="button" name="button" class="btn btn-danger"
+                              ng-click="showLeadDetail(lead[0]._id)">Detail</button></td>
                     </div>
                     </tr>
 
@@ -2323,6 +2325,10 @@
     .viewLeadstable .btn{
       width: 122px !important;
       margin-right: -50px !important;
+    }
+
+    .viewLeadstable-new th{
+      width: 200px !important;
     }
 
   </style>

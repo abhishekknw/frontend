@@ -567,14 +567,24 @@
     $scope.selectFlag=true;
     $scope.clientStatus="";
     $scope.clientComment="";
-    $scope.setValue = function (value) {
+    $scope.setValue = function (value,comment,id) {
       $scope.clientStatus=value;
+      if($scope.clientComment==""){
+        $scope.clientComment=comment;
+      }
       $scope.selectFlag=false;
+      $scope.updateLeadClientStatus($scope.clientStatus, $scope.clientComment,id);
     }
     $scope.valuechange=function(value1){
       //$scope.clientComment=value1;
     }
     
+    $scope.leadDetailData="";
+    $scope.showLeadDetail = function (id) {
+      alert(id)
+
+    }
+
     $scope.updateLeadClientStatus = function (status,comment,id) {
       if($scope.clientStatus==""){
         $scope.clientStatus=status;
@@ -771,6 +781,7 @@
       B2BDashboardService.leadDecisionPanding(value,page)
         .then(function onSuccess(response) {
           $scope.leadDecisionPandingData = response.data.data.lead;
+          console.log($scope.leadDecisionPandingData[0]);
           $scope.totalrecord = response.data.data.length;
           $scope.itemsPerPageRecord = 20;
           $scope.currentPage = page; 
