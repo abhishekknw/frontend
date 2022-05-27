@@ -1,0 +1,12 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "common.scss",
+        "theme/conf/_mixins.scss",
+        "theme/conf/colorScheme/_blur.scss",
+        "theme/conf/_variables.scss"
+    ],
+    "names": [],
+    "file": "common.css"
+}
