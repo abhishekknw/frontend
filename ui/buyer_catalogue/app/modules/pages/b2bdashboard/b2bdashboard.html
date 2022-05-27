@@ -1286,6 +1286,7 @@
                               <select ng-change="setValue(value8,lead[0].macchadalo_client_comment,lead[0]._id)" class="form-control client-status" ng-model="value8">                           
                                 <option ng-repeat="option in listClientStatus" track by "$index">{{option}}</option>
                               </select>
+                              <span>{{lead[0].updated_at}}</span>
                               <span style="display: none;">{{value8=value8?value8:lead[0].macchadalo_client_status}}
                             </td>
                             <!-- <td class="alignment">
@@ -2370,6 +2371,18 @@
                         <div>
                           <table class="table">
                             <tr>
+                              <th><h4>Sector : </h4></th>
+                              <td><h4>Sector : {{leadDetailDataList.sector.sector}}</h4></td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td><h4>Sub-Sector : {{leadDetailDataList.sector.subsector}}</h4></td>
+                            </tr>
+                          </table>
+                        </div><br>
+                        <div>
+                          <table class="table">
+                            <tr>
                               <th><h4>Lead Info :</h4></th>
                               <td><h4>L4 : {{leadDetailDataList.lead_info.L4}}</h4></td>
                             </tr>
@@ -2382,18 +2395,6 @@
                               <td><h4>L6 : {{leadDetailDataList.lead_info.L6}}</h4></td>
                             </tr>
                           </table>
-                      </div><br>
-                      <div>
-                        <table class="table">
-                          <tr>
-                            <th><h4>Sector : </h4></th>
-                            <td><h4>Sector : {{leadDetailDataList.sector.sector}}</h4></td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td><h4>Sub-Sector : {{leadDetailDataList.sector.subsector}}</h4></td>
-                          </tr>
-                        </table>
                       </div><br>
                       <div>
                         <table class="table">
