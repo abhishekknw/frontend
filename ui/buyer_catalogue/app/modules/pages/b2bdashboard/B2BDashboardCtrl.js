@@ -578,12 +578,14 @@
     $scope.valuechange=function(value1){
       //$scope.clientComment=value1;
     }
-    
-    $scope.leadDetailData="";
-    $scope.showLeadDetail = function (id) {
-      alert(id)
-
-    }
+    $scope.leadDetailDataList="";
+    $scope.showLeadDetail = function (_id) {
+      B2BDashboardService.showLeadDetail(_id)
+        .then(function onSuccess(response) {
+        $scope.leadDetailDataList = response.data.data;  
+        //console.log($scope.leadDetailDataList);               
+        });
+       }
 
     $scope.updateLeadClientStatus = function (status,comment,id) {
       if($scope.clientStatus==""){
@@ -781,7 +783,6 @@
       B2BDashboardService.leadDecisionPanding(value,page)
         .then(function onSuccess(response) {
           $scope.leadDecisionPandingData = response.data.data.lead;
-          console.log($scope.leadDecisionPandingData[0]);
           $scope.totalrecord = response.data.data.length;
           $scope.itemsPerPageRecord = 20;
           $scope.currentPage = page; 

@@ -507,6 +507,11 @@ angular.module('catalogueApp')
         var url = url_root + "b2b/client-status-list/";
         return machadaloHttp.get(url);
       }
+
+      DashboardService.showLeadDetail = function (_id) {
+        var url = url_root + "b2b/lead-details/?_id="+_id;
+        return machadaloHttp.get(url);
+      }
       
       DashboardService.listClientStatus = function () {
         var url = url_root + "b2b/machadalo-client-status-list/";

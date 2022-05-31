@@ -256,3 +256,15 @@ a.collapse-menu-link:hover {
         text-align: center !important;
     }
 }
+
+.modalForTAble{
+    table{
+        width: 100%;
+
+        tr{
+            th,td{
+                width: 50%;
+            }
+        }
+    }
+}

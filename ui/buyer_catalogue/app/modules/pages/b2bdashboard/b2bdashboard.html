@@ -1247,12 +1247,12 @@
                         <tbody pagination-id="paginate2" dir-paginate="lead in purchasedNotPurchasedLead.values | itemsPerPage:purchasedNotPurchasedLeadPerPage" total-items="purchasedNotPurchasedLeadTotal" current-page="purchasedNotPurchasedLeadCurrent" track by "$index">
                           <tr>
                             <td  >{{$index + 1}}</td>
-                            <td  class="col-md-2"
+                            <td  class="col-md-2" ng-repeat="leadDetail in lead" ng-hide="$first"
                               >
-                              <span ng-if="lead[1].value">{{lead[1].value}}</span>
-                              <span ng-if="!lead[1].value">NA</span>
+                              <span ng-if="leadDetail.value">{{leadDetail.value}}</span>
+                              <span ng-if="!leadDetail.value">NA</span>
                             </td>
-                            <td  class="col-md-2"
+                            <!-- <td  class="col-md-2"
                               >
                               <span ng-if="lead[2].value">{{lead[2].value}}</span>
                               <span ng-if="!lead[2].value">NA</span>
@@ -1276,7 +1276,7 @@
                               >
                               <span ng-if="lead[6].value">{{lead[6].value}}</span>
                               <span ng-if="!lead[6].value">NA</span>
-                            </td>
+                            </td> -->
                             <!-- <td  class="col-md-2"
                               >
                               <span ng-if="lead[24].value">{{lead[24].value}}</span>
@@ -1286,6 +1286,7 @@
                               <select ng-change="setValue(value8,lead[0].macchadalo_client_comment,lead[0]._id)" class="form-control client-status" ng-model="value8">                           
                                 <option ng-repeat="option in listClientStatus" track by "$index">{{option}}</option>
                               </select>
+                              <span>{{lead[0].updated_at}}</span>
                               <span style="display: none;">{{value8=value8?value8:lead[0].macchadalo_client_status}}
                             </td>
                             <!-- <td class="alignment">
@@ -1297,7 +1298,7 @@
                             <!-- <td><button style="margin-top:8px" type="button" name="button" class="btn btn-danger"
                               ng-click="updateLeadClientStatus(lead[0].macchadalo_client_status,lead[0].macchadalo_client_comment,lead[0]._id)">Update</button></td> -->
                               <td><button style="margin-top:8px; width: 92px !important; margin-right: -16px !important;" type="button" name="button" class="btn btn-danger"
-                              ng-click="showLeadDetail(lead[0]._id)">Detail</button></td>
+                              ng-click="showLeadDetail(lead[0]._id)" data-toggle="modal" data-target="#myModal">Detail</button></td>
                     </div>
                     </tr>
 
@@ -2331,7 +2332,119 @@
       width: 200px !important;
     }
 
+
+.modalForTAble .modal-body{
+  padding: 10px 0;
+}
+.modalForTAble table{
+     width: 100%;
+}
+
+.modalForTAble table h4{
+     margin:0;
+}
+
+.modalForTAble table tr th,.modalForTAble table tr td{
+  width: 50%;
+  background-color: unset;
+  vertical-align: middle;
+  text-align: left;
+  color: #000000;
+  padding: 6px 10px;
+  border:1px solid #eee;
+}
+
   </style>
+
+
+
+        <!-- Modal -->
+        <div class="modal fade modalForTAble" id="myModal" role="dialog">
+          <div class="modal-dialog modal-md">
+              <div class="modal-content">
+                  <div style="background-color: #8e1921; color:#FFFFFF;" class="modal-header">
+                      <button style="color:#FFFFFF;" type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h2 class="modal-title">Lead Details</h2>
+                  </div>
+                  <div style="padding:15px;" class="modal-body">
+                      <div>
+                        <div>
+                          <table class="table">
+                            <tr>
+                              <th><h4>Sector : </h4></th>
+                              <td><h4>Sector : {{leadDetailDataList.sector.sector}}</h4></td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td><h4>Sub-Sector : {{leadDetailDataList.sector.subsector}}</h4></td>
+                            </tr>
+                          </table>
+                        </div><br>
+                        <div>
+                          <table class="table">
+                            <tr>
+                              <th><h4>Lead Info :</h4></th>
+                              <td><h4>L4 : {{leadDetailDataList.lead_info.L4}}</h4></td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td><h4>L5 : {{leadDetailDataList.lead_info.L5}}</h4></td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td><h4>L6 : {{leadDetailDataList.lead_info.L6}}</h4></td>
+                            </tr>
+                          </table>
+                      </div><br>
+                      <div>
+                        <table class="table">
+                          <tr>
+                            <th><h4>User Info:</h4></th>
+                            <td><h4>Name : {{leadDetailDataList.user_info.name}}</h4></td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td><h4>Contact No. : {{leadDetailDataList.user_info.number}}</h4></td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td><h4>Designation : {{leadDetailDataList.user_info.designation}}</h4></td>
+                          </tr>
+                        </table>
+                      </div><br>
+                          <div>
+                            <table class="table">
+                              <tr>
+                                <th><h4>Address :</h4></th>
+                                <td><h4 style="line-height:1.5;">{{leadDetailDataList.adress_details.address}}</h4></td>
+                              </tr>
+                              <tr>
+                                <td></td>
+                                <td><h4>Area : {{leadDetailDataList.adress_details.area}}</h4></td>
+                              </tr>
+                              <tr>
+                                <td></td>
+                                <td><h4>City : {{leadDetailDataList.adress_details.city}}</h4></td>
+                              </tr>
+                              <tr>
+                                <td></td>
+                                <td><h4>State : {{leadDetailDataList.adress_details.state}}</h4></td>
+                              </tr>
+                              <tr>
+                                <td></td>
+                                <td><h4>Country : {{leadDetailDataList.adress_details.country}}</h4></td>
+                              </tr>
+                              <tr>
+                                <td></td>
+                                <td><h4>Pin Code : {{leadDetailDataList.adress_details.pincode}}</h4></td>
+                              </tr>
+                             </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
 </body>
 
 </html>
