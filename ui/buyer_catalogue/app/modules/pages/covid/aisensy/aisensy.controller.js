@@ -216,18 +216,18 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                             console.log(response)
 
                             $scope.userDetailData = response.data.data;
-                            console.log('ooooooooooo', $scope.userDetailData);
+                            $scope.userChatPayload= $scope.userDetailData.payload;
+                            console.log('ooooooooooo', $scope.userChatPayload);
                         }).catch(function onError(response) {
                             console.log(response);
                         })
                     AuthService.getAllUserChatData(param)
                         .then(function onSuccess(response) {
-                            console.log(response)
                             $scope.userChatData = response.data.data;
+                            console.log("userChatDAta",$scope.userChatData);
                             $scope.totalCount = $scope.userChatData.total_count;
                             if ($scope.totalCount > 20) {
                                 let count = $scope.totalCount / 20;
-                                console.log('AAAAAAAAAAAAAAAAAAa',);
                                 if ($scope.pageCount < count) {
                                     $scope.disableNextPagebutton = true;
                                 }

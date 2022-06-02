@@ -1846,7 +1846,7 @@
                           ng-change="checkBoxAutoCheck(key,$index)" ng-model="subrequirement.current_company"
                           style="width:100px;">
                           <option value="" disabled>Select Current Partner</option>
-                          <option ng-repeat="cpartner in companiesDetailData track by $index"
+                          <option  ng-repeat="cpartner in companiesDetailData track by $index"
                             value="{{cpartner.organisation_id}}">
                             {{cpartner.name}}
                           </option>
@@ -1871,7 +1871,7 @@
                           selected-model="subrequirement.selected_preferred_company_sub_sector"
                           ng-click="subSectorPreferredMulticheck(key,$index)" translation-texts="selected_business_type"
                           events="events"></span>
-                          <span ng-repeat="selectedName in subrequirement.selected_preferred_company_sub_sector" class="custom-dropdown" style="text-align: left; display: inline-block">
+                          <span ng-if="" ng-repeat="selectedName in options" style="text-align: left; display: inline-block">
                             {{selectedName.name}}
                             <span ng-if="!$last">,</span>
                           </span>
@@ -1884,7 +1884,7 @@
                       <td class="alignment">
                         <span>
                           <textarea placeholder="L4 Answer" class="form-control" style="width:150px;"
-                          value="{{subrequirement.L4}}" ng-model="subrequirement.l1_answers"
+                          value="{{subrequirement.L4}}" ng-model="subrequirement.L4"
                           rows="4" cols="50">
                           </textarea>
                         </span>
@@ -1901,7 +1901,7 @@
                         </span> -->
                         <span>
                           <textarea placeholder="L5 Answer" class="form-control" style="width:150px;"
-                          value="{{subrequirement.L5}}" ng-model="subrequirement.l1_answer_2"
+                          value="{{subrequirement.L5}}" ng-model="subrequirement.L5"
                           rows="4" cols="50">
                           </textarea>
                         </span>
@@ -1911,7 +1911,7 @@
                       <td class="alignment">
                         <span >
                           <textarea placeholder="L6 Answer"
-                          class="form-control" style="width:150px;" value="{{subrequirement.L6}}" ng-model="subrequirement.l2_answers"
+                          class="form-control" style="width:150px;" value="{{subrequirement.L6}}" ng-model="subrequirement.L6"
                           ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
                             </textarea>
                         </span>

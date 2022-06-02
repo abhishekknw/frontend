@@ -1296,6 +1296,8 @@ angular.module('catalogueApp')
             .then(function onSuccess(response) {
               $scope.requirementDetailData = response.data.data.requirements;
               $scope.companiesDetailData = response.data.data.companies;
+              console.log($scope.requirementDetailData);
+              console.log($scope.companiesDetailData);
               for (let k in $scope.companiesDetailData) {
                 $scope.companiesDetailData[k].id = $scope.companiesDetailData[k].organisation_id;
                 $scope.companiesDetailData[k].label = $scope.companiesDetailData[k].name;
@@ -1418,9 +1420,10 @@ angular.module('catalogueApp')
           releaseCampaignService.requirementBrowsedData(id)
             .then(function onSuccess(response) {
               $scope.browsedDetailData = response.data.data.browsed;
+              //console.log($scope.browsedDetailData);
 
               $scope.companiesDetailDataBrowsed = response.data.data.companies;
-              console.log($scope.companiesDetailDataBrowsed);
+              //console.log("current partnerData",$scope.companiesDetailDataBrowsed);
               for (let k in $scope.companiesDetailDataBrowsed) {
                 $scope.companiesDetailDataBrowsed[k].id = $scope.companiesDetailDataBrowsed[k].organisation_id;
                 $scope.companiesDetailDataBrowsed[k].label = $scope.companiesDetailDataBrowsed[k].name;
@@ -2171,11 +2174,7 @@ angular.module('catalogueApp')
 
         $scope.updateSubSectorRow = function (data,l4,l5,l6) {
           let updateData = [];
-          data.l1_answers=l4;
-          data.l1_answer_2=l5;
-          data.l2_answers=l6;
-          console.log(data.l1_answers, data.l1_answer_2,data.l2_answers);
-          console.log(data);
+          console.log(data['L4.1']);
           if (data.current_company == "") {
             data.current_company = null
           } else {
