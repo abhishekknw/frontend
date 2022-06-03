@@ -1301,6 +1301,7 @@ angular.module('catalogueApp')
               for (let k in $scope.companiesDetailData) {
                 $scope.companiesDetailData[k].id = $scope.companiesDetailData[k].organisation_id;
                 $scope.companiesDetailData[k].label = $scope.companiesDetailData[k].name;
+                $scope.companiesDetailData[k].sector = $scope.companiesDetailData[k].business_type[0];
                 if (k == response.data.data.companies.length - 1) {
                   $scope.companiesDetailData.push({ id: 'other', label: 'other', organisation_id: '', name: 'other' })
                 }
@@ -2505,7 +2506,6 @@ angular.module('catalogueApp')
              } else {
               current_patner_other = null;
              }
-
               browsedData.push({'_id':$scope.browsedDetailData[i]._id,
               'comment':$scope.browsedDetailData[i].comment,
               'meating_timeline':$scope.browsedDetailData[i].meating_timeline,
