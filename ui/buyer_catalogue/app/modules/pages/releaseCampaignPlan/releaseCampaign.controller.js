@@ -228,7 +228,6 @@ angular.module('catalogueApp')
           { header: 'Reason' },
           { header: 'Action' },
         ];
-
         $scope.requirement_browsed_headings = [
           { header: '' },
           { header: 'Sector' },
@@ -308,7 +307,6 @@ angular.module('catalogueApp')
         $scope.clear = function () {
           $scope.dt = null;
         };
-
         $scope.maxDate = new Date(2020, 5, 22);
         $scope.today = new Date();
         $scope.popup1 = false;
@@ -1287,7 +1285,6 @@ angular.module('catalogueApp')
           $scope.disableRestore = false
           $scope.supplierName = suppleName;
           $scope.shortlisted_spaces_id = id
-
           userService.getSector()
             .then(function onSuccess(response) {
               $scope.sectorList = response.data;
@@ -1296,8 +1293,6 @@ angular.module('catalogueApp')
             .then(function onSuccess(response) {
               $scope.requirementDetailData = response.data.data.requirements;
               $scope.companiesDetailData = response.data.data.companies;
-              console.log($scope.requirementDetailData);
-              console.log($scope.companiesDetailData);
               for (let k in $scope.companiesDetailData) {
                 $scope.companiesDetailData[k].id = $scope.companiesDetailData[k].organisation_id;
                 $scope.companiesDetailData[k].label = $scope.companiesDetailData[k].name;
@@ -1542,7 +1537,38 @@ angular.module('catalogueApp')
             $scope.requirementDetailData[key].requirements[index].otherPreferredCompany = false
           }
         }
-
+        
+        $scope.companiesDetailDataArray=[];
+        $scope.companyData=function(id){
+          var i=0;
+          for (let k in $scope.companiesDetailData) {
+            if($scope.companiesDetailData[k].business_type!==undefined){
+              if(id==$scope.companiesDetailData[k].business_type[0]){
+                $scope.companiesDetailDataArray[i]=$scope.companiesDetailData[k];
+                $scope.companiesDetailDataArray[i].id = $scope.companiesDetailData[k].organisation_id;
+                $scope.companiesDetailDataArray[i].label = $scope.companiesDetailData[k].name;
+                $scope.companiesDetailDataArray[i].sector = $scope.companiesDetailData[k].business_type[0];
+                i++;
+              }
+            }
+          }
+        }
+        $scope.companiesBrowseDetailDataArray=[];
+        $scope.companyBrowseData=function(id){
+          var i=0;
+          for (let k in $scope.companiesDetailDataBrowsed) {
+            if($scope.companiesDetailDataBrowsed[k].business_type!==undefined){
+              if(id==$scope.companiesDetailDataBrowsed[k].business_type[0]){
+                $scope.companiesBrowseDetailDataArray[i]=$scope.companiesDetailDataBrowsed[k];
+                $scope.companiesBrowseDetailDataArray[i].id = $scope.companiesDetailDataBrowsed[k].organisation_id;
+                $scope.companiesBrowseDetailDataArray[i].label = $scope.companiesDetailDataBrowsed[k].name;
+                $scope.companiesBrowseDetailDataArray[i].sector = $scope.companiesDetailDataBrowsed[k].business_type[0];
+                i++;
+              }
+            }
+          }
+        }
+        
         $scope.checkBoxAutoCheck = function (key, index) {
           $scope.requirementDetailData[key].requirements[index].requirementCheck = true;
           $scope.checkbooxCheck(key);
@@ -2588,7 +2614,6 @@ angular.module('catalogueApp')
 
         $scope.updateBrowsed = function () {
           let browsedData = [];
-         
           for (let i in $scope.browsedDetailData) {
             if ($scope.browsedDetailData[i].browsedCheck) {
               let preferred_company_other = null;
