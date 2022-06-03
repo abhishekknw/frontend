@@ -657,7 +657,7 @@
 
   .nav-phone {
     width: 100%;
-    height: 50px;
+    height: 80px;
     background-color: #00966c;
     box-shadow: 0 1px 11px #0000004d;
     padding: 4px;
@@ -1488,7 +1488,7 @@
                                     {{userChatData.whatsapp_name.length > 15 ? '...' :
                                     ''}}</span><br />
                                   <span
-                                    class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+                                    class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}}</span>
                                 </center>
                                 <div class="profile-image-chat">
                                   <span>
@@ -1735,15 +1735,16 @@
                                 </span>
                                 <span ng-if="userChatData.whatsapp_name==''">#</span>
                               </div> -->
-
                               <div ng-if="userChatData.whatsapp_name!=''">
                                 <center>
                                   <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
                                     {{userChatData.whatsapp_name.length > 15 ? '...' :
                                     ''}}</span><br />
                                   <span
-                                    class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
-                                </center>
+                                    class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}}</span>
+                                     <!-- <span
+                                    class="tel-number profile-heading">{{userDetailPayload.area})</span> -->
+                                  </center>
                                 <div class="profile-image-chat">
                                   <span>
                                     {{userChatData.whatsapp_name |firstlater}}
@@ -1978,7 +1979,7 @@
                                     {{userChatData.whatsapp_name.length > 15 ? '...' :
                                     ''}}</span><br />
                                   <span
-                                    class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}})</span>
+                                    class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}}</span>
                                 </center>
                                 <div class="profile-image-chat">
                                   <span>
@@ -2258,6 +2259,42 @@
                               {{userDetailData.updated_at | date :
                               'medium'}}</span>
                           </div>
+                          <div class="info-row-mca">
+                            <label class="infolable-mca">City Name:</label>
+                            <span>
+                              {{userChatPayload.city}}</span>
+                          </div>
+                          <div class="info-row-mca">
+                            <label class="infolable-mca">Area:</label>
+                            <span>
+                              {{userChatPayload.area}}</span>
+                          </div>
+                          <div class="info-row-mca">
+                            <label class="infolable-mca">pincode:</label>
+                            <span>
+                              {{userChatPayload.pincode}}</span>
+                          </div>
+                          <div class="info-row-mca">
+                            <label class="infolable-mca">Primary Count:</label>
+                            <span>
+                              {{userChatPayload.primary_count}}</span>
+                          </div>
+                          <div class="info-row-mca">
+                            <label class="infolable-mca">society Name:</label>
+                            <span>
+                              {{userChatPayload.society_name}}</span>
+                          </div>
+                          <div class="info-row-mca">
+                            <label class="infolable-mca">Society Type Quality:</label>
+                            <span>
+                              {{userChatPayload.society_type_quality}}</span>
+                          </div>
+                          <div class="info-row-mca">
+                            <label class="infolable-mca">Type Of Entity</label>
+                            <span>
+                              {{userChatPayload.type_of_entity}}</span>
+                          </div>
+
 
 
 

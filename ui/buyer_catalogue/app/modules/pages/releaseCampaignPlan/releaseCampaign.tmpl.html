@@ -1830,7 +1830,8 @@
                       ng-repeat-start="subrequirement in requirement.requirements">
                       <td ng-style="{'background-color': subrequirement.color_class}" class="input_td_req11"> </td>
                       <td ng-style="{'background-color': subrequirement.color_class}" class="input_td_req">
-                        <input type="checkbox" ng-disabled="subrequirement.varified_ops == 'yes'"
+                        <!-- <input type="checkbox" ng-disabled="subrequirement.varified_ops == 'yes'" -->
+                        <input type="checkbox"
                           name="requirementCheck" id="requirementCheckId" ng-click="checkbooxCheck(key,$index)"
                           ng-model="subrequirement.requirementCheck">
                       </td>
@@ -1838,20 +1839,20 @@
                         {{subrequirement.sub_sector_name}}
                       </td>
                       <td class="alignment">
-                        <select class="form-control"
-                          ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
+                        <!-- <select class="form-control"
+                          ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'" -->
+                          <select class="form-control"
                           name="current_company_{{$index}}" id="current_company_id_{{$index}}"
                           ng-change="checkBoxAutoCheck(key,$index)" ng-model="subrequirement.current_company"
                           style="width:100px;">
                           <option value="" disabled>Select Current Partner</option>
-                          <option ng-repeat="cpartner in companiesDetailData track by $index"
+                          <option  ng-if="subrequirement.sector==cpartner.sector || (subrequirement.sector==null)" ng-repeat="cpartner in companiesDetailData track by $index"
                             value="{{cpartner.organisation_id}}">
                             {{cpartner.name}}
                           </option>
                         </select>
                         <input style="margin-top:10px" type="text" ng-change="checkBoxAutoCheck(key,$index)"
                           class="form-control" placeholder="Other Current Company"
-                          ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
                           ng-if="subrequirement.current_company == ''" name="currentCompanyOther"
                           id="currentCompanyOtherId" ng-model="subrequirement.current_company_other">
                       </td>
@@ -1865,43 +1866,85 @@
 
                       <td class="alignment">
                         <span style="width:150px;"
-                          disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
                           class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;"
                           ng-dropdown-multiselect="" options="companiesDetailData" extra-settings="settings"
                           selected-model="subrequirement.selected_preferred_company_sub_sector"
                           ng-click="subSectorPreferredMulticheck(key,$index)" translation-texts="selected_business_type"
                           events="events"></span>
-                          <span ng-repeat="selectedName in subrequirement.selected_preferred_company_sub_sector" class="custom-dropdown" style="text-align: left; display: inline-block">
+                          <span ng-repeat="selectedName in options" style="text-align: left; display: inline-block">
                             {{selectedName.name}}
                             <span ng-if="!$last">,</span>
                           </span>
                         <input style="margin-top:10px" ng-change="checkBoxAutoCheck(key,$index)" type="text"
                           class="form-control" placeholder="Other Preferred Company"
-                          ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
                           ng-if="subrequirement.otherPreferredCompany" name="other_preferred_company" id="other_preferred_company"
                           ng-model="subrequirement.preferred_company_other">
                       </td>
 
                       <td class="alignment">
-                        <span ng-if="subrequirement.l1_answers || subrequirement.l1_answer_2">{{subrequirement.l1_answers}}
-                          <p>{{subrequirement.l1_answer_2}}</p>
+                        <span>
+                          <textarea placeholder="L4 Answer" class="form-control" style="width:150px;"
+                          value="{{subrequirement.L4}}" ng-model="subrequirement.L4"
+                          rows="4" cols="50">
+                          </textarea>
                         </span>
-                        <span ng-if="!subrequirement.l1_answers && !subrequirement.l1_answer_2">NA</span>
+                        <!-- <span ng-if="subrequirement.l1_answers">{{subrequirement.l1_answers}}
+                          <p>{{subrequirement.l1_answer_2}}</p>
+                        </span> -->
+                        <!-- <span ng-if="!subrequirement.l1_answers">NA</span> -->
 
                       </td>
 
                       <td class="alignment">
-                        <span ng-if="subrequirement.l2_answers || subrequirement.l2_answer_2">{{subrequirement.l2_answers}}
-                          <p>{{subrequirement.l2_answer_2}}</p>
+                        <!-- <span ng-if="subrequirement.l2_answers || subrequirement.l2_answer_2">{{subrequirement.l2_answers}}
+                          <p>{{subrequirement.l1_answer_2}}</p>
+                        </span> -->
+                        <span>
+                          <textarea placeholder="L5 Answer" class="form-control" style="width:150px;"
+                          value="{{subrequirement.L5}}" ng-model="subrequirement.L5"
+                          rows="4" cols="50">
+                          </textarea>
                         </span>
-                        <span ng-if="!subrequirement.l2_answers && !subrequirement.l2_answer_2">NA</span>
+                        <!-- <span ng-if="!subrequirement.l1_answer_2">NA</span> -->
                       </td>
 
                       <td class="alignment">
                         <span >
-                          <textarea placeholder="L3 Answer"
-                          ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
-                          class="form-control" style="width:150px;" ng-model="subrequirement.l3_answer_1"
+                          <textarea placeholder="L6 Answer"
+                          class="form-control" style="width:150px;" value="{{subrequirement.L6}}" ng-model="subrequirement.L6"
+                          ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
+                            </textarea>
+                        </span>
+                        
+
+                      </td>
+
+                      <td class="alignment">
+                        <span >
+                          <textarea placeholder="L4.1 Answer"
+                          class="form-control" style="width:150px;" value="{{subrequirement["L4.1"]}}" ng-model="subrequirement['L4.1']"
+                          ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
+                            </textarea>
+                        </span>
+                        
+
+                      </td>
+
+                      <td class="alignment">
+                        <span >
+                          <textarea placeholder="L5.1 Answer"
+                          class="form-control" style="width:150px;"  value="{{subrequirement["L5.1"]}}" ng-model="subrequirement['L5.1']"
+                          ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
+                            </textarea>
+                        </span>
+                        
+
+                      </td>
+
+                      <td class="alignment">
+                        <span >
+                          <textarea placeholder="L6.1 Answer"
+                          class="form-control" style="width:150px;"  value="{{subrequirement["L6.1"]}}" ng-model="subrequirement['L6.1']"
                           ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
                             </textarea>
                         </span>
@@ -1911,7 +1954,6 @@
 
                       <td class="alignment">
                         <select class="form-control"
-                          ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
                           name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
                           ng-model="subrequirement.impl_timeline" ng-change="checkBoxAutoCheck(key,$index)"
                           style="width:150px;">
@@ -1925,7 +1967,6 @@
 
                       <td class="alignment">
                         <select class="form-control" name="meating_time_{{$index}}"
-                          ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
                           id="meating_time_id_{{$index}}" ng-model="subrequirement.meating_timeline"
                           ng-change="checkBoxAutoCheck(key,$index)" style="width:150px;">
                           <option value="" disabled>Select Meeting Time</option>
@@ -1951,7 +1992,6 @@
 
                       <td class="alignment">
                         <textarea placeholder="Comments"
-                          ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
                           class="form-control" style="width:150px;" ng-model="subrequirement.comment"
                           ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
                                     </textarea>
@@ -1959,7 +1999,6 @@
 
                       <td class="alignment">
                         <textarea placeholder="Internal Comments"
-                          ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
                           class="form-control" style="width:150px;" ng-model="subrequirement.internal_comment"
                           ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
                                     </textarea>
@@ -1974,7 +2013,6 @@
 
                       <td class="alignment">
                         <select class="form-control"
-                          ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
                           name="call_back_time_{{$index}}" id="call_back_time_id_{{$index}}"
                           ng-model="subrequirement.call_back_preference" ng-change="checkBoxAutoCheck(key,$index)"
                           style="width:150px;">
@@ -1987,7 +2025,7 @@
                       </td>
 
                       <td class="alignment">
-                      <input type="number" ng-change="checkBoxAutoCheck(key,$index)" ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'" ng-model="subrequirement.lead_price" name="lead_price" class="form-control" placeholder="Price" id="price_id"
+                      <input type="number" ng-change="checkBoxAutoCheck(key,$index)"  ng-model="subrequirement.lead_price" name="lead_price" class="form-control" placeholder="Price" id="price_id"
                       style="width:150px;">
                       <span ng-if="subrequirement.lead_price">Price (Points): {{subrequirement.lead_price}}</span>
                       </td>
@@ -2011,12 +2049,11 @@
                         <span ng-if="subrequirement.varified_ops == 'yes'">Ops Verified </span>
 
                         <button style="margin-top:10px" class="btn btn-success"
-                          ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
                           type="button" name="button" class="btn btn-success"
-                          ng-click="updateSubSectorRow(subrequirement)">Update</button>
+                          ng-click="updateSubSectorRow(subrequirement,subrequirement.l1_answers,subrequirement.l1_answer_2,subrequirement.l2_answers)">Update</button>
 
                         <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
-                          ng-if="subrequirement.color_class != 'red'" ng-disabled="subrequirement.varified_ops == 'yes'"
+                          ng-if="subrequirement.color_class != 'red'" 
                           ng-click="singleRemoveSubSector(subrequirement.id,key,$index)">Remove</button>
 
                         <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
@@ -2036,7 +2073,7 @@
                           ng-click="updateSubSector(requirement.requirements)">Update</button>
       
                           <button  style="margin-bottom:2px" id="verify_{{key}}" type="button" name="button"
-                          class="btn btn-success" ng-disabled="subSectorCheck || opsVerifyButtonDiable || updateDisable"
+                          class="btn btn-success" ng-disabled="subSectorCheck || updateDisable"
                           ng-click="checkOpsVerifyRequirement(requirement.requirements)"><span
                             ng-if="!opsVerifyButtonDiable">Ops Verify</span>
                           <span ng-if="opsVerifyButtonDiable">Ops Verified</span></button>
@@ -2092,7 +2129,7 @@
                           id="browsedCheckId" ng-model="browsed.browsedCheck">
                       </td>
                       <td class="alignment">
-                        {{browsed.sector_name}}
+                        {{sectorName(browsed.sector_id)}}
                       </td>
 
                       <td class="alignment">
@@ -2106,7 +2143,7 @@
                           id="current_company_id_{{$index}}" ng-change="browsCheckBoxAutoCheck($index)"
                           ng-model="browsed.current_patner_id" style="width:100px;">
                           <option value="" disabled>Select Current Partner</option>
-                          <option ng-repeat="cpartner in companiesDetailDataBrowsed track by $index"
+                          <option ng-if="browsed.sector_id==cpartner.sector || (browsed.sector_id==null)" ng-repeat="cpartner in companiesDetailDataBrowsed track by $index"
                             value="{{cpartner.organisation_id}}">
                             {{cpartner.name}}
                           </option>

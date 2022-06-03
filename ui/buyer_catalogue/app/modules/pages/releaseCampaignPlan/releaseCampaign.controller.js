@@ -170,9 +170,12 @@ angular.module('catalogueApp')
           { header: 'Current Partner' },
           { header: 'FeedBack' },
           { header: 'Preferred Partner' },
-          { header: 'L1 Answers' },
-          { header: 'L2 Answers' },
-          { header: 'L3 Answers' },
+          { header: 'L4 Answers' },
+          { header: 'L5 Answers' },
+          { header: 'L6 Answers' },
+          { header: 'L4.1 Answers' },
+          { header: 'L5.1 Answers' },
+          { header: 'L6.1 Answers' },
           { header: 'Implementation Time' },
           { header: 'Meeting Time' },
           // { header: 'Preferred Meeting Time' },
@@ -1293,9 +1296,12 @@ angular.module('catalogueApp')
             .then(function onSuccess(response) {
               $scope.requirementDetailData = response.data.data.requirements;
               $scope.companiesDetailData = response.data.data.companies;
+              console.log($scope.requirementDetailData);
+              console.log($scope.companiesDetailData);
               for (let k in $scope.companiesDetailData) {
                 $scope.companiesDetailData[k].id = $scope.companiesDetailData[k].organisation_id;
                 $scope.companiesDetailData[k].label = $scope.companiesDetailData[k].name;
+                $scope.companiesDetailData[k].sector = $scope.companiesDetailData[k].business_type[0];
                 if (k == response.data.data.companies.length - 1) {
                   $scope.companiesDetailData.push({ id: 'other', label: 'other', organisation_id: '', name: 'other' })
                 }
@@ -1415,11 +1421,14 @@ angular.module('catalogueApp')
           releaseCampaignService.requirementBrowsedData(id)
             .then(function onSuccess(response) {
               $scope.browsedDetailData = response.data.data.browsed;
+              //console.log($scope.browsedDetailData);
 
               $scope.companiesDetailDataBrowsed = response.data.data.companies;
+              //console.log("current partnerData",$scope.companiesDetailDataBrowsed);
               for (let k in $scope.companiesDetailDataBrowsed) {
                 $scope.companiesDetailDataBrowsed[k].id = $scope.companiesDetailDataBrowsed[k].organisation_id;
                 $scope.companiesDetailDataBrowsed[k].label = $scope.companiesDetailDataBrowsed[k].name;
+                $scope.companiesDetailDataBrowsed[k].sector= $scope.companiesDetailDataBrowsed[k].business_type[0];
                 if (k == response.data.data.companies.length - 1) {
                   $scope.companiesDetailDataBrowsed.push({ id: 'other', label: 'other', organisation_id: '', name: 'other' })
                 }
@@ -1454,14 +1463,16 @@ angular.module('catalogueApp')
                 userService.getSector()
                 .then(function onSuccess(response) {
                   $scope.sectorList = response.data;
+                  console.log($scope.sectorList[1].business_type);
                 });
                 //start added sector name
                 if ($scope.sectorList) {
                   var localindex_indexs = $scope.sectorList.map(function (el) {
                     return el.id;
-                  }).indexOf(JSON.parse($scope.browsedDetailData[i].sector_id));
+                  }).indexOf($scope.browsedDetailData[i].sector_id);
                   if (localindex_indexs != -1) {
                     $scope.browsedDetailData[i].sector_name = $scope.sectorList[localindex_indexs].business_type
+                    console.log($scope.browsedDetailData);
                   }
                 }
                 //end added sector name
@@ -2162,8 +2173,9 @@ angular.module('catalogueApp')
           }
         }
 
-        $scope.updateSubSectorRow = function (data) {
+        $scope.updateSubSectorRow = function (data,l4,l5,l6) {
           let updateData = [];
+          console.log(data['L4.1']);
           if (data.current_company == "") {
             data.current_company = null
           } else {
@@ -2494,7 +2506,6 @@ angular.module('catalogueApp')
              } else {
               current_patner_other = null;
              }
-
               browsedData.push({'_id':$scope.browsedDetailData[i]._id,
               'comment':$scope.browsedDetailData[i].comment,
               'meating_timeline':$scope.browsedDetailData[i].meating_timeline,
@@ -2790,6 +2801,18 @@ angular.module('catalogueApp')
         }
 
 
+        $scope.sectorName= function(id){
+          if(id!=null){
+            for (var k in $scope.sectorList){
+              if($scope.sectorList[k].id==id){
+                return $scope.sectorList[k].business_type;
+              }
+            }
+          }
+          else{
+            return 'NA';
+          }
+        }
 
         $scope.selected_preferred_partner = { buttonDefaultText: 'Select Preferred Partner' };
         $scope.addSubRequirementDetail = function (index) {
