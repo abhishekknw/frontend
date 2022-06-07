@@ -181,6 +181,11 @@
       var url = url_base_ui + "b2b/requirements/?shortlisted_spaces_id=" + id;
       return machadaloHttp.get(url);
     }
+        //Api for LeadDetails
+    releaseCampaignService.selectLeads = function(){
+      var url = url_base_ui + "b2b/question-dropdown-filter/";
+      return machadaloHttp.get(url);
+    }
 
     releaseCampaignService.updateRequirement = function(data){
       var url = url_base_ui + "b2b/requirements/";

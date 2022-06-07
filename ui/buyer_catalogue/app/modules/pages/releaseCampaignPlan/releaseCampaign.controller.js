@@ -270,7 +270,6 @@ angular.module('catalogueApp')
             campaign_id: '',
           }
 
-
         $scope.Relationship_Status = constants.relationship_status;
         $scope.invForComments = constants.inventoryNames;
         $scope.commentsType = constants.comments_type;
@@ -827,7 +826,10 @@ angular.module('catalogueApp')
         }
 
         $scope.detailedShow = [];
-        $scope.ShowDetailed = function (index) {
+        $scope.ShowDetailed = function (index,sector) {
+          $scope.sector_name=sector.toLowerCase();
+          // alert($scope.sector_name);
+          $scope.selectLeadData($scope.sector_name);
           $scope.oldIndex = index;
           $scope.$watch('oldIndex', function (newValue, oldValue) {
             if (newValue != oldValue) {
@@ -1289,6 +1291,11 @@ angular.module('catalogueApp')
             .then(function onSuccess(response) {
               $scope.sectorList = response.data;
             })
+          releaseCampaignService.selectLeads()
+          .then(function onSuccess(response) { 
+            $scope.leads_Data=response.data.data
+            // $scope.selectLeadData();
+          })    
           releaseCampaignService.requirementDetail(id)
             .then(function onSuccess(response) {
               $scope.requirementDetailData = response.data.data.requirements;
@@ -1411,6 +1418,23 @@ angular.module('catalogueApp')
             })
             $('#RequirementModel').modal('show');
         }
+        
+        
+        $scope.selectLeadData=function(data){
+          console.log($scope.leads_Data,data);
+          for(let i in $scope.leads_Data){
+            for (let j in $scope.leads_Data[i]){
+              if(data===j){
+                $scope.leads_Data=$scope.leads_Data[i][data];
+                break;
+              }
+            }
+          }
+        }
+        // $scope.selectedLead=function(Lead)
+        // {
+        //  console.log(Lead);
+        // }
 
         $scope.getRequirementBrowsedData = function (id) {
           releaseCampaignService.requirementBrowsedData(id)
@@ -1568,7 +1592,6 @@ angular.module('catalogueApp')
             }
           }
         }
-        
         $scope.checkBoxAutoCheck = function (key, index) {
           $scope.requirementDetailData[key].requirements[index].requirementCheck = true;
           $scope.checkbooxCheck(key);
@@ -2198,10 +2221,8 @@ angular.module('catalogueApp')
               })
           }
         }
-
         $scope.updateSubSectorRow = function (data,l4,l5,l6) {
           let updateData = [];
-          console.log(data['L4.1']);
           if (data.current_company == "") {
             data.current_company = null
           } else {
