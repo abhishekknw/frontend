@@ -228,7 +228,6 @@ angular.module('catalogueApp')
           { header: 'Reason' },
           { header: 'Action' },
         ];
-
         $scope.requirement_browsed_headings = [
           { header: '' },
           { header: 'Sector' },
@@ -271,7 +270,6 @@ angular.module('catalogueApp')
             campaign_id: '',
           }
 
-
         $scope.Relationship_Status = constants.relationship_status;
         $scope.invForComments = constants.inventoryNames;
         $scope.commentsType = constants.comments_type;
@@ -308,7 +306,6 @@ angular.module('catalogueApp')
         $scope.clear = function () {
           $scope.dt = null;
         };
-
         $scope.maxDate = new Date(2020, 5, 22);
         $scope.today = new Date();
         $scope.popup1 = false;
@@ -829,7 +826,10 @@ angular.module('catalogueApp')
         }
 
         $scope.detailedShow = [];
-        $scope.ShowDetailed = function (index) {
+        $scope.ShowDetailed = function (index,sector) {
+          $scope.sector_name=sector.toLowerCase();
+          // alert($scope.sector_name);
+          $scope.selectLeadData($scope.sector_name);
           $scope.oldIndex = index;
           $scope.$watch('oldIndex', function (newValue, oldValue) {
             if (newValue != oldValue) {
@@ -1287,17 +1287,19 @@ angular.module('catalogueApp')
           $scope.disableRestore = false
           $scope.supplierName = suppleName;
           $scope.shortlisted_spaces_id = id
-
           userService.getSector()
             .then(function onSuccess(response) {
               $scope.sectorList = response.data;
             })
+          releaseCampaignService.selectLeads()
+          .then(function onSuccess(response) { 
+            $scope.leads_Data=response.data.data
+            // $scope.selectLeadData();
+          })    
           releaseCampaignService.requirementDetail(id)
             .then(function onSuccess(response) {
               $scope.requirementDetailData = response.data.data.requirements;
               $scope.companiesDetailData = response.data.data.companies;
-              console.log($scope.requirementDetailData);
-              console.log($scope.companiesDetailData);
               for (let k in $scope.companiesDetailData) {
                 $scope.companiesDetailData[k].id = $scope.companiesDetailData[k].organisation_id;
                 $scope.companiesDetailData[k].label = $scope.companiesDetailData[k].name;
@@ -1416,6 +1418,23 @@ angular.module('catalogueApp')
             })
             $('#RequirementModel').modal('show');
         }
+        
+        
+        $scope.selectLeadData=function(data){
+          console.log($scope.leads_Data,data);
+          for(let i in $scope.leads_Data){
+            for (let j in $scope.leads_Data[i]){
+              if(data===j){
+                $scope.leads_Data=$scope.leads_Data[i][data];
+                break;
+              }
+            }
+          }
+        }
+        // $scope.selectedLead=function(Lead)
+        // {
+        //  console.log(Lead);
+        // }
 
         $scope.getRequirementBrowsedData = function (id) {
           releaseCampaignService.requirementBrowsedData(id)
@@ -1542,7 +1561,37 @@ angular.module('catalogueApp')
             $scope.requirementDetailData[key].requirements[index].otherPreferredCompany = false
           }
         }
-
+        
+        $scope.companiesDetailDataArray=[];
+        $scope.companyData=function(id){
+          var i=0;
+          for (let k in $scope.companiesDetailData) {
+            if($scope.companiesDetailData[k].business_type!==undefined){
+              if(id==$scope.companiesDetailData[k].business_type[0]){
+                $scope.companiesDetailDataArray[i]=$scope.companiesDetailData[k];
+                $scope.companiesDetailDataArray[i].id = $scope.companiesDetailData[k].organisation_id;
+                $scope.companiesDetailDataArray[i].label = $scope.companiesDetailData[k].name;
+                $scope.companiesDetailDataArray[i].sector = $scope.companiesDetailData[k].business_type[0];
+                i++;
+              }
+            }
+          }
+        }
+        $scope.companiesBrowseDetailDataArray=[];
+        $scope.companyBrowseData=function(id){
+          var i=0;
+          for (let k in $scope.companiesDetailDataBrowsed) {
+            if($scope.companiesDetailDataBrowsed[k].business_type!==undefined){
+              if(id==$scope.companiesDetailDataBrowsed[k].business_type[0]){
+                $scope.companiesBrowseDetailDataArray[i]=$scope.companiesDetailDataBrowsed[k];
+                $scope.companiesBrowseDetailDataArray[i].id = $scope.companiesDetailDataBrowsed[k].organisation_id;
+                $scope.companiesBrowseDetailDataArray[i].label = $scope.companiesDetailDataBrowsed[k].name;
+                $scope.companiesBrowseDetailDataArray[i].sector = $scope.companiesDetailDataBrowsed[k].business_type[0];
+                i++;
+              }
+            }
+          }
+        }
         $scope.checkBoxAutoCheck = function (key, index) {
           $scope.requirementDetailData[key].requirements[index].requirementCheck = true;
           $scope.checkbooxCheck(key);
@@ -2172,10 +2221,8 @@ angular.module('catalogueApp')
               })
           }
         }
-
         $scope.updateSubSectorRow = function (data,l4,l5,l6) {
           let updateData = [];
-          console.log(data['L4.1']);
           if (data.current_company == "") {
             data.current_company = null
           } else {
@@ -2588,7 +2635,6 @@ angular.module('catalogueApp')
 
         $scope.updateBrowsed = function () {
           let browsedData = [];
-         
           for (let i in $scope.browsedDetailData) {
             if ($scope.browsedDetailData[i].browsedCheck) {
               let preferred_company_other = null;

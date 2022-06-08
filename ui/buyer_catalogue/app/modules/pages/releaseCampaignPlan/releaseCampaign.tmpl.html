@@ -1818,9 +1818,9 @@
                   <tbody>
                     <tr ng-repeat-start="(key, requirement) in requirementDetailData">
                       <td class="alignment">
-                        <span ng-if="!detailedShow[key]" ng-click="ShowDetailed(key)"
+                        <span ng-if="!detailedShow[key]" ng-click="ShowDetailed(key,requirement.sector_name)"
                           class="glyphicon glyphicon-plus"></span>
-                        <span ng-if="detailedShow[key]" ng-click="ShowDetailed(key)"
+                        <span ng-if="detailedShow[key]" ng-click="ShowDetailed(key,requirement.sector_name)"
                           class="glyphicon glyphicon-minus"></span>
                       </td>
                       <td class="alignment">
@@ -1865,13 +1865,14 @@
                       </td>
 
                       <td class="alignment">
+                        {{companyData(subrequirement.sector)}}
                         <span style="width:150px;"
                           class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;"
-                          ng-dropdown-multiselect="" options="companiesDetailData" extra-settings="settings"
+                          ng-dropdown-multiselect="" options="companiesDetailDataArray" extra-settings="settings"
                           selected-model="subrequirement.selected_preferred_company_sub_sector"
                           ng-click="subSectorPreferredMulticheck(key,$index)" translation-texts="selected_business_type"
                           events="events"></span>
-                          <span ng-repeat="selectedName in options" style="text-align: left; display: inline-block">
+                          <span ng-repeat="selectedName in subrequirement.selected_preferred_company_sub_sector" style="text-align: left; display: inline-block">
                             {{selectedName.name}}
                             <span ng-if="!$last">,</span>
                           </span>
@@ -1882,39 +1883,65 @@
                       </td>
 
                       <td class="alignment">
-                        <span>
+                        <!-- <span>
                           <textarea placeholder="L4 Answer" class="form-control" style="width:150px;"
                           value="{{subrequirement.L4}}" ng-model="subrequirement.L4"
                           rows="4" cols="50">
                           </textarea>
-                        </span>
+                        </span> -->
+                        <select class="form-control"
+                          name="lead_L4" id="lead_L4"
+                          ng-model="subrequirement.L4"
+                          style="width:150px;">
+                          <option ng-repeat="lead_L4 in leads_Data.L4"
+                            value="{{lead_L4}}">
+                            {{lead_L4}}
+                          </option>
+                        </select>
+                        </td>
                         <!-- <span ng-if="subrequirement.l1_answers">{{subrequirement.l1_answers}}
                           <p>{{subrequirement.l1_answer_2}}</p>
                         </span> -->
                         <!-- <span ng-if="!subrequirement.l1_answers">NA</span> -->
 
-                      </td>
-
                       <td class="alignment">
                         <!-- <span ng-if="subrequirement.l2_answers || subrequirement.l2_answer_2">{{subrequirement.l2_answers}}
                           <p>{{subrequirement.l1_answer_2}}</p>
                         </span> -->
-                        <span>
+                        <!-- <span>
                           <textarea placeholder="L5 Answer" class="form-control" style="width:150px;"
                           value="{{subrequirement.L5}}" ng-model="subrequirement.L5"
                           rows="4" cols="50">
                           </textarea>
-                        </span>
+                        </span> -->
                         <!-- <span ng-if="!subrequirement.l1_answer_2">NA</span> -->
+                        <select class="form-control"
+                          name="lead_L5" id="lead_L5"
+                          ng-model="subrequirement.L5" 
+                          style="width:150px;">
+                          <option ng-repeat="lead_L5 in leads_Data.L5"
+                            value="{{lead_L5}}">
+                            {{lead_L5}}
+                          </option>
+                        </select>
                       </td>
 
                       <td class="alignment">
-                        <span >
+                        <!-- <span >
                           <textarea placeholder="L6 Answer"
                           class="form-control" style="width:150px;" value="{{subrequirement.L6}}" ng-model="subrequirement.L6"
                           ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
                             </textarea>
-                        </span>
+                        </span> -->
+                        <select class="form-control"
+                          name="lead_L6" id="lead_L6"
+                          ng-model="subrequirement.L6"
+                          style="width:150px;">
+                          <option ng-repeat="lead_L6 in leads_Data.L6"
+                            value="{{lead_L6}}">
+                            {{lead_L6}}
+                          </option>
+                        </select>
                         
 
                       </td>
@@ -2162,9 +2189,10 @@
                       </td>
 
                       <td class="alignment">
+                        {{companyBrowseData(browsed.sector_id)}}
                         <span style="width:150px;" class="multiselectDropdown"
                           style="color:red;width:100%;margin-left:20px;" ng-click="browsedMulticheck($index)"
-                          ng-dropdown-multiselect="" options="companiesDetailDataBrowsed" extra-settings="settings"
+                          ng-dropdown-multiselect="" options="companiesBrowseDetailDataArray" extra-settings="settings"
                           selected-model="browsed.selected_preferred_company" translation-texts="selected_business_type"
                           events="events"></span>
                           <span ng-repeat="selectedName in browsed.selected_preferred_company" style="text-align: left; display: inline-block">
