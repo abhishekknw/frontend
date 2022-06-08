@@ -286,12 +286,12 @@ angular.module('catalogueApp')
         }
 
         $scope.requirement_lead_status = constants.requirement_lead_status;
-        //$scope.requirement_implementation_time = constants.requirement_implementation_time;
-        //$scope.requirement_meeting_time = constants.requirement_meeting_time;
+        $scope.requirement_implementation_time = constants.requirement_implementation_time;
+        $scope.requirement_meeting_time = constants.requirement_meeting_time;
         $scope.hotnessLead = constants.hotnessLead;
         $scope.clientStatus = constants.clientStatus;
         $scope.current_patner_feedback = constants.current_patner_feedback;
-        //$scope.call_back_time = constants.call_back_time;
+        $scope.call_back_time = constants.call_back_time;
 
         $scope.datePicker = {
           date: { startDate: null, endDate: null },

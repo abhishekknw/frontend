@@ -487,7 +487,7 @@ angular.module('catalogueApp')
         return machadaloHttp.post(url,param);
       }
 
-      DashboardService.updateLeadClientStatus = function (status, comment, id) {
+      DashboardService.updateLeadClientStatus = function (status, comment, id,req_id) {
         // var url = url_root + "b2b/not-purchased-lead-data/";
         // if (campaignId) {
           var param={};
@@ -496,8 +496,10 @@ angular.module('catalogueApp')
           payload_param['macchadalo_client_status']=status;
           payload_param['macchadalo_client_comment']=comment;
           payload_param['_id']=id;
+          payload_param['requirement_id']=req_id;
           payload.push(payload_param);
           param['data']=payload;
+          console.log(param);
           var url = url_root + "b2b/update-machadalo-client-status/";
      //   } 
         return machadaloHttp.post(url,param);
