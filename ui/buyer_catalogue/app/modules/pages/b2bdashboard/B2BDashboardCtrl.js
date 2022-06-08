@@ -805,7 +805,6 @@
     }
     
     $scope.acceptDeclineDecisionPanding = function (index, value,id) {
-      alert(id);
       let data = [{
         "requirement_id": $scope.leadDecisionPandingData[index].requirement_id,
         "client_status": value,
