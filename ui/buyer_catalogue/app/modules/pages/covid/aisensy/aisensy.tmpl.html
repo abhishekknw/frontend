@@ -1488,7 +1488,7 @@
                                     {{userChatData.whatsapp_name.length > 15 ? '...' :
                                     ''}}</span><br />
                                   <span
-                                    class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}}</span>
+                                    class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                                 </center>
                                 <div class="profile-image-chat">
                                   <span>
@@ -1571,7 +1571,7 @@
                                       </div>
                                     </div>
                                 </span>
-                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}}</span>
+                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}},{{chat.status['type']}}</span>
                                 </div>
                               </div>
                             </div>
@@ -1741,7 +1741,7 @@
                                     {{userChatData.whatsapp_name.length > 15 ? '...' :
                                     ''}}</span><br />
                                   <span
-                                    class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}}</span>
+                                    class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                                      <!-- <span
                                     class="tel-number profile-heading">{{userDetailPayload.area})</span> -->
                                   </center>
@@ -1825,7 +1825,7 @@
                                       </div>
                                     </div>
                                 </span>
-                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}}</span>
+                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}},{{chat.status['type']}}</span>
                                 </div>
                               </div>
                             </div>
@@ -1979,7 +1979,7 @@
                                     {{userChatData.whatsapp_name.length > 15 ? '...' :
                                     ''}}</span><br />
                                   <span
-                                    class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}}</span>
+                                    class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                                 </center>
                                 <div class="profile-image-chat">
                                   <span>
@@ -2064,7 +2064,7 @@
                                     </div>
                                   
                                 </span>
-                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}}</span>
+                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}},{{chat.status['type']}}</span>
                                 </div>
                               </div>
                             </div>
@@ -2293,6 +2293,11 @@
                             <label class="infolable-mca">Type Of Entity:</label>
                             <span>
                               {{userChatPayload.type_of_entity}}</span>
+                          </div>
+                          <div class="info-row-mca">
+                            <label class="infolable-mca">Designation Value:</label>
+                            <span>
+                              {{userChatPayload.designation}}</span>
                           </div>
 
 
@@ -2534,7 +2539,7 @@
                         {{userChatData.whatsapp_name.length > 15 ? '...' :
                         ''}}</span><br />
                       <span
-                        class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}}</span>
+                        class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
                     </center>
                     <div class="profile-image-chat">
                       <span>
@@ -2614,7 +2619,7 @@
                         </div>
                       </div>
                   </span>
-                    <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
+                    <span class="chat-time">{{chat.timestamp | date :'medium'}},{{chat.status['type']}}</span>
                   </div>
                 </div>
 
@@ -2723,6 +2728,10 @@
                                   <label class="infolable-mca">Type Of Entity:</label>
                                   <span>
                                     {{userChatPayload.type_of_entity}}</span>
+                                </div>
+                                <div class="info-row-mca">
+                                  <label class="infolable-mca">Designation Value:</label>
+                                  <span>{{userChatPayload.designation}}</span>
                                 </div>
 
 

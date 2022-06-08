@@ -183,7 +183,7 @@ angular.module('catalogueApp')
           { header: 'Comment' },
           { header: 'Internal Comment' },
           { header: 'Lead Given by' },
-          { header: 'Call Back Time' },
+          { header: 'Call Status' },
           { header: 'Price' },
           { header: 'Timestamp' },
           { header: 'Action' },
@@ -286,12 +286,12 @@ angular.module('catalogueApp')
         }
 
         $scope.requirement_lead_status = constants.requirement_lead_status;
-        $scope.requirement_implementation_time = constants.requirement_implementation_time;
-        $scope.requirement_meeting_time = constants.requirement_meeting_time;
+        //$scope.requirement_implementation_time = constants.requirement_implementation_time;
+        //$scope.requirement_meeting_time = constants.requirement_meeting_time;
         $scope.hotnessLead = constants.hotnessLead;
         $scope.clientStatus = constants.clientStatus;
         $scope.current_patner_feedback = constants.current_patner_feedback;
-        $scope.call_back_time = constants.call_back_time;
+        //$scope.call_back_time = constants.call_back_time;
 
         $scope.datePicker = {
           date: { startDate: null, endDate: null },
@@ -1293,7 +1293,8 @@ angular.module('catalogueApp')
             })
           releaseCampaignService.selectLeads()
           .then(function onSuccess(response) { 
-            $scope.leads_Data=response.data.data
+            $scope.leads_time=response.data;
+            $scope.leads_Data=response.data.data;
             // $scope.selectLeadData();
           })    
           releaseCampaignService.requirementDetail(id)
@@ -1421,7 +1422,7 @@ angular.module('catalogueApp')
         
         
         $scope.selectLeadData=function(data){
-          console.log($scope.leads_Data,data);
+          console.log($scope.leads_time.data[10],data);
           for(let i in $scope.leads_Data){
             for (let j in $scope.leads_Data[i]){
               if(data===j){
