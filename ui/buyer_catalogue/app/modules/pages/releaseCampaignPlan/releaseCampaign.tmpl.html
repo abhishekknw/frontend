@@ -1867,7 +1867,7 @@
                       <td class="alignment">
                         {{companyData(subrequirement.sector)}}
                         <span style="width:150px;"
-                          class="multiselectDropdown" style="color:red;width:100%;margin-left:20px;"
+                          class="multiselectDropdown multiselectDropdown-style style="color:red;width:100%;margin-left:20px;"
                           ng-dropdown-multiselect="" options="companiesDetailDataArray" extra-settings="settings"
                           selected-model="subrequirement.selected_preferred_company_sub_sector"
                           ng-click="subSectorPreferredMulticheck(key,$index)" translation-texts="selected_business_type"
@@ -1897,6 +1897,8 @@
                             value="{{lead_L4}}">
                             {{lead_L4}}
                           </option>
+                          <option ng-if="leads_Data.L4.length==0" selected="true" value="NA">NA</option>
+
                         </select>
                         </td>
                         <!-- <span ng-if="subrequirement.l1_answers">{{subrequirement.l1_answers}}
@@ -1923,6 +1925,8 @@
                             value="{{lead_L5}}">
                             {{lead_L5}}
                           </option>
+                          <option ng-if="leads_Data.L5.length==0" selected="true" value="NA">NA</option>
+
                         </select>
                       </td>
 
@@ -1941,6 +1945,7 @@
                             value="{{lead_L6}}">
                             {{lead_L6}}
                           </option>
+                          <option ng-if="leads_Data.L6.length==0" selected="true" value="NA">NA</option>
                         </select>
                         
 
@@ -1961,6 +1966,7 @@
                             value="{{lead_L4_1}}">
                             {{lead_L4_1}}
                           </option>
+                          <option ng-if="leads_Data.L4_1.length==0" selected="true" value="NA">NA</option>
                         </select>
                       </td>
 
@@ -1979,6 +1985,8 @@
                             value="{{lead_L5_1}}">
                             {{lead_L5_1}}
                           </option>
+                          <option ng-if="leads_Data.L5_1.length==0" selected="true" value="NA">NA</option>
+
                         </select>
                       </td>
 
@@ -1997,6 +2005,7 @@
                             value="{{lead_L6_1}}">
                             {{lead_L6_1}}
                           </option>
+                          <option ng-if="leads_Data.L6_1.length==0" selected="true" value="NA">NA</option>
                         </select>
                       </td>
 
@@ -2074,7 +2083,6 @@
                           class="form-control" style="width:150px;" ng-model="subrequirement.internal_comment"
                           ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
                         </textarea>
-                        {{subrequirement.created_at | date:'medium' }}
                       </td>
 
                       <td class="alignment">
@@ -2249,7 +2257,7 @@
 
                       <td class="alignment">
                         {{companyBrowseData(browsed.sector_id)}}
-                        <span style="width:150px;" class="multiselectDropdown"
+                        <span style="width:150px;" class="multiselectDropdown multiselectDropdown-style"
                           style="color:red;width:100%;margin-left:20px;" ng-click="browsedMulticheck($index)"
                           ng-dropdown-multiselect="" options="companiesBrowseDetailDataArray" extra-settings="settings"
                           selected-model="browsed.selected_preferred_company" translation-texts="selected_business_type"
@@ -3240,3 +3248,12 @@
     overflow-y: auto;
   }
 </style> -->
+
+<style>
+  .li-popup .multiselectDropdown.multiselectDropdown-style .dropdown-menu{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transform: unset;
+  }
+</style>

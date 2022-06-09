@@ -932,7 +932,7 @@
   .message-2 .chat-time {
     color: #000000cc;
     font-size: 11.5px;
-    font-weight: 600;
+    /* font-weight: 600; */
     float: right;
     margin-top: 5px;
     display: block;
@@ -1571,7 +1571,7 @@
                                       </div>
                                     </div>
                                 </span>
-                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}},{{chat.status['type']}}</span>
+                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}}, <b style="text-transform: capitalize;">{{chat.status['type']}}</b></span>
                                 </div>
                               </div>
                             </div>
@@ -1825,7 +1825,7 @@
                                       </div>
                                     </div>
                                 </span>
-                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}},{{chat.status['type']}}</span>
+                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}}, <b style="text-transform: capitalize;">{{chat.status['type']}}</b></span>
                                 </div>
                               </div>
                             </div>
@@ -2064,7 +2064,7 @@
                                     </div>
                                   
                                 </span>
-                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}},{{chat.status['type']}}</span>
+                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}}, <b style="text-transform: capitalize;">{{chat.status['type']}}</b></span>
                                 </div>
                               </div>
                             </div>
@@ -2619,7 +2619,7 @@
                         </div>
                       </div>
                   </span>
-                    <span class="chat-time">{{chat.timestamp | date :'medium'}},{{chat.status['type']}}</span>
+                    <span class="chat-time">{{chat.timestamp | date :'medium'}}, <b style="text-transform: capitalize;">{{chat.status['type']}}</b></span>
                   </div>
                 </div>
 

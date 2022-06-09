@@ -1565,8 +1565,13 @@ angular.module('catalogueApp')
         
         $scope.companiesDetailDataArray=[];
         $scope.companyData=function(id){
+          while ($scope.companiesDetailDataArray.length) { 
+            $scope.companiesDetailDataArray.pop(); 
+          }
+          
           var i=0;
           for (let k in $scope.companiesDetailData) {
+            
             if($scope.companiesDetailData[k].business_type!==undefined){
               if(id==$scope.companiesDetailData[k].business_type[0]){
                 $scope.companiesDetailDataArray[i]=$scope.companiesDetailData[k];
@@ -1580,6 +1585,9 @@ angular.module('catalogueApp')
         }
         $scope.companiesBrowseDetailDataArray=[];
         $scope.companyBrowseData=function(id){
+          while ($scope.companiesBrowseDetailDataArray.length) { 
+            $scope.companiesBrowseDetailDataArray.pop(); 
+          }
           var i=0;
           for (let k in $scope.companiesDetailDataBrowsed) {
             if($scope.companiesDetailDataBrowsed[k].business_type!==undefined){
