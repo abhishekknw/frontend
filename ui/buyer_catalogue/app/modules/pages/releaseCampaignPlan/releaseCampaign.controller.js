@@ -183,7 +183,7 @@ angular.module('catalogueApp')
           { header: 'Comment' },
           { header: 'Internal Comment' },
           { header: 'Lead Given by' },
-          { header: 'Call Back Time' },
+          { header: 'Call Status' },
           { header: 'Price' },
           { header: 'Timestamp' },
           { header: 'Action' },
@@ -1293,7 +1293,8 @@ angular.module('catalogueApp')
             })
           releaseCampaignService.selectLeads()
           .then(function onSuccess(response) { 
-            $scope.leads_Data=response.data.data
+            $scope.leads_time=response.data;
+            $scope.leads_Data=response.data.data;
             // $scope.selectLeadData();
           })    
           releaseCampaignService.requirementDetail(id)
@@ -1421,7 +1422,7 @@ angular.module('catalogueApp')
         
         
         $scope.selectLeadData=function(data){
-          console.log($scope.leads_Data,data);
+          console.log($scope.leads_time.data[10],data);
           for(let i in $scope.leads_Data){
             for (let j in $scope.leads_Data[i]){
               if(data===j){
@@ -1564,8 +1565,13 @@ angular.module('catalogueApp')
         
         $scope.companiesDetailDataArray=[];
         $scope.companyData=function(id){
+          while ($scope.companiesDetailDataArray.length) { 
+            $scope.companiesDetailDataArray.pop(); 
+          }
+          
           var i=0;
           for (let k in $scope.companiesDetailData) {
+            
             if($scope.companiesDetailData[k].business_type!==undefined){
               if(id==$scope.companiesDetailData[k].business_type[0]){
                 $scope.companiesDetailDataArray[i]=$scope.companiesDetailData[k];
@@ -1579,6 +1585,9 @@ angular.module('catalogueApp')
         }
         $scope.companiesBrowseDetailDataArray=[];
         $scope.companyBrowseData=function(id){
+          while ($scope.companiesBrowseDetailDataArray.length) { 
+            $scope.companiesBrowseDetailDataArray.pop(); 
+          }
           var i=0;
           for (let k in $scope.companiesDetailDataBrowsed) {
             if($scope.companiesDetailDataBrowsed[k].business_type!==undefined){

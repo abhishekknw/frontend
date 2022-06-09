@@ -339,6 +339,11 @@ call_back_time:{
   "weekend morning":"Weekend Morning",
   'weekend evening':'Weekend Evening',
   "customized calling period":"Customized Calling Period",
+  "rnr":'Rnr',
+  "not with the entity":'Not with the entity',
+  "wrong number":'Wrong number',
+  "call later":"call later",
+  "call connected and Verified":"Call connected and Verified"
 },
 hotnessLead:{
 'H1':'H1',

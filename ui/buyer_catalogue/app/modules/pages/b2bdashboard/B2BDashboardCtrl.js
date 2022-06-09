@@ -567,13 +567,15 @@
     $scope.selectFlag=true;
     $scope.clientStatus="";
     $scope.clientComment="";
-    $scope.setValue = function (value,comment,id) {
+    $scope.requirement_id="";
+    $scope.setValue = function (value,comment,id,req_id) {
       $scope.clientStatus=value;
+      $scope.requirement_id=req_id;
       if($scope.clientComment==""){
         $scope.clientComment=comment;
       }
       $scope.selectFlag=false;
-      $scope.updateLeadClientStatus($scope.clientStatus, $scope.clientComment,id);
+      $scope.updateLeadClientStatus($scope.clientStatus, $scope.clientComment,id,$scope.requirement_id);
     }
     $scope.valuechange=function(value1){
       //$scope.clientComment=value1;
@@ -594,7 +596,7 @@
       if($scope.clientComment==""){
         $scope.clientComment=comment;
       }
-      B2BDashboardService.updateLeadClientStatus( $scope.clientStatus, $scope.clientComment,id)
+      B2BDashboardService.updateLeadClientStatus( $scope.clientStatus, $scope.clientComment,id,$scope.requirement_id)
         .then(function onSuccess(response) {
           swal(constants.name, response.data.data, constants.success);
           $scope.clientStatus="";
@@ -802,10 +804,11 @@
       $scope.leadDecisionPanding(value)
     }
     
-    $scope.acceptDeclineDecisionPanding = function (index, value) {
+    $scope.acceptDeclineDecisionPanding = function (index, value,id) {
       let data = [{
         "requirement_id": $scope.leadDecisionPandingData[index].requirement_id,
-        "client_status": value
+        "client_status": value,
+        "_id":id
       }]
       B2BDashboardService.acceptDeclineDecisionPanding({ 'data': data })
         .then(function onSuccess(response) {
