@@ -2599,6 +2599,8 @@ angular.module('catalogueApp')
                         swal(constants.name, response.data.data.error, constants.error);
                       } else {
                         var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
+                          swal(constants.name, constants.save_success, constants.success);
+
                           return el.id;
                         }).indexOf($scope.shortlisted_spaces_id);
                         if (localindex_index != -1) {
