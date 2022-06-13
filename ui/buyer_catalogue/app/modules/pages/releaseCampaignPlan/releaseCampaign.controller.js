@@ -2599,8 +2599,6 @@ angular.module('catalogueApp')
                         swal(constants.name, response.data.data.error, constants.error);
                       } else {
                         var localindex_index = $scope.releaseDetails.shortlisted_suppliers.map(function (el) {
-                          swal(constants.name, constants.save_success, constants.success);
-
                           return el.id;
                         }).indexOf($scope.shortlisted_spaces_id);
                         if (localindex_index != -1) {
@@ -2630,7 +2628,7 @@ angular.module('catalogueApp')
                           $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
                             $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
                           }
-                        $scope.getRequirementDetail($scope.shortlisted_spaces_id);
+                        $scope.getRequirementDetail($scope.shortlisted_spaces_id,"null","null");
                         swal(constants.name, constants.save_success, constants.success);
                       }
                     }).catch(function onError(response) {
