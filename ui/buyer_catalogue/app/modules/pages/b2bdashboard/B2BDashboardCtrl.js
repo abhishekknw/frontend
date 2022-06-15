@@ -39,7 +39,62 @@
     $scope.supplierTypeCodePerformanceDetail = constants.supplierTypeCodePerformanceDetail;
     $scope.selectedSupplierType = { code: "all", codes: "all" };
     $scope.dateRangeModel = {};
+    $scope.example14model=[];
+    $scope.setting1 = {
+      scrollableHeight: '200px',
+      scrollable: true,
+      enableSearch: true
+    };
+    //$scope.cityListDetails = ["Chennai","Delhi NCR","Kolkata"];
 
+    $scope.startDate="";
+    $scope.endDate="";
+    $scope.options = {};
+    $scope.dateRangeModel = {};
+    $scope.changeStartDate = function () {
+        $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
+        $scope.startDate = $scope.dateFormat($scope.dateRangeModel.start_date);
+        var flag=0;
+        if ($scope.startDate && $scope.endDate==""){
+          flag=1;          
+        }else if($scope.startDate < $scope.endDate){
+          flag=1;
+        }
+        if(flag==1){          
+          $scope.getPurchasedNotPurchasedLead ($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus,0,$scope.startDate,$scope.endDate);
+        }        
+      }
+
+    $scope.changeEndDate = function () {
+      $scope.dateRangeModel.end_date = $scope.dateRangeModel.end_dates;
+        $scope.endDate = $scope.dateFormat($scope.dateRangeModel.end_date);
+      var flag=0;
+      if ($scope.startDate == "" && $scope.endDate){
+        flag=1;          
+      }else if($scope.startDate < $scope.endDate){
+        flag=1;
+      }
+      if(flag==1){
+        $scope.getPurchasedNotPurchasedLead ($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus,0,$scope.startDate,$scope.endDate);
+      }            
+    }
+
+    $scope.dateFormat = function (date) {
+      var d = new Date(date),
+          month = '' + (d.getMonth() + 1),
+          day = '' + d.getDate(),
+          year = d.getFullYear();
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
+      return [day, month, year].join('-');
+    }
+    $scope.selectCity="";
+    $scope.selectedCity = function(city){
+     $scope.selectCity=city;
+     $scope.getPurchasedNotPurchasedLead ($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus,0,$scope.startDate,$scope.endDate,$scope.selectCity);
+
+     console.log($scope.selectCity);
+    }                
     $scope.invKeysLead = [
       { header: 'LEAD COUNT' },
       { header: 'EXISTING CLIENT FEEDBACK COUNT' },
@@ -646,24 +701,38 @@
     }
 
     $scope.pageChangedPurchage= function(page,leadPurchasedStatus,campaignId,campaignName){
-      $scope.getPurchasedNotPurchasedLead(campaignId, campaignName, leadPurchasedStatus, page)
+      $scope.getPurchasedNotPurchasedLead(campaignId, campaignName, leadPurchasedStatus, page, $scope.startDate, $scope.endDate,$scope.selectCity);
     }
 
-    $scope.getPurchasedNotPurchasedLead = function (CampaignId, campaignName, leadStatus,page) {
+    $scope.getPurchasedNotPurchasedLead = function (CampaignId, campaignName, leadStatus,page,startDate,endDate,city) {
       if(!page){
         page=0;
+      }
+      if(!startDate){
+        startDate="";
+      }
+      if(!endDate){
+        endDate="";
+      }
+      if(!city){
+        city="";
       }
       $scope.leadPurchasedStatus = leadStatus;
       $scope.campaignId = CampaignId;
       $scope.campaignName = campaignName;
       $scope.CampaignNameofLeads = campaignName;
-      B2BDashboardService.purchasedNotPurchasedLead(CampaignId, $scope.filterType,$scope.selectedSupplierType.code,page)
+      B2BDashboardService.purchasedNotPurchasedLead(CampaignId, $scope.filterType,$scope.selectedSupplierType.code,page,startDate,endDate,city)
         .then(function onSuccess(response) {
           $scope.isTableHide = false;
           $scope.purchasedNotPurchasedLead = response.data.data;
+          //add start_date and end_date key
+          // $scope.purchasedNotPurchasedLead.start_date=$scope.options.minDate;
+          // $scope.purchasedNotPurchasedLead.end_date=$scope.dateRangeModel.end_date;
           $scope.purchasedNotPurchasedLeadTotal = response.data.data.length;
           $scope.purchasedNotPurchasedLeadCurrent = page;
           $scope.purchasedNotPurchasedLeadPerPage = 20;
+          $scope.cityListDetails=$scope.purchasedNotPurchasedLead.city_list;
+          console.log($scope.purchasedNotPurchasedLead);
           // $scope.all_values = [];
           // for (let i in values) {
           //     let row = {};

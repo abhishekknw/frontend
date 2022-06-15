@@ -2628,7 +2628,7 @@ angular.module('catalogueApp')
                           $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_code = response.data.data.list_color_code;
                             $scope.releaseDetails.shortlisted_suppliers[localindex_index].color_class = color_class;
                           }
-                        $scope.getRequirementDetail($scope.shortlisted_spaces_id);
+                        $scope.getRequirementDetail($scope.shortlisted_spaces_id,"null","null");
                         swal(constants.name, constants.save_success, constants.success);
                       }
                     }).catch(function onError(response) {

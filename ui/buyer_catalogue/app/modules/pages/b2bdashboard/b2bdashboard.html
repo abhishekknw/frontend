@@ -1154,6 +1154,52 @@
                     </br><br>
                     <input type="text" class="form-control" ng-model="searchData" ng-if="purchasedTable"
                       placeholder="search">
+
+                      <div class="date_range_picker">
+                        <div class="row">
+                          <div class="col-lg-6">
+                            <div class="row">
+                              <div class="col-lg-6">
+                                <select ng-change="selectedCity(city)"
+                                class="form-control select_city" ng-model="city">
+                                    <option ng-repeat="city in cityListDetails" track by "$index">{{city}}</option>
+                                </select>
+                              </div>
+
+                              <div class="col-lg-6">
+                                <div class="date_wrapper">
+                                <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                                  placeholder="DD/MM/YYYY" ng-change="changeStartDate()" ng-model="dateRangeModel.start_dates"
+                                  is-open="isDatepickerOpen" datepicker-options="datepickerOptions" ng-required="true" close-text="Close"
+                                  alt-input-formats="altInputFormats">
+                                <button type="button" class="smallBtn calendar" ng-click="isDatepickerOpen = !isDatepickerOpen">
+                                  <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                              </div>
+                            </div>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-6">
+                            <div class="row">
+                              <div class="col-sm-1"><h5 style="color:#000;padding: 10px 0;">To:</h5></div>
+                              <div class="col-md-6">
+                                <div class="date_wrapper">
+                                <input type="text" style="color:#000000;" class="field" uib-datepicker-popup="dd/MM/yyyy"
+                                  placeholder="DD/MM/YYYY" ng-change="changeEndDate()" ng-model="dateRangeModel.end_dates"
+                                  is-open="isEndDateOpen" datepicker-options="options" ng-required="true" close-text="Close"
+                                  alt-input-formats="altInputFormats">
+                                <button type="button" class="smallBtn calendar" ng-disabled="!dateRangeModel.start_dates"
+                                  ng-click="isEndDateOpen = !isEndDateOpen">
+                                  <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                              </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                        </div>
+                      </div>
                     <div class="table-responsive">
                       <div>
                         <center>
@@ -1243,7 +1289,9 @@
 
                     </tbody>
                     </table> -->
-
+                    
+          
+                    
                       <table class="table table_content viewLeadstable-new b2b-table-style">
                         <thead>
                           <tr>
@@ -2409,6 +2457,26 @@
 
     .viewLeadstable.b2b-table-style .btn{
       margin: 0 !important;
+    }
+    .date_wrapper{
+      position: relative;
+    }
+    .date_wrapper button.smallBtn.calendar{
+      position: absolute;
+      top: 6px;
+      right: 10px;
+    }
+    .select_city{
+      height: 44px;
+    }
+    .date_wrapper .uib-datepicker-popup{
+      max-width: 300px;
+    }
+    .uib-datepicker table .btn{
+      width: auto !important;
+    }
+    .table .btn{
+      width: auto !important;
     }
   </style>
 
