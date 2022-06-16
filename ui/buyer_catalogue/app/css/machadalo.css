@@ -769,3 +769,26 @@ header .topRight .top-menu {
   height: 78px !important;
   margin-top: 8px;
 }
+
+.tool-tip{
+  position: relative;
+}
+
+.tool-icon{
+  position: absolute;
+  top: 0px;
+  right: 8px;
+  font-size: 16px;
+}
+
+.tool-popup{
+  position: absolute;
+  background-color: #FFFFFF;
+  right: -8px;
+  border: 1px solid #000;
+  border-radius: 4px;
+  padding: 8px 16px;
+  min-width: 100px;
+  z-index: 16;
+  line-height: 1.5;
+}

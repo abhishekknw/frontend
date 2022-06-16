@@ -632,8 +632,16 @@
       $scope.selectFlag=false;
       $scope.updateLeadClientStatus($scope.clientStatus, $scope.clientComment,id,$scope.requirement_id);
     }
-    $scope.valuechange=function(value1){
-      //$scope.clientComment=value1;
+    $scope.commentValue = function(comment){
+      $scope.commentCheck=comment;
+    }
+    $scope.valuechange=function(value1,status,id,req_id){
+      $scope.clientComment=value1;
+      $scope.requirement_id=req_id;
+      $scope.clientStatus=status;
+      if($scope.clientComment != $scope.commentCheck){
+        $scope.updateLeadClientStatus($scope.clientStatus, $scope.clientComment,id,$scope.requirement_id);
+      }
     }
     $scope.leadDetailDataList="";
     $scope.showLeadDetail = function (_id) {
@@ -1374,7 +1382,7 @@
     }
      $scope.aa = 'Leads';
      $scope.supplierType = 'Leads';
-    $scope.surveyLeadArray = ['Leads'];
+    $scope.surveyLeadArray = ['Leads','Survey','Feedback'];
     
     $scope.surveyLeadFilter = function (filter) {
       if(filter == 'Leads' || filter == 'Survey'){
