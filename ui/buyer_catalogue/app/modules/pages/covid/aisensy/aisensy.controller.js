@@ -35,8 +35,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
         };
     })
     .controller('aisensyCtrl',
-        ['$scope', '$rootScope', '$window', '$sce', '$location', 'AuthService', '$anchorScroll', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService', 'commonDataShare',
-            function ($scope, $rootScope, $window, $sce, $location, AuthService, suspenseLeadService, $anchorScroll, $state, userService, constants, AuthService, vcRecaptchaService, permissions, commonDataShare) {
+        ['$scope', '$rootScope', '$window', '$sce', '$location', 'AuthService','releaseCampaignService', '$anchorScroll', 'suspenseLeadService', '$state', 'userService', 'constants', 'AuthService', 'vcRecaptchaService', 'commonDataShare',
+            function ($scope, $rootScope, $window, $sce, $location, AuthService,releaseCampaignService, suspenseLeadService, $anchorScroll, $state, userService, constants, AuthService, vcRecaptchaService, permissions, commonDataShare) {
                 // AuthService.Clear();
 
                 $scope.isCollapsed = true;
@@ -695,7 +695,7 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     current: 1
                 };
                 $scope.options = {};
-                $scope.dateRangeModel = {};
+            $scope.dateRangeModel = {};
                 $scope.changeStartDate = function () {
                     $scope.dateRangeModel.start_date = $scope.dateRangeModel.start_dates;
                     $scope.options.minDate = $scope.dateRangeModel.start_date;
@@ -906,13 +906,328 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                         }).catch(function onError(response) {
                             console.log(response);
                         })
+                    }
 
+$scope.requirement_submitted_headings = [
+                        { header: '' },
+                        { header: 'Sector' },
+                        { header: 'Sub Sector' },
+                        { header: 'Current Partner' },
+                        { header: 'FeedBack' },
+                        { header: 'Preferred Partner' },
+                        { header: 'L4 Answers' },
+                        { header: 'L5 Answers' },
+                        { header: 'L6 Answers' },
+                        { header: 'L4.1 Answers' },
+                        { header: 'L5.1 Answers' },
+                        { header: 'L6.1 Answers' },
+                        { header: 'Implementation Time' },
+                        { header: 'Meeting Time' },
+                        // { header: 'Preferred Meeting Time' },
+                        { header: 'Lead Status' },
+                        { header: 'Comment' },
+                        { header: 'Internal Comment' },
+                        { header: 'Lead Given by' },
+                        { header: 'Call Status' },
+                        { header: 'Price' },
+                        { header: 'Timestamp' },
+                        { header: 'Action' },
+                      ];
+$scope.requirement_browsed_headings = [
+                        { header: '' },
+                        { header: 'Sector' },
+                        { header: 'Sub Sector' },
+                        { header: 'Current Partner' },
+                        { header: 'FeedBack' },
+                        { header: 'Preferred Partner' },
+                        { header: 'L1 Answers' },
+                        { header: 'L2 Answers' },
+                        { header: 'Implementation Time' },
+                        { header: 'Meeting Time' },
+                        { header: 'Lead Given by' },
+                        { header: 'Comment' },
+                        { header: 'Timestamps' }
+                      ];  
+ $scope.requirementDetailData=[
+                         {sector:'test1'},
+                         {sector:'test2'},
+                         {sector:'test3'},
+                    ];
+$scope.requirements=[{test1:{a:"A",b:"B",c:"C"}},
+                     {test2:{a:"A",b:"B",c:"C"}},
+                     {test3:{a:"A",b:"B",c:"C"}}
+                    ];
+$scope.browsedDetailData=[
+                         {sector:'test4'},
+                         {sector:'test5'},
+                         {sector:'test6'}
+                    ];
+$scope.detailedShow = [];
+ $scope.ShowDetailed=function(index,name){
+           $scope.sector_name=name.toLowerCase();
+           $scope.oldIndex = index;
+           $scope.$watch('oldIndex', function (newValue, oldValue) {
+                  if (newValue != oldValue) {
+                      $scope.detailedShow[oldValue] = false;
+                            }
+                   });
+
+                   $scope.detailedShow[index] = !$scope.detailedShow[index];
+                   $scope.opsVerifyButtonDiable = true
+                   $scope.removeSubSectorDiable = true
+                   $scope.updateDisable = false;
+                   for (let i in $scope.requirementDetailData[index].requirements) {
+                    $scope.requirementDetailData[index].requirements[i].requirementCheck = false;
+                    if ($scope.opsVerifyButtonDiable && $scope.requirementDetailData[index].requirements[i].varified_ops == 'no') {
+                      $scope.opsVerifyButtonDiable = false;
+                    }
+                    if ($scope.removeSubSectorDiable && $scope.requirementDetailData[index].requirements[i].is_deleted == 'no') {
+                      $scope.removeSubSectorDiable = false;
+                    }
+        
+                    if (!$scope.updateDisable && $scope.requirementDetailData[index].requirements[i].is_deleted == 'yes') {
+                      $scope.updateDisable = true;
+                    }
                 }
-
-
-
+                $scope.subSectorCheck = true
+                        
+                        
+        }                               
+                    //ops Verified
+    //                 $scope.opsVerifyButtonDiable = true;
+    //                 $scope.getRequirementDetail = function (id) {
+    //                   userService.getSector()
+    //                     .then(function onSuccess(response) {
+    //                       $scope.sectorList = response.data;
+    //                     })
+    //                   releaseCampaignService.selectLeads()
+    //                   .then(function onSuccess(response) { 
+    //                     $scope.leads_time=response.data;
+    //                     $scope.leads_Data=response.data.data;
+    //                   })    
+    //                   releaseCampaignService.requirementDetail(id)
+    //                     .then(function onSuccess(response) {
+    //                       $scope.requirementDetailData = response.data.data.requirements;
+    //                       $scope.companiesDetailData = response.data.data.companies;
+    //                       for (let k in $scope.companiesDetailData) {
+    //                         $scope.companiesDetailData[k].id = $scope.companiesDetailData[k].organisation_id;
+    //                         $scope.companiesDetailData[k].label = $scope.companiesDetailData[k].name;
+    //                         $scope.companiesDetailData[k].sector = $scope.companiesDetailData[k].business_type[0];
+    //                         if (k == response.data.data.companies.length - 1) {
+    //                           $scope.companiesDetailData.push({ id: 'other', label: 'other', organisation_id: '', name: 'other' })
+    //                         }
+    //                       }
+            
+            
+    //                       angular.forEach($scope.requirementDetailData, function (value, i) {
+    //                         //start multiselect preferred company
+    //                         // var selected_preferred_company = [];
+    //                         // $scope.requirementDetailData[i].selected_preferred_company = [];
+    //                         // if ($scope.requirementDetailData[i] && $scope.requirementDetailData[i].preferred_company && $scope.requirementDetailData[i].preferred_company.length > 0) {
+    //                         //   for (let j in $scope.requirementDetailData[i].preferred_company) {
+    //                         //     var localindex_index = $scope.companiesDetailData.map(function (el) {
+    //                         //       return el.organisation_id;
+    //                         //     }).indexOf($scope.requirementDetailData[i].preferred_company[j]);
+    //                         //     if (localindex_index != -1) {
+    //                         //       selected_preferred_company.push($scope.companiesDetailData[localindex_index])
+    //                         //     }
+    //                         //   }
+    //                         //   $scope.requirementDetailData[i].selected_preferred_company = selected_preferred_company
+    //                         // }
+    //                         //end multiselect preferred company
+    //                         //START sub sector multiselect preferred company
+    //                         if ($scope.requirementDetailData[i].requirements.length > 0) {
+    //                           for (let x in $scope.requirementDetailData[i].requirements) {
+    //                             if (!$scope.requirementDetailData[i].requirements[x].current_company) {
+    //                               $scope.requirementDetailData[i].requirements[x].current_company = '';
+    //                             }
+    //                             var selected_preferred_company_sub_sector = [];
+    //                             $scope.requirementDetailData[i].requirements[x].selected_preferred_company_sub_sector = [];
+            
+    //                             if ($scope.requirementDetailData[i].requirements[x].preferred_company_other) {
+    //                               $scope.otherPreferredCompany = true
+    //                               $scope.requirementDetailData[i].requirements[x].otherPreferredCompany = true
+    //                               $scope.requirementDetailData[i].requirements[x].preferred_company.push("")
+    //                             }
+                   
+    //                             if ($scope.requirementDetailData[i].requirements[x].preferred_company && $scope.requirementDetailData[i].requirements[x].preferred_company.length > 0) {
+    //                               for (let y in $scope.requirementDetailData[i].requirements[x].preferred_company) {
+            
+    //                                 var _index = $scope.companiesDetailData.map(function (el) {
+    //                                   return el.organisation_id;
+    //                                 }).indexOf($scope.requirementDetailData[i].requirements[x].preferred_company[y]);
+    //                                 if (_index != -1) {
+    //                                   selected_preferred_company_sub_sector.push($scope.companiesDetailData[_index])
+    //                                 }
+    //                               }
+              
+    //                               $scope.requirementDetailData[i].requirements[x].selected_preferred_company_sub_sector = selected_preferred_company_sub_sector;
+    //                             }
+            
+    //                             var _indexCompany = $scope.companiesDetailData.map(function (el) {
+    //                               return el.organisation_id;
+    //                             }).indexOf($scope.requirementDetailData[i].requirements[x].company);
+    //                             if (_indexCompany != -1) {
+    //                               $scope.requirementDetailData[i].requirements[x].company_name = $scope.companiesDetailData[_indexCompany].name;
+    //                             }
+            
+    //                             // if ($scope.opsVerifyButtonDiable && $scope.requirementDetailData[i].requirements[x].varified_ops == 'no') {
+    //                             //   $scope.opsVerifyButtonDiable = false;
+    //                             // }
+            
+    //                             $scope.requirementDetailData[i].requirements[x].color_class = 'yellow'
+    //                             if ($scope.requirementDetailData[i].requirements[x].varified_ops == 'yes') {
+    //                               $scope.requirementDetailData[i].requirements[x].color_class = 'green'
+    //                             }
+            
+    //                             if ($scope.requirementDetailData[i].requirements[x].is_deleted == 'yes') {
+    //                               $scope.requirementDetailData[i].requirements[x].color_class = 'red'
+    //                             }
+            
+            
+    //                             //start sub sector name
+    //                             if ($scope.requirementDetailData[i].requirements[x].sub_sector) {
+    //                               if ($scope.sectorList) {
+    //                                 for (let p in $scope.sectorList) {
+    //                                   if ($scope.sectorList[p].subtypes && $scope.sectorList[p].subtypes.length > 0) {
+    //                                     var sub_index = $scope.sectorList[p].subtypes.map(function (el) {
+    //                                       return el.id;
+    //                                     }).indexOf($scope.requirementDetailData[i].requirements[x].sub_sector);
+    //                                     if (sub_index != -1) {
+    //                                       $scope.requirementDetailData[i].requirements[x].sub_sector_name = $scope.sectorList[p].subtypes[sub_index].business_sub_type;
+    //                                     }
+    //                                   }
+    //                                 }
+    //                                 //end sub sector name
+    //                               }
+    //                             }
+    //                           }
+                              
+                              
+    //                         }
+    //                         //END sub sector multiselect preferred company
+    //                         //start added sector name
+    //                         if ($scope.sectorList) {
+    //                           var localindex_indexs = $scope.sectorList.map(function (el) {
+    //                             return el.id;
+    //                           }).indexOf($scope.requirementDetailData[i].sector);
+    //                           if (localindex_indexs != -1) {
+    //                             $scope.requirementDetailData[i].sector_name = $scope.sectorList[localindex_indexs].business_type
+    //                           }
+                              
+    //                         }
+            
+                        
+    //                         //end added sector name
+            
+    //                       })
+    //                       $scope.getRequirementBrowsedData(id);
+    //                     }).catch(function onError(response) {
+    //                       console.log(response);
+    //                     })
+    //                     $('#RequirementModel').modal('show');
+    //                 }
+                    
+                    
+    //                 $scope.selectLeadData=function(data){
+    //                   console.log($scope.leads_time.data[10],data);
+    //                   for(let i in $scope.leads_Data){
+    //                     for (let j in $scope.leads_Data[i]){
+    //                       if(data===j){
+    //                         $scope.leads_Data=$scope.leads_Data[i][data];
+    //                         break;
+    //                       }
+    //                     }
+    //                   }
+    //                 }
+    //                 $scope.getRequirementBrowsedData = function (id) {
+    //                     releaseCampaignService.requirementBrowsedData(id)
+    //                       .then(function onSuccess(response) {
+    //                         $scope.browsedDetailData = response.data.data.browsed;
+    //                         //console.log($scope.browsedDetailData);
+              
+    //                         $scope.companiesDetailDataBrowsed = response.data.data.companies;
+    //                         //console.log("current partnerData",$scope.companiesDetailDataBrowsed);
+    //                         for (let k in $scope.companiesDetailDataBrowsed) {
+    //                           $scope.companiesDetailDataBrowsed[k].id = $scope.companiesDetailDataBrowsed[k].organisation_id;
+    //                           $scope.companiesDetailDataBrowsed[k].label = $scope.companiesDetailDataBrowsed[k].name;
+    //                           $scope.companiesDetailDataBrowsed[k].sector= $scope.companiesDetailDataBrowsed[k].business_type[0];
+    //                           if (k == response.data.data.companies.length - 1) {
+    //                             $scope.companiesDetailDataBrowsed.push({ id: 'other', label: 'other', organisation_id: '', name: 'other' })
+    //                           }
+    //                         }
+              
+                          
+    //                         for (let i in $scope.browsedDetailData) {
+    //                           $scope.browsedDetailData[i].created_at = moment($scope.browsedDetailData[i].created_at).toISOString();               
+    //                           if (!$scope.browsedDetailData[i].current_patner_id) {
+    //                             $scope.browsedDetailData[i].current_patner_id = '';
+    //                           }
+    //                           var selected_preferred_company = [];
+    //                           $scope.browsedDetailData[i].selected_preferred_company = [];
+    //                            if($scope.browsedDetailData[i].prefered_patner_other){
+    //                               $scope.browsedDetailData[i].otherPreferredCompanyBrowsed = true;
+    //                               $scope.browsedDetailData[i].prefered_patners.push("");
+    //                            }
+    //                           if ($scope.browsedDetailData[i].prefered_patners.length > 0) {
+    //                             for (let j in $scope.browsedDetailData[i].prefered_patners) {
+    //                               var localindex_index = $scope.companiesDetailDataBrowsed.map(function (el) {
+    //                                 return el.organisation_id;
+    //                               }).indexOf($scope.browsedDetailData[i].prefered_patners[j]);
+    //                               if (localindex_index != -1) {
+    //                                 selected_preferred_company.push($scope.companiesDetailDataBrowsed[localindex_index])
+    //                               }
+    //                             }
+    //                             $scope.browsedDetailData[i].selected_preferred_company = selected_preferred_company
+    //                           }
+              
+                            
+              
+    //                           userService.getSector()
+    //                           .then(function onSuccess(response) {
+    //                             $scope.sectorList = response.data;
+    //                             console.log($scope.sectorList[1].business_type);
+    //                           });
+    //                           //start added sector name
+    //                           if ($scope.sectorList) {
+    //                             var localindex_indexs = $scope.sectorList.map(function (el) {
+    //                               return el.id;
+    //                             }).indexOf($scope.browsedDetailData[i].sector_id);
+    //                             if (localindex_indexs != -1) {
+    //                               $scope.browsedDetailData[i].sector_name = $scope.sectorList[localindex_indexs].business_type
+    //                               console.log($scope.browsedDetailData);
+    //                             }
+    //                           }
+    //                           //end added sector name
+              
+              
+    //                           if ($scope.browsedDetailData[i].sub_sector_id) {
+    //                             if ($scope.sectorList) {
+    //                               for (let p in $scope.sectorList) {
+    //                                 if ($scope.sectorList[p].subtypes && $scope.sectorList[p].subtypes.length > 0) {
+    //                                   var sub_index = $scope.sectorList[p].subtypes.map(function (el) {
+    //                                     return el.id;
+    //                                   }).indexOf(JSON.parse($scope.browsedDetailData[i].sub_sector_id));
+    //                                   if (sub_index != -1) {
+    //                                     $scope.browsedDetailData[i].sub_sector_name = $scope.sectorList[p].subtypes[sub_index].business_sub_type;
+    //                                   }
+    //                                 }
+    //                               }
+    //                               //end sub sector name
+    //                             }
+    //                           }
+    //                         }
+    //                       }).catch(function onError(response) {
+    //                         console.log(response);
+    //                       })
+    //                   }
+    //                 // $scope.opsVerified=function(){
+    //                 //     alert("1");
+    //                 //     $('#RequirementModel').modal('show');
+    //                 //     // $rootScope.getRequirementDetail();
+    //                 // }
             }
-        ]
+       ]
     );
 
 
