@@ -361,7 +361,31 @@
                 </div>
                 <div ng-if="decisionPendingTab">
                   <div>
-                    <h4 class="panel-title">
+                    <div class="col-md-6">
+                      <h4 class="panel-title">
+                        <!-- <select class="form-control" ng-model="surveyLeadFilter" aria-placeholder="Select Leads,Surveyed Clients" ng-change="setSurveyLeadFilter(surveyLeadFilter.value)">
+                          <option ng-selected="aa" disabled='true' value="">Select Leads,Surveyed Clients</option>
+                          <option value="Survey">Survey</option>
+                          <option value="Leads">Leads</option>
+                        </select> -->
+                        <select ng-options="supplierType for supplierType in surveyLeadArray"
+                          aria-placeholder="Select Leads,Surveyed Clients" ng-model="supplierType" class="form-control"
+                          ng-change="surveyLeadFilter(supplierType)">
+                        </select>
+                      </h4>
+                    </div>
+                    <div class="col-md-6">
+                      <h4 class="panel-title">
+                        <select class="form-control" name="supplierType" ng-model="selectedSupplierType.code"
+                          value="supplierType.value" ng-change="setSupplierType()">
+                          <option value="">Select Supplier Type</option>
+                          <option value="{{supplierType.value}}"
+                            ng-selected="selectedSupplierType == supplierType.value"
+                            ng-repeat="supplierType in supplierTypeCode">{{supplierType.name}}</option>
+                        </select>
+                      </h4>
+                    </div>
+                    <!-- <h4 class="panel-title"> -->
 
 
                       <!-- <select ng-options="entityType.name for entityType in entityTypes" ng-model="entityType.value"
@@ -369,15 +393,15 @@
                       default-option="{{entityType.name}}">  
                     </select> -->
 
-                      <select class="form-control" name="supplierType" ng-model="entityType.value"
+                      <!-- <select class="form-control" name="supplierType" ng-model="entityType.value"
                         value="entityType.value" ng-change="setEntityType(entityType.value)">
                         <option value="">Select Supplier Type</option>
                         <option value="{{entityType.value}}" ng-selected="selectedEntityType == entityType.value"
                           ng-repeat="entityType in supplierTypeCode">{{entityType.name}}</option>
-                      </select>
-                    </h4>
+                      </select> -->
+                    <!-- </h4> -->
                   </div>
-                  <br />
+                  <br/>
                   <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
                   <br />
                   <div class="table-responsive b2b-table-style">
@@ -428,13 +452,22 @@
                             <span style="display: none;">{{value8=value8?value8:decisionPanding.macchadalo_client_status}}</span>
                             <span>{{decisionPanding.updated_at?decisionPanding.updated_at:"NA"}}</span>
                           </td>
-                          <td class="alignment text-center">
+                          <!-- <td class="alignment text-center">
                             {{decisionPanding.client_comment?decisionPanding.client_comment:"NA"}}
-                          </td>
+                          </td> -->
+                            <td class="alignment">
+                              <textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" 
+                                        ng-click="commentValue(mymodel)"
+                                        ng-blur="valuechange(mymodel,decisionPanding.macchadalo_client_status,decisionPanding._id,decisionPanding.requirement_id)"
+                                        name="" placeholder="Comment">
+                                        <span>{{mymodel=mymodel ? mymodel:mymodel==""?"":decisionPanding.macchadalo_client_comment}}</span>
+                              </textarea>
+                            </td>               
+
                           <td class="alignment text-center">
                             {{decisionPanding.phone_number?decisionPanding.phone_number:"NA"}}
                           </td>
-                          <!-- <td class="alignment"><textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{mymodel=mymodel?mymodel:decisionPanding.client_comment}}</textarea></td>                           -->
+                          <!-- <td class="alignment"><textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{mymodel=mymodel?mymodel:decisionPanding.client_comment}}</textarea></td> -->
                           <td class="alignment text-center">
                             <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
                               ng-click="acceptDeclineDecisionPanding($index,'Accepted',decisionPanding._id)">Accept</button>
@@ -453,7 +486,8 @@
                     <div style="padding: 8px 0px;color:#000000;">
                       <b>*TOE = Type of Entity </b><br>
                       <b>Int Comment = Internal Comment </b><br>
-                      <b>Int Status = Internal Status</b>
+                      <b>Int Status = Internal Status</b><br>
+                      <b>Primary count = Flat count (for RS)</b>                      </b>
                     </div>
                     <dir-pagination-controls max-size="7" directionlinks="true" boundary-links="true"
                       on-page-change="pageChanged(newPageNumber-1)" pagination-id="paginate1">
@@ -1154,7 +1188,12 @@
                     </br><br>
                     <input type="text" class="form-control" ng-model="searchData" ng-if="purchasedTable"
                       placeholder="search">
-
+                    <div class="table-responsive">
+                      <div>
+                        <center>
+                          <h2 style="color: black;">Leads</h2>
+                        </center>
+                      </div>
                       <div class="date_range_picker">
                         <div class="row">
                           <div class="col-lg-6">
@@ -1162,6 +1201,7 @@
                               <div class="col-lg-6">
                                 <select ng-change="selectedCity(city)"
                                 class="form-control select_city" ng-model="city">
+                                    <option value="" >Select City</option>
                                     <option ng-repeat="city in cityListDetails" track by "$index">{{city}}</option>
                                 </select>
                               </div>
@@ -1199,12 +1239,6 @@
                           </div>
                           
                         </div>
-                      </div>
-                    <div class="table-responsive">
-                      <div>
-                        <center>
-                          <h2 style="color: black;">Leads</h2>
-                        </center>
                       </div>
                       <div class="panel-heading content-title" ng-if="purchasedTable || notPurchasedTable"
                         style="height:70px">
@@ -1346,19 +1380,24 @@
                               <span ng-if="!lead[24].value">NA</span>
                             </td> -->
                             <td class="col-md-2">
-                              <select ng-change="setValue(value8,lead[0].macchadalo_client_comment,lead[0]._id)"
+                              <select ng-change="setValue(value8,lead[0].macchadalo_client_comment,lead[0]._id,lead[0].requirement_id)"
                                 class="form-control client-status" ng-model="value8">
                                 <option ng-repeat="option in listClientStatus" track by "$index">{{option}}</option>
                               </select>
                               <span>{{lead[0].updated_at}}</span>
                               <span style="display: none;">{{value8=value8?value8:lead[0].macchadalo_client_status}}
                             </td>
-                            <!-- <td class="alignment">
-                              <textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" ng-change="valuechange(mymodel)" name="" placeholder="Comment">{{mymodel=mymodel?mymodel:lead[0].macchadalo_client_comment}}</textarea>
-                            </td> -->
-                            <td class="col-md-2" style="max-width:fit-content;text-align: center; width: 227px;">
-                              <span>{{macchadalo_client_comment?macchadalo_client_comment:"NA"}}</span>
+                            <td class="alignment">
+                              <textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel"
+                                        ng-click="commentValue(mymodel)"
+                                        ng-blur="valuechange(mymodel,lead[0].macchadalo_client_status,lead[0]._id,lead[0].requirement_id)" 
+                                        name="" placeholder="Comment">
+                                        <span>{{mymodel=mymodel?mymodel:mymodel==""?"":lead[0].macchadalo_client_comment}}</span>
+                              </textarea>
                             </td>
+                            <!-- <td class="col-md-2" style="max-width:fit-content;text-align: center; width: 227px;">
+                              <span>{{macchadalo_client_comment?macchadalo_client_comment:"NA"}}</span>
+                            </td> -->
                             <!-- <td><button style="margin-top:8px" type="button" name="button" class="btn btn-danger"
                               ng-click="updateLeadClientStatus(lead[0].macchadalo_client_status,lead[0].macchadalo_client_comment,lead[0]._id)">Update</button></td> -->
                             <td><button style="margin-top:8px; width: 92px !important; margin-right: -16px !important;"
@@ -2516,24 +2555,51 @@
               <table class="table">
                 <tr>
                   <th style="background-color: #8e1921; color: #fff;" bgcolor="#8e1921">
-                    <h4>Lead Details :</h4>
+                    <h4>Sector Specific Questions :</h4>
                   </th>
                 </tr>
                 <tr>
                   <td>
-                    <h4>L4 : {{leadDetailDataList.lead_info.L4}}</h4>
+                    <div class="tool-tip" ng-init="tips1=false">
+                      <h4>Q1.Response : {{leadDetailDataList.lead_info.L4}}<i class="fa fa-question tool-icon" ng-mouseover="tips1=true"ng-mouseleave="tips1=false"></i>
+                        <div ng-show="tips1" class="tool-popup">
+                            <div>Question1:{{leadDetailDataList.lead_info.L4_question.header}}</div>
+                            <div>A:{{leadDetailDataList.lead_info.L4_question.a}}</div>
+                            <div>B:{{leadDetailDataList.lead_info.L4_question.b}}</div>
+                            <div>C:{{leadDetailDataList.lead_info.L4_question.c}}</div>
+                        </div>
+                      </h4>
+                    </div>
                   </td>
                 </tr>
                 <tr>
                   <!-- <td></td> -->
                   <td>
-                    <h4>L5 : {{leadDetailDataList.lead_info.L5}}</h4>
+                    <div class="tool-tip" ng-init="tips2=false">
+                      <h4>Q2.Response: {{leadDetailDataList.lead_info.L5}}<i class="fa fa-question tool-icon" ng-mouseover="tips2=true"ng-mouseleave="tips2=false"></i>
+                        <div ng-show="tips2" class="tool-popup">
+                            <div>Question2:{{leadDetailDataList.lead_info.L5_question.header}}</div>
+                            <div>A:{{leadDetailDataList.lead_info.L5_question.a}}</div>
+                            <div>B:{{leadDetailDataList.lead_info.L5_question.b}}</div>
+                            <div>C:{{leadDetailDataList.lead_info.L5_question.c}}</div>
+                        </div>
+                      </h4>
+                    </div>                    
                   </td>
                 </tr>
                 <tr>
                   <!-- <td></td> -->
                   <td>
-                    <h4>L6 : {{leadDetailDataList.lead_info.L6}}</h4>
+                    <div class="tool-tip" ng-init="tips3=false">
+                      <h4>Q3.Response: {{leadDetailDataList.lead_info.L6}}<i class="fa fa-question tool-icon" ng-mouseover="tips3=true"ng-mouseleave="tips3=false"></i>
+                        <div ng-show="tips3" class="tool-popup">
+                            <div>Question3:{{leadDetailDataList.lead_info.L6_question.header}}</div>
+                            <div>A:{{leadDetailDataList.lead_info.L6_question.a}}</div>
+                            <div>B:{{leadDetailDataList.lead_info.L6_question.b}}</div>
+                            <div>C:{{leadDetailDataList.lead_info.L6_question.c}}</div>
+                        </div>
+                      </h4>
+                    </div>
                   </td>
                 </tr>
               </table>
