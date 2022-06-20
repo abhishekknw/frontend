@@ -523,10 +523,10 @@ angular.module('Authentication')
                   });
             };
             authService.getAllInterveneUserData = function (param,meaType) {
-               let url = "/v0/ui/b2c-bot/intervene/?next_page=" + param.next_page;
+               let url = "v0/ui/b2c-bot/intervene/?next_page=" + param.next_page;
                apiHost = APIBaseUrl;
                if(meaType){
-                  url = "/v0/ui/mea-bot/intervene/?next_page=" + param.next_page;
+                  url = "v0/ui/mea-bot/intervene/?next_page=" + param.next_page;
                   apiHost = interveneApiHost;
                }
                if (param.search) {

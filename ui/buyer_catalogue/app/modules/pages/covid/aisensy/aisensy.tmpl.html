@@ -702,15 +702,15 @@
 
 
 
-  .contact-info{
+  .contact-info {
     width: 250px;
     /* height: 140px; */
     display: flex;
     /* justify-content: center; */
     flex-wrap: wrap;
-}
+  }
 
-.card{
+  .card {
     position: relative;
     flex: 1;
     max-width: 300px;
@@ -722,59 +722,59 @@
     align-items: center;
     justify-content: center;
     height: 85px;
-}
+  }
 
-.icon{
+  .icon {
     font-size: 32px;
     color: #ea8685;
     transition: .3s linear;
-}
+  }
 
-.card:hover .icon{
+  .card:hover .icon {
     transform: scale(4);
     opacity: 0;
-}
+  }
 
-.card-content h3,
-.card-content span{
+  .card-content h3,
+  .card-content span {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     font-size: 16px;
     opacity: 0;
-}
+  }
 
-.card-content h3{
+  .card-content h3 {
     top: 20px;
     /* text-transform: capitalize; */
     color: #ea8685;
-}
+  }
 
-.card-content span{
+  .card-content span {
     bottom: 20px;
     color: #fff;
     font-weight: 500;
-}
+  }
 
-.card:hover h3{
+  .card:hover h3 {
     opacity: 1;
     top: 26px;
     transition: .3s linear .3s;
-}
+  }
 
-.card:hover span{
+  .card:hover span {
     opacity: 1;
     bottom: 46px;
     transition: .3s linear .3s;
-}
+  }
 
 
-@media screen and (max-width:900px){
-    .card{
-        flex: 100%;
-        max-width: 500px;
+  @media screen and (max-width:900px) {
+    .card {
+      flex: 100%;
+      max-width: 500px;
     }
-}
+  }
 
 
   /* @media only screen and (max-height: 650px) {
@@ -1375,8 +1375,8 @@
                         <i class="fa fa-search" aria-hidden="true"></i>
                         <!-- <input placeholder="Search here" ng-change="searchChat(search)" ng-model="search" id="search"
                           name="search" type="text" /> -->
-                        <input placeholder="Search here" ng-change="getActiveUser()"
-                          ng-model="formData.activesearch" id="tab1search" name="search" type="text" />
+                        <input placeholder="Search here" ng-change="getActiveUser()" ng-model="formData.activesearch"
+                          id="tab1search" name="search" type="text" />
                       </div>
                     </div>
 
@@ -1462,7 +1462,7 @@
                         <div class="screen-phone">
                           <div class="nav-phone navbar-fixed">
 
-                            <div class="icon-back" >
+                            <div class="icon-back">
                               <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
                                 ng-click="getActiveUser(pagination.current)">
 
@@ -1532,18 +1532,20 @@
                                   <span ng-if="chat.content.types[0] == 'audio'">
                                     <audio width="200" height="auto" controls>
                                       <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
-                                  </audio>
-                                </span>
+                                    </audio>
+                                  </span>
                                   <span ng-if="chat.type == 'contact'">
-                                      <div class="contact-info">
-                                        <div class="card">
-                                          <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.first_name}}</h5></i></center>
-                                          <div class="card-content">
-                                            <span>{{chat.content.contacts[0].phones[0].phone}}</span>
-                                            <h3>{{chat.content.contacts[0].name.first_name}}</h3>
-                                          </div>
+                                    <div class="contact-info">
+                                      <div class="card">
+                                        <center><i class="icon fas fa-user">
+                                            <h5>{{chat.content.contacts[0].name.first_name}}</h5>
+                                          </i></center>
+                                        <div class="card-content">
+                                          <span>{{chat.content.contacts[0].phones[0].phone}}</span>
+                                          <h3>{{chat.content.contacts[0].name.first_name}}</h3>
                                         </div>
                                       </div>
+                                    </div>
                                   </span>
                                   <br>
                                   <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
@@ -1562,20 +1564,23 @@
                                   <span ng-if="chat.content.types[0] == 'audio'">
                                     <audio width="200" height="auto" controls>
                                       <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
-                                  </audio>
-                                </span>
+                                    </audio>
+                                  </span>
                                   <span ng-if="chat.type == 'contact'">
                                     <div class="contact-info">
                                       <div class="card">
-                                        <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.firstName}}</h5></i></center>
+                                        <center><i class="icon fas fa-user">
+                                            <h5>{{chat.content.contacts[0].name.firstName}}</h5>
+                                          </i></center>
                                         <div class="card-content">
                                           <span>{{chat.content.contacts[0].phones[0].phone}}</span>
                                           <h3>{{chat.content.contacts[0].name.firstName}}</h3>
                                         </div>
                                       </div>
                                     </div>
-                                </span>
-                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}}, <b style="text-transform: capitalize;">{{chat.status['type']}}</b></span>
+                                  </span>
+                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}}, <b
+                                      style="text-transform: capitalize;">{{chat.status['type']}}</b></span>
                                 </div>
                               </div>
                             </div>
@@ -1747,9 +1752,9 @@
                                     ''}}</span><br />
                                   <span
                                     class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
-                                     <!-- <span
+                                  <!-- <span
                                     class="tel-number profile-heading">{{userDetailPayload.area})</span> -->
-                                  </center>
+                                </center>
                                 <div class="profile-image-chat">
                                   <span>
                                     {{userChatData.whatsapp_name |firstlater}}
@@ -1787,19 +1792,21 @@
                                   <span ng-if="chat.content.types[0] == 'audio'">
                                     <audio width="200" height="auto" controls>
                                       <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
-                                  </audio>
-                                </span>
+                                    </audio>
+                                  </span>
                                   <span ng-if="chat.type == 'contact'">
                                     <div class="contact-info">
                                       <div class="card">
-                                        <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.first_name}}</h5></i></center>
+                                        <center><i class="icon fas fa-user">
+                                            <h5>{{chat.content.contacts[0].name.first_name}}</h5>
+                                          </i></center>
                                         <div class="card-content">
                                           <span>{{chat.content.contacts[0].phones[0].phone}}</span>
                                           <h3>{{chat.content.contacts[0].name.first_name}}</h3>
                                         </div>
                                       </div>
                                     </div>
-                                </span>
+                                  </span>
                                   <br>
                                   <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
                                 </div>
@@ -1817,20 +1824,23 @@
                                   <span ng-if="chat.content.types[0] == 'audio'">
                                     <audio width="200" height="auto" controls>
                                       <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
-                                  </audio>
-                                </span>
+                                    </audio>
+                                  </span>
                                   <span ng-if="chat.type == 'contact'">
                                     <div class="contact-info">
                                       <div class="card">
-                                        <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.firstName}}</h5></i></center>
+                                        <center><i class="icon fas fa-user">
+                                            <h5>{{chat.content.contacts[0].name.firstName}}</h5>
+                                          </i></center>
                                         <div class="card-content">
                                           <span>{{chat.content.contacts[0].phones[0].phone}}</span>
                                           <h3>{{chat.content.contacts[0].name.firstName}}</h3>
                                         </div>
                                       </div>
                                     </div>
-                                </span>
-                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}}, <b style="text-transform: capitalize;">{{chat.status['type']}}</b></span>
+                                  </span>
+                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}}, <b
+                                      style="text-transform: capitalize;">{{chat.status['type']}}</b></span>
                                 </div>
                               </div>
                             </div>
@@ -1963,7 +1973,7 @@
                           No Record.
                         </h4>
                       </div>
-                    
+
                       <!-- Start Phone Chat  for tab3-->
                       <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
                         <div class="screen-phone">
@@ -1978,13 +1988,15 @@
                               </svg>
                             </div>
                             <div>
-                            <!-- <div ng-click="userProfileIcon()"> -->
-                               <div ng-if="userChatData.whatsapp_name!=''">
+                              <!-- <div ng-click="userProfileIcon()"> -->
+                              <div ng-if="userChatData.whatsapp_name!=''">
                                 <div>
-                                  <button ng-click="getRequirementDetail('23493')" data-toggle="modal" data-target="#RequirementModel">Suspense Sheet</button>
+                                  <button ng-click="getRequirementDetail('23493')" data-toggle="modal"
+                                    data-target="#SuspenseLeadsModel">Suspense Sheet</button>
                                 </div>
                                 <div>
-                                  <button ng-click="getRequirementDetail('23493')" data-toggle="modal" data-target="#RequirementModel">Ops Verified</button>
+                                  <button ng-click="getRequirementDetail('23493')" data-toggle="modal"
+                                    data-target="#RequirementModel">Ops Verified</button>
                                 </div>
                                 <center>
                                   <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
@@ -1992,7 +2004,7 @@
                                     ''}}</span><br />
                                   <span
                                     class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
-                                  </center>
+                                </center>
                                 <div class="profile-image-chat">
                                   <span>
                                     {{userChatData.whatsapp_name |firstlater}}
@@ -2031,19 +2043,21 @@
                                   <span ng-if="chat.content.types[0] == 'audio'">
                                     <audio width="200" height="auto" controls>
                                       <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
-                                  </audio>
-                                </span>
+                                    </audio>
+                                  </span>
                                   <span ng-if="chat.type == 'contact'">
                                     <div class="contact-info">
                                       <div class="card">
-                                        <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.first_name}}</h5></i></center>
+                                        <center><i class="icon fas fa-user">
+                                            <h5>{{chat.content.contacts[0].name.first_name}}</h5>
+                                          </i></center>
                                         <div class="card-content">
                                           <span>{{chat.content.contacts[0].phones[0].phone}}</span>
                                           <h3>{{chat.content.contacts[0].name.first_name}}</h3>
                                         </div>
                                       </div>
                                     </div>
-                                </span>
+                                  </span>
                                   <br>
                                   <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
                                 </div>
@@ -2061,22 +2075,25 @@
                                   <span ng-if="chat.content.types[0] == 'audio'">
                                     <audio width="200" height="auto" controls>
                                       <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
-                                  </audio>
-                                </span>
-                                
+                                    </audio>
+                                  </span>
+
                                   <span ng-if="chat.content.contacts">
                                     <div class="contact-info">
                                       <div class="card">
-                                        <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.firstName}}</h5></i></center>
+                                        <center><i class="icon fas fa-user">
+                                            <h5>{{chat.content.contacts[0].name.firstName}}</h5>
+                                          </i></center>
                                         <div class="card-content">
                                           <span>{{chat.content.contacts[0].phones[0].phone}}</span>
                                           <h3>{{chat.content.contacts[0].name.firstName}}</h3>
                                         </div>
                                       </div>
                                     </div>
-                                  
-                                </span>
-                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}}, <b style="text-transform: capitalize;">{{chat.status['type']}}</b></span>
+
+                                  </span>
+                                  <span class="chat-time">{{chat.timestamp | date : 'medium'}}, <b
+                                      style="text-transform: capitalize;">{{chat.status['type']}}</b></span>
                                 </div>
                               </div>
                             </div>
@@ -2120,7 +2137,8 @@
                                             Select Contact you want to share</h4>
                                           <hr>
 
-                                          <div class="input-wrapper" style=" margin: 10px; background-color: #575758;position: sticky;top:21px;z-index: 10;">
+                                          <div class="input-wrapper"
+                                            style=" margin: 10px; background-color: #575758;position: sticky;top:21px;z-index: 10;">
                                             <i class="fa fa-search" aria-hidden="true" style="margin-left: 10px;"></i>
                                             <input placeholder="Search here" ng-change="getContactList(contactNames)"
                                               ng-model="contactNames" id="tab1search" name="searchcontact" type="text"
@@ -2130,35 +2148,33 @@
                                           <div class="modal-body">
                                             <table class="table table-bordered table-hover">
                                               <tbody ng-repeat="list in contactListData">
-                                                   <td>
-                                                    <div class="friend-drawer friend-drawer--onhover" >
-                                                      <!-- <div class="text" style="float: left;">
+                                                <td>
+                                                  <div class="friend-drawer friend-drawer--onhover">
+                                                    <!-- <div class="text" style="float: left;">
                                                         <h6>{{list.contact_name}}</h6>
                                                         <p class="text-muted"><b>
                                                             {{list.phone_number}}
                                                           </b></p>
                                                       </div> -->
-                                                      <div class="custom-control custom-checkbox" 
+                                                    <div class="custom-control custom-checkbox"
                                                       ng-click="getselectedContact(list.email_id,list.contact_name,list.phone_number,list.organisation_name)">
-                                                        <input type="checkbox" 
-                                                        class="custom-control-input"
-                                                        id="customCheck" name="example1"
-                                                        checklist-value="list"  checklist-model="list.selected"
-                                                        style="position: absolute; right: 35px; width: 20px;" 
-                                                        >
-                                                        <span class="text" style="float: left;">
-                                                          <h6>{{list.contact_name}}</h6>
-                                                          <p class="text-muted"><b>
+                                                      <input type="checkbox" class="custom-control-input"
+                                                        id="customCheck" name="example1" checklist-value="list"
+                                                        checklist-model="list.selected"
+                                                        style="position: absolute; right: 35px; width: 20px;">
+                                                      <span class="text" style="float: left;">
+                                                        <h6>{{list.contact_name}}</h6>
+                                                        <p class="text-muted"><b>
                                                             {{list.phone_number}}
                                                           </b></p>
-                                                        </span>
-                                                      </div>
+                                                      </span>
                                                     </div>
-                                                  </td>
+                                                  </div>
+                                                </td>
                                               </tbody>
                                             </table>
                                             <button type="submit" class="btn btn-primary" value="submit" id="#myModal"
-                                             ng-click="sendContact('91'+userChatData.phone_number)">Submit</button>
+                                              ng-click="sendContact('91'+userChatData.phone_number)">Submit</button>
                                           </div>
                                         </div>
                                       </div>
@@ -2170,13 +2186,13 @@
 
                                 <!-- <input type="text" ng-model="message.activeMessage" placeholder="Write message"
                                   ng-keydown="$event.keyCode === 13  && sendMessage(userChatData.phone_number)"> -->
-                                  <textarea id="message" ng-model="message.activeMessage" placeholder="Write message" style="width: 90%;
+                                <textarea id="message" ng-model="message.activeMessage" placeholder="Write message"
+                                  style="width: 90%;
                                   height: 15px;
                                   overflow: hidden;margin: 5px; padding-left: 15px;"
-                                  ui-keypress="{13:'sendMessage(userChatData.phone_number)'}" 
-                                    >
+                                  ui-keypress="{13:'sendMessage(userChatData.phone_number)'}">
                               </textarea>
-                                  </div>
+                              </div>
                             </div>
                             <div class="btn-send" ng-click="sendMessage(userChatData.phone_number)">
                               <svg viewBox="0 0 74.433 60.908" width="25" height="25"
@@ -2595,19 +2611,21 @@
                       <span ng-if="chat.content.types[0] == 'audio'">
                         <audio width="200" height="auto" controls>
                           <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
-                      </audio>
-                    </span>
+                        </audio>
+                      </span>
                       <span ng-if="chat.type == 'contact'">
                         <div class="contact-info">
                           <div class="card">
-                            <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.first_name}}</h5></i></center>
+                            <center><i class="icon fas fa-user">
+                                <h5>{{chat.content.contacts[0].name.first_name}}</h5>
+                              </i></center>
                             <div class="card-content">
                               <span>{{chat.content.contacts[0].phones[0].phone}}</span>
                               <h3>{{chat.content.contacts[0].name.first_name}}</h3>
                             </div>
                           </div>
                         </div>
-                    </span>
+                      </span>
                       <br>
                       <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
                     </div>
@@ -2625,20 +2643,23 @@
                     <span ng-if="chat.content.types[0] == 'audio'">
                       <audio width="200" height="auto" controls>
                         <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
-                    </audio>
-                  </span>
+                      </audio>
+                    </span>
                     <span ng-if="chat.type == 'contact'">
                       <div class="contact-info">
                         <div class="card">
-                          <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.firstName}}</h5></i></center>
+                          <center><i class="icon fas fa-user">
+                              <h5>{{chat.content.contacts[0].name.firstName}}</h5>
+                            </i></center>
                           <div class="card-content">
                             <span>{{chat.content.contacts[0].phones[0].phone}}</span>
                             <h3>{{chat.content.contacts[0].name.firstName}}</h3>
                           </div>
                         </div>
                       </div>
-                  </span>
-                    <span class="chat-time">{{chat.timestamp | date :'medium'}}, <b style="text-transform: capitalize;">{{chat.status['type']}}</b></span>
+                    </span>
+                    <span class="chat-time">{{chat.timestamp | date :'medium'}}, <b
+                        style="text-transform: capitalize;">{{chat.status['type']}}</b></span>
                   </div>
                 </div>
 
@@ -3149,19 +3170,21 @@
                 <span ng-if="chat.content.types[0] == 'audio'">
                   <audio width="200" height="auto" controls>
                     <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
-                </audio>
-              </span>
+                  </audio>
+                </span>
                 <span ng-if="chat.type == 'contact'">
                   <div class="contact-info">
                     <div class="card">
-                      <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.first_name}}</h5></i></center>
+                      <center><i class="icon fas fa-user">
+                          <h5>{{chat.content.contacts[0].name.first_name}}</h5>
+                        </i></center>
                       <div class="card-content">
                         <span>{{chat.content.contacts[0].phones[0].phone}}</span>
                         <h3>{{chat.content.contacts[0].name.first_name}}</h3>
                       </div>
                     </div>
                   </div>
-              </span>
+                </span>
                 <br>
                 <span class="chat-time">{{chat.timestamp | date :'medium'}}</span>
               </div>
@@ -3179,19 +3202,21 @@
               <span ng-if="chat.content.types[0] == 'audio'">
                 <audio width="200" height="auto" controls>
                   <source ng-src="{{chat.content.url}}" type="audio/ogg; codecs=opus">
-              </audio>
-            </span>
+                </audio>
+              </span>
               <span ng-if="chat.type == 'contact'">
                 <div class="contact-info">
                   <div class="card">
-                    <center><i class="icon fas fa-user"><h5>{{chat.content.contacts[0].name.firstName}}</h5></i></center>
+                    <center><i class="icon fas fa-user">
+                        <h5>{{chat.content.contacts[0].name.firstName}}</h5>
+                      </i></center>
                     <div class="card-content">
                       <span>{{chat.content.contacts[0].phones[0].phone}}</span>
                       <h3>{{chat.content.contacts[0].name.firstName}}</h3>
                     </div>
                   </div>
                 </div>
-            </span>
+              </span>
               <span class="chat-time">{{chat.timestamp | date : 'medium'}}</span>
             </div>
           </div>
@@ -3430,221 +3455,205 @@
   <!--/Filter Tab-->
 </div>
 
-  <!-- start Requirement table -->
-  <div id="RequirementModel" class="modal fade li-popup">
-    <div class="modal-dialog" style="width:1200px">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">Requirement Details supplierName</h4>
-          <hr />
-          <div class="modal-body" style="width: 1100px; min-height: 200px;">
-            <div class="modal-body col-md-4 table-responsive submitted_lead_table" style="width: 1100px; min-height: 200px;">
-              <form name="myForm">
-                <!-- test -->
-                <h4 class="modal-title">Submitted Leads</h4>
-                <table class="table table-bordered" name="contactForm">
-                  <thead>
-                    <tr>
-                      <th ng-repeat="header in requirement_submitted_headings" class="col-md-2 alignment">
-                        <b>{{header.header}}</b></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr ng-repeat-start="(key, requirement) in requirementDetailData">
-                      <td class="alignment">
-                        <span ng-if="!detailedShow[key]" ng-click="ShowDetailed(key,requirement.sector)"
-                          class="glyphicon glyphicon-plus"></span>
-                        <span ng-if="detailedShow[key]" ng-click="ShowDetailed(key,requirement.sector)"
-                          class="glyphicon glyphicon-minus"></span>
-                      </td>
-                      <td class="alignment">
-                        {{requirement.sector}}
-                      </td>
-                    <tr ng-show="detailedShow[key]" id="detailedSho_{{key}}" ng-repeat-end
-                      ng-repeat-start="subrequirement in requirements">
-                      <td ng-style="{'background-color': subrequirement.color_class}" class="input_td_req11"> </td>
-                      <td ng-style="{'background-color': subrequirement.color_class}" class="input_td_req">
-                        <!-- <input type="checkbox" ng-disabled="subrequirement.varified_ops == 'yes'" -->
-                        <input type="checkbox"
-                          name="requirementCheck" id="requirementCheckId" ng-click="checkbooxCheck(key,$index)"
-                          ng-model="subrequirement.requirementCheck">
-                      </td>
-                      <td class="alignment">
-                        {{subrequirement.sub_sector_name}}
-                      </td>
-                      <td class="alignment">
-                        <!-- <select class="form-control"
+<!-- start Requirement table -->
+<div id="RequirementModel" class="modal fade li-popup">
+  <div class="modal-dialog" style="width:1200px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Requirement Details supplierName</h4>
+        <hr />
+        <div class="modal-body" style="width: 1100px; min-height: 200px;">
+          <div class="modal-body col-md-4 table-responsive submitted_lead_table"
+            style="width: 1100px; min-height: 200px;">
+            <form name="myForm">
+              <!-- test -->
+              <h4 class="modal-title">Submitted Leads</h4>
+              <table class="table table-bordered" name="contactForm">
+                <thead>
+                  <tr>
+                    <th ng-repeat="header in requirement_submitted_headings" class="col-md-2 alignment">
+                      <b>{{header.header}}</b>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat-start="(key, requirement) in requirementDetailData">
+                    <td class="alignment">
+                      <span ng-if="!detailedShow[key]" ng-click="ShowDetailed(key,requirement.sector)"
+                        class="glyphicon glyphicon-plus"></span>
+                      <span ng-if="detailedShow[key]" ng-click="ShowDetailed(key,requirement.sector)"
+                        class="glyphicon glyphicon-minus"></span>
+                    </td>
+                    <td class="alignment">
+                      {{requirement.sector}}
+                    </td>
+                  <tr ng-show="detailedShow[key]" id="detailedSho_{{key}}" ng-repeat-end
+                    ng-repeat-start="subrequirement in requirements">
+                    <td ng-style="{'background-color': subrequirement.color_class}" class="input_td_req11"> </td>
+                    <td ng-style="{'background-color': subrequirement.color_class}" class="input_td_req">
+                      <!-- <input type="checkbox" ng-disabled="subrequirement.varified_ops == 'yes'" -->
+                      <input type="checkbox" name="requirementCheck" id="requirementCheckId"
+                        ng-click="checkbooxCheck(key,$index)" ng-model="subrequirement.requirementCheck">
+                    </td>
+                    <td class="alignment">
+                      {{subrequirement.sub_sector_name}}
+                    </td>
+                    <td class="alignment">
+                      <!-- <select class="form-control"
                           ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'" -->
-                          <select class="form-control"
-                          name="current_company_{{$index}}" id="current_company_id_{{$index}}"
-                          ng-change="checkBoxAutoCheck(key,$index)" ng-model="subrequirement.current_company"
-                          style="width:100px;">
-                          <option value="" disabled>Select Current Partner</option>
-                          <option  ng-if="subrequirement.sector==cpartner.sector || (subrequirement.sector==null)" ng-repeat="cpartner in companiesDetailData track by $index"
-                            value="{{cpartner.organisation_id}}">
-                            {{cpartner.name}}
-                          </option>
-                        </select>
-                        <input style="margin-top:10px" type="text" ng-change="checkBoxAutoCheck(key,$index)"
-                          class="form-control" placeholder="Other Current Company"
-                          ng-if="subrequirement.current_company == ''" name="currentCompanyOther"
-                          id="currentCompanyOtherId" ng-model="subrequirement.current_company_other">
-                      </td>
+                      <select class="form-control" name="current_company_{{$index}}" id="current_company_id_{{$index}}"
+                        ng-change="checkBoxAutoCheck(key,$index)" ng-model="subrequirement.current_company"
+                        style="width:100px;">
+                        <option value="" disabled>Select Current Partner</option>
+                        <option ng-if="subrequirement.sector==cpartner.sector || (subrequirement.sector==null)"
+                          ng-repeat="cpartner in companiesDetailData track by $index"
+                          value="{{cpartner.organisation_id}}">
+                          {{cpartner.name}}
+                        </option>
+                      </select>
+                      <input style="margin-top:10px" type="text" ng-change="checkBoxAutoCheck(key,$index)"
+                        class="form-control" placeholder="Other Current Company"
+                        ng-if="subrequirement.current_company == ''" name="currentCompanyOther"
+                        id="currentCompanyOtherId" ng-model="subrequirement.current_company_other">
+                    </td>
 
-                      <td class="alignment">
-                        {{subrequirement.current_patner_feedback}}<br>
-                        <span
-                          ng-if="subrequirement.current_patner_feedback_reason">Reason:{{subrequirement.current_patner_feedback_reason}}</span>
-                        <span ng-if="!subrequirement.current_patner_feedback_reason">Reason:NA</span>
-                      </td>
+                    <td class="alignment">
+                      {{subrequirement.current_patner_feedback}}<br>
+                      <span
+                        ng-if="subrequirement.current_patner_feedback_reason">Reason:{{subrequirement.current_patner_feedback_reason}}</span>
+                      <span ng-if="!subrequirement.current_patner_feedback_reason">Reason:NA</span>
+                    </td>
 
-                      <td class="alignment">
-                        {{companyData(subrequirement.sector)}}
-                        <span style="width:150px;"
-                          class="multiselectDropdown multiselectDropdown-style style="color:red;width:100%;margin-left:20px;"
-                          ng-dropdown-multiselect="" options="companiesDetailDataArray" extra-settings="settings"
-                          selected-model="subrequirement.selected_preferred_company_sub_sector"
-                          ng-click="subSectorPreferredMulticheck(key,$index)" translation-texts="selected_business_type"
-                          events="events"></span>
-                          <span ng-repeat="selectedName in subrequirement.selected_preferred_company_sub_sector" style="text-align: left; display: inline-block">
-                            {{selectedName.name}}
-                            <span ng-if="!$last">,</span>
-                          </span>
-                        <input style="margin-top:10px" ng-change="checkBoxAutoCheck(key,$index)" type="text"
-                          class="form-control" placeholder="Other Preferred Company"
-                          ng-if="subrequirement.otherPreferredCompany" name="other_preferred_company" id="other_preferred_company"
-                          ng-model="subrequirement.preferred_company_other">
-                      </td>
+                    <td class="alignment">
+                      {{companyData(subrequirement.sector)}}
+                      <span style="width:150px;" class="multiselectDropdown multiselectDropdown-style style="
+                        color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect=""
+                        options="companiesDetailDataArray" extra-settings="settings"
+                        selected-model="subrequirement.selected_preferred_company_sub_sector"
+                        ng-click="subSectorPreferredMulticheck(key,$index)" translation-texts="selected_business_type"
+                        events="events"></span>
+                      <span ng-repeat="selectedName in subrequirement.selected_preferred_company_sub_sector"
+                        style="text-align: left; display: inline-block">
+                        {{selectedName.name}}
+                        <span ng-if="!$last">,</span>
+                      </span>
+                      <input style="margin-top:10px" ng-change="checkBoxAutoCheck(key,$index)" type="text"
+                        class="form-control" placeholder="Other Preferred Company"
+                        ng-if="subrequirement.otherPreferredCompany" name="other_preferred_company"
+                        id="other_preferred_company" ng-model="subrequirement.preferred_company_other">
+                    </td>
 
-                      <td class="alignment">
-                        <!-- <span>
+                    <td class="alignment">
+                      <!-- <span>
                           <textarea placeholder="L4 Answer" class="form-control" style="width:150px;"
                           value="{{subrequirement.L4}}" ng-model="subrequirement.L4"
                           rows="4" cols="50">
                           </textarea>
                         </span> -->
-                        <select class="form-control"
-                          name="lead_L4" id="lead_L4"
-                          ng-model="subrequirement.L4"
-                          style="width:150px;">
-                          <option ng-repeat="lead_L4 in leads_Data.L4"
-                            value="{{lead_L4}}">
-                            {{lead_L4}}
-                          </option>
-                          <option ng-if="leads_Data.L4.length==0" selected="true" value="NA">NA</option>
+                      <select class="form-control" name="lead_L4" id="lead_L4" ng-model="subrequirement.L4"
+                        style="width:150px;">
+                        <option ng-repeat="lead_L4 in leads_Data.L4" value="{{lead_L4}}">
+                          {{lead_L4}}
+                        </option>
+                        <option ng-if="leads_Data.L4.length==0" selected="true" value="NA">NA</option>
 
-                        </select>
-                        </td>
-                        <!-- <span ng-if="subrequirement.l1_answers">{{subrequirement.l1_answers}}
+                      </select>
+                    </td>
+                    <!-- <span ng-if="subrequirement.l1_answers">{{subrequirement.l1_answers}}
                           <p>{{subrequirement.l1_answer_2}}</p>
                         </span> -->
-                        <!-- <span ng-if="!subrequirement.l1_answers">NA</span> -->
+                    <!-- <span ng-if="!subrequirement.l1_answers">NA</span> -->
 
-                      <td class="alignment">
-                        <!-- <span ng-if="subrequirement.l2_answers || subrequirement.l2_answer_2">{{subrequirement.l2_answers}}
+                    <td class="alignment">
+                      <!-- <span ng-if="subrequirement.l2_answers || subrequirement.l2_answer_2">{{subrequirement.l2_answers}}
                           <p>{{subrequirement.l1_answer_2}}</p>
                         </span> -->
-                        <!-- <span>
+                      <!-- <span>
                           <textarea placeholder="L5 Answer" class="form-control" style="width:150px;"
                           value="{{subrequirement.L5}}" ng-model="subrequirement.L5"
                           rows="4" cols="50">
                           </textarea>
                         </span> -->
-                        <!-- <span ng-if="!subrequirement.l1_answer_2">NA</span> -->
-                        <select class="form-control"
-                          name="lead_L5" id="lead_L5"
-                          ng-model="subrequirement.L5" 
-                          style="width:150px;">
-                          <option ng-repeat="lead_L5 in leads_Data.L5"
-                            value="{{lead_L5}}">
-                            {{lead_L5}}
-                          </option>
-                          <option ng-if="leads_Data.L5.length==0" selected="true" value="NA">NA</option>
+                      <!-- <span ng-if="!subrequirement.l1_answer_2">NA</span> -->
+                      <select class="form-control" name="lead_L5" id="lead_L5" ng-model="subrequirement.L5"
+                        style="width:150px;">
+                        <option ng-repeat="lead_L5 in leads_Data.L5" value="{{lead_L5}}">
+                          {{lead_L5}}
+                        </option>
+                        <option ng-if="leads_Data.L5.length==0" selected="true" value="NA">NA</option>
 
-                        </select>
-                      </td>
+                      </select>
+                    </td>
 
-                      <td class="alignment">
-                        <!-- <span >
+                    <td class="alignment">
+                      <!-- <span >
                           <textarea placeholder="L6 Answer"
                           class="form-control" style="width:150px;" value="{{subrequirement.L6}}" ng-model="subrequirement.L6"
                           ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
                             </textarea>
                         </span> -->
-                        <select class="form-control"
-                          name="lead_L6" id="lead_L6"
-                          ng-model="subrequirement.L6"
-                          style="width:150px;">
-                          <option ng-repeat="lead_L6 in leads_Data.L6"
-                            value="{{lead_L6}}">
-                            {{lead_L6}}
-                          </option>
-                          <option ng-if="leads_Data.L6.length==0" selected="true" value="NA">NA</option>
-                        </select>
-                        
+                      <select class="form-control" name="lead_L6" id="lead_L6" ng-model="subrequirement.L6"
+                        style="width:150px;">
+                        <option ng-repeat="lead_L6 in leads_Data.L6" value="{{lead_L6}}">
+                          {{lead_L6}}
+                        </option>
+                        <option ng-if="leads_Data.L6.length==0" selected="true" value="NA">NA</option>
+                      </select>
 
-                      </td>
 
-                      <td class="alignment">
-                        <!-- <span >
+                    </td>
+
+                    <td class="alignment">
+                      <!-- <span >
                           <textarea placeholder="L4.1 Answer"
                           class="form-control" style="width:150px;" value="{{subrequirement["L4.1"]}}" ng-model="subrequirement['L4.1']"
                           ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
                             </textarea>
                         </span> -->
-                        <select class="form-control"
-                          name="lead_L4_1" id="lead_L4_1"
-                          ng-model="subrequirement['L4.1']"
-                          style="width:150px;">
-                          <option ng-repeat="lead_L4_1 in leads_Data.L4_1"
-                            value="{{lead_L4_1}}">
-                            {{lead_L4_1}}
-                          </option>
-                          <option ng-if="leads_Data.L4_1.length==0" selected="true" value="NA">NA</option>
-                        </select>
-                      </td>
+                      <select class="form-control" name="lead_L4_1" id="lead_L4_1" ng-model="subrequirement['L4.1']"
+                        style="width:150px;">
+                        <option ng-repeat="lead_L4_1 in leads_Data.L4_1" value="{{lead_L4_1}}">
+                          {{lead_L4_1}}
+                        </option>
+                        <option ng-if="leads_Data.L4_1.length==0" selected="true" value="NA">NA</option>
+                      </select>
+                    </td>
 
-                      <td class="alignment">
-                        <!-- <span >
+                    <td class="alignment">
+                      <!-- <span >
                           <textarea placeholder="L5.1 Answer"
                           class="form-control" style="width:150px;"  value="{{subrequirement["L5.1"]}}" ng-model="subrequirement['L5.1']"
                           ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
                           </textarea>
                         </span> -->
-                        <select class="form-control"
-                          name="lead_L5_1" id="lead_L5_1"
-                          ng-model="subrequirement['L5.1']"
-                          style="width:150px;">
-                          <option ng-repeat="lead_L5_1 in leads_Data.L5_1"
-                            value="{{lead_L5_1}}">
-                            {{lead_L5_1}}
-                          </option>
-                          <option ng-if="leads_Data.L5_1.length==0" selected="true" value="NA">NA</option>
+                      <select class="form-control" name="lead_L5_1" id="lead_L5_1" ng-model="subrequirement['L5.1']"
+                        style="width:150px;">
+                        <option ng-repeat="lead_L5_1 in leads_Data.L5_1" value="{{lead_L5_1}}">
+                          {{lead_L5_1}}
+                        </option>
+                        <option ng-if="leads_Data.L5_1.length==0" selected="true" value="NA">NA</option>
 
-                        </select>
-                      </td>
+                      </select>
+                    </td>
 
-                      <td class="alignment">
-                        <!-- <span >
+                    <td class="alignment">
+                      <!-- <span >
                           <textarea placeholder="L6.1 Answer"
                           class="form-control" style="width:150px;"  value="{{subrequirement["L6.1"]}}" ng-model="subrequirement['L6.1']"
                           ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
                           </textarea>
                         </span> -->
-                        <select class="form-control"
-                          name="lead_L6_1" id="lead_L6_1"
-                          ng-model="subrequirement['L6.1']"
-                          style="width:150px;">
-                          <option ng-repeat="lead_L6_1 in leads_Data.L6_1"
-                            value="{{lead_L6_1}}">
-                            {{lead_L6_1}}
-                          </option>
-                          <option ng-if="leads_Data.L6_1.length==0" selected="true" value="NA">NA</option>
-                        </select>
-                      </td>
+                      <select class="form-control" name="lead_L6_1" id="lead_L6_1" ng-model="subrequirement['L6.1']"
+                        style="width:150px;">
+                        <option ng-repeat="lead_L6_1 in leads_Data.L6_1" value="{{lead_L6_1}}">
+                          {{lead_L6_1}}
+                        </option>
+                        <option ng-if="leads_Data.L6_1.length==0" selected="true" value="NA">NA</option>
+                      </select>
+                    </td>
 
-                      <!-- <td class="alignment">
+                    <!-- <td class="alignment">
                         <select class="form-control"
                           name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
                           ng-model="subrequirement.impl_timeline" ng-change="checkBoxAutoCheck(key,$index)"
@@ -3656,32 +3665,29 @@
                           </option>
                         </select>
                       </td> -->
-                      <td class="alignment">
-                        <select class="form-control"
-                          name="value" id="value"
-                          ng-model="subrequirement.impl_timeline"
-                          style="width:150px;">
-                          <option value="" disabled>Select Implementation Time</option>
-                          <option ng-repeat="(key,value) in leads_time.data[10].implementation_time track by $index"
-                            value="{{value}}">
-                            {{value}}
-                          </option>
-                        </select>
-                      </td>
-                      <td class="alignment">
-                        <select class="form-control" name="value"
-                          id="value" ng-model="subrequirement.meating_timeline"
-                          style="width:150px;">
-                          <option value="" disabled>Select Meeting Time</option>
-                          <option ng-repeat="(key,value) in leads_time.data[10].meeting_time track by $index"
-                           value="{{value}}">
-                            {{value}}
-                          </option>
-                        </select>
-                      </td>
-                      
+                    <td class="alignment">
+                      <select class="form-control" name="value" id="value" ng-model="subrequirement.impl_timeline"
+                        style="width:150px;">
+                        <option value="" disabled>Select Implementation Time</option>
+                        <option ng-repeat="(key,value) in leads_time.data[10].implementation_time track by $index"
+                          value="{{value}}">
+                          {{value}}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="alignment">
+                      <select class="form-control" name="value" id="value" ng-model="subrequirement.meating_timeline"
+                        style="width:150px;">
+                        <option value="" disabled>Select Meeting Time</option>
+                        <option ng-repeat="(key,value) in leads_time.data[10].meeting_time track by $index"
+                          value="{{value}}">
+                          {{value}}
+                        </option>
+                      </select>
+                    </td>
 
-                      <!-- <td class="alignment">
+
+                    <!-- <td class="alignment">
                         <select class="form-control" name="meating_time_{{$index}}"
                           id="meating_time_id_{{$index}}" ng-model="subrequirement.meating_timeline"
                           ng-change="checkBoxAutoCheck(key,$index)" style="width:150px;">
@@ -3692,8 +3698,8 @@
                         </select>
                       </td> -->
 
-                      <td class="alignment">
-                        <!-- <select class="form-control" name="lead_status_{{$index}}"
+                    <td class="alignment">
+                      <!-- <select class="form-control" name="lead_status_{{$index}}"
                                     id="lead_status_id_{{$index}}" ng-model="subrequirement.lead_status"
                                     ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
                                     ng-change="checkBoxAutoCheck(key,$index)" style="width:150px;">
@@ -3703,31 +3709,30 @@
                                       {{leadstatus}}
                                     </option>
                                   </select> -->
-                        {{subrequirement.lead_status}}
-                      </td>
+                      {{subrequirement.lead_status}}
+                    </td>
 
-                      <td class="alignment">
-                        <textarea placeholder="Comments"
-                          class="form-control" style="width:150px;" ng-model="subrequirement.comment"
-                          ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
+                    <td class="alignment">
+                      <textarea placeholder="Comments" class="form-control" style="width:150px;"
+                        ng-model="subrequirement.comment" ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
                                     </textarea>
-                      </td>
+                    </td>
 
-                      <td class="alignment">
-                        <textarea placeholder="Internal Comments"
-                          class="form-control" style="width:150px;" ng-model="subrequirement.internal_comment"
-                          ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
+                    <td class="alignment">
+                      <textarea placeholder="Internal Comments" class="form-control" style="width:150px;"
+                        ng-model="subrequirement.internal_comment" ng-change="checkBoxAutoCheck(key,$index)" rows="4"
+                        cols="50">
                         </textarea>
-                      </td>
+                    </td>
 
-                      <td class="alignment">
+                    <td class="alignment">
 
-                        <span style="width:150px;">Name: {{requirement.lead_by.name}} </span>
-                        <span style="width:150px;">Number: {{requirement.lead_by.mobile}} </span>
+                      <span style="width:150px;">Name: {{requirement.lead_by.name}} </span>
+                      <span style="width:150px;">Number: {{requirement.lead_by.mobile}} </span>
 
-                      </td>
+                    </td>
 
-                      <!-- <td class="alignment">
+                    <!-- <td class="alignment">
                         <select class="form-control"
                           name="call_back_time_{{$index}}" id="call_back_time_id_{{$index}}"
                           ng-model="subrequirement.call_back_preference" ng-change="checkBoxAutoCheck(key,$index)"
@@ -3739,192 +3744,195 @@
                           </option>
                         </select>
                       </td> -->
-                      <td class="alignment">
-                        <select class="form-control"
-                          name="value" id="value"
-                          ng-model="subrequirement.call_back_preference"
-                          style="width:150px;">
-                          <option value="" disabled>Select Call Back Time</option>
-                          <option ng-repeat="(key,value) in leads_time.data[10].call_status track by $index"
-                            value="{{value}}">
-                            {{value}}
-                          </option>
-                        </select>
-                      </td>
-                      
+                    <td class="alignment">
+                      <select class="form-control" name="value" id="value"
+                        ng-model="subrequirement.call_back_preference" style="width:150px;">
+                        <option value="" disabled>Select Call Back Time</option>
+                        <option ng-repeat="(key,value) in leads_time.data[10].call_status track by $index"
+                          value="{{value}}">
+                          {{value}}
+                        </option>
+                      </select>
+                    </td>
 
-                      <td class="alignment">
-                      <input type="number" ng-change="checkBoxAutoCheck(key,$index)"  ng-model="subrequirement.lead_price" name="lead_price" class="form-control" placeholder="Price" id="price_id"
-                      style="width:150px;">
+
+                    <td class="alignment">
+                      <input type="number" ng-change="checkBoxAutoCheck(key,$index)"
+                        ng-model="subrequirement.lead_price" name="lead_price" class="form-control" placeholder="Price"
+                        id="price_id" style="width:150px;">
                       <span ng-if="subrequirement.lead_price">Price (Points): {{subrequirement.lead_price}}</span>
-                      </td>
+                    </td>
 
-                      <td class="alignment" style="width:300px;">
-                        <p> Submitted: {{subrequirement.created_at | date:'medium' }} </p>
-                        <p> Ops Verify: {{subrequirement.varified_ops_date | date:'medium'}} </p>
-                        <p> Ops Verify Name: {{subrequirement.verified_ops_by_obj.first_name}}
-                          {{subrequirement.verified_ops_by_obj.last_name}} </p>
-                         
-                        <!-- <p> BD Verify: {{subrequirement.varified_bd_date | date:'medium'}} </p> -->
-                      </td>
+                    <td class="alignment" style="width:300px;">
+                      <p> Submitted: {{subrequirement.created_at | date:'medium' }} </p>
+                      <p> Ops Verify: {{subrequirement.varified_ops_date | date:'medium'}} </p>
+                      <p> Ops Verify Name: {{subrequirement.verified_ops_by_obj.first_name}}
+                        {{subrequirement.verified_ops_by_obj.last_name}} </p>
 
-                      <td class="alignment">
-                        <!-- <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
+                      <!-- <p> BD Verify: {{subrequirement.varified_bd_date | date:'medium'}} </p> -->
+                    </td>
+
+                    <td class="alignment">
+                      <!-- <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
                                     ng-if="subrequirement.varified_ops == 'yes' && subrequirement.varified_bd == 'no'"
                                     ng-click="bdVerifyRequirement(subrequirement.id,key,$index)">BD Verify</button> -->
-                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
-                          ng-if="subrequirement.varified_ops == 'no'" ng-disabled="subrequirement.color_class == 'red'"
-                          ng-click="singleOpsVerifyRequirement(subrequirement.id)">Ops Verify</button>
-                        <span ng-if="subrequirement.varified_ops == 'yes'">Ops Verified </span>
+                      <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
+                        ng-if="subrequirement.varified_ops == 'no'" ng-disabled="subrequirement.color_class == 'red'"
+                        ng-click="singleOpsVerifyRequirement(subrequirement.id)">Ops Verify</button>
+                      <span ng-if="subrequirement.varified_ops == 'yes'">Ops Verified </span>
 
-                        <button style="margin-top:10px" class="btn btn-success"
-                          type="button" name="button" class="btn btn-success"
-                          ng-click="updateSubSectorRow(subrequirement,subrequirement.l1_answers,subrequirement.l1_answer_2,subrequirement.l2_answers)">Update</button>
+                      <button style="margin-top:10px" class="btn btn-success" type="button" name="button"
+                        class="btn btn-success"
+                        ng-click="updateSubSectorRow(subrequirement,subrequirement.l1_answers,subrequirement.l1_answer_2,subrequirement.l2_answers)">Update</button>
 
-                        <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
-                          ng-if="subrequirement.color_class != 'red'" 
-                          ng-click="singleRemoveSubSector(subrequirement.id,key,$index)">Remove</button>
+                      <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
+                        ng-if="subrequirement.color_class != 'red'"
+                        ng-click="singleRemoveSubSector(subrequirement.id,key,$index)">Remove</button>
 
-                        <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
-                          ng-if="subrequirement.color_class == 'red'"
-                          ng-click="singleRestoreSubSector(subrequirement.id,key,$index)">Restore</button>
-                      </td>
-                      <!-- </tr> -->
-                      <!-- </tbody>
+                      <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
+                        ng-if="subrequirement.color_class == 'red'"
+                        ng-click="singleRestoreSubSector(subrequirement.id,key,$index)">Restore</button>
+                    </td>
+                    <!-- </tr> -->
+                    <!-- </tbody>
                           </table> -->
-                      <!-- <button class="btn btn-danger" ng-click="addSubRequirementDetail(key)">Add Row</button> -->
+                    <!-- <button class="btn btn-danger" ng-click="addSubRequirementDetail(key)">Add Row</button> -->
 
-                      <!-- </td> -->
+                    <!-- </td> -->
 
-                    <tr ng-show="detailedShow[key]" ng-repeat-end>
-                      <td colspan="17">
-                        <button class="btn btn-success" id="update_{{key}}" ng-disabled="subSectorCheck || updateDisable"
-                          ng-click="updateSubSector(requirement.requirements)">Update</button>
-      
-                          <button  style="margin-bottom:2px" id="verify_{{key}}" type="button" name="button"
-                          class="btn btn-success" ng-disabled="subSectorCheck || updateDisable"
-                          ng-click="checkOpsVerifyRequirement(requirement.requirements)"><span
-                            ng-if="!opsVerifyButtonDiable">Ops Verify</span>
-                          <span ng-if="opsVerifyButtonDiable">Ops Verified</span></button>
-                        <button style="margin-bottom:2px" id="remove_{{key}}" type="button" name="button"
-                          ng-disabled="subSectorCheck || removeSubSectorDiable" class="btn btn-danger"
-                          ng-click="removeSubSectorRequirement(requirement.requirements,key)">Remove</button>
+                  <tr ng-show="detailedShow[key]" ng-repeat-end>
+                    <td colspan="17">
+                      <button class="btn btn-success" id="update_{{key}}" ng-disabled="subSectorCheck || updateDisable"
+                        ng-click="updateSubSector(requirement.requirements)">Update</button>
 
-                        <button style="margin-bottom:2px" id="restore_{{key}}" type="button" name="button"
-                          ng-disabled="subSectorCheck || disableRestore" class="btn btn-success"
-                          ng-click="restoreMultiRequirement(requirement.requirements,key)">Restore</button>
+                      <button style="margin-bottom:2px" id="verify_{{key}}" type="button" name="button"
+                        class="btn btn-success" ng-disabled="subSectorCheck || updateDisable"
+                        ng-click="checkOpsVerifyRequirement(requirement.requirements)"><span
+                          ng-if="!opsVerifyButtonDiable">Ops Verify</span>
+                        <span ng-if="opsVerifyButtonDiable">Ops Verified</span></button>
+                      <button style="margin-bottom:2px" id="remove_{{key}}" type="button" name="button"
+                        ng-disabled="subSectorCheck || removeSubSectorDiable" class="btn btn-danger"
+                        ng-click="removeSubSectorRequirement(requirement.requirements,key)">Remove</button>
 
-                          <button style="margin-bottom:2px" type="button" name="button"
-                          class="btn btn-success btn-small"  data-target="#pocModal" data-toggle="modal">Add POC</button>
-                      </td>
-                    </tr>
+                      <button style="margin-bottom:2px" id="restore_{{key}}" type="button" name="button"
+                        ng-disabled="subSectorCheck || disableRestore" class="btn btn-success"
+                        ng-click="restoreMultiRequirement(requirement.requirements,key)">Restore</button>
 
-                    </tr>
-                    </tr>
-                  </tbody>
-                </table>
+                      <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success btn-small"
+                        data-target="#pocModal" data-toggle="modal">Add POC</button>
+                    </td>
+                  </tr>
 
-                <!-- test -->
+                  </tr>
+                  </tr>
+                </tbody>
+              </table>
 
-                <div class="">
-                  <!-- <button class="btn btn-danger pull-right" ng-click="setEditContactDetails()">Edit</button> -->
-                  <!-- <button class="btn btn-danger" ng-click="addRequirementDetail()">Add Row</button> -->
-                  <!-- <button class="btn btn-success" ng-disabled="!myForm.$valid"
+              <!-- test -->
+
+              <div class="">
+                <!-- <button class="btn btn-danger pull-right" ng-click="setEditContactDetails()">Edit</button> -->
+                <!-- <button class="btn btn-danger" ng-click="addRequirementDetail()">Add Row</button> -->
+                <!-- <button class="btn btn-success" ng-disabled="!myForm.$valid"
                     ng-click="updateRequirement()">Update</button> -->
 
-                </div>
-                <!-- <div class="" ng-show="!editContactDetails" ng-if="statusEditContactDetails">
+              </div>
+              <!-- <div class="" ng-show="!editContactDetails" ng-if="statusEditContactDetails">
                 <button class="btn btn-danger" ng-disabled="!myForm.$valid" ng-click="checkContactDetails()">Save</button>
               </div> -->
-              </form>
-            </div>
+            </form>
+          </div>
 
 
 
-            <div class="modal-body col-md-4 table-responsive browsed_leads_main" style="width: 1100px; min-height: 200px;">
-              <form name="myForms">
-                <h4 class="modal-title">Browsed Leads</h4>
-                <table class="table table-bordered submitted_lead_table" name="contactForm">
-                  <thead>
-                    <tr>
-                      <th ng-repeat="header in requirement_browsed_headings" class="col-md-2 alignment">
-                        <b>{{header.header}}</b></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr ng-repeat="browsed in browsedDetailData">
-                      <td class="alignment">
-                        <input type="checkbox" name="browsedCheck" ng-click="checkboxBrowesLeadCheck()"
-                          id="browsedCheckId" ng-model="browsed.browsedCheck">
-                      </td>
-                      <td class="alignment">
-                        {{sectorName(browsed.sector_id)}}
-                      </td>
+          <div class="modal-body col-md-4 table-responsive browsed_leads_main"
+            style="width: 1100px; min-height: 200px;">
+            <form name="myForms">
+              <h4 class="modal-title">Browsed Leads</h4>
+              <table class="table table-bordered submitted_lead_table" name="contactForm">
+                <thead>
+                  <tr>
+                    <th ng-repeat="header in requirement_browsed_headings" class="col-md-2 alignment">
+                      <b>{{header.header}}</b>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="browsed in browsedDetailData">
+                    <td class="alignment">
+                      <input type="checkbox" name="browsedCheck" ng-click="checkboxBrowesLeadCheck()"
+                        id="browsedCheckId" ng-model="browsed.browsedCheck">
+                    </td>
+                    <td class="alignment">
+                      <!-- {{sectorName(browsed.sector_id)}} -->
+                    </td>
 
-                      <td class="alignment">
-                        <p ng-if="browsed.sub_sector_name">{{browsed.sub_sector_name}}</p>
-                        <p ng-if="!browsed.sub_sector_name">NA</p>
-                    
-                      </td>
+                    <td class="alignment">
+                      <p ng-if="browsed.sub_sector_name">{{browsed.sub_sector_name}}</p>
+                      <p ng-if="!browsed.sub_sector_name">NA</p>
 
-                      <td class="alignment">
-                        <select class="form-control" name="current_company_{{$index}}"
-                          id="current_company_id_{{$index}}" ng-change="browsCheckBoxAutoCheck($index)"
-                          ng-model="browsed.current_patner_id" style="width:100px;">
-                          <option value="" disabled>Select Current Partner</option>
-                          <option ng-if="browsed.sector_id==cpartner.sector || (browsed.sector_id==null)" ng-repeat="cpartner in companiesDetailDataBrowsed track by $index"
-                            value="{{cpartner.organisation_id}}">
-                            {{cpartner.name}}
-                          </option>
-                        </select>
-                        <input style="margin-top:10px" type="text" ng-change="browsCheckBoxAutoCheck($index)"
+                    </td>
+
+                    <td class="alignment">
+                      <select class="form-control" name="current_company_{{$index}}" id="current_company_id_{{$index}}"
+                        ng-change="browsCheckBoxAutoCheck($index)" ng-model="browsed.current_patner_id"
+                        style="width:100px;">
+                        <option value="" disabled>Select Current Partner</option>
+                        <option ng-if="browsed.sector_id==cpartner.sector || (browsed.sector_id==null)"
+                          ng-repeat="cpartner in companiesDetailDataBrowsed track by $index"
+                          value="{{cpartner.organisation_id}}">
+                          {{cpartner.name}}
+                        </option>
+                      </select>
+                      <input style="margin-top:10px" type="text" ng-change="browsCheckBoxAutoCheck($index)"
                         class="form-control" placeholder="Other Current Company"
                         ng-if="browsed.current_patner_id == '' || !browsed.current_patner_id" name="currentCompanyOther"
                         id="currentCompanyOtherId" ng-model="browsed.current_patner_other">
-                      </td>
+                    </td>
 
-                      <td class="alignment">
-                        {{browsed.current_patner_feedback}}<br>
-                        <span
-                          ng-if="browsed.current_patner_feedback_reason">Reason:{{browsed.current_patner_feedback_reason}}</span>
-                        <span ng-if="!browsed.current_patner_feedback_reason">Reason:NA</span>
-                      </td>
+                    <td class="alignment">
+                      {{browsed.current_patner_feedback}}<br>
+                      <span
+                        ng-if="browsed.current_patner_feedback_reason">Reason:{{browsed.current_patner_feedback_reason}}</span>
+                      <span ng-if="!browsed.current_patner_feedback_reason">Reason:NA</span>
+                    </td>
 
-                      <td class="alignment">
-                        {{companyBrowseData(browsed.sector_id)}}
-                        <span style="width:150px;" class="multiselectDropdown multiselectDropdown-style"
-                          style="color:red;width:100%;margin-left:20px;" ng-click="browsedMulticheck($index)"
-                          ng-dropdown-multiselect="" options="companiesBrowseDetailDataArray" extra-settings="settings"
-                          selected-model="browsed.selected_preferred_company" translation-texts="selected_business_type"
-                          events="events"></span>
-                          <span ng-repeat="selectedName in browsed.selected_preferred_company" style="text-align: left; display: inline-block">
-                            {{selectedName.name}}
-                            <span ng-if="!$last">,</span>
-                          </span>
-                          <input style="margin-top:10px" ng-change="browsCheckBoxAutoCheck($index)" type="text"
-                          class="form-control" placeholder="Other Preferred Company"
-                          ng-if="browsed.otherPreferredCompanyBrowsed" name="other_preferred_company" id="other_preferred_company"
-                          ng-model="browsed.prefered_patner_other">
-                      </td>
+                    <td class="alignment">
+                      {{companyBrowseData(browsed.sector_id)}}
+                      <span style="width:150px;" class="multiselectDropdown multiselectDropdown-style"
+                        style="color:red;width:100%;margin-left:20px;" ng-click="browsedMulticheck($index)"
+                        ng-dropdown-multiselect="" options="companiesBrowseDetailDataArray" extra-settings="settings"
+                        selected-model="browsed.selected_preferred_company" translation-texts="selected_business_type"
+                        events="events"></span>
+                      <span ng-repeat="selectedName in browsed.selected_preferred_company"
+                        style="text-align: left; display: inline-block">
+                        {{selectedName.name}}
+                        <span ng-if="!$last">,</span>
+                      </span>
+                      <input style="margin-top:10px" ng-change="browsCheckBoxAutoCheck($index)" type="text"
+                        class="form-control" placeholder="Other Preferred Company"
+                        ng-if="browsed.otherPreferredCompanyBrowsed" name="other_preferred_company"
+                        id="other_preferred_company" ng-model="browsed.prefered_patner_other">
+                    </td>
 
-                      <td class="alignment">
-                        <span ng-if="browsed.l1_answers || browsed.l1_answer_2">{{browsed.l1_answers}}
-                          <p>{{browsed.l1_answer_2}}</p>
-                        </span>
-                        <span ng-if="!browsed.l1_answers && !browsed.l1_answer_2">NA</span>
+                    <td class="alignment">
+                      <span ng-if="browsed.l1_answers || browsed.l1_answer_2">{{browsed.l1_answers}}
+                        <p>{{browsed.l1_answer_2}}</p>
+                      </span>
+                      <span ng-if="!browsed.l1_answers && !browsed.l1_answer_2">NA</span>
 
-                      </td>
+                    </td>
 
-                      <td class="alignment">
-                        <span ng-if="browsed.l2_answers || browsed.l2_answer_2">{{browsed.l2_answers}}
-                          <p>{{browsed.l2_answer_2}}</p>
-                        </span>
-                        <span ng-if="!browsed.l2_answers && !browsed.l2_answer_2">NA</span>
-                      </td>
+                    <td class="alignment">
+                      <span ng-if="browsed.l2_answers || browsed.l2_answer_2">{{browsed.l2_answers}}
+                        <p>{{browsed.l2_answer_2}}</p>
+                      </span>
+                      <span ng-if="!browsed.l2_answers && !browsed.l2_answer_2">NA</span>
+                    </td>
 
 
 
-                      <!-- <td class="alignment">
+                    <!-- <td class="alignment">
                         <span ng-if="browsed.l1_answers">{{browsed.l1_answers}}</span>
                         <span ng-if="!browsed.l1_answers">NA</span>
                       </td>
@@ -3934,34 +3942,34 @@
                         <span ng-if="!browsed.l2_answers">NA</span>
                       </td> -->
 
-                      <!-- <td class="alignment">
+                    <!-- <td class="alignment">
                         <input type="text" placeholder="Lead for" class="form-control" id="lead_for_id"
                           style="width:100px;" ng-model="browsed.sector">
                       </td> -->
 
-                      <td class="alignment">
-                        <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
-                          ng-model="browsed.implementation_timeline" ng-change="browsCheckBoxAutoCheck($index)"
-                          style="width:150px;">
-                          <option value="" disabled>Select Implementation Time</option>
-                          <option ng-repeat="(key,value) in requirement_implementation_time track by $index"
-                            value="{{key}}">
-                            {{value}}
-                          </option>
-                        </select>
-                      </td>
+                    <td class="alignment">
+                      <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
+                        ng-model="browsed.implementation_timeline" ng-change="browsCheckBoxAutoCheck($index)"
+                        style="width:150px;">
+                        <option value="" disabled>Select Implementation Time</option>
+                        <option ng-repeat="(key,value) in requirement_implementation_time track by $index"
+                          value="{{key}}">
+                          {{value}}
+                        </option>
+                      </select>
+                    </td>
 
-                      <td class="alignment">
-                        <select class="form-control" name="meating_time_{{$index}}" id="meating_time_id_{{$index}}"
-                          ng-model="browsed.meating_timeline" ng-change="browsCheckBoxAutoCheck($index)"
-                          style="width:150px;">
-                          <option value="" disabled>Select Meeting Time</option>
-                          <option ng-repeat="(key,value) in requirement_meeting_time track by $index" value="{{key}}">
-                            {{value}}
-                          </option>
-                        </select>
-                      </td>
-                      <!-- <td class="alignment">
+                    <td class="alignment">
+                      <select class="form-control" name="meating_time_{{$index}}" id="meating_time_id_{{$index}}"
+                        ng-model="browsed.meating_timeline" ng-change="browsCheckBoxAutoCheck($index)"
+                        style="width:150px;">
+                        <option value="" disabled>Select Meeting Time</option>
+                        <option ng-repeat="(key,value) in requirement_meeting_time track by $index" value="{{key}}">
+                          {{value}}
+                        </option>
+                      </select>
+                    </td>
+                    <!-- <td class="alignment">
                         <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
                           ng-model="contact.contact_type">
                           <option value="" disabled>Select Preferred Meeting Time</option>
@@ -3970,7 +3978,7 @@
                           </option>
                         </select>
                       </td> -->
-                      <!-- <td class="alignment">
+                    <!-- <td class="alignment">
                         <select class="form-control" name="lead_status_{{$index}}" id="lead_status_id_{{$index}}"
                           ng-model="browsed.lead_status" ng-change="browsCheckBoxAutoCheck($index)"
                           style="width:150px;">
@@ -3981,21 +3989,21 @@
                           </option>
                         </select>
                       </td> -->
-                      <td class="alignment">
-                        <p> Name: {{browsed.lead_by_name}}</p>
-                        <p> Phone: {{browsed.phone_number}}</p>
-                      </td>
+                    <td class="alignment">
+                      <p> Name: {{browsed.lead_by_name}}</p>
+                      <p> Phone: {{browsed.phone_number}}</p>
+                    </td>
 
-                      <td class="alignment">
-                        <textarea placeholder="Comments" class="form-control" style="width:150px;"
-                          ng-model="browsed.comment" ng-change="browsCheckBoxAutoCheck($index)" rows="4" cols="50">
+                    <td class="alignment">
+                      <textarea placeholder="Comments" class="form-control" style="width:150px;"
+                        ng-model="browsed.comment" ng-change="browsCheckBoxAutoCheck($index)" rows="4" cols="50">
                      </textarea>
-                      </td>
+                    </td>
 
-                      <td class="alignment" style="width:300px;">
-                        <p>Lead Entry:{{browsed.created_at | date:'medium'}}</p>
-                      </td>
-                      <!-- <td class="alignment">
+                    <td class="alignment" style="width:300px;">
+                      <p>Lead Entry:{{browsed.created_at | date:'medium'}}</p>
+                    </td>
+                    <!-- <td class="alignment">
                         <select class="form-control" name="feedback_{{$index}}" id="feedback_id_{{$index}}"
                           ng-model="browsed.current_patner_feedback" ng-change="browsCheckBoxAutoCheck($index)"
                           style="width:150px;">
@@ -4006,38 +4014,936 @@
                         </select>
                       </td> -->
 
-                      <!-- <td class="alignment">
+                    <!-- <td class="alignment">
                         <input type="text" placeholder="Reason" class="form-control" id="reason_id_{{$index}}"
                           style="width:100px;" ng-model="browsed.current_patner_feedback_reason"
                           ng-change="browsCheckBoxAutoCheck($index)">
                       </td> -->
 
-                      <!-- <td class="alignment">
+                    <!-- <td class="alignment">
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success" >Verify</button>
                         <button style="margin-bottom:2px" type="button" name="button" ng-click="updateRequirement(requirement)" class="btn btn-info" >Update</button>
                         <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
                           ng-click="removeRequirement($index)">Remove</button>
                       </td> -->
-                    </tr>
-                  </tbody>
-                </table>
+                  </tr>
+                </tbody>
+              </table>
 
-                <!-- test -->
+              <!-- test -->
 
-                <div class="">
-                  <!-- <button class="btn btn-danger" ng-click="addRequirementDetail()">Add Row</button> -->
-                  <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="saveBrowsed()">Submit</button>
-                  <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="updateBrowsed()">Update</button>
-                  <button class="btn btn-danger" ng-click="removeBrowsed()" ng-disabled="browsedCheck">Remove</button>
-                </div>
-                <!-- <div class="" ng-show="!editContactDetails" ng-if="statusEditContactDetails">
+              <div class="">
+                <!-- <button class="btn btn-danger" ng-click="addRequirementDetail()">Add Row</button> -->
+                <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="saveBrowsed()">Submit</button>
+                <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="updateBrowsed()">Update</button>
+                <button class="btn btn-danger" ng-click="removeBrowsed()" ng-disabled="browsedCheck">Remove</button>
+              </div>
+              <!-- <div class="" ng-show="!editContactDetails" ng-if="statusEditContactDetails">
                 <button class="btn btn-danger" ng-disabled="!myForm.$valid" ng-click="checkContactDetails()">Save</button>
               </div> -->
-              </form>
-            </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- end Requirement table -->
+</div>
+<!-- end Requirement table -->
+<!-- start SuspenseLeads table -->
+<div id="SuspenseLeadsModel" class="modal fade li-popup">
+  <div class="modal-dialog" style="width:1200px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Suspense Leads Details supplierName</h4>
+        <hr />
+        <div class="modal-body" style="width: 1100px; min-height: 200px;">
+          <div class="modal-body col-md-4 table-responsive submitted_lead_table"
+            style="width: 1100px; min-height: 200px;">
+            <form name="myForm">
+              <!-- test -->
+              <h4 class="modal-title">Submitted Leads</h4>
+              <table class="table table-bordered" name="contactForm">
+                <thead>
+                  <tr>
+                    <th ng-repeat="header in requirement_submitted_headings" class="col-md-2 alignment">
+                      <b>{{header.header}}</b>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat-start="(key, requirement) in requirementDetailData">
+                    <td class="alignment">
+                      <span ng-if="!detailedShow[key]" ng-click="ShowDetailed(key,requirement.sector)"
+                        class="glyphicon glyphicon-plus"></span>
+                      <span ng-if="detailedShow[key]" ng-click="ShowDetailed(key,requirement.sector)"
+                        class="glyphicon glyphicon-minus"></span>
+                    </td>
+                    <td class="alignment">
+                       <select>
+                        <option ng-repeat="option in sectorName">{{option}}</option>
+                       </select>
+                    </td>
+                  <tr ng-show="detailedShow[key]" id="detailedSho_{{key}}" ng-repeat-end
+                    ng-repeat-start="subrequirement in requirements">
+                    <td ng-style="{'background-color': subrequirement.color_class}" class="input_td_req11"> </td>
+                    <td ng-style="{'background-color': subrequirement.color_class}" class="input_td_req">
+                      <!-- <input type="checkbox" ng-disabled="subrequirement.varified_ops == 'yes'" -->
+                      <input type="checkbox" name="requirementCheck" id="requirementCheckId"
+                        ng-click="checkbooxCheck(key,$index)" ng-model="subrequirement.requirementCheck">
+                    </td>
+                    <td class="alignment">
+                      <span>
+                        <select>
+                          <option ng-repeat="option in subSectorName">{{option}}</option>
+                         </select>
+                      </span>
+                    </td>
+                    <td class="alignment">
+                      <!-- <select class="form-control"
+                          ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'" -->
+                      <select class="form-control" name="current_company_{{$index}}" id="current_company_id_{{$index}}"
+                        ng-change="checkBoxAutoCheck(key,$index)" ng-model="subrequirement.current_company"
+                        style="width:100px;">
+                        <option value="" disabled>Select Current Partner</option>
+                        <option ng-if="subrequirement.sector==cpartner.sector || (subrequirement.sector==null)"
+                          ng-repeat="cpartner in companiesDetailData track by $index"
+                          value="{{cpartner.organisation_id}}">
+                          {{cpartner.name}}
+                        </option>
+                      </select>
+                      <input style="margin-top:10px" type="text" ng-change="checkBoxAutoCheck(key,$index)"
+                        class="form-control" placeholder="Other Current Company"
+                        ng-if="subrequirement.current_company == ''" name="currentCompanyOther"
+                        id="currentCompanyOtherId" ng-model="subrequirement.current_company_other">
+                    </td>
+
+                    <td class="alignment">
+                      {{subrequirement.current_patner_feedback}}<br>
+                      <span
+                        ng-if="subrequirement.current_patner_feedback_reason">Reason:{{subrequirement.current_patner_feedback_reason}}</span>
+                      <span ng-if="!subrequirement.current_patner_feedback_reason">Reason:NA</span>
+                    </td>
+
+                    <td class="alignment">
+                      {{companyData(subrequirement.sector)}}
+                      <span style="width:150px;" class="multiselectDropdown multiselectDropdown-style style="
+                        color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect=""
+                        options="companiesDetailDataArray" extra-settings="settings"
+                        selected-model="subrequirement.selected_preferred_company_sub_sector"
+                        ng-click="subSectorPreferredMulticheck(key,$index)" translation-texts="selected_business_type"
+                        events="events"></span>
+                      <span ng-repeat="selectedName in subrequirement.selected_preferred_company_sub_sector"
+                        style="text-align: left; display: inline-block">
+                        {{selectedName.name}}
+                        <span ng-if="!$last">,</span>
+                      </span>
+                      <input style="margin-top:10px" ng-change="checkBoxAutoCheck(key,$index)" type="text"
+                        class="form-control" placeholder="Other Preferred Company"
+                        ng-if="subrequirement.otherPreferredCompany" name="other_preferred_company"
+                        id="other_preferred_company" ng-model="subrequirement.preferred_company_other">
+                    </td>
+
+                    <td class="alignment">
+                      <!-- <span>
+                          <textarea placeholder="L4 Answer" class="form-control" style="width:150px;"
+                          value="{{subrequirement.L4}}" ng-model="subrequirement.L4"
+                          rows="4" cols="50">
+                          </textarea>
+                        </span> -->
+                      <select class="form-control" name="lead_L4" id="lead_L4" ng-model="subrequirement.L4"
+                        style="width:150px;">
+                        <option ng-repeat="lead_L4 in leads_Data.L4" value="{{lead_L4}}">
+                          {{lead_L4}}
+                        </option>
+                        <option ng-if="leads_Data.L4.length==0" selected="true" value="NA">NA</option>
+
+                      </select>
+                    </td>
+                    <!-- <span ng-if="subrequirement.l1_answers">{{subrequirement.l1_answers}}
+                          <p>{{subrequirement.l1_answer_2}}</p>
+                        </span> -->
+                    <!-- <span ng-if="!subrequirement.l1_answers">NA</span> -->
+
+                    <td class="alignment">
+                      <!-- <span ng-if="subrequirement.l2_answers || subrequirement.l2_answer_2">{{subrequirement.l2_answers}}
+                          <p>{{subrequirement.l1_answer_2}}</p>
+                        </span> -->
+                      <!-- <span>
+                          <textarea placeholder="L5 Answer" class="form-control" style="width:150px;"
+                          value="{{subrequirement.L5}}" ng-model="subrequirement.L5"
+                          rows="4" cols="50">
+                          </textarea>
+                        </span> -->
+                      <!-- <span ng-if="!subrequirement.l1_answer_2">NA</span> -->
+                      <select class="form-control" name="lead_L5" id="lead_L5" ng-model="subrequirement.L5"
+                        style="width:150px;">
+                        <option ng-repeat="lead_L5 in leads_Data.L5" value="{{lead_L5}}">
+                          {{lead_L5}}
+                        </option>
+                        <option ng-if="leads_Data.L5.length==0" selected="true" value="NA">NA</option>
+
+                      </select>
+                    </td>
+
+                    <td class="alignment">
+                      <!-- <span >
+                          <textarea placeholder="L6 Answer"
+                          class="form-control" style="width:150px;" value="{{subrequirement.L6}}" ng-model="subrequirement.L6"
+                          ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
+                            </textarea>
+                        </span> -->
+                      <select class="form-control" name="lead_L6" id="lead_L6" ng-model="subrequirement.L6"
+                        style="width:150px;">
+                        <option ng-repeat="lead_L6 in leads_Data.L6" value="{{lead_L6}}">
+                          {{lead_L6}}
+                        </option>
+                        <option ng-if="leads_Data.L6.length==0" selected="true" value="NA">NA</option>
+                      </select>
+
+
+                    </td>
+
+                    <td class="alignment">
+                      <!-- <span >
+                          <textarea placeholder="L4.1 Answer"
+                          class="form-control" style="width:150px;" value="{{subrequirement["L4.1"]}}" ng-model="subrequirement['L4.1']"
+                          ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
+                            </textarea>
+                        </span> -->
+                      <select class="form-control" name="lead_L4_1" id="lead_L4_1" ng-model="subrequirement['L4.1']"
+                        style="width:150px;">
+                        <option ng-repeat="lead_L4_1 in leads_Data.L4_1" value="{{lead_L4_1}}">
+                          {{lead_L4_1}}
+                        </option>
+                        <option ng-if="leads_Data.L4_1.length==0" selected="true" value="NA">NA</option>
+                      </select>
+                    </td>
+
+                    <td class="alignment">
+                      <!-- <span >
+                          <textarea placeholder="L5.1 Answer"
+                          class="form-control" style="width:150px;"  value="{{subrequirement["L5.1"]}}" ng-model="subrequirement['L5.1']"
+                          ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
+                          </textarea>
+                        </span> -->
+                      <select class="form-control" name="lead_L5_1" id="lead_L5_1" ng-model="subrequirement['L5.1']"
+                        style="width:150px;">
+                        <option ng-repeat="lead_L5_1 in leads_Data.L5_1" value="{{lead_L5_1}}">
+                          {{lead_L5_1}}
+                        </option>
+                        <option ng-if="leads_Data.L5_1.length==0" selected="true" value="NA">NA</option>
+
+                      </select>
+                    </td>
+
+                    <td class="alignment">
+                      <!-- <span >
+                          <textarea placeholder="L6.1 Answer"
+                          class="form-control" style="width:150px;"  value="{{subrequirement["L6.1"]}}" ng-model="subrequirement['L6.1']"
+                          ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
+                          </textarea>
+                        </span> -->
+                      <select class="form-control" name="lead_L6_1" id="lead_L6_1" ng-model="subrequirement['L6.1']"
+                        style="width:150px;">
+                        <option ng-repeat="lead_L6_1 in leads_Data.L6_1" value="{{lead_L6_1}}">
+                          {{lead_L6_1}}
+                        </option>
+                        <option ng-if="leads_Data.L6_1.length==0" selected="true" value="NA">NA</option>
+                      </select>
+                    </td>
+
+                    <!-- <td class="alignment">
+                        <select class="form-control"
+                          name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
+                          ng-model="subrequirement.impl_timeline" ng-change="checkBoxAutoCheck(key,$index)"
+                          style="width:150px;">
+                          <option value="" disabled>Select Implementation Time</option>
+                          <option ng-repeat="(key,value) in leads_time.data[10].implementation_time track by $index"
+                            value="{{key}}">
+                            {{value}}
+                          </option>
+                        </select>
+                      </td> -->
+                    <td class="alignment">
+                      <select class="form-control" name="value" id="value" ng-model="subrequirement.impl_timeline"
+                        style="width:150px;">
+                        <option value="" disabled>Select Implementation Time</option>
+                        <option ng-repeat="(key,value) in leads_time.data[10].implementation_time track by $index"
+                          value="{{value}}">
+                          {{value}}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="alignment">
+                      <select class="form-control" name="value" id="value" ng-model="subrequirement.meating_timeline"
+                        style="width:150px;">
+                        <option value="" disabled>Select Meeting Time</option>
+                        <option ng-repeat="(key,value) in leads_time.data[10].meeting_time track by $index"
+                          value="{{value}}">
+                          {{value}}
+                        </option>
+                      </select>
+                    </td>
+
+
+                    <!-- <td class="alignment">
+                        <select class="form-control" name="meating_time_{{$index}}"
+                          id="meating_time_id_{{$index}}" ng-model="subrequirement.meating_timeline"
+                          ng-change="checkBoxAutoCheck(key,$index)" style="width:150px;">
+                          <option value="" disabled>Select Meeting Time</option>
+                          <option ng-repeat="(key,value) in leads_time.data[10].meeting_time track by $index" value="{{key}}">
+                            {{value}}
+                          </option>
+                        </select>
+                      </td> -->
+
+                    <td class="alignment">
+                      <!-- <select class="form-control" name="lead_status_{{$index}}"
+                                    id="lead_status_id_{{$index}}" ng-model="subrequirement.lead_status"
+                                    ng-disabled="subrequirement.color_class == 'red' || subrequirement.varified_ops == 'yes'"
+                                    ng-change="checkBoxAutoCheck(key,$index)" style="width:150px;">
+                                    <option value="" disabled>Select Lead Status</option>
+                                    <option ng-repeat="leadstatus in requirement_lead_status track by $index"
+                                      value="{{leadstatus}}">
+                                      {{leadstatus}}
+                                    </option>
+                                  </select> -->
+                      {{subrequirement.lead_status}}
+                    </td>
+
+                    <td class="alignment">
+                      <textarea placeholder="Comments" class="form-control" style="width:150px;"
+                        ng-model="subrequirement.comment" ng-change="checkBoxAutoCheck(key,$index)" rows="4" cols="50">
+                                    </textarea>
+                    </td>
+
+                    <td class="alignment">
+                      <textarea placeholder="Internal Comments" class="form-control" style="width:150px;"
+                        ng-model="subrequirement.internal_comment" ng-change="checkBoxAutoCheck(key,$index)" rows="4"
+                        cols="50">
+                        </textarea>
+                    </td>
+
+                    <td class="alignment">
+
+                      <span style="width:150px;">Name: {{requirement.lead_by.name}} </span>
+                      <span style="width:150px;">Number: {{requirement.lead_by.mobile}} </span>
+
+                    </td>
+
+                    <!-- <td class="alignment">
+                        <select class="form-control"
+                          name="call_back_time_{{$index}}" id="call_back_time_id_{{$index}}"
+                          ng-model="subrequirement.call_back_preference" ng-change="checkBoxAutoCheck(key,$index)"
+                          style="width:150px;">
+                          <option value="" disabled>Select Call Back Time</option>
+                          <option ng-repeat="(key,value) in leads_time.data[10].call_status track by $index"
+                            value="{{key}}">
+                            {{value}}
+                          </option>
+                        </select>
+                      </td> -->
+                    <td class="alignment">
+                      <select class="form-control" name="value" id="value"
+                        ng-model="subrequirement.call_back_preference" style="width:150px;">
+                        <option value="" disabled>Select Call Back Time</option>
+                        <option ng-repeat="(key,value) in leads_time.data[10].call_status track by $index"
+                          value="{{value}}">
+                          {{value}}
+                        </option>
+                      </select>
+                    </td>
+
+
+                    <td class="alignment">
+                      <input type="number" ng-change="checkBoxAutoCheck(key,$index)"
+                        ng-model="subrequirement.lead_price" name="lead_price" class="form-control" placeholder="Price"
+                        id="price_id" style="width:150px;">
+                      <span ng-if="subrequirement.lead_price">Price (Points): {{subrequirement.lead_price}}</span>
+                    </td>
+
+                    <td class="alignment" style="width:300px;">
+                      <p> Submitted: {{subrequirement.created_at | date:'medium' }} </p>
+                      <p> Ops Verify: {{subrequirement.varified_ops_date | date:'medium'}} </p>
+                      <p> Ops Verify Name: {{subrequirement.verified_ops_by_obj.first_name}}
+                        {{subrequirement.verified_ops_by_obj.last_name}} </p>
+
+                      <!-- <p> BD Verify: {{subrequirement.varified_bd_date | date:'medium'}} </p> -->
+                    </td>
+
+                    <td class="alignment">
+                      <!-- <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
+                                    ng-if="subrequirement.varified_ops == 'yes' && subrequirement.varified_bd == 'no'"
+                                    ng-click="bdVerifyRequirement(subrequirement.id,key,$index)">BD Verify</button> -->
+                      <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success"
+                        ng-if="subrequirement.varified_ops == 'no'" ng-disabled="subrequirement.color_class == 'red'"
+                        ng-click="singleOpsVerifyRequirement(subrequirement.id)">Ops Verify</button>
+                      <span ng-if="subrequirement.varified_ops == 'yes'">Ops Verified </span>
+                      <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success btn-small"
+                          data-target="#companyDetailModal" ng-click="supplierForAddUpdate($index)" data-toggle="modal">Add Supplier</button>
+                      <button style="margin-bottom:2px"  type="button" name="button" ng-click="opsVerify(browseData._id)" class="btn btn-success">Transfer</button>   
+                      <button style="margin-top:10px" class="btn btn-success" type="button" name="button"
+                        class="btn btn-success"
+                        ng-click="updateSubSectorRow(subrequirement,subrequirement.l1_answers,subrequirement.l1_answer_2,subrequirement.l2_answers)">Update</button>
+
+                      <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
+                        ng-if="subrequirement.color_class != 'red'"
+                        ng-click="singleRemoveSubSector(subrequirement.id,key,$index)">Remove</button>
+
+                      <button style="margin-top:10px" type="button" name="button" class="btn btn-success"
+                        ng-if="subrequirement.color_class == 'red'"
+                        ng-click="singleRestoreSubSector(subrequirement.id,key,$index)">Restore</button>
+                    </td>
+                    <!-- </tr> -->
+                    <!-- </tbody>
+                          </table> -->
+                    <!-- <button class="btn btn-danger" ng-click="addSubRequirementDetail(key)">Add Row</button> -->
+
+                    <!-- </td> -->
+
+                  <tr ng-show="detailedShow[key]" ng-repeat-end>
+                    <td colspan="17">
+                      <button class="btn btn-success" id="update_{{key}}" ng-disabled="subSectorCheck || updateDisable"
+                        ng-click="updateSubSector(requirement.requirements)">Update</button>
+
+                      <button style="margin-bottom:2px" id="verify_{{key}}" type="button" name="button"
+                        class="btn btn-success" ng-disabled="subSectorCheck || updateDisable"
+                        ng-click="checkOpsVerifyRequirement(requirement.requirements)"><span
+                          ng-if="!opsVerifyButtonDiable">Ops Verify</span>
+                        <span ng-if="opsVerifyButtonDiable">Ops Verified</span></button>
+                      <button style="margin-bottom:2px" id="remove_{{key}}" type="button" name="button"
+                        ng-disabled="subSectorCheck || removeSubSectorDiable" class="btn btn-danger"
+                        ng-click="removeSubSectorRequirement(requirement.requirements,key)">Remove</button>
+
+                      <button style="margin-bottom:2px" id="restore_{{key}}" type="button" name="button"
+                        ng-disabled="subSectorCheck || disableRestore" class="btn btn-success"
+                        ng-click="restoreMultiRequirement(requirement.requirements,key)">Restore</button>
+
+                      <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success btn-small"
+                        data-target="#pocModal" data-toggle="modal">Add POC</button>
+                    </td>
+                  </tr>
+
+                  </tr>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- test -->
+
+              <div class="">
+                <!-- <button class="btn btn-danger pull-right" ng-click="setEditContactDetails()">Edit</button> -->
+                <!-- <button class="btn btn-danger" ng-click="addRequirementDetail()">Add Row</button> -->
+                <!-- <button class="btn btn-success" ng-disabled="!myForm.$valid"
+                    ng-click="updateRequirement()">Update</button> -->
+
+              </div>
+              <!-- <div class="" ng-show="!editContactDetails" ng-if="statusEditContactDetails">
+                <button class="btn btn-danger" ng-disabled="!myForm.$valid" ng-click="checkContactDetails()">Save</button>
+              </div> -->
+            </form>
+          </div>
+
+
+
+          <div class="modal-body col-md-4 table-responsive browsed_leads_main"
+            style="width: 1100px; min-height: 200px;">
+            <form name="myForms">
+              <h4 class="modal-title">Browsed Leads</h4>
+              <table class="table table-bordered submitted_lead_table" name="contactForm">
+                <thead>
+                  <tr>
+                    <th ng-repeat="header in requirement_browsed_headings" class="col-md-2 alignment">
+                      <b>{{header.header}}</b>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="browsed in browsedDetailData">
+                    <td class="alignment">
+                      <input type="checkbox" name="browsedCheck" ng-click="checkboxBrowesLeadCheck()"
+                        id="browsedCheckId" ng-model="browsed.browsedCheck">
+                    </td>
+                    <td class="alignment">
+                      <!-- {{sectorName(browsed.sector_id)}} -->
+                    </td>
+
+                    <td class="alignment">
+                      <p ng-if="browsed.sub_sector_name">{{browsed.sub_sector_name}}</p>
+                      <p ng-if="!browsed.sub_sector_name">NA</p>
+
+                    </td>
+
+                    <td class="alignment">
+                      <select class="form-control" name="current_company_{{$index}}" id="current_company_id_{{$index}}"
+                        ng-change="browsCheckBoxAutoCheck($index)" ng-model="browsed.current_patner_id"
+                        style="width:100px;">
+                        <option value="" disabled>Select Current Partner</option>
+                        <option ng-if="browsed.sector_id==cpartner.sector || (browsed.sector_id==null)"
+                          ng-repeat="cpartner in companiesDetailDataBrowsed track by $index"
+                          value="{{cpartner.organisation_id}}">
+                          {{cpartner.name}}
+                        </option>
+                      </select>
+                      <input style="margin-top:10px" type="text" ng-change="browsCheckBoxAutoCheck($index)"
+                        class="form-control" placeholder="Other Current Company"
+                        ng-if="browsed.current_patner_id == '' || !browsed.current_patner_id" name="currentCompanyOther"
+                        id="currentCompanyOtherId" ng-model="browsed.current_patner_other">
+                    </td>
+
+                    <td class="alignment">
+                      {{browsed.current_patner_feedback}}<br>
+                      <span
+                        ng-if="browsed.current_patner_feedback_reason">Reason:{{browsed.current_patner_feedback_reason}}</span>
+                      <span ng-if="!browsed.current_patner_feedback_reason">Reason:NA</span>
+                    </td>
+
+                    <td class="alignment">
+                      {{companyBrowseData(browsed.sector_id)}}
+                      <span style="width:150px;" class="multiselectDropdown multiselectDropdown-style"
+                        style="color:red;width:100%;margin-left:20px;" ng-click="browsedMulticheck($index)"
+                        ng-dropdown-multiselect="" options="companiesBrowseDetailDataArray" extra-settings="settings"
+                        selected-model="browsed.selected_preferred_company" translation-texts="selected_business_type"
+                        events="events"></span>
+                      <span ng-repeat="selectedName in browsed.selected_preferred_company"
+                        style="text-align: left; display: inline-block">
+                        {{selectedName.name}}
+                        <span ng-if="!$last">,</span>
+                      </span>
+                      <input style="margin-top:10px" ng-change="browsCheckBoxAutoCheck($index)" type="text"
+                        class="form-control" placeholder="Other Preferred Company"
+                        ng-if="browsed.otherPreferredCompanyBrowsed" name="other_preferred_company"
+                        id="other_preferred_company" ng-model="browsed.prefered_patner_other">
+                    </td>
+
+                    <td class="alignment">
+                      <span ng-if="browsed.l1_answers || browsed.l1_answer_2">{{browsed.l1_answers}}
+                        <p>{{browsed.l1_answer_2}}</p>
+                      </span>
+                      <span ng-if="!browsed.l1_answers && !browsed.l1_answer_2">NA</span>
+
+                    </td>
+
+                    <td class="alignment">
+                      <span ng-if="browsed.l2_answers || browsed.l2_answer_2">{{browsed.l2_answers}}
+                        <p>{{browsed.l2_answer_2}}</p>
+                      </span>
+                      <span ng-if="!browsed.l2_answers && !browsed.l2_answer_2">NA</span>
+                    </td>
+
+
+
+                    <!-- <td class="alignment">
+                        <span ng-if="browsed.l1_answers">{{browsed.l1_answers}}</span>
+                        <span ng-if="!browsed.l1_answers">NA</span>
+                      </td>
+
+                      <td class="alignment">
+                        <span ng-if="browsed.l2_answers">{{browsed.l2_answers}}</span>
+                        <span ng-if="!browsed.l2_answers">NA</span>
+                      </td> -->
+
+                    <!-- <td class="alignment">
+                        <input type="text" placeholder="Lead for" class="form-control" id="lead_for_id"
+                          style="width:100px;" ng-model="browsed.sector">
+                      </td> -->
+
+                    <td class="alignment">
+                      <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
+                        ng-model="browsed.implementation_timeline" ng-change="browsCheckBoxAutoCheck($index)"
+                        style="width:150px;">
+                        <option value="" disabled>Select Implementation Time</option>
+                        <option ng-repeat="(key,value) in requirement_implementation_time track by $index"
+                          value="{{key}}">
+                          {{value}}
+                        </option>
+                      </select>
+                    </td>
+
+                    <td class="alignment">
+                      <select class="form-control" name="meating_time_{{$index}}" id="meating_time_id_{{$index}}"
+                        ng-model="browsed.meating_timeline" ng-change="browsCheckBoxAutoCheck($index)"
+                        style="width:150px;">
+                        <option value="" disabled>Select Meeting Time</option>
+                        <option ng-repeat="(key,value) in requirement_meeting_time track by $index" value="{{key}}">
+                          {{value}}
+                        </option>
+                      </select>
+                    </td>
+                    <!-- <td class="alignment">
+                        <select class="form-control" name="contact_type_{{$index}}" id="contact_type_id_{{$index}}"
+                          ng-model="contact.contact_type">
+                          <option value="" disabled>Select Preferred Meeting Time</option>
+                          <option ng-repeat="ctype in Contact_Type track by $index" value="{{ctype}}">
+                            {{ctype}}
+                          </option>
+                        </select>
+                      </td> -->
+                    <!-- <td class="alignment">
+                        <select class="form-control" name="lead_status_{{$index}}" id="lead_status_id_{{$index}}"
+                          ng-model="browsed.lead_status" ng-change="browsCheckBoxAutoCheck($index)"
+                          style="width:150px;">
+                          <option value="" disabled>Select Lead Status</option>
+                          <option ng-repeat="leadstatus in requirement_lead_status track by $index"
+                            value="{{leadstatus}}">
+                            {{leadstatus}}
+                          </option>
+                        </select>
+                      </td> -->
+                    <td class="alignment">
+                      <p> Name: {{browsed.lead_by_name}}</p>
+                      <p> Phone: {{browsed.phone_number}}</p>
+                    </td>
+
+                    <td class="alignment">
+                      <textarea placeholder="Comments" class="form-control" style="width:150px;"
+                        ng-model="browsed.comment" ng-change="browsCheckBoxAutoCheck($index)" rows="4" cols="50">
+                     </textarea>
+                    </td>
+
+                    <td class="alignment" style="width:300px;">
+                      <p>Lead Entry:{{browsed.created_at | date:'medium'}}</p>
+                    </td>
+                    <!-- <td class="alignment">
+                        <select class="form-control" name="feedback_{{$index}}" id="feedback_id_{{$index}}"
+                          ng-model="browsed.current_patner_feedback" ng-change="browsCheckBoxAutoCheck($index)"
+                          style="width:150px;">
+                          <option value="" disabled>Select Feedback</option>
+                          <option ng-repeat="(key,value) in current_patner_feedback track by $index" value="{{key}}">
+                            {{value}}
+                          </option>
+                        </select>
+                      </td> -->
+
+                    <!-- <td class="alignment">
+                        <input type="text" placeholder="Reason" class="form-control" id="reason_id_{{$index}}"
+                          style="width:100px;" ng-model="browsed.current_patner_feedback_reason"
+                          ng-change="browsCheckBoxAutoCheck($index)">
+                      </td> -->
+
+                    <!-- <td class="alignment">
+                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-success" >Verify</button>
+                        <button style="margin-bottom:2px" type="button" name="button" ng-click="updateRequirement(requirement)" class="btn btn-info" >Update</button>
+                        <button style="margin-bottom:2px" type="button" name="button" class="btn btn-danger"
+                          ng-click="removeRequirement($index)">Remove</button>
+                      </td> -->
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- test -->
+
+              <div class="">
+                <!-- <button class="btn btn-danger" ng-click="addRequirementDetail()">Add Row</button> -->
+                <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="saveBrowsed()">Submit</button>
+                <button class="btn btn-success" ng-disabled="browsedCheck" ng-click="updateBrowsed()">Update</button>
+                <button class="btn btn-danger" ng-click="removeBrowsed()" ng-disabled="browsedCheck">Remove</button>
+              </div>
+              <!-- <div class="" ng-show="!editContactDetails" ng-if="statusEditContactDetails">
+                <button class="btn btn-danger" ng-disabled="!myForm.$valid" ng-click="checkContactDetails()">Save</button>
+              </div> -->
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end SuspenseLeads table -->
+
+<!--start: Code for contacts Modal Window -->
+<div id="pocModal" class="modal fade style-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="pageTitle smallBtn full-width-header">
+          <h4>Add POC</h4>
+        </div>
+        <div class="modal-body">
+          
+          <form role="form" class="form-inline poc-form-modal" ng-submit="addPoc()" name="pocForm">
+            <div ng-repeat="pocdata in pocModel track by $index">
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Phone Number *: </label>
+              </div>
+              <div class="col-md-6" style="margin-top: 10px">
+                <input type="text" ng-pattern="/^[0-9]{10,10}$/" maxlength="10" placeholder="Phone Number"
+                  class="form-control" name="phone_number_{{$index}}" id="phone_number_{{$index}}"
+                  ng-model="pocdata.mobile" required>
+                <div ng-show="pocForm.phone_number_{{$index}}.$error.pattern" class="error" style="font-size:12px; color: red;">
+                  Phone number Invalid</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> POC Name *: </label>
+              </div>
+              <div class="col-md-6" style="margin-top: 10px">
+                <input type="text" placeholder="POC Name" class="form-control" name="poc"
+                id="poc_poc_{{$index}}" ng-model="pocdata.name" required>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Designation *: </label>
+              </div>
+              <div class="col-md-6" style="margin-top: 10px">
+                <!-- <input type="text" placeholder="Designation" class="form-control" name="designation"
+                  id="poc_designation_{{$index}}" ng-model="pocdata.contact_type" required> -->
+
+                  <select name="designation" class="form-control" value="pocdata.contact_type"  ng-model="pocdata.contact_type" ng-required="true">
+                    <option value="" disabled>Select Designation</option>
+                    <option ng-repeat="desig in poc_designation" ng-selected="desig == pocdata.contact_type"  value="{{desig}}" required>
+                      {{desig}}</option>
+                  </select>
+                  <span ng-show="myForm.designation.$dirty && myForm.designation.$invalid" class="error">Designation is required.</span>
+                  </select>
+              </div>
+            </div>
+            <div class="text-right">
+              <button type="button" ng-click="removePocField($index)" id="remove_poc_{{$index}}" class="smallBtn pocBtn">-</button>
+            </div>
+            <hr>
+          </div>
+          
+            <div class="row">
+              <div class="col-md-6">
+                <button type="submit"  class="smallBtn" ng-disabled="pocForm.$invalid || pocModel.length == 0">Save Detail</button>
+              </div>
+              <div class="col-md-6">
+            <div class="text-right">
+              <button type="button" ng-click="addPocField()" class="smallBtn pocBtn">+ Add Poc</button>
+            </div>
+            </div>
+          </div>
+          </form>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--End: Code for contacts Modal Window -->
+<!-- start of add supllier Model -->
+<div id="companyDetailModal" class="modal fade style-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="pageTitle smallBtn full-width-header">
+          <h4>Add/Update Supplier</h4>
+        </div>
+        <!-- <h4 class="modal-title">Company Details:</h4>
+        <hr /> -->
+        <div class="modal-body">
+          <form role="form" class="form-inline" ng-submit="addUpdateSupplier()" name="myForm">
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Phone Number *: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" ng-pattern="/^[0-9]{10,10}$/" maxlength="10" placeholder="Phone Number"
+                  class="form-control" name="phone_number" disabled id="phone_number_id"
+                  ng-model="supplierForAddUpdateData.phone_number">
+                <div ng-show="myForm.phone_number.$error.pattern" class="error" style="font-size:12px; color: red;">
+                  Phone number Invalid</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Supplier Type *: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <select class="form-control" name="supplier_type" id="supplier_type_id"
+                  ng-model="supplierForAddUpdateData.supplier_type" ng-change= 'changeSupplier(supplierForAddUpdateData.supplier_type)'>
+                  <option value="" disabled>Select Supplier Type</option>
+                  <option ng-repeat="suppliertype in supplierTypes track by $index" value="{{suppliertype.supplier_type_code}}">
+                    {{suppliertype.supplier_type_name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> City *: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <select name="city" class="form-control" ng-change="getArea()" value="supplierForAddUpdateData.city_id"  ng-model="supplierForAddUpdateData.city_id" ng-required="true">
+                  <option value="" disabled>Select City</option>
+                  <option ng-repeat="city in Cities | orderBy: 'city_name'"  ng-selected="supplierForAddUpdateData.city_id == city.id"  value="{{city.id}}" required>
+                    {{city.city_name}}</option>
+                </select>
+                <span ng-show="myForm.city.$dirty && myForm.city.$invalid" class="error">Select a City</span>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Select Area & Edit : </label>
+              </div>
+              <div class="col-md-4" style="margin-top: 10px">
+                  <span disabled="Areas.length == 0 || supplierForAddUpdateData.isNewArea"  class="multiselectDropdown"
+                 ng-dropdown-multiselect=""
+                  options="Areas"  search-filter ="" ng-click="selectArea()" extra-settings="areaSettings"
+                  selected-model="selectedArea"
+                  ></span>
+                </span>
+                </div>
+                <div class="col-md-4">
+                  <md-switch ng-model="supplierForAddUpdateData.isNewArea" ng-change="changeArea()" aria-label="Switch 1">
+                    <label>Add New Area</label>
+                  </md-switch>
+                </div>
+            </div>
+
+            <div class="row" ng-if="!supplierForAddUpdateData.isNewArea && supplierForAddUpdateData.area_id">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Edit Area: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" placeholder="Edit Area " class="form-control" name="edit_area" id="edit_area_id"
+                  ng-model="supplierForAddUpdateData.area">
+              </div>
+            </div>
+
+            <div class="row" ng-if="supplierForAddUpdateData.isNewArea">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Add New Area: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" placeholder="Add New Area " class="form-control" name="new_area" id="new_area_id"
+                  ng-model="supplierForAddUpdateData.area">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Select Supplier & Edit : </label>
+              </div>
+             
+                <div class="col-md-4" style="margin-top: 10px">
+                  <span disabled="suppliersName == 0 || supplierForAddUpdateData.isNewSupplier"  class="multiselectDropdown" ng-dropdown-multiselect=""
+                  options="suppliersName"  search-filter ="" ng-click="selectSupplierName()"  extra-settings="supplierSettings"
+                  selected-model="selectedSupplierName"
+                  ></span>
+                  <span ng-if="suppliersName == 0" class="error">No supplier found</span>
+              </div>
+             
+              <div class="col-md-4">
+                <md-switch ng-model="supplierForAddUpdateData.isNewSupplier" ng-change="addNewSupplier()" aria-label="Switch 1">
+                  <label>Add New Supplier</label>
+                </md-switch>
+              </div>
+            </div>
+
+            <div class="row" ng-if="!supplierForAddUpdateData.isNewSupplier && supplierForAddUpdateData.supplier_id">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Edit Supplier: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" placeholder="Add New Supplier " class="form-control" name="edit_supplier"
+                  id="edit_supplier_id" ng-model="supplierForAddUpdateData.supplier_name">
+              </div>
+            </div>
+
+            <div class="row" ng-if="supplierForAddUpdateData.isNewSupplier">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Add New Supplier: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" placeholder="Add New Supplier " class="form-control" name="new_supplier"
+                  id="new_supplier_id" ng-model="supplierForAddUpdateData.supplier_name">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Add POC *: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" placeholder="POC" class="form-control" name="poc"
+                id="poc_id" ng-model="supplierForAddUpdateData.poc_name">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Designation *: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+      
+                  <select name="designation" class="form-control" value="supplierForAddUpdateData.designation"    ng-model="supplierForAddUpdateData.designation" ng-required="true">
+                    <option value="" disabled>Select Designation</option>
+                    <option ng-repeat="desig in designation" ng-selected="desig == supplierForAddUpdateData.designation"  value="{{desig}}" required>
+                      {{desig}}</option>
+                  </select>
+                  <span ng-show="myForm.designation.$dirty && myForm.designation.$invalid" class="error">Designation is required.</span>
+                  </select>
+              </div>
+            </div>
+
+            <!-- <div class="row" ng-if="supplierForAddUpdateData.designation == 'Other'">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Other Designation *: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" placeholder="Other Designation" class="form-control" name="other_designation"
+                  id="other_designation_id" ng-model="supplierForAddUpdateData.other_designation">
+                 
+                  <span ng-show="myForm.other_designation.$dirty && myForm.other_designation.$invalid" class="error">Other Designation is required.</span>
+                  </select>
+              </div>
+            </div> -->
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label>Address: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" placeholder="Address" class="form-control" name="address" id="address_id"
+                  ng-model="supplierForAddUpdateData.address1">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Pin Code: </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" ng-pattern="/^[0-9_ ]{0,9}$/" placeholder="Pin Code" class="form-control"
+                  name="pin_code" id="pin_code_id" ng-model="supplierForAddUpdateData.pin_code">
+                <div ng-show="myForm.pin_code.$error.pattern" class="error" style="font-size:12px; color: red;">
+                  Pin Code Invalid</div>
+              </div>
+            </div>
+
+
+            <!-- <div class="row">
+              <div class="col-md-4" style="margin-top: 10px">
+                <label> Company Name : </label>
+              </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                <input type="text" placeholder="Name" class="form-control" name="company_name" id="name_id"
+                  ng-model="viewLicenceDetailData.companydetail.company">
+              </div>
+            </div> -->
+
+            <!-- <div>
+              <button class="btn btn-danger" ng-disabled="!myForm.$valid"
+                ng-click="updateCompanyDetails()">Save</button>
+            </div> -->
+            <button type="submit" class="smallBtn" ng-disabled="myForm.$invalid">Add/Update Supplier</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end of add supllier Model -->
