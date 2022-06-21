@@ -1977,34 +1977,34 @@
                       <!-- Start Phone Chat  for tab3-->
                       <div class="phone-chat" ng-if="showChatModule && !isUserProfile">
                         <div class="screen-phone">
-                          <div class="nav-phone navbar-fixed">
+                          <div class="green-fixed nav-phone navbar-fixed">
 
-                            <div class="icon-back">
-                              <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
-                                ng-click="getInterveneUser(pagination.current)">
-
-                                <path fill="#fff"
-                                  d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
-                              </svg>
-                            </div>
-                            <div>
+                            <div >
                               <!-- <div ng-click="userProfileIcon()"> -->
-                              <div ng-if="userChatData.whatsapp_name!=''">
+                                <div ng-if="userChatData.whatsapp_name!=''" class="green-fixed-inner">
+                                <div class="icon-back">
+                                  <svg viewBox="0 0 57.653 64.11" width="25" height="25" xmlns="http://www.w3.org/2000/svg"
+                                    ng-click="getInterveneUser(pagination.current)">
+    
+                                    <path fill="#fff"
+                                      d="M 31.75 0 L 0 31.956 L 30.961 63.124 L 36.412 57.26 L 15.768 36.41 L 56.313 35.997 L 56.107 28.366 L 15.484 28.572 L 37.35 6.086 L 31.75 0 Z" />
+                                  </svg>
+                                </div>
                                 <div>
                                   <button ng-click="getRequirementDetail('23493')" data-toggle="modal"
                                     data-target="#SuspenseLeadsModel">Suspense Sheet</button>
                                 </div>
-                                <div>
-                                  <button ng-click="getRequirementDetail('23493')" data-toggle="modal"
-                                    data-target="#RequirementModel">Ops Verified</button>
-                                </div>
-                                <center>
+                                <div ng-click="userProfileIcon()">
                                   <span class="username profile-heading">{{userChatData.whatsapp_name| limitTo: 15 }}
                                     {{userChatData.whatsapp_name.length > 15 ? '...' :
                                     ''}}</span><br />
                                   <span
                                     class="tel-number profile-heading">({{userChatData.country_code}}{{userChatData.phone_number}}){{userChatPayload.area}},{{userChatPayload.city}},<br>{{userChatPayload.society_name}},{{userChatPayload.pincode}},{{userChatPayload.type_of_entity}},{{userChatPayload.designation}}</span>
-                                </center>
+                                </div>
+                                <div>
+                                  <button ng-click="opsVerified('23493')" data-toggle="modal"
+                                    data-target="#RequirementModel">Ops Verified</button>
+                                </div>
                                 <div class="profile-image-chat">
                                   <span>
                                     {{userChatData.whatsapp_name |firstlater}}
@@ -4062,7 +4062,7 @@
             style="width: 1100px; min-height: 200px;">
             <form name="myForm">
               <!-- test -->
-              <h4 class="modal-title">Submitted Leads</h4>
+              <h4 class="modal-title">Suspense Leads</h4>
               <table class="table table-bordered" name="contactForm">
                 <thead>
                   <tr>
