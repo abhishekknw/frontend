@@ -60,9 +60,9 @@
         }else if($scope.startDate < $scope.endDate){
           flag=1;
         }
-        if(flag==1){          
-          $scope.getPurchasedNotPurchasedLead ($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus,0,$scope.startDate,$scope.endDate);
-        }        
+        // if(flag==1){          
+        //   $scope.getPurchasedNotPurchasedLead ($scope.campaignId, $scope.campaignName, $scope.leadPurchasedStatus,0,$scope.startDate,$scope.endDate);
+        // }        
       }
 
     $scope.changeEndDate = function () {
@@ -644,7 +644,8 @@
       }
     }
     $scope.leadDetailDataList="";
-    $scope.showLeadDetail = function (_id) {
+    $scope.showLeadDetail = function (_id,req_id) {
+      $scope.lead_id=req_id;
       B2BDashboardService.showLeadDetail(_id)
         .then(function onSuccess(response) {
         $scope.leadDetailDataList = response.data.data;  

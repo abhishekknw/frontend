@@ -1402,7 +1402,7 @@
                               ng-click="updateLeadClientStatus(lead[0].macchadalo_client_status,lead[0].macchadalo_client_comment,lead[0]._id)">Update</button></td> -->
                             <td><button style="margin-top:8px; width: 92px !important; margin-right: -16px !important;"
                                 type="button" name="button" class="btn btn-danger"
-                                ng-click="showLeadDetail(lead[0]._id)" data-toggle="modal"
+                                ng-click="showLeadDetail(lead[0]._id,lead[0].requirement_id)" data-toggle="modal"
                                 data-target="#myModal">Detail</button></td>
                     </div>
                     </tr>
@@ -2542,7 +2542,7 @@
       <div class="modal-content">
         <div style="background-color: #8e1921; color:#FFFFFF;" class="modal-header">
           <button style="color:#FFFFFF;" type="button" class="close" data-dismiss="modal">&times;</button>
-          <h2 class="modal-title">Lead Details</h2>
+          <h2 class="modal-title">Lead Details  ({{lead_id}})</h2>
         </div>
         <div style="padding:15px;" class="modal-body">
           <div>
