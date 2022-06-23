@@ -1294,6 +1294,7 @@ angular.module('catalogueApp')
           releaseCampaignService.selectLeads()
           .then(function onSuccess(response) { 
             $scope.leads_time=response.data;
+            $scope.lastIndex=$scope.leads_time.data.length-1;  
             $scope.leads_Data=response.data.data;
             // $scope.selectLeadData();
           })    
@@ -1422,7 +1423,6 @@ angular.module('catalogueApp')
         
         
         $scope.selectLeadData=function(data){
-          console.log($scope.leads_time.data[10],data);
           for(let i in $scope.leads_Data){
             for (let j in $scope.leads_Data[i]){
               if(data===j){
