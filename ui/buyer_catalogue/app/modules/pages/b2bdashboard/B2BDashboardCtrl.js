@@ -604,6 +604,7 @@
         .then(function onSuccess(response) {
           if(response.data.data){
             $scope.leadsDataCampaigns = response.data.data;
+            $scope.campaign_id = $scope.leadsDataCampaigns[0].campaign_id;
           }
           
         });
@@ -741,7 +742,7 @@
           $scope.purchasedNotPurchasedLeadCurrent = page;
           $scope.purchasedNotPurchasedLeadPerPage = 20;
           $scope.cityListDetails=$scope.purchasedNotPurchasedLead.city_list;
-          console.log($scope.purchasedNotPurchasedLead);
+          console.log("viewleadDetails=",$scope.purchasedNotPurchasedLead);
           // $scope.all_values = [];
           // for (let i in values) {
           //     let row = {};
@@ -1386,13 +1387,12 @@
     $scope.surveyLeadArray = ['Leads','Survey','Feedback'];
     
     $scope.surveyLeadFilter = function (filter) {
+      $scope.filterType = filter;
       if(filter == 'Leads' || filter == 'Survey'){
         $scope.filterType = filter;
         $scope.isTableHide = true;
         $scope.viewCampaignLeads();
       }
-      
-
     }
 
     $scope.surveyLeadFilter('Leads');
@@ -1442,7 +1442,8 @@
         end_date = commonDataShare.formatDate($scope.dateRangeModel.end_dates);
       }
 
-      B2BDashboardService.getSummaryReport(campaign.proposal_id, start_date, end_date).then(function onSuccess(response) {
+      B2BDashboardService.getSummaryReport(campaign.proposal_id, start_date, end_date)
+      .then(function onSuccess(response) {
         $scope.summary_report = response.data.data;
 
         $scope.getHotLeadName = ($scope.summary_report.overall_data.company_hot_lead_status || 'Hot Leads');
@@ -1508,6 +1509,11 @@
       }
 
       return "";
+    }
+    $scope.downloadAll_leads = function(comp_id,lead_type){
+      B2BDashboardService.downloadAll_leads(lead_type,comp_id)
+      .then(function onSuccess(response) {
+      })
     }
 
     $scope.weekSummaryStackedBar = {
@@ -1617,6 +1623,7 @@
       }
     }
     /** /Sort funtionality */
+
   })
 })();
 app.factory('Excel', function ($window) {

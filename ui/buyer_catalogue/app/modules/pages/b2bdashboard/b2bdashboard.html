@@ -360,7 +360,7 @@
 
                 </div>
                 <div ng-if="decisionPendingTab">
-                  <div>
+                  <div style="margin-bottom: 15px;float: left; width: 100%;">
                     <div class="col-md-6">
                       <h4 class="panel-title">
                         <!-- <select class="form-control" ng-model="surveyLeadFilter" aria-placeholder="Select Leads,Surveyed Clients" ng-change="setSurveyLeadFilter(surveyLeadFilter.value)">
@@ -402,7 +402,9 @@
                     <!-- </h4> -->
                   </div>
                   <br/>
-                  <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
+                  <span style="display: block;margin: 15px;">
+                    <input type="text" class="form-control" ng-model="searchQuery" placeholder="search">
+                  </span>
                   <br />
                   <div class="table-responsive b2b-table-style">
                     <table class="table">
@@ -415,7 +417,8 @@
                             Count <a><i class="icon-sort" style="color:white;"></i></a></th>
                           <th>Area</th>
                           <th>City</th>
-                          <th>Int Status</th>
+                          <th>Lead Timestamp</th>
+                          <th>Current Status</th>
                           <th>Int Comment</th>
                           <th>Phone Number</th>
                           <th>Action</th>
@@ -444,6 +447,7 @@
                           <td class="alignment text-center">{{decisionPanding.primary_count}}</td>
                           <td class="alignment text-center">{{decisionPanding.area}}</td>
                           <td class="alignment text-center">{{decisionPanding.city}}</td>
+                          <td class="alignment text-center">{{decisionPanding.lead_timestamp}}</td>
                           <td class="alignment text-center">
                             <select ng-change="setValue(value8,decisionPanding.client_comment,decisionPanding._id,decisionPanding.requirement_id)"
                               class="form-control client-status" ng-model="value8">
@@ -1101,9 +1105,9 @@
                               <a><i class="icon-sort" style="color:white;"></i></a> -->
                             </th>
                             <!-- <th style="width:100px;" class="col-md-2" ng-click="Sort('hot_leads')">Hot Leads <a><i class="icon-sort" style="color:white;"></i></a></th> -->
-                            <th class="btn_box_lead_survey_th">View Leads</th>
-                            <th class="btn_box_lead_survey_th">Email Leads</th>
-                            <th class="btn_box_lead_survey_th">Download Leads</th>
+                            <th class="btn_box_lead_survey_th">view {{filterType}}</th>
+                            <th class="btn_box_lead_survey_th">Email {{filterType}}</th>
+                            <th class="btn_box_lead_survey_th">Download {{filterType}}</th>
 
                           </tr>
                           <!-- <tr colspan="9">
@@ -1139,8 +1143,9 @@
                             <td class="btn_box_lead_survey">
                               <button class="btn btn-danger" id="viewLeads_{{$index}}"
                                 ng-click="setButtonIndex($index,campaign.campaign_id,campaign.name)">
-                                <p ng-if="filterType == 'Leads'">View Leads</p>
-                                <p ng-if="filterType != 'Leads'">View Survey</p>
+                                <p ng-if="filterType == 'Leads' && filterType != 'Survey' && filterType != 'Feedback'">View Leads</p>
+                                <p ng-if="filterType != 'Leads' && filterType == 'Survey' && filterType !='Feedback'">View Survey</p>
+                                <p ng-if="filterType != 'Leads' && filterType != 'Survey' && filterType =='Feedback'">View Feedback</p>
                               </button>
                               <!-- <button class="btn btn-danger" ng-hide="$index == buttonIndex" id="viewLeads_{{$index}}"
                                 ng-click="setButtonIndex($index)">
@@ -1161,17 +1166,17 @@
                             <td class="btn_box_lead_survey">
                               <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id, 'email')"
                                 data-target="#sendEmailModal" data-toggle="modal">
-                                <p ng-if="filterType == 'Leads'">Email Leads</p>
-                                <p ng-if="filterType != 'Leads'">Email Survey</p>
+                                <p ng-if="filterType == 'Leads' && filterType != 'Survey' && filterType != 'Feedback'">Email Leads</p>
+                                <p ng-if="filterType != 'Leads' && filterType == 'Survey' && filterType !='Feedback'">Email Survey</p>
+                                <p ng-if="filterType != 'Leads' && filterType != 'Survey' && filterType =='Feedback'">Email Feedback</p>
                               </button>
                             </td>
                             <td class="btn_box_lead_survey">
-                              <button class="btn btn-danger" ng-click="getFormDetails(campaign.campaign_id)"
-                                data-target="#sendEmailModal" data-toggle="modal">
-
-                                <p ng-if="filterType == 'Leads'">Download Leads</p>
-                                <p ng-if="filterType != 'Leads'">Download Survey</p>
-
+                              <button class="btn btn-danger"
+                                data-target="#downloadLeads" data-toggle="modal">
+                                <p ng-if="filterType == 'Leads' && filterType != 'Survey' && filterType != 'Feedback'">Download Leads</p>
+                                <p ng-if="filterType != 'Leads' && filterType == 'Survey' && filterType !='Feedback'">Download Survey</p>
+                                <p ng-if="filterType != 'Leads' && filterType != 'Survey' && filterType =='Feedback'">Download Feedback</p>
                               </button>
                             </td>
                           </tr>
@@ -1334,7 +1339,7 @@
                               ng-repeat="(key,filter) in purchasedNotPurchasedLead.header track by $index">
                               <span> {{key}} </span>
                             </th>
-                            <th style="width:200px;">Client Status</th>
+                            <th style="width:200px;">Current Status</th>
                             <th style="width:200px;">Client Comment</th>
                             <th>Action</th>
                           </tr>
@@ -2688,6 +2693,79 @@
                 </tr>
               </table>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--sendEmailModal start  -->
+  <div id="sendEmailModal" class="modal fade modal-styles">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modalBodyBox">
+            <h3>Send Emails for {{ proposalDetail.name }}</h3>
+            <button type="button" class="close" ng-click="closeModel()" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <label>Select Email Type:</label>
+            <select class="field" name="" ng-model="emailModel.selected">
+              <option value="" disabled selected hidden>Email Type</option>
+              <option value="recce">Recce Email</option>
+              <option value="pipelineOfSupplier">Pipelined Societies Email</option>
+              <option value="listOfSupplier">Booking(Upcoming Society activation Email)</option>
+              <option value="activationOfSupplier">Activation Of Society,Branding and Permission Email</option>
+              <option value="prehype">Prehype Email</option>
+            </select>
+            <div class="sendEmail1">
+              <!-- <input type="email" class="field"  placeholder="Enter Email Id to test" ng-model="emailModel.email"> -->
+               <div layout="column" ng-cloak>
+                <md-content class="md-padding" layout="column">
+                    <md-chips
+                    md-type="email"
+                    md-on-add="validateEmail($chip)"
+                    ng-model="emailModel.email" input-aria-label="Emails"
+                    md-separator-keys="customKeys" placeholder="Enter Multiple User's Email To Send Mail "
+                    secondary-placeholder="Enter Email Id"
+                    input-aria-describedby="customSeparatorKeyDescription">
+                    </md-chips>
+                </md-content>
+               </div>
+
+               <div>
+                  <label>Note :- Use comma separation between emails to send multiple emails to users at the same time</label>
+                </div>
+                <div class="buttons buttons-flex">
+                  <button type="button" name="button" ng-Click="sendBookingEmails(proposalDetail.proposal_id)" class="smallBtn" ng-disabled="isEmailButton || emailBtnDisabled || !emailModel.selected">Sendt email for given user</button>
+                  <span>OR</span>
+                  <button type="button" name="button" class="smallBtn" ng-click="sendBookingEmails(proposalDetail.proposal_id, 'confirmed')" ng-disabled="emailBtnDisabled || !emailModel.selected">Send email to all (Default)</button>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal -->  
+  <!-- modal for download -->
+  <div id="downloadLeads" class="modal fade modal-styles">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modalBodyBox">
+            <h3>Download All leads</h3>
+            
+             <button type="button" class="close" ng-click="closeModel()" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">×</span>
+             </button>
+              <div class="sendEmail1">
+                <div class="buttons">
+                  <div>
+                      <button type="button" name="button" class="smallBtn" ng-click="downloadAll_leads(campaign_id,filterType)">Download Lead</button>
+                  </div>
+                </div>
+             </div>
           </div>
         </div>
       </div>

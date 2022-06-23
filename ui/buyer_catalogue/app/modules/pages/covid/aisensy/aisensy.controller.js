@@ -101,8 +101,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
 
                         .then(function onSuccess(response) {
                             $scope.activeUserData = response.data.data.users;
-                            $scope.totalCount = response.data.data.total_count
-                            console.log($scope.activeUserData)
+                            $scope.totalCount = response.data.data.total_count;
+
                         }).catch(function onError(response) {
                             console.log(response);
                         })
@@ -213,11 +213,8 @@ angular.module('machadaloPages').filter('firstlater', [function () {
                     AuthService.getAllUserDetailData(param)
 
                         .then(function onSuccess(response) {
-                            console.log(response)
-
                             $scope.userDetailData = response.data.data;
                             $scope.userChatPayload= $scope.userDetailData.payload;
-                            console.log('ooooooooooo', $scope.userChatPayload);
                         }).catch(function onError(response) {
                             console.log(response);
                         })
@@ -1082,6 +1079,15 @@ $scope.addPoc = function(){
     //     console.log(response);
     //   })
     }
+    $scope.opsVerified=function(phone,supplier_id){
+        releaseCampaignService.requirementDetail("",phone,supplier_id)
+        .then(function onSuccess(response) {
+        $scope.requirementDetailData = response.data.data.requirements;
+        $scope.companiesDetailData = response.data.data.companies;
+        console.log("requirementData=",$scope.requirementDetailData)
+      })
+    }
+    
   
   
 

@@ -568,6 +568,10 @@ angular.module('catalogueApp')
         var url = url_root + "b2b/update-client-decision-status/";
         return machadaloHttp.post(url, data);
       }
+      DashboardService.downloadAll_leads = function (lead_type,comp_id) {
+        var url = url_root + "b2b/download-leads-summary/?lead_type="+lead_type + "&supplier_code=all" + "&campaign_id="+comp_id;
+        return machadaloHttp.get(url);
+      }
 
       return DashboardService;
 

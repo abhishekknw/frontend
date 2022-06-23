@@ -177,8 +177,8 @@
       return machadaloHttp.put(url,data);
     }
 
-    releaseCampaignService.requirementDetail = function(id){
-      var url = url_base_ui + "b2b/requirements/?shortlisted_spaces_id=" + id;
+    releaseCampaignService.requirementDetail = function(id,phone,supplier_id){
+      var url = url_base_ui + "b2b/requirements/?shortlisted_spaces_id=" + id + "&phone_number=" + phone + "&supplier_id=" + supplier_id;
       return machadaloHttp.get(url);
     }
         //Api for LeadDetails
