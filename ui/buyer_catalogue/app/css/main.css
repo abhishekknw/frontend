@@ -59,10 +59,6 @@ a.collapse-menu-link:hover {
   padding: 5px;
   background: #cb1925 !important;
 }
-
-.dashboard-tab .tab-content {
-
-}
 .dashboard-tab .custom-panel h4 {
   margin-bottom: 0;
 }
@@ -637,34 +633,6 @@ color: #ffffff !important;
   /* overflow-x: hidden; */
 }
 
-.campaigndetailtable table tfoot {
-  /* background: #d9534f;
-  color: white; */
-  /* display: block;
-  max-height: 300px;
-  overflow-y: auto; */
-}
-
-.campaigndetailtable table thead,
-.campaigndetailtable table tbody tr {
-  /* border: 1px solid black; */
-  /* border-collapse: separate; */
-  /* border-spacing: 4px;   */
-  /* display: table;
-  width: 100%;
-  table-layout: fixed; */
-}
-
-
-.campaigndetailtable table thead,
-.campaigndetailtable table tfoot tr {
-  /* background: #d9534f;
-  color: white; */
-  /* display: table; */
-  /* width: 100%; */
-  /* table-layout: fixed; */
-}
-
 .campaigndetailtable table tbody tr td {
   text-align: center;
   /* width: 100px; */
@@ -692,9 +660,6 @@ color: #ffffff !important;
   text-align: center;
 }
 
-
-
-.viewLeadstable {}
 
 .viewLeadstable table thead tr th {
   background:#8e1921;
@@ -1050,4 +1015,47 @@ border-radius: 10px;
 }
 table.viewLeadstable-new thead{
   display: block !important;
+}
+
+/* modal-styles */
+body .modal-styles .modal-body{
+  padding: 15px;
+}
+body .modal-styles.modal .modalBodyBox button.close{
+  top: 10px;
+  right: 15px;
+}
+body .modal-styles .sendEmail1 .md-padding{
+  padding: 0;
+}
+body .modal-styles .sendEmail1 .md-chip-input-container,body .modal-styles .sendEmail1 .md-chip-input-container input{
+  width: 100%;
+}
+body .modal-styles .sendEmail1 .md-chip-input-container input{
+  width: 100%;
+  padding: 13px 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  background-color: #efefef;
+  height: 44px;
+}
+
+.buttons-flex{
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-styles .modal-dialog button.smallBtn{
+  margin-top: 0;
+}
+.m-15{
+  margin: 15px;
+}
+.viewLeadstable table.viewLeadstable-new.b2b-table-style tbody tr td{
+  max-width: none;
+}
+.b2b-table-style textarea.form-control.client-comment{
+  min-width: 250px;
 }

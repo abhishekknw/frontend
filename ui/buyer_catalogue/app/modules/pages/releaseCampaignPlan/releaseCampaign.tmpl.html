@@ -2027,7 +2027,7 @@
                           ng-model="subrequirement.impl_timeline"
                           style="width:150px;">
                           <option value="" disabled>Select Implementation Time</option>
-                          <option ng-repeat="(key,value) in leads_time.data[10].implementation_time track by $index"
+                          <option ng-repeat="(key,value) in leads_time.data[lastIndex].implementation_time track by $index"
                             value="{{value}}">
                             {{value}}
                           </option>
@@ -2038,7 +2038,7 @@
                           id="value" ng-model="subrequirement.meating_timeline"
                           style="width:150px;">
                           <option value="" disabled>Select Meeting Time</option>
-                          <option ng-repeat="(key,value) in leads_time.data[10].meeting_time track by $index"
+                          <option ng-repeat="(key,value) in leads_time.data[lastIndex].meeting_time track by $index"
                            value="{{value}}">
                             {{value}}
                           </option>
@@ -2110,7 +2110,7 @@
                           ng-model="subrequirement.call_back_preference"
                           style="width:150px;">
                           <option value="" disabled>Select Call Back Time</option>
-                          <option ng-repeat="(key,value) in leads_time.data[10].call_status track by $index"
+                          <option ng-repeat="(key,value) in leads_time.data[lastIndex].call_status track by $index"
                             value="{{value}}">
                             {{value}}
                           </option>
