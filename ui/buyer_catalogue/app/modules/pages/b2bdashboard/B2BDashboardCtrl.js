@@ -633,9 +633,44 @@
       $scope.selectFlag=false;
       $scope.updateLeadClientStatus($scope.clientStatus, $scope.clientComment,id,$scope.requirement_id);
     }
-    $scope.commentValue = function(comment){
-      $scope.commentCheck=comment;
+    $scope.viewComments = function (Id,req_id) {
+      $scope.id_basic=Id;
+      $scope.req_id_basic=req_id;
+      $('#viewComments').modal('show');
+       B2BDashboardService.viewCommentsBasic(Id)
+      .then(function onSuccess(response) {
+       console.log(response.data.data)
+      })
+      $scope.commentsData=response.data.data;
     }
+    $scope.viewCommentsLeadDetails = function (Id,req_id) {
+      $scope.id_detail=Id;
+      $scope.req_id_detail=req_id;
+      $('#viewCommentsLeadDetails').modal('show');
+      B2BDashboardService.viewCommentsDetails(Id)
+      .then(function onSuccess(response) {
+       console.log(response.data.data)
+      })
+     // $scope.commentsData=[{'general': "User11111","comment":"commen1111","timestamp":"june 8, 2020 6:14:00 PM"},{'general':"User2222","comment":"comment2222","timestamp":"july 10, 2020 12:54:00 PM"}];
+      //$scope.externalComment=[{'general': "Aman Patidar","comment":"newcomment","timestamp":"august 8, 2020 6:14:00 PM"},{'general':"AAAAAA","comment":"CCCCCCC","timestamp":"december 10, 2020 12:54:00 PM"}];
+      
+    }
+    $scope.commentValue = function(comment,Id,req_id){
+
+      B2BDashboardService.basicInternalComment(comment,Id,req_id)
+      .then(function onSuccess(response){
+        console.log(response.data);
+      })
+      $scope.commentCheck=comment;
+     }
+     $scope.commentValueDetails = function(comment,Id,req_id){
+
+       B2BDashboardService.basicInternalComment(comment,Id,req_id)
+       .then(function onSuccess(response){
+        console.log(response.data);
+      })
+      $scope.commentCheck=comment;
+     }
     $scope.valuechange=function(value1,status,id,req_id){
       $scope.clientComment=value1;
       $scope.requirement_id=req_id;
@@ -1510,15 +1545,6 @@
 
       return "";
     }
-      $scope.viewComments = function (campaign,Id) {
-        $scope.commentsData=[{'general': "User1","comment":"commen1","timestamp":"May 8, 2020 6:14:00 PM"},{'general':"User2","comment":"comment2","timestamp":"May 10, 2020 12:54:00 PM"}];
-        $('#viewComments').modal('show');
-      }
-      $scope.viewCommentsLeadDetails = function (campaign,Id) {
-        $scope.commentsData=[{'general': "User11111","comment":"commen1111","timestamp":"june 8, 2020 6:14:00 PM"},{'general':"User2222","comment":"comment2222","timestamp":"july 10, 2020 12:54:00 PM"}];
-        $scope.externalComment=[{'general': "Aman Patidar","comment":"newcomment","timestamp":"august 8, 2020 6:14:00 PM"},{'general':"AAAAAA","comment":"CCCCCCC","timestamp":"december 10, 2020 12:54:00 PM"}];
-        $('#viewCommentsLeadDetails').modal('show');
-      }
     $scope.downloadAll_leads = function(comp_id,lead_type){
       B2BDashboardService.downloadAll_leads(lead_type,comp_id)
       .then(function onSuccess(response) {

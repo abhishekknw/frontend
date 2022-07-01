@@ -469,7 +469,7 @@
                             </td>                -->
                             <td class="alignment">
                                 <span>comment2</span>
-                                <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewComments()">View / Add</button>
+                                <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewComments(decisionPanding._id,decisionPanding.requirement_id)">View / Add</button>
                             </td>
 
                           <td class="alignment text-center">
@@ -1398,7 +1398,7 @@
                             </td>
                             <td class="alignment">
                               <span>comment2</span>
-                              <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails()">View / Add</button>
+                              <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails(lead[0]._id,lead[0].requirement_id)">View / Add</button>
                           </td>
                             <!-- <td class="alignment">
                               <textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel"
@@ -2798,7 +2798,7 @@
             <tr ng-repeat="item in commentsData">
               <td>
                 <div>
-                  <p>{{item.comment}}</p>
+                  <p>{{item.internal_comments}}</p>
                 </div>
                 <div>
                   <img ng-src="{{userIcon}}">
@@ -2810,7 +2810,7 @@
           </table>
           <div style="margin-top: 15px;">
             <textarea class="field"  rows="8" cols="200" ng-model="mymodel" placeholder="Write here.."></textarea>
-            <button class="smallBtn" type="button" ng-click="commentValue(mymodel)" ng-click="valuechange(mymodel,decisionPanding.macchadalo_client_status,decisionPanding._id,decisionPanding.requirement_id)">Add Comment</button>
+            <button class="smallBtn" type="button" ng-click="commentValue(mymodel,id_basic,req_id_basic)" ng-click="valuechange(mymodel,decisionPanding._id,decisionPanding.requirement_id)">Add Comment</button>
           </div>
         </div>
       </div>
@@ -2861,9 +2861,9 @@
               </td>
             </tr>
           </table>
-          <div>
+          <div  style="margin-top: 15px;">
             <textarea class="field"  rows="8" cols="200" ng-model="mymodel" placeholder="Write here.."></textarea>
-            <button class="smallBtn" type="button" ng-click="commentValue(mymodel)" ng-click="valuechange(mymodel,decisionPanding.macchadalo_client_status,decisionPanding._id,decisionPanding.requirement_id)">Add Comment</button>
+            <button class="smallBtn" type="button" ng-click="commentValueDetails(mymodel,id_detail,req_id_detail)" ng-click="valuechange(mymodel,decisionPanding.macchadalo_client_status,decisionPanding._id,decisionPanding.requirement_id)">Add Comment</button>
           </div>
         </div>
       </div>
