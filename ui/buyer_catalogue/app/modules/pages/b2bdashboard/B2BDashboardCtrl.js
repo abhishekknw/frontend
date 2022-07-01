@@ -1510,6 +1510,15 @@
 
       return "";
     }
+      $scope.viewComments = function (campaign,Id) {
+        $scope.commentsData=[{'general': "User1","comment":"commen1","timestamp":"May 8, 2020 6:14:00 PM"},{'general':"User2","comment":"comment2","timestamp":"May 10, 2020 12:54:00 PM"}];
+        $('#viewComments').modal('show');
+      }
+      $scope.viewCommentsLeadDetails = function (campaign,Id) {
+        $scope.commentsData=[{'general': "User11111","comment":"commen1111","timestamp":"june 8, 2020 6:14:00 PM"},{'general':"User2222","comment":"comment2222","timestamp":"july 10, 2020 12:54:00 PM"}];
+        $scope.externalComment=[{'general': "Aman Patidar","comment":"newcomment","timestamp":"august 8, 2020 6:14:00 PM"},{'general':"AAAAAA","comment":"CCCCCCC","timestamp":"december 10, 2020 12:54:00 PM"}];
+        $('#viewCommentsLeadDetails').modal('show');
+      }
     $scope.downloadAll_leads = function(comp_id,lead_type){
       B2BDashboardService.downloadAll_leads(lead_type,comp_id)
       .then(function onSuccess(response) {

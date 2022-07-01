@@ -1059,3 +1059,21 @@ body .modal-styles .sendEmail1 .md-chip-input-container input{
 .b2b-table-style textarea.form-control.client-comment{
   min-width: 250px;
 }
+.theme-modal .modal-header{
+  background-color: #8e1921;
+  color: #FFFFFF;
+}
+.theme-modal .modal-header .close{
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  color: #fff;
+  text-shadow: none;
+}
+
+.theme-modal .modal-body{
+  padding: 15px !important;
+}
+.table-data{
+  background-color: #fff;
+}

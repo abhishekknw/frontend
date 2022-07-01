@@ -278,7 +278,7 @@
                             <table class="table">
                               <thead>
                                 <tr>
-                                  <th>Index</th>
+                                  <th width: 60px;min-width: 60px;>Index</th>
                                   <th>Campaign Name</th>
                                   <th>Total purchased</th>
                                   <th>Total available</th>
@@ -287,7 +287,7 @@
 
                               <tbody>
                                 <tr ng-repeat="item in campaignLeadData.campaigns | filter : searchQuery">
-                                  <td>{{$index + 1}}</td>
+                                  <td width: 60px;min-width: 60px;>{{$index + 1}}</td>
                                   <td><a ng-click="getLeadSupplier(item)">{{item.name}}</a>
                                   </td>
                                   <td>{{item.purchased_count}}</td>
@@ -459,14 +459,18 @@
                           <!-- <td class="alignment text-center">
                             {{decisionPanding.client_comment?decisionPanding.client_comment:"NA"}}
                           </td> -->
-                            <td class="alignment">
+                            <!-- <td class="alignment">
                               <textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel" 
                                         ng-click="commentValue(mymodel)"
                                         ng-blur="valuechange(mymodel,decisionPanding.macchadalo_client_status,decisionPanding._id,decisionPanding.requirement_id)"
                                         name="" placeholder="Comment">
                                         <span>{{mymodel=mymodel ? mymodel:mymodel==""?"":decisionPanding.macchadalo_client_comment}}</span>
                               </textarea>
-                            </td>               
+                            </td>                -->
+                            <td class="alignment">
+                                <span>comment2</span>
+                                <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewComments()">View / Add</button>
+                            </td>
 
                           <td class="alignment text-center">
                             {{decisionPanding.phone_number?decisionPanding.phone_number:"NA"}}
@@ -779,7 +783,7 @@
                               <table class="table" cellSpacing="0" cellPadding="0">
                                 <thead>
                                   <tr>
-                                    <th>INDEX</th>
+                                    <th style="width: 60px;min-width: 60px;">INDEX</th>
                                     <th>Client Name</th>
                                     <th>Area <br> (SubArea)</th>
                                     <th>Client Type</th>
@@ -788,7 +792,7 @@
                                     <th>Lead Type</th>
                                   </tr>
                                   <tr colspan="12">
-                                    <td></td>
+                                    <td style="width: 60px;min-width: 60px"></td>
                                     <td><input ng-model="f.supplier_data.name" class="form-control"
                                         placeholder="Search">
                                       <hr>
@@ -805,7 +809,7 @@
                                   <div class="row">
                                     <tr
                                       ng-repeat="supplier in supplierData |filter:searchQuery |filter : f | orderBy:sort:reversesort">
-                                      <td>{{$index + 1}}</td>
+                                      <td style="width: 60px;min-width: 60px;">{{$index + 1}}</td>
                                       <td>{{supplier.supplier_data.name}}</td>
                                       <td>{{supplier.supplier_data.area}} <br> ({{supplier.supplier_data.subarea}})</td>
                                       <td>{{supplier.supplier_data.supplier_type_name}}</td>
@@ -913,7 +917,7 @@
                               <table class="table" cellSpacing="0" cellPadding="0">
                                 <thead>
                                   <tr>
-                                    <th>INDEX</th>
+                                    <th style="width: 60px;min-width: 60px;">INDEX</th>
                                     <th>Client Name</th>
                                     <th>Area <br> (SubArea)</th>
                                     <th>Client Type</th>
@@ -939,7 +943,7 @@
                                   <div class="row">
                                     <tr
                                       ng-repeat="supplier in supplierData |filter:searchQuery |filter : f | orderBy:sort:reversesort">
-                                      <td>{{$index + 1}}</td>
+                                      <td style="width: 60px;min-width: 60px;">{{$index + 1}}</td>
                                       <td>{{supplier.supplier_data.name}}</td>
                                       <td>{{supplier.supplier_data.area}} <br> ({{supplier.supplier_data.subarea}})</td>
                                       <td>{{supplier.supplier_data.supplier_type_name}}</td>
@@ -1090,7 +1094,7 @@
                       <table class="table ">
                         <thead>
                           <tr>
-                            <th>Index</th>
+                            <th style="width: 60px;min-width: 60px;">Index</th>
                             <th style="width:200px;" class="col-md-2">Campaign Name</th>
                             <th ng-click="Sort('start_date')">Start Date <a><i class="icon-sort"
                                   style="color:white;"></i></a></th>
@@ -1126,7 +1130,7 @@
                         <tbody ng-if="leadsDataCampaigns.length > 0 ">
                           <tr style="margin:4px 0px;"
                             dir-paginate="campaign in leadsDataCampaigns|filter : searchQuery | filter : f | orderBy:sort:reversesort | itemsPerPage:10 track by $index ">
-                            <td>{{$index + 1}}</td>
+                            <td style="width: 60px;min-width: 60px;">{{$index + 1}}</td>
                             <td style="width:200px;" class="col-md-2">{{campaign.name}}</td>
                             <td>{{campaign.start_date|limitTo:10|date:mediumDate}}</td>
                             <!-- <td ng-if="campaign.campaign_status == 'completed'" style="text-transform:capitalize">
@@ -1334,7 +1338,7 @@
                       <table class="table table_content viewLeadstable-new b2b-table-style">
                         <thead>
                           <tr>
-                            <th>Index</th>
+                            <th style="width: 60px;min-width: 60px !important;">Index</th>
                             <th class="col-md-2"
                               ng-repeat="(key,filter) in purchasedNotPurchasedLead.header track by $index">
                               <span> {{key}} </span>
@@ -1349,7 +1353,7 @@
                           total-items="purchasedNotPurchasedLeadTotal" current-page="purchasedNotPurchasedLeadCurrent"
                           track by "$index">
                           <tr>
-                            <td>{{$index + 1}}</td>
+                            <td style="width: 60px;min-width: 60px;">{{$index + 1}}</td>
                             <td class="col-md-2" ng-repeat="leadDetail in lead" ng-hide="$first">
                               <span ng-if="leadDetail.value">{{leadDetail.value}}</span>
                               <span ng-if="!leadDetail.value">NA</span>
@@ -1393,13 +1397,17 @@
                               <span style="display: none;">{{value8=value8?value8:lead[0].macchadalo_client_status}}
                             </td>
                             <td class="alignment">
+                              <span>comment2</span>
+                              <button type="button" style="margin-bottom:2px" class="btn btn-danger" ng-click="viewCommentsLeadDetails()">View / Add</button>
+                          </td>
+                            <!-- <td class="alignment">
                               <textarea rows="2" class="form-control client-comment" value="value1" ng-model="mymodel"
                                         ng-click="commentValue(mymodel)"
                                         ng-blur="valuechange(mymodel,lead[0].macchadalo_client_status,lead[0]._id,lead[0].requirement_id)" 
                                         name="" placeholder="Comment">
                                         <span>{{mymodel=mymodel?mymodel:mymodel==""?"":lead[0].macchadalo_client_comment}}</span>
                               </textarea>
-                            </td>
+                            </td> -->
                             <!-- <td class="col-md-2" style="max-width:fit-content;text-align: center; width: 227px;">
                               <span>{{macchadalo_client_comment?macchadalo_client_comment:"NA"}}</span>
                             </td> -->
@@ -1437,7 +1445,7 @@
                         <tr>
                           <th></th>
 
-                          <th>Index</th>
+                          <th style="width: 60px;min-width: 60px;">Index</th>
                           <th>Client Name</th>
                           <th>Area</th>
                           <th>Price/Point</th>
@@ -1450,7 +1458,7 @@
                         dir-paginate="leaddata in notPurchasedLeadData | filter : searchData | filter : Code | itemsPerPage:20"
                         total-items="100" current-page="0" track by "$index">
                         <tr>
-                          <td><input type="checkbox"></td>
+                          <td style="width: 60px;min-width: 60px;"><input type="checkbox"></td>
                           <td><button class="btn btn-danger">Buy</button></td>
                           <td style="width:200px;" class="col-md-2">{{$index + 1}}</td>
                           <td style="width:200px;" class="col-md-2">{{leaddata.leads_data[0].supplier_name}}</td>
@@ -2772,6 +2780,97 @@
       </div>
     </div>
   </div>
+
+<!--START : view external comments modal  -->
+<div id="viewComments" class="modal fade theme-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>View Comments {{campaignDataForComment.name}}</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <div class="modalBodyBox">
+          <table class="table-data">
+            <h3>Internal Comments</h3>
+            <tr ng-repeat="item in commentsData">
+              <td>
+                <div>
+                  <p>{{item.comment}}</p>
+                </div>
+                <div>
+                  <img ng-src="{{userIcon}}">
+                  <b>{{item.general}}:</b> 
+                  <span><small>{{item.timestamp|date:'medium'}}</small></span>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <div style="margin-top: 15px;">
+            <textarea class="field"  rows="8" cols="200" ng-model="mymodel" placeholder="Write here.."></textarea>
+            <button class="smallBtn" type="button" ng-click="commentValue(mymodel)" ng-click="valuechange(mymodel,decisionPanding.macchadalo_client_status,decisionPanding._id,decisionPanding.requirement_id)">Add Comment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal -->  
+
+<!--START : view external and internal comments lead details  -->
+<div id="viewCommentsLeadDetails" class="modal fade theme-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>View Comments {{campaignDataForComment.name}}</h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <div class="modalBodyBox">
+          <table class="table-data">
+            <h3>Internal Comments</h3>
+            <tr ng-repeat="item in commentsData">
+              <td>
+                <div>
+                  <p>{{item.comment}}</p>
+                </div>
+                <div>
+                  <img ng-src="{{userIcon}}">
+                  <b>{{item.general}}:</b> 
+                  <span><small>{{item.timestamp|date:'medium'}}</small></span>
+                </div>
+              </td>
+            </tr>
+          </table><br>
+          <table class="table-data">
+            <h3>External Comments</h3>
+            <tr ng-repeat="item in externalComment">
+              <td>
+                <div>
+                  <p>{{item.comment}}</p>
+                </div>
+                <div>
+                  <img ng-src="{{userIcon}}">
+                  <b>{{item.general}}:</b> 
+                  <span><small>{{item.timestamp|date:'medium'}}</small></span>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <div>
+            <textarea class="field"  rows="8" cols="200" ng-model="mymodel" placeholder="Write here.."></textarea>
+            <button class="smallBtn" type="button" ng-click="commentValue(mymodel)" ng-click="valuechange(mymodel,decisionPanding.macchadalo_client_status,decisionPanding._id,decisionPanding.requirement_id)">Add Comment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal --> 
 </body>
 
 </html>
