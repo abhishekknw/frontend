@@ -3486,10 +3486,10 @@
                         class="glyphicon glyphicon-minus"></span>
                     </td>
                     <td class="alignment">
-                      {{requirement.sector}}
+                      {{sectorName(requirement.sector)}}
                     </td>
                   <tr ng-show="detailedShow[key]" id="detailedSho_{{key}}" ng-repeat-end
-                    ng-repeat-start="subrequirement in requirements">
+                    ng-repeat-start="subrequirement in requirement.requirements">
                     <td ng-style="{'background-color': subrequirement.color_class}" class="input_td_req11"> </td>
                     <td ng-style="{'background-color': subrequirement.color_class}" class="input_td_req">
                       <!-- <input type="checkbox" ng-disabled="subrequirement.varified_ops == 'yes'" -->
@@ -3524,26 +3524,23 @@
                         ng-if="subrequirement.current_patner_feedback_reason">Reason:{{subrequirement.current_patner_feedback_reason}}</span>
                       <span ng-if="!subrequirement.current_patner_feedback_reason">Reason:NA</span>
                     </td>
-
                     <td class="alignment">
                       {{companyData(subrequirement.sector)}}
-                      <span style="width:150px;" class="multiselectDropdown multiselectDropdown-style style="
-                        color:red;width:100%;margin-left:20px;" ng-dropdown-multiselect=""
-                        options="companiesDetailDataArray" extra-settings="settings"
+                      <span style="width:150px;"
+                        class="multiselectDropdown multiselectDropdown-style style="color:red;width:100%;margin-left:20px;"
+                        ng-dropdown-multiselect="" options="companiesDetailDataArray" extra-settings="settings"
                         selected-model="subrequirement.selected_preferred_company_sub_sector"
                         ng-click="subSectorPreferredMulticheck(key,$index)" translation-texts="selected_business_type"
                         events="events"></span>
-                      <span ng-repeat="selectedName in subrequirement.selected_preferred_company_sub_sector"
-                        style="text-align: left; display: inline-block">
-                        {{selectedName.name}}
-                        <span ng-if="!$last">,</span>
-                      </span>
+                        <span ng-repeat="selectedName in subrequirement.selected_preferred_company_sub_sector" style="text-align: left; display: inline-block">
+                          {{selectedName.name}}
+                          <span ng-if="!$last">,</span>
+                        </span>
                       <input style="margin-top:10px" ng-change="checkBoxAutoCheck(key,$index)" type="text"
                         class="form-control" placeholder="Other Preferred Company"
-                        ng-if="subrequirement.otherPreferredCompany" name="other_preferred_company"
-                        id="other_preferred_company" ng-model="subrequirement.preferred_company_other">
+                        ng-if="subrequirement.otherPreferredCompany" name="other_preferred_company" id="other_preferred_company"
+                        ng-model="subrequirement.preferred_company_other">
                     </td>
-
                     <td class="alignment">
                       <!-- <span>
                           <textarea placeholder="L4 Answer" class="form-control" style="width:150px;"
@@ -3669,7 +3666,7 @@
                       <select class="form-control" name="value" id="value" ng-model="subrequirement.impl_timeline"
                         style="width:150px;">
                         <option value="" disabled>Select Implementation Time</option>
-                        <option ng-repeat="(key,value) in leads_time.data[10].implementation_time track by $index"
+                        <option ng-repeat="(key,value) in leads_time.data[lastIndex].implementation_time track by $index"
                           value="{{value}}">
                           {{value}}
                         </option>
@@ -3679,7 +3676,7 @@
                       <select class="form-control" name="value" id="value" ng-model="subrequirement.meating_timeline"
                         style="width:150px;">
                         <option value="" disabled>Select Meeting Time</option>
-                        <option ng-repeat="(key,value) in leads_time.data[10].meeting_time track by $index"
+                        <option ng-repeat="(key,value) in leads_time.data[lastIndex].meeting_time track by $index"
                           value="{{value}}">
                           {{value}}
                         </option>
@@ -3748,7 +3745,7 @@
                       <select class="form-control" name="value" id="value"
                         ng-model="subrequirement.call_back_preference" style="width:150px;">
                         <option value="" disabled>Select Call Back Time</option>
-                        <option ng-repeat="(key,value) in leads_time.data[10].call_status track by $index"
+                        <option ng-repeat="(key,value) in leads_time.data[lastIndex].call_status track by $index"
                           value="{{value}}">
                           {{value}}
                         </option>
